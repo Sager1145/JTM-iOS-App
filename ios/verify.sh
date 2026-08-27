@@ -180,6 +180,9 @@ if [ "$run_swift" = 1 ]; then
     grep -q 'lines: \[segment\.sourceCoordinates\]' \
         "$here/RailMap/RailMapView.swift" \
         || fail "ridden-line statistics no longer use canonical WGS84 coordinates"
+    grep -q 'lines: \[segment\.sourceCoordinates\]' \
+        "$here/RailMap/MileageStatisticsStore.swift" \
+        || fail "mileage statistics no longer use canonical WGS84 coordinates"
     grep -q 'gcj02Countries: Set<String> = \["tw", "hk", "mo", "kr"\]' \
         "$here/RailMap/AppleMapDatum.swift" \
         || fail "Apple datum correction is no longer scoped to Taiwan, Hong Kong, Macao and Korea"

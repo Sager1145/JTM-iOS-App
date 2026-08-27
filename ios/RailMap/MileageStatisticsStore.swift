@@ -266,7 +266,10 @@ final class MileageStatisticsStore {
             statisticsTrains.append(statisticsTrain)
             let features = ridesByID[train.id]?.segments.map { segment in
                 Statistics.RouteFeature(
-                    lines: [segment.coordinates], hasGeometry: true,
+                    // Statistics indexes the canonical WGS84 rail package.
+                    // `coordinates` is presentation-only GCJ-02 in four
+                    // regions and will not match that index there.
+                    lines: [segment.sourceCoordinates], hasGeometry: true,
                     rideSegment: Statistics.isRideSegment(
                         stops, segmentIndex: segment.segmentIndex),
                     from: segment.from, to: segment.to)
