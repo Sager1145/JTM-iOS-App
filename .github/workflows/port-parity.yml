@@ -3,14 +3,13 @@
 # The port is verified rather than reviewed: port-fixtures/*.json holds inputs
 # and the answers the JavaScript gives, and the Swift has to reproduce them.
 # That only means anything while the fixtures still describe the JavaScript, so
-# the cheap half of the check — "did the reference implementation move without
-# the fixtures being regenerated?" — runs on every push, on Linux.
+# the first half of the check — "did the reference implementation move without
+# the fixtures being regenerated?" — runs on every push. Two geometry fixtures
+# contain bit-exact V8 answers, so this uses the same macOS ARM environment that
+# generated the committed corpus instead of silently comparing x64 answers.
 #
-# The Swift half needs a macOS runner, which costs about ten times as much per
-# minute, so it runs only when iOS code or the fixtures actually change (and on
-# demand). That is a deliberate trade, not an oversight: a stale fixture makes
-# every Swift result meaningless, so catching it early is worth far more than
-# re-running the Swift suite on a change that cannot affect it.
+# A stale fixture makes every Swift result meaningless, so both halves stay as
+# separate required checks even though they share the supported runner image.
 
 name: Port parity
 
@@ -30,7 +29,10 @@ concurrency:
 jobs:
   fixtures:
     name: Fixtures still describe the JavaScript
-    runs-on: ubuntu-latest
+    # overlap-lanes and station-join-smoothing pin bit-exact geometry. The V8
+    # version is pinned below, and the CPU architecture is pinned here: x64 and
+    # ARM can disagree in the last bit after long floating-point pipelines.
+    runs-on: xcode-27
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -58,7 +60,7 @@ jobs:
           # The generated fixture set is 52 MB and its largest builders hold
           # the source package, cases and serialized answer in memory at once.
           # Node's default ~2 GB old-space ceiling is below that measured
-          # peak on ubuntu-latest, so V8 aborts before it can compare the files.
+          # peak, so V8 otherwise aborts before it can compare the files.
           NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/build/build-port-fixtures.mjs --check
 
