@@ -279,6 +279,10 @@ struct RideCard: View {
                     .railInterpolatedFont(
                         size: interpolated(compactNumberSize, expandedNumberSize),
                         weight: .bold)
+                    // See `PanelHeader`'s title: the size is interpolated per
+                    // frame, so SwiftUI must not also cross-fade the glyphs
+                    // against themselves when the settle spring animates.
+                    .contentTransition(.identity)
                     // §14.4: no key content truncated at an accessibility text
                     // size. Three lines is a sensible ceiling for a名前 like
                     // 「はるか38号（Haruka 38）（1038M）」 at ordinary sizes; at

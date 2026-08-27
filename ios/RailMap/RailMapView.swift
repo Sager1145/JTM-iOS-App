@@ -357,9 +357,6 @@ struct RailMapView: View {
             /// that follows from it, which is what makes flipping a checkbox
             /// free.
             private var segmentCategories: [String: String] = [:]
-            /// A journey chosen with 自動縮放 on, waiting for its geometry.
-            /// See where it is read, below.
-            private var pendingFocusTrainID: String?
             private var basemapOpacity = 1.0
             /// Set only when a genuinely new set of lines arrives. Framing the map
             /// is a reasonable thing to do when a country finishes loading and a
@@ -407,10 +404,17 @@ struct RailMapView: View {
                 naming: MapNaming,
                 on mapView: MKMapView
             ) {
-                let linesChanged = lines.map(\.id) != self.lines.map(\.id)
-                let stationsChanged = stations.map(\.id) != self.stations.map(\.id)
-                let ridesChanged = rides.map(Self.rideSignature)
-                    != self.rides.map(Self.rideSignature)
+                // A sheet drag and a menu presentation can call
+                // `updateUIView` every frame while these arrays still share
+                // their exact backing buffers with the coordinator. Take that
+                // O(1) path before allocating thousands of ids/signatures.
+                let linesChanged = Self.changed(lines, from: self.lines, id: \.id)
+                let stationsChanged = Self.changed(stations, from: self.stations, id: \.id)
+                let ridesChanged = rides.count != self.rides.count
+                    || (!Self.sharesStorage(rides, self.rides)
+                        && !zip(rides, self.rides).allSatisfy {
+                            Self.rideSignature($0) == Self.rideSignature($1)
+                        })
                 let selectionChanged = selectedTrainID != self.selectedTrainID
                 let visibilityChanged = showsNetwork != self.showsNetwork
                     || basemapOpacity != self.basemapOpacity
@@ -490,19 +494,15 @@ struct RailMapView: View {
                 // both be the news there; here a tap on a journey in another
                 // day moves both at once, and framing the day would throw away
                 // the more specific of the two answers.
-                if autoFocus, selectionChanged { pendingFocusTrainID = selectedTrainID }
-                if !autoFocus || selectedTrainID == nil { pendingFocusTrainID = nil }
                 var focusRegion: MKCoordinateRegion? = nil
-                if let pending = pendingFocusTrainID, pending == selectedTrainID,
-                    let selectionRegion {
-                    // The request survives until the geometry exists. A
-                    // journey chosen from the list is very often chosen before
-                    // its route has finished solving, and a fit that could not
-                    // be answered at that instant used to be a fit that never
-                    // happened — the map simply stayed where it was and the
-                    // switch looked broken.
+                if autoFocus, selectionChanged, let selectionRegion {
+                    // Selection only moves the map when its geometry already
+                    // exists. Do not keep a pending camera request while the
+                    // route is loading: completing a solve must not yank the
+                    // reader away from wherever they have panned in the
+                    // meantime. The explicit locate action remains available
+                    // once the geometry is ready.
                     focusRegion = selectionRegion
-                    pendingFocusTrainID = nil
                 } else if autoFocus, dateChanged, selectedDate != Dates.allDates,
                     selectedTrainID == nil {
                     // "Whole-day auto-focus skips hidden trains; the
@@ -519,8 +519,19 @@ struct RailMapView: View {
                     controller?.fit(focusRegion)
                 }
 
-                builtForZoom = nil
-                rebuild(on: mapView)
+                // Loading network packages must not repeatedly rebuild the
+                // reader's routes while that network layer is hidden. Five
+                // regions arrive independently at launch; before this gate,
+                // each arrival rebuilt every ride overlay on the main thread
+                // even though none of the arriving geometry was visible.
+                let visibleNetworkChanged = showsNetwork && (linesChanged || stationsChanged)
+                let drawingChanged = visibleNetworkChanged || ridesChanged
+                    || selectionChanged || visibilityChanged || indexesChanged
+                    || displayChanged || dateChanged || namingChanged
+                if drawingChanged {
+                    builtForZoom = nil
+                    rebuild(on: mapView)
+                }
 
                 if framePending, !(controller?.hasFramedForReader ?? false),
                     let region = Self.region(covering: lines) {
@@ -547,8 +558,40 @@ struct RailMapView: View {
             /// a gate that only counts holds the reloaded ride back at exactly
             /// the edits the reload existed to show.
             static func rideSignature(_ ride: RiddenRouteStore.DrawnRide) -> String {
-                "\(ride.id):\(ride.vertexCount):\(ride.colorHex):\(ride.visible ? 1 : 0)"
+                "\(ride.id):\(ride.geometryDigest):\(ride.colorHex):\(ride.visible ? 1 : 0)"
                     + ":\(ride.trainType ?? ""):\(stopsDigest(ride.stops)):\(ride.daySpan.sig)"
+            }
+
+            /// Whether two arrays are the same immutable generation.
+            /// `Array` is copy-on-write, so a store mutation moves to another
+            /// buffer while an unchanged value handed through SwiftUI keeps
+            /// this address. Empty arrays are the same generation for render
+            /// purposes regardless of their sentinel pointer.
+            private static func sharesStorage<Element>(
+                _ left: [Element], _ right: [Element]
+            ) -> Bool {
+                guard left.count == right.count else { return false }
+                guard !left.isEmpty else { return true }
+                return left.withUnsafeBufferPointer { leftBuffer in
+                    right.withUnsafeBufferPointer { rightBuffer in
+                        UnsafeRawPointer(leftBuffer.baseAddress!)
+                            == UnsafeRawPointer(rightBuffer.baseAddress!)
+                    }
+                }
+            }
+
+            /// Compare collection generations without allocating parallel id
+            /// arrays. A count change is already a complete answer, which is
+            /// the common case while regional packages stream in at launch.
+            private static func changed<Element, Identity: Equatable>(
+                _ next: [Element], from current: [Element],
+                id: KeyPath<Element, Identity>
+            ) -> Bool {
+                guard next.count == current.count else { return true }
+                guard !sharesStorage(next, current) else { return false }
+                return !zip(next, current).allSatisfy {
+                    $0[keyPath: id] == $1[keyPath: id]
+                }
             }
 
             /// The stops, as the one number the signature needs.
@@ -1147,16 +1190,26 @@ struct RailMapView: View {
                 // than beside it: with the network off there is no line for a
                 // station to sit on, so the dots go with it either way.
                 if showsNetwork, layers.networkStations {
-                    // `DrawnStation.minZoom` is a MapLibre number, so it has to
-                    // be read against a MapLibre zoom. Compared against this
-                    // app's zoom it fired one level early, which at a city view
-                    // is not a subtlety: jp drew 3,963 dots where the web app
-                    // draws 348.
-                    let stationZoom = RailStyle.mapLibreZoom(from: zoom)
+                    // A dot goes on the map only where the line it belongs to
+                    // is on the map. `DrawnStation.lodMinZoom` is the station's
+                    // own threshold raised to its line's, in THIS app's zoom
+                    // (`NetworkLOD`) — the package's own number is a MapLibre
+                    // one and reading it against this zoom fired a level early,
+                    // which at a city view was not a subtlety: jp drew 3,963
+                    // dots where the web app draws 348.
+                    //
+                    // The drawn set is consulted as well as the threshold, and
+                    // it is not the same question: the threshold says the line
+                    // is eligible at this zoom, the set says it was actually
+                    // built. The two part company when the vertex budget binds
+                    // and `fitToBudget` sheds branches — which is precisely
+                    // when a stranded dot would be least explicable.
+                    let drawnLineIDs = Set(visible.map(\.id))
                     let stationAnnotations = stations.compactMap { station -> StationAnnotation? in
-                        guard Double(station.minZoom) <= stationZoom else { return nil }
+                        guard station.lodMinZoom <= zoom else { return nil }
                         let point = MKMapPoint(station.coordinate.clLocation)
                         guard buildRect.contains(point) else { return nil }
+                        guard drawnLineIDs.contains(station.lineID) else { return nil }
                         // `buildStationPopupModel` keys its readings on the
                         // platform's OWN id (`lineId:stationId`), which the
                         // four localised-name tables carry alongside the

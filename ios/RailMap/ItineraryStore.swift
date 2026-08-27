@@ -53,7 +53,27 @@ final class ItineraryStore {
     /// The train the reader is looking at. Selection lives here rather than in
     /// a view because the map and the list both need it, and they are in
     /// different halves of the layout.
-    var selectedTrainID: String?
+    var selectedTrainID: String? {
+        didSet {
+            // `nil` means "back to the list", not "forget what was last on
+            // the map". Keeping the last non-nil value lets the route store
+            // warm exactly one cache entry on the next launch without forcing
+            // the detail card back open.
+            guard let selectedTrainID, selectedTrainID != lastViewedTrainID else { return }
+            lastViewedTrainID = selectedTrainID
+            UserDefaults.standard.set(selectedTrainID, forKey: Self.lastViewedTrainKey)
+        }
+    }
+
+    /// The route to publish first on the next launch.
+    ///
+    /// This is deliberately separate from ``selectedTrainID``: restoring the
+    /// selection would change navigation state, while restoring its cached
+    /// geometry only changes how soon the map becomes useful.
+    private(set) var lastViewedTrainID = UserDefaults.standard.string(
+        forKey: ItineraryStore.lastViewedTrainKey)
+
+    private static let lastViewedTrainKey = "last-viewed-train-id"
 
     /// Loads whatever the library says is current — a bundled sample, or the
     /// reader's own saved store.

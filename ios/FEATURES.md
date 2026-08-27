@@ -110,8 +110,8 @@ That is its own cleanup, not this one.
 | Zoom-tiered visibility | `rail-network.js` `minZoomFor*` | ✅ | ✅ off-by-one fixed; rank plus a finer native wide-view length ladder |
 | Official line colours, light and dark | package `color`/`colorDark` | ✅ | ✅ |
 | Display parts — branches split from trunks | `rail-network.js:908` | ✅ | ✅ `RailNetworkStore` builds every line through `DisplayParts.parts` |
-| Station dots | `railmap-style.js` §5 | ✅ | ✅ |
-| Station names, by role tier | `railmap-geometry.js` `markerLabelWinners` | ✅ | ✅ `stationLabelWinners` elects them at decode |
+| Station dots | `railmap-style.js` §5 | ✅ | ✅ and never before the line they stand on: `NetworkLOD` gates the dot on its own threshold *and* its line's, so jp's national view draws 48 beads over its 24 lines rather than 132 |
+| Station names, by role tier | `railmap-geometry.js` `markerLabelWinners` | ✅ | ✅ `stationLabelWinners` elects them at decode — on the thresholds this app draws by, so the platform holding a complex's name is one the reader can actually see |
 | C5 bilingual station popup | `railmap-popup.js` (146) | ✅ | ✅ readings, operator badges and colour swatches — as a card in a sheet (`StationCardView`) rather than a callout anchored to the bead |
 | …from a ride's own stations too | `app-deck-records.js` `handleDeckMarkerClick` | ✅ stop data grid | ✅ the same station card, resolved back to the network platform by station-group code and then by name; the journey selection is left alone (see `gestureRecognizer(_:shouldReceive:)`) |
 | …opened and shared as a real Apple Maps place | — | — | ✅ `StationPlaceStore` resolves the station to its own map item; `StationPlaceLink` picks the winner and writes `/place?place-id=`, falling back to the captioned pin where no service can answer (`audit-station-places.swift`) |
@@ -139,6 +139,18 @@ line's visibility GROUP — after which the rank ladder was recalibrated to
 3,3,4,5,6. The native renderer now also reads the unbucketed group length and
 uses 300/120/50/20 km floors across app zoom 4/5/6/7; zoom 8 remains the
 unchanged all-lines stop.
+
+**And the dots follow the lines.** Those extra terms apply to a LINE, while a
+station kept the web app's own threshold, so the wide views drew the terminals
+of every line the ported ladder allowed over the far smaller set actually
+drawn — 132 beads over 24 lines at app zoom 4, 84 of them belonging to a
+railway nowhere on the map. A station's threshold is now its own raised to its
+line's (`NetworkLOD.stationMinZoomMapLibre`), and the label election runs on
+those same numbers: electing on the package's instead handed 高崎's name to its
+上越線 platform, which this app does not draw at app zoom 5 while its 信越線 and
+北陸新幹線 platforms are on screen. Eleven jp complexes were in that position;
+39 of the 9,021 names move to a different platform of the same complex, and no
+complex gains or loses a name.
 
 ## 2 · Rides — the point of the app
 

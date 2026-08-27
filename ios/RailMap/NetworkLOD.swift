@@ -23,6 +23,13 @@ import RailCore
 ///    wide-view length tier, and how important its operator says it is. Trunks
 ///    survive the wide views; branches wait.
 ///
+///    **A station waits with its line.** The dots are the same decision, not a
+///    parallel one: a station's own threshold decides whether there is room
+///    for it, and the line's decides whether there is anything for it to stand
+///    on. Taking the larger is what keeps a branch's terminals from hanging in
+///    the sea three zoom levels before the branch is drawn — the same rule
+///    `MapLayers.routes` applies to a journey's beads, for the same reason.
+///
 /// 2. **Nothing far off screen is built.** Overlays outside the visible rect
 ///    cost geometry, Metal buffers and decimation time to produce something
 ///    nobody can see. Building is done for a padded rect rather than the exact
@@ -129,25 +136,80 @@ enum NetworkLOD {
         return 7
     }
 
-    /// The zoom at which a line may first be drawn, in **this app's** zoom.
+    /// The zoom at which a line may first be drawn, in **MapLibre's** zoom.
     ///
     /// `portedMinZoom` is `Visibility.minZoomByLineId`'s answer for this line —
     /// a MapLibre zoom, computed from the line's visibility group. The rank
     /// terms are the native additions: taking the largest means a line has to
     /// be long enough at both levels and important enough, where the web app
-    /// asks only the first. The result is then converted once, here, so no
+    /// asks only the first.
+    ///
+    /// Kept separate from ``minZoom(portedMinZoom:rank:visibilityLengthKm:)``
+    /// because a station's threshold is a MapLibre number too, and
+    /// ``stationMinZoomMapLibre(portedMinZoom:lineMinZoomMapLibre:)`` can only
+    /// take the larger of the two if both are still in the same convention.
+    static func minZoomMapLibre(
+        portedMinZoom: Int,
+        rank: Int?,
+        visibilityLengthKm: Double
+    ) -> Int {
+        let byRank = rank.flatMap {
+            $0 >= 0 && $0 < rankMinZoom.count ? rankMinZoom[$0] : nil
+        } ?? 0
+        let byWideViewLength = wideViewMinZoom(visibilityLengthKm: visibilityLengthKm)
+        return max(max(portedMinZoom, byRank), byWideViewLength)
+    }
+
+    /// The same threshold in **this app's** zoom — converted once, here, so no
     /// caller has to remember which convention it is holding.
     static func minZoom(
         portedMinZoom: Int,
         rank: Int?,
         visibilityLengthKm: Double
     ) -> Double {
-        let byRank = rank.flatMap {
-            $0 >= 0 && $0 < rankMinZoom.count ? rankMinZoom[$0] : nil
-        } ?? 0
-        let byWideViewLength = wideViewMinZoom(visibilityLengthKm: visibilityLengthKm)
-        return RailStyle.zoom(
-            fromMapLibre: Double(max(max(portedMinZoom, byRank), byWideViewLength)))
+        RailStyle.zoom(
+            fromMapLibre: Double(
+                minZoomMapLibre(
+                    portedMinZoom: portedMinZoom, rank: rank,
+                    visibilityLengthKm: visibilityLengthKm)))
+    }
+
+    /// The zoom at which a STATION may first be drawn, in MapLibre's zoom:
+    /// never before the line it stands on.
+    ///
+    /// `portedMinZoom` is the station's own — `Visibility.stationMinZoom`,
+    /// which is the line's threshold for a terminal and the denser
+    /// spacing-based one for an intermediate stop. That number answers "is
+    /// there room for this dot", and on the web app it is the whole question,
+    /// because there the line under the dot is drawn by the very same ladder.
+    /// Here it is not: rule 1 above adds rank and a finer length ladder to the
+    /// LINE and nothing to the station, so the wide views drew the terminals of
+    /// every line the ported ladder allowed over the far smaller set this app
+    /// had actually drawn — beads on a railway that was not there.
+    ///
+    ///     app zoom            4     5     6     7     8
+    ///     jp lines drawn     24    51   195   337   652
+    ///     jp dots before    132   280   524   864  1393
+    ///     jp dots after      48   102   390   676  1393
+    ///
+    /// Whole-country counts, before the visible rect is applied. At app zoom 4
+    /// that was 132 beads over 24 drawn lines, 84 of them belonging to a
+    /// railway nowhere on the map. Near detail is untouched: by app zoom 8
+    /// every line is drawn, so every dot the web app's own ladder allows is
+    /// drawn with it, and this rule stops having an opinion.
+    static func stationMinZoomMapLibre(portedMinZoom: Int, lineMinZoomMapLibre: Int) -> Int {
+        max(portedMinZoom, lineMinZoomMapLibre)
+    }
+
+    /// The same threshold in **this app's** zoom. The MapLibre one above is
+    /// what the label election runs on — it compares platforms against each
+    /// other, where the convention cancels — and this is what the map compares
+    /// against the camera.
+    static func stationMinZoom(portedMinZoom: Int, lineMinZoomMapLibre: Int) -> Double {
+        RailStyle.zoom(
+            fromMapLibre: Double(
+                stationMinZoomMapLibre(
+                    portedMinZoom: portedMinZoom, lineMinZoomMapLibre: lineMinZoomMapLibre)))
     }
 
     /// The rect to build for: the visible one, grown by ``padding``.

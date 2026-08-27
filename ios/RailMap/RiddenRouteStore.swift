@@ -97,6 +97,14 @@ final class RiddenRouteStore {
         /// differently — `Dates.segmentDate(_:segmentIndex:)` maps a segment to
         /// its day.
         let daySpan: Dates.DaySpan
+        /// A precomputed identity for the actual vertices.
+        ///
+        /// The map compares rides during every SwiftUI update. Walking all
+        /// coordinates there makes a sheet drag pay for route geometry on
+        /// every frame; comparing only `vertexCount` misses a rebuilt route
+        /// whose new geometry happens to have the same number of points.
+        /// Hash once when the ride is decoded and both paths stay cheap.
+        let geometryDigest: Int
         var strokes: [[Coordinate]] { segments.map(\.coordinates) }
         var vertexCount: Int { strokes.reduce(0) { $0 + $1.count } }
     }
@@ -110,6 +118,12 @@ final class RiddenRouteStore {
 
     private(set) var state: LoadState = .idle
     private(set) var rides: [DrawnRide] = []
+    /// Stable, already-filtered input for the map.
+    ///
+    /// Filtering in `RailWorkspaceView.body` allocated a fresh array on every
+    /// sheet-height sample, defeating the renderer's shared-storage fast path
+    /// even when no journey had changed.
+    private(set) var visibleRides: [DrawnRide] = []
     private var loadTask: Task<Void, Never>?
 
     /// Solve and draw every ride, whatever region each belongs to.
@@ -119,7 +133,7 @@ final class RiddenRouteStore {
     /// pipeline groups by it, and the per-region resources — the sections
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
-    func load(trains: [Train]) {
+    func load(trains: [Train], preferredTrainID: String? = nil) {
         loadTask?.cancel()
         state = .loading
         // The status centre is how the journey detail and the editor — neither
@@ -133,11 +147,27 @@ final class RiddenRouteStore {
         // crash on a data fault rather than a drawing of it.
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
-        loadTask = Task {
+        loadTask = Task(priority: .userInitiated) {
             do {
-                let decoded = try await Self.decode(wanted: wanted)
+                // Publish the one route the reader last looked at before the
+                // all-route scan. Its cache is a single small file; the old
+                // path withheld even that hit until every cached route had
+                // been read and every miss had been solved.
+                let primed = await Self.loadPreferred(
+                    id: preferredTrainID, wanted: wanted)
+                try Task.checkCancellation()
+                if let primed {
+                    rides = [primed]
+                    visibleRides = primed.visible ? [primed] : []
+                    RideStatusCenter.shared.publish(
+                        entries: Self.statusEntries(for: [primed], wanted: []),
+                        phase: .loading)
+                }
+
+                let decoded = try await Self.decode(wanted: wanted, primed: primed)
                 try Task.checkCancellation()
                 rides = decoded
+                visibleRides = decoded.filter(\.visible)
                 state = .loaded(rides: decoded)
                 RideStatusCenter.shared.publish(
                     entries: Self.statusEntries(for: decoded, wanted: wantedIDs),
@@ -146,6 +176,7 @@ final class RiddenRouteStore {
                 return
             } catch {
                 rides = []
+                visibleRides = []
                 state = .failed(error.localizedDescription)
                 RideStatusCenter.shared.publish(
                     entries: [:], phase: .failed(error.localizedDescription))
@@ -153,9 +184,20 @@ final class RiddenRouteStore {
         }
     }
 
+    /// Read the last-viewed route only. A miss deliberately does not solve:
+    /// the complete decoder below owns expensive work and its cancellation.
+    private nonisolated static func loadPreferred(
+        id: String?, wanted: [String: Train]
+    ) async -> DrawnRide? {
+        guard let id, let train = wanted[id] else { return nil }
+        let country = Region.resolved(train).code
+        return loadCached([train], country: country).rides.first
+    }
+
     func clear() {
         loadTask?.cancel()
         rides = []
+        visibleRides = []
         state = .idle
         RideStatusCenter.shared.clear()
     }
@@ -190,6 +232,7 @@ final class RiddenRouteStore {
             } else {
                 rides.removeAll { $0.id == id }
             }
+            visibleRides = rides.filter(\.visible)
             if case .loaded = state { state = .loaded(rides: rides) }
             RideStatusCenter.shared.finishResolving(
                 id,
@@ -243,10 +286,13 @@ final class RiddenRouteStore {
     /// 11 MB of parts to answer a question the on-disk cache has already
     /// answered. Rides that come out of a dataset are written into that cache,
     /// so the scan happens once per journey rather than once per load.
-    private nonisolated static func decode(wanted: [String: Train]) async throws -> [DrawnRide] {
-        var result: [DrawnRide] = []
+    private nonisolated static func decode(
+        wanted: [String: Train], primed: DrawnRide? = nil
+    ) async throws -> [DrawnRide] {
+        var result: [DrawnRide] = primed.map { [$0] } ?? []
         var unresolved: [Region: [Train]] = [:]
-        for (region, trains) in Dictionary(grouping: wanted.values, by: Region.resolved) {
+        let remaining = wanted.values.filter { $0.id != primed?.id }
+        for (region, trains) in Dictionary(grouping: remaining, by: Region.resolved) {
             let cached = loadCached(trains, country: region.code)
             result += cached.rides
             if !cached.missing.isEmpty { unresolved[region] = cached.missing }
@@ -375,6 +421,12 @@ final class RiddenRouteStore {
         } else {
             outcome = .partial(solved: solved.count, expected: expected, unsolved: unsolved)
         }
+        var geometryHasher = Hasher()
+        geometryHasher.combine(segments.count)
+        for segment in segments {
+            geometryHasher.combine(segment.segmentIndex)
+            geometryHasher.combine(segment.sourceCoordinates)
+        }
         return DrawnRide(
             id: train.id,
             trainType: train.trainType,
@@ -384,7 +436,8 @@ final class RiddenRouteStore {
             segments: segments,
             route: outcome,
             stops: train.stops,
-            daySpan: Dates.daySpan(train.forDates))
+            daySpan: Dates.daySpan(train.forDates),
+            geometryDigest: geometryHasher.finalize())
     }
 
     /// The canonical route sections a journey asks for — the same normalisation

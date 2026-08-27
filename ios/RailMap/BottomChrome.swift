@@ -222,13 +222,13 @@ struct BottomChromeMetrics: Equatable {
     ///
     /// The sheet reports its stops exactly: a `.height(136)` detent measures
     /// 136 and `.large` measures the window. A drag reports whatever the finger
-    /// is holding, and lands on one of those three numbers only by accident. So
+    /// is holding, and lands on one of those numbers only by accident. So
     /// "this height is a stop's height" is how the panel tells the SYSTEM's
     /// settle — the spring that runs after the finger lifts, and the move an
     /// accessibility action asks for — from the finger itself. Both of those
-    /// arrive here as one discontinuous jump rather than as a stream, because
-    /// UIKit animates the sheet's frame and lays its content out once, at the
-    /// destination; see `ResidentBottomSheetModifier`.
+    /// arrive as one discontinuous jump rather than as a stream, because UIKit
+    /// animates the sheet's frame but lays its content out once, at the
+    /// destination; see `ResidentBottomSheetModifier.settle(reporting:)`.
     ///
     /// The tolerance is a rounding allowance and not a window: the system
     /// quantises a detent to the device's point grid, which puts Medium's
@@ -423,25 +423,29 @@ struct PanelHeader<Actions: View>: View {
             Text(title)
                 // Interpolated rather than swapped between two `Font`s: see
                 // ``RailInterpolatedFont``. The size is a function of the live
-                // sheet height at every frame of a drag, and of the settle
-                // spring `ResidentBottomSheetModifier` puts on the release —
-                // and a plain `.font()` can follow the first but not the
-                // second.
+                // sheet height at every frame of a drag AND of the settle
+                // spring `ResidentBottomSheetModifier` puts on the release, and
+                // a plain `.font()` can follow the first but not the second.
                 .railInterpolatedFont(
                     size: interpolated(compactTitleSize, openTitleSize),
                     weight: .bold)
-                // The title is not always the same sentence at both ends. Over
-                // a selected journey the Docked row carries the train's number
-                // and the open one names the state (see
-                // `RailWorkspaceView.panelTitle(for:stage:)`), so the one thing
-                // in this header that CANNOT be interpolated is the string. It
-                // gets §9.4's short in-place replacement instead of changing
-                // between two frames — and scoped to the title's own value, so
-                // it never puts a curve on the size the drag is driving.
-                .contentTransition(.opacity)
-                .animation(
-                    RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
-                    value: title)
+                // No cross-fade, and this is the modifier that stops one.
+                //
+                // A `Text` whose rendering changes inside an animated
+                // transaction is cross-faded by SwiftUI, and the settle spring
+                // IS an animated transaction — so the title, whose size is a
+                // function of the sheet's height, was cross-faded against
+                // itself on every release. Recorded at 60 fps on an iPhone 17
+                // Pro, the large title was ABSENT for nine frames after a
+                // flick, leaving the panel headed by its own subtitle; asking
+                // for an explicit `.opacity` transition instead drew it twice,
+                // at two sizes, a hundred points apart.
+                //
+                // Neither is wanted and neither is needed:
+                // ``RailInterpolatedFont`` re-renders the glyphs at every
+                // interpolated size, so there are no two states to fade
+                // between. `.identity` is what says so.
+                .contentTransition(.identity)
                 .lineLimit(titleLines)
                 .minimumScaleFactor(interpolated(0.72, 0.6))
                 .fixedSize(horizontal: false, vertical: true)
@@ -480,10 +484,10 @@ struct PanelHeader<Actions: View>: View {
             // The SET of controls changes at Docked — over a selected journey
             // this row is that journey's controls, and above Docked the card
             // below owns them (see `RailWorkspaceView.panelActions(for:stage:)`).
-            // That is a membership change rather than a morph, so it takes the
-            // same short replacement the title's wording does; without it two
-            // glass capsules appeared and vanished between two frames beside a
-            // title that was still growing.
+            // That is a membership change rather than a morph, so it takes
+            // §9.4's short replacement; without it two glass capsules appeared
+            // and vanished between two frames beside a title that was still
+            // growing.
             .animation(
                 RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
                 value: stage)
@@ -652,6 +656,12 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    /// The stop the panel is currently drawn against, the one before it, and
+    /// when that changed. See ``settle(reporting:)``.
+    @State private var restingHeight: CGFloat = 0
+    @State private var previousRestingHeight: CGFloat = 0
+    @State private var restedAt = Date.distantPast
+
     /// A resident presentation still needs owned lifecycle state.
     ///
     /// A constant `true` binding asks SwiftUI to present again every time the
@@ -731,23 +741,46 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
     /// the opposite of what §9.3 asks for.
     ///
     /// When the finger lifts, it arrives as a single JUMP to the stop the sheet
-    /// is springing to. UIKit animates the frame and lays the content out once,
-    /// at the destination, so every value keyed off this number is finished
-    /// while the panel is still a third of a second from arriving: measured on
-    /// an iPhone 17 Pro, a drag released at 276 pt reported 412 pt on the very
-    /// next sample. That is the case this animates, and it is what §9.5.6's
-    /// "one persistent header" was missing — the title, the subtitle and the
-    /// rail now travel WITH the panel instead of landing ahead of it.
+    /// is springing to. UIKit animates the frame but lays the content out once,
+    /// at the destination, so every value keyed off this number was finished
+    /// while the panel was still a third of a second from arriving: measured on
+    /// an iPhone 17 Pro, a drag released at 266 pt reported 413 pt on the very
+    /// next sample, and the large title took its 34-point size there and then.
+    /// Recorded at 60 fps, the title reached full size while the panel was
+    /// still a quarter of the way up. That is the case this animates, on
+    /// §9.2's sheet spring, and it is what §9.5.6's "one persistent header" was
+    /// missing — the title, the subtitle and the rail travel WITH the panel now
+    /// instead of landing ahead of it.
     ///
     /// The discriminator is a jump that lands ON a stop. A stop the finger
-    /// drags through moves a few points per sample and is left alone; only the
-    /// system arrives at one from far away.
+    /// happens to drag through moves a few points per sample and is left alone;
+    /// only the system arrives at one from far away.
     private func settle(reporting height: CGFloat) {
         let travelled = abs(height - liveHeight)
-        NSLog("RAILANIM live=%.2f travelled=%.2f t=%.4f", height, travelled, CFAbsoluteTimeGetCurrent())
-        guard height > 0, travelled > 0.5 else { return }
-        let stop = metrics.settledStage(at: height)
-        if stop != nil, travelled > 8 {
+        // Below the smallest stop is not a height the panel is AT.
+        //
+        // The sheet cannot rest under Docked, so a shorter measurement means
+        // something is inset over its content rather than that the reader has
+        // collapsed it. The keyboard is that something: tapping the search
+        // field reported 413, then 107, then 478, then 413 again inside about
+        // 150 ms on an iPhone 17 Pro. Redrawing the panel against those made
+        // the destination's content unmount and remount — taking the text
+        // field that had just been tapped with it, so the keyboard never
+        // appeared and the tap did nothing.
+        guard height >= metrics.compact, travelled > 0.5 else { return }
+        guard metrics.settledStage(at: height) != nil else {
+            // The finger. 1:1, unanimated, and it ends the window below: a
+            // height that is not a stop means the sheet is being moved again,
+            // so the stop it left is no longer something to be suspicious of.
+            restedAt = .distantPast
+            liveHeight = height
+            return
+        }
+        guard !isEndOfDragBounce(to: height) else { return }
+        previousRestingHeight = restingHeight
+        restingHeight = height
+        restedAt = .now
+        if travelled > 8 {
             withAnimation(
                 RailMotion.animation(RailMotion.gesture, reduceMotion: reduceMotion)
             ) {
@@ -756,47 +789,41 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
         } else {
             liveHeight = height
         }
-        guard let stop else { return }
-        correctDetent(to: stop, restingAt: height)
     }
 
-    /// Puts the bound detent back on the stop the sheet is actually at.
+    /// Whether this stop is the presentation controller bouncing off the one it
+    /// just left, rather than a height the panel should redraw itself against.
     ///
-    /// `selection` is written by the system only once the sheet has SETTLED,
-    /// so for the whole of a drag the binding still names the stop the sheet
-    /// left — and the layout pass that the settled height triggers re-applies
-    /// that stale value to a presentation controller no longer holding a
-    /// gesture, which obeys it. Measured on an iPhone 17 Pro: a drag released
-    /// into Full reported 778, then 412 — the stop the binding still
-    /// remembered — then 778 again, the three about 50 ms apart. The panel
-    /// header collapsed and re-expanded inside that window, and so did every
-    /// row under it.
+    /// `presentationDetents(_:selection:)` writes the settled detent into its
+    /// binding only AFTER the sheet has come to rest, so for the whole of a
+    /// drag the bound value still names the stop the drag STARTED from — and at
+    /// the moment the gesture ends, SwiftUI reconciles the presentation against
+    /// that value. Measured on an iPhone 17 Pro: a flick released short of Half
+    /// laid the sheet out at 413 pt, then at 136, then at 413 again, the three
+    /// about 90 ms apart. Released into Full it was 778, 413, 778.
     ///
-    /// Corrected a frame late, deliberately. Writing it while the finger is
-    /// still down hands UIKit a detent to MOVE to and ends the drag: with the
-    /// correction applied immediately, a slow drag out of Docked stopped
+    /// The binding cannot be corrected out of it. Writing the settled stop back
+    /// as soon as it is measured is already too late, and writing it EARLY —
+    /// while the finger is still down — hands UIKit a detent to move to and
+    /// ends the drag: with that tried, a slow pull out of Docked stopped
     /// following the finger the moment it crossed Half and threw the sheet to
-    /// Full instead. Re-reading the height after a frame is what tells a
-    /// settled sheet from one still passing through: a moving sheet has
-    /// reported another height by then.
-    private func correctDetent(to stop: SheetStage, restingAt height: CGFloat) {
-        let wanted: PresentationDetent =
-            switch stop {
-            case .compact: metrics.compactDetent
-            case .medium: metrics.mediumDetent
-            case .expanded: .large
-            }
-        guard detent != wanted else { return }
-        let height = height
-        let liveHeight = _liveHeight
-        let detent = _detent
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(20))
-            guard liveHeight.wrappedValue == height else { return }
-            guard detent.wrappedValue != wanted else { return }
-            NSLog("RAILANIM heal to %@ t=%.4f", String(describing: stop), CFAbsoluteTimeGetCurrent())
-            RailMotion.withoutAnimation { detent.wrappedValue = wanted }
-        }
+    /// Full. Dropping the `selection:` binding does remove the bounce, and
+    /// costs more than it saves: without it the sheet can no longer be moved on
+    /// request (§10.2's accessibility actions, and the stop the app opens at),
+    /// and UIKit's own expansion when a text field takes the keyboard stops
+    /// being mediated — the search destination lost focus mid-tap.
+    ///
+    /// So the bounce is answered where it is visible instead. It is a
+    /// recognisable shape — the stop the panel was resting on immediately
+    /// BEFORE this one, arriving within a frame or two of settling — and
+    /// nothing the reader can do produces that shape, because reaching the
+    /// previous stop again takes a gesture, and a gesture reports heights that
+    /// are not stops on the way, which is what clears the window. The panel's
+    /// own contents therefore hold still through it; the sheet's frame still
+    /// twitches, which is SwiftUI's to fix.
+    private func isEndOfDragBounce(to height: CGFloat) -> Bool {
+        height == previousRestingHeight
+            && Date.now.timeIntervalSince(restedAt) < 0.15
     }
 
     private func restoreIfNeeded() {

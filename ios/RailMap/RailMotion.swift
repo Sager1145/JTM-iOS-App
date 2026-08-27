@@ -145,8 +145,7 @@ struct RailInterpolatedFont: ViewModifier, nonisolated Animatable {
     }
 
     func body(content: Content) -> some View {
-        NSLog("RAILANIM font=%.3f t=%.4f", size, CFAbsoluteTimeGetCurrent())
-        return content.font(.system(size: size, weight: weight))
+        content.font(.system(size: size, weight: weight))
     }
 }
 

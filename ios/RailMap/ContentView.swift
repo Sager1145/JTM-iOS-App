@@ -661,10 +661,7 @@ struct RailWorkspaceView: View {
     /// opening another sheet in that callback refreshes this host while its
     /// alert is still visible. Publish the next state after that transition.
     private func afterPresentationDismisses(_ action: @escaping @MainActor () -> Void) {
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(350))
-            action()
-        }
+        PresentationHost.afterTeardown(action)
     }
 
     /// Everything the workspace can present, by case.
@@ -809,7 +806,7 @@ struct RailWorkspaceView: View {
         // therefore moved every crossover down by 34 points: measured on an
         // iPhone 17 Pro, the panel became `.medium` at 243 pt, where
         // `headerExpansion` reads 0.387. So one drag ran the header's morph on
-        // one clock and the things keyed off the STAGE — the destination's
+        // one clock and everything keyed off the STAGE — the destination's
         // content mounting, the title's wording over a selected journey, the
         // Docked action row, Reduce Motion's whole named-state swap — on
         // another, a third of the way out of step. Both now measure against the
@@ -1030,7 +1027,7 @@ struct RailWorkspaceView: View {
                 tabTitle(.upcoming), systemImage: PrimaryTab.upcoming.systemImage,
                 value: PrimaryTab.upcoming
             ) {
-                tabPage(.upcoming, stage: stage, headerExpansion: headerExpansion) {
+                page(.upcoming, stage: stage, headerExpansion: headerExpansion) {
                     upcomingPanel
                 }
             }
@@ -1039,7 +1036,7 @@ struct RailWorkspaceView: View {
                 tabTitle(.stats), systemImage: PrimaryTab.stats.systemImage,
                 value: PrimaryTab.stats
             ) {
-                tabPage(.stats, stage: stage, headerExpansion: headerExpansion) {
+                page(.stats, stage: stage, headerExpansion: headerExpansion) {
                     statisticsPanel
                 }
             }
@@ -1048,7 +1045,7 @@ struct RailWorkspaceView: View {
                 tabTitle(.all), systemImage: PrimaryTab.all.systemImage,
                 value: PrimaryTab.all
             ) {
-                tabPage(.all, stage: stage, headerExpansion: headerExpansion) {
+                page(.all, stage: stage, headerExpansion: headerExpansion) {
                     allJourneysPanel(stage: stage, expansion: headerExpansion)
                 }
             }
@@ -1063,7 +1060,7 @@ struct RailWorkspaceView: View {
                 tabTitle(.search), systemImage: PrimaryTab.search.systemImage,
                 value: PrimaryTab.search, role: .search
             ) {
-                tabPage(.search, stage: stage, headerExpansion: headerExpansion) {
+                page(.search, stage: stage, headerExpansion: headerExpansion) {
                     searchPanel
                 }
             }
@@ -1091,25 +1088,25 @@ struct RailWorkspaceView: View {
         headerExpansion: CGFloat
     ) -> some View {
         TabView(selection: $selection) {
-            tabPage(.upcoming, stage: stage, headerExpansion: headerExpansion) {
+            page(.upcoming, stage: stage, headerExpansion: headerExpansion) {
                 upcomingPanel
             }
                 .tabItem { Label(tabTitle(.upcoming), systemImage: PrimaryTab.upcoming.systemImage) }
                 .tag(PrimaryTab.upcoming)
 
-            tabPage(.stats, stage: stage, headerExpansion: headerExpansion) {
+            page(.stats, stage: stage, headerExpansion: headerExpansion) {
                 statisticsPanel
             }
                 .tabItem { Label(tabTitle(.stats), systemImage: PrimaryTab.stats.systemImage) }
                 .tag(PrimaryTab.stats)
 
-            tabPage(.all, stage: stage, headerExpansion: headerExpansion) {
+            page(.all, stage: stage, headerExpansion: headerExpansion) {
                 allJourneysPanel(stage: stage, expansion: headerExpansion)
             }
                 .tabItem { Label(tabTitle(.all), systemImage: PrimaryTab.all.systemImage) }
                 .tag(PrimaryTab.all)
 
-            tabPage(.search, stage: stage, headerExpansion: headerExpansion) {
+            page(.search, stage: stage, headerExpansion: headerExpansion) {
                 searchPanel
             }
                 // Same as the iOS 18+ path above: the field belongs to
@@ -1120,6 +1117,51 @@ struct RailWorkspaceView: View {
         }
         .modifier(SystemSheetTabSurface())
         .environment(\.locale, localization.locale)
+    }
+
+    /// One destination's page, as a view of its own.
+    ///
+    /// `tabPage` composes the page; this is what MOUNTS it, and the two are
+    /// separate for a reason that is not style. `TabView`'s builder folds its
+    /// four `Tab`s into one value, and each one is built on top of the last —
+    /// so the four pages accumulate on the main thread's stack, and the tab
+    /// bar's own type names all four of them at once. That type is deep enough
+    /// that instantiating its metadata recurses about forty frames on its own.
+    ///
+    /// Measured on an iPhone 16 Pro, whose main thread has 1,008 KB of stack:
+    /// the first page reached its header row with 94 KB left, the second with
+    /// 91, the third with 54, and the fourth with 13 — and the frame after
+    /// that walked into the guard page. `EXC_BAD_ACCESS`, "Could not determine
+    /// thread index for stack guard region", every time. Rotating is what made
+    /// it certain rather than occasional: the sidebar builds the same four
+    /// pages INLINE in `body` (the sheet hosts them in a controller of its own,
+    /// which is a stack of its own), and UIKit's rotation runs that body
+    /// nested inside thirty-odd frames of its own transition machinery.
+    ///
+    /// None of this is reproducible in the simulator, where the main thread is
+    /// a macOS main thread with 8 MB: twenty scenarios across iOS 26.5 and
+    /// 27.0 — rotation, landscape launch, every tab, every sheet, the whole
+    /// network drawn over Tokyo — all passed while the device failed on every
+    /// single rotation.
+    ///
+    /// Erasing the page's type is what ends the accumulation. The tab bar's
+    /// type stops naming the pages, and each page's content is built when
+    /// SwiftUI asks THIS view for its body — from the graph's own stack, not
+    /// from inside the pages built before it. The erased type is the same
+    /// concrete type on every update, so the subtree keeps its identity, its
+    /// scroll offsets and its focus.
+    private func page<Content: View>(
+        _ tab: PrimaryTab,
+        stage: SheetStage,
+        headerExpansion: CGFloat,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> WorkspacePage {
+        WorkspacePage {
+            AnyView(
+                tabPage(
+                    tab, stage: stage, headerExpansion: headerExpansion,
+                    content: content))
+        }
     }
 
     private func tabPage<Content: View>(
@@ -2547,13 +2589,25 @@ struct RailWorkspaceView: View {
     /// it: the web app's chooser "both activates its day and selects it",
     /// because a ride on another day would otherwise vanish from the list the
     /// moment it was chosen.
+    ///
+    /// A second tap on the already-selected line is still an interaction even
+    /// though it does not change `selectedTrainID`. The map surface normally
+    /// drives auto-focus from that state change, so answer this no-change case
+    /// here, where the tap itself is still visible. At this point the selected
+    /// line is already drawn and `selectionRegion` is available; a newly
+    /// selected line continues through the surface so it cannot accidentally
+    /// frame the previous selection's region.
     private func pick(_ train: Train) {
+        let reselectsCurrentTrain = itineraries.selectedTrainID == train.id
         if selectedDate != Dates.allDates,
             !Dates.trainSpans(train.forDates, date: selectedDate)
         {
             selectedDate = Dates.allDates
         }
         itineraries.selectedTrainID = train.id
+        if reselectsCurrentTrain, autoFocusZoom {
+            controller.fitToSelection()
+        }
     }
 
     /// One line of the chooser.
@@ -2592,7 +2646,9 @@ struct RailWorkspaceView: View {
     /// the harder version — only this date on the map — so that one still
     /// filters here.
     private var mapRides: [RiddenRouteStore.DrawnRide] {
-        let visible = riddenRoutes.rides.filter(\.visible)
+        // Pre-filtered by the store so ordinary sheet-height updates keep the
+        // same Array buffer all the way into `RailMapView.updateUIView`.
+        let visible = riddenRoutes.visibleRides
         // §5.3.2: while the statistics are on top, the map is their coverage
         // map — the same records the numbers counted, and only those. A map
         // showing five networks under a Japanese percentage invites the
@@ -2938,6 +2994,19 @@ struct RailWorkspaceView: View {
     /// arrive one region at a time and the map draws each as it lands rather
     /// than waiting for Japan.
     private var lines: [RailNetworkStore.DrawnLine] { store.lines }
+}
+
+/// A workspace destination's page, mounted rather than composed.
+///
+/// Deliberately NOT generic, and that is the whole of it: a generic wrapper
+/// would still name the page in its own type, and it is the type that costs.
+/// The closure is what defers the page, and `AnyView` is what stops the tab
+/// bar's type from naming it. See `RailWorkspaceView.page(_:stage:headerExpansion:content:)`
+/// for the crash both halves answer.
+private struct WorkspacePage: View {
+    let build: () -> AnyView
+
+    var body: some View { build() }
 }
 
 /// Lets an inflexible block scroll rather than overflow.

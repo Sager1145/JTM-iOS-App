@@ -96,7 +96,9 @@ struct ContentView: View {
                 riddenRoutes.clear()
                 return
             }
-            riddenRoutes.load(trains: loaded.trains)
+            riddenRoutes.load(
+                trains: loaded.trains,
+                preferredTrainID: itineraries.lastViewedTrainID)
         }
         .task(id: statisticsLoadKey) {
             guard let loaded = itineraries.loaded else { return }

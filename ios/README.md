@@ -246,7 +246,10 @@ tier would make the parity fixtures meaningless.
    coarse length tier remains the base rule; a finer native ladder keeps only
    groups over 300/120/50/20 km at app zoom 4/5/6/7. Long trunk corridors
    therefore survive wide views while regional branches wait. Zoom 8 still
-   restores every line.
+   restores every line. **A station waits with its line** — its own threshold
+   raised to its line's, so a branch's terminals stop hanging in the sea three
+   zoom levels before the branch is drawn (jp app zoom 4: 132 beads over 24
+   lines, now 48).
 2. **Nothing far off screen is built.** The build covers the visible rect plus
    half a screen each way and is remembered, so panning inside it does no work.
 3. **A vertex budget is the backstop**, shedding least-important first, so the

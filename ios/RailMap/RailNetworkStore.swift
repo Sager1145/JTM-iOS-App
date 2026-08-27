@@ -64,6 +64,11 @@ final class RailNetworkStore {
         /// scoped to the region of the itinerary being edited, so that a
         /// Japanese ride cannot pick up a Korean platform.
         let region: Region
+        /// The line this platform belongs to. A station is per (line, place),
+        /// so this is single-valued even at an interchange: 東京 arrives as
+        /// nine platforms of five railways, each with its own dot and its own
+        /// line. The map reads it to draw a dot only while its line is drawn.
+        let lineID: String
         /// The package's own station-group code — the identity a ride's stop
         /// carries (`n02_station_code`), which is why the ride editor picks
         /// stations by it rather than by name.
@@ -72,7 +77,14 @@ final class RailNetworkStore {
         let nameRoma: String
         let coordinate: Coordinate
         let colorHex: String
+        /// The web app's own threshold for this dot, in MapLibre's zoom — the
+        /// line's for a terminal, the denser spacing-based one for an
+        /// intermediate stop.
         let minZoom: Int
+        /// The threshold this app draws by, in **this app's** zoom: the one
+        /// above, raised to the line's own if the line appears later. See
+        /// `NetworkLOD` — a dot may not precede the rail it sits on.
+        let lodMinZoom: Double
         let isTerminal: Bool
         let showsLabel: Bool
         let popup: StationDisplay.PopupModel
@@ -125,7 +137,9 @@ final class RailNetworkStore {
         state = .loading(pending: Region.ordered)
         lines = []
         stations = []
-        Task {
+        // The complete network is context and starts hidden; route restoration
+        // and interaction work should outrank decoding five national packages.
+        Task(priority: .utility) {
             let started = ContinuousClock.now
             var loads: [RegionLoad] = []
             var failures: [RegionFailure] = []
@@ -197,6 +211,22 @@ final class RailNetworkStore {
         let minZoomByLineId = visibilityLengthByLineId.mapValues {
             Visibility.minZoomForLength(totalKm: $0)
         }
+        // The native threshold for every line, in MapLibre's zoom, computed
+        // once here because both halves of the network read it: the line, to
+        // know when it is drawn, and every station on it, which may not
+        // precede it. `uniquingKeysWith` rather than `uniqueKeysWithValues`
+        // for the reason `StationDisplay.Network` gives — a duplicate line id
+        // is a package question, and the last writer wins there too.
+        let lodMinZoomByLineId = Dictionary(
+            package.lines.map { line in
+                (
+                    line.id,
+                    NetworkLOD.minZoomMapLibre(
+                        portedMinZoom: minZoomByLineId[line.id] ?? 0,
+                        rank: line.rank,
+                        visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0)
+                )
+            }, uniquingKeysWith: { _, last in last })
         let lines = package.lines.map { line in
             let sourceIntervals = DisplayParts.parts(
                 for: line, topology: topologies[line.id] ?? .init())
@@ -233,16 +263,43 @@ final class RailNetworkStore {
             )
         }
         let stationNetwork = StationDisplay.Network(package: package)
-        let labelWinners = Set(StationDisplay.stationLabelWinners(stationNetwork))
+        func lineThreshold(under station: StationDisplay.Network.Station) -> Int {
+            lodMinZoomByLineId[stationNetwork.lines[station.lineIndex].lineID] ?? 0
+        }
+        // Elected on the thresholds THIS app draws by, not the package's.
+        //
+        // The election hands a complex's name to whichever of its platforms
+        // appears first, so that a complex on screen always has the named one
+        // among its visible platforms. That holds only while the election and
+        // the renderer use the same thresholds, and since `NetworkLOD` they do
+        // not: 高崎 elects on its 上越線 platform, which this app does not draw
+        // at app zoom 5, while its 信越線 and 北陸新幹線 platforms are drawn —
+        // so the ported election would leave 高崎 standing there as two bare
+        // dots. Two complexes are in that position at app zoom 5 and nine more
+        // at app zoom 7. Electing on the thresholds actually in force moves
+        // the name to a platform that is drawn. Exactly the same 9,021
+        // complexes are named across jp either way — 39 of the names change
+        // which PLATFORM of their complex holds them, and no complex gains or
+        // loses a name (tw 3, hk 1, mo 0, kr 3).
+        let labelWinners = Set(
+            StationDisplay.stationLabelWinners(stationNetwork) { station in
+                NetworkLOD.stationMinZoomMapLibre(
+                    portedMinZoom: station.minZoom,
+                    lineMinZoomMapLibre: lineThreshold(under: station))
+            })
         let stations = stationNetwork.stations.enumerated().map { index, station in
             let line = stationNetwork.lines[station.lineIndex]
             return DrawnStation(
                 id: station.stationID, region: region,
+                lineID: line.lineID,
                 stationCode: station.stationGroupID,
                 name: station.name,
                 nameRoma: station.nameRoma ?? "",
                 coordinate: AppleMapDatum.display(station.coordinate, country: region.code),
                 colorHex: line.color, minZoom: station.minZoom,
+                lodMinZoom: NetworkLOD.stationMinZoom(
+                    portedMinZoom: station.minZoom,
+                    lineMinZoomMapLibre: lineThreshold(under: station)),
                 isTerminal: station.isTerminal, showsLabel: labelWinners.contains(index),
                 popup: StationDisplay.buildPopupModel(
                     network: stationNetwork, stationID: station.stationID))

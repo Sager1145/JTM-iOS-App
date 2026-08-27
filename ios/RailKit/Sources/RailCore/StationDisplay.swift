@@ -83,6 +83,20 @@ public enum StationDisplay {
             /// levels later.
             public let isTerminal: Bool
             public let minZoom: Int
+
+            /// The same platform at a different threshold — see
+            /// ``stationLabelWinners(_:minZoom:)``.
+            ///
+            /// `minZoom` is the only field a renderer is allowed an opinion
+            /// about: it is where a platform APPEARS, which depends on what
+            /// the renderer draws, where everything else here is what the
+            /// package says the platform IS.
+            func with(minZoom: Int) -> Self {
+                Station(
+                    stationID: stationID, stationGroupID: stationGroupID, name: name,
+                    nameRoma: nameRoma, lineIndex: lineIndex, coordinate: coordinate,
+                    isTerminal: isTerminal, minZoom: minZoom)
+            }
         }
 
         public let lines: [Line]
@@ -433,6 +447,26 @@ public enum StationDisplay {
     /// already accepted within 600 m.
     public static func stationLabelWinners(_ network: Network) -> [Int] {
         stationLabelWinners(network.stations)
+    }
+
+    /// The same election, decided on the thresholds the caller supplies rather
+    /// than on the ones the package gave each platform.
+    ///
+    /// The first pass elects the platform of a group that appears EARLIEST, so
+    /// that whenever any platform of a complex is on screen the one holding
+    /// its name is among them. That invariant is not a property of the
+    /// election on its own — it holds only while the thresholds it elects on
+    /// are the thresholds the renderer actually draws by. A renderer with
+    /// terms of its own breaks it, and the complex then stands there with a
+    /// visible dot and no name.
+    ///
+    /// So the thresholds are handed in. One rule with a second input, rather
+    /// than a second election written somewhere the parity fixtures do not
+    /// reach. `minZoom` is asked once per station, in `network.stations` order.
+    public static func stationLabelWinners(
+        _ network: Network, minZoom: (Network.Station) -> Int
+    ) -> [Int] {
+        stationLabelWinners(network.stations.map { $0.with(minZoom: minZoom($0)) })
     }
 
     static func stationLabelWinners(_ stations: [Network.Station]) -> [Int] {
