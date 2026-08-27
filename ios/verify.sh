@@ -318,6 +318,61 @@ if missing or undecodable or unresolved:
 print(f"  {len(paths)} popup badge paths resolve to artwork iOS can decode")
 PY
 
+    # The app icon must survive the asset catalog, and must not carry alpha.
+    #
+    # Two silent failures, one loud consequence apiece. An `.appiconset` that
+    # the target does not name — `ASSETCATALOG_COMPILER_APPICON_NAME` deleted,
+    # or the catalog moved out of the synchronized folder — still compiles,
+    # and the app just wears the grey placeholder. And a PNG with an alpha
+    # channel builds, installs and runs; App Store validation is where it is
+    # rejected, which is the most expensive place to find out.
+    #
+    # The colour type lives in the IHDR, which is the same 25 bytes of every
+    # PNG ever written, so this reads it rather than shelling out to a tool
+    # that may or may not be installed.
+    python3 - "$here" "$app_bundle" <<'PY' || fail "app icon (above)"
+import json, os, plistlib, struct, sys
+
+source, bundle = sys.argv[1], sys.argv[2]
+icon_set = os.path.join(source, "RailMap", "Assets.xcassets", "AppIcon.appiconset")
+
+problems = []
+
+# The catalog compiled *and* the target claimed it. `CFBundleIconName` is
+# written by the asset catalog compiler; its absence means the icon set never
+# reached the build.
+info = plistlib.load(open(os.path.join(bundle, "Info.plist"), "rb"))
+named = info.get("CFBundleIcons", {}).get("CFBundlePrimaryIcon", {}).get("CFBundleIconName")
+if named != "AppIcon":
+    problems.append(f"the bundle names {named!r} as its icon, not 'AppIcon'")
+
+# ALPHA_TYPES: 4 is grey+alpha, 6 is RGBA. 0, 2 and 3 carry no alpha channel.
+ALPHA_TYPES = {4, 6}
+
+catalog = json.load(open(os.path.join(icon_set, "Contents.json"), encoding="utf-8"))
+declared = [image["filename"] for image in catalog["images"] if image.get("filename")]
+if not declared:
+    problems.append("AppIcon.appiconset declares no image")
+
+for filename in declared:
+    path = os.path.join(icon_set, filename)
+    if not os.path.isfile(path):
+        problems.append(f"{filename}: declared by the icon set, not on disk")
+        continue
+    header = open(path, "rb").read(26)
+    width, height, _, colour = struct.unpack(">IIBB", header[16:26])
+    if (width, height) != (1024, 1024):
+        problems.append(f"{filename}: {width}×{height}, not the 1024×1024 iOS takes")
+    if colour in ALPHA_TYPES:
+        problems.append(f"{filename}: has an alpha channel; App Store validation rejects that")
+
+for problem in problems:
+    print(f"  {problem}")
+if problems:
+    sys.exit(1)
+print(f"  the app icon ships {len(declared)} opaque 1024×1024 appearances")
+PY
+
     # Three behaviours the app target cannot unit-test, because they live in
     # SwiftUI view bodies with no test target underneath them. All three were
     # real regressions, and each is one deleted line away from coming back.
