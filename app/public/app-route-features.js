@@ -1,0 +1,281 @@
+// =========================================================================
+//  app-route-features.js — §30: geometry helpers & matched-route feature assembly
+//
+//  Part of the app-*.js family split out of the old single-file app.js:
+//  plain classic scripts sharing one global lexical scope, loaded in the
+//  order defined by index.html (the module map lives in app.js's header).
+// =========================================================================
+
+// =========================================================================
+//  §30.  Geometry helpers & matched-route feature assembly
+// =========================================================================
+
+// Where a drawn hop finishes, so the next hop can be asked to continue from
+// the same rail rather than re-choosing a display part at the junction.
+function lastGeometryCoordinate(geometry) {
+  const lines = iterateGeometryLines(geometry);
+  const last = lines[lines.length - 1];
+  return last && last.length ? last[last.length - 1] : null;
+}
+
+
+class MinHeap {
+  constructor() {
+    this.items = [];
+  }
+  size() {
+    return this.items.length;
+  }
+  push(item) {
+    this.items.push(item);
+    this.bubbleUp(this.items.length - 1);
+  }
+  pop() {
+    if (this.items.length === 1) return this.items.pop();
+    const top = this.items[0];
+    this.items[0] = this.items.pop();
+    this.bubbleDown(0);
+    return top;
+  }
+  bubbleUp(index) {
+    while (index > 0) {
+      const parent = Math.floor((index - 1) / 2);
+      if (this.items[parent].priority <= this.items[index].priority) break;
+      [this.items[parent], this.items[index]] = [
+        this.items[index],
+        this.items[parent],
+      ];
+      index = parent;
+    }
+  }
+  bubbleDown(index) {
+    const length = this.items.length;
+    while (true) {
+      const left = index * 2 + 1;
+      const right = left + 1;
+      let smallest = index;
+      if (
+        left < length &&
+        this.items[left].priority < this.items[smallest].priority
+      )
+        smallest = left;
+      if (
+        right < length &&
+        this.items[right].priority < this.items[smallest].priority
+      )
+        smallest = right;
+      if (smallest === index) break;
+      [this.items[smallest], this.items[index]] = [
+        this.items[index],
+        this.items[smallest],
+      ];
+      index = smallest;
+    }
+  }
+}
+
+function getMatchedRouteFeatures(train) {
+  let candidates = RouteService.featuresForTrain(train);
+
+  if (!candidates.length) {
+    candidates = matchedRoutesGeoJson.features
+      .filter((feature) => {
+        const p = feature.properties || {};
+        return p.train_id === train.id && p.is_primary !== false;
+      })
+      .sort(
+        (a, b) =>
+          Number(a.properties?.segment_index ?? 0) -
+          Number(b.properties?.segment_index ?? 0),
+      );
+  }
+
+  if (!candidates.length) {
+    const templateKey = getTrainRouteTemplateKey(train);
+    if (templateKey) {
+      // Features store the DIGEST of this key, never the key itself
+      // (routeKeyDigest); compare like with like.
+      const templateDigest = routeKeyDigest(templateKey);
+      candidates = matchedRoutesGeoJson.features
+        .filter((feature) => {
+          const p = feature.properties || {};
+          return (
+            p.route_template_key === templateDigest && p.is_primary !== false
+          );
+        })
+        .sort(
+          (a, b) =>
+            Number(a.properties?.segment_index ?? 0) -
+            Number(b.properties?.segment_index ?? 0),
+        );
+    }
+  }
+
+  if (!candidates.length) {
+    // During a progressive load the streaming warm-up solves trains one at a
+    // time, so a repaint that lands before THIS train has been warmed legitimately
+    // finds no route yet — it is not a failure. Stay silent; the train draws on
+    // the next repaint once its geometry is cached. Only warn for a genuine
+    // miss outside an import.
+    if (!importInProgress) {
+      console.warn(
+        `No N02 railway route could be generated for train ${train.id}. Route will not be drawn.`,
+      );
+      setStatus(
+        els.fieldStatus,
+        I18N.t("status.routeNoPath"),
+        "warn",
+      );
+    }
+    return [];
+  }
+
+  const routeId = candidates[0].properties?.route_id || "";
+  // A junction station lies on both a trunk and its branch, so a hop that ends
+  // there matches either equally well. Carry the previous hop's drawn endpoint
+  // forward as a tie-break, or consecutive hops pick different display parts
+  // and the route breaks open at the junction.
+  let previousEnd = null;
+  return candidates
+    .filter((feature) => (feature.properties?.route_id || "") === routeId)
+    .map((feature, index) => {
+      const normalized = normalizeSingleRouteGeometry(feature);
+      if (!normalized) return null;
+      // The solver supplies the route choice and endpoints only. Pixel
+      // geometry must come from the active "All Railway Lines" model so every
+      // ridden route shares its exact centreline, smoothing and branch join.
+      const canonical =
+        typeof RailMap !== "undefined" &&
+        typeof RailMap.canonicalizeRouteFeature === "function"
+          ? RailMap.canonicalizeRouteFeature(normalized, {
+              continueFrom: previousEnd,
+            })
+          : normalized;
+      // No canonical slice means the two endpoints do not sit on one
+      // continuous stroke of any display line — the package stores that hop's
+      // stations in an order that only reaches them via a branch. Drawing it
+      // anyway is precisely the "train swings onto the wrong railway" bug, and
+      // dropping it leaves a hole in the route, so keep the solver's own N02
+      // path for this hop and carry on.
+      const displayFeature = canonical || {
+        ...normalized,
+        properties: {
+          ...(normalized.properties || {}),
+          display_geometry_source: "route-solver-path",
+        },
+      };
+      if (!canonical) {
+        console.warn(
+          `Ridden route ${train.id} segment ${index} has no continuous complete-network slice; drawing the solved path.`,
+        );
+      }
+      const segmentIndex = Number(
+        displayFeature.properties?.segment_index ?? index,
+      );
+      previousEnd = lastGeometryCoordinate(displayFeature.geometry);
+      return {
+        ...displayFeature,
+        properties: {
+          ...(displayFeature.properties || {}),
+          ride_segment: isRideSegment(train, segmentIndex),
+        },
+      };
+    })
+    .filter(Boolean);
+}
+
+function isRideSegment(train, segmentIndex) {
+  const stops = train.stops || [];
+  // A geometry segment is ridden (shown) only when both of its endpoints are
+  // effectively ridden — pass-through endpoints inherit their interval state.
+  return Boolean(
+    effectiveStopRide(stops, segmentIndex) &&
+      effectiveStopRide(stops, segmentIndex + 1),
+  );
+}
+
+function normalizeSingleRouteGeometry(feature) {
+  if (!feature?.geometry) return null;
+  if (feature.geometry.type === "LineString") return feature;
+  if (feature.geometry.type === "MultiLineString") {
+    const role = feature.properties?.geometry_role;
+    if (role === "single_path_with_gaps") return feature;
+    console.warn(
+      "Rejected MultiLineString because it is not declared as one route with gaps.",
+      feature,
+    );
+    return null;
+  }
+  console.warn(
+    "Rejected matched route with unsupported geometry type.",
+    feature,
+  );
+  return null;
+}
+
+// matched-stops features indexed by train_id (built once — the dataset is
+// static after load). getStopFeature used to linear-scan ALL features for
+// every stop of every train on every marker rebuild: O(trains × stops ×
+// matchedStops). Scanning only the train's own few features preserves the
+// exact first-match semantics at a tiny fraction of the cost.
+let _matchedStopsByTrain = null;
+function getMatchedStopsForTrain(trainId) {
+  if (!_matchedStopsByTrain) {
+    _matchedStopsByTrain = new Map();
+    for (const f of matchedStopsGeoJson.features) {
+      const tid = (f.properties || {}).train_id;
+      if (tid == null) continue;
+      let arr = _matchedStopsByTrain.get(tid);
+      if (!arr) _matchedStopsByTrain.set(tid, (arr = []));
+      arr.push(f);
+    }
+  }
+  return _matchedStopsByTrain.get(trainId) || [];
+}
+
+function getStopFeature(stop, train) {
+  const explicit = getMatchedStopsForTrain(train.id).find((f) => {
+    const p = f.properties || {};
+    return (
+      p.train_id === train.id &&
+      (p.n02_station_code === stopStationCode(stop) ||
+        p.name === stopName(stop))
+    );
+  });
+  if (explicit) {
+    return {
+      ...explicit,
+      properties: {
+        ...(explicit.properties || {}),
+        ...stop,
+        name: stopName(stop),
+        n02_station_code:
+          stopStationCode(stop) ||
+          explicit.properties?.n02_station_code ||
+          null,
+      },
+    };
+  }
+  const station = resolveStationForTrain(stop, train);
+  if (!station) return null;
+  return {
+    type: "Feature",
+    properties: {
+      ...stop,
+      name: stopName(stop),
+      n02_station_code: stopStationCode(stop) || stationCode(station),
+      n02_group_code: stop.n02_group_code || stationGroupCode(station),
+      train_id: train.id,
+      train_type: train.train_type || "",
+      company: train.company || "",
+      number: train.number,
+      line_name: stationLineName(station),
+      operator: stationOperator(station),
+      source: "station display_point",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: getFeatureDisplayCoordinate(station),
+    },
+  };
+}

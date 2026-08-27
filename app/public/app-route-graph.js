@@ -1,0 +1,1450 @@
+// =========================================================================
+//  app-route-graph.js — §27–28: route matching, template keys, runtime route caches, graph construction & rail-section spatial index
+//
+//  Part of the app-*.js family split out of the old single-file app.js:
+//  plain classic scripts sharing one global lexical scope, loaded in the
+//  order defined by index.html (the module map lives in app.js's header).
+// =========================================================================
+
+// -------------------------------------------------------------------------
+// Solve-progress reporting seam.
+//
+// Route solving is domain work: it must not reach into the editor's status
+// element. The UI installs a sink at boot (app.js §9) and this module only
+// announces what happened. With no sink installed — the precompute exporter's
+// Node vm, and any test that replays the family — reporting is a silent
+// no-op instead of a write to a stubbed DOM node.
+//
+// The importInProgress suppression lives here because it is the same rule at
+// every call site: boot-time progressive solves are not editor feedback, and
+// 159 flashed messages would leave the last one stranded on the status line.
+// -------------------------------------------------------------------------
+let routeSolveReporter = null;
+
+function setRouteSolveReporter(sink) {
+  routeSolveReporter = typeof sink === "function" ? sink : null;
+}
+
+function reportRouteSolve(messageKey, params, level = "warn") {
+  if (importInProgress || !routeSolveReporter) return;
+  routeSolveReporter(messageKey, params, level);
+}
+
+// -------------------------------------------------------------------------
+// Cross-session cache seam.
+//
+// The same rule as the reporter above, one layer down: a solve must not reach
+// into the storage layer either. This module knows only the two verdicts a
+// solve can reach — solved geometry, or "unsolvable with this data + policy"
+// — and announces them. app-route-service.js, which already owns the runtime
+// cache lifecycle, installs the IndexedDB writers that make a verdict outlive
+// the session. With no sink installed, remembering is a silent no-op and the
+// runtime caches above are the whole story — which is exactly what an offline
+// exporter with no IndexedDB wants.
+// -------------------------------------------------------------------------
+let routeCacheStore = null;
+
+function setRouteCacheStore(store) {
+  routeCacheStore = store || null;
+}
+
+function rememberSolvedRouteAcrossSessions(cacheKey, templateFeatures) {
+  if (routeCacheStore) routeCacheStore.solved(cacheKey, templateFeatures);
+}
+
+function rememberUnsolvableRouteAcrossSessions(cacheKey) {
+  if (routeCacheStore) routeCacheStore.unsolvable(cacheKey);
+}
+
+// =========================================================================
+//  §27.  Route matching, template keys, feature generation & full graph construction
+// =========================================================================
+
+let routeSolverApi = null;
+let routeSolveInProgress = false;
+
+function configureRouteSolverApi(api) {
+  routeSolverApi = api || null;
+}
+
+function setRouteSolveInProgress(inProgress) {
+  routeSolveInProgress = Boolean(inProgress);
+}
+
+function getTrainRouteTemplateKey(train) {
+  return (train.route_sections || [])
+    .map((section) => {
+      const from = section.from_n02_station_code || section.from || "";
+      const to = section.to_n02_station_code || section.to || "";
+      const lines = (section.line_names || [])
+        .map(String)
+        .filter(Boolean)
+        .sort()
+        .join(",");
+      const operators = (section.operator_names || [])
+        .map(String)
+        .filter(Boolean)
+        .sort()
+        .join(",");
+
+      // line_names/operator_names change the route solver constraints, so they
+      // must be part of the cache/template key.  Without this, editing only
+      // line_names could incorrectly reuse an earlier path for the same endpoints.
+      return `${from}->${to}|lines:${lines}|operators:${operators}`;
+    })
+    .join("|");
+}
+
+let runtimeRouteGraph = null;
+const runtimeRouteCache = new Map();
+const runtimeRouteNegativeCache = new Set();
+
+// Negative cache: cacheKeys whose solve produced ZERO usable geometry (all
+// sections failed — bad/mismatched station codes, or no path under the policy).
+// A failure is deterministic for a given (rail data + sections + policy), all of
+// which are encoded in cacheKey, so re-solving can only fail again. Without this
+// the ~25 unsolvable trains rebuilt regional graphs and ran Dijkstra on every
+// prewarm, final render and live refresh — a big chunk of the ~53 s hot reload.
+// Editing a train changes its cacheKey, so a fix is re-solved automatically.
+// (The key PREFIX that distinguishes a persisted negative entry from a
+// persisted positive one is a detail of the IndexedDB layout, so it lives in
+// app-persistence.js §14 with the only two functions that read or write it.)
+const STATION_SNAP_MAX_DISTANCE_METERS = 500;
+const STATION_SNAP_COST_FACTOR = 4;
+// N02_002 institution type codes are treated as preferences by default, not
+// as a hard whitelist. Some JR service geometry shares or crosses private
+// railway sections around airports/through-service corridors; hard-filtering
+// them can create visible gaps. Set route_policy.institution_filter_mode =
+// "hard" only when a strict institution whitelist is intentionally required.
+const NON_PREFERRED_INSTITUTION_LENGTH_FACTOR = 180;
+const NON_PREFERRED_INSTITUTION_EDGE_PENALTY = 5000;
+const NON_PREFERRED_STATION_SNAP_PENALTY = 20000;
+// Soft preferred-line/operator bias for route Dijkstra. These are deliberately
+// BOUNDED, length-proportional multipliers (a non-preferred metre costs a few
+// preferred metres) — NOT the old route-dominating 140x/100x plus a flat
+// per-edge constant. The flat per-edge penalty scaled with the *number* of
+// N02 micro-segments, so a short branch line (e.g. 内子線, ~93 vertices over
+// 5 km) accumulated ~400k of penalty and a finely-segmented same-line detour
+// looked cheaper than the real path. Keeping the bias proportional to distance
+// makes it resolution-independent and stops a same-line detour from beating a
+// shorter mixed-line path.
+const NON_PREFERRED_OPERATOR_LENGTH_FACTOR = 6;
+const NON_PREFERRED_LINE_LENGTH_FACTOR = 8;
+const NON_PREFERRED_OPERATOR_STATION_SNAP_PENALTY = 12000;
+const NON_PREFERRED_LINE_STATION_SNAP_PENALTY = 15000;
+const STATION_TRANSFER_NODE_RADIUS_DEG = 0.0035;
+const STATION_TRANSFER_MAX_SNAP_METERS = 520;
+const STATION_TRANSFER_MAX_NODE_GAP_METERS = 900;
+const STATION_TRANSFER_EDGE_PENALTY = 180;
+const STATION_TRANSFER_MAX_NODES_PER_GROUP = 24;
+// When adjacent route_sections share the same explicit station code, keep the
+// next solve on the same physical station record chosen by the previous solve.
+// N02 can assign an old and a relocated platform to one station name/group
+// (Hiroden Inaricho is one example); solving the sections independently can
+// otherwise end one feature at the new platform and start the next at the old
+// one, leaving a visible gap even though connecting rail geometry exists.
+const ROUTE_SECTION_CONTINUITY_STATION_METERS = 60;
+// The candidate filter above is intentionally tight, but the final rendered
+// itinerary has a stronger invariant: two consecutive sections that name the
+// same explicit station must meet.  N02 occasionally puts the only routable
+// node hundreds of metres from that station's display point (large station
+// throats, relocated platforms, or a change between conventional/Shinkansen
+// geometry).  The graph already treats same-station nodes up to this distance
+// as an internal station connector, so use the identical bound when closing a
+// remaining feature seam after the solve.
+const ROUTE_SECTION_STITCH_MAX_METERS =
+  STATION_TRANSFER_MAX_NODE_GAP_METERS;
+
+// Build every input that identifies one deterministic route solve. The
+// precompute exporter calls this same helper inside its VM sandbox, so cache-key
+// construction cannot drift between the browser and the static build.
+function buildTrainRouteSolveContext(train) {
+  const routeSections = getRideRouteSectionsForTrain(train);
+  if (!routeSections.length) return null;
+
+  const templateKey = getTrainRouteTemplateKey({
+    ...train,
+    route_sections: routeSections,
+  });
+  const allowedCodes = getAllowedInstitutionTypeCodes(train);
+  const policyKey = [
+    ...(train.route_policy?.preferred_line_names || []).map(
+      (value) => `line:${value}`,
+    ),
+    ...(train.route_policy?.preferred_operator_names || []).map(
+      (value) => `operator:${value}`,
+    ),
+    ...derivedPreferredOperatorNames(train).map(
+      (value) => `operator:${value}`,
+    ),
+    `institution_filter:${train.route_policy?.institution_filter_mode || "soft"}`,
+  ]
+    .sort()
+    .join("|");
+  const cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}`;
+  return { routeSections, templateKey, allowedCodes, cacheKey };
+}
+
+// Both route keys enumerate EVERY route section, so they grow with the train:
+// a 195-stop round-island itinerary produces ~35 KB of each. The two feature
+// properties carrying them — route_id and route_template_key — are only ever
+// used as identities (compared for equality, never read into), so stamping
+// the full keys onto every one of a train's features multiplied 35 KB by the
+// feature count and made a single precomputed part 6.8 MB. Stamp this 53-bit
+// digest instead: identical equality semantics, constant size, and purely
+// deterministic, so the browser and the offline exporter still agree on a
+// part written by the other. Stamp AND compare must both go through it —
+// see getMatchedRouteFeatures.
+function routeKeyDigest(key) {
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
+  const text = String(key || "");
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 =
+    Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+    Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 =
+    Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+    Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+
+// Shared setup for both the render lookup and the streaming route solver:
+// resolve the deterministic solve context, then short-circuit on a cache hit or
+// a known-unsolvable (negative-cached) train. Returns { done:true, result } when
+// the caller should return immediately, otherwise the fields the section solve
+// needs. Side-effect-free apart from the "Generating…" status line.
+// Deduping the cached template geometry is a pure function of that immutable
+// array (segment coincidence, not train identity), yet the cache-HIT path below
+// re-ran it for every train on every render — ~230ms across the full set each
+// cold repaint, the single largest chunk of a scope switch. Memoize it per
+// template array (WeakMap → auto-drops when a re-solve replaces the array), so a
+// hit only pays the cheap per-train clone. cloneRouteFeaturesForTrain rewrites
+// properties but SHARES each feature's geometry object, so the returned features
+// also carry STABLE geometry across renders — which lets getRouteLinePairs cache
+// its snapped segKeys by geometry instead of recomputing them every repaint.
+// Deduping the template first is behaviour-identical to deduping the clone: the
+// clone never touches coordinates, and dedupe's only extra property
+// (geometry_role) does not overlap the clone's (train_id/route_id/source).
+const _dedupedTemplateCache = new WeakMap();
+function dedupedRouteTemplate(cached) {
+  let deduped = _dedupedTemplateCache.get(cached);
+  if (!deduped) {
+    deduped = dedupeSameTrainRouteFeatures(cached);
+    _dedupedTemplateCache.set(cached, deduped);
+  }
+  return deduped;
+}
+
+function prepareTrainRouteSolve(train) {
+  const context = buildTrainRouteSolveContext(train);
+  if (!context) return { done: true, result: [] };
+  const { cacheKey } = context;
+  if (runtimeRouteCache.has(cacheKey)) {
+    const cached = runtimeRouteCache.get(cacheKey);
+    return {
+      done: true,
+      result: cloneRouteFeaturesForTrain(dedupedRouteTemplate(cached), train),
+    };
+  }
+
+  // Known-unsolvable with this exact data + policy: skip the regional-graph
+  // build + Dijkstra entirely and return empty, exactly as a fresh solve would.
+  if (runtimeRouteNegativeCache.has(cacheKey)) {
+    return { done: true, result: [] };
+  }
+
+  // No solver dataset for the active country (see activeCountryHasRouteSolver):
+  // a cache miss is FINAL here. Returning done/empty (without negative-caching)
+  // lets getMatchedRouteFeatures fall back to the precomputed matched-routes
+  // geometry, and keeps the 12 MB Japan-only rail-sections download + a
+  // wrong-country solve out of every non-Japan load.
+  if (!activeCountryHasRouteSolver()) {
+    return { done: true, result: [] };
+  }
+
+  // During a progressive load this fires once per cold-solved train; writing
+  // it to the editor's status line would flash 159 messages and leave the last
+  // one stranded there. Only user-triggered (post-boot) solves show status.
+  reportRouteSolve("status.routeGenerating", {
+    train: train.number || train.id,
+  });
+  return { done: false, ...context };
+}
+
+// Taiwan, Hong Kong and Macao emit their display package and rail-sections
+// dataset from the same groomed, station-cut interval geometry.  Re-running an
+// adjacent interval through Dijkstra can nevertheless change that geometry: a
+// switchback/reversal contains graph nodes that are intentionally visited more
+// than once, and the shortest-path graph is free to jump between those visits
+// (the dense Alishan throat is the clearest example) — and the graph's
+// coordinate normalization can shift vertices off the drawn line.  Index the
+// exact official intervals by their line/operator-specific station endpoints
+// so canonical route_sections draw the VERY SAME ordered coordinates as the
+// "all railways" layer — ridden lines coincide with the network tracks.
+// Imported/non-adjacent/ambiguous sections still fall through to the normal
+// graph solver below.  Japan stays excluded: N02 sections are not station-cut.
+const OFFICIAL_INTERVAL_COUNTRIES = new Set(["tw", "hk", "mo"]);
+const _taiwanOfficialIntervalIndexes = new WeakMap();
+
+function taiwanOfficialIntervalCoordinateKey(coord) {
+  const lon = Number(coord?.[0]);
+  const lat = Number(coord?.[1]);
+  if (!Number.isFinite(lon) || !Number.isFinite(lat)) return "";
+  // The Taiwan package is committed at six decimals.  Do NOT use coordKey's
+  // five-decimal graph grid here: separate reversal vertices in the Alishan
+  // cluster can occupy the same graph cell, which is precisely the shortcut
+  // this exact-interval lookup avoids.
+  return `${lon.toFixed(6)},${lat.toFixed(6)}`;
+}
+
+function taiwanOfficialIntervalKey(lineName, operator, fromCoord, toCoord) {
+  const fromKey = taiwanOfficialIntervalCoordinateKey(fromCoord);
+  const toKey = taiwanOfficialIntervalCoordinateKey(toCoord);
+  if (!lineName || !operator || !fromKey || !toKey) return "";
+  return `${lineName}\u001f${operator}\u001f${fromKey}\u001f${toKey}`;
+}
+
+function getTaiwanOfficialIntervalIndex() {
+  if (!railSectionsGeoJson || !Array.isArray(railSectionsGeoJson.features))
+    return null;
+  const cached = _taiwanOfficialIntervalIndexes.get(railSectionsGeoJson);
+  if (cached) return cached;
+
+  const index = new Map();
+  function add(key, record) {
+    if (!key) return;
+    if (!index.has(key)) index.set(key, []);
+    index.get(key).push(record);
+  }
+
+  railSectionsGeoJson.features.forEach((feature) => {
+    const coordinates = feature?.geometry?.coordinates;
+    if (
+      feature?.geometry?.type !== "LineString" ||
+      !Array.isArray(coordinates) ||
+      coordinates.length < 2
+    )
+      return;
+    const properties = feature.properties || {};
+    const lineName = String(properties.line_name || "").trim();
+    const operator = String(properties.operator || "").trim();
+    const first = coordinates[0];
+    const last = coordinates[coordinates.length - 1];
+    const record = { feature, coordinates, lineName, operator };
+    add(
+      taiwanOfficialIntervalKey(lineName, operator, first, last),
+      { ...record, reversed: false },
+    );
+    add(
+      taiwanOfficialIntervalKey(lineName, operator, last, first),
+      { ...record, reversed: true },
+    );
+  });
+  _taiwanOfficialIntervalIndexes.set(railSectionsGeoJson, index);
+  return index;
+}
+
+function normalizedRouteSectionHintValues(values) {
+  return [
+    ...new Set(
+      (Array.isArray(values) ? values : [])
+        .map((value) => String(value || "").trim())
+        .filter(Boolean),
+    ),
+  ];
+}
+
+function solveTaiwanRouteSectionOnOfficialInterval(
+  section,
+  segmentIndex,
+  train,
+  allowedCodes,
+  continuityAnchor = null,
+) {
+  if (!OFFICIAL_INTERVAL_COUNTRIES.has(activeCountry)) return null;
+  const index = getTaiwanOfficialIntervalIndex();
+  if (!index) return null;
+
+  const requiredLines = normalizedRouteSectionHintValues(section.line_names);
+  const requiredOperators = normalizedRouteSectionHintValues(
+    section.operator_names,
+  );
+  // An explicit line is the proof that this route_section describes one
+  // physical interval rather than a request for the general graph solver.
+  if (!requiredLines.length) return null;
+
+  const fromStations = resolveStationCandidates({
+    name: section.from || "",
+    n02_station_code: section.from_n02_station_code || null,
+  });
+  const toStations = resolveStationCandidates({
+    name: section.to || "",
+    n02_station_code: section.to_n02_station_code || null,
+  });
+  if (!fromStations.length || !toStations.length) return null;
+
+  const matches = new Set();
+  for (const lineName of requiredLines) {
+    const fromOnLine = fromStations.filter(
+      (feature) =>
+        stationLineName(feature) === lineName &&
+        (!requiredOperators.length ||
+          requiredOperators.includes(stationOperator(feature))),
+    );
+    const toOnLine = toStations.filter(
+      (feature) =>
+        stationLineName(feature) === lineName &&
+        (!requiredOperators.length ||
+          requiredOperators.includes(stationOperator(feature))),
+    );
+    for (const fromStation of fromOnLine) {
+      for (const toStation of toOnLine) {
+        const fromOperator = stationOperator(fromStation);
+        const toOperator = stationOperator(toStation);
+        if (!fromOperator || fromOperator !== toOperator) continue;
+        if (
+          requiredOperators.length &&
+          !requiredOperators.includes(fromOperator)
+        )
+          continue;
+        const key = taiwanOfficialIntervalKey(
+          lineName,
+          fromOperator,
+          getFeatureDisplayCoordinate(fromStation),
+          getFeatureDisplayCoordinate(toStation),
+        );
+        (index.get(key) || []).forEach((record) => matches.add(record));
+      }
+    }
+  }
+
+  // A direct interval is safe only when line/operator/endpoints identify one
+  // geometry unambiguously.  Anything else retains the established Dijkstra
+  // behaviour instead of guessing.
+  if (matches.size !== 1) return null;
+  const match = [...matches][0];
+  const properties = match.feature.properties || {};
+  const institutionTypeCode = String(
+    properties.institution_type_code || "",
+  );
+  if (
+    train?.route_policy?.institution_filter_mode === "hard" &&
+    allowedCodes?.length &&
+    institutionTypeCode &&
+    !allowedCodes.map(String).includes(institutionTypeCode)
+  )
+    return null;
+
+  const sourceCoordinates = match.reversed
+    ? [...match.coordinates].reverse()
+    : match.coordinates;
+  // Clone every coordinate: endpoint stitching is intentionally allowed to
+  // replace array entries, but must never mutate railSectionsGeoJson (the
+  // source shared with statistics and subsequent route solves).
+  const coordinates = sourceCoordinates.map((coord) => [
+    Number(coord[0]),
+    Number(coord[1]),
+  ]);
+  if (
+    continuityAnchor &&
+    routeSolverApi.distanceMeters(continuityAnchor, coordinates[0]) >
+      ROUTE_SECTION_CONTINUITY_STATION_METERS
+  )
+    return null;
+
+  const edgeCount = coordinates.length - 1;
+  const physicalLength =
+    Math.round(routeSolverApi.pathLengthForCoordinates(coordinates) * 100) /
+    100;
+  const preferredLines = normalizedRouteSectionHintValues([
+    ...(train?.route_policy?.preferred_line_names || []),
+    ...requiredLines,
+  ]);
+  const preferredOperators = normalizedRouteSectionHintValues([
+    ...(train?.route_policy?.preferred_operator_names || []),
+    ...derivedPreferredOperatorNames(train),
+    match.operator,
+  ]);
+
+  return {
+    type: "Feature",
+    properties: {
+      train_id: train.id,
+      route_id: `${train.id}-runtime-primary`,
+      variant_rank: 0,
+      is_primary: true,
+      route_choice: "official_interval_exact",
+      geometry_role: "single_primary_segment",
+      source: `rail-sections-${activeCountry} interval shared with ${activeCountry}-2025 display package`,
+      segment_index: segmentIndex,
+      from: section.from || stationName(fromStations[0]),
+      to: section.to || stationName(toStations[0]),
+      from_n02_station_code:
+        section.from_n02_station_code || stationCode(fromStations[0]),
+      to_n02_station_code:
+        section.to_n02_station_code || stationCode(toStations[0]),
+      station_code_system: "TDX",
+      allowed_institution_type_codes: allowedCodes,
+      preferred_line_names: preferredLines,
+      required_line_names: requiredLines,
+      required_operator_names: requiredOperators,
+      preferred_operator_names: preferredOperators,
+      solve_mode: "official_interval_exact",
+      require_preferred_institution: false,
+      used_institution_type_codes: institutionTypeCode
+        ? [institutionTypeCode]
+        : [],
+      used_line_names: { [match.lineName]: edgeCount },
+      used_operator_names: { [match.operator]: edgeCount },
+      route_template_key: routeKeyDigest(getTrainRouteTemplateKey(train)),
+      path_coordinate_count: coordinates.length,
+      raw_path_coordinate_count: coordinates.length,
+      snap_distance_m: { from: 0, to: 0 },
+      endpoint_display_gap_m: { from: 0, to: 0 },
+      physical_length_m: physicalLength,
+      raw_physical_length_m: physicalLength,
+      cost: physicalLength,
+      // Ordered retraces are real switchback/reversal geometry, not duplicate
+      // solver output.  Both dedupe and display simplification honour this.
+      preserve_ordered_geometry: true,
+    },
+    geometry: { type: "LineString", coordinates },
+  };
+}
+
+// Solve ONE ride section on its exact Taiwan official interval where possible,
+// otherwise on its on-demand regional subgraph (falling back to the full graph
+// only if a region proves too small — see solveRouteSectionOnDemand). Pushes a
+// "from→to" note into `warnings` when a section can't route. Shared by the sync
+// + streaming solvers.
+function solveTrainRouteSection(
+  train,
+  section,
+  segmentIndex,
+  allowedCodes,
+  generated,
+  warnings,
+  continuityAnchor = null,
+) {
+  const result =
+    solveTaiwanRouteSectionOnOfficialInterval(
+      section,
+      segmentIndex,
+      train,
+      allowedCodes,
+      continuityAnchor,
+    ) ||
+    solveRouteSectionOnDemand(
+      section,
+      segmentIndex,
+      train,
+      allowedCodes,
+      continuityAnchor,
+    );
+  if (!result) {
+    warnings.push(
+      `${section.from || section.from_n02_station_code}→${section.to || section.to_n02_station_code}`,
+    );
+    return;
+  }
+  generated.push(result);
+}
+
+function routeSectionBoundarySharesExplicitStop(previousSection, section) {
+  if (!previousSection || !section) return false;
+  const previousCode = String(
+    previousSection.to_n02_station_code || "",
+  ).trim();
+  const nextCode = String(section.from_n02_station_code || "").trim();
+  if (previousCode && nextCode) return previousCode === nextCode;
+  const previousName = normalizeStationName(previousSection.to || "");
+  const nextName = normalizeStationName(section.from || "");
+  return Boolean(previousName && nextName && previousName === nextName);
+}
+
+function routeFeatureEndCoordinate(feature) {
+  const geometry = feature?.geometry;
+  const lines =
+    geometry?.type === "LineString"
+      ? [geometry.coordinates]
+      : geometry?.type === "MultiLineString"
+        ? geometry.coordinates
+        : [];
+  return lines.length && lines[lines.length - 1].length
+    ? lines[lines.length - 1][lines[lines.length - 1].length - 1]
+    : null;
+}
+
+// Shared tail for both solvers: cache the solved template geometry, persist it,
+// refresh this train's entries in the matched-routes collection, and return the
+// train-concrete deduped features. Identical to the original function's tail.
+function commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings) {
+  if (!generated.length) {
+    console.warn(
+      `Unable to generate N02 railway route for train ${train.id}.`,
+      warnings,
+    );
+    // The console.warn above keeps the full detail; the status line is
+    // user-facing feedback and stays quiet during a progressive load (the
+    // editor isn't showing this train, and the last message would go stale).
+    reportRouteSolve("status.routeGenerateFailed", {
+      train: train.number || train.id,
+      failed: warnings.length,
+    });
+    // Remember the failure so re-renders / prewarms / live refreshes in this
+    // session (and future sessions, via IndexedDB) don't re-run the same doomed
+    // graph build + Dijkstra. Cleared implicitly when the train's data changes
+    // (its cacheKey changes).
+    runtimeRouteNegativeCache.add(cacheKey);
+    rememberUnsolvableRouteAcrossSessions(cacheKey);
+    return [];
+  }
+
+  const templateFeatures = stitchAdjacentRouteFeatureEndpoints(
+    generated.map((feature) => ({
+      ...feature,
+      properties: {
+        ...(feature.properties || {}),
+        train_id: "__template__",
+        route_id: `solved-${routeKeyDigest(cacheKey)}-primary`,
+        route_template_key: routeKeyDigest(templateKey),
+      },
+    })),
+  );
+  runtimeRouteCache.set(cacheKey, templateFeatures);
+  // Persist the freshly solved geometry so later sessions skip both the solve
+  // and (if every train hits the cache) the route-graph build entirely.
+  rememberSolvedRouteAcrossSessions(cacheKey, templateFeatures);
+  // Solved geometry is kept only in runtimeRouteCache (this session) and
+  // IndexedDB (cross-session). It is deliberately NOT attached back onto the
+  // train object, so train-store.json and the in-memory store stay lean.
+
+  const concrete = dedupeSameTrainRouteFeatures(
+    cloneRouteFeaturesForTrain(templateFeatures, train),
+  );
+  // Replace (not append after) this train's previous features: re-solves for
+  // an edited train used to pile up stale entries forever — a slow memory
+  // leak that also fed stale geometry to the train_id fallback lookup.
+  matchedRoutesGeoJson.features = matchedRoutesGeoJson.features.filter(
+    (f) => (f.properties || {}).train_id !== train.id,
+  );
+  concrete.forEach((feature) => matchedRoutesGeoJson.features.push(feature));
+
+  // Same suppression as prepareTrainRouteSolve: boot-time solves are not
+  // editor feedback. Post-boot solves (user edited/rebuilt a route) still
+  // report, localized.
+  if (warnings.length)
+    reportRouteSolve("status.routeGeneratedSkipped", {
+      train: train.number || train.id,
+      count: concrete.length,
+      skipped: warnings.length,
+    });
+  else
+    reportRouteSolve(
+      "status.routeGenerated",
+      { train: train.number || train.id, count: concrete.length },
+      "ok",
+    );
+  return concrete;
+}
+
+// Render-path route lookup. The train has almost always been pre-warmed, so
+// prepareTrainRouteSolve() returns a cache hit. On a genuine cache MISS this
+// NEVER solves synchronously on the render/click thread: a cold solve builds
+// ~0.4 s regional graphs per region (~2 s total for a long train) and would
+// freeze the tab — the reported "selecting a rail is slow". Instead it returns
+// [] and hands the train to the background solve queue, which solves it one
+// section at a time (yielding to paint/input) and repaints when done. During a
+// progressive load the streaming warm-up already owns solving, so we simply
+// defer to it. getMatchedRouteFeatures() falls back to any precomputed
+// matched-routes geometry meanwhile, so covered trains still draw instantly.
+// Streaming solve — used by the progressive load/import warm-up. Solves the
+// train ONE section at a time and calls the caller's shared `yieldIfNeeded()`
+// after each, so a long itinerary hands the main thread back mid-train (paint +
+// input stay live, and GC can reclaim transient graph memory between slices).
+// Writes the exact same runtime/negative caches + matched-routes features as the
+// synchronous solver, so the later render-time lookup is an untouched cache hit.
+async function solveTrainRouteStreaming(train, { yieldIfNeeded } = {}) {
+  const prep = prepareTrainRouteSolve(train);
+  if (prep.done) return prep.result;
+
+  const { routeSections, templateKey, allowedCodes, cacheKey } = prep;
+  const generated = [];
+  const warnings = [];
+  for (
+    let segmentIndex = 0;
+    segmentIndex < routeSections.length;
+    segmentIndex += 1
+  ) {
+    const previousFeature = generated[generated.length - 1];
+    const continuityAnchor =
+      segmentIndex > 0 &&
+      previousFeature?.properties?.segment_index === segmentIndex - 1 &&
+      routeSectionBoundarySharesExplicitStop(
+        routeSections[segmentIndex - 1],
+        routeSections[segmentIndex],
+      )
+        ? routeFeatureEndCoordinate(previousFeature)
+        : null;
+    solveTrainRouteSection(
+      train,
+      routeSections[segmentIndex],
+      segmentIndex,
+      allowedCodes,
+      generated,
+      warnings,
+      continuityAnchor,
+    );
+    if (yieldIfNeeded) await yieldIfNeeded();
+  }
+  return commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings);
+}
+
+function dedupeSameTrainRouteFeatures(features) {
+  // Dedupe solver overlap only WITHIN one itinerary traversal. The same train
+  // may legitimately use the same physical track again in a later
+  // segment_index (an out-and-back or loop). Collapsing those direction-
+  // independent coordinate keys globally erased the later traversal; if it
+  // crossed midnight, its next-day dashed line disappeared entirely because
+  // the surviving feature carried only the earlier segment_index.
+  const seenSegmentsByTraversal = new Map();
+  const cleaned = [];
+  (features || []).forEach((feature, featureIndex) => {
+    // Taiwan official intervals can legitimately traverse the same physical
+    // edge twice inside ONE station interval (forest-rail switchbacks and
+    // station-throat reversals).  Removing the second traversal changes the
+    // groomed all-railways shape, so preserve its complete ordered geometry.
+    if (feature.properties?.preserve_ordered_geometry === true) {
+      cleaned.push(feature);
+      return;
+    }
+    const rawSegmentIndex = feature.properties?.segment_index;
+    const traversalKey =
+      rawSegmentIndex === undefined || rawSegmentIndex === null
+        ? `feature:${featureIndex}`
+        : `segment:${rawSegmentIndex}`;
+    let seenSegments = seenSegmentsByTraversal.get(traversalKey);
+    if (!seenSegments) {
+      seenSegments = new Set();
+      seenSegmentsByTraversal.set(traversalKey, seenSegments);
+    }
+    const uniqueLines = [];
+    iterateGeometryLines(feature.geometry).forEach((line) => {
+      const uniqueLine = [];
+      for (let i = 0; i < line.length - 1; i += 1) {
+        const from = line[i];
+        const to = line[i + 1];
+        if (coordinatesEqual(from, to)) continue;
+        const key = routeCoordinateSegmentKey(from, to);
+        if (seenSegments.has(key)) continue;
+        seenSegments.add(key);
+        if (!uniqueLine.length) uniqueLine.push(from);
+        else if (!coordinatesEqual(uniqueLine[uniqueLine.length - 1], from)) {
+          if (uniqueLine.length >= 2) uniqueLines.push(uniqueLine);
+          uniqueLine.length = 0;
+          uniqueLine.push(from);
+        }
+        uniqueLine.push(to);
+      }
+      if (uniqueLine.length >= 2) uniqueLines.push(uniqueLine);
+    });
+
+    if (!uniqueLines.length) return;
+    const geometry =
+      uniqueLines.length === 1
+        ? { type: "LineString", coordinates: uniqueLines[0] }
+        : { type: "MultiLineString", coordinates: uniqueLines };
+    cleaned.push({
+      ...feature,
+      properties: {
+        ...(feature.properties || {}),
+        geometry_role:
+          uniqueLines.length > 1
+            ? "single_path_with_gaps"
+            : feature.properties?.geometry_role,
+      },
+      geometry,
+    });
+  });
+  return stitchAdjacentRouteFeatureEndpoints(cleaned);
+}
+
+function stitchAdjacentRouteFeatureEndpoints(features) {
+  for (let index = 1; index < features.length; index += 1) {
+    const previous = features[index - 1];
+    const current = features[index];
+    if (
+      Number(current.properties?.segment_index) !==
+      Number(previous.properties?.segment_index) + 1
+    ) {
+      continue;
+    }
+    if (
+      !routeSectionBoundarySharesExplicitStop(
+        previous.properties,
+        current.properties,
+      )
+    ) {
+      continue;
+    }
+    const previousEnd = routeFeatureEndCoordinate(previous);
+    const currentLines =
+      current.geometry?.type === "LineString"
+        ? [current.geometry.coordinates]
+        : current.geometry?.type === "MultiLineString"
+          ? current.geometry.coordinates
+          : [];
+    const currentStart = currentLines[0]?.[0];
+    if (
+      !previousEnd ||
+      !currentStart ||
+      routeSolverApi.distanceMeters(previousEnd, currentStart) >
+        ROUTE_SECTION_STITCH_MAX_METERS
+    ) {
+      continue;
+    }
+    if (routeSolverApi.coordinatesClose(previousEnd, currentStart, 0.25)) {
+      currentLines[0][0] = previousEnd;
+    } else {
+      currentLines[0].unshift(previousEnd);
+    }
+  }
+  return features;
+}
+
+function cloneRouteFeaturesForTrain(features, train) {
+  return features.map((feature) => ({
+    ...feature,
+    properties: {
+      ...(feature.properties || {}),
+      train_id: train.id,
+      route_id: `${train.id}-runtime-primary`,
+      source:
+        feature.properties?.source || "browser_dijkstra_on_embedded_n02_graph",
+    },
+  }));
+}
+
+// -------------------------------------------------------------------------
+// 車輛類型 (train_type) / 營運公司 (company) helpers.
+// `company` may contain several operators separated by "/" — that marks a
+// 直通 (through-running) service. Type + company together SOFT-bias which
+// tracks the route solver renders on (institution codes + operator names);
+// an explicit route_policy always wins.
+// -------------------------------------------------------------------------
+const COMPANY_OPERATOR_ALIASES = {
+  JR北海道: "北海道旅客鉄道",
+  JR東日本: "東日本旅客鉄道",
+  JR东日本: "東日本旅客鉄道",
+  JR東海: "東海旅客鉄道",
+  JR西日本: "西日本旅客鉄道",
+  JR四国: "四国旅客鉄道",
+  JR四國: "四国旅客鉄道",
+  JR九州: "九州旅客鉄道",
+  東京メトロ: "東京地下鉄",
+  东京地下铁: "東京地下鉄",
+  都営地下鉄: "東京都",
+  都営: "東京都",
+  京急: "京浜急行電鉄",
+  京急電鉄: "京浜急行電鉄",
+  東急: "東急電鉄",
+  小田急: "小田急電鉄",
+  京王: "京王電鉄",
+  京成: "京成電鉄",
+  西武: "西武鉄道",
+  東武: "東武鉄道",
+  相鉄: "相模鉄道",
+  近鉄: "近畿日本鉄道",
+  阪急: "阪急電鉄",
+  阪神: "阪神電気鉄道",
+  名鉄: "名古屋鉄道",
+  西鉄: "西日本鉄道",
+  台鐵: "國營臺灣鐵路股份有限公司",
+  臺鐵: "國營臺灣鐵路股份有限公司",
+  台灣高鐵: "台灣高速鐵路股份有限公司",
+  臺灣高鐵: "台灣高速鐵路股份有限公司",
+  台北捷運: "臺北大眾捷運股份有限公司",
+  臺北捷運: "臺北大眾捷運股份有限公司",
+  新北捷運: "新北大眾捷運股份有限公司",
+  桃園捷運: "桃園大眾捷運股份有限公司",
+  台中捷運: "臺中捷運股份有限公司",
+  臺中捷運: "臺中捷運股份有限公司",
+  高雄捷運: "高雄捷運股份有限公司",
+  阿里山林鐵: "阿里山林業鐵路及文化資產管理處",
+};
+
+function companyParts(train) {
+  return String(train?.company || "")
+    .split("/")
+    .map((part) => {
+      const name = part.trim();
+      return activeCountry === "tw"
+        ? RailOperatorBranding.normalizeTaiwanCompanyName(name)
+        : name;
+    })
+    .filter(Boolean);
+}
+
+function isThroughService(train) {
+  return companyParts(train).length > 1;
+}
+
+// "特急 · JR西日本" / "普通 · 京急電鉄/都営地下鉄（直通）"
+function trainCompanyLabel(train) {
+  const parts = companyParts(train);
+  if (!parts.length) return "";
+  const joined = parts.join("/");
+  return isThroughService(train)
+    ? `${joined}（${I18N.t("tag.through")}）`
+    : joined;
+}
+
+function trainTypeCompanyLabel(train) {
+  return [String(train?.train_type || "").trim(), trainCompanyLabel(train)]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+// Map the human company field to N02_004 operator names for the solver's
+// soft operator bias (accepts both marketing names and official names).
+function derivedPreferredOperatorNames(train) {
+  const names = new Set();
+  companyParts(train).forEach((part) => {
+    names.add(COMPANY_OPERATOR_ALIASES[part] || part);
+  });
+  return [...names];
+}
+
+// Derive N02_002 institution-type codes from train_type + company. Empty
+// result = no signal (caller keeps the full default set).
+function derivedInstitutionTypeCodes(train) {
+  const type = String(train?.train_type || "");
+  const text = `${type} ${companyParts(train).join(" ")}`;
+  const codes = new Set();
+  if (/台灣高鐵|臺灣高鐵|高速鐵路/.test(text)) codes.add("1");
+  if (/台鐵|臺鐵|臺灣鐵路|台灣鐵路/.test(text)) codes.add("2");
+  if (/捷運|林鐵|林業鐵路/.test(text)) codes.add("3");
+  if (/新幹線|新干线|shinkansen/i.test(text)) codes.add("1");
+  if (/JR|旅客鉄道|旅客铁道/i.test(text) && !/新幹線|新干线/.test(type))
+    codes.add("2");
+  if (/都営|東京都交通局|市営|公営|市交通局/.test(text)) codes.add("3");
+  if (
+    /メトロ|地下鉄|地下铁|私鉄|私铁|電鉄|电铁|電気鉄道|京急|京成|東急|小田急|近鉄|阪急|阪神|名鉄|西鉄|西武|東武|モノレール|ゆりかもめ|長野電鉄|富士山麓|富士急/.test(
+      text,
+    )
+  )
+    codes.add("4");
+  if (
+    /第三セクター|三セク|三陸鉄道|しなの鉄道|あいの風|IGR|青い森|肥薩おれんじ|道南いさりび|IRいしかわ|松浦鉄道|横浜高速鉄道/.test(
+      text,
+    )
+  )
+    codes.add("5");
+  return [...codes].sort();
+}
+
+function getAllowedInstitutionTypeCodes(train) {
+  const explicit = train.route_policy?.allowed_institution_type_codes;
+  const codes =
+    Array.isArray(explicit) && explicit.length
+      ? explicit.map(String)
+      : [...DEFAULT_ALLOWED_INSTITUTION_TYPE_CODES];
+  const unique = [...new Set(codes)].sort();
+  // When route_policy does NOT narrow the codes itself (still the full
+  // default set), derive a soft narrowing from 車輛類型/公司. With the
+  // default institution_filter_mode "soft" this only biases the solver —
+  // it never creates gaps.
+  const fullDefault = [...DEFAULT_ALLOWED_INSTITUTION_TYPE_CODES].sort();
+  if (unique.join(",") === fullDefault.join(",")) {
+    const derived = derivedInstitutionTypeCodes(train);
+    if (derived.length) return derived;
+  }
+  return unique;
+}
+
+// Core graph builder shared by the full-network graph and the on-demand
+// regional subgraphs. Builds nodes / edges / nodeMeta / spatial-grid from
+// ONLY the given rail-section features (station transfer edges added later).
+function buildRouteGraphFromFeatures(features) {
+  const nodes = new Map();
+  const adjacency = new Map();
+  const grid = new Map();
+  const nodeMeta = new Map();
+  const cellSize = 0.01;
+
+  function ensureNode(coord) {
+    const normalized = routeSolverApi.normalizeGraphCoord(coord);
+    const key = routeSolverApi.coordKey(normalized);
+    if (!nodes.has(key)) {
+      nodes.set(key, normalized);
+      adjacency.set(key, []);
+      nodeMeta.set(key, {
+        line_names: new Set(),
+        operators: new Set(),
+        institution_type_codes: new Set(),
+        railway_class_codes: new Set(),
+      });
+      const gk = routeSolverApi.graphGridKey(normalized, cellSize);
+      if (!grid.has(gk)) grid.set(gk, []);
+      grid.get(gk).push(key);
+    }
+    return key;
+  }
+
+  function recordNodeMeta(key, properties) {
+    const meta = nodeMeta.get(key);
+    if (!meta) return;
+    const lineName = properties?.N02_003 || properties?.line_name || "";
+    const operator = properties?.N02_004 || properties?.operator || "";
+    const institution = String(
+      properties?.N02_002 || properties?.institution_type_code || "",
+    );
+    const railwayClass = String(
+      properties?.N02_001 || properties?.railway_class_code || "",
+    );
+    if (lineName) meta.line_names.add(lineName);
+    if (operator) meta.operators.add(operator);
+    if (institution) meta.institution_type_codes.add(institution);
+    if (railwayClass) meta.railway_class_codes.add(railwayClass);
+  }
+
+  function addRailEdge(aCoord, bCoord, properties) {
+    const a = ensureNode(aCoord);
+    const b = ensureNode(bCoord);
+    if (a === b) return;
+    recordNodeMeta(a, properties);
+    recordNodeMeta(b, properties);
+    const length = routeSolverApi.distanceMeters(nodes.get(a), nodes.get(b));
+    const edge = {
+      to: b,
+      length: Math.max(length, 0.01),
+      institution_type_code: String(
+        properties?.N02_002 || properties?.institution_type_code || "",
+      ),
+      railway_class_code: String(
+        properties?.N02_001 || properties?.railway_class_code || "",
+      ),
+      line_name: properties?.N02_003 || properties?.line_name || "",
+      operator: properties?.N02_004 || properties?.operator || "",
+    };
+    adjacency.get(a).push(edge);
+    adjacency.get(b).push({ ...edge, to: a });
+  }
+
+  // Python-equivalent rule: the routable graph is built ONLY from RailroadSection.
+  // N02 Station LineString is used only for station snap candidates, never as a train-runnable edge.
+  (features || []).forEach((feature) => {
+    const props = feature.properties || {};
+    iterateGeometryLines(feature.geometry).forEach((line) => {
+      for (let i = 0; i < line.length - 1; i += 1)
+        addRailEdge(line[i], line[i + 1], props);
+    });
+  });
+
+  return {
+    nodes,
+    adjacency,
+    grid,
+    nodeMeta,
+    cellSize,
+    stationSnapCache: new Map(),
+  };
+}
+
+// Full-network graph (~377k nodes). Retained as the guaranteed-correct
+// fallback for on-demand solving; built lazily and memoized only if a
+// regional subgraph proves insufficient — never eagerly at startup.
+function getRuntimeRouteGraph() {
+  if (runtimeRouteGraph) return runtimeRouteGraph;
+  // Never memoise a graph built from missing data: with boot no longer
+  // awaiting rail-sections, a premature call here would permanently cache an
+  // EMPTY full-network graph and every solve would silently fail.
+  if (!railSectionsGeoJson)
+    throw new Error(
+      "rail-sections not loaded yet; await ensureSolverReady() before solving.",
+    );
+  const graph = buildRouteGraphFromFeatures(
+    (railSectionsGeoJson && railSectionsGeoJson.features) || [],
+  );
+  routeSolverApi.addStationTransferConnectorEdges(graph);
+  runtimeRouteGraph = graph;
+  return runtimeRouteGraph;
+}
+
+// =========================================================================
+//  §28.  On-demand regional route graphs & rail-section spatial index
+// =========================================================================
+
+// ---- On-demand regional route graphs ------------------------------------
+// Instead of holding the whole-Japan graph resident, build small per-region
+// subgraphs on demand and LRU-cache them. A subgraph built from EVERY rail
+// feature inside a bbox is structurally identical to the full graph
+// restricted to that bbox, so Dijkstra returns the SAME optimal path as long
+// as that path stays inside the bbox. We check that at solve time
+// (pathTouchesRegionEdge) and widen / fall back to the full graph otherwise,
+// so on-demand results never differ from the all-Japan graph.
+
+const RAIL_INDEX_CELL_DEG = 0.1;
+let railSectionSpatialIndex = null;
+
+function featureBbox(feature) {
+  if (feature.__railBbox !== undefined) return feature.__railBbox;
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+  iterateGeometryLines(feature.geometry).forEach((line) => {
+    for (const pt of line) {
+      if (pt[0] < minX) minX = pt[0];
+      if (pt[0] > maxX) maxX = pt[0];
+      if (pt[1] < minY) minY = pt[1];
+      if (pt[1] > maxY) maxY = pt[1];
+    }
+  });
+  const bbox = minX === Infinity ? null : [minX, minY, maxX, maxY];
+  feature.__railBbox = bbox;
+  return bbox;
+}
+
+// Coarse grid index over rail-section feature bboxes. Cheap (just bboxes +
+// references), built once, so regional builds avoid scanning all 22k features.
+function getRailSectionSpatialIndex() {
+  if (railSectionSpatialIndex) return railSectionSpatialIndex;
+  // Same poisoning hazard as getRuntimeRouteGraph: memoising an index over
+  // zero features would make every regional solve come up empty forever.
+  if (!railSectionsGeoJson)
+    throw new Error(
+      "rail-sections not loaded yet; await ensureSolverReady() before solving.",
+    );
+  const grid = new Map();
+  const feats = (railSectionsGeoJson && railSectionsGeoJson.features) || [];
+  feats.forEach((feature) => {
+    const bbox = featureBbox(feature);
+    if (!bbox) return;
+    const x0 = Math.floor(bbox[0] / RAIL_INDEX_CELL_DEG);
+    const x1 = Math.floor(bbox[2] / RAIL_INDEX_CELL_DEG);
+    const y0 = Math.floor(bbox[1] / RAIL_INDEX_CELL_DEG);
+    const y1 = Math.floor(bbox[3] / RAIL_INDEX_CELL_DEG);
+    for (let x = x0; x <= x1; x += 1) {
+      for (let y = y0; y <= y1; y += 1) {
+        const k = `${x},${y}`;
+        let arr = grid.get(k);
+        if (!arr) {
+          arr = [];
+          grid.set(k, arr);
+        }
+        arr.push(feature);
+      }
+    }
+  });
+  railSectionSpatialIndex = grid;
+  return grid;
+}
+
+function bboxIntersects(a, b) {
+  return !(a[2] < b[0] || a[0] > b[2] || a[3] < b[1] || a[1] > b[3]);
+}
+
+function railFeaturesInBbox(bbox) {
+  const grid = getRailSectionSpatialIndex();
+  const x0 = Math.floor(bbox[0] / RAIL_INDEX_CELL_DEG);
+  const x1 = Math.floor(bbox[2] / RAIL_INDEX_CELL_DEG);
+  const y0 = Math.floor(bbox[1] / RAIL_INDEX_CELL_DEG);
+  const y1 = Math.floor(bbox[3] / RAIL_INDEX_CELL_DEG);
+  const seen = new Set();
+  const out = [];
+  for (let x = x0; x <= x1; x += 1) {
+    for (let y = y0; y <= y1; y += 1) {
+      const arr = grid.get(`${x},${y}`);
+      if (!arr) continue;
+      for (const f of arr) {
+        if (seen.has(f)) continue;
+        seen.add(f);
+        const fb = featureBbox(f);
+        if (fb && bboxIntersects(fb, bbox)) out.push(f);
+      }
+    }
+  }
+  return out;
+}
+
+function stationFeaturesInBbox(bbox) {
+  const feats = (stationsGeoJson && stationsGeoJson.features) || [];
+  const out = [];
+  for (const f of feats) {
+    const c = getFeatureDisplayCoordinate(f);
+    if (
+      c &&
+      c[0] >= bbox[0] &&
+      c[0] <= bbox[2] &&
+      c[1] >= bbox[1] &&
+      c[1] <= bbox[3]
+    )
+      out.push(f);
+  }
+  return out;
+}
+
+// Expand a bbox by a metric margin (longitude scaled by latitude).
+function padBboxMeters(bbox, meters) {
+  const latPad = meters / 111320;
+  const midLat = (bbox[1] + bbox[3]) / 2;
+  const lonPad =
+    meters / (111320 * Math.max(0.2, Math.cos((midLat * Math.PI) / 180)));
+  return [
+    bbox[0] - lonPad,
+    bbox[1] - latPad,
+    bbox[2] + lonPad,
+    bbox[3] + latPad,
+  ];
+}
+
+function bboxDiagonalMeters(bbox) {
+  return routeSolverApi.distanceMeters(
+    [bbox[0], bbox[1]],
+    [bbox[2], bbox[3]],
+  );
+}
+
+const REGION_QUANT_DEG = 0.25;
+// Steady-state cap on total resident regional-graph nodes. Was 140,000 — smaller
+// than a SINGLE cross-Japan region (50k–72k nodes), so a multi-region load
+// evicted a region and then rebuilt the identical one 2–3× within one pass
+// (56–61 builds observed for 117 trains). For reference the full-Japan graph is
+// ~377k nodes and is already a tolerated fallback, so holding ~4–5 regions
+// resident here is well within that envelope while erasing most re-builds.
+const REGIONAL_GRAPH_NODE_BUDGET = 300000;
+// During an active progressive load we suspend eviction so a region built for an
+// early train is still resident when a later train needs it again — but cap the
+// transient so a pathological all-Japan load can't blow up memory. Trimmed back
+// to the steady budget by trimRegionalGraphCache() when the load finishes.
+const REGIONAL_GRAPH_LOAD_NODE_BUDGET = 600000;
+const regionalGraphCache = new Map(); // quantized-bbox key -> graph (insertion order = LRU)
+let regionalGraphNodeCount = 0;
+
+function invalidateRouteGraphIndexes() {
+  runtimeRouteGraph = null;
+  railSectionSpatialIndex = null;
+  regionalGraphCache.clear();
+  regionalGraphNodeCount = 0;
+}
+
+// Evict least-recently-used regional graphs until the resident node count is at
+// or below `target` (always keeping at least one so the in-flight solve has its
+// graph). Shared by the on-demand builder and the post-load trim.
+function trimRegionalGraphCache(target) {
+  while (regionalGraphNodeCount > target && regionalGraphCache.size > 1) {
+    const oldestKey = regionalGraphCache.keys().next().value;
+    const oldest = regionalGraphCache.get(oldestKey);
+    regionalGraphCache.delete(oldestKey);
+    regionalGraphNodeCount -= oldest.nodes.size;
+  }
+}
+
+function quantizeBboxOutward(bbox) {
+  return [
+    Math.floor(bbox[0] / REGION_QUANT_DEG) * REGION_QUANT_DEG,
+    Math.floor(bbox[1] / REGION_QUANT_DEG) * REGION_QUANT_DEG,
+    Math.ceil(bbox[2] / REGION_QUANT_DEG) * REGION_QUANT_DEG,
+    Math.ceil(bbox[3] / REGION_QUANT_DEG) * REGION_QUANT_DEG,
+  ];
+}
+
+// Build (or reuse from LRU) the regional subgraph covering a bbox. Quantizing
+// the bbox outward lets nearby sections share one subgraph; an LRU node budget
+// caps total resident graph memory.
+function getRegionalRouteGraph(bbox) {
+  const qbbox = quantizeBboxOutward(bbox);
+  const key = qbbox.map((v) => v.toFixed(2)).join(",");
+  const cached = regionalGraphCache.get(key);
+  if (cached) {
+    regionalGraphCache.delete(key); // LRU touch
+    regionalGraphCache.set(key, cached);
+    return cached;
+  }
+  const graph = buildRouteGraphFromFeatures(railFeaturesInBbox(qbbox));
+  routeSolverApi.addStationTransferConnectorEdges(
+    graph,
+    stationFeaturesInBbox(qbbox),
+  );
+  graph.regionBbox = qbbox;
+  regionalGraphCache.set(key, graph);
+  regionalGraphNodeCount += graph.nodes.size;
+  // While a load OR a single interactive solve is building several regions
+  // back-to-back, keep them resident up to the larger transient budget: a train
+  // spanning >REGIONAL_GRAPH_NODE_BUDGET nodes of regions used to evict its OWN
+  // earlier regions and then rebuild them for a later section (each build ~0.4 s
+  // — the biggest chunk of the ~2 s "selecting a rail is slow" freeze). We trim
+  // back to the steady budget once the solve/load settles (see below +
+  // finalizeProgressiveLoad).
+  trimRegionalGraphCache(
+    importInProgress || routeSolveInProgress
+      ? REGIONAL_GRAPH_LOAD_NODE_BUDGET
+      : REGIONAL_GRAPH_NODE_BUDGET,
+  );
+  return graph;
+}
+
+// Resolve BOTH endpoint station candidate lists of a route section (shared
+// by the bbox helper and the on-graph solver so the from/to lookup pattern
+// lives in exactly one place).
+function resolveSectionEndpoints(section, train, allowedCodes) {
+  // A section that names its line has already said which railway calls here,
+  // so the endpoint expansion may only reach for platforms belonging to it.
+  const lineNames = normalizedRouteSectionHintValues(section.line_names);
+  return {
+    fromStations: routeSolverApi.resolveEndpointCandidates(
+      { name: section.from, n02_station_code: section.from_n02_station_code },
+      train,
+      allowedCodes,
+      lineNames,
+    ),
+    toStations: routeSolverApi.resolveEndpointCandidates(
+      { name: section.to, n02_station_code: section.to_n02_station_code },
+      train,
+      allowedCodes,
+      lineNames,
+    ),
+  };
+}
+
+// Bounding box of a section's resolved endpoint station candidates.
+function sectionEndpointBbox(section, train, allowedCodes) {
+  const { fromStations, toStations } = resolveSectionEndpoints(
+    section,
+    train,
+    allowedCodes,
+  );
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+  [...fromStations, ...toStations].forEach((f) => {
+    const c = getFeatureDisplayCoordinate(f);
+    if (!c) return;
+    if (c[0] < minX) minX = c[0];
+    if (c[0] > maxX) maxX = c[0];
+    if (c[1] < minY) minY = c[1];
+    if (c[1] > maxY) maxY = c[1];
+  });
+  return minX === Infinity ? null : [minX, minY, maxX, maxY];
+}
+
+// True if any vertex of the solved feature lies within marginDeg of the
+// region edge — a signal the true optimum might leave the region, so the
+// search should widen (or fall back to the full graph).
+function pathTouchesRegionEdge(feature, regionBbox, marginDeg) {
+  if (!feature || !regionBbox) return false;
+  // The solver currently emits LineStrings only, but iterate by geometry type
+  // so a MultiLineString could never silently skip the widen-to-full-graph
+  // check (comparing a nested coordinate array against a number is always
+  // false, which would accept a possibly-truncated regional result).
+  for (const line of iterateGeometryLines(feature.geometry)) {
+    for (const c of line) {
+      if (
+        c[0] <= regionBbox[0] + marginDeg ||
+        c[0] >= regionBbox[2] - marginDeg ||
+        c[1] <= regionBbox[1] + marginDeg ||
+        c[1] >= regionBbox[3] - marginDeg
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// On-demand replacement for "solve on the full graph". Uses a small regional
+// subgraph; widens it (and finally falls back to the full graph) if the
+// solved path reaches the region edge, so the result matches the all-Japan
+// graph while keeping resident graph memory bounded.
+function solveRouteSectionOnDemand(
+  section,
+  segmentIndex,
+  train,
+  allowedCodes,
+  continuityAnchor = null,
+) {
+  if (!routeSolverApi) {
+    throw new Error("Route section solver has not been configured.");
+  }
+  const endpointBbox = sectionEndpointBbox(section, train, allowedCodes);
+  if (!endpointBbox) {
+    return routeSolverApi.solveSection(
+      section,
+      segmentIndex,
+      train,
+      getRuntimeRouteGraph(),
+      allowedCodes,
+      continuityAnchor,
+    );
+  }
+  const straight = bboxDiagonalMeters(endpointBbox);
+  const margins = [
+    Math.max(30000, straight * 0.6),
+    Math.max(90000, straight * 1.5),
+  ];
+  let lastResult = null;
+  for (const margin of margins) {
+    const graph = getRegionalRouteGraph(padBboxMeters(endpointBbox, margin));
+    const result = routeSolverApi.solveSection(
+      section,
+      segmentIndex,
+      train,
+      graph,
+      allowedCodes,
+      continuityAnchor,
+    );
+    if (result) {
+      lastResult = result;
+      if (!pathTouchesRegionEdge(result, graph.regionBbox, 0.02)) return result;
+    }
+  }
+  // The region wasn't conclusively large enough — use the full graph so the
+  // answer is provably identical to the original all-Japan solve.
+  const full = routeSolverApi.solveSection(
+    section,
+    segmentIndex,
+    train,
+    getRuntimeRouteGraph(),
+    allowedCodes,
+    continuityAnchor,
+  );
+  return full || lastResult;
+}
+
+function intersects(a, b) {
+  if (!a || !b) return false;
+  for (const value of a) if (b.has(value)) return true;
+  return false;
+}
+
+function nearbyGraphNodes(coord, graph, radiusDeg = 0.0015, limit = 30) {
+  const [lon, lat] = routeSolverApi.normalizeGraphCoord(coord);
+  const baseX = Math.floor(lon / graph.cellSize);
+  const baseY = Math.floor(lat / graph.cellSize);
+  const cellRadius = Math.max(1, Math.ceil(radiusDeg / graph.cellSize));
+  const found = [];
+  const seen = new Set();
+  for (let dx = -cellRadius; dx <= cellRadius; dx += 1) {
+    for (let dy = -cellRadius; dy <= cellRadius; dy += 1) {
+      const bucket = graph.grid.get(`${baseX + dx},${baseY + dy}`) || [];
+      bucket.forEach((key) => {
+        if (seen.has(key)) return;
+        seen.add(key);
+        const distance = routeSolverApi.distanceMeters(
+          [lon, lat],
+          graph.nodes.get(key),
+        );
+        found.push({ key, distance });
+      });
+    }
+  }
+  found.sort((a, b) => a.distance - b.distance);
+  return found.slice(0, limit);
+}
