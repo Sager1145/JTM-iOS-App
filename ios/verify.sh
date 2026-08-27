@@ -427,6 +427,24 @@ PY
         fail "a workspace stops the shared playback when its tab goes off screen"
     fi
     echo "  playback survives a tab switch"
+
+    # A display-link frame must not tear down playback's MapKit object graph.
+    # Finished trail pieces and station annotations are stable; only the short
+    # unfinished head segment is replaced, and the head annotation moves by
+    # changing its coordinate. The previous renderer removed and recreated
+    # every overlay and annotation at 60 Hz while the main thread also moved
+    # the camera.
+    if awk '/private func paintPlayback\(/ { inside = 1 }
+            /private func syncDonePlayback\(/ { inside = 0 }
+            inside && /clearPlayback\(on:/ { found = 1 }
+            END { exit !found }' RailMap/RailMapView.swift; then
+        fail "paintPlayback tears down the complete playback layer on each frame"
+    fi
+    grep -q 'mapView\.removeOverlay(old)' RailMap/RailMapView.swift \
+        || fail "playback no longer limits frame replacement to its partial trail"
+    grep -q 'annotation\.coordinate = head\.clLocation' RailMap/RailMapView.swift \
+        || fail "playback no longer moves its retained head annotation in place"
+    echo "  playback frames retain completed overlays and annotations"
 fi
 
 echo "OK"

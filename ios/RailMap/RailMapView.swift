@@ -371,8 +371,16 @@ struct RailMapView: View {
             /// its padding. Panning inside it does no work; leaving it rebuilds.
             private var builtRect: MKMapRect = .null
             private var lastPlaybackSnapshot: PlaybackMapSnapshot?
-            private var playbackOverlays: [MKOverlay] = []
-            private var playbackAnnotations: [MKAnnotation] = []
+            private var playbackDoneOverlays: [MKOverlay] = []
+            private var playbackTrailOverlays: [MKOverlay] = []
+            private var playbackPartialOverlay: MKOverlay?
+            private var playbackStationAnnotations: [PlaybackAnnotation] = []
+            private var playbackHeadAnnotation: PlaybackAnnotation?
+            private var playbackTrainID: String?
+            private var playbackRenderedDoneCount = 0
+            private var playbackCompletedStepCount = 0
+            private var playbackLastDistance = -Double.infinity
+            private var playbackSteps: [PlaybackTrailStep] = []
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
             private var endpointAnnotations: [EndpointLabelAnnotation] = []
@@ -842,6 +850,10 @@ struct RailMapView: View {
                 let scale = Self.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
                 styledScale = scale
 
+                // A normal network rebuild removes every overlay underneath
+                // MapKit. Forget the incremental playback mount before doing
+                // so; the current snapshot is re-mounted once at the end.
+                clearPlayback(on: mapView)
                 mapView.removeOverlays(mapView.overlays)
                 // The rescale's view set belongs to the annotations about to be
                 // replaced. MapKit hands back the ones it puts on the map next
@@ -1799,6 +1811,11 @@ struct RailMapView: View {
                         dot.applyScale(scale)
                     case let label as RideLabelAnnotationView:
                         label.applyScale(scale, zoom: markZoom)
+                    case let playback as PlaybackAnnotationView:
+                        guard let annotation = playback.annotation as? PlaybackAnnotation else {
+                            continue
+                        }
+                        playback.configure(annotation, scale: scale)
                     default:
                         continue
                     }
@@ -1808,113 +1825,47 @@ struct RailMapView: View {
             func renderPlayback(_ snapshot: PlaybackMapSnapshot?) {
                 guard let mapView else { return }
                 lastPlaybackSnapshot = snapshot
-                clearPlayback(on: mapView)
-                guard let snapshot else { return }
+                guard let snapshot else {
+                    clearPlayback(on: mapView)
+                    return
+                }
                 paintPlayback(snapshot, on: mapView, applyCamera: snapshot.autoFocus)
             }
 
             private func clearPlayback(on mapView: MKMapView) {
-                if !playbackOverlays.isEmpty { mapView.removeOverlays(playbackOverlays) }
-                if !playbackAnnotations.isEmpty { mapView.removeAnnotations(playbackAnnotations) }
-                playbackOverlays = []
-                playbackAnnotations = []
+                let overlays = playbackDoneOverlays + playbackTrailOverlays
+                    + [playbackPartialOverlay].compactMap { $0 }
+                if !overlays.isEmpty { mapView.removeOverlays(overlays) }
+                forgetPlaybackStyles(overlays)
+                let annotations: [MKAnnotation] = playbackStationAnnotations
+                    + [playbackHeadAnnotation].compactMap { $0 }
+                if !annotations.isEmpty { mapView.removeAnnotations(annotations) }
+                playbackDoneOverlays = []
+                playbackRenderedDoneCount = 0
+                resetCurrentPlayback(on: mapView, removeMountedObjects: false)
             }
 
             private func paintPlayback(
                 _ snapshot: PlaybackMapSnapshot, on mapView: MKMapView, applyCamera: Bool
             ) {
-                clearPlayback(on: mapView)
                 let color = Self.uiColor(hex: snapshot.path.color) ?? .systemBlue
-                var segments: [MKPolyline] = []
+                syncDonePlayback(snapshot.done, fallbackColor: color, on: mapView)
 
-                // The journeys already finished, in their own colours and at
-                // full strength, laid down first so the running journey's
-                // trail draws on top of them. See `PlaybackMapSnapshot.done`.
-                for (index, trail) in snapshot.done.enumerated() where trail.coords.count >= 2 {
-                    // Sampled the way the live trail is: these are whole
-                    // journeys rather than the stretch covered so far, and a
-                    // day of them is tens of thousands of vertices that say
-                    // nothing a sample does not.
-                    let strideBy = max(1, trail.coords.count / 64)
-                    var sampled = Swift.stride(
-                        from: 0, to: trail.coords.count, by: strideBy).map { trail.coords[$0] }
-                    if sampled.last != trail.coords.last { sampled.append(trail.coords.last!) }
-                    guard sampled.count >= 2 else { continue }
-                    let line = MKPolyline(
-                        coordinates: sampled.map(\.clLocation), count: sampled.count)
-                    let styleKey = "playback-done|\(index)"
-                    line.title = styleKey
-                    overlayStyles[styleKey] = OverlayStyle(
-                        color: Self.uiColor(hex: trail.colorHex) ?? color,
-                        widthToken: RailStyle.railWidth * RailStyle.riddenWidthScale
-                            + RailStyle.playbackTrailEdge * 2,
-                        alpha: 1)
-                    segments.append(line)
+                // A new train (or a backwards seek/restart) is the only time
+                // the current trail and its station objects are replaced.
+                // Ordinary display-link frames retain every completed segment
+                // and mutate the handful of objects that actually moved.
+                if playbackTrainID != snapshot.path.trainID
+                    || snapshot.frame.distance < playbackLastDistance
+                {
+                    resetCurrentPlayback(on: mapView)
+                    prepareCurrentPlayback(snapshot, color: color, on: mapView)
                 }
-                let currentRun = snapshot.frame.runProgress.index
-                for (runIndex, run) in snapshot.path.runs.enumerated() where runIndex <= currentRun {
-                    let localLimit = runIndex < currentRun
-                        ? run.total
-                        : max(0, min(run.total, snapshot.frame.distance - run.offset))
-                    guard localLimit > 0 else { continue }
-                    var points: [Coordinate] = [run.coords[0]]
-                    for index in 1..<run.coords.count {
-                        if run.cum[index] <= localLimit {
-                            points.append(run.coords[index])
-                        } else {
-                            break
-                        }
-                    }
-                    if let head = snapshot.frame.head, runIndex == currentRun,
-                       points.last != head { points.append(head) }
-                    guard points.count >= 2 else { continue }
-                    let strideBy = max(1, points.count / 64)
-                    var sampled = Swift.stride(from: 0, to: points.count, by: strideBy).map { points[$0] }
-                    if sampled.last != points.last { sampled.append(points.last!) }
-                    for index in 1..<sampled.count {
-                        let pair = [sampled[index - 1].clLocation, sampled[index].clLocation]
-                        let line = MKPolyline(coordinates: pair, count: pair.count)
-                        let styleKey = "playback|\(runIndex)|\(segments.count)"
-                        line.title = styleKey
-                        let fraction = Double(segments.count + 1) / Double(max(sampled.count - 1, 1))
-                        overlayStyles[styleKey] = OverlayStyle(
-                            color: color,
-                            // One step wider than the ride under it, so the
-                            // covered stretch reads as lit rather than as a second
-                            // line beside the first — and on the same ramp, since
-                            // nothing on this map opts out of it.
-                            widthToken: RailStyle.railWidth * RailStyle.riddenWidthScale
-                                + RailStyle.playbackTrailEdge * 2,
-                            alpha: 0.18 + 0.82 * fraction)
-                        segments.append(line)
-                    }
-                }
-                playbackOverlays = segments
-                mapView.addOverlays(segments, level: .aboveLabels)
-
-                var annotations: [PlaybackAnnotation] = snapshot.path.stations.enumerated().map {
-                    let passed = $0.offset <= snapshot.frame.stations.index
-                    return PlaybackAnnotation(
-                        coordinate: $0.element.coord.clLocation,
-                        // `buildPlaybackPath` names its stations through
-                        // `I18N.stationName` in the web app; the ported path
-                        // carries the package's own spelling, so the language
-                        // is applied here instead. Without the stop's code —
-                        // the path does not carry one — the readings table's
-                        // by-name lookup answers, which is its documented
-                        // second choice rather than a fallback.
-                        title: self.localized($0.element.name).display, color: color,
-                        kind: .station, active: passed,
-                        pulse: $0.offset == snapshot.frame.stations.index
-                            ? snapshot.frame.stations.pulse : 0)
-                }
-                if let head = snapshot.frame.head {
-                    annotations.append(PlaybackAnnotation(
-                        coordinate: head.clLocation, title: nil, color: color,
-                        kind: .head, active: true, pulse: 0))
-                }
-                playbackAnnotations = annotations
-                mapView.addAnnotations(annotations)
+                appendCompletedPlaybackSteps(
+                    through: snapshot.frame.distance, color: color, on: mapView)
+                updatePlaybackPartial(snapshot, color: color, on: mapView)
+                updatePlaybackAnnotations(snapshot, color: color, on: mapView)
+                playbackLastDistance = snapshot.frame.distance
 
                 if applyCamera, let camera = snapshot.frame.camera {
                     let width = max(Double(mapView.bounds.width), 1)
@@ -1929,14 +1880,225 @@ struct RailMapView: View {
                 playback?.mapRendererViewSize = mapView.bounds.size
             }
 
+            /// Mount only newly finished journeys. `done` is an append-only
+            /// prefix while a queue plays, so repainting it at 60 Hz is pure
+            /// object churn. A shorter array means playback was restarted.
+            private func syncDonePlayback(
+                _ done: [PlaybackMapSnapshot.DoneTrail], fallbackColor: UIColor,
+                on mapView: MKMapView
+            ) {
+                if done.count < playbackRenderedDoneCount {
+                    if !playbackDoneOverlays.isEmpty {
+                        mapView.removeOverlays(playbackDoneOverlays)
+                        forgetPlaybackStyles(playbackDoneOverlays)
+                    }
+                    playbackDoneOverlays = []
+                    playbackRenderedDoneCount = 0
+                }
+                var additions: [MKOverlay] = []
+                for index in playbackRenderedDoneCount..<done.count {
+                    let trail = done[index]
+                    guard trail.coords.count >= 2 else { continue }
+                    let strideBy = max(1, trail.coords.count / 64)
+                    var sampled = Swift.stride(
+                        from: 0, to: trail.coords.count, by: strideBy
+                    ).map { trail.coords[$0] }
+                    if sampled.last != trail.coords.last, let last = trail.coords.last {
+                        sampled.append(last)
+                    }
+                    guard sampled.count >= 2 else { continue }
+                    let line = MKPolyline(
+                        coordinates: sampled.map(\.clLocation), count: sampled.count)
+                    let styleKey = "playback-done|\(index)"
+                    line.title = styleKey
+                    overlayStyles[styleKey] = OverlayStyle(
+                        color: Self.uiColor(hex: trail.colorHex) ?? fallbackColor,
+                        widthToken: Self.playbackTrailWidth, alpha: 1)
+                    additions.append(line)
+                }
+                playbackRenderedDoneCount = done.count
+                playbackDoneOverlays += additions
+                if !additions.isEmpty { mapView.addOverlays(additions, level: .aboveLabels) }
+            }
+
+            private func prepareCurrentPlayback(
+                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
+            ) {
+                playbackTrainID = snapshot.path.trainID
+                playbackLastDistance = -Double.infinity
+                playbackCompletedStepCount = 0
+                playbackSteps = snapshot.path.runs.enumerated().flatMap {
+                    element -> [PlaybackTrailStep] in
+                    let (runIndex, run) = element
+                    guard run.coords.count >= 2, run.cum.count == run.coords.count else { return [] }
+                    let strideBy = max(1, run.coords.count / 64)
+                    var indices = Array(Swift.stride(
+                        from: 0, to: run.coords.count, by: strideBy))
+                    if indices.last != run.coords.count - 1 { indices.append(run.coords.count - 1) }
+                    let denominator = Double(max(indices.count - 1, 1))
+                    return indices.indices.dropFirst().map { position in
+                        let from = indices[position - 1]
+                        let to = indices[position]
+                        return PlaybackTrailStep(
+                            runIndex: runIndex,
+                            start: run.coords[from], end: run.coords[to],
+                            startDistance: run.offset + run.cum[from],
+                            endDistance: run.offset + run.cum[to],
+                            fraction: Double(position) / denominator)
+                    }
+                }
+
+                playbackStationAnnotations = snapshot.path.stations.enumerated().map {
+                    PlaybackAnnotation(
+                        coordinate: $0.element.coord.clLocation,
+                        // `buildPlaybackPath` names its stations through
+                        // `I18N.stationName`; without a code the readings
+                        // table's documented by-name lookup is used.
+                        title: self.localized($0.element.name).display,
+                        color: color, kind: .station, active: false, pulse: 0)
+                }
+                if !playbackStationAnnotations.isEmpty {
+                    mapView.addAnnotations(playbackStationAnnotations)
+                }
+            }
+
+            private func appendCompletedPlaybackSteps(
+                through distance: Double, color: UIColor, on mapView: MKMapView
+            ) {
+                var additions: [MKOverlay] = []
+                while playbackCompletedStepCount < playbackSteps.count {
+                    let index = playbackCompletedStepCount
+                    let step = playbackSteps[index]
+                    guard step.endDistance <= distance else { break }
+                    let points = [step.start.clLocation, step.end.clLocation]
+                    let line = MKPolyline(coordinates: points, count: points.count)
+                    let styleKey = "playback|\(playbackTrainID ?? "")|\(index)"
+                    line.title = styleKey
+                    overlayStyles[styleKey] = OverlayStyle(
+                        color: color, widthToken: Self.playbackTrailWidth,
+                        alpha: 0.18 + 0.82 * step.fraction)
+                    additions.append(line)
+                    playbackCompletedStepCount += 1
+                }
+                playbackTrailOverlays += additions
+                if !additions.isEmpty { mapView.addOverlays(additions, level: .aboveLabels) }
+            }
+
+            /// The only overlay replaced on an ordinary frame: the short
+            /// unfinished line from the last fixed sample to the moving head.
+            private func updatePlaybackPartial(
+                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
+            ) {
+                if let old = playbackPartialOverlay {
+                    mapView.removeOverlay(old)
+                    forgetPlaybackStyles([old])
+                    playbackPartialOverlay = nil
+                }
+                guard let head = snapshot.frame.head else { return }
+                let currentRun = snapshot.frame.runProgress.index
+                guard let step = playbackSteps.first(where: {
+                    $0.runIndex == currentRun
+                        && $0.startDistance <= snapshot.frame.distance
+                        && $0.endDistance > snapshot.frame.distance
+                }), step.start != head else { return }
+                let points = [step.start.clLocation, head.clLocation]
+                let line = MKPolyline(coordinates: points, count: points.count)
+                let styleKey = "playback-partial|\(playbackTrainID ?? "")"
+                line.title = styleKey
+                overlayStyles[styleKey] = OverlayStyle(
+                    color: color, widthToken: Self.playbackTrailWidth,
+                    alpha: 0.18 + 0.82 * step.fraction)
+                playbackPartialOverlay = line
+                mapView.addOverlay(line, level: .aboveLabels)
+            }
+
+            private func updatePlaybackAnnotations(
+                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
+            ) {
+                for (index, annotation) in playbackStationAnnotations.enumerated() {
+                    let active = index <= snapshot.frame.stations.index
+                    let pulse = index == snapshot.frame.stations.index
+                        ? snapshot.frame.stations.pulse : 0
+                    guard annotation.active != active || annotation.pulse != pulse else { continue }
+                    annotation.active = active
+                    annotation.pulse = pulse
+                    (mapView.view(for: annotation) as? PlaybackAnnotationView)?
+                        .configure(annotation, scale: playbackAnnotationScale(on: mapView))
+                }
+                if let head = snapshot.frame.head {
+                    if let annotation = playbackHeadAnnotation {
+                        annotation.coordinate = head.clLocation
+                    } else {
+                        let annotation = PlaybackAnnotation(
+                            coordinate: head.clLocation, title: nil, color: color,
+                            kind: .head, active: true, pulse: 0)
+                        playbackHeadAnnotation = annotation
+                        mapView.addAnnotation(annotation)
+                    }
+                } else if let annotation = playbackHeadAnnotation {
+                    mapView.removeAnnotation(annotation)
+                    playbackHeadAnnotation = nil
+                }
+            }
+
+            private func resetCurrentPlayback(
+                on mapView: MKMapView, removeMountedObjects: Bool = true
+            ) {
+                let overlays = playbackTrailOverlays
+                    + [playbackPartialOverlay].compactMap { $0 }
+                let annotations: [MKAnnotation] = playbackStationAnnotations
+                    + [playbackHeadAnnotation].compactMap { $0 }
+                if removeMountedObjects {
+                    if !overlays.isEmpty { mapView.removeOverlays(overlays) }
+                    if !annotations.isEmpty { mapView.removeAnnotations(annotations) }
+                }
+                forgetPlaybackStyles(overlays)
+                playbackTrailOverlays = []
+                playbackPartialOverlay = nil
+                playbackStationAnnotations = []
+                playbackHeadAnnotation = nil
+                playbackTrainID = nil
+                playbackCompletedStepCount = 0
+                playbackLastDistance = -Double.infinity
+                playbackSteps = []
+            }
+
+            private func forgetPlaybackStyles(_ overlays: [MKOverlay]) {
+                for overlay in overlays {
+                    guard let key = overlay.title ?? nil else { continue }
+                    overlayStyles.removeValue(forKey: key)
+                    overlayRenderers.removeValue(forKey: key)
+                }
+            }
+
+            private func playbackAnnotationScale(on mapView: MKMapView) -> CGFloat {
+                guard mapView.bounds.width > 1 else { return 1 }
+                return Self.quantised(
+                    RailStyle.scale(atZoom: Self.zoomLevel(of: mapView)), on: mapView)
+            }
+
+            private static var playbackTrailWidth: CGFloat {
+                RailStyle.railWidth * RailStyle.riddenWidthScale
+                    + RailStyle.playbackTrailEdge * 2
+            }
+
+            private struct PlaybackTrailStep {
+                let runIndex: Int
+                let start: Coordinate
+                let end: Coordinate
+                let startDistance: Double
+                let endDistance: Double
+                let fraction: Double
+            }
+
             private final class PlaybackAnnotation: NSObject, MKAnnotation {
                 enum Kind { case station, head }
                 dynamic var coordinate: CLLocationCoordinate2D
                 let title: String?
                 let color: UIColor
                 let kind: Kind
-                let active: Bool
-                let pulse: Double
+                var active: Bool
+                var pulse: Double
                 init(
                     coordinate: CLLocationCoordinate2D, title: String?, color: UIColor,
                     kind: Kind, active: Bool, pulse: Double
@@ -1947,6 +2109,36 @@ struct RailMapView: View {
                     self.kind = kind
                     self.active = active
                     self.pulse = pulse
+                }
+            }
+
+            private final class PlaybackAnnotationView: MKAnnotationView {
+                func configure(_ annotation: PlaybackAnnotation, scale: CGFloat) {
+                    self.annotation = annotation
+                    // Playback beads are multiples of an ordinary station's
+                    // radius and therefore share the map's one weight ramp.
+                    let swell = RailStyle.playbackStationScale
+                        + (RailStyle.playbackStationCurrentScale
+                            - RailStyle.playbackStationScale) * CGFloat(annotation.pulse)
+                    let multiple: CGFloat = annotation.kind == .head
+                        ? RailStyle.playbackHeadScale
+                        : annotation.pulse > 0
+                            ? swell
+                            : annotation.active
+                                ? RailStyle.playbackStationDoneScale
+                                : RailStyle.playbackStationScale
+                    let size = max(2, RailStyle.stationRadius * multiple * 2 * scale)
+                    frame.size = CGSize(width: size, height: size)
+                    layer.cornerRadius = size / 2
+                    layer.borderWidth = RailStyle.stationRing * 2 * scale
+                    layer.borderColor = UIColor.white.cgColor
+                    backgroundColor = annotation.active
+                        ? annotation.color : annotation.color.withAlphaComponent(0.25)
+                    layer.shadowColor = UIColor.black.cgColor
+                    layer.shadowOpacity = annotation.kind == .head ? 0.28 : 0
+                    layer.shadowRadius = 4
+                    canShowCallout = annotation.kind == .station
+                    accessibilityLabel = annotation.title
                 }
             }
 
@@ -2930,34 +3122,9 @@ struct RailMapView: View {
                 guard let annotation = annotation as? PlaybackAnnotation else { return nil }
                 let identifier = annotation.kind == .head ? "playback-head" : "playback-station"
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-                    ?? MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.annotation = annotation
-                // Playback beads are multiples of an ORDINARY station's radius,
-                // and they ride the same factor as that station: a stop already
-                // reached is filled and larger, and the one just reached swells
-                // toward the current-station scale as its pulse runs.
-                let swell = RailStyle.playbackStationScale
-                    + (RailStyle.playbackStationCurrentScale - RailStyle.playbackStationScale)
-                    * CGFloat(annotation.pulse)
-                let multiple: CGFloat = annotation.kind == .head
-                    ? RailStyle.playbackHeadScale
-                    : annotation.pulse > 0
-                        ? swell
-                        : annotation.active
-                            ? RailStyle.playbackStationDoneScale
-                            : RailStyle.playbackStationScale
-                let size = max(2, RailStyle.stationRadius * multiple * 2 * scale)
-                view.frame.size = CGSize(width: size, height: size)
-                view.layer.cornerRadius = size / 2
-                view.layer.borderWidth = RailStyle.stationRing * 2 * scale
-                view.layer.borderColor = UIColor.white.cgColor
-                view.backgroundColor = annotation.active
-                    ? annotation.color : annotation.color.withAlphaComponent(0.25)
-                view.layer.shadowColor = UIColor.black.cgColor
-                view.layer.shadowOpacity = annotation.kind == .head ? 0.28 : 0
-                view.layer.shadowRadius = 4
-                view.canShowCallout = annotation.kind == .station
-                view.accessibilityLabel = annotation.title
+                    as? PlaybackAnnotationView
+                    ?? PlaybackAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.configure(annotation, scale: scale)
                 return view
             }
 
