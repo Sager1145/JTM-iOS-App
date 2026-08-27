@@ -16,7 +16,7 @@ name: Port parity
 
 on:
   push:
-    branches: [main, swift-ios-port]
+    branches: [main]
   pull_request:
   workflow_dispatch: {}
 
@@ -51,11 +51,21 @@ jobs:
       # read the diff.
       - name: Fixtures match the code that generated them
         working-directory: app
+        env:
+          # The generated fixture set is 52 MB and its largest builders hold
+          # the source package, cases and serialized answer in memory at once.
+          # Node 20's default ~2 GB old-space ceiling is below that measured
+          # peak on ubuntu-latest, so V8 aborts before it can compare the files.
+          NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/build/build-port-fixtures.mjs --check
 
   swift:
     name: RailCore matches the fixtures
-    runs-on: macos-15
+    # This repository is developed and verified with Xcode 27 / Swift 6.4.
+    # macos-15 currently selects Xcode 16.4 / Swift 6.1.2, whose Foundation
+    # formatter cannot emit the 1,085-digit exact decimal used by the
+    # JavaScript toFixed parity check and silently takes the fallback path.
+    runs-on: xcode-27
     timeout-minutes: 30
     # Skipped on pushes that cannot affect it; always available by hand.
     if: >-
