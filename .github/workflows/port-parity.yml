@@ -37,7 +37,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Fixture bytes include V8 fdlibm results and error text. Pin the
+          # exact engine used to generate the committed corpus; a Node major
+          # upgrade is a deliberate fixture migration, not a CI detail.
+          node-version: 26.4.0
           cache: npm
           cache-dependency-path: app/package-lock.json
 
@@ -54,7 +57,7 @@ jobs:
         env:
           # The generated fixture set is 52 MB and its largest builders hold
           # the source package, cases and serialized answer in memory at once.
-          # Node 20's default ~2 GB old-space ceiling is below that measured
+          # Node's default ~2 GB old-space ceiling is below that measured
           # peak on ubuntu-latest, so V8 aborts before it can compare the files.
           NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/build/build-port-fixtures.mjs --check

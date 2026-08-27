@@ -227,9 +227,18 @@ public enum StationJoinSmoothing {
     /// .rounded()` is wrong differently again, because the product has already
     /// been rounded before the tie is examined.
     ///
-    /// The exact decimal expansion is obtained from `%.*e` at a precision no
-    /// finite Double can exceed (767 significant digits is the worst case, for
-    /// the smallest subnormal), and the rounding is then done on digits.
+    /// The calculation starts from the Double's IEEE-754 bits rather than from
+    /// Foundation formatting. That matters on CI: Darwin's formatter has
+    /// changed its maximum dynamic precision between Xcode releases, and an
+    /// implementation built on `String(format: "%.*e", 1085, value)` silently
+    /// fell back to `ToString(value)` on some runners.
+    ///
+    /// For a non-negative finite Double, `value = significand × 2^exponent`.
+    /// Scaling by `10^digits` therefore becomes the exact integer expression
+    /// `significand × 5^digits × 2^(exponent + digits)`. The small bigint below
+    /// evaluates that expression and, when the final power of two is negative,
+    /// rounds the discarded bits toward the larger integer exactly as the
+    /// ECMAScript algorithm requires.
     static func toFixedString(_ value: Double, _ digits: Int) -> String {
         if value.isNaN { return "NaN" }
         if value < 0 { return "-" + toFixedString(-value, digits) }
@@ -238,43 +247,32 @@ public enum StationJoinSmoothing {
         // gives up and returns ToString(x), exponent and all.
         if value >= 1e21 { return JSNumber.string(value) }
 
-        let exact = String(format: "%.*e", 1085, abs(value))
-        guard let eIndex = exact.firstIndex(of: "e"),
-            let exponent = Int(exact[exact.index(after: eIndex)...])
-        else { return JSNumber.string(value) }
-        var significand = Array(exact[exact.startIndex..<eIndex].utf8)
-            .filter { $0 != UInt8(ascii: ".") }
-            .map { Int($0) - 48 }
+        precondition((0...100).contains(digits), "toFixed digits must be in 0...100")
 
-        // value == significand × 10^(exponent − (count − 1)), so scaling by
-        // 10^digits leaves `shift` decimal places still to be removed.
-        let shift = exponent - (significand.count - 1) + digits
-        var n: [Int]
-        if shift >= 0 {
-            n = significand + [Int](repeating: 0, count: shift)
-        } else if -shift >= significand.count {
-            // Everything is dropped. The first dropped digit is the leading
-            // one only when exactly all of them go.
-            n = [(-shift == significand.count && significand[0] >= 5) ? 1 : 0]
+        let bits = abs(value).bitPattern
+        let storedExponent = Int((bits >> 52) & 0x7ff)
+        let fraction = bits & 0x000f_ffff_ffff_ffff
+        let significand: UInt64
+        let binaryExponent: Int
+        if storedExponent == 0 {
+            // Subnormal (and zero): there is no implicit leading one.
+            significand = fraction
+            binaryExponent = -1074
         } else {
-            let firstDropped = significand[significand.count + shift]
-            significand.removeLast(-shift)
-            n = significand
-            // ≥ 5 rounds up in both cases the specification distinguishes:
-            // above the tie, and AT the tie, where it picks the larger n.
-            if firstDropped >= 5 {
-                var i = n.count - 1
-                while i >= 0 {
-                    n[i] += 1
-                    if n[i] < 10 { break }
-                    n[i] = 0
-                    i -= 1
-                }
-                if i < 0 { n.insert(1, at: 0) }
-            }
+            significand = fraction | 0x0010_0000_0000_0000
+            binaryExponent = storedExponent - 1023 - 52
         }
-        while n.count > 1 && n[0] == 0 { n.removeFirst() }
-        var text = n.map { String($0) }.joined()
+
+        var scaled = ExactUnsignedInteger(significand)
+        for _ in 0..<digits { scaled.multiply(by: 5) }
+        let binaryShift = binaryExponent + digits
+        if binaryShift >= 0 {
+            scaled.shiftLeft(binaryShift)
+        } else {
+            scaled.roundedRightShift(-binaryShift)
+        }
+
+        var text = scaled.decimalString
         if digits > 0 {
             if text.count <= digits {
                 text = String(repeating: "0", count: digits + 1 - text.count) + text
@@ -282,6 +280,126 @@ public enum StationJoinSmoothing {
             text.insert(".", at: text.index(text.endIndex, offsetBy: -digits))
         }
         return text
+    }
+
+    /// The tiny subset of an unsigned bigint needed by ``toFixedString(_:_:)``.
+    /// Limbs are little-endian base 2^32. Keeping this type private avoids
+    /// making number formatting a general-purpose arithmetic dependency of
+    /// RailCore.
+    private struct ExactUnsignedInteger {
+        private var limbs: [UInt32]
+
+        init(_ value: UInt64) {
+            limbs = [UInt32(truncatingIfNeeded: value)]
+            let high = UInt32(truncatingIfNeeded: value >> 32)
+            if high != 0 { limbs.append(high) }
+        }
+
+        mutating func multiply(by factor: UInt32) {
+            var carry: UInt64 = 0
+            for index in limbs.indices {
+                let product = UInt64(limbs[index]) * UInt64(factor) + carry
+                limbs[index] = UInt32(truncatingIfNeeded: product)
+                carry = product >> 32
+            }
+            if carry != 0 { limbs.append(UInt32(carry)) }
+        }
+
+        mutating func shiftLeft(_ count: Int) {
+            guard count > 0, !isZero else { return }
+            let wordShift = count / 32
+            let bitShift = count % 32
+            if wordShift > 0 {
+                limbs.insert(contentsOf: repeatElement(0, count: wordShift), at: 0)
+            }
+            guard bitShift > 0 else { return }
+            var carry: UInt64 = 0
+            for index in limbs.indices {
+                let shifted = (UInt64(limbs[index]) << bitShift) | carry
+                limbs[index] = UInt32(truncatingIfNeeded: shifted)
+                carry = shifted >> 32
+            }
+            if carry != 0 { limbs.append(UInt32(carry)) }
+        }
+
+        mutating func roundedRightShift(_ count: Int) {
+            guard count > 0 else { return }
+            // For a power-of-two divisor, the highest discarded bit alone
+            // decides whether the remainder is at least one half. Equality is
+            // deliberately included: ECMAScript chooses the larger integer.
+            let roundsUp = bit(at: count - 1)
+            shiftRight(count)
+            if roundsUp { addOne() }
+        }
+
+        var decimalString: String {
+            if isZero { return "0" }
+            var copy = self
+            var chunks: [UInt32] = []
+            while !copy.isZero { chunks.append(copy.divide(by: 1_000_000_000)) }
+            var text = String(chunks.removeLast())
+            for chunk in chunks.reversed() {
+                let part = String(chunk)
+                text += String(repeating: "0", count: 9 - part.count) + part
+            }
+            return text
+        }
+
+        private var isZero: Bool { limbs.count == 1 && limbs[0] == 0 }
+
+        private func bit(at index: Int) -> Bool {
+            guard index >= 0 else { return false }
+            let word = index / 32
+            guard word < limbs.count else { return false }
+            return (limbs[word] & (1 << UInt32(index % 32))) != 0
+        }
+
+        private mutating func shiftRight(_ count: Int) {
+            let wordShift = count / 32
+            let bitShift = count % 32
+            guard wordShift < limbs.count else {
+                limbs = [0]
+                return
+            }
+            if wordShift > 0 { limbs.removeFirst(wordShift) }
+            if bitShift > 0 {
+                var carry: UInt32 = 0
+                for index in limbs.indices.reversed() {
+                    let current = limbs[index]
+                    limbs[index] = (current >> UInt32(bitShift)) | carry
+                    carry = current << UInt32(32 - bitShift)
+                }
+            }
+            normalize()
+        }
+
+        private mutating func addOne() {
+            var index = 0
+            while index < limbs.count {
+                let (value, overflow) = limbs[index].addingReportingOverflow(1)
+                limbs[index] = value
+                if !overflow { return }
+                index += 1
+            }
+            limbs.append(1)
+        }
+
+        /// Divides in place and returns the remainder. The divisor is at most
+        /// 1e9, so `(remainder << 32) | limb` always fits in UInt64.
+        private mutating func divide(by divisor: UInt32) -> UInt32 {
+            var remainder: UInt64 = 0
+            for index in limbs.indices.reversed() {
+                let dividend = (remainder << 32) | UInt64(limbs[index])
+                limbs[index] = UInt32(dividend / UInt64(divisor))
+                remainder = dividend % UInt64(divisor)
+            }
+            normalize()
+            return UInt32(remainder)
+        }
+
+        private mutating func normalize() {
+            while limbs.count > 1 && limbs.last == 0 { limbs.removeLast() }
+        }
     }
 
     /// `+x.toFixed(digits)` — the JavaScript expression the join report is

@@ -10,6 +10,8 @@ parity data required to build and test independently from the web repository.
 - Run `ios/verify.sh` for the RailKit parity tests and app build checks.
 - The project has no remote Swift package dependencies; `ios/RailKit` is a
   local package.
+- Use Node `26.4.0` (recorded in `.node-version`) when regenerating parity
+  fixtures. Their bytes include V8-specific numeric results and error text.
 
 The reduced `app/` tree is intentional. It contains the JavaScript reference
 implementation and source data used by the port-parity harness and Xcode's
@@ -20,4 +22,3 @@ resource-copy build phase. It is not a second application to deploy.
 Extracted from `Sager1145/Japan-Train-Map`, branch `swift-ios-port`, while its
 tip was `811286e4`. The branch's iOS-related commits are replayed here in their
 original order, followed by the working-tree changes present during extraction.
-
