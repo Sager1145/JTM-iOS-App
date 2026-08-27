@@ -13,6 +13,10 @@ ios/RailKit/debug.yaml
 ios/RailKit/plugin-tools.yaml
 ios/RailKit/workspace-state.json
 ios/RailKit/arm64-apple-macosx/
+ios/RailKit/artifacts/
+ios/RailKit/checkouts/
+ios/RailKit/repositories/
+ios/RailMap.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
 
 # Node dependencies used only to regenerate parity fixtures.
 app/node_modules/
@@ -20,4 +24,3 @@ app/node_modules/
 # Local archives and reports.
 *.zip
 outputs/
-

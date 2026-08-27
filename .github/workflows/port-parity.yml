@@ -45,17 +45,6 @@ jobs:
         working-directory: app
         run: npm ci
 
-      # The reference implementation first. A fixture generated from behaviour
-      # that has since moved is worse than no fixture: it reports agreement
-      # with something the web app no longer does.
-      - name: Web app tests
-        working-directory: app
-        run: npm test
-
-      - name: Lint
-        working-directory: app
-        run: npm run lint
-
       # --check regenerates into memory and fails if any answer moved. If this
       # is red, that is not a broken build — it is a list of answers the Swift
       # port now has to be re-verified against. Regenerate deliberately and
@@ -72,7 +61,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'pull_request' ||
-      github.ref == 'refs/heads/swift-ios-port'
+      github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v7
 

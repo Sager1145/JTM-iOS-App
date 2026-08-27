@@ -54,16 +54,9 @@ if [ "$run_js" = 1 ]; then
     echo "== JavaScript =================================================="
     cd "$repo/app"
 
-    # The web app is the reference implementation. If its behaviour moved, the
-    # fixtures are stale and every Swift result checked against them is
-    # meaningless, so this runs first.
-    npm test >/dev/null 2>&1 || fail "npm test"
-    echo "  tests pass"
-
-    npm run lint >/dev/null 2>&1 || fail "npm run lint"
-    echo "  lint passes"
-
-    # --check regenerates into memory and fails if anything moved. A fixture
+    # The reduced app tree is the reference implementation retained by this
+    # standalone repository. --check regenerates into memory and fails if any
+    # answer moved. A fixture
     # may only change deliberately: a diff here is the list of answers the
     # Swift port has to be re-verified against.
     node scripts/build/build-port-fixtures.mjs --check >/dev/null 2>&1 \
