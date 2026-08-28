@@ -51,6 +51,16 @@ struct RideCard: View {
     var onOpenDate: (String) -> Void
     var onPrimary: (JourneyPresentation.PrimaryAction) -> Void
     var onSecondary: (SecondaryAction) -> Void
+    /// §5.3: confirm that this journey was ridden, or take it back.
+    ///
+    /// Passed through to ``RideDetailContent`` rather than resolved into a
+    /// `SecondaryAction`, and the difference is deliberate. The resolver
+    /// decides which ONE verb is primary for a journey (§11.2) out of hiding,
+    /// playing and route repair; whether a record was ridden is not a verb
+    /// competing with those — it is a field of the record, reported in the
+    /// record's own cards next to Visibility, and confirmed from the card that
+    /// explains why the mileage is not being counted.
+    var onSetRidden: ((Bool) -> Void)?
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -144,7 +154,10 @@ struct RideCard: View {
                             departure: departureTime,
                             arrival: arrivalTime,
                             originPlatform: train.stops.first?.platformNumber,
-                            destinationPlatform: train.stops.last?.platformNumber
+                            destinationPlatform: train.stops.last?.platformNumber,
+                            originCode: train.originStationCode,
+                            destinationCode: train.destinationStationCode,
+                            region: Region.resolved(train)
                         )
                         .padding(.horizontal, 16)
 
@@ -181,7 +194,8 @@ struct RideCard: View {
                             includesIdentity: false,
                             includesStationPair: false,
                             surface: AnyShapeStyle(Color.primary.opacity(0.05)),
-                            scrolls: false
+                            scrolls: false,
+                            onSetRidden: onSetRidden
                         )
                     }
                     .padding(.top, 4)
@@ -311,11 +325,11 @@ struct RideCard: View {
                 // height back rather than repeating it.
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 5) {
-                        Text(localization.stationName(train.origin))
+                        Text(localization.originName(of: train))
                         Image(systemName: "arrow.right")
                             .imageScale(.small)
                             .accessibilityHidden(true)
-                        Text(localization.stationName(train.destination))
+                        Text(localization.destinationName(of: train))
                         if let time = departureTime {
                             Text("·")
                             Text(time).monospacedDigit()

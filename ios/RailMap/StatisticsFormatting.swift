@@ -144,6 +144,25 @@ enum StatisticsStrings {
             .en: "Unmatched distance", .ja: "未一致の距離",
             .zhHans: "未匹配里程", .zhHant: "未配對里程",
         ],
+        // §5.3 counts only what the reader has said they rode. This is the
+        // one line that says so, and it is stated as a holding with an action
+        // rather than as an exclusion — nothing has been lost, nothing is
+        // wrong, and the thing to do about it is named.
+        "ios.stats.unconfirmedTitle": [
+            .en: "Waiting to be confirmed", .ja: "確認待ち",
+            .zhHans: "待确认", .zhHant: "待確認",
+        ],
+        // Counted before the verb rather than "{n} journeys …", because the
+        // catalog has no plural forms — `ios.stats.operatorCount` reads
+        // "1 operators" — and a sentence that puts the number in a clause of
+        // its own is right at every count in all four languages.
+        "ios.stats.unconfirmedHeld": [
+            .en: "Journeys not confirmed as ridden: {n}. "
+                + "Confirm one and it joins these figures.",
+            .ja: "乗車が未確認の旅程：{n} 本。確認すると集計に加わります。",
+            .zhHans: "尚未确认乘坐的行程：{n} 趟。确认后即计入统计。",
+            .zhHant: "尚未確認乘坐的行程：{n} 趟。確認後即計入統計。",
+        ],
         "ios.stats.coverageA11y": [
             .en: "{pct} percent covered, {ridden} of {total} kilometres",
             .ja: "カバー率 {pct} パーセント、{total} キロ中 {ridden} キロ",

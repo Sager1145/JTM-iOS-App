@@ -22,6 +22,7 @@ struct DataManagerView: View {
 
     @State private var flow = ImportFlow()
     @State private var showsImporter = false
+    @State private var showsGuideImporter = false
     @State private var showsImportChoice = false
     @State private var importsFile = false
     @State private var exportsFile = false
@@ -64,6 +65,9 @@ struct DataManagerView: View {
         .sheet(isPresented: $showsImporter) {
             DataImportView(
                 flow: flow, itineraries: itineraries, library: library)
+        }
+        .sheet(isPresented: $showsGuideImporter) {
+            TransferGuideImportView(itineraries: itineraries, library: library)
         }
         .confirmationDialog(
             localization.text("sec.import", fallback: "Import"),
@@ -232,6 +236,16 @@ struct DataManagerView: View {
                     localization.text("sec.importPaste", fallback: "Paste JSON text"),
                     systemImage: "doc.on.clipboard")
             }
+            // A third door, and the only one that does not start from a file
+            // this app wrote: a photograph of somebody else's route planner.
+            // It lands in the same store through the same `add`, so nothing
+            // downstream needs to know a journey arrived this way.
+            Button { showsGuideImporter = true } label: {
+                Label(
+                    localization.guideText("ios.guide.entry"),
+                    systemImage: "text.viewfinder")
+            }
+            .accessibilityIdentifier("guideImportButton")
         } header: {
             Text(localization.dataText("data.importGroup"))
         } footer: {
@@ -393,7 +407,7 @@ struct DataManagerView: View {
         // Japanese and failing to solve.
         Task {
             do {
-                let incoming = try library.sample(sample.resource)
+                let incoming = try await library.sample(sample.resource)
                 if let store = itineraries.store, !store.trains.isEmpty {
                     library.snapshotBackup(
                         store, reason: replacingEverything ? .beforeReplace : .beforeImport)
@@ -531,14 +545,22 @@ struct DataManagerView: View {
                 Button(localization.dataText("data.restoreBackup")) {
                     confirmRestore = false
                     afterPresentationDismisses {
-                        do {
-                            _ = try library.restoreBackup()
-                            itineraries.load(from: library)
-                        } catch {
-                            operationError = OperationError(
-                                titleKey: "data.loadFailedTitle",
-                                detail: error.localizedDescription,
-                                keptKey: "data.errorNothingChanged")
+                        // A `Task` because the copy is queued behind any save
+                        // still in flight. Waiting for it is what keeps the
+                        // reload from reading the store the backup was meant
+                        // to replace, and what puts a backup that could not be
+                        // read in front of the reader instead of only in
+                        // `lastSaveError`.
+                        Task {
+                            do {
+                                _ = try await library.restoreBackup()
+                                itineraries.load(from: library)
+                            } catch {
+                                operationError = OperationError(
+                                    titleKey: "data.loadFailedTitle",
+                                    detail: error.localizedDescription,
+                                    keptKey: "data.errorNothingChanged")
+                            }
                         }
                     }
                 }

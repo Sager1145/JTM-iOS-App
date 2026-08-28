@@ -154,6 +154,13 @@ struct RouteTimingView: View {
     var arrival: String?
     var originPlatform: Int? = nil
     var destinationPlatform: Int? = nil
+    /// The two endpoints' station codes and the region they belong to — what
+    /// the readings table is asked with. See `StationNaming.swift`: without
+    /// them the lookup falls through to Japan's engine, which annotates
+    /// rather than replaces, and every name is handed back unchanged.
+    var originCode: String? = nil
+    var destinationCode: String? = nil
+    var region: Region? = nil
 
     @Environment(AppLocalization.self) private var localization
 
@@ -168,37 +175,42 @@ struct RouteTimingView: View {
 
     private var sideBySide: some View {
         HStack(alignment: .top, spacing: 12) {
-            endpoint(origin, time: departure, platform: originPlatform, alignment: .leading)
+            endpoint(
+                origin, code: originCode, time: departure, platform: originPlatform,
+                alignment: .leading)
             Image(systemName: "arrow.right")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.tertiary)
                 .accessibilityHidden(true)
                 .padding(.top, 2)
             endpoint(
-                destination, time: arrival, platform: destinationPlatform,
-                alignment: .trailing)
+                destination, code: destinationCode, time: arrival,
+                platform: destinationPlatform, alignment: .trailing)
         }
     }
 
     private var stacked: some View {
         VStack(alignment: .leading, spacing: 6) {
-            endpoint(origin, time: departure, platform: originPlatform, alignment: .leading)
+            endpoint(
+                origin, code: originCode, time: departure, platform: originPlatform,
+                alignment: .leading)
             Image(systemName: "arrow.down")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.tertiary)
                 .accessibilityHidden(true)
             endpoint(
-                destination, time: arrival, platform: destinationPlatform,
-                alignment: .leading)
+                destination, code: destinationCode, time: arrival,
+                platform: destinationPlatform, alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func endpoint(
-        _ name: String, time: String?, platform: Int?, alignment: HorizontalAlignment
+        _ name: String, code: String?, time: String?, platform: Int?,
+        alignment: HorizontalAlignment
     ) -> some View {
         VStack(alignment: alignment, spacing: 2) {
-            Text(localization.stationName(name))
+            Text(localization.stationName(name, code: code, region: region))
                 .font(.headline)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(alignment == .trailing ? .trailing : .leading)
@@ -219,10 +231,11 @@ struct RouteTimingView: View {
 
     /// §10.2: one journey reads as one sentence, not as four labels.
     private var spokenSummary: String {
-        var parts = [localization.stationName(origin)]
+        var parts = [localization.stationName(origin, code: originCode, region: region)]
         if let departure, !departure.isEmpty { parts.append(departure) }
         if let originPlatform, originPlatform >= 0 { parts.append(platformText(originPlatform)) }
-        parts.append(localization.stationName(destination))
+        parts.append(
+            localization.stationName(destination, code: destinationCode, region: region))
         if let arrival, !arrival.isEmpty { parts.append(arrival) }
         if let destinationPlatform, destinationPlatform >= 0 {
             parts.append(platformText(destinationPlatform))
@@ -348,12 +361,12 @@ struct JourneySummaryRow: View {
 
     private var horizontalStationPair: some View {
         HStack(alignment: .firstTextBaseline, spacing: 7) {
-            stationName(train.origin, lineLimit: 1)
+            stationLabel(localization.originName(of: train), lineLimit: 1)
             Image(systemName: "arrow.right")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.tertiary)
                 .accessibilityHidden(true)
-            stationName(train.destination, lineLimit: 1)
+            stationLabel(localization.destinationName(of: train), lineLimit: 1)
         }
         // Make ViewThatFits compare the route's honest single-line width; if
         // it cannot fit, the vertical route below is clearer than compressing
@@ -363,17 +376,20 @@ struct JourneySummaryRow: View {
 
     private var stackedStationPair: some View {
         VStack(alignment: .leading, spacing: 4) {
-            stationName(train.origin, lineLimit: nil)
+            stationLabel(localization.originName(of: train), lineLimit: nil)
             Image(systemName: "arrow.down")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.tertiary)
                 .accessibilityHidden(true)
-            stationName(train.destination, lineLimit: nil)
+            stationLabel(localization.destinationName(of: train), lineLimit: nil)
         }
     }
 
-    private func stationName(_ name: String, lineLimit: Int?) -> some View {
-        Text(localization.stationName(name))
+    /// The name is already through the readings table — see the two
+    /// `stationLabel` callers above, which name it from the journey so the
+    /// right region's table answers.
+    private func stationLabel(_ name: String, lineLimit: Int?) -> some View {
+        Text(name)
             .font(.title3.weight(.bold))
             .lineLimit(lineLimit)
             .fixedSize(horizontal: false, vertical: true)

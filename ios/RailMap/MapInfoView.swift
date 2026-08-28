@@ -294,31 +294,33 @@ private struct LegendSymbolView: View {
                     stroke, with: .color(Self.routeColour),
                     style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 let centre = CGPoint(x: size.width / 2, y: midY)
-                let radius = symbol == .terminal ? outerRadius * 1.33 : outerRadius
+                let radius = symbol == .terminal
+                    ? RailStyle.stationTerminalRadius * 2.2 : outerRadius
                 let disc = Path(
                     ellipseIn: CGRect(
                         x: centre.x - radius, y: centre.y - radius,
                         width: radius * 2, height: radius * 2))
-                // White fill, ink ring — and the other way round for a
-                // terminal. Fixed rather than theme-derived: these are the
-                // colours `MapRideMarkers` actually draws with (`white` /
-                // `ink`), and a legend that inverted itself in dark mode would
-                // be showing marks the map never draws.
-                context.fill(disc, with: .color(symbol == .terminal ? Self.ink : Self.white))
+                // Apple Maps' route hierarchy: a light ordinary bead with a
+                // route-colour keyline, inverted for a prominent endpoint.
+                // White stays white in dark mode, just as it does on the map.
+                context.fill(
+                    disc,
+                    with: .color(symbol == .terminal ? Self.routeColour : Self.white))
                 context.stroke(
-                    disc, with: .color(symbol == .terminal ? Self.white : Self.ink),
+                    disc,
+                    with: .color(symbol == .terminal ? Self.white : Self.routeColour),
                     lineWidth: max(radius / 3, 1))
                 if symbol == .stop {
-                    // The stop's black centre is its ONLY difference from a
-                    // pass-through — the same distinction the map makes, and
-                    // the reason both rows are here.
-                    let inner = radius * 0.45
+                    // The stop's small route-coloured centre is its ONLY
+                    // difference from a pass-through — the same distinction
+                    // the map makes, and the reason both rows are here.
+                    let inner = radius * RailStyle.stopCentreToStationRadius
                     context.fill(
                         Path(
                             ellipseIn: CGRect(
                                 x: centre.x - inner, y: centre.y - inner,
                                 width: inner * 2, height: inner * 2)),
-                        with: .color(Self.ink))
+                        with: .color(Self.routeColour))
                 }
             }
         }
@@ -328,7 +330,6 @@ private struct LegendSymbolView: View {
     /// the map can actually draw rather than the system tint.
     private static let routeColour = Color(hex: TrainValidation.defaultTrainColor) ?? .accentColor
     private static let white = Color(red: 1, green: 1, blue: 1)
-    private static let ink = Color(red: 0.05, green: 0.05, blue: 0.07)
 
     /// Drawn at a legible multiple of the map's own token: `RailStyle.railWidth`
     /// is 1.5 pt at full scale, which is a hairline in a list row.

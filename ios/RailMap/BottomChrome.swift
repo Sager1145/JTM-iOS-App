@@ -232,9 +232,18 @@ struct BottomChromeMetrics: Equatable {
     ///
     /// The tolerance is a rounding allowance and not a window: the system
     /// quantises a detent to the device's point grid, which puts Medium's
-    /// 412.57 on screen as 412.67 on a 3× phone.
+    /// 412.57 on screen as 412.67 on a 3× phone, and `settle(reporting:)`
+    /// rounds that to a whole point before asking. Half a point covered
+    /// neither of those on its own — the two together can carry a genuine stop
+    /// 0.67 points away from its own detent, and a stop that is not recognised
+    /// is a settle that is not animated: the header would take its new size in
+    /// one frame while the panel was still a third of a second from arriving.
+    /// Whether that happened depended on the fractional part of the window's
+    /// height, so it was a device-by-device coin toss. One point covers both
+    /// allowances and is still two orders of magnitude short of the 276 points
+    /// between the nearest pair of stops.
     func settledStage(at height: CGFloat) -> SheetStage? {
-        stages.first { abs(self.height(of: $0) - height) <= 0.5 }
+        stages.first { abs(self.height(of: $0) - height) <= 1 }
     }
 
     /// A continuous compact-to-medium value for chrome that must follow the
@@ -288,9 +297,60 @@ struct PanelHeader<Actions: View>: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ScaledMetric(relativeTo: .title3) private var compactTitleSize: CGFloat = 20
     @ScaledMetric(relativeTo: .largeTitle) private var expandedTitleSize: CGFloat = 34
-    @ScaledMetric(relativeTo: .footnote) private var subtitleLineHeight: CGFloat = 16
+    /// One subtitle line, at the reader's text size — asked of the font rather
+    /// than written down.
+    ///
+    /// It used to be a `@ScaledMetric` of 16, and a footnote line is 18. Those
+    /// two points are what the reveal below was clipping: the reserved height
+    /// topped out short of the glyphs it was reserving for, so the subtitle's
+    /// descenders were cut for the whole of the morph and the missing strip
+    /// arrived in a single frame at the Half stop. Measured from the style the
+    /// text is actually drawn in, the ramp's top IS the natural height, so
+    /// there is nothing left to snap. `@Environment(\.dynamicTypeSize)` above
+    /// is what re-reads this when the reader changes their text size.
+    private var subtitleLineHeight: CGFloat {
+        UIFont.preferredFont(forTextStyle: .footnote).lineHeight
+    }
 
+    /// How far below the collapsed card's top edge the reduced title row sits.
+    ///
+    /// It is a padding now because the row used to be positioned by an
+    /// accident instead. `RailWorkspaceView.tabPage` gives the panel header a
+    /// `VStack` whose only other child is the destination's content, and that
+    /// content is absent below the Half stop (§9.5.6's Docked shows the title
+    /// row alone) — so for the whole of the lower half of the drag the stack
+    /// held ONE view and SwiftUI centred it in the page. The header's distance
+    /// from the card's top edge was therefore half of whatever space the tab
+    /// bar had not claimed, which grows as the sheet does: measured on an
+    /// iPhone 17 Pro it ran 36.7 pt at Docked, 53 at 208, 61.7 at 228 and 90
+    /// at 294 — the title drifting DOWN while the panel it heads travelled up
+    /// — and then snapped back to 13.7 pt in one frame at the stop where the
+    /// content mounted and took the slack. A 76-point jump, in the middle of a
+    /// gesture, on §9.5.6's "one persistent header".
+    ///
+    /// The header is anchored to the top of the page now (see `tabPage`), and
+    /// this is what keeps the collapsed row looking as it did: 25 points puts
+    /// the collapsed title's glyphs back on the line the old centring happened
+    /// to produce at Docked (36.7 pt below the card's top edge, measured), so
+    /// the two rest states are unchanged and only the path between them is.
+    ///
+    /// Not at an accessibility text size. There the collapsed stop is already
+    /// full — the row is a large title plus its own 44-point row of controls
+    /// (see ``stacksActions``) — and there is no slack to reproduce, so the
+    /// inset would be 25 points of the title clipped instead.
+    private var collapsedTopInset: CGFloat {
+        dynamicTypeSize.isAccessibilitySize ? 10 : 25
+    }
+
+    /// The semantic title at the two open stops.
     var title: String
+    /// A different label needed only while the panel is docked.
+    ///
+    /// Both labels stay mounted and share the same geometry below. Swapping
+    /// this string from a `stage` branch made the title change in one frame at
+    /// the nearest-detent midpoint, even though its size and position were
+    /// otherwise following the finger continuously.
+    var compactTitle: String? = nil
     var subtitle: String?
     var stage: SheetStage
     var expansionProgress: CGFloat
@@ -304,8 +364,19 @@ struct PanelHeader<Actions: View>: View {
         return reduceMotion ? (stage == .compact ? 0 : 1) : live
     }
 
+    /// Opacity is the Reduce Motion-safe form of this semantic replacement,
+    /// so it may keep following the live height even when the larger spatial
+    /// typography morph is reduced to its named end states.
+    private var titleHandoffProgress: CGFloat {
+        min(max(expansionProgress, 0), 1)
+    }
+
     private func interpolated(_ compact: CGFloat, _ expanded: CGFloat) -> CGFloat {
         compact + (expanded - compact) * progress
+    }
+
+    private var hasDistinctCompactTitle: Bool {
+        compactTitle.map { $0 != title } ?? false
     }
 
     /// How many lines the subtitle is allowed, and therefore how much height
@@ -403,7 +474,7 @@ struct PanelHeader<Actions: View>: View {
         // side gets the wider margin that makes the two read as equal.
         .padding(.leading, interpolated(16, 24))
         .padding(.trailing, 16)
-        .padding(.top, interpolated(8, 10))
+        .padding(.top, interpolated(collapsedTopInset, 10))
         .padding(.bottom, interpolated(2, 6))
         // Normal motion is driven directly by the live sheet height and must
         // not lag behind it. Under Reduce Motion the named-state typography
@@ -420,35 +491,22 @@ struct PanelHeader<Actions: View>: View {
 
     private var titleBlock: some View {
         VStack(alignment: .leading, spacing: interpolated(0, 1)) {
-            Text(title)
-                // Interpolated rather than swapped between two `Font`s: see
-                // ``RailInterpolatedFont``. The size is a function of the live
-                // sheet height at every frame of a drag AND of the settle
-                // spring `ResidentBottomSheetModifier` puts on the release, and
-                // a plain `.font()` can follow the first but not the second.
-                .railInterpolatedFont(
-                    size: interpolated(compactTitleSize, openTitleSize),
-                    weight: .bold)
-                // No cross-fade, and this is the modifier that stops one.
-                //
-                // A `Text` whose rendering changes inside an animated
-                // transaction is cross-faded by SwiftUI, and the settle spring
-                // IS an animated transaction — so the title, whose size is a
-                // function of the sheet's height, was cross-faded against
-                // itself on every release. Recorded at 60 fps on an iPhone 17
-                // Pro, the large title was ABSENT for nine frames after a
-                // flick, leaving the panel headed by its own subtitle; asking
-                // for an explicit `.opacity` transition instead drew it twice,
-                // at two sizes, a hundred points apart.
-                //
-                // Neither is wanted and neither is needed:
-                // ``RailInterpolatedFont`` re-renders the glyphs at every
-                // interpolated size, so there are no two states to fade
-                // between. `.identity` is what says so.
-                .contentTransition(.identity)
-                .lineLimit(titleLines)
-                .minimumScaleFactor(interpolated(0.72, 0.6))
-                .fixedSize(horizontal: false, vertical: true)
+            ZStack(alignment: .topLeading) {
+                titleLabel(compactTitle ?? title)
+                    .opacity(hasDistinctCompactTitle ? 1 - titleHandoffProgress : 1)
+                if let compactTitle, compactTitle != title {
+                    titleLabel(title)
+                        .opacity(titleHandoffProgress)
+                }
+            }
+                // The two labels occupy the same layout slot. Nothing is
+                // masked or clipped: the ZStack reserves the larger label's
+                // natural bounds while opacity performs the semantic handoff.
+                // This keeps a reversal continuous as well — progress simply
+                // runs backward from the pixels already on screen.
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(
+                    Text(titleHandoffProgress < 0.5 ? (compactTitle ?? title) : title))
                 // Keep one stable, non-interactive header element for
                 // VoiceOver and UI automation. Putting this identifier on the
                 // outer layout propagates it into the action buttons.
@@ -456,23 +514,66 @@ struct PanelHeader<Actions: View>: View {
                 .accessibilityAddTraits(.isHeader)
                 .railSheetStageActions()
                 .modifier(ReduceMotionUITestProbe(enabled: reduceMotion))
-            if showsSubtitle, let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(subtitleLines)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .opacity(progress)
-                    .offset(y: interpolated(-3, 0))
-                    .frame(
-                        height: progress >= 1
-                            ? nil
-                            : subtitleLineHeight * CGFloat(subtitleLines) * progress,
-                        alignment: .top)
-                    .clipped()
-                    .accessibilityHidden(progress < 0.5)
+            if showsSubtitle {
+                // One shared slot for every destination, grown rather than
+                // sliced.
+                //
+                // This slot must exist even when a destination has no current
+                // subtitle. Stats deliberately has none; Search has one only
+                // after a query; Upcoming may still be loading. Removing the
+                // view in those states made the header take its natural,
+                // shorter height and caused its vertical centre to differ
+                // from the other tabs. The empty ZStack below keeps the same
+                // title-bar height and centre line everywhere without drawing
+                // placeholder text.
+                //
+                // When text exists, scaling the type by the same ramp that
+                // grows this slot makes it fill the available height at every
+                // point: no overflow, no cutoff and no frame where descenders
+                // suddenly appear.
+                let line = subtitleLineHeight * CGFloat(subtitleLines)
+                ZStack(alignment: .topLeading) {
+                    if let subtitle, !subtitle.isEmpty {
+                        Text(subtitle)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(subtitleLines)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .scaleEffect(progress, anchor: .topLeading)
+                            // Squared, so the line is legible before it is visible.
+                            //
+                            // The scale above is what stops the reveal cutting glyphs,
+                            // and it costs a phase at the bottom of the ramp where the
+                            // subtitle is drawn at four points — a size that carries no
+                            // reading at all and, at a linear third of full strength,
+                            // shows up as the smudge under the title that §14.1 names.
+                            // A square is dark where the type is too small to read and
+                            // catches up as it grows: a fifth of a second's fade rather
+                            // than a stripe of grey following the finger.
+                            .opacity(progress * progress)
+                            .accessibilityHidden(progress < 0.5)
+                    }
+                }
+                .frame(height: line * progress, alignment: .topLeading)
             }
         }
+    }
+
+    private func titleLabel(_ value: String) -> some View {
+        Text(value)
+            // Interpolated rather than swapped between two `Font`s: see
+            // ``RailInterpolatedFont``. The size is a function of the live
+            // sheet height at every frame of a drag AND of the settle spring
+            // `ResidentBottomSheetModifier` puts on the release.
+            .railInterpolatedFont(
+                size: interpolated(compactTitleSize, openTitleSize),
+                weight: .bold)
+            // The glyphs are already redrawn at every interpolated size. Do
+            // not let SwiftUI add a second implicit content cross-fade.
+            .contentTransition(.identity)
+            .lineLimit(titleLines)
+            .minimumScaleFactor(interpolated(0.72, 0.6))
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private var actionStrip: some View {

@@ -169,6 +169,7 @@ extension View {
 /// §14.3's first line: "按下瞬间有反馈，不等待 click/touch-up". SwiftUI's
 /// `.plain` style leaves that to the label, and every place in this app that
 /// wanted it was writing its own `scaleEffect`. This is that, once.
+///
 /// ## Disabled
 ///
 /// A custom `ButtonStyle` inherits none of the system's disabled appearance —

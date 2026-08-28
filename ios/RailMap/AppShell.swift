@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 import UniformTypeIdentifiers
@@ -90,6 +91,10 @@ struct ContentView: View {
             // chosen because there is nothing to choose.
             network.loadAll()
             itineraries.load(from: library)
+            // Playback bakes its station names when it compiles a path, so it
+            // needs the readings tables rather than only the records. See
+            // `PlaybackController.localization`.
+            playback.localization = localization
         }
         .task(id: routeLoadKey) {
             guard let loaded = itineraries.loaded else {
@@ -107,9 +112,16 @@ struct ContentView: View {
             // figure of 0 % for a country you have never been to is an answer,
             // and it is the same answer the per-region scope gives.
             let countries = region.map { [$0.code] } ?? Region.ordered.map(\.code)
-            let trains = region.map { scope in
-                loaded.trains.filter { Region.resolved($0) == scope }
-            } ?? loaded.trains
+            // Two filters. The region is the reader's scope; the second is not
+            // a scope at all but the rule that only a journey the record SAYS
+            // was ridden has kilometres to contribute (see
+            // ``RailPresentation/RideLedger``). No clock takes part in it: a
+            // date is a plan, and a passport that filled itself in from the
+            // calendar would be counting trips nobody confirmed taking.
+            let trains = loaded.trains.filter { train in
+                if let region, Region.resolved(train) != region { return false }
+                return RideLedger.hasBeenRidden(train)
+            }
             let ids = Set(trains.map(\.id))
             mileageStatistics.load(
                 countries: countries, trains: trains,
@@ -196,17 +208,42 @@ struct ContentView: View {
     /// The same, plus what the statistics additionally depend on: which region
     /// Passport is reporting on, and the drawn geometry the coverage is
     /// measured against.
+    ///
+    /// `geometryDigest` rather than `vertexCount`: the digest covers the
+    /// section count, each section's index and each section's canonical WGS84
+    /// coordinates, and it is hashed once when the ride is decoded. Counting
+    /// vertices says "nothing changed" for a route that was re-solved onto a
+    /// different path with the same number of points — the store's own entry
+    /// cache has always keyed on the digest for exactly that reason, and a
+    /// load key that cannot see the change never gives it the chance.
+    ///
+    /// What is NOT here is the date, in any form. Whether a journey counts is
+    /// a stated fact on the record (`ride_segment`, read through
+    /// `RideLedger`), so it moves only when the record does — and the record
+    /// is already in `trains`. A key that carried today as well would re-run
+    /// this load at five midnights a day to produce the same answer.
+    ///
+    /// The key stays deliberately coarse — a colour change still re-keys it —
+    /// because `MileageStatisticsStore.load` now fingerprints its own inputs
+    /// and returns without touching anything when they are unchanged. The
+    /// duty here is to be a SUPERSET of what the numbers depend on; deciding
+    /// whether they actually moved belongs to the store that knows.
     private var statisticsLoadKey: StatisticsLoadKey {
         StatisticsLoadKey(
             region: statisticsRegionCode,
             trains: routeLoadKey,
-            rides: riddenRoutes.rides.map { "\($0.id):\($0.vertexCount)" })
+            rides: riddenRoutes.rides.map { RideKey(id: $0.id, geometry: $0.geometryDigest) })
+    }
+
+    private struct RideKey: Equatable {
+        var id: String
+        var geometry: Int
     }
 
     private struct StatisticsLoadKey: Equatable {
         var region: String
         var trains: [Train]?
-        var rides: [String]
+        var rides: [RideKey]
     }
 }
 

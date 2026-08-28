@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The mileage statistics, as a SECTION rather than as a screen.
@@ -111,7 +112,14 @@ struct StatisticsDashboardContent: View {
 
     var body: some View {
         Group {
-            if let loaded = itineraries.loaded.map(scoped) {
+            if let all = itineraries.loaded {
+                let scope = scoped(all)
+                let loaded = scope.loaded
+                // Journeys whose records do not say they were ridden. They are
+                // in no figure on this screen (see
+                // ``RailPresentation/RideLedger``), so the screen says how many
+                // it is holding back and where to confirm them.
+                let unconfirmed = scope.unconfirmed
                 // A plain VStack, not Lazy: the caller is already a LazyVStack
                 // inside the workspace's one ScrollView, and nesting a second
                 // lazy container inside it defeats both.
@@ -123,9 +131,9 @@ struct StatisticsDashboardContent: View {
                         failureCard(failure)
                     }
                     if loaded.trains.isEmpty {
-                        emptyCard
+                        emptyCard(unconfirmed: unconfirmed)
                     } else if let stats = statistics.view {
-                        passportDataPage(loaded, stats.overall)
+                        passportDataPage(loaded, stats.overall, unconfirmed: unconfirmed)
                         coverageCard(stats)
                         serviceCard(stats.overall)
                         topSegmentsCard(stats.overall)
@@ -242,7 +250,8 @@ struct StatisticsDashboardContent: View {
     /// §5.3's question: **how much have I ridden, and which railways does that
     /// cover?**
     private func passportDataPage(
-        _ loaded: ItineraryStore.Loaded, _ stats: Statistics.MileageStats
+        _ loaded: ItineraryStore.Loaded, _ stats: Statistics.MileageStats,
+        unconfirmed: Int
     ) -> some View {
         let total = statistics.totalKm
         let pct = total > 0 ? 100 * stats.riddenAll / total : 0
@@ -309,6 +318,18 @@ struct StatisticsDashboardContent: View {
             // day reads as what it is: one entry in them.
             if let daily = statistics.view?.daily {
                 dailyStamp(daily)
+            }
+
+            // Why 旅程數 is not the number of journeys in the store. Beside
+            // the field it qualifies rather than at the foot of the screen,
+            // and in the same neutral register as the unmatched note below: a
+            // journey nobody has confirmed riding is not a fault in the data,
+            // it is a question the app has not been answered.
+            if unconfirmed > 0 {
+                PassportNote(
+                    title: localization.statsText("ios.stats.unconfirmedTitle"),
+                    message: unconfirmedMessage(unconfirmed),
+                    systemImage: "checkmark.circle")
             }
 
             // §5.7: a neutral note, not the critical role. Unmatched distance
@@ -577,8 +598,20 @@ struct StatisticsDashboardContent: View {
         }
     }
 
+    /// `sectionLabel` — the two endpoint names, through the readings table.
+    ///
+    /// `topRiddenSegments` names a section by its endpoints and carries no
+    /// station codes, so this is the by-name lookup: in a region scope it is
+    /// that region's table, and in the 全部 scope it is whichever table knows
+    /// the name unambiguously (see `AppLocalization.regionNaming`). The web
+    /// app's `topSegmentsHtml` uses `I18N.placeName` here, so a Japanese
+    /// section still carries its kana or romaji reading.
     private func sectionLabel(_ row: Statistics.TopRow) -> String {
-        "\(row.from) ↔ \(row.to)"
+        "\(placeName(row.from)) ↔ \(placeName(row.to))"
+    }
+
+    private func placeName(_ name: String) -> String {
+        localization.placeName(name, region: region ?? localization.regionNaming(name))
     }
 
     private func rideCount(_ count: Int) -> String {
@@ -729,12 +762,29 @@ struct StatisticsDashboardContent: View {
         .accessibilityElement(children: .combine)
     }
 
-    private var emptyCard: some View {
-        Text(localization.statsText("stats.empty"))
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .statisticsCard()
+    /// Nothing to count — and, when that is only true *until the reader says
+    /// otherwise*, why.
+    ///
+    /// A reader whose whole store is unconfirmed journeys would otherwise be
+    /// told they have ridden nothing, which is both true and useless. The
+    /// second line is what makes the first one readable.
+    private func emptyCard(unconfirmed: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(localization.statsText("stats.empty"))
+            if unconfirmed > 0 {
+                Text(unconfirmedMessage(unconfirmed))
+            }
+        }
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .statisticsCard()
+    }
+
+    /// 「尚未確認乘坐：N 趟。在行程詳情裡確認後就會計入。」
+    private func unconfirmedMessage(_ count: Int) -> String {
+        localization.statsText(
+            "ios.stats.unconfirmedHeld", params: ["n": .number(Double(count))])
     }
 
     // MARK: - shared bits
@@ -751,27 +801,61 @@ struct StatisticsDashboardContent: View {
         }
     }
 
-    /// This screen's slice of the working set: one region's rides, and the
-    /// date buckets they occupy.
+    /// What this screen counts, and what it is holding back.
+    ///
+    /// The two travel together because they are one pass over the store, and
+    /// because they are read together: the second is what stops the first from
+    /// looking like a loss. A reader who has just written down a journey and
+    /// watched 旅程數 not move needs a line saying why, and "waiting for you to
+    /// confirm it" is a very different message from a number that silently did
+    /// not change.
+    private struct Scope {
+        let loaded: ItineraryStore.Loaded
+        /// Journeys in the region scope whose records do not say they were
+        /// ridden.
+        let unconfirmed: Int
+    }
+
+    /// This screen's slice of the working set: one region's confirmed rides,
+    /// and the date buckets they occupy.
     ///
     /// The region itself is chosen in the panel header, which offers every
     /// region rather than only the ones with rides in them: a coverage figure
     /// of 0 % for a region you have not ridden is an answer, and a region that
     /// disappeared from the picker as soon as its last ride was deleted would
     /// look like a bug.
-    private func scoped(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
-        let trains = region.map { scope in
-            loaded.trains.filter { Region.resolved($0) == scope }
-        } ?? loaded.trains
+    ///
+    /// The second filter is not a scope the reader chose. 旅程數, 出行日 and
+    /// 停站數 are counted HERE while every kilometre beside them is counted in
+    /// the store, so both have to draw the line between a journey taken and a
+    /// journey merely written down in the same place — `MileageStatisticsStore`
+    /// is handed a list already filtered by ``RailPresentation/RideLedger``,
+    /// and a card that said "8 journeys, 0 km" because two of them were never
+    /// confirmed would be this screen disagreeing with itself.
+    private func scoped(_ loaded: ItineraryStore.Loaded) -> Scope {
+        var trains: [Train] = []
+        var unconfirmed = 0
+        trains.reserveCapacity(loaded.trains.count)
+        for train in loaded.trains {
+            if let region, Region.resolved(train) != region { continue }
+            if RideLedger.hasBeenRidden(train) {
+                trains.append(train)
+            } else {
+                unconfirmed += 1
+            }
+        }
         let ids = Set(trains.map(\.id))
-        return ItineraryStore.Loaded(
-            regions: region.map { [$0] } ?? Region.ordered,
-            trains: trains,
-            days: loaded.days.compactMap { day in
-                let kept = day.trains.filter { ids.contains($0.id) }
-                return kept.isEmpty ? nil : ItineraryStore.Loaded.Day(date: day.date, trains: kept)
-            },
-            elapsed: loaded.elapsed)
+        return Scope(
+            loaded: ItineraryStore.Loaded(
+                regions: region.map { [$0] } ?? Region.ordered,
+                trains: trains,
+                days: loaded.days.compactMap { day in
+                    let kept = day.trains.filter { ids.contains($0.id) }
+                    return kept.isEmpty
+                        ? nil : ItineraryStore.Loaded.Day(date: day.date, trains: kept)
+                },
+                elapsed: loaded.elapsed),
+            unconfirmed: unconfirmed)
     }
 
     private func stopCount(_ trains: [Train]) -> Int {

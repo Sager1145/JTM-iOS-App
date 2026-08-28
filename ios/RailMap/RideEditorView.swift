@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// Native form editing for one canonical train record. The editor owns a
@@ -38,6 +39,9 @@ struct RideEditorView: View {
     /// recovery. A confirmation would be asking permission to do something
     /// that costs nothing to reverse.
     @State private var undoableDeletion: [Deletion] = []
+    /// Whether the reader has moved the ride switch themselves. Once true the
+    /// date pre-fill is finished for this session — see ``prefillRidden(forDate:)``.
+    @State private var riddenIsTheReaders = false
     /// Recomputed once per draft change rather than once per field.
     ///
     /// The authoritative half of the validation encodes the draft and runs
@@ -49,6 +53,13 @@ struct RideEditorView: View {
 
     let original: Train
     let title: String
+    /// Whether this form is creating a journey rather than editing one.
+    ///
+    /// The only thing it changes is the ride toggle's PRE-FILL — see
+    /// ``riddenBinding``. An existing record's ride state is never seeded,
+    /// re-seeded or corrected by this form, whatever the reader does to its
+    /// date.
+    let isNew: Bool
     let onSave: (Train) -> Void
     /// Ids already in the store, so an id collision is visible while it is
     /// being typed rather than after the save quietly keeps the old one.
@@ -65,11 +76,13 @@ struct RideEditorView: View {
     init(
         train: Train,
         title: String = "Edit journey",
+        isNew: Bool = false,
         existingIDs: Set<String>? = nil,
         onSave: @escaping (Train) -> Void
     ) {
         original = train
         self.title = title
+        self.isNew = isNew
         self.existingIDs = existingIDs
         _draft = State(initialValue: train)
         _stopIDs = State(initialValue: train.stops.map { _ in UUID() })
@@ -102,6 +115,11 @@ struct RideEditorView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .environment(\.editMode, .constant(.active))
                 .onChange(of: draft, initial: true) { _, _ in revalidate() }
+                // Keyed on the date alone, so that editing any other field —
+                // including the ride switch itself — cannot re-run it.
+                .onChange(of: draft.date, initial: true) { _, date in
+                    prefillRidden(forDate: date)
+                }
 #if DEBUG
                 // Scroll straight to a named section, for the same reason the
                 // other `RAILMAP_UI_TEST_*` hooks exist: a screenshot harness
@@ -257,12 +275,32 @@ struct RideEditorView: View {
                 title: localization.countryText("field.direction", fallback: "Direction"),
                 text: optionalText(\.direction))
 
+            Toggle(
+                localization.editorText("ios.detail.riddenState"), isOn: riddenBinding)
+            if RideLedger.confirmation(of: draft) == .partly {
+                // The whole-journey switch reads "on" over a record that is
+                // only partly ridden, which is true — it IS being counted —
+                // and would be misleading unread. Say how much, and where the
+                // rest of it is decided.
+                Text(
+                    localization.editorText(
+                        "ios.editor.riddenPartlyNote",
+                        ["n": .number(Double(RideLedger.riddenSegmentCount(draft.stops)))])
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            }
+
             Toggle(localization.text("ios.showOnMap", fallback: "Show on map"), isOn: visibleBinding)
         } header: {
             Text(localization.editorText("ios.editor.basics"))
         } footer: {
-            // §8.5: hiding changes the map, not the record or the export.
-            Text(localization.editorText("ios.editor.visibilityNote"))
+            VStack(alignment: .leading, spacing: 6) {
+                // §5.3: only the reader decides this, and the date never will.
+                Text(localization.editorText("ios.editor.riddenNote"))
+                // §8.5: hiding changes the map, not the record or the export.
+                Text(localization.editorText("ios.editor.visibilityNote"))
+            }
         }
     }
 
@@ -404,6 +442,7 @@ struct RideEditorView: View {
                 } label: {
                     RouteSectionLabel(
                         section: draft.routeSections?[index], index: index + 1,
+                        region: Region.resolved(draft),
                         localization: localization)
                 }
             }
@@ -545,6 +584,56 @@ struct RideEditorView: View {
         Binding(get: { draft.visible != false }, set: { draft.visible = $0 })
     }
 
+    /// Whether this journey was ridden — the switch the passport reads.
+    ///
+    /// Writing it sets `ride_segment` across every call of the journey, which
+    /// is what `RideLedger.setRidden` means and why the per-stop switches in
+    /// the stop list are still there for a journey only partly ridden.
+    ///
+    /// **Touching it takes it out of the pre-fill's hands, for good.** See
+    /// ``prefillRidden(forDate:)``.
+    private var riddenBinding: Binding<Bool> {
+        Binding(
+            get: { RideLedger.hasBeenRidden(draft) },
+            set: { ridden in
+                riddenIsTheReaders = true
+                draft = RideLedger.setRidden(draft, ridden)
+            })
+    }
+
+    /// The date pre-fill, and the exact edge of what the app is allowed to
+    /// decide for itself.
+    ///
+    /// Nothing in this app may conclude from a date that a journey happened —
+    /// a date is a plan, and a passport filled in from the calendar counts
+    /// trips that were cancelled, moved or simply never taken. What a FORM may
+    /// do is open on the likely answer, in a switch the reader is looking at,
+    /// which they can move, and which they confirm by pressing Save. That is
+    /// the whole of what this is, and it is fenced accordingly:
+    ///
+    ///   - **Only while creating.** An existing record's ride state is never
+    ///     touched here, however its date is edited. What is written down is
+    ///     what the reader said, and it stays said.
+    ///   - **Only until touched.** The moment the reader moves the switch it
+    ///     is theirs, and typing a different date afterwards will not move it
+    ///     back.
+    ///
+    /// It follows the date field rather than firing once when the sheet opens
+    /// because a blank journey has no date yet: seeded at open it would always
+    /// read "ridden", and picking next month's date would leave it there —
+    /// which is the pre-fill being wrong in exactly the direction that matters.
+    private func prefillRidden(forDate date: String?) {
+        guard isNew, !riddenIsTheReaders else { return }
+        // An unparseable or empty date names no day, so there is nothing to be
+        // ahead of and the form opens on "ridden" — the same answer every
+        // record written by an older build carries.
+        let ridden = Dates.normalizeDateString(date).map {
+            $0 <= RecordDate.today(in: Region.resolved(draft).clock)
+        } ?? true
+        guard RideLedger.hasBeenRidden(draft) != ridden else { return }
+        draft = RideLedger.setRidden(draft, ridden)
+    }
+
     /// The region row.
     ///
     /// Reading falls back to what the stops say — an untagged ride shows the
@@ -648,6 +737,10 @@ struct RideEditorView: View {
 private struct RouteSectionLabel: View {
     let section: RouteSection?
     let index: Int
+    /// Which readings table names these two stations. A section carries the
+    /// OPERATOR's station code outside Japan, which names no region on its
+    /// own — see `StationNaming.swift`.
+    let region: Region
     let localization: AppLocalization
 
     var body: some View {
@@ -668,7 +761,9 @@ private struct RouteSectionLabel: View {
     }
 
     private func endpoint(_ name: String?, _ code: String?) -> String {
-        if let name, !name.isEmpty { return localization.stationName(name, code: code) }
+        if let name, !name.isEmpty {
+            return localization.stationName(name, code: code, region: region)
+        }
         if let code, !code.isEmpty { return code }
         return localization.editorText("ios.route.unnamedStation")
     }
@@ -1017,15 +1112,62 @@ private struct StopEditorView: View {
     }
 }
 
+/// The editor's station chooser.
+///
+/// ## What the list costs, and where that cost used to fall
+///
+/// `stations` is one row per (line, station): Japan hands this 10,217 rows
+/// carrying 9,039 distinct station codes, because 東京 arrives once per
+/// platform. The list the reader reads is those rows de-duplicated by code and
+/// sorted by `localizedStandardCompare`, and then filtered by what they have
+/// typed.
+///
+/// All three steps used to live in one computed property, so **all three ran
+/// on every keystroke** — including the two that do not depend on the query.
+/// Measured over the Japanese package in release (`ios/tools/bench`, Apple
+/// silicon):
+///
+/// | | per keystroke |
+/// | --- | ---: |
+/// | de-duplicate + `localizedStandardCompare` sort | 46.6 ms |
+/// | filter (three locale-aware searches × 9,039 rows) | 22.9 ms |
+///
+/// 70 ms of main thread per character, on a machine several times faster than
+/// the phone. So the sort moved to where its input changes — once per station
+/// list — and the filter moved off the main actor behind a short debounce.
+///
+/// ## Why a debounce is acceptable here and the empty query is not debounced
+///
+/// The filter is 23 ms of locale-aware substring search that no amount of
+/// rearranging makes cheap: `localizedCaseInsensitiveContains` is what the
+/// contract is written in, and the three candidate spellings of it measured
+/// within 8 % of one another. What can be avoided is running it once per
+/// character while the reader is still typing. Clearing the field is answered
+/// synchronously and immediately, because "I have deleted my query" is a
+/// result the reader is entitled to see on the same frame, and its answer is
+/// already in hand.
 private struct StationPickerView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
     @Binding var stop: Stop
     let stations: [RailNetworkStore.DrawnStation]
     @State private var query = ""
+    /// The de-duplicated, sorted list — the answer that does not depend on the
+    /// query, computed when `stations` changes and not again.
+    @State private var prepared: [RailNetworkStore.DrawnStation] = []
+    /// What the list is showing. Equal to `prepared` whenever the field is
+    /// empty, so an empty query never waits for anything.
+    @State private var matches: [RailNetworkStore.DrawnStation] = []
+    @State private var filterTask: Task<Void, Never>?
+
+    /// How long typing has to pause before the list is re-filtered.
+    ///
+    /// Under one frame's grace at a comfortable typing speed and well under
+    /// the ~200 ms at which a delay stops reading as "the list is keeping up".
+    private static let debounce = Duration.milliseconds(120)
 
     var body: some View {
-        List(filteredStations, id: \.stationCode) { station in
+        List(matches, id: \.stationCode) { station in
             Button {
                 stop.name = station.name
                 stop.n02StationCode = station.stationCode
@@ -1051,18 +1193,69 @@ private struct StationPickerView: View {
         .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $query, prompt: Text(localization.editorText("ios.editor.stationSearch")))
+        // Keyed on the list's identity rather than run once: the picker is
+        // presented inside a sheet that can outlive one region's package
+        // arriving.
+        .task(id: "\(stations.count)|\(stations.first?.id ?? "")|\(stations.last?.id ?? "")") {
+            let source = stations
+            prepared = await Task.detached(priority: .userInitiated) {
+                Self.prepare(source)
+            }.value
+            apply(query: query)
+        }
+        .onChange(of: query) { _, needle in
+            apply(query: needle)
+        }
+        .onDisappear { filterTask?.cancel() }
     }
 
-    private var filteredStations: [RailNetworkStore.DrawnStation] {
+    /// The half of the list that does not depend on the query.
+    ///
+    /// `nonisolated` and taking its input by value so it can run off the main
+    /// actor: `DrawnStation` is `Sendable`, and this is 10,217 rows through a
+    /// locale-aware sort.
+    private nonisolated static func prepare(
+        _ stations: [RailNetworkStore.DrawnStation]
+    ) -> [RailNetworkStore.DrawnStation] {
         var seen = Set<String>()
-        let unique = stations.filter { seen.insert($0.stationCode).inserted }
+        seen.reserveCapacity(stations.count)
+        return stations.filter { seen.insert($0.stationCode).inserted }
             .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty else { return unique }
-        return unique.filter {
+    }
+
+    /// §5.1's predicate, unchanged — the same three fields in the same order
+    /// through the same locale-aware search. What changed is when it runs, not
+    /// what it answers.
+    private nonisolated static func filter(
+        _ stations: [RailNetworkStore.DrawnStation], needle: String
+    ) -> [RailNetworkStore.DrawnStation] {
+        stations.filter {
             $0.name.localizedCaseInsensitiveContains(needle)
                 || $0.nameRoma.localizedCaseInsensitiveContains(needle)
                 || $0.stationCode.localizedCaseInsensitiveContains(needle)
+        }
+    }
+
+    /// Show the answer for `query`, immediately when it is free and after a
+    /// short pause when it is not.
+    private func apply(query: String) {
+        filterTask?.cancel()
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !needle.isEmpty else {
+            // Free, and owed on this frame: clearing the field must not leave
+            // the reader looking at the previous query's results.
+            matches = prepared
+            return
+        }
+        let source = prepared
+        filterTask = Task { @MainActor in
+            try? await Task.sleep(for: Self.debounce)
+            guard !Task.isCancelled else { return }
+            let found = await Task.detached(priority: .userInitiated) {
+                Self.filter(source, needle: needle)
+            }.value
+            guard !Task.isCancelled else { return }
+            matches = found
         }
     }
 }

@@ -194,6 +194,19 @@ enum ShellStrings {
         "ios.zoomIn": [.en: "Zoom in", .ja: "拡大", .zhHans: "放大", .zhHant: "放大"],
         "ios.zoomOut": [.en: "Zoom out", .ja: "縮小", .zhHans: "缩小", .zhHant: "縮小"],
 
+        // -- The ambiguous-tap chooser -------------------------------------
+        //
+        // iOS-only. The web app asks this in a dialog whose MESSAGE is the
+        // whole question (`choose.overlap`, a sentence ending in a colon); the
+        // sheet here has a navigation bar, and a bar takes a heading rather
+        // than a sentence. The sentence is not repeated inside the sheet — the
+        // rows are trains, under a title that says what the list is, which is
+        // the same shape every other sheet in this app has.
+        "ios.chooseOverlapTitle": [
+            .en: "Overlapping lines", .ja: "重なった路線の選択",
+            .zhHans: "重叠线路选择", .zhHant: "重疊線路選擇",
+        ],
+
         // -- Map layers: the two groups ------------------------------------
         //
         // iOS-only keys. The web app's layers popover has no network group —
@@ -353,16 +366,16 @@ enum ShellStrings {
             .zhHant: "關閉時，跨夜行程在另一個日期的半段以虛線繪製。",
         ],
         "ios.note.terminalRadius": [
-            .en: "The dot at a ride's origin and destination.",
-            .ja: "行程の始発駅と終着駅に置かれる丸です。",
-            .zhHans: "行程起点与终点站的圆点。",
-            .zhHant: "行程起點與終點站的圓點。",
+            .en: "The full-size origin and destination dots of the selected ride. Unselected endpoints stay close to ordinary station size.",
+            .ja: "選択中の行程で表示する始発・終着駅の最大サイズです。未選択時は通常の駅より少し大きく表示します。",
+            .zhHans: "选中行程的起点与终点完整尺寸；未选中时仅略大于普通站点。",
+            .zhHant: "選中行程的起點與終點完整尺寸；未選中時僅略大於普通站點。",
         ],
         "ios.note.stopRadius": [
-            .en: "The black centre inside an intermediate stop's dot.",
-            .ja: "途中停車駅の丸の中心にある黒点です。",
-            .zhHans: "中途停靠站圆点中心的黑点。",
-            .zhHant: "中途停靠站圓點中心的黑點。",
+            .en: "The small route-coloured centre inside an intermediate stop's dot.",
+            .ja: "途中停車駅の丸の中心にある路線色の点です。",
+            .zhHans: "中途停靠站圆点中心的线路色小点。",
+            .zhHant: "中途停靠站圓點中心的線路色小點。",
         ],
         "ios.note.passRadius": [
             .en: "The outer circle for intermediate calls and pass-throughs.",

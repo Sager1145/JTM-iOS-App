@@ -107,6 +107,14 @@ struct RailWorkspaceView: View {
     /// control that appears to do nothing, which is indistinguishable from one
     /// that is broken.
     @State private var categoryIndexesBuilding = false
+    /// The workspace's memoised answers — see ``WorkspaceDerived``.
+    ///
+    /// Not observable and not observed: it is a cache whose every entry is a
+    /// pure function of its key, so filling one during a body evaluation
+    /// invalidates nothing. It exists because this view asks the same
+    /// expensive questions several times per pass, and a sheet drag is one
+    /// pass per frame.
+    @State private var derived = WorkspaceDerived()
     @State private var manualDates: [String] = []
     @State private var newManualDate = ""
     @AppStorage("map-follows-selected-date") private var mapFollowsSelectedDate = false
@@ -188,7 +196,6 @@ struct RailWorkspaceView: View {
     private enum RidesDialog {
         case addDate
         case delete(Train)
-        case choose([Train])
     }
 
     /// Everything this workspace can present over itself.
@@ -215,6 +222,11 @@ struct RailWorkspaceView: View {
         case mapLayers
         /// A station's own card — what used to be the map's callout.
         case station(StationCard)
+        /// The rides under one ambiguous tap — what used to be a
+        /// `confirmationDialog`. It is here, beside the station card, because
+        /// the two are the same event: a finger that landed on more than the
+        /// map can answer by itself. See `RideChooserView`.
+        case chooseRide([Train])
         /// §4.1's Data Library and Settings. They are presented from HERE
         /// rather than from the shell because the shell is already presenting
         /// the resident bottom sheet, and one controller cannot present two.
@@ -230,6 +242,7 @@ struct RailWorkspaceView: View {
             case .mapInfo: "info"
             case .mapLayers: "layers"
             case .station(let card): "station:\(card.id)"
+            case .chooseRide(let trains): "choose:\(trains.map(\.id).joined(separator: ","))"
             case .utility(let destination): "utility:\(destination.rawValue)"
             }
         }
@@ -274,6 +287,37 @@ struct RailWorkspaceView: View {
         }
         .onChange(of: playback.currentTrainID) { _, id in
             if let id { itineraries.selectedTrainID = id }
+        }
+        // Where the map opens, in two steps — the country the reader's next
+        // journey is in, and then that journey's own day.
+        //
+        // This step waits for two things and no more: an `MKMapView` to talk
+        // to, and the rides to have been read. Deliberately NOT for the rail
+        // packages: ``Region/networkExtent`` is a written-down box precisely so
+        // that the opening view does not arrive seconds after the launch it
+        // belongs to. See ``RailMapController/frameAtLaunch(_:precise:)`` for
+        // what this replaced and for the ways it declines to move a camera
+        // somebody else already has.
+        //
+        // Keyed on a cheap summary rather than on `launchRegion` itself: the
+        // answer costs a pass over every ride, this key is read on every body
+        // evaluation, and a sheet drag is a body evaluation per frame.
+        .task(id: "\(controller.isMapReady)|\(launchFramingKey)") {
+            guard controller.isMapReady, let launchRegion else { return }
+            controller.frameAtLaunch(launchRegion.networkExtent)
+        }
+        // …and the step the country box is standing in for: the routes of the
+        // day the reader is opening the app on, all of them, at the zoom that
+        // holds them. It cannot be the first step because it is drawn
+        // GEOMETRY — solved, cached and read off disk — and a map left on the
+        // globe until that lands is not an opening view either.
+        //
+        // Once. `frameAtLaunch(precise:)` refuses a second, and refuses this
+        // one outright if the reader has meanwhile touched the map or opened a
+        // journey; a camera somebody is already using is not the app's to take.
+        .task(id: "\(controller.isMapReady)|\(launchFocusKey)") {
+            guard controller.isMapReady, let region = launchFocusRegion else { return }
+            controller.frameAtLaunch(region, precise: true)
         }
         // §5.3.2: while Passport is on top the map IS its coverage map, so
         // changing what is being reported on has to move the map to it.
@@ -350,9 +394,10 @@ struct RailWorkspaceView: View {
             }
         }
         // Which region the camera starts on, and which sample is loaded —
-        // the two things a `simctl` harness cannot tap its way to now that
-        // the app boots with an empty store and a camera framing all five
-        // networks at a zoom where the LOD draws almost nothing.
+        // the two things a `simctl` harness cannot tap its way to. The opening
+        // camera is chosen from the reader's own rides now, so a harness that
+        // has loaded no store at all still opens on the fallback country
+        // rather than on the country the shot is meant to be of.
         .task(id: "\(store.lines.count)|\(controller.isMapReady)") {
             guard controller.isMapReady else { return }
             if let camera = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_CAMERA"] {
@@ -372,9 +417,9 @@ struct RailWorkspaceView: View {
                 .filter { $0.region == region }
                 .reduce(MKMapRect.null) { $0.union($1.mapRect) }
             guard !rect.isNull else { return }
-            // After the map's own one-time framing, which fires when the last
-            // region's lines land and would otherwise pull the camera back out
-            // to all five networks a moment after this set it.
+            // After the app's own opening move, and after the lines this rect
+            // is measured from have landed. `frameAtLaunch` will not fire
+            // twice, so this is the last word on the camera either way.
             try? await Task.sleep(for: .milliseconds(700))
             controller.mapView?.setVisibleMapRect(
                 rect, edgePadding: UIEdgeInsets(top: 40, left: 40, bottom: 40, right: 40),
@@ -453,8 +498,8 @@ struct RailWorkspaceView: View {
                 // Not a layer, but the same problem: 自動縮放 is a stored
                 // preference with a switch in the date menu, and a harness
                 // cannot open a menu either. Without it every screenshot of
-                // the map is taken from the launch camera, which frames five
-                // countries and shows a journey as four pixels.
+                // the map is taken from the launch camera, which frames a
+                // whole country and shows a journey as a few pixels.
                 case "focus": autoFocusZoom = true
                 default: break
                 }
@@ -463,19 +508,19 @@ struct RailWorkspaceView: View {
         // The ambiguous-tap chooser, which otherwise needs a finger landing
         // within 18 points of two rides at once. The list it shows is built
         // the same way a real tap builds it — see `RideTapResolver`, whose
-        // arithmetic is unit-tested; this only reaches the dialog.
+        // arithmetic is unit-tested; this only reaches the sheet.
         .task(id: "\(itineraries.loaded?.trains.count ?? -1)") {
             guard let count = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_CHOOSER"]
                 .flatMap(Int.init), let trains = itineraries.loaded?.trains, trains.count >= count
             else { return }
             try? await Task.sleep(for: .milliseconds(1200))
-            dialog = .choose(Array(trains.prefix(count)))
+            sheet = .chooseRide(Array(trains.prefix(count)))
         }
         .task(id: "\(itineraries.loaded?.trains.count ?? -1)") {
             guard itineraries.loaded != nil,
                   let wanted = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_SAMPLE"],
                   let sample = RideLibrary.Sample.all.first(where: { $0.resource == wanted }),
-                  let incoming = try? library.sample(sample.resource) else { return }
+                  let incoming = try? await library.sample(sample.resource) else { return }
             await itineraries.merge(incoming, into: library)
         }
 #if DEBUG
@@ -560,13 +605,6 @@ struct RailWorkspaceView: View {
                         signal(.deleted)
                     }
                 }
-            case .some(.choose(let trains)):
-                ForEach(trains, id: \.id) { train in
-                    Button(chooserLabel(train)) {
-                        dialog = nil
-                        afterPresentationDismisses { pick(train) }
-                    }
-                }
             case .some(.addDate), .none:
                 EmptyView()
             }
@@ -629,14 +667,14 @@ struct RailWorkspaceView: View {
         Binding(
             get: {
                 switch dialog {
-                case .some(.delete), .some(.choose): true
+                case .some(.delete): true
                 case .some(.addDate), .none: false
                 }
             },
             set: { presented in
                 guard !presented else { return }
                 switch dialog {
-                case .some(.delete), .some(.choose): dialog = nil
+                case .some(.delete): dialog = nil
                 case .some(.addDate), .none: break
                 }
             })
@@ -649,8 +687,6 @@ struct RailWorkspaceView: View {
                 "ios.journey.deleteConfirm",
                 ["train": .string(train.number)],
                 fallback: "Delete {train}?")
-        case .some(.choose):
-            localization.countryText("choose.overlap", fallback: "Which journey?")
         case .some(.addDate), .none:
             ""
         }
@@ -672,7 +708,10 @@ struct RailWorkspaceView: View {
             case .newJourney(let draft):
                 RideEditorView(
                     train: draft,
-                    title: localization.text("ios.editorTitleNew", fallback: "New")
+                    title: localization.text("ios.editorTitleNew", fallback: "New"),
+                    // The one place `isNew` is true, and the only place the
+                    // ride switch is ever pre-filled from a date.
+                    isNew: true
                 ) { added in
                     // §8.2: saving selects the new journey, so the route state
                     // that follows is reported in its own Hero.
@@ -744,6 +783,18 @@ struct RailWorkspaceView: View {
                 MapLayersView(controller: controller, classifying: categoryIndexesBuilding)
             case .station(let card):
                 StationCardView(card: card)
+            case .chooseRide(let trains):
+                RideChooserView(
+                    trains: trains,
+                    // The date leads only when the list is not already scoped
+                    // to one day: scoped, every candidate carries the same
+                    // date and it says nothing about which is which.
+                    showsDate: selectedDate == Dates.allDates,
+                    presentation: { presentation(for: $0) }
+                ) { train in
+                    sheet = nil
+                    afterPresentationDismisses { pick(train) }
+                }
             case .utility(let destination):
                 UtilityDestinationView(
                     destination: destination,
@@ -1172,7 +1223,8 @@ struct RailWorkspaceView: View {
     ) -> some View {
         VStack(spacing: 0) {
             PanelHeader(
-                title: panelTitle(for: tab, stage: stage),
+                title: panelTitle(for: tab, stage: .expanded),
+                compactTitle: panelTitle(for: tab, stage: .compact),
                 subtitle: panelSubtitle(for: tab),
                 stage: stage,
                 expansionProgress: headerExpansion
@@ -1207,6 +1259,21 @@ struct RailWorkspaceView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
         }
+        // The header is anchored to the top of the page, not floated in the
+        // middle of it.
+        //
+        // Below the Half stop the branch above contributes nothing, so this
+        // stack held a single view — and a lone child of a stack that is
+        // handed the whole page is centred in it. That put the panel header
+        // half of the leftover space below the card's top edge, which is a
+        // distance that GROWS with the sheet: the title drifted downwards
+        // through the first half of the drag and then jumped 76 points back up
+        // at the stop where `content()` appeared and claimed the slack. See
+        // `PanelHeader.collapsedTopInset` for the measurements. The header's
+        // own padding states its distance from the top now, which is a
+        // function of the morph rather than of what happens to be mounted
+        // under it.
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private func tabTitle(_ tab: PrimaryTab) -> String {
@@ -1226,23 +1293,36 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// §5.3's Passport, by its plainer name. The coverage map it used to draw
-    /// inside itself is the root map now — one basemap for all three
-    /// destinations, which is what stopped this screen from being a second
-    /// `MKMapView` over the first one.
     /// The journeys the statistics destination is reporting on.
     ///
     /// The same two filters `PassportWorkspaceView` applies, spelled here as
     /// well because the map is outside that view now — and derived from the
     /// same two values, so the two cannot disagree about what is in scope.
-    private var statisticsScopedTrains: [Train] {
+    private var statisticsScopedTrains: [Train] { statisticsScope.trains }
+
+    /// §5.3's scope, and the same answer as a set of ids for the map filter.
+    ///
+    /// Memoised together because the two are the same pass: `mapRides` used to
+    /// rebuild the id set out of this list on every body evaluation, which on
+    /// the Passport destination made a sheet drag a per-frame scan of every
+    /// journey. See ``WorkspaceDerived``.
+    ///
+    /// Three filters, not two. A journey the record does not say was ridden is
+    /// not in the numbers (see ``RailPresentation/RideLedger``), so it must not
+    /// be on the coverage map either: §5.3.2 draws "the same records the
+    /// numbers counted, and only those", and a line under a percentage that
+    /// does not include it is the map contradicting the figure above it.
+    private var statisticsScope: (trains: [Train], ids: Set<String>) {
         let trains = itineraries.loaded?.trains ?? []
-        return trains.filter { train in
-            if let statisticsRegion, Region.resolved(train) != statisticsRegion {
-                return false
+        let date = statistics.selectedDate
+        let region = statisticsRegion
+        return derived.statisticsScope(trains: trains, region: region, date: date) {
+            trains.filter { train in
+                if let region, Region.resolved(train) != region { return false }
+                guard RideLedger.hasBeenRidden(train) else { return false }
+                guard date != Dates.allDates else { return true }
+                return Dates.trainSpans(train.forDates, date: date)
             }
-            guard statistics.selectedDate != Dates.allDates else { return true }
-            return Dates.trainSpans(train.forDates, date: statistics.selectedDate)
         }
     }
 
@@ -1254,6 +1334,10 @@ struct RailWorkspaceView: View {
         afterPresentationDismisses { sheet = .utility(.settings) }
     }
 
+    /// §5.3's Passport, by its plainer name. The coverage map it used to draw
+    /// inside itself is the root map now — one basemap for all three
+    /// destinations, which is what stopped this screen from being a second
+    /// `MKMapView` over the first one.
     private var statisticsPanel: some View {
         PassportWorkspaceView(
             itineraries: itineraries,
@@ -1295,8 +1379,12 @@ struct RailWorkspaceView: View {
             localization.text("nav.stats", fallback: "Stats")
         case .all:
             if let train = selectedTrain {
+                // Not `train.number` itself: that field is a caption, and at
+                // this stop it is one line over a tab bar. See
+                // ``JourneyTitle``, which is where the cut is decided and
+                // where the cases are held to it.
                 stage == .compact
-                    ? train.number
+                    ? JourneyTitle.compact(train)
                     : localization.text("ios.currentJourney", fallback: "Current journey")
             } else {
                 localization.text("nav.allJourneys", fallback: "All journeys")
@@ -1322,8 +1410,8 @@ struct RailWorkspaceView: View {
         case .all:
             if let train = selectedTrain {
                 let endpoints = [
-                    localization.stationName(train.origin),
-                    localization.stationName(train.destination),
+                    localization.originName(of: train),
+                    localization.destinationName(of: train),
                 ]
                 .filter { !$0.isEmpty }
                 .joined(separator: " → ")
@@ -1513,12 +1601,6 @@ struct RailWorkspaceView: View {
             statisticsRegion.localizationKey, fallback: statisticsRegion.fallbackName)
     }
 
-    /// §5.3.1's region scope, in the header rather than in a card.
-    ///
-    /// It is the only scope the statistics have that the reader chooses, and
-    /// §9.5.6 gives every destination one row for exactly that. Labelled with
-    /// the region's NAME rather than a glyph: a scope control whose current
-    /// value is invisible is a control the reader has to open to read.
     /// §5.3.1's date Scope, in the header row rather than in a card.
     ///
     /// It used to live inside 當日統計, where the numbers it scopes are — a
@@ -1597,6 +1679,12 @@ struct RailWorkspaceView: View {
         return localization.text(key, fallback: key)
     }
 
+    /// §5.3.1's region scope, in the header rather than in a card.
+    ///
+    /// It is the only scope the statistics have that the reader chooses, and
+    /// §9.5.6 gives every destination one row for exactly that. Labelled with
+    /// the region's NAME rather than a glyph: a scope control whose current
+    /// value is invisible is a control the reader has to open to read.
     private var regionMenu: some View {
         Menu {
             // 全部 first, and above a divider: it is not a sixth region, it is
@@ -1664,32 +1752,193 @@ struct RailWorkspaceView: View {
     /// record on or after today is upcoming; an undated one is not — it has no
     /// position on a calendar to be ahead of, and putting it here would be
     /// claiming one.
-    private var upcomingTrains: [Train] {
+    ///
+    /// **Today is the ride's, not the device's.** With five networks in one
+    /// store there are five answers to "what day is it" at any instant, and
+    /// the one that decides whether a journey is still ahead is the one where
+    /// the journey is: a Tokyo ride dated 2026-08-27 stopped being upcoming
+    /// when Japan reached the 28th, not when London did six hours later. One
+    /// `Date()` for all five, so that two rides in one region cannot land on
+    /// different days by being asked a millisecond apart.
+    private var upcomingTrains: [Train] { upcomingScope.trains }
+
+    /// The same answer, plus the ids the map filters on — one pass, for the
+    /// same reason ``statisticsScope`` is a pair: the Upcoming destination
+    /// draws exactly the journeys its list holds (§4.2), so the list and the
+    /// map must not be able to disagree about what is still ahead.
+    private var upcomingScope: (trains: [Train], ids: Set<String>) {
+        let today = todayByRegion()
         let trains = itineraries.loaded?.trains ?? []
-        let today = todayString
-        return trains
-            .filter { train in
-                guard let date = train.date, !date.isEmpty else { return false }
-                return date >= today
-            }
-            .sorted { lhs, rhs in
-                let a = lhs.date ?? "", b = rhs.date ?? ""
-                return a == b ? lhs.id < rhs.id : a < b
-            }
+        return derived.upcoming(trains: trains, today: today) {
+            trains
+                .filter { train in
+                    guard let date = train.date, !date.isEmpty,
+                        let regionToday = today[Region.resolved(train)]
+                    else { return false }
+                    return date >= regionToday
+                }
+                .sorted { lhs, rhs in
+                    let a = lhs.date ?? "", b = rhs.date ?? ""
+                    return a == b ? lhs.id < rhs.id : a < b
+                }
+        }
     }
 
-    /// Today, spelled the way a record spells a date.
+    /// Today, on each of the five clocks.
     ///
-    /// Deliberately not in `RailCore`. That module is pure and checked against
-    /// recorded fixtures, and a function whose answer depends on when it is
-    /// called can be neither — "what is today" is the app's question, not the
-    /// ported logic's.
-    private var todayString: String {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-        let parts = calendar.dateComponents([.year, .month, .day], from: Date())
-        return String(
-            format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
+    /// One `Date()` for all of them, so that two rides in one region cannot
+    /// land on different days by being asked a millisecond apart — and one
+    /// owner, so that "is this ahead of me", "is this behind me" and "may the
+    /// statistics count this yet" cannot come to answer against different
+    /// todays. See ``RegionToday``, which is that owner.
+    ///
+    /// Nothing about the STATISTICS is asked of it. What the passport counts
+    /// is a stated fact on the record, not a date — see
+    /// ``RailPresentation/RideLedger``.
+    private func todayByRegion() -> [Region: String] {
+        RegionToday.byRegion()
+    }
+
+    // MARK: - where the map opens
+
+    /// The country the map is framed on at launch.
+    ///
+    /// The soonest journey that has not happened yet; for a reader with
+    /// nothing ahead of them, the most recent one that has; and for a store
+    /// with no dated ride in it at all, ``defaultRegion``'s answer — which
+    /// ends at Japan, as every other "which region did you mean" in the app
+    /// does.
+    ///
+    /// `nil` until the rides have been read, and that is load-bearing rather
+    /// than tidy: the opening move happens ONCE, so an answer given while the
+    /// store is still on disk would be Japan for everybody, for good.
+    private var launchRegion: Region? {
+        switch itineraries.state {
+        case .idle, .loading:
+            return nil
+        case .failed:
+            // Nothing to choose from and nothing coming. Better the fallback
+            // country than a camera left sitting on the whole globe waiting
+            // for rides that are not going to arrive.
+            return defaultRegion
+        case .loaded:
+            if let next = upcomingTrains.first { return Region.resolved(next) }
+            if let previous = latestPastTrain { return Region.resolved(previous) }
+            return defaultRegion
+        }
+    }
+
+    /// What the opening move is waiting on, as something cheap to compare.
+    ///
+    /// `LoadState` is not `Equatable` and ``launchRegion`` costs a pass over
+    /// every ride; this is read on every body evaluation, so it is neither.
+    private var launchFramingKey: String {
+        switch itineraries.state {
+        case .idle: "idle"
+        case .loading: "loading"
+        case .failed: "failed"
+        case .loaded(let loaded): "loaded:\(loaded.trains.count)"
+        }
+    }
+
+    /// The journeys the map actually opens ON: everything still ahead on the
+    /// soonest day that has anything, in that day's own country.
+    ///
+    /// The map used to open on a whole country, which answers "where am I
+    /// going next" at the scale of Honshū — true, and no use to somebody about
+    /// to travel. What a journey app is opened for is the day it is opened on,
+    /// so the opening view is the day's own routes, all of them, at whatever
+    /// zoom holds them.
+    ///
+    /// **A day rather than today.** With nothing dated today the first thing
+    /// ahead is the next thing ahead, and framing the country until then would
+    /// leave the reader with no opening view at all on every day they are not
+    /// travelling. `upcomingTrains` is sorted by date, so its first entry names
+    /// the day; being that day's own region as well keeps a Tokyo morning and
+    /// a Seoul evening dated alike from being framed as one box across the Sea
+    /// of Japan.
+    ///
+    /// Empty when nothing is ahead — the country box (``launchRegion``) is
+    /// then the whole of the opening view, as it was.
+    private var launchFocusIDs: Set<String> {
+        let upcoming = upcomingScope.trains
+        return derived.launchFocus(upcoming: upcoming) {
+            guard let first = upcoming.first, let date = first.date, !date.isEmpty
+            else { return [] }
+            let region = Region.resolved(first)
+            return Set(
+                upcoming
+                    .filter { $0.date == date && Region.resolved($0) == region }
+                    .map(\.id))
+        }
+    }
+
+    /// The box those journeys' drawn routes fill, once they have been read off
+    /// disk. `nil` until then, and `nil` for a day whose routes all failed to
+    /// solve — there is nothing to frame, and a camera sent to an empty box
+    /// would be worse than the country it is already showing.
+    ///
+    /// Measured from the VISIBLE rides: a journey the reader has switched off
+    /// is not drawn, and framing the map on where it would have been leaves
+    /// them looking at blank basemap.
+    /// **Only once the whole load is in.** `RiddenRouteStore` publishes the
+    /// last-viewed journey on its own, ahead of the other two hundred, so that
+    /// the map has something on it while the rest is read. Framing on that is
+    /// how "all of the day's routes" quietly becomes "one of them": the
+    /// opening move happens once, and it would have happened on a partial
+    /// answer. `.loaded` is the store saying there is no more coming.
+    private var launchFocusRegion: MKCoordinateRegion? {
+        guard case .loaded = riddenRoutes.state else { return nil }
+        let ids = launchFocusIDs
+        guard !ids.isEmpty else { return nil }
+        return RailMapController.region(
+            covering: riddenRoutes.visibleRides
+                .filter { ids.contains($0.id) }
+                .flatMap(\.strokes))
+    }
+
+    /// What the precise half of the opening move is waiting on: the day's own
+    /// journeys, and every route having been read for them.
+    ///
+    /// The store's own phase is the arrival signal rather than the geometry —
+    /// counting vertices on every body evaluation to notice a load finishing
+    /// would cost more than the framing it triggers, and a sheet drag is a
+    /// body evaluation per frame. ``launchFocusIDs`` is memoised, so its count
+    /// is free.
+    private var launchFocusKey: String {
+        let phase: String
+        switch riddenRoutes.state {
+        case .idle: phase = "idle"
+        case .loading: phase = "loading"
+        case .failed: phase = "failed"
+        case .loaded(let rides): phase = "loaded:\(rides.count)"
+        }
+        return "\(launchFocusIDs.count)|\(phase)"
+    }
+
+    /// The journey that happened most recently — the newest record behind
+    /// today, on its own region's clock.
+    ///
+    /// "The first of the history", read the way ``upcomingTrains`` reads the
+    /// first of what is coming: nearest to now. An undated record is not in
+    /// the running, for the reason it is not upcoming either — it has no
+    /// position on a calendar to be behind.
+    private var latestPastTrain: Train? {
+        let today = todayByRegion()
+        let trains = itineraries.loaded?.trains ?? []
+        return derived.latestPast(trains: trains, today: today) {
+            trains
+                .filter { train in
+                    guard let date = train.date, !date.isEmpty,
+                        let regionToday = today[Region.resolved(train)]
+                    else { return false }
+                    return date < regionToday
+                }
+                .max { lhs, rhs in
+                    let a = lhs.date ?? "", b = rhs.date ?? ""
+                    return a == b ? lhs.id < rhs.id : a < b
+                }
+        }
     }
 
     private var upcomingCount: Int? {
@@ -1733,17 +1982,6 @@ struct RailWorkspaceView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
-    }
-
-    private func groupedByDate(_ trains: [Train]) -> [ItineraryStore.Loaded.Day] {
-        var order: [String] = []
-        var byDate: [String: [Train]] = [:]
-        for train in trains {
-            let date = train.date ?? Dates.undated
-            if byDate[date] == nil { order.append(date) }
-            byDate[date, default: []].append(train)
-        }
-        return order.map { .init(date: $0, trains: byDate[$0] ?? []) }
     }
 
     // MARK: - wide windows: a sidebar, on iPad and on a phone in landscape
@@ -1835,7 +2073,8 @@ struct RailWorkspaceView: View {
                     itineraries.selectedTrainID = nil
                 },
                 onPrimary: { perform($0, on: train) },
-                onSecondary: { perform($0, on: train) }
+                onSecondary: { perform($0, on: train) },
+                onSetRidden: { setRidden(train, $0) }
             )
             .padding(.top, 4)
         }
@@ -2147,6 +2386,39 @@ struct RailWorkspaceView: View {
             // is the tint role — 可点击、选中 — so it takes the app's accent.
             .tint(.accentColor)
         }
+        // §5.3: the passport counts what the reader says they rode, so the
+        // saying has to be somewhere they already are. The leading edge,
+        // because the trailing one is where destructive lives and a confirm is
+        // the opposite of that — and because this is the swipe a reader makes
+        // repeatedly after a trip, down a list of the journeys they just took.
+        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+            let ridden = RideLedger.hasBeenRidden(train)
+            Button {
+                setRidden(train, !ridden)
+            } label: {
+                Label(
+                    localization.editorText(
+                        ridden ? "ios.detail.markNotRidden" : "ios.detail.confirmRidden"),
+                    systemImage: ridden ? "circle.dashed" : "checkmark.circle")
+            }
+            // Green for the confirm, which §6.2 allows as the success role;
+            // the accent for taking it back, because that is not a failure —
+            // it is the same tint role the visibility swipe takes.
+            .tint(ridden ? .accentColor : .green)
+        }
+    }
+
+    /// Say whether a journey was ridden, and write it down.
+    ///
+    /// Goes through `replace` — the one verified commit every other edit takes
+    /// — rather than a store transition of its own, because that is all this
+    /// is: the record's own `ride_segment` flags, set across the whole journey.
+    /// See ``RailPresentation/RideLedger``.
+    private func setRidden(_ train: Train, _ ridden: Bool) {
+        guard RideLedger.hasBeenRidden(train) != ridden else { return }
+        itineraries.replace(RideLedger.setRidden(train, ridden), replacing: train.id)
+        persistMine()
+        signal(.saved)
     }
 
     // MARK: - workspace-level states (§13.1, §13.2, §13.3)
@@ -2280,6 +2552,28 @@ struct RailWorkspaceView: View {
         _ loaded: ItineraryStore.Loaded,
         query searchQuery: String = ""
     ) -> [ItineraryStore.Loaded.Day] {
+        // Memoised, because one body evaluation asks this up to three times —
+        // the header's count, the list itself, and `playbackScope` behind the
+        // play button's `disabled` — and with a query in the field each of
+        // those is a locale-aware substring search over every field of every
+        // journey. See ``WorkspaceDerived``.
+        //
+        // Keyed on the naming generation as well, because the search now reads
+        // names the store does not carry: the same query over the same store
+        // answers differently once the reader switches language, or once a
+        // readings table lands. See ``StationNamingGeneration``.
+        derived.days(
+            of: loaded, selectedDate: selectedDate, query: searchQuery,
+            naming: localization.stationNamingGeneration
+        ) {
+            computeFilteredDays(loaded, query: searchQuery)
+        }
+    }
+
+    private func computeFilteredDays(
+        _ loaded: ItineraryStore.Loaded,
+        query searchQuery: String
+    ) -> [ItineraryStore.Loaded.Day] {
         let source = selectedDate == Dates.allDates
             ? loaded.days
             : loaded.days.filter { $0.date == selectedDate }
@@ -2290,8 +2584,19 @@ struct RailWorkspaceView: View {
         // `direction` — which no test noticed, because every test searched by
         // train number. A contract that exists in one place can be checked;
         // one that exists inside a filter cannot.
+        //
+        // `alsoNamed` is the one field the matcher cannot see for itself: the
+        // journey surfaces name stations through the readings table, so a
+        // Taiwanese ride reads "Taipei Main Station" to an English reader
+        // while the record says 台北車站. Searching only the record meant the
+        // name on the screen found nothing. The table is in the app bundle
+        // behind a `@MainActor` object, which is why this is the caller that
+        // supplies it — see ``AppLocalization/localizedStationNames(of:)``
+        // for what it costs and why it costs nothing in Japan.
+        let alsoNamed = localization.localizedStationNames(of:)
         return source.compactMap { day in
-            let trains = JourneySearchMatcher.filter(day.trains, query: needle)
+            let trains = JourneySearchMatcher.filter(
+                day.trains, query: needle, alsoNamed: alsoNamed)
             return trains.isEmpty ? nil : .init(date: day.date, trains: trains)
         }
     }
@@ -2581,7 +2886,7 @@ struct RailWorkspaceView: View {
         case 1:
             pick(trains[0])
         default:
-            dialog = .choose(trains)
+            sheet = .chooseRide(trains)
         }
     }
 
@@ -2610,30 +2915,6 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// One line of the chooser.
-    ///
-    /// The web app's `uiChoose` gives each item a label (date・number・type)
-    /// and a sublabel (origin → destination). A system confirmation dialog
-    /// renders one line per button and silently drops the rest, so the two are
-    /// folded into one — and what gets dropped is the type and the operator,
-    /// because two rides the reader cannot tell apart are usually two trains
-    /// on the SAME corridor, where the number and the direction are what
-    /// separate them and 「特急 JR西日本」 is what they have in common.
-    private func chooserLabel(_ train: Train) -> String {
-        let region = Region.resolved(train)
-        let date = train.date.map { $0 == Dates.undated ? "" : $0 } ?? ""
-        let name = train.number.isEmpty ? train.id : train.number
-        let origin = localization.placeName(train.origin, region: region)
-        let destination = localization.placeName(train.destination, region: region)
-        let route = origin.isEmpty && destination.isEmpty
-            ? "" : "\(origin) → \(destination)"
-        // The date leads only when the list is not already scoped to one day:
-        // scoped, every candidate carries the same date and it is a prefix
-        // that pushes the distinguishing half off the end of the line.
-        let parts = selectedDate == Dates.allDates ? [date, name, route] : [name, route]
-        return parts.filter { !$0.isEmpty }.joined(separator: " · ")
-    }
-
     /// Every visible ride, INCLUDING the ones outside the selected date.
     ///
     /// This used to drop off-date rides. That is not what the web app does and
@@ -2645,24 +2926,41 @@ struct RailWorkspaceView: View {
     /// `map-date-filter` (`mapFollowsSelectedDate`) is the reader asking for
     /// the harder version — only this date on the map — so that one still
     /// filters here.
+    ///
+    /// ## What the destination narrows it to (§4.2)
+    ///
+    /// One basemap, three questions. The destination on top does not change
+    /// how a ride is DRAWN — every switch under 已乘坐線路 in `MapLayers`
+    /// still owns that, for what is ahead exactly as for what is behind, so
+    /// there is no second set of switches for a second kind of line — it
+    /// changes only WHICH rides are handed over:
+    ///
+    ///   - **Upcoming** — the journeys still ahead, and only those. The
+    ///     destination's question is what is coming, and a map carrying the
+    ///     whole log underneath that list answers a different one.
+    ///   - **Passport** — the records the numbers counted, and only those
+    ///     (§5.3.2). A map showing five networks under a Japanese percentage
+    ///     invites the reader to read the percentage as covering all of them.
+    ///   - **All journeys**, and Search — everything on record, which is what
+    ///     those two destinations list.
     private var mapRides: [RiddenRouteStore.DrawnRide] {
         // Pre-filtered by the store so ordinary sheet-height updates keep the
-        // same Array buffer all the way into `RailMapView.updateUIView`.
+        // same Array buffer all the way into `RailMapView.updateUIView`; the
+        // narrowed answers below are held by `WorkspaceDerived` for the same
+        // reason, because the destination the app OPENS on is a narrowed one.
         let visible = riddenRoutes.visibleRides
-        // §5.3.2: while the statistics are on top, the map is their coverage
-        // map — the same records the numbers counted, and only those. A map
-        // showing five networks under a Japanese percentage invites the
-        // reader to read the percentage as covering all of them.
-        if selection == .stats {
-            let scoped = Set(statisticsScopedTrains.map(\.id))
-            return visible.filter { scoped.contains($0.id) }
+        switch selection {
+        case .upcoming:
+            return derived.rides(visible, scopedTo: upcomingScope.ids)
+        case .stats:
+            return derived.rides(visible, scopedTo: statisticsScope.ids)
+        case .all, .search:
+            break
         }
         guard mapFollowsSelectedDate, selectedDate != Dates.allDates,
               let trains = itineraries.loaded?.trains else { return visible }
-        let inScope = Set(trains.filter {
-            Dates.trainSpans($0.forDates, date: selectedDate)
-        }.map(\.id))
-        return visible.filter { inScope.contains($0.id) }
+        return derived.rides(
+            visible, scopedTo: derived.trainIDs(spanning: selectedDate, in: trains))
     }
 
     /// `resolveQueue` — what "play" means right now.
@@ -2701,12 +2999,16 @@ struct RailWorkspaceView: View {
             restoringSelection: itineraries.selectedTrainID)
     }
 
-    private var rideIDs: Set<String> { Set(riddenRoutes.rides.map(\.id)) }
+    private var rideIDs: Set<String> { derived.rideSummary(riddenRoutes.rides).ids }
 
     /// The regions the drawn rides belong to — the only ones whose network
     /// the category filter could ever need to classify against.
+    ///
+    /// Taken off the same memoised pass as ``rideIDs``: both were separate
+    /// walks over every drawn ride, made on every body evaluation, for answers
+    /// that change only when a route finishes solving.
     private var riddenCountries: [String] {
-        Array(Set(riddenRoutes.rides.map(\.country))).sorted()
+        derived.rideSummary(riddenRoutes.rides).countries
     }
 
     /// Re-run the index build when a category is first switched off, or when a
@@ -2731,241 +3033,27 @@ struct RailWorkspaceView: View {
     @ViewBuilder
     private var playbackBar: some View {
         if showsPlaybackBar {
-            VStack(spacing: 9) {
-                if dynamicTypeSize.isAccessibilitySize {
-                    accessibilityPlaybackLayout
-                } else {
-                    standardPlaybackLayout
+            // The transport is its own view, and that is a performance
+            // contract rather than tidiness — see `PlaybackTransportBar`. The
+            // eleven properties that used to live here read the playhead
+            // inside THIS body, so a run rebuilt the whole workspace on every
+            // published tick.
+            PlaybackTransportBar(
+                playback: playback,
+                videoExporter: videoExporter,
+                onStop: { stopPlayback() },
+                onRequestVideoOptions: {
+                    videoPlanSeconds = playback.prepare(
+                        trains: playbackScope, rides: riddenRoutes.rides,
+                        reducedMotion: reduceMotion
+                    ).seconds
+                    sheet = .videoOptions
                 }
-            }
-            .buttonStyle(RailPressStyle(dims: false))
-            .padding(12)
-            // The transport is a control floating over the map, so it takes
-            // the same surface every other floating control does. It used to
-            // spell `.regularMaterial` here, which made it the ONE piece of
-            // chrome that stayed a material while the rest became Liquid Glass
-            // on iOS 26 — and, more seriously, the one that answered neither
-            // Reduce Transparency nor Increase Contrast, because both of those
-            // are handled inside `RailGlassSurface` and nowhere else.
-            //
-            // `interactive` is deliberately off: the buttons inside carry
-            // their own press feedback, and a capsule that deforms wherever it
-            // is touched would compete with them.
-            .railGlass(in: RoundedRectangle(
-                cornerRadius: RailStyle.chromeCornerRadius,
-                style: .continuous))
-            // Kept, and it is not decoration: §6.5 uses a heavy shadow for the
-            // one job of separating a floating surface from the map.
-            .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
-            .frame(maxWidth: 540)
+            )
             .transition(RailMotion.panelTransition(reduceMotion: reduceMotion))
-            .accessibilityElement(children: .contain)
         }
     }
 
-    /// The compact transport used at ordinary text sizes.
-    private var standardPlaybackLayout: some View {
-        VStack(spacing: 9) {
-            HStack(spacing: 10) {
-                playbackTransportControls
-                playbackIdentity(titleLines: 1, stationLines: 1)
-                Spacer(minLength: 4)
-                playbackStopButton
-            }
-
-            playbackProgress
-
-            HStack(spacing: 10) {
-                playbackQueueLabel
-                focusToggle
-                Spacer()
-                speedSlider.frame(maxWidth: 120)
-                speedReadout
-                    .frame(minWidth: 34, alignment: .trailing)
-                    .fixedSize(horizontal: true, vertical: false)
-                videoControl
-            }
-        }
-    }
-
-    /// Accessibility text gets a content-led composition instead of a scaled
-    /// copy of the two dense horizontal rows. Text may grow; transport chrome
-    /// keeps a familiar size and each group gets the full available width.
-    private var accessibilityPlaybackLayout: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            playbackIdentity(titleLines: 3, stationLines: 2)
-
-            HStack(spacing: 8) {
-                playbackTransportControls
-                playbackStopButton
-                Spacer(minLength: 0)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
-            playbackProgress
-
-            HStack(spacing: 8) {
-                playbackQueueLabel
-                focusToggle
-                videoControl
-                Spacer(minLength: 0)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
-            HStack(spacing: 10) {
-                speedSlider
-                speedReadout
-                    .fixedSize(horizontal: true, vertical: false)
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-        }
-        // In map layouts the vertical control rail shares this overlay. Keep
-        // accessibility-sized text and controls out of its resting footprint;
-        // the glass surfaces may overlap visually, but their hit targets must
-        // never overlap.
-        .padding(
-            .trailing,
-            MapControlBar.side + (2 * MapControlBar.interactionBleed) + 12)
-    }
-
-    private var playbackTransportControls: some View {
-        HStack(spacing: 10) {
-            Button { playback.previous() } label: {
-                Image(systemName: "backward.end.fill")
-                    .frame(width: 44, height: 44)
-                    .contentShape(.rect)
-            }
-            .disabled(!playback.canGoPrevious)
-            .accessibilityLabel(
-                Text(localization.journeyText("play.prev", fallback: "Previous train")))
-
-            Button { playback.togglePause() } label: {
-                Image(systemName: playback.isPlaying ? "pause.fill" : "play.fill")
-                    .font(.title3)
-                    .contentTransition(.symbolEffect(.replace))
-                    .animation(RailMotion.replace, value: playback.isPlaying)
-                    .frame(width: 44, height: 44)
-                    .contentShape(.rect)
-            }
-            .disabled(playback.phase == .ended)
-            .accessibilityLabel(
-                Text(localization.journeyText(
-                    playback.isPlaying ? "play.pause" : "play.resume",
-                    fallback: playback.isPlaying ? "Pause" : "Resume")))
-
-            Button { playback.next() } label: {
-                Image(systemName: "forward.end.fill")
-                    .frame(width: 44, height: 44)
-                    .contentShape(.rect)
-            }
-            .disabled(!playback.canGoNext)
-            .accessibilityLabel(
-                Text(localization.journeyText("play.next", fallback: "Next train")))
-        }
-    }
-
-    private func playbackIdentity(titleLines: Int, stationLines: Int) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(playback.title)
-                .font(.caption.weight(.semibold))
-                .lineLimit(titleLines)
-                .fixedSize(horizontal: false, vertical: true)
-            if !playback.stationName.isEmpty {
-                Text(playback.stationName)
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(stationLines)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-    }
-
-    private var playbackStopButton: some View {
-        Button { stopPlayback() } label: {
-            Image(systemName: "xmark.circle.fill")
-                .frame(width: 44, height: 44)
-                .contentShape(.rect)
-        }
-        .accessibilityLabel(localization.countryText("play.stop", fallback: "Stop playback"))
-        .accessibilityIdentifier("playbackStopButton")
-    }
-
-    private var playbackProgress: some View {
-        ProgressView(value: playback.progress)
-            .tint(.accentColor)
-    }
-
-    private var playbackQueueLabel: some View {
-        Label(
-            "\(playback.queueIndex + 1)/\(max(playback.queueCount, 1))", systemImage: "tram"
-        )
-        .font(.caption2.monospacedDigit())
-        .accessibilityLabel(
-            localization.journeyText("ios.journey.playbackQueue", fallback: "Journey"))
-        .accessibilityValue(
-            Text("\(playback.queueIndex + 1)/\(max(playback.queueCount, 1))"))
-    }
-
-    private var focusToggle: some View {
-        Toggle(isOn: $playback.autoFocus) {
-            Label(
-                localization.journeyText("play.focus", fallback: "Auto focus"),
-                systemImage: "scope")
-        }
-        .font(.caption2)
-        .toggleStyle(.button)
-    }
-
-    private var speedSlider: some View {
-        Slider(
-            value: Binding(get: { playback.speed }, set: { playback.setSpeed($0) }),
-            in: Playback.Tuning.speedMin...Playback.Tuning.speedMax,
-            step: Playback.Tuning.speedStep
-        )
-        .accessibilityLabel(localization.countryText("play.speed", fallback: "Playback speed"))
-    }
-
-    private var speedReadout: some View {
-        Text("\(playback.speed.formatted(.number.precision(.fractionLength(2))))×")
-            .font(.caption2.monospacedDigit())
-            .accessibilityHidden(true)
-    }
-
-    @ViewBuilder
-    private var videoControl: some View {
-        switch videoExporter.state {
-        case .recording:
-            Button { videoExporter.cancel() } label: {
-                Image(systemName: "record.circle.fill").foregroundStyle(.red)
-            }
-            .accessibilityLabel(localization.journeyText("video.cancel", fallback: "Cancel video export"))
-        case .finishing:
-            ProgressView().controlSize(.small)
-                .accessibilityLabel(localization.journeyText("video.finishing", fallback: "Finishing video"))
-        case .finished(let url, let partial):
-            ShareLink(item: url) {
-                Image(systemName: "square.and.arrow.up.fill")
-                    // A cancelled run's film is offered like any other, and
-                    // says so: `video.readyPartial` rather than `video.ready`.
-                    .foregroundStyle(partial ? AnyShapeStyle(.secondary) : AnyShapeStyle(.tint))
-            }
-            .accessibilityLabel(
-                localization.journeyText(
-                    partial ? "video.readyPartial" : "video.share",
-                    fallback: partial ? "Share partial video" : "Share video"))
-        case .idle, .failed:
-            Button {
-                videoPlanSeconds = playback.prepare(
-                    trains: playbackScope, rides: riddenRoutes.rides,
-                    reducedMotion: reduceMotion
-                ).seconds
-                sheet = .videoOptions
-            } label: {
-                Image(systemName: "video.badge.plus")
-            }
-            .accessibilityLabel(localization.countryText("video.export", fallback: "Export playback video"))
-        }
-    }
 
     private func startVideoExport() {
         guard let mapView = controller.mapView else { return }

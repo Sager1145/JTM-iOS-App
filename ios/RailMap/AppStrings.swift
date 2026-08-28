@@ -36,13 +36,15 @@ import RailPresentation
 /// into something that fails loudly rather than silently picking a winner.
 enum AppStrings {
 
-    /// The five contributors, named, so a collision can say *which two*.
+    /// The contributors, named, so a collision can say *which two*.
     private static let contributors: [(name: String, table: Table)] = [
         ("ShellStrings", ShellStrings.table),
         ("DataStrings", DataStrings.table),
         ("EditorStrings", EditorStrings.table),
         ("JourneyStrings", JourneyStrings.table),
         ("StatisticsStrings", StatisticsStrings.table),
+        ("TransferGuideStrings", TransferGuideStrings.table),
+        ("ClockStrings", ClockStrings.table),
     ]
 
     typealias Table = [String: [Localization.Language: String]]
@@ -132,6 +134,13 @@ extension AppLocalization {
             key,
             text.params.isEmpty ? nil : text.params,
             fallback: text.fallback)
+    }
+
+    /// The screenshot importer's own sentences. Same rule as
+    /// ``dataText(_:_:)`` — its keys are `ios.guide.*` and the web catalog
+    /// spells none of them.
+    func guideText(_ key: String, _ params: [String: Localization.Param]? = nil) -> String {
+        text(key, params: params)
     }
 
     /// The statistics screen's own sentences.

@@ -201,7 +201,10 @@ struct StationCardView: View {
                     .accessibilityLabel(localization.text("ios.share", fallback: "Share"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    closeButton
+                    SheetCloseButton(
+                        accessibilityLabel: Text(
+                            localization.text("ios.close", fallback: "Close")),
+                        action: { dismiss() })
                 }
             }
         }
@@ -228,46 +231,6 @@ struct StationCardView: View {
         // list inside it cannot be dragged between its stops at all.
         .presentationDragIndicator(.hidden)
         .presentationContentInteraction(.resizes)
-    }
-
-    /// The system's own close button, and nothing drawn on top of it.
-    ///
-    /// This used to be a hand-built `xmark.circle.fill` at `.title2` in
-    /// secondary ink, which is what a close button looked like when a toolbar
-    /// item was bare glyph on bare bar. On iOS 26 the toolbar gives every item
-    /// its own circular glass capsule, so that filled circle became a second,
-    /// grey circle sitting inside the system's — a doubled mark next to a
-    /// share button that had let the system draw its container.
-    ///
-    /// `ButtonRole.close` is the whole fix: it is iOS 26's own dismissal
-    /// button — the standard glyph, at the standard weight, in the standard
-    /// container, matching every other sheet the reader closes. It arrived in
-    /// that release and the app deploys to iOS 17, so the hand-built glyph
-    /// stays as the fallback, where it is still the right drawing: before iOS
-    /// 26 the bar puts nothing behind a toolbar item and the filled circle IS
-    /// the container.
-    ///
-    /// The label is the app's own `ios.close` rather than the system's, for
-    /// the reason every other string here is: this app carries its own
-    /// language setting, and VoiceOver would otherwise say 「閉じる」 to a
-    /// reader who has put the app in Chinese.
-    @ViewBuilder
-    private var closeButton: some View {
-        if #available(iOS 26.0, *) {
-            Button(role: .close) { dismiss() }
-                .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
-        } else {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title2)
-                    .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(.secondary)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
-        }
     }
 }
 

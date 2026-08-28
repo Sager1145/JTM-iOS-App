@@ -141,15 +141,21 @@ struct PassportWorkspaceView: View {
 
     // MARK: - what is in scope
 
-    /// The journeys this Passport is reporting on: one region, and either one
-    /// day or all of them.
+    /// The journeys this Passport is reporting on: one region, either one day
+    /// or all of them, and only what the records say was ridden.
     ///
-    /// The same two filters the statistics store applies, so the log below can
-    /// never list a journey the numbers above it excluded.
+    /// The same three filters the statistics store applies, so the log below
+    /// can never list a journey the numbers above it excluded — which is now
+    /// also true of one nobody has confirmed riding. Passport is the
+    /// recollection surface (§5.3); an unconfirmed journey is still in 全部
+    /// 行程, where it can be confirmed with one swipe, and the statistics card
+    /// above says how many are waiting rather than leaving them to be missed
+    /// here. No clock takes part — see ``RailPresentation/RideLedger``.
     private var scopedTrains: [Train] {
         let trains = itineraries.loaded?.trains ?? []
         return trains.filter { train in
             if let region, Region.resolved(train) != region { return false }
+            guard RideLedger.hasBeenRidden(train) else { return false }
             guard statistics.selectedDate != Dates.allDates else { return true }
             return Dates.trainSpans(train.forDates, date: statistics.selectedDate)
         }

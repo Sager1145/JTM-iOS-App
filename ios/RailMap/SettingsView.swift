@@ -261,9 +261,10 @@ struct SettingsView: View {
         return Section(localization.text("ios.stationMarkers", fallback: "Station markers")) {
             DisplaySliderRow(
                 title: localization.countryText(
-                    "disp.terminalRadius", fallback: "Terminal (origin/dest) size"),
+                    "disp.terminalRadius", fallback: "Selected origin/destination size"),
                 note: localization.text(
-                    "ios.note.terminalRadius", fallback: "The dot at a ride's origin and destination."
+                    "ios.note.terminalRadius",
+                    fallback: "The full-size dots shown for the selected ride's origin and destination."
                 ),
                 value: $display.terminalRadius,
                 range: 3...20,
@@ -275,7 +276,7 @@ struct SettingsView: View {
                 title: localization.countryText("disp.stopRadius", fallback: "Stop center-dot size"),
                 note: localization.text(
                     "ios.note.stopRadius",
-                    fallback: "The black centre inside an intermediate stop's dot."),
+                    fallback: "The small route-coloured centre inside an intermediate stop's dot."),
                 value: $display.stopRadius,
                 range: 2...16,
                 step: 1,

@@ -112,3 +112,53 @@ final class RailMapUITests: XCTestCase {
         app.descendants(matching: .any).matching(identifier: identifier).firstMatch
     }
 }
+
+/// The screenshot importer, as far as a test can drive it.
+///
+/// It stops at the picker. Everything past that point — recognising the text,
+/// parsing it, resolving the stations — is covered by `TransferGuideTests` in
+/// RailCore, which can be handed a layout directly instead of a photograph.
+/// What only a launched app can answer is whether the door is there and
+/// whether the room behind it renders, and that is what this asks.
+@MainActor
+final class TransferGuideImportUITests: XCTestCase {
+    override func setUp() {
+        continueAfterFailure = false
+    }
+
+    func testTheScreenshotImporterOpensFromTheDataWorkspace() {
+        let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
+        app.launch()
+
+        let gear = app.descendants(matching: .any)
+            .matching(identifier: "utilityMenuButton").firstMatch
+        XCTAssertTrue(gear.waitForExistence(timeout: 10), "the utility menu is not reachable")
+        gear.tap()
+
+        let data = app.descendants(matching: .any)
+            .matching(identifier: "utilityDataButton").firstMatch
+        XCTAssertTrue(data.waitForExistence(timeout: 8), "Data is not in the utility menu")
+        data.tap()
+
+        let entry = app.descendants(matching: .any)
+            .matching(identifier: "guideImportButton").firstMatch
+        XCTAssertTrue(
+            entry.waitForExistence(timeout: 8),
+            "the screenshot importer is not offered in the Import group")
+        entry.tap()
+
+        // Both doors, because they are the only two ways in and a reader who
+        // keeps screenshots in Files rather than Photos needs the second one.
+        XCTAssertTrue(
+            app.descendants(matching: .any)
+                .matching(identifier: "guidePhotoPicker").firstMatch
+                .waitForExistence(timeout: 8),
+            "the importer opened without a way to choose a screenshot")
+        XCTAssertTrue(
+            app.descendants(matching: .any)
+                .matching(identifier: "guideFilePicker").firstMatch.exists,
+            "the importer offers no way to choose an image file")
+    }
+}

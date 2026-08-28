@@ -169,6 +169,52 @@ extension SheetIconButton where Label == Image {
     }
 }
 
+/// The system's own close button, and nothing drawn on top of it.
+///
+/// This used to be a hand-built `xmark.circle.fill` at `.title2` in secondary
+/// ink, which is what a close button looked like when a toolbar item was bare
+/// glyph on bare bar. On iOS 26 the toolbar gives every item its own circular
+/// glass capsule, so that filled circle became a second, grey circle sitting
+/// inside the system's — a doubled mark next to a share button that had let
+/// the system draw its container.
+///
+/// `ButtonRole.close` is the whole fix: it is iOS 26's own dismissal button —
+/// the standard glyph, at the standard weight, in the standard container,
+/// matching every other sheet the reader closes. It arrived in that release
+/// and the app deploys to iOS 17, so the hand-built glyph stays as the
+/// fallback, where it is still the right drawing: before iOS 26 the bar puts
+/// nothing behind a toolbar item and the filled circle IS the container.
+///
+/// The label is passed in rather than taken from the system, for the reason
+/// every other string in this app is its own: the app carries its own language
+/// setting, and VoiceOver would otherwise say 「閉じる」 to a reader who has put
+/// it in Chinese.
+///
+/// One type rather than a copy per sheet — the station card and the
+/// ambiguous-tap chooser are two surfaces the reader closes the same way, and
+/// two hand-built fallbacks would be two things to keep in step when the
+/// deployment floor moves.
+struct SheetCloseButton: View {
+    var accessibilityLabel: Text
+    var action: () -> Void
+
+    var body: some View {
+        if #available(iOS 26.0, *) {
+            Button(role: .close, action: action)
+                .accessibilityLabel(accessibilityLabel)
+        } else {
+            Button(action: action) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(accessibilityLabel)
+        }
+    }
+}
+
 /// The same shape as ``SheetIconButton`` for things that open a menu, which
 /// cannot be expressed as a `Button`'s action.
 struct SheetIconLabel: View {

@@ -34,14 +34,6 @@ struct MapControlBar: View {
     /// then rather than showing a gap where the compass will be.
     var mapView: MKMapView
     @Bindable var controller: RailMapController
-    /// §4.1: "定位所选路线" — frames the SELECTION.
-    /// §4.1: "适配完整路网" — frames every drawn line, whatever is selected.
-    ///
-    /// A separate closure, and below a separate button with a separate label,
-    /// because they are two different questions. One button that means either
-    /// depending on the selection is a button whose accessibility label is
-    /// wrong half the time, and a reader who wanted the whole network cannot
-    /// ask for it by first deselecting something.
     /// 地圖圖層. A sheet held by the workspace for the same reason 圖例 is —
     /// see `onInfo`.
     var onLayers: () -> Void
@@ -80,7 +72,7 @@ struct MapControlBar: View {
                         // signal is a hue. `location` two groups down already
                         // worked this way; this one drew `tram.fill` in both
                         // states and changed nothing but the tint.
-                        systemImage: controller.showsNetwork ? "tram.fill" : "tram",
+                        glyph: .symbol(controller.showsNetwork ? "tram.fill" : "tram"),
                         label: Text(localization.text("map.allRailways", fallback: "Rail network")),
                         identifier: "mapNetworkToggle",
                         isOn: controller.showsNetwork
@@ -95,11 +87,18 @@ struct MapControlBar: View {
                     // the network underneath a three-tap round trip — and it
                     // is the switch this map is toggled with most.
                     //
-                    // Same fill-is-the-state rule as the button above.
+                    // Same fill-is-the-state rule as the button above —
+                    // here the stations are the fill.
+                    //
+                    // The mark is the app icon's, not SF Symbols'. It was
+                    // `point.topleft.down.to.point.bottomright.curvepath`,
+                    // whose smooth curve is a different drawing of the same
+                    // idea the icon states as a polyline — and these two are
+                    // seen seconds apart, the icon on the Home Screen and
+                    // this the moment the map opens. `RouteGlyph` carries the
+                    // icon's own geometry.
                     ControlButton(
-                        systemImage: controller.layers.routes
-                            ? "point.topleft.down.to.point.bottomright.curvepath.fill"
-                            : "point.topleft.down.to.point.bottomright.curvepath",
+                        glyph: .route(filled: controller.layers.routes),
                         label: Text(localization.countryText(
                             "map.routes", fallback: "Train routes")),
                         identifier: "mapRoutesToggle",
@@ -108,7 +107,7 @@ struct MapControlBar: View {
                         controller.layers.routes.toggle()
                     }
                     ControlButton(
-                        systemImage: "square.3.layers.3d",
+                        glyph: .symbol("square.3.layers.3d"),
                         label: Text(localization.text("map.layers", fallback: "Map layers")),
                         identifier: "mapLayersButton"
                     ) {
@@ -150,7 +149,7 @@ struct MapControlBar: View {
             RailGlassGroup(spacing: Self.groupSpacing) {
                 VStack(spacing: Self.groupSpacing) {
                     ControlButton(
-                        systemImage: "info.circle",
+                        glyph: .symbol("info.circle"),
                         label: Text(
                             localization.countryText(
                                 "info.button", fallback: "Legend and sources")),
@@ -161,7 +160,8 @@ struct MapControlBar: View {
                     .railGlass(in: capsule, interactive: true)
 
                     ControlButton(
-                        systemImage: controller.isFollowingUser ? "location.fill" : "location",
+                        glyph: .symbol(
+                            controller.isFollowingUser ? "location.fill" : "location"),
                         label: Text(
                             localization.text(
                                 "ios.currentLocation", fallback: "Current location")),
@@ -254,6 +254,18 @@ struct MapControlBar: View {
     }
 }
 
+/// What one control draws.
+///
+/// Two cases rather than a `Image(systemName:)` everywhere, because the
+/// routes toggle is drawn from the app icon rather than from SF Symbols —
+/// and a control's mark carrying its own on/off state is the rail's rule, so
+/// each case has to say how it does that: `symbol` by swapping in a `.fill`
+/// variant, `route` by filling the stations in.
+private enum ControlGlyph: Equatable {
+    case symbol(String)
+    case route(filled: Bool)
+}
+
 /// One control.
 ///
 /// The glyph carries no background of its own — the glass is on the capsule —
@@ -263,7 +275,7 @@ private struct ControlButton: View {
     @Environment(\.accessibilityDifferentiateWithoutColor)
     private var differentiateWithoutColor
 
-    var systemImage: String
+    var glyph: ControlGlyph
     var label: Text
     /// A stable name for this control, independent of the reader's language.
     ///
@@ -279,18 +291,13 @@ private struct ControlButton: View {
 
     var body: some View {
         Button(action: action) {
-            Image(systemName: systemImage)
-                // The control's meaning and 48-point hit target stay stable at
-                // every Dynamic Type size. SF Symbols inside map chrome do not
-                // represent reading text, so allowing them to grow past their
-                // capsule makes the control less usable rather than more.
-                .font(.system(size: 20, weight: .medium))
-                // §9.1's 状态替换: `location` becoming `location.fill` is one
-                // mark replacing another IN PLACE, which is exactly the form
-                // §9.4 keeps under Reduce Motion — so it takes the `replace`
-                // token directly rather than being degraded to it.
-                .contentTransition(.symbolEffect(.replace))
-                .animation(RailMotion.replace, value: systemImage)
+            mark
+                // §9.1's 状态替换: `location` becoming `location.fill`, or a
+                // station ring filling in, is one mark replacing another IN
+                // PLACE — which is exactly the form §9.4 keeps under Reduce
+                // Motion, so it takes the `replace` token directly rather
+                // than being degraded to it.
+                .animation(RailMotion.replace, value: glyph)
                 .foregroundStyle(isOn ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(Color.primary))
                 .frame(width: MapControlBar.side, height: MapControlBar.side)
                 // The selected disc, which is a SHAPE and therefore survives
@@ -326,6 +333,25 @@ private struct ControlButton: View {
         .accessibilityLabel(label)
         .accessibilityIdentifier(identifier)
         .accessibilityAddTraits(isOn ? [.isSelected] : [])
+    }
+
+    @ViewBuilder
+    private var mark: some View {
+        switch glyph {
+        case .symbol(let name):
+            Image(systemName: name)
+                // The control's meaning and 48-point hit target stay stable at
+                // every Dynamic Type size. SF Symbols inside map chrome do not
+                // represent reading text, so allowing them to grow past their
+                // capsule makes the control less usable rather than more.
+                .font(.system(size: 20, weight: .medium))
+                .contentTransition(.symbolEffect(.replace))
+        case .route(let filled):
+            // No `contentTransition` — that is the symbol machinery, and this
+            // is a shape. It animates because the hole it fills in is one
+            // number: see `RouteMark.Stations.animatableData`.
+            RouteGlyph(isFilled: filled)
+        }
     }
 }
 

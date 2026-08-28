@@ -188,6 +188,61 @@ enum EditorStrings {
             .zhHant: "從地圖隱藏", .zhHans: "从地图隐藏", .ja: "地図から隠す",
             .en: "Hide from the map",
         ],
+        // §5.3's rule, in the reader's words: the passport counts what they
+        // say they rode, and the app never decides that from a date. The
+        // detail copy has to carry the whole of that — what is not counted,
+        // that nothing is wrong, and that one tap settles it.
+        "ios.detail.notRiddenTitle": [
+            .zhHant: "尚未確認乘坐", .zhHans: "尚未确认乘坐", .ja: "乗車が未確認です",
+            .en: "Not confirmed as ridden",
+        ],
+        "ios.detail.notRiddenDetail": [
+            .zhHant: "這趟行程還沒有計入里程統計。實際乘坐之後在這裡確認，日期不會替你決定。",
+            .zhHans: "这趟行程还没有计入里程统计。实际乘坐之后在这里确认，日期不会替你决定。",
+            .ja: "この旅程はまだ距離の集計に入っていません。実際に乗った後でここで確認してください。日付が勝手に決めることはありません。",
+            .en: "This journey is not in the mileage statistics yet. Confirm it here once you have travelled — the date will never decide for you.",
+        ],
+        "ios.detail.confirmRidden": [
+            .zhHant: "確認已乘坐", .zhHans: "确认已乘坐", .ja: "乗車を確認する",
+            .en: "Confirm as ridden",
+        ],
+        "ios.detail.markNotRidden": [
+            .zhHant: "標記為未乘坐", .zhHans: "标记为未乘坐", .ja: "未乗車に戻す",
+            .en: "Mark as not ridden",
+        ],
+        "ios.detail.riddenState": [
+            .zhHant: "乘坐狀態", .zhHans: "乘坐状态", .ja: "乗車状態",
+            .en: "Ridden",
+        ],
+        "ios.detail.riddenYes": [
+            .zhHant: "已乘坐", .zhHans: "已乘坐", .ja: "乗車済み", .en: "Ridden",
+        ],
+        "ios.detail.riddenNo": [
+            .zhHant: "未乘坐", .zhHans: "未乘坐", .ja: "未乗車", .en: "Not ridden",
+        ],
+        // A journey the per-stop editor left half switched on. It IS counted,
+        // for the part that was ridden, so the word cannot be either of the
+        // two above.
+        "ios.detail.riddenPartly": [
+            .zhHant: "部分區間已乘坐", .zhHans: "部分区间已乘坐",
+            .ja: "一部区間のみ乗車", .en: "Partly ridden",
+        ],
+        // The rule, stated where the switch is. "日期不會替你決定" is the
+        // whole of it and is why this note exists at all: a reader who has
+        // just typed next month's date needs to know that the switch above,
+        // and only the switch, decides whether it is counted.
+        "ios.editor.riddenNote": [
+            .zhHant: "只有這個開關決定要不要計入里程統計，日期不會替你決定。新建時會依日期先幫你選好，你可以立刻改。",
+            .zhHans: "只有这个开关决定要不要计入里程统计，日期不会替你决定。新建时会按日期先帮你选好，你可以立刻改。",
+            .ja: "集計に入れるかどうかを決めるのはこのスイッチだけで、日付が代わりに決めることはありません。新規作成時は日付から初期値を選んでおきますが、その場で変更できます。",
+            .en: "Only this switch decides whether the journey is counted — the date never will. A new journey opens on the likely answer, and you can change it straight away.",
+        ],
+        "ios.editor.riddenPartlyNote": [
+            .zhHant: "目前有 {n} 個區間算已乘坐。逐站調整請用下方的停站清單。",
+            .zhHans: "目前有 {n} 个区间算已乘坐。逐站调整请用下方的停靠站列表。",
+            .ja: "現在 {n} 区間が乗車済みです。区間ごとの調整は下の停車駅リストで行えます。",
+            .en: "{n} intervals count as ridden. Adjust them one by one in the stop list below.",
+        ],
         "ios.detail.stopsCount": [
             .zhHant: "{count} 個停站", .zhHans: "{count} 个停靠站", .ja: "停車駅 {count}",
             .en: "{count} stops",

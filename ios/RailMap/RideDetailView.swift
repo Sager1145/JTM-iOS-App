@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// A recorded journey expressed with Flighty's information hierarchy while
@@ -26,6 +27,12 @@ struct RideDetailView: View {
                     updated.visible = visible
                     save(updated)
                 }
+            },
+            // The same shape, and for the same reason: confirming a ride is an
+            // edit to the record's own `ride_segment` flags, so it travels
+            // through the one atomic save rather than a second write path.
+            onSetRidden: onSave.map { save in
+                { ridden in save(RideLedger.setRidden(train, ridden)) }
             })
             .background(Color(.systemGroupedBackground))
             .navigationTitle(train.number)
@@ -109,6 +116,12 @@ struct RideDetailContent: View {
     /// §8.5: hide from the map, or put it back. Absent on surfaces that have
     /// their own visibility control, so the reader is never offered two.
     var onSetVisible: ((Bool) -> Void)?
+    /// §5.3: say that this journey was ridden, or take it back.
+    ///
+    /// The passport counts what the record says, and only the reader may say
+    /// it — this is where they do. Absent on a read-only surface, where the
+    /// state is still reported and simply cannot be changed.
+    var onSetRidden: ((Bool) -> Void)?
 
     @Environment(AppLocalization.self) private var localization
     @State private var rebuild: RebuildPhase = .idle
@@ -132,6 +145,7 @@ struct RideDetailContent: View {
             if includesIdentity { identityCard }
             if includesStationPair { stationPairCard }
             timelineCard
+            if confirmation == .notRidden { notRiddenCard }
             if train.visible == false { hiddenCard }
             routeStateCard
             serviceCard
@@ -175,6 +189,7 @@ struct RideDetailContent: View {
             HStack(alignment: .top, spacing: 12) {
                 stationSummary(
                     name: train.origin,
+                    code: train.originStationCode,
                     stop: firstRiddenStop,
                     role: localization.countryText("popup.departure", fallback: "Departure"),
                     isArrival: false
@@ -187,6 +202,7 @@ struct RideDetailContent: View {
                 Spacer(minLength: 8)
                 stationSummary(
                     name: train.destination,
+                    code: train.destinationStationCode,
                     stop: lastRiddenStop,
                     role: localization.countryText("popup.arrival", fallback: "Arrival"),
                     isArrival: true
@@ -213,6 +229,7 @@ struct RideDetailContent: View {
 
     private func stationSummary(
         name: String,
+        code: String?,
         stop: Stop?,
         role: String,
         isArrival: Bool
@@ -220,11 +237,14 @@ struct RideDetailContent: View {
         let time = isArrival ? stop?.arrival ?? stop?.departure
             : stop?.departure ?? stop?.arrival
         let platform = stop?.platformNumber.flatMap { $0 >= 0 ? $0 : nil }
+        // The record's own spelling goes to the readings table with the code
+        // the record carries; what the reader sees is the answer.
+        let display = localization.stationName(name, in: train, code: code)
         return VStack(alignment: isArrival ? .trailing : .leading, spacing: 4) {
             Text(role)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
-            Text(name)
+            Text(display)
                 .font(.title3.bold())
                 .fixedSize(horizontal: false, vertical: true)
             if let time, !time.isEmpty {
@@ -239,7 +259,7 @@ struct RideDetailContent: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            [role, name, time, time.map(nextDayVoiceOver) ?? nil,
+            [role, display, time, time.map(nextDayVoiceOver) ?? nil,
              platform.map(platformText)]
                 .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ", ")
         )
@@ -255,6 +275,7 @@ struct RideDetailContent: View {
             ForEach(Array(train.stops.enumerated()), id: \.offset) { index, stop in
                 timelineRow(stop, index: index)
             }
+            localTimeNote
         }
         .padding(16)
         .background(
@@ -263,6 +284,34 @@ struct RideDetailContent: View {
                 cornerRadius: RailStyle.cardCornerRadius,
                 style: .continuous))
         .accessibilityLabel(localization.countryText("table.stopsLabel", fallback: "Stops table"))
+    }
+
+    /// Which clock the times above are on — said once, under the list.
+    ///
+    /// The app converts nothing: `25:10` is 25:10 in the timetable the reader
+    /// copied it from, and rewriting a printed time into the device's zone
+    /// would be this app editing somebody else's schedule. So this is a note
+    /// about what the record already holds, and it is the answer to the
+    /// question a list of bare times raises for a reader who is not in the
+    /// region — which, with five networks in one store, is most of the time.
+    ///
+    /// One line rather than a badge per row: the whole journey is on one
+    /// clock. ``JourneyClock`` is where that stops being true, and its own
+    /// documentation lists what changes here when it does.
+    private var localTimeNote: some View {
+        let clock = train.journeyClock.home
+        return Text(
+            localization.journeyText(
+                "ios.clock.localTimes",
+                [
+                    "zone": .string(localization.journeyText(clock.name)),
+                    "offset": .string(clock.utcOffsetText(at: Date())),
+                ])
+        )
+        .font(.caption)
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 12)
     }
 
     private func timelineRow(_ stop: Stop, index: Int) -> some View {
@@ -286,7 +335,7 @@ struct RideDetailContent: View {
                 }
             }
             VStack(alignment: .leading, spacing: 3) {
-                Text(stop.name)
+                Text(localization.stationName(stop.name, in: train, code: stop.n02StationCode))
                     .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
                     .foregroundStyle(stop.rideSegment ? .primary : .secondary)
                     // §14.5: a long station name wraps rather than truncating.
@@ -365,7 +414,58 @@ struct RideDetailContent: View {
             .fixedSize(horizontal: true, vertical: false)
     }
 
-    // MARK: - 4a. Hidden (§8.5)
+    // MARK: - 4a. Not ridden yet (§5.3)
+
+    /// What the record says about whether this journey happened.
+    private var confirmation: RideLedger.Confirmation {
+        RideLedger.confirmation(of: train)
+    }
+
+    private var confirmationKey: String {
+        switch confirmation {
+        case .ridden: "ios.detail.riddenYes"
+        case .partly: "ios.detail.riddenPartly"
+        case .notRidden: "ios.detail.riddenNo"
+        }
+    }
+
+    /// The prominent half of the ride confirmation, shown only while the
+    /// journey is not being counted.
+    ///
+    /// Written the way ``hiddenCard`` is, and placed in the same slot, because
+    /// it is the same kind of statement: a record is in a state that changes
+    /// what the rest of the app shows, and the action out of that state is the
+    /// primary one while it lasts. The copy has to carry the whole rule — that
+    /// nothing is wrong, that the mileage is simply not counted, and that a
+    /// date will never decide this — because this card is the only place the
+    /// reader meets it.
+    private var notRiddenCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(
+                localization.editorText("ios.detail.notRiddenTitle"),
+                systemImage: "circle.dashed"
+            )
+            .font(.headline)
+            Text(localization.editorText("ios.detail.notRiddenDetail"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let onSetRidden {
+                Button(localization.editorText("ios.detail.confirmRidden")) { onSetRidden(true) }
+                    .buttonStyle(.borderedProminent)
+                    .frame(minHeight: 44)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    // MARK: - 4b. Hidden (§8.5)
 
     private var hiddenCard: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -394,7 +494,7 @@ struct RideDetailContent: View {
                 style: .continuous))
     }
 
-    // MARK: - 4b. Route state (§5.5)
+    // MARK: - 4c. Route state (§5.5)
 
     private var routeStateCard: some View {
         RideRouteStateCard(
@@ -439,6 +539,23 @@ struct RideDetailContent: View {
                 localization.text("ios.recordedStops", fallback: "Recorded stops"),
                 value: train.stops.count.formatted()
             )
+            LabeledContent(
+                localization.editorText("ios.detail.riddenState"),
+                value: localization.editorText(confirmationKey)
+            )
+            // Offered only while the journey IS counted — while it is not, the
+            // opposite action is the prominent one on the card above, and two
+            // copies of one control on one screen is two answers to one
+            // question. The same rule ``onSetVisible`` follows two rows down.
+            if let onSetRidden, confirmation != .notRidden {
+                Button(
+                    localization.editorText("ios.detail.markNotRidden"),
+                    systemImage: "circle.dashed"
+                ) {
+                    onSetRidden(false)
+                }
+                .frame(minHeight: 44)
+            }
             LabeledContent(
                 localization.text("ios.visibility", fallback: "Visibility"),
                 value: train.visible == false
@@ -539,9 +656,15 @@ struct RideDetailContent: View {
     /// — so section *i* is the stretch from `stops[i]` to `stops[i+1]`, and
     /// the stop the reader typed is a better name than a six-digit code.
     private func endpointName(_ name: String?, code: String?, stopIndex: Int) -> String {
-        if let name, !name.isEmpty { return name }
-        if train.stops.indices.contains(stopIndex), !train.stops[stopIndex].name.isEmpty {
-            return train.stops[stopIndex].name
+        let stop = train.stops.indices.contains(stopIndex) ? train.stops[stopIndex] : nil
+        // Whichever spelling is used, it is named through the readings table
+        // with the best code available — the section's own, else the stop's.
+        if let name, !name.isEmpty {
+            return localization.stationName(
+                name, in: train, code: code ?? stop?.n02StationCode)
+        }
+        if let stop, !stop.name.isEmpty {
+            return localization.stationName(stop.name, in: train, code: stop.n02StationCode)
         }
         if let code, !code.isEmpty { return code }
         return localization.editorText("ios.route.unnamedStation")
@@ -850,9 +973,12 @@ private struct RideRouteStateCard: View {
     }
 
     private func name(_ value: String?, stopIndex: Int) -> String {
-        if let value, !value.isEmpty { return value }
-        if train.stops.indices.contains(stopIndex), !train.stops[stopIndex].name.isEmpty {
-            return train.stops[stopIndex].name
+        let stop = train.stops.indices.contains(stopIndex) ? train.stops[stopIndex] : nil
+        if let value, !value.isEmpty {
+            return localization.stationName(value, in: train, code: stop?.n02StationCode)
+        }
+        if let stop, !stop.name.isEmpty {
+            return localization.stationName(stop.name, in: train, code: stop.n02StationCode)
         }
         return localization.editorText("ios.route.unnamedStation")
     }
