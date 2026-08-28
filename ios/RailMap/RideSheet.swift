@@ -106,7 +106,7 @@ extension View {
             // journey. Both layers stay mounted, so this opacity transition is
             // interruptible and preserves list scroll state. Keyboard callers
             // suppress it with `RailMotion.withoutAnimation`.
-            .animation(RailMotion.reduced, value: isTop)
+            .animation(RailMotion.crossfade, value: isTop)
     }
 }
 

@@ -216,8 +216,12 @@ struct RideCard: View {
             // the header's font, padding and reserved heights under Reduce
             // Motion. The header remains 1:1 normally and changes immediately
             // between named states when motion is reduced.
+            // Through the helper rather than as a hand-written ternary. The two
+            // spell the same swap, and the helper is the one that keeps
+            // spelling it when the Reduce Motion stand-in changes — which is
+            // the entire reason `RailMotion.animation(_:reduceMotion:)` exists.
             .animation(
-                reduceMotion ? RailMotion.reduced : RailMotion.replace,
+                RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
                 value: isCompact)
         }
         // The one thing in this card that CANNOT be interpolated: the body is

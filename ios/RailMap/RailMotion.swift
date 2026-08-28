@@ -31,11 +31,28 @@ enum RailMotion {
     /// The default spring: a state change the reader caused, with no momentum.
     static let spring = Animation.spring(response: 0.36, dampingFraction: 1.0)
 
-    /// A drag or a sheet detent, where the finger's velocity is handed over.
+    /// A drag or a sheet detent: the settle that runs when the finger lifts.
     ///
-    /// `interactiveSpring` rather than `spring`: §9.3 asks the release to be
-    /// handed the finger's velocity so there is no pause at the moment it
-    /// lifts, and that is the difference between the two.
+    /// `interactiveSpring` rather than `spring`, and the reason is narrower
+    /// than it was written here. This comment used to say the release is
+    /// "handed the finger's velocity", which is not what the API does:
+    /// `Animation.interactiveSpring` is a spring with a shorter response and a
+    /// much smaller `blendDuration` (0.125 against `spring`'s 0), and it
+    /// receives no gesture velocity of its own. Nor is there any to receive at
+    /// the one call site — `ResidentBottomSheetModifier.settle(reporting:)`
+    /// animates a single discontinuous jump, because UIKit lays the sheet's
+    /// content out once at the destination rather than streaming it.
+    ///
+    /// What the short blend actually buys is the thing that call site needs: a
+    /// reader who drags again before the settle has finished retargets the
+    /// spring instead of stacking a second one on top of it. That is
+    /// interruptibility, not velocity handoff, and it is why the token stays.
+    ///
+    /// The one thing this does NOT control is the sheet's own frame, which
+    /// UIKit animates on its own detent curve. The two clocks are close enough
+    /// that nothing has been observed leading or lagging, but that is an
+    /// absence of reports rather than a measurement — see the note on
+    /// `settle(reporting:)`.
     static let gesture = Animation.interactiveSpring(response: 0.34, dampingFraction: 0.86)
 
     /// Press feedback. Kept under Reduce Motion — §9.4 names it explicitly.
@@ -60,7 +77,26 @@ enum RailMotion {
 
     /// The Reduce Motion stand-in for anything that would otherwise spring or
     /// slide: the same change, cross-faded in place.
+    ///
+    /// Reached through ``animation(_:reduceMotion:)`` and not spelled at call
+    /// sites. Three surfaces used to name it directly as their ORDINARY
+    /// motion, which worked only because the two values happen to agree: the
+    /// next revision of the Reduce Motion stand-in would have silently changed
+    /// the normal feel of a resident layer swap, a layers-sheet status line
+    /// and the journey card's detail body. ``crossfade`` is what those three
+    /// name now.
     static let reduced = Animation.easeInOut(duration: 0.16)
+
+    /// Two states swapping in place, with no movement in either direction —
+    /// a resident layer handing over, a status line arriving, a body mounting.
+    ///
+    /// Distinct from ``replace`` in what it is FOR rather than in its value:
+    /// `replace` is one small thing becoming another (a badge, a count, a
+    /// glyph), this is one whole surface taking another's place. It is
+    /// already motionless, so ``animation(_:reduceMotion:)`` has nothing to
+    /// take away from it — which is exactly why it must not be spelled as
+    /// ``reduced``, whose whole job is to be the thing that gets substituted.
+    static let crossfade = Animation.easeInOut(duration: 0.16)
 
     /// Any of the above, with the Reduce Motion swap applied. One function
     /// rather than one per token, so the swap is impossible to forget for a

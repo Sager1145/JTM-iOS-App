@@ -151,7 +151,7 @@ struct MapLayersView: View {
                     // This is a status replacement, not spatial motion. A short
                     // opacity-only transition remains useful under Reduce
                     // Motion and avoids collapsing the footer in one frame.
-                    .animation(RailMotion.reduced, value: classifying)
+                    .animation(RailMotion.crossfade, value: classifying)
                 }
             }
             .navigationTitle(localization.countryText("map.layers", fallback: "Map layers"))
