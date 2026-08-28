@@ -68,12 +68,67 @@ final class PlaybackController {
     private(set) var phase: Phase = .idle
     private(set) var queueIndex = 0
     private(set) var queueCount = 0
+    /// How far through the current journey the playhead is, **as the interface
+    /// reads it** — see ``exactProgress`` for the one the frame is drawn from.
+    ///
+    /// Republished on a 20 Hz ladder rather than on every display-link frame,
+    /// and the difference is not cosmetic. `@Observable` invalidates every
+    /// view whose body READ a property, and the two that read this one are
+    /// `RailWorkspaceView`'s journey rows and Passport's — so at 60 Hz a run
+    /// made the whole workspace body, with its list, its derived summaries and
+    /// its map inputs, a per-frame recomputation of everything.
+    ///
+    /// 20 Hz is chosen against what the value drives rather than by taste. It
+    /// feeds a `ProgressView` at most 540 points wide, so one publish is at
+    /// most 27 points of travel even on the shortest run the transport can
+    /// play, and a progress bar interpolates nothing — what the reader sees is
+    /// a bar advancing in steps narrower than the rounded cap already drawn on
+    /// its end. The terminal values are published unconditionally, so a run
+    /// finishes on a full bar rather than on wherever the last tick landed.
     private(set) var progress = 0.0
+    /// The playhead this instant, for anything drawing the frame rather than
+    /// describing it.
+    ///
+    /// `@ObservationIgnored` on purpose: it is written sixty times a second,
+    /// and a view that read it would be asking to be rebuilt sixty times a
+    /// second.
+    @ObservationIgnored private(set) var exactProgress = 0.0
     private(set) var currentTrainID: String?
     private(set) var title = ""
     private(set) var stationName = ""
+
+    /// How a station is spelled for the reader.
+    ///
+    /// Playback BAKES its names: `Playback.compile` localises each station as
+    /// it builds the path, because the map's label layer reads a baked string
+    /// and a language switch repaints the whole map anyway (which ends
+    /// playback and drops every compiled path). That is the web app's rule and
+    /// the port kept the seam — `compile(train:features:localize:)` — but this
+    /// controller used to leave it at its identity default, so the transport's
+    /// caption, the station now passing, and the same name burnt into an
+    /// exported video were all the record's own spelling whatever language the
+    /// app was in.
+    ///
+    /// Weak, and `@ObservationIgnored`: the shell owns this object and nothing
+    /// here should rebuild a view when it is set.
+    @ObservationIgnored weak var localization: AppLocalization?
     private(set) var plan: Playback.Plan?
-    private(set) var exportFrameSerial = 0
+    /// A counter for "a new frame exists".
+    ///
+    /// Not observable, for ``exactProgress``'s reason. Nothing reads it today;
+    /// the exporter is driven by ``onFrame``, which is a callback rather than
+    /// a dependency, and keeping this out of the observation graph is what
+    /// stops the next reader of it from making the app a 60 Hz rebuild by
+    /// accident.
+    @ObservationIgnored private(set) var exportFrameSerial = 0
+
+    /// When ``progress`` was last republished, on the display link's own clock.
+    ///
+    /// Not `Date`: the tick already carries a `CFTimeInterval`, and asking the
+    /// system for the wall clock sixty times a second to decide whether to
+    /// publish would cost more than the publish.
+    @ObservationIgnored private var lastProgressPublish = -Double.infinity
+    @ObservationIgnored private static let progressPublishInterval = 0.05
     var speed = 1.0 { didSet { speed = Playback.clampSpeed(speed) } }
     var autoFocus = true
 
@@ -114,8 +169,6 @@ final class PlaybackController {
     @ObservationIgnored private var cameraTask: Task<Void, Never>?
 
     var isActive: Bool { phase != .idle && phase != .ended }
-    /// Whether the transport is waiting on the reader rather than running.
-    var isArmed: Bool { phase == .armed }
     var isPlaying: Bool { phase == .playing }
     var canGoPrevious: Bool { queueIndex > 0 }
     var canGoNext: Bool { queueIndex + 1 < queueCount }
@@ -127,8 +180,21 @@ final class PlaybackController {
         var compiled: [Playback.Path?] = []
         var entries: [Entry] = []
         for train in trains {
+            let region = Region.resolved(train)
             let path = ridesByID[train.id].flatMap { ride in
-                Playback.compile(train: train, features: playbackFeatures(train: train, ride: ride))
+                Playback.compile(
+                    train: train,
+                    features: playbackFeatures(train: train, ride: ride),
+                    // `assumeIsolated` rather than an isolated closure: this
+                    // method is already on the main actor and `compile` is a
+                    // synchronous pure function, so the closure runs where it
+                    // was made — but its parameter type cannot say so.
+                    localize: { name, code in
+                        MainActor.assumeIsolated {
+                            self.localization?.stationName(
+                                name, code: code, region: region) ?? name
+                        }
+                    })
             }
             compiled.append(path)
             if let path { entries.append(Entry(train: train, path: path)) }
@@ -160,11 +226,11 @@ final class PlaybackController {
             return false
         }
         queueIndex = 0
-        progress = 0
+        resetProgress(to: 0)
         stationName = ""
         // Named before it runs: an armed transport showing a blank caption
         // would be a control that has not said what it is about to play.
-        title = queue.first.map(Self.title(of:)) ?? ""
+        title = queue.first.map(title(of:)) ?? ""
         currentTrainID = nil
         phase = .armed
 
@@ -238,7 +304,7 @@ final class PlaybackController {
         queueIndex = 0
         queueCount = 0
         doneTrails = []
-        progress = 0
+        resetProgress(to: 0)
         currentTrainID = nil
         title = ""
         stationName = ""
@@ -263,9 +329,9 @@ final class PlaybackController {
         cameraTask?.cancel()
         let entry = queue[queueIndex]
         currentTrainID = entry.train.id
-        title = Self.title(of: entry)
+        title = title(of: entry)
         stationName = ""
-        progress = 0
+        resetProgress(to: 0)
         playhead = Playback.Playhead()
 
         guard intro, let start = entry.path.start, !reducedMotion else {
@@ -290,9 +356,14 @@ final class PlaybackController {
         startClock()
     }
 
-    private static func title(of entry: Entry) -> String {
-        let number = entry.train.number.isEmpty ? entry.train.id : entry.train.number
-        return "\(number)  \(entry.train.origin) → \(entry.train.destination)"
+    /// The transport's caption for one journey — its number, then where it
+    /// ran between, named the way the reader's language spells it.
+    private func title(of entry: Entry) -> String {
+        let train = entry.train
+        let number = train.number.isEmpty ? train.id : train.number
+        let origin = localization?.originName(of: train) ?? train.origin
+        let destination = localization?.destinationName(of: train) ?? train.destination
+        return "\(number)  \(origin) → \(destination)"
     }
 
     /// A bounding box needs every vertex; a bounding box of a national day
@@ -308,6 +379,8 @@ final class PlaybackController {
 
     private func tick(timestamp: CFTimeInterval) {
         guard phase == .playing, queue.indices.contains(queueIndex) else { return }
+        let interval = RailSignpost.map.begin("playback.tick")
+        defer { RailSignpost.map.end("playback.tick", interval) }
         let entry = queue[queueIndex]
         let shortSide = Double(min(
             mapRendererViewSize?.width ?? 390,
@@ -316,9 +389,17 @@ final class PlaybackController {
             nowMilliseconds: timestamp * 1000,
             path: entry.path, speed: speed,
             shortSidePixels: max(shortSide, 1), reducedMotion: reducedMotion)
-        progress = min(max(frame.progress, 0), 1)
+        let exact = min(max(frame.progress, 0), 1)
+        exactProgress = exact
+        publish(progress: exact, atSeconds: timestamp, force: frame.finished)
         if frame.stations.index >= 0, frame.stations.index < entry.path.stations.count {
-            stationName = entry.path.stations[frame.stations.index].name
+            // Guarded, and it is not a micro-optimisation. `@Observable`'s
+            // generated setter does not compare — it calls `withMutation`
+            // whatever it is handed — so writing the same station name sixty
+            // times a second invalidates every view that read it sixty times a
+            // second, for a string that changes a few times a minute.
+            let name = entry.path.stations[frame.stations.index].name
+            if name != stationName { stationName = name }
         }
         let snapshot = PlaybackMapSnapshot(
             path: entry.path, frame: frame, autoFocus: autoFocus, done: doneTrails)
@@ -326,6 +407,30 @@ final class PlaybackController {
         exportFrameSerial &+= 1
         onFrame?(snapshot)
         if frame.finished { holdThenAdvance() }
+    }
+
+    /// Republish ``progress`` if the ladder allows it, or if it must.
+    ///
+    /// `force` is every moment the value is a statement rather than a
+    /// position: the end of a journey, the start of one, a stop. Those are
+    /// published whatever the clock says, because a bar left at 0.98 because
+    /// the run finished 40 ms after the last publish is a bar that is simply
+    /// wrong.
+    private func publish(progress value: Double, atSeconds now: Double, force: Bool) {
+        guard force || now - lastProgressPublish >= Self.progressPublishInterval else {
+            return
+        }
+        lastProgressPublish = now
+        if progress != value { progress = value }
+    }
+
+    /// Put the published playhead back to a stated value — the start of a
+    /// journey, or the end of a run — and let the next tick start a fresh
+    /// ladder from there.
+    private func resetProgress(to value: Double) {
+        exactProgress = value
+        lastProgressPublish = -.infinity
+        if progress != value { progress = value }
     }
 
     /// The renderer is normally the map coordinator. Its view size is exposed
@@ -370,7 +475,7 @@ final class PlaybackController {
     private func finishQueue() {
         invalidateClock()
         phase = .ended
-        progress = 1
+        resetProgress(to: 1)
         // Everything the run covered, which is the backlog plus the journey
         // that just finished joining it.
         mapRenderer?.framePlayback(

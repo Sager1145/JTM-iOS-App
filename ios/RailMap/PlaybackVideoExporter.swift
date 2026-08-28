@@ -44,6 +44,40 @@ final class PlaybackVideoExporter {
     @ObservationIgnored private var crop = CGRect.zero
     @ObservationIgnored private var frameInterval = 1.0 / 60.0
 
+    // Frame-invariant drawing state.
+    //
+    // `append` runs on the main actor at display-link cadence, sharing that
+    // actor with the playback renderer's own MapKit work — so anything built
+    // inside it is built sixty times a second in competition with the map.
+    // None of these change between frames, so none of them are.
+    private let colorSpace = CGColorSpaceCreateDeviceRGB()
+    private let backdrop = UIColor.black.cgColor
+    private let panelFill = UIColor.black.withAlphaComponent(0.72)
+    private let trackFill = UIColor.white.withAlphaComponent(0.2)
+    private let titleAttributes: [NSAttributedString.Key: Any] = {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byTruncatingTail
+        return [
+            .font: UIFont.systemFont(ofSize: 15, weight: .semibold),
+            .foregroundColor: UIColor.white,
+            .paragraphStyle: paragraph,
+        ]
+    }()
+    private let stationAttributes: [NSAttributedString.Key: Any] = [
+        .font: UIFont.systemFont(ofSize: 12, weight: .medium),
+        .foregroundColor: UIColor.white.withAlphaComponent(0.8),
+    ]
+
+    @ObservationIgnored private var contexts: [BitmapKey: CGContext] = [:]
+    @ObservationIgnored private var layoutCache: CaptionLayout?
+    /// The caption's two strings, already laid out. The title changes once per
+    /// journey and the station name once per station, not once per frame.
+    @ObservationIgnored private var titleCache: (text: String, line: NSAttributedString)?
+    @ObservationIgnored private var stationCache: (text: String, line: NSAttributedString)?
+    /// The journey's colour, which arrives as `#rrggbb` and would otherwise be
+    /// re-parsed out of that string for every frame of the run.
+    @ObservationIgnored private var colorCache: (hex: String, color: UIColor)?
+
     var isRecording: Bool { state == .recording || state == .finishing }
 
     func start(
@@ -114,6 +148,7 @@ final class PlaybackVideoExporter {
             self.lastFrameAt = -.infinity
             self.appendedFrames = 0
             self.progress = 0
+            resetFrameCaches()
             self.state = .recording
 
             playback.onFrame = { [weak self] snapshot in
@@ -173,50 +208,102 @@ final class PlaybackVideoExporter {
         let now = CACurrentMediaTime()
         guard now - lastFrameAt >= frameInterval else { return }
         lastFrameAt = now
+        let interval = RailSignpost.jobs.begin("video.frame")
+        defer { RailSignpost.jobs.end("video.frame", interval) }
         var optionalBuffer: CVPixelBuffer?
         guard CVPixelBufferPoolCreatePixelBuffer(nil, pool, &optionalBuffer) == kCVReturnSuccess,
               let buffer = optionalBuffer else { return }
         CVPixelBufferLockBaseAddress(buffer, [])
         defer { CVPixelBufferUnlockBaseAddress(buffer, []) }
-        guard let base = CVPixelBufferGetBaseAddress(buffer) else { return }
-        let width = CVPixelBufferGetWidth(buffer)
-        let height = CVPixelBufferGetHeight(buffer)
-        guard let context = CGContext(
-            data: base, width: width, height: height, bitsPerComponent: 8,
-            bytesPerRow: CVPixelBufferGetBytesPerRow(buffer),
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
-                | CGBitmapInfo.byteOrder32Little.rawValue)
-        else { return }
+        guard let context = context(for: buffer) else { return }
 
         // The crop FILLS the frame rather than being letterboxed into it: it
         // was chosen to have the frame's shape precisely so there are no bars.
         // A `native` shape makes the crop the whole view and this is a plain
         // scale, which is what the old code did for every shape.
         let filmed = crop.isEmpty ? CGRect(origin: .zero, size: mapView.bounds.size) : crop
-        let scale = outputSize.width / max(filmed.width, 1)
-        context.setFillColor(UIColor.black.cgColor)
+        let layout = captionLayout(filmed: filmed)
+        context.setFillColor(backdrop)
         context.fill(CGRect(origin: .zero, size: outputSize))
         context.saveGState()
         // Flip into UIKit's orientation, then shift so the crop's top-left
         // corner — not the view's — lands on the frame's.
-        context.translateBy(x: -filmed.minX * scale, y: outputSize.height + filmed.minY * scale)
-        context.scaleBy(x: scale, y: -scale)
+        context.translateBy(
+            x: -filmed.minX * layout.scale,
+            y: outputSize.height + filmed.minY * layout.scale)
+        context.scaleBy(x: layout.scale, y: -layout.scale)
         mapView.layer.render(in: context)
-        drawCaption(snapshot, in: context, filmed: filmed)
+        drawCaption(snapshot, in: context, layout: layout)
         context.restoreGState()
 
         let elapsed = max(0, now - startedAt)
         adapter.append(buffer, withPresentationTime: CMTime(seconds: elapsed, preferredTimescale: 600))
         appendedFrames += 1
-        progress = snapshot.frame.progress
+        publish(progress: snapshot.frame.progress)
+    }
+
+    /// The context that draws into `buffer`, built once per buffer rather than
+    /// once per frame.
+    ///
+    /// The adaptor's pool hands the same handful of buffers back in rotation,
+    /// so the context built for one of them is the context every later frame
+    /// filmed into it needs. Reuse is keyed on the address and the row layout,
+    /// and a context is only ever handed back for a LOCKED buffer reporting
+    /// that exact pair — so it can write nowhere but into the frame being
+    /// filmed right now, even if the pool has since released and re-made the
+    /// buffer that address belongs to.
+    private func context(for buffer: CVPixelBuffer) -> CGContext? {
+        guard let base = CVPixelBufferGetBaseAddress(buffer) else { return nil }
+        let key = BitmapKey(
+            base: UInt(bitPattern: base),
+            width: CVPixelBufferGetWidth(buffer),
+            height: CVPixelBufferGetHeight(buffer),
+            bytesPerRow: CVPixelBufferGetBytesPerRow(buffer))
+        if let cached = contexts[key] { return cached }
+        guard let context = CGContext(
+            data: base, width: key.width, height: key.height, bitsPerComponent: 8,
+            bytesPerRow: key.bytesPerRow, space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+                | CGBitmapInfo.byteOrder32Little.rawValue)
+        else { return nil }
+        // More entries than a pixel buffer pool holds means the addresses are
+        // not being recycled and every one of these is a context for a buffer
+        // that no longer exists, so the cache starts again rather than growing
+        // for the length of a film.
+        if contexts.count >= 8 { contexts.removeAll() }
+        contexts[key] = context
+        return context
     }
 
     private func drawCaption(
-        _ snapshot: PlaybackMapSnapshot, in context: CGContext, filmed: CGRect
+        _ snapshot: PlaybackMapSnapshot, in context: CGContext, layout: CaptionLayout
     ) {
         UIGraphicsPushContext(context)
         defer { UIGraphicsPopContext() }
+        panelFill.setFill()
+        layout.panel.fill()
+
+        titleLine(playback?.title ?? "").draw(in: layout.titleRect)
+        let station = playback?.stationName ?? ""
+        if !station.isEmpty {
+            stationLine(station).draw(at: layout.stationOrigin)
+        }
+        trackFill.setFill()
+        layout.trackPath.fill()
+        let fill = CGRect(
+            x: layout.track.minX, y: layout.track.minY,
+            width: layout.track.width * CGFloat(min(max(snapshot.frame.progress, 0), 1)),
+            height: layout.track.height)
+        trackColor(hex: snapshot.path.color).setFill()
+        UIBezierPath(roundedRect: fill, cornerRadius: 2).fill()
+    }
+
+    /// Where the caption sits and the furniture that never moves inside it.
+    ///
+    /// Rebuilt only when the filmed rectangle changes, which for the length of
+    /// one export it does not.
+    private func captionLayout(filmed: CGRect) -> CaptionLayout {
+        if let layoutCache, layoutCache.filmed == filmed { return layoutCache }
         // Placed against the FILMED rectangle, not the whole view: a square
         // crop of a phone in portrait discards a third of the height at the
         // bottom, and a caption laid out against the view would be cropped
@@ -226,37 +313,47 @@ final class PlaybackVideoExporter {
         let box = CGRect(
             x: filmed.minX + margin, y: filmed.maxY - height - margin,
             width: max(filmed.width - margin * 2, 1), height: height)
-        UIColor.black.withAlphaComponent(0.72).setFill()
-        UIBezierPath(roundedRect: box, cornerRadius: 16).fill()
-
-        let title = playback?.title ?? ""
-        let station = playback?.stationName ?? ""
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.lineBreakMode = .byTruncatingTail
-        (title as NSString).draw(
-            in: box.insetBy(dx: 14, dy: 11),
-            withAttributes: [
-                .font: UIFont.systemFont(ofSize: 15, weight: .semibold),
-                .foregroundColor: UIColor.white,
-                .paragraphStyle: paragraph,
-            ])
-        if !station.isEmpty {
-            (station as NSString).draw(
-                at: CGPoint(x: box.minX + 14, y: box.minY + 36),
-                withAttributes: [
-                    .font: UIFont.systemFont(ofSize: 12, weight: .medium),
-                    .foregroundColor: UIColor.white.withAlphaComponent(0.8),
-                ])
-        }
         let track = CGRect(x: box.minX + 14, y: box.maxY - 13, width: box.width - 28, height: 4)
-        UIColor.white.withAlphaComponent(0.2).setFill()
-        UIBezierPath(roundedRect: track, cornerRadius: 2).fill()
-        let fill = CGRect(
-            x: track.minX, y: track.minY,
-            width: track.width * CGFloat(min(max(snapshot.frame.progress, 0), 1)),
-            height: track.height)
-        (Self.color(hex: snapshot.path.color) ?? .systemBlue).setFill()
-        UIBezierPath(roundedRect: fill, cornerRadius: 2).fill()
+        let layout = CaptionLayout(
+            filmed: filmed,
+            scale: outputSize.width / max(filmed.width, 1),
+            panel: UIBezierPath(roundedRect: box, cornerRadius: 16),
+            titleRect: box.insetBy(dx: 14, dy: 11),
+            stationOrigin: CGPoint(x: box.minX + 14, y: box.minY + 36),
+            track: track,
+            trackPath: UIBezierPath(roundedRect: track, cornerRadius: 2))
+        layoutCache = layout
+        return layout
+    }
+
+    private func titleLine(_ text: String) -> NSAttributedString {
+        if let titleCache, titleCache.text == text { return titleCache.line }
+        let line = NSAttributedString(string: text, attributes: titleAttributes)
+        titleCache = (text, line)
+        return line
+    }
+
+    private func stationLine(_ text: String) -> NSAttributedString {
+        if let stationCache, stationCache.text == text { return stationCache.line }
+        let line = NSAttributedString(string: text, attributes: stationAttributes)
+        stationCache = (text, line)
+        return line
+    }
+
+    private func trackColor(hex: String) -> UIColor {
+        if let colorCache, colorCache.hex == hex { return colorCache.color }
+        let color = UIColor(railHex: hex) ?? .systemBlue
+        colorCache = (hex, color)
+        return color
+    }
+
+    /// Published when the number moves rather than on every frame: an
+    /// `@Observable` write is a promise to redraw whoever reads it, and at
+    /// sixty a second that is a SwiftUI invalidation competing with the render
+    /// this method just did — for a bar that cannot show a thousandth.
+    private func publish(progress value: Double) {
+        guard abs(value - progress) >= 0.001 else { return }
+        progress = value
     }
 
     private func finish() {
@@ -300,16 +397,39 @@ final class PlaybackVideoExporter {
         mapView = nil
         playback = nil
         outputURL = nil
+        resetFrameCaches()
     }
 
-    private static func color(hex: String) -> UIColor? {
-        var value = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        if value.hasPrefix("#") { value.removeFirst() }
-        guard value.count == 6, let number = UInt32(value, radix: 16) else { return nil }
-        return UIColor(
-            red: CGFloat((number >> 16) & 0xff) / 255,
-            green: CGFloat((number >> 8) & 0xff) / 255,
-            blue: CGFloat(number & 0xff) / 255, alpha: 1)
+    /// Everything held for one film's frames.
+    ///
+    /// Cleared with the writer because every entry belongs to that run: the
+    /// contexts point into a pixel buffer pool that goes with the adaptor, and
+    /// the layout is measured against a rectangle the next run may not film.
+    private func resetFrameCaches() {
+        contexts.removeAll()
+        layoutCache = nil
+        titleCache = nil
+        stationCache = nil
+        colorCache = nil
+    }
+
+    /// A bitmap context is bound to the address and row layout it writes into,
+    /// so it may only be reused for a buffer reporting both.
+    private struct BitmapKey: Hashable {
+        let base: UInt
+        let width: Int
+        let height: Int
+        let bytesPerRow: Int
+    }
+
+    private struct CaptionLayout {
+        let filmed: CGRect
+        let scale: CGFloat
+        let panel: UIBezierPath
+        let titleRect: CGRect
+        let stationOrigin: CGPoint
+        let track: CGRect
+        let trackPath: UIBezierPath
     }
 
     private enum ExportError: LocalizedError {
