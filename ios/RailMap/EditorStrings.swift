@@ -30,8 +30,8 @@ enum EditorStrings {
             .zhHant: "準備路線", .zhHans: "准备路线", .ja: "経路を準備中", .en: "Preparing route",
         ],
         "ios.route.preparingDetail": [
-            .zhHant: "尚未開始求解這趟旅程的鐵路路徑。",
-            .zhHans: "尚未开始求解这趟旅程的铁路路径。",
+            .zhHant: "尚未開始求解這趟行程的鐵路路徑。",
+            .zhHans: "尚未开始求解这趟行程的铁路路径。",
             .ja: "この乗車記録の経路探索はまだ始まっていません。",
             .en: "Solving has not started for this journey yet.",
         ],
@@ -68,8 +68,8 @@ enum EditorStrings {
             .en: "Route unavailable",
         ],
         "ios.route.unavailableDetail": [
-            .zhHant: "這趟旅程的 {expected} 個區間都沒有找到符合目前線路約束的路徑。",
-            .zhHans: "这趟旅程的 {expected} 个区间都没有找到符合当前线路约束的路径。",
+            .zhHant: "這趟行程的 {expected} 個區間都沒有找到符合目前線路約束的路徑。",
+            .zhHans: "这趟行程的 {expected} 个区间都没有找到符合当前线路约束的路径。",
             .ja: "この乗車記録の {expected} 区間すべてで、現在の路線制約に合う経路が見つかりませんでした。",
             .en: "None of this journey's {expected} sections found a path that fits the current line constraints.",
         ],
@@ -78,15 +78,15 @@ enum EditorStrings {
             .en: "No drawable route yet",
         ],
         "ios.route.noSectionsDetail": [
-            .zhHant: "這趟旅程還沒有標記為已乘坐的相鄰停站，因此沒有可求解的區間。",
-            .zhHans: "这趟旅程还没有标记为已乘坐的相邻停靠站，因此没有可求解的区间。",
+            .zhHant: "這趟行程還沒有標記為已乘坐的相鄰停站，因此沒有可求解的區間。",
+            .zhHans: "这趟行程还没有标记为已乘坐的相邻停靠站，因此没有可求解的区间。",
             .ja: "乗車済みとして連続する停車駅がないため、探索できる区間がありません。",
             .en: "No two adjacent stops are marked as ridden, so there is no section to solve.",
         ],
         // §13.3 line three: what was kept. §1.1: never a straight line.
         "ios.route.recordKept": [
-            .zhHant: "旅程記錄與停站沒有改變，也沒有用直線代替鐵路。",
-            .zhHans: "旅程记录与停靠站没有改变，也没有用直线代替铁路。",
+            .zhHant: "行程記錄與停站沒有改變，也沒有用直線代替鐵路。",
+            .zhHans: "行程记录与停靠站没有改变，也没有用直线代替铁路。",
             .ja: "乗車記録と停車駅は変更されていません。直線での代替描画も行っていません。",
             .en: "The journey record and its stops are unchanged, and no straight line stood in for railway.",
         ],
@@ -154,8 +154,8 @@ enum EditorStrings {
         // §7.3 / §10.4: an overnight time keeps its 24+ spelling. The detail
         // explains the crossing rather than rewriting the value into a date.
         "ios.detail.crossDay": [
-            .zhHant: "這趟旅程跨日。24:00 以上的時刻屬於隔天，例如 25:10 是隔天 01:10，資料裡保留原始寫法。",
-            .zhHans: "这趟旅程跨日。24:00 以上的时刻属于隔天，例如 25:10 是隔天 01:10，数据里保留原始写法。",
+            .zhHant: "這趟行程跨日。24:00 以上的時刻屬於隔天，例如 25:10 是隔天 01:10，資料裡保留原始寫法。",
+            .zhHans: "这趟行程跨日。24:00 以上的时刻属于隔天，例如 25:10 是隔天 01:10，数据里保留原始写法。",
             .ja: "この乗車は日をまたぎます。24 時以降の時刻は翌日を表し（25:10 は翌日 01:10）、データは元の表記のまま保持します。",
             .en: "This journey crosses midnight. Times past 24:00 are the next day — 25:10 is 01:10 tomorrow — and the record keeps the original spelling.",
         ],
@@ -199,7 +199,7 @@ enum EditorStrings {
         "ios.detail.notRiddenDetail": [
             .zhHant: "這趟行程還沒有計入里程統計。實際乘坐之後在這裡確認，日期不會替你決定。",
             .zhHans: "这趟行程还没有计入里程统计。实际乘坐之后在这里确认，日期不会替你决定。",
-            .ja: "この旅程はまだ距離の集計に入っていません。実際に乗った後でここで確認してください。日付が勝手に決めることはありません。",
+            .ja: "この行程はまだ距離の集計に入っていません。実際に乗った後でここで確認してください。日付が勝手に決めることはありません。",
             .en: "This journey is not in the mileage statistics yet. Confirm it here once you have travelled — the date will never decide for you.",
         ],
         "ios.detail.confirmRidden": [
@@ -248,7 +248,7 @@ enum EditorStrings {
             .en: "{count} stops",
         ],
         "ios.detail.platformValue": [
-            .zhHant: "站台 {number}", .zhHans: "站台 {number}", .ja: "{number}番線",
+            .zhHant: "月台 {number}", .zhHans: "站台 {number}", .ja: "{number}番線",
             .en: "Platform {number}",
         ],
 
@@ -300,7 +300,7 @@ enum EditorStrings {
             .zhHant: "日期", .zhHans: "日期", .ja: "日付", .en: "Date",
         ],
         "ios.editor.routeColor": [
-            .zhHant: "路線顏色", .zhHans: "路线颜色", .ja: "経路の色", .en: "Route colour",
+            .zhHant: "路線顏色", .zhHans: "路线颜色", .ja: "経路の色", .en: "Route color",
         ],
         "ios.editor.visibilityNote": [
             .zhHant: "只影響地圖顯示。記錄與匯出的 JSON 不變。",
@@ -321,8 +321,8 @@ enum EditorStrings {
             .en: "At least two stops. Their order is the running order; drag to rearrange.",
         ],
         "ios.editor.rebuildAfterSave": [
-            .zhHant: "保存停站後，可在旅程詳情的「路線狀態」裡重建路線。",
-            .zhHans: "保存停靠站后，可在旅程详情的「路线状态」里重建路线。",
+            .zhHant: "儲存停站後，可在行程詳情的「路線狀態」裡重建路線。",
+            .zhHans: "保存停靠站后，可在行程详情的「路线状态」里重建路线。",
             .ja: "停車駅を保存したあと、乗車記録の「経路の状態」から経路を再構築できます。",
             .en: "After the stops are saved, rebuild the route from the journey's Route state card.",
         ],
@@ -330,15 +330,15 @@ enum EditorStrings {
         // MARK: - §5.4 editor — actions, in specific verbs
 
         "ios.editor.saveJourney": [
-            .zhHant: "保存旅程", .zhHans: "保存旅程", .ja: "乗車記録を保存", .en: "Save journey",
+            .zhHant: "儲存行程", .zhHans: "保存行程", .ja: "乗車記録を保存", .en: "Save journey",
         ],
         "ios.editor.discardTitle": [
-            .zhHant: "放棄未保存的修改？", .zhHans: "放弃未保存的修改？",
+            .zhHant: "放棄未儲存的修改？", .zhHans: "放弃未保存的修改？",
             .ja: "保存していない変更を破棄しますか？", .en: "Discard unsaved changes?",
         ],
         "ios.editor.discardDetail": [
-            .zhHant: "這次編輯的修改會被丟棄。已保存的旅程記錄不受影響。",
-            .zhHans: "这次编辑的修改会被丢弃。已保存的旅程记录不受影响。",
+            .zhHant: "這次編輯的修改會被丟棄。已儲存的行程記錄不受影響。",
+            .zhHans: "这次编辑的修改会被丢弃。已保存的行程记录不受影响。",
             .ja: "今回の編集内容は破棄されます。保存済みの記録は変わりません。",
             .en: "The changes made in this session are dropped. The saved journey is unaffected.",
         ],
@@ -352,11 +352,11 @@ enum EditorStrings {
             .zhHant: "查看錯誤", .zhHans: "查看错误", .ja: "エラーを見る", .en: "Show the error",
         ],
         "ios.editor.cannotSaveYet": [
-            .zhHant: "還不能保存", .zhHans: "还不能保存", .ja: "まだ保存できません",
+            .zhHant: "還不能儲存", .zhHans: "还不能保存", .ja: "まだ保存できません",
             .en: "Not ready to save",
         ],
         "ios.editor.blockedCount": [
-            .zhHant: "有 {count} 個問題擋住保存。",
+            .zhHant: "有 {count} 個問題擋住儲存。",
             .zhHans: "有 {count} 个问题挡住保存。",
             .ja: "保存を妨げている問題が {count} 件あります。",
             .en: "{count} problems are blocking the save.",
@@ -376,8 +376,8 @@ enum EditorStrings {
         // MARK: - §5.4 editor — the rules, said next to the field
 
         "ios.editor.idRequired": [
-            .zhHant: "請填寫旅程 ID。", .zhHans: "请填写旅程 ID。",
-            .ja: "列車 ID を入力してください。", .en: "Enter a journey id.",
+            .zhHant: "請填寫列車 ID。", .zhHans: "请填写列车 ID。",
+            .ja: "列車 ID を入力してください。", .en: "Enter a train ID.",
         ],
         "ios.editor.stationCodeRule": [
             .zhHant: "車站代碼需為六位 N02_005c 或 TDX StationUID；沒有就留空。",
@@ -392,8 +392,8 @@ enum EditorStrings {
             .en: "Letters, digits, underscores and hyphens only.",
         ],
         "ios.editor.idTaken": [
-            .zhHant: "「{id}」已被另一趟旅程使用。保存時不會覆蓋對方，這趟會保留原本的 ID。",
-            .zhHans: "「{id}」已被另一趟旅程使用。保存时不会覆盖对方，这趟会保留原本的 ID。",
+            .zhHant: "「{id}」已被另一趟行程使用。儲存時不會覆蓋對方，這趟會保留原本的 ID。",
+            .zhHans: "「{id}」已被另一趟行程使用。保存时不会覆盖对方，这趟会保留原本的 ID。",
             .ja: "「{id}」は別の乗車記録が使用中です。保存しても相手を上書きせず、この記録は元の ID のままになります。",
             .en: "“{id}” already belongs to another journey. Saving will not overwrite it; this journey keeps its previous id.",
         ],
@@ -419,7 +419,7 @@ enum EditorStrings {
             .zhHant: "路線顏色需為 #RRGGBB。留空則使用預設色。",
             .zhHans: "路线颜色需为 #RRGGBB。留空则使用默认色。",
             .ja: "経路の色は #RRGGBB 形式です。空欄なら既定色を使います。",
-            .en: "Use #RRGGBB, or leave it empty for the default colour.",
+            .en: "Use #RRGGBB, or leave it empty for the default color.",
         ],
         "ios.editor.stopCountRule": [
             .zhHant: "至少需要 2 個停站，目前只有 {count} 個。",
@@ -450,14 +450,14 @@ enum EditorStrings {
             .en: "Stop type must be origin, passenger_stop, operational_stop or pass_through.",
         ],
         "ios.editor.policyProblem": [
-            .zhHant: "路徑策略不符合 schema 1.3，保存會被拒絕。重設即可修正。",
+            .zhHant: "路徑策略不符合 schema 1.3，儲存會被拒絕。重設即可修正。",
             .zhHans: "路径策略不符合 schema 1.3，保存会被拒绝。重置即可修正。",
             .ja: "経路ポリシーが schema 1.3 に適合していないため保存できません。既定に戻すと解消します。",
             .en: "The route policy does not match schema 1.3, so the save is refused. Resetting it fixes this.",
         ],
         "ios.editor.otherProblem": [
-            .zhHant: "這趟旅程還不符合 schema 1.3。",
-            .zhHans: "这趟旅程还不符合 schema 1.3。",
+            .zhHant: "這趟行程還不符合 schema 1.3。",
+            .zhHans: "这趟行程还不符合 schema 1.3。",
             .ja: "この乗車記録はまだ schema 1.3 に適合していません。",
             .en: "This journey does not match schema 1.3 yet.",
         ],
@@ -497,14 +497,14 @@ enum EditorStrings {
             .zhHant: "車站代碼", .zhHans: "车站代码", .ja: "駅コード", .en: "Station code",
         ],
         "ios.editor.platformNumber": [
-            .zhHant: "站台編號", .zhHans: "站台编号", .ja: "番線", .en: "Platform number",
+            .zhHant: "月台編號", .zhHans: "站台编号", .ja: "番線", .en: "Platform number",
         ],
         "ios.editor.platformOptional": [
             .zhHant: "沒有資料時留空", .zhHans: "没有数据时留空", .ja: "不明なら空欄",
             .en: "Leave blank when unknown",
         ],
         "ios.editor.platformRule": [
-            .zhHant: "站台編號必須是 0 或正整數；沒有資料時請留空。",
+            .zhHant: "月台編號必須是 0 或正整數；沒有資料時請留空。",
             .zhHans: "站台编号必须是 0 或正整数；没有数据时请留空。",
             .ja: "番線は 0 以上の整数で入力してください。不明なら空欄にします。",
             .en: "Platform number must be zero or a positive integer; leave it blank when unknown.",

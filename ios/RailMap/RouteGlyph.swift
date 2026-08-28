@@ -82,11 +82,24 @@ enum RouteMark {
     static let trim: CGFloat = 74
 
     /// What the mark occupies, discs included.
-    static let bounds = CGRect(
-        x: points.map(\.x).min()! - stationRadius,
-        y: points.map(\.y).min()! - stationRadius,
-        width: points.map(\.x).max()! - points.map(\.x).min()! + 2 * stationRadius,
-        height: points.map(\.y).max()! - points.map(\.y).min()! + 2 * stationRadius)
+    ///
+    /// Folded rather than force-unwrapped. `points` is the literal above and
+    /// cannot be empty today, but this is a `static let`: it is computed
+    /// before any drawing code that could report a problem, so emptying that
+    /// literal would crash at first touch with nothing to read. Falling back
+    /// to a bare pair of discs keeps such an edit visible as a mark that
+    /// draws nothing, and — unlike a zero rect — leaves `fit(in:)` a
+    /// non-zero extent to divide by rather than a NaN transform.
+    static let bounds: CGRect = {
+        let xs = points.map(\.x), ys = points.map(\.y)
+        let minX = xs.min() ?? 0, maxX = xs.max() ?? 0
+        let minY = ys.min() ?? 0, maxY = ys.max() ?? 0
+        return CGRect(
+            x: minX - stationRadius,
+            y: minY - stationRadius,
+            width: maxX - minX + 2 * stationRadius,
+            height: maxY - minY + 2 * stationRadius)
+    }()
 
     /// Icon units to a view's coordinates, fitted and centred.
     static func fit(in rect: CGRect) -> CGAffineTransform {
@@ -119,7 +132,10 @@ enum RouteMark {
 
         func path(in rect: CGRect) -> Path {
             var path = Path()
-            for centre in [RouteMark.points.first!, RouteMark.points.last!] {
+            // The two ends, compacted rather than forced, for the reason
+            // `RouteMark.bounds` folds: an emptied literal should draw
+            // nothing, not trap inside a `Shape.path(in:)`.
+            for centre in [RouteMark.points.first, RouteMark.points.last].compactMap(\.self) {
                 path.addEllipse(in: disc(centre, RouteMark.stationRadius))
                 if hole > 0 { path.addEllipse(in: disc(centre, hole)) }
             }

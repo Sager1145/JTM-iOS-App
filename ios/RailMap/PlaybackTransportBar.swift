@@ -35,6 +35,7 @@ struct PlaybackTransportBar: View {
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 9) {
@@ -145,6 +146,14 @@ struct PlaybackTransportBar: View {
             Button { playback.togglePause() } label: {
                 Image(systemName: playback.isPlaying ? "pause.fill" : "play.fill")
                     .font(.title3)
+                    // §9.1's 状态替换, and therefore NOT degraded: play
+                    // becoming pause is one mark replacing another in place,
+                    // which is the form §9.4 keeps under Reduce Motion rather
+                    // than the form it removes. `MapControlBar.mark` states the
+                    // same rule for `location` → `location.fill`, and the two
+                    // controls have to answer alike — a transport whose glyph
+                    // cross-faded while the map's rail glyph replaced would be
+                    // two vocabularies for one kind of change.
                     .contentTransition(.symbolEffect(.replace))
                     .animation(RailMotion.replace, value: playback.isPlaying)
                     .frame(width: 44, height: 44)
@@ -173,13 +182,35 @@ struct PlaybackTransportBar: View {
                 .font(.caption.weight(.semibold))
                 .lineLimit(titleLines)
                 .fixedSize(horizontal: false, vertical: true)
-            if !playback.stationName.isEmpty {
-                Text(playback.stationName)
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(stationLines)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+                .contentTransition(.opacity)
+                .railAnimation(
+                    RailMotion.replace, value: playback.title,
+                    reduceMotion: reduceMotion)
+            // Always mounted, and the space is what keeps it that way.
+            //
+            // `stationName` is cleared at the start of every journey and
+            // filled again when the head reaches its first call, so a
+            // conditional row inserted and removed a line of type on the
+            // transport — which is a VStack, so the WHOLE bar grew by that
+            // line, and the play, previous and next buttons moved out from
+            // under the reader's thumb at the first station of every journey
+            // in the queue. A control must not move because something beside
+            // it changed, least of all one the reader is reaching for while
+            // the map is animating.
+            //
+            // Reserving with a space rather than a `minHeight` keeps the
+            // reservation exactly one line of THIS font at the reader's own
+            // text size, with no second number to keep true.
+            Text(playback.stationName.isEmpty ? " " : playback.stationName)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .lineLimit(stationLines)
+                .fixedSize(horizontal: false, vertical: true)
+                .contentTransition(.opacity)
+                .railAnimation(
+                    RailMotion.replace, value: playback.stationName,
+                    reduceMotion: reduceMotion)
+                .accessibilityHidden(playback.stationName.isEmpty)
         }
     }
 
@@ -203,6 +234,15 @@ struct PlaybackTransportBar: View {
             "\(playback.queueIndex + 1)/\(max(playback.queueCount, 1))", systemImage: "tram"
         )
         .font(.caption2.monospacedDigit())
+        // The house treatment for a figure that ticks — the same pairing
+        // `PassportMetric` and `StatisticsBar` use, down to taking `replace`
+        // directly rather than through the Reduce Motion swap: §9.4 keeps
+        // numeric updates, because the figure changing IS the information.
+        // Monospaced digits already stop the width from jumping; this stops the
+        // digit itself from cutting, which on a bar floating over a moving map
+        // was the one hard swap left in it.
+        .contentTransition(.numericText())
+        .animation(RailMotion.replace, value: playback.queueIndex)
         .accessibilityLabel(
             localization.journeyText("ios.journey.playbackQueue", fallback: "Journey"))
         .accessibilityValue(
@@ -246,8 +286,19 @@ struct PlaybackTransportBar: View {
     /// and three were hit at 20 — and the three that were not are the ones a
     /// reader presses while a run is playing and the bar is moving under their
     /// thumb. HIG `buttons.md`: a button needs a hit region of at least 44×44.
-    @ViewBuilder
     private var videoControl: some View {
+        videoControlContent
+            // The four states are four different view types, so SwiftUI treats
+            // a change of state as one leaving and another arriving — which,
+            // inside an animated transaction, is the default opacity
+            // transition and outside one is a hard cut. `crossfade` rather
+            // than `railAnimation`: it is already motionless, which is the
+            // reason `RailMotion` keeps it separate from `reduced`.
+            .animation(RailMotion.crossfade, value: videoExporter.state)
+    }
+
+    @ViewBuilder
+    private var videoControlContent: some View {
         switch videoExporter.state {
         case .recording:
             Button { videoExporter.cancel() } label: {
@@ -259,7 +310,14 @@ struct PlaybackTransportBar: View {
             .accessibilityLabel(
                 localization.journeyText("video.cancel", fallback: "Cancel video export"))
         case .finishing:
+            // The same 44-point box as the other three branches, and here it
+            // is a LAYOUT contract rather than a hit target: a bare
+            // `ProgressView` is about twenty points square, so an export
+            // passing through this state shrank the control and slid the speed
+            // slider and its readout sideways beside it — twice, once on the
+            // way in and once on the way out.
             ProgressView().controlSize(.small)
+                .frame(width: 44, height: 44)
                 .accessibilityLabel(
                     localization.journeyText("video.finishing", fallback: "Finishing video"))
         case .finished(let url, let partial):

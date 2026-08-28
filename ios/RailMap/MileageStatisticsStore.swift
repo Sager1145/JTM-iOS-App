@@ -83,6 +83,15 @@ final class MileageStatisticsStore {
     private(set) var totalKm: Double = 0
     private(set) var lineTotals: [(name: String, byMask: [Int: Double])] = []
     private(set) var lineOperators: [String: String] = [:]
+    /// The per-journey grouping the passport's Flighty-shaped cards read —
+    /// the distributions, the ranked lists, the superlatives. See
+    /// ``PassportStatistics``, which is where the reasoning lives.
+    ///
+    /// All-time for the region in scope, like ``view``'s `overall` and unlike
+    /// its `daily`: the day slice answers a question the reader asked in the
+    /// panel header, and these cards answer the passport's own. So it is
+    /// computed once per load and left alone by ``selectDate(_:)``.
+    private(set) var passport: PassportStatistics?
     private(set) var progress: Progress?
 
     /// The statistics screen's own date bucket, in the same vocabulary the
@@ -185,6 +194,12 @@ final class MileageStatisticsStore {
 
                 let result = try await Self.aggregate(context: context, selectedDate: scope)
                 try Task.checkCancellation()
+                // Grouped from the entries that were just matched, off the
+                // main actor for the same reason the aggregate is: it is a
+                // pass over every stop of every journey, and the panel it
+                // lands in is a scroll view the reader may already be moving.
+                let grouped = await Self.group(trains: trains, entries: prepared.entries)
+                try Task.checkCancellation()
 
                 self.context = context
                 self.entryCache = prepared.cache
@@ -196,6 +211,7 @@ final class MileageStatisticsStore {
                 self.lineOperators = Dictionary(
                     index.lineOperator.pairs.map { ($0.key, $0.value) },
                     uniquingKeysWith: { first, _ in first })
+                self.passport = grouped
                 self.progress = nil
                 self.state = .loaded
                 // The scope can be moved while the load is still running; the
@@ -212,6 +228,7 @@ final class MileageStatisticsStore {
                 self.servedFingerprint = nil
                 self.context = nil
                 self.view = nil
+                self.passport = nil
                 self.availableDates = []
                 self.lineTotals = []
                 self.lineOperators = [:]
@@ -511,6 +528,19 @@ final class MileageStatisticsStore {
             country: context.country, selectedDate: selectedDate,
             trainDate: { $0.date ?? Dates.undated },
             dateLabel: { $0 })
+    }
+
+    /// The passport's per-journey grouping, off the main actor.
+    ///
+    /// `async` for that reason alone — nothing in it awaits. A `nonisolated`
+    /// async function runs on the generic executor, which is what keeps a pass
+    /// over every stop of every journey out of the frame the panel is drawing.
+    private nonisolated static func group(
+        trains: [Train], entries: [Statistics.TrainEntry]
+    ) async -> PassportStatistics {
+        let interval = RailSignpost.jobs.begin("stats.group")
+        defer { RailSignpost.jobs.end("stats.group", interval) }
+        return PassportStatistics.build(trains: trains, entries: entries)
     }
 
     private struct Context: Sendable {

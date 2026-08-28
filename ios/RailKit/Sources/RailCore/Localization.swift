@@ -5,7 +5,7 @@ import Foundation
 ///
 /// The two halves of that pair are ported differently, on purpose.
 ///
-/// **The catalogs are data.** 432 keys × Traditional Chinese and English, plus
+/// **The catalogs are data.** 456 keys × Traditional Chinese and English, plus
 /// a complete Japanese overlay, now live in `ios/RailMap/Localizable.xcstrings`
 /// — generated from the real JavaScript by
 /// `app/scripts/build/port-fixtures/i18n.mjs` on every fixture run. Nothing in
@@ -19,7 +19,7 @@ import Foundation
 /// ## The fourth language is generated, and it is generated at build time
 ///
 /// The app offers four UI languages but maintains three. Simplified Chinese is
-/// derived at runtime by `toSimplifiedChinese()`, a 236-entry character and
+/// derived at runtime by `toSimplifiedChinese()`, a 243-entry character and
 /// phrase map that lives in `i18n.js` and is reachable from nowhere but `t()`
 /// — it only ever converts a catalog value, or the key when the catalog has
 /// nothing. So the generator materialises `zh-Hans` into the String Catalog by
@@ -28,7 +28,7 @@ import Foundation
 /// That is why the `zh-Hans` case below is a plain lookup while the other three
 /// keep their fallback chains: pre-folding a *derivation* is not the same as
 /// pre-folding a *translation*, and it removes the whole class of bug where one
-/// row of a 236-entry table is mistyped in Swift and one screen quietly reads
+/// row of a 243-entry table is mistyped in Swift and one screen quietly reads
 /// wrong. Every entry carries a `zh-Hans`, including entries that would fall
 /// back, which is what leaves that lookup with no residue.
 ///

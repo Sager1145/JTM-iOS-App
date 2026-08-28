@@ -34,20 +34,14 @@
 
     // persistent workspace navigation
     "nav.label": { zh: "工作區導覽", en: "Workspace navigation" },
-    "nav.trains": { zh: "列車", en: "Trains" },
-    "nav.editor": { zh: "編輯", en: "Edit" },
     "nav.data": { zh: "資料", en: "Data" },
-    "nav.display": { zh: "顯示", en: "Display" },
-    "nav.about": { zh: "說明", en: "About" },
     "menu.hide": { zh: "隱藏選單", en: "Hide menu" },
     "menu.show": { zh: "顯示選單", en: "Show menu" },
-    "menu.expand": { zh: "展開選單", en: "Expand menu" },
-    "menu.minimize": { zh: "縮小選單", en: "Minimize menu" },
 
     // §2.2: three content destinations. Data Library and Settings are tasks,
     // reached from the Utility group, and are deliberately NOT here.
-    "nav.journeys": { zh: "旅程", en: "Journeys" },
-    "nav.network": { zh: "鐵路網絡", en: "Network" },
+    "nav.journeys": { zh: "行程", en: "Journeys" },
+    "nav.network": { zh: "鐵路網", en: "Network" },
     "nav.passport": { zh: "乘車護照", en: "Passport" },
     // §2.2 (revised on iOS): the three destinations the native shell offers.
     // The railway network stopped being one of them when the map became the
@@ -68,15 +62,15 @@
 
     // §5.2 Network workspace
     "grp.networkContents": { zh: "路網內容", en: "Network contents" },
-    "btn.showNetwork": { zh: "顯示完整鐵路網絡", en: "Show the complete network" },
-    "btn.hideNetwork": { zh: "隱藏完整鐵路網絡", en: "Hide the complete network" },
+    "btn.showNetwork": { zh: "顯示完整鐵路網", en: "Show the complete network" },
+    "btn.hideNetwork": { zh: "隱藏完整鐵路網", en: "Hide the complete network" },
     "btn.fitNetwork": { zh: "適配完整路網", en: "Frame the complete network" },
     "network.hint": {
       zh: "路線顏色、車站圓點與縮放分級由地圖圖層與顯示設定控制。",
-      en: "Line colours, station dots and zoom tiers are controlled by the map layers and Settings.",
+      en: "Line colors, station dots and zoom tiers are controlled by the map layers and Settings.",
     },
     "network.packageOff": {
-      zh: "完整鐵路網絡目前關閉；已乘路線仍然顯示。",
+      zh: "完整鐵路網目前關閉；已乘路線仍然顯示。",
       en: "The complete network is off. Recorded journeys are still drawn.",
     },
     "network.packageLoading": {
@@ -95,16 +89,16 @@
     "network.stations": { zh: "車站 {n} 座", en: "{n} stations" },
 
     // §5.3 Passport
-    "grp.journeyLog": { zh: "旅程記錄", en: "Journey log" },
+    "grp.journeyLog": { zh: "行程記錄", en: "Journey log" },
     "grp.passportShare": { zh: "回放與匯出", en: "Replay and export" },
     "passport.scope": { zh: "統計範圍", en: "Scope" },
     "passport.coverage": { zh: "已乘路網", en: "Ridden network" },
     "passport.coverageHint": {
       zh: "地圖上加粗的線是已記錄的乘車區間。",
-      en: "The emphasised lines on the map are the recorded ride segments.",
+      en: "The emphasized lines on the map are the recorded ride segments.",
     },
     "passport.logEmpty": {
-      zh: "此範圍內沒有旅程記錄。",
+      zh: "此範圍內沒有行程記錄。",
       en: "No journeys are recorded in this scope.",
     },
 
@@ -146,7 +140,6 @@
     },
 
     // video export
-    "video.title": { zh: "輸出行程影片", en: "Export journey video" },
     "video.export": { zh: "輸出影片", en: "Export video" },
     "video.stop": { zh: "結束錄影", en: "Stop recording" },
     "video.shape": { zh: "比例", en: "Shape" },
@@ -278,14 +271,14 @@
       en: 'Paste a full store: {"schema_version":"1.3","trains":[...]}, or a train array or a single train object',
     },
     "btn.openLocal": { zh: "打開本地 JSON", en: "Open Local JSON" },
-    "btn.saveLocal": { zh: "保存／另存 JSON", en: "Save / Save As JSON" },
+    "btn.saveLocal": { zh: "儲存／另存 JSON", en: "Save / Save As JSON" },
     "btn.validate": { zh: "驗證匯入 JSON", en: "Validate Import JSON" },
     "btn.apply": { zh: "開始載入／逐條匯入", en: "Start Loading / Import Items" },
 
     // data source (static deploy: sample data vs the user's own browser store)
     "sec.dataSource": { zh: "資料來源", en: "Data Source" },
     "hint.dataSource": {
-      zh: "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。",
+      zh: "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。",
       en: "Sample data is for browsing only — changes to it are never saved. Your own data is stored in this browser and auto-saves as you edit.",
     },
     "btn.loadSampleAll": { zh: "載入全部示例資料", en: "Load Full Sample Data" },
@@ -314,100 +307,100 @@
       en: "Load Tokyo Limited-Express Loop",
     },
     "btn.restoreMine": { zh: "恢復我的資料", en: "Restore My Data" },
-    "btn.saveAsMine": { zh: "保存為我的資料", en: "Save as My Data" },
+    "btn.saveAsMine": { zh: "儲存為我的資料", en: "Save as My Data" },
     "mode.user": {
-      zh: "目前顯示：我的資料（自動保存在此瀏覽器）",
+      zh: "目前顯示：我的資料（自動儲存在此瀏覽器）",
       en: "Showing: my data (auto-saved in this browser)",
     },
     "mode.sampleSingle": {
-      zh: "目前顯示：示例資料 {date}（更改不會保存）",
+      zh: "目前顯示：示例資料 {date}（更改不會儲存）",
       en: "Showing: sample data {date} (changes are not saved)",
     },
     "mode.sampleAll": {
-      zh: "目前顯示：全部示例資料（更改不會保存）",
+      zh: "目前顯示：全部示例資料（更改不會儲存）",
       en: "Showing: full sample data (changes are not saved)",
     },
     "mode.newYearGrandLoop": {
-      zh: "目前顯示：跨年大回行程（更改不會保存）",
+      zh: "目前顯示：跨年大回行程（更改不會儲存）",
       en: "Showing: New Year grand loop (changes are not saved)",
     },
     "mode.tokyoLimitedExpressLoop": {
-      zh: "目前顯示：東京特急大回行程（更改不會保存）",
+      zh: "目前顯示：東京特急大回行程（更改不會儲存）",
       en: "Showing: Tokyo limited-express loop (changes are not saved)",
     },
     "confirm.loadSampleAll": {
-      zh: "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。",
+      zh: "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。",
       en: "Load the full sample data? What is on screen will be replaced by the sample (your saved data is untouched and can be restored anytime).",
     },
     "confirm.loadNewYearGrandLoop": {
-      zh: "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。",
+      zh: "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。",
       en: "Load the New Year grand loop? What is on screen will be replaced by this separate itinerary (your saved data is untouched and can be restored anytime).",
     },
     "confirm.loadTokyoLimitedExpressLoop": {
-      zh: "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。",
+      zh: "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。",
       en: "Load the Tokyo limited-express loop? What is on screen will be replaced by this separate itinerary (your saved data is untouched and can be restored anytime).",
     },
     "confirm.restoreMine": {
-      zh: "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。",
+      zh: "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。",
       en: "Restore my data? The sample currently shown (including unsaved changes) will be discarded.",
     },
     "confirm.saveAsMine": {
-      zh: "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。",
+      zh: "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。",
       en: "Save what is on screen as my data? Future edits will auto-save in this browser.",
     },
     "confirm.overwriteMine": {
-      zh: "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？",
+      zh: "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？",
       en: "Warning: you already have saved data. Saving the current view as my data will overwrite it and cannot be undone. Continue?",
     },
     "confirm.clearStorage": {
-      zh: "確定清除此瀏覽器保存的資料？此操作無法復原。",
+      zh: "確定清除此瀏覽器儲存的資料？此操作無法復原。",
       en: "Clear the data saved in this browser? This cannot be undone.",
     },
     "confirm.resetDefaults": {
-      zh: "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。",
+      zh: "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。",
       en: "Reset to the embedded sample? All current trains and unsaved changes will be replaced and cannot be recovered.",
     },
     "confirm.importInSample": {
-      zh: "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。",
+      zh: "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。",
       en: "Sample data is currently shown. OK: clear the sample, import only your JSON and save it as my data. Cancel: overlay the JSON on the sample temporarily (not saved).",
     },
     "status.sampleSingleLoaded": {
-      zh: "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。",
+      zh: "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。",
       en: "Loaded sample data for {date} ({count} trains). The sample is view-only and never saved; press “Load Full Sample Data” to see every date.",
     },
     "status.sampleAllLoaded": {
-      zh: "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。",
+      zh: "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。",
       en: "Loaded the full sample data ({count} trains). The sample is view-only; changes are not saved.",
     },
     "status.newYearGrandLoopLoaded": {
-      zh: "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。",
+      zh: "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。",
       en: "Loaded the New Year grand loop ({count} trains). It is separate from the regular sample and is view-only; changes are not saved.",
     },
     "status.tokyoLimitedExpressLoopLoaded": {
-      zh: "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。",
+      zh: "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。",
       en: "Loaded the Tokyo limited-express loop ({count} trains). It is separate from the other samples and is view-only; changes are not saved.",
     },
     "status.savedAsMine": {
-      zh: "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。",
+      zh: "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。",
       en: "Saved as my data ({count} trains). Future edits auto-save in this browser.",
     },
     "status.noUserStore": {
-      zh: "此瀏覽器中沒有已保存的資料。",
+      zh: "此瀏覽器中沒有已儲存的資料。",
       en: "No saved data in this browser.",
     },
     "status.sampleNoSave": {
-      zh: "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。",
+      zh: "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。",
       en: "Sample mode: changes are not saved. To keep the current content, press “Save as My Data” in the Data tab.",
     },
     "status.autosaveLocalOk": {
-      zh: "已自動保存到此瀏覽器。",
+      zh: "已自動儲存到此瀏覽器。",
       en: "Auto-saved in this browser.",
     },
     "status.autosaveConflict": {
-      zh: "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。",
+      zh: "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。",
       en: "Not saved: another tab changed {date}. Export this tab’s JSON before reloading so the newer saved data is not overwritten.",
     },
-    "src.userStore": { zh: "我的資料（此瀏覽器保存）", en: "my data (saved in this browser)" },
+    "src.userStore": { zh: "我的資料（此瀏覽器儲存）", en: "my data (saved in this browser)" },
     "src.sampleDay": { zh: "示例資料 {date}", en: "sample data {date}" },
     "src.sampleAll": { zh: "全部示例資料", en: "full sample data" },
     "src.newYearGrandLoop": {
@@ -432,11 +425,9 @@
     },
 
     // card / group titles (railprint-style folder-tab cards)
-    "grp.edit": { zh: "編輯選中列車", en: "Edit Selected Train" },
     "grp.dates": { zh: "日期與篩選", en: "Dates & Filters" },
     "grp.trainResults": { zh: "當日列車", en: "Trains for This Date" },
     "grp.listActions": { zh: "列車操作", en: "Train Actions" },
-    "grp.data": { zh: "資料管理", en: "Data Management" },
     "grp.danger": { zh: "危險區域", en: "Danger Zone" },
     "hint.danger": {
       zh: "這些操作會影響全部資料，無法復原，請小心使用。",
@@ -445,7 +436,6 @@
 
     // mileage statistics (railprint-style coverage)
     "nav.stats": { zh: "統計", en: "Stats" },
-    "sec.stats": { zh: "里程統計", en: "Mileage Stats" },
     "stat.all": { zh: "全國", en: "Nationwide" },
     "stat.all.tw": { zh: "全島", en: "Island-wide" },
     "stat.all.hk": { zh: "全港", en: "Territory-wide" },
@@ -493,11 +483,8 @@
       en: "Statistics are currently available for the Japan rail network only.",
     },
     "stats.dailyTitle": { zh: "當日統計（{date}）", en: "Selected Day ({date})" },
-    "stats.overallTitle": { zh: "全部統計", en: "All-Time Total" },
     "stats.coverageTitle": { zh: "路網覆蓋率", en: "Network Coverage" },
     "stats.actualTitle": { zh: "實際乘坐量", en: "Actual Rides" },
-    "stats.byLine": { zh: "分線明細", en: "By line" },
-    "stats.byCount": { zh: "依次數", en: "By ride count" },
     // Collapsible-summary variants carrying the row count — the punctuation
     // (fullwidth vs ASCII parens) belongs to the locale, not the caller.
     "stats.byLineCount": { zh: "分線明細（{count}）", en: "By line ({count})" },
@@ -516,12 +503,11 @@
     "fmt.durationM": { zh: "{m} 分", en: "{m}m" },
     "stats.empty": { zh: "尚無乘坐記錄。", en: "No rides recorded yet." },
     "stats.hint": {
-      zh: "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。",
+      zh: "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。",
       en: "Computed from every train's actually-ridden intervals (ride checkboxes), deduplicated across trains; totals come from the full N02-25 national network.",
     },
 
     // train list
-    "sec.list": { zh: "列車清單", en: "Train List" },
     "btn.addDate": { zh: "新增日期", en: "Add Date" },
     "btn.removeEmpty": { zh: "刪除空日期", en: "Remove Empty Dates" },
     "chk.mapDateFilter": { zh: "地圖僅顯示當前日期", en: "Map shows current date only" },
@@ -547,7 +533,6 @@
     "field.origin": { zh: "起站", en: "Origin" },
     "field.destination": { zh: "終站", en: "Destination" },
     "field.color": { zh: "顏色", en: "Color" },
-    "field.weight": { zh: "線寬", en: "Line Width" },
     "btn.saveFields": { zh: "套用欄位", en: "Apply Fields" },
     "btn.toggleVisible": { zh: "顯示／隱藏", en: "Show/Hide" },
     "btn.moveUp": { zh: "上移", en: "Move Up" },
@@ -557,7 +542,7 @@
     "sec.stops": { zh: "停靠站與通過站", en: "Stops & Pass-throughs" },
     "th.seq": { zh: "序", en: "#" },
     "th.station": { zh: "車站", en: "Station" },
-    "th.platform": { zh: "站台", en: "Platform" },
+    "th.platform": { zh: "月台", en: "Platform" },
     "th.arr": { zh: "到", en: "Arr" },
     "th.dep": { zh: "發", en: "Dep" },
     "th.type": { zh: "類型", en: "Type" },
@@ -578,30 +563,7 @@
     "btn.downloadJson": { zh: "下載 JSON", en: "Download JSON" },
     "btn.resetDefaults": { zh: "重置示例", en: "Reset Sample" },
     "btn.downloadHtml": { zh: "下載目前 HTML", en: "Download Current HTML" },
-    "btn.clearStorage": { zh: "清除保存資料", en: "Clear Saved Data" },
-
-    // legend & sources
-    "sec.legend": { zh: "圖例與資料來源", en: "Legend & Data Sources" },
-    "legend.railway": {
-      zh: "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點",
-      en: "All railway lines (switch, off by default): official line colors (faded) + grey station dots",
-    },
-    "legend.station": {
-      zh: "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點",
-      en: "Intermediate stops: outlined circles with black centers; pass-throughs: same-size outlined circles; endpoints: large ink dots",
-    },
-    "legend.express": {
-      zh: "特急路線：全色加粗（選中時墨色底襯）",
-      en: "Limited express routes: full color, thicker (ink casing when selected)",
-    },
-    "legend.source1": {
-      zh: "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。",
-      en: 'Railway data: created from "National Land Numerical Information (Railway Data N02)" (MLIT Japan), CC BY 4.0.',
-    },
-    "legend.source2": {
-      zh: "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。",
-      en: "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark). Romanizations © OpenStreetMap contributors, ODbL. Rail package © railprint (jp-2025).",
-    },
+    "btn.clearStorage": { zh: "清除儲存資料", en: "Clear Saved Data" },
 
     // unified map information panel (bottom-right i button)
     "info.button": { zh: "開啟圖例與資料來源", en: "Open legend and data sources" },
@@ -752,7 +714,7 @@
     },
 
     // import source labels
-    "src.serverStore": { zh: "伺服器保存的 train-store.json", en: "server-saved train-store.json" },
+    "src.serverStore": { zh: "伺服器儲存的 train-store.json", en: "server-saved train-store.json" },
     "src.builtinDefault": { zh: "內建預設 JSON", en: "built-in default JSON" },
     "src.serverCleared": { zh: "伺服器已清除（內建預設）", en: "server cleared (built-in defaults)" },
     "src.agentImport": { zh: "AI 代理導入", en: "AI agent import" },
@@ -775,15 +737,15 @@
       en: "Region switch failed: {msg}",
     },
     "status.noSavedStore": {
-      zh: "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。",
+      zh: "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。",
       en: "No saved train-store.json yet; loaded built-in defaults. Edits auto-save to the server.",
     },
     "status.recoveryEntered": {
-      zh: "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。",
+      zh: "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。",
       en: "Saved data failed to load: {msg}. Read-only recovery mode: autosave is off and the raw JSON is in the Export box — fix and re-import it, or use Reset Sample / Clear Saved Data to start over.",
     },
     "status.recoveryNoSave": {
-      zh: "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。",
+      zh: "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。",
       en: "Read-only recovery mode: autosave is disabled (the saved store failed to load).",
     },
     "status.serverClearedFallback": {
@@ -795,7 +757,7 @@
       en: "Auto-loaded {label}: {count} train(s).",
     },
     "status.autosaveOk": {
-      zh: "已自動保存到伺服器。",
+      zh: "已自動儲存到伺服器。",
       en: "Auto-saved to the server.",
     },
     "status.importBusy": {
@@ -803,7 +765,7 @@
       en: "Loading data — please wait before editing.",
     },
     "status.autosaveFail": {
-      zh: "自動保存到伺服器失敗：{msg}",
+      zh: "自動儲存到伺服器失敗：{msg}",
       en: "Auto-save to server failed: {msg}",
     },
     "err.pendingServerInvalid": {
@@ -811,7 +773,7 @@
       en: "The unsent browser recovery copy is invalid: {msg}",
     },
     "err.pendingServerConflict": {
-      zh: "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。",
+      zh: "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。",
       en: "This browser has an unsent edit, but another source changed the server afterward. It was not replayed; save or merge the recovery copy from the Export box.",
     },
     "err.pendingServerReplayFailed": {
@@ -849,7 +811,7 @@
       zh: "已從 {label} 逐條恢復 {total} 趟列車。",
       en: "Restored {total} train(s) from {label} item by item.",
     },
-    "status.savedTo": { zh: "已保存到 {name}。", en: "Saved to {name}." },
+    "status.savedTo": { zh: "已儲存到 {name}。", en: "Saved to {name}." },
     "status.imported": {
       zh: "已匯入 {count} 趟列車：{ids}",
       en: "Imported {count} train(s): {ids}",
@@ -860,10 +822,10 @@
     },
     "status.resetDefaults": { zh: "已重置為內建示例資料。", en: "Reset to embedded defaults." },
     "status.clearedAll": {
-      zh: "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。",
+      zh: "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。",
       en: "Cleared the saved data and local file authorization. Sample/default data will load on the next visit.",
     },
-    "status.clearFail": { zh: "清除保存資料失敗：{msg}", en: "Failed to clear saved data: {msg}" },
+    "status.clearFail": { zh: "清除儲存資料失敗：{msg}", en: "Failed to clear saved data: {msg}" },
     "confirm.deleteTrain": { zh: "確定刪除選取的列車？", en: "Delete selected train?" },
     "confirm.deleteTrainDetail": {
       zh: "確定刪除 {date} 的「{number}」（{stops} 個停站）？此操作無法復原。",
@@ -878,7 +840,6 @@
       zh: "此處有多條重疊路線，請選擇列車：",
       en: "Several routes overlap here — choose a train:",
     },
-    "chip.sample": { zh: "示例資料", en: "Sample data" },
     "sec.importPaste": { zh: "貼上 JSON 文字", en: "Paste JSON text" },
     "sec.rawPreview": { zh: "原始 JSON 預覽", en: "Raw JSON preview" },
     "disp.advanced": { zh: "進階顯示參數", en: "Advanced display parameters" },
@@ -1008,15 +969,9 @@
     "ph.trainType.kr": "KTX／ITX／ムグンファ",
     "app.hint": "地図上で行程を確認し、列車・停車駅・JSON データを管理します。",
     "nav.label": "ワークスペースナビゲーション",
-    "nav.trains": "列車",
-    "nav.editor": "編集",
     "nav.data": "データ",
-    "nav.display": "表示",
-    "nav.about": "情報",
     "menu.hide": "メニューを隠す",
     "menu.show": "メニューを表示",
-    "menu.expand": "メニューを展開",
-    "menu.minimize": "メニューを縮小",
     "nav.journeys": "行程",
     "nav.network": "鉄道ネットワーク",
     "nav.passport": "乗車パスポート",
@@ -1070,7 +1025,6 @@
     "play.done": "再生が終わりました",
     "play.empty": "現在のリストに再生できる列車がありません。",
     "play.busy": "データを読み込み中です。少し待ってから再生してください。",
-    "video.title": "行程の動画を書き出す",
     "video.export": "動画を書き出す",
     "video.stop": "録画を終了",
     "video.shape": "比率",
@@ -1101,7 +1055,7 @@
     "video.savedPartial": "中断までの分を保存しました：{name}（{size}）",
     "video.empty": "映像が記録されませんでした。",
     "video.failed": "動画の書き出しに失敗しました：{msg}",
-    "video.unsupported": "このブラウザーは録画に対応していません。",
+    "video.unsupported": "このブラウザは録画に対応していません。",
     "video.noFrames": "地図から映像が届きませんでした。このタブを前面にしてやり直してください。",
     "btn.autoFocus": "自動フォーカス：",
     "state.on": "オン",
@@ -1112,7 +1066,7 @@
     "country.hk": "香港",
     "country.mo": "マカオ",
     "country.kr": "韓国",
-    "disp.reset": "初期設定に戻す",
+    "disp.reset": "既定に戻す",
     "theme.label": "テーマ",
     "theme.system": "システム",
     "theme.light": "ライト",
@@ -1155,7 +1109,7 @@
     "btn.openLocal": "ローカル JSON を開く",
     "btn.saveLocal": "JSON を保存／別名保存",
     "btn.validate": "読み込み JSON を検証",
-    "btn.apply": "読み込み／順次インポートを開始",
+    "btn.apply": "一括／順次の読み込みを開始",
     "sec.dataSource": "データソース",
     "hint.dataSource":
       "サンプルデータは閲覧専用で、変更は保存されません。自分のデータはこのブラウザに保存され、編集すると自動保存されます。",
@@ -1207,7 +1161,7 @@
       "サンプルモード：変更は保存されません。内容を残すには「データ」タブの「自分のデータとして保存」を押してください。",
     "status.autosaveLocalOk": "このブラウザに自動保存しました。",
     "status.autosaveConflict":
-      "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON をエクスポートしてから再読み込みしてください。",
+      "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON を書き出してから再読み込みしてください。",
     "src.userStore": "自分のデータ（このブラウザ保存）",
     "src.sampleDay": "サンプルデータ {date}",
     "src.sampleAll": "サンプルデータ全件",
@@ -1218,21 +1172,15 @@
       "年越し大回り行程を読み込めません。しばらくしてからもう一度お試しください。",
     "err.noTokyoLimitedExpressLoopData":
       "東京特急大回り行程を読み込めません。しばらくしてからもう一度お試しください。",
-    "grp.edit": "選択中の列車を編集",
     "grp.dates": "日付と絞り込み",
     "grp.trainResults": "この日の列車",
     "grp.listActions": "列車操作",
-    "grp.data": "データ管理",
     "grp.danger": "危険な操作",
     "hint.danger": "これらの操作はすべてのデータに影響し、元に戻せません。慎重に操作してください。",
     "nav.stats": "統計",
-    "sec.stats": "走行距離統計",
     "stats.dailyTitle": "当日の統計（{date}）",
-    "stats.overallTitle": "全期間の統計",
     "stats.coverageTitle": "路線網カバー率",
     "stats.actualTitle": "実乗車量",
-    "stats.byLine": "路線別",
-    "stats.byCount": "回数順",
     "stats.byLineCount": "路線別（{count}）",
     "stats.byCountCount": "回数順（{count}）",
     "stats.topSegmentsTitle": "最も乗車した区間",
@@ -1280,7 +1228,6 @@
     "stats.unavailableCountry": "統計は現在、日本の路線網データのみ対応しています。",
     "stats.empty": "乗車記録がありません。",
     "stats.hint": "全列車で実際に乗車した区間を重複を除いて集計します。総延長は国土数値情報 N02-25 の全国鉄道網に基づきます。",
-    "sec.list": "列車一覧",
     "btn.addDate": "日付を追加",
     "btn.removeEmpty": "空の日付を削除",
     "chk.mapDateFilter": "地図には選択日のみ表示",
@@ -1297,7 +1244,6 @@
     "field.origin": "始発駅",
     "field.destination": "終着駅",
     "field.color": "色",
-    "field.weight": "線幅",
     "btn.saveFields": "項目を適用",
     "btn.toggleVisible": "表示／非表示",
     "btn.moveUp": "上へ",
@@ -1324,12 +1270,6 @@
     "btn.resetDefaults": "サンプルを初期化",
     "btn.downloadHtml": "現在の HTML をダウンロード",
     "btn.clearStorage": "保存データを消去",
-    "sec.legend": "凡例とデータ出典",
-    "legend.railway": "全路線（初期状態はオフ）：路線ごとの公式色（淡色）＋灰色の駅マーカー",
-    "legend.station": "途中停車駅：黒い中心点付きの中空円、通過駅：同じ大きさの中空円、始終点：大きな墨色の点",
-    "legend.express": "列車経路：指定色の太線（選択中は墨色の下線）",
-    "legend.source1": "鉄道路線データ：国土交通省『国土数値情報（鉄道データ N02）』を加工して作成（CC BY 4.0）。",
-    "legend.source2": "背景地図 © OpenStreetMap contributors｜OpenFreeMap。ローマ字表記 © OpenStreetMap contributors, ODbL。鉄道データパッケージ © railprint (jp-2025)。",
     "info.button": "凡例とデータ出典を開く",
     "info.title": "凡例とデータ出典",
     "info.intro": "地図記号、使用データ、ライセンスをまとめて確認できます。",
@@ -1406,26 +1346,26 @@
     "src.serverCleared": "サーバー消去済み（内蔵初期データ）",
     "src.agentImport": "AI エージェントからの読み込み",
     "src.otherUpdate": "別のソースからの更新",
-    "src.pendingRecovery": "ブラウザー内の未送信リカバリーコピー",
+    "src.pendingRecovery": "ブラウザ内の未送信リカバリーコピー",
     "src.localJson": "ローカル JSON：{name}",
     "src.emptyStore": "空のデータ",
     "status.loadFailed": "データの読み込みに失敗しました：{msg}",
     "status.countrySwitched": "{name}のデータに切り替えました。",
     "status.countrySwitchFailed": "地域の切り替えに失敗しました：{msg}",
     "status.noSavedStore": "保存済みの train-store.json がないため、内蔵初期データを読み込みました。編集内容はサーバーへ自動保存されます。",
-    "status.recoveryEntered": "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON エクスポート」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。",
+    "status.recoveryEntered": "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON 書き出し」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。",
     "status.recoveryNoSave": "読み取り専用の復旧モード：自動保存は無効です（保存データの読み込みに失敗）。",
     "status.serverClearedFallback": "サーバー上のデータが消去されたため、内蔵初期データに戻しました。",
     "status.autoLoaded": "{label} を自動読み込みしました：{count} 本。",
     "status.autosaveOk": "サーバーに自動保存しました。",
     "status.autosaveFail": "サーバーへの自動保存に失敗しました：{msg}",
     "err.pendingServerInvalid":
-      "ブラウザー内の未送信リカバリーコピーが無効です：{msg}",
+      "ブラウザ内の未送信リカバリーコピーが無効です：{msg}",
     "err.pendingServerConflict":
-      "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。エクスポート欄からリカバリーコピーを保存または統合してください。",
+      "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。書き出し欄からリカバリーコピーを保存または統合してください。",
     "err.pendingServerReplayFailed":
-      "ブラウザー内の未送信編集を再送できませんでした：{msg}",
-    "status.noFsApi": "このブラウザーはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。",
+      "ブラウザ内の未送信編集を再送できませんでした：{msg}",
+    "status.noFsApi": "このブラウザはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。",
     "err.noWritePerm": "ローカル JSON ファイルへの書き込み権限がありません。",
     "prog.prepare": "{label} の順次読み込みを準備中：0/{total}",
     "prog.loading": "{label} を順次読み込み中：{count}/{total}：{id}",
@@ -1436,7 +1376,7 @@
     "status.loadedAll": "{label} から {total} 本を順次読み込みました。",
     "status.restoredAll": "{label} から {total} 本を順次復元しました。",
     "status.savedTo": "{name} に保存しました。",
-    "status.imported": "{count} 本をインポートしました：{ids}",
+    "status.imported": "{count} 本を読み込みました：{ids}",
     "status.importBusy": "データ読み込み中です。完了までお待ちください。",
     "status.exported": "現在の列車データをテキスト欄へ書き出しました。",
     "status.resetDefaults": "内蔵サンプルデータに戻しました。",
@@ -1445,10 +1385,9 @@
     "confirm.deleteTrain": "選択中の列車を削除しますか？",
     "confirm.deleteTrainDetail":
       "{date} の「{number}」（停車駅 {stops}）を削除しますか？この操作は元に戻せません。",
-    "status.shared": "共有シートからエクスポートしました",
+    "status.shared": "共有シートから書き出しました",
     "confirm.deleteAll": "すべての列車を削除しますか？",
     "choose.overlap": "この地点では複数の路線が重なっています。列車を選択してください：",
-    "chip.sample": "サンプルデータ",
     "sec.importPaste": "JSONテキストを貼り付け",
     "sec.rawPreview": "JSONプレビュー",
     "disp.advanced": "詳細表示パラメータ",

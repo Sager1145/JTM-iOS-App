@@ -76,9 +76,34 @@
     "農": "农", "臺": "台",
     // Taiwan's coverage categories (輕軌 …).
     "輕": "轻", "軌": "轨",
+    // Korea and Macao panels, the video export sheet and the workspace rail
+    // (韓國鐵道公社, 首爾交通公社, 國家鐵道公團; 現行路線; 畫質, 中斷; 資料庫,
+    // 乘車護照, 滿屏). Every row here was a Traditional glyph reaching the
+    // Simplified UI unconverted.
+    "韓": "韩", "爾": "尔", "團": "团", "優": "优", "對": "对",
+    "現": "现", "駛": "驶", "質": "质", "斷": "断", "庫": "库",
+    "護": "护", "滿": "满", "縮": "缩", "級": "级", "組": "组",
+    "場": "场", "綫": "线", "強": "强", "窮": "穷", "畢": "毕",
+    "約": "约", "擊": "击", "適": "适", "進": "进", "階": "阶",
   };
 
   const HANS_PHRASE_MAP = {
+    // Vocabulary, not orthography: these read as Taiwanese rather than wrong
+    // once the character map has run, so they are replaced whole and BEFORE
+    // it. Longest match first, as everywhere in this table.
+    "無法復原": "无法撤销",
+    "保持在前景": "保持在前台",
+    "進階": "高级",
+    "選單": "菜单",
+    "分頁": "标签页",
+    "偵測": "检测",
+    "陣列": "数组",
+    "唯讀": "只读",
+    "儲存": "保存",
+    "影格": "帧",
+    "影片": "视频",
+    "座標": "坐标",
+    "月台": "站台",
     "「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成":
       "根据日本国土交通省“国土数值信息（铁路数据 N02）”加工制作",
     "國土數值情報": "国土数值信息",

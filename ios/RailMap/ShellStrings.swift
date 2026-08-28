@@ -125,7 +125,7 @@ enum ShellStrings {
             .zhHans: "返回当天行程", .zhHant: "返回當天行程",
         ],
         "ios.journey.locateShort": [
-            .en: "Focus", .ja: "経路", .zhHans: "聚焦", .zhHant: "聚焦",
+            .en: "Focus", .ja: "フォーカス", .zhHans: "聚焦", .zhHant: "聚焦",
         ],
         "ios.journey.showShort": [
             .en: "Show", .ja: "表示", .zhHans: "显示", .zhHant: "顯示",
@@ -163,7 +163,7 @@ enum ShellStrings {
             .en:
                 "Built from data.go.kr's official station records and OpenStreetMap track alignments.",
             .ja: "data.go.kr の公式駅データと OpenStreetMap の線形をもとに作成しています。",
-            .zhHans: "依 data.go.kr 官方车站资料与 OpenStreetMap 线形加工制作。",
+            .zhHans: "依 data.go.kr 官方车站数据与 OpenStreetMap 线形加工制作。",
             .zhHant: "依 data.go.kr 官方車站資料與 OpenStreetMap 線形加工製作。",
         ],
         "ios.info.basemapBody": [
@@ -174,7 +174,7 @@ enum ShellStrings {
         ],
         "ios.mapInfo": [
             .en: "Legend and sources", .ja: "凡例と出典",
-            .zhHans: "图例与资料来源", .zhHant: "圖例與資料來源",
+            .zhHans: "图例与数据来源", .zhHant: "圖例與資料來源",
         ],
         "ios.journey": [.en: "Journey", .ja: "乗車", .zhHans: "行程", .zhHant: "行程"],
         "ios.stations": [.en: "Stations", .ja: "駅", .zhHans: "车站", .zhHant: "車站"],
@@ -273,7 +273,7 @@ enum ShellStrings {
             .en: "These change how the map is drawn. They never touch your rides or the JSON you export.",
             .ja: "これらは地図の見え方だけを変える設定です。乗車記録や書き出される JSON は変わりません。",
             .zhHans: "这些设置只影响地图的呈现方式，不会更动乘车记录，也不会改变导出的 JSON。",
-            .zhHant: "這些設定只影響地圖的呈現方式，不會更動乘車紀錄，也不會改變匯出的 JSON。",
+            .zhHant: "這些設定只影響地圖的呈現方式，不會更動乘車記錄，也不會改變匯出的 JSON。",
         ],
         "ios.note.allRailways": [
             .en: "The complete rail network drawn beneath your rides. Off leaves only your own journeys.",
@@ -300,7 +300,7 @@ enum ShellStrings {
             .zhHant: "只影響底圖；鐵路與行程維持原樣。",
         ],
         "ios.note.theme": [
-            .en: "Line colours automatically use each operator's light or dark palette.",
+            .en: "Line colors automatically use each operator's light or dark palette.",
             .ja: "路線色は事業者ごとのライト／ダークの配色を自動で使い分けます。",
             .zhHans: "线路颜色会自动采用各运营商的亮色或暗色版本。",
             .zhHant: "線路顏色會自動採用各業者的亮色或暗色版本。",
@@ -312,7 +312,7 @@ enum ShellStrings {
             .zhHant: "在日文站名下方加註假名讀音。",
         ],
         "ios.note.readingRomaji": [
-            .en: "Adds the Hepburn romanisation under a station name.",
+            .en: "Adds the Hepburn romanization under a station name.",
             .ja: "駅名にヘボン式ローマ字を併記します。",
             .zhHans: "在站名下方加注罗马字。",
             .zhHant: "在站名下方加註羅馬字。",
@@ -320,7 +320,7 @@ enum ShellStrings {
         "ios.note.readingZh": [
             .en: "Adds the Chinese name under a station, where the reference table has one.",
             .ja: "対照表にある駅について、中国語表記を併記します。",
-            .zhHans: "在对照表有资料的站名下方加注中文站名。",
+            .zhHans: "在对照表有数据的站名下方加注中文站名。",
             .zhHant: "在對照表有資料的站名下方加註中文站名。",
         ],
         "ios.note.readingsFollowLanguage": [
@@ -372,7 +372,7 @@ enum ShellStrings {
             .zhHant: "選中行程的起點與終點完整尺寸；未選中時僅略大於普通站點。",
         ],
         "ios.note.stopRadius": [
-            .en: "The small route-coloured centre inside an intermediate stop's dot.",
+            .en: "The small route-colored centre inside an intermediate stop's dot.",
             .ja: "途中停車駅の丸の中心にある路線色の点です。",
             .zhHans: "中途停靠站圆点中心的线路色小点。",
             .zhHant: "中途停靠站圓點中心的線路色小點。",
@@ -392,8 +392,8 @@ enum ShellStrings {
         "ios.note.reset": [
             .en: "Resets the display settings on this screen only. Your rides and exported data are untouched.",
             .ja: "この画面の表示設定だけを初期化します。乗車記録と書き出しデータは変わりません。",
-            .zhHans: "只重设本页的显示设置；乘车记录与导出资料不受影响。",
-            .zhHant: "只重設本頁的顯示設定；乘車紀錄與匯出資料不受影響。",
+            .zhHans: "只重设本页的显示设置；乘车记录与导出数据不受影响。",
+            .zhHant: "只重設本頁的顯示設定；乘車記錄與匯出資料不受影響。",
         ],
     ]
 }

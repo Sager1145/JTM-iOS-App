@@ -83,6 +83,7 @@ final class PlaybackVideoExporter {
     func start(
         playback: PlaybackController,
         mapView: UIView,
+        filming: CGRect,
         trains: [Train],
         rides: [RiddenRouteStore.DrawnRide],
         reducedMotion: Bool,
@@ -90,18 +91,20 @@ final class PlaybackVideoExporter {
     ) {
         cancel(clearPlayback: false)
         do {
-            // The WHOLE map view, where the web app films only the map the
-            // menu is not covering (`uncoveredRect`).
+            // `uncoveredRect`: the map the panel is not covering, which is
+            // where the playback camera now centres its train.
             //
-            // That is not an oversight and it is not a shortcut: the web app
-            // crops there because its playback camera PADS for the menu and
-            // therefore centres the train in the uncovered part. This one does
-            // not — `mapRendererViewSize` is the full view — so filming a
-            // smaller rectangle would take the train off centre in the file.
-            // The crop and the camera have to agree about where the middle is;
-            // the day the camera learns about the panel, this should follow it.
+            // This used to film the WHOLE view, and the note here said why —
+            // the camera centred on the whole view, so a smaller rectangle
+            // would have taken the train off centre in the file — and ended
+            // "the day the camera learns about the panel, this should follow
+            // it". `applyPlaybackCamera` learned; this follows. The crop and
+            // the camera have to agree about where the middle is.
+            let source = filming.width > 1 && filming.height > 1
+                ? filming
+                : CGRect(origin: .zero, size: mapView.bounds.size)
             let plan = settings.plan(
-                sourceSize: mapView.bounds.size,
+                sourceRect: source,
                 displayScale: mapView.window?.screen.scale ?? UIScreen.main.scale)
             let size = plan.size
             crop = plan.crop

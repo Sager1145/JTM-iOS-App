@@ -1,7 +1,7 @@
 {
   "fixture": "operator-branding.json",
   "describes": "app-operator-branding.js — RailOperatorBranding.{companyLabel, normalizeTaiwanCompanyName, companyFor, operatorLogo, lineLogo, verifiedPackageLineLogo, logoForLine, logoNeedsDarkMatte}",
-  "contract": "Eleven exact-match tables and four fallback chains, and the exactness IS the contract: every lookup is by whole string, never by prefix, and JavaScript compares those strings by UTF-16 code unit. A Swift Dictionary keyed on String compares by canonical equivalence instead, so a decomposed name matches a composed key there and misses here; String.hasPrefix and CharacterSet.whitespacesAndNewlines disagree with startsWith and ECMAScript trim in the same way. The cost of getting this wrong is small and constant — a passenger reads the wrong company name, or a line wears another railway's mark — which is exactly why nobody would catch it by eye.\n\nThree answers below look like defects and are reproduced deliberately, because a port that quietly fixes one is a port whose disagreements can no longer be read:\n  1. operatorLogo keys on the RAW operator string while several logo tables are keyed on the short LABEL, so 東急 / 京王 / 小田急 / 西武 / 東武 / 阪急 / 阪神 / 近鉄 / 南海 / 名鉄 / 京成 / 京急 / 相鉄 and the municipal operators all label correctly and still resolve to no logo.\n  2. verifiedPackageLineLogo consults JAPAN_NON_LINE_LOGO_IDS with the stroke's own id, but a split part or paired alignment carries its PARENT's artwork under a suffixed id (jp-東日本旅客鉄道-中央線-2) that the set does not contain — so 17 strokes keep the very company marks the audit set exists to reject.\n  3. the label tables are consulted before the 株式会社 strip, so 株式会社東急電鉄 becomes 東急電鉄 rather than 東急.",
+  "contract": "Eleven exact-match tables and four fallback chains, and the exactness IS the contract: every lookup is by whole string, never by prefix, and JavaScript compares those strings by UTF-16 code unit. A Swift Dictionary keyed on String compares by canonical equivalence instead, so a decomposed name matches a composed key there and misses here; String.hasPrefix and CharacterSet.whitespacesAndNewlines disagree with startsWith and ECMAScript trim in the same way. The cost of getting this wrong is small and constant — a passenger reads the wrong company name, or a line wears another railway's mark — which is exactly why nobody would catch it by eye.\n\nTwo answers below look like defects and are reproduced deliberately, because a port that quietly fixes one is a port whose disagreements can no longer be read:\n  1. operatorLogo keys on the RAW operator string while several logo tables are keyed on the short LABEL, so 東急 / 京王 / 小田急 / 西武 / 東武 / 阪急 / 阪神 / 近鉄 / 南海 / 名鉄 / 京成 / 京急 / 相鉄 and the municipal operators all label correctly and still resolve to no logo.\n  2. the label tables are consulted before the 株式会社 strip, so 株式会社東急電鉄 becomes 東急電鉄 rather than 東急.",
   "cases": [
     {
       "operator": "澳門輕軌",
@@ -22,7 +22,7 @@
       "country": "hk",
       "companyLabel": "香港電車",
       "normalizeTaiwanCompanyName": "香港電車",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/hkt-badge.svg"
     },
     {
       "operator": "阿里山林業鐵路及文化資產管理處",
@@ -85,7 +85,7 @@
       "country": "kr",
       "companyLabel": "한국철도공사",
       "normalizeTaiwanCompanyName": "한국철도공사",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/korail.svg"
     },
     {
       "operator": "공항철도주식회사",
@@ -106,7 +106,7 @@
       "country": "kr",
       "companyLabel": "에스알",
       "normalizeTaiwanCompanyName": "에스알",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/sr.svg"
     },
     {
       "operator": "서울시메트로9호선",
@@ -596,7 +596,7 @@
       "country": "jp",
       "companyLabel": "北越急行",
       "normalizeTaiwanCompanyName": "北越急行",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/jp/q10903965.svg"
     },
     {
       "operator": "北陸鉄道",
@@ -645,7 +645,7 @@
       "country": "jp",
       "companyLabel": "名古屋ガイドウェイバス",
       "normalizeTaiwanCompanyName": "名古屋ガイドウェイバス",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/jp/q11414812.svg"
     },
     {
       "operator": "名古屋市",
@@ -897,7 +897,7 @@
       "country": "jp",
       "companyLabel": "愛知高速交通",
       "normalizeTaiwanCompanyName": "愛知高速交通",
-      "operatorLogo": null
+      "operatorLogo": "/rail/operator-logos/jp/q11073857.svg"
     },
     {
       "operator": "明知鉄道",
@@ -1415,7 +1415,7 @@
       "country": "jp",
       "companyLabel": "養老鉄道",
       "normalizeTaiwanCompanyName": "養老鉄道",
-      "operatorLogo": "/rail/operator-logos/jp/yoro-railway.webp"
+      "operatorLogo": "/rail/operator-logos/jp/yoro-railway.svg"
     },
     {
       "operator": "首都圏新都市鉄道",
@@ -1672,8 +1672,8 @@
       "country": null,
       "companyLabel": "香港電車",
       "normalizeTaiwanCompanyName": "香港电车",
-      "operatorLogo": null,
-      "note": "simplified Hong Kong Tramways: labels to 香港電車, and the JavaScript is explicit that it is its own operator with no logo asset"
+      "operatorLogo": "/rail/operator-logos/hkt-badge.svg",
+      "note": "simplified Hong Kong Tramways: labels to 香港電車 and then takes the same two-hop path into OPERATOR_LOGOS that Macao does"
     },
     {
       "operator": "澳门轻轨",
@@ -6155,7 +6155,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/hkt-badge.svg"
     },
     {
       "country": "hk",
@@ -6167,7 +6167,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/hkt-badge.svg"
     },
     {
       "country": "hk",
@@ -6179,7 +6179,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/hkt-badge.svg"
     },
     {
       "country": "hk",
@@ -6191,7 +6191,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/hkt-badge.svg"
     },
     {
       "country": "tw",
@@ -6671,7 +6671,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6683,7 +6683,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6695,7 +6695,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6707,7 +6707,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6719,7 +6719,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6731,7 +6731,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6743,7 +6743,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6755,7 +6755,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6767,7 +6767,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6779,7 +6779,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6791,7 +6791,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6803,7 +6803,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6815,7 +6815,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6827,7 +6827,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6839,7 +6839,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6851,7 +6851,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6862,8 +6862,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gyeongchun.svg",
+      "logoForLine": "/rail/line-logos/kr-gyeongchun.svg"
     },
     {
       "country": "kr",
@@ -6875,7 +6875,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6886,8 +6886,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-arex.svg",
+      "logoForLine": "/rail/line-logos/kr-arex.svg"
     },
     {
       "country": "kr",
@@ -6898,8 +6898,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-7.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-7.svg"
     },
     {
       "country": "kr",
@@ -6910,8 +6910,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gyeongui-jungang.svg",
+      "logoForLine": "/rail/line-logos/kr-gyeongui-jungang.svg"
     },
     {
       "country": "kr",
@@ -6923,7 +6923,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/sr.svg"
     },
     {
       "country": "kr",
@@ -6934,8 +6934,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-suin-bundang.svg",
+      "logoForLine": "/rail/line-logos/kr-suin-bundang.svg"
     },
     {
       "country": "kr",
@@ -6947,7 +6947,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -6958,8 +6958,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-5.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-5.svg"
     },
     {
       "country": "kr",
@@ -6970,8 +6970,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-9.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-9.svg"
     },
     {
       "country": "kr",
@@ -6982,8 +6982,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-busan-1.svg",
+      "logoForLine": "/rail/line-logos/kr-busan-1.svg"
     },
     {
       "country": "kr",
@@ -6994,8 +6994,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-3.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-3.svg"
     },
     {
       "country": "kr",
@@ -7006,8 +7006,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gtx-a.svg",
+      "logoForLine": "/rail/line-logos/kr-gtx-a.svg"
     },
     {
       "country": "kr",
@@ -7018,8 +7018,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-busan-2.svg",
+      "logoForLine": "/rail/line-logos/kr-busan-2.svg"
     },
     {
       "country": "kr",
@@ -7030,8 +7030,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-incheon-1.svg",
+      "logoForLine": "/rail/line-logos/kr-incheon-1.svg"
     },
     {
       "country": "kr",
@@ -7042,8 +7042,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-4.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-4.svg"
     },
     {
       "country": "kr",
@@ -7054,8 +7054,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-sinbundang.svg",
+      "logoForLine": "/rail/line-logos/kr-sinbundang.svg"
     },
     {
       "country": "kr",
@@ -7066,8 +7066,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-donghae.svg",
+      "logoForLine": "/rail/line-logos/kr-donghae.svg"
     },
     {
       "country": "kr",
@@ -7079,7 +7079,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7090,8 +7090,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-incheon-2.svg",
+      "logoForLine": "/rail/line-logos/kr-incheon-2.svg"
     },
     {
       "country": "kr",
@@ -7102,8 +7102,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-daegu-2.svg",
+      "logoForLine": "/rail/line-logos/kr-daegu-2.svg"
     },
     {
       "country": "kr",
@@ -7114,8 +7114,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-daegu-1.svg",
+      "logoForLine": "/rail/line-logos/kr-daegu-1.svg"
     },
     {
       "country": "kr",
@@ -7126,8 +7126,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-1.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-1.svg"
     },
     {
       "country": "kr",
@@ -7138,8 +7138,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-6.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-6.svg"
     },
     {
       "country": "kr",
@@ -7150,8 +7150,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-4.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-4.svg"
     },
     {
       "country": "kr",
@@ -7162,8 +7162,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-2.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-2.svg"
     },
     {
       "country": "kr",
@@ -7174,8 +7174,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gimpo-gold.svg",
+      "logoForLine": "/rail/line-logos/kr-gimpo-gold.svg"
     },
     {
       "country": "kr",
@@ -7186,8 +7186,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-daegu-3.svg",
+      "logoForLine": "/rail/line-logos/kr-daegu-3.svg"
     },
     {
       "country": "kr",
@@ -7198,8 +7198,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-busan-gimhae.svg",
+      "logoForLine": "/rail/line-logos/kr-busan-gimhae.svg"
     },
     {
       "country": "kr",
@@ -7210,8 +7210,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-donghae.svg",
+      "logoForLine": "/rail/line-logos/kr-donghae.svg"
     },
     {
       "country": "kr",
@@ -7222,8 +7222,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-daejeon-1.svg",
+      "logoForLine": "/rail/line-logos/kr-daejeon-1.svg"
     },
     {
       "country": "kr",
@@ -7235,7 +7235,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7246,8 +7246,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gwangju-1.svg",
+      "logoForLine": "/rail/line-logos/kr-gwangju-1.svg"
     },
     {
       "country": "kr",
@@ -7258,8 +7258,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-suin-bundang.svg",
+      "logoForLine": "/rail/line-logos/kr-suin-bundang.svg"
     },
     {
       "country": "kr",
@@ -7270,8 +7270,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-3.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-3.svg"
     },
     {
       "country": "kr",
@@ -7282,8 +7282,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-8.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-8.svg"
     },
     {
       "country": "kr",
@@ -7294,8 +7294,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-busan-3.svg",
+      "logoForLine": "/rail/line-logos/kr-busan-3.svg"
     },
     {
       "country": "kr",
@@ -7306,8 +7306,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-4.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-4.svg"
     },
     {
       "country": "kr",
@@ -7318,8 +7318,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-4.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-4.svg"
     },
     {
       "country": "kr",
@@ -7331,7 +7331,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7342,8 +7342,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-everline.svg",
+      "logoForLine": "/rail/line-logos/kr-everline.svg"
     },
     {
       "country": "kr",
@@ -7354,8 +7354,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-busan-4.svg",
+      "logoForLine": "/rail/line-logos/kr-busan-4.svg"
     },
     {
       "country": "kr",
@@ -7367,7 +7367,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7378,8 +7378,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-8.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-8.svg"
     },
     {
       "country": "kr",
@@ -7390,8 +7390,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-uisinseol.svg",
+      "logoForLine": "/rail/line-logos/kr-uisinseol.svg"
     },
     {
       "country": "kr",
@@ -7402,8 +7402,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-daegu-1.svg",
+      "logoForLine": "/rail/line-logos/kr-daegu-1.svg"
     },
     {
       "country": "kr",
@@ -7415,7 +7415,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7426,8 +7426,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-uijeongbu-u.svg",
+      "logoForLine": "/rail/line-logos/kr-uijeongbu-u.svg"
     },
     {
       "country": "kr",
@@ -7438,8 +7438,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-1.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-1.svg"
     },
     {
       "country": "kr",
@@ -7451,7 +7451,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7462,8 +7462,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-5.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-5.svg"
     },
     {
       "country": "kr",
@@ -7474,8 +7474,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-sillim.svg",
+      "logoForLine": "/rail/line-logos/kr-sillim.svg"
     },
     {
       "country": "kr",
@@ -7486,8 +7486,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-5.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-5.svg"
     },
     {
       "country": "kr",
@@ -7498,8 +7498,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-gyeongui-jungang.svg",
+      "logoForLine": "/rail/line-logos/kr-gyeongui-jungang.svg"
     },
     {
       "country": "kr",
@@ -7510,8 +7510,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-2.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-2.svg"
     },
     {
       "country": "kr",
@@ -7523,7 +7523,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7534,8 +7534,8 @@
         "logo": null
       },
       "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
+      "lineLogo": "/rail/line-logos/kr-seoul-2.svg",
+      "logoForLine": "/rail/line-logos/kr-seoul-2.svg"
     },
     {
       "country": "kr",
@@ -7547,7 +7547,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7571,7 +7571,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7607,7 +7607,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -7631,7 +7631,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": null
+      "logoForLine": "/rail/operator-logos/korail.svg"
     },
     {
       "country": "kr",
@@ -8361,9 +8361,9 @@
         "operator": "九州旅客鉄道",
         "logo": "/rail/logos/jp-九州旅客鉄道-日豊線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-九州旅客鉄道-日豊線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-九州旅客鉄道-日豊線.png"
+      "logoForLine": "/rail/operator-logos/jp/q498366.svg"
     },
     {
       "country": "jp",
@@ -8505,9 +8505,9 @@
         "operator": "九州旅客鉄道",
         "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
+      "logoForLine": "/rail/operator-logos/jp/q498366.svg"
     },
     {
       "country": "jp",
@@ -8517,9 +8517,9 @@
         "operator": "九州旅客鉄道",
         "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
+      "logoForLine": "/rail/operator-logos/jp/q498366.svg"
     },
     {
       "country": "jp",
@@ -8529,9 +8529,9 @@
         "operator": "九州旅客鉄道",
         "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png"
+      "logoForLine": "/rail/operator-logos/jp/q498366.svg"
     },
     {
       "country": "jp",
@@ -9477,9 +9477,9 @@
         "operator": "北越急行",
         "logo": "/rail/logos/jp-北越急行-ほくほく線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-北越急行-ほくほく線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-北越急行-ほくほく線.png"
+      "logoForLine": "/rail/operator-logos/jp/q10903965.svg"
     },
     {
       "country": "jp",
@@ -9705,9 +9705,9 @@
         "operator": "名古屋ガイドウェイバス",
         "logo": "/rail/logos/jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線.png"
+      "logoForLine": "/rail/operator-logos/jp/q11414812.svg"
     },
     {
       "country": "jp",
@@ -11025,9 +11025,9 @@
         "operator": "愛知高速交通",
         "logo": "/rail/logos/jp-愛知高速交通-東部丘陵線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-愛知高速交通-東部丘陵線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-愛知高速交通-東部丘陵線.png"
+      "logoForLine": "/rail/operator-logos/jp/q11073857.svg"
     },
     {
       "country": "jp",
@@ -11505,9 +11505,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-中央線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-中央線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-中央線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -11517,9 +11517,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-中央線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-中央線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-中央線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -11937,9 +11937,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-成田線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-成田線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-成田線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -11949,9 +11949,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-成田線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-成田線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-成田線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -11997,9 +11997,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12009,9 +12009,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12021,9 +12021,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12033,9 +12033,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12045,9 +12045,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12057,9 +12057,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東北線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -12081,9 +12081,9 @@
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-東海道線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-東海道線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-東海道線.png"
+      "logoForLine": "/rail/operator-logos/jp/q499071.svg"
     },
     {
       "country": "jp",
@@ -14013,9 +14013,9 @@
         "operator": "西日本旅客鉄道",
         "logo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-西日本旅客鉄道-山陽線.png"
+      "logoForLine": "/rail/operator-logos/jp/q502125.svg"
     },
     {
       "country": "jp",
@@ -14025,9 +14025,9 @@
         "operator": "西日本旅客鉄道",
         "logo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png"
       },
-      "verifiedPackageLineLogo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png",
+      "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-西日本旅客鉄道-山陽線.png"
+      "logoForLine": "/rail/operator-logos/jp/q502125.svg"
     },
     {
       "country": "jp",
@@ -15335,7 +15335,7 @@
       },
       "verifiedPackageLineLogo": null,
       "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/jp/yoro-railway.webp"
+      "logoForLine": "/rail/operator-logos/jp/yoro-railway.svg"
     },
     {
       "country": "jp",
@@ -15675,6 +15675,10 @@
       "needsDarkMatte": false
     },
     {
+      "logo": "/rail/operator-logos/hkt-badge.svg",
+      "needsDarkMatte": false
+    },
+    {
       "logo": "/rail/operator-logos/alsr-badge.png",
       "needsDarkMatte": false
     },
@@ -15740,6 +15744,146 @@
     },
     {
       "logo": "/rail/line-logos/tym-a.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/operator-logos/korail.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-gyeongchun.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-arex.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-7.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-gyeongui-jungang.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/operator-logos/sr.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-suin-bundang.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-5.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-9.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-busan-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-3.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-gtx-a.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-busan-2.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-incheon-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-4.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-sinbundang.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-donghae.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-incheon-2.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-daegu-2.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-daegu-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-6.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-2.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-gimpo-gold.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-daegu-3.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-busan-gimhae.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-daejeon-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-gwangju-1.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-seoul-8.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-busan-3.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-everline.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-busan-4.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-uisinseol.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-uijeongbu-u.svg",
+      "needsDarkMatte": false
+    },
+    {
+      "logo": "/rail/line-logos/kr-sillim.svg",
       "needsDarkMatte": false
     },
     {
@@ -15879,10 +16023,6 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-九州旅客鉄道-日豊線.png",
-      "needsDarkMatte": false
-    },
-    {
       "logo": "/rail/logos/jp-九州旅客鉄道-筑肥線.png",
       "needsDarkMatte": false
     },
@@ -15896,10 +16036,6 @@
     },
     {
       "logo": "/rail/logos/jp-九州旅客鉄道-香椎線.png",
-      "needsDarkMatte": false
-    },
-    {
-      "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
       "needsDarkMatte": false
     },
     {
@@ -16107,7 +16243,7 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-北越急行-ほくほく線.png",
+      "logo": "/rail/operator-logos/jp/q10903965.svg",
       "needsDarkMatte": false
     },
     {
@@ -16175,7 +16311,7 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線.png",
+      "logo": "/rail/operator-logos/jp/q11414812.svg",
       "needsDarkMatte": false
     },
     {
@@ -16471,7 +16607,7 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-愛知高速交通-東部丘陵線.png",
+      "logo": "/rail/operator-logos/jp/q11073857.svg",
       "needsDarkMatte": false
     },
     {
@@ -16611,10 +16747,6 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-東日本旅客鉄道-中央線.png",
-      "needsDarkMatte": false
-    },
-    {
       "logo": "/rail/logos/jp-東日本旅客鉄道-五日市線.png",
       "needsDarkMatte": false
     },
@@ -16632,18 +16764,6 @@
     },
     {
       "logo": "/rail/logos/jp-東日本旅客鉄道-山手線.png",
-      "needsDarkMatte": false
-    },
-    {
-      "logo": "/rail/logos/jp-東日本旅客鉄道-成田線.png",
-      "needsDarkMatte": false
-    },
-    {
-      "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
-      "needsDarkMatte": false
-    },
-    {
-      "logo": "/rail/logos/jp-東日本旅客鉄道-東海道線.png",
       "needsDarkMatte": false
     },
     {
@@ -17055,10 +17175,6 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png",
-      "needsDarkMatte": false
-    },
-    {
       "logo": "/rail/logos/jp-西日本旅客鉄道-播但線.png",
       "needsDarkMatte": false
     },
@@ -17391,7 +17507,7 @@
       "needsDarkMatte": false
     },
     {
-      "logo": "/rail/operator-logos/jp/yoro-railway.webp",
+      "logo": "/rail/operator-logos/jp/yoro-railway.svg",
       "needsDarkMatte": false
     },
     {

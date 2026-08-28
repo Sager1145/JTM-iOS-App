@@ -1,7 +1,7 @@
 {
   "fixture": "i18n.json",
   "describes": "i18n.js — I18N.{t, tc, setCountry, setLang, getLang, placeName, trainName, nameReadings, nameReadingsList, nameReadingsTyped, stationName, localeDefaultReadingPrefs, setNameReadings, setStationReadings} over the i18n-strings.js catalogs",
-  "contract": "432 keys, four UI languages, three of them maintained: the Simplified Chinese UI is generated at runtime from the Traditional copy by a 236-entry map that lives in i18n.js and is reachable from nowhere but t(). The Swift port has no converter — ios/RailMap/Localizable.xcstrings, written by this module on every fixture run, carries zh-Hans as a materialised localisation produced by calling the real t(). Three languages keep their fallback chains in the port; the fourth is pre-folded because it is a derivation, not a translation.\n\nThe country-variant rule is a blind string suffix: with Taiwan active 'app.title' resolves to 'app.title.tw' IF that key exists, and otherwise stays put. Every lookup around it is exact-match, and three consequences look like defects and are frozen here deliberately:\n  1. setCountry's whitelist is [jp, tw, hk, mo, kr], case sensitive and untrimmed. Anything else becomes 'jp', so a mistyped country does not fail — it silently serves the Japanese copy.\n  2. Korea has no app.title.kr, app.hint.kr, ph.trainType.kr or info.packageBody.kr, so the Korean dataset shows the Japanese title and hint; Hong Kong and Macao fall back the same way for the stat.* categories they never declared. The fallback is the design, which strings are missing is not, and `variantKeys` is the list.\n  3. tc('country') answers 'country' under Japan and '台灣' under Taiwan: country.tw/hk/mo/kr are region LABELS that happen to look like country variants of a key named 'country', and country.jp — which does exist — is unreachable through tc(), because 'jp' short-circuits before the suffix is ever built.\n\nt() does not always return a string. STRINGS and JA_STRINGS are object literals, so STRINGS['toString'] finds Object.prototype's method and the `if (entry)` guard passes. In Japanese, JA_STRINGS[key] is read first and `??` accepts a function, so t('toString') returns Object.prototype.toString itself and t('toString', params) throws TypeError; the other three languages read entry.zh / entry.en off that function, find nothing, and return the key. A Swift Dictionary has no prototype chain and no String reproduces 'a Function came out of t()', so prototypeKeys records the JavaScript TYPE and the port returns the key in all four languages. That is the one divergence in this port, and it is unreachable from any data-i18n attribute or call site in the app.\n\nEverything else compares by UTF-16 code unit, because that is what JavaScript does and this copy is CJK with full-width punctuation: nameReadingsTyped drops a reading that === the name, so a decomposed reading against a composed name is KEPT by JavaScript and would be dropped by Swift's ==.",
+  "contract": "456 keys, four UI languages, three of them maintained: the Simplified Chinese UI is generated at runtime from the Traditional copy by a 243-entry map that lives in i18n.js and is reachable from nowhere but t(). The Swift port has no converter — ios/RailMap/Localizable.xcstrings, written by this module on every fixture run, carries zh-Hans as a materialised localisation produced by calling the real t(). Three languages keep their fallback chains in the port; the fourth is pre-folded because it is a derivation, not a translation.\n\nThe country-variant rule is a blind string suffix: with Taiwan active 'app.title' resolves to 'app.title.tw' IF that key exists, and otherwise stays put. Every lookup around it is exact-match, and three consequences look like defects and are frozen here deliberately:\n  1. setCountry's whitelist is [jp, tw, hk, mo, kr], case sensitive and untrimmed. Anything else becomes 'jp', so a mistyped country does not fail — it silently serves the Japanese copy.\n  2. Korea has no app.title.kr, app.hint.kr, ph.trainType.kr or info.packageBody.kr, so the Korean dataset shows the Japanese title and hint; Hong Kong and Macao fall back the same way for the stat.* categories they never declared. The fallback is the design, which strings are missing is not, and `variantKeys` is the list.\n  3. tc('country') answers 'country' under Japan and '台灣' under Taiwan: country.tw/hk/mo/kr are region LABELS that happen to look like country variants of a key named 'country', and country.jp — which does exist — is unreachable through tc(), because 'jp' short-circuits before the suffix is ever built.\n\nt() does not always return a string. STRINGS and JA_STRINGS are object literals, so STRINGS['toString'] finds Object.prototype's method and the `if (entry)` guard passes. In Japanese, JA_STRINGS[key] is read first and `??` accepts a function, so t('toString') returns Object.prototype.toString itself and t('toString', params) throws TypeError; the other three languages read entry.zh / entry.en off that function, find nothing, and return the key. A Swift Dictionary has no prototype chain and no String reproduces 'a Function came out of t()', so prototypeKeys records the JavaScript TYPE and the port returns the key in all four languages. That is the one divergence in this port, and it is unreachable from any data-i18n attribute or call site in the app.\n\nEverything else compares by UTF-16 code unit, because that is what JavaScript does and this copy is CJK with full-width punctuation: nameReadingsTyped drops a reading that === the name, so a decomposed reading against a composed name is KEPT by JavaScript and would be dropped by Swift's ==.",
   "catalog": {
     "path": "ios/Resources/Localizable.xcstrings",
     "sourceLanguage": "zh-Hant",
@@ -12,9 +12,9 @@
       "ja",
       "en"
     ],
-    "keyCount": 478,
-    "localizationCount": 1912,
-    "zhHansCount": 478,
+    "keyCount": 456,
+    "localizationCount": 1824,
+    "zhHansCount": 456,
     "note": "generated by app/scripts/build/port-fixtures/i18n.mjs. zh-Hant, en and ja are copied raw from the catalogs; zh-Hans is materialised through the real toSimplifiedChinese by way of t()"
   },
   "notes": {
@@ -383,34 +383,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "lang": "zh-Hant",
       "jsType": "string",
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -425,28 +401,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -524,13 +488,13 @@
       "key": "btn.showNetwork",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -548,7 +512,7 @@
       "key": "network.packageOff",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -584,7 +548,7 @@
       "key": "grp.journeyLog",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -614,7 +578,7 @@
       "key": "passport.logEmpty",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -741,12 +705,6 @@
       "lang": "zh-Hant",
       "jsType": "string",
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -1232,7 +1190,7 @@
       "key": "btn.saveLocal",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -1256,7 +1214,7 @@
       "key": "hint.dataSource",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -1310,151 +1268,151 @@
       "key": "btn.saveAsMine",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -1499,12 +1457,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "lang": "zh-Hant",
       "jsType": "string",
@@ -1523,12 +1475,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "lang": "zh-Hant",
       "jsType": "string",
@@ -1545,12 +1491,6 @@
       "lang": "zh-Hant",
       "jsType": "string",
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -1757,12 +1697,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "lang": "zh-Hant",
       "jsType": "string",
@@ -1773,18 +1707,6 @@
       "lang": "zh-Hant",
       "jsType": "string",
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -1862,13 +1784,7 @@
       "key": "stats.hint",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -1991,12 +1907,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "lang": "zh-Hant",
       "jsType": "string",
@@ -2042,7 +1952,7 @@
       "key": "th.platform",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -2150,43 +2060,7 @@
       "key": "btn.clearStorage",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -2618,7 +2492,7 @@
       "key": "src.serverStore",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -2684,19 +2558,19 @@
       "key": "status.noSavedStore",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -2714,7 +2588,7 @@
       "key": "status.autosaveOk",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -2726,7 +2600,7 @@
       "key": "status.autosaveFail",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -2738,7 +2612,7 @@
       "key": "err.pendingServerConflict",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -2810,7 +2684,7 @@
       "key": "status.savedTo",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -2834,13 +2708,13 @@
       "key": "status.clearedAll",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "lang": "zh-Hant",
       "jsType": "string",
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -2871,12 +2745,6 @@
       "lang": "zh-Hant",
       "jsType": "string",
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "lang": "zh-Hant",
-      "jsType": "string",
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -3236,7 +3104,7 @@
       "key": "app.title.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道列车管理"
+      "value": "韩国铁道列车管理"
     },
     {
       "key": "app.hint",
@@ -3251,76 +3119,40 @@
       "value": "工作区导航"
     },
     {
-      "key": "nav.trains",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "列车"
-    },
-    {
-      "key": "nav.editor",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "编辑"
-    },
-    {
       "key": "nav.data",
       "lang": "zh-Hans",
       "jsType": "string",
       "value": "数据"
     },
     {
-      "key": "nav.display",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "显示"
-    },
-    {
-      "key": "nav.about",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "说明"
-    },
-    {
       "key": "menu.hide",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "隐藏选单"
+      "value": "隐藏菜单"
     },
     {
       "key": "menu.show",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "显示选单"
-    },
-    {
-      "key": "menu.expand",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "展开选单"
-    },
-    {
-      "key": "menu.minimize",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "縮小选单"
+      "value": "显示菜单"
     },
     {
       "key": "nav.journeys",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "铁路网絡"
+      "value": "铁路网"
     },
     {
       "key": "nav.passport",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "乘车護照"
+      "value": "乘车护照"
     },
     {
       "key": "nav.upcoming",
@@ -3344,7 +3176,7 @@
       "key": "nav.dataLibrary",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "数据庫"
+      "value": "数据库"
     },
     {
       "key": "nav.settings",
@@ -3374,7 +3206,7 @@
       "key": "panel.full",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "滿屏"
+      "value": "满屏"
     },
     {
       "key": "menu.resizePanel",
@@ -3392,31 +3224,31 @@
       "key": "btn.showNetwork",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "显示完整铁路网絡"
+      "value": "显示完整铁路网"
     },
     {
       "key": "btn.hideNetwork",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "隐藏完整铁路网絡"
+      "value": "隐藏完整铁路网"
     },
     {
       "key": "btn.fitNetwork",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "適配完整路网"
+      "value": "适配完整路网"
     },
     {
       "key": "network.hint",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "路线颜色、车站圆点与縮放分級由地图图层与显示设置控制。"
+      "value": "路线颜色、车站圆点与缩放分级由地图图层与显示设置控制。"
     },
     {
       "key": "network.packageOff",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "完整铁路网絡当前关闭；已乘路线仍然显示。"
+      "value": "完整铁路网当前关闭；已乘路线仍然显示。"
     },
     {
       "key": "network.packageLoading",
@@ -3452,7 +3284,7 @@
       "key": "grp.journeyLog",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "旅程记录"
+      "value": "行程记录"
     },
     {
       "key": "grp.passportShare",
@@ -3482,7 +3314,7 @@
       "key": "passport.logEmpty",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "此范围内没有旅程记录。"
+      "value": "此范围内没有行程记录。"
     },
     {
       "key": "sec.search",
@@ -3596,7 +3428,7 @@
       "key": "play.done",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "播放完畢"
+      "value": "播放完毕"
     },
     {
       "key": "play.empty",
@@ -3611,16 +3443,10 @@
       "value": "数据加载中，稍后再播放。"
     },
     {
-      "key": "video.title",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "输出行程影片"
-    },
-    {
       "key": "video.export",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "输出影片"
+      "value": "输出视频"
     },
     {
       "key": "video.stop",
@@ -3638,7 +3464,7 @@
       "key": "video.quality",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "画質"
+      "value": "画质"
     },
     {
       "key": "video.bitrate",
@@ -3662,7 +3488,7 @@
       "key": "video.summary",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "{size} · {fps} fps · {mbps} Mbps · {length} · 約 {bytes} {ext}"
+      "value": "{size} · {fps} fps · {mbps} Mbps · {length} · 约 {bytes} {ext}"
     },
     {
       "key": "video.shape.square",
@@ -3740,7 +3566,7 @@
       "key": "video.preparing",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "正在准备影片…"
+      "value": "正在准备视频…"
     },
     {
       "key": "video.recording",
@@ -3758,31 +3584,31 @@
       "key": "video.saved",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "影片已储存：{name}（{size}）"
+      "value": "视频已保存：{name}（{size}）"
     },
     {
       "key": "video.ready",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "影片已完成：{name}"
+      "value": "视频已完成：{name}"
     },
     {
       "key": "video.readyPartial",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "已保留中斷前的片段：{name}"
+      "value": "已保留中断前的片段：{name}"
     },
     {
       "key": "video.save",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "储存影片（{size}）"
+      "value": "保存视频（{size}）"
     },
     {
       "key": "video.savedPartial",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "已储存中斷前的片段：{name}（{size}）"
+      "value": "已保存中断前的片段：{name}（{size}）"
     },
     {
       "key": "video.empty",
@@ -3794,19 +3620,19 @@
       "key": "video.failed",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "影片输出失败：{msg}"
+      "value": "视频输出失败：{msg}"
     },
     {
       "key": "video.unsupported",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "此浏览器不支持影片录制。"
+      "value": "此浏览器不支持视频录制。"
     },
     {
       "key": "video.noFrames",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "地图画面没有送出影格，请让本分页保持在前景后重试。"
+      "value": "地图画面没有送出帧，请让本标签页保持在前台后重试。"
     },
     {
       "key": "btn.autoFocus",
@@ -3860,7 +3686,7 @@
       "key": "country.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国"
+      "value": "韩国"
     },
     {
       "key": "disp.reset",
@@ -3902,7 +3728,7 @@
       "key": "uiMode.auto",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "自动侦测"
+      "value": "自动检测"
     },
     {
       "key": "uiMode.mobile",
@@ -3920,7 +3746,7 @@
       "key": "uiMode.status",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "侦测：{device} · 当前：{mode}"
+      "value": "检测：{device} · 当前：{mode}"
     },
     {
       "key": "uiMode.device.phone",
@@ -4052,7 +3878,7 @@
       "key": "disp.fitCurvePendingHint",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "参数已修改，尚未生效——点擊「重建拟合曲线」应用。"
+      "value": "参数已修改，尚未生效——点击「重建拟合曲线」应用。"
     },
     {
       "key": "disp.hoverRegions",
@@ -4088,7 +3914,7 @@
       "key": "ph.importJson",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "粘贴完整 store：{\"schema_version\":\"1.3\",\"trains\":[...]}，也可粘贴列车阵列或单一列车对象"
+      "value": "粘贴完整 store：{\"schema_version\":\"1.3\",\"trains\":[...]}，也可粘贴列车数组或单一列车对象"
     },
     {
       "key": "btn.openLocal",
@@ -4154,7 +3980,7 @@
       "key": "btn.loadSampleAllKr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "加载韓国示例数据"
+      "value": "加载韩国示例数据"
     },
     {
       "key": "btn.loadNewYearGrandLoop",
@@ -4244,19 +4070,19 @@
       "key": "confirm.overwriteMine",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "注意：你已有保存的数据。把当前画面内容保存为我的数据会覆盖原有保存，且无法复原。确定？"
+      "value": "注意：你已有保存的数据。把当前画面内容保存为我的数据会覆盖原有保存，且无法撤销。确定？"
     },
     {
       "key": "confirm.clearStorage",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "确定清除此浏览器保存的数据？此操作无法复原。"
+      "value": "确定清除此浏览器保存的数据？此操作无法撤销。"
     },
     {
       "key": "confirm.resetDefaults",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "重置为内置示例数据？当前的全部列车与未保存更改都会被取代，且无法复原。"
+      "value": "重置为内置示例数据？当前的全部列车与未保存更改都会被取代，且无法撤销。"
     },
     {
       "key": "confirm.importInSample",
@@ -4304,7 +4130,7 @@
       "key": "status.sampleNoSave",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "示例模式：更改不会保存。想保留当前内容，请在「数据」分页按「保存为我的数据」。"
+      "value": "示例模式：更改不会保存。想保留当前内容，请在「数据」标签页按「保存为我的数据」。"
     },
     {
       "key": "status.autosaveLocalOk",
@@ -4316,7 +4142,7 @@
       "key": "status.autosaveConflict",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "未保存：另一个分页已更改 {date} 的数据。请先导出此分页的 JSON，再重新加载以免覆盖较新的数据。"
+      "value": "未保存：另一个标签页已更改 {date} 的数据。请先导出此标签页的 JSON，再重新加载以免覆盖较新的数据。"
     },
     {
       "key": "src.userStore",
@@ -4367,12 +4193,6 @@
       "value": "东京特急大回行程当前无法加载，请稍后再试。"
     },
     {
-      "key": "grp.edit",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "编辑选中列车"
-    },
-    {
       "key": "grp.dates",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -4391,12 +4211,6 @@
       "value": "列车操作"
     },
     {
-      "key": "grp.data",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "数据管理"
-    },
-    {
       "key": "grp.danger",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -4406,19 +4220,13 @@
       "key": "hint.danger",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "这些操作会影响全部数据，无法复原，请小心使用。"
+      "value": "这些操作会影响全部数据，无法撤销，请小心使用。"
     },
     {
       "key": "nav.stats",
       "lang": "zh-Hans",
       "jsType": "string",
       "value": "统计"
-    },
-    {
-      "key": "sec.stats",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "里程统计"
     },
     {
       "key": "stat.all",
@@ -4502,7 +4310,7 @@
       "key": "stat.ltdexp.tw",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "對号列车"
+      "value": "对号列车"
     },
     {
       "key": "stat.metro.tw",
@@ -4556,7 +4364,7 @@
       "key": "stat.conv.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "stat.metro.kr",
@@ -4580,19 +4388,19 @@
       "key": "stat.jrconv.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "stat.ltdexp.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "優等列车"
+      "value": "优等列车"
     },
     {
       "key": "stat.all.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "全韓"
+      "value": "全韩"
     },
     {
       "key": "stat.allrail",
@@ -4625,12 +4433,6 @@
       "value": "当日统计（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "全部统计"
-    },
-    {
       "key": "stats.coverageTitle",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -4641,18 +4443,6 @@
       "lang": "zh-Hans",
       "jsType": "string",
       "value": "实际乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "分线明细"
-    },
-    {
-      "key": "stats.byCount",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "依次数"
     },
     {
       "key": "stats.byLineCount",
@@ -4733,12 +4523,6 @@
       "value": "根据全部列车的实际乘坐区间（乘坐勾选）去重合并计算；总里程来自国土数值信息 N02-25 全路网。"
     },
     {
-      "key": "sec.list",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "列车清单"
-    },
-    {
       "key": "btn.addDate",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -4790,13 +4574,13 @@
       "key": "ph.trainType.tw",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "自強／区间／高铁"
+      "value": "自强／区间／高铁"
     },
     {
       "key": "ph.trainType.hk",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "普通／机場快綫"
+      "value": "普通／机场快线"
     },
     {
       "key": "ph.trainType.mo",
@@ -4808,7 +4592,7 @@
       "key": "ph.trainType.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "KTX／ITX／无窮花"
+      "value": "KTX／ITX／无穷花"
     },
     {
       "key": "field.company",
@@ -4857,12 +4641,6 @@
       "lang": "zh-Hans",
       "jsType": "string",
       "value": "颜色"
-    },
-    {
-      "key": "field.weight",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "线宽"
     },
     {
       "key": "btn.saveFields",
@@ -5021,42 +4799,6 @@
       "value": "清除保存数据"
     },
     {
-      "key": "sec.legend",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "图例与数据来源"
-    },
-    {
-      "key": "legend.railway",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "全部线路（开关默认关闭）：各线路官方色（淡）＋灰色车站点"
-    },
-    {
-      "key": "legend.station",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "中途停靠站：空心圆加黑色中心点；通过站：同尺寸空心圆；起终点：墨色大圆点"
-    },
-    {
-      "key": "legend.express",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "特急路线：全色加粗（选中时墨色底衬）"
-    },
-    {
-      "key": "legend.source1",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "铁路线数据：根据日本国土交通省“国土数值信息（铁路数据 N02）”加工制作（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
-    },
-    {
       "key": "info.button",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -5144,7 +4886,7 @@
       "key": "info.suspendedTitle",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "停駛区间"
+      "value": "停驶区间"
     },
     {
       "key": "info.suspendedDesc",
@@ -5228,7 +4970,7 @@
       "key": "info.packageBody.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "使用 kr-2025 韓国铁道数据包。"
+      "value": "使用 kr-2025 韩国铁道数据包。"
     },
     {
       "key": "info.twRailTitle",
@@ -5282,13 +5024,13 @@
       "key": "info.krRailTitle",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道网"
+      "value": "韩国铁道网"
     },
     {
       "key": "info.krRailBody",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "站点识别、座标与站间距离取自国土交通部、国家铁道公團、韓国铁道公社与首爾交通公社的公开数据；轨道中心线取自 OpenStreetMap（ODbL）。"
+      "value": "站点识别、坐标与站间距离取自国土交通部、国家铁道公团、韩国铁道公社与首尔交通公社的公开数据；轨道中心线取自 OpenStreetMap（ODbL）。"
     },
     {
       "key": "info.krOpenData",
@@ -5306,7 +5048,7 @@
       "key": "info.moRailBody",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "依澳门轻轨股份有限公司官方現行路线与车站数据加工制作。"
+      "value": "依澳门轻轨股份有限公司官方现行路线与车站数据加工制作。"
     },
     {
       "key": "map.layers",
@@ -5420,7 +5162,7 @@
       "key": "map.riddenJr.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "map.riddenPriv.kr",
@@ -5558,13 +5300,13 @@
       "key": "status.recoveryEntered",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "已保存数据加载失败：{msg}。已切换到唯读恢复模式：自动保存停用，原始 JSON 已放入「JSON 导出」框；可修正后重新导入，或用「重置示例／清除保存数据」重新开始。"
+      "value": "已保存数据加载失败：{msg}。已切换到只读恢复模式：自动保存停用，原始 JSON 已放入「JSON 导出」框；可修正后重新导入，或用「重置示例／清除保存数据」重新开始。"
     },
     {
       "key": "status.recoveryNoSave",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "唯读恢复模式：自动保存已停用（原保存数据加载失败）。"
+      "value": "只读恢复模式：自动保存已停用（原保存数据加载失败）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -5720,7 +5462,7 @@
       "key": "confirm.deleteTrainDetail",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "确定删除 {date} 的「{number}」（{stops} 个停靠站）？此操作无法复原。"
+      "value": "确定删除 {date} 的「{number}」（{stops} 个停靠站）？此操作无法撤销。"
     },
     {
       "key": "status.shared",
@@ -5741,12 +5483,6 @@
       "value": "此处有多条重叠路线，请选择列车："
     },
     {
-      "key": "chip.sample",
-      "lang": "zh-Hans",
-      "jsType": "string",
-      "value": "示例数据"
-    },
-    {
       "key": "sec.importPaste",
       "lang": "zh-Hans",
       "jsType": "string",
@@ -5762,7 +5498,7 @@
       "key": "disp.advanced",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "進階显示参数"
+      "value": "高级显示参数"
     },
     {
       "key": "status.allDeleted",
@@ -6044,7 +5780,7 @@
       "key": "popup.stationGroup",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "站点群組"
+      "value": "站点群组"
     },
     {
       "key": "popup.sourceStationOverlay",
@@ -6119,34 +5855,10 @@
       "value": "ワークスペースナビゲーション"
     },
     {
-      "key": "nav.trains",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "編集"
-    },
-    {
       "key": "nav.data",
       "lang": "ja",
       "jsType": "string",
       "value": "データ"
-    },
-    {
-      "key": "nav.display",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "表示"
-    },
-    {
-      "key": "nav.about",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "情報"
     },
     {
       "key": "menu.hide",
@@ -6159,18 +5871,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "メニューを表示"
-    },
-    {
-      "key": "menu.expand",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "メニューを展開"
-    },
-    {
-      "key": "menu.minimize",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "メニューを縮小"
     },
     {
       "key": "nav.journeys",
@@ -6479,12 +6179,6 @@
       "value": "データを読み込み中です。少し待ってから再生してください。"
     },
     {
-      "key": "video.title",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "行程の動画を書き出す"
-    },
-    {
       "key": "video.export",
       "lang": "ja",
       "jsType": "string",
@@ -6668,7 +6362,7 @@
       "key": "video.unsupported",
       "lang": "ja",
       "jsType": "string",
-      "value": "このブラウザーは録画に対応していません。"
+      "value": "このブラウザは録画に対応していません。"
     },
     {
       "key": "video.noFrames",
@@ -6734,7 +6428,7 @@
       "key": "disp.reset",
       "lang": "ja",
       "jsType": "string",
-      "value": "初期設定に戻す"
+      "value": "既定に戻す"
     },
     {
       "key": "theme.label",
@@ -6980,7 +6674,7 @@
       "key": "btn.apply",
       "lang": "ja",
       "jsType": "string",
-      "value": "読み込み／順次インポートを開始"
+      "value": "一括／順次の読み込みを開始"
     },
     {
       "key": "sec.dataSource",
@@ -7184,7 +6878,7 @@
       "key": "status.autosaveConflict",
       "lang": "ja",
       "jsType": "string",
-      "value": "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON をエクスポートしてから再読み込みしてください。"
+      "value": "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON を書き出してから再読み込みしてください。"
     },
     {
       "key": "src.userStore",
@@ -7235,12 +6929,6 @@
       "value": "東京特急大回り行程を読み込めません。しばらくしてからもう一度お試しください。"
     },
     {
-      "key": "grp.edit",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "選択中の列車を編集"
-    },
-    {
       "key": "grp.dates",
       "lang": "ja",
       "jsType": "string",
@@ -7259,12 +6947,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "データ管理"
-    },
-    {
       "key": "grp.danger",
       "lang": "ja",
       "jsType": "string",
@@ -7281,12 +6963,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "走行距離統計"
     },
     {
       "key": "stat.all",
@@ -7493,12 +7169,6 @@
       "value": "当日の統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "全期間の統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "lang": "ja",
       "jsType": "string",
@@ -7509,18 +7179,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "実乗車量"
-    },
-    {
-      "key": "stats.byLine",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "路線別"
-    },
-    {
-      "key": "stats.byCount",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "回数順"
     },
     {
       "key": "stats.byLineCount",
@@ -7599,12 +7257,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "全列車で実際に乗車した区間を重複を除いて集計します。総延長は国土数値情報 N02-25 の全国鉄道網に基づきます。"
-    },
-    {
-      "key": "sec.list",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "列車一覧"
     },
     {
       "key": "btn.addDate",
@@ -7725,12 +7377,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "色"
-    },
-    {
-      "key": "field.weight",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "線幅"
     },
     {
       "key": "btn.saveFields",
@@ -7887,42 +7533,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "保存データを消去"
-    },
-    {
-      "key": "sec.legend",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "凡例とデータ出典"
-    },
-    {
-      "key": "legend.railway",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "全路線（初期状態はオフ）：路線ごとの公式色（淡色）＋灰色の駅マーカー"
-    },
-    {
-      "key": "legend.station",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "途中停車駅：黒い中心点付きの中空円、通過駅：同じ大きさの中空円、始終点：大きな墨色の点"
-    },
-    {
-      "key": "legend.express",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "列車経路：指定色の太線（選択中は墨色の下線）"
-    },
-    {
-      "key": "legend.source1",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "鉄道路線データ：国土交通省『国土数値情報（鉄道データ N02）』を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "背景地図 © OpenStreetMap contributors｜OpenFreeMap。ローマ字表記 © OpenStreetMap contributors, ODbL。鉄道データパッケージ © railprint (jp-2025)。"
     },
     {
       "key": "info.button",
@@ -8384,7 +7994,7 @@
       "key": "src.pendingRecovery",
       "lang": "ja",
       "jsType": "string",
-      "value": "ブラウザー内の未送信リカバリーコピー"
+      "value": "ブラウザ内の未送信リカバリーコピー"
     },
     {
       "key": "src.localJson",
@@ -8426,7 +8036,7 @@
       "key": "status.recoveryEntered",
       "lang": "ja",
       "jsType": "string",
-      "value": "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON エクスポート」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。"
+      "value": "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON 書き出し」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。"
     },
     {
       "key": "status.recoveryNoSave",
@@ -8468,25 +8078,25 @@
       "key": "err.pendingServerInvalid",
       "lang": "ja",
       "jsType": "string",
-      "value": "ブラウザー内の未送信リカバリーコピーが無効です：{msg}"
+      "value": "ブラウザ内の未送信リカバリーコピーが無効です：{msg}"
     },
     {
       "key": "err.pendingServerConflict",
       "lang": "ja",
       "jsType": "string",
-      "value": "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。エクスポート欄からリカバリーコピーを保存または統合してください。"
+      "value": "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。書き出し欄からリカバリーコピーを保存または統合してください。"
     },
     {
       "key": "err.pendingServerReplayFailed",
       "lang": "ja",
       "jsType": "string",
-      "value": "ブラウザー内の未送信編集を再送できませんでした：{msg}"
+      "value": "ブラウザ内の未送信編集を再送できませんでした：{msg}"
     },
     {
       "key": "status.noFsApi",
       "lang": "ja",
       "jsType": "string",
-      "value": "このブラウザーはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。"
+      "value": "このブラウザはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。"
     },
     {
       "key": "err.noWritePerm",
@@ -8552,7 +8162,7 @@
       "key": "status.imported",
       "lang": "ja",
       "jsType": "string",
-      "value": "{count} 本をインポートしました：{ids}"
+      "value": "{count} 本を読み込みました：{ids}"
     },
     {
       "key": "status.exported",
@@ -8594,7 +8204,7 @@
       "key": "status.shared",
       "lang": "ja",
       "jsType": "string",
-      "value": "共有シートからエクスポートしました"
+      "value": "共有シートから書き出しました"
     },
     {
       "key": "confirm.deleteAll",
@@ -8607,12 +8217,6 @@
       "lang": "ja",
       "jsType": "string",
       "value": "この地点では複数の路線が重なっています。列車を選択してください："
-    },
-    {
-      "key": "chip.sample",
-      "lang": "ja",
-      "jsType": "string",
-      "value": "サンプルデータ"
     },
     {
       "key": "sec.importPaste",
@@ -8987,34 +8591,10 @@
       "value": "Workspace navigation"
     },
     {
-      "key": "nav.trains",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Trains"
-    },
-    {
-      "key": "nav.editor",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Edit"
-    },
-    {
       "key": "nav.data",
       "lang": "en",
       "jsType": "string",
       "value": "Data"
-    },
-    {
-      "key": "nav.display",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Display"
-    },
-    {
-      "key": "nav.about",
-      "lang": "en",
-      "jsType": "string",
-      "value": "About"
     },
     {
       "key": "menu.hide",
@@ -9027,18 +8607,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Show menu"
-    },
-    {
-      "key": "menu.expand",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Expand menu"
-    },
-    {
-      "key": "menu.minimize",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Minimize menu"
     },
     {
       "key": "nav.journeys",
@@ -9146,7 +8714,7 @@
       "key": "network.hint",
       "lang": "en",
       "jsType": "string",
-      "value": "Line colours, station dots and zoom tiers are controlled by the map layers and Settings."
+      "value": "Line colors, station dots and zoom tiers are controlled by the map layers and Settings."
     },
     {
       "key": "network.packageOff",
@@ -9212,7 +8780,7 @@
       "key": "passport.coverageHint",
       "lang": "en",
       "jsType": "string",
-      "value": "The emphasised lines on the map are the recorded ride segments."
+      "value": "The emphasized lines on the map are the recorded ride segments."
     },
     {
       "key": "passport.logEmpty",
@@ -9345,12 +8913,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Data is still loading — try playing again shortly."
-    },
-    {
-      "key": "video.title",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Export journey video"
     },
     {
       "key": "video.export",
@@ -10103,12 +9665,6 @@
       "value": "The Tokyo limited-express loop is unavailable right now; please try again later."
     },
     {
-      "key": "grp.edit",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Edit Selected Train"
-    },
-    {
       "key": "grp.dates",
       "lang": "en",
       "jsType": "string",
@@ -10127,12 +9683,6 @@
       "value": "Train Actions"
     },
     {
-      "key": "grp.data",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Data Management"
-    },
-    {
       "key": "grp.danger",
       "lang": "en",
       "jsType": "string",
@@ -10149,12 +9699,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Stats"
-    },
-    {
-      "key": "sec.stats",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Mileage Stats"
     },
     {
       "key": "stat.all",
@@ -10361,12 +9905,6 @@
       "value": "Selected Day ({date})"
     },
     {
-      "key": "stats.overallTitle",
-      "lang": "en",
-      "jsType": "string",
-      "value": "All-Time Total"
-    },
-    {
       "key": "stats.coverageTitle",
       "lang": "en",
       "jsType": "string",
@@ -10377,18 +9915,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Actual Rides"
-    },
-    {
-      "key": "stats.byLine",
-      "lang": "en",
-      "jsType": "string",
-      "value": "By line"
-    },
-    {
-      "key": "stats.byCount",
-      "lang": "en",
-      "jsType": "string",
-      "value": "By ride count"
     },
     {
       "key": "stats.byLineCount",
@@ -10467,12 +9993,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Computed from every train's actually-ridden intervals (ride checkboxes), deduplicated across trains; totals come from the full N02-25 national network."
-    },
-    {
-      "key": "sec.list",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Train List"
     },
     {
       "key": "btn.addDate",
@@ -10593,12 +10113,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Color"
-    },
-    {
-      "key": "field.weight",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Line Width"
     },
     {
       "key": "btn.saveFields",
@@ -10755,42 +10269,6 @@
       "lang": "en",
       "jsType": "string",
       "value": "Clear Saved Data"
-    },
-    {
-      "key": "sec.legend",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Legend & Data Sources"
-    },
-    {
-      "key": "legend.railway",
-      "lang": "en",
-      "jsType": "string",
-      "value": "All railway lines (switch, off by default): official line colors (faded) + grey station dots"
-    },
-    {
-      "key": "legend.station",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Intermediate stops: outlined circles with black centers; pass-throughs: same-size outlined circles; endpoints: large ink dots"
-    },
-    {
-      "key": "legend.express",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Limited express routes: full color, thicker (ink casing when selected)"
-    },
-    {
-      "key": "legend.source1",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Railway data: created from \"National Land Numerical Information (Railway Data N02)\" (MLIT Japan), CC BY 4.0."
-    },
-    {
-      "key": "legend.source2",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark). Romanizations © OpenStreetMap contributors, ODbL. Rail package © railprint (jp-2025)."
     },
     {
       "key": "info.button",
@@ -11477,12 +10955,6 @@
       "value": "Several routes overlap here — choose a train:"
     },
     {
-      "key": "chip.sample",
-      "lang": "en",
-      "jsType": "string",
-      "value": "Sample data"
-    },
-    {
       "key": "sec.importPaste",
       "lang": "en",
       "jsType": "string",
@@ -11866,7 +11338,7 @@
       "key": "app.title.kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道列车管理"
+      "value": "韩国铁道列车管理"
     },
     {
       "key": "app.title.",
@@ -13621,34 +13093,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "jp",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "jp",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "jp",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "jp",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "jp",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -13663,28 +13111,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "jp",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "jp",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "jp",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "jp",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -13762,13 +13198,13 @@
       "key": "btn.showNetwork",
       "country": "jp",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "jp",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -13786,7 +13222,7 @@
       "key": "network.packageOff",
       "country": "jp",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -13822,7 +13258,7 @@
       "key": "grp.journeyLog",
       "country": "jp",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -13852,7 +13288,7 @@
       "key": "passport.logEmpty",
       "country": "jp",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -13979,12 +13415,6 @@
       "country": "jp",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "jp",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -14470,7 +13900,7 @@
       "key": "btn.saveLocal",
       "country": "jp",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -14494,7 +13924,7 @@
       "key": "hint.dataSource",
       "country": "jp",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -14548,151 +13978,151 @@
       "key": "btn.saveAsMine",
       "country": "jp",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "jp",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "jp",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "jp",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "jp",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "jp",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "jp",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "jp",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "jp",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "jp",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "jp",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "jp",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "jp",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "jp",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "jp",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "jp",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "jp",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "jp",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "jp",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "jp",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -14737,12 +14167,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "jp",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "jp",
       "variantExists": false,
@@ -14761,12 +14185,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "jp",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "jp",
       "variantExists": false,
@@ -14783,12 +14201,6 @@
       "country": "jp",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "jp",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -14995,12 +14407,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "jp",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "jp",
       "variantExists": false,
@@ -15011,18 +14417,6 @@
       "country": "jp",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "jp",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "jp",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -15100,13 +14494,7 @@
       "key": "stats.hint",
       "country": "jp",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "jp",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -15229,12 +14617,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "jp",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "jp",
       "variantExists": false,
@@ -15280,7 +14662,7 @@
       "key": "th.platform",
       "country": "jp",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -15388,43 +14770,7 @@
       "key": "btn.clearStorage",
       "country": "jp",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "jp",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "jp",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "jp",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "jp",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "jp",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "jp",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -15856,7 +15202,7 @@
       "key": "src.serverStore",
       "country": "jp",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -15922,19 +15268,19 @@
       "key": "status.noSavedStore",
       "country": "jp",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "jp",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "jp",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -15952,7 +15298,7 @@
       "key": "status.autosaveOk",
       "country": "jp",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -15964,7 +15310,7 @@
       "key": "status.autosaveFail",
       "country": "jp",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -15976,7 +15322,7 @@
       "key": "err.pendingServerConflict",
       "country": "jp",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -16048,7 +15394,7 @@
       "key": "status.savedTo",
       "country": "jp",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -16072,13 +15418,13 @@
       "key": "status.clearedAll",
       "country": "jp",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "jp",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -16109,12 +15455,6 @@
       "country": "jp",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "jp",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -16489,34 +15829,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "tw",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "tw",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "tw",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "tw",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "tw",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -16531,28 +15847,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "tw",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "tw",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "tw",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "tw",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -16630,13 +15934,13 @@
       "key": "btn.showNetwork",
       "country": "tw",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "tw",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -16654,7 +15958,7 @@
       "key": "network.packageOff",
       "country": "tw",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -16690,7 +15994,7 @@
       "key": "grp.journeyLog",
       "country": "tw",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -16720,7 +16024,7 @@
       "key": "passport.logEmpty",
       "country": "tw",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -16847,12 +16151,6 @@
       "country": "tw",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "tw",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -17338,7 +16636,7 @@
       "key": "btn.saveLocal",
       "country": "tw",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -17362,7 +16660,7 @@
       "key": "hint.dataSource",
       "country": "tw",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -17416,151 +16714,151 @@
       "key": "btn.saveAsMine",
       "country": "tw",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "tw",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "tw",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "tw",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "tw",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "tw",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "tw",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "tw",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "tw",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "tw",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "tw",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "tw",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "tw",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "tw",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "tw",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "tw",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "tw",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "tw",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "tw",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "tw",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -17605,12 +16903,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "tw",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "tw",
       "variantExists": false,
@@ -17629,12 +16921,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "tw",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "tw",
       "variantExists": false,
@@ -17651,12 +16937,6 @@
       "country": "tw",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "tw",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -17863,12 +17143,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "tw",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "tw",
       "variantExists": false,
@@ -17879,18 +17153,6 @@
       "country": "tw",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "tw",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "tw",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -17968,13 +17230,7 @@
       "key": "stats.hint",
       "country": "tw",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "tw",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -18097,12 +17353,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "tw",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "tw",
       "variantExists": false,
@@ -18148,7 +17398,7 @@
       "key": "th.platform",
       "country": "tw",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -18256,43 +17506,7 @@
       "key": "btn.clearStorage",
       "country": "tw",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "tw",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "tw",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "tw",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "tw",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "tw",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "tw",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -18724,7 +17938,7 @@
       "key": "src.serverStore",
       "country": "tw",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -18790,19 +18004,19 @@
       "key": "status.noSavedStore",
       "country": "tw",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "tw",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "tw",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -18820,7 +18034,7 @@
       "key": "status.autosaveOk",
       "country": "tw",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -18832,7 +18046,7 @@
       "key": "status.autosaveFail",
       "country": "tw",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -18844,7 +18058,7 @@
       "key": "err.pendingServerConflict",
       "country": "tw",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -18916,7 +18130,7 @@
       "key": "status.savedTo",
       "country": "tw",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -18940,13 +18154,13 @@
       "key": "status.clearedAll",
       "country": "tw",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "tw",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -18977,12 +18191,6 @@
       "country": "tw",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "tw",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -19357,34 +18565,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "hk",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "hk",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "hk",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "hk",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "hk",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -19399,28 +18583,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "hk",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "hk",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "hk",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "hk",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -19498,13 +18670,13 @@
       "key": "btn.showNetwork",
       "country": "hk",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "hk",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -19522,7 +18694,7 @@
       "key": "network.packageOff",
       "country": "hk",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -19558,7 +18730,7 @@
       "key": "grp.journeyLog",
       "country": "hk",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -19588,7 +18760,7 @@
       "key": "passport.logEmpty",
       "country": "hk",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -19715,12 +18887,6 @@
       "country": "hk",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "hk",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -20206,7 +19372,7 @@
       "key": "btn.saveLocal",
       "country": "hk",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -20230,7 +19396,7 @@
       "key": "hint.dataSource",
       "country": "hk",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -20284,151 +19450,151 @@
       "key": "btn.saveAsMine",
       "country": "hk",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "hk",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "hk",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "hk",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "hk",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "hk",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "hk",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "hk",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "hk",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "hk",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "hk",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "hk",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "hk",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "hk",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "hk",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "hk",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "hk",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "hk",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "hk",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "hk",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -20473,12 +19639,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "hk",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "hk",
       "variantExists": false,
@@ -20497,12 +19657,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "hk",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "hk",
       "variantExists": false,
@@ -20519,12 +19673,6 @@
       "country": "hk",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "hk",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -20731,12 +19879,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "hk",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "hk",
       "variantExists": false,
@@ -20747,18 +19889,6 @@
       "country": "hk",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "hk",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "hk",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -20836,13 +19966,7 @@
       "key": "stats.hint",
       "country": "hk",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "hk",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -20965,12 +20089,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "hk",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "hk",
       "variantExists": false,
@@ -21016,7 +20134,7 @@
       "key": "th.platform",
       "country": "hk",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -21124,43 +20242,7 @@
       "key": "btn.clearStorage",
       "country": "hk",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "hk",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "hk",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "hk",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "hk",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "hk",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "hk",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -21592,7 +20674,7 @@
       "key": "src.serverStore",
       "country": "hk",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -21658,19 +20740,19 @@
       "key": "status.noSavedStore",
       "country": "hk",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "hk",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "hk",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -21688,7 +20770,7 @@
       "key": "status.autosaveOk",
       "country": "hk",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -21700,7 +20782,7 @@
       "key": "status.autosaveFail",
       "country": "hk",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -21712,7 +20794,7 @@
       "key": "err.pendingServerConflict",
       "country": "hk",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -21784,7 +20866,7 @@
       "key": "status.savedTo",
       "country": "hk",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -21808,13 +20890,13 @@
       "key": "status.clearedAll",
       "country": "hk",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "hk",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -21845,12 +20927,6 @@
       "country": "hk",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "hk",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -22225,34 +21301,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "mo",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "mo",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "mo",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "mo",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "mo",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -22267,28 +21319,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "mo",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "mo",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "mo",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "mo",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -22366,13 +21406,13 @@
       "key": "btn.showNetwork",
       "country": "mo",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "mo",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -22390,7 +21430,7 @@
       "key": "network.packageOff",
       "country": "mo",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -22426,7 +21466,7 @@
       "key": "grp.journeyLog",
       "country": "mo",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -22456,7 +21496,7 @@
       "key": "passport.logEmpty",
       "country": "mo",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -22583,12 +21623,6 @@
       "country": "mo",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "mo",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -23074,7 +22108,7 @@
       "key": "btn.saveLocal",
       "country": "mo",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -23098,7 +22132,7 @@
       "key": "hint.dataSource",
       "country": "mo",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -23152,151 +22186,151 @@
       "key": "btn.saveAsMine",
       "country": "mo",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "mo",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "mo",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "mo",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "mo",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "mo",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "mo",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "mo",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "mo",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "mo",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "mo",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "mo",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "mo",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "mo",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "mo",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "mo",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "mo",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "mo",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "mo",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "mo",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -23341,12 +22375,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "mo",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "mo",
       "variantExists": false,
@@ -23365,12 +22393,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "mo",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "mo",
       "variantExists": false,
@@ -23387,12 +22409,6 @@
       "country": "mo",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "mo",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -23599,12 +22615,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "mo",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "mo",
       "variantExists": false,
@@ -23615,18 +22625,6 @@
       "country": "mo",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "mo",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "mo",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -23704,13 +22702,7 @@
       "key": "stats.hint",
       "country": "mo",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "mo",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -23833,12 +22825,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "mo",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "mo",
       "variantExists": false,
@@ -23884,7 +22870,7 @@
       "key": "th.platform",
       "country": "mo",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -23992,43 +22978,7 @@
       "key": "btn.clearStorage",
       "country": "mo",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "mo",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "mo",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "mo",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "mo",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "mo",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "mo",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -24460,7 +23410,7 @@
       "key": "src.serverStore",
       "country": "mo",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -24526,19 +23476,19 @@
       "key": "status.noSavedStore",
       "country": "mo",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "mo",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "mo",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -24556,7 +23506,7 @@
       "key": "status.autosaveOk",
       "country": "mo",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -24568,7 +23518,7 @@
       "key": "status.autosaveFail",
       "country": "mo",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -24580,7 +23530,7 @@
       "key": "err.pendingServerConflict",
       "country": "mo",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -24652,7 +23602,7 @@
       "key": "status.savedTo",
       "country": "mo",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -24676,13 +23626,13 @@
       "key": "status.clearedAll",
       "country": "mo",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "mo",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -24713,12 +23663,6 @@
       "country": "mo",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "mo",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -25093,34 +24037,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "kr",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "kr",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "kr",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "kr",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "kr",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -25135,28 +24055,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "kr",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "kr",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "kr",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "kr",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -25234,13 +24142,13 @@
       "key": "btn.showNetwork",
       "country": "kr",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "kr",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -25258,7 +24166,7 @@
       "key": "network.packageOff",
       "country": "kr",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -25294,7 +24202,7 @@
       "key": "grp.journeyLog",
       "country": "kr",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -25324,7 +24232,7 @@
       "key": "passport.logEmpty",
       "country": "kr",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -25451,12 +24359,6 @@
       "country": "kr",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "kr",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -25942,7 +24844,7 @@
       "key": "btn.saveLocal",
       "country": "kr",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -25966,7 +24868,7 @@
       "key": "hint.dataSource",
       "country": "kr",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -26020,151 +24922,151 @@
       "key": "btn.saveAsMine",
       "country": "kr",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "kr",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "kr",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "kr",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "kr",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "kr",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "kr",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "kr",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "kr",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "kr",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "kr",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "kr",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "kr",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "kr",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "kr",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "kr",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "kr",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "kr",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "kr",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "kr",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -26209,12 +25111,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "kr",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "kr",
       "variantExists": false,
@@ -26233,12 +25129,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "kr",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "kr",
       "variantExists": false,
@@ -26255,12 +25145,6 @@
       "country": "kr",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "kr",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -26467,12 +25351,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "kr",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "kr",
       "variantExists": false,
@@ -26483,18 +25361,6 @@
       "country": "kr",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "kr",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "kr",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -26572,13 +25438,7 @@
       "key": "stats.hint",
       "country": "kr",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "kr",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -26701,12 +25561,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "kr",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "kr",
       "variantExists": false,
@@ -26752,7 +25606,7 @@
       "key": "th.platform",
       "country": "kr",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -26860,43 +25714,7 @@
       "key": "btn.clearStorage",
       "country": "kr",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "kr",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "kr",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "kr",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "kr",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "kr",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "kr",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -27328,7 +26146,7 @@
       "key": "src.serverStore",
       "country": "kr",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -27394,19 +26212,19 @@
       "key": "status.noSavedStore",
       "country": "kr",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "kr",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "kr",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -27424,7 +26242,7 @@
       "key": "status.autosaveOk",
       "country": "kr",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -27436,7 +26254,7 @@
       "key": "status.autosaveFail",
       "country": "kr",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -27448,7 +26266,7 @@
       "key": "err.pendingServerConflict",
       "country": "kr",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -27520,7 +26338,7 @@
       "key": "status.savedTo",
       "country": "kr",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -27544,13 +26362,13 @@
       "key": "status.clearedAll",
       "country": "kr",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "kr",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -27581,12 +26399,6 @@
       "country": "kr",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "kr",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -27961,34 +26773,10 @@
       "value": "工作區導覽"
     },
     {
-      "key": "nav.trains",
-      "country": "us",
-      "variantExists": false,
-      "value": "列車"
-    },
-    {
-      "key": "nav.editor",
-      "country": "us",
-      "variantExists": false,
-      "value": "編輯"
-    },
-    {
       "key": "nav.data",
       "country": "us",
       "variantExists": false,
       "value": "資料"
-    },
-    {
-      "key": "nav.display",
-      "country": "us",
-      "variantExists": false,
-      "value": "顯示"
-    },
-    {
-      "key": "nav.about",
-      "country": "us",
-      "variantExists": false,
-      "value": "說明"
     },
     {
       "key": "menu.hide",
@@ -28003,28 +26791,16 @@
       "value": "顯示選單"
     },
     {
-      "key": "menu.expand",
-      "country": "us",
-      "variantExists": false,
-      "value": "展開選單"
-    },
-    {
-      "key": "menu.minimize",
-      "country": "us",
-      "variantExists": false,
-      "value": "縮小選單"
-    },
-    {
       "key": "nav.journeys",
       "country": "us",
       "variantExists": false,
-      "value": "旅程"
+      "value": "行程"
     },
     {
       "key": "nav.network",
       "country": "us",
       "variantExists": false,
-      "value": "鐵路網絡"
+      "value": "鐵路網"
     },
     {
       "key": "nav.passport",
@@ -28102,13 +26878,13 @@
       "key": "btn.showNetwork",
       "country": "us",
       "variantExists": false,
-      "value": "顯示完整鐵路網絡"
+      "value": "顯示完整鐵路網"
     },
     {
       "key": "btn.hideNetwork",
       "country": "us",
       "variantExists": false,
-      "value": "隱藏完整鐵路網絡"
+      "value": "隱藏完整鐵路網"
     },
     {
       "key": "btn.fitNetwork",
@@ -28126,7 +26902,7 @@
       "key": "network.packageOff",
       "country": "us",
       "variantExists": false,
-      "value": "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+      "value": "完整鐵路網目前關閉；已乘路線仍然顯示。"
     },
     {
       "key": "network.packageLoading",
@@ -28162,7 +26938,7 @@
       "key": "grp.journeyLog",
       "country": "us",
       "variantExists": false,
-      "value": "旅程記錄"
+      "value": "行程記錄"
     },
     {
       "key": "grp.passportShare",
@@ -28192,7 +26968,7 @@
       "key": "passport.logEmpty",
       "country": "us",
       "variantExists": false,
-      "value": "此範圍內沒有旅程記錄。"
+      "value": "此範圍內沒有行程記錄。"
     },
     {
       "key": "sec.search",
@@ -28319,12 +27095,6 @@
       "country": "us",
       "variantExists": false,
       "value": "資料載入中，稍後再播放。"
-    },
-    {
-      "key": "video.title",
-      "country": "us",
-      "variantExists": false,
-      "value": "輸出行程影片"
     },
     {
       "key": "video.export",
@@ -28810,7 +27580,7 @@
       "key": "btn.saveLocal",
       "country": "us",
       "variantExists": false,
-      "value": "保存／另存 JSON"
+      "value": "儲存／另存 JSON"
     },
     {
       "key": "btn.validate",
@@ -28834,7 +27604,7 @@
       "key": "hint.dataSource",
       "country": "us",
       "variantExists": false,
-      "value": "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+      "value": "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
     },
     {
       "key": "btn.loadSampleAll",
@@ -28888,151 +27658,151 @@
       "key": "btn.saveAsMine",
       "country": "us",
       "variantExists": false,
-      "value": "保存為我的資料"
+      "value": "儲存為我的資料"
     },
     {
       "key": "mode.user",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示：我的資料（自動保存在此瀏覽器）"
+      "value": "目前顯示：我的資料（自動儲存在此瀏覽器）"
     },
     {
       "key": "mode.sampleSingle",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示：示例資料 {date}（更改不會保存）"
+      "value": "目前顯示：示例資料 {date}（更改不會儲存）"
     },
     {
       "key": "mode.sampleAll",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示：全部示例資料（更改不會保存）"
+      "value": "目前顯示：全部示例資料（更改不會儲存）"
     },
     {
       "key": "mode.newYearGrandLoop",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示：跨年大回行程（更改不會保存）"
+      "value": "目前顯示：跨年大回行程（更改不會儲存）"
     },
     {
       "key": "mode.tokyoLimitedExpressLoop",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示：東京特急大回行程（更改不會保存）"
+      "value": "目前顯示：東京特急大回行程（更改不會儲存）"
     },
     {
       "key": "confirm.loadSampleAll",
       "country": "us",
       "variantExists": false,
-      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadNewYearGrandLoop",
       "country": "us",
       "variantExists": false,
-      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.loadTokyoLimitedExpressLoop",
       "country": "us",
       "variantExists": false,
-      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+      "value": "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
     },
     {
       "key": "confirm.restoreMine",
       "country": "us",
       "variantExists": false,
-      "value": "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+      "value": "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
     },
     {
       "key": "confirm.saveAsMine",
       "country": "us",
       "variantExists": false,
-      "value": "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+      "value": "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "confirm.overwriteMine",
       "country": "us",
       "variantExists": false,
-      "value": "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+      "value": "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
     },
     {
       "key": "confirm.clearStorage",
       "country": "us",
       "variantExists": false,
-      "value": "確定清除此瀏覽器保存的資料？此操作無法復原。"
+      "value": "確定清除此瀏覽器儲存的資料？此操作無法復原。"
     },
     {
       "key": "confirm.resetDefaults",
       "country": "us",
       "variantExists": false,
-      "value": "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+      "value": "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
     },
     {
       "key": "confirm.importInSample",
       "country": "us",
       "variantExists": false,
-      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+      "value": "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
     },
     {
       "key": "status.sampleSingleLoaded",
       "country": "us",
       "variantExists": false,
-      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+      "value": "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
     },
     {
       "key": "status.sampleAllLoaded",
       "country": "us",
       "variantExists": false,
-      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+      "value": "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.newYearGrandLoopLoaded",
       "country": "us",
       "variantExists": false,
-      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.tokyoLimitedExpressLoopLoaded",
       "country": "us",
       "variantExists": false,
-      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+      "value": "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
     },
     {
       "key": "status.savedAsMine",
       "country": "us",
       "variantExists": false,
-      "value": "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+      "value": "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
     },
     {
       "key": "status.noUserStore",
       "country": "us",
       "variantExists": false,
-      "value": "此瀏覽器中沒有已保存的資料。"
+      "value": "此瀏覽器中沒有已儲存的資料。"
     },
     {
       "key": "status.sampleNoSave",
       "country": "us",
       "variantExists": false,
-      "value": "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+      "value": "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
     },
     {
       "key": "status.autosaveLocalOk",
       "country": "us",
       "variantExists": false,
-      "value": "已自動保存到此瀏覽器。"
+      "value": "已自動儲存到此瀏覽器。"
     },
     {
       "key": "status.autosaveConflict",
       "country": "us",
       "variantExists": false,
-      "value": "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+      "value": "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
     },
     {
       "key": "src.userStore",
       "country": "us",
       "variantExists": false,
-      "value": "我的資料（此瀏覽器保存）"
+      "value": "我的資料（此瀏覽器儲存）"
     },
     {
       "key": "src.sampleDay",
@@ -29077,12 +27847,6 @@
       "value": "東京特急大回行程目前無法載入，請稍後再試。"
     },
     {
-      "key": "grp.edit",
-      "country": "us",
-      "variantExists": false,
-      "value": "編輯選中列車"
-    },
-    {
       "key": "grp.dates",
       "country": "us",
       "variantExists": false,
@@ -29101,12 +27865,6 @@
       "value": "列車操作"
     },
     {
-      "key": "grp.data",
-      "country": "us",
-      "variantExists": false,
-      "value": "資料管理"
-    },
-    {
       "key": "grp.danger",
       "country": "us",
       "variantExists": false,
@@ -29123,12 +27881,6 @@
       "country": "us",
       "variantExists": false,
       "value": "統計"
-    },
-    {
-      "key": "sec.stats",
-      "country": "us",
-      "variantExists": false,
-      "value": "里程統計"
     },
     {
       "key": "stat.all",
@@ -29335,12 +28087,6 @@
       "value": "當日統計（{date}）"
     },
     {
-      "key": "stats.overallTitle",
-      "country": "us",
-      "variantExists": false,
-      "value": "全部統計"
-    },
-    {
       "key": "stats.coverageTitle",
       "country": "us",
       "variantExists": false,
@@ -29351,18 +28097,6 @@
       "country": "us",
       "variantExists": false,
       "value": "實際乘坐量"
-    },
-    {
-      "key": "stats.byLine",
-      "country": "us",
-      "variantExists": false,
-      "value": "分線明細"
-    },
-    {
-      "key": "stats.byCount",
-      "country": "us",
-      "variantExists": false,
-      "value": "依次數"
     },
     {
       "key": "stats.byLineCount",
@@ -29440,13 +28174,7 @@
       "key": "stats.hint",
       "country": "us",
       "variantExists": false,
-      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
-    },
-    {
-      "key": "sec.list",
-      "country": "us",
-      "variantExists": false,
-      "value": "列車清單"
+      "value": "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
     },
     {
       "key": "btn.addDate",
@@ -29569,12 +28297,6 @@
       "value": "顏色"
     },
     {
-      "key": "field.weight",
-      "country": "us",
-      "variantExists": false,
-      "value": "線寬"
-    },
-    {
       "key": "btn.saveFields",
       "country": "us",
       "variantExists": false,
@@ -29620,7 +28342,7 @@
       "key": "th.platform",
       "country": "us",
       "variantExists": false,
-      "value": "站台"
+      "value": "月台"
     },
     {
       "key": "th.arr",
@@ -29728,43 +28450,7 @@
       "key": "btn.clearStorage",
       "country": "us",
       "variantExists": false,
-      "value": "清除保存資料"
-    },
-    {
-      "key": "sec.legend",
-      "country": "us",
-      "variantExists": false,
-      "value": "圖例與資料來源"
-    },
-    {
-      "key": "legend.railway",
-      "country": "us",
-      "variantExists": false,
-      "value": "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-    },
-    {
-      "key": "legend.station",
-      "country": "us",
-      "variantExists": false,
-      "value": "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
-    },
-    {
-      "key": "legend.express",
-      "country": "us",
-      "variantExists": false,
-      "value": "特急路線：全色加粗（選中時墨色底襯）"
-    },
-    {
-      "key": "legend.source1",
-      "country": "us",
-      "variantExists": false,
-      "value": "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-    },
-    {
-      "key": "legend.source2",
-      "country": "us",
-      "variantExists": false,
-      "value": "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
+      "value": "清除儲存資料"
     },
     {
       "key": "info.button",
@@ -30196,7 +28882,7 @@
       "key": "src.serverStore",
       "country": "us",
       "variantExists": false,
-      "value": "伺服器保存的 train-store.json"
+      "value": "伺服器儲存的 train-store.json"
     },
     {
       "key": "src.builtinDefault",
@@ -30262,19 +28948,19 @@
       "key": "status.noSavedStore",
       "country": "us",
       "variantExists": false,
-      "value": "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+      "value": "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
     },
     {
       "key": "status.recoveryEntered",
       "country": "us",
       "variantExists": false,
-      "value": "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+      "value": "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
     },
     {
       "key": "status.recoveryNoSave",
       "country": "us",
       "variantExists": false,
-      "value": "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+      "value": "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
     },
     {
       "key": "status.serverClearedFallback",
@@ -30292,7 +28978,7 @@
       "key": "status.autosaveOk",
       "country": "us",
       "variantExists": false,
-      "value": "已自動保存到伺服器。"
+      "value": "已自動儲存到伺服器。"
     },
     {
       "key": "status.importBusy",
@@ -30304,7 +28990,7 @@
       "key": "status.autosaveFail",
       "country": "us",
       "variantExists": false,
-      "value": "自動保存到伺服器失敗：{msg}"
+      "value": "自動儲存到伺服器失敗：{msg}"
     },
     {
       "key": "err.pendingServerInvalid",
@@ -30316,7 +29002,7 @@
       "key": "err.pendingServerConflict",
       "country": "us",
       "variantExists": false,
-      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+      "value": "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
     },
     {
       "key": "err.pendingServerReplayFailed",
@@ -30388,7 +29074,7 @@
       "key": "status.savedTo",
       "country": "us",
       "variantExists": false,
-      "value": "已保存到 {name}。"
+      "value": "已儲存到 {name}。"
     },
     {
       "key": "status.imported",
@@ -30412,13 +29098,13 @@
       "key": "status.clearedAll",
       "country": "us",
       "variantExists": false,
-      "value": "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+      "value": "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
     },
     {
       "key": "status.clearFail",
       "country": "us",
       "variantExists": false,
-      "value": "清除保存資料失敗：{msg}"
+      "value": "清除儲存資料失敗：{msg}"
     },
     {
       "key": "confirm.deleteTrain",
@@ -30449,12 +29135,6 @@
       "country": "us",
       "variantExists": false,
       "value": "此處有多條重疊路線，請選擇列車："
-    },
-    {
-      "key": "chip.sample",
-      "country": "us",
-      "variantExists": false,
-      "value": "示例資料"
     },
     {
       "key": "sec.importPaste",
@@ -31522,7 +30202,7 @@
       "country": "tw",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "自強／区间／高铁"
+      "value": "自强／区间／高铁"
     },
     {
       "key": "stat.all",
@@ -31557,7 +30237,7 @@
       "country": "tw",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "對号列车"
+      "value": "对号列车"
     },
     {
       "key": "stat.metro",
@@ -32082,7 +30762,7 @@
       "country": "hk",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "普通／机場快綫"
+      "value": "普通／机场快线"
     },
     {
       "key": "stat.all",
@@ -33167,28 +31847,28 @@
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道列车管理"
+      "value": "韩国铁道列车管理"
     },
     {
       "key": "country",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国"
+      "value": "韩国"
     },
     {
       "key": "info.packageBody",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "使用 kr-2025 韓国铁道数据包。"
+      "value": "使用 kr-2025 韩国铁道数据包。"
     },
     {
       "key": "map.riddenJr",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "map.riddenPriv",
@@ -33202,21 +31882,21 @@
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "KTX／ITX／无窮花"
+      "value": "KTX／ITX／无穷花"
     },
     {
       "key": "stat.all",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "全韓"
+      "value": "全韩"
     },
     {
       "key": "stat.conv",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "stat.hsr",
@@ -33230,14 +31910,14 @@
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国铁道（一般铁道）"
+      "value": "韩国铁道（一般铁道）"
     },
     {
       "key": "stat.ltdexp",
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "優等列车"
+      "value": "优等列车"
     },
     {
       "key": "stat.metro",
@@ -33265,7 +31945,7 @@
       "country": "kr",
       "lang": "zh-Hans",
       "jsType": "string",
-      "value": "韓国"
+      "value": "韩国"
     },
     {
       "key": "country.label",

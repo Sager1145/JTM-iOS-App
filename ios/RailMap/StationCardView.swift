@@ -239,6 +239,15 @@ struct StationCardView: View {
 /// `railmap-popup.js` draws the operator's mark where there is one and a
 /// colour swatch where there is not — never both, and never a bare name.
 /// `OperatorBranding` decides which, through `StationDisplay.buildPopupModel`.
+///
+/// The one thing this does NOT port is the badge's BOX. The web rule
+/// (`.rp-line-logo`) is 16 points tall with a width derived from the artwork's
+/// own aspect ratio and capped at 48, which a browser renders happily and a
+/// list renders badly: an interchange lists a dozen railways, and a column of
+/// marks that are each a different width starts every row at a different
+/// optical weight. Every mark in this app is drawn in ``RouteLogoSquare``
+/// instead — the artwork keeps its ratio, the box never varies — which is what
+/// lets the names beside them share a left edge.
 private struct StationCardLineRow: View {
     var row: StationDisplay.PopupRow
 
@@ -251,31 +260,15 @@ private struct StationCardLineRow: View {
         .accessibilityElement(children: .combine)
     }
 
-    @ViewBuilder
+    /// No glyph in the fallback: the line's own name is spelled out directly
+    /// beside this square, so a tram symbol on every unbranded row would be a
+    /// second thing saying "railway" and nothing saying WHICH. The colour is
+    /// what distinguishes two lines the reader can already read.
     private var badge: some View {
-        if let image = OperatorBadge.image(row.logo) {
-            let ratio = image.size.height > 0 ? image.size.width / image.size.height : 1
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                // 16 points tall, aspect kept, never wider than 48 — the
-                // `.rp-line-logo` rule, which is what keeps a row of mixed
-                // badges reading as one column rather than as a ransom note.
-                .frame(width: min(48, 16 * ratio), height: 16)
-                .padding(row.logoNeedsDarkMatte ? 2 : 0)
-                .background {
-                    if row.logoNeedsDarkMatte {
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(Color(uiColor: OperatorBadge.matte))
-                    }
-                }
-                .frame(width: 52, alignment: .leading)
-        } else {
-            // `.rp-line-swatch`: 14 × 6, the line's own colour.
-            RoundedRectangle(cornerRadius: 2)
-                .fill(Color(hex: row.color) ?? Color(.systemGray))
-                .frame(width: 14, height: 6)
-                .frame(width: 52, alignment: .leading)
-        }
+        RouteLogoSquare(
+            path: row.logo,
+            color: Color(hex: row.color) ?? Color(.systemGray),
+            systemImage: nil,
+            side: 28)
     }
 }

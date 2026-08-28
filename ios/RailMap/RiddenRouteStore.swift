@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailPresentation
 
 /// Precomputed ridden geometry shipped by the main fork's progressive sample
 /// datasets. Each part contains one canonical train plus the exact route
@@ -34,35 +35,15 @@ final class RiddenRouteStore {
 
     /// What became of one journey's route, per journey rather than per store.
     ///
-    /// The store used to answer this with a single bit — a ride was in `rides`
-    /// or it was not — and that bit could not tell "drew everything" from
-    /// "drew four of six and dropped the rest". `solveMissing` appended a ride
-    /// `if !segments.isEmpty` and discarded every section that solved to
-    /// nothing, so a partly-solved journey was indistinguishable from a whole
-    /// one and the interface had nothing to warn anybody with.
-    ///
-    /// Nothing here ever invents geometry: `partial` and `unavailable` mean a
-    /// stretch of railway was **not drawn**, never that a straight line stood
-    /// in for it.
-    enum RouteOutcome: Sendable, Equatable {
-        /// Every section the journey asked for came back with geometry.
-        case resolved
-        /// Some did not. `unsolved` names them the way the reader wrote them,
-        /// so the interface can say which stretch is missing rather than that
-        /// something, somewhere, failed.
-        case partial(solved: Int, expected: Int, unsolved: [SectionGap])
-        /// Not one section solved. The record is untouched and still exports.
-        case unavailable(expected: Int)
-
-        var isResolved: Bool { self == .resolved }
-    }
+    /// The type itself is `RailPresentation.RouteOutcome`: deciding what a
+    /// route outcome MEANS for a surface is a rule, and a rule in the app
+    /// target is a rule with no test under it. These two spellings stay
+    /// because they are what six files already say, and because a route
+    /// outcome is still the store's to produce — only not its to interpret.
+    typealias RouteOutcome = RailPresentation.RouteOutcome
 
     /// One stretch that has no drawn railway, named by its own endpoints.
-    struct SectionGap: Sendable, Equatable {
-        let segmentIndex: Int
-        let from: String?
-        let to: String?
-    }
+    typealias SectionGap = RailPresentation.SectionGap
 
     struct DrawnRide: Identifiable, Sendable {
         let id: String

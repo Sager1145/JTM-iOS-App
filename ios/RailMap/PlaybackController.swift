@@ -129,7 +129,35 @@ final class PlaybackController {
     /// publish would cost more than the publish.
     @ObservationIgnored private var lastProgressPublish = -Double.infinity
     @ObservationIgnored private static let progressPublishInterval = 0.05
-    var speed = 1.0 { didSet { speed = Playback.clampSpeed(speed) } }
+    /// The playback rate, snapped to ``Playback/Tuning/speedStep`` and
+    /// clamped to its range.
+    ///
+    /// A computed property over its own storage, and deliberately NOT the
+    /// `didSet` that stood here — which crashed the app on the first touch of
+    /// the speed slider.
+    ///
+    /// `@Observable` rewrites a stored property into a computed one and moves
+    /// the observers onto the private `_speed` it generates behind it. So
+    /// `var speed = 1.0 { didSet { speed = clamp(speed) } }` expands to a
+    /// `didSet` on `_speed` whose body assigns to the COMPUTED `speed`, whose
+    /// setter assigns `_speed`, which runs the `didSet` again — unbounded
+    /// recursion ending in a stack overflow. Swift's re-entrancy rule for
+    /// observers cannot break it, because the two writes are to two different
+    /// properties; and the macro's `shouldNotifyObservers` short-circuit
+    /// writes the storage on its own path too, so an unchanged value recursed
+    /// as readily as a changed one. Every writer reached it: the slider, the
+    /// keyboard, ``setSpeed(_:)``.
+    ///
+    /// Clamping in the setter of a property that owns its storage keeps the
+    /// invariant with no observer at all, and keeps observation intact —
+    /// every read and write still goes through ``clampedSpeed``, which is the
+    /// property the macro tracks.
+    var speed: Double {
+        get { clampedSpeed }
+        set { clampedSpeed = Playback.clampSpeed(newValue) }
+    }
+
+    private var clampedSpeed = 1.0
     var autoFocus = true
 
     /// `restoreSelected` — the selection this run interrupted.
@@ -167,16 +195,72 @@ final class PlaybackController {
     /// the hold between two journeys, because a stop has to cancel both and a
     /// skip only the second.
     @ObservationIgnored private var cameraTask: Task<Void, Never>?
+    /// Whether ``cameraTask`` is currently the intro ease rather than the
+    /// opening overview or the closing panorama. `.armed` covers both "waiting
+    /// for the reader to press play" and "already flying onto the first
+    /// journey", and the two answer a second press differently.
+    @ObservationIgnored private var isIntroducing = false
+    /// Set when the reader pauses during the terminus beat, so the resume
+    /// moves to the next journey instead of restarting a clock on a journey
+    /// that is already over.
+    @ObservationIgnored private var pausedMidTransition = false
+    /// Where the camera was on the last frame drawn, so the next journey can
+    /// take the chase over from there — see ``beginCurrent(intro:)``.
+    @ObservationIgnored private var lastCameraCenter: Coordinate?
 
     var isActive: Bool { phase != .idle && phase != .ended }
     var isPlaying: Bool { phase == .playing }
     var canGoPrevious: Bool { queueIndex > 0 }
     var canGoNext: Bool { queueIndex + 1 < queueCount }
 
+    /// What a run over these journeys would cost, WITHOUT arming one.
+    ///
+    /// The export options sheet asks this while a run may already be playing,
+    /// and it used to ask it through ``prepare(trains:rides:reducedMotion:)`` —
+    /// which freezes the queue. Mid-run that replaced a queue of forty with the
+    /// one journey `playbackScope` narrows to while playing, without moving
+    /// `queueIndex`: `tick`'s `queue.indices.contains(queueIndex)` then failed
+    /// on every frame, so the clock kept running against nothing, the terminus
+    /// was never reached, and the transport sat frozen reading "6/1". Costing a
+    /// film is a question; it must not be an instruction.
+    func estimate(
+        trains: [Train], rides: [RiddenRouteStore.DrawnRide]
+    ) -> Playback.Plan {
+        Playback.plan(compiled: compile(trains: trains, rides: rides).compiled, speed: speed)
+    }
+
     func prepare(
         trains: [Train], rides: [RiddenRouteStore.DrawnRide], reducedMotion: Bool
     ) -> Playback.Plan {
-        let ridesByID = Dictionary(uniqueKeysWithValues: rides.map { ($0.id, $0) })
+        let built = compile(trains: trains, rides: rides)
+        let result = Playback.plan(compiled: built.compiled, speed: speed)
+        queue = built.entries
+        queueCount = built.entries.count
+        plan = result
+        self.reducedMotion = reducedMotion
+        return result
+    }
+
+    /// Every journey's path, and the queue of those that produced one.
+    ///
+    /// Pure: it reads the stores it is handed and writes nothing here, which is
+    /// what lets ``estimate(trains:rides:)`` and
+    /// ``prepare(trains:rides:reducedMotion:)`` share it without sharing the
+    /// second one's side effects.
+    private func compile(
+        trains: [Train], rides: [RiddenRouteStore.DrawnRide]
+    ) -> (compiled: [Playback.Path?], entries: [Entry]) {
+        // `uniquingKeysWith`, not `uniqueKeysWithValues`, and for the reason
+        // `RiddenRouteStore.load` and `RailNetworkStore` both give at their own
+        // id tables: a duplicate id is a data fault to draw, not a reason to
+        // trap. It is reachable — `DatasetPartIndex` maps one train id to a
+        // LIST of parts on purpose ("a dataset that ever carried two for the
+        // same id would have had both searched before"), and `datasetRides`
+        // builds a ride from each match without striking the train off
+        // `wanted`. Two matching parts therefore put two rides with one id in
+        // front of this line, and pressing 播放行程 was a crash.
+        let ridesByID = Dictionary(
+            rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         var compiled: [Playback.Path?] = []
         var entries: [Entry] = []
         for train in trains {
@@ -199,12 +283,7 @@ final class PlaybackController {
             compiled.append(path)
             if let path { entries.append(Entry(train: train, path: path)) }
         }
-        let result = Playback.plan(compiled: compiled, speed: speed)
-        queue = entries
-        queueCount = entries.count
-        plan = result
-        self.reducedMotion = reducedMotion
-        return result
+        return (compiled, entries)
     }
 
     /// Arm a run: freeze the queue and open on the whole of it.
@@ -261,11 +340,33 @@ final class PlaybackController {
 
     func togglePause() {
         switch phase {
+        case .armed where isIntroducing:
+            // The intro ease is already flying and the button still reads
+            // "play", so a second press is the reader saying the first one did
+            // nothing — which means give them the train NOW. It used to call
+            // `begin()`, whose `beginCurrent(intro:)` cancelled the flight and
+            // started the same 900 ms ease over again: a play button that
+            // replays its own preamble every time it is pressed.
+            cameraTask?.cancel()
+            cameraTask = nil
+            isIntroducing = false
+            runClock()
         case .armed:
             begin()
         case .playing:
             invalidateClock()
             phase = .paused
+        case .transitioning:
+            // The 200 ms beat at a terminus. Short, but the control is on
+            // screen and enabled throughout it, and a button that is enabled
+            // and does nothing is worse than a disabled one. Hold at the
+            // terminus the run just reached; the resume moves on.
+            transitionTask?.cancel()
+            pausedMidTransition = true
+            phase = .paused
+        case .paused where pausedMidTransition:
+            pausedMidTransition = false
+            advanceAfterTerminus()
         case .paused:
             playhead.startClock(atMilliseconds: CACurrentMediaTime() * 1000)
             phase = .playing
@@ -279,6 +380,7 @@ final class PlaybackController {
         guard canGoPrevious else { return }
         transitionTask?.cancel()
         cameraTask?.cancel()
+        pausedMidTransition = false
         queueIndex -= 1
         beginCurrent()
     }
@@ -290,6 +392,7 @@ final class PlaybackController {
         }
         transitionTask?.cancel()
         cameraTask?.cancel()
+        pausedMidTransition = false
         queueIndex += 1
         beginCurrent()
     }
@@ -298,6 +401,9 @@ final class PlaybackController {
         transitionTask?.cancel()
         cameraTask?.cancel()
         cameraTask = nil
+        isIntroducing = false
+        pausedMidTransition = false
+        lastCameraCenter = nil
         invalidateClock()
         mapRenderer?.renderPlayback(nil)
         queue = []
@@ -327,12 +433,13 @@ final class PlaybackController {
         guard queue.indices.contains(queueIndex) else { return }
         invalidateClock()
         cameraTask?.cancel()
+        isIntroducing = false
         let entry = queue[queueIndex]
         currentTrainID = entry.train.id
         title = title(of: entry)
         stationName = ""
         resetProgress(to: 0)
-        playhead = Playback.Playhead()
+        playhead = Playback.Playhead(camera: chase(handingOffTo: entry, intro: intro))
 
         guard intro, let start = entry.path.start, !reducedMotion else {
             runClock()
@@ -340,6 +447,7 @@ final class PlaybackController {
         }
         mapRenderer?.framePlayback(
             coordinates: [start], maxZoom: entry.path.zoom, animated: true)
+        isIntroducing = true
         cameraTask = Task { [weak self] in
             try? await Task.sleep(
                 for: .milliseconds(Int(Playback.Tuning.introMilliseconds)))
@@ -348,9 +456,42 @@ final class PlaybackController {
         }
     }
 
+    /// The camera state the next journey starts its chase from.
+    ///
+    /// `CameraChase.handOff` is the JavaScript's mid-queue move and the reason
+    /// ``Playback/catchUpZoom(center:head:target:shortSidePixels:)`` exists:
+    /// wherever the camera IS becomes the new offset, so the chase closes it
+    /// while the next train is already running — which is what draws the
+    /// pull-back-and-in arc "for free, with the next train already running
+    /// underneath it".
+    ///
+    /// It was defined in `RailCore` and called by nothing but the parity
+    /// tests. Every hand-off built a fresh `Playhead`, whose offsets are nil
+    /// and therefore read as zero on the first frame, so the camera was placed
+    /// on the new train outright: a hard cut where the port specifies an arc.
+    /// Carrying the previous ``Playback/CameraChase`` over keeps its zoom
+    /// track too, so the scale eases into the new journey's instead of
+    /// snapping to it.
+    ///
+    /// The first journey of a run is excluded on purpose. `intro` has just
+    /// flown the camera onto its starting frame and the clock waited for that
+    /// move to land, so there is nothing to close — an offset there would
+    /// drift away from the frame the reader was just shown. Reduced motion is
+    /// excluded for the same reason it makes `decay` zero: it asks for
+    /// placement, not travel.
+    private func chase(handingOffTo entry: Entry, intro: Bool) -> Playback.CameraChase {
+        guard !intro, !reducedMotion,
+              let from = lastCameraCenter, let start = entry.path.start
+        else { return Playback.CameraChase() }
+        var chase = playhead.camera
+        chase.handOff(cameraCenter: from, to: start)
+        return chase
+    }
+
     /// Start the clock on whatever `beginCurrent` set up.
     private func runClock() {
         guard queue.indices.contains(queueIndex) else { return }
+        isIntroducing = false
         playhead.startClock(atMilliseconds: CACurrentMediaTime() * 1000)
         phase = .playing
         startClock()
@@ -391,6 +532,9 @@ final class PlaybackController {
             shortSidePixels: max(shortSide, 1), reducedMotion: reducedMotion)
         let exact = min(max(frame.progress, 0), 1)
         exactProgress = exact
+        // Where the camera got to, for the next journey to take the chase over
+        // from. See `chase(handingOffTo:intro:)`.
+        if let center = frame.camera?.center { lastCameraCenter = center }
         publish(progress: exact, atSeconds: timestamp, force: frame.finished)
         if frame.stations.index >= 0, frame.stations.index < entry.path.stations.count {
             // Guarded, and it is not a micro-optimisation. `@Observable`'s
@@ -455,13 +599,20 @@ final class PlaybackController {
         transitionTask = Task { [weak self] in
             try? await Task.sleep(for: .milliseconds(
                 Int(Playback.Tuning.terminusHoldMilliseconds)))
-            guard !Task.isCancelled, let self else { return }
-            if self.canGoNext {
-                self.queueIndex += 1
-                self.beginCurrent()
-            } else {
-                self.finishQueue()
-            }
+            guard !Task.isCancelled else { return }
+            self?.advanceAfterTerminus()
+        }
+    }
+
+    /// What the terminus beat resolves to: the next journey, or the end of the
+    /// run. Named because ``togglePause()`` performs it too, when the reader
+    /// paused inside the beat and then resumed.
+    private func advanceAfterTerminus() {
+        if canGoNext {
+            queueIndex += 1
+            beginCurrent()
+        } else {
+            finishQueue()
         }
     }
 

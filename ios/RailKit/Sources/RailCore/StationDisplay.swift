@@ -201,7 +201,7 @@ public enum StationDisplay {
         /// (日豊線's 立石 pair is `日豊線-2-p1`), which is why the JavaScript's
         /// `/(?:-p?\d+)+$/` peels repeatedly; taking one suffix off leaves
         /// `日豊線-2`, a badge that was never drawn either.
-        static func badgeIDForLine(_ lineID: String) -> String {
+        public static func badgeIDForLine(_ lineID: String) -> String {
             var units = Array(lineID.utf16)
             while true {
                 var end = units.count

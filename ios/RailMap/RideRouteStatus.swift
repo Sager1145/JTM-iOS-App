@@ -3,78 +3,12 @@ import Observation
 import RailCore
 import RailPresentation
 
-/// §5.5's route resolution state, for **one** journey.
-///
-/// `RailPresentation.JourneyRouteState` is the same five states one tier down,
-/// and this bridges to it (``journeyRouteState``). It is not simply used
-/// instead, because the pure tier deliberately reduces a partial solve to a
-/// single `reason` string: its own documentation says `needsReview` "is not"
-/// derivable from what Slice 1 could observe, and that "Slice 3 owns adding it
-/// to the store".
-///
-/// That is what this type is. `RiddenRouteStore.RouteOutcome` now names the
-/// stretches that did not draw, and §8.4 requires the interface to say which
-/// ones ("失败时明确受影响区间"), so the gaps travel all the way to the screen
-/// rather than being flattened into "something failed".
-enum RideRouteStatus: Equatable {
-    /// Nothing has been asked yet — no solve has started (§5.5 `unknown`).
-    case unknown
-    /// A solve is running for this journey (§5.5 `resolving`).
-    case resolving
-    /// Every section came back with geometry (§5.5 `resolved`).
-    case resolved(sections: Int)
-    /// Some sections drew and some did not (§5.5 `needsReview`).
-    case needsReview(solved: Int, expected: Int, gaps: [RiddenRouteStore.SectionGap])
-    /// Sections were asked for and none drew (§5.5 `unavailable`).
-    ///
-    /// `reason` is a record value — a load failure the reader can act on —
-    /// never a catalog key. Nil means the ordinary case: the solver found no
-    /// path that fits the constraints, which the card explains in the
-    /// catalog's own words.
-    case unavailable(expected: Int, reason: String?)
-    /// The journey has no drawable section at all — no two adjacent stops are
-    /// marked ridden, so there is nothing for the solver to be asked.
-    ///
-    /// Kept apart from ``unavailable(expected:)`` because the recovery is
-    /// different: nothing failed, the reader has not said which stretch they
-    /// rode yet.
-    case noRoute
-
-    /// §8.4 / §5.6: starting playback or a video export over a route that is
-    /// not whole would be a claim the data does not support.
-    var blocksPlayback: Bool {
-        if case .resolved = self { return false }
-        return true
-    }
-
-    /// §7.5: a success state is not a permanent badge. Only these states are
-    /// worth taking space in a Hero for.
-    var isNoteworthy: Bool {
-        switch self {
-        case .resolved: false
-        default: true
-        }
-    }
-
-    /// The same state as the pure display tier spells it, so a surface already
-    /// rendering `JourneyPresentation` gets the richer answer for free.
-    ///
-    /// The gap list collapses into `reason` here — that is the shape §11.1
-    /// defines — and every caller that wants the sections themselves reads
-    /// this enum instead.
-    func journeyRouteState(reason: String = "") -> JourneyRouteState {
-        switch self {
-        case .unknown: .unknown
-        case .resolving: .resolving(completed: nil, total: nil)
-        case .resolved: .resolved
-        case .needsReview(let solved, let expected, _):
-            .needsReview(reason: reason.isEmpty ? "\(solved)/\(expected)" : reason)
-        case .unavailable(_, let failure):
-            .unavailable(reason: reason.isEmpty ? (failure ?? "") : reason)
-        case .noRoute: .unavailable(reason: reason)
-        }
-    }
-}
+// `RideRouteStatus` itself now lives in `RailPresentation`, next to the
+// `JourneyRouteState` it bridges to and the `RouteLoadPhase` it reads.
+// Deciding which of §5.5's five states a journey is in is a rule, and a
+// rule stated in the app target is a rule nothing runs: this file has no
+// test target under it. `RouteStatusResolver` is where those rules are
+// asserted; what stays here is the observable storage they read.
 
 /// What the editor and the journey detail need to know about the workspace
 /// they were never handed.
@@ -102,22 +36,11 @@ final class RideStatusCenter {
     static let shared = RideStatusCenter()
 
     /// `RiddenRouteStore.LoadState`, flattened — the same four cases
-    /// `RailPresentation.RouteLoadPhase` names.
-    enum Phase: Equatable {
-        case idle
-        case loading
-        case loaded
-        case failed(String)
-    }
+    /// `RailPresentation.RouteLoadPhase` names, which is now simply that type.
+    typealias Phase = RouteLoadPhase
 
     /// One journey's solved route, as the store left it.
-    ///
-    /// `Sendable` because the store builds these on the decode's own executor
-    /// and hands the finished table to the main actor in one assignment.
-    struct Entry: Equatable, Sendable {
-        var outcome: RiddenRouteStore.RouteOutcome
-        var drawnSegments: Int
-    }
+    typealias Entry = RouteStatusEntry
 
     private(set) var phase: Phase = .idle
     private(set) var entries: [String: Entry] = [:]
@@ -135,35 +58,12 @@ final class RideStatusCenter {
 
     // MARK: - Reading
 
+    /// §5.5's state for one journey. The rules are
+    /// ``RouteStatusResolver/status(id:resolvingIDs:entries:phase:)``'s, and
+    /// they are asserted there rather than here.
     func status(forTrainID id: String) -> RideRouteStatus {
-        if resolvingIDs.contains(id) { return .resolving }
-        guard let entry = entries[id] else {
-            switch phase {
-            case .idle: return .unknown
-            // Store-wide, so a journey nobody has reported on yet is still
-            // being worked on rather than known to have failed.
-            case .loading: return .resolving
-            case .loaded: return .noRoute
-            // §8.8: a route dataset that would not load is not evidence that
-            // this journey has nothing to draw, so it is not reported as
-            // such — it is a route that is unavailable, for a stated reason.
-            case .failed(let message): return .unavailable(expected: 0, reason: message)
-            }
-        }
-        switch entry.outcome {
-        case .resolved:
-            return .resolved(sections: max(entry.drawnSegments, 1))
-        case .partial(let solved, let expected, let unsolved):
-            return .needsReview(solved: solved, expected: expected, gaps: unsolved)
-        case .unavailable(let expected):
-            // `expected == 0` is the store's spelling for "this journey asked
-            // for nothing": `solveMissing` skips a train whose canonical
-            // section list is empty, and the publish below records the ones it
-            // skipped rather than leaving them indistinguishable from a
-            // journey it never saw.
-            return expected == 0
-                ? .noRoute : .unavailable(expected: expected, reason: nil)
-        }
+        RouteStatusResolver.status(
+            id: id, resolvingIDs: resolvingIDs, entries: entries, phase: phase)
     }
 
     // MARK: - Writing (stores only)

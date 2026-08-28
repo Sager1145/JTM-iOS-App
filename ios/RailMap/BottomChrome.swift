@@ -126,6 +126,54 @@ struct BottomChromeMetrics: Equatable {
     /// gains nothing for the loss.
     static let minimumCompact: CGFloat = 120
 
+    /// One line of the header's subtitle, at the reader's text size.
+    ///
+    /// Asked of the font rather than written down, for the reason
+    /// `PanelHeader`'s own note gives — a footnote line is 18 points at the
+    /// standard size and a constant that says 16 clips its descenders. It is
+    /// HERE rather than there because two things now need the same number: the
+    /// header reserving the slot, and the compact detent that has to be tall
+    /// enough to hold it when the subtitle stays for the whole drag (see
+    /// ``PanelHeader/pinsSubtitle``).
+    static var subtitleRow: CGFloat {
+        UIFont.preferredFont(forTextStyle: .footnote).lineHeight
+    }
+
+    /// How far the panel header's type may be shrunk before something else
+    /// has to give — the floor under the title and both subtitle rows.
+    ///
+    /// Half, and it is a floor rather than a target: the strings the header
+    /// carries fit at full size in every language the app ships, and the only
+    /// things that reach for it are an accessibility text size and a station
+    /// pair long enough to be its own sentence. What it buys is the rule that
+    /// nothing in this header ends in an ellipsis — a cut station name is not
+    /// a shorter answer to "which journey is this", it is a wrong one.
+    static let smallestLegibleScale: CGFloat = 0.5
+
+    /// The gap between a pinned subtitle and the title above it. Two points,
+    /// where the open header's is one: the collapsed title is smaller and its
+    /// line box is tighter, so the same nothing reads as a collision.
+    static let pinnedSubtitleGap: CGFloat = 2
+
+    /// Whether the panel header draws a subtitle at all in this window.
+    ///
+    /// One rule, two readers: ``PanelHeader`` uses it to decide whether to
+    /// draw, and the workspace uses it to decide whether the compact stop has
+    /// to be a line taller. Spelled once because the two disagreeing is a
+    /// clipped line at one stop and a gap at the other, with nothing on screen
+    /// saying which of the two is wrong.
+    ///
+    /// A landscape phone at an accessibility text size has 402 points in
+    /// total, and two wrapped lines of subtitle take eighty of them out of the
+    /// content below — where `RouteTimingView` states the same origin,
+    /// destination and times properly, as its own row. §6: every element earns
+    /// its place, and here the same sentence is already paid for once.
+    static func drawsSubtitle(
+        isAccessibilitySize: Bool, verticalSizeClass: UserInterfaceSizeClass?
+    ) -> Bool {
+        !(isAccessibilitySize && verticalSizeClass == .compact)
+    }
+
     var compact: CGFloat {
         let wanted = max(compactRow, Self.minimumCompact)
         // At an accessibility size there IS no medium stop (see `detents`), so
@@ -308,9 +356,7 @@ struct PanelHeader<Actions: View>: View {
     /// text is actually drawn in, the ramp's top IS the natural height, so
     /// there is nothing left to snap. `@Environment(\.dynamicTypeSize)` above
     /// is what re-reads this when the reader changes their text size.
-    private var subtitleLineHeight: CGFloat {
-        UIFont.preferredFont(forTextStyle: .footnote).lineHeight
-    }
+    private var subtitleLineHeight: CGFloat { BottomChromeMetrics.subtitleRow }
 
     /// How far below the collapsed card's top edge the reduced title row sits.
     ///
@@ -352,6 +398,34 @@ struct PanelHeader<Actions: View>: View {
     /// otherwise following the finger continuously.
     var compactTitle: String? = nil
     var subtitle: String?
+    /// A second subtitle row, drawn under the first.
+    ///
+    /// One caller and one reason: a selected journey says where it ran and
+    /// when, and those are two facts rather than one sentence. Joined on one
+    /// line they were long enough to need shrinking on a phone; stacked they
+    /// are not. Absent for every destination whose subtitle is a summary,
+    /// which is what keeps the ordinary header exactly as tall as it was.
+    var subtitleDetail: String? = nil
+    /// Whether the subtitle stays at the collapsed stop instead of being
+    /// scaled away with the rest of the morph.
+    ///
+    /// Off for a destination's own subtitle, which is a summary of a list that
+    /// is not on screen when the panel is docked — "231 journeys" over a map
+    /// is a fact about something the reader cannot see, and the collapsed stop
+    /// exists to give them the map.
+    ///
+    /// On when the header is naming ONE journey. There the subtitle is that
+    /// journey's stations and times, and those are the same order of fact as
+    /// the name above them: docked, this header is the only thing on screen
+    /// that says which line is drawn on the map and when it ran. It is also
+    /// the only place left to say it — the ride card, which states the pair
+    /// properly in `RouteTimingView`, is part of the content the collapsed
+    /// stop does not mount.
+    ///
+    /// The stop grows by ``BottomChromeMetrics/subtitleRow`` to hold it; the
+    /// workspace measures that, so this flag and `chromeMetrics` have to be
+    /// decided from the same condition.
+    var pinsSubtitle = false
     var stage: SheetStage
     var expansionProgress: CGFloat
     @ViewBuilder var actions: Actions
@@ -375,6 +449,45 @@ struct PanelHeader<Actions: View>: View {
         compact + (expanded - compact) * progress
     }
 
+    /// Where in the ramp the subtitle's line is fully reserved — and, because
+    /// it is the same number, where its text begins to arrive.
+    ///
+    /// The slot fills over the LOWER part of the drag and the type fades in
+    /// over the upper part, so the line is only ever drawn into a slot that
+    /// already holds it whole. That split is what replaced fitting the type to
+    /// the slot: a box that grows from nothing scales the text inside it from
+    /// nothing too, and `scale(0)` is not a reveal — the line does not settle
+    /// into place, it appears from having never existed. Squaring the opacity
+    /// was the previous answer to that, and it was treating the symptom: it
+    /// made the illegible phase dark rather than removing it.
+    ///
+    /// Splitting the two costs one kink in the header's height curve at this
+    /// value and nothing else: the reserved height is still continuous, still
+    /// monotonic and still attached to the finger at every point.
+    ///
+    /// Computed rather than stored: `PanelHeader` is generic over its actions,
+    /// and a generic type may not hold a static stored property.
+    private static var subtitleSlotFilled: CGFloat { 0.6 }
+
+    /// How much of the subtitle's line the header currently reserves.
+    private var subtitleSlot: CGFloat {
+        min(progress / Self.subtitleSlotFilled, 1)
+    }
+
+    /// How far into its arrival the subtitle's text is.
+    ///
+    /// Driven by the LIVE height, like ``titleHandoffProgress`` and for the
+    /// same reason: what is left of this reveal is an opacity cross-fade,
+    /// which is the Reduce Motion-safe form of a replacement, so it may keep
+    /// following the finger where the spatial typography morph is reduced to
+    /// its two named ends.
+    private var subtitleReveal: CGFloat {
+        let live = min(max(expansionProgress, 0), 1)
+        let start = Self.subtitleSlotFilled
+        guard live > start else { return 0 }
+        return (live - start) / (1 - start)
+    }
+
     private var hasDistinctCompactTitle: Bool {
         compactTitle.map { $0 != title } ?? false
     }
@@ -382,6 +495,16 @@ struct PanelHeader<Actions: View>: View {
     /// How many lines the subtitle is allowed, and therefore how much height
     /// the header reserves for it.
     private var subtitleLines: Int { dynamicTypeSize.isAccessibilitySize ? 2 : 1 }
+
+    /// How many ROWS the subtitle slot holds — one for a destination's
+    /// summary, two for a journey's stations and its times.
+    ///
+    /// A count rather than a longer string, because the two rows are two
+    /// facts. `RailWorkspaceView.compactHeaderRows` reserves the same number
+    /// at the collapsed stop, where they are pinned.
+    private var subtitleRows: CGFloat {
+        (subtitleDetail?.isEmpty == false) ? 2 : 1
+    }
 
     /// The title's size at the two open stops.
     ///
@@ -425,18 +548,13 @@ struct PanelHeader<Actions: View>: View {
         dynamicTypeSize.isAccessibilitySize && verticalSizeClass != .compact ? 2 : 1
     }
 
-    /// Whether the subtitle is drawn at all.
-    ///
-    /// It is L2 metadata (§3.1) and it is worth its line almost everywhere.
-    /// In one window it is not: a landscape phone at an accessibility text
-    /// size has 402 points in total, and two wrapped lines of subtitle take
-    /// eighty of them out of the scrolling content below — where
-    /// `RouteTimingView` states the same origin, destination and times
-    /// properly, as its own row, two rows further down. §6's rule is that
-    /// every element earns its place; here the same sentence is already paid
-    /// for once.
+    /// Whether the subtitle is drawn at all — see
+    /// ``BottomChromeMetrics/drawsSubtitle(isAccessibilitySize:verticalSizeClass:)``,
+    /// which the compact detent is measured against as well.
     private var showsSubtitle: Bool {
-        !(dynamicTypeSize.isAccessibilitySize && verticalSizeClass == .compact)
+        BottomChromeMetrics.drawsSubtitle(
+            isAccessibilitySize: dynamicTypeSize.isAccessibilitySize,
+            verticalSizeClass: verticalSizeClass)
     }
 
     /// Large accessibility text needs the full panel width for both the title
@@ -490,7 +608,10 @@ struct PanelHeader<Actions: View>: View {
     }
 
     private var titleBlock: some View {
-        VStack(alignment: .leading, spacing: interpolated(0, 1)) {
+        VStack(
+            alignment: .leading,
+            spacing: interpolated(pinsSubtitle ? BottomChromeMetrics.pinnedSubtitleGap : 0, 1)
+        ) {
             ZStack(alignment: .topLeading) {
                 titleLabel(compactTitle ?? title)
                     .opacity(hasDistinctCompactTitle ? 1 - titleHandoffProgress : 1)
@@ -527,36 +648,77 @@ struct PanelHeader<Actions: View>: View {
                 // title-bar height and centre line everywhere without drawing
                 // placeholder text.
                 //
-                // When text exists, scaling the type by the same ramp that
-                // grows this slot makes it fill the available height at every
-                // point: no overflow, no cutoff and no frame where descenders
-                // suddenly appear.
+                // When text exists it is drawn at its own size throughout —
+                // the slot is finished growing before the first frame the
+                // type is visible in — so there is no overflow, no cutoff and
+                // no frame where descenders suddenly appear.
                 let line = subtitleLineHeight * CGFloat(subtitleLines)
+                // How much of that slot is open, and how far the text inside
+                // it has arrived. Two ramps rather than one: the slot leads,
+                // the type follows, and the second never starts before the
+                // first has finished (see ``subtitleSlotFilled``).
+                //
+                // Pinned, the subtitle is not part of the morph at all — it is
+                // drawn at its own size from the collapsed stop upward,
+                // because at that stop it is the only statement of the
+                // journey's stations and times on screen, and the stop was
+                // measured to include the row it takes. The ramps are what the
+                // OTHER destinations' subtitles ride.
+                let slot = pinsSubtitle ? 1 : subtitleSlot
+                let arrived = pinsSubtitle ? 1 : subtitleReveal
                 ZStack(alignment: .topLeading) {
-                    if let subtitle, !subtitle.isEmpty {
-                        Text(subtitle)
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(subtitleLines)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .scaleEffect(progress, anchor: .topLeading)
-                            // Squared, so the line is legible before it is visible.
-                            //
-                            // The scale above is what stops the reveal cutting glyphs,
-                            // and it costs a phase at the bottom of the ramp where the
-                            // subtitle is drawn at four points — a size that carries no
-                            // reading at all and, at a linear third of full strength,
-                            // shows up as the smudge under the title that §14.1 names.
-                            // A square is dark where the type is too small to read and
-                            // catches up as it grows: a fifth of a second's fade rather
-                            // than a stripe of grey following the finger.
-                            .opacity(progress * progress)
-                            .accessibilityHidden(progress < 0.5)
+                    VStack(alignment: .leading, spacing: 0) {
+                        if let subtitle, !subtitle.isEmpty {
+                            subtitleLabel(subtitle)
+                        }
+                        if let subtitleDetail, !subtitleDetail.isEmpty {
+                            subtitleLabel(subtitleDetail)
+                        }
                     }
+                    // Drawn at its own size from the first frame it is drawn
+                    // at all, so there is no phase where this is type too small
+                    // to carry a reading: the slot has already reserved its
+                    // rows by the time the arrival leaves zero, which is what
+                    // lets the reveal be opacity instead of a fit. Nothing is
+                    // clipped and nothing overflows, which is what the old
+                    // scale was buying at the price of starting from nothing.
+                    //
+                    // The three per cent of scale left is the one the rest of
+                    // the app's arrivals use
+                    // (``RailMotion/anchoredTransition``), and it is dropped
+                    // under Reduce Motion rather than merely shortened — §9.4
+                    // asks for less scaling, not for faster scaling.
+                    .scaleEffect(
+                        reduceMotion
+                            ? 1
+                            : RailMotion.arrivalScale
+                                + (1 - RailMotion.arrivalScale) * arrived,
+                        anchor: .topLeading)
+                    .opacity(arrived)
+                    .accessibilityHidden(arrived < 0.5)
                 }
-                .frame(height: line * progress, alignment: .topLeading)
+                .frame(height: line * subtitleRows * slot, alignment: .topLeading)
             }
         }
+    }
+
+    /// One row of the subtitle.
+    ///
+    /// **No ellipsis, at any size.** A cut station name is not a shorter
+    /// answer to "which journey is this", it is a wrong one — 「北小金 → 我孫
+    /// 子」 truncated to 「北小金 → 我…」 names one end of a journey and hints
+    /// at the other. So the row shrinks instead, all the way to half size if
+    /// the reader's text size and the panel's width ask for it, and the header
+    /// reserves its height from the FONT rather than from the drawn glyphs, so
+    /// a shrunk row still sits on the line the stop was measured for.
+    private func subtitleLabel(_ value: String) -> some View {
+        Text(value)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .lineLimit(subtitleLines)
+            .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func titleLabel(_ value: String) -> some View {
@@ -572,7 +734,12 @@ struct PanelHeader<Actions: View>: View {
             // not let SwiftUI add a second implicit content cross-fade.
             .contentTransition(.identity)
             .lineLimit(titleLines)
-            .minimumScaleFactor(interpolated(0.72, 0.6))
+            // Down to half rather than to 72 %: nothing in this header may
+            // end in an ellipsis (see ``subtitleLabel(_:)``), and the title is
+            // the one row that can be handed a name long enough to need the
+            // room — a 特急's own name and its number, at an accessibility
+            // text size, on a phone.
+            .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
             .fixedSize(horizontal: false, vertical: true)
     }
 

@@ -106,7 +106,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国铁道列车管理"
+            "value" : "韩国铁道列车管理"
           }
         },
         "zh-Hant" : {
@@ -390,7 +390,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "読み込み／順次インポートを開始"
+            "value" : "一括／順次の読み込みを開始"
           }
         },
         "zh-Hans" : {
@@ -489,7 +489,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "清除保存資料"
+            "value" : "清除儲存資料"
           }
         }
       }
@@ -715,7 +715,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "適配完整路网"
+            "value" : "适配完整路网"
           }
         },
         "zh-Hant" : {
@@ -744,13 +744,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐藏完整铁路网絡"
+            "value" : "隐藏完整铁路网"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隱藏完整鐵路網絡"
+            "value" : "隱藏完整鐵路網"
           }
         }
       }
@@ -860,7 +860,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "加载韓国示例数据"
+            "value" : "加载韩国示例数据"
           }
         },
         "zh-Hant" : {
@@ -1214,7 +1214,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存為我的資料"
+            "value" : "儲存為我的資料"
           }
         }
       }
@@ -1272,7 +1272,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存／另存 JSON"
+            "value" : "儲存／另存 JSON"
           }
         }
       }
@@ -1295,13 +1295,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示完整铁路网絡"
+            "value" : "显示完整铁路网"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "顯示完整鐵路網絡"
+            "value" : "顯示完整鐵路網"
           }
         }
       }
@@ -1360,35 +1360,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "驗證匯入 JSON"
-          }
-        }
-      }
-    },
-    "chip.sample" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sample data"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サンプルデータ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "示例数据"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "示例資料"
           }
         }
       }
@@ -1469,13 +1440,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定清除此浏览器保存的数据？此操作无法复原。"
+            "value" : "确定清除此浏览器保存的数据？此操作无法撤销。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "確定清除此瀏覽器保存的資料？此操作無法復原。"
+            "value" : "確定清除此瀏覽器儲存的資料？此操作無法復原。"
           }
         }
       }
@@ -1556,7 +1527,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定删除 {date} 的「{number}」（{stops} 个停靠站）？此操作无法复原。"
+            "value" : "确定删除 {date} 的「{number}」（{stops} 个停靠站）？此操作无法撤销。"
           }
         },
         "zh-Hant" : {
@@ -1591,7 +1562,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並保存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不保存）。"
+            "value" : "目前顯示的是示例資料。按「確定」：清除示例、只匯入你的 JSON，並儲存為我的資料；按「取消」：把 JSON 暫時疊加到示例上（不儲存）。"
           }
         }
       }
@@ -1620,7 +1591,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+            "value" : "載入跨年大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
           }
         }
       }
@@ -1649,7 +1620,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "載入全部示例資料？目前畫面上的內容會被示例取代（你保存的資料不受影響，可隨時恢復）。"
+            "value" : "載入全部示例資料？目前畫面上的內容會被示例取代（你儲存的資料不受影響，可隨時恢復）。"
           }
         }
       }
@@ -1678,7 +1649,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你保存的資料不受影響，可隨時恢復）。"
+            "value" : "載入東京特急大回行程？目前畫面上的內容會被這套獨立行程取代（你儲存的資料不受影響，可隨時恢復）。"
           }
         }
       }
@@ -1701,13 +1672,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注意：你已有保存的数据。把当前画面内容保存为我的数据会覆盖原有保存，且无法复原。确定？"
+            "value" : "注意：你已有保存的数据。把当前画面内容保存为我的数据会覆盖原有保存，且无法撤销。确定？"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "注意：你已有保存的資料。把目前畫面內容保存為我的資料會覆蓋原有保存，且無法復原。確定？"
+            "value" : "注意：你已有儲存的資料。把目前畫面內容儲存為我的資料會覆蓋原有儲存，且無法復原。確定？"
           }
         }
       }
@@ -1730,13 +1701,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置为内置示例数据？当前的全部列车与未保存更改都会被取代，且无法复原。"
+            "value" : "重置为内置示例数据？当前的全部列车与未保存更改都会被取代，且无法撤销。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置為內建示例資料？目前的全部列車與未保存更改都會被取代，且無法復原。"
+            "value" : "重置為內建示例資料？目前的全部列車與未儲存更改都會被取代，且無法復原。"
           }
         }
       }
@@ -1765,7 +1736,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢復我的資料？目前顯示的示例（包含未保存的更改）會被捨棄。"
+            "value" : "恢復我的資料？目前顯示的示例（包含未儲存的更改）會被捨棄。"
           }
         }
       }
@@ -1794,7 +1765,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "把目前畫面上的內容保存為我的資料？之後的編輯會自動保存在此瀏覽器。"
+            "value" : "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
           }
         }
       }
@@ -1875,7 +1846,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国"
+            "value" : "韩国"
           }
         },
         "zh-Hant" : {
@@ -2049,7 +2020,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "進階显示参数"
+            "value" : "高级显示参数"
           }
         },
         "zh-Hant" : {
@@ -2223,7 +2194,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "参数已修改，尚未生效——点擊「重建拟合曲线」应用。"
+            "value" : "参数已修改，尚未生效——点击「重建拟合曲线」应用。"
           }
         },
         "zh-Hant" : {
@@ -2623,7 +2594,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "初期設定に戻す"
+            "value" : "既定に戻す"
           }
         },
         "zh-Hans" : {
@@ -3000,7 +2971,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。エクスポート欄からリカバリーコピーを保存または統合してください。"
+            "value" : "未送信の編集がありますが、その後サーバーが別のソースから更新されました。上書きを避けるため自動再送していません。書き出し欄からリカバリーコピーを保存または統合してください。"
           }
         },
         "zh-Hans" : {
@@ -3012,7 +2983,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框保存或合併此恢復副本。"
+            "value" : "瀏覽器中有未送達的編輯，但伺服器資料之後已被其他來源更改。為避免覆蓋，未自動重送；請從匯出框儲存或合併此恢復副本。"
           }
         }
       }
@@ -3029,7 +3000,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブラウザー内の未送信リカバリーコピーが無効です：{msg}"
+            "value" : "ブラウザ内の未送信リカバリーコピーが無効です：{msg}"
           }
         },
         "zh-Hans" : {
@@ -3058,7 +3029,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブラウザー内の未送信編集を再送できませんでした：{msg}"
+            "value" : "ブラウザ内の未送信編集を再送できませんでした：{msg}"
           }
         },
         "zh-Hans" : {
@@ -3307,35 +3278,6 @@
         }
       }
     },
-    "field.weight" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Line Width"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "線幅"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "线宽"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "線寬"
-          }
-        }
-      }
-    },
     "fmt.duration" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3423,35 +3365,6 @@
         }
       }
     },
-    "grp.data" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data Management"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "データ管理"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "数据管理"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "資料管理"
-          }
-        }
-      }
-    },
     "grp.dates" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3481,35 +3394,6 @@
         }
       }
     },
-    "grp.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Selected Train"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "選択中の列車を編集"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑选中列车"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "編輯選中列車"
-          }
-        }
-      }
-    },
     "grp.journeyLog" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3528,13 +3412,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旅程记录"
+            "value" : "行程记录"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旅程記錄"
+            "value" : "行程記錄"
           }
         }
       }
@@ -3673,7 +3557,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这些操作会影响全部数据，无法复原，请小心使用。"
+            "value" : "这些操作会影响全部数据，无法撤销，请小心使用。"
           }
         },
         "zh-Hant" : {
@@ -3708,7 +3592,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "示例資料僅供瀏覽，任何更改都不會保存；你的資料保存在此瀏覽器中，編輯時自動保存。"
+            "value" : "示例資料僅供瀏覽，任何更改都不會儲存；你的資料儲存在此瀏覽器中，編輯時自動儲存。"
           }
         }
       }
@@ -3992,7 +3876,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "站点识别、座标与站间距离取自国土交通部、国家铁道公團、韓国铁道公社与首爾交通公社的公开数据；轨道中心线取自 OpenStreetMap（ODbL）。"
+            "value" : "站点识别、坐标与站间距离取自国土交通部、国家铁道公团、韩国铁道公社与首尔交通公社的公开数据；轨道中心线取自 OpenStreetMap（ODbL）。"
           }
         },
         "zh-Hant" : {
@@ -4021,7 +3905,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国铁道网"
+            "value" : "韩国铁道网"
           }
         },
         "zh-Hant" : {
@@ -4079,7 +3963,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "依澳门轻轨股份有限公司官方現行路线与车站数据加工制作。"
+            "value" : "依澳门轻轨股份有限公司官方现行路线与车站数据加工制作。"
           }
         },
         "zh-Hant" : {
@@ -4369,7 +4253,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用 kr-2025 韓国铁道数据包。"
+            "value" : "使用 kr-2025 韩国铁道数据包。"
           }
         },
         "zh-Hant" : {
@@ -4717,7 +4601,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停駛区间"
+            "value" : "停驶区间"
           }
         },
         "zh-Hant" : {
@@ -5014,151 +4898,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "語言"
-          }
-        }
-      }
-    },
-    "legend.express" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limited express routes: full color, thicker (ink casing when selected)"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列車経路：指定色の太線（選択中は墨色の下線）"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "特急路线：全色加粗（选中时墨色底衬）"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "特急路線：全色加粗（選中時墨色底襯）"
-          }
-        }
-      }
-    },
-    "legend.railway" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All railway lines (switch, off by default): official line colors (faded) + grey station dots"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全路線（初期状態はオフ）：路線ごとの公式色（淡色）＋灰色の駅マーカー"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部线路（开关默认关闭）：各线路官方色（淡）＋灰色车站点"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部線路（開關預設關閉）：各線路官方色（淡）＋灰色車站點"
-          }
-        }
-      }
-    },
-    "legend.source1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Railway data: created from \"National Land Numerical Information (Railway Data N02)\" (MLIT Japan), CC BY 4.0."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鉄道路線データ：国土交通省『国土数値情報（鉄道データ N02）』を加工して作成（CC BY 4.0）。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "铁路线数据：根据日本国土交通省“国土数值信息（铁路数据 N02）”加工制作（CC BY 4.0）。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鐵路線資料：「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成（CC BY 4.0）。"
-          }
-        }
-      }
-    },
-    "legend.source2" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark). Romanizations © OpenStreetMap contributors, ODbL. Rail package © railprint (jp-2025)."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "背景地図 © OpenStreetMap contributors｜OpenFreeMap。ローマ字表記 © OpenStreetMap contributors, ODbL。鉄道データパッケージ © railprint (jp-2025)。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Basemap © OpenStreetMap contributors｜OpenFreeMap (Positron / Dark)。Romanizations © OpenStreetMap contributors, ODbL。Rail package © railprint (jp-2025)。"
-          }
-        }
-      }
-    },
-    "legend.station" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intermediate stops: outlined circles with black centers; pass-throughs: same-size outlined circles; endpoints: large ink dots"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "途中停車駅：黒い中心点付きの中空円、通過駅：同じ大きさの中空円、始終点：大きな墨色の点"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中途停靠站：空心圆加黑色中心点；通过站：同尺寸空心圆；起终点：墨色大圆点"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中途停靠站：空心圓加黑色中心點；通過站：同尺寸空心圓；起終點：墨色大圓點"
           }
         }
       }
@@ -5587,7 +5326,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国铁道（一般铁道）"
+            "value" : "韩国铁道（一般铁道）"
           }
         },
         "zh-Hant" : {
@@ -5917,35 +5656,6 @@
         }
       }
     },
-    "menu.expand" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expand menu"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "メニューを展開"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "展开选单"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "展開選單"
-          }
-        }
-      }
-    },
     "menu.hide" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5964,42 +5674,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐藏选单"
+            "value" : "隐藏菜单"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "隱藏選單"
-          }
-        }
-      }
-    },
-    "menu.minimize" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimize menu"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "メニューを縮小"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "縮小选单"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "縮小選單"
           }
         }
       }
@@ -6051,7 +5732,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示选单"
+            "value" : "显示菜单"
           }
         },
         "zh-Hant" : {
@@ -6144,7 +5825,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示：跨年大回行程（更改不會保存）"
+            "value" : "目前顯示：跨年大回行程（更改不會儲存）"
           }
         }
       }
@@ -6173,7 +5854,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示：全部示例資料（更改不會保存）"
+            "value" : "目前顯示：全部示例資料（更改不會儲存）"
           }
         }
       }
@@ -6202,7 +5883,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示：示例資料 {date}（更改不會保存）"
+            "value" : "目前顯示：示例資料 {date}（更改不會儲存）"
           }
         }
       }
@@ -6231,7 +5912,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示：東京特急大回行程（更改不會保存）"
+            "value" : "目前顯示：東京特急大回行程（更改不會儲存）"
           }
         }
       }
@@ -6260,36 +5941,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前顯示：我的資料（自動保存在此瀏覽器）"
-          }
-        }
-      }
-    },
-    "nav.about" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "情報"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "说明"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "說明"
+            "value" : "目前顯示：我的資料（自動儲存在此瀏覽器）"
           }
         }
       }
@@ -6370,71 +6022,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据庫"
+            "value" : "数据库"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "資料庫"
-          }
-        }
-      }
-    },
-    "nav.display" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Display"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "表示"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "顯示"
-          }
-        }
-      }
-    },
-    "nav.editor" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "編集"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "編輯"
           }
         }
       }
@@ -6457,13 +6051,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旅程"
+            "value" : "行程"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "旅程"
+            "value" : "行程"
           }
         }
       }
@@ -6515,13 +6109,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "铁路网絡"
+            "value" : "铁路网"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "鐵路網絡"
+            "value" : "鐵路網"
           }
         }
       }
@@ -6544,7 +6138,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "乘车護照"
+            "value" : "乘车护照"
           }
         },
         "zh-Hant" : {
@@ -6613,35 +6207,6 @@
         }
       }
     },
-    "nav.trains" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trains"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列車"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列车"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列車"
-          }
-        }
-      }
-    },
     "nav.upcoming" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -6706,7 +6271,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Line colours, station dots and zoom tiers are controlled by the map layers and Settings."
+            "value" : "Line colors, station dots and zoom tiers are controlled by the map layers and Settings."
           }
         },
         "ja" : {
@@ -6718,7 +6283,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "路线颜色、车站圆点与縮放分級由地图图层与显示设置控制。"
+            "value" : "路线颜色、车站圆点与缩放分级由地图图层与显示设置控制。"
           }
         },
         "zh-Hant" : {
@@ -6834,13 +6399,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "完整铁路网絡当前关闭；已乘路线仍然显示。"
+            "value" : "完整铁路网当前关闭；已乘路线仍然显示。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "完整鐵路網絡目前關閉；已乘路線仍然顯示。"
+            "value" : "完整鐵路網目前關閉；已乘路線仍然顯示。"
           }
         }
       }
@@ -6950,7 +6515,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "滿屏"
+            "value" : "满屏"
           }
         },
         "zh-Hant" : {
@@ -7025,7 +6590,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The emphasised lines on the map are the recorded ride segments."
+            "value" : "The emphasized lines on the map are the recorded ride segments."
           }
         },
         "ja" : {
@@ -7066,13 +6631,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此范围内没有旅程记录。"
+            "value" : "此范围内没有行程记录。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此範圍內沒有旅程記錄。"
+            "value" : "此範圍內沒有行程記錄。"
           }
         }
       }
@@ -7182,7 +6747,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "粘贴完整 store：{\"schema_version\":\"1.3\",\"trains\":[...]}，也可粘贴列车阵列或单一列车对象"
+            "value" : "粘贴完整 store：{\"schema_version\":\"1.3\",\"trains\":[...]}，也可粘贴列车数组或单一列车对象"
           }
         },
         "zh-Hant" : {
@@ -7269,7 +6834,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "普通／机場快綫"
+            "value" : "普通／机场快线"
           }
         },
         "zh-Hant" : {
@@ -7298,7 +6863,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KTX／ITX／无窮花"
+            "value" : "KTX／ITX／无穷花"
           }
         },
         "zh-Hant" : {
@@ -7356,7 +6921,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自強／区间／高铁"
+            "value" : "自强／区间／高铁"
           }
         },
         "zh-Hant" : {
@@ -7443,7 +7008,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "播放完畢"
+            "value" : "播放完毕"
           }
         },
         "zh-Hant" : {
@@ -8052,7 +7617,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "站点群組"
+            "value" : "站点群组"
           }
         },
         "zh-Hant" : {
@@ -8498,64 +8063,6 @@
         }
       }
     },
-    "sec.legend" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Legend & Data Sources"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "凡例とデータ出典"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图例与数据来源"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "圖例與資料來源"
-          }
-        }
-      }
-    },
-    "sec.list" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Train List"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列車一覧"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列车清单"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "列車清單"
-          }
-        }
-      }
-    },
     "sec.rawPreview" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8610,35 +8117,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜尋與操作"
-          }
-        }
-      }
-    },
-    "sec.stats" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mileage Stats"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "走行距離統計"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "里程统计"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "里程統計"
           }
         }
       }
@@ -8887,7 +8365,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ブラウザー内の未送信リカバリーコピー"
+            "value" : "ブラウザ内の未送信リカバリーコピー"
           }
         },
         "zh-Hans" : {
@@ -9015,7 +8493,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "伺服器保存的 train-store.json"
+            "value" : "伺服器儲存的 train-store.json"
           }
         }
       }
@@ -9073,7 +8551,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我的資料（此瀏覽器保存）"
+            "value" : "我的資料（此瀏覽器儲存）"
           }
         }
       }
@@ -9154,7 +8632,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全韓"
+            "value" : "全韩"
           }
         },
         "zh-Hant" : {
@@ -9299,7 +8777,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国铁道（一般铁道）"
+            "value" : "韩国铁道（一般铁道）"
           }
         },
         "zh-Hant" : {
@@ -9502,7 +8980,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "韓国铁道（一般铁道）"
+            "value" : "韩国铁道（一般铁道）"
           }
         },
         "zh-Hant" : {
@@ -9589,7 +9067,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "優等列车"
+            "value" : "优等列车"
           }
         },
         "zh-Hant" : {
@@ -9618,7 +9096,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "對号列车"
+            "value" : "对号列车"
           }
         },
         "zh-Hant" : {
@@ -10267,35 +9745,6 @@
         }
       }
     },
-    "stats.byCount" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "By ride count"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "回数順"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "依次数"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "依次數"
-          }
-        }
-      }
-    },
     "stats.byCountCount" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -10321,35 +9770,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "依次數（{count}）"
-          }
-        }
-      }
-    },
-    "stats.byLine" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "By line"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "路線別"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "分线明细"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "分線明細"
           }
         }
       }
@@ -10494,7 +9914,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自国土数値情報 N02-25 全路網。"
+            "value" : "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
           }
         }
       }
@@ -10524,35 +9944,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在載入路網資料…"
-          }
-        }
-      }
-    },
-    "stats.overallTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All-Time Total"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全期間の統計"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部统计"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部統計"
           }
         }
       }
@@ -10714,19 +10105,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON をエクスポートしてから再読み込みしてください。"
+            "value" : "未保存：別のタブが {date} のデータを変更しました。新しい保存データを上書きしないよう、このタブの JSON を書き出してから再読み込みしてください。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未保存：另一个分页已更改 {date} 的数据。请先导出此分页的 JSON，再重新加载以免覆盖较新的数据。"
+            "value" : "未保存：另一个标签页已更改 {date} 的数据。请先导出此标签页的 JSON，再重新加载以免覆盖较新的数据。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未保存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
+            "value" : "未儲存：另一個分頁已更改 {date} 的資料。請先匯出此分頁的 JSON，再重新載入以免覆蓋較新的資料。"
           }
         }
       }
@@ -10755,7 +10146,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動保存到伺服器失敗：{msg}"
+            "value" : "自動儲存到伺服器失敗：{msg}"
           }
         }
       }
@@ -10784,7 +10175,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已自動保存到此瀏覽器。"
+            "value" : "已自動儲存到此瀏覽器。"
           }
         }
       }
@@ -10813,7 +10204,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已自動保存到伺服器。"
+            "value" : "已自動儲存到伺服器。"
           }
         }
       }
@@ -10842,7 +10233,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "清除保存資料失敗：{msg}"
+            "value" : "清除儲存資料失敗：{msg}"
           }
         }
       }
@@ -10871,7 +10262,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已清除保存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
+            "value" : "已清除儲存的資料與本地檔案授權。下次開啟時會重新載入示例／預設資料。"
           }
         }
       }
@@ -11091,7 +10482,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "{count} 本をインポートしました：{ids}"
+            "value" : "{count} 本を読み込みました：{ids}"
           }
         },
         "zh-Hans" : {
@@ -11219,7 +10610,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會保存。"
+            "value" : "已載入跨年大回行程（{count} 趟列車）。此行程與一般示例分開，僅供瀏覽，更改不會儲存。"
           }
         }
       }
@@ -11265,7 +10656,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このブラウザーはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。"
+            "value" : "このブラウザはローカルファイルへの直接書き込みに対応していないため、JSON をダウンロードしました。"
           }
         },
         "zh-Hans" : {
@@ -11306,7 +10697,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "尚未有保存的 train-store.json，已載入內建預設資料。編輯後會自動保存到伺服器。"
+            "value" : "尚未有儲存的 train-store.json，已載入內建預設資料。編輯後會自動儲存到伺服器。"
           }
         }
       }
@@ -11335,7 +10726,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此瀏覽器中沒有已保存的資料。"
+            "value" : "此瀏覽器中沒有已儲存的資料。"
           }
         }
       }
@@ -11352,19 +10743,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON エクスポート」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。"
+            "value" : "保存データの読み込みに失敗しました：{msg}。読み取り専用の復旧モードに切り替えました：自動保存は無効化され、元の JSON は「JSON 書き出し」欄にあります。修正して再読み込みするか、「サンプルへリセット／保存データを消去」でやり直してください。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保存数据加载失败：{msg}。已切换到唯读恢复模式：自动保存停用，原始 JSON 已放入「JSON 导出」框；可修正后重新导入，或用「重置示例／清除保存数据」重新开始。"
+            "value" : "已保存数据加载失败：{msg}。已切换到只读恢复模式：自动保存停用，原始 JSON 已放入「JSON 导出」框；可修正后重新导入，或用「重置示例／清除保存数据」重新开始。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動保存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除保存資料」重新開始。"
+            "value" : "已儲存資料載入失敗：{msg}。已切換到唯讀恢復模式：自動儲存停用，原始 JSON 已放入「JSON 匯出」框；可修正後重新匯入，或用「重置示例／清除儲存資料」重新開始。"
           }
         }
       }
@@ -11387,13 +10778,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "唯读恢复模式：自动保存已停用（原保存数据加载失败）。"
+            "value" : "只读恢复模式：自动保存已停用（原保存数据加载失败）。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "唯讀恢復模式：自動保存已停用（原保存資料載入失敗）。"
+            "value" : "唯讀恢復模式：自動儲存已停用（原儲存資料載入失敗）。"
           }
         }
       }
@@ -11654,7 +11045,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會保存。"
+            "value" : "已載入全部示例資料（{count} 趟列車）。示例僅供瀏覽，更改不會儲存。"
           }
         }
       }
@@ -11677,13 +11068,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "示例模式：更改不会保存。想保留当前内容，请在「数据」分页按「保存为我的数据」。"
+            "value" : "示例模式：更改不会保存。想保留当前内容，请在「数据」标签页按「保存为我的数据」。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "示例模式：更改不會保存。想保留目前內容，請在「資料」分頁按「保存為我的資料」。"
+            "value" : "示例模式：更改不會儲存。想保留目前內容，請在「資料」分頁按「儲存為我的資料」。"
           }
         }
       }
@@ -11712,7 +11103,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會保存；按「載入全部示例資料」可查看全部日期。"
+            "value" : "已載入示例資料 {date}（{count} 趟列車）。示例僅供瀏覽，不會儲存；按「載入全部示例資料」可查看全部日期。"
           }
         }
       }
@@ -11741,7 +11132,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保存為我的資料（{count} 趟列車），之後的編輯會自動保存在此瀏覽器。"
+            "value" : "已儲存為我的資料（{count} 趟列車），之後的編輯會自動儲存在此瀏覽器。"
           }
         }
       }
@@ -11770,7 +11161,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保存到 {name}。"
+            "value" : "已儲存到 {name}。"
           }
         }
       }
@@ -11816,7 +11207,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "共有シートからエクスポートしました"
+            "value" : "共有シートから書き出しました"
           }
         },
         "zh-Hans" : {
@@ -11857,7 +11248,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會保存。"
+            "value" : "已載入東京特急大回行程（{count} 趟列車）。此行程與其他示例分開，僅供瀏覽，更改不會儲存。"
           }
         }
       }
@@ -12292,7 +11683,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "站台"
+            "value" : "月台"
           }
         }
       }
@@ -12634,7 +12025,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自动侦测"
+            "value" : "自动检测"
           }
         },
         "zh-Hant" : {
@@ -12837,7 +12228,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "侦测：{device} · 当前：{mode}"
+            "value" : "检测：{device} · 当前：{mode}"
           }
         },
         "zh-Hant" : {
@@ -13127,7 +12518,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "输出影片"
+            "value" : "输出视频"
           }
         },
         "zh-Hant" : {
@@ -13156,7 +12547,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "影片输出失败：{msg}"
+            "value" : "视频输出失败：{msg}"
           }
         },
         "zh-Hant" : {
@@ -13185,7 +12576,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "地图画面没有送出影格，请让本分页保持在前景后重试。"
+            "value" : "地图画面没有送出帧，请让本标签页保持在前台后重试。"
           }
         },
         "zh-Hant" : {
@@ -13214,7 +12605,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在准备影片…"
+            "value" : "正在准备视频…"
           }
         },
         "zh-Hant" : {
@@ -13243,7 +12634,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画質"
+            "value" : "画质"
           }
         },
         "zh-Hant" : {
@@ -13388,7 +12779,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "影片已完成：{name}"
+            "value" : "视频已完成：{name}"
           }
         },
         "zh-Hant" : {
@@ -13417,7 +12808,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保留中斷前的片段：{name}"
+            "value" : "已保留中断前的片段：{name}"
           }
         },
         "zh-Hant" : {
@@ -13475,7 +12866,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "储存影片（{size}）"
+            "value" : "保存视频（{size}）"
           }
         },
         "zh-Hant" : {
@@ -13504,7 +12895,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "影片已储存：{name}（{size}）"
+            "value" : "视频已保存：{name}（{size}）"
           }
         },
         "zh-Hant" : {
@@ -13533,7 +12924,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已储存中斷前的片段：{name}（{size}）"
+            "value" : "已保存中断前的片段：{name}（{size}）"
           }
         },
         "zh-Hant" : {
@@ -13765,42 +13156,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "{size} · {fps} fps · {mbps} Mbps · {length} · 約 {bytes} {ext}"
+            "value" : "{size} · {fps} fps · {mbps} Mbps · {length} · 约 {bytes} {ext}"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "{size} · {fps} fps · {mbps} Mbps · {length} · 約 {bytes} {ext}"
-          }
-        }
-      }
-    },
-    "video.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Export journey video"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "行程の動画を書き出す"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输出行程影片"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "輸出行程影片"
           }
         }
       }
@@ -13817,13 +13179,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このブラウザーは録画に対応していません。"
+            "value" : "このブラウザは録画に対応していません。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此浏览器不支持影片录制。"
+            "value" : "此浏览器不支持视频录制。"
           }
         },
         "zh-Hant" : {

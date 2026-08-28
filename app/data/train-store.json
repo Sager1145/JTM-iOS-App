@@ -20382,15 +20382,33 @@
       "route_sections": [
         {
           "from_n02_station_code": "000430",
-          "to_n02_station_code": "000476"
+          "to_n02_station_code": "000476",
+          "line_names": [
+            "北海道新幹線"
+          ],
+          "operator_names": [
+            "北海道旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "000476",
-          "to_n02_station_code": "000491"
+          "to_n02_station_code": "000491",
+          "line_names": [
+            "北海道新幹線"
+          ],
+          "operator_names": [
+            "北海道旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "000491",
-          "to_n02_station_code": "000532"
+          "to_n02_station_code": "000532",
+          "line_names": [
+            "北海道新幹線"
+          ],
+          "operator_names": [
+            "北海道旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "000532",
@@ -23785,35 +23803,83 @@
       "route_sections": [
         {
           "from_n02_station_code": "008038",
-          "to_n02_station_code": "010189"
+          "to_n02_station_code": "010189",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "010189",
-          "to_n02_station_code": "008064"
+          "to_n02_station_code": "008064",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008064",
-          "to_n02_station_code": "008062"
+          "to_n02_station_code": "008062",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008062",
-          "to_n02_station_code": "008058"
+          "to_n02_station_code": "008058",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008058",
-          "to_n02_station_code": "008055"
+          "to_n02_station_code": "008055",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008055",
-          "to_n02_station_code": "008048"
+          "to_n02_station_code": "008048",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008048",
-          "to_n02_station_code": "008061"
+          "to_n02_station_code": "008061",
+          "line_names": [
+            "宇品線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008061",
-          "to_n02_station_code": "008070"
+          "to_n02_station_code": "008070",
+          "line_names": [
+            "宇品線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         }
       ],
       "stops": [
@@ -23917,11 +23983,23 @@
       "route_sections": [
         {
           "from_n02_station_code": "008060",
-          "to_n02_station_code": "008037"
+          "to_n02_station_code": "008037",
+          "line_names": [
+            "広島新交通1号線"
+          ],
+          "operator_names": [
+            "広島高速交通"
+          ]
         },
         {
           "from_n02_station_code": "008037",
-          "to_n02_station_code": "008009"
+          "to_n02_station_code": "008009",
+          "line_names": [
+            "広島新交通1号線"
+          ],
+          "operator_names": [
+            "広島高速交通"
+          ]
         }
       ],
       "stops": [
@@ -23977,67 +24055,163 @@
       "route_sections": [
         {
           "from_n02_station_code": "008044",
-          "to_n02_station_code": "008039"
+          "to_n02_station_code": "008039",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008039",
-          "to_n02_station_code": "008034"
+          "to_n02_station_code": "008034",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008034",
-          "to_n02_station_code": "008030"
+          "to_n02_station_code": "008030",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008030",
-          "to_n02_station_code": "008053"
+          "to_n02_station_code": "008053",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008053",
-          "to_n02_station_code": "008054"
+          "to_n02_station_code": "008054",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008054",
-          "to_n02_station_code": "008046"
+          "to_n02_station_code": "008046",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008046",
-          "to_n02_station_code": "008041"
+          "to_n02_station_code": "008041",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008041",
-          "to_n02_station_code": "008057"
+          "to_n02_station_code": "008057",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008057",
-          "to_n02_station_code": "008050"
+          "to_n02_station_code": "008050",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008050",
-          "to_n02_station_code": "008035"
+          "to_n02_station_code": "008035",
+          "line_names": [
+            "本線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008035",
-          "to_n02_station_code": "008067"
+          "to_n02_station_code": "008067",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008067",
-          "to_n02_station_code": "008078"
+          "to_n02_station_code": "008078",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008078",
-          "to_n02_station_code": "008086"
+          "to_n02_station_code": "008086",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008086",
-          "to_n02_station_code": "008098"
+          "to_n02_station_code": "008098",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008098",
-          "to_n02_station_code": "008105"
+          "to_n02_station_code": "008105",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         },
         {
           "from_n02_station_code": "008105",
-          "to_n02_station_code": "008111"
+          "to_n02_station_code": "008111",
+          "line_names": [
+            "宮島線"
+          ],
+          "operator_names": [
+            "広島電鉄"
+          ]
         }
       ],
       "stops": [
@@ -24205,19 +24379,43 @@
       "route_sections": [
         {
           "from_n02_station_code": "008114",
-          "to_n02_station_code": "008027"
+          "to_n02_station_code": "008027",
+          "line_names": [
+            "山陽線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008027",
-          "to_n02_station_code": "007999"
+          "to_n02_station_code": "007999",
+          "line_names": [
+            "山陽線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "007999",
-          "to_n02_station_code": "008002"
+          "to_n02_station_code": "008002",
+          "line_names": [
+            "山陽線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008002",
-          "to_n02_station_code": "008031"
+          "to_n02_station_code": "008031",
+          "line_names": [
+            "山陽線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         }
       ],
       "stops": [
@@ -24289,31 +24487,73 @@
       "route_sections": [
         {
           "from_n02_station_code": "008025",
-          "to_n02_station_code": "008430"
+          "to_n02_station_code": "008430",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008430",
-          "to_n02_station_code": "008530"
+          "to_n02_station_code": "008530",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008530",
-          "to_n02_station_code": "008479"
+          "to_n02_station_code": "008479",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008479",
-          "to_n02_station_code": "008528"
+          "to_n02_station_code": "008528",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008528",
-          "to_n02_station_code": "008577"
+          "to_n02_station_code": "008577",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008577",
-          "to_n02_station_code": "008682"
+          "to_n02_station_code": "008682",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "008682",
-          "to_n02_station_code": "009034"
+          "to_n02_station_code": "009034",
+          "line_names": [
+            "山陽新幹線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
         }
       ],
       "stops": [
@@ -24409,7 +24649,13 @@
       "route_sections": [
         {
           "from_n02_station_code": "009033",
-          "to_n02_station_code": "009331"
+          "to_n02_station_code": "009331",
+          "line_names": [
+            "九州新幹線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         }
       ],
       "stops": [
@@ -24457,75 +24703,183 @@
       "route_sections": [
         {
           "from_n02_station_code": "009333",
-          "to_n02_station_code": "009338"
+          "to_n02_station_code": "009338",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009338",
-          "to_n02_station_code": "009359"
+          "to_n02_station_code": "009359",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009359",
-          "to_n02_station_code": "009379"
+          "to_n02_station_code": "009379",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009379",
-          "to_n02_station_code": "009393"
+          "to_n02_station_code": "009393",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009393",
-          "to_n02_station_code": "009413"
+          "to_n02_station_code": "009413",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009413",
-          "to_n02_station_code": "009446"
+          "to_n02_station_code": "009446",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009446",
-          "to_n02_station_code": "009450"
+          "to_n02_station_code": "009450",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009450",
-          "to_n02_station_code": "009453"
+          "to_n02_station_code": "009453",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009453",
-          "to_n02_station_code": "009460"
+          "to_n02_station_code": "009460",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009460",
-          "to_n02_station_code": "009495"
+          "to_n02_station_code": "009495",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009495",
-          "to_n02_station_code": "009502"
+          "to_n02_station_code": "009502",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009502",
-          "to_n02_station_code": "009496"
+          "to_n02_station_code": "009496",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009496",
-          "to_n02_station_code": "009510"
+          "to_n02_station_code": "009510",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009510",
-          "to_n02_station_code": "009518"
+          "to_n02_station_code": "009518",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009518",
-          "to_n02_station_code": "009528"
+          "to_n02_station_code": "009528",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009528",
-          "to_n02_station_code": "009527"
+          "to_n02_station_code": "009527",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009527",
-          "to_n02_station_code": "009530"
+          "to_n02_station_code": "009530",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009530",
-          "to_n02_station_code": "009543"
+          "to_n02_station_code": "009543",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         }
       ],
       "stops": [
@@ -24709,43 +25063,103 @@
       "route_sections": [
         {
           "from_n02_station_code": "009544",
-          "to_n02_station_code": "009533"
+          "to_n02_station_code": "009533",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009533",
-          "to_n02_station_code": "009525"
+          "to_n02_station_code": "009525",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009525",
-          "to_n02_station_code": "009514"
+          "to_n02_station_code": "009514",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009514",
-          "to_n02_station_code": "009504"
+          "to_n02_station_code": "009504",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009504",
-          "to_n02_station_code": "009491"
+          "to_n02_station_code": "009491",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009491",
-          "to_n02_station_code": "009482"
+          "to_n02_station_code": "009482",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009482",
-          "to_n02_station_code": "009474"
+          "to_n02_station_code": "009474",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009474",
-          "to_n02_station_code": "009458"
+          "to_n02_station_code": "009458",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009458",
-          "to_n02_station_code": "009442"
+          "to_n02_station_code": "009442",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009442",
-          "to_n02_station_code": "009436"
+          "to_n02_station_code": "009436",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         }
       ],
       "stops": [
@@ -24865,79 +25279,193 @@
       "route_sections": [
         {
           "from_n02_station_code": "009436",
-          "to_n02_station_code": "009429"
+          "to_n02_station_code": "009429",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009429",
-          "to_n02_station_code": "009420"
+          "to_n02_station_code": "009420",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009420",
-          "to_n02_station_code": "009412"
+          "to_n02_station_code": "009412",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009412",
-          "to_n02_station_code": "009405"
+          "to_n02_station_code": "009405",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009405",
-          "to_n02_station_code": "009394"
+          "to_n02_station_code": "009394",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009394",
-          "to_n02_station_code": "009381"
+          "to_n02_station_code": "009381",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009381",
-          "to_n02_station_code": "009370"
+          "to_n02_station_code": "009370",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009370",
-          "to_n02_station_code": "009367"
+          "to_n02_station_code": "009367",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009367",
-          "to_n02_station_code": "009354"
+          "to_n02_station_code": "009354",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009354",
-          "to_n02_station_code": "009347"
+          "to_n02_station_code": "009347",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009347",
-          "to_n02_station_code": "009342"
+          "to_n02_station_code": "009342",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009342",
-          "to_n02_station_code": "009350"
+          "to_n02_station_code": "009350",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009350",
-          "to_n02_station_code": "009363"
+          "to_n02_station_code": "009363",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009363",
-          "to_n02_station_code": "009357"
+          "to_n02_station_code": "009357",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009357",
-          "to_n02_station_code": "009337"
+          "to_n02_station_code": "009337",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009337",
-          "to_n02_station_code": "009345"
+          "to_n02_station_code": "009345",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009345",
-          "to_n02_station_code": "009343"
+          "to_n02_station_code": "009343",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009343",
-          "to_n02_station_code": "009344"
+          "to_n02_station_code": "009344",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009344",
-          "to_n02_station_code": "009340"
+          "to_n02_station_code": "009340",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         }
       ],
       "stops": [
@@ -25129,111 +25657,273 @@
       "route_sections": [
         {
           "from_n02_station_code": "009340",
-          "to_n02_station_code": "009362"
+          "to_n02_station_code": "009362",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009362",
-          "to_n02_station_code": "009392"
+          "to_n02_station_code": "009392",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009392",
-          "to_n02_station_code": "009400"
+          "to_n02_station_code": "009400",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009400",
-          "to_n02_station_code": "009407"
+          "to_n02_station_code": "009407",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009407",
-          "to_n02_station_code": "009424"
+          "to_n02_station_code": "009424",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009424",
-          "to_n02_station_code": "009427"
+          "to_n02_station_code": "009427",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009427",
-          "to_n02_station_code": "009443"
+          "to_n02_station_code": "009443",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009443",
-          "to_n02_station_code": "009449"
+          "to_n02_station_code": "009449",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009449",
-          "to_n02_station_code": "009461"
+          "to_n02_station_code": "009461",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009461",
-          "to_n02_station_code": "009476"
+          "to_n02_station_code": "009476",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009476",
-          "to_n02_station_code": "009490"
+          "to_n02_station_code": "009490",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009490",
-          "to_n02_station_code": "009512"
+          "to_n02_station_code": "009512",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009512",
-          "to_n02_station_code": "009516"
+          "to_n02_station_code": "009516",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009516",
-          "to_n02_station_code": "009529"
+          "to_n02_station_code": "009529",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009529",
-          "to_n02_station_code": "009532"
+          "to_n02_station_code": "009532",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009532",
-          "to_n02_station_code": "009523"
+          "to_n02_station_code": "009523",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009523",
-          "to_n02_station_code": "009511"
+          "to_n02_station_code": "009511",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009511",
-          "to_n02_station_code": "009509"
+          "to_n02_station_code": "009509",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009509",
-          "to_n02_station_code": "009498"
+          "to_n02_station_code": "009498",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009498",
-          "to_n02_station_code": "009503"
+          "to_n02_station_code": "009503",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009503",
-          "to_n02_station_code": "009507"
+          "to_n02_station_code": "009507",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009507",
-          "to_n02_station_code": "009513"
+          "to_n02_station_code": "009513",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009513",
-          "to_n02_station_code": "009520"
+          "to_n02_station_code": "009520",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009520",
-          "to_n02_station_code": "009538"
+          "to_n02_station_code": "009538",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009538",
-          "to_n02_station_code": "009552"
+          "to_n02_station_code": "009552",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009552",
-          "to_n02_station_code": "009553"
+          "to_n02_station_code": "009553",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009553",
-          "to_n02_station_code": "009557"
+          "to_n02_station_code": "009557",
+          "line_names": [
+            "西九州線"
+          ],
+          "operator_names": [
+            "松浦鉄道"
+          ]
         }
       ],
       "stops": [
@@ -25489,99 +26179,243 @@
       "route_sections": [
         {
           "from_n02_station_code": "009556",
-          "to_n02_station_code": "009560"
+          "to_n02_station_code": "009560",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009560",
-          "to_n02_station_code": "009564"
+          "to_n02_station_code": "009564",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009564",
-          "to_n02_station_code": "009568"
+          "to_n02_station_code": "009568",
+          "line_names": [
+            "佐世保線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009568",
-          "to_n02_station_code": "009583"
+          "to_n02_station_code": "009583",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009583",
-          "to_n02_station_code": "009584"
+          "to_n02_station_code": "009584",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009584",
-          "to_n02_station_code": "009596"
+          "to_n02_station_code": "009596",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009596",
-          "to_n02_station_code": "009593"
+          "to_n02_station_code": "009593",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009593",
-          "to_n02_station_code": "009605"
+          "to_n02_station_code": "009605",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009605",
-          "to_n02_station_code": "009615"
+          "to_n02_station_code": "009615",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009615",
-          "to_n02_station_code": "009626"
+          "to_n02_station_code": "009626",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009626",
-          "to_n02_station_code": "010173"
+          "to_n02_station_code": "010173",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "010173",
-          "to_n02_station_code": "009640"
+          "to_n02_station_code": "009640",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009640",
-          "to_n02_station_code": "009650"
+          "to_n02_station_code": "009650",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009650",
-          "to_n02_station_code": "009656"
+          "to_n02_station_code": "009656",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009656",
-          "to_n02_station_code": "009662"
+          "to_n02_station_code": "009662",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009662",
-          "to_n02_station_code": "009667"
+          "to_n02_station_code": "009667",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009667",
-          "to_n02_station_code": "009695"
+          "to_n02_station_code": "009695",
+          "line_names": [
+            "大村線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009695",
-          "to_n02_station_code": "009708"
+          "to_n02_station_code": "009708",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009708",
-          "to_n02_station_code": "009717"
+          "to_n02_station_code": "009717",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009717",
-          "to_n02_station_code": "009734"
+          "to_n02_station_code": "009734",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009734",
-          "to_n02_station_code": "009762"
+          "to_n02_station_code": "009762",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009762",
-          "to_n02_station_code": "009776"
+          "to_n02_station_code": "009776",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009776",
-          "to_n02_station_code": "009813"
+          "to_n02_station_code": "009813",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         },
         {
           "from_n02_station_code": "009813",
-          "to_n02_station_code": "009823"
+          "to_n02_station_code": "009823",
+          "line_names": [
+            "長崎線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
+          ]
         }
       ],
       "stops": [
@@ -29958,6 +30792,9 @@
           "to_n02_station_code": "009465",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -29972,6 +30809,9 @@
           "to_n02_station_code": "009428",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -29979,6 +30819,9 @@
           "to_n02_station_code": "009395",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -30098,6 +30941,9 @@
           "to_n02_station_code": "009013",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -30105,6 +30951,9 @@
           "to_n02_station_code": "009008",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -30224,13 +31073,20 @@
           "to_n02_station_code": "008683",
           "line_names": [
             "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
           "from_n02_station_code": "008683",
           "to_n02_station_code": "008679",
           "line_names": [
-            "鹿児島線"
+            "鹿児島線",
+            "日豊線"
+          ],
+          "operator_names": [
+            "九州旅客鉄道"
           ]
         },
         {
@@ -31464,7 +32320,8 @@
           "from_n02_station_code": "008683",
           "to_n02_station_code": "008679",
           "line_names": [
-            "鹿児島線"
+            "鹿児島線",
+            "日豊線"
           ],
           "operator_names": [
             "九州旅客鉄道"

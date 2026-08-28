@@ -9,9 +9,9 @@ import Testing
 /// The expected values in `port-fixtures/operator-branding.json` are whatever
 /// the JavaScript returns today, so a failure here means the two apps would
 /// show a reader different words or different artwork for the same railway.
-/// Several of the recorded answers look wrong — a well-known railway with no
-/// mark, a split part wearing a company mark the audit set rejects — and are
-/// deliberate: the fixture's `contract` field names all three.
+/// Some recorded answers look wrong — notably a well-known railway with no
+/// operator fallback — and are deliberate: the fixture's `contract` field
+/// names the remaining JavaScript behaviours exactly.
 struct OperatorBrandingParityTests {
 
     // MARK: - loading

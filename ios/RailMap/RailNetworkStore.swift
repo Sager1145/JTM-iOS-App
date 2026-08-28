@@ -126,68 +126,176 @@ final class RailNetworkStore {
     private(set) var state: LoadState = .idle
     private(set) var lines: [DrawnLine] = []
     private(set) var stations: [DrawnStation] = []
+    /// Which mark each railway wears, for the surfaces that hold a recorded
+    /// journey rather than a network line — see ``RouteBadgeIndex``.
+    ///
+    /// Observed like the other two, and published well before them: a region
+    /// hands this over as soon as its package is parsed rather than when its
+    /// geometry is finished, which is the difference between a journeys list
+    /// that settles on its route symbols in a moment and one that wears
+    /// company marks for several seconds first.
+    private(set) var badges = RouteBadgeIndex()
 
-    /// Every region drawn at once.
+    /// One region's badges, taken as soon as that region has them.
+    ///
+    /// First writer wins inside ``RouteBadgeIndex/merge(_:)``, and the regions
+    /// arrive in whatever order they parse, so a key two packages share
+    /// resolves to whichever landed first. No key is shared today — every one
+    /// of them begins with the region's own code.
+    private func adopt(_ regionBadges: RouteBadgeIndex) {
+        badges.merge(regionBadges)
+    }
+
+    /// Every region drawn at once — but decoded only when one is needed.
     ///
     /// The web app loads one package because it has a region switch; this app
-    /// has none, so all five are decoded together and merged into one field of
-    /// lines and one of stations. Nothing downstream needs to know a region
-    /// boundary exists — `NetworkLOD` culls by zoom and by the visible rect,
-    /// which is a rule about what is on screen rather than about which country
-    /// it is in.
+    /// has none, so all five are merged into one field of lines and one of
+    /// stations. Nothing downstream needs to know a region boundary exists —
+    /// `NetworkLOD` culls by zoom and by the visible rect, which is a rule
+    /// about what is on screen rather than about which country it is in.
     ///
-    /// Decoding runs concurrently and publishes each region as it lands, in
-    /// completion order: Macao's 8 KB is on screen long before Japan's 9.5 MB
-    /// has finished.
+    /// What this does NOT do any more is decode all five at launch. Measured
+    /// over the shipped packages, a region's decode is a parse and then a
+    /// geometry pass, and the geometry is almost all of it:
+    ///
+    ///     jp  9.3 MB   parse 280 ms   geometry 1744 ms
+    ///     kr  845 KB   parse  20 ms   geometry  122 ms
+    ///     tw  480 KB   parse  13 ms   geometry  112 ms
+    ///
+    /// and the map opens with its network layer OFF, so on a launch where the
+    /// reader never turns it on, none of that geometry is ever drawn. Two
+    /// phases, then. Every region is INDEXED at launch — parsed far enough to
+    /// answer which mark each of its railways wears, which is 2 ms of work on
+    /// top of the parse and is what a journeys list is waiting for. A region's
+    /// geometry is decoded when something asks for it, through ``ensure(_:)``.
+    ///
+    /// A region that is asked for is parsed a second time, and that is the
+    /// deliberate trade: holding five parsed packages alive to save it would
+    /// be holding 394,285 coordinates for countries the reader may never pan
+    /// to, to save 280 ms of background work in the one case where they do.
     func loadAll() {
-        if case .loading = state { return }
-        state = .loading(pending: Region.ordered)
+        if isIndexing { return }
+        isIndexing = true
         lines = []
         stations = []
+        badges = RouteBadgeIndex()
+        indexed = []
+        requested = []
+        decoding = []
+        loads = []
+        failures = []
+        pending = []
+        state = .idle
         // The complete network is context and starts hidden; route restoration
-        // and interaction work should outrank decoding five national packages.
+        // and interaction work should outrank reading five national packages.
         Task(priority: .utility) {
-            let started = ContinuousClock.now
-            var loads: [RegionLoad] = []
-            var failures: [RegionFailure] = []
-            var pending = Region.ordered
-
-            await withTaskGroup(of: (Region, Result<Decoded, Error>).self) { group in
+            await withTaskGroup(of: (Region, RouteBadgeIndex?).self) { group in
                 for region in Region.ordered {
-                    group.addTask {
-                        do { return (region, .success(try await Self.decode(region: region))) }
-                        catch { return (region, .failure(error)) }
-                    }
+                    group.addTask { (region, try? await Self.index(region: region)) }
                 }
-                for await (region, result) in group {
-                    pending.removeAll { $0 == region }
-                    switch result {
-                    case .success(let decoded):
-                        lines.append(contentsOf: decoded.lines)
-                        stations.append(contentsOf: decoded.stations)
-                        loads.append(
-                            RegionLoad(
-                                region: region, lineCount: decoded.lines.count,
-                                stationCount: decoded.stations.count,
-                                elapsed: decoded.elapsed))
-                    case .failure(let error):
-                        // One missing package is not a dead map: the other four
-                        // still draw, and the data screen names the one that
-                        // did not. A region-switching app could treat this as
-                        // fatal; an all-regions one cannot.
-                        failures.append(
-                            RegionFailure(
-                                region: region, message: error.localizedDescription))
-                    }
-                    if !pending.isEmpty { state = .loading(pending: pending) }
+                for await (region, index) in group {
+                    guard let index else { continue }
+                    adopt(index)
+                    indexed.insert(region)
                 }
             }
-            loads.sort { Region.ordered.firstIndex(of: $0.region) ?? 0
-                < Region.ordered.firstIndex(of: $1.region) ?? 0 }
-            state = .loaded(
-                regions: loads, failures: failures, elapsed: ContinuousClock.now - started)
+            isIndexing = false
+            // Anything asked for while the indexes were still being built. The
+            // ask is recorded rather than acted on during indexing, so that a
+            // reader who turns the network on immediately does not have the
+            // geometry competing with the indexes every other screen wants.
+            for region in Region.ordered where requested.contains(region) {
+                decodeGeometry(region)
+            }
         }
     }
+
+    /// Decode one region's geometry, if it has not been asked for already.
+    ///
+    /// Idempotent and cheap to call from a render path: the second and every
+    /// later call for a region is a set lookup. Whoever needs a region's lines
+    /// or stations is the one that knows it needs them, so the ask lives at
+    /// the point of need rather than in a launch sequence that has to guess.
+    func ensure(_ region: Region) {
+        guard requested.insert(region).inserted else { return }
+        // While the indexes are being built the ask is only recorded; the
+        // indexing task drains `requested` when it finishes.
+        if !isIndexing { decodeGeometry(region) }
+    }
+
+    /// Every region whose network could be on screen in `rect`.
+    ///
+    /// `Region.networkExtent` is a constant, so this answers without having
+    /// decoded anything — which is the whole point: the map can say which
+    /// countries it is looking at before any of them has been read.
+    func ensure(regionsIntersecting rect: MKMapRect) {
+        for region in Region.ordered where Self.mapRect(of: region).intersects(rect) {
+            ensure(region)
+        }
+    }
+
+    /// Every region, for the surfaces that are about all of them at once — the
+    /// statistics screen's coverage is a fraction of each network's own length
+    /// and reads as zero for a country that has not been decoded.
+    func ensureAll() {
+        for region in Region.ordered { ensure(region) }
+    }
+
+    private func decodeGeometry(_ region: Region) {
+        guard decoding.insert(region).inserted else { return }
+        pending.append(region)
+        state = .loading(pending: pending)
+        let started = ContinuousClock.now
+        Task(priority: .utility) {
+            do {
+                let decoded = try await Self.decode(region: region)
+                lines.append(contentsOf: decoded.lines)
+                stations.append(contentsOf: decoded.stations)
+                loads.append(
+                    RegionLoad(
+                        region: region, lineCount: decoded.lines.count,
+                        stationCount: decoded.stations.count,
+                        elapsed: decoded.elapsed))
+                loads.sort { Region.ordered.firstIndex(of: $0.region) ?? 0
+                    < Region.ordered.firstIndex(of: $1.region) ?? 0 }
+            } catch {
+                // One missing package is not a dead map: the others still draw,
+                // and the data screen names the one that did not. A
+                // region-switching app could treat this as fatal; an
+                // all-regions one cannot.
+                failures.append(
+                    RegionFailure(region: region, message: error.localizedDescription))
+            }
+            pending.removeAll { $0 == region }
+            state = pending.isEmpty
+                ? .loaded(
+                    regions: loads, failures: failures,
+                    elapsed: ContinuousClock.now - started)
+                : .loading(pending: pending)
+        }
+    }
+
+    /// The region's own extent, in the projected space the map tests against.
+    private static func mapRect(of region: Region) -> MKMapRect {
+        let extent = region.networkExtent
+        let north = extent.center.latitude + extent.span.latitudeDelta / 2
+        let south = extent.center.latitude - extent.span.latitudeDelta / 2
+        let west = extent.center.longitude - extent.span.longitudeDelta / 2
+        let east = extent.center.longitude + extent.span.longitudeDelta / 2
+        let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: north, longitude: west))
+        let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude: south, longitude: east))
+        return MKMapRect(
+            x: min(topLeft.x, bottomRight.x), y: min(topLeft.y, bottomRight.y),
+            width: abs(bottomRight.x - topLeft.x), height: abs(bottomRight.y - topLeft.y))
+    }
+
+    @ObservationIgnored private var isIndexing = false
+    @ObservationIgnored private var indexed: Set<Region> = []
+    @ObservationIgnored private var requested: Set<Region> = []
+    @ObservationIgnored private var decoding: Set<Region> = []
+    @ObservationIgnored private var pending: [Region] = []
+    @ObservationIgnored private var loads: [RegionLoad] = []
+    @ObservationIgnored private var failures: [RegionFailure] = []
 
     /// The stations of one region only — the ride editor's picker, which is
     /// scoped to the region the itinerary being edited belongs to.
@@ -201,6 +309,10 @@ final class RailNetworkStore {
     /// countries per character. Grouping preserves relative order, so the
     /// answer is the one `filter` gave.
     func stations(in region: Region) -> [DrawnStation] {
+        // The ride editor's picker is the only caller, and it is a surface
+        // that exists precisely because the reader wants this region — so the
+        // ask belongs here rather than in whoever presented the editor.
+        ensure(region)
         if let stationsByRegion, ArrayGeneration.same(stationsByRegion.of, stations) {
             return stationsByRegion.grouped[region] ?? []
         }
@@ -225,6 +337,28 @@ final class RailNetworkStore {
     /// sees the finished value. Marked `async` rather than dispatched by hand
     /// because that is what lets the compiler check the hand-off instead of
     /// trusting it.
+    /// Phase one: which mark each of a region's railways wears.
+    ///
+    /// The parse and nothing after it, and the package is released the moment
+    /// the index is built — this runs for all five countries at launch and
+    /// must not leave five parsed packages behind it.
+    ///
+    /// Through `DisplayParts.LoadedPackage` like every other package read in
+    /// this app, even though the index reads none of the topology half it
+    /// carries. Asking `CompactPackage` for itself would open and scan the
+    /// same file a second way, which is the thing that decoder exists to stop
+    /// — and `verify.sh` refuses it by name.
+    private nonisolated static func index(region: Region) async throws -> RouteBadgeIndex {
+        let interval = RailSignpost.data.begin("data.package.index")
+        defer { RailSignpost.data.end("data.package.index", interval) }
+        guard let url = Bundle.main.url(
+            forResource: region.packageResource, withExtension: "json")
+        else { throw LoadError.missingResource(region.code) }
+        return RouteBadgeIndex(
+            region: region,
+            package: try DisplayParts.LoadedPackage.load(contentsOf: url).package)
+    }
+
     private nonisolated static func decode(region: Region) async throws -> Decoded {
         let interval = RailSignpost.data.begin("data.package.decode")
         defer { RailSignpost.data.end("data.package.decode", interval) }
@@ -296,7 +430,18 @@ final class RailNetworkStore {
                 intervals: intervals
             )
         }
-        let stationNetwork = StationDisplay.Network(package: package)
+        // The badge set is passed, and until now it was not.
+        //
+        // `packageLogoLineIDs` defaults to empty, the only caller that ever
+        // supplied it was a parity test, and `line.logo` was therefore nil for
+        // every railway on device. That is the whole third leg of
+        // `OperatorBranding.logoForLine` — the package's own per-line art —
+        // never firing: 382 Japanese railways, the 350 files
+        // `copy-rail-packages.sh` ships and the reason 銀座線 wore the 東京メトロ
+        // company mark instead of its orange G.
+        let stationNetwork = StationDisplay.Network(
+            package: package,
+            packageLogoLineIDs: Set(package.lines.filter(\.hasLogo).map(\.id)))
         func lineThreshold(under station: StationDisplay.Network.Station) -> Int {
             lodMinZoomByLineId[stationNetwork.lines[station.lineIndex].lineID] ?? 0
         }
@@ -338,7 +483,8 @@ final class RailNetworkStore {
                 popup: StationDisplay.buildPopupModel(
                     network: stationNetwork, stationID: station.stationID))
         }
-        return Decoded(lines: lines, stations: stations, elapsed: ContinuousClock.now - started)
+        return Decoded(
+            lines: lines, stations: stations, elapsed: ContinuousClock.now - started)
     }
 
     /// Union of every vertex, in projected map space.

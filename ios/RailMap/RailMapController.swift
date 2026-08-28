@@ -220,6 +220,18 @@ final class RailMapController {
         UIEdgeInsets(top: 40, left: 40, bottom: max(40, bottomObstruction + 20), right: 40)
     }
 
+    /// The same rectangle, for the playback chase to centre its train in.
+    ///
+    /// Exposed because the transport frames the map from two places and they
+    /// have to agree about where the middle is. The bracketing moves — the
+    /// opening overview, the ease onto the first journey, the closing panorama
+    /// — come through ``fit(_:animated:)`` and are therefore clear of the
+    /// panel; the per-frame chase wrote `setRegion` directly and centred on the
+    /// raw view, so the instant the clock started the map jumped by half the
+    /// sheet's height and the train then rode the panel's top edge for the
+    /// whole run.
+    var playbackFramingInsets: UIEdgeInsets { framingInsets }
+
     // MARK: - the one move the app makes for itself
 
     /// Open the map on a country, once, before anything else has claimed the
@@ -234,65 +246,40 @@ final class RailMapController {
     /// pinching, and taking their zoom with it. A camera that moves seconds
     /// after launch is not an opening view, it is an interruption of one.
     ///
-    /// So the opening view is now chosen from the RIDES — the journeys still
-    /// ahead of the reader (`RailWorkspaceView.launchRegion` and
-    /// `launchFocusRegion`) — and it happens at most once. Every guard below is
-    /// a way of saying the same thing: the app gets the camera only while
-    /// nobody else wants it.
+    /// So the opening view is now chosen from the RIDES — the country of the
+    /// reader's first journey (`RailWorkspaceView.launchRegion`) — and it
+    /// happens at most once. Every guard below is a way of saying the same
+    /// thing: the app gets the camera only while nobody else wants it.
     ///
-    ///   - ``hasOpened`` / ``hasOpenedPrecisely`` — an opening move is a move
-    ///     you make once. A second one is exactly the behaviour this replaced.
+    ///   - ``hasOpened`` — an opening move is a move you make once. A second
+    ///     one is exactly the behaviour this replaced.
     ///   - ``hasFramedForReader`` — a journey chosen, a 定位, a statistics
     ///     scope switched. A deliberate move outranks a housekeeping one, and
     ///     the rides can finish loading after any of them.
     ///   - ``readerMovedCamera`` — a finger already on the map. Nothing the
     ///     app decided at launch is worth taking that away for.
     ///
-    /// **The opening view has two halves, and only one of them is optional.**
-    /// The country box (`precise: false`) can be drawn the moment the rides
-    /// have been read, because `Region.networkExtent` is written down; the
-    /// day's own upcoming routes (`precise: true`) cannot, because they are
-    /// geometry that is still being read off disk. Waiting for the second
-    /// would leave the map on the whole globe for as long as that takes, so
-    /// the country box goes up first and the precise frame is allowed to
-    /// replace it — exactly once, and only while the reader has not taken the
-    /// camera in between.
-    ///
-    /// The country box is never animated: there is nowhere to travel FROM,
-    /// because it is where the map starts. The frame that REPLACES it is,
-    /// because by then there is — it is a zoom from the country onto the
-    /// routes of the day, which is a move with a direction and a reason.
-    /// Reduced motion still turns that into an arrival.
-    ///
-    /// - Parameter precise: whether this is the day's own routes rather than
-    ///   the country they are in.
+    /// **A country, and nothing closer.** A second, "precise" frame used to
+    /// follow this one, zooming onto the routes of the soonest upcoming day as
+    /// soon as their geometry had been read off disk. It is gone for the
+    /// reason the five-package framing is: it moved the camera at the moment a
+    /// FILE finished, which is not a moment the reader did anything at. What
+    /// this leaves is a single set-and-stay — which is why it is never
+    /// animated. There is nowhere to travel from; this is where the map
+    /// starts.
     @discardableResult
-    func frameAtLaunch(_ region: MKCoordinateRegion, precise: Bool = false) -> Bool {
-        guard !hasFramedForReader, !readerMovedCamera else { return false }
-        guard precise ? !hasOpenedPrecisely : !hasOpened else { return false }
+    func frameAtLaunch(_ region: MKCoordinateRegion) -> Bool {
+        guard !hasOpened, !hasFramedForReader, !readerMovedCamera else { return false }
         guard let mapView else { return false }
         let rect = Self.mapRect(of: region)
         guard !rect.isNull else { return false }
-        // `hasOpened` before this call, not after: it is what tells the two
-        // halves apart. A precise frame that arrives BEFORE the country box —
-        // rides already decoded when the map appeared — is the opening view
-        // itself and arrives rather than travelling, and the country box is
-        // then simply not owed.
-        let replacesOpening = hasOpened
         hasOpened = true
-        if precise { hasOpenedPrecisely = true }
-        mapView.setVisibleMapRect(
-            rect, edgePadding: framingInsets,
-            animated: replacesOpening && RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+        mapView.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
         return true
     }
 
     /// Whether the map has already opened on its country.
     @ObservationIgnored private(set) var hasOpened = false
-
-    /// Whether it has opened on the day's own upcoming routes — the frame the
-    /// country box is a stand-in for until the geometry exists.
-    @ObservationIgnored private(set) var hasOpenedPrecisely = false
 
     /// Whether the reader's own hands have been on the map.
     ///
@@ -418,9 +405,20 @@ final class RailMapController {
 
     // MARK: - feedback from the map
 
+    /// Both guarded, and it is not a micro-optimisation.
+    ///
+    /// `@Observable`'s generated setter does not compare — it calls
+    /// `withMutation` whatever it is handed — and the map reports a region
+    /// change on every frame of a playback chase, because the chase writes the
+    /// visible rect on every display-link tick. Writing the same heading and
+    /// the same tracking mode sixty times a second therefore invalidated every
+    /// view that read either of them sixty times a second, `MapControlBar`
+    /// among them, for two values that change when the reader rotates the map
+    /// or presses 定位 and at no other time.
     func mapDidChange(heading: Double, trackingMode: MKUserTrackingMode) {
-        headingDegrees = heading
-        isFollowingUser = trackingMode != .none
+        if headingDegrees != heading { headingDegrees = heading }
+        let following = trackingMode != .none
+        if isFollowingUser != following { isFollowingUser = following }
     }
 
     // MARK: - CoreLocation

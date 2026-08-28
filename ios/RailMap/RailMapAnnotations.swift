@@ -68,7 +68,25 @@ final class PlaybackAnnotationView: MKAnnotationView {
                     ? RailStyle.playbackStationDoneScale
                     : RailStyle.playbackStationScale
         let size = max(2, RailStyle.stationRadius * multiple * 2 * scale)
-        frame.size = CGSize(width: size, height: size)
+        // `bounds`, not `frame`, and it is the whole of why the beads used to
+        // shiver.
+        //
+        // MapKit places an annotation view by its CENTRE — the projected point
+        // plus `centerOffset` — and UIKit's `frame.size` setter keeps the
+        // ORIGIN, so every resize moved the centre by half the change and left
+        // it there until MapKit's next layout pass pulled it back. That is a
+        // per-frame wobble rather than a one-off: this method is called for
+        // every frame of a station's 0.45 s arrival pulse, where the bead
+        // swells from 11.4 pt to 17.4 pt and decays — a 3 pt hop on arrival
+        // and a fraction of a point every frame after it — and again from
+        // `restyle` while the chase's zoom eases.
+        //
+        // `bounds.size` keeps the centre, which is the anchor MapKit is
+        // actually driving. The three sibling views here reach the same place
+        // by writing `centerOffset` immediately after their own `frame.size`
+        // (assigning it re-runs MapKit's placement); this one had no offset to
+        // write, so it never got the correction.
+        bounds.size = CGSize(width: size, height: size)
         layer.cornerRadius = size / 2
         layer.borderWidth = RailStyle.stationRing * 2 * scale
         layer.borderColor = UIColor.white.cgColor
@@ -78,6 +96,11 @@ final class PlaybackAnnotationView: MKAnnotationView {
         layer.shadowOpacity = annotation.kind == .head ? 0.28 : 0
         layer.shadowRadius = 4
         canShowCallout = annotation.kind == .station
+        // A label on a view VoiceOver cannot reach is a label nobody hears:
+        // `MKAnnotationView` is not an accessibility element by default, so
+        // the station names baked into the played path were announced by
+        // nothing at all.
+        isAccessibilityElement = annotation.title?.isEmpty == false
         accessibilityLabel = annotation.title
     }
 }
@@ -425,6 +448,41 @@ final class StationAnnotationView: MKAnnotationView {
         centerOffset = CGPoint(x: width / 2 - diameter / 2, y: 0)
     }
 
+    /// The bead is one of the two things on this map a reader taps, and it is
+    /// drawn at six points — a three-point radius, where HIG's iOS control
+    /// size is 44×44 and its floor is 28×28. The touch is therefore answered
+    /// over ``RailStyle/minimumTouchTarget`` centred on the dot, while the dot
+    /// itself keeps its six.
+    ///
+    /// ## Why this is not `frame`
+    ///
+    /// Because these bounds are load-bearing three times over: `collisionMode
+    /// = .rectangle` measures them, the name label is laid out inside them,
+    /// and `centerOffset` is derived from them. Growing the frame to buy a hit
+    /// target would move every caption on the map and evict the neighbours of
+    /// every bead that kept one — paying for a station that can be tapped with
+    /// a station that can no longer be read. `point(inside:)` changes none of
+    /// those: it is asked only once a touch is already being routed.
+    ///
+    /// The existing bounds stay hittable on top of the disc, because the NAME
+    /// is part of the same annotation and a reader who taps the word means the
+    /// station.
+    ///
+    /// ## Where two beads are closer together than the target is wide
+    ///
+    /// Their discs overlap, and UIKit answers such a touch with the topmost
+    /// view — which is the same one the eye picks, because it is the one drawn
+    /// over the other. That is a worse answer than "the nearest", and a much
+    /// better one than the miss a three-point radius produces today.
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if bounds.contains(point) { return true }
+        let reach = max(RailStyle.minimumTouchTarget, dot.bounds.width) / 2
+        // A disc rather than the square it is inscribed in. The corners of a
+        // 44-point box are 31 points from the dot, and at that distance a
+        // neighbouring bead is usually the one meant.
+        return hypot(point.x - dot.frame.midX, point.y - dot.frame.midY) <= reach
+    }
+
 }
 
 /// The dot itself: fill, ring, and — on an intermediate stop — the
@@ -534,6 +592,22 @@ final class RideStationAnnotationView: MKAnnotationView {
             x: (diameter - coreDiameter) / 2, y: (diameter - coreDiameter) / 2,
             width: coreDiameter, height: coreDiameter)
         core.layer.cornerRadius = coreDiameter / 2
+    }
+
+    /// ``StationAnnotationView/point(inside:with:)``'s rule, for the dots on a
+    /// ride. Same numbers, same reasons — and here `collisionMode = .circle`
+    /// is measured from these bounds, so the target is even more clearly not
+    /// something the frame may be grown to provide: a bead that collided at 44
+    /// points would suppress the captions this view already yields to.
+    ///
+    /// A stop that is also under the ride's own stroke is still answered by
+    /// the stroke: `handleMapTap` claims that touch before
+    /// `mapView(_:didSelect:)` is asked, and one tap gets one answer. What
+    /// this reaches is the stop tapped just OFF the line — at a corner, or
+    /// where the finger covers the dot and lands beside it.
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let reach = max(RailStyle.minimumTouchTarget, bounds.width) / 2
+        return hypot(point.x - bounds.midX, point.y - bounds.midY) <= reach
     }
 }
 

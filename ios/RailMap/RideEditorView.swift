@@ -487,10 +487,16 @@ struct RideEditorView: View {
                 )
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
-                Circle()
+                // The same square the journey's mark is drawn in, at the same
+                // corner ratio — this field IS that mark's fallback colour, so
+                // previewing it as a circle showed the editor one shape and
+                // every list the other.
+                RouteLogoSquare.shape(side: 22)
                     .fill(routeColor)
                     .frame(width: 22, height: 22)
-                    .overlay(Circle().stroke(.separator, lineWidth: 0.5))
+                    .overlay(
+                        RouteLogoSquare.shape(side: 22)
+                            .strokeBorder(.separator, lineWidth: 0.5))
                     .accessibilityHidden(true)
             }
             .id(RideDraftIssue.Field.color)

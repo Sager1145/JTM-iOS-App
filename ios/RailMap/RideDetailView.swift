@@ -157,20 +157,41 @@ struct RideDetailContent: View {
 
     // MARK: - 1. Identity
 
+    /// The same identity the list row shows, in the same order: the mark, the
+    /// service, the date, then what railway it ran on.
+    ///
+    /// It matters that this is the same shape as ``JourneySummaryRow``'s
+    /// header rather than merely the same facts. A reader arrives here by
+    /// tapping a row, and the row they tapped led with an operator's mark and
+    /// a bold service name; a screen that opens with a generic tram symbol
+    /// beside the same name reads as a different journey for the moment it
+    /// takes to check.
     private var identityCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline) {
-                Label(train.number, systemImage: "tram.fill")
-                    .font(.title2.bold())
-                Spacer()
-                if let date = train.date, !date.isEmpty {
-                    Text(date)
-                        .font(.subheadline.weight(.semibold))
-                        .monospacedDigit()
+        HStack(alignment: .center, spacing: 12) {
+            RouteLogoSquare(train: train, side: 44)
+
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(train.number)
+                        .font(.title2.bold())
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 4)
+                    if let date = train.date, !date.isEmpty {
+                        Text(date)
+                            .font(.subheadline.weight(.semibold))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                }
+                if !identityDetailText.isEmpty {
+                    Text(identityDetailText)
+                        .font(.subheadline)
                         .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            if let type = train.trainType, !type.isEmpty { Text(type).font(.headline) }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(16)
         .background(
@@ -179,6 +200,16 @@ struct RideDetailContent: View {
                 cornerRadius: RailStyle.cardCornerRadius,
                 style: .continuous))
         .accessibilityElement(children: .combine)
+    }
+
+    /// 「特急 · 東海道本線 · JR東海」 — the type, then the line and its
+    /// operator, resolved by the same lookup that chose the mark beside them.
+    private var identityDetailText: String {
+        [train.trainType.flatMap { $0.isEmpty ? nil : $0 },
+         JourneyBranding.routeText(of: train).isEmpty
+             ? nil : JourneyBranding.routeText(of: train)]
+            .compactMap { $0 }
+            .joined(separator: " · ")
     }
 
     // MARK: - 2. Route timing (§7.3)

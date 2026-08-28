@@ -128,10 +128,18 @@ final class VideoExportSettings {
         }
     }
 
-    /// `cropFor` + `outputSize` + `bitrateFor`, for a map of `sourceSize`
-    /// points at `displayScale` pixels per point.
-    func plan(sourceSize: CGSize, displayScale: CGFloat) -> Plan {
-        let crop = Self.crop(in: sourceSize, aspect: shape.aspect)
+    /// `cropFor` + `outputSize` + `bitrateFor`, for the rectangle of the map
+    /// the film is taken from, in the map view's own points, at `displayScale`
+    /// pixels per point.
+    ///
+    /// A RECT rather than a size, because the playback camera does not centre
+    /// its train in the middle of the map view: it centres it in the part the
+    /// resident sheet leaves uncovered (`RailMapController.playbackFramingInsets`),
+    /// which is the web app's `uncoveredRect` behaviour. The crop and the
+    /// camera have to agree about where the middle is or the train sits
+    /// off-centre in the file.
+    func plan(sourceRect: CGRect, displayScale: CGFloat) -> Plan {
+        let crop = Self.crop(in: sourceRect, aspect: shape.aspect)
         let size = Self.outputSize(
             crop: crop, displayScale: displayScale, cap: quality.cap)
         let raw = Double(size.width * size.height)
@@ -141,12 +149,11 @@ final class VideoExportSettings {
             bitsPerSecond: min(Self.maxBitrate, max(Self.minBitrate, raw)))
     }
 
-    /// The largest rectangle of the requested shape that still fits INSIDE the
-    /// map. Going outside it would pull in whatever is behind the panel, which
-    /// is precisely what nobody wants in the file.
-    static func crop(in source: CGSize, aspect: CGFloat) -> CGRect {
-        let whole = CGRect(origin: .zero, size: source)
-        guard aspect > 0, source.width > 0, source.height > 0 else { return whole }
+    /// The largest rectangle of the requested shape that still fits inside
+    /// `source`, centred on it. Going outside it would pull in whatever is
+    /// behind the panel, which is precisely what nobody wants in the file.
+    static func crop(in source: CGRect, aspect: CGFloat) -> CGRect {
+        guard aspect > 0, source.width > 0, source.height > 0 else { return source }
         let have = source.width / source.height
         var width = source.width
         var height = source.height
@@ -156,8 +163,8 @@ final class VideoExportSettings {
             width = source.height * aspect
         }
         return CGRect(
-            x: ((source.width - width) / 2).rounded(),
-            y: ((source.height - height) / 2).rounded(),
+            x: (source.minX + (source.width - width) / 2).rounded(),
+            y: (source.minY + (source.height - height) / 2).rounded(),
             width: width.rounded(),
             height: height.rounded())
     }

@@ -119301,7 +119301,7 @@
           "company": "香港電車",
           "label": "電車東行綫 (Tramways Eastbound)",
           "color": "#007549",
-          "logo": null,
+          "logo": "/rail/operator-logos/hkt-badge.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -119312,7 +119312,7 @@
           "company": "香港電車",
           "label": "電車跑馬地支綫 (Tramways Happy Valley Branch)",
           "color": "#007549",
-          "logo": null,
+          "logo": "/rail/operator-logos/hkt-badge.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -119323,7 +119323,7 @@
           "company": "香港電車",
           "label": "電車北角支綫 (Tramways North Point Branch)",
           "color": "#007549",
-          "logo": null,
+          "logo": "/rail/operator-logos/hkt-badge.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -119334,7 +119334,7 @@
           "company": "香港電車",
           "label": "電車西行綫 (Tramways Westbound)",
           "color": "#007549",
-          "logo": null,
+          "logo": "/rail/operator-logos/hkt-badge.svg",
           "logoNeedsDarkMatte": false
         }
       ],
@@ -120898,7 +120898,7 @@
           "company": "한국철도공사",
           "label": "경부선 (Gyeongbuseon)",
           "color": "#0054a6",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120909,7 +120909,7 @@
           "company": "한국철도공사",
           "label": "경부고속선 (Gyeongbugosokseon)",
           "color": "#c60c30",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120920,7 +120920,7 @@
           "company": "한국철도공사",
           "label": "중앙선 (Jungangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120931,7 +120931,7 @@
           "company": "한국철도공사",
           "label": "경전선 (Gyeongjeonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120942,7 +120942,7 @@
           "company": "한국철도공사",
           "label": "호남선 (Honamseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120953,7 +120953,7 @@
           "company": "한국철도공사",
           "label": "호남고속선 (Honamgosokseon)",
           "color": "#c60c30",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120964,7 +120964,7 @@
           "company": "한국철도공사",
           "label": "전라선 (Jeonraseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120975,7 +120975,7 @@
           "company": "한국철도공사",
           "label": "영동선 (Yeongdongseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120986,7 +120986,7 @@
           "company": "한국철도공사",
           "label": "장항선 (Janghangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -120997,7 +120997,7 @@
           "company": "한국철도공사",
           "label": "경강선 (Gyeonggangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121008,7 +121008,7 @@
           "company": "한국철도공사",
           "label": "경북선 (Gyeongbukseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121019,7 +121019,7 @@
           "company": "한국철도공사",
           "label": "충북선 (Chungbukseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121030,7 +121030,7 @@
           "company": "한국철도공사",
           "label": "태백선 (Taebaekseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121041,7 +121041,7 @@
           "company": "한국철도공사",
           "label": "중부내륙선 (Jungbunaeryukseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121052,7 +121052,7 @@
           "company": "한국철도공사",
           "label": "서해선 (Seohaeseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121063,7 +121063,7 @@
           "company": "한국철도공사",
           "label": "경원선 (Gyeongwonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121074,7 +121074,7 @@
           "company": "한국철도공사",
           "label": "경춘선 (Gyeongchunseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gyeongchun.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121085,7 +121085,7 @@
           "company": "한국철도공사",
           "label": "목포보성선 (Mokpoboseongseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121096,7 +121096,7 @@
           "company": "공항철도주식회사",
           "label": "인천국제공항선 (Incheongukjegonghangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-arex.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121107,7 +121107,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 7호선 (Seoul Jihacheol 7Hoseon)",
           "color": "#6e7e31",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-7.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121118,7 +121118,7 @@
           "company": "한국철도공사",
           "label": "경의선 (Gyeonguiseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gyeongui-jungang.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121129,7 +121129,7 @@
           "company": "에스알",
           "label": "수서평택고속선 (Suseopyeongtaekgosokseon)",
           "color": "#c60c30",
-          "logo": null,
+          "logo": "/rail/operator-logos/sr.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121140,7 +121140,7 @@
           "company": "한국철도공사",
           "label": "분당선 (Bundangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-suin-bundang.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121151,7 +121151,7 @@
           "company": "한국철도공사",
           "label": "정선선 (Jeongseonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121162,7 +121162,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 5호선 (Seoul Jihacheol 5Hoseon)",
           "color": "#794698",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-5.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121173,7 +121173,7 @@
           "company": "서울시메트로9호선",
           "label": "서울 지하철 9호선 (Seoul Jihacheol 9Hoseon)",
           "color": "#958c73",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-9.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121184,7 +121184,7 @@
           "company": "부산교통공사",
           "label": "부산 도시철도 1호선 (Busan Dosicheoldo 1Hoseon)",
           "color": "#e66600",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-busan-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121195,7 +121195,7 @@
           "company": "서울교통공사",
           "label": "3호선 (3Hoseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-3.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121206,7 +121206,7 @@
           "company": "지티엑스에이운영주식회사",
           "label": "수도권광역급행철도에이선 (Sudogwongwangyeokgeuphaengcheoldoeiseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gtx-a.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121217,7 +121217,7 @@
           "company": "부산교통공사",
           "label": "부산 도시철도 2호선 (Busan Dosicheoldo 2Hoseon)",
           "color": "#669a36",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-busan-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121228,7 +121228,7 @@
           "company": "인천교통공사",
           "label": "인천 도시철도 1호선 (Incheon Dosicheoldo 1Hoseon)",
           "color": "#678dce",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-incheon-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121239,7 +121239,7 @@
           "company": "서울교통공사",
           "label": "4호선 (4Hoseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-4.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121250,7 +121250,7 @@
           "company": "네오트랜스주식회사",
           "label": "신분당선 (Sinbundangseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-sinbundang.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121261,7 +121261,7 @@
           "company": "한국철도공사",
           "label": "동해본선 (Donghaebonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-donghae.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121272,7 +121272,7 @@
           "company": "한국철도공사",
           "label": "교외선 (Gyooeseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121283,7 +121283,7 @@
           "company": "인천교통공사",
           "label": "인천 도시철도 2호선 (Incheon Dosicheoldo 2Hoseon)",
           "color": "#dd6c0f",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-incheon-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121294,7 +121294,7 @@
           "company": "대구교통공사",
           "label": "대구 도시철도 2호선 (Daegu Dosicheoldo 2Hoseon)",
           "color": "#30a042",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-daegu-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121305,7 +121305,7 @@
           "company": "대구교통공사",
           "label": "대구 도시철도 1호선 (Daegu Dosicheoldo 1Hoseon)",
           "color": "#ef5c35",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-daegu-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121316,7 +121316,7 @@
           "company": "한국철도공사",
           "label": "경인선 (Gyeonginseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121327,7 +121327,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 6호선 (Seoul Jihacheol 6Hoseon)",
           "color": "#7c4932",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-6.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121338,7 +121338,7 @@
           "company": "한국철도공사",
           "label": "안산선 (Ansanseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-4.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121349,7 +121349,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 2호선 (Seoul Jihacheol 2Hoseon)",
           "color": "#00a23f",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121360,7 +121360,7 @@
           "company": "김포골드라인SRS",
           "label": "김포 골드라인 (Gimpo Goldeurain)",
           "color": "#957326",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gimpo-gold.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121371,7 +121371,7 @@
           "company": "대구교통공사",
           "label": "대구 도시철도 3호선 (Daegu Dosicheoldo 3Hoseon)",
           "color": "#c57c02",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-daegu-3.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121382,7 +121382,7 @@
           "company": "부산·김해경전철주식회사",
           "label": "부산김해경전철 (Busangimhaegyeongjeoncheol)",
           "color": "#8652a1",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-busan-gimhae.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121393,7 +121393,7 @@
           "company": "한국철도공사",
           "label": "동해선 (Donghaeseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-donghae.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121404,7 +121404,7 @@
           "company": "대전교통공사",
           "label": "대전 도시철도 1호선 (Daejeon Dosicheoldo 1Hoseon)",
           "color": "#007448",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-daejeon-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121415,7 +121415,7 @@
           "company": "한국철도공사",
           "label": "대구선 (Daeguseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121426,7 +121426,7 @@
           "company": "광주교통공사",
           "label": "광주 도시철도 1호선 (Gwangju Dosicheoldo 1Hoseon)",
           "color": "#009088",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gwangju-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121437,7 +121437,7 @@
           "company": "한국철도공사",
           "label": "수인선 (Suinseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-suin-bundang.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121448,7 +121448,7 @@
           "company": "한국철도공사",
           "label": "일산선 (Ilsanseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-3.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121459,7 +121459,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 8호선 (Seoul Jihacheol 8Hoseon)",
           "color": "#d11d70",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-8.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121470,7 +121470,7 @@
           "company": "부산교통공사",
           "label": "부산 도시철도 3호선 (Busan Dosicheoldo 3Hoseon)",
           "color": "#b28500",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-busan-3.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121481,7 +121481,7 @@
           "company": "서울교통공사",
           "label": "진접선 (Jinjeopseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-4.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121492,7 +121492,7 @@
           "company": "한국철도공사",
           "label": "과천선 (Gwacheonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-4.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121503,7 +121503,7 @@
           "company": "한국철도공사",
           "label": "삼척선 (Samcheokseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121514,7 +121514,7 @@
           "company": "용인에버라인운영(주)",
           "label": "용인경전철 (Yongingyeongjeoncheol)",
           "color": "#429f34",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-everline.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121525,7 +121525,7 @@
           "company": "부산교통공사",
           "label": "부산 도시철도 4호선 (Busan Dosicheoldo 4Hoseon)",
           "color": "#217dcb",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-busan-4.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121536,7 +121536,7 @@
           "company": "한국철도공사",
           "label": "광주선 (Gwangjuseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121547,7 +121547,7 @@
           "company": "서울교통공사",
           "label": "별내선 (Byeolnaeseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-8.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121558,7 +121558,7 @@
           "company": "우이신설 도시철도",
           "label": "우이신설선 (Uisinseolseon)",
           "color": "#85942b",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-uisinseol.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121569,7 +121569,7 @@
           "company": "대구교통공사",
           "label": "안심~하양 복선전철 (Ansim Hayang Bokseonjeoncheol)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-daegu-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121580,7 +121580,7 @@
           "company": "한국철도공사",
           "label": "함백선 (Hambaekseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121591,7 +121591,7 @@
           "company": "(주)우진메트로",
           "label": "의정부경전철 (Uijeongbugyeongjeoncheol)",
           "color": "#d9700e",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-uijeongbu-u.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121602,7 +121602,7 @@
           "company": "한국철도공사",
           "label": "서울 지하철 1호선 (Seoul Jihacheol 1Hoseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-1.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121613,7 +121613,7 @@
           "company": "한국철도공사",
           "label": "가야선 (Gayaseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121624,7 +121624,7 @@
           "company": "서울교통공사",
           "label": "하남선 (Hanamseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-5.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121635,7 +121635,7 @@
           "company": "로템SRS",
           "label": "서울 경전철 신림선 (Seoul Gyeongjeoncheol Sinrimseon)",
           "color": "#6789ca",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-sillim.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121646,7 +121646,7 @@
           "company": "서울교통공사",
           "label": "마천지선 (Macheonjiseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-5.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121657,7 +121657,7 @@
           "company": "한국철도공사",
           "label": "용산선 (Yongsanseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-gyeongui-jungang.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121668,7 +121668,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 2호선 신정지선 (Seoul Jihacheol 2Hoseon Sinjeongjiseon)",
           "color": "#00a23f",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121679,7 +121679,7 @@
           "company": "한국철도공사",
           "label": "대전선 (Daejeonseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121690,7 +121690,7 @@
           "company": "서울교통공사",
           "label": "서울 지하철 2호선 성수지선 (Seoul Jihacheol 2Hoseon Seongsujiseon)",
           "color": "#00a23f",
-          "logo": null,
+          "logo": "/rail/line-logos/kr-seoul-2.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121701,7 +121701,7 @@
           "company": "한국철도공사",
           "label": "망우선 (Manguseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121723,7 +121723,7 @@
           "company": "한국철도공사",
           "label": "안산연결선 (Ansanyeongyeolseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121756,7 +121756,7 @@
           "company": "한국철도공사",
           "label": "병점기지선 (Byeongjeomgijiseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -121778,7 +121778,7 @@
           "company": "한국철도공사",
           "label": "강경선 (Ganggyeongseon)",
           "color": "#0067a3",
-          "logo": null,
+          "logo": "/rail/operator-logos/korail.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -123556,7 +123556,7 @@
           "company": "JR九州",
           "label": "日豊線",
           "color": "#0094d8",
-          "logo": "/rail/logos/jp-九州旅客鉄道-日豊線.png",
+          "logo": "/rail/operator-logos/jp/q498366.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -123688,7 +123688,7 @@
           "company": "JR九州",
           "label": "鹿児島線",
           "color": "#ee3d49",
-          "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+          "logo": "/rail/operator-logos/jp/q498366.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -123699,7 +123699,7 @@
           "company": "JR九州",
           "label": "鹿児島線",
           "color": "#ee3d49",
-          "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+          "logo": "/rail/operator-logos/jp/q498366.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -123710,7 +123710,7 @@
           "company": "JR九州",
           "label": "鹿児島線",
           "color": "#ee3d49",
-          "logo": "/rail/logos/jp-九州旅客鉄道-鹿児島線.png",
+          "logo": "/rail/operator-logos/jp/q498366.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -124579,7 +124579,7 @@
           "company": "北越急行",
           "label": "ほくほく線 (Hokuhoku Line)",
           "color": "#6633ff",
-          "logo": "/rail/logos/jp-北越急行-ほくほく線.png",
+          "logo": "/rail/operator-logos/jp/q10903965.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -124788,7 +124788,7 @@
           "company": "名古屋ガイドウェイバス",
           "label": "ガイドウェイバス志段味線 (Guideway Bus Shidami Line)",
           "color": "#1d4b9f",
-          "logo": "/rail/logos/jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線.png",
+          "logo": "/rail/operator-logos/jp/q11414812.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -125998,7 +125998,7 @@
           "company": "愛知高速交通",
           "label": "東部丘陵線 (Linimo)",
           "color": "#164ca2",
-          "logo": "/rail/logos/jp-愛知高速交通-東部丘陵線.png",
+          "logo": "/rail/operator-logos/jp/q11073857.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126438,7 +126438,7 @@
           "company": "JR東日本",
           "label": "中央線 (Chuo Line)",
           "color": "#0074be",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-中央線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126449,7 +126449,7 @@
           "company": "JR東日本",
           "label": "中央線 (Chuo Line)",
           "color": "#0074be",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-中央線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126834,7 +126834,7 @@
           "company": "JR東日本",
           "label": "成田線 (Narita Line)",
           "color": "#00a158",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-成田線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126845,7 +126845,7 @@
           "company": "JR東日本",
           "label": "成田線 (Narita Line)",
           "color": "#00a158",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-成田線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126889,7 +126889,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126900,7 +126900,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126911,7 +126911,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126922,7 +126922,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126933,7 +126933,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126944,7 +126944,7 @@
           "company": "JR東日本",
           "label": "東北線",
           "color": "#359e64",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東北線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -126966,7 +126966,7 @@
           "company": "JR東日本",
           "label": "東海道線 (Tokaido Main Line)",
           "color": "#d77109",
-          "logo": "/rail/logos/jp-東日本旅客鉄道-東海道線.png",
+          "logo": "/rail/operator-logos/jp/q499071.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -128737,7 +128737,7 @@
           "company": "JR西日本",
           "label": "山陽線 (Sanyo Line)",
           "color": "#0072bc",
-          "logo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png",
+          "logo": "/rail/operator-logos/jp/q502125.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -128748,7 +128748,7 @@
           "company": "JR西日本",
           "label": "山陽線 (Sanyo Line)",
           "color": "#0072bc",
-          "logo": "/rail/logos/jp-西日本旅客鉄道-山陽線.png",
+          "logo": "/rail/operator-logos/jp/q502125.svg",
           "logoNeedsDarkMatte": false
         },
         {
@@ -129947,7 +129947,7 @@
           "company": "養老鉄道",
           "label": "養老線 (Yoro Railway Yoro Line)",
           "color": "#e3007f",
-          "logo": "/rail/operator-logos/jp/yoro-railway.webp",
+          "logo": "/rail/operator-logos/jp/yoro-railway.svg",
           "logoNeedsDarkMatte": false
         },
         {

@@ -70,6 +70,18 @@ enum RailMotion {
     /// One small thing replacing another in place: a badge, a count, a label.
     static let replace = Animation.easeInOut(duration: 0.18)
 
+    /// How small a thing arriving in place starts, and how large a thing
+    /// leaving ends.
+    ///
+    /// Bounded, and the bound is the point: §9.1's rule against decoration
+    /// applies to the BOTTOM of a scale as much as to the top. A mark that
+    /// begins at zero does not settle into place, it appears from nowhere —
+    /// and on a value that follows a finger it also means the first third of
+    /// the drag is spent drawing type at a size that carries no reading.
+    /// Three per cent is enough to say "this arrived here"; anything more is
+    /// the zoom §9.4 asks to remove.
+    static let arrivalScale: CGFloat = 0.97
+
     /// A small anchored surface arriving or leaving: a callout, tooltip or
     /// compact popover. Unlike ``replace``, entry needs an immediate response,
     /// so it uses ease-out rather than a symmetric morphing curve.
@@ -144,7 +156,8 @@ enum RailMotion {
     ) -> AnyTransition {
         reduceMotion
             ? .opacity
-            : .scale(scale: 0.97, anchor: anchor).combined(with: .opacity)
+            : .scale(scale: RailMotion.arrivalScale, anchor: anchor)
+                .combined(with: .opacity)
     }
 }
 

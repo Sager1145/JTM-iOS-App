@@ -122,8 +122,8 @@ const ADVERSARIAL_OPERATORS = [
   ["香港鐵路有限公司 MTR Corporation", "the bilingual alias: one key, with a space"],
   [
     "香港电车",
-    "simplified Hong Kong Tramways: labels to 香港電車, and the JavaScript is " +
-      "explicit that it is its own operator with no logo asset",
+    "simplified Hong Kong Tramways: labels to 香港電車 and then takes the " +
+      "same two-hop path into OPERATOR_LOGOS that Macao does",
   ],
   [
     "澳门轻轨",
@@ -415,19 +415,14 @@ export function build({ RailNetwork, APP_DIR }) {
       "this wrong is small and constant — a passenger reads the wrong company " +
       "name, or a line wears another railway's mark — which is exactly why " +
       "nobody would catch it by eye.\n\n" +
-      "Three answers below look like defects and are reproduced deliberately, " +
+      "Two answers below look like defects and are reproduced deliberately, " +
       "because a port that quietly fixes one is a port whose disagreements can " +
       "no longer be read:\n" +
       "  1. operatorLogo keys on the RAW operator string while several logo " +
       "tables are keyed on the short LABEL, so 東急 / 京王 / 小田急 / 西武 / " +
       "東武 / 阪急 / 阪神 / 近鉄 / 南海 / 名鉄 / 京成 / 京急 / 相鉄 and the " +
       "municipal operators all label correctly and still resolve to no logo.\n" +
-      "  2. verifiedPackageLineLogo consults JAPAN_NON_LINE_LOGO_IDS with the " +
-      "stroke's own id, but a split part or paired alignment carries its " +
-      "PARENT's artwork under a suffixed id (jp-東日本旅客鉄道-中央線-2) that " +
-      "the set does not contain — so 17 strokes keep the very company marks " +
-      "the audit set exists to reject.\n" +
-      "  3. the label tables are consulted before the 株式会社 strip, so " +
+      "  2. the label tables are consulted before the 株式会社 strip, so " +
       "株式会社東急電鉄 becomes 東急電鉄 rather than 東急.",
     cases: operatorCases,
     companyFor: companyForCases,

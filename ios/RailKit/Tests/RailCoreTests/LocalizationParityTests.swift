@@ -9,7 +9,7 @@ import Testing
 ///
 /// - **the catalog is the right catalog.** `ios/Resources/Localizable.xcstrings`
 ///   is generated from `app/public/i18n-strings.js`, so if somebody edits the
-///   copy and does not regenerate, the 1,728 `translations` cases go red with
+///   copy and does not regenerate, the 1,824 `translations` cases go red with
 ///   the old string beside the new one. That is the whole reason the catalog is
 ///   generated rather than transcribed.
 /// - **the runtime is the right runtime.** The fallback chains, the

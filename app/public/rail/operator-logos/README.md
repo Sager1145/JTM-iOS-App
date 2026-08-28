@@ -7,7 +7,7 @@ scope is verified against the corresponding line. The old package flag merely
 meant that an image existed: 65 of its 349 images were actually company marks,
 generic Shinkansen marks, regional JR codes applied beyond their official
 scope, historical predecessor marks, or a parent-company mark. The audited
-runtime therefore treats 284 images as line badges; twelve further route
+runtime therefore treats 281 images as line badges; twelve further route
 records carry a verified passenger-facing badge through the branding override
 table (北勢線 uses the
 三岐鉄道 route letter H from [Commons File:SG number-H.svg](https://commons.wikimedia.org/wiki/File:SG_number-H.svg),
@@ -48,12 +48,31 @@ them intentionally.
 The legacy Mie Railway mark on 四日市あすなろう鉄道・内部線, the 1911/1917
 predecessor marks on 養老鉄道 and 伊賀鉄道, the pre-1944 北勢鉄道 mark on
 三岐鉄道・北勢線, and the Keisei parent mark on 筑波観光鉄道 are explicitly
-rejected. 養老・伊賀・筑波 now use current assets from each operator's
-official site; 四日市 uses its current YAR company mark; 北勢線 uses its
-official route-letter badge and 三岐鉄道's fallback is the company's current
-Commons mark (`jp/q7418001.svg`). The regional JR letter codes JA (鹿児島本線)
+rejected. 伊賀・筑波 now use current assets from each operator's official
+site and 養老 the company's current symbol from Commons
+(`jp/yoro-railway.svg`); 四日市 uses its current YAR company mark; 北勢線
+uses its official route-letter badge and 三岐鉄道's fallback is the company's
+current Commons mark (`jp/q7418001.svg`). The regional JR letter codes JA (鹿児島本線)
 on the package's 山陽線 entry is likewise rejected — JR九州 assigns no symbol
 to its 山陽線 section — so that route falls back to the JR九州 mark.
+
+Seven Japanese operators changed which of their own marks the app draws,
+because the file on record spelled the company name out. A badge is drawn 36
+points across, and at that size a 576-pixel wordmark or a 120 × 30 logotype
+strip resolves to a grey smear that names nothing, while the same company's
+symbol still reads at a glance. Each operator involved publishes both, so
+taking the symbol costs no authenticity and needs neither a crop nor a
+redraw — it is the other mark the company already uses, and the manifest
+records which file each row now points at. The rows left on a wordmark are
+the ones whose operator publishes nothing else.
+
+Three of the seven — 北越急行, 愛知高速交通 and 名古屋ガイドウェイバス — were
+not on an operator asset at all but on package art of their own line name set
+as type: ほくほく線, Linimo and ゆとりーとライン. That art is correctly scoped
+to the line, unlike the images rejected above, so it is set aside for the
+legibility reason alone and the line falls through to the operator mark. The
+package file itself stays where it is, because `../logos/` is shared with the
+web app; only the audit's judgement of it changes.
 
 `万葉線` and `鞍馬寺` do not publish a distinct operator logo in the checked
 sources. Their three lines deliberately retain the established color-swatch
@@ -62,7 +81,7 @@ fallback instead of using a fabricated or unrelated mark.
 The complete mapping was re-audited against those live sources on 2026-08-20,
 including a visual pass over the displayed assets. Automated popup tests
 verify the 284 accepted package badges, the twelve line-badge overrides, all
-fallback decisions, the 89 downloaded operator assets, their image signatures,
+fallback decisions, the 92 downloaded operator assets, their image signatures,
 and the exact operator-to-manifest assignment.
 
 Japanese operator fallbacks follow the same emblem-first presentation as the
@@ -76,6 +95,24 @@ color swatch. Original source files remain in `jp/`; derived emblem crops are
 stored in `jp-badges/`. The light-on-dark marks for 青函トンネル記念館,
 四国ケーブル, and 阿佐海岸鉄道 receive a dark matte so they remain legible
 in light mode.
+
+The `jp-badges` crops are resolved from the source's own ink rather than from
+the eyeballed fraction that first framed them. Each row keeps its `crop`, which
+still records the region the emblem was taken from, but the badge is cut to the
+bounding box of the connected artwork that window lands on — and to that
+artwork alone, so lettering that falls inside the emblem's own bounds is still
+dropped. A fraction that stopped short of a mark therefore no longer slices it:
+長野電鉄's ring was cut flat on both sides at `0.18` of a source whose emblem
+runs out to `0.2119`, and thirteen of the 33 crops were missing more than a
+tenth of the ink the window showed. Each badge is then squared and given a 6%
+transparent margin, because the popup draws it inside a rounded tile where
+edge-flush artwork reads as cut off. The resolved box and the written pixel
+size are recorded per row as `cropResolved` and `badgePixels`. Run
+`swift ios/tools/rebuild-operator-badges.swift` from the repository root to
+regenerate the files, or with `--check` to confirm the committed ones still
+match their sources. Six rows deliberately keep their manifest window instead:
+five sources are flattened onto opaque paper, which leaves no ink boundary to
+follow, and 札幌市's is a live operator header the script does not fetch.
 
 Municipal tram fallbacks use their passenger-facing transit identity. 札幌市電
 uses the emblem-only ST mark cropped from the current
@@ -117,6 +154,21 @@ retained because the popup already renders the `MTR` company name as text. MTR
 does not publish separate badge artwork for its heavy-rail lines on the system
 map, so this emblem is the intentional fallback for those lines.
 
+`hkt-badge.svg` is Hongkong Tramways' own mark, taken unchanged from
+[Commons File:Hong Kong Tramways Logo Without Text.svg](https://commons.wikimedia.org/wiki/File:Hong_Kong_Tramways_Logo_Without_Text.svg)
+(CC0, credited to Hongkong Tramways). The text-free variant is the one wanted
+here for the same reason the marks above are cropped to their emblem: the
+popup already renders 香港電車 as text beside the badge.
+
+The four tram rows in the package are branch splits of one tramway rather than
+numbered routes — a tram is identified by its destination blind, and the
+company publishes no per-route symbol — so this operator mark is the whole
+answer for them, exactly as MTR's emblem is for heavy rail. Until it was added
+they were the only rows in the Hong Kong package that resolved to no mark at
+all. Its `#007549` is the same green the package already draws the four rows
+in, which is what confirms it is the current corporate mark rather than a
+historical one.
+
 ## Macao
 
 `macao-lrt-badge.png` is the blue-green `M` emblem cropped from the current
@@ -129,3 +181,33 @@ and Hengqin lines, so all three intentionally use this verified operator mark.
 
 The logo and trademark remain the property of Macao Light Rapid Transit
 Corporation, Limited.
+
+## Korea
+
+Thirty-five of the 82 rows in `../kr-2025.json` carry no route symbol of their
+own — intercity, high-speed, freight, connector and depot lines, plus a handful
+of tourist rides and airport people movers — so the operating company's mark is
+the whole answer for them, as MTR's emblem is for Hong Kong heavy rail. Two
+companies cover 30 of those rows between them and are the marks added here.
+
+| Asset | Operator | Rows | Source |
+| --- | --- | --- | --- |
+| `korail.svg` | 한국철도공사 | 29 | [Commons File:Korail logo.svg](https://commons.wikimedia.org/wiki/File:Korail_logo.svg), public domain, credited to Korea Railroad Corporation |
+| `sr.svg` | 에스알 | 1 (수서평택고속선) | [Commons File:SR Corporation logo.svg](https://commons.wikimedia.org/wiki/File:SR_Corporation_logo.svg), public domain, credited to SR Corporation |
+
+Both files are the company's current combination mark, stored exactly as
+Commons publishes it. Neither has been cropped to its emblem yet, which the
+other regions here do and the Japanese audit above spells out the reason for:
+at 36 points across, a wordmark that spells the company name a second time next
+to the popup's own text label reads as a smear rather than a mark. Korail's is
+the more exposed of the two — a 283 × 69 strip whose emblem occupies only its
+left end — and both are vector, so a crop costs nothing but the decision about
+where the emblem ends.
+
+Five further rows fall to operators with no mark on file: 해운대블루라인,
+인천교통공사 (월미바다열차 only — its two subway lines carry their own badges),
+(주)스카이레일, and 인천공항시설관리 for the two 인천국제공항 셔틀트레인 rows.
+They keep the color-swatch fallback until a verified company mark is sourced,
+rather than borrowing an unrelated one.
+
+The logos and trademarks remain the property of their respective owners.

@@ -32,20 +32,20 @@ enum DataStrings {
             .en: "Sample data · read-only preview",
         ],
         "data.savedOnDevice": [
-            .zhHant: "{count} 趟旅程 · 已保存在此裝置",
-            .zhHans: "{count} 趟旅程 · 已保存在此设备",
+            .zhHant: "{count} 趟行程 · 已儲存在此裝置",
+            .zhHans: "{count} 趟行程 · 已保存在此设备",
             .ja: "{count} 本の乗車記録 · この端末に保存済み",
             .en: "{count} journeys · saved on this device",
         ],
         "data.notSavedOnDevice": [
-            .zhHant: "{count} 趟旅程 · 尚未保存到此裝置",
-            .zhHans: "{count} 趟旅程 · 尚未保存到此设备",
+            .zhHant: "{count} 趟行程 · 尚未儲存到此裝置",
+            .zhHans: "{count} 趟行程 · 尚未保存到此设备",
             .ja: "{count} 本の乗車記録 · この端末には未保存",
             .en: "{count} journeys · not saved on this device yet",
         ],
         "data.sampleSubtitle": [
-            .zhHant: "{count} 趟旅程 · 內建示例，不會被覆寫",
-            .zhHans: "{count} 趟旅程 · 内置示例，不会被覆盖",
+            .zhHant: "{count} 趟行程 · 內建示例，不會被覆寫",
+            .zhHans: "{count} 趟行程 · 内置示例，不会被覆盖",
             .ja: "{count} 本の乗車記録 · 内蔵サンプル（上書きされません）",
             .en: "{count} journeys · bundled sample, never overwritten",
         ],
@@ -56,14 +56,14 @@ enum DataStrings {
             .en: "Editing a sample saves a copy as your own data; bundled samples are never overwritten.",
         ],
         "data.readingJourneys": [
-            .zhHant: "正在讀取旅程…",
-            .zhHans: "正在读取旅程…",
+            .zhHant: "正在讀取行程…",
+            .zhHans: "正在读取行程…",
             .ja: "乗車記録を読み込んでいます…",
             .en: "Reading journeys…",
         ],
         "data.storageFootnote": [
-            .zhHant: "旅程保存在此裝置上。匯入、匯出與統計都不需要網路。",
-            .zhHans: "旅程保存在此设备上。导入、导出与统计都不需要网络。",
+            .zhHant: "行程儲存在此裝置上。匯入、匯出與統計都不需要網路。",
+            .zhHans: "行程保存在此设备上。导入、导出与统计都不需要网络。",
             .ja: "乗車記録はこの端末に保存されます。読み込み・書き出し・統計にネットワークは不要です。",
             .en: "Journeys live on this device. Import, export and statistics need no network.",
         ],
@@ -83,20 +83,20 @@ enum DataStrings {
             .zhHant: "追加", .zhHans: "追加", .ja: "追加", .en: "Append",
         ],
         "data.modeReplaceDetail": [
-            .zhHant: "目前的 {kept} 趟旅程會全部移除，換成檔案裡的 {count} 趟。",
-            .zhHans: "当前的 {kept} 趟旅程会全部移除，换成文件里的 {count} 趟。",
+            .zhHant: "目前的 {kept} 趟行程會全部移除，換成檔案裡的 {count} 趟。",
+            .zhHans: "当前的 {kept} 趟行程会全部移除，换成文件里的 {count} 趟。",
             .ja: "現在の {kept} 本をすべて削除し、ファイルの {count} 本に置き換えます。",
             .en: "All {kept} current journeys are removed and replaced by the {count} in the file.",
         ],
         "data.modeAppendDetail": [
-            .zhHant: "目前的 {kept} 趟旅程全部保留，檔案裡的 {count} 趟接在後面。",
-            .zhHans: "当前的 {kept} 趟旅程全部保留，文件里的 {count} 趟接在后面。",
+            .zhHant: "目前的 {kept} 趟行程全部保留，檔案裡的 {count} 趟接在後面。",
+            .zhHans: "当前的 {kept} 趟行程全部保留，文件里的 {count} 趟接在后面。",
             .ja: "現在の {kept} 本はすべて残り、ファイルの {count} 本が後ろに追加されます。",
             .en: "All {kept} current journeys are kept; the {count} in the file are added after them.",
         ],
         "data.appendIdRule": [
-            .zhHant: "ID 與現有旅程相同時，新的一趟會取得新 ID（如 {example}）。現有旅程不會被覆寫，也不會依 ID 更新。",
-            .zhHans: "ID 与现有旅程相同时，新的一趟会取得新 ID（如 {example}）。现有旅程不会被覆盖，也不会按 ID 更新。",
+            .zhHant: "ID 與現有行程相同時，新的一趟會取得新 ID（如 {example}）。現有行程不會被覆寫，也不會依 ID 更新。",
+            .zhHans: "ID 与现有行程相同时，新的一趟会取得新 ID（如 {example}）。现有行程不会被覆盖，也不会按 ID 更新。",
             .ja: "既存と同じ ID の場合、新しい方に別の ID（例：{example}）が付きます。既存の記録は上書きも ID 更新もされません。",
             .en: "A colliding id is renamed on the incoming journey (e.g. {example}). Existing journeys are never overwritten or updated by id.",
         ],
@@ -126,13 +126,13 @@ enum DataStrings {
             .en: "Detected {region} from the station codes in the file.",
         ],
         "data.preflightDateNote": [
-            .zhHant: "沒有 date 的旅程，依 JSON 的 date 欄位或 ID 自動判定日期。",
-            .zhHans: "没有 date 的旅程，依 JSON 的 date 字段或 ID 自动判定日期。",
+            .zhHant: "沒有 date 的行程，依 JSON 的 date 欄位或 ID 自動判定日期。",
+            .zhHans: "没有 date 的行程，依 JSON 的 date 字段或 ID 自动判定日期。",
             .ja: "date のない列車は、JSON の date 項目または ID から日付を判定します。",
             .en: "Journeys without a date are filed by the JSON's own date field or by id.",
         ],
         "data.journeysInFile": [
-            .zhHant: "檔案內旅程", .zhHans: "文件内旅程", .ja: "ファイル内の乗車記録", .en: "Journeys in file",
+            .zhHant: "檔案內行程", .zhHans: "文件内行程", .ja: "ファイル内の乗車記録", .en: "Journeys in file",
         ],
         "data.willAdd": [
             .zhHant: "將新增", .zhHans: "将新增", .ja: "追加される", .en: "Will be added",
@@ -168,7 +168,7 @@ enum DataStrings {
             .en: "Validating {count}/{total}",
         ],
         "data.stageValidatingPlain": [
-            .zhHant: "驗證旅程", .zhHans: "验证旅程", .ja: "乗車記録を検証中", .en: "Validating journeys",
+            .zhHant: "驗證行程", .zhHans: "验证行程", .ja: "乗車記録を検証中", .en: "Validating journeys",
         ],
         "data.stageImporting": [
             .zhHant: "匯入 {count}/{total}",
@@ -183,7 +183,7 @@ enum DataStrings {
             .zhHant: "整理日期", .zhHans: "整理日期", .ja: "日付をまとめています", .en: "Grouping by date",
         ],
         "data.stageSaving": [
-            .zhHant: "保存到此裝置", .zhHans: "保存到此设备", .ja: "この端末に保存中", .en: "Saving to this device",
+            .zhHant: "儲存到此裝置", .zhHans: "保存到此设备", .ja: "この端末に保存中", .en: "Saving to this device",
         ],
         "data.stageInteractive": [
             .zhHant: "匯入期間可以繼續看地圖；資料要等這一步完成才會換。",
@@ -201,8 +201,8 @@ enum DataStrings {
         // MARK: import — outcome
 
         "data.importDone": [
-            .zhHant: "已匯入 {count} 趟旅程，並保存在此裝置。",
-            .zhHans: "已导入 {count} 趟旅程，并保存在此设备。",
+            .zhHant: "已匯入 {count} 趟行程，並儲存在此裝置。",
+            .zhHans: "已导入 {count} 趟行程，并保存在此设备。",
             .ja: "{count} 本を読み込み、この端末に保存しました。",
             .en: "Imported {count} journeys and saved them on this device.",
         ],
@@ -213,8 +213,8 @@ enum DataStrings {
             .en: "{count} of them were given a new id because their id was already taken.",
         ],
         "data.importCancelled": [
-            .zhHant: "已取消檢查。目前的旅程沒有任何變更。",
-            .zhHans: "已取消检查。当前的旅程没有任何变更。",
+            .zhHant: "已取消檢查。目前的行程沒有任何變更。",
+            .zhHans: "已取消检查。当前的行程没有任何变更。",
             .ja: "チェックを中止しました。現在の乗車記録は変更されていません。",
             .en: "Check cancelled. Nothing in the current journeys changed.",
         ],
@@ -225,8 +225,8 @@ enum DataStrings {
             .en: "{count} problems have to be fixed before this can be imported.",
         ],
         "data.startImport": [
-            .zhHant: "匯入 {count} 趟旅程",
-            .zhHans: "导入 {count} 趟旅程",
+            .zhHant: "匯入 {count} 趟行程",
+            .zhHans: "导入 {count} 趟行程",
             .ja: "{count} 本を読み込む",
             .en: "Import {count} journeys",
         ],
@@ -255,14 +255,14 @@ enum DataStrings {
             .en: "This JSON cannot be imported",
         ],
         "data.errorKept": [
-            .zhHant: "目前的 {count} 趟旅程沒有變更，也沒有被刪除。",
-            .zhHans: "当前的 {count} 趟旅程没有变更，也没有被删除。",
+            .zhHant: "目前的 {count} 趟行程沒有變更，也沒有被刪除。",
+            .zhHans: "当前的 {count} 趟行程没有变更，也没有被删除。",
             .ja: "現在の {count} 本は変更も削除もされていません。",
             .en: "The {count} journeys you already have are unchanged and were not deleted.",
         ],
         "data.errorNothingChanged": [
-            .zhHant: "目前的旅程沒有變更。",
-            .zhHans: "当前的旅程没有变更。",
+            .zhHant: "目前的行程沒有變更。",
+            .zhHans: "当前的行程没有变更。",
             .ja: "現在の乗車記録は変更されていません。",
             .en: "Nothing in the current journeys changed.",
         ],
@@ -270,7 +270,7 @@ enum DataStrings {
             .zhHant: "位置：{path}", .zhHans: "位置：{path}", .ja: "位置：{path}", .en: "At {path}",
         ],
         "data.issueTrainID": [
-            .zhHant: "旅程 ID：{id}", .zhHans: "旅程 ID：{id}", .ja: "乗車 ID：{id}", .en: "Journey id {id}",
+            .zhHant: "行程 ID：{id}", .zhHans: "行程 ID：{id}", .ja: "乗車 ID：{id}", .en: "Journey id {id}",
         ],
         "data.issueDocumentRoot": [
             .zhHant: "整份文件", .zhHans: "整份文件", .ja: "ドキュメント全体", .en: "the document root",
@@ -283,28 +283,28 @@ enum DataStrings {
         ],
 
         "data.saveFailedTitle": [
-            .zhHant: "無法保存到此裝置",
+            .zhHant: "無法儲存到此裝置",
             .zhHans: "无法保存到此设备",
             .ja: "この端末に保存できません",
             .en: "Could not save to this device",
         ],
         "data.saveFailedKept": [
-            .zhHant: "旅程仍在畫面上，但重新啟動後會回到上次保存的版本。",
-            .zhHans: "旅程仍在画面上，但重新启动后会回到上次保存的版本。",
+            .zhHant: "行程仍在畫面上，但重新啟動後會回到上次儲存的版本。",
+            .zhHans: "行程仍在画面上，但重新启动后会回到上次保存的版本。",
             .ja: "画面の乗車記録は残りますが、再起動すると前回保存した内容に戻ります。",
             .en: "The journeys are still on screen, but a relaunch will show the last saved version.",
         ],
         "data.saveRetry": [
-            .zhHant: "再保存一次", .zhHans: "再保存一次", .ja: "もう一度保存", .en: "Save again",
+            .zhHant: "再儲存一次", .zhHans: "再保存一次", .ja: "もう一度保存", .en: "Save again",
         ],
         "data.loadFailedTitle": [
-            .zhHant: "無法讀取這個地區的旅程",
-            .zhHans: "无法读取这个地区的旅程",
+            .zhHant: "無法讀取這個地區的行程",
+            .zhHans: "无法读取这个地区的行程",
             .ja: "この地域の乗車記録を読み込めません",
             .en: "Could not read this region's journeys",
         ],
         "data.loadFailedKept": [
-            .zhHant: "保存在此裝置上的檔案沒有被改動。",
+            .zhHant: "儲存在此裝置上的檔案沒有被改動。",
             .zhHans: "保存在此设备上的文件没有被改动。",
             .ja: "この端末に保存されたファイルは変更されていません。",
             .en: "The file saved on this device was not modified.",
@@ -343,8 +343,8 @@ enum DataStrings {
             .en: "This region's map cannot draw railways, and routes cannot be solved.",
         ],
         "data.packageMissingKept": [
-            .zhHant: "旅程記錄仍然可以瀏覽、編輯、匯入與匯出。",
-            .zhHans: "旅程记录仍然可以浏览、编辑、导入与导出。",
+            .zhHant: "行程記錄仍然可以瀏覽、編輯、匯入與匯出。",
+            .zhHans: "行程记录仍然可以浏览、编辑、导入与导出。",
             .ja: "乗車記録の閲覧・編集・読み込み・書き出しは引き続きできます。",
             .en: "Journey records can still be browsed, edited, imported and exported.",
         ],
@@ -373,8 +373,8 @@ enum DataStrings {
             .zhHant: "已複製", .zhHans: "已复制", .ja: "コピーしました", .en: "Copied",
         ],
         "data.exportSize": [
-            .zhHant: "{count} 趟旅程 · 約 {kb} KB",
-            .zhHans: "{count} 趟旅程 · 约 {kb} KB",
+            .zhHant: "{count} 趟行程 · 約 {kb} KB",
+            .zhHans: "{count} 趟行程 · 约 {kb} KB",
             .ja: "{count} 本 · 約 {kb} KB",
             .en: "{count} journeys · about {kb} KB",
         ],
@@ -382,11 +382,11 @@ enum DataStrings {
         // MARK: danger zone and recovery
 
         "data.deleteAllTitle": [
-            .zhHant: "刪除全部旅程", .zhHans: "删除全部旅程", .ja: "すべての乗車記録を削除", .en: "Delete every journey",
+            .zhHant: "刪除全部行程", .zhHans: "删除全部行程", .ja: "すべての乗車記録を削除", .en: "Delete every journey",
         ],
         "data.deleteAllScope": [
-            .zhHant: "會刪除 {region} 的 {count} 趟旅程，包含保存在此裝置的副本。其他地區不受影響。",
-            .zhHans: "会删除 {region} 的 {count} 趟旅程，包含保存在此设备的副本。其他地区不受影响。",
+            .zhHant: "會刪除 {region} 的 {count} 趟行程，包含儲存在此裝置的副本。其他地區不受影響。",
+            .zhHans: "会删除 {region} 的 {count} 趟行程，包含保存在此设备的副本。其他地区不受影响。",
             .ja: "{region} の {count} 本を、この端末の保存分も含めて削除します。他の地域には影響しません。",
             .en: "Deletes {region}'s {count} journeys, including the copy saved on this device. Other regions are untouched.",
         ],
@@ -397,8 +397,8 @@ enum DataStrings {
             .en: "A backup is written first, so this can be undone from “Restore from backup”.",
         ],
         "data.deleteSavedScope": [
-            .zhHant: "會刪除保存在此裝置上的 {region} 副本。畫面上的旅程會換回內建示例。",
-            .zhHans: "会删除保存在此设备上的 {region} 副本。画面上的旅程会换回内置示例。",
+            .zhHant: "會刪除儲存在此裝置上的 {region} 副本。畫面上的行程會換回內建示例。",
+            .zhHans: "会删除保存在此设备上的 {region} 副本。画面上的行程会换回内置示例。",
             .ja: "この端末に保存された {region} のコピーを削除します。画面は内蔵サンプルに戻ります。",
             .en: "Deletes the {region} copy saved on this device. The screen falls back to the bundled sample.",
         ],
@@ -406,8 +406,8 @@ enum DataStrings {
             .zhHant: "恢復", .zhHans: "恢复", .ja: "復元", .en: "Recovery",
         ],
         "data.backupAvailable": [
-            .zhHant: "備份：{count} 趟旅程 · {time}",
-            .zhHans: "备份：{count} 趟旅程 · {time}",
+            .zhHant: "備份：{count} 趟行程 · {time}",
+            .zhHans: "备份：{count} 趟行程 · {time}",
             .ja: "バックアップ：{count} 本 · {time}",
             .en: "Backup: {count} journeys · {time}",
         ],
@@ -424,8 +424,8 @@ enum DataStrings {
             .zhHant: "從備份恢復", .zhHans: "从备份恢复", .ja: "バックアップから復元", .en: "Restore from backup",
         ],
         "data.restoreBackupDetail": [
-            .zhHant: "會把目前的旅程換成備份裡的 {count} 趟。",
-            .zhHans: "会把当前的旅程换成备份里的 {count} 趟。",
+            .zhHant: "會把目前的行程換成備份裡的 {count} 趟。",
+            .zhHans: "会把当前的行程换成备份里的 {count} 趟。",
             .ja: "現在の乗車記録をバックアップの {count} 本に置き換えます。",
             .en: "Replaces the current journeys with the {count} in the backup.",
         ],

@@ -31,6 +31,7 @@
     "check:jsonspec-values": "node scripts/validation/build-jsonspec-value-catalog.mjs --check",
     "rebuild:railway:jp": "node scripts/railway/rebuild-japan-railway.mjs",
     "audit:apple-tiles:jp": "node scripts/validation/audit-apple-maps-tiles.mjs",
+    "audit:sample-branding:jp": "node scripts/validation/audit-japan-sample-branding.mjs",
     "build:static": "node scripts/build/build-static-site.mjs",
     "serve:static": "node scripts/build/serve-static.mjs",
     "dev:static": "npm run build:static && node scripts/build/serve-static.mjs",

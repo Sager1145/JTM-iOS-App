@@ -48,7 +48,6 @@ struct RideCard: View {
     var expansionProgress: CGFloat = 1
     var dateChipTitle: String?
     var onClose: () -> Void
-    var onOpenDate: (String) -> Void
     var onPrimary: (JourneyPresentation.PrimaryAction) -> Void
     var onSecondary: (SecondaryAction) -> Void
     /// §5.3: confirm that this journey was ridden, or take it back.
@@ -266,6 +265,14 @@ struct RideCard: View {
         // interpolated top inset instead, which reads as centred against the
         // short collapsed block and as top-aligned against the tall open one.
         HStack(alignment: .top, spacing: 10) {
+            // The journey's own mark, the same square the list row and the
+            // detail screen draw it in — this card is what a tapped row opens
+            // into, and the mark is the thing that says it is still the same
+            // journey. Its side is interpolated like everything else here, so
+            // it grows with the number beside it rather than stepping when the
+            // sheet settles.
+            RouteLogoSquare(train: train, side: interpolated(36, 46))
+
             VStack(alignment: .leading, spacing: interpolated(2, 6)) {
                 // §3.2 puts the date above the number as an eyebrow; the
                 // resolver supplies it, and it is a Button because §5.2 makes
@@ -284,7 +291,6 @@ struct RideCard: View {
                             height: progress >= 1 ? nil : dateChipHeight * progress,
                             alignment: .top)
                         .clipped()
-                        .allowsHitTesting(progress > 0.5)
                         .accessibilityHidden(progress < 0.5)
                 }
 
@@ -407,45 +413,39 @@ struct RideCard: View {
     }
 
     private func dateChip(_ date: String) -> some View {
-        // The chip carries the date this journey is filed under, and the date
-        // is how the reader gets back to that day's list (§5.2).
+        // §3.2's eyebrow: the date this journey is filed under, and nothing
+        // else.
         //
-        // A capsule at the standard sizes and a continuous rounded rectangle
-        // at an accessibility one, because at those sizes it holds TWO lines:
-        // a capsule's end caps are drawn for a single line of text and a
-        // two-line one reads as a lozenge with the corners cut off.
-        let shape = AnyShape(
-            dynamicTypeSize.isAccessibilitySize
-                ? AnyShape(RoundedRectangle(
-                    cornerRadius: RailStyle.controlCornerRadius,
-                    style: .continuous))
-                : AnyShape(Capsule()))
-        return Button { onOpenDate(date) } label: {
-            chipContent
-                .font(.caption.weight(.semibold))
-                .padding(.horizontal, 9)
-                // At the standard text sizes this is the same 34-point visual
-                // body as the close button beside it and the controls below.
-                // The outer 44-point frame is the hit target, just like
-                // `SheetIconButton`. AX keeps its intrinsic two-line height —
-                // forcing that content back into 34 points would clip the date.
-                .frame(
-                    height: dynamicTypeSize.isAccessibilitySize
-                        ? nil
-                        : SheetIconButton<Image>.visualSide)
-                .background(Color.accentColor.opacity(0.14), in: shape)
-                .overlay { shape.stroke(Color.accentColor.opacity(0.35), lineWidth: 1) }
-                .contentShape(shape)
-                .frame(minHeight: 44)
-        }
-        .buttonStyle(RailPressStyle())
-        // The whole date, spoken, whichever way it is drawn — a reader hearing
-        // this control must not be given the wrapped halves as two fragments.
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(date))
-        .accessibilityHint(
-            Text(localization.journeyText(
-                "ios.journey.backToDate", fallback: "Back to this day's journeys")))
+        // It used to be a Button that entered that day's list (§5.2), and that
+        // was the last route by which choosing ONE line chose a DAY. Its cost
+        // was the shape of the interaction rather than the tap: the control
+        // appeared the moment a line was picked, sat at the top of the card
+        // wearing the accent, and answered by scoping the whole log to that
+        // date AND dropping the selection — so the reader who touched it had
+        // gone from "this journey" to "this day", and getting back to the
+        // journey they were already looking at took another pick. One click on
+        // a line now means one thing. The date bar in the panel header is
+        // where a day is asked for, and it is one press either way.
+        //
+        // Drawn as plain text rather than as a tinted capsule now, because a
+        // capsule in the accent colour is a promise that it can be pressed.
+        chipContent
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.secondary)
+            // The same 34-point band the control row beside it occupies, so
+            // removing the button does not move the number underneath. AX
+            // keeps its intrinsic two-line height — forcing that content back
+            // into 34 points would clip the date.
+            .frame(
+                height: dynamicTypeSize.isAccessibilitySize
+                    ? nil
+                    : SheetIconButton<Image>.visualSide,
+                alignment: .leading)
+            // The whole date, spoken, whichever way it is drawn — a reader
+            // hearing this must not be given the wrapped halves as two
+            // fragments.
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(date))
     }
 
     @ViewBuilder

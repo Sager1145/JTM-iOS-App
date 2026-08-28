@@ -4,7 +4,7 @@
 //
 //  Two jobs live here, and the split is the point.
 //
-//  THE CATALOGS ARE DATA. i18n-strings.js holds 432 keys × { zh, en } plus a
+//  THE CATALOGS ARE DATA. i18n-strings.js holds 456 keys × { zh, en } plus a
 //  complete Japanese overlay. Those belong in the iOS app as a resource, not
 //  as transcribed Swift source, so this module writes them to
 //  ios/Resources/Localizable.xcstrings — generated from the real JavaScript, on
@@ -19,7 +19,7 @@
 //
 //  The app has four UI languages but only three maintained ones. Simplified
 //  Chinese is DERIVED at runtime: t() runs the Traditional copy through
-//  toSimplifiedChinese(), a 236-entry character/phrase map that lives in
+//  toSimplifiedChinese(), a 243-entry character/phrase map that lives in
 //  i18n.js and is reachable from nowhere else. So the emitted catalog carries
 //  zh-Hans as a materialised localisation — computed here by calling the real
 //  t() with the language set to zh-Hans, never by re-typing the map — and the
@@ -28,7 +28,7 @@
 //  That is a deliberate asymmetry: three languages keep their fallback chains
 //  in the port, and the fourth is pre-folded because it is a derivation rather
 //  than a translation. It also removes the whole class of bug where one entry
-//  of a 236-row table is mistyped in Swift and one screen quietly reads wrong.
+//  of a 243-row table is mistyped in Swift and one screen quietly reads wrong.
 //
 //  Every entry gets a zh-Hans localisation, including entries that would fall
 //  back — t() under zh-Hans always returns a string, even for an entry with no
@@ -798,9 +798,9 @@ export function build({ APP_DIR, AppCore }) {
       "stationName, localeDefaultReadingPrefs, setNameReadings, " +
       "setStationReadings} over the i18n-strings.js catalogs",
     contract:
-      "432 keys, four UI languages, three of them maintained: the Simplified " +
+      "456 keys, four UI languages, three of them maintained: the Simplified " +
       "Chinese UI is generated at runtime from the Traditional copy by a " +
-      "236-entry map that lives in i18n.js and is reachable from nowhere but " +
+      "243-entry map that lives in i18n.js and is reachable from nowhere but " +
       "t(). The Swift port has no converter — ios/RailMap/Localizable." +
       "xcstrings, written by this module on every fixture run, carries " +
       "zh-Hans as a materialised localisation produced by calling the real " +

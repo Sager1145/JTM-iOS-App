@@ -174,7 +174,7 @@ public enum OperatorBranding {
     /// added for Swift's benefit.
     public static func lineLogo(_ lineId: String?) -> String? {
         guard let lineId else { return nil }
-        return lineLogos[lineId]
+        return lineLogos[lineId] ?? lineLogos[badgeLineID(lineId)]
     }
 
     /// The package's own badge for a line — but only where it is a line badge.
@@ -185,17 +185,14 @@ public enum OperatorBranding {
     /// regional JR codes, three historical predecessor marks and one
     /// parent-company mark; none of those may outrank the line's real operator.
     ///
-    /// The set is consulted with the stroke's OWN id, and split parts and
-    /// paired alignments carry their parent's artwork under a suffixed id
-    /// (`jp-東日本旅客鉄道-中央線-2`) that the set does not contain. Seventeen
-    /// strokes therefore keep exactly the company marks the audit exists to
-    /// reject. That is what the JavaScript does today and the fixture records
-    /// it; changing it is a data decision, not a porting one.
+    /// Split parts and paired alignments carry their parent's artwork under a
+    /// suffixed id (`jp-東日本旅客鉄道-中央線-2`). The audit therefore uses the
+    /// same parent id that the package loader used to choose that artwork.
     public static func verifiedPackageLineLogo(_ line: Line?) -> String? {
         // `if (!line || !line.logo)` — an empty logo string is falsy and stops
         // here, before the audit set is ever consulted.
         guard let line, let logo = line.logo, !logo.isEmpty else { return nil }
-        let lineId = firstTruthy(line.lineId, line.id) ?? ""
+        let lineId = badgeLineID(firstTruthy(line.lineId, line.id) ?? "")
         // The `jp-` guard is part of the rule, not an optimisation: every entry
         // in the set is a Japanese id, and a non-Japanese line keeps whatever
         // badge the package gave it without being examined at all.
@@ -237,6 +234,27 @@ public enum OperatorBranding {
             if let value, !value.isEmpty { return value }
         }
         return nil
+    }
+
+    /// `lineID` with any trailing run of split/alignment suffixes removed.
+    /// Mirrors `rail-network.js`'s `/(?:-p?\d+)+$/` exactly.
+    private static func badgeLineID(_ lineID: String) -> String {
+        var units = Array(lineID.utf16)
+        while true {
+            var end = units.count
+            var digits = 0
+            while end - digits > 0, (0x30...0x39).contains(units[end - digits - 1]) {
+                digits += 1
+            }
+            guard digits > 0 else { break }
+            var start = end - digits
+            if start > 0, units[start - 1] == 0x70 { start -= 1 }  // "p"
+            guard start > 0, units[start - 1] == 0x2D else { break }  // "-"
+            start -= 1
+            units.removeSubrange(start..<end)
+            end = start
+        }
+        return String(decoding: units, as: UTF16.self)
     }
 
     private static let slash: UInt16 = 0x002F
@@ -477,7 +495,10 @@ public enum OperatorBranding {
         ("高尾登山電鉄", "/rail/operator-logos/jp/q7677245.svg"),
         ("高松琴平電気鉄道", "/rail/operator-logos/jp/q566998.svg"),
         ("筑波観光鉄道", "/rail/operator-logos/jp/tsukuba-kanko.png"),
-        ("養老鉄道", "/rail/operator-logos/jp/yoro-railway.webp"),
+        ("養老鉄道", "/rail/operator-logos/jp/yoro-railway.svg"),
+        ("北越急行", "/rail/operator-logos/jp/q10903965.svg"),
+        ("愛知高速交通", "/rail/operator-logos/jp/q11073857.svg"),
+        ("名古屋ガイドウェイバス", "/rail/operator-logos/jp/q11414812.svg"),
         ("鹿児島市", "/rail/operator-logos/jp/q3537114.gif"),
     ])
 
@@ -582,6 +603,16 @@ public enum OperatorBranding {
         "jp-西日本旅客鉄道-北陸新幹線",
         "jp-仙台市-東西線",
         "jp-北海道旅客鉄道-北海道新幹線",
+        // Line art that is the line's NAME set as type. Correctly scoped,
+        // unlike the company and predecessor marks above, but 120 points
+        // wide and 25 to 30 tall: at badge size it is a grey smear naming
+        // nothing, while each of these three operators publishes a symbol
+        // that still reads. The package file stays where it is —
+        // `/rail/logos` is shared with the web app — and only this audit's
+        // judgement of it changes.
+        "jp-北越急行-ほくほく線",
+        "jp-愛知高速交通-東部丘陵線",
+        "jp-名古屋ガイドウェイバス-ガイドウェイバス志段味線",
         "jp-九州旅客鉄道-西九州新幹線",
     ])
 
@@ -593,6 +624,13 @@ public enum OperatorBranding {
 
     private static let operatorLogos = CodeUnitTable([
         ("MTR", "/rail/operator-logos/mtr-badge.png"),
+        // Hongkong Tramways numbers no routes — a tram is identified by its
+        // destination blind — so the four package rows are branch splits of
+        // one tramway and none of them can carry a route badge. They were
+        // carrying nothing at all instead. This is the company's own mark in
+        // the text-free variant it publishes, and its green is the same
+        // #007549 the package already draws the four rows in.
+        ("香港電車", "/rail/operator-logos/hkt-badge.svg"),
         ("澳門輕軌", "/rail/operator-logos/macao-lrt-badge.png"),
         ("台鐵", "/rail/operator-logos/tra.svg"),
         ("台灣高鐵", "/rail/operator-logos/thsr.svg"),
@@ -601,6 +639,11 @@ public enum OperatorBranding {
         ("桃園捷運", "/rail/operator-logos/tym.png"),
         ("台中捷運", "/rail/operator-logos/tcmrt.svg"),
         ("高雄捷運", "/rail/operator-logos/krtc-badge.png"),
+        // Korail and SR: the fallback for the 35 Korean railways that
+        // publish no route symbol of their own — the mainlines, the freight
+        // and connector lines, and the three tourist railways.
+        ("한국철도공사", "/rail/operator-logos/korail.svg"),
+        ("에스알", "/rail/operator-logos/sr.svg"),
         ("阿里山林鐵", "/rail/operator-logos/alsr-badge.png"),
     ])
 
@@ -634,6 +677,57 @@ public enum OperatorBranding {
         ("tw-krtc-r", "/rail/line-logos/krtc-r.svg"),
         ("tw-krtc-o", "/rail/line-logos/krtc-o.svg"),
         ("tw-klrt-c", "/rail/line-logos/krtc-c.svg"),
+        // Korea. Every row that carries an official route symbol; the rest
+        // fall through to Korail's or SR's company mark above.
+        // Through-services, branches and extensions share the badge on
+        // their platform rather than one of their own.
+        ("kr-gyeongchunseon", "/rail/line-logos/kr-gyeongchun.svg"),
+        ("kr-incheongukjegonghangseon", "/rail/line-logos/kr-arex.svg"),
+        ("kr-seoul-jihacheol-7hoseon", "/rail/line-logos/kr-seoul-7.svg"),
+        ("kr-gyeonguiseon", "/rail/line-logos/kr-gyeongui-jungang.svg"),
+        ("kr-bundangseon", "/rail/line-logos/kr-suin-bundang.svg"),
+        ("kr-seoul-jihacheol-5hoseon", "/rail/line-logos/kr-seoul-5.svg"),
+        ("kr-seoul-jihacheol-9hoseon", "/rail/line-logos/kr-seoul-9.svg"),
+        ("kr-busan-dosicheoldo-1hoseon", "/rail/line-logos/kr-busan-1.svg"),
+        ("kr-3hoseon", "/rail/line-logos/kr-seoul-3.svg"),
+        ("kr-sudogwongwangyeokgeuphaengcheoldoeiseon", "/rail/line-logos/kr-gtx-a.svg"),
+        ("kr-busan-dosicheoldo-2hoseon", "/rail/line-logos/kr-busan-2.svg"),
+        ("kr-incheon-dosicheoldo-1hoseon", "/rail/line-logos/kr-incheon-1.svg"),
+        ("kr-4hoseon", "/rail/line-logos/kr-seoul-4.svg"),
+        ("kr-sinbundangseon", "/rail/line-logos/kr-sinbundang.svg"),
+        ("kr-donghaebonseon", "/rail/line-logos/kr-donghae.svg"),
+        ("kr-incheon-dosicheoldo-2hoseon", "/rail/line-logos/kr-incheon-2.svg"),
+        ("kr-daegu-dosicheoldo-2hoseon", "/rail/line-logos/kr-daegu-2.svg"),
+        ("kr-daegu-dosicheoldo-1hoseon", "/rail/line-logos/kr-daegu-1.svg"),
+        ("kr-gyeonginseon", "/rail/line-logos/kr-seoul-1.svg"),
+        ("kr-seoul-jihacheol-6hoseon", "/rail/line-logos/kr-seoul-6.svg"),
+        ("kr-ansanseon", "/rail/line-logos/kr-seoul-4.svg"),
+        ("kr-seoul-jihacheol-2hoseon", "/rail/line-logos/kr-seoul-2.svg"),
+        ("kr-gimpo-goldeurain", "/rail/line-logos/kr-gimpo-gold.svg"),
+        ("kr-daegu-dosicheoldo-3hoseon", "/rail/line-logos/kr-daegu-3.svg"),
+        ("kr-busangimhaegyeongjeoncheol", "/rail/line-logos/kr-busan-gimhae.svg"),
+        ("kr-donghaeseon", "/rail/line-logos/kr-donghae.svg"),
+        ("kr-daejeon-dosicheoldo-1hoseon", "/rail/line-logos/kr-daejeon-1.svg"),
+        ("kr-gwangju-dosicheoldo-1hoseon", "/rail/line-logos/kr-gwangju-1.svg"),
+        ("kr-suinseon", "/rail/line-logos/kr-suin-bundang.svg"),
+        ("kr-ilsanseon", "/rail/line-logos/kr-seoul-3.svg"),
+        ("kr-seoul-jihacheol-8hoseon", "/rail/line-logos/kr-seoul-8.svg"),
+        ("kr-busan-dosicheoldo-3hoseon", "/rail/line-logos/kr-busan-3.svg"),
+        ("kr-jinjeopseon", "/rail/line-logos/kr-seoul-4.svg"),
+        ("kr-gwacheonseon", "/rail/line-logos/kr-seoul-4.svg"),
+        ("kr-yongingyeongjeoncheol", "/rail/line-logos/kr-everline.svg"),
+        ("kr-busan-dosicheoldo-4hoseon", "/rail/line-logos/kr-busan-4.svg"),
+        ("kr-byeolnaeseon", "/rail/line-logos/kr-seoul-8.svg"),
+        ("kr-uisinseolseon", "/rail/line-logos/kr-uisinseol.svg"),
+        ("kr-ansim-hayang-bokseonjeoncheol", "/rail/line-logos/kr-daegu-1.svg"),
+        ("kr-uijeongbugyeongjeoncheol", "/rail/line-logos/kr-uijeongbu-u.svg"),
+        ("kr-seoul-jihacheol-1hoseon", "/rail/line-logos/kr-seoul-1.svg"),
+        ("kr-hanamseon", "/rail/line-logos/kr-seoul-5.svg"),
+        ("kr-seoul-gyeongjeoncheol-sinrimseon", "/rail/line-logos/kr-sillim.svg"),
+        ("kr-macheonjiseon", "/rail/line-logos/kr-seoul-5.svg"),
+        ("kr-yongsanseon", "/rail/line-logos/kr-gyeongui-jungang.svg"),
+        ("kr-seoul-jihacheol-2hoseon-sinjeongjiseon", "/rail/line-logos/kr-seoul-2.svg"),
+        ("kr-seoul-jihacheol-2hoseon-seongsujiseon", "/rail/line-logos/kr-seoul-2.svg"),
         ("hk-mtr-lr-505", "/rail/line-logos/mtr-lr-505.svg"),
         ("hk-mtr-lr-507", "/rail/line-logos/mtr-lr-507.svg"),
         ("hk-mtr-lr-610", "/rail/line-logos/mtr-lr-610.svg"),

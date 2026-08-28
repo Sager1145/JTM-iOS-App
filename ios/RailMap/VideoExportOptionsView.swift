@@ -13,8 +13,10 @@ import SwiftUI
 /// frame, quality and bitrate appear only once it is opened.
 struct VideoExportOptionsView: View {
     @Bindable var settings: VideoExportSettings
-    /// The map's own size in points, which is what the crop is taken from.
-    let sourceSize: CGSize
+    /// The rectangle of the map the crop is taken from, in the map view's own
+    /// points — the part the resident sheet leaves uncovered, which is where
+    /// the playback camera centres its train.
+    let sourceRect: CGRect
     let displayScale: CGFloat
     /// The planned run, from `Playback.plan` — the only honest input to a file
     /// size, and zero when nothing is queued.
@@ -25,7 +27,7 @@ struct VideoExportOptionsView: View {
     @Environment(AppLocalization.self) private var localization
 
     private var plan: VideoExportSettings.Plan {
-        settings.plan(sourceSize: sourceSize, displayScale: displayScale)
+        settings.plan(sourceRect: sourceRect, displayScale: displayScale)
     }
 
     var body: some View {

@@ -263,10 +263,20 @@ struct RouteTimingView: View {
 
 /// One journey, as a list reads it.
 ///
-/// The field order follows what a reader is choosing: quiet service metadata,
-/// then the origin and destination as the visual title, then both endpoint
-/// times, and finally state. The record ID never appears — §3.1 puts it in L4,
-/// which is the detail screen.
+/// Flighty's passport row is the model, and it suits a record that is being
+/// recollected rather than acted on: a bounded brand mark gives every row the
+/// same visual start, one quiet line carries the service and the date, the
+/// pair of stations is the TITLE, and everything else sits under it at
+/// footnote weight. The record ID never appears — §3.1 puts it in L4, which is
+/// the detail screen.
+///
+/// What is deliberately not borrowed is the two-line ceiling. A flight is
+/// identified by a carrier and a number, so Flighty needs nothing under the
+/// city pair; a ride is identified by a line, an operator, a type and a
+/// number, and the times are the thing the reader wrote down. So this row
+/// keeps exactly two footnote lines below the title — the route, then the
+/// timing — and nothing else joins them: state appears only when there is
+/// state to report.
 struct JourneySummaryRow: View {
     var train: Train
     var presentation: JourneyPresentation
@@ -277,39 +287,16 @@ struct JourneySummaryRow: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        Group {
             if dynamicTypeSize.isAccessibilitySize {
-                // At large text sizes the route is the decision, so it must
-                // appear before service metadata that can span many lines.
-                stationPair
-                timingLine
-                detailLine
+                accessibilityLayout
             } else {
-                detailLine
-                stationPair
-                timingLine
-            }
-
-            if let status = presentation.summaryStatus,
-               status.title.key != JourneyPresentationResolver.Keys.hiddenTitle
-            {
-                JourneyStatusBadge(status: status, compact: true)
-                    .padding(.top, 1)
+                standardLayout
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 38)
-        .padding(.trailing, 12)
-        .padding(.vertical, 11)
+        .padding(12)
         .background(rowBackground)
-        .overlay(alignment: .leading) {
-            Capsule(style: .continuous)
-                .fill(swatchColor)
-                .frame(width: 8)
-                .padding(.leading, 16)
-                .padding(.vertical, 12)
-                .accessibilityHidden(true)
-        }
         .overlay {
             RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
                 .strokeBorder(
@@ -321,177 +308,183 @@ struct JourneySummaryRow: View {
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 
-    @ViewBuilder
-    private var detailLine: some View {
-        if dynamicTypeSize.isAccessibilitySize {
+    /// The ordinary row keeps the mark as a stable square column. Nothing in
+    /// the text column is positioned from the artwork's aspect ratio, so a
+    /// wide wordmark and a round metro badge align exactly the same way.
+    ///
+    /// The mark is centred against the whole text column rather than pinned to
+    /// its first line: a row is three or four lines tall and its height varies
+    /// with how much of the route there is to name, so a top-aligned badge
+    /// drifts up the card as the row grows. Centred, every row in the list has
+    /// its mark on the same optical line.
+    private var standardLayout: some View {
+        HStack(alignment: .center, spacing: 12) {
+            RouteLogoSquare(train: train)
+
             VStack(alignment: .leading, spacing: 5) {
-                if showsDate { dateBadge }
-                detail
+                headerLine
+                stationTitle
+                timingLine
+                routeLine
+                stateBadge
             }
-        } else {
-            HStack(alignment: .firstTextBaseline, spacing: 10) {
-                if showsDate { dateBadge }
-                detail
-            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
-    private var detail: some View {
-        Text(detailText)
-            // The train number, type and operator identify the service, but
-            // they are supporting detail rather than the decision the row is
-            // for. The route below therefore owns the display weight.
-            .font(.caption.weight(.semibold))
+    /// At an accessibility size the logo remains a bounded identifier rather
+    /// than taking a text-scaled share of the row. The reading content below
+    /// it receives the card's full width and every critical label can wrap.
+    private var accessibilityLayout: some View {
+        VStack(alignment: .leading, spacing: 9) {
+            HStack(alignment: .center, spacing: 12) {
+                RouteLogoSquare(train: train)
+                accessibilityHeader
+            }
+
+            stationTitle
+            timingLine
+            routeLine
+            stateBadge
+        }
+    }
+
+    /// The ordinary first line mirrors Flighty's number/date baseline. At an
+    /// accessibility size those two strings no longer fit honestly beside one
+    /// another, so ``accessibilityHeader`` stacks them instead of letting the
+    /// fixed-width date crush a long service name into a one-character column.
+    private var accessibilityHeader: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(serviceText)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if showsDate {
+                Text(dateText)
+                    .font(.subheadline.weight(.semibold))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var headerLine: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(serviceText)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer(minLength: 4)
+
+            if showsDate {
+                Text(dateText)
+                    .font(.subheadline.weight(.semibold))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// 「東京 → 大阪」 — the row's title, and ONE `Text` rather than a stack
+    /// of two.
+    ///
+    /// Flighty writes the pair as a sentence with the connector in a lighter
+    /// weight, and writing it the same way here removes an arrangement problem
+    /// rather than only changing how it looks: two labels with an arrow
+    /// between them either fit on one line or have to become a stacked pair
+    /// with a downward arrow, and choosing between those needed a
+    /// `ViewThatFits` wrapped around both forms. A sentence just wraps. That
+    /// is §10.1's rule — the layout gives way, the type never shrinks —
+    /// reached by writing one piece of text instead of by choosing between two
+    /// layouts of it.
+    ///
+    /// The connector is an arrow in every language, and it comes from the
+    /// catalog rather than from a literal here — `ios.journey.stationConnector`
+    /// is the one place the mark is decided, next to `ios.journey.endpoints`,
+    /// which spells the same relationship for the surfaces that state it as a
+    /// sentence.
+    private var stationTitle: some View {
+        (Text(localization.originName(of: train))
+            .fontWeight(.bold)
+            + Text(" \(stationConnector) ")
+            .fontWeight(.regular)
             .foregroundStyle(.secondary)
-            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+            + Text(localization.destinationName(of: train))
+            .fontWeight(.bold))
+            .font(.title3)
+            // Three lines is generous for a station pair and still bounded; at
+            // an accessibility size the pair is the answer the row exists to
+            // give, so it takes whatever it needs (§14.4).
+            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
             .fixedSize(horizontal: false, vertical: true)
     }
 
+    private var stationConnector: String {
+        localization.text("ios.journey.stationConnector", fallback: "to")
+    }
+
+    /// 「東海道本線 · JR東海」 — which railway this was, after the pair of
+    /// stations and the times the reader wrote down.
+    ///
+    /// The operators are short names rather than legal ones — see
+    /// ``JourneyBranding/operatorLabels(of:)``, which is also what stops
+    /// 「東日本旅客鉄道 / JR東日本」 from printing one company twice.
     @ViewBuilder
-    private var stationPair: some View {
-        if dynamicTypeSize.isAccessibilitySize {
-            stackedStationPair
-        } else {
-            ViewThatFits(in: .horizontal) {
-                horizontalStationPair
-                stackedStationPair
-            }
+    private var routeLine: some View {
+        if !routeDetailText.isEmpty {
+            Text(routeDetailText)
+                .font(.footnote.weight(.medium))
+                .foregroundStyle(.secondary)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
-    private var horizontalStationPair: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 7) {
-            stationLabel(localization.originName(of: train), lineLimit: 1)
-            Image(systemName: "arrow.right")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .accessibilityHidden(true)
-            stationLabel(localization.destinationName(of: train), lineLimit: 1)
-        }
-        // Make ViewThatFits compare the route's honest single-line width; if
-        // it cannot fit, the vertical route below is clearer than compressing
-        // or truncating either station name.
-        .fixedSize(horizontal: true, vertical: false)
-    }
-
-    private var stackedStationPair: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            stationLabel(localization.originName(of: train), lineLimit: nil)
-            Image(systemName: "arrow.down")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .accessibilityHidden(true)
-            stationLabel(localization.destinationName(of: train), lineLimit: nil)
-        }
-    }
-
-    /// The name is already through the readings table — see the two
-    /// `stationLabel` callers above, which name it from the journey so the
-    /// right region's table answers.
-    private func stationLabel(_ name: String, lineLimit: Int?) -> some View {
-        Text(name)
-            .font(.title3.weight(.bold))
-            .lineLimit(lineLimit)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-
+    /// 「発 08:00 3番線 · 着 09:32 5番線 · 12 駅」.
+    ///
+    /// Directly under the station pair, because the two answer one question
+    /// together: a row is 「関西空港 → 新大阪」 AND when that was. The railway
+    /// it ran over follows, which is the next question rather than part of
+    /// this one.
+    ///
+    /// One string, for the same reason the title above is one string: a row of
+    /// labelled chips has to be arranged twice — once across, once down — and
+    /// the arrangement is what broke at an accessibility size. A sentence
+    /// wraps at whatever width it is handed.
     @ViewBuilder
     private var timingLine: some View {
-        if dynamicTypeSize.isAccessibilitySize {
-            verticalTimingLine
-        } else {
-            ViewThatFits(in: .horizontal) {
-                horizontalTimingLine
-                verticalTimingLine
-            }
-        }
-    }
-
-    private var horizontalTimingLine: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 7) {
-            timeEndpoint(
-                localization.countryText("tag.dep", fallback: "Dep"),
-                time: departureTime,
-                platform: train.stops.first?.platformNumber)
-            Image(systemName: "arrow.right")
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .accessibilityHidden(true)
-            timeEndpoint(
-                localization.countryText("tag.arr", fallback: "Arr"),
-                time: arrivalTime,
-                platform: train.stops.last?.platformNumber)
-            Text("·")
-                .foregroundStyle(.tertiary)
-            Text(stopCountText)
-            Spacer(minLength: 0)
-            visibilityBadge
-                .fixedSize(horizontal: true, vertical: false)
-        }
-        .fixedSize(horizontal: true, vertical: false)
-    }
-
-    private var verticalTimingLine: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            timeEndpoint(
-                localization.countryText("tag.dep", fallback: "Dep"),
-                time: departureTime,
-                platform: train.stops.first?.platformNumber)
-            timeEndpoint(
-                localization.countryText("tag.arr", fallback: "Arr"),
-                time: arrivalTime,
-                platform: train.stops.last?.platformNumber)
-            HStack(spacing: 8) {
-                Text(stopCountText)
-                visibilityBadge
-            }
-        }
-    }
-
-    private func timeEndpoint(_ label: String, time: String?, platform: Int?) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 4) {
-            Text(label)
-            Text(time ?? "—:—")
+        if !timingText.isEmpty {
+            Text(timingText)
+                .font(.footnote)
+                // §14.2: a time is a figure the reader compares down a column.
                 .monospacedDigit()
-                .foregroundStyle(.primary)
-            if let platform, platform >= 0 {
-                Text(
-                    localization.editorText(
-                        "ios.detail.platformValue",
-                        ["number": .number(Double(platform))])
-                )
-                .font(.caption.weight(.semibold))
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
-                .background(Color(.tertiarySystemFill), in: Capsule(style: .continuous))
-            }
+                .foregroundStyle(.secondary)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .font(.subheadline)
-        .foregroundStyle(.secondary)
     }
 
-    private var dateBadge: some View {
-        Text(dateText)
-            .font(.caption.weight(.semibold))
-            .monospacedDigit()
-            .foregroundStyle(.secondary)
-            .padding(.horizontal, 7)
-            .padding(.vertical, 2)
-            .background(Color(.tertiarySystemFill), in: Capsule(style: .continuous))
-            .fixedSize(horizontal: true, vertical: false)
-    }
-
-    private var visibilityBadge: some View {
-        Text(
-            train.visible == false
-                ? localization.countryText("state.hidden", fallback: "Hidden")
-                : localization.countryText("state.shown", fallback: "Shown")
-        )
-        .font(.caption)
-        .foregroundStyle(.secondary)
-        .padding(.horizontal, 9)
-        .padding(.vertical, 4)
-        .background(Color(.tertiarySystemFill), in: Capsule(style: .continuous))
+    /// State appears only when there is state to report.
+    ///
+    /// The row used to carry a permanent 「顯示中」/「已隱藏」 capsule beside
+    /// the times, which is exactly the success badge §7.5 forbids: two hundred
+    /// rows all saying they are shown is two hundred pills carrying nothing.
+    /// The resolver already returns 「已從地圖隱藏」 as this journey's status
+    /// when it is hidden — so the one badge below says it, and the capsule is
+    /// gone rather than duplicated.
+    @ViewBuilder
+    private var stateBadge: some View {
+        if let status = presentation.summaryStatus {
+            JourneyStatusBadge(status: status, compact: true)
+                .padding(.top, 1)
+        }
     }
 
     private var rowBackground: some View {
@@ -503,10 +496,10 @@ struct JourneySummaryRow: View {
             }
     }
 
-    private var detailText: String {
-        [train.number, typeCompanyText]
-            .filter { !$0.isEmpty }
-            .joined(separator: "  ")
+    private var serviceText: String {
+        [train.number, nonEmpty(train.trainType)]
+            .compactMap { $0 }
+            .joined(separator: " · ")
     }
 
     private var dateText: String {
@@ -514,13 +507,43 @@ struct JourneySummaryRow: View {
         return date
     }
 
-    private var typeCompanyText: String {
-        [train.trainType, train.company]
-            .compactMap { value in
-                guard let value, !value.isEmpty else { return nil }
-                return value
-            }
-            .joined(separator: " · ")
+    /// The line and the operator, resolved the same way the mark beside them
+    /// is — see ``JourneyBranding``.
+    private var routeDetailText: String { JourneyBranding.routeText(of: train) }
+
+    private var timingText: String {
+        var parts: [String] = []
+        if let departureTime {
+            parts.append(
+                endpointText(
+                    localization.countryText("tag.dep", fallback: "Dep"),
+                    time: departureTime,
+                    platform: train.stops.first?.platformNumber))
+        }
+        if let arrivalTime {
+            parts.append(
+                endpointText(
+                    localization.countryText("tag.arr", fallback: "Arr"),
+                    time: arrivalTime,
+                    platform: train.stops.last?.platformNumber))
+        }
+        parts.append(stopCountText)
+        return parts.joined(separator: " · ")
+    }
+
+    private func endpointText(_ label: String, time: String, platform: Int?) -> String {
+        var parts = [label, time]
+        if let platform, platform >= 0 {
+            parts.append(
+                localization.editorText(
+                    "ios.detail.platformValue", ["number": .number(Double(platform))]))
+        }
+        return parts.joined(separator: " ")
+    }
+
+    private func nonEmpty(_ value: String?) -> String? {
+        guard let value, !value.isEmpty else { return nil }
+        return value
     }
 
     private var stopCountText: String {
@@ -537,13 +560,6 @@ struct JourneySummaryRow: View {
         let time = train.stops.last?.arrival ?? train.stops.last?.departure
         guard let time, !time.isEmpty else { return nil }
         return time
-    }
-
-    private var swatchColor: Color {
-        if let color = train.style?.color, let resolved = Color(hex: color) {
-            return resolved
-        }
-        return Color(hex: TrainValidation.defaultTrainColor) ?? .accentColor
     }
 }
 
