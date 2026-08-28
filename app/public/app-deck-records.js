@@ -1609,15 +1609,19 @@ function buildDeckMarkerRecords(orderedTrains) {
 }
 
 // Marker click -> select train + open the stop popup at the marker. Same
-// off-date guard + stage-1/stage-2 popup gating as handleDeckRouteClick.
+// off-date guard as handleDeckRouteClick.
+//
+// The popup used to be withheld from a click that only activated the train's
+// day; pickTrain no longer has that stage, so the stop the reader touched
+// always has its own selected train behind it.
 function handleDeckMarkerClick(info) {
   const hit = interactiveTrainFromClick(info);
   if (!hit) return;
-  // A stage-1 click (day activation) opens no popup of its own — close any
-  // popup left from a previous stop so it can't outlive its context.
+  // Close the popup left by a previous stop first, so it cannot outlive its
+  // context if this click opens none (no coordinate, no map).
   closeClickPopup();
   pickTrain(hit.train.id);
-  if (hit.selectsNow && info.coordinate && map) {
+  if (info.coordinate && map) {
     openClickPopup(info.coordinate, buildStopPopup(hit.feature, hit.train));
   }
 }

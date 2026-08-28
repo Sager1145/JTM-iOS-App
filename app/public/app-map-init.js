@@ -834,17 +834,19 @@ function handleMapBackgroundClick() {
 
 // Shared click guard for on-map route lines and station dots. Off-date
 // trains are not clickable while a concrete day is active (their pick lanes
-// are filtered out in railmap, this guard is belt-and-braces). `selectsNow`
-// tells the caller whether the click actually SELECTS the train — a stage-1
-// click from "全部" (or another day) just activates the train's day, exactly
-// like pressing that date button, and must not open a popup.
+// are filtered out in railmap, this guard is belt-and-braces).
+//
+// It used to also report `selectsNow` — whether the click would select the
+// train or merely activate its day — because pickTrain was two-stage. Every
+// click that gets past this guard now selects, so there is no half-answered
+// click left for a caller to gate on.
 function interactiveTrainFromClick(info) {
   if (!info || !info.object) return null;
   const { train, feature } = info.object;
   if (!train) return null;
   const trainDate = getTrainDate(train);
   if (selectedDate !== ALL_DATES && trainDate !== selectedDate) return null;
-  return { train, feature, selectsNow: trainDate === selectedDate };
+  return { train, feature };
 }
 
 // Route click -> select the train. Deliberately NO popup: the old segment
@@ -863,9 +865,9 @@ function handleDeckRouteClick(info) {
 
 // Ambiguous coarse-pointer tap over CROSSING route lines. Touch has no hover
 // stage to disambiguate, so railmap hands over every distinct train under the
-// tap; list them for an explicit choice. Picking one both activates its day
-// and selects it — the user already disambiguated, so the two-stage pick
-// would only cost an extra tap.
+// tap; list them for an explicit choice. Picking one selects it, exactly as a
+// click on an unambiguous line does — the chooser is how the tap says which
+// line it meant, not a different kind of pick.
 function handleDeckRouteChoices(info) {
   const records = (info && info.records) || [];
   // Same off-date guard as a direct click on each line.
@@ -893,9 +895,8 @@ function handleDeckRouteChoices(info) {
   }));
   uiChoose(I18N.t("choose.overlap"), items).then((index) => {
     if (index == null) return;
-    const train = candidates[index];
-    if (!getTrain(train.id)) return; // deleted while the dialog was open
-    selectDateBucket(getTrainDate(train));
-    selectTrain(train.id, { fit: focusZoomEnabled });
+    // pickTrain re-reads the store, so a train deleted while the dialog was
+    // open is dropped there rather than selected from a stale candidate.
+    pickTrain(candidates[index].id);
   });
 }

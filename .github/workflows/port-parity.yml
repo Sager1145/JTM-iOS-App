@@ -57,10 +57,13 @@ jobs:
       - name: Fixtures match the code that generated them
         working-directory: app
         env:
-          # The generated fixture set is 52 MB and its largest builders hold
-          # the source package, cases and serialized answer in memory at once.
-          # Node's default ~2 GB old-space ceiling is below that measured
-          # peak, so V8 otherwise aborts before it can compare the files.
+          # Peak heap is set by the largest SINGLE builder, not by the size of
+          # the corpus: fixtures are rendered and released one at a time, so
+          # adding a fixture no longer raises the ceiling. route-graph and
+          # station-join-smoothing each reach ~2.9 GB while they run, which is
+          # above Node's default ~2 GB old-space ceiling — V8 otherwise aborts
+          # before it can compare the files. Run the generator with --stats to
+          # see the per-fixture heap behind this number.
           NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/build/build-port-fixtures.mjs --check
 

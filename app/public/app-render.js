@@ -201,22 +201,25 @@ function selectDateBucket(date) {
     });
 }
 
-// Two-stage train pick shared by the sidebar card and the on-map route line.
-// First interaction with a day (selecting a train whose date is not the active
-// one — e.g. from "全部" or another date) only switches to that day and
-// highlights ALL of its trains. A second click, once that day is active,
-// selects the single train. Within the already-active day the first click
-// selects directly.
+// One click, one train: the pick shared by the sidebar card and the on-map
+// route line selects WHAT WAS CLICKED, whichever day it belongs to.
+//
+// It used to be two-stage. A click on a train whose date was not the active
+// one — from "全部", or from another day — only entered that day and
+// highlighted ALL of its trains, and selecting the single train took a second
+// click on the same line. The cost was a first click that answered a question
+// nobody asked: the reader pointed at one line and got its whole day, and
+// every time the blank-map ladder stepped back out to "全部"
+// (handleMapBackgroundClick), the next line they pointed at needed two clicks
+// again. The day bucket is already one press on the date bar, which is where
+// a reader who wants the whole day asks for it.
+//
+// The day still follows the pick — selectTrain jumps the date filter to the
+// train's own date — so the sidebar lands on the right card and a selection
+// still always lives on a concrete day, which is what that ladder steps out
+// of.
 function pickTrain(id) {
-  const train = getTrain(id);
-  if (!train) return;
-  const date = getTrainDate(train);
-  if (selectedDate !== date) {
-    // Stage 1: enter the day and highlight the whole day (no single selection).
-    selectDateBucket(date);
-    return;
-  }
-  // Stage 2: the day is already active — select this single train.
+  if (!getTrain(id)) return;
   selectTrain(id, { fit: focusZoomEnabled });
 }
 

@@ -89,15 +89,22 @@ if [ "$run_swift" = 1 ]; then
     #
     # Not pedantry: six ports can be in flight at once, each writing a
     # thousand-odd lines, and a warning nobody owns is one nobody fixes. Scoped
-    # to RailCore, RailPresentation and RailMap so an SDK or toolchain warning
-    # cannot fail a build for something we did not write and cannot fix.
+    # to the directories we write, so an SDK or toolchain warning cannot fail a
+    # build for something we did not write and cannot fix.
+    #
+    # This half sees the PACKAGE only. It used to name `RailMap` in the filter
+    # too, which read as though the app target were covered — and it never was:
+    # `swift build` here builds RailKit, whose log cannot contain a RailMap
+    # path, so 26,000 lines of app were being grepped for in a file that could
+    # not mention them. The app's own warnings are checked against the app's own
+    # build log, below.
     warnings=$(swift build --scratch-path "$scratch" 2>&1 \
         | grep 'warning:' \
-        | grep -E '/(RailCore|RailPresentation|RailMap)/' \
+        | grep -E '/(RailCore|RailPresentation)/' \
         | sort -u)
     if [ -n "$warnings" ]; then
         echo "$warnings"
-        fail "warnings in our own sources"
+        fail "warnings in RailCore or RailPresentation"
     fi
     echo "  no warnings in RailCore or RailPresentation"
 
@@ -160,6 +167,33 @@ if [ "$run_swift" = 1 ]; then
         "expected network and ridden-route simplifiers to share epsilon; found $renderer_simplifiers"
     echo "  both renderers decimate to the same $js_tolerance pt"
 
+    # The annotation layer is the map's, and only the map's.
+    #
+    # Its ten classes used to be `private` members of the coordinator, so the
+    # compiler guaranteed no other file could reach them. Lifting them into
+    # `RailMapAnnotations.swift` made them module-internal, because Swift has
+    # no access level meaning "this file and one other" — so the guarantee has
+    # to be restored here or it is simply gone. Comment lines are skipped: a
+    # doc comment elsewhere may point AT one of these types, it just may not
+    # use one.
+    #
+    # Rooted at $here, not at the shell's cwd: this block runs after
+    # `cd "$here/RailKit"`, where `RailMap` does not exist. Written relative,
+    # grep warned to stderr, the `|| true` ate the failure and the check
+    # passed on an empty result no matter what the sources said — a check that
+    # cannot fail, which is the same defect this file already fixed once for
+    # the app-target warnings. Caught by audit; keep the path absolute.
+    annotation_users=$(cd "$here" && grep -rnE \
+        '\b(PlaybackAnnotation|PlaybackAnnotationView|StationAnnotation|RideStationAnnotation|RideLabelAnnotation|EndpointLabelAnnotation|StationAnnotationView|RideStationAnnotationView|RideLabelAnnotationView|EndpointLabelView)\b' \
+        --include='*.swift' RailMap \
+        | grep -vE '^RailMap/(RailMapAnnotations|RailMapView)\.swift:' \
+        | grep -vE ':[0-9]+: *//' || true)
+    if [ -n "$annotation_users" ]; then
+        echo "$annotation_users"
+        fail "the map's annotation classes are named outside the map (lines above)"
+    fi
+    echo "  the annotation layer is used by the map and nothing else"
+
     # The five packages are WGS84 and must stay that way for the WebUI, but
     # Apple's Taiwan, Hong Kong, Macao and Korea basemaps are presented in GCJ-02.
     # Keep the datum correction
@@ -198,13 +232,29 @@ if [ "$run_swift" = 1 ]; then
     # station no map service could answer for — and it is checked by
     # `StationPlaceLinkTests` against recorded live answers. A second builder
     # anywhere would be a link nothing tests, so there may not be one.
-    builders=$(grep -rl 'maps\.apple\.com' --include='*.swift' \
+    #
+    # Naming the host is not the same as building one, though: a file that
+    # RECOGNISES `maps.apple.com` — to spot a pasted link, say — hands back no
+    # `URL`, and the direction is the whole difference. So the allowance is a
+    # rule rather than a list of files: any file other than the builder may
+    # name the host, and none of them may assemble one.
+    named=$(grep -rl 'maps\.apple\.com' --include='*.swift' \
         "$here/RailMap" "$here/RailKit/Sources" "$here/RailMapUITests" "$here/tools" \
         2>/dev/null | grep -v 'StationPlaceLink\.swift' || true)
-    if [ -n "$builders" ]; then
-        echo "$builders"
-        fail "an Apple Maps link is built outside StationPlaceLink (files above)"
-    fi
+    for file in $named; do
+        # `URL` alone, not `URLComponents` — taking a link apart uses the
+        # components too, but only a finished link is a `URL`. The second
+        # half is the same rule from the other side: the host handed to
+        # anything that assembles a link, however the result is spelled.
+        # Comment lines are free to say either.
+        built=$(grep -nE '(^|[^A-Za-z_])URL([^A-Za-z_]|$)|URL[A-Za-z]*\(.*maps\.apple\.com' \
+            "$file" | grep -v '^[0-9]*: *//' || true)
+        if [ -n "$built" ]; then
+            echo "$file"
+            echo "$built"
+            fail "an Apple Maps link is built outside StationPlaceLink (lines above)"
+        fi
+    done
 
     # And the card actually resolves one. Both halves live in a SwiftUI body
     # with no test target underneath them, and dropping either silently
@@ -234,6 +284,20 @@ if [ "$run_app" = 1 ] && [ "$run_swift" = 1 ]; then
         -derivedDataPath "$scratch-app" build >"$scratch-app.log" 2>&1 \
         || { grep -E 'error: ' "$scratch-app.log" | head -20; fail "app build"; }
     echo "  RailMap.app builds"
+
+    # …and builds clean. The app target is two thirds of the Swift in this
+    # repository and, until this check existed, the only tier whose warnings
+    # nothing read: a Swift 6 actor-isolation warning sat in the screenshot
+    # importer through a green gate. Scoped to RailMap for the reason the
+    # package check is scoped — an SDK warning is not ours to fix.
+    app_warnings=$(grep 'warning:' "$scratch-app.log" \
+        | grep -E '/RailMap/' \
+        | sort -u)
+    if [ -n "$app_warnings" ]; then
+        echo "$app_warnings"
+        fail "warnings in the app target"
+    fi
+    echo "  no warnings in RailMap"
 
     # Every badge the branding tables name must resolve, in the built bundle,
     # to a file iOS can actually decode.
@@ -314,59 +378,76 @@ if missing or undecodable or unresolved:
 print(f"  {len(paths)} popup badge paths resolve to artwork iOS can decode")
 PY
 
-    # The app icon must survive the asset catalog, and must not carry alpha.
+    # The app icon must survive the asset catalog, and must declare layers
+    # that are actually there.
     #
-    # Two silent failures, one loud consequence apiece. An `.appiconset` that
-    # the target does not name — `ASSETCATALOG_COMPILER_APPICON_NAME` deleted,
-    # or the catalog moved out of the synchronized folder — still compiles,
-    # and the app just wears the grey placeholder. And a PNG with an alpha
-    # channel builds, installs and runs; App Store validation is where it is
-    # rejected, which is the most expensive place to find out.
+    # The icon is an Icon Composer document — `RailMap/AppIcon.icon` — not an
+    # `.appiconset`, so the system renders the Liquid Glass treatment and the
+    # dark and mono appearances from the layers instead of the build shipping
+    # a flat PNG per appearance. That moves the silent failures:
     #
-    # The colour type lives in the IHDR, which is the same 25 bytes of every
-    # PNG ever written, so this reads it rather than shelling out to a tool
-    # that may or may not be installed.
+    #   * An icon the target does not name — `ASSETCATALOG_COMPILER_APPICON_NAME`
+    #     deleted, or the document moved out of the synchronized folder — still
+    #     compiles, and the app just wears the grey placeholder.
+    #   * A layer whose `image-name` names no file in `Assets/` also still
+    #     compiles. The layer is simply absent, and the icon is missing its
+    #     route, or its stations, with nothing said about it.
+    #   * An `.appiconset` left behind under the same name is a second claim on
+    #     `AppIcon`, and which one wins is not worth finding out on a device.
+    #
+    # There is deliberately no alpha check here. That rule was about the
+    # 1024×1024 PNG an `.appiconset` handed to App Store validation; the
+    # renditions actool generates from a `.icon` are RGBA by design.
     python3 - "$here" "$app_bundle" <<'PY' || fail "app icon (above)"
-import json, os, plistlib, struct, sys
+import json, os, plistlib, sys
 
 source, bundle = sys.argv[1], sys.argv[2]
-icon_set = os.path.join(source, "RailMap", "Assets.xcassets", "AppIcon.appiconset")
+document = os.path.join(source, "RailMap", "AppIcon.icon")
 
 problems = []
 
-# The catalog compiled *and* the target claimed it. `CFBundleIconName` is
-# written by the asset catalog compiler; its absence means the icon set never
+# The document compiled *and* the target claimed it. `CFBundleIconName` is
+# written by the asset catalog compiler; its absence means the icon never
 # reached the build.
 info = plistlib.load(open(os.path.join(bundle, "Info.plist"), "rb"))
 named = info.get("CFBundleIcons", {}).get("CFBundlePrimaryIcon", {}).get("CFBundleIconName")
 if named != "AppIcon":
     problems.append(f"the bundle names {named!r} as its icon, not 'AppIcon'")
 
-# ALPHA_TYPES: 4 is grey+alpha, 6 is RGBA. 0, 2 and 3 carry no alpha channel.
-ALPHA_TYPES = {4, 6}
+# ...and it left renditions behind, which is the part `CFBundleIconName` alone
+# does not prove.
+renditions = [name for name in os.listdir(bundle)
+              if name.startswith("AppIcon") and name.endswith(".png")]
+if not renditions:
+    problems.append("the bundle carries no AppIcon rendition")
 
-catalog = json.load(open(os.path.join(icon_set, "Contents.json"), encoding="utf-8"))
-declared = [image["filename"] for image in catalog["images"] if image.get("filename")]
-if not declared:
-    problems.append("AppIcon.appiconset declares no image")
+stale = os.path.join(source, "RailMap", "Assets.xcassets", "AppIcon.appiconset")
+if os.path.exists(stale):
+    problems.append("AppIcon.appiconset is still present and competes with AppIcon.icon")
 
-for filename in declared:
-    path = os.path.join(icon_set, filename)
-    if not os.path.isfile(path):
-        problems.append(f"{filename}: declared by the icon set, not on disk")
-        continue
-    header = open(path, "rb").read(26)
-    width, height, _, colour = struct.unpack(">IIBB", header[16:26])
-    if (width, height) != (1024, 1024):
-        problems.append(f"{filename}: {width}×{height}, not the 1024×1024 iOS takes")
-    if colour in ALPHA_TYPES:
-        problems.append(f"{filename}: has an alpha channel; App Store validation rejects that")
+layers = []
+try:
+    composition = json.load(open(os.path.join(document, "icon.json"), encoding="utf-8"))
+except (OSError, ValueError) as error:
+    problems.append(f"AppIcon.icon/icon.json: {error}")
+else:
+    for group in composition.get("groups", []):
+        layers.extend(group.get("layers", []))
+    if not layers:
+        problems.append("AppIcon.icon declares no layer")
+    for layer in layers:
+        image = layer.get("image-name")
+        if not image:
+            problems.append(f"layer {layer.get('name')!r}: names no image")
+        elif not os.path.isfile(os.path.join(document, "Assets", image)):
+            problems.append(f"{image}: declared by AppIcon.icon, not on disk")
 
 for problem in problems:
     print(f"  {problem}")
 if problems:
     sys.exit(1)
-print(f"  the app icon ships {len(declared)} opaque 1024×1024 appearances")
+print(f"  the app icon composes {len(layers)} layers into "
+      f"{len(renditions)} built renditions")
 PY
 
     # Three behaviours the app target cannot unit-test, because they live in
@@ -415,6 +496,62 @@ PY
         || fail "routeLoadKey no longer keys the route reload on the whole record"
     echo "  editing a journey reloads what the map draws of it"
 
+    # A journey nobody has confirmed riding is not a kilometre.
+    #
+    # §5.3's passport reports what the reader SAYS they rode. The line is
+    # drawn in four places — the statistics load, the coverage map's scope,
+    # the cards that count 旅程數 / 出行日 / 停站數, and the journey log under
+    # them — and all four have to draw it identically or the screen
+    # contradicts itself: a log listing a trip the total above it did not
+    # count, or a map drawing a line the percentage beside it excludes. One
+    # rule (`RideLedger.hasBeenRidden`), named in all four.
+    for file in AppShell.swift ContentView.swift StatisticsView.swift \
+        PassportWorkspaceView.swift; do
+        grep -q 'RideLedger\.hasBeenRidden(' "RailMap/$file" \
+            || fail "RailMap/$file scopes the passport without excluding what is not confirmed"
+    done
+    echo "  the passport counts only journeys the record says were ridden"
+
+    # And that rule has no clock in it.
+    #
+    # This is the whole point of the type, and it is the one property a
+    # reviewer cannot see by reading a call site: the app knows what day it is
+    # in five regions, the record carries a date, and comparing the two is one
+    # line away at all times. It would be wrong. A date is a plan — a trip
+    # written down and then cancelled, a booking moved, a ticket never used —
+    # and an app that counted it would be writing kilometres into somebody's
+    # passport for track they never rode, on a day they did not open it.
+    #
+    # So the rule may name no clock, no calendar and no today. `RegionClock`
+    # still exists and is still right; it answers what is UPCOMING (§5.1),
+    # which is a question about the calendar and changes no record.
+    clocked=$(grep -nE 'Date\(|RegionClock|Calendar|today|isUpcoming|hasPassed|isTodayOrEarlier' \
+        RailKit/Sources/RailPresentation/RideLedger.swift \
+        | grep -vE ':[0-9]+: *(///|//)' || true)
+    if [ -n "$clocked" ]; then
+        echo "$clocked"
+        fail "RideLedger consulted a clock (lines above); what is counted is a stated fact"
+    fi
+    echo "  what the passport counts is a stated fact, not a date"
+
+    # The statistics decide whether they have work to do BEFORE they take the
+    # numbers off the screen.
+    #
+    # The shell re-keys this load on the whole record of every journey, which
+    # is deliberate and correct — a key made of fewer fields reports "nothing
+    # changed" for an edit that changed everything. The cost is that renaming
+    # or recolouring a journey arrives here as a reload, and a reload re-reads
+    # a 377,620-edge index and re-walks every vertex of every ride while the
+    # figures are replaced by a progress stage. `Fingerprint` is what makes
+    # that free; a guard placed after `state = .loading` would still blank the
+    # screen for work it then declines to do.
+    awk '/func load\(countries:/ { inside = 1 }
+         inside && /guard fingerprint != servedFingerprint/ { guarded = 1 }
+         inside && /state = \.loading/ && !seen { seen = 1; ok = guarded }
+         END { exit !ok }' RailMap/MileageStatisticsStore.swift \
+        || fail "the statistics reload no longer fingerprints its inputs before clearing the screen"
+    echo "  unchanged statistics inputs are not recalculated"
+
     # One PlaybackController serves the whole app (§5.3.5 gives Passport its
     # own replay entry point over the same transport). A TabView calls
     # onDisappear on every tab switch, so stopping playback there means a run
@@ -445,6 +582,153 @@ PY
     grep -q 'annotation\.coordinate = head\.clLocation' RailMap/RailMapView.swift \
         || fail "playback no longer moves its retained head annotation in place"
     echo "  playback frames retain completed overlays and annotations"
+
+    # The chase owns the camera at display-link cadence. Network LOD still
+    # restyles continuously, but rebuilding its complete MapKit object graph
+    # waits until playback releases the camera. Basemap opacity is likewise a
+    # one-polygon renderer update, not a network invalidation.
+    grep -q 'if lastPlaybackSnapshot != nil {' RailMap/RailMapView.swift \
+        || fail "playback camera changes are no longer isolated from network rebuilds"
+    grep -q 'if basemapChanged { updateBasemapVeil(on: mapView) }' \
+        RailMap/RailMapView.swift \
+        || fail "basemap opacity once again invalidates the complete map"
+    echo "  playback camera and basemap opacity use narrow MapKit invalidation"
+
+    # A region's package is opened and JSON-scanned ONCE, wherever it is read.
+    #
+    # The compact rows and the per-line topology are separate contracts with
+    # separate decoders, so asking each of them for itself is the natural thing
+    # to write — and it read jp-2025.json's 9.1 MB twice and ran the scanner
+    # over it twice, for two values that come off the same rows. The two
+    # callers regress independently: the network store pays it for five regions
+    # at launch, the route solver pays it again on every route cache miss.
+    # `DisplayParts.LoadedPackage` takes both halves off one decoder;
+    # `byLineID(contentsOf:)` stays in RailCore for ports outside this app.
+    if grep -rln 'LineTopology\.byLineID(contentsOf:\|CompactPackage\.load(contentsOf:' \
+        --include='*.swift' RailMap; then
+        fail "an app-side caller reads a package twice instead of using LoadedPackage"
+    fi
+    echo "  every package read in the app is single-pass"
+
+    # A cold route lookup must not re-read a whole dataset per journey.
+    #
+    # The dataset search used to decode every part in a manifest before reading
+    # the train id it had just paid for, so one uncached journey cost all 201
+    # parts of the Japanese sample and the next one cost them again. The id to
+    # part mapping is built once per dataset, and the full part decode — the
+    # one that materialises coordinates — is reachable only through it.
+    grep -q 'try await DatasetPartIndex\.shared\.parts(in: dataset)' \
+        RailMap/RiddenRouteStore.swift \
+        || fail "the dataset search no longer goes through the per-dataset part index"
+    [ "$(grep -c 'JSONDecoder()\.decode(Part\.self' RailMap/RiddenRouteStore.swift)" = 1 ] \
+        || fail "a second full precomputed-part decode can bypass the part index"
+    echo "  a dataset is scanned once, not once per journey"
+
+    # The route cache sweep is the only thing in this app that deletes
+    # anything, and everything it can reach is re-solvable. That stays true for
+    # exactly as long as its single removal is fed by an enumeration of the
+    # route cache directory: a second remover here, or one pointed elsewhere,
+    # is data loss rather than a re-solve.
+    [ "$(grep -c 'removeItem(at:' RailMap/RiddenRouteStore.swift)" = 1 ] \
+        || fail "the route store gained a second file removal"
+    grep -q 'at: cacheDirectory(country: region.code),' RailMap/RiddenRouteStore.swift \
+        || fail "the route cache sweep no longer enumerates only the route cache directory"
+    grep -q 'guard !didSweepRouteCache else { return }' RailMap/RiddenRouteStore.swift \
+        || fail "the route cache sweep is no longer bounded to once per launch"
+    echo "  the route cache is swept once per launch, and only the route cache"
+
+    # Every write belongs to the persistence actor, and they wait for each
+    # other. A second writer on the main actor is a save nothing can order
+    # against the queued ones, which is how an edit gets put back by a save
+    # that started before it — and an actor alone does not answer this, because
+    # Swift makes no promise about which enqueued message an actor takes next.
+    if awk '/^actor RideStorage/ { inside = 1 }
+            !inside && /\.write\(to:/ { print FILENAME ":" FNR; found = 1 }
+            END { exit !found }' RailMap/RideLibrary.swift; then
+        fail "RideLibrary writes a file outside RideStorage (lines above)"
+    fi
+    grep -q 'await previous?.value' RailMap/RideLibrary.swift \
+        || fail "RideLibrary's file operations no longer wait for the one before them"
+
+    # A store half-written because the app was killed mid-save is worse than no
+    # store: the reader does not find out until the next launch. And both the
+    # store and its backup are the web app's own export spelling — a second
+    # spelling on disk under the first's name is a file nothing can import.
+    if grep -n '\.write(to:' RailMap/RideLibrary.swift | grep -v 'options: \.atomic'; then
+        fail "a store or backup file is written non-atomically (lines above)"
+    fi
+    [ "$(grep -c 'MergedStore.export(store)' RailMap/RideLibrary.swift)" = 2 ] \
+        || fail "the saved store or its backup is no longer written canonically"
+    echo "  saved stores are written in order, atomically, in the canonical spelling"
+
+    # Grouping carries the same hazard the saves do: work started earlier can
+    # finish later, and a superseded regroup publishing over a newer one leaves
+    # the list showing a grouping the store no longer has.
+    grep -q 'guard ticket == groupingTicket' RailMap/ItineraryStore.swift \
+        || fail "a superseded regroup can publish over a newer one"
+
+    # A duplicated id resolves to the FIRST journey carrying it — that journey
+    # appears twice and the second never does. That is what the linear scan
+    # this replaced answered with, so it is what the lookup has to answer with.
+    grep -q 'uniquingKeysWith: { first, _ in first }' RailMap/ItineraryStore.swift \
+        || fail "the date bridge no longer resolves a duplicate id to the first journey"
+    echo "  journeys group in one pass, and the newest grouping is the one shown"
+
+    # The working set has exactly ONE writer, and that writer counts itself.
+    #
+    # `load` is five suspension points long — two library calls, the store
+    # read, the region tagging, the grouping — and everything the reader can do
+    # in that window publishes a newer working set: folding in a sample,
+    # committing an import, editing a journey. `load` used to resume
+    # afterwards, overwrite it with the snapshot it had started from, and then
+    # SAVE that snapshot on top, so a sample loaded seconds after launch was
+    # gone from the list, from memory and from the file, with nothing said
+    # about it.
+    #
+    # The generation guard is what stops that, and it only works while every
+    # writer is counted. A second `store =` anywhere in this file is the bug
+    # coming back, which is why this counts writers rather than reading them.
+    # Counted over the whole line rather than anchored to its start: a second
+    # writer arrives as `extension ItineraryStore { … store = s }` on one line
+    # long before it arrives as a tidy statement, and an anchored pattern reads
+    # that as clean. `let`/`var` bindings are declarations, not writes.
+    store_writers=$(grep -oE '(let |var )?(self\.)?\bstore = ' \
+        RailMap/ItineraryStore.swift | grep -vcE '^(let|var) ' || true)
+    [ "$store_writers" = 1 ] || fail \
+        "the working set has $store_writers writers; only publishWorkingSet may assign it"
+    grep -q 'guard generation == storeGeneration else { return }' \
+        RailMap/ItineraryStore.swift \
+        || fail "a suspended load can once again publish over a newer working set"
+    echo "  the working set has one writer, and a suspended load cannot overwrite a newer one"
+
+    # The exporter films MapKit on the main actor and must keep doing it.
+    # `layer.render(in:)` and every UIKit object the caption touches are
+    # main-actor-only; moving them behind a queue yields a plausible film with
+    # occasional corrupt frames, which is the worst kind of wrong. Swift 6
+    # already refuses — CVBuffer is @_nonSendable and the adaptor is not
+    # Sendable — so the only way back in is an escape hatch, and that is what
+    # this looks for.
+    if grep -nE 'DispatchQueue|nonisolated\(unsafe\)|@unchecked Sendable' \
+        RailMap/PlaybackVideoExporter.swift; then
+        fail "the video exporter left the main actor (lines above)"
+    fi
+
+    # And its per-frame path stays free of the allocations it used to rebuild
+    # sixty times a second, on the same actor the playback renderer is moving
+    # the camera on. Each of these belongs to the run, not to the frame.
+    if awk '/private func append\(/ { inside = 1 }
+            /private func captionLayout\(/ { inside = 0 }
+            inside && /CGColorSpaceCreateDeviceRGB|UIFont\.systemFont|NSMutableParagraphStyle|UIColor\(railHex:/ \
+                { print FILENAME ":" FNR ": " $0; found = 1 }
+            END { exit !found }' RailMap/PlaybackVideoExporter.swift; then
+        fail "the video exporter rebuilds frame-invariant state per frame (above)"
+    fi
+
+    # Skipping frames the writer cannot take is what bounds the exporter's
+    # memory. Without it a slow encoder is answered by holding every frame.
+    grep -q 'input\.isReadyForMoreMediaData' RailMap/PlaybackVideoExporter.swift \
+        || fail "the video exporter no longer skips frames the writer cannot take"
+    echo "  the video exporter stays on the main actor and allocates per run"
 fi
 
 echo "OK"

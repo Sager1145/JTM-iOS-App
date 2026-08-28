@@ -23,9 +23,11 @@
 //  integral coordinates, six-decimal jitter, antimeridian-free but wide
 //  longitude spread) instead of tidy round numbers.
 //
-//  Usage:  node scripts/build/build-port-fixtures.mjs [--check]
+//  Usage:  node scripts/build/build-port-fixtures.mjs [--check] [--stats]
 //          --check regenerates into memory and fails if anything moved,
 //          which is what CI wants: fixtures may only change deliberately.
+//          --stats prints each fixture's time, output size and live heap,
+//          which is how you find the builder holding peak memory up.
 // =========================================================================
 
 import fs from "node:fs";
@@ -290,20 +292,27 @@ function visibilityFixture() {
 
 // ── write ───────────────────────────────────────────────────────────────
 
-function build() {
+// The built-in fixtures as names and thunks rather than as a built object.
+// Nothing here runs until the write loop asks for it, which is what lets each
+// answer be serialized and released before the next one is computed.
+function builtInFixtures() {
   // jp is the largest and most varied package; tw adds a second country's
   // coordinate distribution so the cases are not all one survey's rounding.
-  const sample = [
-    ...railPackageCoordinates("jp", 1600),
-    ...railPackageCoordinates("tw", 400),
+  // Shared by the first three fixtures and computed once: it is ~2,000
+  // coordinates, and never the reason this run needed a large heap.
+  let sample = null;
+  const coords = () =>
+    (sample ??= [
+      ...railPackageCoordinates("jp", 1600),
+      ...railPackageCoordinates("tw", 400),
+    ]);
+  return [
+    { name: "coords.json", build: () => coordsFixture(coords()) },
+    { name: "distance.json", build: () => distanceFixture(coords()) },
+    { name: "simplify.json", build: () => simplifyFixture(coords()) },
+    { name: "intervals.json", build: () => intervalsFixture() },
+    { name: "visibility.json", build: () => visibilityFixture() },
   ];
-  return {
-    "coords.json": coordsFixture(sample),
-    "distance.json": distanceFixture(sample),
-    "simplify.json": simplifyFixture(sample),
-    "intervals.json": intervalsFixture(),
-    "visibility.json": visibilityFixture(),
-  };
 }
 
 function serialize(name, fixture) {
@@ -341,45 +350,78 @@ async function loadFixtureModules() {
   return loaded;
 }
 
-const built = build();
+/**
+ * Builds one fixture and hands back only its text. The graph an answer is
+ * computed as outweighs the JSON it prints to, and it becomes unreachable the
+ * moment this returns — which is the reason fixtures are rendered one at a
+ * time. The case count comes back with the text because counting it
+ * afterwards would mean keeping the graph alive to be counted.
+ */
+function render(name, build) {
+  const fixture = build();
+  return { cases: fixture.cases.length, text: serialize(name, fixture) };
+}
 
-for (const module of await loadFixtureModules()) {
-  if (built[module.name]) {
+const check = process.argv.includes("--check");
+const stats = process.argv.includes("--stats");
+let changed = 0;
+
+// Modules are imported up front, because a name collision should be reported
+// wherever it is found — but their `build` is deferred like the built-ins',
+// so no module's answer is computed before its turn.
+const modules = (await loadFixtureModules()).map((module) => ({
+  name: module.name,
+  build: () => module.build({ RailNetwork, AppCore, js, railPackage, APP_DIR }),
+}));
+
+// Built, compared and released one fixture at a time, so that peak memory
+// tracks the largest single fixture instead of growing with every one added.
+// Measured on the 26-file corpus: 4.10 GB peak before, 3.71 GB after. The
+// remainder is not the answers being held — it is what individual builders
+// allocate while they run, and `--stats` is what names them (route-graph and
+// station-join-smoothing each reach ~2.9 GB of heap on their own). Nothing
+// about the bytes changes here, only how many of them are alive at once.
+fs.mkdirSync(OUT_DIR, { recursive: true });
+const rendered = new Set();
+for (const fixture of [...builtInFixtures(), ...modules]) {
+  const name = fixture.name;
+  if (rendered.has(name)) {
     console.error(
-      `  ! ${module.name} is already built in — rename the module's fixture`,
+      `  ! ${name} is already built in — rename the module's fixture`,
     );
     process.exitCode = 1;
     continue;
   }
-  built[module.name] = module.build({
-    RailNetwork,
-    AppCore,
-    js,
-    railPackage,
-    APP_DIR,
-  });
-}
-const check = process.argv.includes("--check");
-let changed = 0;
+  rendered.add(name);
 
-fs.mkdirSync(OUT_DIR, { recursive: true });
-for (const [name, fixture] of Object.entries(built)) {
+  const startedAt = process.hrtime.bigint();
+  const { cases, text } = render(name, fixture.build);
   const target = path.join(OUT_DIR, name);
-  const next = serialize(name, fixture);
   const previous = fs.existsSync(target) ? fs.readFileSync(target, "utf8") : null;
-  if (previous === next) {
-    console.log(`  = ${name} (${fixture.cases.length} cases)`);
-    continue;
+  if (previous === text) {
+    console.log(`  = ${name} (${cases} cases)`);
+  } else {
+    changed += 1;
+    if (check) {
+      console.error(`  ! ${name} would change — regenerate deliberately`);
+    } else {
+      fs.writeFileSync(target, text);
+      console.log(`  ${previous ? "~" : "+"} ${name} (${cases} cases)`);
+    }
   }
-  changed += 1;
-  if (check) {
-    console.error(`  ! ${name} would change — regenerate deliberately`);
-    continue;
+
+  // Which builder is holding the ceiling up is otherwise only visible as one
+  // number at the end of the whole run, by which point every candidate has
+  // already been released.
+  if (stats) {
+    const usage = process.memoryUsage();
+    console.log(
+      `      ${(Number(process.hrtime.bigint() - startedAt) / 1e6).toFixed(0)}` +
+        ` ms · ${(text.length / 1e6).toFixed(1)} MB out` +
+        ` · heap ${(usage.heapUsed / 1e6).toFixed(0)} MB` +
+        ` · rss ${(usage.rss / 1e6).toFixed(0)} MB`,
+    );
   }
-  fs.writeFileSync(target, next);
-  console.log(
-    `  ${previous ? "~" : "+"} ${name} (${fixture.cases.length} cases)`,
-  );
 }
 
 if (check && changed) {
