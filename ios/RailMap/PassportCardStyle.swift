@@ -565,6 +565,12 @@ struct PassportBand: View {
                         }
                 }
                 .frame(height: 6)
+                // One clock for the band: the figure beside this bar already
+                // rolls on `replace` (see ``PassportMetric`` and
+                // ``PassportMetricGrid``), and the proportion under it is the
+                // same statement in the other notation. See `StatisticsBar`,
+                // which carries the same pair.
+                .animation(RailMotion.replace, value: clamp(fraction))
             }
             if let detail {
                 Text(detail)

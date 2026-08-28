@@ -108,6 +108,16 @@ struct StatisticsBar: View {
                     }
             }
             .frame(height: 7)
+            // The bar and the figure above it are one statement, so they move
+            // on one clock. The figures on this screen already roll — Passport's
+            // metrics carry `contentTransition(.numericText())` on the same
+            // `replace` token — and a bar that jumped while its own number
+            // rolled was two clocks inside one card.
+            //
+            // Not degraded under Reduce Motion, for the reason §9.4 keeps
+            // numeric updates: this is a value changing, not a thing moving
+            // across the screen, and the width IS the value.
+            .animation(RailMotion.replace, value: clamped)
             if let detail {
                 Text(detail)
                     .font(.caption)
