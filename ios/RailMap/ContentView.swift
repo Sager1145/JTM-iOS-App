@@ -2860,6 +2860,23 @@ struct RailWorkspaceView: View {
             onSelectStation: { sheet = .station($0) }
         ) { render = $0 }
         .ignoresSafeArea()
+        // The one place the setting crosses from SwiftUI into the controller.
+        //
+        // `RailMapController` is not a `View`, so it cannot read
+        // `@Environment` itself — its own note says the value is "pushed in
+        // from the view", and until now nothing pushed it: the property held
+        // its `false` default for the app's whole life, which made
+        // `RailMotion.cameraAnimated(reduceMotion:)` a constant `true` at all
+        // six camera call sites. Every zoom, every reset-north and every
+        // "frame this" flew the camera with Reduce Motion on.
+        //
+        // Attached to `map` rather than to either layout, because both the
+        // sheet layout and the sidebar layout mount it and the controller must
+        // not depend on which one the window is in. `initial: true` is what
+        // covers a reader who already had the setting on at launch.
+        .onChange(of: reduceMotion, initial: true) { _, reduced in
+            controller.reduceMotion = reduced
+        }
     }
 
     /// §4.4: a tap on empty map steps back exactly one level — first the

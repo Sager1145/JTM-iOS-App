@@ -53,6 +53,14 @@ final class RailMapController {
     /// move to become shorter or to happen outright rather than travelling, and
     /// MapKit's only control over that is `animated:` — so this is what every
     /// call below passes.
+    ///
+    /// The writer is `RailWorkspaceView.map`'s `onChange(of: reduceMotion,
+    /// initial: true)`, and it is named here because for a while there was no
+    /// writer at all: this property held its `false` default for the app's
+    /// whole life, so the six `RailMotion.cameraAnimated(reduceMotion:)` calls
+    /// below were a constant `true` and every camera move flew with Reduce
+    /// Motion on. A pushed-in value fails silently when nobody pushes it, and
+    /// nothing about the reading side shows that.
     var reduceMotion = false
 
     private(set) var locationAuthorization: CLAuthorizationStatus = .notDetermined
