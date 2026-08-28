@@ -112,8 +112,6 @@ struct RailWorkspaceView: View {
     /// The dates the reader typed in — see ``ManualDates``, which owns them
     /// and their persistence.
     @State private var manualDates = ManualDates()
-    /// The text in the add-a-date alert. Transient view state, not a date yet.
-    @State private var newManualDate = ""
     @AppStorage("map-follows-selected-date") private var mapFollowsSelectedDate = false
     /// `focusZoomEnabled` — 自動縮放. Off to start with, as in the web app: a
     /// map that moves itself every time a row is tapped is a map the reader
@@ -604,19 +602,9 @@ struct RailWorkspaceView: View {
     /// top of the bottom chrome, which is also where the reader asked for it.
     private func withPresentations(_ content: some View) -> some View {
         content
-        .alert(
-            localization.journeyText("ios.journey.addDateTitle", fallback: "Add a date"),
-            isPresented: addDateIsPresented
-        ) {
-            TextField("YYYY-MM-DD", text: $newManualDate)
-            Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {}
-            Button(localization.journeyText("btn.add", fallback: "Add")) { addManualDate() }
-                .disabled(Dates.normalizeDateString(newManualDate) == nil)
-        } message: {
-            Text(
-                localization.journeyText(
-                    "ios.journey.addDateDetail",
-                    fallback: "Create an empty date to add journeys to later."))
+        .addDateAlert(isPresented: addDateIsPresented) { typed in
+            guard let added = manualDates.add(typed) else { return }
+            selectedDate = added
         }
         .confirmationDialog(
             confirmationTitle,
@@ -2741,7 +2729,6 @@ struct RailWorkspaceView: View {
         Group {
             Divider()
             Button {
-                newManualDate = ""
                 PresentationHost.afterTeardown { dialog = .addDate }
             } label: {
                 Label(
@@ -2808,12 +2795,6 @@ struct RailWorkspaceView: View {
         guard let region else { return availableDates(loaded) }
         let trains = loaded.trains.filter { Region.resolved($0) == region }
         return Dates.availableDates(trains.map(\.forDates), manualDates: manualDates.dates)
-    }
-
-    /// Add what was typed, and go and look at it — the reason for adding it.
-    private func addManualDate() {
-        guard let added = manualDates.add(newManualDate) else { return }
-        selectedDate = added
     }
 
     /// The web app's 載入示例資料 / 保存為我的資料 / 恢復我的資料, as one menu.
