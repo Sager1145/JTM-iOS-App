@@ -93,29 +93,14 @@ struct RailWorkspaceView: View {
     @FocusState private var searchFocused: Bool
     @State private var sheet: RidesSheet?
     @State private var importFlow = ImportFlow()
-    @State private var videoExporter = PlaybackVideoExporter()
-    @State private var videoSettings = VideoExportSettings()
-    /// How long the film would run, taken from `Playback.plan` when the export
-    /// options open — §5.6's summary has to state a length before the reader
-    /// commits to a run that takes minutes.
-    @State private var videoPlanSeconds = 0.0
+    /// Filming a run — see ``VideoExportFlow``, which owns the recorder, the
+    /// reader's choices and the length the options sheet quotes.
+    @State private var videoExport = VideoExportFlow()
     @State private var didRunDebugPlayback = false
-    /// The N02 edge indexes the 已乘路線顯示 filter classifies against, one per
-    /// region that has rides.
-    ///
-    /// Empty until the reader actually switches a category off. Building one
-    /// parses a whole region's rail network, and three of the four boxes being
-    /// ticked is the state the map spends its life in — so the default path
-    /// pays nothing, exactly as `riddenFeatureCategory` is only reached in the
-    /// web app when `anyRiddenCategoryHidden()`.
-    @State private var categoryIndexes: [String: Statistics.EdgeIndex] = [:]
-    /// Whether an index is being built right now.
-    ///
-    /// Reading a region's network takes seconds, and until it lands every ride
-    /// stays visible — so without this the first tick of a category box is a
-    /// control that appears to do nothing, which is indistinguishable from one
-    /// that is broken.
-    @State private var categoryIndexesBuilding = false
+    /// The 已乘路線顯示 filter's edge indexes and their build — see
+    /// ``CategoryIndexes``. What stays here is only WHEN to ask, which is
+    /// `categoryIndexKey`.
+    @State private var categoryIndexes = CategoryIndexes()
     /// The workspace's memoised answers — see ``WorkspaceDerived``.
     ///
     /// Not observable and not observed: it is a cache whose every entry is a
@@ -124,7 +109,10 @@ struct RailWorkspaceView: View {
     /// expensive questions several times per pass, and a sheet drag is one
     /// pass per frame.
     @State private var derived = WorkspaceDerived()
-    @State private var manualDates: [String] = []
+    /// The dates the reader typed in — see ``ManualDates``, which owns them
+    /// and their persistence.
+    @State private var manualDates = ManualDates()
+    /// The text in the add-a-date alert. Transient view state, not a date yet.
     @State private var newManualDate = ""
     @AppStorage("map-follows-selected-date") private var mapFollowsSelectedDate = false
     /// `focusZoomEnabled` — 自動縮放. Off to start with, as in the web app: a
@@ -414,22 +402,13 @@ struct RailWorkspaceView: View {
             guard !store.lines.isEmpty else { return }
             frameRegionScope(regionScope)
         }
-        .task { manualDates = loadManualDates() }
+        .task { manualDates.load() }
         // Built off the main actor, published as each region's arrives, and
         // never torn down: a reader who ticks 地下鐵 back off a minute later
         // should not wait for the network to be read a second time.
         .task(id: categoryIndexKey) {
             guard controller.layers.categories.anyHidden else { return }
-            let wanted = riddenCountries.filter { categoryIndexes[$0] == nil }
-            guard !wanted.isEmpty else { return }
-            categoryIndexesBuilding = true
-            defer { categoryIndexesBuilding = false }
-            for country in wanted {
-                guard let index = try? await EdgeIndexCache.shared.index(country: country)
-                else { continue }
-                if Task.isCancelled { return }
-                categoryIndexes[country] = index
-            }
+            await categoryIndexes.load(for: riddenCountries)
         }
 #if DEBUG
         // A headless way to put the workspace into its selected state.
@@ -692,10 +671,9 @@ struct RailWorkspaceView: View {
         .onChange(of: stageSelection) { _, _ in signal(.settled) }
         .onDisappear {
             // The RECORDING cannot survive this: it captures the map view this
-            // workspace owns, and a `MKMapView` that has left the screen
-            // renders nothing worth writing to a file. `clearPlayback: false`
-            // is what keeps the run itself going while the file is abandoned.
-            videoExporter.cancel(clearPlayback: false)
+            // workspace owns. See `VideoExportFlow.abandonRecording` for why
+            // the run itself is left playing.
+            videoExport.abandonRecording()
             // The PLAYBACK deliberately does not stop here. §5.3.5 gives
             // Passport its own replay entry point over the same transport, and
             // the shell holds one `PlaybackController` for the whole app for
@@ -781,10 +759,10 @@ struct RailWorkspaceView: View {
                 }
             case .videoOptions:
                 VideoExportOptionsView(
-                    settings: videoSettings,
+                    settings: videoExport.settings,
                     sourceRect: playbackFilmedRect,
                     displayScale: controller.mapView?.window?.screen.scale ?? 3,
-                    seconds: videoPlanSeconds
+                    seconds: videoExport.plannedSeconds
                 ) {
                     sheet = nil
                     startVideoExport()
@@ -828,7 +806,7 @@ struct RailWorkspaceView: View {
             case .mapInfo:
                 MapInfoView()
             case .mapLayers:
-                MapLayersView(controller: controller, classifying: categoryIndexesBuilding)
+                MapLayersView(controller: controller, classifying: categoryIndexes.isBuilding)
             case .station(let card):
                 StationCardView(card: card)
             case .chooseRide(let trains):
@@ -2771,9 +2749,7 @@ struct RailWorkspaceView: View {
                     systemImage: "calendar.badge.plus")
             }
             Button(role: .destructive) {
-                let used = Set(loaded.days.map(\.date))
-                manualDates.removeAll { !used.contains($0) }
-                persistManualDates()
+                manualDates.prune(keeping: Set(loaded.days.map(\.date)))
                 if selectedDate != Dates.allDates,
                     !availableDates(loaded).contains(selectedDate)
                 {
@@ -2818,7 +2794,7 @@ struct RailWorkspaceView: View {
     }
 
     private func availableDates(_ loaded: ItineraryStore.Loaded) -> [String] {
-        Dates.availableDates(loaded.trains.map(\.forDates), manualDates: manualDates)
+        Dates.availableDates(loaded.trains.map(\.forDates), manualDates: manualDates.dates)
     }
 
     /// The same buckets, narrowed to one region.
@@ -2831,24 +2807,13 @@ struct RailWorkspaceView: View {
     ) -> [String] {
         guard let region else { return availableDates(loaded) }
         let trains = loaded.trains.filter { Region.resolved($0) == region }
-        return Dates.availableDates(trains.map(\.forDates), manualDates: manualDates)
+        return Dates.availableDates(trains.map(\.forDates), manualDates: manualDates.dates)
     }
 
+    /// Add what was typed, and go and look at it — the reason for adding it.
     private func addManualDate() {
-        guard let normalized = Dates.normalizeDateString(newManualDate) else { return }
-        if !manualDates.contains(normalized) { manualDates.append(normalized) }
-        persistManualDates()
-        selectedDate = normalized
-    }
-
-    private func manualDatesKey() -> String { "manual-dates" }
-
-    private func loadManualDates() -> [String] {
-        (UserDefaults.standard.array(forKey: manualDatesKey()) as? [String]) ?? []
-    }
-
-    private func persistManualDates() {
-        UserDefaults.standard.set(manualDates, forKey: manualDatesKey())
+        guard let added = manualDates.add(newManualDate) else { return }
+        selectedDate = added
     }
 
     /// The web app's 載入示例資料 / 保存為我的資料 / 恢復我的資料, as one menu.
@@ -2951,7 +2916,7 @@ struct RailWorkspaceView: View {
             // the complete network back on after the reader turns it off.
             showsNetwork: controller.showsNetwork,
             basemapOpacity: controller.basemapOpacity,
-            categoryIndexes: categoryIndexes,
+            categoryIndexes: categoryIndexes.byCountry,
             autoFocus: autoFocusZoom,
             controller: controller,
             playback: playback,
@@ -3191,15 +3156,12 @@ struct RailWorkspaceView: View {
             // published tick.
             PlaybackTransportBar(
                 playback: playback,
-                videoExporter: videoExporter,
+                videoExporter: videoExport.exporter,
                 onStop: { stopPlayback() },
                 onRequestVideoOptions: {
-                    // `estimate`, not `prepare`: this button is pressed while a
-                    // run is playing, and `prepare` freezes the queue. See
-                    // `PlaybackController.estimate`.
-                    videoPlanSeconds = playback.estimate(
-                        trains: playbackScope, rides: riddenRoutes.rides
-                    ).seconds
+                    videoExport.plan(
+                        playback: playback,
+                        trains: playbackScope, rides: riddenRoutes.rides)
                     sheet = .videoOptions
                 }
             )
@@ -3210,11 +3172,10 @@ struct RailWorkspaceView: View {
 
     private func startVideoExport() {
         guard let mapView = controller.mapView else { return }
-        videoSettings.persist()
-        videoExporter.start(
+        videoExport.start(
             playback: playback, mapView: mapView, filming: playbackFilmedRect,
             trains: playbackScope, rides: riddenRoutes.rides,
-            reducedMotion: reduceMotion, settings: videoSettings)
+            reducedMotion: reduceMotion)
     }
 
     /// The part of the map a film is cropped from.
@@ -3232,7 +3193,7 @@ struct RailWorkspaceView: View {
     }
 
     private func stopPlayback() {
-        if videoExporter.isRecording { videoExporter.cancel(clearPlayback: false) }
+        if videoExport.isRecording { videoExport.abandonRecording() }
         playback.stop()
         // `restoreSelected`. Deliberately on STOP and not when a run reaches
         // its end: an ended run leaves its last journey selected, which is
