@@ -141,6 +141,22 @@ nonisolated public enum RailStyle {
     /// 发明 13、17、19 等随机间距" in the corner-radius register.
     public static let chromeCornerRadius: CGFloat = 20
 
+    // MARK: - §14's minimum touch target
+
+    /// The side of the smallest area this app will answer a finger over.
+    ///
+    /// HIG's Accessibility/Mobility table gives 44×44 pt as iOS's DEFAULT
+    /// control size and 28×28 as its floor, and the difference between those
+    /// two numbers is the difference between a control that is usable and one
+    /// that is merely reachable. This app takes the default.
+    ///
+    /// It is a token rather than a literal because the map cannot reach the
+    /// SwiftUI spelling of the same rule. A bead is a `UIView` inside
+    /// `MKMapView`, so `SheetIconButton`'s frame and every `contentShape` in
+    /// the chrome are unavailable to it, and the alternative was the number
+    /// written down a ninth time in a file that draws six-point circles.
+    public static let minimumTouchTarget: CGFloat = 44
+
     // MARK: - the map-scale weight ramp
 
     /// The scale at which the railway draws at full token weight, in metres of
@@ -155,7 +171,7 @@ nonisolated public enum RailStyle {
     ///
     ///     metresPerPixel = 78271.52 × cos(latitude) / 2^zoom
     ///
-    /// `RailMapView.Coordinator.zoomLevel(of:)` derives zoom from 256-point
+    /// `MapProjection.zoomLevel(of:)` derives zoom from 256-point
     /// tiles (`360 × width / 256 / longitudeDelta`), the Google/Leaflet
     /// convention, which reports the same ground scale **one level higher** —
     /// 500 m/pt is MapLibre z7 and z8 here. Measured, not assumed:
@@ -250,7 +266,7 @@ nonisolated public enum RailStyle {
     /// ground scale.
     ///
     /// One, and it is arithmetic rather than tuning: MapLibre's tiles are
-    /// 512 px and `RailMapView.Coordinator.zoomLevel(of:)` derives its number
+    /// 512 px and `MapProjection.zoomLevel(of:)` derives its number
     /// from 256-point tiles, so the world is half as wide in its units at the
     /// same number and every ground scale reports one level higher.
     ///
@@ -260,7 +276,7 @@ nonisolated public enum RailStyle {
     /// Every threshold ported out of the web app — layer `minzoom`, the
     /// per-feature `minz` gate, the ride label tiers — is a MapLibre number and
     /// has to come through ``zoom(fromMapLibre:)`` before it is compared
-    /// against a zoom measured here. See `RailMapView.Coordinator.zoomLevel`
+    /// against a zoom measured here. See `MapProjection.zoomLevel`
     /// for the thresholds that predate this helper and do NOT yet convert.
     static let mapLibreZoomOffset: Double = 1
 

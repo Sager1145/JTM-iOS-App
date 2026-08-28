@@ -132,6 +132,15 @@ struct RailMapView: View {
     /// because the answer is a sheet and a sheet presented from inside the map
     /// is a sheet that disappears with it.
     var onSelectStation: (StationCard) -> Void = { _ in }
+    /// The rect the map has just rebuilt for.
+    ///
+    /// The map is the only thing that knows which countries are on screen, and
+    /// `RailNetworkStore` decodes a country only when something asks for it —
+    /// so this is the ask. Reported from the rebuild rather than from every
+    /// camera callback because the rebuild is already throttled to a zoom tier
+    /// and a padded rect, and a pan inside that rect cannot bring a new
+    /// country into view.
+    var onBuildRect: (MKMapRect) -> Void = { _ in }
     /// Reports back what the renderer actually did, so the numbers on screen
     /// are measurements rather than estimates.
     var onRender: (RenderStats) -> Void
@@ -248,6 +257,7 @@ struct RailMapView: View {
             localization: localization,
             onSelectRide: onSelectRide,
             onSelectStation: onSelectStation,
+            onBuildRect: onBuildRect,
             onRender: onRender
         )
     }
@@ -274,6 +284,7 @@ struct RailMapView: View {
         var localization: AppLocalization?
         var onSelectRide: ([String]) -> Void
         var onSelectStation: (StationCard) -> Void
+        var onBuildRect: (MKMapRect) -> Void = { _ in }
         var onRender: (RenderStats) -> Void
 
         func makeUIView(context: Context) -> MKMapView {
@@ -293,6 +304,7 @@ struct RailMapView: View {
             context.coordinator.mapView = mapView
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
+            context.coordinator.onBuildRect = onBuildRect
             context.coordinator.controller = controller
             context.coordinator.playback = playback
             playback.mapRenderer = context.coordinator
@@ -302,6 +314,40 @@ struct RailMapView: View {
                 target: context.coordinator, action: #selector(Coordinator.handleMapTap(_:)))
             tap.delegate = context.coordinator
             mapView.addGestureRecognizer(tap)
+
+            // A double tap is a ZOOM, and a zoom is not an answer about the
+            // selection.
+            //
+            // Without this the single-tap recogniser fires on the FIRST tap of
+            // every double tap, so zooming in on empty water cleared the ride
+            // the reader had just chosen — and a double tap on the chosen line
+            // itself re-picked it, which with 自動縮放 on sent the camera to
+            // frame the selection in the middle of the reader's own zoom.
+            //
+            // This recogniser exists only to be waited on. MapKit's own
+            // double-tap-to-zoom is a private recogniser this cannot name, so
+            // rather than reaching into `mapView.gestureRecognizers` for
+            // something Apple never promised is there, the map gets one of ours
+            // to fail against. It consumes nothing (`cancelsTouchesInView` and
+            // the two touch delays are all off, and the coordinator answers
+            // `true` to `shouldRecognizeSimultaneouslyWith`), so MapKit's zoom
+            // still sees the same pair of taps it always did.
+            //
+            // The cost is that a single tap is answered when the double-tap
+            // window closes rather than on the lift. That is the tempo this
+            // map already runs at: MapKit's own annotation selection waits for
+            // the same recogniser and lands at 0.51–0.57 s (see
+            // `mapView(_:didSelect:)`), which is still after this, so the
+            // claim/answer order between the two is unchanged.
+            let doubleTap = UITapGestureRecognizer(
+                target: context.coordinator, action: #selector(Coordinator.handleMapDoubleTap(_:)))
+            doubleTap.numberOfTapsRequired = 2
+            doubleTap.delegate = context.coordinator
+            doubleTap.cancelsTouchesInView = false
+            doubleTap.delaysTouchesBegan = false
+            doubleTap.delaysTouchesEnded = false
+            mapView.addGestureRecognizer(doubleTap)
+            tap.require(toFail: doubleTap)
 
             // Two SENSORS, not gestures: they never move the map and never
             // consume a touch, they only let the coordinator know that a finger
@@ -346,6 +392,7 @@ struct RailMapView: View {
             context.coordinator.playback = playback
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
+            context.coordinator.onBuildRect = onBuildRect
             context.coordinator.localization = localization
             playback.mapRenderer = context.coordinator
             playback.mapRendererViewSize = mapView.bounds.size
@@ -371,11 +418,16 @@ struct RailMapView: View {
         final class Coordinator: NSObject, MKMapViewDelegate, PlaybackMapRendering,
             UIGestureRecognizerDelegate {
             weak var mapView: MKMapView?
-            var controller: RailMapController?
-            weak var playback: PlaybackController?
+            var controller: RailMapController? {
+                didSet { playbackLayer.controller = controller }
+            }
+            weak var playback: PlaybackController? {
+                didSet { playbackLayer.playback = playback }
+            }
             var onRender: (RenderStats) -> Void = { _ in }
             var onSelectRide: ([String]) -> Void = { _ in }
             var onSelectStation: (StationCard) -> Void = { _ in }
+            var onBuildRect: (MKMapRect) -> Void = { _ in }
             /// The localisation engine's owner. A `@MainActor` class, and
             /// therefore `Sendable`, so a nonisolated coordinator may hold it;
             /// see ``localized(_:code:)`` for how it is read.
@@ -416,17 +468,9 @@ struct RailMapView: View {
             /// The rect the current overlays were built for — the visible one plus
             /// its padding. Panning inside it does no work; leaving it rebuilds.
             private var builtRect: MKMapRect = .null
-            private var lastPlaybackSnapshot: PlaybackMapSnapshot?
-            private var playbackDoneOverlays: [MKOverlay] = []
-            private var playbackTrailOverlays: [MKOverlay] = []
-            private var playbackPartialOverlay: MKOverlay?
-            private var playbackStationAnnotations: [PlaybackAnnotation] = []
-            private var playbackHeadAnnotation: PlaybackAnnotation?
-            private var playbackTrainID: String?
-            private var playbackRenderedDoneCount = 0
-            private var playbackCompletedStepCount = 0
-            private var playbackLastDistance = -Double.infinity
-            private var playbackSteps: [PlaybackTrailStep] = []
+            /// The chase — see ``MapPlaybackLayer``, which owns every field the
+            /// trail needs and shares only this coordinator's style registry.
+            private lazy var playbackLayer = MapPlaybackLayer(overlayStyles: overlayStyles)
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
             private var endpointAnnotations: [EndpointLabelAnnotation] = []
@@ -543,13 +587,13 @@ struct RailMapView: View {
                     // is a question about the reader's rides, not about which
                     // package decoded last; it is answered once, at launch, by
                     // `RailMapController.frameAtLaunch`.
-                    let region = Self.region(covering: lines)
+                    let region = MapProjection.region(covering: lines)
                     let controller = self.controller
                     DispatchQueue.main.async { controller?.fitRegion = region }
                 }
 
                 let selectedRide = rides.first { $0.id == selectedTrainID }
-                let selectionRegion = selectedRide.flatMap { Self.region(covering: $0.strokes) }
+                let selectionRegion = selectedRide.flatMap { MapProjection.region(covering: $0.strokes) }
                 let controller = self.controller
                 // 自動縮放, and it is decided HERE rather than at the dozen
                 // places that can change a selection, because this is the
@@ -562,7 +606,19 @@ struct RailMapView: View {
                 // day moves both at once, and framing the day would throw away
                 // the more specific of the two answers.
                 var focusRegion: MKCoordinateRegion? = nil
-                if autoFocus, selectionChanged, let selectionRegion {
+                // Never while the transport owns the camera, and this is the
+                // same rule the rebuild below keeps for the same reason. A run
+                // moves the selection from journey to journey as it plays
+                // (`ContentView`'s `onChange(of:playback.currentTrainID)`), so
+                // with 自動フォーカス on, every hand-off asked `fit` to fly the
+                // camera to the whole extent of the journey now starting —
+                // against a chase that writes the visible rect on every
+                // display-link frame. Two owners, sixty times a second: the
+                // camera lurched out to the journey's bounding box and was
+                // yanked back onto the train on the next tick, for the length
+                // of the fit's animation.
+                let playbackOwnsCamera = playback?.isActive == true
+                if autoFocus, !playbackOwnsCamera, selectionChanged, let selectionRegion {
                     // Selection only moves the map when its geometry already
                     // exists. Do not keep a pending camera request while the
                     // route is loading: completing a solve must not yank the
@@ -570,12 +626,12 @@ struct RailMapView: View {
                     // meantime. The explicit locate action remains available
                     // once the geometry is ready.
                     focusRegion = selectionRegion
-                } else if autoFocus, dateChanged, selectedDate != Dates.allDates,
-                    selectedTrainID == nil {
+                } else if autoFocus, !playbackOwnsCamera, dateChanged,
+                    selectedDate != Dates.allDates, selectedTrainID == nil {
                     // "Whole-day auto-focus skips hidden trains; the
                     // single-train fit does not" — and every ride that reaches
                     // this surface is already a visible one.
-                    focusRegion = Self.region(
+                    focusRegion = MapProjection.region(
                         covering: rides
                             .filter { $0.daySpan.date == selectedDate }
                             .flatMap(\.strokes))
@@ -597,7 +653,34 @@ struct RailMapView: View {
                     || displayChanged || dateChanged || namingChanged
                 if drawingChanged {
                     builtForZoom = nil
-                    rebuild(on: mapView)
+                    // Not during a run, for the reason `regionDidChangeAnimated`
+                    // gives — and this is the path that actually hurt. The
+                    // transport moves the selection from journey to journey as
+                    // it plays (`ContentView`'s `onChange(of:playback.currentTrainID)`),
+                    // so `selectionChanged` was true at every hand-off and every
+                    // hand-off ran the whole rebuild: 150–460 ms of main-thread
+                    // work over Japan, in the middle of a 60 Hz chase, which
+                    // tore the mounted playback trail and its beads off the map
+                    // and remounted them a fifth of a second later. The dot
+                    // vanishing and reappearing at each new train is that.
+                    //
+                    // `builtForZoom` is cleared above whether or not the
+                    // rebuild is deferred, so the one `renderPlayback(nil)`
+                    // pays afterwards is not skipped by its own zoom-bucket
+                    // guard when a run ends at the zoom it started from.
+                    // `isActive` as well as a mounted snapshot: an ENDED run
+                    // keeps its last frame on the map until the reader presses
+                    // stop, and deferring through that would leave an edit made
+                    // from the list undrawn with nothing on screen to explain
+                    // it. A rebuild that does happen settles any debt owed from
+                    // earlier in the run, so the flag cannot outlive the reason
+                    // for it.
+                    if playback?.isActive == true, playbackLayer.lastSnapshot != nil {
+                        rebuildDeferredByPlayback = true
+                    } else {
+                        rebuildDeferredByPlayback = false
+                        rebuild(on: mapView)
+                    }
                 }
                 if basemapChanged { updateBasemapVeil(on: mapView) }
             }
@@ -785,7 +868,7 @@ struct RailMapView: View {
                 // their ramp (`restyle` below still runs every frame), so what
                 // the reader loses is detail arriving late — against a map that
                 // stopped following them, which is what the report was.
-                if lastPlaybackSnapshot != nil {
+                if playbackLayer.lastSnapshot != nil {
                     // The chase moves the camera every display-link frame.
                     // The retained strokes still restyle continuously; a
                     // national LOD rebuild waits until playback releases the
@@ -883,7 +966,7 @@ struct RailMapView: View {
                 // culling every line. Wait for a real size.
                 guard mapView.bounds.width > 1, !lines.isEmpty || !rides.isEmpty else { return }
 
-                let zoom = Self.zoomLevel(of: mapView)
+                let zoom = MapProjection.zoomLevel(of: mapView)
                 // Every LOD and label floor is an integer zoom. `rounded()`
                 // rebuilt half a level before the floor, then did nothing when
                 // the camera actually crossed it; a z14 caption could therefore
@@ -898,6 +981,10 @@ struct RailMapView: View {
                 builtForZoom = bucket
                 let buildRect = NetworkLOD.buildRect(for: visibleRect)
                 builtRect = buildRect
+                // Before the build, not after: a country that has not been
+                // decoded contributes nothing to what follows, and saying so
+                // now is what gets it decoded in time for the next rebuild.
+                onBuildRect(buildRect)
 
                 let started = ContinuousClock.now
                 let rebuildInterval = RailSignpost.map.begin("map.rebuild")
@@ -929,7 +1016,7 @@ struct RailMapView: View {
                 // was eight times it, and because the parity fixtures compare
                 // the two apps ABOVE this line, nothing reported the difference
                 // but the map.
-                let epsilon = Self.metresPerPixel(
+                let epsilon = MapProjection.metresPerPixel(
                     zoom: zoom, latitude: mapView.region.center.latitude)
                     * RailStyle.simplifyTolerance
 
@@ -971,14 +1058,14 @@ struct RailMapView: View {
                 // by the same rule `restyle` rounds by, so a mark built here
                 // and a mark rescaled there are never a fraction of a pixel
                 // apart.
-                let scale = Self.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
+                let scale = MapProjection.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
                 styledScale = scale
                 styledMarkZoom = (zoom * 16).rounded() / 16
 
                 // A normal network rebuild removes every overlay underneath
                 // MapKit. Forget the incremental playback mount before doing
                 // so; the current snapshot is re-mounted once at the end.
-                clearPlayback(on: mapView)
+                playbackLayer.clear(on: mapView)
                 let teardown = RailSignpost.map.begin("map.rebuild.teardown")
                 mapView.removeOverlays(mapView.overlays)
                 basemapVeil = nil
@@ -993,8 +1080,7 @@ struct RailMapView: View {
                 rideStationAnnotations = []
                 if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
                 endpointAnnotations = []
-                overlayStyles.removeAll(keepingCapacity: true)
-                overlayRenderers.removeAll(keepingCapacity: true)
+                overlayStyles.removeAll()
                 RailSignpost.map.end("map.rebuild.teardown", teardown)
                 if basemapOpacity < 0.999 {
                     let corners = [
@@ -1022,7 +1108,7 @@ struct RailMapView: View {
                     let multi = MKMultiPolyline(polylines)
                     let styleKey = "network|\(key)"
                     multi.title = styleKey
-                    overlayStyles[styleKey] = OverlayStyle(
+                    overlayStyles[styleKey] = .init(
                         color: colors[key] ?? .systemGray,
                         // The rail stroke is a quarter of the station dot, and it
                         // is a TOKEN — the full-scale weight, not the drawn one.
@@ -1132,7 +1218,7 @@ struct RailMapView: View {
                         let styleKey = "\(suffix)|\(index)|\(ride.id)"
                         let multi = MKMultiPolyline(polylines)
                         multi.title = styleKey
-                        overlayStyles[styleKey] = OverlayStyle(
+                        overlayStyles[styleKey] = .init(
                             color: color, widthToken: width, alpha: alpha, dashed: dashed)
                         rideOverlays.append(multi)
 
@@ -1148,7 +1234,7 @@ struct RailMapView: View {
                         let casingKey = "\(suffix)-casing|\(index)|\(ride.id)"
                         let casing = MKMultiPolyline(polylines)
                         casing.title = casingKey
-                        overlayStyles[casingKey] = OverlayStyle(
+                        overlayStyles[casingKey] = .init(
                             // `MAP_SURFACE_COLORS[theme].casing`, the same two
                             // values the web app's selection halo uses.
                             color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
@@ -1561,9 +1647,7 @@ struct RailMapView: View {
                     layoutEndpointLabels(on: mapView)
                 }
 
-                if let lastPlaybackSnapshot {
-                    paintPlayback(lastPlaybackSnapshot, on: mapView, applyCamera: false)
-                }
+                playbackLayer.repaint(on: mapView)
 
                 let elapsed = ContinuousClock.now - started
 #if DEBUG
@@ -1888,7 +1972,7 @@ struct RailMapView: View {
 
             @objc func handleMapTap(_ recognizer: UITapGestureRecognizer) {
                 guard recognizer.state == .ended, let mapView,
-                      lastPlaybackSnapshot == nil else { return }
+                      playbackLayer.lastSnapshot == nil else { return }
                 let point = recognizer.location(in: mapView)
                 let interval = RailSignpost.map.begin("map.tap")
                 defer { RailSignpost.map.end("map.tap", interval) }
@@ -1917,12 +2001,69 @@ struct RailMapView: View {
                 let hits = RideTapResolver.hits(
                     at: RideTapResolver.Point(x: point.x, y: point.y),
                     among: candidates)
+                // A tap that found no ride, but landed on a station OF THE
+                // CHOSEN one, is not a tap on empty map — so it must not be
+                // answered as one.
+                //
+                // `gestureRecognizer(_:shouldReceive:)` already keeps a touch
+                // inside a bead's own 44-point target away from this
+                // recogniser, and that is the narrower question. MapKit selects
+                // an annotation from further out than the view itself claims —
+                // `mapView(_:didSelect:)` says so — so a finger that lands
+                // beside a dot, past its target but still within MapKit's,
+                // reached here, found no ride under it (a bead at the very end
+                // of a line has stroke on one side only) and cleared the
+                // selection, and then half a second later the same touch opened
+                // that station's card. One touch, two contradictory answers,
+                // and the reader watching a card appear over a map that has
+                // just gone quiet.
+                if hits.isEmpty, tappedStationOfSelectedRide(at: point, on: mapView) { return }
                 // The touch is CLAIMED when it lands on a ride, and the claim
                 // is what `mapView(_:didSelect:)` reads half a second later.
                 // See the comment there: this map answers a tap twice
                 // otherwise.
                 if !hits.isEmpty { rideAnsweredTap = .now }
                 onSelectRide(hits)
+            }
+
+            /// A double tap only ever zooms. See `makeUIView` for why this
+            /// recogniser exists at all — the single tap waits on it, and the
+            /// waiting is the whole feature.
+            @objc func handleMapDoubleTap(_ recognizer: UITapGestureRecognizer) {}
+
+            /// Whether `point` is on one of the SELECTED ride's own station
+            /// beads.
+            ///
+            /// Asked of the annotations rather than of the ride's stops so that
+            /// the answer is the one the reader can see: a bead that was culled
+            /// from the build rect, or that belongs to a journey which is not
+            /// the chosen one, is not on screen to be tapped. `selected` is
+            /// already on the annotation — the beads are built with it, for the
+            /// focus boost — so nothing new has to be carried to ask this.
+            ///
+            /// The reach is three quarters of ``RailStyle/minimumTouchTarget``,
+            /// and the fraction is the point. Half of it is the dot's own claim
+            /// (`RideStationAnnotationView.point(inside:with:)`), and a touch
+            /// inside THAT never arrives here — `shouldReceive` hands it
+            /// straight to MapKit. What is left to cover is the band outside
+            /// the dot's target that MapKit nevertheless answers with the same
+            /// bead, whose width Apple does not document; a quarter-target
+            /// margin is enough for a finger that lands beside a dot and no
+            /// wider on purpose, because a guard that swallowed taps a whole
+            /// target away from the line would make a selection hard to leave.
+            private func tappedStationOfSelectedRide(
+                at point: CGPoint, on mapView: MKMapView
+            ) -> Bool {
+                guard selectedTrainID != nil else { return false }
+                let reach = RailStyle.minimumTouchTarget * 0.75
+                for annotation in rideStationAnnotations {
+                    guard let dot = annotation as? RideStationAnnotation, dot.selected
+                    else { continue }
+                    let centre = mapView.convert(dot.coordinate, toPointTo: mapView)
+                    let dx = centre.x - point.x, dy = centre.y - point.y
+                    if dx * dx + dy * dy <= reach * reach { return true }
+                }
+                return false
             }
 
             func gestureRecognizer(
@@ -2029,29 +2170,10 @@ struct RailMapView: View {
                 return true
             }
 
-            /// What one overlay is drawn with — a colour, an opacity, and a weight
-            /// expressed as its FULL-SCALE token rather than as points on screen.
-            ///
-            /// Storing the token is the whole of the weight contract on this side:
-            /// nothing here may hold a width that has already had a ramp applied
-            /// to it, because then a rescale would have to know which factor to
-            /// divide out. ``drawnWidth(_:atScale:)`` is the only place a token
-            /// becomes points.
-            private struct OverlayStyle {
-                var color: UIColor
-                var widthToken: CGFloat
-                var alpha: CGFloat
-                /// Dashed strokes carry the pair in LINE WIDTHS, so it is derived
-                /// from the token and needs no ramp of its own — the same factor
-                /// carries dash and stroke down together.
-                var dashed = false
-            }
-
-            private var overlayStyles: [String: OverlayStyle] = [:]
-            /// The renderers MapKit built, so a rescale can reach them. MapKit
-            /// caches what `rendererFor` returns and never asks again, so a width
-            /// written into `overlayStyles` after the fact would never be drawn.
-            private var overlayRenderers: [String: MKOverlayRenderer] = [:]
+            /// What every stroke on this map is drawn with. See
+            /// ``MapOverlayStyles`` for the full-scale-token contract the four
+            /// writers — network, rides, veil, playback — share through it.
+            let overlayStyles = MapOverlayStyles()
 
             /// The annotation views MapKit currently has on the map, kept so a
             /// rescale does not have to ASK for each of them.
@@ -2074,10 +2196,6 @@ struct RailMapView: View {
             /// the view that wants the new scale.
             private let displayedAnnotationViews = NSHashTable<MKAnnotationView>.weakObjects()
 
-            private static func drawnWidth(_ style: OverlayStyle?, atScale scale: CGFloat) -> CGFloat {
-                (style?.widthToken ?? RailStyle.railWidth) * scale
-            }
-
             /// Re-applies the one shared factor to everything already on screen.
             ///
             /// Cheap by construction: the strokes are a handful of renderers, the
@@ -2091,7 +2209,7 @@ struct RailMapView: View {
                 // camera flight (see `mapViewDidChangeVisibleRegion`), and the
                 // annotation pass below used to derive the same number a
                 // second time.
-                let zoom = Self.zoomLevel(of: mapView)
+                let zoom = MapProjection.zoomLevel(of: mapView)
                 // QUANTISED, and everything below is drawn from these rather
                 // than from the raw pair.
                 //
@@ -2108,7 +2226,7 @@ struct RailMapView: View {
                 // which is the whole argument: the ramp still runs on every
                 // frame — §9.1's intermediate frames still explain the change —
                 // it just stops re-running for differences that round away.
-                let scale = Self.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
+                let scale = MapProjection.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
                 let markZoom = (zoom * 16).rounded() / 16
                 // Two throttles, because marks and type stop changing at
                 // different zooms. Conflating them froze the label ramp as soon
@@ -2126,24 +2244,7 @@ struct RailMapView: View {
                 guard scaleChanged || markZoomChanged else { return }
                 styledScale = scale
                 styledMarkZoom = markZoom
-                if scaleChanged {
-                    for (key, renderer) in overlayRenderers {
-                        let style = overlayStyles[key]
-                        let width = Self.drawnWidth(style, atScale: scale)
-                        if let polyline = renderer as? MKPolylineRenderer {
-                            polyline.lineWidth = width
-                            polyline.lineDashPattern = style?.dashed == true
-                                ? RailStyle.dashPattern(atScale: scale) : nil
-                        } else if let multi = renderer as? MKMultiPolylineRenderer {
-                            multi.lineWidth = width
-                            multi.lineDashPattern = style?.dashed == true
-                                ? RailStyle.dashPattern(atScale: scale) : nil
-                        } else {
-                            continue
-                        }
-                        renderer.setNeedsDisplay()
-                    }
-                }
+                if scaleChanged { overlayStyles.rescale(to: scale) }
                 // The marks, reached through the views MapKit already handed
                 // over rather than by asking it for one per annotation. See
                 // ``displayedAnnotationViews`` — the asking was the whole of
@@ -2180,305 +2281,25 @@ struct RailMapView: View {
                 }
             }
 
+            // MARK: - playback
+
+            // The chase itself lives in `MapPlaybackLayer`. What stays here is
+            // the one thing that is not about the trail: whether a rebuild the
+            // trail was holding off may now run. See `rebuildDeferredByPlayback`.
+
             func renderPlayback(_ snapshot: PlaybackMapSnapshot?) {
                 guard let mapView else { return }
-                lastPlaybackSnapshot = snapshot
-                guard let snapshot else {
-                    clearPlayback(on: mapView)
-                    if rebuildDeferredByPlayback {
-                        rebuildDeferredByPlayback = false
-                        rebuild(on: mapView)
-                    }
-                    return
-                }
-                paintPlayback(snapshot, on: mapView, applyCamera: snapshot.autoFocus)
+                guard playbackLayer.render(snapshot, on: mapView),
+                      rebuildDeferredByPlayback else { return }
+                rebuildDeferredByPlayback = false
+                rebuild(on: mapView)
             }
 
-            private func clearPlayback(on mapView: MKMapView) {
-                let overlays = playbackDoneOverlays + playbackTrailOverlays
-                    + [playbackPartialOverlay].compactMap { $0 }
-                if !overlays.isEmpty { mapView.removeOverlays(overlays) }
-                forgetPlaybackStyles(overlays)
-                let annotations: [MKAnnotation] = playbackStationAnnotations
-                    + [playbackHeadAnnotation].compactMap { $0 }
-                if !annotations.isEmpty { mapView.removeAnnotations(annotations) }
-                playbackDoneOverlays = []
-                playbackRenderedDoneCount = 0
-                resetCurrentPlayback(on: mapView, removeMountedObjects: false)
-            }
-
-            private func paintPlayback(
-                _ snapshot: PlaybackMapSnapshot, on mapView: MKMapView, applyCamera: Bool
-            ) {
-                let color = UIColor(railHex: snapshot.path.color) ?? .systemBlue
-                syncDonePlayback(snapshot.done, fallbackColor: color, on: mapView)
-
-                // A new train (or a backwards seek/restart) is the only time
-                // the current trail and its station objects are replaced.
-                // Ordinary display-link frames retain every completed segment
-                // and mutate the handful of objects that actually moved.
-                if playbackTrainID != snapshot.path.trainID
-                    || snapshot.frame.distance < playbackLastDistance
-                {
-                    resetCurrentPlayback(on: mapView)
-                    prepareCurrentPlayback(snapshot, color: color, on: mapView)
-                }
-                appendCompletedPlaybackSteps(
-                    through: snapshot.frame.distance, color: color, on: mapView)
-                updatePlaybackPartial(snapshot, color: color, on: mapView)
-                updatePlaybackAnnotations(snapshot, color: color, on: mapView)
-                playbackLastDistance = snapshot.frame.distance
-
-                if applyCamera, let camera = snapshot.frame.camera {
-                    let width = max(Double(mapView.bounds.width), 1)
-                    let height = max(Double(mapView.bounds.height), 1)
-                    let longitudeDelta = 360 * (width / 256) / pow(2, camera.zoom)
-                    mapView.setRegion(MKCoordinateRegion(
-                        center: camera.center.clLocation,
-                        span: MKCoordinateSpan(
-                            latitudeDelta: longitudeDelta * height / width,
-                            longitudeDelta: longitudeDelta)), animated: false)
-                }
-                playback?.mapRendererViewSize = mapView.bounds.size
-            }
-
-            /// Mount only newly finished journeys. `done` is an append-only
-            /// prefix while a queue plays, so repainting it at 60 Hz is pure
-            /// object churn. A shorter array means playback was restarted.
-            private func syncDonePlayback(
-                _ done: [PlaybackMapSnapshot.DoneTrail], fallbackColor: UIColor,
-                on mapView: MKMapView
-            ) {
-                if done.count < playbackRenderedDoneCount {
-                    if !playbackDoneOverlays.isEmpty {
-                        mapView.removeOverlays(playbackDoneOverlays)
-                        forgetPlaybackStyles(playbackDoneOverlays)
-                    }
-                    playbackDoneOverlays = []
-                    playbackRenderedDoneCount = 0
-                }
-                var additions: [MKOverlay] = []
-                for index in playbackRenderedDoneCount..<done.count {
-                    let trail = done[index]
-                    guard trail.coords.count >= 2 else { continue }
-                    let strideBy = max(1, trail.coords.count / 64)
-                    var sampled = Swift.stride(
-                        from: 0, to: trail.coords.count, by: strideBy
-                    ).map { trail.coords[$0] }
-                    if sampled.last != trail.coords.last, let last = trail.coords.last {
-                        sampled.append(last)
-                    }
-                    guard sampled.count >= 2 else { continue }
-                    let line = MKPolyline(
-                        coordinates: sampled.map(\.clLocation), count: sampled.count)
-                    let styleKey = "playback-done|\(index)"
-                    line.title = styleKey
-                    overlayStyles[styleKey] = OverlayStyle(
-                        color: UIColor(railHex: trail.colorHex) ?? fallbackColor,
-                        widthToken: Self.playbackTrailWidth, alpha: 1)
-                    additions.append(line)
-                }
-                playbackRenderedDoneCount = done.count
-                playbackDoneOverlays += additions
-                if !additions.isEmpty { mapView.addOverlays(additions, level: .aboveLabels) }
-            }
-
-            private func prepareCurrentPlayback(
-                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
-            ) {
-                playbackTrainID = snapshot.path.trainID
-                playbackLastDistance = -Double.infinity
-                playbackCompletedStepCount = 0
-                playbackSteps = snapshot.path.runs.enumerated().flatMap {
-                    element -> [PlaybackTrailStep] in
-                    let (runIndex, run) = element
-                    guard run.coords.count >= 2, run.cum.count == run.coords.count else { return [] }
-                    let strideBy = max(1, run.coords.count / 64)
-                    var indices = Array(Swift.stride(
-                        from: 0, to: run.coords.count, by: strideBy))
-                    if indices.last != run.coords.count - 1 { indices.append(run.coords.count - 1) }
-                    let denominator = Double(max(indices.count - 1, 1))
-                    return indices.indices.dropFirst().map { position in
-                        let from = indices[position - 1]
-                        let to = indices[position]
-                        return PlaybackTrailStep(
-                            runIndex: runIndex,
-                            start: run.coords[from], end: run.coords[to],
-                            startDistance: run.offset + run.cum[from],
-                            endDistance: run.offset + run.cum[to],
-                            fraction: Double(position) / denominator)
-                    }
-                }
-
-                playbackStationAnnotations = snapshot.path.stations.enumerated().map {
-                    PlaybackAnnotation(
-                        coordinate: $0.element.coord.clLocation,
-                        // Already named: `Playback.compile` puts every
-                        // station through `I18N.stationName` with its own stop
-                        // code as it builds the path, which is where the web
-                        // app bakes it too. Re-running the lookup here would
-                        // ask the table about a name it has already answered
-                        // for — and, with no code to say which region, ask
-                        // Japan's table about a Taiwanese station.
-                        title: $0.element.name,
-                        color: color, kind: .station, active: false, pulse: 0)
-                }
-                if !playbackStationAnnotations.isEmpty {
-                    mapView.addAnnotations(playbackStationAnnotations)
-                }
-            }
-
-            private func appendCompletedPlaybackSteps(
-                through distance: Double, color: UIColor, on mapView: MKMapView
-            ) {
-                var additions: [MKOverlay] = []
-                while playbackCompletedStepCount < playbackSteps.count {
-                    let index = playbackCompletedStepCount
-                    let step = playbackSteps[index]
-                    guard step.endDistance <= distance else { break }
-                    let points = [step.start.clLocation, step.end.clLocation]
-                    let line = MKPolyline(coordinates: points, count: points.count)
-                    let styleKey = "playback|\(playbackTrainID ?? "")|\(index)"
-                    line.title = styleKey
-                    overlayStyles[styleKey] = OverlayStyle(
-                        color: color, widthToken: Self.playbackTrailWidth,
-                        alpha: 0.18 + 0.82 * step.fraction)
-                    additions.append(line)
-                    playbackCompletedStepCount += 1
-                }
-                playbackTrailOverlays += additions
-                if !additions.isEmpty { mapView.addOverlays(additions, level: .aboveLabels) }
-            }
-
-            /// The only overlay replaced on an ordinary frame: the short
-            /// unfinished line from the last fixed sample to the moving head.
-            private func updatePlaybackPartial(
-                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
-            ) {
-                if let old = playbackPartialOverlay {
-                    mapView.removeOverlay(old)
-                    forgetPlaybackStyles([old])
-                    playbackPartialOverlay = nil
-                }
-                guard let head = snapshot.frame.head else { return }
-                let currentRun = snapshot.frame.runProgress.index
-                guard let step = playbackSteps.first(where: {
-                    $0.runIndex == currentRun
-                        && $0.startDistance <= snapshot.frame.distance
-                        && $0.endDistance > snapshot.frame.distance
-                }), step.start != head else { return }
-                let points = [step.start.clLocation, head.clLocation]
-                let line = MKPolyline(coordinates: points, count: points.count)
-                let styleKey = "playback-partial|\(playbackTrainID ?? "")"
-                line.title = styleKey
-                overlayStyles[styleKey] = OverlayStyle(
-                    color: color, widthToken: Self.playbackTrailWidth,
-                    alpha: 0.18 + 0.82 * step.fraction)
-                playbackPartialOverlay = line
-                mapView.addOverlay(line, level: .aboveLabels)
-            }
-
-            private func updatePlaybackAnnotations(
-                _ snapshot: PlaybackMapSnapshot, color: UIColor, on mapView: MKMapView
-            ) {
-                for (index, annotation) in playbackStationAnnotations.enumerated() {
-                    let active = index <= snapshot.frame.stations.index
-                    let pulse = index == snapshot.frame.stations.index
-                        ? snapshot.frame.stations.pulse : 0
-                    guard annotation.active != active || annotation.pulse != pulse else { continue }
-                    annotation.active = active
-                    annotation.pulse = pulse
-                    (mapView.view(for: annotation) as? PlaybackAnnotationView)?
-                        .configure(annotation, scale: playbackAnnotationScale(on: mapView))
-                }
-                if let head = snapshot.frame.head {
-                    if let annotation = playbackHeadAnnotation {
-                        annotation.coordinate = head.clLocation
-                    } else {
-                        let annotation = PlaybackAnnotation(
-                            coordinate: head.clLocation, title: nil, color: color,
-                            kind: .head, active: true, pulse: 0)
-                        playbackHeadAnnotation = annotation
-                        mapView.addAnnotation(annotation)
-                    }
-                } else if let annotation = playbackHeadAnnotation {
-                    mapView.removeAnnotation(annotation)
-                    playbackHeadAnnotation = nil
-                }
-            }
-
-            private func resetCurrentPlayback(
-                on mapView: MKMapView, removeMountedObjects: Bool = true
-            ) {
-                let overlays = playbackTrailOverlays
-                    + [playbackPartialOverlay].compactMap { $0 }
-                let annotations: [MKAnnotation] = playbackStationAnnotations
-                    + [playbackHeadAnnotation].compactMap { $0 }
-                if removeMountedObjects {
-                    if !overlays.isEmpty { mapView.removeOverlays(overlays) }
-                    if !annotations.isEmpty { mapView.removeAnnotations(annotations) }
-                }
-                forgetPlaybackStyles(overlays)
-                playbackTrailOverlays = []
-                playbackPartialOverlay = nil
-                playbackStationAnnotations = []
-                playbackHeadAnnotation = nil
-                playbackTrainID = nil
-                playbackCompletedStepCount = 0
-                playbackLastDistance = -Double.infinity
-                playbackSteps = []
-            }
-
-            private func forgetPlaybackStyles(_ overlays: [MKOverlay]) {
-                for overlay in overlays {
-                    guard let key = overlay.title ?? nil else { continue }
-                    overlayStyles.removeValue(forKey: key)
-                    overlayRenderers.removeValue(forKey: key)
-                }
-            }
-
-            private func playbackAnnotationScale(on mapView: MKMapView) -> CGFloat {
-                guard mapView.bounds.width > 1 else { return 1 }
-                return Self.quantised(
-                    RailStyle.scale(atZoom: Self.zoomLevel(of: mapView)), on: mapView)
-            }
-
-            private static var playbackTrailWidth: CGFloat {
-                RailStyle.railWidth * RailStyle.riddenWidthScale
-                    + RailStyle.playbackTrailEdge * 2
-            }
-
-            private struct PlaybackTrailStep {
-                let runIndex: Int
-                let start: Coordinate
-                let end: Coordinate
-                let startDistance: Double
-                let endDistance: Double
-                let fraction: Double
-            }
-
-            /// `fitTrainsBounds` while the transport owns the camera.
-            ///
-            /// `maxZoom` is a floor on how far in the move may go, expressed
-            /// as a MapLibre zoom because that is what `Playback.Tuning`
-            /// carries. Without it a single short journey opens at street
-            /// level, where the overview shows nothing an overview is for.
-            func framePlayback(
-                coordinates: [Coordinate], maxZoom: Double, animated: Bool
-            ) {
-                guard let mapView, var region = Self.region(covering: [coordinates])
-                else { return }
-                // The smallest span this zoom is allowed to produce, across
-                // the view's own width — one MapLibre tile pixel is this
-                // app's zoom minus the ported offset, and `metresPerPixel`
-                // already speaks that language.
-                let metres = Self.metresPerPixel(
-                    zoom: RailStyle.zoom(fromMapLibre: maxZoom),
-                    latitude: region.center.latitude) * Double(mapView.bounds.width)
-                let minimumDelta = metres / 111_320
-                region.span.latitudeDelta = max(region.span.latitudeDelta, minimumDelta)
-                region.span.longitudeDelta = max(region.span.longitudeDelta, minimumDelta)
-                controller?.fit(region, animated: animated)
+            func framePlayback(coordinates: [Coordinate], maxZoom: Double, animated: Bool) {
+                guard let mapView else { return }
+                playbackLayer.frame(
+                    coordinates: coordinates, maxZoom: maxZoom, animated: animated,
+                    on: mapView)
             }
 
             // MARK: - selection
@@ -2693,20 +2514,20 @@ struct RailMapView: View {
                 // `railwayScale` exists to prevent: a nationwide Japan that reads
                 // as one fused mass of railway rather than as a network.
                 let scale = mapView.bounds.width > 1
-                    ? RailStyle.scale(atZoom: Self.zoomLevel(of: mapView)) : 1
+                    ? RailStyle.scale(atZoom: MapProjection.zoomLevel(of: mapView)) : 1
                 if let polyline = overlay as? MKPolyline {
                     let renderer = MKPolylineRenderer(polyline: polyline)
                     let key = polyline.title ?? ""
                     let style = overlayStyles[key]
                     renderer.strokeColor = (style?.color ?? .systemBlue)
                         .withAlphaComponent(style?.alpha ?? 1)
-                    renderer.lineWidth = Self.drawnWidth(style, atScale: scale)
+                    renderer.lineWidth = MapOverlayStyles.drawnWidth(style, atScale: scale)
                     renderer.lineCap = .round
                     renderer.lineJoin = .round
                     if style?.dashed == true {
                         renderer.lineDashPattern = RailStyle.dashPattern(atScale: scale)
                     }
-                    if !key.isEmpty { overlayRenderers[key] = renderer }
+                    overlayStyles.remember(renderer, forKey: key)
                     return renderer
                 }
                 guard let multi = overlay as? MKMultiPolyline else {
@@ -2716,22 +2537,22 @@ struct RailMapView: View {
                 let key = multi.title ?? ""
                 let style = overlayStyles[key]
                 renderer.strokeColor = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
-                renderer.lineWidth = Self.drawnWidth(style, atScale: scale)
+                renderer.lineWidth = MapOverlayStyles.drawnWidth(style, atScale: scale)
                 renderer.lineCap = .round
                 renderer.lineJoin = .round
                 if style?.dashed == true {
                     renderer.lineDashPattern = RailStyle.dashPattern(atScale: scale)
                 }
-                if !key.isEmpty { overlayRenderers[key] = renderer }
+                overlayStyles.remember(renderer, forKey: key)
                 return renderer
             }
 
             func mapView(
                 _ mapView: MKMapView, viewFor annotation: any MKAnnotation
             ) -> MKAnnotationView? {
-                let zoom = Self.zoomLevel(of: mapView)
+                let zoom = MapProjection.zoomLevel(of: mapView)
                 let scale = mapView.bounds.width > 1
-                    ? Self.quantised(RailStyle.scale(atZoom: zoom), on: mapView) : 1
+                    ? MapProjection.quantised(RailStyle.scale(atZoom: zoom), on: mapView) : 1
                 if let station = annotation as? StationAnnotation {
                     let identifier = "network-station"
                     let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -2776,97 +2597,6 @@ struct RailMapView: View {
                     ?? PlaybackAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.configure(annotation, scale: scale)
                 return view
-            }
-
-            // MARK: - geometry helpers
-
-            /// Web-Mercator zoom for the map view's current span, in the
-            /// Google/Leaflet convention: 256-point tiles, so the world is
-            /// `256 × 2^zoom` points wide.
-            ///
-            /// **This is one level above MapLibre's**, and the comment that used to
-            /// stand here — "so the ported LOD thresholds mean the same thing here
-            /// as they do in MapLibre" — was wrong. MapLibre's tiles are 512 px, so
-            /// the same ground scale reports one level LOWER there:
-            ///
-            ///     78271.52 × cos35° / 2⁷  = 500.9 m per MapLibre pixel
-            ///     156543.03 × cos35° / 2⁸ = 500.9 m per point here
-            ///
-            /// The web app confirms its own side of that: `app-map-fit.js` computes
-            /// its longitude-per-pixel as `360 / (512 × 2^minZoom)`.
-            ///
-            /// So every threshold ported out of the web app is a MapLibre number
-            /// and **must be converted before it is read against this zoom**, or
-            /// it fires one level early — one step wider than the web app fires
-            /// it. Both places that got this wrong have been fixed and measured:
-            /// the station gate (jp drew 3,963 dots at a city view where the web
-            /// app draws 348) and `NetworkLOD.minZoom` (652 lines at a national
-            /// view against 431). Weights and the ride label tiers convert too.
-            ///
-            /// The conversion is `RailStyle.zoom(fromMapLibre:)` and its inverse.
-            /// Anything new that compares a ported number against this value
-            /// without one of them is a bug of the same shape.
-            static func zoomLevel(of mapView: MKMapView) -> Double {
-                let width = max(mapView.bounds.width, 1)
-                let longitudeDelta = max(mapView.region.span.longitudeDelta, 1e-9)
-                return log2(360 * (width / 256) / longitudeDelta)
-            }
-
-            /// The widest mark ``RailStyle/scale(atZoom:)`` is ever multiplied
-            /// into, in points at full weight.
-            ///
-            /// A bound rather than a measurement, and deliberately generous: it
-            /// only decides how finely the shared factor is rounded, and being
-            /// too large costs a redraw nobody needed while being too small
-            /// costs a visible step. A station bead is 6 pt, a ride stroke with
-            /// the reader's 線路粗細 at its widest and the focus boost on top
-            /// is under 10, and a playback head is a multiple of the bead's
-            /// radius.
-            private static let widestScaledMark: CGFloat = 12
-
-            /// The shared factor, rounded to the finest step the screen can
-            /// actually show on ``widestScaledMark``.
-            static func quantised(_ scale: CGFloat, on mapView: MKMapView) -> CGFloat {
-                let pixel = 1 / max(mapView.traitCollection.displayScale, 1)
-                let step = pixel / widestScaledMark
-                return (scale / step).rounded() * step
-            }
-
-            static func metresPerPixel(zoom: Double, latitude: Double) -> Double {
-                156_543.03392 * cos(latitude * .pi / 180) / pow(2, zoom)
-            }
-
-            static func region(covering lines: [RailNetworkStore.DrawnLine]) -> MKCoordinateRegion? {
-                var minLat = Double.infinity, maxLat = -Double.infinity
-                var minLon = Double.infinity, maxLon = -Double.infinity
-                for line in lines {
-                    for interval in line.intervals {
-                        for point in interval {
-                            minLat = min(minLat, point.lat)
-                            maxLat = max(maxLat, point.lat)
-                            minLon = min(minLon, point.lon)
-                            maxLon = max(maxLon, point.lon)
-                        }
-                    }
-                }
-                guard minLat <= maxLat, minLon <= maxLon else { return nil }
-                return MKCoordinateRegion(
-                    center: CLLocationCoordinate2D(
-                        latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2),
-                    span: MKCoordinateSpan(
-                        latitudeDelta: max((maxLat - minLat) * 1.25, 0.01),
-                        longitudeDelta: max((maxLon - minLon) * 1.25, 0.01))
-                )
-            }
-
-            /// The box that holds these strokes — ``RailMapController/region(covering:)``.
-            ///
-            /// The controller owns it because the workspace frames strokes as
-            /// well now (the journeys the opening view is for), and two copies
-            /// of a bounding box with a margin in it is two framings waiting to
-            /// disagree by a factor nobody meant to change.
-            static func region(covering strokes: [[Coordinate]]) -> MKCoordinateRegion? {
-                RailMapController.region(covering: strokes)
             }
 
             /// The `[r, g, b]` channels a `MarkerRecord` carries.

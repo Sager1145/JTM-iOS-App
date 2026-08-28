@@ -177,6 +177,15 @@ if [ "$run_swift" = 1 ]; then
     # doc comment elsewhere may point AT one of these types, it just may not
     # use one.
     #
+    # The allowed list is "the map's own files", and the map is three files
+    # now: `MapPlaybackLayer` was lifted out of the coordinator, which is where
+    # the playback trail's beads and head are built. Widening the list is
+    # therefore not a relaxation — the contract is about which SUBSYSTEM may
+    # name these classes, and adding a file the map itself owns keeps it exact.
+    # Anything outside the map still fails, which is the whole point: a
+    # statistics or editor screen reaching for `StationAnnotationView` is the
+    # regression this guards.
+    #
     # Rooted at $here, not at the shell's cwd: this block runs after
     # `cd "$here/RailKit"`, where `RailMap` does not exist. Written relative,
     # grep warned to stderr, the `|| true` ate the failure and the check
@@ -186,7 +195,7 @@ if [ "$run_swift" = 1 ]; then
     annotation_users=$(cd "$here" && grep -rnE \
         '\b(PlaybackAnnotation|PlaybackAnnotationView|StationAnnotation|RideStationAnnotation|RideLabelAnnotation|EndpointLabelAnnotation|StationAnnotationView|RideStationAnnotationView|RideLabelAnnotationView|EndpointLabelView)\b' \
         --include='*.swift' RailMap \
-        | grep -vE '^RailMap/(RailMapAnnotations|RailMapView)\.swift:' \
+        | grep -vE '^RailMap/(RailMapAnnotations|RailMapView|MapPlaybackLayer)\.swift:' \
         | grep -vE ':[0-9]+: *//' || true)
     if [ -n "$annotation_users" ]; then
         echo "$annotation_users"
@@ -571,15 +580,32 @@ PY
     # changing its coordinate. The previous renderer removed and recreated
     # every overlay and annotation at 60 Hz while the main thread also moved
     # the camera.
-    if awk '/private func paintPlayback\(/ { inside = 1 }
-            /private func syncDonePlayback\(/ { inside = 0 }
-            inside && /clearPlayback\(on:/ { found = 1 }
-            END { exit !found }' RailMap/RailMapView.swift; then
-        fail "paintPlayback tears down the complete playback layer on each frame"
+    # These three read `MapPlaybackLayer.swift`, which is where the chase went
+    # when it was lifted out of the map coordinator. `seen` is why the first
+    # one names the file's own function twice: pinned to `RailMapView.swift`,
+    # this awk stopped finding `paintPlayback` the moment it moved and then
+    # passed on an empty scan — the same "check that cannot fail" defect this
+    # file has already had to fix twice. It now fails if the frame tears its
+    # layer down OR if the function it scans is not there at all.
+    if awk '/private func paint\(/ { inside = 1; seen = 1 }
+            /private func syncDone\(/ { inside = 0 }
+            inside && /clear\(on:/ { tears = 1 }
+            END { exit !(tears || !seen) }' RailMap/MapPlaybackLayer.swift; then
+        fail "the playback frame tears down its whole layer, or has moved out from under this check"
     fi
-    grep -q 'mapView\.removeOverlay(old)' RailMap/RailMapView.swift \
-        || fail "playback no longer limits frame replacement to its partial trail"
-    grep -q 'annotation\.coordinate = head\.clLocation' RailMap/RailMapView.swift \
+    # Singular, and no plural beside it: the frame replaces the one unfinished
+    # stroke and nothing else. Matched by SHAPE rather than by the local's
+    # name — the previous spelling pinned `removeOverlay(old)`, and a rename to
+    # `previous` (correct in itself: the removal moved into a `defer` so the
+    # replacement mounts first) silently broke the check.
+    if ! awk '/private func updatePartial\(/ { inside = 1 }
+              /private func updateAnnotations\(/ { inside = 0 }
+              inside && /mapView\.removeOverlay\(/ { single = 1 }
+              inside && /mapView\.removeOverlays\(/ { plural = 1 }
+              END { exit !(single && !plural) }' RailMap/MapPlaybackLayer.swift; then
+        fail "playback no longer limits frame replacement to its partial trail"
+    fi
+    grep -q 'annotation\.coordinate = head\.clLocation' RailMap/MapPlaybackLayer.swift \
         || fail "playback no longer moves its retained head annotation in place"
     echo "  playback frames retain completed overlays and annotations"
 
@@ -587,7 +613,7 @@ PY
     # restyles continuously, but rebuilding its complete MapKit object graph
     # waits until playback releases the camera. Basemap opacity is likewise a
     # one-polygon renderer update, not a network invalidation.
-    grep -q 'if lastPlaybackSnapshot != nil {' RailMap/RailMapView.swift \
+    grep -q 'if playbackLayer\.lastSnapshot != nil {' RailMap/RailMapView.swift \
         || fail "playback camera changes are no longer isolated from network rebuilds"
     grep -q 'if basemapChanged { updateBasemapVeil(on: mapView) }' \
         RailMap/RailMapView.swift \

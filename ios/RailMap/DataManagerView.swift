@@ -76,11 +76,11 @@ struct DataManagerView: View {
         ) {
             Button(localization.text("btn.openLocal", fallback: "Open JSON")) {
                 showsImportChoice = false
-                afterPresentationDismisses { importsFile = true }
+                PresentationHost.afterTeardown { importsFile = true }
             }
             Button(localization.text("sec.importPaste", fallback: "Paste JSON")) {
                 showsImportChoice = false
-                afterPresentationDismisses {
+                PresentationHost.afterTeardown {
                     flow.load("", origin: .pasted)
                     showsImporter = true
                 }
@@ -371,7 +371,7 @@ struct DataManagerView: View {
                                 // A context menu is itself a presentation on
                                 // iOS. Let its controller leave before asking
                                 // SwiftUI for the confirmation dialog.
-                                afterPresentationDismisses {
+                                PresentationHost.afterTeardown {
                                     replaceCandidate = sample
                                 }
                             } label: {
@@ -544,7 +544,7 @@ struct DataManagerView: View {
             ) {
                 Button(localization.dataText("data.restoreBackup")) {
                     confirmRestore = false
-                    afterPresentationDismisses {
+                    PresentationHost.afterTeardown {
                         // A `Task` because the copy is queued behind any save
                         // still in flight. Waiting for it is what keeps the
                         // reload from reading the store the backup was meant
@@ -604,7 +604,7 @@ struct DataManagerView: View {
                 role: .destructive
             ) {
                 confirmDeleteSaved = false
-                afterPresentationDismisses {
+                PresentationHost.afterTeardown {
                     if let store = itineraries.store {
                         library.snapshotBackup(store, reason: .beforeDeleteAll)
                     }
@@ -625,7 +625,7 @@ struct DataManagerView: View {
         ) {
             Button(localization.dataText("data.deleteAllTitle"), role: .destructive) {
                 confirmDeleteAll = false
-                afterPresentationDismisses {
+                PresentationHost.afterTeardown {
                     if let store = itineraries.store {
                         library.snapshotBackup(store, reason: .beforeDeleteAll)
                     }
@@ -660,7 +660,7 @@ struct DataManagerView: View {
             ) {
                 let sample = replaceCandidate
                 replaceCandidate = nil
-                afterPresentationDismisses {
+                PresentationHost.afterTeardown {
                     if let sample {
                         loadSample(sample, replacingEverything: true)
                     }
@@ -671,15 +671,6 @@ struct DataManagerView: View {
                 (replaceCandidate.map { localization.text($0.titleKey, fallback: $0.title) }
                     ?? "") + "\n" + localization.dataText("data.deleteAllRecovery"))
         }
-    }
-
-    /// UIKit dismisses menus and alert controllers asynchronously. Starting a
-    /// sheet, importer, or store-driven rebuild from the action callback races
-    /// that dismissal and produces "already presenting" warnings. Keep the
-    /// action declarative, but publish its next state after the old controller
-    /// has completed its transition.
-    private func afterPresentationDismisses(_ action: @escaping @MainActor () -> Void) {
-        PresentationHost.afterTeardown(action)
     }
 
     // MARK: - the sentences the hero says
