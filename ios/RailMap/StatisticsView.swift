@@ -70,6 +70,8 @@ struct StatisticsDashboardContent: View {
     /// mounted and unmounted by this decision.
     @State private var progressVisible = false
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     /// `TOP_SEGMENT_CATEGORIES`. Not `view.categories`: the coverage rows carry
     /// a JR（含新幹線）row that is the UNION of two other rows, which is right
     /// for percentages and would merely duplicate sections here. Every row
@@ -126,6 +128,19 @@ struct StatisticsDashboardContent: View {
                 VStack(spacing: 16) {
                     if progressVisible, let progress = statistics.progress {
                         StatisticsProgressSummary(progress: progress)
+                            // The one card on this screen that arrives and
+                            // leaves on its own, and the cards below it shift
+                            // by its full height when it does. §9.4's short
+                            // in-place replacement is what `MapLayersView`
+                            // already gives the same stage's one-line status;
+                            // this is that card getting the same treatment.
+                            //
+                            // Opacity only, and deliberately not a `.move`: the
+                            // card is not coming from anywhere, and a slide
+                            // would be the "large slide" §9.4 asks to remove.
+                            // That also makes it correct under Reduce Motion
+                            // unchanged — only the curve degrades below.
+                            .transition(.opacity)
                     }
                     if let failure = statistics.failureMessage {
                         failureCard(failure)
@@ -147,13 +162,35 @@ struct StatisticsDashboardContent: View {
             }
         }
         .task(id: statistics.progress == nil) {
+            // Both writes are animated, not just the arrival. The card leaving
+            // is the moment the five result cards take its place, and an
+            // unanimated departure is the one the reader actually sees as a
+            // jump — the arrival happens 400 ms into a wait nobody is watching
+            // closely.
+            //
+            // `withAnimation` rather than `.animation(_:value:)` on the card:
+            // the value that changes is this view's own state and the thing
+            // that must animate is a MOUNT, and a transition is inert unless
+            // the insertion happens inside an animated transaction. The same
+            // split `RideCard` makes for its detail body.
             guard statistics.progress != nil else {
-                progressVisible = false
+                withAnimation(settle) { progressVisible = false }
                 return
             }
             try? await Task.sleep(for: .milliseconds(400))
-            progressVisible = statistics.progress != nil
+            let visible = statistics.progress != nil
+            withAnimation(settle) { progressVisible = visible }
         }
+    }
+
+    /// The progress card's arrival and departure, with the Reduce Motion swap
+    /// already applied.
+    ///
+    /// `replace` rather than `spring`: this is one small thing appearing where
+    /// another was, which is exactly what that token names, and a card the
+    /// reader did not push has no momentum to carry.
+    private var settle: Animation {
+        RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion)
     }
 
     // MARK: - 當日統計, as a stamp on the passport
