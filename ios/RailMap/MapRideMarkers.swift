@@ -38,7 +38,7 @@ import RailCore
 /// |---------------|-----------------------------------------------------------|
 /// | `terminal`    | the first and last EFFECTIVELY RIDDEN stopping station     |
 /// | `stop`        | every other drawn stopping station                         |
-/// | `stop-center` | its black core, as in the web app                          |
+/// | `stop-center` | its centre record; MapKit presents it in route colour     |
 /// | `pass`        | `stop_type == "pass_through"`, plus computed pass-throughs |
 /// | `xday`        | the stop each `Dates.DayBreak` lands on                     |
 ///
@@ -47,11 +47,13 @@ import RailCore
 /// map is a claim the reader's own `ride_segment` flags support.
 enum MapRideMarkers {
 
-    // MARK: - the neutral dot palette (railprint C4: hue is reserved for LINES)
+    // MARK: - portable record palette
 
-    /// `RP_INK_RGB` / `RP_WHITE_RGB`. Kept as the `[Double]` channel arrays
-    /// `MarkerRecord` takes, because `rgbCss` indexes three elements without
-    /// checking and the port reproduces that.
+    /// `RP_INK_RGB` / `RP_WHITE_RGB`. These stay in the portable records so
+    /// their contents continue to agree with the web renderer. MapKit replaces
+    /// them at the last presentation boundary with the ride colour: light core
+    /// plus route-coloured keyline for ordinary stations, and the inverse for
+    /// endpoints.
     static let ink: [Double] = [26, 26, 26]
     static let white: [Double] = [255, 255, 255]
 
@@ -68,7 +70,7 @@ enum MapRideMarkers {
     }
 
     /// One built marker: the record, the feature its name election produced,
-    /// and the station identity neither of them carries.
+    /// and the station/route presentation identity neither of them carries.
     ///
     /// The code travels with the record because the readings table is keyed by
     /// it first and by name second (`Localization.stationReadingRow`), and
@@ -79,6 +81,15 @@ enum MapRideMarkers {
         var record: StationDisplay.MarkerRecord
         var feature: StationDisplay.MarkerFeature
         var stationCode: String?
+        /// The region whose readings table names this station.
+        ///
+        /// Carried rather than derived from ``stationCode``: a journey's stop
+        /// holds the OPERATOR's code outside Japan, which names no region —
+        /// see `StationNaming.swift`. The ride knows.
+        var region: Region?
+        /// The exact colour of the route underneath this bead. Kept out of the
+        /// portable record so native styling does not perturb parity logic.
+        var routeColorHex: String
         /// The ride's own day span, so the renderer can apply the date scope
         /// without looking the ride up again.
         var daySpan: Dates.DaySpan
@@ -98,8 +109,8 @@ enum MapRideMarkers {
         Double(RailStyle.stationRing) * scale * settings.markerStrokeScale
     }
 
-    /// `stopCenterRadius` — keep the stop visibly filled while retaining
-    /// enough white around the centre to distinguish it from the solid
+    /// `stopCenterRadius` — keep a small route-coloured centre while retaining
+    /// enough light space around it to distinguish it from the solid
     /// origin/destination marker.
     static func stopCentreRadius(outer: Double, settings: Settings) -> Double {
         max(0.75, min(outer * 0.72, settings.stopCentreRadius))
@@ -134,7 +145,7 @@ enum MapRideMarkers {
     }
 
     /// `passThroughMarkerStyleValues`. The outer circle is an intermediate
-    /// stop's exactly; the stop's black centre is their sole visual delta.
+    /// stop's exactly; the stop's small centre is their sole visual delta.
     ///
     /// `active` is `ride_segment !== false`, and it is not decoration: an
     /// inactive pass-through draws at 0.4. Nothing here can currently produce
@@ -241,7 +252,7 @@ enum MapRideMarkers {
     ///
     /// The order matters and is the web app's: rides in the order they are
     /// drawn, each ride's own stops in travel order, its computed
-    /// pass-throughs after them, and a stop's black centre immediately after
+    /// pass-throughs after them, and a stop's centre immediately after
     /// the dot it sits in. ``StationDisplay/markerLabelWinners(_:)`` resolves
     /// ties in favour of whichever record arrived FIRST, so a different order
     /// would hand a shared station's name to a different ride.
@@ -254,8 +265,8 @@ enum MapRideMarkers {
             let stops = ride.stops
             let flags = rideFlags(stops)
             let positions = stopPositions(of: ride)
-            // First + last effectively-ridden STOPPING station: the black-dot
-            // pair. Pass-throughs are excluded from the pair by construction —
+            // First + last effectively-ridden STOPPING station: the prominent
+            // endpoint pair. Pass-throughs are excluded by construction —
             // a ride does not begin at a station it rolled through.
             let ridden = Statistics.effectivelyRiddenStopIndexes(flags)
             let boundaries: Set<Int> = ridden.isEmpty
@@ -337,7 +348,7 @@ enum MapRideMarkers {
 
                 records.append((record, stop.n02StationCode, ride))
                 guard !isPass, !isBoundary else { continue }
-                // 中途停靠站: a pass-through-sized circle plus a BLACK centre,
+                // 中途停靠站: a pass-through-sized circle plus a small centre,
                 // which is a second record on the same layer drawn on top.
                 let centre = stopCentreRadius(outer: style.radius, settings: settings)
                 var core = record
@@ -426,6 +437,8 @@ enum MapRideMarkers {
         return zip(built, features).map { entry, feature in
             Drawn(
                 record: entry.record, feature: feature, stationCode: entry.code,
+                region: Region(rawValue: entry.ride.country),
+                routeColorHex: entry.ride.colorHex,
                 daySpan: entry.ride.daySpan,
                 mapLibreMinZoom: RideMarkerVisibility.minimumMapLibreZoom(
                     role: feature.role,

@@ -78,7 +78,7 @@ struct MapLayers: Equatable {
 
     /// Whether a marker record of this role is drawn.
     ///
-    /// `stop-center` is the black core inside an intermediate stop's dot. It
+    /// `stop-center` is the route-coloured core inside an intermediate stop's dot. It
     /// is not a mark in its own right — it is drawn INSIDE the dot it belongs
     /// to — so it can only follow that dot's switch.
     ///

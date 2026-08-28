@@ -115,17 +115,6 @@ enum MapLabelStyle {
         .systemFont(ofSize: size, weight: .medium)
     }
 
-    /// `--ink` — the text colour on a filled label card.
-    ///
-    /// Warmer than `UIColor.label` at both ends (#241b18 / #f5eee9), which is
-    /// what the web app's own cards use. Distinct from ``ink(dark:)``: that is
-    /// ink laid straight onto the MAP, this is ink on a card sitting over it.
-    static let cardInk = UIColor { traits in
-        traits.userInterfaceStyle == .dark
-            ? UIColor(red: 245 / 255, green: 238 / 255, blue: 233 / 255, alpha: 1)
-            : UIColor(red: 36 / 255, green: 27 / 255, blue: 24 / 255, alpha: 1)
-    }
-
     /// `text-radial-offset: 0.75` — how far the name sits off its bead, in ems,
     /// so the gap grows with the text rather than staying a fixed pixel count
     /// while the label around it changes size.
@@ -137,12 +126,10 @@ enum MapLabelStyle {
     ///
     /// This is ordering *within* the elected names — it never revives a
     /// platform `StationDisplay.stationLabelWinners` passed over.
-    /// A NAMED station is `.required`, for the reason recorded on the ride
-    /// captions: an annotation view competes with the basemap's own labels, and
-    /// anything below `.required` loses to them over a city — which is the whole
-    /// of a city. A station drawn as a bare bead keeps a modest priority and may
-    /// still be dropped, which is the right way round: losing a bead costs a
-    /// dot on a line that is drawn anyway, losing a name costs the name.
+    /// A name admitted by `MapLabelCollisionGrid` is `.required`: the grid has
+    /// already resolved JTM-to-JTM collisions in this exact hierarchy, while an
+    /// annotation view below `.required` loses wholesale to Apple's dense city
+    /// labels. A bare bead keeps a modest priority and may still be dropped.
     static func stationDisplayPriority(
         interchange: Bool, isTerminal: Bool, named: Bool
     ) -> MKFeatureDisplayPriority {
@@ -151,12 +138,9 @@ enum MapLabelStyle {
                 rawValue: MKFeatureDisplayPriority.defaultLow.rawValue
                     + (isTerminal ? 100 : 0))
         }
-        // `symbol-sort-key` orders interchanges before terminals before
-        // ordinary stops, so that where a dense district cannot show every
-        // name the survivors are the ones a reader navigates by. Once every
-        // named station is `.required` nothing is suppressed and that ordering
-        // has nothing left to decide — the parameters are kept because the
-        // question comes back the moment a thinning pass exists to answer it.
+        // The screen-space thinning pass has already consumed this ordering;
+        // the parameters stay here because this view also answers for bare
+        // beads, whose terminal distinction still affects MapKit's fallback.
         _ = (interchange, isTerminal)
         return .required
     }

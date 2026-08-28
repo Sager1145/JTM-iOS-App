@@ -1,6 +1,7 @@
 import CoreLocation
 import MapKit
 import Observation
+import RailCore
 import SwiftUI
 
 /// The commands the control bar can give the map, and the state it reads back.
@@ -196,8 +197,7 @@ final class RailMapController {
         stopFollowingUser()
         mapView.setVisibleMapRect(
             rect,
-            edgePadding: UIEdgeInsets(
-                top: 40, left: 40, bottom: max(40, bottomObstruction + 20), right: 40),
+            edgePadding: framingInsets,
             // `animated` overrides only downwards in practice: the transport
             // passes false when the reader asked for less motion, and the
             // reduce-motion rule below would have said the same. It is a
@@ -205,6 +205,97 @@ final class RailMapController {
             // decide twice.
             animated: animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion))
     }
+
+    /// The room a framed subject is given: the resident sheet's own height at
+    /// the bottom (§9.5.6), and a margin everywhere else.
+    private var framingInsets: UIEdgeInsets {
+        UIEdgeInsets(top: 40, left: 40, bottom: max(40, bottomObstruction + 20), right: 40)
+    }
+
+    // MARK: - the one move the app makes for itself
+
+    /// Open the map on a country, once, before anything else has claimed the
+    /// camera. Answers whether it did.
+    ///
+    /// **What this replaced.** The map used to frame ITSELF: each time a
+    /// regional package finished decoding, the camera was set to the extent of
+    /// every line loaded so far. Five packages land at five different moments
+    /// over the first seconds of a launch, so the camera jumped five times and
+    /// finished on all five networks at once — a view of four countries the
+    /// reader is not going to, arriving after they had already started
+    /// pinching, and taking their zoom with it. A camera that moves seconds
+    /// after launch is not an opening view, it is an interruption of one.
+    ///
+    /// So the opening view is now chosen from the RIDES — the journeys still
+    /// ahead of the reader (`RailWorkspaceView.launchRegion` and
+    /// `launchFocusRegion`) — and it happens at most once. Every guard below is
+    /// a way of saying the same thing: the app gets the camera only while
+    /// nobody else wants it.
+    ///
+    ///   - ``hasOpened`` / ``hasOpenedPrecisely`` — an opening move is a move
+    ///     you make once. A second one is exactly the behaviour this replaced.
+    ///   - ``hasFramedForReader`` — a journey chosen, a 定位, a statistics
+    ///     scope switched. A deliberate move outranks a housekeeping one, and
+    ///     the rides can finish loading after any of them.
+    ///   - ``readerMovedCamera`` — a finger already on the map. Nothing the
+    ///     app decided at launch is worth taking that away for.
+    ///
+    /// **The opening view has two halves, and only one of them is optional.**
+    /// The country box (`precise: false`) can be drawn the moment the rides
+    /// have been read, because `Region.networkExtent` is written down; the
+    /// day's own upcoming routes (`precise: true`) cannot, because they are
+    /// geometry that is still being read off disk. Waiting for the second
+    /// would leave the map on the whole globe for as long as that takes, so
+    /// the country box goes up first and the precise frame is allowed to
+    /// replace it — exactly once, and only while the reader has not taken the
+    /// camera in between.
+    ///
+    /// The country box is never animated: there is nowhere to travel FROM,
+    /// because it is where the map starts. The frame that REPLACES it is,
+    /// because by then there is — it is a zoom from the country onto the
+    /// routes of the day, which is a move with a direction and a reason.
+    /// Reduced motion still turns that into an arrival.
+    ///
+    /// - Parameter precise: whether this is the day's own routes rather than
+    ///   the country they are in.
+    @discardableResult
+    func frameAtLaunch(_ region: MKCoordinateRegion, precise: Bool = false) -> Bool {
+        guard !hasFramedForReader, !readerMovedCamera else { return false }
+        guard precise ? !hasOpenedPrecisely : !hasOpened else { return false }
+        guard let mapView else { return false }
+        let rect = Self.mapRect(of: region)
+        guard !rect.isNull else { return false }
+        // `hasOpened` before this call, not after: it is what tells the two
+        // halves apart. A precise frame that arrives BEFORE the country box —
+        // rides already decoded when the map appeared — is the opening view
+        // itself and arrives rather than travelling, and the country box is
+        // then simply not owed.
+        let replacesOpening = hasOpened
+        hasOpened = true
+        if precise { hasOpenedPrecisely = true }
+        mapView.setVisibleMapRect(
+            rect, edgePadding: framingInsets,
+            animated: replacesOpening && RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+        return true
+    }
+
+    /// Whether the map has already opened on its country.
+    @ObservationIgnored private(set) var hasOpened = false
+
+    /// Whether it has opened on the day's own upcoming routes — the frame the
+    /// country box is a stand-in for until the geometry exists.
+    @ObservationIgnored private(set) var hasOpenedPrecisely = false
+
+    /// Whether the reader's own hands have been on the map.
+    ///
+    /// Reported by the map's pinch and pan sensors rather than inferred from a
+    /// region change, because MapKit's own callbacks cannot tell a gesture
+    /// from a `setVisibleMapRect` this object just made — see
+    /// ``RailMapView/Coordinator/handleManipulation(_:)``.
+    @ObservationIgnored private(set) var readerMovedCamera = false
+
+    /// Told by the map when a finger starts moving it.
+    func readerBeganManipulating() { readerMovedCamera = true }
 
     /// How much of the map's bottom edge the resident sheet is covering right
     /// now. Written by the workspace as the sheet moves.
@@ -226,18 +317,53 @@ final class RailMapController {
             height: abs(bottomRight.y - topLeft.y))
     }
 
-    /// Supplied by the map each time it rebuilds, so the button frames what is
-    /// actually drawn rather than a remembered extent.
+    /// The box that holds every one of these strokes, with the margin a framed
+    /// subject is given around itself.
+    ///
+    /// Here rather than inside the map's coordinator because two halves of the
+    /// app now measure the same thing: the coordinator frames the selected
+    /// ride and the day's rides, and the workspace frames the journeys the
+    /// opening view is for. One box, one margin, so a "fit this" cannot come
+    /// to mean two slightly different framings.
+    ///
+    /// `nil` for strokes that hold no points at all — a ride whose route has
+    /// not solved has nothing to frame, and a null rect would silently move
+    /// the camera nowhere.
+    nonisolated static func region(covering strokes: [[Coordinate]]) -> MKCoordinateRegion? {
+        var minLat = Double.infinity, maxLat = -Double.infinity
+        var minLon = Double.infinity, maxLon = -Double.infinity
+        for stroke in strokes {
+            for point in stroke {
+                minLat = min(minLat, point.lat)
+                maxLat = max(maxLat, point.lat)
+                minLon = min(minLon, point.lon)
+                maxLon = max(maxLon, point.lon)
+            }
+        }
+        guard minLat <= maxLat, minLon <= maxLon else { return nil }
+        return MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: (minLat + maxLat) / 2,
+                longitude: (minLon + maxLon) / 2
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: max((maxLat - minLat) * 1.35, 0.01),
+                longitudeDelta: max((maxLon - minLon) * 1.35, 0.01)
+            )
+        )
+    }
+
     /// Whether a move the READER asked for has happened.
     ///
-    /// The map frames itself once per dataset — a country finishing its load
-    /// is a reasonable moment to look at it — and the five regions land one at
-    /// a time, seconds apart. Without this, a journey chosen (or a statistics
-    /// region switched) in the meantime is framed and then pulled straight
-    /// back out to all five networks by a file finishing loading. A deliberate
-    /// move outranks a housekeeping one.
+    /// A journey chosen, a 定位, a statistics scope switched. It exists
+    /// because the app has one camera move of its own — ``frameAtLaunch(_:)``
+    /// — and it waits on rides being read from disk, which can finish after
+    /// any of those. A deliberate move outranks a housekeeping one, so the
+    /// opening move is simply not owed any more once one has happened.
     @ObservationIgnored private(set) var hasFramedForReader = false
 
+    /// Supplied by the map each time it rebuilds, so the button frames what is
+    /// actually drawn rather than a remembered extent.
     @ObservationIgnored var fitRegion: MKCoordinateRegion?
     @ObservationIgnored var selectionRegion: MKCoordinateRegion?
 

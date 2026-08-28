@@ -45,9 +45,10 @@ nonisolated public enum RailStyle {
     static let stationDiameter: CGFloat = 6
     static let stationRadius: CGFloat = stationDiameter / 2
     /// Ring around that dot so it stays legible over its own line — an eighth
-    /// of the dot, the proportion Apple's bead/keyline pair reads at. A ring
-    /// that kept its absolute width while the dot shrank would swallow the
-    /// colour it is meant to separate.
+    /// of the dot, the proportion Apple's bead/keyline pair reads at. The
+    /// renderer uses this as the COLOURED keyline around a light station core;
+    /// reversing the old coloured-fill/dark-ring treatment is the change that
+    /// makes a stop read like a station on Apple Maps instead of a map pin.
     static let stationRing: CGFloat = stationDiameter / 8
     /// Rail stroke = a quarter of the dot. Derived, never set independently.
     static let railWidthToStationDiameter: CGFloat = 0.25
@@ -61,14 +62,33 @@ nonisolated public enum RailStyle {
     /// `app-config.js`'s `DEFAULT_TRAIN_WEIGHT` seed, after `RIDDEN_WIDTH_SCALE`.
     static let riddenWidthScale: CGFloat = 1.18
 
-    /// The black centre inside an intermediate stop's dot: two thirds of the
-    /// dot it sits in, which leaves a ring of white wide enough that a stop
-    /// still reads as a different mark from the solid endpoint dot.
-    static let stopCentreToStationRadius: CGFloat = 2.0 / 3.0
-    /// The one dot on a ride deliberately bigger than the station dot the
-    /// network already drew there, by the same step the ride's stroke takes.
-    static let stationTerminalRadius: CGFloat = stationRadius * riddenEmphasisRatio
+    /// A tiny route-coloured centre inside an intermediate CALL. Apple Maps'
+    /// ordinary route beads stay predominantly light; one third preserves that
+    /// quiet centre while still distinguishing a call from a pass-through by
+    /// shape rather than by colour alone.
+    static let stopCentreToStationRadius: CGFloat = 1.0 / 3.0
+    /// The full emphasis radius of an origin or destination on the SELECTED
+    /// ride. Unselected and wide-view endpoints are resolved by
+    /// ``endpointEmphasisProgress(atZoom:)`` at presentation time; keeping this
+    /// token as the full state preserves the reader's size setting.
+    static let stationTerminalRadius: CGFloat = stationRadius * 2
     static let stationStopCentreRadius: CGFloat = stationRadius * stopCentreToStationRadius
+
+    /// Endpoint hierarchy arrives only as the map becomes local. At a regional
+    /// view every ride endpoint is an ordinary bead; across two zoom levels it
+    /// grows into either a quiet 4/3× unselected endpoint or the selected ride's
+    /// full emphasis marker. A continuous ramp avoids a circle popping as a
+    /// pinch crosses an integer LOD boundary.
+    static let endpointEmphasisStartZoom = zoom(fromMapLibre: 10)
+    static let endpointEmphasisFullZoom = zoom(fromMapLibre: 12)
+
+    static func endpointEmphasisProgress(atZoom zoom: Double) -> CGFloat {
+        guard endpointEmphasisFullZoom > endpointEmphasisStartZoom else { return 1 }
+        return CGFloat(min(max(
+            (zoom - endpointEmphasisStartZoom)
+                / (endpointEmphasisFullZoom - endpointEmphasisStartZoom),
+            0), 1))
+    }
 
     /// A quiet edge either side of the coloured core, so railways separate from
     /// roads and from one another without becoming glowing selection strokes.

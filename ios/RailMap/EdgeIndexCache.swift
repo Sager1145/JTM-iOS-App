@@ -38,12 +38,25 @@ actor EdgeIndexCache {
             try Self.build(country: country)
         }
         inFlight[country] = task
-        defer { inFlight[country] = nil }
         // Detached, so a caller that is cancelled while waiting does not take
         // the build down with it — the other caller is still waiting on it.
-        let built = try await task.value
-        indexes[country] = built
-        return built
+        //
+        // The in-flight entry is cleared by whoever the build finishes for,
+        // and only if it is still THIS task. It used to be cleared in a
+        // `defer` on this function, which runs when the *awaiting caller*
+        // leaves — so a caller cancelled mid-wait removed a build that was
+        // still running, and the next ask started a second one over the same
+        // 12 MB of Japanese sections. Cancelling one waiter must not cost the
+        // next one seconds.
+        do {
+            let built = try await task.value
+            if inFlight[country] == task { inFlight[country] = nil }
+            indexes[country] = built
+            return built
+        } catch {
+            if inFlight[country] == task { inFlight[country] = nil }
+            throw error
+        }
     }
 
     /// One index covering several regions.
@@ -62,12 +75,44 @@ actor EdgeIndexCache {
     /// arrives from more than one region is therefore qualified with its
     /// region, and names that are unique are left exactly as they are so the
     /// single-region case is untouched.
+    ///
+    /// ## The regions are built concurrently
+    ///
+    /// They are merged in the order they were asked for, but they are BUILT at
+    /// the same time.
+    ///
+    /// The loop this replaces awaited one region before starting the next, so
+    /// the first "全部" statistics of a launch paid five reads and five index
+    /// builds back to back — for five files that share nothing and can be read
+    /// at the same time. Ordering is restored explicitly afterwards because
+    /// `merge` is order-sensitive: it decides which region's spelling of a
+    /// shared line name comes first, and the edge offsets it lays down have to
+    /// match the arrays they index into.
+    ///
+    /// Unbounded over five is bounded in fact rather than by a semaphore:
+    /// Japan is 12.1 MB of sections and the other four are 1.7 MB together, so
+    /// the peak is Japan's decode either way. A sixth region of Japan's size
+    /// would be the moment to add a limit, and would be a change to this
+    /// comment as much as to the code.
     func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
-        var built: [(country: String, index: Statistics.EdgeIndex)] = []
-        for country in countries {
-            built.append((country, try await index(country: country)))
+        guard countries.count > 1 else {
+            // One region needs no group, and none at all still answers what
+            // the sequential version answered: `merge` of nothing.
+            guard let only = countries.first else { return Self.merge([]) }
+            return Self.merge([(only, try await index(country: only))])
         }
-        return Self.merge(built)
+        var byPosition: [Int: Statistics.EdgeIndex] = [:]
+        try await withThrowingTaskGroup(
+            of: (Int, Statistics.EdgeIndex).self
+        ) { group in
+            for (position, country) in countries.enumerated() {
+                group.addTask { (position, try await self.index(country: country)) }
+            }
+            for try await (position, built) in group { byPosition[position] = built }
+        }
+        return Self.merge(countries.enumerated().compactMap { position, country in
+            byPosition[position].map { (country, $0) }
+        })
     }
 
     nonisolated static func merge(
@@ -141,9 +186,11 @@ actor EdgeIndexCache {
     private nonisolated static func build(
         country: String
     ) throws -> Statistics.EdgeIndex {
-        let suffix = country == "jp" ? "" : "-\(country)"
+        let interval = RailSignpost.data.begin("data.edgeIndex.build")
+        defer { RailSignpost.data.end("data.edgeIndex.build", interval) }
         guard let url = Bundle.main.url(
-            forResource: "rail-sections\(suffix)", withExtension: "json")
+            forResource: Region.countrySuffixed("rail-sections", country: country),
+            withExtension: "json")
         else { throw MissingSections(country: country) }
         let sections = try Statistics.SectionFeatureCollection.load(contentsOf: url).sections
         return Statistics.buildEdgeIndex(sections: sections, country: country)
