@@ -84,6 +84,14 @@ The basemap asks for `.muted` emphasis — MapKit's own term for "something is
 being drawn over me" — and excludes points of interest, so Apple's transit
 lines do not compete with ours for the same ink.
 
+Every railway mounts at `MKOverlayLevel.aboveLabels` for the same reason. The
+base map's own labelling — road names, expressway shields — is drawn between
+`.aboveRoads` and `.aboveLabels`, so a railway at the lower level is a railway
+a motorway badge can be printed on top of. The web app stacks its rail layers
+above the whole OpenFreeMap style, labels included; this is that order. The one
+thing deliberately left at `.aboveRoads` is the 底圖不透明度 veil, which is what
+keeps the dimming under the railways rather than over them.
+
 The cost is that the S tier does not port as data. MapLibre style JSON would
 have been read by both renderers; MapKit has no style spec, so the design
 tokens have to become renderer parameters instead. That is a real loss and it
@@ -276,6 +284,67 @@ after decimation, on what the lines will really cost.
 
 Still unmeasured: a sustained pinch across many zoom tiers in quick succession.
 That is the next thing to put a number on rather than assume.
+
+### Then: the rest of the app, and what measuring it moved
+
+The numbers above are all about the map's *geometry*. A second pass went after
+everything else a reader touches, and it was run the same way — measure first,
+in release, over the real data. `ios/tools/bench` is the harness and its README
+says what it can and cannot answer; `RailMap/RailSignpost.swift` is the
+instrumentation that ships in the app for the half no host benchmark can see.
+
+Four findings, in the order of how much they were worth:
+
+**A tap on the map cost the whole store.** `handleMapTap` projected every
+vertex of every ride into screen space before asking which one was under the
+finger — 180,447 `MKMapView.convert` calls on the national sample, for every
+tap including the ones that land on sea. `RideTapIndex` cuts each stroke into
+64-segment chunks with a bounding box in `MKMapPoint` space, and a tap projects
+only the chunks whose box is within the tolerance. On the same geometry that is
+**≤ 674 projections instead of 180,447**, and the arithmetic around them falls
+from 1.94 ms to 0.009 ms per tap. The cull is conservative rather than
+approximate — a box contains its chunk, `hits` scores a ride by its *minimum*
+distance, and the map-point→view-point transform is a similarity while the
+camera is unpitched — so the answer cannot change; a pitched camera or a view
+across the antimeridian declines the cull and projects everything, as before.
+`RideTapCullTests` checks the property over a thousand generated taps.
+
+**The playhead rebuilt the whole app twenty times a second.** `progress` is
+`@Observable`, and the transport that read it was eleven computed properties on
+`RailWorkspaceView` — so every display-link tick invalidated that view's entire
+body: the map's inputs, the journey list, every derived summary. The transport
+is now `PlaybackTransportBar`, a view of its own, and `progress` publishes on a
+20 Hz ladder with the terminal values forced. What is drawn is unchanged; who
+has to be redrawn when it changes is not.
+
+**One body evaluation asked the same question three times.** On the search
+destination `filteredDays` ran for the header's count, for the list, and for
+`playbackScope` behind the play button's `disabled` — and with a query in the
+field that is a locale-aware substring search over every field of every
+journey, 4.9 ms a time. `WorkspaceDerived` memoises it, and `todayByRegion`,
+`upcomingTrains`, the statistics scope and the drawn-ride summaries with it,
+each keyed on the *generation* of its input rather than on a summary of it.
+
+**A statistics reload re-matched every journey.** The numbers reload on every
+edit, and matching all 201 journeys onto the 377,620-edge Japanese index is
+425 ms; matching one is 1.96 ms. `MileageStatisticsStore` now keeps each
+journey's entry against a digest of the four things
+`collectTrainStatsEntry` reads, so an edit re-matches what was edited.
+
+And two things measurement said were *not* worth changing, which is the more
+useful half of a benchmark:
+
+- The map rebuild's geometry — level of detail, Douglas–Peucker, the vertex
+  budget — is **6.7 ms at a national zoom and 24.2 ms at a city one** over the
+  whole Japanese network, against a rebuild this file records at 150–460 ms. So
+  moving it off the main actor, which is the obvious thing to reach for, would
+  move under a sixth of the cost at best; the rest is `MKPolyline`
+  construction, overlay teardown and annotation work that has to stay where it
+  is. `map.rebuild.*` signposts now name each phase so a device trace can say
+  which, and that trace has not been taken.
+- The editor's authoritative validation is **3.9 ms on the longest journey in
+  the store** (217 stops) — inside a frame, so the debounce that was planned
+  for it would have been complexity bought with nothing.
 
 ## Two environment notes that cost time
 

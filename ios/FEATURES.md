@@ -36,6 +36,39 @@ the editor, import — and the reasoning is in `RegionCatalog`'s and
 `MergedStore`'s own documentation. Everything else on this page is still
 measured against the web app.
 
+### Each ride's dates are on its own region's clock
+
+A consequence of the same decision, and the web app has no equivalent because
+with one country loaded it never has to choose. `RailPresentation/RegionClock.swift`
+holds the five — Asia/Tokyo and Asia/Seoul at UTC+9, Asia/Taipei, Asia/Hong_Kong
+and Asia/Macau at UTC+8, none of them on summer time since 1988 at the latest —
+and `Train.journeyClock` picks the one the ride's region names.
+
+**Only questions about *now* go through it.** "What day is it", "is this
+journey still ahead", "has this happened" each turn an instant into a civil
+date, and that conversion has a zone; the app used to use the device's, which
+answered wrongly for every reader not standing in the region — a Tokyo journey
+dated 2026-08-27 was still listed as upcoming at 19:00 in London, six hours
+after Japan reached the 28th. The three call sites are the upcoming list
+(`ContentView.upcomingTrains`), the screenshot importer's seeded date, and its
+「乗った」 default.
+
+**Nothing else moves.** `RailCore.Dates` still has no time zone at all and must
+not gain one — its header says why at length, and its answers are checked
+against the JavaScript by fixture. A printed stop time is never converted:
+`25:10` is a business fact about an overnight service, and rewriting it into
+the reader's zone would be this app editing somebody else's timetable. The stop
+list says which clock it is on instead, once, under the times.
+
+**Cross-zone journeys are not supported, and the seam for them is written
+down.** No journey in this app can cross a border — the five networks do not
+touch — so `JourneyClock` holds one clock and every stop answers it. Its
+documentation names the three members that change when that stops being true
+(`clock(atStopIndex:)`, `crossesTimeZones`, `offsetMinutes(fromStopIndex:toStopIndex:)`)
+and the one function above them that would then be wrong: `Statistics.trainRideMinutes`,
+which subtracts a departure from an arrival. The correction belongs above
+`RailCore`, never in it.
+
 ## 0 · What is deliberately not ported
 
 Three groups, so they stop being re-discovered as gaps.
@@ -120,6 +153,7 @@ That is its own cleanup, not this one.
 | Basemap opacity | `app-display-features.js` `applyMapOpacity` | — | ✅ |
 | Legend and data sources, with licences | `app-map-init.js` `buildMapInfoControl` | — | ✅ `MapInfoView`, plus a Korean article the web app has never had and an Apple-Maps basemap article in place of OpenFreeMap's |
 | Map layer toggles (routes / stops / terminals / pass / four ridden categories) | `app-map-init.js` `buildMapLayersControl` | ✅ | ✅ `MapLayersView`, all nine — the categories classify through the ported `Statistics.riddenFeatureCategory`, and are labelled from the BASE keys because each filter acts on all five networks |
+| One basemap, scoped by the destination on top | — | — | ✅ native-only. Upcoming draws the journeys still ahead and only those, Passport the records its numbers counted, All journeys and Search everything on record. It is the ride LIST that narrows, never the drawing: what is ahead and what is behind share one set of 已乘坐線路 switches, so there is no second layer menu for a second kind of line (`RailWorkspaceView.mapRides`) |
 | Statistics scope: one region, or 全部 | — | — | ✅ native-only. The five networks are disjoint, so their edge indexes merge into one denominator (`EdgeIndexCache.merged`); switching the scope frames that network on the map, and 全部 frames all of them |
 | Basemap picker (Positron / none) | `buildMapLayersControl` | — | — Apple Maps is the basemap; the opacity slider covers "less of it" |
 | Hover fan for overlapping lines | `railmap.js` `_setExpandedGroup` | — | — not ported, see §0 |
@@ -170,6 +204,7 @@ complex gains or loses a name.
 | Ride station labels | `app-deck-records.js` `markerRecordsToFC` | ✅ | ✅ three tiers, elected, haloed |
 | Select a train, clear selection | `#fit-selected`, `#clear-selection` | — | ✅ |
 | Fit to selection (定位) | `app-map-fit.js` (216) | — | ✅ |
+| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five, and opens on **the routes of the day it is opened on** — every journey still ahead on the soonest day that has one, framed together. In two steps, because the second is drawn geometry that is still being read: the country of that day (`Region.networkExtent`, written down so the map is never left on the globe), then the day's own routes, which replace it exactly once. Failing anything ahead, the country of the most recent journey behind; failing that, the fallback region. Never over a camera the reader has already taken |
 
 ## 3 · The itinerary list and editor
 
@@ -200,6 +235,10 @@ complex gains or loses a name.
 | **當日統計 — the day's own numbers** | `app-stats-render.js` `renderMileageStatsDom` | ✅ | ✅ stamped inside the passport page; absent, never `0`, when no day is in scope |
 | The 統計 panel | `app-stats-render.js` (359) | — | ✅ counts, time, service mix, mileage, coverage, top sections |
 | Date + region scope | — | — | ✅ both in the panel header (§5.3.1), one owner each; the region decides the categories and the coverage denominator |
+| Only confirmed rides are counted | — | — | ✅ native-only, and **no clock takes part**: a journey enters the numbers because the record says it was ridden (`ride_segment`, read through `RideLedger`), never because its date has passed. Unconfirmed journeys stay out of the statistics, the coverage map and the passport log, and the passport says how many it is holding. Stores from older builds carry `ride_segment: true` throughout, so nothing needed migrating |
+| Confirm a ride by hand | — | — | ✅ native-only. A card on the journey detail while it is not counted (「確認已乘坐」), a 乘坐狀態 row with 「標記為未乘坐」 once it is, and a leading swipe on every row of 全部行程. Confirming sets `ride_segment` across the whole journey; the per-stop switches still handle a journey only partly ridden |
+| New-journey pre-fill | — | — | ✅ the create form's 乘坐狀態 switch opens on the likely answer for the date typed into it, and stops following the moment the reader moves it. Never applied to an existing record, whatever its date is edited to |
+| Statistics recompute only when the numbers would move | — | — | ✅ native-only. The reload key is the whole record, so a colour, a name or a visibility toggle arrives as a reload; `MileageStatisticsStore.Fingerprint` lists exactly what a figure is a function of — the region scope, and per journey the id, service type, date bucket and ride digest — and an unchanged fingerprint returns without re-reading the index, re-matching a ride or taking the figures off the screen |
 | Passport stationery | — | — | ✅ §6.1's Memory personality: one feature card, tinted chart cards, plain lists (`PassportCardStyle.swift`) |
 
 ## 5 · Data in and out
@@ -216,6 +255,49 @@ complex gains or loses a name.
 | Save / restore my rides, locally | `#save-as-user-store`, `#restore-user-store` | — | ✅ one merged store; per-region files from earlier builds are folded in once on first launch |
 | Delete my rides | `#clear-storage` | — | ✅ |
 | Delete all / reset to sample | `#delete-all-trains`, `#reset-defaults` | ✅ | ✅ |
+| Import a transit-app screenshot | — none, iOS only | ✅ `TransferGuide` | ✅ reads the trains, stations, times, platforms, fares and line names off a Yahoo! 乗換案内 **or** JR東日本アプリ route and adds one journey per leg |
+
+### The screenshot importer is not a port
+
+The web app has no such thing, and could not: it is Vision reading a photo of
+somebody else's route planner. Its shape follows the JSON importer's — choose,
+read, check, commit — for the reason §8.7 gives, and more strongly. A JSON file
+is what its author wrote; a screenshot is what a recogniser thinks it saw, so
+the preview is the only place a misread digit can be caught before it becomes a
+journey.
+
+**One door, two apps.** The reader picks a photograph, not a format, so which
+app took it is worked out here rather than asked. It is worked out from the
+LAYOUT before the wordmark — `9駅目で降りる`, `更新時刻`, `出発時刻を変更` and
+`移動距離` are JR East's and nobody else's; `IC優先`, the fare boxes and the
+circled 駅 count are Yahoo's — and none of those is in the footer. A screenshot
+cropped to hide the logo, or scrubbed of it, still says which app drew it on
+every screenful of its body. Where even that is inconclusive both readers run
+and the one that accounted for more of the picture wins; guessing costs a whole
+journey and parsing costs microseconds.
+
+Three tiers, split the way the testability is:
+
+- `RailCore/TransferGuide.swift` reads Yahoo's grammar out of OCR *text with
+  boxes*, and `RailCore/JREastGuide.swift` reads JR East's into the same
+  `Route`. No pixels either side, so every case that matters is a fixture of
+  rectangles — `TransferGuideTests`, `JREastGuideTests`. The two grammars
+  differ in three places and only three: JR East's leg header carries the
+  DEPARTURE TIME of the station above it, its boundary stations put their time
+  and their name two rows apart, and it prints 着/発 at every stop rather than
+  only at the transfers.
+- `RailCore/TransferGuideTrains.swift` turns that into canonical records:
+  station names resolved to codes by the cheapest chain through the whole
+  journey, and each section's `line_names` narrowed to the lines both of its
+  ends carry.
+- `RailMap/TransferGuideOCR.swift` is the half no test can reach — Vision over
+  a screenshot that may be twenty thousand pixels tall, in overlapping tiles,
+  with several images joined into one document.
+
+The reader answers the three questions a screenshot cannot: which day (it
+prints no year), whether the journey **happened or is going to** (`ride_segment`
+— a plan that counted itself would report kilometres nobody has travelled), and
+which of its trains to keep.
 
 ## 6 · Playback
 
