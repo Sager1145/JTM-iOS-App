@@ -39,10 +39,10 @@ final class DisplaySettings {
     var riddenOpacity: Double = Defaults.riddenOpacity
     /// Opacity of rides not on the selected date.
     var dimOpacity: Double = Defaults.dimOpacity
-    /// Radius of the origin / destination markers: the one dot on a ride
-    /// deliberately bigger than the station dot the network already drew there.
+    /// Full close-view radius of the selected ride's origin / destination markers.
+    /// Unselected endpoints use a subtler, zoom-responsive emphasis.
     var terminalRadius: Double = Defaults.terminalRadius
-    /// The black centre inside an intermediate stop marker.
+    /// The small route-coloured centre inside an intermediate stop marker.
     ///
     /// Stored as the web app's legacy 2…16 slider number rather than as a
     /// radius, so a settings payload written by either client still reads: the
@@ -89,7 +89,10 @@ final class DisplaySettings {
             Double(RailStyle.stationStopCentreRadius) / DisplaySettings.stopCentreSliderScale
         static let passRadius = Double(RailStyle.stationRadius)
         static let markerStrokeScale: Double = 1
-        static let focusBoost: Double = 2
+        /// One point clarifies selection without turning a selected route into
+        /// a different visual system. It also keeps a selected terminal near
+        /// Apple Maps' roughly 14-point endpoint footprint.
+        static let focusBoost: Double = 1
         static let showFullCrossDay = false
         static let nameReadingKana = false
         static let nameReadingRomaji = false
@@ -103,6 +106,10 @@ final class DisplaySettings {
     /// retune halved the railway's weight, so sizes tuned against the old weight
     /// have to be re-seeded rather than carried over.
     private static let storageKey = "display-settings-v5"
+    /// Marker appearance can evolve without discarding unrelated choices such
+    /// as opacity and reading annotations. Version 2 is the Apple Maps-style
+    /// light-bead / prominent-endpoint system.
+    private static let markerStyleVersion = 2
 
     private var isLoading = false
 
@@ -145,6 +152,7 @@ final class DisplaySettings {
                 "passRadius": passRadius,
                 "markerStrokeScale": markerStrokeScale,
                 "focusBoost": focusBoost,
+                "markerStyleVersion": Self.markerStyleVersion,
                 "showFullCrossDay": showFullCrossDay,
                 "nameReadingKana": nameReadingKana,
                 "nameReadingRomaji": nameReadingRomaji,
@@ -158,7 +166,6 @@ final class DisplaySettings {
     private func load() {
         guard let saved = userDefaults.dictionary(forKey: Self.storageKey) else { return }
         isLoading = true
-        defer { isLoading = false }
         func number(_ key: String, _ fallback: Double) -> Double {
             (saved[key] as? NSNumber)?.doubleValue ?? fallback
         }
@@ -178,6 +185,16 @@ final class DisplaySettings {
         nameReadingRomaji = flag("nameReadingRomaji", Defaults.nameReadingRomaji)
         nameReadingZh = flag("nameReadingZh", Defaults.nameReadingZh)
         nameReadingsCustomized = flag("nameReadingsCustomized", Defaults.nameReadingsCustomized)
+        let savedMarkerStyleVersion = (saved["markerStyleVersion"] as? NSNumber)?.intValue ?? 1
+        if savedMarkerStyleVersion < Self.markerStyleVersion {
+            // Preserve a reader's deliberate tuning. Only values equal to the
+            // previous defaults move to the new measured defaults.
+            if terminalRadius == 4 { terminalRadius = Defaults.terminalRadius }
+            if stopRadius == 5 { stopRadius = Defaults.stopRadius }
+            if focusBoost == 2 { focusBoost = Defaults.focusBoost }
+        }
+        isLoading = false
+        if savedMarkerStyleVersion < Self.markerStyleVersion { persist() }
     }
 
     // MARK: - derived values the renderer asks for

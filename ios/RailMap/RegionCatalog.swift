@@ -1,5 +1,8 @@
+import CoreLocation
 import Foundation
+import MapKit
 import RailCore
+import RailPresentation
 
 /// The five regional packages, and how an itinerary is matched to one.
 ///
@@ -77,23 +80,34 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
         }
     }
 
-    /// The rail package in the app bundle.
-    var packageResource: String { "\(rawValue)-2025" }
-
-    /// The statistics sections file: Japan's carries no suffix, exactly as the
-    /// web app names them (`rail-sections.json`, `rail-sections-tw.json`).
-    var sectionsResource: String {
-        self == .jp ? "rail-sections" : "rail-sections-\(rawValue)"
+    /// A bundled dataset's name for one country, under the web app's own
+    /// naming: Japan's carries no suffix, and every other country's is the
+    /// family plus `-<code>` — `stations.json`, `stations-tw.json`.
+    ///
+    /// One rule rather than four. `copy-rail-packages.sh` ships these files
+    /// under exactly this spelling, and the route store, the edge index and
+    /// the readings store had each grown their own `country == "jp" ? "" :
+    /// "-\(country)"` beside a call that used it. A naming rule with four
+    /// authors is a rule that drifts on the first family that is added.
+    ///
+    /// Takes a country string rather than a `Region` because the callers hold
+    /// one, and because a country this enum does not carry must still resolve
+    /// to the name it resolved to before rather than to nothing.
+    static func countrySuffixed(_ family: String, country: String) -> String {
+        country == "jp" ? family : "\(family)-\(country)"
     }
+
+    /// The rail package in the app bundle.
+    ///
+    /// The only family that is not country-suffixed: a package is named for
+    /// the year it was surveyed, so Japan's is `jp-2025` and carries its code
+    /// like every other.
+    static func packageResource(country: String) -> String { "\(country)-2025" }
+
+    /// The rail package in the app bundle, for a region already in hand.
+    var packageResource: String { Self.packageResource(country: rawValue) }
 
     // MARK: - matching a ride to a region
-
-    /// The region a line id belongs to — `"tw-alsr-alishan"` → `.tw`.
-    static func fromLineID(_ lineID: String?) -> Region? {
-        guard let lineID, let dash = lineID.firstIndex(of: "-") else { return nil }
-        return Region(rawValue: String(lineID[lineID.startIndex..<dash]))
-    }
-
     /// The region a station code names, when it names one at all.
     ///
     /// Japan's `N02_005c` is six ASCII digits, and the packages' group ids
@@ -136,11 +150,101 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// The region an itinerary is drawn and measured in — matched, or Japan.
     static func resolved(_ train: Train) -> Region { matched(train) ?? .jp }
+
+    // MARK: - what time it is here
+
+    /// The clock this region's journeys are dated on.
+    ///
+    /// The table itself is `RailPresentation.RegionClock`, one tier down,
+    /// where `swift test` can reach it — the app target has no test target
+    /// under it, and "which day is it in Macao" is exactly the kind of claim
+    /// that has to be checked rather than reviewed. This property is only the
+    /// bridge from the region catalog to that table.
+    var clock: RegionClock { .forRegionCode(code) }
+
+    // MARK: - where the country is
+
+    /// The whole of this region's railway, as a region a camera can be set to
+    /// — the 国家全图 the map opens on. See
+    /// ``RailMapController/frameAtLaunch(_:)``.
+    ///
+    /// **Written down rather than measured**, and that is the whole point of
+    /// it. Every other "frame this" in the app reduces `RailNetworkStore.lines`
+    /// to a rect, which is exact and which is useless here: the five packages
+    /// decode independently and Japan's 9.5 MB lands seconds behind Macao's
+    /// 8 KB, so a camera that waits for lines before framing a country is a
+    /// camera that MOVES seconds after launch — over whatever the reader has
+    /// pinched to by then. A constant is answerable the moment the rides are,
+    /// which is what lets the opening view be the opening view and not an
+    /// interruption of one.
+    ///
+    /// The numbers are the exact extent of the shipped packages — every
+    /// coordinate of every segment, not just the stations:
+    ///
+    /// ```sh
+    /// python3 - <<'PY'
+    /// import glob, json
+    /// for path in sorted(glob.glob('app/public/rail/*-2025.json')):
+    ///     points = [point
+    ///               for line in json.load(open(path))['lines']
+    ///               for segment in line.get('segments', [])
+    ///               for point in segment[2]]
+    ///     print(path,
+    ///           min(p[1] for p in points), min(p[0] for p in points),
+    ///           max(p[1] for p in points), max(p[0] for p in points))
+    /// PY
+    /// ```
+    ///
+    /// so this agrees with `store.lines` to the metre today, and is allowed to
+    /// drift by a kilometre if a package is resurveyed without it: what it
+    /// decides is where a camera opens, not what is drawn there.
+    var networkExtent: MKCoordinateRegion {
+        let box = Self.networkBounds(of: self)
+        // Through the same shift the drawn network takes. `AppleMapDatum`'s
+        // note has the sizes — half a kilometre in Taiwan, Hong Kong, Macao
+        // and Korea — which is nothing across a country and everything across
+        // Macao's five. A box measured in one datum and framed in the other
+        // is the kind of quiet mismatch this app keeps at one boundary.
+        let southWest = AppleMapDatum.display(
+            Coordinate(lon: box.west, lat: box.south), country: code)
+        let northEast = AppleMapDatum.display(
+            Coordinate(lon: box.east, lat: box.north), country: code)
+        return MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: (southWest.lat + northEast.lat) / 2,
+                longitude: (southWest.lon + northEast.lon) / 2),
+            span: MKCoordinateSpan(
+                latitudeDelta: northEast.lat - southWest.lat,
+                longitudeDelta: northEast.lon - southWest.lon))
+    }
+
+    /// The package's own bounding box, in the WGS84 it is surveyed in.
+    private static func networkBounds(
+        of region: Region
+    ) -> (south: Double, west: Double, north: Double, east: Double) {
+        switch region {
+        // Yonaguni is not on it and Okinawa's monorail is, so the south edge
+        // is Naha rather than the southern tip of the country; the north is
+        // Wakkanai and the east is Nemuro.
+        case .jp: (26.193150, 127.652285, 45.416341, 145.598010)
+        case .tw: (22.265252, 120.211958, 25.201089, 121.957939)
+        case .hk: (22.240175, 113.935773, 22.528167, 114.274552)
+        case .mo: (22.131407, 113.529403, 22.183615, 113.575406)
+        case .kr: (34.615526, 126.386565, 38.257434, 129.430039)
+        }
+    }
 }
 
 extension Train {
-    /// The region this itinerary is drawn and measured in.
-    var resolvedRegion: Region { Region.resolved(self) }
+
+    /// The clock this journey's dates are read on — its region's.
+    ///
+    /// Every "is this still ahead of me", "did this happen" and "what day is
+    /// it" about a ride goes through here rather than through `Date()` and the
+    /// device's zone. See ``JourneyClock`` for what a journey on more than one
+    /// clock will change, and for why nothing here converts a printed stop
+    /// time.
+    var journeyClock: JourneyClock { JourneyClock(home: Region.resolved(self).clock) }
 
     /// The same train with its region written down — when the ride actually
     /// says which one it is.

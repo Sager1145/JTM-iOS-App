@@ -166,11 +166,6 @@ final class RideStatusCenter {
         }
     }
 
-    /// Whether an id typed into the editor belongs to a different journey.
-    func idIsTaken(_ candidate: String, editing originalID: String) -> Bool {
-        candidate != originalID && trainIDs.contains(candidate)
-    }
-
     // MARK: - Writing (stores only)
 
     func publish(phase: Phase) {

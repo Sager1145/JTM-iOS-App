@@ -172,6 +172,7 @@ final class RiddenRouteStore {
                 RideStatusCenter.shared.publish(
                     entries: Self.statusEntries(for: decoded, wanted: wantedIDs),
                     phase: .loaded)
+                Self.sweepRouteCacheOnce()
             } catch is CancellationError {
                 return
             } catch {
@@ -293,7 +294,7 @@ final class RiddenRouteStore {
         var unresolved: [Region: [Train]] = [:]
         let remaining = wanted.values.filter { $0.id != primed?.id }
         for (region, trains) in Dictionary(grouping: remaining, by: Region.resolved) {
-            let cached = loadCached(trains, country: region.code)
+            let cached = await loadCachedConcurrently(trains, country: region.code)
             result += cached.rides
             if !cached.missing.isEmpty { unresolved[region] = cached.missing }
         }
@@ -303,7 +304,7 @@ final class RiddenRouteStore {
                 trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             for dataset in RideLibrary.routeDatasets(for: region) {
                 if missing.isEmpty { break }
-                let found = try datasetRides(
+                let found = try await datasetRides(
                     dataset: dataset, country: region.code, wanted: missing)
                 for ride in found { missing.removeValue(forKey: ride.id) }
                 result += found
@@ -320,31 +321,36 @@ final class RiddenRouteStore {
     /// A part is accepted only when its train's route-cache digest matches the
     /// one in the store, which is what makes searching several datasets safe:
     /// geometry solved for another itinerary is rejected rather than drawn.
+    ///
+    /// Which parts are even worth opening comes from ``DatasetPartIndex``.
+    /// This used to walk the manifest and decode every part in it before
+    /// reading the train id it had just paid for, so one journey missing from
+    /// the route cache cost the whole dataset — 201 files and 7 MB for the
+    /// Japanese sample — and the next journey cost it again.
     private nonisolated static func datasetRides(
         dataset: String,
         country: String,
         wanted: [String: Train]
-    ) throws -> [DrawnRide] {
-        guard let manifestURL = Bundle.main.url(
-            forResource: "manifest",
-            withExtension: "json",
-            subdirectory: dataset
-        ) else { throw LoadError.missingManifest(dataset) }
-
-        let manifest = try JSONDecoder().decode(
-            Manifest.self,
-            from: Data(contentsOf: manifestURL)
-        )
+    ) async throws -> [DrawnRide] {
+        let interval = RailSignpost.data.begin("route.datasetLookup")
+        defer { RailSignpost.data.end("route.datasetLookup", interval) }
+        let index = try await DatasetPartIndex.shared.parts(in: dataset)
+        // Sorted back into manifest order, because `wanted` is a dictionary
+        // and has none of its own, and the order rides come back in is the
+        // order the map is handed them in.
+        let hits = wanted.keys
+            .flatMap { index[$0] ?? [] }
+            .sorted { $0.position < $1.position }
         var result: [DrawnRide] = []
-        result.reserveCapacity(min(manifest.parts.count, wanted.count))
+        result.reserveCapacity(hits.count)
 
-        for name in manifest.parts {
+        for hit in hits {
             try Task.checkCancellation()
             guard let partURL = Bundle.main.url(
-                forResource: name,
+                forResource: hit.name,
                 withExtension: "json",
                 subdirectory: dataset
-            ) else { throw LoadError.missingPart(dataset, name) }
+            ) else { throw LoadError.missingPart(dataset, hit.name) }
             let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
             guard let train = wanted[part.train.id] else { continue }
             guard routeCacheDigest(train, country: country)
@@ -454,28 +460,34 @@ final class RiddenRouteStore {
     private nonisolated static func solveMissing(
         _ trains: [Train], country: String
     ) throws -> [DrawnRide] {
-        let suffix = country == "jp" ? "" : "-\(country)"
         guard let sectionsURL = Bundle.main.url(
-            forResource: "rail-sections\(suffix)", withExtension: "json"),
+            forResource: Region.countrySuffixed("rail-sections", country: country),
+            withExtension: "json"),
               let stationsURL = Bundle.main.url(
-                forResource: "stations\(suffix)", withExtension: "json")
+                forResource: Region.countrySuffixed("stations", country: country),
+                withExtension: "json")
         else { throw LoadError.missingSolverResources(country) }
         let sections = try RouteGraph.SectionFeatureCollection.load(contentsOf: sectionsURL).features
         let stationCollection = try Stations.FeatureCollection.load(contentsOf: stationsURL)
         let stationIndex = Stations.Index(stationCollection)
         let officialIntervals = RouteSolver.OfficialIntervalIndex(sections: sections)
         let displayNetwork: RouteNetwork? = {
+            // Both halves of the package come off one read and one parse.
+            // Asking the compact decoder and the topology decoder separately
+            // opened the same file twice and scanned it twice — 9.1 MB apiece
+            // for Japan, and here that is paid on a route cache miss rather
+            // than once at launch.
             guard let url = Bundle.main.url(
-                forResource: "\(country)-2025", withExtension: "json"),
-                  let package = try? CompactPackage.load(contentsOf: url),
-                  let topologies = try? DisplayParts.LineTopology.byLineID(contentsOf: url)
+                forResource: Region.packageResource(country: country), withExtension: "json"),
+                  let loaded = try? DisplayParts.LoadedPackage.load(contentsOf: url)
             else { return nil }
-            return RouteNetwork(lines: package.lines.map { line in
+            return RouteNetwork(lines: loaded.package.lines.map { line in
                 RouteNetwork.Line(
                     lineId: line.id, name: line.name, operator: line.operator,
                     isLoop: false, alignmentDirection: nil,
                     parts: DisplayParts.parts(
-                        for: line, topology: topologies[line.id] ?? .init()))
+                        for: line,
+                        topology: loaded.topologyByLineID[line.id] ?? .init()))
             })
         }()
         let graphStore = RouteGraph.RouteGraphStore(sections: sections)
@@ -628,34 +640,99 @@ final class RiddenRouteStore {
         var rides: [DrawnRide] = []
         var missing: [Train] = []
         for train in trains {
-            guard let digest = routeCacheDigest(train, country: country),
-                  let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
-                  let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
-                  cache.version == RouteGraph.routeSolverCacheVersion,
-                  cache.digest == digest
-            else {
-                missing.append(train)
-                continue
-            }
-            let segments = cache.segments.compactMap { cached -> DrawnSegment? in
-                let coordinates = cached.coordinates.compactMap(Coordinate.init(pair:))
-                guard coordinates.count >= 2 else { return nil }
-                return DrawnSegment(
-                    segmentIndex: cached.segmentIndex, from: cached.from,
-                    to: cached.to, coordinates: coordinates,
-                    country: country)
-            }
-            if segments.isEmpty {
-                missing.append(train)
+            if let ride = readCached(train, country: country) {
+                rides.append(ride)
             } else {
-                rides.append(drawnRide(
-                    train,
-                    country: country,
-                    segments: segments,
-                    expectedSections: canonicalSections(train, country: country)))
+                missing.append(train)
             }
         }
         return (rides, missing)
+    }
+
+    /// The same answer, reading several journeys' cache files at once.
+    ///
+    /// One journey is one small file, and 201 of them read one after another
+    /// is the whole of a warm load: measured over the shipped sample's 201
+    /// parts — the same count and shape as the cache files — reading and
+    /// decoding them takes **58.4 ms sequentially and 25.3 ms four at a time**
+    /// (`ios/tools/bench`, release, Apple silicon), against 4.7 ms for all 201
+    /// cache digests. The files are independent, so the sequence was the only
+    /// thing making this slow.
+    ///
+    /// Four rather than "as many as there are", and the reason is memory
+    /// rather than politeness: each task holds one file's bytes and its
+    /// decoded coordinates at once, and a journey the length of a whole
+    /// Shinkansen run is not small. Four keeps the flash busy — the measured
+    /// step from four to eight is a further 5 ms — without holding two hundred
+    /// decodes in the air.
+    ///
+    /// **The order is the sequential version's, not the scheduler's.** Results
+    /// are placed by index and read back in order, so this returns exactly
+    /// what the loop returned — including which journeys land in `missing`,
+    /// and in what order. Appending as answers arrived would have made the
+    /// order a property of which file the filesystem happened to finish first,
+    /// and that order reaches the map: it is the order the overlays are added
+    /// in, and therefore which line is drawn over which.
+    private nonisolated static func loadCachedConcurrently(
+        _ trains: [Train], country: String
+    ) async -> (rides: [DrawnRide], missing: [Train]) {
+        guard trains.count > 1 else { return loadCached(trains, country: country) }
+        let interval = RailSignpost.data.begin("route.cacheRead")
+        defer { RailSignpost.data.end("route.cacheRead", interval) }
+        var found = [DrawnRide?](repeating: nil, count: trains.count)
+        await withTaskGroup(of: (Int, DrawnRide?).self) { group in
+            var next = 0
+            func addNext() {
+                guard next < trains.count else { return }
+                let position = next
+                let train = trains[position]
+                next += 1
+                group.addTask {
+                    guard !Task.isCancelled else { return (position, nil) }
+                    return (position, readCached(train, country: country))
+                }
+            }
+            for _ in 0..<Swift.min(cacheReadWidth, trains.count) { addNext() }
+            while let (position, ride) = await group.next() {
+                found[position] = ride
+                addNext()
+            }
+        }
+        var rides: [DrawnRide] = []
+        var missing: [Train] = []
+        for (position, ride) in found.enumerated() {
+            if let ride { rides.append(ride) } else { missing.append(trains[position]) }
+        }
+        return (rides, missing)
+    }
+
+    /// How many cache files are read at once. See ``loadCachedConcurrently``.
+    private nonisolated static let cacheReadWidth = 4
+
+    /// One journey's cached route, or `nil` if there is not a usable one.
+    private nonisolated static func readCached(
+        _ train: Train, country: String
+    ) -> DrawnRide? {
+        guard let digest = routeCacheDigest(train, country: country),
+              let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
+              let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
+              cache.version == RouteGraph.routeSolverCacheVersion,
+              cache.digest == digest
+        else { return nil }
+        let segments = cache.segments.compactMap { cached -> DrawnSegment? in
+            let coordinates = cached.coordinates.compactMap(Coordinate.init(pair:))
+            guard coordinates.count >= 2 else { return nil }
+            return DrawnSegment(
+                segmentIndex: cached.segmentIndex, from: cached.from,
+                to: cached.to, coordinates: coordinates,
+                country: country)
+        }
+        guard !segments.isEmpty else { return nil }
+        return drawnRide(
+            train,
+            country: country,
+            segments: segments,
+            expectedSections: canonicalSections(train, country: country))
     }
 
     private nonisolated static func saveCache(
@@ -686,6 +763,88 @@ final class RiddenRouteStore {
         return base.appending(path: "RailMap/Routes/\(country)", directoryHint: .isDirectory)
     }
 
+    /// How many solved routes one region's cache may keep.
+    ///
+    /// Set well above any working set that ships — the largest bundled dataset
+    /// is 201 journeys and a reader can hold all three Japanese ones at once —
+    /// because what fills the remainder is not journeys but revisions of them.
+    /// A digest covers a journey's sections and policy, so every edit writes a
+    /// new file and orphans the old one, correct and never read again.
+    private nonisolated static let routeCacheEntryBudget = 512
+
+    private static var didSweepRouteCache = false
+
+    /// Trim the route cache once per launch, after the load that filled it.
+    ///
+    /// Last rather than first, so the sweep never competes with solving, and
+    /// once rather than per write, so a reader who reworks one journey twenty
+    /// times in a session pays for the tidying on the next launch instead of
+    /// twenty times over. A cancelled load never reaches here, so the flag is
+    /// only ever spent on a load that finished.
+    private static func sweepRouteCacheOnce() {
+        guard !didSweepRouteCache else { return }
+        didSweepRouteCache = true
+        // Detached and low priority: nothing waits on the answer, and the
+        // reader is already looking at their map by the time it runs.
+        Task.detached(priority: .utility) {
+            _ = sweepRouteCache()
+        }
+    }
+
+    /// Trim each region's cache back to ``routeCacheEntryBudget``, oldest
+    /// first, and answer how many entries went.
+    ///
+    /// Bounded by count and not by age on purpose. An entry is rewritten only
+    /// when its route is solved again, so a sample loaded once and never
+    /// edited keeps its original dates for as long as the install lasts; an
+    /// age rule would eventually delete all 201 of the Japanese sample's
+    /// routes and make the next launch re-solve them, which is exactly the
+    /// wait this cache exists to remove. Oldest-first still evicts a
+    /// superseded revision before the replacement that outdates it, and an
+    /// entry evicted while still live is solved again and rewritten with a
+    /// fresh date, which moves it out of the firing line by itself.
+    ///
+    /// Everything it can reach is derived: only `RailMap/Routes/<code>` under
+    /// the caches directory, only for the five region codes this app knows,
+    /// only regular files directly inside one, and only those named `*.json`.
+    /// Each is a file `solveMissing` builds again from the bundled network, so
+    /// the worst a mistake here can cost is a re-solve — the same cost iOS
+    /// imposes whenever it purges the caches directory on its own.
+    ///
+    /// The count is returned rather than reported because nothing in this app
+    /// logs; it is there so a sweep that removes nothing, or everything, is
+    /// visible to whoever next has a debugger on this.
+    private nonisolated static func sweepRouteCache() -> Int {
+        let manager = FileManager.default
+        let keys: Set<URLResourceKey> = [.isRegularFileKey, .contentModificationDateKey]
+        var removed = 0
+        for region in Region.ordered {
+            guard let contents = try? manager.contentsOfDirectory(
+                at: cacheDirectory(country: region.code),
+                includingPropertiesForKeys: Array(keys),
+                options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+            else { continue }
+            let entries = contents.compactMap { url -> (url: URL, written: Date)? in
+                guard url.pathExtension == "json",
+                      let values = try? url.resourceValues(forKeys: keys),
+                      values.isRegularFile == true
+                else { return nil }
+                return (url, values.contentModificationDate ?? .distantPast)
+            }
+            guard entries.count > routeCacheEntryBudget else { continue }
+            let doomed = entries
+                .sorted { $0.written < $1.written }
+                .prefix(entries.count - routeCacheEntryBudget)
+            for entry in doomed {
+                // A failure needs no handling: the entry either went or it did
+                // not, and either way the next load re-solves what is missing.
+                guard (try? manager.removeItem(at: entry.url)) != nil else { continue }
+                removed += 1
+            }
+        }
+        return removed
+    }
+
     private nonisolated static func routeSectionBoundarySharesExplicitStop(
         _ previous: RouteSection, _ next: RouteSection
     ) -> Bool {
@@ -695,10 +854,6 @@ final class RiddenRouteStore {
         let previousName = Stations.normalizeStationName(previous.to ?? "")
         let nextName = Stations.normalizeStationName(next.from ?? "")
         return !previousName.isEmpty && previousName == nextName
-    }
-
-    private struct Manifest: Decodable {
-        let parts: [String]
     }
 
     private struct Part: Decodable {
@@ -781,6 +936,105 @@ final class RiddenRouteStore {
             case .missingSolverResources(let country):
                 "Runtime solver resources for \(country) are missing from the app bundle."
             }
+        }
+    }
+}
+
+/// Which precomputed part holds which journey, built once per dataset.
+///
+/// The scan it replaces was paid per journey rather than per dataset: with a
+/// cold route cache, every train the load could not answer for reopened and
+/// re-decoded all 201 parts of the Japanese sample to discover that 200 of
+/// them belonged to somebody else.
+///
+/// The FIRST ask still opens every part, because the manifest names the parts
+/// and nothing else. It is not extended with an id index here: that file is
+/// written by the JavaScript precompute pipeline in the main fork and read by
+/// both apps, so its shape is settled somewhere this repository cannot see.
+///
+/// An `actor` rather than a lock, for the reason ``EdgeIndexCache`` is one:
+/// two regions can be decoding at the same time, and the second must wait on
+/// the first build instead of starting a second one beside it.
+private actor DatasetPartIndex {
+    static let shared = DatasetPartIndex()
+
+    /// One part, and where it sat in the manifest.
+    ///
+    /// The position is carried so the rides a dataset answers for come back in
+    /// manifest order on every run. Dictionary iteration order is not stable
+    /// between launches, and this order is the order the map draws in.
+    struct PartRef: Sendable {
+        let name: String
+        let position: Int
+    }
+
+    private var indexes: [String: [String: [PartRef]]] = [:]
+    private var inFlight: [String: Task<[String: [PartRef]], Error>] = [:]
+
+    /// The index for one dataset, building it if this is the first ask.
+    func parts(in dataset: String) async throws -> [String: [PartRef]] {
+        if let ready = indexes[dataset] { return ready }
+        if let running = inFlight[dataset] { return try await running.value }
+
+        let task = Task.detached(priority: .userInitiated) {
+            try Self.build(dataset: dataset)
+        }
+        inFlight[dataset] = task
+        defer { inFlight[dataset] = nil }
+        // Detached, so a load cancelled halfway through the scan does not take
+        // it down and leave the next load to start it over. The scan is worth
+        // finishing: it is the only thing that ever has to read these files.
+        let built = try await task.value
+        indexes[dataset] = built
+        return built
+    }
+
+    /// Read every part once, for its train id and nothing else.
+    ///
+    /// ``PartIdentity`` deliberately cannot see the route: the coordinate
+    /// arrays are nearly all of a part's bytes and the scan needs none of
+    /// them, so what would have been a full geometry decode is now a parse
+    /// that keeps one string.
+    private nonisolated static func build(dataset: String) throws -> [String: [PartRef]] {
+        guard let manifestURL = Bundle.main.url(
+            forResource: "manifest",
+            withExtension: "json",
+            subdirectory: dataset
+        ) else { throw RiddenRouteStore.LoadError.missingManifest(dataset) }
+
+        let manifest = try JSONDecoder().decode(
+            Manifest.self,
+            from: Data(contentsOf: manifestURL)
+        )
+        var index: [String: [PartRef]] = [:]
+        index.reserveCapacity(manifest.parts.count)
+        for (position, name) in manifest.parts.enumerated() {
+            guard let partURL = Bundle.main.url(
+                forResource: name,
+                withExtension: "json",
+                subdirectory: dataset
+            ) else { throw RiddenRouteStore.LoadError.missingPart(dataset, name) }
+            let identity = try JSONDecoder().decode(
+                PartIdentity.self, from: Data(contentsOf: partURL))
+            // Appended rather than assigned. The datasets that ship carry one
+            // part per journey, but a dataset that ever carried two for the
+            // same id would have had both searched before, and dropping one
+            // here would silently stop drawing a route that used to draw.
+            index[identity.train.id, default: []].append(
+                PartRef(name: name, position: position))
+        }
+        return index
+    }
+
+    private struct Manifest: Decodable {
+        let parts: [String]
+    }
+
+    private struct PartIdentity: Decodable {
+        let train: TrainIdentity
+
+        struct TrainIdentity: Decodable {
+            let id: String
         }
     }
 }

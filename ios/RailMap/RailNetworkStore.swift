@@ -23,6 +23,13 @@ final class RailNetworkStore {
         let region: Region
         let name: String
         let nameRoma: String?
+        /// The package's `operator` — `東日本旅客鉄道`, the official name and
+        /// not the `JR東日本` a journey record carries. Held because the
+        /// screenshot importer writes `preferred_operator_names`, which the
+        /// solver reads in the package's own spelling, and because
+        /// `OperatorBranding.companyLabel` needs the official name to produce
+        /// the short one.
+        let operatorName: String?
         let color: Color
         /// The operator's dark-mode colour where it publishes one. The
         /// packages have always carried this — `rail-network.js` reads
@@ -184,9 +191,28 @@ final class RailNetworkStore {
 
     /// The stations of one region only — the ride editor's picker, which is
     /// scoped to the region the itinerary being edited belongs to.
+    /// One region's platforms, in store order.
+    ///
+    /// Grouped once per generation of ``stations`` rather than filtered per
+    /// call, and that is not a micro-optimisation: the ride editor asks for
+    /// this from inside a `NavigationLink`'s destination, which SwiftUI builds
+    /// on every body evaluation of the stop editor — so a reader typing a
+    /// station name was running a pass over all ~20,000 platforms of five
+    /// countries per character. Grouping preserves relative order, so the
+    /// answer is the one `filter` gave.
     func stations(in region: Region) -> [DrawnStation] {
-        stations.filter { $0.region == region }
+        if let stationsByRegion, ArrayGeneration.same(stationsByRegion.of, stations) {
+            return stationsByRegion.grouped[region] ?? []
+        }
+        var grouped: [Region: [DrawnStation]] = [:]
+        for station in stations { grouped[station.region, default: []].append(station) }
+        stationsByRegion = (stations, grouped)
+        return grouped[region] ?? []
     }
+
+    /// The grouping above, with the generation it was taken from.
+    @ObservationIgnored private var stationsByRegion:
+        (of: [DrawnStation], grouped: [Region: [DrawnStation]])?
 
     private struct Decoded: Sendable {
         var lines: [DrawnLine]
@@ -200,13 +226,20 @@ final class RailNetworkStore {
     /// because that is what lets the compiler check the hand-off instead of
     /// trusting it.
     private nonisolated static func decode(region: Region) async throws -> Decoded {
+        let interval = RailSignpost.data.begin("data.package.decode")
+        defer { RailSignpost.data.end("data.package.decode", interval) }
         let started = ContinuousClock.now
         guard let url = Bundle.main.url(
             forResource: region.packageResource, withExtension: "json")
         else { throw LoadError.missingResource(region.code) }
 
-        let package = try CompactPackage.load(contentsOf: url)
-        let topologies = try DisplayParts.LineTopology.byLineID(contentsOf: url)
+        // Both halves of the package come off one read and one parse. Asking
+        // the compact decoder and the topology decoder separately opened the
+        // same file twice and scanned it twice — 9.1 MB apiece for Japan, with
+        // all five regions decoding concurrently at launch.
+        let loaded = try DisplayParts.LoadedPackage.load(contentsOf: url)
+        let package = loaded.package
+        let topologies = loaded.topologyByLineID
         let visibilityLengthByLineId = Visibility.groupLengthByLineId(package)
         let minZoomByLineId = visibilityLengthByLineId.mapValues {
             Visibility.minZoomForLength(totalKm: $0)
@@ -247,6 +280,7 @@ final class RailNetworkStore {
                 region: region,
                 name: line.name,
                 nameRoma: line.nameRoma,
+                operatorName: line.operator,
                 color: Color(hex: line.color) ?? .accentColor,
                 colorDark: Color(hex: line.colorDark ?? line.color) ?? .accentColor,
                 colorHex: (line.color ?? "#7a7a7a").lowercased(),
@@ -337,25 +371,5 @@ final class RailNetworkStore {
                     """
             }
         }
-    }
-}
-
-extension Color {
-    /// Reads the `#rrggbb` strings the rail packages store.
-    ///
-    /// The packages also carry `colorDark` for operators that publish a
-    /// separate dark-mode colour; wiring that to the colour scheme is a
-    /// follow-up, and doing it here rather than in `RailCore` is deliberate —
-    /// which colour a theme picks is presentation, and presentation does not
-    /// go in the pure tier.
-    init?(hex: String?) {
-        guard var text = hex?.trimmingCharacters(in: .whitespaces) else { return nil }
-        if text.hasPrefix("#") { text.removeFirst() }
-        guard text.count == 6, let value = UInt32(text, radix: 16) else { return nil }
-        self.init(
-            red: Double((value >> 16) & 0xFF) / 255,
-            green: Double((value >> 8) & 0xFF) / 255,
-            blue: Double(value & 0xFF) / 255
-        )
     }
 }

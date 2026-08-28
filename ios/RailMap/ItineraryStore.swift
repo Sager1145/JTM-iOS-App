@@ -129,17 +129,11 @@ final class ItineraryStore {
             candidate.id = originalID
         }
         next.trains[index] = candidate.taggingRegion()
-        store = next
+        publishWorkingSet(next)
         selectedTrainID = candidate.id
         publishRecordIndex()
 
-        Task {
-            do {
-                state = .loaded(try await Self.group(store: next))
-            } catch {
-                state = .failed(error.localizedDescription)
-            }
-        }
+        regroup(next)
         return outcome
     }
 
@@ -365,10 +359,17 @@ final class ItineraryStore {
                 copy.region = train.region ?? region.code
                 return copy
             })
+        // Taken before the grouping and checked after it, for the reason
+        // `load` takes one: bumping afterwards would discard a rebuild that is
+        // strictly newer than this grouping.
+        groupingTicket += 1
+        let ticket = groupingTicket
         let grouped = try await Self.group(store: next)
-        store = next
+        publishWorkingSet(next)
         selectedTrainID = commit.selectedTrainID
-        state = .loaded(grouped)
+        // The import happened and is reported either way; what is skipped is
+        // publishing an older grouping over a newer one.
+        if ticket == groupingTicket { state = .loaded(grouped) }
         publishRecordIndex()
         return ImportSummary(
             mode: mode, imported: commit.ids.count, ids: commit.ids,
@@ -398,18 +399,10 @@ final class ItineraryStore {
         try session.replaceTrainStoreFromJSONText(text, sourceLabel: "JSON")
         let next = MergedStore.tagged(
             TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: session.trains))
-        store = next
+        publishWorkingSet(next)
         selectedTrainID = session.selectedTrainID
         publishRecordIndex()
-        let selection = session.selectedTrainID
-        Task {
-            do {
-                state = .loaded(try await Self.group(store: next))
-                selectedTrainID = selection
-            } catch {
-                state = .failed(error.localizedDescription)
-            }
-        }
+        regroup(next, reassertingSelection: true)
     }
 
     func deleteAll() {
@@ -452,19 +445,10 @@ final class ItineraryStore {
         // scaffold, `duplicateTrain`'s copy — arrives without a region, and
         // the scaffold's stops are the only thing that could say. Tagging the
         // whole store settles it once, here, rather than at every reader.
-        self.store = MergedStore.tagged(workspace.store)
+        publishWorkingSet(MergedStore.tagged(workspace.store))
         selectedTrainID = workspace.selectedTrainID
         publishRecordIndex()
-        let selection = workspace.selectedTrainID
-        let tagged = self.store ?? workspace.store
-        Task {
-            do {
-                state = .loaded(try await Self.group(store: tagged))
-                selectedTrainID = selection
-            } catch {
-                state = .failed(error.localizedDescription)
-            }
-        }
+        regroup(self.store ?? workspace.store, reassertingSelection: true)
         return workspace.selectedTrainID
     }
 
@@ -478,18 +462,46 @@ final class ItineraryStore {
     /// region at a time, and loading one is an action.
     func load(from library: RideLibrary) {
         state = .loading
-        library.migrateLegacyStores()
-        library.refreshSavedState()
+        // Taken before the first suspension. What this load reads is only
+        // publishable while the working set is still the one it started from.
+        let generation = storeGeneration
 
         Task {
             do {
+                // All three touch the store file, and a cold one is a megabyte
+                // of JSON: read on the main actor, this was the launch the app
+                // spent not drawing. They are awaited in this order rather than
+                // started together because each one has to see what the one
+                // before it left on disk.
+                await library.migrateLegacyStores()
+                await library.refreshSavedState()
                 let saved = library.hasSavedStore
-                    ? try library.savedStore()
+                    ? try await library.savedStore()
                     : TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: [])
                 let store = await MergedStore.regionTagged(saved)
-                self.store = store
+                // Somebody published while this was reading the file — a
+                // sample folded in, an import committed, a journey edited.
+                // Theirs is the newer working set and it has already been
+                // saved; this is the file as it was BEFORE that happened, so
+                // it is abandoned rather than written over the top. The door
+                // that published has already republished `state`.
+                guard generation == storeGeneration else { return }
+                publishWorkingSet(store)
                 publishRecordIndex()
-                state = .loaded(try await Self.group(store: store))
+                // Taken, not bumped.
+                //
+                // This used to be `groupingTicket += 1` after the grouping,
+                // meaning "mine is the newest answer". That is false for a
+                // rebuild asked for AFTER this grouping started: such a
+                // rebuild is strictly newer, and bumping the ticket killed it
+                // so that this older grouping could publish in its place. Take
+                // a ticket first and check it after, exactly as `regroup`
+                // does.
+                groupingTicket += 1
+                let ticket = groupingTicket
+                let grouped = try await Self.group(store: store)
+                guard ticket == groupingTicket else { return }
+                state = .loaded(grouped)
                 selectedTrainID = nil
                 // Written back, because the point of the pass is that it
                 // happens once: a correction that is not saved is a correction
@@ -499,6 +511,9 @@ final class ItineraryStore {
                 // nothing.
                 if store != saved { library.save(store) }
             } catch {
+                // A failure from a load nobody is waiting on any more must not
+                // replace a working set that arrived while it was reading.
+                guard generation == storeGeneration else { return }
                 state = .failed(error.localizedDescription)
             }
         }
@@ -516,6 +531,14 @@ final class ItineraryStore {
         // codes name no region on their face — so a sample folded in untagged
         // is drawn and solved as Japanese, and the Macanese one reported
         // 無法繪製路線 until the app was next launched. See ``RegionCodeIndex``.
+        // A running import owns the store, exactly as it does for `replace`
+        // and `mutate`. `runImport` reads the trains at entry and writes the
+        // result seconds later, so a fold that lands in between is discarded
+        // without a trace. Until now the only thing preventing that was a
+        // `.disabled` modifier on one screen — a UI accident, not an
+        // invariant, and one that says nothing about the sample load already
+        // in flight when the import starts.
+        guard !isImporting else { return [] }
         let tagged = await MergedStore.regionTagged(incoming)
         // Refused while the working set is still being read from disk. Folding
         // into a store that is not there yet would merge into nothing and then
@@ -525,13 +548,10 @@ final class ItineraryStore {
         // set checked before it is not the one being folded into.
         guard let current = store else { return [] }
         let next = MergedStore.merging(tagged, into: current)
-        store = next
+        publishWorkingSet(next)
         publishRecordIndex()
         library.save(next)
-        Task {
-            do { state = .loaded(try await Self.group(store: next)) }
-            catch { state = .failed(error.localizedDescription) }
-        }
+        regroup(next)
         return incoming.trains.map(\.id)
     }
 
@@ -539,20 +559,83 @@ final class ItineraryStore {
     /// which is the only place the web app's "this sample IS the store"
     /// meaning survives.
     func replaceAll(with incoming: TrainStore, into library: RideLibrary) async {
+        // As `merge`: a running import owns the store.
+        guard !isImporting else { return }
         let next = await MergedStore.regionTagged(incoming)
-        store = next
+        publishWorkingSet(next)
         selectedTrainID = nil
         publishRecordIndex()
         library.save(next)
+        regroup(next)
+    }
+
+    /// The number of the most recent rebuild that was asked for.
+    ///
+    /// See ``regroup(_:reassertingSelection:)``.
+    private var groupingTicket = 0
+
+    /// How many times the working set has been published.
+    ///
+    /// ``load(from:)`` is the only door that reads the store off disk, and
+    /// reading a cold one is five suspension points long. Everything the
+    /// reader can do in that window publishes a newer working set — folding in
+    /// a sample, committing an import, editing a journey — and `load` then
+    /// resumed, overwrote it with the snapshot it had started from, and SAVED
+    /// that snapshot on top. The sample the reader had just loaded was gone
+    /// from the list, from memory, and from the file, with nothing said.
+    ///
+    /// This is the hazard two racing regroups have, one tier down, and it
+    /// takes the same answer: work that suspended may only publish if nothing
+    /// published while it was away. `groupingTicket` guards the grouping;
+    /// this guards the store the grouping is derived FROM.
+    private var storeGeneration = 0
+
+    /// The one door onto the working set.
+    ///
+    /// Every assignment goes through here so that a future one cannot forget
+    /// to count itself. A generation that misses a writer is worse than no
+    /// generation at all, because `load` would then believe it was safe.
+    private func publishWorkingSet(_ next: TrainStore) {
+        store = next
+        storeGeneration &+= 1
+    }
+
+    /// Rebuild the date buckets for `store` and publish them — unless a later
+    /// edit has asked for a rebuild of its own since this one started.
+    ///
+    /// Grouping runs off the main actor, so two edits a moment apart can
+    /// finish in either order, and the older one publishing last leaves the
+    /// list and the date bar showing the store as it was BEFORE the newer
+    /// edit — a wrong answer that stays on screen until something else happens
+    /// to rebuild. Same hazard as two saves racing to one file, and the same
+    /// answer: only the latest rebuild asked for may speak.
+    ///
+    /// `reassertingSelection` is for the two callers that add or rename a
+    /// journey. Their new record is not in the published grouping until this
+    /// rebuild lands, so a surface reading `loaded` can drop a selection it
+    /// cannot find in the meantime; those two put it back.
+    private func regroup(_ store: TrainStore, reassertingSelection: Bool = false) {
+        groupingTicket += 1
+        let ticket = groupingTicket
+        let selection = selectedTrainID
         Task {
-            do { state = .loaded(try await Self.group(store: next)) }
-            catch { state = .failed(error.localizedDescription) }
+            do {
+                let grouped = try await Self.group(store: store)
+                guard ticket == groupingTicket else { return }
+                state = .loaded(grouped)
+                if reassertingSelection { selectedTrainID = selection }
+            } catch {
+                guard ticket == groupingTicket else { return }
+                state = .failed(error.localizedDescription)
+            }
         }
     }
 
     /// A national store is 201 itineraries, so the grouping runs off the main
     /// actor and the main actor only sees the finished value.
     private nonisolated static func group(store: TrainStore) async throws -> Loaded {
+        let interval = RailSignpost.ui.begin("itinerary.group")
+        defer { RailSignpost.ui.end("itinerary.group", interval) }
         let started = ContinuousClock.now
 
         // Both the ordering and the bucketing are the web app's, ported. The
@@ -564,13 +647,29 @@ final class ItineraryStore {
         // the other. Bridging here keeps that seam visible instead of pretending
         // it does not exist — and it is a real seam to close, because two
         // models of one thing eventually disagree about it.
+        //
+        // Two rides may carry the same id — nothing in the store forbids it,
+        // and the import path renames rather than merges — so the way back
+        // from a bridged row has to answer with the FIRST ride holding that
+        // id, which is what the linear scan this replaced did. Scanning was
+        // also 201 passes over 201 journeys on every regroup, and a regroup
+        // follows every edit.
+        let firstByID = Dictionary(
+            store.trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let sorted = Dates.sortByDateAndDeparture(store.trains.map(\.forDates))
-            .compactMap { bridged in store.trains.first { $0.id == bridged.id } }
+            .compactMap { bridged in bridged.id.flatMap { firstByID[$0] } }
 
-        let days = Dates.availableDates(sorted.map(\.forDates)).map { date in
-            let bucket = Dates.trains(sorted.map(\.forDates), inBucket: date)
-            let ids = Set(bucket.compactMap(\.id))
-            return Loaded.Day(date: date, trains: sorted.filter { ids.contains($0.id) })
+        // One bridge and one `trainDate` per ride, rather than one of each per
+        // ride per date. `availableDates` names the buckets with the same
+        // `trainDate` that `trains(_:inBucket:)` filters on, so collecting the
+        // rides under it directly is the answer the two of them gave together.
+        let bridged = sorted.map(\.forDates)
+        var buckets: [String: [Train]] = [:]
+        for (train, row) in zip(sorted, bridged) {
+            buckets[Dates.trainDate(row), default: []].append(train)
+        }
+        let days = Dates.availableDates(bridged).map { date in
+            Loaded.Day(date: date, trains: buckets[date] ?? [])
         }
         return Loaded(
             regions: MergedStore.regions(of: sorted),

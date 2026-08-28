@@ -16,9 +16,10 @@ import RailCore
 /// and vice versa. A SQLite schema of our own would be faster to query and
 /// would immediately be a second format nobody else can read.
 ///
-/// Application Support rather than Documents because this is app state the
-/// reader did not create as a document, and it is excluded from iCloud backup
-/// only where it is a cache — this is not, so it is backed up.
+/// The files themselves are touched by ``RideStorage``, which is not the main
+/// actor. What is left here is the state the screens read — whether there is a
+/// saved store, when it was written, what went wrong — and the order the file
+/// operations are asked for in.
 @MainActor
 @Observable
 final class RideLibrary {
@@ -120,41 +121,69 @@ final class RideLibrary {
 
     private(set) var backup: Backup?
 
+    // MARK: - the order the files are touched in
+
+    /// The tail of the queue every file operation joins.
+    ///
+    /// Moving the writes off the main actor introduces a hazard the
+    /// synchronous version could not have: two saves in flight at once, the
+    /// older one landing last and putting back the store the reader has
+    /// already edited. An actor does not prevent that on its own — it runs one
+    /// message at a time but promises nothing about which message it takes
+    /// next — so each operation is made to wait for the one enqueued before
+    /// it, and the chain is built here, on the main actor, in the order the
+    /// app asked.
+    ///
+    /// That ordering is also what keeps "write the recovery copy, THEN delete
+    /// everything" in that order across a suspension point, and what makes the
+    /// read that ``ItineraryStore`` does after a restore see the restored file
+    /// rather than the one it replaced.
+    private var queue: Task<Void, Never>?
+
+    /// Put one operation at the back of the queue.
+    ///
+    /// The returned task is how a caller waits for its own operation without
+    /// waiting for anybody else's; discarding it is the fire-and-forget form,
+    /// which is what the buttons that only publish an error afterwards use.
+    @discardableResult
+    private func enqueue<T: Sendable>(
+        _ work: @escaping @Sendable (RideStorage) async throws -> T
+    ) -> Task<T, Error> {
+        let previous = queue
+        let operation = Task<T, Error> {
+            await previous?.value
+            return try await work(RideStorage.shared)
+        }
+        // The tail swallows the outcome deliberately: a failed write must not
+        // cancel the operations queued behind it, only report itself to the
+        // caller that asked for it.
+        queue = Task { _ = await operation.result }
+        return operation
+    }
+
     // MARK: - reading
 
-    func sample(_ resource: String) throws -> TrainStore {
-        guard let url = Bundle.main.url(forResource: resource, withExtension: "json") else {
-            throw LibraryError.missingSample(resource)
-        }
-        return try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
+    /// A bundled sample.
+    ///
+    /// Deliberately not queued: the samples ship inside the app bundle and
+    /// nothing in this app ever writes them, so there is no order to keep them
+    /// in, and putting the largest read in the app behind a save would be a
+    /// wait for nothing. It goes to the storage actor for the other reason —
+    /// the Japanese sample is 1.2 MB of JSON, and decoding it where the map is
+    /// drawn is a load that stops the app rather than one that takes a moment.
+    func sample(_ resource: String) async throws -> TrainStore {
+        try await RideStorage.shared.decodeSample(resource)
     }
 
-    func savedStore() throws -> TrainStore {
-        try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: Self.storeURL()))
+    func savedStore() async throws -> TrainStore {
+        try await enqueue { try await $0.decodeStore() }.value
     }
 
-    func refreshSavedState() {
-        let url = Self.storeURL()
-        hasSavedStore = FileManager.default.fileExists(atPath: url.path)
-        savedStoreDate =
-            hasSavedStore
-            ? (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?
-                .contentModificationDate : nil
-        refreshBackupState()
-    }
-
-    /// Reads the sidecar rather than the backup itself: what the screen shows
-    /// is a date and a count, and decoding a 201-journey store to learn them
-    /// would be a megabyte of work every time the tab is opened.
-    func refreshBackupState() {
-        guard FileManager.default.fileExists(atPath: Self.backupURL().path),
-            let data = try? Data(contentsOf: Self.backupMetaURL()),
-            let decoded = try? Self.metaDecoder.decode(Backup.self, from: data)
-        else {
-            backup = nil
-            return
-        }
-        backup = decoded
+    func refreshSavedState() async {
+        guard let state = try? await enqueue({ await $0.savedState() }).value else { return }
+        hasSavedStore = state.hasStore
+        savedStoreDate = state.storeDate
+        backup = state.backup
     }
 
     // MARK: - writing
@@ -175,76 +204,88 @@ final class RideLibrary {
     /// Written atomically: a store half-written because the app was killed
     /// mid-save is worse than no store, because the reader would not find out
     /// until the next launch.
-    func save(_ store: TrainStore) {
+    ///
+    /// Returns before the file exists. `store` is a value, so what is written
+    /// is what the caller handed over however long the queue ahead of it is.
+    ///
+    /// The returned task finishes once the outcome has been published, which
+    /// is what a caller that has to *report* the save waits for: the import
+    /// summary says whether it landed, and ``lastSaveError`` answers that only
+    /// after the write it is being asked about. Everything else discards the
+    /// task and leaves the reporting to the data screen's error card.
+    @discardableResult
+    func save(_ store: TrainStore) -> Task<Void, Never> {
         lastSaveError = nil
-        do {
-            let directory = Self.directory()
-            try FileManager.default.createDirectory(
-                at: directory, withIntermediateDirectories: true)
-
-            try Data(MergedStore.export(store).utf8)
-                .write(to: Self.storeURL(), options: .atomic)
-
-            hasSavedStore = true
-            savedStoreDate = Date()
-        } catch {
-            lastSaveError = error.localizedDescription
+        let write = enqueue { try await $0.writeStore(store) }
+        return Task {
+            do {
+                savedStoreDate = try await write.value
+                hasSavedStore = true
+            } catch {
+                lastSaveError = error.localizedDescription
+            }
         }
     }
 
     /// Writes the recovery copy a destructive action can be undone from.
     ///
-    /// Same canonical bytes as ``save(_:country:)`` — a backup that cannot be
+    /// Same canonical bytes as ``save(_:)`` — a backup that cannot be
     /// re-imported by the web app is not a backup of this store, it is a
-    /// second format. Failure is reported rather than thrown: the caller's
-    /// decision (delete everything, replace everything) is the reader's, and
-    /// the screen refuses to go ahead unsupervised when the backup did not
-    /// land rather than silently proceeding without one.
-    @discardableResult
-    func snapshotBackup(_ store: TrainStore, reason: Backup.Reason) -> Bool {
-        do {
-            try FileManager.default.createDirectory(
-                at: Self.directory(), withIntermediateDirectories: true)
-            try Data(MergedStore.export(store).utf8)
-                .write(to: Self.backupURL(), options: .atomic)
-            let meta = Backup(created: Date(), trainCount: store.trains.count, reason: reason)
-            try Self.metaEncoder.encode(meta).write(
-                to: Self.backupMetaURL(), options: .atomic)
-            backup = meta
-            return true
-        } catch {
-            lastSaveError = error.localizedDescription
-            return false
+    /// second format.
+    ///
+    /// The destructive action that follows is queued behind this one, so it
+    /// cannot overtake the copy it is meant to be undoable from. Failure is
+    /// reported rather than thrown, and it is reported by ``backup`` staying
+    /// nil: the recovery card the screen offers is drawn from that, so a
+    /// backup that did not land is a card that never appears rather than one
+    /// that promises a file nobody wrote.
+    func snapshotBackup(_ store: TrainStore, reason: Backup.Reason) {
+        let meta = Backup(created: Date(), trainCount: store.trains.count, reason: reason)
+        let write = enqueue { try await $0.writeBackup(store, meta: meta) }
+        Task {
+            do {
+                try await write.value
+                backup = meta
+            } catch {
+                lastSaveError = error.localizedDescription
+            }
         }
     }
 
-    /// Puts the backup back as the reader's own store and returns it.
+    /// Puts the backup back as the reader's own store, and returns the one
+    /// being restored so a caller can say what it was.
     ///
     /// The backup is consumed: leaving it in place after a restore would offer
     /// a "restore" button that now restores what is already on screen, which
     /// reads as a second undo that does nothing.
+    ///
+    /// The copy is queued rather than written here, so that it cannot overtake
+    /// a save still in flight and be undone by it a moment later. It is then
+    /// awaited rather than left running, so that a recovery copy that could not
+    /// be read, decoded or written still reaches the caller's `catch` and is
+    /// reported where the reader asked for the restore.
     @discardableResult
-    func restoreBackup() throws -> TrainStore {
-        let url = Self.backupURL()
-        let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
-        try FileManager.default.createDirectory(
-            at: Self.directory(), withIntermediateDirectories: true)
-        try Data(contentsOf: url).write(to: Self.storeURL(), options: .atomic)
-        hasSavedStore = true
+    func restoreBackup() async throws -> Backup {
+        guard let restoring = backup else { throw LibraryError.missingBackup }
+        let restore = enqueue { try await $0.restoreBackup() }
+        backup = nil
         lastSaveError = nil
-        discardBackup()
-        refreshSavedState()
-        return store
+        let outcome = await restore.result
+        // Read back rather than assumed: a restore that did not land leaves
+        // the recovery copy where it was, and the screen has to offer it again
+        // instead of claiming it was consumed.
+        await refreshSavedState()
+        if case .failure(let error) = outcome { throw error }
+        return restoring
     }
 
     func discardBackup() {
-        try? FileManager.default.removeItem(at: Self.backupURL())
-        try? FileManager.default.removeItem(at: Self.backupMetaURL())
+        enqueue { await $0.discardBackup() }
         backup = nil
     }
 
     func deleteSavedStore() {
-        try? FileManager.default.removeItem(at: Self.storeURL())
+        enqueue { await $0.removeStore() }
         hasSavedStore = false
         savedStoreDate = nil
         forgetLoadedSamples()
@@ -289,25 +330,6 @@ final class RideLibrary {
         }
     }
 
-    // MARK: - locations
-
-    /// One file, holding every region.
-    ///
-    /// It used to be one file per region, because the app had a region switch
-    /// and "load the Taiwan sample" had to be unambiguous about what it
-    /// replaced. With every region drawn at once there is one working set, so
-    /// there is one file — and each ride says which region it belongs to
-    /// (`Train.region`) rather than being told by which file it was in.
-    private static func storeURL() -> URL {
-        directory().appending(path: "train-store.json")
-    }
-
-    /// The per-region files this app wrote before the merge, in the order they
-    /// are folded into the merged store.
-    private static let legacyStoreURLs: [(Region, String)] = Region.ordered.map {
-        ($0, "train-store-\($0.rawValue).json")
-    }
-
     /// Fold any per-region stores left by an earlier version into the merged
     /// one, once.
     ///
@@ -316,9 +338,140 @@ final class RideLibrary {
     /// the kind of one-way step that is worth being able to check afterwards,
     /// and five small JSON files are a cheap receipt. A subsequent launch sees
     /// the merged file and skips this entirely.
-    func migrateLegacyStores() {
-        let merged = Self.storeURL()
-        guard !FileManager.default.fileExists(atPath: merged.path) else { return }
+    func migrateLegacyStores() async {
+        do {
+            guard let written = try await enqueue({ try await $0.foldLegacyStores() }).value
+            else { return }
+            savedStoreDate = written
+            hasSavedStore = true
+        } catch {
+            lastSaveError = error.localizedDescription
+        }
+    }
+
+    enum LibraryError: LocalizedError {
+        case missingSample(String)
+        case missingBackup
+
+        var errorDescription: String? {
+            switch self {
+            case .missingSample(let name):
+                """
+                \(name).json is not in the app bundle. Run ios/copy-rail-packages.sh — \
+                the samples are read from app/data rather than committed twice.
+                """
+            case .missingBackup:
+                "There is no recovery copy on this device to restore from."
+            }
+        }
+    }
+}
+
+/// Every touch of the files under Application Support, off the main actor.
+///
+/// A 201-journey store is a megabyte of JSON coming in and a megabyte going
+/// out through the canonical stringifier, and both used to happen on the actor
+/// that draws the map: the launch that decoded the saved store and the frame
+/// after every edit were the two the app dropped.
+///
+/// It owns the paths as well as the work, so that nothing above it needs to
+/// know where the file is — and so that a second writer cannot be added on the
+/// main actor by reaching for a URL that is lying around.
+///
+/// Application Support rather than Documents because this is app state the
+/// reader did not create as a document, and it is excluded from iCloud backup
+/// only where it is a cache — this is not, so it is backed up.
+actor RideStorage {
+
+    static let shared = RideStorage()
+
+    /// What the data screen says about the copy on this device, read in one
+    /// pass so the screen does not pay for four separate trips to the disk.
+    struct SavedState: Sendable {
+        var hasStore = false
+        var storeDate: Date?
+        var backup: RideLibrary.Backup?
+    }
+
+    // MARK: - reading
+
+    func savedState() -> SavedState {
+        let url = Self.storeURL()
+        let exists = FileManager.default.fileExists(atPath: url.path)
+        return SavedState(
+            hasStore: exists,
+            storeDate: exists
+                ? (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?
+                    .contentModificationDate : nil,
+            backup: recoverableBackup())
+    }
+
+    /// Reads the sidecar rather than the backup itself: what the screen shows
+    /// is a date and a count, and decoding a 201-journey store to learn them
+    /// would be a megabyte of work every time the tab is opened.
+    private func recoverableBackup() -> RideLibrary.Backup? {
+        guard FileManager.default.fileExists(atPath: Self.backupURL().path),
+            let data = try? Data(contentsOf: Self.backupMetaURL()),
+            let decoded = try? metaDecoder.decode(RideLibrary.Backup.self, from: data)
+        else { return nil }
+        return decoded
+    }
+
+    /// One of the seven read-only itineraries the app ships with.
+    func decodeSample(_ resource: String) throws -> TrainStore {
+        guard let url = Bundle.main.url(forResource: resource, withExtension: "json") else {
+            throw RideLibrary.LibraryError.missingSample(resource)
+        }
+        return try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
+    }
+
+    func decodeStore() throws -> TrainStore {
+        try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: Self.storeURL()))
+    }
+
+    // MARK: - writing
+
+    /// The canonical bytes, atomically, and the moment they landed.
+    func writeStore(_ store: TrainStore) throws -> Date {
+        try createDirectory()
+        try Data(MergedStore.export(store).utf8).write(to: Self.storeURL(), options: .atomic)
+        return Date()
+    }
+
+    func writeBackup(_ store: TrainStore, meta: RideLibrary.Backup) throws {
+        try createDirectory()
+        try Data(MergedStore.export(store).utf8).write(to: Self.backupURL(), options: .atomic)
+        try metaEncoder.encode(meta).write(to: Self.backupMetaURL(), options: .atomic)
+    }
+
+    /// Copies the recovery bytes over the saved store, then consumes them.
+    ///
+    /// Decoded before it is copied, and the copy is of the bytes that decoded:
+    /// a backup that is not a store must not be written over the one that is,
+    /// and re-exporting a decoded store here would put a second spelling of
+    /// the same rides on disk under the name of the first.
+    func restoreBackup() throws {
+        let bytes = try Data(contentsOf: Self.backupURL())
+        _ = try JSONDecoder().decode(TrainStore.self, from: bytes)
+        try createDirectory()
+        try bytes.write(to: Self.storeURL(), options: .atomic)
+        discardBackup()
+    }
+
+    func discardBackup() {
+        try? FileManager.default.removeItem(at: Self.backupURL())
+        try? FileManager.default.removeItem(at: Self.backupMetaURL())
+    }
+
+    func removeStore() {
+        try? FileManager.default.removeItem(at: Self.storeURL())
+    }
+
+    /// Folds the per-region stores an earlier version wrote into the merged
+    /// one, and reports when the merged file was written — or nothing at all,
+    /// which is what every launch after the first one gets.
+    func foldLegacyStores() throws -> Date? {
+        guard !FileManager.default.fileExists(atPath: Self.storeURL().path) else { return nil }
         var trains: [Train] = []
         var seen = Set<String>()
         for (region, name) in Self.legacyStoreURLs {
@@ -338,8 +491,33 @@ final class RideLibrary {
                 trains.append(copy)
             }
         }
-        guard !trains.isEmpty else { return }
-        save(TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: trains))
+        guard !trains.isEmpty else { return nil }
+        return try writeStore(
+            TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: trains))
+    }
+
+    private func createDirectory() throws {
+        try FileManager.default.createDirectory(
+            at: Self.directory(), withIntermediateDirectories: true)
+    }
+
+    // MARK: - locations
+
+    /// One file, holding every region.
+    ///
+    /// It used to be one file per region, because the app had a region switch
+    /// and "load the Taiwan sample" had to be unambiguous about what it
+    /// replaced. With every region drawn at once there is one working set, so
+    /// there is one file — and each ride says which region it belongs to
+    /// (`Train.region`) rather than being told by which file it was in.
+    private static func storeURL() -> URL {
+        directory().appending(path: "train-store.json")
+    }
+
+    /// The per-region files this app wrote before the merge, in the order they
+    /// are folded into the merged store.
+    private static let legacyStoreURLs: [(Region, String)] = Region.ordered.map {
+        ($0, "train-store-\($0.rawValue).json")
     }
 
     /// The recovery copy and its sidecar. The sidecar is separate so that the
@@ -353,13 +531,13 @@ final class RideLibrary {
         directory().appending(path: "train-store.backup-meta.json")
     }
 
-    private static let metaEncoder: JSONEncoder = {
+    private let metaEncoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }()
 
-    private static let metaDecoder: JSONDecoder = {
+    private let metaDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return decoder
@@ -369,19 +547,5 @@ final class RideLibrary {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             .first ?? URL.temporaryDirectory
         return base.appending(path: "Rides", directoryHint: .isDirectory)
-    }
-
-    enum LibraryError: LocalizedError {
-        case missingSample(String)
-
-        var errorDescription: String? {
-            switch self {
-            case .missingSample(let name):
-                """
-                \(name).json is not in the app bundle. Run ios/copy-rail-packages.sh — \
-                the samples are read from app/data rather than committed twice.
-                """
-            }
-        }
     }
 }

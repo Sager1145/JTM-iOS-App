@@ -318,7 +318,11 @@ final class ImportFlow {
                         stage: .saving, completed: nil, total: nil, canInteract: false,
                         canCancel: false))
                 if let store = itineraries.store {
-                    library.save(store)
+                    // Awaited, because the line below reports whether it
+                    // landed. The save is queued behind whatever else is
+                    // writing, and `lastSaveError` says nothing about this one
+                    // until it has run.
+                    await library.save(store).value
                 }
                 stopVisibilityClock()
                 phase = .finished(

@@ -45,7 +45,7 @@ actor StationReadingsStore {
 
     /// `AppCore.countrySuffixed("station-readings", country)`.
     nonisolated static func resourceName(country: String) -> String {
-        country == "jp" ? "station-readings" : "station-readings-\(country)"
+        Region.countrySuffixed("station-readings", country: country)
     }
 
     /// The table for a country, or `.empty` when the bundle has no such file.
