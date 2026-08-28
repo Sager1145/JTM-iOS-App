@@ -97,3 +97,115 @@ public enum RideTapResolver {
         return hypot(point.x - (a.x + ratio * dx), point.y - (a.y + ratio * dy))
     }
 }
+
+// MARK: - culling
+
+/// The half of a tap that does not need every vertex projected.
+///
+/// ``RideTapResolver/hits(at:among:tolerance:)`` is exact and cheap per
+/// vertex, and that was never the problem: the problem is that the caller has
+/// to PROJECT every vertex of every ride before it can call, and a projection
+/// is a `MKMapView.convert(_:toPointTo:)` per point. The national sample is
+/// 180,447 ridden vertices, so every tap on the map — including the ones that
+/// land on nothing — did 180,447 MapKit conversions and allocated 2,303 arrays
+/// to hold the answers.
+///
+/// What is added here is the arithmetic that lets the caller skip almost all
+/// of them: a stroke is cut into chunks, each chunk keeps the box its vertices
+/// fall in, and a chunk whose box is further than the tolerance from the tap
+/// cannot contain a hit and is never projected.
+///
+/// It is expressed over a planar space rather than over coordinates because
+/// that is what makes it both testable and correct. The caller supplies the
+/// tap and the boxes in ONE linear space — on iOS, `MKMapPoint`, where a
+/// distance is the same number of units everywhere on an unpitched map — and
+/// this decides. Nothing here knows about MapKit, and nothing here has to.
+extension RideTapResolver {
+
+    /// An axis-aligned box in the same planar space as ``Point``.
+    public struct Bounds: Equatable, Sendable {
+        public var minX: Double
+        public var minY: Double
+        public var maxX: Double
+        public var maxY: Double
+
+        public init(minX: Double, minY: Double, maxX: Double, maxY: Double) {
+            self.minX = minX
+            self.minY = minY
+            self.maxX = maxX
+            self.maxY = maxY
+        }
+
+        /// The box a run of points falls in, or `nil` for an empty run.
+        public init?(_ points: some Sequence<Point>) {
+            var iterator = points.makeIterator()
+            guard let first = iterator.next() else { return nil }
+            var box = Bounds(
+                minX: first.x, minY: first.y, maxX: first.x, maxY: first.y)
+            while let point = iterator.next() {
+                box.minX = Swift.min(box.minX, point.x)
+                box.minY = Swift.min(box.minY, point.y)
+                box.maxX = Swift.max(box.maxX, point.x)
+                box.maxY = Swift.max(box.maxY, point.y)
+            }
+            self = box
+        }
+
+        /// The distance from `point` to the nearest part of the box, or zero
+        /// when it is inside.
+        ///
+        /// This is what makes the cull *conservative rather than approximate*:
+        /// every vertex of the chunk lies inside the box, so no point of the
+        /// chunk — and therefore no point of any segment between two of its
+        /// vertices, the box being convex — can be nearer to the tap than
+        /// this. A chunk rejected here is a chunk that could not have won.
+        public func distance(to point: Point) -> Double {
+            let dx = Swift.max(minX - point.x, 0, point.x - maxX)
+            let dy = Swift.max(minY - point.y, 0, point.y - maxY)
+            if dx == 0 { return dy }
+            if dy == 0 { return dx }
+            return (dx * dx + dy * dy).squareRoot()
+        }
+
+        /// Whether a chunk in this box can hold a point within `tolerance`.
+        public func mayContain(_ point: Point, within tolerance: Double) -> Bool {
+            distance(to: point) <= tolerance
+        }
+    }
+
+    /// How many segments a chunk covers.
+    ///
+    /// Chosen against the shape of the data rather than by taste: the national
+    /// sample averages 78 vertices per stroke, and a chunk far larger than a
+    /// stroke culls nothing extra while a chunk of a handful of vertices pays
+    /// for a box per corner of a station approach. 64 leaves a long
+    /// trans-Honshū section — 5,000 vertices in one stroke — split into
+    /// eighty boxes, which is what stops one such section from defeating the
+    /// whole cull.
+    public static let defaultChunkSegments = 64
+
+    /// The vertex ranges a stroke of `count` points is cut into.
+    ///
+    /// Consecutive ranges OVERLAP BY ONE VERTEX, and that is the whole
+    /// correctness argument: a range `a..<b` covers the segments `a` through
+    /// `b - 2`, so without the shared vertex the segment straddling a chunk
+    /// boundary would belong to no chunk and a tap on it would silently miss.
+    /// Every segment of the stroke lies in exactly one range, and a range
+    /// carrying fewer than two vertices draws nothing and is dropped.
+    public static func chunkRanges(
+        count: Int, segmentsPerChunk: Int = defaultChunkSegments
+    ) -> [Range<Int>] {
+        guard count >= 2 else { return [] }
+        let stride = Swift.max(1, segmentsPerChunk)
+        guard count > stride + 1 else { return [0..<count] }
+        var ranges: [Range<Int>] = []
+        ranges.reserveCapacity((count - 1 + stride - 1) / stride)
+        var start = 0
+        while start < count - 1 {
+            let end = Swift.min(count, start + stride + 1)
+            ranges.append(start..<end)
+            start += stride
+        }
+        return ranges
+    }
+}
