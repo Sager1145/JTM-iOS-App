@@ -1251,7 +1251,8 @@ public enum Statistics {
     /// The three buckets are the same everywhere — high speed, the
     /// reserved-seat premium tier, everything else — but the service names that
     /// identify them are a country's own vocabulary, so the matching is per
-    /// country. Every country other than Taiwan falls through to Japan's words.
+    /// country. Taiwan and Korea each match their own; every other country
+    /// falls through to Japan's words.
     public static func serviceGroupOfTrain(trainType: String?, country: String) -> String {
         let t = trainType ?? ""
         if country == "tw" {
@@ -1260,6 +1261,26 @@ public enum Statistics {
             if containsAny(t, ["高鐵", "高铁"]) { return "hsr" }
             if containsAny(
                 t, ["自強", "自强", "太魯閣", "太鲁阁", "普悠瑪", "普悠玛", "莒光", "對號", "对号"])
+            { return "ltd" }
+            return "other"
+        }
+        if country == "kr" {
+            // KTX and SRT are the high-speed services; ITX-새마을 / ITX-마음 and
+            // 무궁화호 are the reserved-seat intercity tier 有料特急 corresponds
+            // to. The JavaScript's own note says what its absence costs: "a KTX
+            // ride landed in 其他列車 while the 高速鐵道（KTX・SRT）row above it
+            // read 0.0 km." This port did not follow it there, and no fixture
+            // caught that — `stats.json` still records the older belief in its
+            // own `why` ("Only jp and tw have their own vocabulary"), so the
+            // parity test asserted the stale answer and passed.
+            //
+            // The first test is case-insensitive and the second is not,
+            // because the two JavaScript regexes differ in exactly that way
+            // (`/KTX|SRT|고속/i` against `/ITX|새마을|…/`). Folding is ASCII-only
+            // so the UTF-16 code-unit count cannot shift under `contains`.
+            if containsAny(asciiUppercased(t), ["KTX", "SRT", "고속"]) { return "hsr" }
+            if containsAny(
+                t, ["ITX", "새마을", "무궁화", "セマウル", "ムグンファ", "新村", "無窮花", "无穷花"])
             { return "ltd" }
             return "other"
         }
@@ -1292,6 +1313,20 @@ public enum Statistics {
 
     static func containsAny(_ haystack: String, _ needles: [String]) -> Bool {
         needles.contains { contains(haystack, $0) }
+    }
+
+    /// `a`…`z` folded to upper case and nothing else.
+    ///
+    /// `String.uppercased()` would do full Unicode case mapping, which can
+    /// change a string's length (ß becomes SS) and so cannot be used under a
+    /// rule whose whole point is to match JavaScript's UTF-16 code-unit
+    /// search. Every needle this serves is ASCII.
+    static func asciiUppercased(_ text: String) -> String {
+        String(String.UnicodeScalarView(text.unicodeScalars.map { scalar in
+            (scalar.value >= 97 && scalar.value <= 122)
+                ? Unicode.Scalar(scalar.value - 32) ?? scalar
+                : scalar
+        }))
     }
 
     public static func serviceGroupStats(

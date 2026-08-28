@@ -1056,11 +1056,21 @@ public enum TrainValidation {
         guard train.isTruthy, case .object = train else {
             throw fail("Each train must be an object.")
         }
+        // The JavaScript's thirteen keys, plus `region`.
+        //
+        // `region` is this port's own field and has no JavaScript counterpart,
+        // so it is absent from every fixture and cannot change a parity
+        // answer. It has to be here all the same, because
+        // `normalizeExportTrain` deliberately CARRIES it (see the note there)
+        // and `StoreOperations.json(_:)` writes it — so without this line the
+        // app rejected its own export on the way back in, one error per
+        // journey, and a backup it had just written could not be restored.
         try assertOnlyKeys(
             train,
             [
                 "id", "date", "number", "train_type", "company", "origin", "destination",
                 "direction", "visible", "style", "route_policy", "route_sections", "stops",
+                "region",
             ],
             "Train")
 
@@ -1098,7 +1108,12 @@ public enum TrainValidation {
                 guard case .array(let rows)? = train["route_sections"] else { return [] }
                 return try rows.map { try normalizeImportedRouteSection($0, stations: stations) }
             }(),
-            stops: try stops.map(normalizeImportedStop))
+            stops: try stops.map(normalizeImportedStop),
+            // Read back for the same reason the export writes it: a ride that
+            // says which region it is in must not have to be re-derived, and
+            // `Region.resolved` would otherwise answer "Japan" for a Taiwanese
+            // store on the launch that loaded it.
+            region: (train["region"] ?? .null).stringOrNilIfFalsy)
     }
 
     /// `normalizeTrainCompany` — trim, then canonicalise for Taiwan only.

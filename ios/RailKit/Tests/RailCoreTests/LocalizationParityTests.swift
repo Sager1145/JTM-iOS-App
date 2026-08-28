@@ -426,7 +426,7 @@ struct LocalizationParityTests {
         localization.setLanguage("zh-Hant")
         #expect(fixture.variantKeys.count == fixture.catalog.keyCount * 6)
 
-        var fellBack = 0
+        let fellBack = 0
         for item in fixture.variantKeys {
             localization.setCountry(item.country)
             // The resolved key, checked against catalog membership rather than

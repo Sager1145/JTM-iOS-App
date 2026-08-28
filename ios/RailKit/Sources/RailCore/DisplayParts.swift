@@ -272,13 +272,50 @@ public enum DisplayParts {
             let lines: [Row]
         }
 
-        /// Reads the two fields straight out of a shipped package, keyed by
-        /// line id. Only non-empty entries are returned.
-        public static func byLineID(contentsOf url: URL) throws -> [String: LineTopology] {
-            let shape = try JSONDecoder().decode(PackageShape.self, from: Data(contentsOf: url))
+        private static func byLineID(_ shape: PackageShape) -> [String: LineTopology] {
             var out: [String: LineTopology] = [:]
             for row in shape.lines where !row.topology.isEmpty { out[row.id] = row.topology }
             return out
+        }
+
+        /// Reads the two fields straight out of a shipped package, keyed by
+        /// line id. Only non-empty entries are returned.
+        public static func byLineID(contentsOf url: URL) throws -> [String: LineTopology] {
+            byLineID(try JSONDecoder().decode(PackageShape.self, from: Data(contentsOf: url)))
+        }
+
+        /// The same map off a decoder that is already standing on a package,
+        /// which is how ``DisplayParts/LoadedPackage`` gets it without opening
+        /// and scanning the file a second time.
+        static func byLineID(from decoder: Decoder) throws -> [String: LineTopology] {
+            byLineID(try PackageShape(from: decoder))
+        }
+    }
+
+    /// A shipped package and the per-line topology beside it, off one read and
+    /// one parse.
+    ///
+    /// The two halves are decoded apart for the reason ``LineTopology`` gives,
+    /// and a caller that wanted both used to ask each for itself — which read
+    /// the same file twice and ran the JSON scanner over it twice. That is
+    /// 9.1 MB re-read and re-scanned for Japan alone, with all five regions
+    /// decoding at once, and it bought nothing: they are the same bytes and
+    /// the same rows.
+    ///
+    /// Each half is still produced by the initializer it was reached by
+    /// before, handed the one decoder rather than one of its own, so neither
+    /// value changes.
+    public struct LoadedPackage: Sendable, Decodable {
+        public let package: CompactPackage
+        public let topologyByLineID: [String: LineTopology]
+
+        public init(from decoder: Decoder) throws {
+            package = try CompactPackage(from: decoder)
+            topologyByLineID = try LineTopology.byLineID(from: decoder)
+        }
+
+        public static func load(contentsOf url: URL) throws -> LoadedPackage {
+            try JSONDecoder().decode(LoadedPackage.self, from: Data(contentsOf: url))
         }
     }
 
@@ -338,29 +375,24 @@ public enum DisplayParts {
     /// Written as plain `+`/`-`/`*` because the compensation term is only
     /// meaningful if nothing contracts it into an FMA — Swift does not contract
     /// by default, and the 604/604 agreement is the check that it did not.
-    static func jsHypot(_ a: Double, _ b: Double) -> Double {
-        let values = (abs(a), abs(b))
-        var maxValue = 0.0
-        var sawNaN = false
-        // NaN and Infinity are answered before the sum, as V8 answers them: a
-        // single infinite argument wins even against a NaN.
-        for value in [values.0, values.1] {
-            if value.isNaN { sawNaN = true } else if value > maxValue { maxValue = value }
-        }
-        if maxValue == .infinity { return .infinity }
-        if sawNaN { return .nan }
-        if maxValue == 0 { return 0 }
-        var sum = 0.0
-        var compensation = 0.0
-        for value in [values.0, values.1] {
-            let n = value / maxValue
-            let summand = n * n - compensation
-            let preliminary = sum + summand
-            compensation = (preliminary - sum) - summand
-            sum = preliminary
-        }
-        return sum.squareRoot() * maxValue
-    }
+    /// V8's `Math.hypot`, which lives in ``JSMath``.
+    ///
+    /// Kept under its local name because the surrounding code is read against
+    /// the JavaScript, where it is spelled `hypot` — this is the same shape
+    /// the string primitives took when they were folded into `JSString`.
+    ///
+    /// It WAS a second copy, and the copy was exact: measured over 400,256
+    /// pairs — every combination of ±0, ±1, ±∞, ±NaN, the subnormal and
+    /// finite extremes, and 400,000 random pairs at coordinate and
+    /// metres-per-degree magnitudes — the two bodies agreed on every bit,
+    /// including the rule that a single infinite argument beats a NaN.
+    ///
+    /// This is emphatically NOT true of its neighbours. ``turnDegrees``,
+    /// ``distanceMeters`` and ``pointSegmentDistanceMeters`` here differ from
+    /// `Grooming`'s by construction — one family builds on V8's `hypot`, the
+    /// other on Darwin's, and they disagree on 96,040 of 200,060 real
+    /// three-point samples. Those must stay apart; this one had no reason to.
+    static func jsHypot(_ a: Double, _ b: Double) -> Double { JSMath.hypot(a, b) }
 
     /// ``Grooming/distanceMeters(_:_:)`` spelled with ``jsHypot(_:_:)``.
     static func distanceMeters(_ left: Coordinate, _ right: Coordinate) -> Double {

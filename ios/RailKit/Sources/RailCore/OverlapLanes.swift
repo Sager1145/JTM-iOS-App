@@ -1016,6 +1016,16 @@ public enum OverlapLanes {
         overlap: OverlapMap, orig: [Coordinate], segKeys: [String], trainId: String,
         noPick: Bool
     ) -> LaneAssignment {
+        // The private caller guards `orig.count >= 2` before every call; this
+        // is the public entry point, and without the same guard a route with
+        // no geometry allocates `count: -1` and aborts the process. The
+        // JavaScript's `new Array(-1)` throws a catchable RangeError, so the
+        // two ends disagree about a bad input as well as about a good one.
+        guard orig.count >= 2 else {
+            return LaneAssignment(
+                segIdentity: [], segSlot: [], segMult: [], segBridged: [],
+                lineHasOverlap: false)
+        }
         let nSeg = orig.count - 1
         var segIdentity = [Int?](repeating: nil, count: nSeg)
         var segSlot = [Int](repeating: 0, count: nSeg)
