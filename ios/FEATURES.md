@@ -36,6 +36,13 @@ the editor, import — and the reasoning is in `RegionCatalog`'s and
 `MergedStore`'s own documentation. Everything else on this page is still
 measured against the web app.
 
+What the three journey destinations do have is a region **scope**: a globe
+button in the panel header that narrows what Upcoming, 全部行程 and 統計 report
+on, with 全部地區 as its off position. That is a filter over one store, not the
+web app's switch between five of them — nothing is loaded or unloaded, the
+editor and the data screen still hold every region at once, and the value is
+shared by the three so they cannot answer differently.
+
 ### Each ride's dates are on its own region's clock
 
 A consequence of the same decision, and the web app has no equivalent because
@@ -154,7 +161,7 @@ That is its own cleanup, not this one.
 | Legend and data sources, with licences | `app-map-init.js` `buildMapInfoControl` | — | ✅ `MapInfoView`, plus a Korean article the web app has never had and an Apple-Maps basemap article in place of OpenFreeMap's |
 | Map layer toggles (routes / stops / terminals / pass / four ridden categories) | `app-map-init.js` `buildMapLayersControl` | ✅ | ✅ `MapLayersView`, all nine — the categories classify through the ported `Statistics.riddenFeatureCategory`, and are labelled from the BASE keys because each filter acts on all five networks |
 | One basemap, scoped by the destination on top | — | — | ✅ native-only. Upcoming draws the journeys still ahead and only those, Passport the records its numbers counted, All journeys and Search everything on record. It is the ride LIST that narrows, never the drawing: what is ahead and what is behind share one set of 已乘坐線路 switches, so there is no second layer menu for a second kind of line (`RailWorkspaceView.mapRides`) |
-| Statistics scope: one region, or 全部 | — | — | ✅ native-only. The five networks are disjoint, so their edge indexes merge into one denominator (`EdgeIndexCache.merged`); switching the scope frames that network on the map, and 全部 frames all of them |
+| Region scope: one region, or 全部 | — | — | ✅ native-only, and shared by Upcoming, 全部行程 and 統計 — a round globe button in each of their headers. It offers only the regions the store has journeys in, plus 全部地區, which is always there and is the way back: a scope whose every result is an empty list is not a choice. The five networks are disjoint, so their edge indexes merge into one denominator (`EdgeIndexCache.merged`); switching the scope narrows the list, narrows what the map draws under it, and frames that network, while 全部 frames all of them |
 | Basemap picker (Positron / none) | `buildMapLayersControl` | — | — Apple Maps is the basemap; the opacity slider covers "less of it" |
 | Hover fan for overlapping lines | `railmap.js` `_setExpandedGroup` | — | — not ported, see §0 |
 
@@ -200,17 +207,17 @@ complex gains or loses a name.
 | Deck marker records | `app-deck-records.js` (1590) | ✅ | ✅ terminal / stop / pass / xday, with the name election |
 | Corridor fitting in `OverlapLanes.swift` | `app-overlap-lanes.js` (2319) | ✅ 3,105 lines | — deliberately uncalled: it feeds the hover fan, not the drawn line (§0) |
 | Station-join curve smoothing | `app-overlap-lanes.js` `smoothCurveStationJoins` | ✅ 26-case fixture | — same |
-| Ambiguous tap over crossing rides | `app-map-init.js` `handleDeckRouteChoices` | — | ✅ lists every ride under the finger; picking one activates its day |
+| Ambiguous tap over crossing rides | `app-map-init.js` `handleDeckRouteChoices` | — | ✅ lists every ride under the finger; picking one selects that ride and nothing else — the date filter is the reader's, not the pick's |
 | Ride station labels | `app-deck-records.js` `markerRecordsToFC` | ✅ | ✅ three tiers, elected, haloed |
 | Select a train, clear selection | `#fit-selected`, `#clear-selection` | — | ✅ |
 | Fit to selection (定位) | `app-map-fit.js` (216) | — | ✅ |
-| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five, and opens on **the routes of the day it is opened on** — every journey still ahead on the soonest day that has one, framed together. In two steps, because the second is drawn geometry that is still being read: the country of that day (`Region.networkExtent`, written down so the map is never left on the globe), then the day's own routes, which replace it exactly once. Failing anything ahead, the country of the most recent journey behind; failing that, the fallback region. Never over a camera the reader has already taken |
+| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five, and opens on **a whole country** — the one the first journey still ahead is in, failing that the one the first journey in the log is in, failing that the fallback region. Framed once, from a written-down country extent (`Region.networkExtent`) rather than from lines that land seconds apart, and never over a camera the reader has already taken. Nothing closer than a country: everything narrower is something the reader asks for |
 
 ## 3 · The itinerary list and editor
 
 | Feature | Source | logic | app |
 | --- | --- | :-: | :-: |
-| Date bar, add/remove dates | `app-dates.js` (192), `#add-date` | ✅ | ✅ filter, add date, remove empty dates |
+| Date bar, add/remove dates | `app-dates.js` (192), `#add-date` | ✅ | ✅ filter, add date, remove empty dates. The filter is a round calendar button in the panel header on Upcoming and 全部行程 — a filter is not a setting, so it is no longer reached through the gear — and it narrows both lists off one value. Upcoming offers only the days that still lie ahead; Search keeps its copy in the gear menu, and is deliberately never region-scoped |
 | Map follows the selected date | `#map-date-filter` | ✅ | ✅ |
 | Train list, grouped by date | `app-render.js` (492) | ✅ | ✅ |
 | Search | `#search-input` | — | ✅ |
@@ -234,7 +241,9 @@ complex gains or loses a name.
 | Top ridden segments | `app-stats.js` `topRiddenSegments` | ✅ | ✅ overall and per category |
 | **當日統計 — the day's own numbers** | `app-stats-render.js` `renderMileageStatsDom` | ✅ | ✅ stamped inside the passport page; absent, never `0`, when no day is in scope |
 | The 統計 panel | `app-stats-render.js` (359) | — | ✅ counts, time, service mix, mileage, coverage, top sections |
-| Date + region scope | — | — | ✅ both in the panel header (§5.3.1), one owner each; the region decides the categories and the coverage denominator |
+| Date + region scope | — | — | ✅ both round buttons in the panel header (§5.3.1), one owner each, tinted while the scope is narrowed; the region decides the categories and the coverage denominator. 統計's date is its own value, independent of the journeys filter, exactly as §5.3.1 requires |
+| **The statistics page as a picture** | — | — | ✅ native-only. A share button in the 統計 header renders the page — the same cards, order, figures and wording, minus the two segmented pickers and the folded tail of a ranked list — into a PNG and hands it to the system share sheet, with a preview first. One line above the numbers states the region and the day they are scoped to, because an image travels without the two buttons that set them, and the app's own icon and the name it has on the reader's home screen sit in that title row's empty right half — the picture is the one thing this app makes that is looked at by people who do not have it (`StatisticsShareImage.swift`) |
+| The passport's own journey log | — | — | — removed. It was 全部行程 a second time, under a different heading, at the bottom of the one screen whose question is how much it all adds up to; the journeys have a destination of their own that now carries the same two scopes |
 | Only confirmed rides are counted | — | — | ✅ native-only, and **no clock takes part**: a journey enters the numbers because the record says it was ridden (`ride_segment`, read through `RideLedger`), never because its date has passed. Unconfirmed journeys stay out of the statistics, the coverage map and the passport log, and the passport says how many it is holding. Stores from older builds carry `ride_segment: true` throughout, so nothing needed migrating |
 | Confirm a ride by hand | — | — | ✅ native-only. A card on the journey detail while it is not counted (「確認已乘坐」), a 乘坐狀態 row with 「標記為未乘坐」 once it is, and a leading swipe on every row of 全部行程. Confirming sets `ride_segment` across the whole journey; the per-stop switches still handle a journey only partly ridden |
 | New-journey pre-fill | — | — | ✅ the create form's 乘坐狀態 switch opens on the likely answer for the date typed into it, and stops following the moment the reader moves it. Never applied to an existing record, whatever its date is edited to |

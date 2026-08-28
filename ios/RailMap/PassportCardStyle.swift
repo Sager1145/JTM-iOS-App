@@ -112,6 +112,27 @@ extension EnvironmentValues {
     }
 }
 
+private struct PassportPosterKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    /// Whether this subtree is being drawn into a SHARE IMAGE rather than onto
+    /// the screen. §6.1 names share images as Memory surfaces alongside the
+    /// statistics themselves, which is why the flag lives in this file.
+    ///
+    /// A poster is a picture of an answer, not of the screen that answers it.
+    /// So the cards drop the controls that only mean anything to a finger —
+    /// the segmented pickers that choose an axis, and the disclosure that
+    /// folds the tail of a ranked list — and commit to whatever the reader had
+    /// set when they asked for the picture. Nothing else changes: same
+    /// figures, same order, same wording.
+    var passportPoster: Bool {
+        get { self[PassportPosterKey.self] }
+        set { self[PassportPosterKey.self] = newValue }
+    }
+}
+
 // MARK: - the paper
 
 private struct PassportCardSurface: ViewModifier {
@@ -513,6 +534,10 @@ struct PassportMetricGrid: View {
                 .monospacedDigit()
                 .foregroundStyle(ink.title)
                 .railType(.metricValueStacked)
+                // `replace` directly, not through `RailMotion.animation(_:reduceMotion:)`,
+                // for the reason ``PassportMetric`` gives above: §9.4 keeps
+                // numeric updates. Noted here as well because a raw token is
+                // what an audit greps for, and this is the deliberate case.
                 .contentTransition(.numericText())
                 .animation(RailMotion.replace, value: item.value)
             if let caption = item.caption {

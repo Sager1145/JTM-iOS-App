@@ -52,18 +52,30 @@ struct ContentView: View {
     /// Threading them through every view between would make the ride list an
     /// intermediary in a conversation it takes no part in.
     @State private var displaySettings = DisplaySettings()
-    /// Which region Passport is reporting on — the only region selector left.
+    /// Which region the reader is looking at — ONE scope, for all three
+    /// destinations that now offer the globe button in their header.
     ///
-    /// The map, the ride list and the data screen all hold every region at
-    /// once now. A statistic mostly cannot: its categories and its coverage
-    /// denominator are one network's, so Passport keeps a switch and this is
-    /// where it is remembered between launches.
+    /// It began as Passport's alone, because a statistic mostly cannot span
+    /// networks: its categories differ (捷運 / 地下鐵, 高鐵 / 新幹線) and its
+    /// coverage is a fraction of one network's own length. Upcoming and All
+    /// Journeys have the same control now, and they share this value rather
+    /// than keeping one each — a reader who scopes to 台灣 in the log and
+    /// finds 統計 still reporting on 日本 is being shown two answers to one
+    /// question, which is precisely the split ownership §5.1 forbids.
+    ///
+    /// The stored key is NEW, and deliberately. The old one held a value that
+    /// only ever scoped the statistics, and a reader who had left it on 日本
+    /// would open this build to a journey log that had quietly lost every ride
+    /// outside Japan — a filter they never set, hiding rows that look deleted.
+    /// A value whose meaning changed gets a new name and the new default;
+    /// 全部地區 is the honest starting scope for an app that holds five
+    /// networks and has not been asked to narrow to one.
     ///
     /// `"all"` is the exception, and it is a real one rather than a label:
     /// the five networks are geographically disjoint, so their indexes can be
     /// laid side by side into a single denominator and a single set of
     /// category rows. See `EdgeIndexCache.merged`.
-    @AppStorage("statistics-region") private var statisticsRegionCode = Region.jp.rawValue
+    @AppStorage("region-scope") private var regionScopeCode = Self.allRegionsCode
 
     /// The stored value that means every region at once.
     private static let allRegionsCode = "all"
@@ -80,7 +92,7 @@ struct ContentView: View {
             controller: mapController,
             playback: playback,
             statistics: mileageStatistics,
-            statisticsRegion: statisticsRegion,
+            regionScope: regionScope,
             selection: $selection
         )
         .environment(localization)
@@ -107,7 +119,7 @@ struct ContentView: View {
         }
         .task(id: statisticsLoadKey) {
             guard let loaded = itineraries.loaded else { return }
-            let region = statisticsRegion.wrappedValue
+            let region = regionScope.wrappedValue
             // 全部 counts every region's network, ridden or not: a coverage
             // figure of 0 % for a country you have never been to is an answer,
             // and it is the same answer the per-region scope gives.
@@ -151,13 +163,13 @@ struct ContentView: View {
                 .environment["RAILMAP_UI_TEST_STATS_REGION"],
                 Region(rawValue: wanted) != nil || wanted == Self.allRegionsCode
             else { return }
-            statisticsRegionCode = wanted
+            regionScopeCode = wanted
         }
 #endif
         // `initial: true`: the variant region has its own stored key now (see
         // `AppLocalization.variantKey`), so the launch value has to be pushed
         // rather than assumed to already agree.
-        .onChange(of: statisticsRegionCode, initial: true) { _, code in
+        .onChange(of: regionScopeCode, initial: true) { _, code in
             // The eleven country-variant catalog keys — 捷運 / 地下鐵 and the
             // rest — all belong to the statistics vocabulary, so they follow
             // this switch rather than a region the app no longer has. 全部 has
@@ -166,17 +178,18 @@ struct ContentView: View {
         }
     }
 
-    /// The stored region code, as the scope Passport binds to. `nil` is 全部.
-    private var statisticsRegion: Binding<Region?> {
+    /// The stored region code, as the scope the three destinations bind to.
+    /// `nil` is 全部.
+    private var regionScope: Binding<Region?> {
         Binding(
             get: {
-                guard statisticsRegionCode != Self.allRegionsCode else { return nil }
+                guard regionScopeCode != Self.allRegionsCode else { return nil }
                 // An unrecognised code is Japan rather than 全部: a value this
                 // build does not know is a stale preference, not a request for
                 // every network at once.
-                return Region(rawValue: statisticsRegionCode) ?? .jp
+                return Region(rawValue: regionScopeCode) ?? .jp
             },
-            set: { statisticsRegionCode = $0?.rawValue ?? Self.allRegionsCode })
+            set: { regionScopeCode = $0?.rawValue ?? Self.allRegionsCode })
     }
 
     /// Every ride, in full, as the value the route load is keyed on.
@@ -230,7 +243,7 @@ struct ContentView: View {
     /// whether they actually moved belongs to the store that knows.
     private var statisticsLoadKey: StatisticsLoadKey {
         StatisticsLoadKey(
-            region: statisticsRegionCode,
+            region: regionScopeCode,
             trains: routeLoadKey,
             rides: riddenRoutes.rides.map { RideKey(id: $0.id, geometry: $0.geometryDigest) })
     }

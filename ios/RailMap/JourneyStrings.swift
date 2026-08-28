@@ -31,6 +31,14 @@ enum JourneyStrings {
 
     static let table: [String: [Localization.Language: String]] = [
 
+        // The date filter's own name, for the round button that now carries it
+        // in the panel header on Upcoming and All Journeys. VoiceOver reads
+        // this and then the bucket the filter is set to.
+        "ios.journey.dateFilter": [
+            .en: "Date filter", .ja: "日付フィルタ",
+            .zhHans: "日期筛选", .zhHant: "日期篩選",
+        ],
+
         // MARK: - journey identity (§3.2)
 
         // Not translated so much as arranged: the arrow is the whole string in
@@ -68,6 +76,16 @@ enum JourneyStrings {
             .ja: "経路が描画された乗車が範囲内にないため、録画できるものがまだありません。",
             .en: "No journey with a drawn route is in scope, so there is nothing to film yet.",
         ],
+        // What goes between two station names in a summary row's title —
+        // 「東京 → 大阪」. Like `ios.journey.endpoints` below, this is not
+        // translated so much as arranged: the arrow is the whole string in
+        // every language, and it stays a catalog entry rather than a literal
+        // in the view so that the app has ONE place to change its mind about
+        // the mark (and so a language that wants a word can have one without
+        // the row learning about languages).
+        "ios.journey.stationConnector": [
+            .zhHant: "→", .zhHans: "→", .ja: "→", .en: "→",
+        ],
         "ios.journey.endpoints": [
             .zhHant: "{from} → {to}",
             .zhHans: "{from} → {to}",
@@ -90,13 +108,13 @@ enum JourneyStrings {
             .en: "Hidden from map",
         ],
         "ios.journey.hiddenDetail": [
-            .zhHant: "重新顯示不會改變匯出的旅程資料。",
+            .zhHant: "重新顯示不會改變匯出的行程資料。",
             .zhHans: "重新显示不会改变导出的行程数据。",
             .ja: "再表示しても、書き出される乗車データは変わりません。",
             .en: "Showing it again does not change the journey data you export.",
         ],
         "ios.journey.stillSaved": [
-            .zhHant: "旅程仍然保存著",
+            .zhHant: "行程仍然儲存著",
             .zhHans: "行程仍然保存着",
             .ja: "乗車記録は保存されたままです",
             .en: "The journey is still saved",
@@ -105,7 +123,7 @@ enum JourneyStrings {
         // MARK: - playback (§5.6)
 
         "ios.journey.playing": [
-            .zhHant: "正在播放旅程",
+            .zhHant: "正在播放行程",
             .zhHans: "正在播放行程",
             .ja: "行程を再生中",
             .en: "Playing journey",
@@ -162,13 +180,13 @@ enum JourneyStrings {
         // said which stretch they rode, so the solver was never asked. §13.3
         // still applies — what happened, and what to do next.
         "ios.journey.noRiddenSection": [
-            .zhHant: "這趟旅程還沒有標記任何乘坐區間，可在停站中設定。",
+            .zhHant: "這趟行程還沒有標記任何乘坐區間，可在停站中設定。",
             .zhHans: "这趟行程还没有标记任何乘坐区间，可在停靠站中设置。",
             .ja: "乗車区間がまだ指定されていません。停車駅で設定できます。",
             .en: "No stretch of this journey is marked as ridden yet — set it in the stops.",
         ],
         "ios.journey.recordUnchanged": [
-            .zhHant: "旅程記錄與停站沒有改變。",
+            .zhHant: "行程記錄與停站沒有改變。",
             .zhHans: "行程记录与停靠站没有改变。",
             .ja: "乗車記録と停車駅は変わっていません。",
             .en: "The journey record and its stops are unchanged.",
@@ -183,13 +201,13 @@ enum JourneyStrings {
         // MARK: - workspace loading and empty states (§13.1, §13.2)
 
         "ios.journey.loadingTitle": [
-            .zhHant: "正在讀取旅程",
+            .zhHant: "正在讀取行程",
             .zhHans: "正在读取行程",
             .ja: "乗車記録を読み込み中",
             .en: "Loading journeys",
         ],
         "ios.journey.loadingDetail": [
-            .zhHant: "正在讀取已保存的資料",
+            .zhHant: "正在讀取已儲存的資料",
             .zhHans: "正在读取已保存的数据",
             .ja: "保存済みのデータを読み込んでいます",
             .en: "Reading the saved store",
@@ -201,13 +219,13 @@ enum JourneyStrings {
             .en: "No journeys yet",
         ],
         "ios.journey.emptyDetail": [
-            .zhHant: "新增一趟旅程，或匯入既有的 JSON。",
+            .zhHant: "新增一趟行程，或匯入既有的 JSON。",
             .zhHans: "新建一趟行程，或导入已有的 JSON。",
             .ja: "新しい行程を作るか、既存の JSON を読み込みます。",
             .en: "Add a journey, or import an existing JSON store.",
         ],
         "ios.journey.emptyDateTitle": [
-            .zhHant: "這一天沒有旅程",
+            .zhHant: "這一天沒有行程",
             .zhHans: "这一天没有行程",
             .ja: "この日の行程はありません",
             .en: "No journeys on this day",
@@ -219,7 +237,7 @@ enum JourneyStrings {
             .en: "The current date filter has no records.",
         ],
         "ios.journey.emptySearchTitle": [
-            .zhHant: "沒有符合的旅程",
+            .zhHant: "沒有符合的行程",
             .zhHans: "没有匹配的行程",
             .ja: "一致する行程がありません",
             .en: "No matching journeys",
@@ -231,7 +249,7 @@ enum JourneyStrings {
             .en: "Try a train number, a station, or an ID.",
         ],
         "ios.journey.importingTitle": [
-            .zhHant: "正在匯入旅程",
+            .zhHant: "正在匯入行程",
             .zhHans: "正在导入行程",
             .ja: "乗車記録を読み込んでいます",
             .en: "Importing journeys",
@@ -240,13 +258,13 @@ enum JourneyStrings {
         // MARK: - failures (§13.3)
 
         "ios.journey.loadFailedTitle": [
-            .zhHant: "無法讀取旅程",
+            .zhHant: "無法讀取行程",
             .zhHans: "无法读取行程",
             .ja: "乗車記録を読み込めませんでした",
             .en: "Could not load journeys",
         ],
         "ios.journey.loadFailedKept": [
-            .zhHant: "此裝置上已保存的旅程資料沒有改變。",
+            .zhHant: "此裝置上已儲存的行程資料沒有改變。",
             .zhHans: "此设备上已保存的行程数据没有改变。",
             .ja: "この端末に保存されている乗車データは変わっていません。",
             .en: "The journey data saved on this device was not changed.",
@@ -258,13 +276,13 @@ enum JourneyStrings {
             .en: "Could not import this file",
         ],
         "ios.journey.importFailedKept": [
-            .zhHant: "沒有匯入任何內容，現有的旅程沒有改變。",
+            .zhHant: "沒有匯入任何內容，現有的行程沒有改變。",
             .zhHans: "没有导入任何内容，现有的行程没有改变。",
             .ja: "何も読み込まれておらず、既存の乗車記録は変わっていません。",
             .en: "Nothing was imported; your existing journeys are unchanged.",
         ],
         "ios.journey.saveFailedTitle": [
-            .zhHant: "無法保存這趟旅程",
+            .zhHant: "無法儲存這趟行程",
             .zhHans: "无法保存这趟行程",
             .ja: "この乗車記録を保存できませんでした",
             .en: "Could not save this journey",
@@ -276,19 +294,19 @@ enum JourneyStrings {
             .en: "Your edits are still open.",
         ],
         "ios.journey.draftInvalidTitle": [
-            .zhHant: "修正這些欄位才能保存",
+            .zhHant: "修正這些欄位才能儲存",
             .zhHans: "修正这些字段才能保存",
             .ja: "保存するには、これらの項目を修正してください",
             .en: "Fix these fields to save",
         ],
         "ios.journey.draftInvalidKept": [
-            .zhHant: "在你保存之前，已保存的旅程不會改變。",
+            .zhHant: "在你儲存之前，已儲存的行程不會改變。",
             .zhHans: "在你保存之前，已保存的行程不会改变。",
             .ja: "保存するまで、保存済みの乗車記録は変わりません。",
             .en: "The saved journey stays unchanged until you save.",
         ],
         "ios.journey.draftDirty": [
-            .zhHant: "有未保存的變更",
+            .zhHant: "有未儲存的變更",
             .zhHans: "有未保存的更改",
             .ja: "未保存の変更があります",
             .en: "Unsaved changes",
@@ -344,7 +362,7 @@ enum JourneyStrings {
         // MARK: - surfaces this port has and the web app does not
 
         "ios.journey.listSummary": [
-            .zhHant: "{journeys} 趟旅程 · {days} 天",
+            .zhHant: "{journeys} 趟行程 · {days} 天",
             .zhHans: "{journeys} 趟行程 · {days} 天",
             .ja: "{journeys} 本の行程 · {days} 日",
             .en: "{journeys} journeys · {days} days",
@@ -359,7 +377,7 @@ enum JourneyStrings {
             .en: "No upcoming journeys.",
         ],
         "ios.journey.daySummary": [
-            .zhHant: "{journeys} 趟旅程",
+            .zhHant: "{journeys} 趟行程",
             .zhHans: "{journeys} 趟行程",
             .ja: "{journeys} 本の行程",
             .en: "{journeys} journeys",
@@ -385,7 +403,7 @@ enum JourneyStrings {
             .en: "Clear selection",
         ],
         "ios.journey.moreActions": [
-            .zhHant: "更多旅程操作",
+            .zhHant: "更多行程操作",
             .zhHans: "更多行程操作",
             .ja: "その他の操作",
             .en: "More journey actions",
@@ -412,7 +430,7 @@ enum JourneyStrings {
         // Spoken instead of the coverage map, which a screen reader cannot
         // read. It says what the picture is OF, which is the honest answer.
         "ios.passport.coverageSpoken": [
-            .zhHant: "{region} 路網上已記錄 {n} 趟旅程",
+            .zhHant: "{region} 路網上已記錄 {n} 趟行程",
             .zhHans: "{region} 路网上已记录 {n} 趟行程",
             .ja: "{region}の路線網に記録された行程 {n} 件",
             .en: "{n} recorded journeys drawn over the {region} network",
@@ -436,7 +454,7 @@ enum JourneyStrings {
             .en: "Add a date",
         ],
         "ios.journey.addDateDetail": [
-            .zhHant: "先建立一個空的日期，之後再往裡面加旅程。",
+            .zhHant: "先建立一個空的日期，之後再往裡面加行程。",
             .zhHans: "先建立一个空的日期，之后再往里面加行程。",
             .ja: "空の日付を作り、あとから行程を追加できます。",
             .en: "Create an empty date to add journeys to later.",
@@ -448,7 +466,7 @@ enum JourneyStrings {
             .en: "Delete {train}?",
         ],
         "ios.journey.deleteDetail": [
-            .zhHant: "這趟旅程會從此裝置上的資料中移除。",
+            .zhHant: "這趟行程會從此裝置上的資料中移除。",
             .zhHans: "这趟行程会从此设备上的数据中移除。",
             .ja: "この乗車記録は、この端末のデータから取り除かれます。",
             .en: "The journey is removed from the data on this device.",

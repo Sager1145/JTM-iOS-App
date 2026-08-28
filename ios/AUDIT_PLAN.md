@@ -98,7 +98,7 @@ app target 的 import 矩阵实测是干净的：65 个文件里没有一个 sto
 | 存储 / 数据流 | `ItineraryStore` `RideLibrary` `MergedStore` `RiddenRouteStore` `RailNetworkStore` `MileageStatisticsStore` `StationPlaceStore` `StationReadingsStore` `EdgeIndexCache` `RegionCatalog` |
 | 行程界面 | `RideCard` `RideDetailView` `RideEditorView` `RideLibrary` `JourneyComponents` `JourneyPresentationBridge` `RideRouteStatus` `EditorValidation` |
 | 统计 | `StatisticsView` `StatisticsComponents` `StatisticsFormatting` |
-| Passport | `PassportWorkspaceView` `PassportCardStyle` `PassportJourneyLogView` |
+| Passport | `PassportWorkspaceView` `PassportCardStyle` `StatisticsShareImage` |
 | 导入导出 | `DataManagerView` `DataImportView` `ImportFlow` `ImportPreflight` `TrainStoreDocument` |
 | 播放 / 视频 | `PlaybackController` `PlaybackVideoExporter` `VideoExportSettings` `VideoExportOptionsView` |
 | 样式 token | `GlassStyle` `RailMotion` `RailType` `OperatorBadge` |

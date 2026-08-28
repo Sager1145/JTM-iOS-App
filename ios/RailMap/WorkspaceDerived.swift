@@ -65,6 +65,9 @@ final class WorkspaceDerived {
     private struct DaysKey {
         let days: [ItineraryStore.Loaded.Day]
         let date: String
+        /// The header's region scope, or `nil` for 全部 — the second filter
+        /// the list now applies, and one the days themselves cannot carry.
+        let region: Region?
         let query: String
         /// The search reads station names the store does not carry — see
         /// ``AppLocalization/localizedStationNames(of:)`` — so the answer
@@ -81,19 +84,21 @@ final class WorkspaceDerived {
 
     /// `RailWorkspaceView.filteredDays`, memoised.
     func days(
-        of loaded: ItineraryStore.Loaded, selectedDate: String, query: String,
-        naming: StationNamingGeneration,
+        of loaded: ItineraryStore.Loaded, selectedDate: String, region: Region?,
+        query: String, naming: StationNamingGeneration,
         compute: () -> [ItineraryStore.Loaded.Day]
     ) -> [ItineraryStore.Loaded.Day] {
         for entry in daysCache
-        where entry.key.date == selectedDate && entry.key.query == query
+        where entry.key.date == selectedDate && entry.key.region == region
+            && entry.key.query == query
             && entry.key.naming == naming
             && ArrayGeneration.same(entry.key.days, loaded.days) {
             return entry.value
         }
         let value = compute()
         let key = DaysKey(
-            days: loaded.days, date: selectedDate, query: query, naming: naming)
+            days: loaded.days, date: selectedDate, region: region, query: query,
+            naming: naming)
         daysCache.insert((key, value), at: 0)
         if daysCache.count > 2 { daysCache.removeLast(daysCache.count - 2) }
         return value
@@ -112,59 +117,57 @@ final class WorkspaceDerived {
         let today: [Region: String]
     }
 
-    private var upcomingKey: DatedKey?
+    /// The same, plus the two scopes the Upcoming destination's own header
+    /// now applies — see `RailWorkspaceView.upcomingScope`.
+    private struct UpcomingKey {
+        let trains: [Train]
+        let today: [Region: String]
+        let region: Region?
+        let date: String
+    }
+
+    private var upcomingKey: UpcomingKey?
     private var upcomingValue: [Train] = []
     /// The same answer as a set of ids — what the Upcoming destination's map
     /// filter wants, and the reason this returns a pair the way
     /// ``statisticsScope(trains:region:date:compute:)`` does: the list and the
     /// map ask the same question of the same pass.
     private var upcomingIDs: Set<String> = []
-    private var latestPastKey: DatedKey?
-    private var latestPastValue: Train?
+    private var earliestPastKey: DatedKey?
+    private var earliestPastValue: Train?
 
     func upcoming(
-        trains: [Train], today: [Region: String], compute: () -> [Train]
+        trains: [Train], today: [Region: String], region: Region?, date: String,
+        compute: () -> [Train]
     ) -> (trains: [Train], ids: Set<String>) {
         if let upcomingKey, upcomingKey.today == today,
+           upcomingKey.region == region, upcomingKey.date == date,
            ArrayGeneration.same(upcomingKey.trains, trains) {
             return (upcomingValue, upcomingIDs)
         }
         upcomingValue = compute()
         upcomingIDs = Set(upcomingValue.map(\.id))
-        upcomingKey = DatedKey(trains: trains, today: today)
+        upcomingKey = UpcomingKey(
+            trains: trains, today: today, region: region, date: date)
         return (upcomingValue, upcomingIDs)
     }
 
     // MARK: - the opening view
 
-    private var launchFocusKey: [Train]?
-    private var launchFocusValue: Set<String> = []
-
-    /// The journeys the opening view is framed on, memoised against the
-    /// upcoming list it is cut from.
-    ///
-    /// Keyed on that list's generation rather than on the store's: the answer
-    /// is a function of what is still ahead, and ``upcoming(trains:today:compute:)``
-    /// already hands back the same buffer while that has not changed.
-    func launchFocus(upcoming: [Train], compute: () -> Set<String>) -> Set<String> {
-        if let launchFocusKey, ArrayGeneration.same(launchFocusKey, upcoming) {
-            return launchFocusValue
-        }
-        launchFocusValue = compute()
-        launchFocusKey = upcoming
-        return launchFocusValue
-    }
-
-    func latestPast(
+    /// The first journey in the log, memoised — see
+    /// `RailWorkspaceView.earliestPastTrain`. The opening view asks for it
+    /// once per launch, but the property behind it is read on every body
+    /// evaluation that composes the task key.
+    func earliestPast(
         trains: [Train], today: [Region: String], compute: () -> Train?
     ) -> Train? {
-        if let latestPastKey, latestPastKey.today == today,
-           ArrayGeneration.same(latestPastKey.trains, trains) {
-            return latestPastValue
+        if let earliestPastKey, earliestPastKey.today == today,
+           ArrayGeneration.same(earliestPastKey.trains, trains) {
+            return earliestPastValue
         }
-        latestPastValue = compute()
-        latestPastKey = DatedKey(trains: trains, today: today)
-        return latestPastValue
+        earliestPastValue = compute()
+        earliestPastKey = DatedKey(trains: trains, today: today)
+        return earliestPastValue
     }
 
     // MARK: - the statistics scope
@@ -272,5 +275,46 @@ final class WorkspaceDerived {
             trains.filter { Dates.trainSpans($0.forDates, date: date) }.map(\.id))
         dateScopeKey = (trains, date)
         return dateScopeIDs
+    }
+
+    // MARK: - which regions the store has anything in
+
+    private var regionsKey: [Train]?
+    private var regionsValue: [Region] = []
+
+    /// The regions the reader actually has journeys in, in the catalog's own
+    /// order — what the globe menu offers.
+    ///
+    /// Memoised for the reason everything here is: the menu's content is built
+    /// on every body evaluation, not on the tap that opens it, and a sheet drag
+    /// is one body evaluation per frame. Without this, dragging the panel
+    /// scanned every journey once a frame to answer a question whose answer
+    /// only moves when a record is added or deleted.
+    func regions(in trains: [Train]) -> [Region] {
+        if let regionsKey, ArrayGeneration.same(regionsKey, trains) { return regionsValue }
+        var seen = Set<Region>()
+        for train in trains { seen.insert(Region.resolved(train)) }
+        regionsValue = Region.ordered.filter { seen.contains($0) }
+        regionsKey = trains
+        return regionsValue
+    }
+
+    // MARK: - the map's region scope
+
+    private var regionScopeKey: (trains: [Train], region: Region)?
+    private var regionScopeIDs: Set<String> = []
+
+    /// The ids of every journey in one region — the same narrowing the list
+    /// applies, so the map under All Journeys draws what that list holds
+    /// (§4.2) rather than five networks under a one-region list.
+    func trainIDs(inRegion region: Region, in trains: [Train]) -> Set<String> {
+        if let regionScopeKey, regionScopeKey.region == region,
+           ArrayGeneration.same(regionScopeKey.trains, trains) {
+            return regionScopeIDs
+        }
+        regionScopeIDs = Set(
+            trains.filter { Region.resolved($0) == region }.map(\.id))
+        regionScopeKey = (trains, region)
+        return regionScopeIDs
     }
 }

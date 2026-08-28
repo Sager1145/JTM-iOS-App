@@ -217,16 +217,38 @@ struct SheetCloseButton: View {
 
 /// The same shape as ``SheetIconButton`` for things that open a menu, which
 /// cannot be expressed as a `Button`'s action.
+///
+/// ## `isActive`, and what it is for
+///
+/// A scope control drawn as a glyph does not say what its value is. The two
+/// scope buttons in the panel header — the date filter and the region — used
+/// to be capsules wide enough to spell theirs, and the round shape the reader
+/// asked for cannot. So the button states the one thing that cannot be
+/// recovered by opening it: whether the scope is NARROWED at all.
+///
+/// The tint role is §6.2's — "可点击、选中、当前路线" — and a filter the reader
+/// has switched on is the selected case of it. Off, nothing changes: an
+/// unfiltered scope is the ordinary state and must not read as a badge.
 struct SheetIconLabel: View {
     var systemImage: String
+    /// Whether the control this labels is currently narrowing something.
+    var isActive: Bool = false
 
     var body: some View {
         Image(systemName: systemImage)
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(Color.primary)
+            .foregroundStyle(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(Color.primary))
             .frame(width: SheetIconButton<Image>.visualSide, height: SheetIconButton<Image>.visualSide)
-            .background(.quaternary.opacity(0.5), in: Circle())
-            .overlay { Circle().stroke(Color.primary.opacity(0.06), lineWidth: 0.5) }
+            .background(
+                isActive
+                    ? AnyShapeStyle(Color.accentColor.opacity(0.16))
+                    : AnyShapeStyle(.quaternary.opacity(0.5)),
+                in: Circle())
+            .overlay {
+                Circle().stroke(
+                    isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
+                    lineWidth: 0.5)
+            }
             .frame(minWidth: 44, minHeight: 44)
             .contentShape(.rect)
     }

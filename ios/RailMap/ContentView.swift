@@ -45,6 +45,15 @@ import SwiftUI
 /// which store call each resolved action makes.
 struct RailWorkspaceView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    /// Read for one reason: the share image is rendered off screen, and an
+    /// `ImageRenderer` starts from the light appearance unless it is told
+    /// otherwise — so a reader in Dark Mode would get a white poster of their
+    /// own dark screen. See ``StatisticsPoster``.
+    @Environment(\.colorScheme) private var colorScheme
+    /// Read for one reason: `PanelHeader` drops its subtitle in a short
+    /// window at an accessibility text size, and the compact stop must not
+    /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(AppLocalization.self) private var localization
 
     @Bindable var store: RailNetworkStore
@@ -62,9 +71,9 @@ struct RailWorkspaceView: View {
     @Bindable var playback: PlaybackController
     /// §5.3's numbers, computed once for the whole app.
     @Bindable var statistics: MileageStatisticsStore
-    /// Which region the statistics destination is reporting on.
+    /// Which region Upcoming, All Journeys and the statistics are scoped to.
     /// `nil` is 全部 — see `StatisticsView.region`.
-    @Binding var statisticsRegion: Region?
+    @Binding var regionScope: Region?
     /// §2.2 (revised): which of the three destinations is on top. The shell
     /// owns it because it survives every panel here.
     @Binding var selection: PrimaryTab
@@ -189,8 +198,42 @@ struct RailWorkspaceView: View {
     /// At accessibility sizes `PanelHeader` moves its controls onto their own
     /// 44-point row. The compact detent must reserve that row too; otherwise
     /// the adaptive layout is correct but the system sheet clips its bottom.
+    ///
+    /// …and one more row when the header is naming a journey, because there
+    /// its subtitle stays through the collapse rather than being scaled away
+    /// with the rest of the morph (``pinsSubtitle(for:)``). Measured from the
+    /// same footnote line the header reserves the slot from, and gated on the
+    /// same "is a subtitle drawn in this window at all" rule, so the stop
+    /// cannot come to reserve a row the header does not draw or clip one it
+    /// does.
     private var compactHeaderRows: CGFloat {
-        compactTitleRow + (dynamicTypeSize.isAccessibilitySize ? 50 : 0)
+        let controls: CGFloat = dynamicTypeSize.isAccessibilitySize ? 50 : 0
+        let drawsSubtitle = BottomChromeMetrics.drawsSubtitle(
+            isAccessibilitySize: dynamicTypeSize.isAccessibilitySize,
+            verticalSizeClass: verticalSizeClass)
+        // Up to TWO rows, not one: the pinned subtitle is the journey's
+        // stations and, under them, its times (``panelSubtitleDetail(for:)``).
+        // Counted from the record rather than assumed, because a journey with
+        // no times has one row and a stop reserved for two would open on a
+        // strip of empty panel.
+        //
+        // Each row may wrap to a second line at an accessibility text size,
+        // which is what `PanelHeader.subtitleLines` allows and what this has
+        // to reserve — a stop measured for one line and drawn with two is the
+        // clip `compactRow` exists to prevent.
+        let rows: CGFloat = {
+            guard drawsSubtitle, pinsSubtitle(for: selection), let train = selectedTrain
+            else { return 0 }
+            let content = journeyHeaderRows(train)
+            return (content.stations.isEmpty ? 0 : 1) + (content.times.isEmpty ? 0 : 1)
+        }()
+        let wraps: CGFloat = dynamicTypeSize.isAccessibilitySize ? 2 : 1
+        let subtitle =
+            rows > 0
+            ? BottomChromeMetrics.subtitleRow * wraps * rows
+                + BottomChromeMetrics.pinnedSubtitleGap
+            : 0
+        return compactTitleRow + controls + subtitle
     }
 
     private enum RidesDialog {
@@ -231,6 +274,9 @@ struct RailWorkspaceView: View {
         /// rather than from the shell because the shell is already presenting
         /// the resident bottom sheet, and one controller cannot present two.
         case utility(UtilityDestination)
+        /// §5.3.5's other share: the statistics page as a picture, already
+        /// rendered, with the system share sheet one tap below it.
+        case statisticsImage(StatisticsPoster.File)
 
         var id: String {
             switch self {
@@ -244,6 +290,7 @@ struct RailWorkspaceView: View {
             case .station(let card): "station:\(card.id)"
             case .chooseRide(let trains): "choose:\(trains.map(\.id).joined(separator: ","))"
             case .utility(let destination): "utility:\(destination.rawValue)"
+            case .statisticsImage(let file): "statisticsImage:\(file.id)"
             }
         }
     }
@@ -288,16 +335,25 @@ struct RailWorkspaceView: View {
         .onChange(of: playback.currentTrainID) { _, id in
             if let id { itineraries.selectedTrainID = id }
         }
-        // Where the map opens, in two steps — the country the reader's next
-        // journey is in, and then that journey's own day.
+        // Where the map opens: the whole country the reader's first journey is
+        // in. One step, and one only.
         //
-        // This step waits for two things and no more: an `MKMapView` to talk
-        // to, and the rides to have been read. Deliberately NOT for the rail
-        // packages: ``Region/networkExtent`` is a written-down box precisely so
-        // that the opening view does not arrive seconds after the launch it
-        // belongs to. See ``RailMapController/frameAtLaunch(_:precise:)`` for
-        // what this replaced and for the ways it declines to move a camera
-        // somebody else already has.
+        // It waits for two things and no more — an `MKMapView` to talk to, and
+        // the rides to have been read. Deliberately NOT for the rail packages:
+        // ``Region/networkExtent`` is a written-down box precisely so that the
+        // opening view does not arrive seconds after the launch it belongs to.
+        // See ``RailMapController/frameAtLaunch(_:)`` for what this replaced
+        // and for the ways it declines to move a camera somebody else has.
+        //
+        // **A country, not the journey inside it.** A second step used to
+        // follow this one, zooming from the country onto the routes of the
+        // soonest upcoming day once their geometry had been read. It is gone,
+        // and the argument for removing it is the argument for the whole of
+        // this file's camera policy: that frame arrives when a disk read
+        // finishes, which is not a moment the reader did anything at, and on a
+        // small store it arrived so soon that the country was never on screen
+        // at all. The opening view is a country. Everything closer than that
+        // is something the reader asks for — a journey tapped, 定位, 自動縮放.
         //
         // Keyed on a cheap summary rather than on `launchRegion` itself: the
         // answer costs a pass over every ride, this key is read on every body
@@ -306,25 +362,19 @@ struct RailWorkspaceView: View {
             guard controller.isMapReady, let launchRegion else { return }
             controller.frameAtLaunch(launchRegion.networkExtent)
         }
-        // …and the step the country box is standing in for: the routes of the
-        // day the reader is opening the app on, all of them, at the zoom that
-        // holds them. It cannot be the first step because it is drawn
-        // GEOMETRY — solved, cached and read off disk — and a map left on the
-        // globe until that lands is not an opening view either.
-        //
-        // Once. `frameAtLaunch(precise:)` refuses a second, and refuses this
-        // one outright if the reader has meanwhile touched the map or opened a
-        // journey; a camera somebody is already using is not the app's to take.
-        .task(id: "\(controller.isMapReady)|\(launchFocusKey)") {
-            guard controller.isMapReady, let region = launchFocusRegion else { return }
-            controller.frameAtLaunch(region, precise: true)
-        }
         // §5.3.2: while Passport is on top the map IS its coverage map, so
         // changing what is being reported on has to move the map to it.
         // Otherwise the reader switches to 韓國 and reads a Korean percentage
         // over a picture of Honshū.
-        .onChange(of: statisticsRegion) { _, region in
-            frameStatisticsRegion(region)
+        //
+        // The globe button is on Upcoming and All Journeys now as well, and
+        // the camera follows it there for the same reason it does here: those
+        // two destinations narrow their list AND their map to the region (see
+        // ``mapRides``), so a scope change that left the camera over Honshū
+        // would be a map framed on a country whose journeys it is no longer
+        // drawing.
+        .onChange(of: regionScope) { _, region in
+            frameRegionScope(region)
         }
         // …and ARRIVING at Passport is the same event.
         //
@@ -355,8 +405,14 @@ struct RailWorkspaceView: View {
         // The key flips at most twice — arriving, then the packages landing —
         // so this is not a camera that keeps jumping while five regions decode.
         .task(id: "\(selection == .stats)|\(store.lines.isEmpty)") {
-            guard selection == .stats, !store.lines.isEmpty else { return }
-            frameStatisticsRegion(statisticsRegion)
+            guard selection == .stats else { return }
+            // Coverage is a fraction of each network's OWN length, so this
+            // screen is the one surface that is about all five countries at
+            // once. A region that has not been decoded reads as zero rather
+            // than as unknown, which is why the ask is unconditional here.
+            store.ensureAll()
+            guard !store.lines.isEmpty else { return }
+            frameRegionScope(regionScope)
         }
         .task { manualDates = loadManualDates() }
         // Built off the main actor, published as each region's arrives, and
@@ -595,7 +651,7 @@ struct RailWorkspaceView: View {
                     role: .destructive
                 ) {
                     dialog = nil
-                    afterPresentationDismisses {
+                    PresentationHost.afterTeardown {
                         let id = train.id
                         if itineraries.selectedTrainID == id {
                             itineraries.selectedTrainID = nil
@@ -692,14 +748,6 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// Menu, context-menu, and alert action callbacks run before UIKit has
-    /// finished dismissing their presentation controller. Mutating the map or
-    /// opening another sheet in that callback refreshes this host while its
-    /// alert is still visible. Publish the next state after that transition.
-    private func afterPresentationDismisses(_ action: @escaping @MainActor () -> Void) {
-        PresentationHost.afterTeardown(action)
-    }
-
     /// Everything the workspace can present, by case.
     @ViewBuilder
     private func presentedSheet(_ presented: RidesSheet) -> some View {
@@ -734,7 +782,7 @@ struct RailWorkspaceView: View {
             case .videoOptions:
                 VideoExportOptionsView(
                     settings: videoSettings,
-                    sourceSize: controller.mapView?.bounds.size ?? .zero,
+                    sourceRect: playbackFilmedRect,
                     displayScale: controller.mapView?.window?.screen.scale ?? 3,
                     seconds: videoPlanSeconds
                 ) {
@@ -793,7 +841,7 @@ struct RailWorkspaceView: View {
                     presentation: { presentation(for: $0) }
                 ) { train in
                     sheet = nil
-                    afterPresentationDismisses { pick(train) }
+                    PresentationHost.afterTeardown { pick(train) }
                 }
             case .utility(let destination):
                 UtilityDestinationView(
@@ -803,6 +851,8 @@ struct RailWorkspaceView: View {
                     appearance: $appearance,
                     network: store,
                     controller: controller)
+            case .statisticsImage(let file):
+                StatisticsShareView(file: file) { sheet = nil }
             }
         }
         // One surface for every sheet this workspace presents (§14.2, §6.5).
@@ -1053,9 +1103,10 @@ struct RailWorkspaceView: View {
 
     // MARK: - system destinations (§2.2, revised)
 
-    /// The system owns the bottom row. On iOS 26 and later the semantic Search
-    /// role is automatically separated onto its own trailing Liquid Glass
-    /// circle; the three ordinary destinations share the main capsule.
+    /// The system owns the bottom row: four destinations in one Liquid Glass
+    /// capsule, each of them an icon over its own label, in whichever language
+    /// the reader picked. Search is the fourth destination rather than the
+    /// semantic role's separated circle — see the `Tab` below for why.
     @ViewBuilder
     private func workspaceTabs(
         stage: SheetStage,
@@ -1101,15 +1152,34 @@ struct RailWorkspaceView: View {
                 }
             }
 
-            // Titled, like the other three, rather than left to the role's own
-            // label. A `Tab(value:role:)` with no title is named by SwiftUI,
-            // and SwiftUI names it in the BUNDLE's language — so the tab bar
-            // read 今後の行程 / 統計 / すべての行程 / "Search", the one word on
-            // the bar that ignored the in-app language switch. The role is
-            // still declared, so it keeps its trailing search surface.
+            // A titled destination like the other three, and deliberately
+            // NOT `role: .search`.
+            //
+            // The role does not draw a destination, it draws a button: on
+            // iOS 26 it leaves the capsule for a trailing glass circle with
+            // its GLYPH ONLY, so the bottom row read as three named
+            // destinations plus one unnamed control — and the name it dropped
+            // is the only one of the four that a reader who does not already
+            // read the magnifier as "search" has to be told. It is also not
+            // stable across systems: the same build puts search back inside
+            // the capsule, labelled, on iOS 27. One row, two shapes, neither
+            // of them the one the other three tabs are in.
+            //
+            // Nothing functional goes with it. The role presents its field by
+            // morphing the tab bar, and this app forbids that morph —
+            // `railPersistentTabBar()` sets `tabBarMinimizeBehavior(.never)`
+            // so the bar stays continuous across the three stops (§14.3) — so
+            // `searchPanel` already draws the field itself, on every version
+            // this app deploys to. See its own note.
+            //
+            // The title stays spelled out, for the reason it always was: a
+            // `Tab` that leaves its label to the system is named by SwiftUI in
+            // the BUNDLE's language, so the bar used to read 今後の行程 /
+            // 統計 / すべての行程 / "Search" — the one word on it that ignored
+            // the in-app language switch.
             Tab(
                 tabTitle(.search), systemImage: PrimaryTab.search.systemImage,
-                value: PrimaryTab.search, role: .search
+                value: PrimaryTab.search
             ) {
                 page(.search, stage: stage, headerExpansion: headerExpansion) {
                     searchPanel
@@ -1226,6 +1296,8 @@ struct RailWorkspaceView: View {
                 title: panelTitle(for: tab, stage: .expanded),
                 compactTitle: panelTitle(for: tab, stage: .compact),
                 subtitle: panelSubtitle(for: tab),
+                subtitleDetail: panelSubtitleDetail(for: tab),
+                pinsSubtitle: pinsSubtitle(for: tab),
                 stage: stage,
                 expansionProgress: headerExpansion
             ) {
@@ -1315,7 +1387,7 @@ struct RailWorkspaceView: View {
     private var statisticsScope: (trains: [Train], ids: Set<String>) {
         let trains = itineraries.loaded?.trains ?? []
         let date = statistics.selectedDate
-        let region = statisticsRegion
+        let region = regionScope
         return derived.statisticsScope(trains: trains, region: region, date: date) {
             trains.filter { train in
                 if let region, Region.resolved(train) != region { return false }
@@ -1327,11 +1399,11 @@ struct RailWorkspaceView: View {
     }
 
     private func openData() {
-        afterPresentationDismisses { sheet = .utility(.data) }
+        PresentationHost.afterTeardown { sheet = .utility(.data) }
     }
 
     private func openSettings() {
-        afterPresentationDismisses { sheet = .utility(.settings) }
+        PresentationHost.afterTeardown { sheet = .utility(.settings) }
     }
 
     /// §5.3's Passport, by its plainer name. The coverage map it used to draw
@@ -1341,13 +1413,12 @@ struct RailWorkspaceView: View {
     private var statisticsPanel: some View {
         PassportWorkspaceView(
             itineraries: itineraries,
-            library: library,
             statistics: statistics,
             riddenRoutes: riddenRoutes,
             network: store,
             controller: controller,
             playback: playback,
-            region: $statisticsRegion,
+            region: $regionScope,
             openData: openData,
             openSettings: openSettings)
     }
@@ -1394,6 +1465,66 @@ struct RailWorkspaceView: View {
         }
     }
 
+    /// Whether this destination's subtitle survives the collapse (§9.5.6).
+    ///
+    /// Only where the header has stopped naming a STATE and started naming a
+    /// journey. Docked over the map, that header is all there is: the title
+    /// says which service — 普通, 特急 はるか38号（1038M） — and without the
+    /// line under it nothing on screen says between which stations or when.
+    /// The card that states the pair properly is content, and the collapsed
+    /// stop does not mount content.
+    ///
+    /// The other three destinations' subtitles are summaries of the list
+    /// behind them (「231 趟旅程」), and a summary of something the reader
+    /// cannot see is not worth the line of map it costs.
+    ///
+    /// ``compactHeaderRows`` reads the same answer, because the stop has to be
+    /// tall enough for what this puts in it.
+    private func pinsSubtitle(for tab: PrimaryTab) -> Bool {
+        tab == .all && selectedTrain != nil
+    }
+
+    /// The header's second subtitle row: the selected journey's times, under
+    /// its stations.
+    ///
+    /// A row of its own rather than a tail on the station line. Docked, the
+    /// header has the panel's whole width and one thing to say, and the two
+    /// facts do not compete for it when they are stacked — 「北小金 → 我孫子 ·
+    /// 08:05—08:17」 is one line long enough to need shrinking on a phone,
+    /// where the same content on two lines needs none.
+    ///
+    /// `nil` for a record with no times at all, which is a record that has
+    /// nothing to put here — not an empty row to keep the layout tidy.
+    private func panelSubtitleDetail(for tab: PrimaryTab) -> String? {
+        guard tab == .all, let train = selectedTrain else { return nil }
+        let times = journeyHeaderRows(train).times
+        return times.isEmpty ? nil : times
+    }
+
+    /// The two rows the header says about one journey: between where, and
+    /// when.
+    ///
+    /// One function because they are one reading of the same record, and
+    /// because the pair decides how tall the collapsed stop has to be — see
+    /// ``compactHeaderRows``.
+    private func journeyHeaderRows(_ train: Train) -> (stations: String, times: String) {
+        let stations = [
+            localization.originName(of: train),
+            localization.destinationName(of: train),
+        ]
+        .filter { !$0.isEmpty }
+        .joined(separator: " → ")
+        let departure = train.stops.first?.departure ?? train.stops.first?.arrival
+        let arrival = train.stops.last?.arrival ?? train.stops.last?.departure
+        let times = [departure, arrival]
+            .compactMap { time in
+                guard let time, !time.isEmpty else { return nil }
+                return time
+            }
+            .joined(separator: "—")
+        return (stations, times)
+    }
+
     private func panelSubtitle(for tab: PrimaryTab) -> String? {
         switch tab {
         case .upcoming:
@@ -1409,23 +1540,13 @@ struct RailWorkspaceView: View {
             return nil
         case .all:
             if let train = selectedTrain {
-                let endpoints = [
-                    localization.originName(of: train),
-                    localization.destinationName(of: train),
-                ]
-                .filter { !$0.isEmpty }
-                .joined(separator: " → ")
-                let departure = train.stops.first?.departure ?? train.stops.first?.arrival
-                let arrival = train.stops.last?.arrival ?? train.stops.last?.departure
-                let times = [departure, arrival]
-                    .compactMap { time in
-                        guard let time, !time.isEmpty else { return nil }
-                        return time
-                    }
-                    .joined(separator: "—")
-                return [endpoints, times]
-                    .filter { !$0.isEmpty }
-                    .joined(separator: " · ")
+                // Stations only. The times are the row UNDER this one — see
+                // ``panelSubtitleDetail(for:)`` — because a journey's where
+                // and its when are two facts, and running them together
+                // behind a interpunct made one line that had to be truncated
+                // before either of them was finished.
+                let stations = journeyHeaderRows(train).stations
+                return stations.isEmpty ? nil : stations
             }
             // The FILTERED counts, not the store's: this line is now the
             // list's own summary row (§5.1), which the search field and the
@@ -1433,7 +1554,7 @@ struct RailWorkspaceView: View {
             // journeys" over four search results would be describing a list
             // that is not on screen.
             guard let loaded = itineraries.loaded else { return nil }
-            let days = filteredDays(loaded)
+            let days = filteredDays(loaded, region: regionScope)
             let journeys = days.reduce(0) { $0 + $1.trains.count }
             return selectedDate == Dates.allDates
                 ? localization.journeyText(
@@ -1450,7 +1571,7 @@ struct RailWorkspaceView: View {
         case .search:
             let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !needle.isEmpty, let loaded = itineraries.loaded else { return nil }
-            let journeys = filteredDays(loaded, query: needle)
+            let journeys = filteredDays(loaded, region: nil, query: needle)
                 .reduce(0) { $0 + $1.trains.count }
             return localization.journeyText(
                 "ios.journey.daySummary",
@@ -1461,11 +1582,25 @@ struct RailWorkspaceView: View {
 
     /// The function buttons, top right.
     ///
-    /// Two of them, at every destination and in the same order: what this
-    /// destination can do, and the Utility entry §4.1 requires in one place on
-    /// every surface. Anything a destination needs beyond that goes in the
-    /// first menu rather than growing the row — §4.2 forbids a screen that
-    /// floats a line of unrelated glyphs.
+    /// The row is the destination's own scope and its own verb, then the
+    /// Utility entry §4.1 requires in one place on every surface.
+    ///
+    /// ## The two scope buttons (§5.1, §5.3.1)
+    ///
+    /// Upcoming, All Journeys and 統計 each carry a round DATE button and a
+    /// round REGION button, in that order, and they are the same two controls
+    /// on all three. The date filter used to be a submenu inside the gear —
+    /// the reader's own report is that a filter is not a setting, and a scope
+    /// that has to be found under 設定 is one nobody finds. The region used to
+    /// exist on 統計 alone, as a capsule wide enough to spell its value.
+    ///
+    /// Round and unlabelled, both of them state their value the only way a
+    /// glyph can: ``SheetIconLabel/isActive`` tints the button when the scope
+    /// is narrowed. What they are scoped TO is one tap away, and the menu
+    /// marks it.
+    ///
+    /// Search keeps its date filter in the gear. It is the one destination
+    /// whose question is the query, and its header already carries the `+`.
     @ViewBuilder
     private func panelActions(for tab: PrimaryTab, stage: SheetStage) -> some View {
         // Docked, over a selected journey, this row IS the journey's controls.
@@ -1507,9 +1642,17 @@ struct RailWorkspaceView: View {
         if tab == .all, panelRoute.isHome {
             playbackButton
         }
-        if tab == .stats {
-            dateScopeMenu
+        // §5.1's two scopes, on the three destinations that have them. Not
+        // over a selected journey: there the row is that journey's controls
+        // (see the branch above), and four more glyphs would push them off it.
+        if tab == .upcoming || (tab == .all && panelRoute.isHome) {
+            journeyDateMenu(for: tab)
             regionMenu
+        }
+        if tab == .stats {
+            statisticsDateMenu
+            regionMenu
+            statisticsShareButton
         }
         if tab == .search {
             SheetIconButton(
@@ -1525,9 +1668,12 @@ struct RailWorkspaceView: View {
         } label: {
             // A gear, not a second ellipsis.
             //
-            // This is the GLOBAL entry — Data Library, Settings, the date
-            // filter — and the journey card below carries its own ellipsis for
-            // that journey's secondary actions. Two identical glyphs on one
+            // This is the GLOBAL entry — Data Library, Settings, the sample
+            // and working-set actions — and the journey card below carries its
+            // own ellipsis for that journey's secondary actions. (The date
+            // filter used to be in here too. It is a filter, not a setting,
+            // and it is a round button of its own now on every destination but
+            // Search.) Two identical glyphs on one
             // screen with two different scopes is precisely the ambiguity §16
             // calls a weak mapping: the reader cannot tell which "more" they
             // are about to open, and the label that would explain it is not
@@ -1548,7 +1694,10 @@ struct RailWorkspaceView: View {
     @ViewBuilder
     private func destinationMenu(for tab: PrimaryTab) -> some View {
         if tab == .all || tab == .upcoming || tab == .search {
-            if let loaded = itineraries.loaded, !loaded.days.isEmpty {
+            // The date filter is a BUTTON on Upcoming and All Journeys now
+            // (see ``panelActions(for:stage:)``), so it appears here only for
+            // Search — one filter must not have two entries in one state.
+            if tab == .search, let loaded = itineraries.loaded, !loaded.days.isEmpty {
                 dateFilterSection(loaded)
             }
             rideSourceSection
@@ -1578,13 +1727,13 @@ struct RailWorkspaceView: View {
         .accessibilityIdentifier("utilitySettingsButton")
     }
 
-    /// Move the map to the network the statistics are now reporting on —
-    /// or, for 全部, back out to all five of them.
+    /// Move the map to the network the reader has scoped to — or, for 全部,
+    /// back out to all five of them.
     ///
     /// Framed from the LINES rather than from the rides: the coverage figure
     /// is a fraction of the network, and a reader who has ridden two stations
     /// in Korea is being shown how little of Korea that is.
-    private func frameStatisticsRegion(_ region: Region?) {
+    private func frameRegionScope(_ region: Region?) {
         let rect = store.lines
             .filter { region == nil || $0.region == region }
             .reduce(MKMapRect.null) { $0.union($1.mapRect) }
@@ -1592,13 +1741,25 @@ struct RailWorkspaceView: View {
         controller.fit(rect)
     }
 
+    /// The regions the globe menu offers: the ones this store has journeys in.
+    ///
+    /// Never date-filtered and never scope-filtered, or choosing a region
+    /// would empty the menu that chose it — the same rule ``statisticsDates``
+    /// keeps for the calendar beside it. Ridden or not, planned or past: a
+    /// journey on record in a region is a reason that region can be scoped to,
+    /// and the three destinations that share this control each answer a
+    /// different question about that record.
+    private var scopableRegions: [Region] {
+        derived.regions(in: itineraries.loaded?.trains ?? [])
+    }
+
     /// What the scope control reads, 全部 included.
-    private var statisticsRegionName: String {
-        guard let statisticsRegion else {
+    private var regionScopeName: String {
+        guard let regionScope else {
             return localization.text("ios.region.all", fallback: "All regions")
         }
         return localization.text(
-            statisticsRegion.localizationKey, fallback: statisticsRegion.fallbackName)
+            regionScope.localizationKey, fallback: regionScope.fallbackName)
     }
 
     /// §5.3.1's date Scope, in the header row rather than in a card.
@@ -1607,13 +1768,13 @@ struct RailWorkspaceView: View {
     /// reasonable place for it while the daily block was its own card. The
     /// daily block is now a stamp inside the passport page, and a control
     /// buried a scroll into the panel cannot be found from the top of it.
-    /// Here it is the neighbour of the region capsule, which is the other half
+    /// Here it is the neighbour of the region button, which is the other half
     /// of the same scope, and both are on screen at every sheet stop.
     ///
     /// It changes the statistics only. §5.3.1: "Passport 的日期 Scope 独立于
-    /// Journeys 筛选，切换后不扰动旅程列表" — `dateFilterSection` is the other
-    /// tabs' filter and is a different value with a different owner.
-    private var dateScopeMenu: some View {
+    /// Journeys 筛选，切换后不扰动旅程列表" — ``journeyDateMenu(for:)`` is the
+    /// other tabs' filter and is a different value with a different owner.
+    private var statisticsDateMenu: some View {
         Menu {
             // 全部 first and above a divider, for the same reason the region
             // menu puts it there: it is the absence of a scope, not a date.
@@ -1631,30 +1792,21 @@ struct RailWorkspaceView: View {
                     statistics.selectDate(date)
                 } label: {
                     Label(
-                        statisticsDateLabel(date),
+                        dateBucketLabel(date),
                         systemImage: date == statistics.selectedDate ? "checkmark" : "calendar")
                 }
             }
         } label: {
-            HStack(spacing: 4) {
-                Image(systemName: "calendar")
-                    .font(.caption.weight(.bold))
-                Text(statisticsDateLabel(statistics.selectedDate))
-                    .font(.subheadline.weight(.semibold))
-            }
-            .foregroundStyle(Color.primary)
-            .padding(.horizontal, 11)
-            .frame(height: SheetIconButton<Image>.visualSide)
-            .background(.quaternary.opacity(0.5), in: Capsule())
-            .overlay { Capsule().stroke(Color.primary.opacity(0.06), lineWidth: 0.5) }
-            .frame(minHeight: 44)
-            .contentShape(.rect)
+            SheetIconLabel(
+                systemImage: "calendar",
+                isActive: statistics.selectedDate != Dates.allDates)
         }
         // `statsText`, not `text`: the label lives in the statistics screen's
         // own string table, and `text` would have handed VoiceOver the English
         // fallback in every language.
         .accessibilityLabel(Text(localization.statsText("ios.stats.scope")))
-        .accessibilityValue(Text(statisticsDateLabel(statistics.selectedDate)))
+        .accessibilityValue(Text(dateBucketLabel(statistics.selectedDate)))
+        .accessibilityIdentifier("statisticsDateButton")
     }
 
     /// The days the statistics can be scoped to: this region's, in order.
@@ -1664,7 +1816,7 @@ struct RailWorkspaceView: View {
     /// takes, so the menu cannot offer a day the numbers have no rides for.
     private var statisticsDates: [String] {
         guard let loaded = itineraries.loaded else { return [] }
-        let trains = statisticsRegion.map { region in
+        let trains = regionScope.map { region in
             loaded.trains.filter { Region.resolved($0) == region }
         } ?? loaded.trains
         let ids = Set(trains.map(\.id))
@@ -1673,57 +1825,106 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// `dateLabel` — the two sentinels need a word, a real bucket labels itself.
-    private func statisticsDateLabel(_ date: String) -> String {
-        let key = Dates.dateLabelKey(date)
-        return localization.text(key, fallback: key)
-    }
-
-    /// §5.3.1's region scope, in the header rather than in a card.
+    /// §5.3.1's region scope, in the header rather than in a card — and now on
+    /// all three destinations that ask a question about one network.
     ///
-    /// It is the only scope the statistics have that the reader chooses, and
-    /// §9.5.6 gives every destination one row for exactly that. Labelled with
-    /// the region's NAME rather than a glyph: a scope control whose current
-    /// value is invisible is a control the reader has to open to read.
+    /// A globe, at the reader's own request, rather than the capsule that
+    /// spelled the region's name. What the round shape gives up is the value,
+    /// so the button is TINTED whenever the scope is narrowed: the reader can
+    /// still see at a glance that they are not looking at everything, and the
+    /// menu below says which region when they ask.
+    ///
+    /// ## Only the regions the reader has been to
+    ///
+    /// The menu lists the regions this store actually holds journeys in, not
+    /// the catalog's five. A scope that can only ever produce an empty list is
+    /// not a choice — 澳門 offered to somebody who has never ridden there is a
+    /// button whose whole effect is to blank the screen they were reading, and
+    /// they then have to work out which of the six entries undoes it.
+    ///
+    /// 全部地區 is always there, and it is the reason this can be safe to
+    /// narrow: it is the absence of the scope rather than a sixth region, so
+    /// the way back is on the menu whatever the store contains. A reader whose
+    /// last journey in a region is deleted while scoped to it keeps that scope
+    /// — the list says it is empty and 全部地區 is one tap away — rather than
+    /// having the app silently move them somewhere they did not ask to be.
     private var regionMenu: some View {
         Menu {
             // 全部 first, and above a divider: it is not a sixth region, it is
             // the absence of the scope the other five apply.
             Button {
-                statisticsRegion = nil
+                regionScope = nil
             } label: {
                 Label(
                     localization.text("ios.region.all", fallback: "All regions"),
-                    systemImage: statisticsRegion == nil ? "checkmark" : "globe.asia.australia")
+                    systemImage: regionScope == nil ? "checkmark" : "globe.asia.australia")
             }
-            Divider()
-            ForEach(Region.ordered) { candidate in
+            if !scopableRegions.isEmpty { Divider() }
+            ForEach(scopableRegions) { candidate in
                 Button {
-                    statisticsRegion = candidate
+                    regionScope = candidate
                 } label: {
                     Label(
                         localization.text(
                             candidate.localizationKey, fallback: candidate.fallbackName),
-                        systemImage: candidate == statisticsRegion ? "checkmark" : "map")
+                        systemImage: candidate == regionScope ? "checkmark" : "map")
                 }
             }
         } label: {
-            HStack(spacing: 3) {
-                Text(statisticsRegionName)
-                .font(.subheadline.weight(.semibold))
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.caption2.weight(.bold))
-            }
-            .foregroundStyle(Color.primary)
-            .padding(.horizontal, 11)
-            .frame(height: SheetIconButton<Image>.visualSide)
-            .background(.quaternary.opacity(0.5), in: Capsule())
-            .overlay { Capsule().stroke(Color.primary.opacity(0.06), lineWidth: 0.5) }
-            .frame(minHeight: 44)
-            .contentShape(.rect)
+            SheetIconLabel(
+                systemImage: "globe.asia.australia", isActive: regionScope != nil)
         }
         .accessibilityLabel(Text(localization.text("country.label", fallback: "Region")))
-        .accessibilityValue(Text(statisticsRegionName))
+        .accessibilityValue(Text(regionScopeName))
+        .accessibilityIdentifier("regionScopeButton")
+    }
+
+    /// §5.3.5's share, for the numbers rather than for the film.
+    ///
+    /// The passport's own card offers a REPLAY and a JSON export; neither is a
+    /// picture, and a picture is what somebody actually posts at the end of a
+    /// year of travelling. It sits in the header rather than in that card for
+    /// the reason the two scope buttons do: it is a thing this destination can
+    /// do, and §9.5.6 gives every destination one row for exactly those.
+    ///
+    /// Rendered on the spot rather than kept ready. The page is several
+    /// thousand points tall and its bitmap is measured in tens of megabytes,
+    /// so holding one against the chance the reader taps this would be paying
+    /// for the feature on every screen that never uses it.
+    ///
+    /// Disabled while there is nothing to draw: an image of a screen that is
+    /// still calculating is a picture of a spinner.
+    private var statisticsShareButton: some View {
+        SheetIconButton(
+            systemImage: "square.and.arrow.up",
+            accessibilityLabel: Text(localization.statsText("ios.stats.shareImage"))
+        ) {
+            guard let file = renderStatisticsImage() else { return }
+            PresentationHost.afterTeardown { sheet = .statisticsImage(file) }
+        }
+        .disabled(statistics.view == nil)
+        .accessibilityIdentifier("statisticsShareButton")
+    }
+
+    /// The statistics page, as a PNG on disk. `nil` if it could not be drawn
+    /// or could not be written, in which case nothing is presented.
+    private func renderStatisticsImage() -> StatisticsPoster.File? {
+        StatisticsPoster.render(
+            itineraries: itineraries,
+            statistics: statistics,
+            region: regionScope,
+            // The two scopes, spelled out. On screen they are the two round
+            // buttons beside this one and they stay on screen while the
+            // numbers are read; an image travels without them.
+            scope: localization.statsText(
+                "ios.stats.shareScope",
+                params: [
+                    "region": .string(regionScopeName),
+                    "date": .string(dateBucketLabel(statistics.selectedDate)),
+                ]),
+            title: localization.text("nav.stats", fallback: "Stats"),
+            localization: localization,
+            colorScheme: colorScheme)
     }
 
     private var playbackButton: some View {
@@ -1769,9 +1970,21 @@ struct RailWorkspaceView: View {
     private var upcomingScope: (trains: [Train], ids: Set<String>) {
         let today = todayByRegion()
         let trains = itineraries.loaded?.trains ?? []
-        return derived.upcoming(trains: trains, today: today) {
+        let region = regionScope
+        let scopedDate = selectedDate
+        return derived.upcoming(
+            trains: trains, today: today, region: region, date: scopedDate
+        ) {
             trains
                 .filter { train in
+                    // The header's two scopes first — they are the reader's,
+                    // and they are the reason the two round buttons above this
+                    // list are not decoration. The date is the SAME value the
+                    // log filters on (`selectedDate`): one filter, one owner,
+                    // whichever of the two destinations it was set from.
+                    if let region, Region.resolved(train) != region { return false }
+                    if scopedDate != Dates.allDates,
+                        !Dates.trainSpans(train.forDates, date: scopedDate) { return false }
                     guard let date = train.date, !date.isEmpty,
                         let regionToday = today[Region.resolved(train)]
                     else { return false }
@@ -1823,7 +2036,7 @@ struct RailWorkspaceView: View {
             return defaultRegion
         case .loaded:
             if let next = upcomingTrains.first { return Region.resolved(next) }
-            if let previous = latestPastTrain { return Region.resolved(previous) }
+            if let first = earliestPastTrain { return Region.resolved(first) }
             return defaultRegion
         }
     }
@@ -1841,92 +2054,21 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// The journeys the map actually opens ON: everything still ahead on the
-    /// soonest day that has anything, in that day's own country.
+    /// The FIRST journey in the log — the oldest record behind today, on its
+    /// own region's clock.
     ///
-    /// The map used to open on a whole country, which answers "where am I
-    /// going next" at the scale of Honshū — true, and no use to somebody about
-    /// to travel. What a journey app is opened for is the day it is opened on,
-    /// so the opening view is the day's own routes, all of them, at whatever
-    /// zoom holds them.
+    /// "The first of the history" read literally: earliest by date, which is
+    /// also the first row the journey list shows, because `Dates` orders its
+    /// buckets ascending. Not "the most recent one" — that is the other end of
+    /// the same list, and the two disagree for anybody whose travel has
+    /// crossed a border.
     ///
-    /// **A day rather than today.** With nothing dated today the first thing
-    /// ahead is the next thing ahead, and framing the country until then would
-    /// leave the reader with no opening view at all on every day they are not
-    /// travelling. `upcomingTrains` is sorted by date, so its first entry names
-    /// the day; being that day's own region as well keeps a Tokyo morning and
-    /// a Seoul evening dated alike from being framed as one box across the Sea
-    /// of Japan.
-    ///
-    /// Empty when nothing is ahead — the country box (``launchRegion``) is
-    /// then the whole of the opening view, as it was.
-    private var launchFocusIDs: Set<String> {
-        let upcoming = upcomingScope.trains
-        return derived.launchFocus(upcoming: upcoming) {
-            guard let first = upcoming.first, let date = first.date, !date.isEmpty
-            else { return [] }
-            let region = Region.resolved(first)
-            return Set(
-                upcoming
-                    .filter { $0.date == date && Region.resolved($0) == region }
-                    .map(\.id))
-        }
-    }
-
-    /// The box those journeys' drawn routes fill, once they have been read off
-    /// disk. `nil` until then, and `nil` for a day whose routes all failed to
-    /// solve — there is nothing to frame, and a camera sent to an empty box
-    /// would be worse than the country it is already showing.
-    ///
-    /// Measured from the VISIBLE rides: a journey the reader has switched off
-    /// is not drawn, and framing the map on where it would have been leaves
-    /// them looking at blank basemap.
-    /// **Only once the whole load is in.** `RiddenRouteStore` publishes the
-    /// last-viewed journey on its own, ahead of the other two hundred, so that
-    /// the map has something on it while the rest is read. Framing on that is
-    /// how "all of the day's routes" quietly becomes "one of them": the
-    /// opening move happens once, and it would have happened on a partial
-    /// answer. `.loaded` is the store saying there is no more coming.
-    private var launchFocusRegion: MKCoordinateRegion? {
-        guard case .loaded = riddenRoutes.state else { return nil }
-        let ids = launchFocusIDs
-        guard !ids.isEmpty else { return nil }
-        return RailMapController.region(
-            covering: riddenRoutes.visibleRides
-                .filter { ids.contains($0.id) }
-                .flatMap(\.strokes))
-    }
-
-    /// What the precise half of the opening move is waiting on: the day's own
-    /// journeys, and every route having been read for them.
-    ///
-    /// The store's own phase is the arrival signal rather than the geometry —
-    /// counting vertices on every body evaluation to notice a load finishing
-    /// would cost more than the framing it triggers, and a sheet drag is a
-    /// body evaluation per frame. ``launchFocusIDs`` is memoised, so its count
-    /// is free.
-    private var launchFocusKey: String {
-        let phase: String
-        switch riddenRoutes.state {
-        case .idle: phase = "idle"
-        case .loading: phase = "loading"
-        case .failed: phase = "failed"
-        case .loaded(let rides): phase = "loaded:\(rides.count)"
-        }
-        return "\(launchFocusIDs.count)|\(phase)"
-    }
-
-    /// The journey that happened most recently — the newest record behind
-    /// today, on its own region's clock.
-    ///
-    /// "The first of the history", read the way ``upcomingTrains`` reads the
-    /// first of what is coming: nearest to now. An undated record is not in
-    /// the running, for the reason it is not upcoming either — it has no
-    /// position on a calendar to be behind.
-    private var latestPastTrain: Train? {
+    /// An undated record is not in the running, for the reason it is not
+    /// upcoming either: it has no position on a calendar to be behind.
+    private var earliestPastTrain: Train? {
         let today = todayByRegion()
         let trains = itineraries.loaded?.trains ?? []
-        return derived.latestPast(trains: trains, today: today) {
+        return derived.earliestPast(trains: trains, today: today) {
             trains
                 .filter { train in
                     guard let date = train.date, !date.isEmpty,
@@ -1934,7 +2076,7 @@ struct RailWorkspaceView: View {
                     else { return false }
                     return date < regionToday
                 }
-                .max { lhs, rhs in
+                .min { lhs, rhs in
                     let a = lhs.date ?? "", b = rhs.date ?? ""
                     return a == b ? lhs.id < rhs.id : a < b
                 }
@@ -2068,10 +2210,6 @@ struct RailWorkspaceView: View {
                 expansionProgress: expansion,
                 dateChipTitle: train.date,
                 onClose: { itineraries.selectedTrainID = nil },
-                onOpenDate: { date in
-                    selectedDate = date
-                    itineraries.selectedTrainID = nil
-                },
                 onPrimary: { perform($0, on: train) },
                 onSecondary: { perform($0, on: train) },
                 onSetRidden: { setRidden(train, $0) }
@@ -2095,9 +2233,30 @@ struct RailWorkspaceView: View {
     /// and its own atomic commit (§8.3); a failure to load is a workspace
     /// phase, not this journey's. So playback is what is left — and the
     /// resolver still refuses to report it while the route is not resolved.
+    /// `exactProgress`, and the choice is the whole of why a run stopped
+    /// rebuilding this view twenty times a second.
+    ///
+    /// `PlaybackController.progress` is `@Observable`, and its own note says
+    /// what reading it here costs: "`@Observable` invalidates every view whose
+    /// body READ a property", and this read is inside `RailWorkspaceView`'s.
+    /// So the playhead's 20 Hz ladder was recomputing the workspace — its list,
+    /// its derived summaries, its map inputs — twenty times a second for the
+    /// length of every run. That is the exact cost `PlaybackTransportBar` was
+    /// extracted to remove; this one line put it straight back.
+    ///
+    /// And it bought nothing: `JourneyPresentationResolver` matches
+    /// `if case .playing(_, let isPaused)` and reads the progress in no branch,
+    /// so the number was published, observed, passed down and discarded.
+    /// ``PlaybackController/exactProgress`` is the same playhead — more
+    /// precise, in fact — and is `@ObservationIgnored`, so it is free to read.
+    ///
+    /// **If a journey row ever draws a live bar from this**, it must not come
+    /// back through here: the value would then only refresh when this body
+    /// re-evaluates for some other reason. Give the row a small view of its own
+    /// that reads `progress`, the way the transport does.
     private func playbackPhase(for train: Train) -> JourneyWorkspacePhase? {
         guard playback.isActive, playback.currentTrainID == train.id else { return nil }
-        return .playing(progress: playback.progress, isPaused: !playback.isPlaying)
+        return .playing(progress: playback.exactProgress, isPaused: !playback.isPlaying)
     }
 
     // MARK: - §5.1 the journey list
@@ -2105,7 +2264,7 @@ struct RailWorkspaceView: View {
     /// All Journeys is deliberately unfiltered by the Search destination's
     /// query. A hidden query must never make this list silently incomplete.
     private var ridesList: some View {
-        journeyListState(searchQuery: "", groupsByDate: false)
+        journeyListState(searchQuery: "", region: regionScope, groupsByDate: false)
     }
 
     /// The search destination, and its own field.
@@ -2128,7 +2287,7 @@ struct RailWorkspaceView: View {
     private var searchPanel: some View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         return VStack(spacing: 0) {
-            searchField
+            JourneySearchField(query: $query, isFocused: $searchFocused)
             Group {
                 if needle.isEmpty {
                     // No action in this empty state any more: the `+` in the
@@ -2147,7 +2306,7 @@ struct RailWorkspaceView: View {
                     }
                     .modifier(ScrollableIfNeeded())
                 } else {
-                    journeyListState(searchQuery: needle)
+                    journeyListState(searchQuery: needle, region: nil)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -2155,65 +2314,10 @@ struct RailWorkspaceView: View {
         .background { keyboardShortcuts }
     }
 
-    /// §6.4's `radius-control`, a 44-point row, and the field's own clear
-    /// button — the three things that make this read as the system's search
-    /// field rather than as a text box that happens to filter a list.
-    private var searchField: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(.secondary)
-                .accessibilityHidden(true)
-            TextField(
-                localization.countryText(
-                    "ph.search", fallback: "Train, station, or identifier"),
-                text: $query)
-                .textFieldStyle(.plain)
-                .focused($searchFocused)
-                .submitLabel(.search)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-                .accessibilityIdentifier("journeySearchField")
-            if !query.isEmpty {
-                Button {
-                    query = ""
-                    searchFocused = true
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.secondary)
-                        // Hit at 44, drawn at the glyph's own size — the same
-                        // two-numbers rule `SheetIconButton` states, and for
-                        // the same reason. A bare `Image` label gives the
-                        // button the glyph's bounds as its hit region, and
-                        // `RailPressStyle` only scales and dims, so this was a
-                        // twenty-point target inside a field whose whole job is
-                        // to be typed in and cleared. The `minHeight` on the
-                        // row below binds the ROW, not the button in it.
-                        .frame(width: 44, height: 44)
-                        .contentShape(.rect)
-                        // The enlarged target reclaims the field's own trailing
-                        // inset rather than pushing the glyph inward, so the
-                        // mark stays exactly where it was drawn. This is what
-                        // UIKit's search field does with its own clear button.
-                        .padding(.trailing, -12)
-                }
-                .buttonStyle(RailPressStyle(dims: false))
-                .accessibilityLabel(
-                    Text(localization.text("ios.clear", fallback: "Clear search")))
-            }
-        }
-        .padding(.horizontal, 12)
-        .frame(minHeight: 44)
-        .background(
-            Color(.tertiarySystemFill),
-            in: RoundedRectangle(
-                cornerRadius: RailStyle.controlCornerRadius,
-                style: .continuous))
-        .padding(.horizontal, 16)
-        .padding(.bottom, 12)
-    }
-
     @ViewBuilder
-    private func journeyListState(searchQuery: String, groupsByDate: Bool = true) -> some View {
+    private func journeyListState(
+        searchQuery: String, region: Region?, groupsByDate: Bool = true
+    ) -> some View {
         switch itineraries.state {
         case .idle, .loading:
             workspaceStatus(JourneyPresentationResolver.workspace(phase: .loading))
@@ -2229,7 +2333,7 @@ struct RailWorkspaceView: View {
                     "ios.journey.noRegionRecords",
                     fallback: "This region has a railway package, but no recorded journeys yet."))
         case .loaded(let loaded):
-            let days = filteredDays(loaded, query: searchQuery)
+            let days = filteredDays(loaded, region: region, query: searchQuery)
             List {
                 if groupsByDate {
                     ForEach(days) { day in
@@ -2285,8 +2389,9 @@ struct RailWorkspaceView: View {
         .opacity(0)
         .accessibilityHidden(true)
 
-        // §10.3: Escape steps back one level rather than clearing everything —
-        // the same rule as a tap on empty map (§4.4), and the same code.
+        // §10.3: Escape clears the journey selection and leaves the reader's
+        // date filter and search where they are — the same rule as a tap on
+        // empty map (§4.4), and the same code.
         Button(localization.text("ios.cancel", fallback: "Cancel")) {
             RailMotion.withoutAnimation { selectFromMap([]) }
         }
@@ -2354,73 +2459,23 @@ struct RailWorkspaceView: View {
         .accessibilityHidden(true)
     }
 
+    /// One row of the journey list — see ``JourneyListRow``, which is where the
+    /// row's own 78 lines and its context menu went.
+    ///
+    /// What stays here is only what the row cannot know: which journey the
+    /// playhead is on, where a detail sheet is presented, and which dialog the
+    /// workspace raises for a delete.
     private func journeyRow(_ train: Train, showsDate: Bool? = nil) -> some View {
-        // A Button rather than a `NavigationLink`: selecting a journey changes
-        // which resident layer is on top, and §8.1 wants that reflected in the
-        // list AND on the map at once rather than pushing a screen over both.
-        Button {
-            itineraries.selectedTrainID = train.id
-        } label: {
-            JourneySummaryRow(
-                train: train,
-                presentation: presentation(for: train),
-                isSelected: itineraries.selectedTrainID == train.id,
-                showsDate: showsDate ?? (selectedDate == Dates.allDates))
-        }
-        // §14.3's first line, on the control this app is tapped through more
-        // than any other. `.plain` inside a `List` draws no highlight at all,
-        // so selecting a journey used to give nothing back until the store
-        // came round and the row's border changed — which is after the finger
-        // has already lifted.
-        .buttonStyle(RailRowPressStyle())
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.clear)
-        .listRowInsets(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
-        // §5.1: the row does not expose every verb. Swipe and context menu do.
-        .contextMenu { rideContextMenu(train) }
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            Button(role: .destructive) { dialog = .delete(train) } label: {
-                Label(
-                    localization.countryText("btn.delete", fallback: "Delete"),
-                    systemImage: "trash")
-            }
-            Button {
-                itineraries.toggleVisibility(train.id)
-                persistMine()
-            } label: {
-                Label(
-                    train.visible == false
-                        ? localization.text("ios.showOnMap", fallback: "Show on map")
-                        : localization.journeyText(
-                            "ios.journey.hideFromMap", fallback: "Hide from map"),
-                    systemImage: train.visible == false ? "eye" : "eye.slash"
-                )
-            }
-            // §6.2's allowed roles do not include indigo, and this action is
-            // not a state colour anyway: showing or hiding a journey on the map
-            // is the tint role — 可点击、选中 — so it takes the app's accent.
-            .tint(.accentColor)
-        }
-        // §5.3: the passport counts what the reader says they rode, so the
-        // saying has to be somewhere they already are. The leading edge,
-        // because the trailing one is where destructive lives and a confirm is
-        // the opposite of that — and because this is the swipe a reader makes
-        // repeatedly after a trip, down a list of the journeys they just took.
-        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            let ridden = RideLedger.hasBeenRidden(train)
-            Button {
-                setRidden(train, !ridden)
-            } label: {
-                Label(
-                    localization.editorText(
-                        ridden ? "ios.detail.markNotRidden" : "ios.detail.confirmRidden"),
-                    systemImage: ridden ? "circle.dashed" : "checkmark.circle")
-            }
-            // Green for the confirm, which §6.2 allows as the success role;
-            // the accent for taking it back, because that is not a failure —
-            // it is the same tint role the visibility swipe takes.
-            .tint(ridden ? .accentColor : .green)
-        }
+        JourneyListRow(
+            train: train,
+            presentation: presentation(for: train),
+            showsDate: showsDate ?? (selectedDate == Dates.allDates),
+            itineraries: itineraries,
+            persist: persistMine,
+            play: { startPlayback([train]) },
+            showDetail: { sheet = .detail(train) },
+            setRidden: { setRidden(train, $0) },
+            confirmDelete: { dialog = .delete(train) })
     }
 
     /// Say whether a journey was ridden, and write it down.
@@ -2438,19 +2493,13 @@ struct RailWorkspaceView: View {
 
     // MARK: - workspace-level states (§13.1, §13.2, §13.3)
 
+    // Both drawn by ``JourneyWorkspaceStates``. These stay as the injection
+    // point: the views are pure functions of a resolved presentation, and the
+    // one thing they cannot be pure about — what a chosen action DOES — is
+    // this workspace's `perform`.
+
     private func workspaceStatus(_ presentation: JourneyPresentation) -> some View {
-        VStack(spacing: 10) {
-            ProgressView()
-            Text(localization.journeyText(presentation.title))
-                .font(.headline)
-            if let status = presentation.status {
-                Text(localization.journeyText(status.title))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .accessibilityElement(children: .combine)
+        WorkspaceStatusView(presentation: presentation)
     }
 
     private func workspaceUnavailable(
@@ -2458,34 +2507,12 @@ struct RailWorkspaceView: View {
         systemImage: String,
         description: String? = nil
     ) -> some View {
-        ContentUnavailableView {
-            Label(localization.journeyText(presentation.title), systemImage: systemImage)
-        } description: {
-            VStack(spacing: 8) {
-                if let subtitle = presentation.subtitle {
-                    Text(localization.journeyText(subtitle))
-                }
-                if let description { Text(description) }
-                if let status = presentation.status {
-                    // §13.3: what was kept, next to what went wrong.
-                    Text(localization.journeyText(status.title))
-                        .foregroundStyle(status.tone.color)
-                }
-            }
-        } actions: {
-            QuietActionGroup(
-                presentation: presentation,
-                perform: { perform($0, on: nil) },
-                performSecondary: { perform($0, on: nil) }
-            )
-            .frame(maxWidth: 320)
-        }
-        // §4.1: "按钮、列表最后一行和滚动指示器必须避开底栏". The panel's
-        // content region ends where the destination selector begins, and a
-        // `ContentUnavailableView` is an inflexible block — at the medium stop
-        // its action button was being cut in half by that edge. Scrolling is
-        // how a block that cannot shrink gives way.
-        .modifier(ScrollableIfNeeded())
+        WorkspaceUnavailableView(
+            presentation: presentation,
+            systemImage: systemImage,
+            description: description,
+            perform: { perform($0, on: nil) },
+            performSecondary: { perform($0, on: nil) })
     }
 
     // MARK: - what a resolved action actually does (§8)
@@ -2537,7 +2564,7 @@ struct RailWorkspaceView: View {
             persistMine()
         case .delete:
             if let train {
-                afterPresentationDismisses { dialog = .delete(train) }
+                PresentationHost.afterTeardown { dialog = .delete(train) }
             }
         case .inspectDetails:
             if let train { sheet = .detail(train) }
@@ -2563,8 +2590,17 @@ struct RailWorkspaceView: View {
         return count
     }
 
+    /// The journeys the list shows, after every filter the header applies.
+    ///
+    /// `region` is passed rather than read off ``regionScope`` because the two
+    /// destinations that use this do not want the same answer: the log and its
+    /// summary are scoped to the region the globe button names, and Search is
+    /// deliberately not — a query that silently skipped four networks would be
+    /// a search that reports "no results" for a journey the reader can see two
+    /// taps away. `nil` is every region.
     private func filteredDays(
         _ loaded: ItineraryStore.Loaded,
+        region: Region?,
         query searchQuery: String = ""
     ) -> [ItineraryStore.Loaded.Day] {
         // Memoised, because one body evaluation asks this up to three times —
@@ -2578,20 +2614,32 @@ struct RailWorkspaceView: View {
         // answers differently once the reader switches language, or once a
         // readings table lands. See ``StationNamingGeneration``.
         derived.days(
-            of: loaded, selectedDate: selectedDate, query: searchQuery,
+            of: loaded, selectedDate: selectedDate, region: region,
+            query: searchQuery,
             naming: localization.stationNamingGeneration
         ) {
-            computeFilteredDays(loaded, query: searchQuery)
+            computeFilteredDays(loaded, region: region, query: searchQuery)
         }
     }
 
     private func computeFilteredDays(
         _ loaded: ItineraryStore.Loaded,
+        region: Region?,
         query searchQuery: String
     ) -> [ItineraryStore.Loaded.Day] {
-        let source = selectedDate == Dates.allDates
+        var source = selectedDate == Dates.allDates
             ? loaded.days
             : loaded.days.filter { $0.date == selectedDate }
+        // The region scope, before the query rather than after it: a day left
+        // with no journey in this region is not an empty day, it is a day this
+        // scope does not have — and a section header over nothing is the one
+        // thing a filtered list must not draw.
+        if let region {
+            source = source.compactMap { day in
+                let trains = day.trains.filter { Region.resolved($0) == region }
+                return trains.isEmpty ? nil : .init(date: day.date, trains: trains)
+            }
+        }
         let needle = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return source }
         // §5.1's field list lives in `JourneySearchMatcher`, not in this
@@ -2616,33 +2664,107 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// §5.1's date filter, as a submenu of the header's menu.
+    /// §5.1's date filter, as a submenu of the header's gear menu.
     ///
-    /// It was a toolbar item, and there is no toolbar in the sheet. A submenu rather
-    /// than a flat section because the date list is as long as the log is:
-    /// two hundred journeys over thirty days is thirty entries, and §4.2 does
-    /// not want thirty of anything between the reader and Settings.
+    /// Search only, now. The other two destinations that read this value carry
+    /// it as a round button of their own — see ``journeyDateMenu(for:)`` —
+    /// and the contents are shared rather than written twice.
     @ViewBuilder
     private func dateFilterSection(_ loaded: ItineraryStore.Loaded) -> some View {
         Menu {
+            dateFilterMenuContent(loaded, dates: availableDates(loaded))
+        } label: {
+            Label(
+                selectedDate == Dates.allDates
+                    ? localization.countryText("date.all", fallback: "All dates")
+                    : selectedDate,
+                systemImage: "calendar")
+        }
+    }
+
+    /// §5.1's date filter, as a round button in the header row.
+    ///
+    /// One value — ``selectedDate`` — shared by Upcoming and All Journeys,
+    /// because the two are asking the same question of the same log from
+    /// different ends of it, and a reader who scopes to one day in the log and
+    /// finds the other tab still showing every day is reading two answers. It
+    /// is NOT the statistics' date: §5.3.1 says so in as many words, and
+    /// ``statisticsDateMenu`` is that other value's control.
+    ///
+    /// What differs between the two tabs is which days are on offer. The log
+    /// offers every bucket the store has; Upcoming offers only the ones that
+    /// still lie ahead, because a menu that lets the reader pick a day in the
+    /// past on a list of what is coming is a control whose every entry empties
+    /// the screen.
+    @ViewBuilder
+    private func journeyDateMenu(for tab: PrimaryTab) -> some View {
+        Menu {
+            if let loaded = itineraries.loaded {
+                dateFilterMenuContent(loaded, dates: journeyDates(for: tab, in: loaded))
+            }
+        } label: {
+            SheetIconLabel(
+                systemImage: "calendar", isActive: selectedDate != Dates.allDates)
+        }
+        .accessibilityLabel(
+            Text(localization.journeyText("ios.journey.dateFilter", fallback: "Date filter")))
+        .accessibilityValue(Text(dateBucketLabel(selectedDate)))
+        .accessibilityIdentifier("journeyDateButton")
+    }
+
+    /// The days one destination may be scoped to.
+    ///
+    /// Region-scoped in both cases, so the globe and the calendar cannot
+    /// disagree: with the scope on 台灣, a Japanese-only day is not a day this
+    /// screen has.
+    private func journeyDates(
+        for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
+    ) -> [String] {
+        guard tab == .upcoming else { return availableDates(loaded, region: regionScope) }
+        // Deliberately built from the region filter and the calendar ALONE:
+        // `upcomingScope` also applies `selectedDate`, and a menu built from
+        // that would collapse to the one day it had already been set to.
+        let today = todayByRegion()
+        let trains = loaded.trains.filter { train in
+            if let region = regionScope, Region.resolved(train) != region { return false }
+            guard let date = train.date, !date.isEmpty,
+                let regionToday = today[Region.resolved(train)]
+            else { return false }
+            return date >= regionToday
+        }
+        return Dates.availableDates(trains.map(\.forDates))
+    }
+
+    /// The entries both spellings of the date filter show.
+    ///
+    /// The dates are passed in rather than derived here: the two destinations
+    /// offer different slices of the calendar (see ``journeyDates(for:in:)``),
+    /// and everything below the divider is the same everywhere.
+    @ViewBuilder
+    private func dateFilterMenuContent(
+        _ loaded: ItineraryStore.Loaded, dates: [String]
+    ) -> some View {
+        Button {
+            selectedDate = Dates.allDates
+        } label: {
+            Label(
+                localization.countryText("date.all", fallback: "All dates"),
+                systemImage: selectedDate == Dates.allDates ? "checkmark" : "calendar")
+        }
+        ForEach(dates, id: \.self) { date in
             Button {
-                selectedDate = Dates.allDates
+                selectedDate = date
             } label: {
                 Label(
-                    localization.countryText("date.all", fallback: "All dates"),
-                    systemImage: selectedDate == Dates.allDates ? "checkmark" : "calendar")
+                    dateBucketLabel(date),
+                    systemImage: selectedDate == date ? "checkmark" : "calendar")
             }
-            ForEach(availableDates(loaded), id: \.self) { date in
-                Button {
-                    selectedDate = date
-                } label: {
-                    Label(date, systemImage: selectedDate == date ? "checkmark" : "calendar")
-                }
-            }
+        }
+        Group {
             Divider()
             Button {
                 newManualDate = ""
-                afterPresentationDismisses { dialog = .addDate }
+                PresentationHost.afterTeardown { dialog = .addDate }
             } label: {
                 Label(
                     localization.countryText("btn.addDate", fallback: "Add date"),
@@ -2673,13 +2795,14 @@ struct RailWorkspaceView: View {
             // changes — and the web app keeps its own 自動縮放 button in the
             // date bar for the same reason.
             Toggle(autoFocusLabel, isOn: $autoFocusZoom)
-        } label: {
-            Label(
-                selectedDate == Dates.allDates
-                    ? localization.countryText("date.all", fallback: "All dates")
-                    : selectedDate,
-                systemImage: "calendar")
         }
+    }
+
+    /// A date bucket as the reader reads it — the two sentinels need a word,
+    /// a real day labels itself.
+    private func dateBucketLabel(_ date: String) -> String {
+        let key = Dates.dateLabelKey(date)
+        return localization.text(key, fallback: date)
     }
 
     /// 自動縮放, without the separator the web app's button needs.
@@ -2696,6 +2819,19 @@ struct RailWorkspaceView: View {
 
     private func availableDates(_ loaded: ItineraryStore.Loaded) -> [String] {
         Dates.availableDates(loaded.trains.map(\.forDates), manualDates: manualDates)
+    }
+
+    /// The same buckets, narrowed to one region.
+    ///
+    /// The manual dates are not narrowed: a bucket the reader created by hand
+    /// belongs to no region, and dropping it under a region scope would make
+    /// the empty day they just added impossible to reach.
+    private func availableDates(
+        _ loaded: ItineraryStore.Loaded, region: Region?
+    ) -> [String] {
+        guard let region else { return availableDates(loaded) }
+        let trains = loaded.trains.filter { Region.resolved($0) == region }
+        return Dates.availableDates(trains.map(\.forDates), manualDates: manualDates)
     }
 
     private func addManualDate() {
@@ -2789,58 +2925,6 @@ struct RailWorkspaceView: View {
         }?.key ?? .jp
     }
 
-    @ViewBuilder
-    private func rideContextMenu(_ train: Train) -> some View {
-        Button {
-            startPlayback([train])
-        } label: {
-            Label(localization.countryText("btn.play", fallback: "Play journey"), systemImage: "play.fill")
-        }
-        Button {
-            sheet = .detail(train)
-        } label: {
-            Label(
-                localization.text("ios.journeyInfo", fallback: "Journey information"),
-                systemImage: "info.circle")
-        }
-        Button {
-            itineraries.duplicate(train.id)
-            persistMine()
-        } label: {
-            Label(localization.countryText("btn.duplicate", fallback: "Duplicate"), systemImage: "plus.square.on.square")
-        }
-        Button {
-            itineraries.toggleVisibility(train.id)
-            persistMine()
-        } label: {
-            Label(
-                train.visible == false
-                    ? localization.text("ios.showOnMap", fallback: "Show on map")
-                    : localization.journeyText(
-                        "ios.journey.hideFromMap", fallback: "Hide from map"),
-                systemImage: train.visible == false ? "eye" : "eye.slash"
-            )
-        }
-        Button {
-            itineraries.move(train.id, by: -1)
-            persistMine()
-        } label: {
-            Label(localization.countryText("btn.moveUp", fallback: "Move earlier"), systemImage: "arrow.up")
-        }
-        Button {
-            itineraries.move(train.id, by: 1)
-            persistMine()
-        } label: {
-            Label(localization.countryText("btn.moveDown", fallback: "Move later"), systemImage: "arrow.down")
-        }
-        Divider()
-        Button(role: .destructive) {
-            afterPresentationDismisses { dialog = .delete(train) }
-        } label: {
-            Label(localization.countryText("btn.delete", fallback: "Delete"), systemImage: "trash")
-        }
-    }
-
     private func persistMine() {
         // Any edit forks a bundled sample into the reader's own store. A
         // sample remains immutable on disk and the user's change is durable.
@@ -2872,7 +2956,15 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             onSelectRide: { selectFromMap($0) },
-            onSelectStation: { sheet = .station($0) }
+            onSelectStation: { sheet = .station($0) },
+            // Which countries the reader is actually looking at, from the rect
+            // the map rebuilt for. Only while the network is on: with it off
+            // there are no rails and no station dots to draw, so a pan across
+            // Japan costs nothing at all.
+            onBuildRect: { rect in
+                guard controller.showsNetwork else { return }
+                store.ensure(regionsIntersecting: rect)
+            }
         ) { render = $0 }
         .ignoresSafeArea()
         // The one place the setting crosses from SwiftUI into the controller.
@@ -2894,9 +2986,18 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// §4.4: a tap on empty map steps back exactly one level — first the
-    /// journey selection, then a single-day filter. Never both at once, and
-    /// never a jump to a state the reader cannot predict.
+    /// §4.4: a tap on empty map clears the journey selection, and nothing else.
+    ///
+    /// It used to be a two-rung ladder — the selection first, then the date
+    /// filter — and that second rung was the other half of a coupling this
+    /// workspace no longer has. Picking a ride does not move the date filter
+    /// (see ``pick(_:)``), so a date on screen is one the reader chose from
+    /// the filter menu, and a tap on the sea is not an answer to that
+    /// question. It also cost the reader a state they never asked to be in:
+    /// clearing the selection left the ladder standing on that ride's day, so
+    /// choosing another journey meant tapping empty water first to get back
+    /// out of a day nobody had picked. Two states, two controls — the map
+    /// clears what the map selected.
     ///
     /// A tap that lands on SEVERAL rides asks instead of choosing. That is the
     /// web app's `handleDeckRouteChoices`, and its reason is the same: a
@@ -2910,11 +3011,7 @@ struct RailWorkspaceView: View {
         }
         switch trains.count {
         case 0:
-            if itineraries.selectedTrainID != nil {
-                itineraries.selectedTrainID = nil
-            } else if selectedDate != Dates.allDates {
-                selectedDate = Dates.allDates
-            }
+            itineraries.selectedTrainID = nil
         case 1:
             pick(trains[0])
         default:
@@ -2922,10 +3019,23 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// Select a ride the reader picked on the map, and make sure they can see
-    /// it: the web app's chooser "both activates its day and selects it",
-    /// because a ride on another day would otherwise vanish from the list the
-    /// moment it was chosen.
+    /// Select the ride the reader pointed at. Only that.
+    ///
+    /// The web app's `selectTrain` also jumps the date filter to the picked
+    /// ride's own day, and this used to carry half of that: a ride outside the
+    /// filtered day dropped the filter back to 全部. Both directions are gone.
+    /// A pick that moves the date filter answers a question the reader did not
+    /// ask — they pointed at one line and the whole list under the map became
+    /// a different day — and it is the reason choosing a second journey took
+    /// three taps instead of one, because the day it left behind then had to
+    /// be stepped back out of before the next line was reachable.
+    ///
+    /// Nothing is hidden by leaving the filter alone. The selected journey's
+    /// card reads from the store rather than from the filtered days
+    /// (``selectedTrain``), and on the map a selected ride draws at full
+    /// strength whichever day it runs on — that is exactly what
+    /// ``MapDateScope/alpha(own:span:scope:isSelected:hasSelection:)`` puts
+    /// the selection wrap after the date wrap for.
     ///
     /// A second tap on the already-selected line is still an interaction even
     /// though it does not change `selectedTrainID`. The map surface normally
@@ -2936,11 +3046,6 @@ struct RailWorkspaceView: View {
     /// frame the previous selection's region.
     private func pick(_ train: Train) {
         let reselectsCurrentTrain = itineraries.selectedTrainID == train.id
-        if selectedDate != Dates.allDates,
-            !Dates.trainSpans(train.forDates, date: selectedDate)
-        {
-            selectedDate = Dates.allDates
-        }
         itineraries.selectedTrainID = train.id
         if reselectsCurrentTrain, autoFocusZoom {
             controller.fitToSelection()
@@ -2989,10 +3094,22 @@ struct RailWorkspaceView: View {
         case .all, .search:
             break
         }
-        guard mapFollowsSelectedDate, selectedDate != Dates.allDates,
-              let trains = itineraries.loaded?.trains else { return visible }
-        return derived.rides(
-            visible, scopedTo: derived.trainIDs(spanning: selectedDate, in: trains))
+        let trains = itineraries.loaded?.trains ?? []
+        var ids: Set<String>?
+        // All Journeys carries the same globe button the other two do, so the
+        // map under it draws that region and not the other four. Search does
+        // not scope by region — see ``filteredDays(_:region:query:)`` — and a
+        // map that narrowed while its list did not would be the second half of
+        // the same lie.
+        if selection == .all, let region = regionScope {
+            ids = derived.trainIDs(inRegion: region, in: trains)
+        }
+        if mapFollowsSelectedDate, selectedDate != Dates.allDates {
+            let dated = derived.trainIDs(spanning: selectedDate, in: trains)
+            ids = ids.map { $0.intersection(dated) } ?? dated
+        }
+        guard let ids else { return visible }
+        return derived.rides(visible, scopedTo: ids)
     }
 
     /// `resolveQueue` — what "play" means right now.
@@ -3012,7 +3129,9 @@ struct RailWorkspaceView: View {
             return [train]
         }
         let searchQuery = selection == .search ? query : ""
-        return filteredDays(loaded, query: searchQuery)
+        return filteredDays(
+            loaded, region: selection == .search ? nil : regionScope,
+            query: searchQuery)
             .flatMap(\.trains)
             .filter { $0.visible != false && $0.stops.count > 1 }
     }
@@ -3075,9 +3194,11 @@ struct RailWorkspaceView: View {
                 videoExporter: videoExporter,
                 onStop: { stopPlayback() },
                 onRequestVideoOptions: {
-                    videoPlanSeconds = playback.prepare(
-                        trains: playbackScope, rides: riddenRoutes.rides,
-                        reducedMotion: reduceMotion
+                    // `estimate`, not `prepare`: this button is pressed while a
+                    // run is playing, and `prepare` freezes the queue. See
+                    // `PlaybackController.estimate`.
+                    videoPlanSeconds = playback.estimate(
+                        trains: playbackScope, rides: riddenRoutes.rides
                     ).seconds
                     sheet = .videoOptions
                 }
@@ -3091,9 +3212,23 @@ struct RailWorkspaceView: View {
         guard let mapView = controller.mapView else { return }
         videoSettings.persist()
         videoExporter.start(
-            playback: playback, mapView: mapView,
+            playback: playback, mapView: mapView, filming: playbackFilmedRect,
             trains: playbackScope, rides: riddenRoutes.rides,
             reducedMotion: reduceMotion, settings: videoSettings)
+    }
+
+    /// The part of the map a film is cropped from.
+    ///
+    /// The playback camera centres its train in the map LESS the room the
+    /// resident sheet takes (`RailMapController.playbackFramingInsets`) — the
+    /// web app's `uncoveredRect`. The crop is taken from the same rectangle,
+    /// because the two have to agree about where the middle is or the train
+    /// sits off-centre in the file. The whole view is the fallback for a map
+    /// that has not been laid out yet.
+    private var playbackFilmedRect: CGRect {
+        guard let mapView = controller.mapView else { return .zero }
+        let inset = mapView.bounds.inset(by: controller.playbackFramingInsets)
+        return inset.width > 1 && inset.height > 1 ? inset : mapView.bounds
     }
 
     private func stopPlayback() {
@@ -3135,7 +3270,9 @@ private struct WorkspacePage: View {
 /// can be 130 points tall (§9.5.6's compact stop) or holding an accessibility
 /// text size. Either way the block has to give way, and a `ScrollView` is how
 /// a block that cannot shrink gives way.
-private struct ScrollableIfNeeded: ViewModifier {
+// Internal rather than `private`: `WorkspaceUnavailableView` moved to a file of
+// its own and gives way the same way the panels here do.
+struct ScrollableIfNeeded: ViewModifier {
     func body(content: Content) -> some View {
         ScrollView { content }
             .scrollBounceBehavior(.basedOnSize)
@@ -3165,7 +3302,7 @@ extension Duration {
         controller: RailMapController(),
         playback: PlaybackController(),
         statistics: MileageStatisticsStore(),
-        statisticsRegion: $region,
+        regionScope: $region,
         selection: $selection
     )
     .environment(AppLocalization())

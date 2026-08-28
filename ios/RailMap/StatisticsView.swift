@@ -70,7 +70,25 @@ struct StatisticsDashboardContent: View {
     /// mounted and unmounted by this decision.
     @State private var progressVisible = false
 
+    /// Which axis 乘坐分佈 is drawn on — the reference's "FLIGHTS PER Year /
+    /// Month / Weekday".
+    ///
+    /// Month rather than year by default, and deliberately: a store covering
+    /// one year has ONE year column and nothing to see, while every store has
+    /// twelve months and a shape.
+    @State private var rhythm: RhythmScale = .month
+
+    /// Whether the two rankable lists are ordered by how often or by how far.
+    /// Two properties rather than one, because the reference gives each list
+    /// its own control and a reader comparing 里程 in one against 趟數 in the
+    /// other is asking a question a shared toggle cannot hold.
+    @State private var operatorMetric: RankMetric = .count
+    @State private var routeMetric: RankMetric = .count
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Whether this is being drawn into the share image rather than onto the
+    /// screen — see ``SwiftUI/EnvironmentValues/passportPoster``.
+    @Environment(\.passportPoster) private var isPoster
 
     /// `TOP_SEGMENT_CATEGORIES`. Not `view.categories`: the coverage rows carry
     /// a JR（含新幹線）row that is the UNION of two other rows, which is right
@@ -108,6 +126,44 @@ struct StatisticsDashboardContent: View {
         let rows: [LineCoverageRow]
         var id: Int { category.mask }
     }
+
+    /// The three axes 乘坐分佈 can be read on.
+    enum RhythmScale: String, CaseIterable, Identifiable {
+        case year, month, weekday
+        var id: String { rawValue }
+        var localizationKey: String { "ios.stats.scale.\(rawValue)" }
+    }
+
+    /// What a ranked list is ordered — and drawn — by.
+    enum RankMetric: String, CaseIterable, Identifiable {
+        case count, distance
+        var id: String { rawValue }
+        var localizationKey: String { "ios.stats.metric.\(rawValue)" }
+    }
+
+    /// One row of 距離紀錄's scale block: what the total is being compared to,
+    /// and how far around it that is.
+    ///
+    /// Every figure is a real ratio against a real distance — the WGS-84
+    /// equator the map's own kilometres are measured on, the Moon's mean
+    /// distance, and the Sun's own circumference. §5.3 asks this screen to be
+    /// more expressive than the editor while keeping the numbers accurate, and
+    /// a souvenir figure that is not true is not a souvenir.
+    private struct ScaleSpec {
+        let i18n: String
+        let systemImage: String
+        let km: Double
+    }
+
+    private static let scaleSpecs: [ScaleSpec] = [
+        ScaleSpec(i18n: "ios.stats.aroundEarth", systemImage: "globe.asia.australia", km: 40075.017),
+        ScaleSpec(i18n: "ios.stats.toTheMoon", systemImage: "moon", km: 384_400),
+        ScaleSpec(i18n: "ios.stats.aroundSun", systemImage: "sun.max", km: 4_375_517),
+    ]
+
+    /// How many rows a ranked list shows before the rest is folded away —
+    /// the reference's own count above its "Show More".
+    private static let rankedListLimit = 8
 
     /// `TOP_SEGMENT_LIMIT`.
     private static let topSegmentLimit = 12
@@ -148,10 +204,35 @@ struct StatisticsDashboardContent: View {
                     if loaded.trains.isEmpty {
                         emptyCard(unconfirmed: unconfirmed)
                     } else if let stats = statistics.view {
+                        // The per-journey grouping, or nothing. It arrives one
+                        // step behind the aggregate on the very first load, so
+                        // every card built from it is optional rather than the
+                        // whole screen waiting for the slower half.
+                        let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
                         passportDataPage(loaded, stats.overall, unconfirmed: unconfirmed)
+                        // §5.7's order, with the reference's own sections
+                        // folded into it: what the shape of the travelling was,
+                        // then the two records the distance and the clock hold,
+                        // then coverage and 車種, then who and where.
+                        if let passport {
+                            rhythmCard(passport)
+                            distanceCard(passport)
+                            timeCard(passport)
+                        }
                         coverageCard(stats)
                         serviceCard(stats.overall)
+                        if let passport {
+                            stationsCard(passport)
+                            operatorsCard(passport)
+                            routesCard(passport)
+                        }
                         topSegmentsCard(stats.overall)
+                        // Only when there is more than one. Scoped to Japan,
+                        // this card would be the scope control's own answer
+                        // read back — a country list of length one (§5.1).
+                        if let passport, passport.regions.count > 1 {
+                            regionsCard(passport)
+                        }
                         lineDetailCard(stats)
                     }
                 }
@@ -775,6 +856,502 @@ struct StatisticsDashboardContent: View {
             }
             return StatisticsFormat.linesPrecede(a.name, b.name)
         }
+    }
+
+    // MARK: - 乘坐分佈 (the reference's "FLIGHTS PER Year / Month / Weekday")
+
+    /// The shape of the travelling, on whichever of three axes the reader asks
+    /// for.
+    ///
+    /// The reference draws a 0–4 scale down the left edge and leaves the
+    /// columns bare. This one prints the count on every column instead — see
+    /// ``StatisticsColumnChart`` for why — so the card carries no axis and the
+    /// figures are exact rather than read off a rule.
+    ///
+    /// The one line above the chart is the answer somebody scrolling past
+    /// actually wants: WHICH month, not what twelve months look like. It is
+    /// the same lift `topSegmentsCard` makes for its own best row.
+    private func rhythmCard(_ passport: PassportStatistics) -> some View {
+        let columns = rhythmColumns(passport)
+        let best = columns.max { $0.count < $1.count }
+        return VStack(alignment: .leading, spacing: 14) {
+            PassportCardHeader(
+                localization.statsText("ios.stats.rhythmTitle"),
+                systemImage: "chart.bar.xaxis")
+            if !isPoster {
+                Picker(localization.statsText("ios.stats.scaleLabel"), selection: $rhythm) {
+                    ForEach(RhythmScale.allCases) { scale in
+                        Text(localization.statsText(scale.localizationKey)).tag(scale)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .accessibilityLabel(Text(localization.statsText("ios.stats.scaleLabel")))
+            }
+            if let best, best.count > 0 {
+                PassportHighlight(
+                    eyebrow: localization.statsText("ios.stats.mostJourneys"),
+                    title: best.name,
+                    detail: journeyCount(best.count))
+            }
+            StatisticsColumnChart(columns: columns) { journeyCount($0.count) }
+                // The three axes share no bucket numbering — month 7 and
+                // weekday 7 are different things — so the chart is REPLACED
+                // rather than re-laid-out, and a crossfade is what §9.4 asks
+                // for when one small thing appears where another was.
+                .id(rhythm)
+                .transition(.opacity)
+            if passport.undated > 0 {
+                Text(
+                    localization.statsText(
+                        "ios.stats.undatedHeld",
+                        params: ["n": .number(Double(passport.undated))])
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .animation(settle, value: rhythm)
+        .passportCard(.soft)
+    }
+
+    private func rhythmColumns(_ passport: PassportStatistics)
+        -> [StatisticsColumnChart.Column]
+    {
+        switch rhythm {
+        case .year:
+            // Four digits per column stops fitting somewhere past eight of
+            // them, so a long record keeps the century for VoiceOver and the
+            // highlight line and shows the axis the way every chart does.
+            let abbreviate = passport.byYear.count > 8
+            return passport.byYear.map { column in
+                let full = String(column.id)
+                return StatisticsColumnChart.Column(
+                    id: column.id,
+                    label: abbreviate ? String(full.suffix(2)) : full,
+                    name: full,
+                    count: column.count,
+                    spoken: journeyCount(column.count))
+            }
+        case .month:
+            return passport.byMonth.map { column in
+                StatisticsColumnChart.Column(
+                    id: column.id,
+                    label: column.id.formatted(),
+                    name: monthName(column.id),
+                    count: column.count,
+                    spoken: journeyCount(column.count))
+            }
+        case .weekday:
+            return passport.byWeekday.map { column in
+                StatisticsColumnChart.Column(
+                    id: column.id,
+                    label: weekdayLabel(column.id, short: true),
+                    name: weekdayLabel(column.id, short: false),
+                    count: column.count,
+                    spoken: journeyCount(column.count))
+            }
+        }
+    }
+
+    /// A calendar whose symbols are in the language the reader CHOSE, not the
+    /// one the device is set to — the same rule `AppLocalization.locale`
+    /// exists for, applied to month and weekday names.
+    private var symbolCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = localization.locale
+        return calendar
+    }
+
+    private func monthName(_ month: Int) -> String {
+        let symbols = symbolCalendar.monthSymbols
+        guard month >= 1, month <= symbols.count else { return month.formatted() }
+        return symbols[month - 1]
+    }
+
+    /// `Calendar`'s weekday numbering — 1 is Sunday — which is why the columns
+    /// carry it rather than an index of their own.
+    private func weekdayLabel(_ weekday: Int, short: Bool) -> String {
+        let symbols = short
+            ? symbolCalendar.shortWeekdaySymbols : symbolCalendar.weekdaySymbols
+        guard weekday >= 1, weekday <= symbols.count else { return weekday.formatted() }
+        return symbols[weekday - 1]
+    }
+
+    /// `stat.trains` — how many journeys, in the vocabulary the rest of the
+    /// screen counts journeys in.
+    private func journeyCount(_ count: Int) -> String {
+        localization.statsText("stat.trains", params: ["n": .number(Double(count))])
+    }
+
+    // MARK: - 距離紀錄 (the reference's "Flight Distance")
+
+    /// What the total distance means, in units nobody counts kilometres in.
+    ///
+    /// The total itself is not restated here — it is the passport page's own
+    /// headline, three cards up. What this card adds is the three things the
+    /// reference adds: the mean, the scale comparisons, and the two journeys
+    /// at the ends of the range.
+    private func distanceCard(_ passport: PassportStatistics) -> some View {
+        let scales = scaleRows(passport.totalKm)
+        let longest = passport.longestByDistance
+        let shortest = passport.shortestByDistance
+        return VStack(alignment: .leading, spacing: 16) {
+            PassportCardHeader(
+                localization.statsText("ios.stats.distanceTitle"),
+                systemImage: "ruler")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.perJourney"),
+                value: "\(StatisticsFormat.km(passport.averageKm)) km")
+            if !scales.isEmpty {
+                VStack(spacing: 10) { ForEach(scales) { row in row.view } }
+            }
+            if longest != nil || shortest != nil {
+                PassportRule()
+                VStack(spacing: 14) {
+                    if let longest {
+                        superlative(
+                            "ios.stats.longestByDistance", longest,
+                            value: "\(StatisticsFormat.km(longest.km)) km")
+                    }
+                    // Only when it is a different journey. With one record in
+                    // scope the longest and the shortest are the same ride,
+                    // and printing it twice under two headings says the store
+                    // holds two.
+                    if let shortest, shortest.id != longest?.id {
+                        superlative(
+                            "ios.stats.shortestByDistance", shortest,
+                            value: "\(StatisticsFormat.km(shortest.km)) km")
+                    }
+                }
+            }
+        }
+        .passportCard(.soft)
+    }
+
+    /// A scale row, built and kept identifiable so `ForEach` has something
+    /// stable to key on.
+    private struct ScaleRow: Identifiable {
+        let id: String
+        let view: StatisticsRankedRow
+    }
+
+    /// The comparisons that are worth drawing, and no others.
+    ///
+    /// A ratio under a two-hundredth reads as `0.00×`, which is a row that
+    /// says nothing while taking up the space of one that does — the same
+    /// judgement `aroundTheWorld` already makes about the hero's caption. So a
+    /// short record shows the Earth row alone, and a long one shows all three.
+    private func scaleRows(_ km: Double) -> [ScaleRow] {
+        guard km.isFinite, km > 0 else { return [] }
+        return Self.scaleSpecs.compactMap { spec in
+            let multiple = km / spec.km
+            guard multiple >= 0.005 else { return nil }
+            let label = localization.statsText(spec.i18n)
+            let value = "\(multipleText(multiple))×"
+            return ScaleRow(
+                id: spec.i18n,
+                view: StatisticsRankedRow(
+                    label: label,
+                    systemImage: spec.systemImage,
+                    value: value,
+                    fraction: min(1, multiple),
+                    spoken: "\(value) \(label)"))
+        }
+    }
+
+    /// `1.4`, `0.15`, `0.009` — enough digits that the figure is not rounded
+    /// to nothing, and no more.
+    private func multipleText(_ value: Double) -> String {
+        let digits: Int
+        switch abs(value) {
+        case 10...: digits = 0
+        case 0.1...: digits = 1
+        case 0.01...: digits = 2
+        default: digits = 3
+        }
+        return value.formatted(.number.precision(.fractionLength(digits)))
+    }
+
+    // MARK: - 時間紀錄 (the reference's "Flight Time")
+
+    /// The ride-time total in the units it stops being imaginable in, and the
+    /// two journeys at the ends of the clock.
+    ///
+    /// A month is 30 days and a year is 365 here, which is what makes these
+    /// comparable rather than calendrical: the figure answers "how long have I
+    /// spent on trains", and no reader is asking whether that stretch happened
+    /// to contain a February.
+    private func timeCard(_ passport: PassportStatistics) -> some View {
+        let minutes = passport.totalMinutes
+        let longest = passport.longestByTime
+        let shortest = passport.shortestByTime
+        return VStack(alignment: .leading, spacing: 16) {
+            PassportCardHeader(
+                localization.statsText("ios.stats.timeTitle"),
+                systemImage: "clock")
+            PassportMetricGrid(items: [
+                .init(localization.statsText("ios.stats.days"), spanText(minutes / 1440)),
+                .init(localization.statsText("ios.stats.weeks"), spanText(minutes / 10080)),
+                .init(localization.statsText("ios.stats.months"), spanText(minutes / 43200)),
+                .init(localization.statsText("ios.stats.years"), spanText(minutes / 525_600)),
+            ])
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.perJourney"),
+                value: StatisticsFormat.duration(passport.averageMinutes, localization))
+            if longest != nil || shortest != nil {
+                PassportRule()
+                VStack(spacing: 14) {
+                    if let longest {
+                        superlative(
+                            "ios.stats.longestByTime", longest,
+                            value: StatisticsFormat.duration(longest.minutes, localization))
+                    }
+                    if let shortest, shortest.id != longest?.id {
+                        superlative(
+                            "ios.stats.shortestByTime", shortest,
+                            value: StatisticsFormat.duration(shortest.minutes, localization))
+                    }
+                }
+            }
+        }
+        .passportCard(.soft)
+    }
+
+    /// The same digit rule the scale rows use, on a span rather than a ratio —
+    /// so `0.009` years is a figure and not a zero.
+    private func spanText(_ value: Double) -> String {
+        guard value.isFinite else { return "0" }
+        return multipleText(value)
+    }
+
+    // MARK: - the ranked lists (Top Visited Airports / Airlines / Routes)
+
+    /// 最常進出的車站 — where the reader has boarded and got off most.
+    private func stationsCard(_ passport: PassportStatistics) -> some View {
+        let rows = rankedRows(passport.stations, metric: .count) { placeName($0.name) }
+        return rankedCard(
+            title: localization.statsText("ios.stats.stationsTitle"),
+            systemImage: "building.columns",
+            total: passport.stations.count,
+            unit: localization.statsText("ios.stats.unit.stations"),
+            hint: localization.statsText("ios.stats.stationsHint"),
+            rows: rows)
+    }
+
+    /// 最常乘坐的業者 — the reference's Top Airlines, and this app's one place
+    /// where the record's own `company` is counted rather than derived from
+    /// the network. Two operators can share a short label, so the tally is
+    /// keyed on the raw name and only the DISPLAY is shortened.
+    private func operatorsCard(_ passport: PassportStatistics) -> some View {
+        let rows = rankedRows(passport.operators, metric: operatorMetric) {
+            StatisticsFormat.companyLabel($0.name)
+        }
+        return rankedCard(
+            title: localization.statsText("ios.stats.operatorsTitle"),
+            systemImage: "building.2",
+            total: passport.operators.count,
+            unit: localization.statsText("ios.stats.unit.operators"),
+            hint: nil,
+            rows: rows,
+            metric: $operatorMetric)
+    }
+
+    /// 最常乘坐的起訖 — the reference's Top Routes.
+    ///
+    /// Deliberately NOT the same list as 最常乘坐區間 below it: a route is the
+    /// two ends of a journey, and a section is a stretch of track that several
+    /// different journeys may each cover part of. 東京↔新大阪 ridden four
+    /// times is one route and about thirty sections.
+    private func routesCard(_ passport: PassportStatistics) -> some View {
+        let rows = rankedRows(passport.routes, metric: routeMetric) { tally in
+            "\(placeName(tally.name)) ↔ \(placeName(tally.pair ?? ""))"
+        }
+        return rankedCard(
+            title: localization.statsText("ios.stats.routesTitle"),
+            systemImage: "arrow.left.arrow.right",
+            total: passport.routes.count,
+            unit: localization.statsText("ios.stats.unit.routes"),
+            hint: localization.statsText("ios.stats.routesHint"),
+            rows: rows,
+            metric: $routeMetric,
+            // Two station names and an arrow. In the gutter an inline row
+            // gives them, that wraps to three lines and breaks inside a
+            // reading's own brackets — 「三島（みし／ま）」 — so this list
+            // takes the card's full width for its names.
+            layout: .stacked)
+    }
+
+    /// One ranked card: the total, an optional 趟數/里程 control, the bars, and
+    /// the sentence that says what a row counts.
+    ///
+    /// One function rather than three copies, because the three lists differ
+    /// only in what they are lists OF — and the reference draws them
+    /// identically for exactly that reason.
+    @ViewBuilder
+    private func rankedCard(
+        title: String, systemImage: String, total: Int, unit: String, hint: String?,
+        rows: [StatisticsRankedList.Row], metric: Binding<RankMetric>? = nil,
+        layout: StatisticsRankedRow.Layout = .inline
+    ) -> some View {
+        if !rows.isEmpty {
+            VStack(alignment: .leading, spacing: 14) {
+                PassportCardHeader(title, systemImage: systemImage)
+                PassportHeadline(
+                    label: title,
+                    value: total.formatted(),
+                    spoken: "\(total.formatted()) \(unit)",
+                    unit: unit,
+                    // A field, not a page headline: the one `largeTitle` on
+                    // this screen belongs to the passport page.
+                    prominence: .field)
+                if let metric, !isPoster {
+                    Picker(localization.statsText("ios.stats.rankBy"), selection: metric) {
+                        ForEach(RankMetric.allCases) { option in
+                            Text(localization.statsText(option.localizationKey)).tag(option)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .accessibilityLabel(Text(localization.statsText("ios.stats.rankBy")))
+                }
+                StatisticsRankedList(
+                    rows: rows,
+                    visible: Self.rankedListLimit,
+                    moreLabel: localization.statsText(
+                        "ios.stats.showMore",
+                        params: [
+                            "n": .number(Double(max(0, rows.count - Self.rankedListLimit)))
+                        ]),
+                    layout: layout
+                )
+                .animation(settle, value: metric?.wrappedValue)
+                if let hint {
+                    Text(hint)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .passportCard(.soft)
+        }
+    }
+
+    /// A tally list, ordered and spelled for whichever metric is showing.
+    ///
+    /// The bars are a share of the LEADING row rather than of the total (see
+    /// ``StatisticsRankedList``), and the figure beside each one is the real
+    /// number, so both readings of "most" answer with the same rows in the
+    /// same order whichever control is set.
+    private func rankedRows(
+        _ tallies: [PassportStatistics.Tally],
+        metric: RankMetric,
+        label: (PassportStatistics.Tally) -> String
+    ) -> [StatisticsRankedList.Row] {
+        // Already ordered by count; ordering by distance is the same list read
+        // the other way, with the same tie-break underneath it.
+        let ordered = metric == .count
+            ? tallies
+            : tallies.sorted { a, b in
+                if a.km != b.km { return a.km > b.km }
+                if a.count != b.count { return a.count > b.count }
+                return StatisticsFormat.linesPrecede(a.id, b.id)
+            }
+        return ordered.map { tally in
+            let count = rideCount(tally.count)
+            let km = "\(StatisticsFormat.km(tally.km)) km"
+            return StatisticsRankedList.Row(
+                id: tally.id,
+                label: label(tally),
+                value: metric == .count ? count : km,
+                magnitude: metric == .count ? Double(tally.count) : tally.km,
+                // Both figures, whichever is drawn: the bar is one of them and
+                // a reader who cannot see it needs the other too.
+                spoken: "\(count) · \(km)")
+        }
+    }
+
+    // MARK: - 國家與地區 (the reference's "Countries & Territories")
+
+    /// Which of the five networks the passport has stamps from.
+    ///
+    /// Shown only when there is more than one — see the call site. The flag is
+    /// decoration and is hidden from VoiceOver: the region names itself on the
+    /// same row, and 「🇯🇵 日本」 read aloud is the country twice.
+    private func regionsCard(_ passport: PassportStatistics) -> some View {
+        let peak = Double(passport.regions.map(\.count).max() ?? 0)
+        return VStack(alignment: .leading, spacing: 14) {
+            PassportCardHeader(
+                localization.statsText("ios.stats.regionsTitle"),
+                systemImage: "globe.asia.australia")
+            PassportHeadline(
+                label: localization.statsText("ios.stats.regionsTitle"),
+                value: passport.regions.count.formatted(),
+                spoken: "\(passport.regions.count.formatted()) "
+                    + localization.statsText("ios.stats.unit.regions"),
+                unit: localization.statsText("ios.stats.unit.regions"),
+                prominence: .field)
+            VStack(spacing: 10) {
+                ForEach(passport.regions) { tally in
+                    StatisticsRankedRow(
+                        label: regionName(tally.region),
+                        emblem: flag(tally.region),
+                        value: rideCount(tally.count),
+                        fraction: peak > 0 ? Double(tally.count) / peak : 0,
+                        spoken:
+                            "\(rideCount(tally.count)) · \(StatisticsFormat.km(tally.km)) km")
+                }
+            }
+        }
+        .passportCard(.soft)
+    }
+
+    private func regionName(_ region: Region) -> String {
+        localization.text(region.localizationKey, fallback: region.fallbackName)
+    }
+
+    /// The regional indicator pair for a region's ISO code — the stamp a
+    /// passport would carry. A device whose own region suppresses one of these
+    /// draws the two letters instead, which is still the right answer beside a
+    /// row that names the place in words.
+    private func flag(_ region: Region) -> String {
+        switch region {
+        case .jp: "🇯🇵"
+        case .tw: "🇹🇼"
+        case .hk: "🇭🇰"
+        case .mo: "🇲🇴"
+        case .kr: "🇰🇷"
+        }
+    }
+
+    // MARK: - a superlative, named
+
+    /// One end of a range — the reference's "Shortest flight" / "Longest
+    /// flight", as a journey this app can name.
+    private func superlative(
+        _ key: String, _ journey: PassportStatistics.Journey, value: String
+    ) -> some View {
+        let endpoints = "\(placeName(journey.from)) → \(placeName(journey.to))"
+        let caption = journeyCaption(journey)
+        return StatisticsSuperlative(
+            eyebrow: localization.statsText(key),
+            title: endpoints,
+            detail: caption,
+            value: value,
+            spoken: "\(endpoints) · \(value) · \(caption)")
+    }
+
+    /// The train, and the day it ran — the reference's "WS 255 · 20 Feb 2025".
+    private func journeyCaption(_ journey: PassportStatistics.Journey) -> String {
+        let day = journey.date.isEmpty ? nil : dayLabel(journey.date)
+        return [journey.title, day].compactMap { $0 }.joined(separator: " · ")
+    }
+
+    /// A record's `YYYY-MM-DD` in the reader's own language, or unchanged when
+    /// it is not a day this device can parse.
+    private func dayLabel(_ date: String) -> String {
+        guard let point = RecordDate.date(from: date) else { return date }
+        return point.formatted(
+            .dateTime.year().month(.abbreviated).day().locale(localization.locale))
     }
 
     // MARK: - states that are not numbers
