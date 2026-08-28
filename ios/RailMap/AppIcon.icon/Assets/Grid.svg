@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Network dot lattice, bowed outward so the grid reads as a sphere.
+       The two outer corners the stations sit on are missing on purpose: those
+       dots fell inside the station holes in Route.svg and showed through them.
+       See ios/tools/gen-route-svg.py. -->
+  <g fill="#FFFFFF">
+    <circle cx="230" cy="230" r="17"/><circle cx="407" cy="196" r="21"/><circle cx="617" cy="196" r="21"/>
+    <circle cx="196" cy="407" r="21"/><circle cx="395" cy="395" r="25"/><circle cx="629" cy="395" r="25"/><circle cx="828" cy="407" r="21"/>
+    <circle cx="196" cy="617" r="21"/><circle cx="395" cy="629" r="25"/><circle cx="629" cy="629" r="25"/><circle cx="828" cy="617" r="21"/>
+    <circle cx="407" cy="828" r="21"/><circle cx="617" cy="828" r="21"/><circle cx="794" cy="794" r="17"/>
+  </g>
+</svg>
