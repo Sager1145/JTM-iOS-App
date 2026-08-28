@@ -236,12 +236,25 @@ struct PlaybackTransportBar: View {
             .accessibilityHidden(true)
     }
 
+    /// The video control, in whichever of its four states the export is in.
+    ///
+    /// Every branch states the same 44-point landing area as
+    /// ``transportControls`` and ``stopButton``, and that is a fix rather than
+    /// a flourish: a bare `Image` label gives a `Button` the glyph's own bounds
+    /// as its hit region, which at this bar's inherited text size is about
+    /// twenty points square. Four buttons in one control cluster were hit at 44
+    /// and three were hit at 20 — and the three that were not are the ones a
+    /// reader presses while a run is playing and the bar is moving under their
+    /// thumb. HIG `buttons.md`: a button needs a hit region of at least 44×44.
     @ViewBuilder
     private var videoControl: some View {
         switch videoExporter.state {
         case .recording:
             Button { videoExporter.cancel() } label: {
-                Image(systemName: "record.circle.fill").foregroundStyle(.red)
+                Image(systemName: "record.circle.fill")
+                    .foregroundStyle(.red)
+                    .frame(width: 44, height: 44)
+                    .contentShape(.rect)
             }
             .accessibilityLabel(
                 localization.journeyText("video.cancel", fallback: "Cancel video export"))
@@ -255,6 +268,8 @@ struct PlaybackTransportBar: View {
                     // A cancelled run's film is offered like any other, and
                     // says so: `video.readyPartial` rather than `video.ready`.
                     .foregroundStyle(partial ? AnyShapeStyle(.secondary) : AnyShapeStyle(.tint))
+                    .frame(width: 44, height: 44)
+                    .contentShape(.rect)
             }
             .accessibilityLabel(
                 localization.journeyText(
@@ -263,6 +278,8 @@ struct PlaybackTransportBar: View {
         case .idle, .failed:
             Button { onRequestVideoOptions() } label: {
                 Image(systemName: "video.badge.plus")
+                    .frame(width: 44, height: 44)
+                    .contentShape(.rect)
             }
             .accessibilityLabel(
                 localization.countryText("video.export", fallback: "Export playback video"))

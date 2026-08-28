@@ -2180,6 +2180,21 @@ struct RailWorkspaceView: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.secondary)
+                        // Hit at 44, drawn at the glyph's own size — the same
+                        // two-numbers rule `SheetIconButton` states, and for
+                        // the same reason. A bare `Image` label gives the
+                        // button the glyph's bounds as its hit region, and
+                        // `RailPressStyle` only scales and dims, so this was a
+                        // twenty-point target inside a field whose whole job is
+                        // to be typed in and cleared. The `minHeight` on the
+                        // row below binds the ROW, not the button in it.
+                        .frame(width: 44, height: 44)
+                        .contentShape(.rect)
+                        // The enlarged target reclaims the field's own trailing
+                        // inset rather than pushing the glyph inward, so the
+                        // mark stays exactly where it was drawn. This is what
+                        // UIKit's search field does with its own clear button.
+                        .padding(.trailing, -12)
                 }
                 .buttonStyle(RailPressStyle(dims: false))
                 .accessibilityLabel(
