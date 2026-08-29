@@ -71,7 +71,7 @@ struct RideCard: View {
     @ScaledMetric(relativeTo: .subheadline) private var compactNumberSize: CGFloat = 15
     @ScaledMetric(relativeTo: .title2) private var expandedNumberSize: CGFloat = 22
     /// The collapsed height of the two rows that belong to one stop only.
-    @ScaledMetric(relativeTo: .caption) private var dateChipHeight: CGFloat = 27
+    @ScaledMetric(relativeTo: .subheadline) private var dateChipHeight: CGFloat = 27
     @ScaledMetric(relativeTo: .caption) private var identityLineHeight: CGFloat = 17
     @ScaledMetric(relativeTo: .caption2) private var badgeHeight: CGFloat = 20
 
@@ -131,7 +131,7 @@ struct RideCard: View {
             if !scrollsHeader {
                 header
                     .padding(.horizontal, 16)
-                    .padding(.bottom, interpolated(12, 10))
+                    .padding(.bottom, interpolated(12, 8))
             }
 
             Group {
@@ -264,7 +264,7 @@ struct RideCard: View {
         // row that still jumped mid-drag; the buttons take a small
         // interpolated top inset instead, which reads as centred against the
         // short collapsed block and as top-aligned against the tall open one.
-        HStack(alignment: .top, spacing: 10) {
+        RideIdentityHeaderLayout(progress: progress, spacing: 10) {
             // The journey's own mark, the same square the list row and the
             // detail screen draw it in — this card is what a tapped row opens
             // into, and the mark is the thing that says it is still the same
@@ -273,11 +273,14 @@ struct RideCard: View {
             // sheet settles.
             RouteLogoSquare(train: train, side: interpolated(36, 46))
 
-            VStack(alignment: .leading, spacing: interpolated(2, 6)) {
+            // Expanded, the mark, filing date and dismissal form one quiet
+            // metadata row. The title then receives the card's full width
+            // below it instead of wrapping inside the narrow strip between
+            // the mark and the close button. Compact, this slot collapses and
+            // the same title moves back beside the mark.
+            ZStack(alignment: .leading) {
                 // §3.2 puts the date above the number as an eyebrow; the
-                // resolver supplies it, and it is a Button because §5.2 makes
-                // the date chip the way back to that day's list rather than a
-                // decoration.
+                // resolver supplies it as metadata rather than a control.
                 if let date = dateChipTitle {
                     dateChip(date)
                         .opacity(progress)
@@ -293,7 +296,9 @@ struct RideCard: View {
                         .clipped()
                         .accessibilityHidden(progress < 0.5)
                 }
+            }
 
+            VStack(alignment: .leading, spacing: 0) {
                 Text(train.number)
                     // Interpolated rather than swapped between two `Font`s, for
                     // the reason ``RailInterpolatedFont`` gives and for the one
@@ -356,13 +361,15 @@ struct RideCard: View {
                         JourneyStatusBadge(status: badge, compact: true)
                     }
                 }
+                // Only the compact identity needs separation from the title.
+                // At the expanded stop its height and its spacing both become
+                // zero, so it leaves no invisible gap below the heading.
+                .padding(.top, interpolated(2, 0))
                 .opacity(1 - progress)
                 .frame(height: collapsedIdentityHeight * (1 - progress), alignment: .top)
                 .clipped()
                 .accessibilityHidden(progress > 0.5)
             }
-
-            Spacer(minLength: 4)
 
             HStack(spacing: 2) {
                 // Compact offers the one action the resolver chose; open offers
@@ -429,8 +436,14 @@ struct RideCard: View {
         //
         // Drawn as plain text rather than as a tinted capsule now, because a
         // capsule in the accent colour is a promise that it can be pressed.
+        // The leading chevron went the same way and for the same reason: it
+        // outlived the Button it belonged to, and a back-chevron in front of a
+        // date is a stronger promise than the capsule ever was — a capsule
+        // only says "press me", while a chevron says where pressing goes.
+        // What is left is what §3.2 asked for, a line of metadata: the day
+        // this journey is filed under, and the kind of service it was.
         chipContent
-            .font(.caption.weight(.semibold))
+            .font(.subheadline.weight(.semibold))
             .foregroundStyle(.secondary)
             // The same 34-point band the control row beside it occupies, so
             // removing the button does not move the number underneath. AX
@@ -461,8 +474,6 @@ struct RideCard: View {
         let type = (train.trainType?.isEmpty == false) && !dynamicTypeSize.isAccessibilitySize
             ? train.trainType : nil
         HStack(spacing: 5) {
-            Image(systemName: "chevron.left")
-                .font(.caption2.weight(.bold))
             if dynamicTypeSize.isAccessibilitySize, let split = Self.splitDate(date) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(split.year).monospacedDigit()
@@ -508,5 +519,119 @@ struct RideCard: View {
         let time = train.stops.last?.arrival ?? train.stops.last?.departure
         guard let time, !time.isEmpty else { return nil }
         return time
+    }
+}
+
+/// Positions the selected journey's identity as one continuously moving
+/// header rather than swapping compact and expanded variants.
+///
+/// Compact keeps the logo, title and actions on one row. As the sheet opens,
+/// the date takes the middle of the metadata row while the title moves below
+/// it and grows into the full card width. The layout's progress is animatable,
+/// so the same views follow the drag instead of jumping at a detent boundary.
+private struct RideIdentityHeaderLayout: Layout {
+    var progress: CGFloat
+    var spacing: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    private var clampedProgress: CGFloat { min(max(progress, 0), 1) }
+
+    func sizeThatFits(
+        proposal: ProposedViewSize, subviews: Subviews, cache: inout ()
+    ) -> CGSize {
+        metrics(proposedWidth: proposal.width, subviews: subviews).size
+    }
+
+    func placeSubviews(
+        in bounds: CGRect, proposal: ProposedViewSize,
+        subviews: Subviews, cache: inout ()
+    ) {
+        let metrics = metrics(proposedWidth: bounds.width, subviews: subviews)
+        guard subviews.count == 4 else { return }
+
+        subviews[0].place(
+            at: CGPoint(x: bounds.minX, y: bounds.minY),
+            anchor: .topLeading,
+            proposal: .unspecified)
+        subviews[1].place(
+            at: CGPoint(
+                x: bounds.minX + metrics.metadataX,
+                y: bounds.minY + metrics.metadataY),
+            anchor: .topLeading,
+            proposal: ProposedViewSize(width: metrics.metadataWidth, height: nil))
+        subviews[2].place(
+            at: CGPoint(
+                x: bounds.minX + metrics.identityX,
+                y: bounds.minY + metrics.identityY),
+            anchor: .topLeading,
+            proposal: ProposedViewSize(width: metrics.identityWidth, height: nil))
+        subviews[3].place(
+            at: CGPoint(
+                x: bounds.maxX - metrics.actions.width,
+                y: bounds.minY),
+            anchor: .topLeading,
+            proposal: .unspecified)
+    }
+
+    private func metrics(proposedWidth: CGFloat?, subviews: Subviews) -> Metrics {
+        guard subviews.count == 4 else {
+            return Metrics(size: .zero)
+        }
+
+        let progress = clampedProgress
+        let logo = subviews[0].sizeThatFits(.unspecified)
+        let actions = subviews[3].sizeThatFits(.unspecified)
+        let naturalIdentity = subviews[2].sizeThatFits(.unspecified)
+        let naturalMetadata = subviews[1].sizeThatFits(.unspecified)
+        let intrinsicWidth = max(
+            naturalIdentity.width,
+            logo.width + spacing + naturalIdentity.width + spacing + actions.width,
+            logo.width + spacing + naturalMetadata.width + spacing + actions.width)
+        let width = max(1, proposedWidth ?? intrinsicWidth)
+
+        let metadataX = logo.width + spacing
+        let metadataWidth = max(
+            1, width - metadataX - actions.width - spacing)
+        let metadata = subviews[1].sizeThatFits(
+            ProposedViewSize(width: metadataWidth, height: nil))
+
+        let compactLeading = logo.width + spacing
+        let compactTrailing = actions.width + spacing
+        let identityX = compactLeading * (1 - progress)
+        let identityWidth = max(
+            1,
+            width - (compactLeading + compactTrailing) * (1 - progress))
+        let identity = subviews[2].sizeThatFits(
+            ProposedViewSize(width: identityWidth, height: nil))
+
+        let topRowHeight = max(logo.height, metadata.height, actions.height)
+        let identityY = (topRowHeight + 8) * progress
+        let height = max(topRowHeight, identityY + identity.height)
+        let metadataY = max(0, (topRowHeight - metadata.height) / 2) * progress
+
+        return Metrics(
+            size: CGSize(width: width, height: height),
+            actions: actions,
+            metadataX: metadataX,
+            metadataY: metadataY,
+            metadataWidth: metadataWidth,
+            identityX: identityX,
+            identityY: identityY,
+            identityWidth: identityWidth)
+    }
+
+    private struct Metrics {
+        var size: CGSize
+        var actions: CGSize = .zero
+        var metadataX: CGFloat = 0
+        var metadataY: CGFloat = 0
+        var metadataWidth: CGFloat = 0
+        var identityX: CGFloat = 0
+        var identityY: CGFloat = 0
+        var identityWidth: CGFloat = 0
     }
 }
