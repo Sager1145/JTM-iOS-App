@@ -60,27 +60,37 @@ struct MapLayersView: View {
                 // down. Forcing them would throw away the arrangement the
                 // reader had; disabling them keeps the panel honest about what
                 // the map is drawing without spending their settings to do it.
+                //
+                // Each subordinate carries its OWN `disabled`, and that is a
+                // fix rather than a style. The three used to sit in a `Group`
+                // with one `.disabled(!routes)` on it, and inside a `Section`
+                // that modifier did not stay on the group: it reached the
+                // master switch beside it as well. So turning 列車経路 off
+                // disabled the very control that turns it back on — the switch
+                // took the tap, moved nothing, and the only way back was the
+                // map rail's own button. A one-way switch reads as a switch
+                // that has fallen off, which is exactly what it had.
                 Section {
                     Toggle(
                         localization.countryText("map.routes", fallback: "Train routes"),
                         isOn: $controller.layers.routes)
                     .accessibilityIdentifier("layerRoutes")
-                    Group {
-                        Toggle(
-                            localization.countryText("map.stops", fallback: "Intermediate stops"),
-                            isOn: $controller.layers.stops)
-                        .accessibilityIdentifier("layerStops")
-                        Toggle(
-                            localization.countryText(
-                                "map.terminals", fallback: "Terminals (origin / destination)"),
-                            isOn: $controller.layers.terminals)
-                        .accessibilityIdentifier("layerTerminals")
-                        Toggle(
-                            localization.countryText(
-                                "map.passThrough", fallback: "Pass-through stations"),
-                            isOn: $controller.layers.passThrough)
-                        .accessibilityIdentifier("layerPassThrough")
-                    }
+                    Toggle(
+                        localization.countryText("map.stops", fallback: "Intermediate stops"),
+                        isOn: $controller.layers.stops)
+                    .accessibilityIdentifier("layerStops")
+                    .disabled(!controller.layers.routes)
+                    Toggle(
+                        localization.countryText(
+                            "map.terminals", fallback: "Terminals (origin / destination)"),
+                        isOn: $controller.layers.terminals)
+                    .accessibilityIdentifier("layerTerminals")
+                    .disabled(!controller.layers.routes)
+                    Toggle(
+                        localization.countryText(
+                            "map.passThrough", fallback: "Pass-through stations"),
+                        isOn: $controller.layers.passThrough)
+                    .accessibilityIdentifier("layerPassThrough")
                     .disabled(!controller.layers.routes)
                 } header: {
                     Text(localization.countryText(
