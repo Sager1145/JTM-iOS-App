@@ -260,9 +260,6 @@ struct RailWorkspaceView: View {
         /// rather than from the shell because the shell is already presenting
         /// the resident bottom sheet, and one controller cannot present two.
         case utility(UtilityDestination)
-        /// §5.3.5's other share: the statistics page as a picture, already
-        /// rendered, with the system share sheet one tap below it.
-        case statisticsImage(StatisticsPoster.File)
 
         var id: String {
             switch self {
@@ -276,7 +273,6 @@ struct RailWorkspaceView: View {
             case .station(let card): "station:\(card.id)"
             case .chooseRide(let trains): "choose:\(trains.map(\.id).joined(separator: ","))"
             case .utility(let destination): "utility:\(destination.rawValue)"
-            case .statisticsImage(let file): "statisticsImage:\(file.id)"
             }
         }
     }
@@ -817,8 +813,6 @@ struct RailWorkspaceView: View {
                     appearance: $appearance,
                     network: store,
                     controller: controller)
-            case .statisticsImage(let file):
-                StatisticsShareView(file: file) { sheet = nil }
             }
         }
         // One surface for every sheet this workspace presents (§14.2, §6.5).
@@ -1376,6 +1370,24 @@ struct RailWorkspaceView: View {
     /// inside itself is the root map now — one basemap for all three
     /// destinations, which is what stopped this screen from being a second
     /// `MKMapView` over the first one.
+    /// The statistics destination's own presentation anchor — the first sheet
+    /// in this app that is not raised through `RidesSheet`.
+    ///
+    /// `RidesSheet`'s note says why there is normally one anchor: four
+    /// `isPresented` bindings racing for it is how a "Delete" dialog swallows
+    /// the editor opening behind it. That is about four bindings on ONE view.
+    /// `.utility`'s note states the other half — the shell cannot present these
+    /// at all, because it is already presenting the resident sheet and one
+    /// controller cannot present two.
+    ///
+    /// Neither says a destination inside that sheet may not have an anchor of
+    /// its own, and it can: `ConsoleSweepTests.walkStatisticsShare` opens this
+    /// one and then walks the shared anchor's sheets in the same run, with
+    /// nothing in the console about presenting twice. What makes it safe is
+    /// that the destinations are mutually exclusive — only the tab on screen
+    /// can be trying to present.
+    @State private var statisticsImage: StatisticsPoster.File?
+
     private var statisticsPanel: some View {
         PassportWorkspaceView(
             itineraries: itineraries,
@@ -1387,6 +1399,9 @@ struct RailWorkspaceView: View {
             region: $regionScope,
             openData: openData,
             openSettings: openSettings)
+        .sheet(item: $statisticsImage) { file in
+            StatisticsShareView(file: file) { statisticsImage = nil }
+        }
     }
 
     // MARK: - the panel header (§9.5.6: 左上大标题, 右上功能按钮)
@@ -1866,7 +1881,7 @@ struct RailWorkspaceView: View {
             accessibilityLabel: Text(localization.statsText("ios.stats.shareImage"))
         ) {
             guard let file = renderStatisticsImage() else { return }
-            PresentationHost.afterTeardown { sheet = .statisticsImage(file) }
+            PresentationHost.afterTeardown { statisticsImage = file }
         }
         .disabled(statistics.view == nil)
         .accessibilityIdentifier("statisticsShareButton")

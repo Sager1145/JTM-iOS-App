@@ -355,8 +355,12 @@ struct StatisticsShareView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(localization.text("ios.done", fallback: "Done"), action: onClose)
+                        .accessibilityIdentifier("statisticsShareCloseButton")
                 }
             }
+            // Identified rather than found by label: `ConsoleSweepTests` walks
+            // this surface, and the label is the reader's language.
+            .accessibilityIdentifier("statisticsShareSheet")
         }
     }
 }

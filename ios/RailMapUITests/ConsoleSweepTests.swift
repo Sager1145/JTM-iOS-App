@@ -26,10 +26,74 @@ final class ConsoleSweepTests: XCTestCase {
 
         walkDestinations(app)
         walkSheetStops(app)
+        walkStatisticsShare(app)
         walkMapSheets(app)
         walkUtilityMenu(app)
         walkJourneyDetailAndEditor(app)
         walkSearch(app)
+    }
+
+    /// §5.3.5's share image, and the one surface in this app presented from an
+    /// anchor of its own.
+    ///
+    /// Placed BEFORE the map and utility sheets deliberately. Every other sheet
+    /// here comes from the workspace's single `RidesSheet` anchor; this one
+    /// hangs off the statistics destination. Walking it and then walking the
+    /// shared anchor in the same run is what proves the two coexist — two
+    /// anchors under one presenting controller is exactly the arrangement that
+    /// produces "Attempt to present … which is already presenting", and that
+    /// failure is silent: the second sheet simply never appears.
+    private func walkStatisticsShare(_ app: XCUIApplication) {
+        let stats = app.tabBars.buttons.element(boundBy: index(of: "stats"))
+        guard stats.waitForExistence(timeout: 8) else {
+            XCTFail("the statistics destination is not on the tab bar")
+            return
+        }
+        stats.tap()
+        settle()
+
+        let share = element("statisticsShareButton", in: app)
+        guard share.waitForExistence(timeout: 8) else {
+            XCTFail("the statistics share button is not reachable")
+            return
+        }
+        // Disabled while the figures are still being computed — an image of a
+        // screen that is calculating is a picture of a spinner. Give it the
+        // time the sweep gives a sheet rather than failing on a cold launch.
+        guard share.isEnabled || share.waitForExistence(timeout: 6) else { return }
+        settle(1.5)
+        guard share.isEnabled else {
+            XCTFail("the statistics share button never became enabled")
+            return
+        }
+        share.tap()
+        settle(1.5)
+
+        XCTAssertTrue(
+            element("statisticsShareSheet", in: app).waitForExistence(timeout: 10),
+            "the statistics share sheet did not appear from its own anchor")
+
+        let close = element("statisticsShareCloseButton", in: app)
+        if close.waitForExistence(timeout: 4) {
+            close.tap()
+        } else {
+            app.swipeDown()
+        }
+        settle()
+
+        // Put the destination back: this step is the only one in the sweep
+        // that changes tabs mid-walk, and every step after it was written
+        // against the tab the walk launched on.
+        //
+        // It is NOT what makes `walkMapSheets` fail below. That was the first
+        // guess and it was wrong — the same failure reproduces with this whole
+        // step commented out, so the map rail is off-screen for a reason that
+        // predates it.
+        let all = app.tabBars.buttons.element(boundBy: index(of: "all"))
+        if all.waitForExistence(timeout: 6) {
+            all.tap()
+            settle()
+        }
     }
 
     // MARK: - the four destinations
