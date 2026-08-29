@@ -33,6 +33,12 @@ import SwiftUI
 /// These cards are drawn as passport pages rather than as system cards, which
 /// is the Memory personality §6.1 reserves for exactly this screen —
 /// "expressive / railway-signage / ticket-and-map metaphors / souvenir-like".
+/// They are printed in a Japanese railway ticket's own colours and on its own
+/// stock: the deep みどり of a 指定席券 for the data page, the warm apricot
+/// 地紋 of a 磁気乗車券 under the charts, 磁気券's orange for every bar, and a
+/// 改札印 in vermillion around the one date on the screen. `TicketPalette.swift`
+/// is where those five hues are written down, and the only place they are.
+///
 /// The tones come from `PassportCardStyle.swift` and are assigned here:
 ///
 ///   - `.feature`, once, for ``passportDataPage(_:_:)`` — the card that
@@ -304,7 +310,10 @@ struct StatisticsDashboardContent: View {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 PassportEyebrow(localization.statsText("ios.stats.dailyHeading"))
                 Spacer(minLength: 8)
-                PassportEyebrow(scopeLabel(daily.date))
+                // The day, in the frame a gate would have stamped it in — see
+                // ``PassportStamp``. Same string, same role, same voice: the
+                // frame is ink around the date and adds nothing to read.
+                PassportStamp(scopeLabel(daily.date))
             }
             PassportHeadline(
                 label: localization.statsText(
@@ -600,7 +609,11 @@ struct StatisticsDashboardContent: View {
                     spoken:
                         "\(StatisticsFormat.km(row.group.km)) km · \(serviceDetail(row.group))")
             }
-            Divider()
+            // `PassportRule`, not `Divider`: the system separator is a grey
+            // line, and every other hairline on these cards follows the paper
+            // it is drawn on. One card ruling itself differently from the nine
+            // beside it is the whole reason that component exists.
+            PassportRule()
             StatisticsMetricRow(
                 label: localization.statsText("stat.time"),
                 value: StatisticsFormat.duration(stats.rideMinutes, localization))
@@ -756,10 +769,14 @@ struct StatisticsDashboardContent: View {
         return Group {
             if !sections.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
-                    Label(
+                    // The same head row every other card on this screen opens
+                    // with. The card's SURFACE stays `.plain` — §6.1 keeps the
+                    // dense lists off the Memory stationery — but a card that
+                    // titled itself in a different type from the nine above it
+                    // read as a card from a different screen.
+                    PassportCardHeader(
                         localization.statsText("ios.stats.detailTitle"),
                         systemImage: "list.bullet.indent")
-                        .font(.headline)
                     ForEach(sections) { section in
                         DisclosureGroup {
                             VStack(spacing: 12) {

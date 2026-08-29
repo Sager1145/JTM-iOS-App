@@ -77,6 +77,15 @@ struct StatisticsProgressSummary: View {
 /// carrying the same numbers, so the chart is never the only place a value
 /// exists.
 struct StatisticsBar: View {
+    /// Which paper this bar is being drawn on.
+    ///
+    /// It used to read `Color.accentColor` over `Color.secondary` directly,
+    /// which agreed with the ink roles only by coincidence — the accent WAS
+    /// ``PassportInk/fill`` at the time. It is not any more (`TicketPalette`),
+    /// and the coincidence would have shown as a blue bar in a row of orange
+    /// ones the moment a soft card carried both this and a ranked row. Every
+    /// proportion on this screen now comes out of the same two roles.
+    @Environment(\.passportInk) private var ink
     let label: String
     /// The number shown at the trailing edge of the head row.
     let value: String
@@ -92,18 +101,20 @@ struct StatisticsBar: View {
             HStack(alignment: .firstTextBaseline) {
                 Text(label)
                     .font(.subheadline)
+                    .foregroundStyle(ink.title)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 8)
                 Text(value)
                     .font(.subheadline.weight(.semibold))
                     .monospacedDigit()
+                    .foregroundStyle(ink.title)
             }
             GeometryReader { geometry in
                 Capsule()
-                    .fill(Color.secondary.opacity(0.14))
+                    .fill(ink.track)
                     .overlay(alignment: .leading) {
                         Capsule()
-                            .fill(Color.accentColor)
+                            .fill(ink.fill)
                             .frame(width: geometry.size.width * clamped)
                     }
             }
@@ -122,7 +133,7 @@ struct StatisticsBar: View {
                 Text(detail)
                     .font(.caption)
                     .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(ink.caption)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -147,6 +158,10 @@ struct StatisticsBar: View {
 /// for the opposite case — a `ViewThatFits` candidate, which has to state its
 /// TRUE width or the arrangements below it are never reached. See `RailType`.)
 struct StatisticsMetricRow: View {
+    /// The same reason ``StatisticsBar`` reads the ink: the semantic roles and
+    /// the passport's own agree on a soft card and nowhere else, and a
+    /// component on this screen should not be the one that finds that out.
+    @Environment(\.passportInk) private var ink
     let label: String
     let value: String
 
@@ -155,10 +170,11 @@ struct StatisticsMetricRow: View {
             Text(value)
                 .font(.headline)
                 .monospacedDigit()
+                .foregroundStyle(ink.title)
                 .railType(.metricValueStacked)
         } label: {
             Text(label)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(ink.caption)
                 .railType(.metricLabel)
         }
     }

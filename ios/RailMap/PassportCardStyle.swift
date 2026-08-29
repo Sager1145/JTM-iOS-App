@@ -30,15 +30,17 @@ import SwiftUI
 ///   - ``PassportTone/plain`` is exactly the card this app already had, kept
 ///     for dense lists and for every non-statistics card in the workspace.
 ///
-/// ## The colours, and §6.2
+/// ## The colours
 ///
-/// §6.2 bans scattered hex and reserves green / orange / red for status. Both
-/// rules are kept here: every colour below is a **system palette** colour
-/// (`systemBlue`, `systemIndigo`) resolved through a trait closure, deepened
-/// by a factor rather than replaced by a literal, and none of the four status
-/// hues appears — so no card on this screen can be misread as a state. The
-/// deepening is what makes white ink legible: `systemBlue` under white text is
-/// about 3.6:1, and the same hue at 70 % brightness is about 7:1.
+/// They are a Japanese railway ticket's, and they live in `TicketPalette.swift`
+/// rather than here — this file is shape, spacing and ink ROLES, and that one
+/// is the five hues those roles resolve to. The split is what lets a card ask
+/// for "the block a figure is stamped into" without also deciding what colour
+/// a 改札印 is.
+///
+/// See `TicketPalette` for the reading of §6.2 that the ticket palette rests
+/// on, and for why the green there is the paper a ticket is issued on and
+/// never the ink a figure is drawn in.
 ///
 /// It is deliberately **not** `Color.accentColor`. §6.2 gives the tint role to
 /// "可点击、选中、当前路线", and a 200-point decorative surface is none of
@@ -90,15 +92,22 @@ struct PassportInk: Equatable {
     /// The translucent block a card nests inside itself — the reference's
     /// footer chip, and the highlight above a list.
     var chip: Color {
-        onColor
-            ? .white.opacity(increasedContrast ? 0.26 : 0.16)
-            : Color(.systemIndigo).opacity(increasedContrast ? 0.18 : 0.10)
+        onColor ? .white.opacity(increasedContrast ? 0.26 : 0.16) : TicketPalette.chip
     }
     /// The unfilled part of a proportion bar…
-    var track: Color { onColor ? .white.opacity(0.26) : Color.secondary.opacity(0.16) }
+    var track: Color { onColor ? .white.opacity(0.26) : TicketPalette.track }
     /// …and the filled part. Never the positive/green role: §5.3.5 is explicit
-    /// that a large number is not a success state.
-    var fill: Color { onColor ? .white : Color.accentColor }
+    /// that a large number is not a success state — which is exactly why
+    /// `TicketPalette`'s green is paper and its orange is ink.
+    var fill: Color { onColor ? .white : TicketPalette.fill }
+    /// 改札印 — the rule around a stamped date, and nothing else.
+    ///
+    /// A role of its own rather than a reuse of ``rule``, because it is the one
+    /// mark on these cards that is allowed to be a different colour from the
+    /// paper it is on: a gate stamp is inked in vermillion over whatever the
+    /// ticket happened to be printed on. It draws the FRAME only — the words
+    /// inside a stamp stay on ``eyebrow``, which answers to Increase Contrast.
+    var stamp: Color { onColor ? TicketPalette.stampInkOnColor : TicketPalette.stampInk }
 }
 
 private struct PassportInkKey: EnvironmentKey {
@@ -162,7 +171,7 @@ private struct PassportCardSurface: ViewModifier {
         switch tone {
         case .feature:
             ZStack(alignment: .bottomTrailing) {
-                PassportPalette.dataPage
+                TicketPalette.dataPage
                 // The guilloche a passport prints under its data page, in the
                 // one object this passport is about. Decoration, so it is
                 // hidden from VoiceOver and drawn far below the ink: at a
@@ -177,7 +186,7 @@ private struct PassportCardSurface: ViewModifier {
         case .soft:
             ZStack {
                 Color.railElevated(.secondarySystemBackground)
-                PassportPalette.wash
+                TicketPalette.stockWash
             }
         case .plain:
             Color.railElevated(.secondarySystemBackground)
@@ -194,74 +203,12 @@ private struct PassportCardSurface: ViewModifier {
                 shape.strokeBorder(Color.white.opacity(0.55), lineWidth: 1)
             }
         case .soft:
-            shape.strokeBorder(PassportPalette.keyline, lineWidth: 1)
+            shape.strokeBorder(TicketPalette.keyline, lineWidth: 1)
         case .plain:
             if contrast == .increased {
                 shape.strokeBorder(Color(.separator), lineWidth: 1)
             }
         }
-    }
-}
-
-/// The passport's own colours: two system hues, deepened.
-enum PassportPalette {
-
-    /// The data page. Blue into indigo along the diagonal, which is the
-    /// direction the eye reads the card in.
-    static var dataPage: LinearGradient {
-        LinearGradient(
-            colors: [
-                deepened(.systemBlue, light: 0.30, dark: 0.44),
-                deepened(.systemIndigo, light: 0.26, dark: 0.42),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing)
-    }
-
-    /// The tint wash on a soft card — the same two hues at the opacity where
-    /// they colour the paper without colouring the text on it.
-    static var wash: LinearGradient {
-        LinearGradient(
-            colors: [Color(.systemIndigo).opacity(0.12), Color(.systemBlue).opacity(0.04)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing)
-    }
-
-    static var keyline: Color {
-        Color(
-            UIColor { traits in
-                let strong = traits.accessibilityContrast == .high
-                return UIColor.systemIndigo.withAlphaComponent(strong ? 0.55 : 0.20)
-            })
-    }
-
-    /// A system hue at a fraction of its own brightness.
-    ///
-    /// Derived rather than written down, for the reason §6.2 gives: a literal
-    /// navy would not follow the appearance, would not answer Increase
-    /// Contrast, and would not move when the system palette is revised. HSB
-    /// keeps the hue exactly and touches only the two components that decide
-    /// whether white text on it is legible.
-    private static func deepened(_ base: UIColor, light: CGFloat, dark: CGFloat) -> Color {
-        Color(
-            UIColor { traits in
-                let resolved = base.resolvedColor(with: traits)
-                var hue: CGFloat = 0
-                var saturation: CGFloat = 0
-                var brightness: CGFloat = 0
-                var alpha: CGFloat = 0
-                guard
-                    resolved.getHue(
-                        &hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-                else { return resolved }
-                var amount = traits.userInterfaceStyle == .dark ? dark : light
-                if traits.accessibilityContrast == .high { amount += 0.08 }
-                return UIColor(
-                    hue: hue,
-                    saturation: min(1, saturation + 0.05),
-                    brightness: max(0, brightness * (1 - amount)),
-                    alpha: alpha)
-            })
     }
 }
 
@@ -449,6 +396,85 @@ struct PassportRule: View {
             .fill(ink.rule)
             .frame(height: 1)
             .accessibilityHidden(true)
+    }
+}
+
+/// ミシン目 — the perforation a ticket is torn along.
+///
+/// The one place a ruled line on these cards means something more than
+/// "different subject below": it is the seam between the ticket and its stub,
+/// and this app has exactly one of those — the all-time page, and the single
+/// day stamped underneath it. So it is a dash pattern rather than a solid
+/// hairline, and it is used ONCE, in ``StatisticsDashboardContent``.
+///
+/// Drawn as a stroked line rather than as a row of dots, because a dash
+/// pattern keeps its rhythm at any width and a fixed count of dots does not.
+/// Decoration, and hidden from VoiceOver: the block below already names itself.
+struct PassportPerforation: View {
+    @Environment(\.passportInk) private var ink
+
+    var body: some View {
+        Rectangle()
+            .fill(.clear)
+            .frame(height: 1)
+            .overlay {
+                // 3-on / 4-off, which at a 1-point line is the pitch a real
+                // ticket's perforation reads at from the distance a phone is
+                // held. `.butt` so the dashes stay dashes rather than merging
+                // into a dotted rule at their own round caps.
+                Line()
+                    .stroke(
+                        ink.rule,
+                        style: StrokeStyle(lineWidth: 1, lineCap: .butt, dash: [3, 4]))
+            }
+            .accessibilityHidden(true)
+    }
+
+    /// One horizontal line across whatever it is given, so the dash pattern
+    /// has a path to run along. `Rectangle` would stroke all four sides.
+    private struct Line: Shape {
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            path.move(to: CGPoint(x: rect.minX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+            return path
+        }
+    }
+}
+
+/// 改札印 — a date, in the frame a station master would have stamped it in.
+///
+/// A real gate stamp is a round rubber die carrying a station name and a date,
+/// inked in vermillion and set down slightly askew. Round is what this cannot
+/// be: the string inside is a localized date — 「2026年8月29日」, "29 Aug 2026",
+/// 「全部日期」 — and a circle sized for the longest of those is a circle with
+/// a hole in the middle for every other. So it is the rectangular 記念印 form
+/// instead, which is the other stamp on a Japanese ticket and takes any width.
+///
+/// The frame is the only mark on these cards drawn in an ink of its own
+/// (``PassportInk/stamp``). The TEXT inside is an ordinary ``PassportEyebrow``
+/// — vermillion type on a deep green card is not a contrast anyone should have
+/// to read a date through, and the stamp is decoration around information
+/// rather than information itself.
+///
+/// The tilt is 2°, which is enough to read as hand-stamped and small enough
+/// that the row above it does not look broken. It is a static rotation with no
+/// animation attached, so §9.4's Reduce Motion contract has nothing to degrade.
+struct PassportStamp: View {
+    @Environment(\.passportInk) private var ink
+    let text: String
+
+    init(_ text: String) { self.text = text }
+
+    var body: some View {
+        PassportEyebrow(text)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .overlay {
+                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                    .strokeBorder(ink.stamp, lineWidth: 1.4)
+            }
+            .rotationEffect(.degrees(-2))
     }
 }
 
