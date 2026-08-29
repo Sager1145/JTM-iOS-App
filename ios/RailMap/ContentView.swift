@@ -1315,6 +1315,11 @@ struct RailWorkspaceView: View {
     /// §5.1's list, and §5.2's journey card, as one surface with two layers.
     private func allJourneysPanel(stage: SheetStage, expansion: CGFloat) -> some View {
         ZStack(alignment: .top) {
+            // Neither layer fades as they hand over — see
+            // ``View/residentLayer(isTop:)`` for why a cross-fade between two
+            // backgroundless layers is two texts read through one another.
+            // The list leaves in one frame; the card that arrives carries the
+            // motion.
             ridesList
                 .residentLayer(isTop: panelRoute.isHome)
             // The card's header morphs against the SAME live number the panel
@@ -2188,6 +2193,10 @@ struct RailWorkspaceView: View {
     private func rideHero(stage: SheetStage, expansion: CGFloat) -> some View {
         if let train = selectedTrain {
             let presentation = presentation(for: train)
+            // The card settles into place as it opens — see
+            // ``ArrivingJourneyCard``, which is where the movement of the
+            // whole list-to-journey handover lives.
+            ArrivingJourneyCard(reduceMotion: reduceMotion) {
             RideCard(
                 train: train,
                 presentation: presentation,
@@ -2200,6 +2209,7 @@ struct RailWorkspaceView: View {
                 onSetRidden: { setRidden(train, $0) }
             )
             .padding(.top, 4)
+            }
         }
     }
 

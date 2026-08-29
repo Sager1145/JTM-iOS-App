@@ -82,6 +82,15 @@ enum RailMotion {
     /// the zoom §9.4 asks to remove.
     static let arrivalScale: CGFloat = 0.97
 
+    /// How far the journey card rises into place as it opens.
+    ///
+    /// Short, and short for the reason ``arrivalScale`` is bounded: this is a
+    /// card settling into the panel it belongs to, not a screen arriving from
+    /// off-stage. §9.1's rule against decoration applies to distance as much
+    /// as to scale — far enough that the card is seen to ARRIVE rather than to
+    /// appear, close enough that nothing is read in flight.
+    static let arrivalRise: CGFloat = 28
+
     /// A small anchored surface arriving or leaving: a callout, tooltip or
     /// compact popover. Unlike ``replace``, entry needs an immediate response,
     /// so it uses ease-out rather than a symmetric morphing curve.

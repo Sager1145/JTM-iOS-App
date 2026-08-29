@@ -97,16 +97,89 @@ extension View {
     /// written: the panel states its own height, so nothing here contributes
     /// to layout anyway, and proposing zero height to a covered `ScrollView`
     /// is what loses its offset. Hidden, inert, unspoken — and unchanged.
+    ///
+    /// ## The swap is a single frame, on purpose
+    ///
+    /// Both layers draw straight onto the panel's surface and neither carries
+    /// a background of its own, so any interval in which both are partly
+    /// visible is an interval in which the reader is looking at two sets of
+    /// text through one another. A cross-fade between them IS that interval —
+    /// it was 0.16 seconds here, short enough to pass for a flicker and long
+    /// enough to look like one, and slowing it down only made the double
+    /// exposure legible.
+    ///
+    /// So the layers do not animate at all: `nil` rather than no modifier,
+    /// which also stops a `withAnimation` around the selection from putting
+    /// the fade back on the layer that is leaving. The motion belongs to the
+    /// card that ARRIVES, over its own content, where there is nothing behind
+    /// it to show through — see ``ArrivingJourneyCard``.
     func residentLayer(isTop: Bool) -> some View {
         self
             .opacity(isTop ? 1 : 0)
             .allowsHitTesting(isTop)
             .accessibilityHidden(!isTop)
-            // A near-imperceptible continuity bridge for a touch-selected
-            // journey. Both layers stay mounted, so this opacity transition is
-            // interruptible and preserves list scroll state. Keyboard callers
-            // suppress it with `RailMotion.withoutAnimation`.
-            .animation(RailMotion.crossfade, value: isTop)
+            .animation(nil, value: isTop)
+    }
+}
+
+/// The journey card, settling into the place the list just left.
+///
+/// ## Why this is a view with state, and not a transition
+///
+/// The obvious spelling of an arrival is a `.transition` on the card, or an
+/// offset on the layer that holds it. Neither works here, and the reason is
+/// the same for both: `ridesList` is mounted before the reader taps a row and
+/// after it, so anything the LIST layer animates has a previous value to
+/// travel from — but the card is built when a journey is selected and taken
+/// down when it is not. On the frame it arrives, every value it has is being
+/// created at its resting state. Measured over a slowed-down handover, the
+/// list moved and the card simply appeared, fully drawn, in one frame.
+///
+/// So the arrival is driven by state that changes AFTER the card is mounted.
+/// `settled` is `false` for exactly one rendered frame — the card is laid out
+/// where it belongs and drawn slightly small, slightly low and invisible —
+/// and then `task` springs it to its resting state. That is a transaction
+/// like any other, with a before and an after, which is the one thing an
+/// insertion cannot give.
+///
+/// Rising rather than sliding in from a side, because the row it came from
+/// was below it in the same panel; scaling from `.top` rather than the
+/// middle, because the header is the part that has to look planted while the
+/// rest of the card is still on its way.
+///
+/// There is no matching departure. Closing the card puts the reader back on a
+/// list that is ALREADY drawn underneath it, so a card animating out is a
+/// card the list is read through for the length of the animation — the one
+/// thing this arrangement cannot afford. Going in is a movement; coming back
+/// is a cut.
+struct ArrivingJourneyCard<Content: View>: View {
+    /// §9.4: less motion means the card fades into place from where it
+    /// belongs, rather than travelling or growing there.
+    var reduceMotion: Bool
+    @ViewBuilder var content: Content
+
+    @State private var settled = false
+
+    var body: some View {
+        content
+            .scaleEffect(scale, anchor: .top)
+            .offset(y: rise)
+            .opacity(settled ? 1 : 0)
+            .task {
+                withAnimation(
+                    RailMotion.animation(RailMotion.spring, reduceMotion: reduceMotion)
+                ) {
+                    settled = true
+                }
+            }
+    }
+
+    private var scale: CGFloat {
+        settled || reduceMotion ? 1 : RailMotion.arrivalScale
+    }
+
+    private var rise: CGFloat {
+        settled || reduceMotion ? 0 : RailMotion.arrivalRise
     }
 }
 
