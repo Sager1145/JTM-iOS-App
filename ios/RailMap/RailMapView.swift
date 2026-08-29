@@ -528,6 +528,12 @@ struct RailMapView: View {
                 // the drawing does. An index is built once per region and
                 // never mutated, so its presence is the whole of the news.
                 let indexesChanged = Set(categoryIndexes.keys) != Set(self.categoryIndexes.keys)
+                // Read here, while `self.layers` is still the previous pass's:
+                // the tap index carries only the segments 已乘路線顯示 leaves
+                // drawn (see ``drawnStrokes(of:)``), so a category switched off
+                // — or back on — moves the hit geometry without moving a
+                // single ride.
+                let categoriesChanged = layers.categories != self.layers.categories
                 // Every 顯示調節 number is a width, a radius or an opacity of
                 // something already drawn, so a change to one is a rebuild like
                 // any other rather than a separate code path.
@@ -555,12 +561,20 @@ struct RailMapView: View {
                 self.showsNetwork = showsNetwork
                 self.basemapOpacity = basemapOpacity
                 self.selectedTrainID = selectedTrainID
-                if ridesChanged {
-                    self.rides = rides
-                    // The tap cull's geometry moved. Dropped rather than
-                    // rebuilt: `update` runs inside a SwiftUI pass, and a pass
-                    // over every ridden vertex is the thing this index exists
-                    // to keep out of one. See ``tapIndex()``.
+                if ridesChanged { self.rides = rides }
+                // The tap cull's geometry moved. Dropped rather than rebuilt:
+                // `update` runs inside a SwiftUI pass, and a pass over every
+                // ridden vertex is the thing this index exists to keep out of
+                // one. See ``tapIndex()``.
+                //
+                // Three ways for it to move, and only the first is the rides
+                // themselves. A category switched off takes its segments out of
+                // the index, and a region's edge index ARRIVING is what lets
+                // those segments be classified at all — before it lands every
+                // one of them is undetermined and therefore drawn, so the tap
+                // geometry the reader ends up with is not the one built a
+                // moment earlier.
+                if ridesChanged || categoriesChanged || indexesChanged {
                     cachedTapIndex = nil
                 }
                 if stationsChanged {
@@ -1730,9 +1744,43 @@ struct RailMapView: View {
                 if let cachedTapIndex { return cachedTapIndex }
                 let interval = RailSignpost.map.begin("map.tapIndex.build")
                 defer { RailSignpost.map.end("map.tapIndex.build", interval) }
-                let index = RideTapIndex(rides: rides)
+                let index = RideTapIndex(rides: rides, drawnStrokes: drawnStrokes)
                 cachedTapIndex = index
                 return index
+            }
+
+            /// The runs of one ride that are actually on the map.
+            ///
+            /// 已乘路線顯示 hides ridden line by CATEGORY, and it does so per
+            /// segment — a 新幹線 run with a metro leg on the end loses the
+            /// leg, not the run. The web app filters the same thing out of the
+            /// source `renderTrainLayers` pushes, and the pick layer reads that
+            /// source, so a stretch the reader has switched off is not clicked
+            /// there either. The index used to be built from `ride.strokes`,
+            /// which knows nothing about any of this: 地下鐵 off left every
+            /// subway leg invisible and still selectable, which is the same
+            /// complaint as a tap on a hidden ride and the same answer.
+            ///
+            /// A dropped run is handed back as an empty array rather than
+            /// removed: `RideTapIndex` reads a stroke's position as the
+            /// segment it came from, and a stroke of fewer than two points
+            /// draws nothing and is skipped by both the chunker and
+            /// ``RideTapResolver/hits(at:among:tolerance:)``.
+            ///
+            /// The whole geometry, unexamined, whenever no category is off —
+            /// which is the state the app ships in, and `draws(segment:…)`
+            /// would answer `true` for every segment anyway. That fast path is
+            /// also what keeps `MapRideMarkers.rideFlags` off this path
+            /// entirely until a filter is on.
+            private func drawnStrokes(
+                of ride: RiddenRouteStore.DrawnRide
+            ) -> [[Coordinate]] {
+                guard layers.categories.anyHidden else { return ride.strokes }
+                let riddenStops = MapRideMarkers.rideFlags(ride.stops)
+                return ride.segments.map { segment in
+                    draws(segment: segment, of: ride, riddenStops: riddenStops)
+                        ? segment.coordinates : []
+                }
             }
 
             /// Whether one drawn segment's ridden-line category is switched on.
@@ -1973,6 +2021,30 @@ struct RailMapView: View {
             @objc func handleMapTap(_ recognizer: UITapGestureRecognizer) {
                 guard recognizer.state == .ended, let mapView,
                       playbackLayer.lastSnapshot == nil else { return }
+                // 列車経路 off takes the rides' HIT AREA with their ink.
+                //
+                // `RailMap.setVisible` moves `TRAIN_PICK_LAYER` and
+                // `TRAIN_PICK_FAN_LAYER` — the layers a click is resolved
+                // against — along with the drawn ones, and MapLibre answers no
+                // rendered feature from a hidden layer, so in the browser a
+                // click over a hidden route is a click on bare ground. Here the
+                // tap index was built from the rides themselves, which do not
+                // know whether they were drawn: with the switch off the reader
+                // tapped an empty basemap and got a journey card, or the
+                // ambiguity chooser offering three journeys none of which was
+                // on screen.
+                //
+                // Answered as a tap on empty map rather than swallowed, which
+                // is what it now is: nothing of the reader's is drawn, so §4.4's
+                // rule that empty ground clears the selection is the same rule
+                // here. `tappedStationOfSelectedRide` is not consulted for the
+                // same reason — `MapLayers.draws(role:)` is gated on this
+                // switch, so there is no bead of any ride on the map to have
+                // been meant.
+                guard layers.routes else {
+                    onSelectRide([])
+                    return
+                }
                 let point = recognizer.location(in: mapView)
                 let interval = RailSignpost.map.begin("map.tap")
                 defer { RailSignpost.map.end("map.tap", interval) }

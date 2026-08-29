@@ -103,6 +103,58 @@ final class MapLayerToggleTests: XCTestCase {
             "and the rail's own button must report the state the sheet just set.")
     }
 
+    /// A ride that is not drawn is not a target either.
+    ///
+    /// `RailMap.setVisible` moves the pick layers with the drawn ones, so a
+    /// click over a hidden route hits nothing in the browser. The native tap
+    /// index was built from the rides themselves, which do not know whether
+    /// they were drawn: with 列車経路 off, a tap on empty basemap opened a
+    /// journey card — or the ambiguity chooser, listing journeys none of which
+    /// was on screen.
+    ///
+    /// The first half is the control: without it, "nothing was selected" would
+    /// also be the answer when the tap simply stopped landing on a line.
+    func testAHiddenRideIsNotSelectable() {
+        let drawn = launchOverTokyo()
+        XCTAssertTrue(
+            tapSelectsARide(drawn),
+            "the tap no longer lands on a ridden line — the camera or the sample moved, "
+                + "and the other half of this test proves nothing until it does again")
+        attach(drawn, named: "08-tap-selects-a-drawn-ride")
+        drawn.terminate()
+
+        let hidden = launchOverTokyo(hiding: "routes")
+        XCTAssertFalse(
+            tapSelectsARide(hidden),
+            "With 列車経路 off there is nothing of the reader's on the map, so a tap on "
+                + "one of its lines must read as a tap on empty ground.")
+        attach(hidden, named: "09-tap-on-hidden-ride-selects-nothing")
+    }
+
+    /// And a ride 已乘路線顯示 has filtered out is not a target either.
+    ///
+    /// The same rule one switch further down: the web app filters hidden
+    /// categories out of the source the pick layer reads, so a 地下鐵 stretch
+    /// the reader has switched off is not clickable there. Per SEGMENT, which
+    /// is why the aim is a metro line rather than a metro journey.
+    ///
+    /// No control half here — ``testAHiddenRideIsNotSelectable`` is it, and it
+    /// fails first if this aim ever stops finding a line.
+    func testACategoryHiddenRideIsNotSelectable() {
+        let app = launchOverTokyo(hiding: "metro")
+        // Until the region's network has been read, every segment is
+        // UNDETERMINED and therefore still drawn (and still tappable) — see
+        // the renderer's `draws(segment:…)`. So this waits for the
+        // classification rather than for the map, and an insufficient wait
+        // fails the test rather than passing it for the wrong reason.
+        Thread.sleep(forTimeInterval: 18)
+        attach(app, named: "10-metro-filtered-off")
+        XCTAssertFalse(
+            tapSelectsARide(app),
+            "A ridden stretch whose category is switched off is not on the map, so it "
+                + "must not answer a tap on where it used to be.")
+    }
+
     /// The network group exists and both of its switches operate.
     func testNetworkStationSwitchesExist() {
         let app = launch()
@@ -182,5 +234,53 @@ final class MapLayerToggleTests: XCTestCase {
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
         app.launch()
         return app
+    }
+
+    // MARK: - the tap tests' shared aim
+
+    /// Tokyo, at the zoom the sample's metro lines are legible from.
+    ///
+    /// A camera the test SETS rather than one it pans to: `setRegion` fits
+    /// this span to the window, so the fraction below lands on the same
+    /// geography whatever the launch camera would have chosen.
+    private static let tokyoCamera = "35.68,139.75,0.12"
+
+    /// Where on the window the 丸ノ内線 runs between 新大塚 and 茗荷谷 under
+    /// ``tokyoCamera``.
+    ///
+    /// Chosen because it is one line on its own — the tap resolves to a single
+    /// journey rather than to the ambiguity chooser — and because it is 地下鐵,
+    /// which is what makes it usable by both tests below.
+    private static let riddenMetroLine = CGVector(dx: 148.0 / 402.0, dy: 277.0 / 874.0)
+
+    /// Launch over ``tokyoCamera``, with `layers` switched off.
+    private func launchOverTokyo(hiding layers: String? = nil) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = Self.tokyoCamera
+        if let layers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers }
+        app.launch()
+        // The camera hook waits for the map to exist and then for its own
+        // beat, and the rides land as their packages decode. There is nothing
+        // in the tree to wait ON — a map is one element whatever is drawn in
+        // it — so this is one of the two places in this suite that sleeps.
+        Thread.sleep(forTimeInterval: 12)
+        return app
+    }
+
+    /// Whether a tap on ``riddenMetroLine`` selected a journey.
+    ///
+    /// `journeyPrimaryAction` is the selected journey's own button, so it
+    /// exists exactly while the panel is showing one — which is the question
+    /// here, asked without depending on the reader's language.
+    private func tapSelectsARide(_ app: XCUIApplication) -> Bool {
+        app.coordinate(withNormalizedOffset: Self.riddenMetroLine).tap()
+        // Long enough for the card to arrive, and asserted on afterwards
+        // rather than waited for: a `waitForExistence` here would answer the
+        // negative case only by timing out, which is the case both callers
+        // care about most.
+        Thread.sleep(forTimeInterval: 4)
+        return app.buttons["journeyPrimaryAction"].exists
     }
 }

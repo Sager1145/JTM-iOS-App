@@ -70,7 +70,21 @@ struct RideTapIndex {
     /// tap avoided.
     let vertexCount: Int
 
-    init(rides: [RiddenRouteStore.DrawnRide]) {
+    /// - Parameter drawnStrokes: which of a ride's runs are ON THE MAP, in
+    ///   `DrawnRide.strokes` order — a run the caller has left out is given as
+    ///   an empty array rather than removed, so a stroke's index still names
+    ///   the segment it came from.
+    ///
+    ///   It is a parameter because this index decides what a tap can HIT, and
+    ///   the answer has to be what the reader can see: 已乘路線顯示 hides
+    ///   whole categories of ridden line, and the ride objects carry no record
+    ///   of it — the classification lives with the renderer, against each
+    ///   region's own edge index. Defaulted to the whole geometry so the
+    ///   ordinary case, every category on, states nothing.
+    init(
+        rides: [RiddenRouteStore.DrawnRide],
+        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]] = { $0.strokes }
+    ) {
         var strokes: [[[Coordinate]]] = []
         var ids: [String] = []
         var chunks: [Chunk] = []
@@ -80,7 +94,7 @@ struct RideTapIndex {
         for (rideIndex, ride) in rides.enumerated() {
             // `strokes` is a computed property that rebuilds its outer array
             // on every read; read it once here and never again per tap.
-            let rideStrokes = ride.strokes
+            let rideStrokes = drawnStrokes(ride)
             for (strokeIndex, stroke) in rideStrokes.enumerated() {
                 vertices += stroke.count
                 for range in RideTapResolver.chunkRanges(count: stroke.count) {
