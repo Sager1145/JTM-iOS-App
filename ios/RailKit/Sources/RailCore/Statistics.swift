@@ -1066,6 +1066,28 @@ public enum Statistics {
         public var rideMinutes: Double = 0
         public var services: ServiceGroups = ServiceGroups()
         public var topSegments: TopSegments? = nil
+
+        /// The part of ``riddenAll`` a coverage percentage may be taken of.
+        ///
+        /// ``riddenAll`` is every kilometre the reader rode, which is the
+        /// right answer to 総乗車距離 and the wrong one to 網路覆蓋率. It
+        /// includes the connector spans the walk bridges gaps with, and the
+        /// mask-0 ones among them are by definition distance that landed on no
+        /// classified edge at all — while the denominator is the classified
+        /// network and nothing else. Left in, a ride that never touched the
+        /// network would raise the percentage of the network said to be
+        /// covered.
+        ///
+        /// The MASKED spans stay: `collectTrainStatsEntry` records those with
+        /// the category of the edge they reconnect to precisely because they
+        /// are the network, minus the exact edge id the index happened not to
+        /// carry — which is the same reading `riddenByMask` already takes of
+        /// them. Only the remainder this subtracts is unattributable, and
+        /// ``unmatchedKm`` is the figure the passport states it in.
+        ///
+        /// Derived rather than aggregated, so `aggregateMileageStats` keeps
+        /// returning the two figures the port fixtures pin bit-for-bit.
+        public var networkKm: Double { riddenAll - unmatchedKm }
     }
 
     /// The deduped union. **This is the function the whole panel means.**

@@ -381,10 +381,15 @@ struct StatisticsDashboardContent: View {
         unconfirmed: Int
     ) -> some View {
         let total = statistics.totalKm
-        let pct = total > 0 ? 100 * stats.riddenAll / total : 0
+        // The headline distance and the coverage fraction are two different
+        // numbers and always were — see ``Statistics/MileageStats/networkKm``.
+        // The gap between them is exactly the unmatched note at the foot of
+        // this card, which is why the two are drawn on the one surface.
+        let pct = total > 0 ? 100 * stats.networkKm / total : 0
         let ridden = riddenLines(stats)
         let laps = aroundTheWorld(stats.riddenAll)
         let distance = StatisticsFormat.km(stats.riddenAll)
+        let covered = StatisticsFormat.km(stats.networkKm)
         return VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 5) {
                 // No region chip and no date menu on the card. Both scopes are
@@ -435,15 +440,22 @@ struct StatisticsDashboardContent: View {
             PassportBand(
                 label: localization.statsText("stats.coverageTitle"),
                 value: "\(StatisticsFormat.percent(pct))%",
-                detail: "\(distance) / \(StatisticsFormat.km(total)) km",
-                fraction: total > 0 ? stats.riddenAll / total : 0,
-                spoken: coverageSpoken(ridden: stats.riddenAll, total: total))
+                detail: "\(covered) / \(StatisticsFormat.km(total)) km",
+                fraction: total > 0 ? stats.networkKm / total : 0,
+                spoken: coverageSpoken(ridden: stats.networkKm, total: total))
 
             // The selected day, stamped on the page it is part of (§5.3.3's
             // Daily module). Below the all-time block rather than above it, so
             // the passport's own headline and fields stay contiguous and the
             // day reads as what it is: one entry in them.
+            //
+            // The perforation is the seam a ticket is torn along, and this is
+            // the one seam this screen has: everything above it is every
+            // journey ever taken, everything below it is one day out of them.
+            // Drawn here rather than inside ``dailyStamp`` because a stub does
+            // not carry its own tear line — the ticket it came off does.
             if let daily = statistics.view?.daily {
+                PassportPerforation()
                 dailyStamp(daily)
             }
 
@@ -462,7 +474,12 @@ struct StatisticsDashboardContent: View {
             // §5.7: a neutral note, not the critical role. Unmatched distance
             // means the drawn ride left the classified network for a stretch —
             // it is information about coverage, not a data error.
-            if stats.unmatchedKm > 0.01 {
+            //
+            // Gated on what the note will SAY rather than on what it holds:
+            // `StatisticsFormat.km` keeps one decimal below 100 km, so any
+            // remainder under 0.05 renders as "0.0" — a card stating that
+            // nothing is missing, in the words of something being missing.
+            if stats.unmatchedKm >= 0.05 {
                 PassportNote(
                     title: localization.statsText("ios.stats.unmatchedTitle"),
                     message: localization.text(
@@ -537,7 +554,7 @@ struct StatisticsDashboardContent: View {
     private func coverageCard(_ view: Statistics.MileageStatsView) -> some View {
         let stats = view.overall
         let total = statistics.totalKm
-        let pctAll = total > 0 ? 100 * stats.riddenAll / total : 0
+        let pctAll = total > 0 ? 100 * stats.networkKm / total : 0
         return VStack(alignment: .leading, spacing: 16) {
             PassportCardHeader(
                 localization.statsText("stats.coverageTitle"),
@@ -545,9 +562,9 @@ struct StatisticsDashboardContent: View {
             StatisticsBar(
                 label: localization.statsCategoryText("stat.all"),
                 value: "\(StatisticsFormat.percent(pctAll))%",
-                detail: "\(StatisticsFormat.km(stats.riddenAll)) / \(StatisticsFormat.km(total)) km",
-                fraction: total > 0 ? stats.riddenAll / total : 0,
-                spoken: coverageSpoken(ridden: stats.riddenAll, total: total))
+                detail: "\(StatisticsFormat.km(stats.networkKm)) / \(StatisticsFormat.km(total)) km",
+                fraction: total > 0 ? stats.networkKm / total : 0,
+                spoken: coverageSpoken(ridden: stats.networkKm, total: total))
             ForEach(view.categories, id: \.mask) { category in
                 let ridden = stats.riddenByMask[category.mask] ?? 0
                 let categoryTotal = statistics.totalsByMask[category.mask] ?? 0

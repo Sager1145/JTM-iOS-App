@@ -615,6 +615,45 @@ struct StatisticsParityTests {
         #expect(stats.riddenByMask[Statistics.maskCONV] == entry.km)
     }
 
+    /// A coverage percentage is a fraction OF the network, so the one part of
+    /// `riddenAll` that reached no classified edge is not in its numerator.
+    ///
+    /// The ride here never touches the index at all and stays inside
+    /// `maxBridgeKm`, so the walk files the whole of it as one mask-0
+    /// connector span: distance genuinely ridden, and distance the network
+    /// cannot be said to be any more covered for. `riddenAll` keeps it —
+    /// 総乗車距離 is what the reader rode — and `networkKm` does not.
+    ///
+    /// Compared within a rounding error rather than on `bitPattern`, against
+    /// this file's usual doctrine, because the subtraction is the point:
+    /// `(x + y) - y` is not `x` in IEEE 754, and an exact assertion here would
+    /// be a claim about float arithmetic rather than about coverage.
+    @Test("networkKm holds back the distance unmatchedKm reports")
+    func networkKmExcludesTheUnmatchedRemainder() throws {
+        let a = Coordinate(lon: 139.0, lat: 35.0)
+        let b = Coordinate(lon: 139.01, lat: 35.0)
+        let properties = Statistics.SectionProperties(
+            n02_001: .string("11"), n02_002: .string("2"),
+            n02_003: .string("test"), n02_004: .string("東日本旅客鉄道"))
+        let index = Statistics.buildEdgeIndex(
+            sections: [.init(properties: properties, coordinates: [a, b])],
+            country: "jp")
+        let off = Coordinate(lon: 140.0, lat: 36.0)
+        let offEnd = Coordinate(lon: 140.01, lat: 36.0)
+        let entry = Statistics.collectTrainStatsEntry(
+            features: [
+                .init(lines: [[a, b]], rideSegment: true, from: "A", to: "B"),
+                .init(lines: [[off, offEnd]], rideSegment: true, from: "C", to: "D"),
+            ],
+            index: index)
+        let stats = Statistics.aggregateMileageStats(
+            index: index, entries: [entry], country: "jp")
+
+        #expect(stats.unmatchedKm > 0)
+        #expect(stats.networkKm < stats.riddenAll)
+        #expect(abs(stats.networkKm - index.km[0]) <= .ulpOfOne * stats.riddenAll)
+    }
+
     // MARK: - the deduped union
 
     @Test("aggregateMileageStats folds repeat rides into one union")
