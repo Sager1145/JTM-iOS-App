@@ -346,9 +346,9 @@ struct StatisticsShareView: View {
                         localization.text("ios.share", fallback: "Share"),
                         systemImage: "square.and.arrow.up")
                         .frame(maxWidth: .infinity)
-                        .frame(minHeight: 32)
                 }
                 .buttonStyle(.borderedProminent)
+                .railMinimumTouchTarget()
                 .padding(16)
                 .background(.bar)
             }

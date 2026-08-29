@@ -2089,6 +2089,7 @@ struct RailWorkspaceView: View {
                     selection = .all
                 }
                 .buttonStyle(.bordered)
+                .railMinimumTouchTarget()
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 24)

@@ -210,6 +210,7 @@ struct SheetCloseButton: View {
                     .foregroundStyle(.secondary)
             }
             .buttonStyle(.plain)
+            .railMinimumTouchTarget()
             .accessibilityLabel(accessibilityLabel)
         }
     }

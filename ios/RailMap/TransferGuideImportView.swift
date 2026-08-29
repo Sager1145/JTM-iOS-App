@@ -468,6 +468,7 @@ struct TransferGuideImportView: View {
                         .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .railMinimumTouchTarget()
                     .accessibilityIdentifier("guideImportCommit")
                     .disabled(draft.build.trains.isEmpty || itineraries.isImporting)
                     if draft.build.trains.isEmpty {
@@ -485,6 +486,7 @@ struct TransferGuideImportView: View {
                 Text(localization.guideText("ios.guide.done")).frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
+            .railMinimumTouchTarget()
             .padding(.horizontal)
             .padding(.vertical, 10)
             .background(.bar)

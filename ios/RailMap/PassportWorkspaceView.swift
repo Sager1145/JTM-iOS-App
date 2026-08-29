@@ -157,6 +157,7 @@ private struct PassportShareCard: View {
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
+        .railMinimumTouchTarget()
         .disabled(!canReplay)
     }
 
@@ -168,5 +169,6 @@ private struct PassportShareCard: View {
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.bordered)
+        .railMinimumTouchTarget()
     }
 }

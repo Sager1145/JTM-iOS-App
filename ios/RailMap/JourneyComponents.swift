@@ -731,8 +731,7 @@ struct QuietActionGroup: View {
         // A compact visual button with the same 44-point landing area as the
         // header icons. The action stays easy to hit without reading as a
         // full-width call-to-action that overwhelms the journey itself.
-        .frame(height: 44)
-        .contentShape(.rect)
+        .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
         // Which action this IS varies by state — 経路 / 播放 / 聚焦 — and its
         // label is the reader's language on top of that, so a harness has no
@@ -762,8 +761,7 @@ struct QuietActionGroup: View {
         }
         .buttonStyle(.bordered)
         .controlSize(.regular)
-        .frame(height: 44)
-        .contentShape(.rect)
+        .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
     }
 
@@ -786,6 +784,7 @@ struct QuietActionGroup: View {
                 .padding(.vertical, 10)
         }
         .buttonStyle(.bordered)
+        .railMinimumTouchTarget()
         .accessibilityLabel(Text(appearance.label))
     }
 
@@ -853,6 +852,7 @@ struct QuietActionGroup: View {
             .padding(.vertical, 10)
         }
         .buttonStyle(.bordered)
+        .railMinimumTouchTarget()
         .accessibilityLabel(
             Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
     }

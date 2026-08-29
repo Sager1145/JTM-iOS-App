@@ -353,6 +353,7 @@ struct DataImportView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .railMinimumTouchTarget()
                 .disabled(flow.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             case .checking, .importing:
                 Button(role: .cancel) { flow.cancel() } label: {
@@ -360,6 +361,7 @@ struct DataImportView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
+                .railMinimumTouchTarget()
             case .checked(let report):
                 if report.isCommittable {
                     Button {
@@ -373,6 +375,7 @@ struct DataImportView: View {
                         .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .railMinimumTouchTarget()
                 } else {
                     // §3.3: an import that failed its preflight gets no
                     // prominent button. Fixing the input is the action.
@@ -382,6 +385,7 @@ struct DataImportView: View {
                         Text(localization.dataText("data.recheck")).frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    .railMinimumTouchTarget()
                 }
             case .finished:
                 Button { dismiss() } label: {
@@ -389,6 +393,7 @@ struct DataImportView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .railMinimumTouchTarget()
             case .failed:
                 Button {
                     flow.reset()
@@ -396,6 +401,7 @@ struct DataImportView: View {
                     Text(localization.dataText("data.recheck")).frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
+                .railMinimumTouchTarget()
             }
         }
         .padding()

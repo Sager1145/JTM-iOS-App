@@ -157,6 +157,7 @@ struct DataManagerView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .railMinimumTouchTarget()
                 .disabled(itineraries.isImporting)
             }
             .padding(.vertical, 6)
