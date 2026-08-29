@@ -147,6 +147,11 @@ struct JourneyStateBlock: View {
 /// Times are `monospacedDigit` (§14.2) and are never reformatted: `25:10` is a
 /// business fact about an overnight service, and turning it into `01:10` on the
 /// next date loses the thing the reader wrote down.
+///
+/// Between the two endpoints is a ``connector(_:)`` rather than an arrow: it
+/// carries how long the ride takes, because that is the subtraction a reader
+/// does for themselves the moment they see two times, and because the middle
+/// of this row was otherwise the widest empty space on the card.
 struct RouteTimingView: View {
     var origin: String
     var destination: String
@@ -163,6 +168,17 @@ struct RouteTimingView: View {
     var region: Region? = nil
 
     @Environment(AppLocalization.self) private var localization
+    /// The two bands an endpoint prints in: one line of `.headline` for the
+    /// station and one of `.title3` for the time.
+    ///
+    /// The connector reserves the same two, which is what puts its arrow on
+    /// the STATIONS' line and the elapsed time on the TIMES' line instead of
+    /// both floating between the two. Scaled rather than fixed for the reason
+    /// every other measured line in this app is: at an accessibility size the
+    /// bands grow and the connector has to grow with them, or the row that was
+    /// aligned at `.large` is a stack of three drifting things at `.xxxLarge`.
+    @ScaledMetric(relativeTo: .headline) private var nameLineHeight: CGFloat = 22
+    @ScaledMetric(relativeTo: .title3) private var timeLineHeight: CGFloat = 25
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -178,11 +194,7 @@ struct RouteTimingView: View {
             endpoint(
                 origin, code: originCode, time: departure, platform: originPlatform,
                 alignment: .leading)
-            Image(systemName: "arrow.right")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .accessibilityHidden(true)
-                .padding(.top, 2)
+            connector(.rightwards)
             endpoint(
                 destination, code: destinationCode, time: arrival,
                 platform: destinationPlatform, alignment: .trailing)
@@ -194,15 +206,117 @@ struct RouteTimingView: View {
             endpoint(
                 origin, code: originCode, time: departure, platform: originPlatform,
                 alignment: .leading)
-            Image(systemName: "arrow.down")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .accessibilityHidden(true)
+            connector(.downwards)
             endpoint(
                 destination, code: destinationCode, time: arrival,
                 platform: destinationPlatform, alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Which way this row runs, which is also which way its arrow points.
+    private enum ConnectorDirection { case rightwards, downwards }
+
+    /// The arrow between the two endpoints, and how long the ride between them
+    /// takes.
+    ///
+    /// The middle of the side-by-side form is the widest empty space on the
+    /// selected journey's card — two short station names leave most of the row
+    /// to a single small glyph — and the number that belongs in it is the one
+    /// fact the row implies without ever saying: a reader looking at 16:14 and
+    /// 17:06 is subtracting them. So the empty column carries the answer
+    /// instead of white space, and the arrow stops floating alone in it.
+    ///
+    /// Deliberately the only thing added here. A duration is derived from what
+    /// is already printed, so it cannot disagree with the row; anything else
+    /// that would fill the same space (the operator, the line, the distance)
+    /// is L3 material and belongs to the detail below, not to the Hero.
+    @ViewBuilder
+    private func connector(_ direction: ConnectorDirection) -> some View {
+        switch direction {
+        case .rightwards:
+            // Under the arrow rather than beside it, which keeps the middle
+            // column no wider than the wider of the two. Width spent here is
+            // width taken from the station names — and it is the names, not
+            // the connector, that `ViewThatFits` is protecting when it drops
+            // to the stacked form.
+            //
+            // The two bands and the 2-point gap between them are `endpoint`'s
+            // own, so this column is the same two lines the endpoints either
+            // side of it are: arrow beside the stations, minutes beside the
+            // times.
+            VStack(spacing: 2) {
+                arrow(direction)
+                    .frame(height: nameLineHeight)
+                elapsedLabel(band: timeLineHeight)
+            }
+        case .downwards:
+            // Beside the arrow here, for the mirror-image reason: the stacked
+            // form exists because the row ran out of WIDTH, so it has width to
+            // spare and no height to spare. No band either — there are no two
+            // columns left to line up with.
+            HStack(spacing: 6) {
+                arrow(direction)
+                elapsedLabel(band: nil)
+            }
+        }
+    }
+
+    private func arrow(_ direction: ConnectorDirection) -> some View {
+        Image(systemName: direction == .rightwards ? "arrow.right" : "arrow.down")
+            .font(.footnote.weight(.semibold))
+            .foregroundStyle(.tertiary)
+            .accessibilityHidden(true)
+    }
+
+    /// The elapsed time, centred in the band it is given.
+    ///
+    /// The band is passed in rather than applied outside, because a `nil`
+    /// duration must take no height at all: a frame wrapped around the empty
+    /// case would reserve a line for a number that is not there, and the row
+    /// would open a gap under the arrow on exactly the records that have the
+    /// least to say.
+    @ViewBuilder
+    private func elapsedLabel(band: CGFloat?) -> some View {
+        if let elapsed {
+            Text(elapsed)
+                .font(.caption.weight(.semibold))
+                .monospacedDigit()
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                // States its true width, so the candidate this sits in reports
+                // honestly whether it fits — the same reason every label in
+                // `QuietActionGroup` carries it.
+                .fixedSize()
+                .frame(height: band)
+                .accessibilityHidden(true)
+        }
+    }
+
+    /// How long the ride takes, spelled the way every other duration in the
+    /// app is spelled.
+    ///
+    /// Computed from the two times this row is ALREADY showing rather than
+    /// passed in beside them: the caller would be reading the same two stops,
+    /// and a duration that can disagree with the times printed either side of
+    /// it is worse than no duration at all.
+    ///
+    /// `nil` rather than a guess whenever the arithmetic does not close. §7.3
+    /// keeps a business time exactly as recorded, so an overnight service
+    /// written as `25:10` subtracts correctly — and one written as `01:10`
+    /// cannot be told from a typo, where inventing 23 hours would be inventing
+    /// the one number the reader did not write down.
+    private var elapsed: String? {
+        guard let departure, let arrival,
+            let start = TransferGuide.Clock.minutes(departure),
+            let end = TransferGuide.Clock.minutes(arrival),
+            end > start
+        else { return nil }
+        // `StatisticsFormat` rather than a local spelling: 「1 小時 5 分」 is a
+        // sentence this app already knows how to write in four languages, and
+        // the statistics panel is where it was first needed, not where it
+        // belongs.
+        return StatisticsFormat.duration(Double(end - start), localization)
     }
 
     private func endpoint(
@@ -240,6 +354,9 @@ struct RouteTimingView: View {
         if let destinationPlatform, destinationPlatform >= 0 {
             parts.append(platformText(destinationPlatform))
         }
+        // Last, because it is the sentence's conclusion rather than one of its
+        // facts: the reader has just been told both ends and both times.
+        if let elapsed { parts.append(elapsed) }
         return parts.joined(separator: ", ")
     }
 
