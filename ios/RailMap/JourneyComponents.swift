@@ -278,10 +278,26 @@ struct RouteTimingView: View {
 /// timing — and nothing else joins them: state appears only when there is
 /// state to report.
 struct JourneySummaryRow: View {
+    /// Whether the row draws the card it sits on, or is already inside one.
+    ///
+    /// In a list it is the card — that is what makes two hundred of them read
+    /// as a list. Lifted OUT of a list and into a card that has already been
+    /// drawn — Passport's 最長 / 最短 rows, which quote one journey inside a
+    /// statistics card — the row must not draw a second surface at the same
+    /// `radius-card`: §6.4 gives a block INSIDE a card `radius-control`, and
+    /// the two surfaces are what express the depth between them. So the host
+    /// supplies the block (`passportBlock()`) and the row supplies the
+    /// journey.
+    enum Surface {
+        case card
+        case inherited
+    }
+
     var train: Train
     var presentation: JourneyPresentation
     var isSelected: Bool
     var showsDate: Bool
+    var surface: Surface = .card
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -295,13 +311,17 @@ struct JourneySummaryRow: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
-        .background(rowBackground)
+        .padding(surface == .card ? 12 : 0)
+        .background {
+            if surface == .card { rowBackground }
+        }
         .overlay {
-            RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
-                .strokeBorder(
-                    isSelected ? Color.accentColor.opacity(0.55) : .clear,
-                    lineWidth: 1.5)
+            if surface == .card {
+                RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
+                    .strokeBorder(
+                        isSelected ? Color.accentColor.opacity(0.55) : .clear,
+                        lineWidth: 1.5)
+            }
         }
         .contentShape(.rect)
         .accessibilityElement(children: .combine)

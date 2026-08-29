@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 import UIKit
 
@@ -64,6 +65,7 @@ enum StatisticsPoster {
         scope: String,
         title: String,
         localization: AppLocalization,
+        journeyPresentation: @escaping (Train) -> JourneyPresentation,
         colorScheme: ColorScheme
     ) -> File? {
         let page = StatisticsPosterPage(
@@ -71,7 +73,8 @@ enum StatisticsPoster {
             statistics: statistics,
             region: region,
             scope: scope,
-            title: title
+            title: title,
+            journeyPresentation: journeyPresentation
         )
         .frame(width: pageWidth)
         .environment(localization)
@@ -151,6 +154,11 @@ private struct StatisticsPosterPage: View {
     var region: Region?
     var scope: String
     var title: String
+    /// The picture draws the same journey rows the screen does, so it needs
+    /// the same resolved surfaces — see ``StatisticsDashboardContent``. What
+    /// it does NOT get is a way to open one: `passportPoster` makes those
+    /// blocks inert, because a control in a picture is furniture.
+    var journeyPresentation: (Train) -> JourneyPresentation
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -161,7 +169,9 @@ private struct StatisticsPosterPage: View {
                 // A picture cannot be re-scoped, so the binding it is handed
                 // is one that refuses the write rather than one that would
                 // silently move the live screen behind it.
-                region: .constant(region))
+                region: .constant(region),
+                journeyPresentation: journeyPresentation,
+                openJourney: { _ in })
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)

@@ -1397,6 +1397,8 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             region: $regionScope,
+            journeyPresentation: { presentation(for: $0) },
+            openJourney: { sheet = .detail($0) },
             openData: openData,
             openSettings: openSettings)
         .sheet(item: $statisticsImage) { file in
@@ -1905,6 +1907,7 @@ struct RailWorkspaceView: View {
                 ]),
             title: localization.text("nav.stats", fallback: "Stats"),
             localization: localization,
+            journeyPresentation: { presentation(for: $0) },
             colorScheme: colorScheme)
     }
 

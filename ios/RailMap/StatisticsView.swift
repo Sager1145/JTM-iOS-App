@@ -71,6 +71,23 @@ struct StatisticsDashboardContent: View {
     /// `nil` is 全部 — every network in one denominator.
     @Binding var region: Region?
 
+    /// §11.2's resolved surface for one journey, from the app's ONE caller of
+    /// `JourneyPresentationResolver`.
+    ///
+    /// A closure rather than a call: `JourneyBridge`'s own note says the
+    /// priority order is decided once, in the tested module, and that keeping
+    /// that promise means having exactly one caller. This screen quotes two
+    /// journeys (``superlative(_:_:value:)``) and asks that caller for their
+    /// surface rather than becoming a second one.
+    var journeyPresentation: (Train) -> JourneyPresentation
+    /// Open one journey's record — §3.1's L4, which is a sheet.
+    ///
+    /// Not a selection. Passport has no journey panel to hand a selection to:
+    /// §5.3 removed the 乘車記録 list from this screen because the log has a
+    /// destination of its own, so tapping a journey here opens the record
+    /// rather than silently changing what the map behind the panel draws.
+    var openJourney: (Train) -> Void
+
     /// §13.2: work under about 400 ms must not flash progress UI at the
     /// reader. Held here rather than inside the summary because the summary is
     /// mounted and unmounted by this decision.
@@ -1366,12 +1383,31 @@ struct StatisticsDashboardContent: View {
     ) -> some View {
         let endpoints = "\(placeName(journey.from)) → \(placeName(journey.to))"
         let caption = journeyCaption(journey)
+        let train = ridden(journey)
         return StatisticsSuperlative(
             eyebrow: localization.statsText(key),
             title: endpoints,
             detail: caption,
             value: value,
-            spoken: "\(endpoints) · \(value) · \(caption)")
+            spoken: "\(endpoints) · \(value) · \(caption)",
+            ride: train.map {
+                StatisticsSuperlative.Ride(train: $0, presentation: journeyPresentation($0))
+            },
+            // A picture cannot be tapped, so on the poster the block is inert
+            // rather than a button drawn for somebody who cannot press it.
+            open: train.map { train in isPoster ? nil : { openJourney(train) } } ?? nil)
+    }
+
+    /// The record a superlative is about.
+    ///
+    /// `PassportStatistics.Journey.id` IS the record's id — the statistics are
+    /// built from these very trains — so this is a lookup rather than a match.
+    /// It can still miss for a frame: the passport grouping arrives from its
+    /// own store while the working set is being replaced, and a journey just
+    /// deleted is named by numbers computed before it was. `nil` is what
+    /// ``StatisticsSuperlative/Ride`` is optional for.
+    private func ridden(_ journey: PassportStatistics.Journey) -> Train? {
+        itineraries.loaded?.trains.first { $0.id == journey.id }
     }
 
     /// The train, and the day it ran — the reference's "WS 255 · 20 Feb 2025".

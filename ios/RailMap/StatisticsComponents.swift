@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 // MARK: - card chrome
@@ -496,25 +497,89 @@ struct StatisticsRankedList: View {
 
 /// The reference's "Shortest flight" / "Longest flight" — one journey, named,
 /// with the figure it won on.
+///
+/// ## Why it is the journey row rather than two lines of text
+///
+/// It used to be a bespoke block: the two endpoints in `subheadline`, the
+/// train and the day in `caption2`, the figure on the right. Every one of
+/// those strings was already a thing the app knows how to draw a journey with,
+/// and drawing them again here meant a journey looked like a journey
+/// everywhere except on the one screen that is about journeys — no operator
+/// mark, no service badge, no route line, and no way in.
+///
+/// So it quotes ``JourneySummaryRow`` — the same row All Journeys is read
+/// through, in ``JourneySummaryRow/Surface/inherited`` so that this card
+/// supplies the surface (§6.4) and the row supplies the journey.
+///
+/// ## What the eyebrow and the figure still carry
+///
+/// The row names the JOURNEY; the line above it names the MEASUREMENT. They
+/// are not the same statement, and one case makes that visible: the figure is
+/// the distance or the time of the stretch the record says was **ridden**,
+/// while the row's title is the journey's own endpoints. On a journey ridden
+/// end to end those are the same two stations; on one where only part was
+/// confirmed they are not, and the honest thing is to keep both — the number
+/// is what won, the row is what it belongs to.
+///
+/// ## Tapping
+///
+/// `open` is the journey's detail (§3.1's L4), which is a sheet and therefore
+/// reachable from Passport — this screen has no journey panel of its own to
+/// hand a selection to, and §5.3's note on the removed 乘車記録 list is why:
+/// the log lives one tab away. `nil` on the share image, where a control that
+/// cannot be pressed is furniture (``SwiftUI/EnvironmentValues/passportPoster``).
 struct StatisticsSuperlative: View {
+    /// The journey this row is about, and the surface state §11.2 resolved for
+    /// it.
+    ///
+    /// Carried together because they are meaningless apart, and OPTIONAL
+    /// because the two halves of this screen do not update in one step: the
+    /// per-journey grouping arrives from `MileageStatisticsStore` while the
+    /// working set is being replaced, so for a frame after an edit a
+    /// superlative can name a journey the store no longer holds. Without the
+    /// journey the row falls back to the two lines of text it always drew,
+    /// which keeps the card the same height rather than dropping a row out of
+    /// the middle of it.
+    struct Ride {
+        var train: Train
+        var presentation: JourneyPresentation
+    }
+
     @Environment(\.passportInk) private var ink
     let eyebrow: String
-    /// The two endpoints, already through the readings table.
+    /// The two endpoints, already through the readings table — the fallback
+    /// title, and what VoiceOver reads either way.
     let title: String
     /// The train, and the day.
     let detail: String
     let value: String
     /// The whole block, spoken.
     let spoken: String
+    var ride: Ride?
+    /// Open this journey. `nil` makes the block inert.
+    var open: (() -> Void)?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            PassportEyebrow(eyebrow)
+        if let open {
+            Button(action: open) { block }
+                // §14.3: the row this screen is tapped through gives something
+                // back before the sheet arrives. `.plain` alone draws nothing
+                // inside a card.
+                .buttonStyle(RailRowPressStyle())
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+        } else {
+            block
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text(eyebrow))
+                .accessibilityValue(Text(spoken))
+        }
+    }
+
+    private var block: some View {
+        VStack(alignment: .leading, spacing: ride == nil ? 4 : 10) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text(title)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(ink.title)
-                    .fixedSize(horizontal: false, vertical: true)
+                PassportEyebrow(eyebrow)
                 Spacer(minLength: 8)
                 Text(value)
                     .font(.subheadline.weight(.bold))
@@ -522,14 +587,29 @@ struct StatisticsSuperlative: View {
                     .foregroundStyle(ink.title)
                     .railType(.metricValueStacked)
             }
-            Text(detail)
-                .font(.caption2)
-                .foregroundStyle(ink.caption)
-                .fixedSize(horizontal: false, vertical: true)
+            if let ride {
+                JourneySummaryRow(
+                    train: ride.train,
+                    presentation: ride.presentation,
+                    // Passport selects nothing: the selection is the map's and
+                    // the journeys panel's, and a row here that drew itself as
+                    // selected would be reporting a state this screen has no
+                    // way to enter or leave.
+                    isSelected: false,
+                    showsDate: true,
+                    surface: .inherited)
+            } else {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(ink.title)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(detail)
+                    .font(.caption2)
+                    .foregroundStyle(ink.caption)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(eyebrow))
-        .accessibilityValue(Text(spoken))
+        .passportBlock()
     }
 }

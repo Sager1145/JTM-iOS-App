@@ -41,6 +41,11 @@ struct PassportWorkspaceView: View {
     @Bindable var playback: PlaybackController
     /// `nil` is 全部 — see `StatisticsView.region`.
     @Binding var region: Region?
+    /// Threaded straight through to ``StatisticsDashboardContent`` — see the
+    /// two properties there for why the resolver and the record sheet are the
+    /// workspace's to supply rather than the statistics screen's to reach for.
+    var journeyPresentation: (Train) -> JourneyPresentation
+    var openJourney: (Train) -> Void
     var openData: () -> Void
     var openSettings: () -> Void
 
@@ -65,7 +70,9 @@ struct PassportWorkspaceView: View {
                 StatisticsDashboardContent(
                     itineraries: itineraries,
                     statistics: statistics,
-                    region: $region)
+                    region: $region,
+                    journeyPresentation: journeyPresentation,
+                    openJourney: openJourney)
 
                 PassportShareCard(
                     canReplay: !scopedTrains.isEmpty,
