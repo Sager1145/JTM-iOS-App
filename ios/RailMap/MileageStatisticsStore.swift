@@ -137,9 +137,20 @@ final class MileageStatisticsStore {
     /// now: the shell re-keys this load on the whole record of every journey,
     /// so an edit to a colour, a name, a note or a visibility flag arrives
     /// here as a call with identical inputs. See ``Fingerprint``.
+    ///
+    /// An empty journey list is answered synchronously without reading a rail
+    /// package. The screen already has a dedicated empty state, so there is no
+    /// numerator to match and no coverage denominator to build. Keeping this
+    /// guard here (rather than only in the shell) also makes every caller obey
+    /// the same no-work contract and lets an empty reload cancel an older
+    /// calculation that may still be running.
     func load(countries: [String], trains: [Train], rides: [RiddenRouteStore.DrawnRide]) {
         let fingerprint = Self.fingerprint(countries: countries, trains: trains, rides: rides)
         guard fingerprint != servedFingerprint else { return }
+        guard !trains.isEmpty else {
+            clearForEmpty(fingerprint: fingerprint)
+            return
+        }
         servedFingerprint = fingerprint
         task?.cancel()
         scopeTask?.cancel()
@@ -236,6 +247,33 @@ final class MileageStatisticsStore {
                 self.state = .failed(error.localizedDescription)
             }
         }
+    }
+
+    /// Publish the absence of statistics without touching ``EdgeIndexCache``.
+    ///
+    /// Every value from the previous answer is cleared together. In
+    /// particular, retaining `context` would let a later date selection
+    /// aggregate the deleted journeys again, while retaining `progress` would
+    /// leave the empty card claiming that a calculation was still underway.
+    private func clearForEmpty(fingerprint: Fingerprint) {
+        task?.cancel()
+        scopeTask?.cancel()
+        task = nil
+        scopeTask = nil
+        servedFingerprint = fingerprint
+        context = nil
+        view = nil
+        totalsByMask = [:]
+        totalKm = 0
+        lineTotals = []
+        lineOperators = [:]
+        passport = nil
+        progress = nil
+        selectedDate = Dates.allDates
+        availableDates = []
+        entryCache = [:]
+        entryCacheIndexKey = ""
+        state = .idle
     }
 
     /// Move the statistics screen's own date scope.
