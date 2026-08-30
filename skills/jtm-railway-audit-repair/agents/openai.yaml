@@ -1,0 +1,4 @@
+interface:
+  display_name: "JTM Railway Audit & Repair"
+  short_description: "Audit and repair JTM railway data across WebUI and iOS"
+  default_prompt: "Use $jtm-railway-audit-repair to audit and repair railway geometry, topology, stations, and cross-platform rendering for Japan Train Map."
