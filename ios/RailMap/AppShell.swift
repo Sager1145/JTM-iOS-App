@@ -117,8 +117,32 @@ struct ContentView: View {
                 trains: loaded.trains,
                 preferredTrainID: itineraries.lastViewedTrainID)
         }
-        .task(id: statisticsLoadKey) {
-            guard let loaded = itineraries.loaded else { return }
+        // Keyed on the destination as well as on the record, because these
+        // numbers are the most expensive thing the app can be asked for and
+        // this task used to run at every launch whether or not the reader ever
+        // opened Passport.
+        //
+        // What it costs: 全部 is the default scope, so `countries` is all
+        // seven, and `MileageStatisticsStore.load` reads every one of them —
+        // `rail-sections*.json` for the edge index (528 ms of host time across
+        // the seven, Japan's 11.8 MB the half of it) and every package again
+        // underneath it for the drawn network the index is vectored against
+        // (a further 454 ms). ~1 s of host time and several times that on a
+        // phone, at every cold launch, in parallel with the badge indexes and
+        // the route cache, for a screen that begins two taps away.
+        //
+        // Deferred rather than made cheaper, because the wait it is deferred
+        // INTO is already designed: `MileageStatisticsStore.Progress` names
+        // the stage in flight — 讀取路網 / 比對行程 / 彙整 — precisely because
+        // reading the network is seconds and a bare spinner would say nothing
+        // for all of them. A reader who opens Passport now watches that;
+        // before, every reader paid it and only some ever saw the screen.
+        //
+        // Nothing is recomputed on a second visit: the store returns having
+        // touched nothing when the fingerprint of its inputs has not moved,
+        // and `EdgeIndexCache` holds the indexes for the life of the process.
+        .task(id: StatisticsLoadTrigger(shows: selection == .stats, key: statisticsLoadKey)) {
+            guard selection == .stats, let loaded = itineraries.loaded else { return }
             let region = regionScope.wrappedValue
             // 全部 counts every region's network, ridden or not: a coverage
             // figure of 0 % for a country you have never been to is an answer,
@@ -257,6 +281,21 @@ struct ContentView: View {
         var region: String
         var trains: [Train]?
         var rides: [RideKey]
+    }
+
+    /// The statistics load's key, with the one thing that decides whether it
+    /// runs at all.
+    ///
+    /// A `guard` inside the task would not be enough on its own: the task is
+    /// re-run when the key CHANGES, so a reader who arrives at Passport after
+    /// the record settled would find a task that had already returned on the
+    /// guard and nothing to re-trigger it. The destination is part of the key
+    /// for that reason, and an edit made while the reader is elsewhere still
+    /// moves `key`, so coming back re-runs on the new record rather than on
+    /// the one that was current when they left.
+    private struct StatisticsLoadTrigger: Equatable {
+        var shows: Bool
+        var key: StatisticsLoadKey
     }
 }
 

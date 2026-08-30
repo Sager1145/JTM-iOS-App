@@ -54,14 +54,30 @@ enum StatisticsFormat {
     /// `formatStatDuration` — hours and minutes, or bare minutes under an hour.
     @MainActor
     static func duration(_ minutes: Double, _ localization: AppLocalization) -> String {
+        let split = hoursMinutes(minutes)
+        if split.hours > 0 {
+            return localization.statsText(
+                "fmt.duration",
+                params: ["h": .number(Double(split.hours)), "m": .number(Double(split.minutes))])
+        }
+        return localization.statsText(
+            "fmt.durationM", params: ["m": .number(Double(split.minutes))])
+    }
+
+    /// The same split, unformatted.
+    ///
+    /// The ticket face sets a duration as 「268 時間 40 分」 with the hours at
+    /// 大字 and the minutes at 24 px — two figures at two sizes, which no
+    /// single formatted string can be cut back into. So the arithmetic lives
+    /// here and ``duration(_:_:)`` spells it, rather than the face doing its
+    /// own division: 「197 時間 9 分」 rounding one way on the card and another
+    /// in the sentence beside it is the exact class of drift this whole file
+    /// exists to prevent.
+    static func hoursMinutes(_ minutes: Double) -> (hours: Int, minutes: Int) {
         let safe = minutes.isFinite ? minutes : 0
         let h = (safe / 60).rounded(.down)
         let m = (safe.truncatingRemainder(dividingBy: 60)).rounded(.toNearestOrAwayFromZero)
-        if h > 0 {
-            return localization.statsText(
-                "fmt.duration", params: ["h": .number(h), "m": .number(m)])
-        }
-        return localization.statsText("fmt.durationM", params: ["m": .number(m)])
+        return (Int(h), Int(m))
     }
 
     /// The placeholder every daily figure reads as while the scope is 全部.
@@ -97,6 +113,81 @@ enum StatisticsFormat {
 /// live there with the other four screens' entry points.
 enum StatisticsStrings {
     static let table: [String: [Localization.Language: String]] = [
+        // MARK: 券面 — the ticket face's own words
+        //
+        // §5.7's figures, re-labelled for a printed form. The passport's cards
+        // set every label at one size in a two-column block, which is a much
+        // tighter budget than a card header: 「総乗車距離」 is the heading over
+        // a statistic and 「乗車距離」 is the field on a ticket, and the design
+        // asks for the second. The three that already had a short form
+        // (`ios.rideTime`, `ios.stops`, `ios.stats.operatorsLabel`) are reused
+        // rather than restated here.
+        "ios.ticket.label.distance": [
+            .en: "Distance", .ja: "乗車距離", .zhHans: "乘车里程", .zhHant: "乘車里程",
+        ],
+        "ios.ticket.label.rides": [
+            .en: "Rides", .ja: "乗車回数", .zhHans: "乘车次数", .zhHant: "乘車次數",
+        ],
+        "ios.ticket.label.coverage": [
+            .en: "Coverage", .ja: "路線カバー率", .zhHans: "路线覆盖率", .zhHant: "路線覆蓋率",
+        ],
+        // The counters, and the three that are EMPTY in English on purpose.
+        //
+        // 「乗車回数 412 回」 is a form field: the counter is what tells a
+        // reader that 412 is a count of rides and not of anything else. English
+        // has no counters — "Rides 412 rides" says the noun twice — so the
+        // value here is the empty string and the face draws no unit at all.
+        // That is a real difference between the languages, and spelling it as
+        // an entry in the catalog is what keeps it from being read as a
+        // missing translation.
+        "ios.ticket.unit.hours": [
+            .en: "h", .ja: "時間", .zhHans: "小时", .zhHant: "小時",
+        ],
+        "ios.ticket.unit.minutes": [
+            .en: "min", .ja: "分", .zhHans: "分", .zhHant: "分",
+        ],
+        "ios.ticket.unit.rides": [
+            .en: "", .ja: "回", .zhHans: "次", .zhHant: "次",
+        ],
+        "ios.ticket.unit.stops": [
+            .en: "", .ja: "駅", .zhHans: "站", .zhHant: "站",
+        ],
+        "ios.ticket.unit.operators": [
+            .en: "", .ja: "社", .zhHans: "家", .zhHant: "家",
+        ],
+        // Full-width in the two scripts that set it full-width. A ticket's
+        // percentage sign sits on the same em as the kanji beside it.
+        "ios.ticket.unit.percent": [
+            .en: "%", .ja: "％", .zhHans: "％", .zhHant: "％",
+        ],
+        // 「集計期間は年を必ず入れる」 — the design's own 表記 rule, and the
+        // reason this is a spelled date rather than the compact 年.月.日 form
+        // the foot of the card uses. A span that read 「4.1 から 3.31」 would
+        // not say which year, and this line is the only place on the face that
+        // says what the figures above it cover.
+        "ios.ticket.date": [
+            .en: "{y}-{m}-{d}", .ja: "{y}年{m}月{d}日",
+            .zhHans: "{y}年{m}月{d}日", .zhHant: "{y}年{m}月{d}日",
+        ],
+        "ios.ticket.span": [
+            .en: "Totalled {from} to {to}",
+            .ja: "{from}から　{to}まで集計",
+            .zhHans: "统计 {from} 至 {to}",
+            .zhHant: "統計 {from} 至 {to}",
+        ],
+        "ios.ticket.spanDay": [
+            .en: "Totalled {date}", .ja: "{date}分を集計",
+            .zhHans: "统计 {date}", .zhHant: "統計 {date}",
+        ],
+        // 最下行の左: 「集計日　RAILMAP 発行」. The design's own form carries a
+        // terminal number after the issuer — 「（1-14）」, the MARS machine the
+        // ticket came out of. There is no such number here and inventing one
+        // would be the only fabricated thing on a card of measured figures, so
+        // the row is issued without it.
+        "ios.ticket.issued": [
+            .en: "{date}　RAILMAP issued", .ja: "{date}　RAILMAP 発行",
+            .zhHans: "{date}　RAILMAP 发行", .zhHant: "{date}　RAILMAP 發行",
+        ],
         "ios.stats.scope": [
             .en: "Date scope", .ja: "対象日", .zhHans: "日期范围", .zhHant: "日期範圍",
         ],
@@ -168,10 +259,6 @@ enum StatisticsStrings {
             .en: "Detail by line and category", .ja: "路線・種別ごとの内訳",
             .zhHans: "按线路与类别的明细", .zhHant: "依線路與類別的明細",
         ],
-        "ios.stats.unmatchedTitle": [
-            .en: "Unmatched distance", .ja: "未一致の距離",
-            .zhHans: "未匹配里程", .zhHant: "未配對里程",
-        ],
         // §5.3 counts only what the reader has said they rode. This is the
         // one line that says so, and it is stated as a holding with an action
         // rather than as an exclusion — nothing has been lost, nothing is
@@ -208,10 +295,6 @@ enum StatisticsStrings {
             .ja: "乗車記録と経路は変更されていません。",
             .zhHans: "行程记录与路线均未改变。",
             .zhHant: "行程記錄與路線均未改變。",
-        ],
-        "ios.stats.passportTitle": [
-            .en: "All-time rail passport", .ja: "全期間 鉄道パスポート",
-            .zhHans: "全时段 铁道护照", .zhHant: "全期間 鐵道護照",
         ],
         // The reference's "1.4x around the world". Written with the number
         // ahead of the unit in English and behind it in CJK, because
@@ -335,6 +418,13 @@ enum StatisticsStrings {
             .ja: "乗り降りした行程ごとに 1 回。途中の停車は数えません。",
             .zhHans: "每趟在此上下车各计 1 次；中途停靠不计。",
             .zhHant: "每趟在此上下車各計 1 次；中途停靠不計。",
+        ],
+        // The label over a bare count of companies, as against
+        // `ios.stats.operatorCount`, which is the count WITH its unit in a
+        // clause ("35 家業者"). A column header cannot carry the unit twice.
+        "ios.stats.operatorsLabel": [
+            .en: "Operators", .ja: "事業者数",
+            .zhHans: "公司数量", .zhHant: "業者數",
         ],
         "ios.stats.operatorsTitle": [
             .en: "Most ridden operators", .ja: "よく乗った事業者",

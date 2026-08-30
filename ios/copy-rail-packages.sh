@@ -23,7 +23,7 @@ fi
 
 mkdir -p "$target_dir"
 
-for country in jp tw hk mo kr; do
+for country in jp tw hk mo kr us ca; do
     package="$source_dir/$country-2025.json"
     if [ ! -f "$package" ]; then
         echo "error: missing $package — is the repository complete?" >&2
@@ -35,7 +35,7 @@ done
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply
 # the same `countrySuffixed` rule without maintaining a second manifest.
-for country in jp tw hk mo kr; do
+for country in jp tw hk mo kr us ca; do
     if [ "$country" = "jp" ]; then
         suffix=""
     else
@@ -154,7 +154,9 @@ cp -p "$catalog" "$target_dir/Localizable.json"
 #
 # The five country stores plus the two special itineraries are exactly the set
 # behind index.html's 載入*示例資料 buttons.
-for store in train-store train-store-tw train-store-hk train-store-mo train-store-kr; do
+for store in train-store train-store-tw train-store-hk train-store-mo \
+    train-store-kr train-store-us train-store-ca
+do
     file="$here/../app/data/$store.json"
     if [ -f "$file" ]; then
         cp -p "$file" "$target_dir/$store.json"

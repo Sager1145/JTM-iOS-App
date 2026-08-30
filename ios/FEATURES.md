@@ -47,9 +47,18 @@ shared by the three so they cannot answer differently.
 
 A consequence of the same decision, and the web app has no equivalent because
 with one country loaded it never has to choose. `RailPresentation/RegionClock.swift`
-holds the five — Asia/Tokyo and Asia/Seoul at UTC+9, Asia/Taipei, Asia/Hong_Kong
-and Asia/Macau at UTC+8, none of them on summer time since 1988 at the latest —
-and `Train.journeyClock` picks the one the ride's region names.
+holds the five Asian ones — Asia/Tokyo and Asia/Seoul at UTC+9, Asia/Taipei,
+Asia/Hong_Kong and Asia/Macau at UTC+8, none of them on summer time since 1988
+at the latest — plus the nine the two North American packages reach, and
+`Train.journeyClock` picks the one the ride names.
+
+For the five Asian regions the region IS the clock. For the United States and
+Canada it is only a default: those two span nine zones between them, seven of
+which move an hour twice a year, so the clock is a property of the STATION.
+`StationClockIndex` reads it out of the `time_zone` each station carries in
+`stations-us.json` / `stations-ca.json`, which the package build copies from
+the operator's own GTFS (`stop_timezone`, else `agency_timezone`). Nothing here
+decides a zone from a longitude.
 
 **Only questions about *now* go through it.** "What day is it", "is this
 journey still ahead", "has this happened" each turn an instant into a civil
@@ -67,14 +76,26 @@ against the JavaScript by fixture. A printed stop time is never converted:
 the reader's zone would be this app editing somebody else's timetable. The stop
 list says which clock it is on instead, once, under the times.
 
-**Cross-zone journeys are not supported, and the seam for them is written
-down.** No journey in this app can cross a border — the five networks do not
-touch — so `JourneyClock` holds one clock and every stop answers it. Its
-documentation names the three members that change when that stops being true
-(`clock(atStopIndex:)`, `crossesTimeZones`, `offsetMinutes(fromStopIndex:toStopIndex:)`)
-and the one function above them that would then be wrong: `Statistics.trainRideMinutes`,
-which subtracts a departure from an arrival. The correction belongs above
-`RailCore`, never in it.
+**Cross-zone journeys are supported, and cross-border ones are a different
+question.** They stopped being hypothetical with the two North American
+packages, and the two cases are not the same:
+
+* A journey can change clock without leaving its country. The *Empire Builder*
+  departs Chicago on Central time and arrives in Seattle on Pacific.
+  `JourneyClock` carries a clock per stop when the stops disagree, and
+  `JourneyClock.rideMinutes(_:stopCount:on:)` corrects
+  `Statistics.trainRideMinutes` — which subtracts a printed departure from a
+  printed arrival and is therefore two hours out for that train. The correction
+  is applied in `PassportStatistics`, above `RailCore`: that tier is checked
+  against JavaScript that has no zones at all, and must not gain one.
+* A journey can cross a border without changing clock. The *Maple Leaf* runs
+  Toronto to New York on Eastern time throughout. What that changes is not the
+  clock but which network the ride is solved against — `RouteScope` in
+  `RegionCatalog.swift` — because the packages are split at the border and
+  neither country's graph alone can reach both ends.
+
+A printed stop time is still never converted. `25:10` stays `25:10`; the note
+under the stop list names the clock at each end instead.
 
 ## 0 · What is deliberately not ported
 
@@ -211,7 +232,7 @@ complex gains or loses a name.
 | Ride station labels | `app-deck-records.js` `markerRecordsToFC` | ✅ | ✅ three tiers, elected, haloed |
 | Select a train, clear selection | `#fit-selected`, `#clear-selection` | — | ✅ |
 | Fit to selection (定位) | `app-map-fit.js` (216) | — | ✅ |
-| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five, and opens on **a whole country** — the one the first journey still ahead is in, failing that the one the first journey in the log is in, failing that the fallback region. Framed once, from a written-down country extent (`Region.networkExtent`) rather than from lines that land seconds apart, and never over a camera the reader has already taken. Nothing closer than a country: everything narrower is something the reader asks for |
+| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five. **設定 › 啟動地圖範圍** decides: 自動 (the default), 全球 (`Region.everyNetworkExtent`), or one country the reader names. 自動 takes the country of the first journey still ahead, else of the first in the log — counting only journeys that carry a time on some stop, so the bundled demonstration routes cannot decide it. Framed once, from a written-down country extent rather than from lines that land seconds apart, and never over a camera the reader has already taken. Nothing closer than a country: everything narrower is something the reader asks for |
 
 ## 3 · The itinerary list and editor
 

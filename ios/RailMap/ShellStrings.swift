@@ -49,12 +49,6 @@ enum ShellStrings {
         "ios.mileageCoverage": [.en: "Mileage and coverage", .ja: "距離とカバー率", .zhHans: "里程与覆盖率", .zhHant: "里程與覆蓋率"],
         "ios.networkCoverage": [.en: "Network coverage", .ja: "路線網カバー率", .zhHans: "路网覆盖率", .zhHant: "路網覆蓋率"],
         "ios.mostRiddenSections": [.en: "Most ridden sections", .ja: "よく乗る区間", .zhHans: "最常乘坐区间", .zhHant: "最常乘坐區間"],
-        "ios.unmatchedDistance": [
-            .en: "{km} km could not be matched to a classified network edge.",
-            .ja: "{km} km は分類済み路線に一致しませんでした。",
-            .zhHans: "有 {km} km 未能匹配到已分类路网。",
-            .zhHant: "有 {km} km 未能配對到已分類路網。",
-        ],
         "ios.geometryPending": [
             .en: "Available after ridden route geometry is connected.",
             .ja: "乗車ルート形状の接続後に利用できます。",
@@ -249,6 +243,7 @@ enum ShellStrings {
         "ios.regionLanguage": [.en: "Region & language", .ja: "地域と言語", .zhHans: "地区与语言", .zhHant: "地區與語言"],
         "ios.stationNames": [.en: "Station names", .ja: "駅名の表示", .zhHans: "站名显示", .zhHant: "站名顯示"],
         "ios.mapContent": [.en: "Map content", .ja: "地図の内容", .zhHans: "地图内容", .zhHant: "地圖內容"],
+        "ios.launchScope.header": [.en: "Opening view", .ja: "起動時の表示範囲", .zhHans: "启动地图范围", .zhHant: "啟動地圖範圍"],
         "ios.stationMarkers": [.en: "Station markers", .ja: "駅マーカー", .zhHans: "站点标记", .zhHant: "站點標記"],
         "ios.selectionFocus": [.en: "Selection & focus", .ja: "選択とフォーカス", .zhHans: "选择与聚焦", .zhHant: "選擇與聚焦"],
 
@@ -264,6 +259,33 @@ enum ShellStrings {
         ],
         "ios.decodeTime": [.en: "Decode time", .ja: "解析時間", .zhHans: "解析耗时", .zhHant: "解析耗時"],
         "ios.renderer": [.en: "Renderer", .ja: "描画エンジン", .zhHans: "绘制引擎", .zhHant: "繪製引擎"],
+
+        // -- Settings: the opening view --------------------------------------
+        "ios.launchScope": [
+            .en: "Opening view", .ja: "起動時の表示範囲",
+            .zhHans: "启动地图范围", .zhHant: "啟動地圖範圍",
+        ],
+        "ios.launchScope.auto": [
+            .en: "Automatic", .ja: "自動", .zhHans: "自动", .zhHant: "自動",
+        ],
+        "ios.launchScope.world": [
+            .en: "All networks", .ja: "全路線網", .zhHans: "全球", .zhHant: "全球",
+        ],
+        "ios.launchScope.region": [
+            .en: "One country or area", .ja: "国・地域を指定",
+            .zhHans: "国家地区", .zhHant: "國家地區",
+        ],
+        "ios.note.launchScope": [
+            .en: "Where the map is framed when the app opens. Automatic uses the country of "
+                + "your first upcoming journey, or of the first journey in your log; with no "
+                + "journeys, it shows East Asia.",
+            .ja: "アプリを開いたときに地図を合わせる範囲です。自動では、これから乗る最初の行程の"
+                + "国・地域、なければ記録の最初の行程の国・地域を使い、行程がなければ東アジアを表示します。",
+            .zhHans: "打开应用时地图的取景范围。自动会使用最近一趟未来行程所在的国家地区，"
+                + "没有的话就用记录中第一趟行程的国家地区；没有行程时显示东亚。",
+            .zhHant: "開啟應用程式時地圖的取景範圍。自動會使用最近一趟未來行程所在的國家地區，"
+                + "沒有的話就用紀錄中第一趟行程的國家地區；沒有行程時顯示東亞。",
+        ],
 
         // -- Settings: what each control actually reaches --------------------
         //

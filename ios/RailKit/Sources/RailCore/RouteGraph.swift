@@ -157,7 +157,7 @@ public enum RouteGraph {
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
     /// parameter here rather than a constant this file owns.
-    public static let routeSolverCacheVersion = "17"
+    public static let routeSolverCacheVersion = "18"
 
     /// The operators a `company` field names, split on `/`.
     ///

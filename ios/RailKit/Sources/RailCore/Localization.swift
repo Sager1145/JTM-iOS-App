@@ -267,7 +267,7 @@ public struct Localization: Sendable {
     /// The whitelist `setCountry` enforces, and `SUPPORTED_COUNTRIES` in
     /// `app-config.js`. It is the same list in both files and they are not
     /// wired together.
-    public static let supportedCountries = ["jp", "tw", "hk", "mo", "kr"]
+    public static let supportedCountries = ["jp", "tw", "hk", "mo", "kr", "us", "ca"]
 
     /// Countries whose readings table localises the base station NAME rather
     /// than annotating a Japanese name with a kana/romaji subline.

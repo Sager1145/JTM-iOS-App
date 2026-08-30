@@ -148,9 +148,21 @@ struct PassportStatistics: Sendable {
             let flags = MapRideMarkers.rideFlags(train.stops)
             let ridden = Statistics.effectivelyRiddenStopIndexes(flags)
             let km = entry.km.isFinite ? entry.km : 0
-            let minutes = Statistics.trainRideMinutes(
-                Statistics.Train(
-                    id: train.id, trainType: train.trainType, date: train.date, stops: flags))
+            // The ported answer, then the correction for a journey that
+            // changes clock on the way. `Statistics.trainRideMinutes`
+            // subtracts a printed departure from a printed arrival, which is
+            // exact for a journey on one clock and two hours short for the
+            // *Empire Builder*. The correction cannot live in `RailCore` —
+            // that tier is checked against JavaScript that has no zones at
+            // all — so it is applied here, on top, in the ported unit. See
+            // ``JourneyClock/rideMinutes(_:stopCount:on:)``.
+            let minutes = train.journeyClock.rideMinutes(
+                Statistics.trainRideMinutes(
+                    Statistics.Train(
+                        id: train.id, trainType: train.trainType,
+                        date: train.date, stops: flags)),
+                stopCount: train.stops.count,
+                on: train.date)
 
             totalKm += km
             if let minutes, minutes.isFinite, minutes > 0 {

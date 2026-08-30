@@ -17,18 +17,41 @@ final class RiddenRouteStore {
         /// Canonical WGS84 geometry used by the solver, cache and statistics.
         /// It must remain in the same datum as the region's edge index.
         let sourceCoordinates: [Coordinate]
+        /// The drawn path in WGS84 — what ``coordinates`` is the displaced
+        /// presentation OF, and the array the route cache persists. Kept
+        /// because the displacement is not reversible in this direction: a
+        /// cache holding the GCJ-02 copy would displace it a second time on
+        /// the next load.
+        let drawnCoordinates: [Coordinate]
         /// Geometry presented to MapKit. This differs for Taiwan, Hong Kong,
         /// Macao and Korea, where Apple's basemap is displaced to GCJ-02.
         let coordinates: [Coordinate]
 
+        /// - Parameter sourceCoordinates: the N02-datum path, when it is not
+        ///   the same array as what gets drawn. A hop re-drawn against the
+        ///   display line is a different geometry from the one the solver
+        ///   walked — groomed, welded at junction anchors, and at 東京駅 on
+        ///   surveyed OpenStreetMap track N02 does not carry — so a caller
+        ///   that canonicalises MUST hand the solver's own path in here.
+        ///   Defaulting to `coordinates` keeps every caller that does not
+        ///   canonicalise exactly as it was.
+        ///
+        ///   Handing the drawn path to both is what made the statistics
+        ///   measure a ride against a network it was not matched on. It also
+        ///   double-counted: the display network cuts an N02 edge in half at
+        ///   a station anchor, so the same track ridden once each way holds
+        ///   the whole edge and its two halves, and a deduped union over edge
+        ///   ids cannot see that they are the same rail.
         init(
             segmentIndex: Int, from: String?, to: String?,
-            coordinates: [Coordinate], country: String
+            coordinates: [Coordinate], sourceCoordinates: [Coordinate]? = nil,
+            country: String
         ) {
             self.segmentIndex = segmentIndex
             self.from = from
             self.to = to
-            sourceCoordinates = coordinates
+            self.sourceCoordinates = sourceCoordinates ?? coordinates
+            drawnCoordinates = coordinates
             self.coordinates = AppleMapDatum.display(coordinates, country: country)
         }
     }
@@ -145,7 +168,22 @@ final class RiddenRouteStore {
                         phase: .loading)
                 }
 
-                let decoded = try await Self.decode(wanted: wanted, primed: primed)
+                // Each scope's rides are handed over as that scope lands, so
+                // the map fills in while the rest is still being read. The
+                // status centre stays on `.loading` throughout: a journey that
+                // has not been reached yet is not a journey that failed, and
+                // `wanted: []` is what keeps the ones still coming out of the
+                // "unavailable" bucket. See `decode(wanted:primed:publish:)`.
+                let decoded = try await Self.decode(wanted: wanted, primed: primed) { partial in
+                    await MainActor.run {
+                        guard !Task.isCancelled else { return }
+                        self.rides = partial
+                        self.visibleRides = partial.filter(\.visible)
+                        RideStatusCenter.shared.publish(
+                            entries: Self.statusEntries(for: partial, wanted: []),
+                            phase: .loading)
+                    }
+                }
                 try Task.checkCancellation()
                 rides = decoded
                 visibleRides = decoded.filter(\.visible)
@@ -172,8 +210,7 @@ final class RiddenRouteStore {
         id: String?, wanted: [String: Train]
     ) async -> DrawnRide? {
         guard let id, let train = wanted[id] else { return nil }
-        let country = Region.resolved(train).code
-        return loadCached([train], country: country).rides.first
+        return loadCached([train], country: RouteScope(train).code).rides.first
     }
 
     func clear() {
@@ -197,12 +234,12 @@ final class RiddenRouteStore {
     /// straight-lined: a journey whose new sections solve to nothing keeps its
     /// record and loses its strokes, which is what "unavailable" means.
     func resolve(_ train: Train) {
-        let country = Region.resolved(train).code
+        let scope = RouteScope(train)
         let id = train.id
         RideStatusCenter.shared.beginResolving(id)
         Task {
             let solved = await Task.detached(priority: .userInitiated) { () -> DrawnRide? in
-                try? Self.resolveOne(train, country: country)
+                try? await Self.resolveOne(train, scope: scope)
             }.value
 
             if let solved {
@@ -229,11 +266,11 @@ final class RiddenRouteStore {
     /// `nil` means the journey asked for no sections at all, which the caller
     /// records as `unavailable(expected: 0)` rather than as silence.
     private nonisolated static func resolveOne(
-        _ train: Train, country: String
-    ) throws -> DrawnRide? {
-        let cached = loadCached([train], country: country)
+        _ train: Train, scope: RouteScope
+    ) async throws -> DrawnRide? {
+        let cached = loadCached([train], country: scope.code)
         if let ride = cached.rides.first { return ride }
-        return try solveMissing(cached.missing, country: country).first
+        return try await solveMissing(cached.missing, scope: scope).first
     }
 
     /// What each journey the load was asked about ended up with.
@@ -268,31 +305,103 @@ final class RiddenRouteStore {
     /// 11 MB of parts to answer a question the on-disk cache has already
     /// answered. Rides that come out of a dataset are written into that cache,
     /// so the scan happens once per journey rather than once per load.
+    ///
+    /// ## Two phases, and the map is handed the first one
+    ///
+    /// The cache read is the whole of a warm load and costs ~20 ms for 201
+    /// journeys; the dataset scan and the solve are the cold one and cost
+    /// seconds, because they read a country's `rail-sections*.json` and
+    /// `stations*.json` (11.8 MB and 3.2 MB for Japan). Returning one array at
+    /// the end meant a single uncached journey held every cached journey off
+    /// the map for as long as its country took to read.
+    ///
+    /// So `publish` is called with everything the cache answered before any
+    /// dataset is opened, and again as each remaining scope finishes. A warm
+    /// load calls it zero times and is byte for byte what it was.
+    ///
+    /// ## …cheapest scope first, and in a fixed order
+    ///
+    /// The scopes are walked in ``RouteScope/ordered(_:)``'s order rather than
+    /// the grouping dictionary's. Two things come of that. A reader whose
+    /// uncached journeys are Taiwanese sees them without waiting for Japan's
+    /// datasets to be read for the one Japanese journey behind them. And the
+    /// order stops being a per-process accident: Swift seeds dictionary
+    /// hashing per launch, so the countries used to be walked differently
+    /// every time — and this order is the order the rides reach the map, which
+    /// is the order the overlays are added in and therefore which line is
+    /// drawn over which.
     private nonisolated static func decode(
-        wanted: [String: Train], primed: DrawnRide? = nil
+        wanted: [String: Train], primed: DrawnRide? = nil,
+        publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
-        var unresolved: [Region: [Train]] = [:]
+        var unresolved: [(scope: RouteScope, trains: [Train])] = []
         let remaining = wanted.values.filter { $0.id != primed?.id }
-        for (region, trains) in Dictionary(grouping: remaining, by: Region.resolved) {
-            let cached = await loadCachedConcurrently(trains, country: region.code)
+        // Grouped by SCOPE rather than by region, which for every journey that
+        // stays inside one country is the same grouping it always was. A
+        // journey that crosses a border forms its own group, so the two
+        // packages it needs are loaded once for all the journeys that cross it
+        // the same way.
+        //
+        // The same way, not the same border: a scope carries the order the
+        // ride reaches its regions, because `home` — which decides the route
+        // cache directory, the normalisation country and the institution
+        // filter — is the region the journey set out from. So the *Maple Leaf*
+        // (`ca, us`) and the *Adirondack* (`us, ca`) are two groups and each
+        // reads both countries' sections and stations. They still share the
+        // DRAWN network, which is the expensive half and is cached under
+        // `scope.key` for exactly that reason (``DisplayNetworkCache``); what
+        // is paid twice is the solver's own datasets, on a cold route cache,
+        // and the result of that solve is written to disk.
+        let byScope = Dictionary(grouping: remaining, by: RouteScope.init)
+        // In a fixed order — cheapest scopes first — rather than in the
+        // dictionary's. See ``RouteScope/ordered(_:)``: the grouping's own
+        // order is seeded per process, so this loop used to walk the countries
+        // differently on every launch, and the order rides come back in is the
+        // order the map is handed them in and therefore which line is drawn
+        // over which.
+        for scope in RouteScope.ordered(byScope.keys) {
+            guard let trains = byScope[scope] else { continue }
+            // Which clock each of this scope's stations is on, before any of
+            // its journeys is asked. Only the two North American regions have
+            // an answer to load; for every other scope this returns without
+            // opening a file. See ``StationClockIndex``.
+            await StationClockIndex.shared.prime(regions: scope.regions)
+            let cached = await loadCachedConcurrently(trains, country: scope.code)
             result += cached.rides
-            if !cached.missing.isEmpty { unresolved[region] = cached.missing }
+            if !cached.missing.isEmpty { unresolved.append((scope, cached.missing)) }
         }
 
-        for (region, trains) in unresolved {
+        // Everything the on-disk cache could answer, on the map before a
+        // single dataset is opened.
+        //
+        // This is the whole of a warm load — 201 journeys read in ~20 ms — and
+        // until now it waited behind the cold half regardless. One journey
+        // imported yesterday and not yet cached meant the two hundred that
+        // WERE cached stayed off the map while its country's solver datasets
+        // were read (Japan: 11.8 MB of sections and 3.2 MB of stations), which
+        // is a blank map for seconds to draw one line.
+        if !unresolved.isEmpty { await publish(result) }
+
+        // Compact scopes first, for the same reason the launch badge index
+        // takes them first: a reader whose uncached journeys are Taiwanese
+        // should not wait on Japan's datasets to see them. Each scope's rides
+        // are published as that scope finishes, so the map fills in country by
+        // country instead of in one step at the end.
+        for (scope, trains) in unresolved {
             var missing = Dictionary(
                 trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-            for dataset in RideLibrary.routeDatasets(for: region) {
+            for dataset in RideLibrary.routeDatasets(for: scope.home) {
                 if missing.isEmpty { break }
                 let found = try await datasetRides(
-                    dataset: dataset, country: region.code, wanted: missing)
+                    dataset: dataset, country: scope.code, wanted: missing)
                 for ride in found { missing.removeValue(forKey: ride.id) }
                 result += found
             }
             if !missing.isEmpty {
-                result += try solveMissing(Array(missing.values), country: region.code)
+                result += try await solveMissing(Array(missing.values), scope: scope)
             }
+            await publish(result)
         }
         return result
     }
@@ -324,7 +433,6 @@ final class RiddenRouteStore {
             .sorted { $0.position < $1.position }
         var result: [DrawnRide] = []
         result.reserveCapacity(hits.count)
-
         for hit in hits {
             try Task.checkCancellation()
             guard let partURL = Bundle.main.url(
@@ -343,6 +451,16 @@ final class RiddenRouteStore {
             }
             let indicesAreAuthoritative = matchingFeatures
                 .allSatisfy { $0.properties?.segmentIndex != nil }
+            // The dataset stores the SOLVER's path, and it STAYS the solver's
+            // path. Re-drawing it against the display line — the step the web
+            // app takes in `app-route-features.js` before it paints — was
+            // tried here and reverted: `DrawnSegment.sourceCoordinates` is
+            // what the mileage statistics match against, the display network
+            // is not the same geometry as the N02 edge index they match on
+            // (東京駅's two Shinkansen are drawn on OpenStreetMap track, and a
+            // canonical slice interpolates its own endpoints), and the swap
+            // took the unmatched remainder from 3.3 km to 95.3 km. Drawn
+            // geometry belongs in `coordinates`; this is the other field.
             let segments = matchingFeatures.flatMap { feature in
                 feature.geometry.strokes.enumerated().compactMap { pair -> DrawnSegment? in
                     let (partIndex, coordinates) = pair
@@ -438,39 +556,57 @@ final class RiddenRouteStore {
         ).routeSections ?? []
     }
 
+    /// Solve the journeys no cache and no dataset could answer for.
+    ///
+    /// The scope, not a country, because of the three trains that cross the
+    /// Canada–United States border. Their stops are split between two packages
+    /// — a package says what one country's railways are, and half of the Maple
+    /// Leaf is not one of Canada's — so solving one against a single country's
+    /// graph can only fail at the crossing. Both countries' sections and
+    /// stations are loaded and concatenated instead.
+    ///
+    /// This is the one place in the app where two countries' solver datasets
+    /// are read together, and `app-config.js` is right that doing it carelessly
+    /// is dangerous: two networks in one graph let a same-named station in the
+    /// wrong country capture a hop. It is safe HERE, and only here, because
+    /// (1) it happens only for a journey whose own stops name both regions,
+    /// (2) the two graphs are joined only where real track crosses the border,
+    /// and (3) the hops are matched on `n02_station_code`, which the North
+    /// American build prefixes with the region (`US-…`, `CA-…`) precisely so a
+    /// Windsor in Ontario cannot answer for a Windsor in Connecticut.
     private nonisolated static func solveMissing(
-        _ trains: [Train], country: String
-    ) throws -> [DrawnRide] {
-        guard let sectionsURL = Bundle.main.url(
-            forResource: Region.countrySuffixed("rail-sections", country: country),
-            withExtension: "json"),
-              let stationsURL = Bundle.main.url(
-                forResource: Region.countrySuffixed("stations", country: country),
-                withExtension: "json")
-        else { throw LoadError.missingSolverResources(country) }
-        let sections = try RouteGraph.SectionFeatureCollection.load(contentsOf: sectionsURL).features
-        let stationCollection = try Stations.FeatureCollection.load(contentsOf: stationsURL)
+        _ trains: [Train], scope: RouteScope
+    ) async throws -> [DrawnRide] {
+        let country = scope.code
+        var sections: [RouteGraph.SectionFeature] = []
+        var stationFeatures: [Stations.Feature] = []
+        // In the CATALOG's order, not the ride's — see
+        // ``RouteScope/graphRegions``. `Stations.Index` resolves an ambiguous
+        // NAME to the first feature carrying it, so the two directions of the
+        // same crossing would otherwise pick opposite sides of the border for
+        // a section that names a station without a code. The same track, asked
+        // about twice, has to answer the same.
+        for region in scope.graphRegions {
+            guard let sectionsURL = Bundle.main.url(
+                forResource: Region.countrySuffixed("rail-sections", country: region.code),
+                withExtension: "json"),
+                  let stationsURL = Bundle.main.url(
+                    forResource: Region.countrySuffixed("stations", country: region.code),
+                    withExtension: "json")
+            else { throw LoadError.missingSolverResources(region.code) }
+            sections += try RouteGraph.SectionFeatureCollection
+                .load(contentsOf: sectionsURL).features
+            stationFeatures += try Stations.FeatureCollection
+                .load(contentsOf: stationsURL).features
+        }
+        let stationCollection = Stations.FeatureCollection(features: stationFeatures)
         let stationIndex = Stations.Index(stationCollection)
         let officialIntervals = RouteSolver.OfficialIntervalIndex(sections: sections)
-        let displayNetwork: RouteNetwork? = {
-            // Both halves of the package come off one read and one parse.
-            // Asking the compact decoder and the topology decoder separately
-            // opened the same file twice and scanned it twice — 9.1 MB apiece
-            // for Japan, and here that is paid on a route cache miss rather
-            // than once at launch.
-            guard let url = Bundle.main.url(
-                forResource: Region.packageResource(country: country), withExtension: "json"),
-                  let loaded = try? DisplayParts.LoadedPackage.load(contentsOf: url)
-            else { return nil }
-            return RouteNetwork(lines: loaded.package.lines.map { line in
-                RouteNetwork.Line(
-                    lineId: line.id, name: line.name, operator: line.operator,
-                    isLoop: false, alignmentDirection: nil,
-                    parts: DisplayParts.parts(
-                        for: line,
-                        topology: loaded.topologyByLineID[line.id] ?? .init()))
-            })
-        }()
+        // Shared with the dataset path, which needs the same network for the
+        // same reason — see ``DisplayNetworkCache``. `try?` keeps the old
+        // behaviour of a bundle without a package: the ride is drawn on the
+        // solver's own path rather than not drawn at all.
+        let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
         let graphStore = RouteGraph.RouteGraphStore(sections: sections)
         graphStore.augment = { graph, bbox in
             let features: [Stations.Feature]
@@ -540,6 +676,10 @@ final class RiddenRouteStore {
                         from: section.from ?? stationIndex.name(forCode: section.fromN02StationCode),
                         to: section.to ?? stationIndex.name(forCode: section.toN02StationCode),
                         coordinates: drawnCoordinates,
+                        // The map gets the canonical slice; the statistics get
+                        // the path the solver actually walked, which is N02's
+                        // own vertices and is the datum the edge index is in.
+                        sourceCoordinates: solved.coordinates,
                         country: country))
                     lastSolvedIndex = index
                     continuity = solved.coordinates.last
@@ -701,11 +841,14 @@ final class RiddenRouteStore {
               cache.digest == digest
         else { return nil }
         let segments = cache.segments.compactMap { cached -> DrawnSegment? in
-            let coordinates = cached.coordinates.compactMap(Coordinate.init(pair:))
-            guard coordinates.count >= 2 else { return nil }
+            // Both halves come back as they went in: the map redraws the slice
+            // it drew before, and the statistics keep matching N02.
+            let source = cached.coordinates.compactMap(Coordinate.init(pair:))
+            let drawn = cached.drawnCoordinates.compactMap(Coordinate.init(pair:))
+            guard source.count >= 2, drawn.count >= 2 else { return nil }
             return DrawnSegment(
                 segmentIndex: cached.segmentIndex, from: cached.from,
-                to: cached.to, coordinates: coordinates,
+                to: cached.to, coordinates: drawn, sourceCoordinates: source,
                 country: country)
         }
         guard !segments.isEmpty else { return nil }
@@ -728,7 +871,8 @@ final class RiddenRouteStore {
             segments: ride.segments.map {
                 CachedSegment(
                     segmentIndex: $0.segmentIndex, from: $0.from, to: $0.to,
-                    coordinates: $0.sourceCoordinates.map(\.pair))
+                    coordinates: $0.sourceCoordinates.map(\.pair),
+                    drawnCoordinates: $0.drawnCoordinates.map(\.pair))
             })
         try JSONEncoder().encode(cache).write(
             to: cacheURL(country: country, digest: digest), options: .atomic)
@@ -873,7 +1017,19 @@ final class RiddenRouteStore {
         let segmentIndex: Int
         let from: String?
         let to: String?
+        /// The N02-datum path the statistics match, under the name it has
+        /// always had on disk.
         let coordinates: [[Double]]
+        /// The path the map draws — the canonical slice, where there was one.
+        ///
+        /// Required rather than optional on purpose. An entry written before
+        /// the two were told apart carries one array, and it is the drawn one:
+        /// it cannot answer for both, and reading it as if it could is the
+        /// error this field exists to end. Decoding such an entry fails,
+        /// ``readCached(_:country:)`` answers `nil`, and the journey is solved
+        /// again — which retires every stale entry without spending a cache
+        /// version on it.
+        let drawnCoordinates: [[Double]]
     }
 
     private struct Geometry: Decodable {

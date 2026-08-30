@@ -117,6 +117,13 @@ struct RailWorkspaceView: View {
     /// map that moves itself every time a row is tapped is a map the reader
     /// cannot keep a place in, so it is asked for rather than assumed.
     @AppStorage("auto-focus-zoom") private var autoFocusZoom = false
+    /// 設定 › 啟動地圖範圍 — what the map opens on, when the reader would
+    /// rather say than have the app infer. See ``LaunchMapScope`` and
+    /// ``launchExtent``; `SettingsView.launchScopeSection` is the other end.
+    @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
+    /// Which country 國家地區 means. Kept apart from the mode so that a trip
+    /// through 全球 and back does not forget it.
+    @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
     /// Where the resident sheet is resting, as a STAGE rather than as a
     /// `PresentationDetent`.
     ///
@@ -337,12 +344,14 @@ struct RailWorkspaceView: View {
         // at all. The opening view is a country. Everything closer than that
         // is something the reader asks for — a journey tapped, 定位, 自動縮放.
         //
-        // Keyed on a cheap summary rather than on `launchRegion` itself: the
+        // Keyed on a cheap summary rather than on `launchExtent` itself: the
         // answer costs a pass over every ride, this key is read on every body
         // evaluation, and a sheet drag is a body evaluation per frame.
-        .task(id: "\(controller.isMapReady)|\(launchFramingKey)") {
-            guard controller.isMapReady, let launchRegion else { return }
-            controller.frameAtLaunch(launchRegion.networkExtent)
+        .task(
+            id: "\(controller.isMapReady)|\(launchScope)|\(launchScopeRegion)|\(launchFramingKey)"
+        ) {
+            guard controller.isMapReady, let launchExtent else { return }
+            controller.frameAtLaunch(launchExtent)
         }
         // §5.3.2: while Passport is on top the map IS its coverage map, so
         // changing what is being reported on has to move the map to it.
@@ -372,28 +381,29 @@ struct RailWorkspaceView: View {
         // Guarded on the destination rather than fired on every switch: coming
         // back to the journey list must NOT move the camera, because there the
         // reader's own last framing is the thing they were looking at.
-        // A `task(id:)` rather than an `onChange`, and the key carries the
-        // NETWORK's readiness as well as the destination. Two reasons, both
-        // found by testing rather than by reading:
+        // A `task(id:)` rather than an `onChange`, because `onChange` fires on
+        // a CHANGE: a launch that opens straight onto Passport — the
+        // screenshot harness does exactly this — never fired it at all.
         //
-        //   - `onChange` fires on a CHANGE, so a launch that opens straight
-        //     onto Passport — the screenshot harness does exactly this — never
-        //     fired it at all.
-        //   - `frameStatisticsRegion` measures a rect from `store.lines`, and
-        //     for the first moments of a launch that array is empty, so the
-        //     rect is null and the call returns having moved nothing. The tab
-        //     was reached before the data it frames against existed.
+        // It used to carry the network's readiness in its key too, and to ask
+        // the store for every region before framing, because the rect came
+        // from `store.lines` and that array is empty for the first moments of
+        // a launch. Both are gone, and what replaces them is
+        // `Region.networkExtent` — a constant that is answerable immediately.
         //
-        // The key flips at most twice — arriving, then the packages landing —
-        // so this is not a camera that keeps jumping while five regions decode.
-        .task(id: "\(selection == .stats)|\(store.lines.isEmpty)") {
+        // That constant exists for exactly this: its own note says every other
+        // "frame this" in the app reduces `store.lines` to a rect, which is
+        // exact and useless here because a camera that waits for lines is a
+        // camera that moves seconds after the reader arrived. What was not
+        // noticed is what the waiting COST — `ensureAll()` decoded all seven
+        // packages' geometry, ~394,000 coordinates and the single most
+        // expensive thing this store does (Japan alone is 1.7 s of geometry on
+        // a device), to compute a bounding box that is written down in
+        // `RegionCatalog` to the metre. The complete network starts hidden and
+        // is decoded when it is turned on, region by visible region, through
+        // `ensure(regionsIntersecting:)`; nothing on this screen draws it.
+        .task(id: selection == .stats) {
             guard selection == .stats else { return }
-            // Coverage is a fraction of each network's OWN length, so this
-            // screen is the one surface that is about all five countries at
-            // once. A region that has not been decoded reads as zero rather
-            // than as unknown, which is why the ask is unconditional here.
-            store.ensureAll()
-            guard !store.lines.isEmpty else { return }
             frameRegionScope(regionScope)
         }
         .task { manualDates.load() }
@@ -425,7 +435,7 @@ struct RailWorkspaceView: View {
         // Which region the camera starts on, and which sample is loaded —
         // the two things a `simctl` harness cannot tap its way to. The opening
         // camera is chosen from the reader's own rides now, so a harness that
-        // has loaded no store at all still opens on the fallback country
+        // has loaded no store at all still opens on the East Asia fallback
         // rather than on the country the shot is meant to be of.
         .task(id: "\(store.lines.count)|\(controller.isMapReady)") {
             guard controller.isMapReady else { return }
@@ -1722,11 +1732,14 @@ struct RailWorkspaceView: View {
     /// is a fraction of the network, and a reader who has ridden two stations
     /// in Korea is being shown how little of Korea that is.
     private func frameRegionScope(_ region: Region?) {
-        let rect = store.lines
-            .filter { region == nil || $0.region == region }
-            .reduce(MKMapRect.null) { $0.union($1.mapRect) }
-        guard !rect.isNull else { return }
-        controller.fit(rect)
+        // The catalog's written-down extent, not a reduction over the decoded
+        // lines. It is answerable before any package has been read, which is
+        // what lets this fire the moment the reader arrives rather than
+        // whenever Japan finishes decoding — and it agrees with `store.lines`
+        // to the metre. See `Region.networkExtent`.
+        // `fit(_ region:)` rather than a rect built here: the controller owns
+        // the conversion and the sheet-clearing padding that goes with it.
+        controller.fit(region?.networkExtent ?? Region.everyNetworkExtent)
     }
 
     /// The regions the globe menu offers: the ones this store has journeys in.
@@ -2003,36 +2016,45 @@ struct RailWorkspaceView: View {
 
     // MARK: - where the map opens
 
-    /// The country the map is framed on at launch.
+    /// The box the map opens on, once something can answer for it.
     ///
-    /// The soonest journey that has not happened yet; for a reader with
-    /// nothing ahead of them, the most recent one that has; and for a store
-    /// with no dated ride in it at all, ``defaultRegion``'s answer — which
-    /// ends at Japan, as every other "which region did you mean" in the app
-    /// does.
-    ///
-    /// `nil` until the rides have been read, and that is load-bearing rather
-    /// than tidy: the opening move happens ONCE, so an answer given while the
-    /// store is still on disk would be Japan for everybody, for good.
-    private var launchRegion: Region? {
-        switch itineraries.state {
-        case .idle, .loading:
-            return nil
-        case .failed:
-            // Nothing to choose from and nothing coming. Better the fallback
-            // country than a camera left sitting on the whole globe waiting
-            // for rides that are not going to arrive.
-            return defaultRegion
-        case .loaded:
-            if let next = upcomingTrains.first { return Region.resolved(next) }
-            if let first = earliestPastTrain { return Region.resolved(first) }
-            return defaultRegion
+    /// Two of the three modes answer immediately, because neither depends on
+    /// the rides: a reader who has said 全球, or named a country, gets it in
+    /// the same breath as the map. Only 自動 waits, and it waits on the rides
+    /// rather than on the rail packages — see the framing task above.
+    private var launchExtent: MKCoordinateRegion? {
+        // An unrecognised stored value is `auto`, not a crash: preferences
+        // outlive the builds that wrote them.
+        switch LaunchMapScope(rawValue: launchScope) ?? .auto {
+        case .world:
+            return Region.everyNetworkExtent
+        case .region:
+            return (Region(rawValue: launchScopeRegion) ?? .jp).networkExtent
+        case .auto:
+            switch itineraries.state {
+            case .idle, .loading:
+                return nil
+            case .failed:
+                return Region.eastAsiaNetworkExtent
+            case .loaded(let loaded):
+                let today = todayByRegion()
+                guard let first = LaunchJourneySelector.first(
+                    in: loaded.trains,
+                    today: { train in today[Region.resolved(train)] }
+                ) else {
+                    // A route-only sample is not a journey. In particular, a
+                    // loaded Macao network demonstration must not turn the
+                    // neutral empty-store view into a Macao launch.
+                    return Region.eastAsiaNetworkExtent
+                }
+                return Region.resolved(first).networkExtent
+            }
         }
     }
 
     /// What the opening move is waiting on, as something cheap to compare.
     ///
-    /// `LoadState` is not `Equatable` and ``launchRegion`` costs a pass over
+    /// `LoadState` is not `Equatable` and ``launchExtent`` can cost a pass over
     /// every ride; this is read on every body evaluation, so it is neither.
     private var launchFramingKey: String {
         switch itineraries.state {
@@ -2040,35 +2062,6 @@ struct RailWorkspaceView: View {
         case .loading: "loading"
         case .failed: "failed"
         case .loaded(let loaded): "loaded:\(loaded.trains.count)"
-        }
-    }
-
-    /// The FIRST journey in the log — the oldest record behind today, on its
-    /// own region's clock.
-    ///
-    /// "The first of the history" read literally: earliest by date, which is
-    /// also the first row the journey list shows, because `Dates` orders its
-    /// buckets ascending. Not "the most recent one" — that is the other end of
-    /// the same list, and the two disagree for anybody whose travel has
-    /// crossed a border.
-    ///
-    /// An undated record is not in the running, for the reason it is not
-    /// upcoming either: it has no position on a calendar to be behind.
-    private var earliestPastTrain: Train? {
-        let today = todayByRegion()
-        let trains = itineraries.loaded?.trains ?? []
-        return derived.earliestPast(trains: trains, today: today) {
-            trains
-                .filter { train in
-                    guard let date = train.date, !date.isEmpty,
-                        let regionToday = today[Region.resolved(train)]
-                    else { return false }
-                    return date < regionToday
-                }
-                .min { lhs, rhs in
-                    let a = lhs.date ?? "", b = rhs.date ?? ""
-                    return a == b ? lhs.id < rhs.id : a < b
-                }
         }
     }
 

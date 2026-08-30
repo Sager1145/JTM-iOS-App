@@ -15,16 +15,33 @@ import UIKit
 /// A Japanese ticket does. There are only a handful of colours involved and
 /// every one of them is load-bearing to somebody who has held one:
 ///
-///   - **地紋 (jimon)** — the warm apricot security print an ordinary
-///     磁気乗車券 is stocked on. This is *the* colour of a Japanese ticket.
-///   - **みどり** — the green a reserved-seat 特急券 is issued on, and the
-///     green of the みどりの窓口 it is issued at.
-///   - **濃紺** — the navy the data on a ticket is actually printed in, which
-///     is what the green runs into on the data page below.
-///   - **朱 (shu)** — the vermillion of a 改札印, the round gate stamp a
-///     station master inks onto the face of the ticket.
-///   - **橙** — the orange the magnetic stock's own figures are set in, which
-///     is this screen's bar ink.
+///   - **RailMap 青** — the blue of the app's own mark, in the two strengths
+///     the 字模様 is printed at: one for white stock, and one for 暗色 G, the
+///     navy stock the passport is issued on after dark. It is also the ink the
+///     色帯 across the foot of the face is laid in.
+///   - **暗色 G の地色** — that navy itself.
+///
+/// The 朱 of a 改札印 used to be here too, for the frame a date was stamped
+/// in. The face the design gives this card prints its date instead of stamping
+/// it — 集計日 at the foot, and the 集計範囲 in the corner — so the vermillion
+/// left with the mark it was mixed for rather than staying on as a hue in
+/// search of a use.
+///
+/// The blue is the one hue here that is not a ticket's. It is the issuer's,
+/// which is the same thing: a real 地紋 carries the letters of whoever issued
+/// the ticket, and for these tickets that is this app. The shapes it is
+/// printed in live in `TicketJimon` — this file is the hues, that one is the
+/// geometry, the same split `PassportCardStyle` keeps.
+///
+/// ## One card
+///
+/// This file used to dress the whole statistics screen: an apricot 地紋 wash
+/// under every chart card, that apricot again for keylines, chips and bar
+/// tracks, and 磁気券's orange for every bar. It does not any more. The
+/// passport is the only card issued on ticket stock, and everything around it
+/// draws in the system's semantic colours — so the hues that only ever served
+/// those other cards (the apricot, the orange, and the `wash` helper that
+/// resolved them at an alpha) are gone rather than kept warm.
 ///
 /// ## §6.2, and why these are hex
 ///
@@ -32,215 +49,129 @@ import UIKit
 /// Both rules are read here rather than ignored.
 ///
 /// *Scattered* is the operative word in the first: this file is the one place
-/// the five hues exist, every surface below is derived from them, and no call
+/// these hues exist, every surface below is derived from them, and no call
 /// site anywhere else in the app names a colour. That is the property the rule
 /// protects, and it is stronger now than it was under `systemBlue` — which was
 /// a system name in one file and a private deepening factor beside it.
 ///
 /// The second is a rule about **meaning**, not about wavelength. Green, orange
 /// and red are reserved so that a badge, a label or a row cannot be misread as
-/// a state. Nothing below is a badge, a label or a row: they are the paper the
-/// figures are printed on and the ink they are printed in, on the one screen
-/// §6.1 hands to the Memory personality. The status roles keep the semantic
-/// colours they have everywhere else in the app, and this screen draws no
-/// status. A card cannot be misread as "success" when nothing on the screen it
-/// belongs to ever reports success.
+/// a state. Nothing below is a badge, a label or a row: they are the paper one
+/// card is printed on and the ink it is printed in. The status roles keep the
+/// semantic colours they have everywhere else in the app, and this screen
+/// draws no status. A card cannot be misread as "success" when nothing on the
+/// screen it belongs to ever reports success.
 ///
-/// ## Derived, not literal
+/// ## One ink per stock, not one ink dimmed
 ///
-/// The reason §6.2 gives for banning hex — that a literal will not follow the
-/// appearance, will not answer Increase Contrast, and will not move when the
-/// system revises its palette — is answered by ``printed(_:light:dark:lightContrast:darkContrast:saturate:)``
-/// rather than by refusing to name a colour. Each hue is written down ONCE, as
-/// the ink it is on paper, and every appearance of it is that ink resolved
-/// through a trait closure: darker under the dark appearance where a saturated
-/// surface would otherwise glow, further from its background under Increase
-/// Contrast, and — for the bar ink, which has to stand OUT of the paper rather
-/// than sink into it — brighter in the dark rather than darker.
+/// The reason §6.2 gives for banning hex is that a literal will not follow the
+/// appearance. These do, and they do it by being TWO inks rather than one ink
+/// resolved twice: 「浅色版 #1f8fe0（紙白）／暗色 G 版 #5cb8f7（地色 #0B2440）」
+/// is the design stating a light stock and a dark stock as separate printings,
+/// each with its own ground and its own ink, and every entry point below takes
+/// `onDarkStock` and hands back the pair that belong together. A blue drawn to
+/// read on white paper has nothing left to read against on navy, so deriving
+/// one from the other by a brightness factor — which is what this file used to
+/// do — was answering the appearance with arithmetic where the design had
+/// already answered it with a second plate.
+///
+/// Increase Contrast is answered where it can be: `TicketJimon` damps the
+/// print (a security 地紋 must get QUIETER, not louder, when the figures over
+/// it need to stand out) and `PassportCardStyle` strikes the card a keyline.
+/// Neither is a change of hue, which is §6.5's instruction exactly.
 enum TicketPalette {
 
-    // MARK: - the five inks, written down once
+    // MARK: - the inks, written down once
 
-    /// 地紋 — the warm stock an ordinary 磁気乗車券 is printed on, and the
-    /// brown its keylines and washes are drawn from.
-    private static let stock = "#C98A3E"
-    /// みどりの窓口 — the green a 指定席券 is issued on.
-    private static let midori = "#0E6B4F"
-    /// The navy a ticket's own data is printed in.
-    private static let navy = "#123A52"
-    /// 改札印 — the vermillion of a gate stamp.
-    private static let vermillion = "#C1372B"
-    /// The orange the magnetic stock sets its figures in — this screen's bars.
-    private static let orange = "#C85A1E"
+    /// The blue of the app's own mark, which is the ink its 字模様 is printed
+    /// in on white stock. 「浅色版 #1f8fe0（紙白）」.
+    private static let issuerBlue = "#1F8FE0"
+    /// The same ink lightened for 暗色 G, where the ground is navy instead of
+    /// paper and a blue drawn to read on white has nothing left to read
+    /// against. 「暗色 G 版 #5cb8f7」.
+    private static let issuerBlueOnDark = "#5CB8F7"
+    /// 暗色 G の地色 — the navy the passport is issued on after dark, and the
+    /// one ground the design names outright: 「地色 #0B2440」.
+    private static let darkGround = "#0B2440"
 
     // MARK: - the paper
 
-    /// The data page: みどり into 濃紺 along the diagonal the eye reads the
-    /// card in.
+    /// 暗色 G — the stock the passport is issued on in the dark appearance.
     ///
-    /// Both ends carry white ink at better than 6:1 in the light appearance
-    /// (green ≈ 6.6, navy ≈ 11.9), which is the whole reason the deep pair was
-    /// chosen over the apricot stock a 乗車券 is actually printed on: a real
-    /// ticket is dark ink on light paper, and a light card cannot be the one
-    /// loud surface on a screen of light cards. The apricot is on every OTHER
-    /// card instead (``stockWash``), which is where a ticket's stock belongs —
-    /// under the figures, not shouting over them.
-    static var dataPage: LinearGradient {
-        LinearGradient(
-            colors: [
-                printed(midori, dark: 0.80, lightContrast: 0.86, darkContrast: 0.86),
-                printed(navy, dark: 0.82, lightContrast: 0.88, darkContrast: 0.88),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing)
-    }
-
-    /// The tint wash on a soft card — 地紋 at the alpha where it colours the
-    /// paper without colouring the text on it.
+    /// Flat, and deliberately not a gradient. 「地色を全面に刷り、線と文字を
+    /// 明色で抜く」 is what the dark stock IS: one ground laid edge to edge
+    /// with the print knocked out of it in light ink. A gradient underneath a
+    /// 地紋 would make the print look like it fades, which is the one thing a
+    /// security print must never appear to do.
     ///
-    /// Warmer in the dark appearance rather than fainter: a low-alpha warm hue
-    /// over `secondarySystemBackground` disappears completely once that
-    /// surface is nearly black, and a card that is only tinted in one
-    /// appearance is a card that changes personality at sunset.
-    static var stockWash: LinearGradient {
-        LinearGradient(
-            colors: [
-                wash(stock, light: 0.16, dark: 0.20, contrast: 0.24),
-                wash(stock, light: 0.05, dark: 0.08, contrast: 0.10),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing)
-    }
-
-    /// §6.5: a surface gains an EDGE under Increase Contrast rather than more
-    /// colour. The soft card carries this always — the wash alone is too faint
-    /// to say where the card stops.
-    static var keyline: Color {
-        wash(stock, light: 0.30, dark: 0.34, contrast: 0.66)
-    }
-
-    /// The translucent block a card nests inside itself — the reference's
-    /// footer chip, and the field a ticket stamps a single day into.
-    static var chip: Color {
-        wash(stock, light: 0.13, dark: 0.18, contrast: 0.24)
-    }
-
-    /// The unfilled part of a proportion bar: the paper a bar has not been
-    /// printed on yet, so it is the stock's own hue rather than a grey.
-    static var track: Color {
-        wash(stock, light: 0.20, dark: 0.24, contrast: 0.34)
-    }
-
-    // MARK: - the ink
-
-    /// …and the filled part. 磁気券's own orange.
+    /// It carries white ink at about 17:1, which is the margin the printed
+    /// letters and rings on top of it spend without costing the figures
+    /// anything.
     ///
-    /// It is the one colour here that has to stand OUT of the paper rather
-    /// than sink into it, so it is the one that goes BRIGHTER in the dark
-    /// appearance and further from its ground in both under Increase Contrast.
+    /// There is no matching constant for the light appearance because there is
+    /// nothing to name: 「紙自体は白」 — the stock is white, so the passport takes
+    /// the same system card surface every other card takes, under the wash
+    /// ``jimonTint(onDarkStock:)`` lays over it.
+    static var darkStock: Color { printed(darkGround) }
+
+    /// The ink the 字模様 is printed in, for the appearance it is read in.
     ///
-    /// Never the positive/green role: §5.3.5 is explicit that a large number
-    /// is not a success state, and that is why the green in this file is the
-    /// paper a ticket is issued on and never the ink a figure is drawn in.
-    static var fill: Color {
-        printed(orange, dark: 1.34, lightContrast: 0.86, darkContrast: 1.12, saturate: 0.04)
+    /// Two literals rather than one hue deepened, because these are two
+    /// different inks on two different stocks and not one ink under two
+    /// lights: a blue drawn to read on white paper has nothing left to read
+    /// against on 暗色 G's navy.
+    static func jimonInk(onDarkStock: Bool) -> Color {
+        printed(onDarkStock ? issuerBlueOnDark : issuerBlue)
     }
 
-    /// 改札印 — the vermillion the date stamp is inked with.
+    /// The wash between a stock's paper and its print.
     ///
-    /// Decoration on paper, and on the data page it is the one hue that cannot
-    /// simply be deepened: vermillion on deep green is barely a colour change
-    /// at all. So ``stampInkOnColor`` is the same ink LIGHTENED instead, to
-    /// the coral it reads at over the green — and both are used for the
-    /// stamp's RULE only. The words inside a stamp stay on the ink roles that
-    /// answer to Increase Contrast, which is why neither of these has to carry
-    /// text contrast.
-    static var stampInk: Color {
-        printed(vermillion, dark: 1.22, lightContrast: 0.88, darkContrast: 1.10)
+    /// Both stocks carry one, at the two strengths the artboard lays down
+    /// under the 地紋: `rgba(31,143,224,0.06)` over paper white, and
+    /// `rgba(255,255,255,0.04)` over the navy.
+    ///
+    /// This was `.clear` on white for a while, on the reading that 「紙自体は
+    /// 白」 — the paper is not dyed, and what looks tinted is the line density
+    /// of the print. That reading is right about a real 券紙 and wrong about
+    /// this card: the panel behind it resolves to `#FFFFFF`, so a stock that
+    /// is white to the last percent has no edge against the surface it is
+    /// lying on. Six percent is what the design itself paints, and it is what
+    /// makes the ticket a card.
+    static func jimonTint(onDarkStock: Bool) -> Color {
+        onDarkStock
+            ? .white.opacity(0.04)
+            : printed(issuerBlue).opacity(0.06)
     }
 
-    /// The same stamp, over the data page.
-    static var stampInkOnColor: Color {
-        printed(vermillion, light: 1.62, dark: 1.62, lightContrast: 1.14, darkContrast: 1.14,
-            saturate: -0.32)
+    /// 色帯 — the stripe across the foot of the face.
+    ///
+    /// 「色帯は地紋色の 28 %（暗色版は白 7 %）を全幅に敷く」. Two different
+    /// answers rather than one, and the asymmetry is the design's: over paper
+    /// the band is the 地紋's own ink laid solid, and over the navy a blue band
+    /// on a blue ground would not be a band at all, so it is struck in white
+    /// instead.
+    static func band(onDarkStock: Bool) -> Color {
+        onDarkStock
+            ? .white.opacity(0.07)
+            : printed(issuerBlue).opacity(0.28)
     }
 
-    // MARK: - resolving one ink for the appearance it is read in
+    // MARK: - one hex, resolved
 
-    /// One printed hue, resolved for the appearance and the contrast setting
-    /// it is being read under.
+    /// One printed hue, as a `Color`.
     ///
-    /// Every argument is a multiplier on the ink's own BRIGHTNESS, which is
-    /// the only component that decides whether the thing on top of it is
-    /// legible — the hue is preserved exactly, so a deepened みどり is still
-    /// the green a 特急券 is issued on and not a different colour that happens
-    /// to be dark.
-    ///
-    ///   - `light` / `dark`: the appearance the card is drawn in.
-    ///   - `lightContrast` / `darkContrast`: applied ON TOP of those under
-    ///     Increase Contrast. Two of them rather than one because "more
-    ///     contrast" is *darker* for a surface carrying white ink and
-    ///     *brighter* for ink carried on a dark surface, and a single factor
-    ///     would improve one and ruin the other.
-    ///   - `saturate`: an additive nudge, for the two cases where brightness
-    ///     alone leaves the hue looking washed (a brightened orange) or
-    ///     leaves it too hot to read as a stamp over green (a lightened
-    ///     vermillion).
-    private static func printed(
-        _ hex: String,
-        light: CGFloat = 1,
-        dark: CGFloat = 1,
-        lightContrast: CGFloat = 1,
-        darkContrast: CGFloat = 1,
-        saturate: CGFloat = 0
-    ) -> Color {
-        Color(
-            UIColor { traits in
-                // A malformed literal is a programmer error in THIS file and
-                // nowhere else — there is no call site that can pass one in —
-                // so it resolves to the label colour rather than to a colour
-                // that would look deliberate.
-                guard let base = UIColor(railHex: hex) else { return .label }
-                var hue: CGFloat = 0
-                var saturation: CGFloat = 0
-                var brightness: CGFloat = 0
-                var alpha: CGFloat = 0
-                guard
-                    base.getHue(
-                        &hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-                else { return base }
-                let isDark = traits.userInterfaceStyle == .dark
-                var factor = isDark ? dark : light
-                if traits.accessibilityContrast == .high {
-                    factor *= isDark ? darkContrast : lightContrast
-                }
-                return UIColor(
-                    hue: hue,
-                    saturation: min(1, max(0, saturation + saturate)),
-                    brightness: min(1, max(0, brightness * factor)),
-                    alpha: alpha)
-            })
-    }
-
-    /// The same ink at an ALPHA that follows the appearance — a wash, a
-    /// keyline, a track.
-    ///
-    /// Separate from ``printed(_:light:dark:lightContrast:darkContrast:saturate:)``
-    /// because these are not surfaces in their own right: they are one hue laid
-    /// over whatever the system card underneath resolved to, and what has to
-    /// change between appearances is how much of it there is, not how dark it
-    /// is.
-    private static func wash(
-        _ hex: String, light: CGFloat, dark: CGFloat, contrast: CGFloat
-    ) -> Color {
-        Color(
-            UIColor { traits in
-                guard let base = UIColor(railHex: hex) else { return .separator }
-                if traits.accessibilityContrast == .high {
-                    return base.withAlphaComponent(contrast)
-                }
-                return base.withAlphaComponent(
-                    traits.userInterfaceStyle == .dark ? dark : light)
-            })
+    /// The whole of what this does is turn a hex the design wrote down into a
+    /// colour, in the ONE file allowed to name one. It used to carry five
+    /// brightness multipliers so a single ink could be re-resolved per
+    /// appearance and per contrast setting; the design's own two-plate answer
+    /// (see the note on this type) made every one of them the identity, and a
+    /// parameter that is always defaulted is a claim about the code that is
+    /// not true.
+    private static func printed(_ hex: String) -> Color {
+        // A malformed literal is a programmer error in THIS file and nowhere
+        // else — there is no call site that can pass one in — so it resolves
+        // to the label colour rather than to a colour that would look
+        // deliberate.
+        Color(UIColor(railHex: hex) ?? .label)
     }
 }

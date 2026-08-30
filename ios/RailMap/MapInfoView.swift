@@ -25,7 +25,7 @@ import SwiftUI
 ///     article is written from that.
 ///   - **Every region is listed at once.** The web app hides the articles that
 ///     do not apply to the active country (`applyCountryVisibility`); with all
-///     five networks drawn, all five apply.
+///     seven networks drawn, all seven apply.
 struct MapInfoView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
@@ -164,6 +164,38 @@ struct MapInfoView: View {
             links: [
                 .init(label: "data.go.kr", url: "https://www.data.go.kr/"),
                 .init(label: "OpenStreetMap (ODbL)", url: "https://www.openstreetmap.org/copyright"),
+            ]),
+        Source(
+            titleKey: "ios.info.usRailTitle", titleFallback: "United States rail network",
+            bodyKey: "ios.info.usRailBody",
+            bodyFallback:
+                "Service and station records come from transit operators' official GTFS feeds; alignments are checked against the U.S. DOT North American Rail Network and OpenStreetMap.",
+            links: [
+                .init(
+                    label: "U.S. DOT North American Rail Network",
+                    url: "https://rosap.ntl.bts.gov/view/dot/53568"),
+                .init(
+                    label: "FTA National Transit Database",
+                    url: "https://www.transit.dot.gov/ntd"),
+                .init(
+                    label: "OpenStreetMap (ODbL)",
+                    url: "https://www.openstreetmap.org/copyright"),
+            ]),
+        Source(
+            titleKey: "ios.info.caRailTitle", titleFallback: "Canadian rail network",
+            bodyKey: "ios.info.caRailBody",
+            bodyFallback:
+                "Service and station records come from operators' official GTFS feeds and Canada's public-transit inventories; alignments are checked against official rail mapping and OpenStreetMap.",
+            links: [
+                .init(
+                    label: "Government of Canada public transit systems",
+                    url: "https://open.canada.ca/data/en/dataset/b8241e15-2872-4a63-9d36-3083d03e8474"),
+                .init(
+                    label: "Statistics Canada GTFS metadata report",
+                    url: "https://publications.aws.tpsgc-pwgsc.cloud-nuage.canada.ca/site/eng/9.953125/publication.html"),
+                .init(
+                    label: "OpenStreetMap (ODbL)",
+                    url: "https://www.openstreetmap.org/copyright"),
             ]),
         Source(
             titleKey: "info.basemapTitle", titleFallback: "Basemap",

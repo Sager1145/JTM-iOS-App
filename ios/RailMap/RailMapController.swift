@@ -247,9 +247,10 @@ final class RailMapController {
     /// after launch is not an opening view, it is an interruption of one.
     ///
     /// So the opening view is now chosen from the RIDES — the country of the
-    /// reader's first journey (`RailWorkspaceView.launchRegion`) — and it
-    /// happens at most once. Every guard below is a way of saying the same
-    /// thing: the app gets the camera only while nobody else wants it.
+    /// reader's first journey (`RailWorkspaceView.launchExtent`), or East Asia
+    /// when there is none — and it happens at most once. Every guard below is
+    /// a way of saying the same thing: the app gets the camera only while
+    /// nobody else wants it.
     ///
     ///   - ``hasOpened`` — an opening move is a move you make once. A second
     ///     one is exactly the behaviour this replaced.

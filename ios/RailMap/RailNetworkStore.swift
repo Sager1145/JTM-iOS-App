@@ -164,15 +164,31 @@ final class RailNetworkStore {
     ///
     /// and the map opens with its network layer OFF, so on a launch where the
     /// reader never turns it on, none of that geometry is ever drawn. Two
-    /// phases, then. Every region is INDEXED at launch — parsed far enough to
-    /// answer which mark each of its railways wears, which is 2 ms of work on
-    /// top of the parse and is what a journeys list is waiting for. A region's
-    /// geometry is decoded when something asks for it, through ``ensure(_:)``.
+    /// phases, then. Every region is INDEXED at launch — read far enough to
+    /// answer which mark each of its railways wears, which is the line
+    /// attributes and no geometry at all (``index(region:)``) and is what a
+    /// journeys list is waiting for. A region's geometry is decoded when
+    /// something asks for it, through ``ensure(_:)``.
     ///
-    /// A region that is asked for is parsed a second time, and that is the
-    /// deliberate trade: holding five parsed packages alive to save it would
+    /// A region that is asked for is read a second time, and that is the
+    /// deliberate trade: holding seven parsed packages alive to save it would
     /// be holding 394,285 coordinates for countries the reader may never pan
-    /// to, to save 280 ms of background work in the one case where they do.
+    /// to, to save one background read in the one case where they do.
+    ///
+    /// ## The two large regions are indexed after the five compact ones
+    ///
+    /// Not throttling for its own sake — it is what makes the phase useful to
+    /// the reader it is for. The five compact packages come to 3 MB together
+    /// and Japan alone is 9.3 MB, so a task group holding all seven puts
+    /// Macao's 8 KB in a queue behind the two files that take an order of
+    /// magnitude longer than the rest of the app's launch. A reader whose
+    /// journeys are Taiwanese then waits on Japan and the United States for
+    /// marks that Taiwan's own package could have supplied in 12 ms.
+    ///
+    /// Compact first and concurrently, large after and concurrently with each
+    /// other: the ONLY thing the second phase can delay is a badge for a
+    /// journey in Japan or the United States, and it is the phase that has to
+    /// read 16 MB to produce one. See ``Region/DataWeight``.
     func loadAll() {
         if isIndexing { return }
         isIndexing = true
@@ -187,18 +203,10 @@ final class RailNetworkStore {
         pending = []
         state = .idle
         // The complete network is context and starts hidden; route restoration
-        // and interaction work should outrank reading five national packages.
+        // and interaction work should outrank reading seven national packages.
         Task(priority: .utility) {
-            await withTaskGroup(of: (Region, RouteBadgeIndex?).self) { group in
-                for region in Region.ordered {
-                    group.addTask { (region, try? await Self.index(region: region)) }
-                }
-                for await (region, index) in group {
-                    guard let index else { continue }
-                    adopt(index)
-                    indexed.insert(region)
-                }
-            }
+            await indexRegions(Region.ordered(.compact))
+            await indexRegions(Region.ordered(.large))
             isIndexing = false
             // Anything asked for while the indexes were still being built. The
             // ask is recorded rather than acted on during indexing, so that a
@@ -206,6 +214,25 @@ final class RailNetworkStore {
             // geometry competing with the indexes every other screen wants.
             for region in Region.ordered where requested.contains(region) {
                 decodeGeometry(region)
+            }
+        }
+    }
+
+    /// Index one weight class, concurrently within it.
+    ///
+    /// Every region's badges are adopted as that region's read finishes rather
+    /// than when the class does, so a journeys list settles country by country
+    /// instead of in one step at the end.
+    private func indexRegions(_ regions: [Region]) async {
+        guard !regions.isEmpty else { return }
+        await withTaskGroup(of: (Region, RouteBadgeIndex?).self) { group in
+            for region in regions {
+                group.addTask { (region, try? await Self.index(region: region)) }
+            }
+            for await (region, index) in group {
+                guard let index else { continue }
+                adopt(index)
+                indexed.insert(region)
             }
         }
     }
@@ -234,12 +261,19 @@ final class RailNetworkStore {
         }
     }
 
-    /// Every region, for the surfaces that are about all of them at once — the
-    /// statistics screen's coverage is a fraction of each network's own length
-    /// and reads as zero for a country that has not been decoded.
-    func ensureAll() {
-        for region in Region.ordered { ensure(region) }
-    }
+    // There is deliberately no `ensureAll()`.
+    //
+    // There was, and its one caller was the statistics screen, on the belief
+    // that a coverage figure needs the drawn network. It does not: coverage is
+    // a fraction of `Statistics.EdgeIndex.totalKm`, which is built from
+    // `rail-sections*.json` by `EdgeIndexCache` and never touches this store.
+    // What the call actually paid for was a camera rect, which
+    // `Region.networkExtent` answers as a constant — so opening Passport
+    // decoded seven packages' geometry, the most expensive thing this type
+    // does, for a bounding box that is written down.
+    //
+    // Every region at once is not a want any surface has. Ask for the one you
+    // need, or for the ones on screen.
 
     private func decodeGeometry(_ region: Region) {
         guard decoding.insert(region).inserted else { return }
@@ -339,15 +373,18 @@ final class RailNetworkStore {
     /// trusting it.
     /// Phase one: which mark each of a region's railways wears.
     ///
-    /// The parse and nothing after it, and the package is released the moment
-    /// the index is built — this runs for all five countries at launch and
-    /// must not leave five parsed packages behind it.
+    /// The line ATTRIBUTES and nothing else. The index reads six strings per
+    /// railway and not one coordinate, so it goes through
+    /// `CompactPackage.Headers` — one scan of the same file that stops at the
+    /// geometry instead of materialising it. Measured on the shipped packages
+    /// that is 234.6 ms → 29.4 ms for Japan and 138.8 ms → 17.2 ms for the
+    /// United States, and across all seven regions the launch index falls from
+    /// ~454 ms to ~57 ms of host time.
     ///
-    /// Through `DisplayParts.LoadedPackage` like every other package read in
-    /// this app, even though the index reads none of the topology half it
-    /// carries. Asking `CompactPackage` for itself would open and scan the
-    /// same file a second way, which is the thing that decoder exists to stop
-    /// — and `verify.sh` refuses it by name.
+    /// This is not the second decoder `verify.sh` refuses. That contract is
+    /// about reading one file TWICE for two halves of one answer, which is why
+    /// anything needing geometry still goes through
+    /// `DisplayParts.LoadedPackage`; this reads it once, for less.
     private nonisolated static func index(region: Region) async throws -> RouteBadgeIndex {
         let interval = RailSignpost.data.begin("data.package.index")
         defer { RailSignpost.data.end("data.package.index", interval) }
@@ -355,8 +392,7 @@ final class RailNetworkStore {
             forResource: region.packageResource, withExtension: "json")
         else { throw LoadError.missingResource(region.code) }
         return RouteBadgeIndex(
-            region: region,
-            package: try DisplayParts.LoadedPackage.load(contentsOf: url).package)
+            region: region, headers: try CompactPackage.Headers.load(contentsOf: url))
     }
 
     private nonisolated static func decode(region: Region) async throws -> Decoded {
@@ -439,8 +475,13 @@ final class RailNetworkStore {
         // never firing: 382 Japanese railways, the 350 files
         // `copy-rail-packages.sh` ships and the reason 銀座線 wore the 東京メトロ
         // company mark instead of its orange G.
+        // `loopLineIDs` had the identical defect and the identical cause: it
+        // defaults to empty, no caller but a parity test ever supplied it, and
+        // a circular railway was therefore drawn with a terminus at each end
+        // of a line that has neither.
         let stationNetwork = StationDisplay.Network(
             package: package,
+            loopLineIDs: Set(package.lines.filter(\.isLoop).map(\.id)),
             packageLogoLineIDs: Set(package.lines.filter(\.hasLogo).map(\.id)))
         func lineThreshold(under station: StationDisplay.Network.Station) -> Int {
             lodMinZoomByLineId[stationNetwork.lines[station.lineIndex].lineID] ?? 0

@@ -401,7 +401,7 @@ struct LocalizationParityTests {
 
     // MARK: - Country
 
-    @Test("setCountry accepts five countries and silently answers jp for the rest")
+    @Test("setCountry accepts seven countries and silently answers jp for the rest")
     func countryWhitelist() throws {
         let fixture = try Self.fixture()
         var localization = Localization(catalog: try Self.catalog())
@@ -424,7 +424,7 @@ struct LocalizationParityTests {
         let catalog = try Self.catalog()
         var localization = Localization(catalog: catalog)
         localization.setLanguage("zh-Hant")
-        #expect(fixture.variantKeys.count == fixture.catalog.keyCount * 6)
+        #expect(fixture.variantKeys.count == fixture.catalog.keyCount * 8)
 
         let fellBack = 0
         for item in fixture.variantKeys {

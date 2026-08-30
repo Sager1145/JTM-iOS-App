@@ -31,12 +31,20 @@ struct SettingsView: View {
     @Binding var appearance: String
     @Bindable var network: RailNetworkStore
     @Bindable var controller: RailMapController
+    /// §5.9's question answered "the map": these two decide where it opens and
+    /// nothing else. Read at launch by `RailWorkspaceView.launchExtent`, which
+    /// is their only consumer — an `@AppStorage` pair rather than a value
+    /// passed down, because the two ends are a settings Form and a `.task` on
+    /// the workspace root with the whole app in between.
+    @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
+    @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
 
     var body: some View {
         Form {
             languageSection
             stationNameSection
             appearanceSection
+            launchScopeSection
             mapContentSection
             rideLineSection
             stationMarkerSection
@@ -181,6 +189,62 @@ struct SettingsView: View {
                     "ios.note.theme",
                     fallback:
                         "Line colours automatically use each operator's light or dark palette."))
+        }
+    }
+
+    // MARK: - 2b. Where the map opens
+
+    /// 啟動地圖範圍 — the opening view, when the reader would rather say than
+    /// have it inferred.
+    ///
+    /// Left alone, the app infers it: the country of the first journey still
+    /// ahead, or of the first one in the log. That is a guess about somebody's
+    /// plans, and it is wrong for at least two readers — one who keeps rides
+    /// in five countries and always wants the same one, and one who wants to
+    /// see the lot. Both are one control away now, and neither has to be
+    /// argued about inside the inference.
+    ///
+    /// The country picker appears only under 國家地區. A picker for a value
+    /// nothing is reading is a control that looks broken — and the value
+    /// survives the trip out to 全球 and back regardless, which is why it is
+    /// a preference of its own (see ``LaunchMapScope/region``).
+    @ViewBuilder
+    private var launchScopeSection: some View {
+        Section {
+            Picker(
+                localization.text("ios.launchScope", fallback: "Opening view"),
+                selection: $launchScope
+            ) {
+                ForEach(LaunchMapScope.allCases) { scope in
+                    Text(localization.text(scope.localizationKey, fallback: scope.fallbackName))
+                        .tag(scope.rawValue)
+                }
+            }
+            .pickerStyle(.navigationLink)
+            if LaunchMapScope(rawValue: launchScope) == .region {
+                Picker(
+                    localization.countryText("country.label", fallback: "Region"),
+                    selection: $launchScopeRegion
+                ) {
+                    // The interface's own order — smallest network first, the
+                    // same list the statistics scope offers.
+                    ForEach(Region.ordered) { region in
+                        Text(
+                            localization.text(
+                                region.localizationKey, fallback: region.fallbackName)
+                        )
+                        .tag(region.rawValue)
+                    }
+                }
+                .pickerStyle(.navigationLink)
+            }
+            Text(localization.text(
+                "ios.note.launchScope",
+                fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        } header: {
+            Text(localization.text("ios.launchScope.header", fallback: "Opening view"))
         }
     }
 

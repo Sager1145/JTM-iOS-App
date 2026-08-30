@@ -35,7 +35,15 @@ actor EdgeIndexCache {
         if let running = inFlight[country] { return try await running.value }
 
         let task = Task.detached(priority: .userInitiated) {
-            try Self.build(country: country)
+            let n02 = try Self.build(country: country)
+            // The drawn network behind it — see ``appendingVector(to:network:)``.
+            // `try?` keeps N02 alone as the answer when the package is absent:
+            // a bundle without it can still measure a ride, it just cannot
+            // measure the parts of one that only the package draws.
+            guard let network = try? await DisplayNetworkCache.shared.network(
+                country: country)
+            else { return n02 }
+            return Self.appendingVector(to: n02, network: network)
         }
         inFlight[country] = task
         // Detached, so a caller that is cancelled while waiting does not take
@@ -89,11 +97,34 @@ actor EdgeIndexCache {
     /// shared line name comes first, and the edge offsets it lays down have to
     /// match the arrays they index into.
     ///
-    /// Unbounded over five is bounded in fact rather than by a semaphore:
-    /// Japan is 12.1 MB of sections and the other four are 1.7 MB together, so
-    /// the peak is Japan's decode either way. A sixth region of Japan's size
-    /// would be the moment to add a limit, and would be a change to this
-    /// comment as much as to the code.
+    /// Unbounded over the compact regions; the large ones one at a time.
+    ///
+    /// The note this replaces said a sixth region of Japan's size would be the
+    /// moment to add a limit. That region arrived: the United States is
+    /// 7.1 MB of sections over Japan's 11.8, and the two of them plus Canada
+    /// are 20.5 of the 22.2 MB the seven come to.
+    ///
+    /// Building one index is not a decode of its file — it is the file's
+    /// coordinates as Swift values, the edge table over them, AND the region's
+    /// whole 6–9 MB package underneath for the drawn network the index is
+    /// vectored against (``appendingVector(to:network:)``). Seven of those in
+    /// flight at once holds every large intermediate the app can produce
+    /// simultaneously, and the two that dominate it are exactly the two that
+    /// need the most room. On a phone that peak is the difference between a
+    /// slow screen and a terminated one, and it buys nothing: the wall clock
+    /// of a set whose two big members are CPU-bound is those two, whether they
+    /// overlap or queue.
+    ///
+    /// So: the five compact regions concurrently, because together they are
+    /// smaller than either large one and their latency is the group's; then
+    /// the large ones in catalog order, one at a time. See
+    /// ``Region/DataWeight`` for where the line is drawn and why.
+    ///
+    /// **The merge order is unchanged.** Results are placed by the caller's
+    /// own position and read back in it, exactly as the all-concurrent version
+    /// did — `merge` decides which region's spelling of a shared line name
+    /// comes first and lays down edge offsets that index into the arrays it
+    /// builds, so the order it sees may not become a property of the schedule.
     func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
         guard countries.count > 1 else {
             // One region needs no group, and none at all still answers what
@@ -102,14 +133,28 @@ actor EdgeIndexCache {
             return Self.merge([(only, try await index(country: only))])
         }
         var byPosition: [Int: Statistics.EdgeIndex] = [:]
+        // By POSITION rather than by country, so a list that names a country
+        // twice still gets both of its slots filled and the merge still sees
+        // the caller's own sequence.
+        let weighed = countries.enumerated().map {
+            (position: $0, country: $1, weight: Region.dataWeight(country: $1))
+        }
+
         try await withThrowingTaskGroup(
             of: (Int, Statistics.EdgeIndex).self
         ) { group in
-            for (position, country) in countries.enumerated() {
-                group.addTask { (position, try await self.index(country: country)) }
+            for entry in weighed where entry.weight == .compact {
+                group.addTask {
+                    (entry.position, try await self.index(country: entry.country))
+                }
             }
             for try await (position, built) in group { byPosition[position] = built }
         }
+
+        for entry in weighed where entry.weight == .large {
+            byPosition[entry.position] = try await index(country: entry.country)
+        }
+
         return Self.merge(countries.enumerated().compactMap { position, country in
             byPosition[position].map { (country, $0) }
         })
@@ -194,6 +239,101 @@ actor EdgeIndexCache {
         else { throw MissingSections(country: country) }
         let sections = try Statistics.SectionFeatureCollection.load(contentsOf: url).sections
         return Statistics.buildEdgeIndex(sections: sections, country: country)
+    }
+
+    /// The vector package's own track, appended behind N02 so a ride drawn on
+    /// display geometry is still measured.
+    ///
+    /// **N02 stays the authority.** It is inserted first and it wins every key
+    /// collision, it alone defines the denominator (`totalKm`, `totalsByMask`,
+    /// `lineTotByCat` are left exactly as `buildEdgeIndex` computed them), and
+    /// a vector edge does not classify itself — it inherits the mask of the
+    /// N02 line it belongs to, matched by operator and name. There is one
+    /// classification authority in this app and it is `classifySectionMask`.
+    ///
+    /// ## Why the fallback has to exist
+    ///
+    /// A ride carries ONE geometry and two things read it. The map draws it,
+    /// and `RiddenRouteStore` re-draws a solved hop against the display line so
+    /// it shares the network's centreline; the statistics match it, and they
+    /// match against N02. Those are not the same geometry: the package cuts
+    /// station intervals out of N02 but grooms them, welds junction anchors,
+    /// and — at 東京駅 — draws both Shinkansen on surveyed OpenStreetMap track
+    /// that N02 does not carry at all. Measured over the Japanese package,
+    /// 11 089 of its 375 801 drawn edges (673 km) are absent from N02.
+    ///
+    /// Before this, every one of those hops matched nothing and its whole
+    /// distance was filed as the unattributable remainder: canonicalising the
+    /// sample's rides took `unmatchedKm` from 3.3 km to 95.3 km, which is what
+    /// this index is here to make impossible.
+    ///
+    /// ## What it costs
+    ///
+    /// A section ridden once on N02 vertices and once on drawn vertices holds
+    /// two edge ids, so the deduped union counts it twice. The whole surface
+    /// that can happen over is those 673 km, against a denominator two orders
+    /// of magnitude larger — and the alternative is losing the distance
+    /// outright, which is the error this replaces.
+    private nonisolated static func appendingVector(
+        to n02: Statistics.EdgeIndex, network: RouteNetwork
+    ) -> Statistics.EdgeIndex {
+        // What N02 says each line is. Read off the finished index rather than
+        // re-derived, so the two can never disagree.
+        var maskByLine: [String: (mask: Int, lineMask: Int)] = [:]
+        for edge in n02.km.indices where !n02.lineName[edge].isEmpty {
+            let name = n02.lineName[edge]
+            if maskByLine[name] == nil {
+                maskByLine[name] = (n02.mask[edge], n02.lineMask[edge])
+            }
+        }
+        var operatorByLine: [String: String] = [:]
+        for (name, owner) in n02.lineOperator.pairs where operatorByLine[name] == nil {
+            operatorByLine[name] = owner
+        }
+
+        var map = n02.map
+        var km = n02.km
+        var mask = n02.mask
+        var lineName = n02.lineName
+        var lineMask = n02.lineMask
+
+        for line in network.lines {
+            guard let name = line.name, !name.isEmpty else { continue }
+            // A drawn line with no N02 line of that name is a line N02 files
+            // under another name — 京王新線 is 京王線 there, and it is the only
+            // one in the five shipped packages. Skipping it costs the fallback
+            // and nothing else: its track is N02's under the other name, so
+            // riding it still matches wherever the vertices agree.
+            guard let classified = maskByLine[name] else { continue }
+            // The operator check is a guard against two railways sharing a
+            // name, not a requirement: `lineOperator` holds the company owning
+            // MOST of the N02 line's track, and a drawn line may name a
+            // subsidiary. Only a positive disagreement rejects.
+            if let owner = operatorByLine[name], let drawn = line.operator,
+                !owner.isEmpty, !drawn.isEmpty, owner != drawn
+            { continue }
+
+            for part in line.parts where part.count >= 2 {
+                for index in 1..<part.count {
+                    let key = Statistics.edgeKey(part[index - 1], part[index])
+                    // N02 first, and first wins.
+                    if map[key] != nil { continue }
+                    map[key] = km.count
+                    km.append(Statistics.equirectKm(
+                        part[index - 1].lon, part[index - 1].lat,
+                        part[index].lon, part[index].lat))
+                    mask.append(classified.mask)
+                    lineName.append(name)
+                    lineMask.append(classified.lineMask)
+                }
+            }
+        }
+
+        return Statistics.EdgeIndex(
+            map: map, km: km, mask: mask, lineName: lineName, lineMask: lineMask,
+            // The denominator is the classified network and nothing else.
+            totalKm: n02.totalKm, totalsByMask: n02.totalsByMask,
+            lineTotByCat: n02.lineTotByCat, lineOperator: n02.lineOperator)
     }
 
     struct MissingSections: LocalizedError {

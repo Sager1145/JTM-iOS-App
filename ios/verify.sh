@@ -203,8 +203,10 @@ if [ "$run_swift" = 1 ]; then
     fi
     echo "  the annotation layer is used by the map and nothing else"
 
-    # The five packages are WGS84 and must stay that way for the WebUI, but
-    # Apple's Taiwan, Hong Kong, Macao and Korea basemaps are presented in GCJ-02.
+    # Every package is WGS84 and must stay that way for the WebUI, but
+    # Apple's Taiwan, Hong Kong, Macao and Korea basemaps are presented in
+    # GCJ-02. North America is not among them: Apple's basemap there is WGS84,
+    # so `us` and `ca` deliberately stay out of the correction below.
     # Keep the datum correction
     # at the MapKit boundary and on every subject that can be drawn: network
     # lines, network stations and ridden routes. The latter keeps its WGS84
@@ -635,6 +637,103 @@ PY
         fail "an app-side caller reads a package twice instead of using LoadedPackage"
     fi
     echo "  every package read in the app is single-pass"
+
+    # …and a caller that needs no geometry does not decode any.
+    #
+    # The launch badge index reads six STRINGS per railway — the name, the
+    # normalised name, the operator, its artwork path and two flags. It used to
+    # get them through the full decoder, which is 234.6 ms for Japan and
+    # 138.8 ms for the United States against 29.4 and 17.2 through
+    # `CompactPackage.Headers`, because materialising ~394,000 coordinates so
+    # they can be released again is most of what a package decode is.
+    #
+    # This is not a licence to add a third decoder. `Headers` answers a
+    # strictly smaller question in ONE scan, `CompactPackageHeadersTests` holds
+    # it field-for-field to the full decoder over all seven shipped packages,
+    # and anything that needs geometry still goes through `LoadedPackage`
+    # above. What is pinned here is that the index has not quietly gone back to
+    # taking the whole country to read its line names.
+    grep -q 'region: region, headers: try CompactPackage\.Headers\.load(contentsOf: url)' \
+        RailMap/RailNetworkStore.swift \
+        || fail "the launch badge index no longer reads line attributes only"
+    if grep -n 'LoadedPackage' RailMap/RailNetworkStore.swift \
+        | grep -q 'static func index'; then
+        fail "the launch badge index decodes a package's geometry again"
+    fi
+    echo "  the launch badge index reads line attributes, not geometry"
+
+    # The seven regions are not seven of a kind, and one place says so.
+    #
+    # `Region.DataWeight` is what the launch index and the statistics edge
+    # index branch on, and its whole claim is about the shipped bytes: Japan
+    # and the United States are an order of magnitude past the other five. A
+    # classification that stops matching the files is worse than none, because
+    # the strategies built on it then read a 7 MB country as if it were Macao.
+    for country in mo hk tw kr ca; do
+        size=$(wc -c < "../app/public/rail/$country-2025.json")
+        [ "$size" -lt 3000000 ] \
+            || fail "$country ships ${size}B and is still classified compact"
+    done
+    for country in jp us; do
+        size=$(wc -c < "../app/public/rail/$country-2025.json")
+        [ "$size" -gt 3000000 ] \
+            || fail "$country ships ${size}B and no longer needs the large-region path"
+    done
+    grep -q 'case .jp, .us: .large' RailMap/RegionCatalog.swift \
+        || fail "the large regions are no longer Japan and the United States"
+    echo "  the region weight classes match the shipped packages"
+
+    # Passport's numbers are not computed at launch.
+    #
+    # `MileageStatisticsStore.load` on the default 全部 scope reads every
+    # region's `rail-sections*.json` for the edge index and every region's
+    # package again underneath it — ~1 s of host time and several times that on
+    # a phone. It used to run on every cold launch whether or not the reader
+    # ever opened the screen. The store's own `Progress` stages exist to be
+    # watched during that wait, by the reader who asked for it.
+    grep -q 'task(id: StatisticsLoadTrigger(shows: selection == .stats' \
+        RailMap/AppShell.swift \
+        || fail "the statistics load is no longer keyed on the destination"
+    grep -q 'guard selection == .stats, let loaded = itineraries.loaded else { return }' \
+        RailMap/AppShell.swift \
+        || fail "the statistics load no longer guards on the destination"
+    echo "  the statistics load waits for Passport to be opened"
+
+    # …and opening Passport does not decode seven packages to place a camera.
+    #
+    # `Region.networkExtent` is a written-down constant precisely so a camera
+    # need not wait for lines. The statistics framing reduced `store.lines`
+    # instead and called `ensureAll()` to fill it, which made arriving at
+    # Passport the most expensive geometry decode in the app — for a bounding
+    # box the catalog already holds to the metre.
+    if grep -rn 'ensureAll' --include='*.swift' RailMap \
+        | grep -qv 'there is deliberately no\|// '; then
+        fail "an all-regions geometry decode is back"
+    fi
+    grep -q 'controller.fit(region?.networkExtent ?? Region.everyNetworkExtent)' \
+        RailMap/ContentView.swift \
+        || fail "the statistics camera no longer frames from the catalog's extent"
+    echo "  the statistics camera frames from constants, not from decoded lines"
+
+    # A cached journey is not held off the map by an uncached one.
+    #
+    # The cache read is the whole of a warm load (~20 ms for 201 journeys); the
+    # dataset scan and the solve are the cold one and read a country's whole
+    # sections and stations files. Returning one array at the end meant one
+    # journey imported yesterday kept two hundred cached ones off the map for
+    # as long as its country took to read. The cached rides are published
+    # first, then each remaining scope as it finishes — and the scopes are
+    # walked cheapest-first, in a FIXED order: the grouping dictionary's order
+    # is seeded per process, and it decides which line is drawn over which.
+    grep -q 'if !unresolved.isEmpty { await publish(result) }' \
+        RailMap/RiddenRouteStore.swift \
+        || fail "the route load no longer publishes its cached rides first"
+    grep -q 'for scope in RouteScope.ordered(byScope.keys)' \
+        RailMap/RiddenRouteStore.swift \
+        || fail "the route load walks its scopes in dictionary order again"
+    grep -q 'left.dataWeight == .compact' RailMap/RegionCatalog.swift \
+        || fail "route scopes are no longer ordered by how much they have to read"
+    echo "  the route load publishes cached rides first, cheapest scope first"
 
     # A cold route lookup must not re-read a whole dataset per journey.
     #

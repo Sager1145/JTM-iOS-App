@@ -110,12 +110,7 @@ final class WorkspaceDerived {
     // which is reachable from every view that asks rather than only from this
     // workspace — and two caches would be two todays.
 
-    // MARK: - the two ends of the calendar
-
-    private struct DatedKey {
-        let trains: [Train]
-        let today: [Region: String]
-    }
+    // MARK: - what is upcoming
 
     /// The same, plus the two scopes the Upcoming destination's own header
     /// now applies — see `RailWorkspaceView.upcomingScope`.
@@ -133,8 +128,6 @@ final class WorkspaceDerived {
     /// ``statisticsScope(trains:region:date:compute:)`` does: the list and the
     /// map ask the same question of the same pass.
     private var upcomingIDs: Set<String> = []
-    private var earliestPastKey: DatedKey?
-    private var earliestPastValue: Train?
 
     func upcoming(
         trains: [Train], today: [Region: String], region: Region?, date: String,
@@ -150,24 +143,6 @@ final class WorkspaceDerived {
         upcomingKey = UpcomingKey(
             trains: trains, today: today, region: region, date: date)
         return (upcomingValue, upcomingIDs)
-    }
-
-    // MARK: - the opening view
-
-    /// The first journey in the log, memoised — see
-    /// `RailWorkspaceView.earliestPastTrain`. The opening view asks for it
-    /// once per launch, but the property behind it is read on every body
-    /// evaluation that composes the task key.
-    func earliestPast(
-        trains: [Train], today: [Region: String], compute: () -> Train?
-    ) -> Train? {
-        if let earliestPastKey, earliestPastKey.today == today,
-           ArrayGeneration.same(earliestPastKey.trains, trains) {
-            return earliestPastValue
-        }
-        earliestPastValue = compute()
-        earliestPastKey = DatedKey(trains: trains, today: today)
-        return earliestPastValue
     }
 
     // MARK: - the statistics scope

@@ -33,11 +33,16 @@ import SwiftUI
 /// These cards are drawn as passport pages rather than as system cards, which
 /// is the Memory personality §6.1 reserves for exactly this screen —
 /// "expressive / railway-signage / ticket-and-map metaphors / souvenir-like".
-/// They are printed in a Japanese railway ticket's own colours and on its own
-/// stock: the deep みどり of a 指定席券 for the data page, the warm apricot
-/// 地紋 of a 磁気乗車券 under the charts, 磁気券's orange for every bar, and a
-/// 改札印 in vermillion around the one date on the screen. `TicketPalette.swift`
-/// is where those five hues are written down, and the only place they are.
+/// They are printed in a Japanese railway ticket's own colours: the warm
+/// apricot 地紋 of a 磁気乗車券 washed under the charts, 磁気券's orange for
+/// every bar, and a 改札印 in vermillion around the one date on the screen.
+/// `TicketPalette.swift` is where those hues are written down, and the only
+/// place they are.
+///
+/// The data page goes further and is issued on the stock itself, 字模様 and
+/// all — white paper by day, 暗色 A's navy after dark. It is the only card
+/// that carries the print; `TicketJimon.swift` is the print, and the reason
+/// only one card gets it.
 ///
 /// The tones come from `PassportCardStyle.swift` and are assigned here:
 ///
@@ -232,7 +237,21 @@ struct StatisticsDashboardContent: View {
                         // every card built from it is optional rather than the
                         // whole screen waiting for the slower half.
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
-                        passportDataPage(loaded, stats.overall, unconfirmed: unconfirmed)
+                        passportDataPage(loaded, stats.overall)
+                        // 本日乗車 — the day in scope, issued as a ticket of
+                        // its own directly under the record it is one entry
+                        // in. It used to be a stamped block INSIDE that card,
+                        // below a perforation, on the reading that a stub does
+                        // not carry its own tear line. The face the design
+                        // gives these cards has no room for a second document
+                        // inside the first: it is one 券面 from 券種名 to
+                        // 最下行, and a day printed into the middle of it would
+                        // have to be a second 券種名 on the same piece of
+                        // stock. So it is a second piece of stock — same
+                        // stock, same typesetting, its own 券種.
+                        if let daily = stats.daily {
+                            dailyTicket(daily)
+                        }
                         // §5.7's order, with the reference's own sections
                         // folded into it: what the shape of the travelling was,
                         // then the two records the distance and the clock hold,
@@ -297,9 +316,12 @@ struct StatisticsDashboardContent: View {
         RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion)
     }
 
-    // MARK: - 當日統計, as a stamp on the passport
+    // MARK: - 本日乗車 — the day in scope, as a ticket of its own
 
     /// `#stats-daily`'s subtitle: how long, over how many trains.
+    ///
+    /// Spoken only now. The face states both figures in fields of their own,
+    /// so this is what VoiceOver hears in place of reading a form aloud.
     private func dailySubtitle(_ daily: Statistics.DailyStats?) -> String {
         let time = daily.map { StatisticsFormat.duration($0.stats.rideMinutes, localization) }
             ?? StatisticsFormat.unset
@@ -312,56 +334,78 @@ struct StatisticsDashboardContent: View {
         return "\(localization.statsText("stat.time")) \(time) · \(trains)"
     }
 
-    /// `#stats-daily`, as a stamp inside the passport rather than as a card
-    /// above it.
+    /// `#stats-daily`, issued as a second ticket under the record card rather
+    /// than stamped inside it.
+    ///
+    /// The same stock, the same 組版, and its own 券種名 — which is the whole
+    /// of the difference from the block this replaces. A day is not a footnote
+    /// to the total above it; it is the same set of questions asked over one
+    /// date, and the design's face answers a set of questions. Printing it
+    /// into the middle of the record's own 券面 meant a second heading, a
+    /// second date and a perforation on a card that already had a 券種名 at
+    /// the top and an issuing line at the foot.
+    ///
+    /// Where the record card puts 集計範囲 in its corner, this one has the
+    /// region too — a day in Japan and the same day counted worldwide are
+    /// different figures, and the ticket says which it is holding.
     ///
     /// The web app renders this block whether or not a day is chosen, with
     /// `--` in every field, because in the browser the date bar that scopes it
     /// is a different region of the page. Here the scope control sits in the
     /// panel header — visible at every sheet stop, on this destination only —
-    /// so "no day is in scope" is stated by the control that owns the scope.
-    /// A block of dashes underneath it would say the same thing a second time,
-    /// in the one register §13.1 rules out.
-    private func dailyStamp(_ daily: Statistics.DailyStats) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                PassportEyebrow(localization.statsText("ios.stats.dailyHeading"))
-                Spacer(minLength: 8)
-                // The day, in the frame a gate would have stamped it in — see
-                // ``PassportStamp``. Same string, same role, same voice: the
-                // frame is ink around the date and adds nothing to read.
-                PassportStamp(scopeLabel(daily.date))
-            }
-            PassportHeadline(
-                label: localization.statsText(
-                    "stats.dailyTitle", params: ["date": .string(scopeLabel(daily.date))]),
-                value: StatisticsFormat.km(daily.stats.riddenAll),
-                spoken: dailySpoken(daily),
-                unit: "km",
-                caption: dailySubtitle(daily),
-                // A field inside the page, not a second page headline: the
-                // day is part of the total above it, and two `largeTitle`
-                // figures on one card is two cards.
-                prominence: .field)
-            // Same mutually-exclusive ride groups as 實際乘坐量; the
-            // overlapping network-category rows the panel once carried here
-            // were removed.
-            PassportRule()
-            VStack(spacing: 8) {
-                ForEach(serviceRows(daily.stats.services)) { row in
-                    PassportRow(
+    /// so "no day is in scope" is stated by the control that owns the scope,
+    /// and no ticket is issued. A card of dashes would say the same thing a
+    /// second time, in the one register §13.1 rules out.
+    private func dailyTicket(_ daily: Statistics.DailyStats) -> some View {
+        // The same mutually-exclusive ride groups the block carried, and the
+        // same accumulating figure as its headline: the day is part of the
+        // total on the card above, and a part measured on the other convention
+        // is not a part of it.
+        let groups = serviceRows(daily.stats.services)
+        let distance = StatisticsFormat.km(daily.stats.services.km)
+        let rides = daily.trainCount.formatted()
+        let ridesUnit = localization.statsText("ios.ticket.unit.rides")
+        return TicketFaceCard(
+            kind: "本日乗車",
+            scope: ticketScope,
+            displays: [
+                .figure(
+                    label: localization.statsText("ios.ticket.label.distance"),
+                    value: distance,
+                    unit: "KM",
+                    spoken: dailySpoken(daily)),
+                ticketRideTime(daily.stats.rideMinutes),
+            ],
+            // 車種 in the three fields the four-cell block has left, which is
+            // the one place these two faces differ in what they print: the
+            // record card qualifies its distance with what the reader has
+            // covered, and a single day is better qualified by what it was
+            // spent on.
+            fields: [
+                TicketField(
+                    label: localization.statsText("ios.ticket.label.rides"),
+                    value: rides,
+                    unit: ridesUnit,
+                    spoken: ticketSpoken(rides, ridesUnit))
+            ]
+                + groups.map { row in
+                    let km = StatisticsFormat.km(row.group.km)
+                    return TicketField(
                         label: localization.statsCategoryText(row.key),
-                        value:
-                            "\(StatisticsFormat.km(row.group.km)) km · \(serviceDetail(row.group))")
-                }
-            }
-        }
-        .passportBlock()
+                        value: km,
+                        unit: "KM",
+                        spoken: "\(km) km · \(serviceDetail(row.group))")
+                },
+            span: localization.statsText(
+                "ios.ticket.spanDay", params: ["date": .string(spelledDate(daily.date))]),
+            issued: ticketIssued
+        )
+        .passportCard(.feature)
     }
 
     private func dailySpoken(_ daily: Statistics.DailyStats?) -> String {
         guard let daily else { return localization.statsText("ios.stats.unsetSpoken") }
-        return "\(StatisticsFormat.km(daily.stats.riddenAll)) km · \(dailySubtitle(daily))"
+        return "\(StatisticsFormat.km(daily.stats.services.km)) km · \(dailySubtitle(daily))"
     }
 
     /// `dateLabel` — the two sentinels need a word, a real bucket labels itself.
@@ -370,177 +414,228 @@ struct StatisticsDashboardContent: View {
         return localization.text(key, fallback: key)
     }
 
-    // MARK: - §5.7 #1 + #2 — the passport data page
+    /// The span the passport covers, in the compact numeric form a ticket
+    /// prints a date in — `2025.1.1-2026.2.3`.
+    ///
+    /// Read off the day buckets rather than off the date scope, because they
+    /// are not the same question: the scope is what the reader asked for and
+    /// this is what is actually in it. `availableDates` already sorted them
+    /// and already put the undated bucket last, so the ends of the dated
+    /// stretch are its first and last entries once that sentinel is dropped.
+    ///
+    /// `nil` when nothing in scope carries a date at all — there is no span to
+    /// print, and 「undated-undated」 is not one.
+    private func issuedSpan(_ loaded: ItineraryStore.Loaded) -> String? {
+        let dated = loaded.days.map(\.date).filter { $0 != Dates.undated }
+        guard let first = dated.first, let last = dated.last else { return nil }
+        guard first != last else {
+            return localization.statsText(
+                "ios.ticket.spanDay", params: ["date": .string(spelledDate(first))])
+        }
+        return localization.statsText(
+            "ios.ticket.span",
+            params: ["from": .string(spelledDate(first)), "to": .string(spelledDate(last))])
+    }
 
-    /// 總乘車里程, the fields that qualify it, and the day in scope — one page.
+    /// `2025-04-01` → 「2025年4月1日」.
+    ///
+    /// The spelled form, because 「集計期間は年を必ず入れる」 is the design's
+    /// own 表記 rule and a span is the one line on the face that says what the
+    /// figures above it cover. Localized, unlike ``ticketDate(_:)``: this one
+    /// is a sentence a reader reads, not a field a machine printed.
+    ///
+    /// The two date sentinels never parse, and fall through to the words the
+    /// rest of the app calls them by.
+    private func spelledDate(_ date: String) -> String {
+        let parts = date.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return scopeLabel(date) }
+        return localization.statsText(
+            "ios.ticket.date",
+            params: [
+                "y": .string(String(parts[0])),
+                "m": .string(String(parts[1])),
+                "d": .string(String(parts[2])),
+            ])
+    }
+
+    /// `2025-04-01` → `2025.-4.-1`.
+    ///
+    /// Not a `DateFormatter`: this is the numeric form printed at the foot of
+    /// a ticket face, which is the same in all four of this app's languages,
+    /// and a localized date here would put a different string on the stock
+    /// depending on who is holding it.
+    ///
+    /// The half-width dash is not a minus and not a separator — it is the
+    /// design's own 表記 rule (「一桁の数には前に `-`（例 `-3`）、二桁はそのまま
+    /// （`31`）」), and it is a real ticket's habit: a MARS terminal prints a
+    /// fixed-width field, so a one-digit month is struck with a rule where its
+    /// leading digit would have gone rather than with a zero.
+    private func ticketDate(_ date: String) -> String {
+        let parts = date.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return date }
+        let padded = parts.dropFirst().map { $0 < 10 ? "-\($0)" : "\($0)" }
+        return ([String(parts[0])] + padded).joined(separator: ".")
+    }
+
+    /// 集計範囲 — the region the figures are counted over, for the corner of
+    /// the face.
+    ///
+    /// The panel header carries this scope too, and an earlier revision of
+    /// this card dropped its region chip for exactly that reason (§5.1: one
+    /// value, one place). This is not that chip coming back. A chip was a
+    /// control that looked interactive and answered a question the header had
+    /// already answered; 「（日本）」 in the corner of a 券面 is the DOCUMENT
+    /// stating its own scope, which is the property that lets the same card be
+    /// screenshotted, shared or exported and still be readable — the poster
+    /// (`StatisticsShareImage`) draws these cards with no panel header
+    /// anywhere near them.
+    private var ticketScope: String {
+        guard let region else {
+            return localization.text("ios.region.all", fallback: "All regions")
+        }
+        return regionName(region)
+    }
+
+    /// 最下行の左 — 「集計日　RAILMAP 発行」.
+    ///
+    /// The 集計日 is today, and it is the one date on this screen that is
+    /// allowed to be: it says when the tally was struck, not when anybody
+    /// rode. `RideLedger` still has no clock in it and this changes nothing
+    /// about that — what is COUNTED remains a stated fact on the record.
+    private var ticketIssued: String {
+        localization.statsText(
+            "ios.ticket.issued",
+            params: ["date": .string(ticketDate(RecordDate.text(from: Date())))])
+    }
+
+    /// A figure and its counter, spoken as one phrase.
+    ///
+    /// The counter is empty in English (see `ios.ticket.unit.rides`), and
+    /// 「412 」 with a trailing space is not a thing to hand VoiceOver.
+    private func ticketSpoken(_ value: String, _ unit: String) -> String {
+        unit.isEmpty ? value : "\(value) \(unit)"
+    }
+
+    // MARK: - §5.7 #1 + #2 — 乗車記録, the ticket this passport is
+
+    /// The whole record, on one 券面.
     ///
     /// §5.3.3 asks for the distance first and 旅程數 / 出行日 / 停站數 /
-    /// 乘車時間 second, and that is the order here — but as ONE card rather
-    /// than three, which is where this screen departs from a card-per-item
-    /// reading of the spec. The reason is the thing being imitated: a passport
-    /// data page is a headline with its fields under it, and on separate
-    /// surfaces the total read as the answer to a different question from the
-    /// journey count that produced it.
+    /// 乘車時間 second, and that is still the order — but the shape is now the
+    /// design's own 集計券 rather than a card of metric tiles: two 大字 figures
+    /// across the top (乗車距離 and 乗車時間, at cx150 / cx365), the four that
+    /// qualify them as a 中字 form block underneath, the 集計期間 as a printed
+    /// sentence, the 色帯, and the issuing line under it. See
+    /// `PassportTicketFace.swift` for the 組版規則 that lays all of that out;
+    /// this method's whole job is choosing which measured number goes in which
+    /// printed field.
     ///
-    /// One field is not in §5.3.3's list: 乗車路線, the number of distinct
-    /// lines ridden and the companies that run them. It is the reference's
-    /// AIRLINES field, it is free (the aggregate already carries the per-line
-    /// table), and it answers the question a coverage percentage cannot —
-    /// 31 % of the network is not a thing anyone has ridden, 125 lines is.
+    /// It is the one `.feature` card on the screen (§6.1's Memory personality
+    /// — see `PassportCardStyle.swift`). One, because a screen where every card
+    /// is loud has no hero, and this is the card that answers §5.3's question:
+    /// **how much have I ridden, and which railways does that cover?**
     ///
-    /// It is also the one `.feature` card on the screen (§6.1's Memory
-    /// personality — see `PassportCardStyle.swift`). One, because a screen
-    /// where every card is loud has no hero, and this is the card that answers
-    /// §5.3's question: **how much have I ridden, and which railways does that
-    /// cover?**
+    /// ### What left the card, and where it went
+    ///
+    /// The face has no captions — a printed form has a label, a figure and a
+    /// counter, and nothing under them. The three this card used to carry are
+    /// all still on the screen, one card further down, which is why losing
+    /// them here costs nothing and gains §5.1:
+    ///
+    ///   - 「地球 1.4 周」 → `distanceCard`'s scale rows, which count the same
+    ///     lap off the same circumference.
+    ///   - 「高速鉄道 12 本」 under 旅程数 → `serviceCard`, whose entire subject
+    ///     that is.
+    ///   - 「4,203 / 13,608 km」 under the percentage → `coverageCard`, which
+    ///     states the same fraction with its denominator.
+    ///
+    /// The coverage BAR went with them for a different reason: 「文字色は純黒
+    /// #000 / 純白 #fff のみ。透明度は使わない」 leaves a proportion bar nothing
+    /// to be drawn in that is not either a third colour on a two-plate ticket
+    /// or a screened block pretending to be a chart.
+    ///
+    /// The unconfirmed-journeys note went for the plainest reason of all: the
+    /// 券面 has no field for it. 組版規則's 位置 is a closed list — 券種名, the
+    /// 識別文字, the 集計範囲, two 大字 anchors, four 中字 cells, the 集計期間,
+    /// the 色帯 and one 最下行 — and every line of it is spoken for. A note
+    /// printed anywhere on this face would be either type inside the band the
+    /// design says carries none, or a line below the 最下行 that the design does
+    /// not set.
     private func passportDataPage(
-        _ loaded: ItineraryStore.Loaded, _ stats: Statistics.MileageStats,
-        unconfirmed: Int
+        _ loaded: ItineraryStore.Loaded, _ stats: Statistics.MileageStats
     ) -> some View {
         let total = statistics.totalKm
         // The headline distance and the coverage fraction are two different
         // numbers and always were — see ``Statistics/MileageStats/networkKm``.
-        // The gap between them is exactly the unmatched note at the foot of
-        // this card, which is why the two are drawn on the one surface.
+        // 総乗車距離 is every kilometre the reader rode; the percentage below
+        // it is a fraction of the classified network, and the distance that
+        // reached none of it cannot raise the share of it said to be covered.
         let pct = total > 0 ? 100 * stats.networkKm / total : 0
-        let ridden = riddenLines(stats)
-        let laps = aroundTheWorld(stats.riddenAll)
         let distance = StatisticsFormat.km(stats.riddenAll)
-        let covered = StatisticsFormat.km(stats.networkKm)
-        return VStack(alignment: .leading, spacing: 18) {
-            VStack(alignment: .leading, spacing: 5) {
-                // No region chip and no date menu on the card. Both scopes are
-                // chosen in the panel header now — one row, always visible, on
-                // this destination only — and a card that repeated either
-                // would be a second place for one value to be stated (§5.1).
-                PassportEyebrow(localization.statsText("ios.stats.passportTitle"))
-                PassportBookletLine()
-            }
-
-            PassportHeadline(
-                label: localization.statsText("ios.stats.totalDistance"),
-                value: distance,
-                spoken: laps.map { "\(distance) km · \($0)" } ?? "\(distance) km",
-                unit: "km",
-                caption: laps)
-
-            PassportMetricGrid(items: [
-                .init(
-                    localization.statsText("ios.stats.journeysLabel"),
-                    loaded.trains.count.formatted(),
-                    caption: highSpeedCaption(stats.services)),
-                .init(
-                    localization.text("ios.rideTime", fallback: "Ride time"),
-                    StatisticsFormat.duration(stats.rideMinutes, localization)),
-                .init(
-                    localization.text("ios.travelDays", fallback: "Travel days"),
-                    loaded.days.count.formatted()),
-                .init(
-                    localization.text("ios.stops", fallback: "Stops"),
-                    stopCount(loaded.trains).formatted()),
-                .init(
-                    localization.statsText("ios.stats.linesRidden"),
-                    ridden.lines.formatted(),
-                    caption: ridden.operators > 0
-                        ? localization.statsText(
-                            "ios.stats.operatorCount",
-                            params: ["n": .number(Double(ridden.operators))])
-                        : nil),
-            ])
-
-            // The same three numbers the old hero footnote carried — the
-            // percentage, the denominator, and what they are a fraction of —
-            // in the band the reference puts its footer chip in. Not a
-            // navigation: the coverage card is the next card down in the same
-            // scroll view, and a button that scrolls the reader somewhere they
-            // can already see is furniture.
-            PassportBand(
-                label: localization.statsText("stats.coverageTitle"),
-                value: "\(StatisticsFormat.percent(pct))%",
-                detail: "\(covered) / \(StatisticsFormat.km(total)) km",
-                fraction: total > 0 ? stats.networkKm / total : 0,
-                spoken: coverageSpoken(ridden: stats.networkKm, total: total))
-
-            // The selected day, stamped on the page it is part of (§5.3.3's
-            // Daily module). Below the all-time block rather than above it, so
-            // the passport's own headline and fields stay contiguous and the
-            // day reads as what it is: one entry in them.
-            //
-            // The perforation is the seam a ticket is torn along, and this is
-            // the one seam this screen has: everything above it is every
-            // journey ever taken, everything below it is one day out of them.
-            // Drawn here rather than inside ``dailyStamp`` because a stub does
-            // not carry its own tear line — the ticket it came off does.
-            if let daily = statistics.view?.daily {
-                PassportPerforation()
-                dailyStamp(daily)
-            }
-
-            // Why 旅程數 is not the number of journeys in the store. Beside
-            // the field it qualifies rather than at the foot of the screen,
-            // and in the same neutral register as the unmatched note below: a
-            // journey nobody has confirmed riding is not a fault in the data,
-            // it is a question the app has not been answered.
-            if unconfirmed > 0 {
-                PassportNote(
-                    title: localization.statsText("ios.stats.unconfirmedTitle"),
-                    message: unconfirmedMessage(unconfirmed),
-                    systemImage: "checkmark.circle")
-            }
-
-            // §5.7: a neutral note, not the critical role. Unmatched distance
-            // means the drawn ride left the classified network for a stretch —
-            // it is information about coverage, not a data error.
-            //
-            // Gated on what the note will SAY rather than on what it holds:
-            // `StatisticsFormat.km` keeps one decimal below 100 km, so any
-            // remainder under 0.05 renders as "0.0" — a card stating that
-            // nothing is missing, in the words of something being missing.
-            if stats.unmatchedKm >= 0.05 {
-                PassportNote(
-                    title: localization.statsText("ios.stats.unmatchedTitle"),
-                    message: localization.text(
-                        "ios.unmatchedDistance",
-                        params: ["km": .string(StatisticsFormat.km(stats.unmatchedKm))],
-                        fallback: "\(StatisticsFormat.km(stats.unmatchedKm)) km unmatched"))
-            }
-        }
+        let rides = loaded.trains.count.formatted()
+        let stops = stopCount(loaded.trains).formatted()
+        let coverage = StatisticsFormat.percent(pct)
+        let operators = riddenLines(stats).operators.formatted()
+        let ridesUnit = localization.statsText("ios.ticket.unit.rides")
+        let stopsUnit = localization.statsText("ios.ticket.unit.stops")
+        let operatorsUnit = localization.statsText("ios.ticket.unit.operators")
+        return TicketFaceCard(
+            // 券種名. `Text(verbatim:)` inside the face and never localized,
+            // for the reason a 乗車券 does not translate its own name: this is
+            // what is PRINTED on the stock, in the same sense that a JR ticket
+            // says 乗車券 to a reader who has never read Japanese.
+            kind: "乗車記録",
+            scope: ticketScope,
+            displays: [
+                .figure(
+                    label: localization.statsText("ios.ticket.label.distance"),
+                    value: distance,
+                    unit: "KM",
+                    spoken: "\(distance) km"),
+                ticketRideTime(stats.rideMinutes),
+            ],
+            fields: [
+                TicketField(
+                    label: localization.statsText("ios.ticket.label.rides"),
+                    value: rides,
+                    unit: ridesUnit,
+                    spoken: ticketSpoken(rides, ridesUnit)),
+                TicketField(
+                    label: localization.text("ios.stops", fallback: "Stops"),
+                    value: stops,
+                    unit: stopsUnit,
+                    spoken: ticketSpoken(stops, stopsUnit)),
+                TicketField(
+                    label: localization.statsText("ios.ticket.label.coverage"),
+                    value: coverage,
+                    unit: localization.statsText("ios.ticket.unit.percent"),
+                    spoken: coverageSpoken(ridden: stats.networkKm, total: total)),
+                TicketField(
+                    label: localization.statsText("ios.stats.operatorsLabel"),
+                    value: operators,
+                    unit: operatorsUnit,
+                    spoken: ticketSpoken(operators, operatorsUnit)),
+            ],
+            span: issuedSpan(loaded),
+            issued: ticketIssued
+        )
         .passportCard(.feature)
-        .accessibilityElement(children: .contain)
     }
 
-    /// The reference's "1.4x around the world", in the only unit that means
-    /// anything to someone who has been counting kilometres: laps of the
-    /// equator, at the WGS-84 circumference the map's own distances are
-    /// measured on.
+    /// 乗車時間, in the split組版 the design sets a duration in — 「268 時間 40 分」.
     ///
-    /// `nil` under a twentieth of a lap, where the figure would read 「地球
-    /// 0.0 周」 and say nothing. Expressive is not the same as inventing a
-    /// number — §5.3 asks for both at once ("可以比编辑界面更有表现力，但数字仍
-    /// 应准确、克制").
-    private func aroundTheWorld(_ km: Double) -> String? {
-        guard km.isFinite, km > 0 else { return nil }
-        let laps = km / 40075.017
-        guard laps >= 0.05 else { return nil }
-        let digits = laps >= 1 ? 1 : 2
-        return localization.statsText(
-            "ios.stats.earthLaps",
-            params: [
-                "n": .string(laps.formatted(.number.precision(.fractionLength(digits))))
-            ])
-    }
-
-    /// The reference's "4 Long Haul" — the one qualifier a journey count is
-    /// worth carrying.
-    ///
-    /// `stat.hsr` is a country-variant key (新幹線 / 高鐵 / 고속철도), so it
-    /// goes through `statsCategoryText` and says whichever of those the region
-    /// in scope calls it.
-    private func highSpeedCaption(_ services: Statistics.ServiceGroups) -> String? {
-        guard services.hsr.count > 0 else { return nil }
-        let trains = localization.statsText(
-            "stat.trains", params: ["n": .number(Double(services.hsr.count))])
-        return "\(localization.statsCategoryText("stat.hsr")) \(trains)"
+    /// Shared by both faces, because the two tickets state the same figure
+    /// about two different spans and a duration set one way on one of them and
+    /// another way on the other would read as two different measurements.
+    private func ticketRideTime(_ minutes: Double) -> TicketDisplay {
+        let split = StatisticsFormat.hoursMinutes(minutes)
+        return .duration(
+            label: localization.text("ios.rideTime", fallback: "Ride time"),
+            hours: split.hours,
+            minutes: split.minutes,
+            hourUnit: localization.statsText("ios.ticket.unit.hours"),
+            minuteUnit: localization.statsText("ios.ticket.unit.minutes"),
+            spoken: StatisticsFormat.duration(minutes, localization))
     }
 
     /// How many distinct lines the reader has been on, and how many companies
@@ -1090,9 +1185,13 @@ struct StatisticsDashboardContent: View {
     /// The comparisons that are worth drawing, and no others.
     ///
     /// A ratio under a two-hundredth reads as `0.00×`, which is a row that
-    /// says nothing while taking up the space of one that does — the same
-    /// judgement `aroundTheWorld` already makes about the hero's caption. So a
-    /// short record shows the Earth row alone, and a long one shows all three.
+    /// says nothing while taking up the space of one that does. So a short
+    /// record shows the Earth row alone, and a long one shows all three.
+    ///
+    /// This is the only place the lap is counted now. The record card used to
+    /// print 「地球 1.4 周」 under its headline as well; the design's 券面 has
+    /// no caption under a 大字, and the row below states the same figure off
+    /// the same circumference.
     private func scaleRows(_ km: Double) -> [ScaleRow] {
         guard km.isFinite, km > 0 else { return [] }
         return Self.scaleSpecs.compactMap { spec in
@@ -1371,6 +1470,8 @@ struct StatisticsDashboardContent: View {
         case .hk: "🇭🇰"
         case .mo: "🇲🇴"
         case .kr: "🇰🇷"
+        case .us: "🇺🇸"
+        case .ca: "🇨🇦"
         }
     }
 

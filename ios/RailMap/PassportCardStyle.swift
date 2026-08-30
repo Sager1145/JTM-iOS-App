@@ -19,36 +19,41 @@ import SwiftUI
 /// ## Three tones, and why not seven
 ///
 /// A screen where every card shouts has no hero. The reference this is drawn
-/// from (Flighty's Passport) is mostly quiet: one saturated data page, a
+/// from (Flighty's Passport) is mostly quiet: one printed data page, a
 /// couple of tinted cards, and plain surfaces under the dense lists — so the
 /// eye lands on the page that carries the headline numbers.
 ///
-///   - ``PassportTone/feature`` is the data page: a deep gradient with white
-///     ink, for the ONE card that answers the screen's question.
-///   - ``PassportTone/soft`` is a passport page: the system card surface with
-///     a tint wash and a keyline, for the cards that carry charts.
+///   - ``PassportTone/feature`` is the data page: real ticket stock, 字模様
+///     and all, for the ONE card that answers the screen's question. It is
+///     the only card in the app that carries the print.
+///   - ``PassportTone/soft`` is the system card surface with a hairline
+///     keyline, for the cards that carry charts.
 ///   - ``PassportTone/plain`` is exactly the card this app already had, kept
 ///     for dense lists and for every non-statistics card in the workspace.
 ///
 /// ## The colours
 ///
-/// They are a Japanese railway ticket's, and they live in `TicketPalette.swift`
-/// rather than here — this file is shape, spacing and ink ROLES, and that one
-/// is the five hues those roles resolve to. The split is what lets a card ask
-/// for "the block a figure is stamped into" without also deciding what colour
-/// a 改札印 is.
+/// A Japanese railway ticket's, and ON THE PASSPORT ONLY. Every other card
+/// here draws in the system's semantic colours, the same as the rest of the
+/// app — one card carries the metaphor and the screen around it stays
+/// stationery, which is the only way one card can be the hero of it.
 ///
-/// See `TicketPalette` for the reading of §6.2 that the ticket palette rests
-/// on, and for why the green there is the paper a ticket is issued on and
-/// never the ink a figure is drawn in.
+/// The ticket's hues live in `TicketPalette.swift` rather than here — this
+/// file is shape, spacing and ink ROLES, and that one is the hues those roles
+/// resolve to. The split is what lets a card ask for "the block a figure sits
+/// in" without also deciding what colour the stock is.
 ///
-/// It is deliberately **not** `Color.accentColor`. §6.2 gives the tint role to
-/// "可点击、选中、当前路线", and a 200-point decorative surface is none of
-/// those. The passport's colours are its own.
+/// Three files make one ticket, and this is the third of them by depth: see
+/// `TicketPalette` for the reading of §6.2 the ticket palette rests on,
+/// `TicketJimon` for the 字模様 both stocks are printed with, and
+/// `PassportTicketFace` for the TYPE that goes on top — the 組版規則 the
+/// design states as a 510 × 345 artboard, which is what a `.feature` card
+/// carries and no other card does.
 enum PassportTone: Equatable {
-    /// The data page — deep gradient, white ink. At most one per screen.
+    /// The data page — printed ticket stock. At most one per screen, and the
+    /// only tone the 字模様 is laid under.
     case feature
-    /// A passport page — system surface, tint wash, hairline keyline.
+    /// A system surface with a hairline keyline.
     case soft
     /// The ordinary content card (§6.4's `radius-card` on a system surface).
     case plain
@@ -71,43 +76,88 @@ extension View {
 ///
 /// On a `.soft` or `.plain` card these are the semantic roles and nothing
 /// else, so Increase Contrast and the dark appearance stay the system's
-/// business. On a `.feature` card they are white at a set of opacities,
-/// because there is no semantic colour for "on top of a saturated surface" —
-/// `Color.primary` there would resolve to black in the light appearance and
-/// vanish into the gradient.
+/// business.
+///
+/// On the passport they are not, because the passport is the one card printed
+/// on stock. See ``faceInk``.
 struct PassportInk: Equatable {
+    /// Whether this is the passport itself — a card printed on ticket stock
+    /// rather than drawn on a system surface.
+    var onStock: Bool = false
+    /// Whether that stock is 暗色 A rather than white paper. Only ever true
+    /// alongside ``onStock``.
     var onColor: Bool = false
     var increasedContrast: Bool = false
 
     static let plain = PassportInk()
 
+    /// The single ink a ticket's face is printed in.
+    ///
+    /// Solid, at full alpha, and either pure black or pure white — never a
+    /// grey, never a percentage. 「券面文字は地紋より必ず濃く」 is the design's
+    /// own rule and it is not a preference: the face type has to be darker
+    /// than the 地紋 under it, and `secondaryLabel` — sixty percent of a dark
+    /// grey — is not darker than a security print at any density that still
+    /// reads as one. A ticket has no second ink to fall back to.
+    ///
+    /// So the passport gives up the type hierarchy that colour was carrying
+    /// and lets size, weight and tracking carry it instead, which is what a
+    /// press does when it has one plate. `Color.black` and `Color.white` are
+    /// safe as literals here precisely because ``onColor`` tracks the stock:
+    /// white paper is only ever issued in the light appearance and 暗色 A only
+    /// in the dark one, so neither literal can turn up against its own ground.
+    private var faceInk: Color { onColor ? .white : .black }
+
     /// A heading or a figure — the thing being read.
-    var title: Color { onColor ? .white : .primary }
+    var title: Color { onStock ? faceInk : .primary }
     /// The small tracked label above a figure.
-    var eyebrow: Color { onColor ? .white.opacity(increasedContrast ? 0.96 : 0.80) : .secondary }
+    var eyebrow: Color { onStock ? faceInk : .secondary }
     /// A caption under a figure, a footnote, a unit.
-    var caption: Color { onColor ? .white.opacity(increasedContrast ? 0.92 : 0.72) : .secondary }
+    var caption: Color { onStock ? faceInk : .secondary }
     /// A rule or divider.
     var rule: Color { onColor ? .white.opacity(0.24) : Color(.separator) }
     /// The translucent block a card nests inside itself — the reference's
     /// footer chip, and the highlight above a list.
-    var chip: Color {
-        onColor ? .white.opacity(increasedContrast ? 0.26 : 0.16) : TicketPalette.chip
-    }
-    /// The unfilled part of a proportion bar…
-    var track: Color { onColor ? .white.opacity(0.26) : TicketPalette.track }
-    /// …and the filled part. Never the positive/green role: §5.3.5 is explicit
-    /// that a large number is not a success state — which is exactly why
-    /// `TicketPalette`'s green is paper and its orange is ink.
-    var fill: Color { onColor ? .white : TicketPalette.fill }
-    /// 改札印 — the rule around a stamped date, and nothing else.
     ///
-    /// A role of its own rather than a reuse of ``rule``, because it is the one
-    /// mark on these cards that is allowed to be a different colour from the
-    /// paper it is on: a gate stamp is inked in vermillion over whatever the
-    /// ticket happened to be printed on. It draws the FRAME only — the words
-    /// inside a stamp stay on ``eyebrow``, which answers to Increase Contrast.
-    var stamp: Color { onColor ? TicketPalette.stampInkOnColor : TicketPalette.stampInk }
+    /// On the passport this is ``faceInk`` at an alpha, for the same reason
+    /// the type is: one plate, one ink. A screened block on a ticket is the
+    /// same ink laid down lighter, never a second colour.
+    ///
+    /// Off the passport it is `tertiarySystemFill` — the system's own answer
+    /// for a block nested inside a card, and the answer every card here gives
+    /// now that the ticket's colours are the passport's alone.
+    var chip: Color {
+        guard onStock else { return Color(.tertiarySystemFill) }
+        return faceInk.opacity(increasedContrast ? 0.26 : 0.16)
+    }
+    /// The unfilled part of a proportion bar — the same ink again, and the
+    /// same split.
+    var track: Color {
+        guard onStock else { return Color(.tertiarySystemFill) }
+        return faceInk.opacity(0.26)
+    }
+    /// …and the filled part.
+    ///
+    /// On the passport it is the issuer's blue — the same ink the 字模様 under
+    /// it is printed in, at full strength instead of at a third of one. That
+    /// is the second plate a ticket is allowed: 地紋 in one colour and the
+    /// figures in another, both of them the issuer's. A bar in a THIRD hue
+    /// would be the only mark on the card that came from nowhere.
+    ///
+    /// Off the passport it is the app's own tint, which is what iOS fills a
+    /// bar with. That is a deliberate re-reading of §6.2, not an oversight of
+    /// it: the rule hands the tint to 可点击 / 选中 / 当前路线 so that nothing
+    /// INERT borrows an interactive colour, and it was written when the
+    /// alternative on offer was a bespoke hue. Between a bespoke hue on a
+    /// chart bar and the system's, the system's is the one a reader has to
+    /// learn nothing about — say the word and this goes back to a neutral.
+    ///
+    /// Never the positive/green role, here or on any other card: §5.3.5 is
+    /// explicit that a large number is not a success state.
+    var fill: Color {
+        guard onStock else { return .accentColor }
+        return TicketPalette.jimonInk(onDarkStock: onColor)
+    }
 }
 
 private struct PassportInkKey: EnvironmentKey {
@@ -145,53 +195,89 @@ extension EnvironmentValues {
 // MARK: - the paper
 
 private struct PassportCardSurface: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var contrast
     var tone: PassportTone
 
+    /// §6.4's `radius-card`, except on the ticket.
+    ///
+    /// A 券紙 is die-cut, not rounded, and a rounded one reads as a picture OF
+    /// a ticket rather than as one. The face inside it is drawn to the same
+    /// premise — 「端まで刷り切る（塗り足しなし）。余白を残すと券紙らしさが消え
+    /// ます」 — so a corner radius here would have been the one place the card
+    /// stopped agreeing with its own contents.
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: tone == .feature ? 0 : RailStyle.cardCornerRadius,
+            style: .continuous)
     }
 
     func body(content: Content) -> some View {
         content
-            // §6.4: card padding 16–20. The data page takes the top of that
-            // band because it is the only card whose margin is part of the
-            // picture; the rest keep the 18 every card in this app used.
-            .padding(tone == .feature ? 20 : 18)
+            // §6.4: card padding 16–20, and NONE on the ticket. The face sets
+            // its own 44 px margins inside the die-cut edge (see `TicketFace`),
+            // and the 色帯 crosses the whole of it — both of which a card
+            // inset would cut short.
+            .padding(tone == .feature ? 0 : 18)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background { fill }
             .clipShape(shape)
             .overlay { edge }
             .environment(
                 \.passportInk,
-                PassportInk(onColor: tone == .feature, increasedContrast: contrast == .increased))
+                PassportInk(
+                    onStock: tone == .feature,
+                    onColor: tone == .feature && issuedOnDarkStock,
+                    increasedContrast: contrast == .increased))
     }
 
+    /// The passport is a piece of ticket stock — a ground, the wash between
+    /// ground and print, and the 字模様 printed onto it. Every other card is
+    /// the stationery it always was.
+    ///
+    /// That is the whole of the rule, and it is a rule about ONE card rather
+    /// than about a family of them. A 地紋 is the loudest thing this file can
+    /// put on a surface, and a screen where every card carries one has no
+    /// passport on it — just nine tickets, none of which is the document. The
+    /// tone that already means "at most one per screen" is the tone that gets
+    /// the print.
+    ///
+    /// Which of the two stocks it is issued on follows the appearance, because
+    /// that is the only thing the choice can follow once there is one card: by
+    /// day the stock is white and takes the brand blue, and after dark it is
+    /// 暗色 A, the variant the design draws for exactly the case where white
+    /// paper is not the premise (「白紙前提でない面に用います」).
     @ViewBuilder private var fill: some View {
         switch tone {
         case .feature:
-            ZStack(alignment: .bottomTrailing) {
-                TicketPalette.dataPage
-                // The guilloche a passport prints under its data page, in the
-                // one object this passport is about. Decoration, so it is
-                // hidden from VoiceOver and drawn far below the ink: at a
-                // tenth of white it reads as texture in both appearances and
-                // as nothing at all through the text on top of it.
-                Image(systemName: "train.side.front.car")
-                    .font(.system(size: 120))
-                    .foregroundStyle(.white.opacity(0.07))
-                    .offset(x: 34, y: 30)
-                    .accessibilityHidden(true)
+            ZStack {
+                if issuedOnDarkStock {
+                    TicketPalette.darkStock
+                } else {
+                    Color.railElevated(.secondarySystemBackground)
+                }
+                TicketPalette.jimonTint(onDarkStock: issuedOnDarkStock)
+                TicketJimon(stock: issuedOnDarkStock ? .darkA : .jrm)
             }
         case .soft:
-            ZStack {
-                Color.railElevated(.secondarySystemBackground)
-                TicketPalette.stockWash
-            }
+            // The system card surface and nothing over it. The wash that used
+            // to warm this tone was a ticket's stock, and stock is now the one
+            // thing that tells the passport apart from every other card on the
+            // screen — a second card wearing a paler version of it made the
+            // hero look like the first of a set.
+            Color.railElevated(.secondarySystemBackground)
         case .plain:
             Color.railElevated(.secondarySystemBackground)
         }
     }
+
+    /// Whether the passport is issued on 暗色 A rather than on white stock.
+    ///
+    /// This is also what decides the ink on top of it, which is why it is one
+    /// property and not two: white type belongs on the navy stock and nowhere
+    /// else, and the day the two answers disagree is the day the card becomes
+    /// unreadable in one appearance.
+    private var issuedOnDarkStock: Bool { colorScheme == .dark }
 
     /// §6.5: under Increase Contrast a surface gains an edge rather than more
     /// colour. The soft tone carries its keyline always — the wash alone is
@@ -200,41 +286,22 @@ private struct PassportCardSurface: ViewModifier {
         switch tone {
         case .feature:
             if contrast == .increased {
-                shape.strokeBorder(Color.white.opacity(0.55), lineWidth: 1)
+                // The edge has to be drawn out of whichever stock is under it,
+                // and a white hairline on white paper is not an edge.
+                shape.strokeBorder(
+                    issuedOnDarkStock ? Color.white.opacity(0.55) : Color(.separator),
+                    lineWidth: 1)
             }
         case .soft:
-            shape.strokeBorder(TicketPalette.keyline, lineWidth: 1)
+            // Carried always rather than only under Increase Contrast: with
+            // the wash gone this hairline is the whole of what separates a
+            // soft card from a plain one.
+            shape.strokeBorder(Color(.separator), lineWidth: 1)
         case .plain:
             if contrast == .increased {
                 shape.strokeBorder(Color(.separator), lineWidth: 1)
             }
         }
-    }
-}
-
-/// The line a real passport prints in every language at once, in the four the
-/// five networks of this app are read in.
-///
-/// Decoration, and deliberately NOT localized: a passport does not pick one of
-/// these words for you, it prints them all. `Text(verbatim:)` because none of
-/// it is a key, and hidden from VoiceOver because it says nothing a reader
-/// needs said.
-struct PassportBookletLine: View {
-    @Environment(\.passportInk) private var ink
-
-    var body: some View {
-        Text(verbatim: "PASSPORT · パスポート · 護照 · 여권")
-            .font(.caption2.weight(.medium))
-            .tracking(1.1)
-            .foregroundStyle(ink.caption)
-            // Chrome bounds, and the one `minimumScaleFactor` in this file.
-            // `RailType`'s contract bans it inside a `ViewThatFits` candidate
-            // (it makes any width "fit") and §10.1 bans it as an answer to a
-            // layout problem — neither applies to a line that carries no
-            // information and has to stay on one line to read as engraving.
-            .railType(.chrome)
-            .minimumScaleFactor(0.7)
-            .accessibilityHidden(true)
     }
 }
 
@@ -299,9 +366,9 @@ extension PassportCardHeader where Accessory == EmptyView {
 
 /// The one figure a card is about: value, unit, and the line under it.
 struct PassportHeadline: View {
-    /// How loud this figure is. A page has ONE ``page`` headline; a figure
-    /// inside a stamped block is a ``field``, or the day would shout down the
-    /// total it is a part of.
+    /// How loud this figure is. A card has ONE ``page`` headline; a figure
+    /// nested inside a block on that card is a ``field``, or it would shout
+    /// down the total it is a part of.
     enum Prominence {
         case page
         case field
@@ -362,7 +429,7 @@ struct PassportHeadline: View {
 }
 
 /// The translucent block a card nests inside itself — the reference's footer
-/// chip, and the field a passport stamps a single day into.
+/// chip, and the ground a highlighted row is lifted onto.
 ///
 /// §6.4: a block INSIDE a card takes `radius-control`, never the card's own
 /// radius, because radius is what expresses depth here.
@@ -396,85 +463,6 @@ struct PassportRule: View {
             .fill(ink.rule)
             .frame(height: 1)
             .accessibilityHidden(true)
-    }
-}
-
-/// ミシン目 — the perforation a ticket is torn along.
-///
-/// The one place a ruled line on these cards means something more than
-/// "different subject below": it is the seam between the ticket and its stub,
-/// and this app has exactly one of those — the all-time page, and the single
-/// day stamped underneath it. So it is a dash pattern rather than a solid
-/// hairline, and it is used ONCE, in ``StatisticsDashboardContent``.
-///
-/// Drawn as a stroked line rather than as a row of dots, because a dash
-/// pattern keeps its rhythm at any width and a fixed count of dots does not.
-/// Decoration, and hidden from VoiceOver: the block below already names itself.
-struct PassportPerforation: View {
-    @Environment(\.passportInk) private var ink
-
-    var body: some View {
-        Rectangle()
-            .fill(.clear)
-            .frame(height: 1)
-            .overlay {
-                // 3-on / 4-off, which at a 1-point line is the pitch a real
-                // ticket's perforation reads at from the distance a phone is
-                // held. `.butt` so the dashes stay dashes rather than merging
-                // into a dotted rule at their own round caps.
-                Line()
-                    .stroke(
-                        ink.rule,
-                        style: StrokeStyle(lineWidth: 1, lineCap: .butt, dash: [3, 4]))
-            }
-            .accessibilityHidden(true)
-    }
-
-    /// One horizontal line across whatever it is given, so the dash pattern
-    /// has a path to run along. `Rectangle` would stroke all four sides.
-    private struct Line: Shape {
-        func path(in rect: CGRect) -> Path {
-            var path = Path()
-            path.move(to: CGPoint(x: rect.minX, y: rect.midY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-            return path
-        }
-    }
-}
-
-/// 改札印 — a date, in the frame a station master would have stamped it in.
-///
-/// A real gate stamp is a round rubber die carrying a station name and a date,
-/// inked in vermillion and set down slightly askew. Round is what this cannot
-/// be: the string inside is a localized date — 「2026年8月29日」, "29 Aug 2026",
-/// 「全部日期」 — and a circle sized for the longest of those is a circle with
-/// a hole in the middle for every other. So it is the rectangular 記念印 form
-/// instead, which is the other stamp on a Japanese ticket and takes any width.
-///
-/// The frame is the only mark on these cards drawn in an ink of its own
-/// (``PassportInk/stamp``). The TEXT inside is an ordinary ``PassportEyebrow``
-/// — vermillion type on a deep green card is not a contrast anyone should have
-/// to read a date through, and the stamp is decoration around information
-/// rather than information itself.
-///
-/// The tilt is 2°, which is enough to read as hand-stamped and small enough
-/// that the row above it does not look broken. It is a static rotation with no
-/// animation attached, so §9.4's Reduce Motion contract has nothing to degrade.
-struct PassportStamp: View {
-    @Environment(\.passportInk) private var ink
-    let text: String
-
-    init(_ text: String) { self.text = text }
-
-    var body: some View {
-        PassportEyebrow(text)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .overlay {
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .strokeBorder(ink.stamp, lineWidth: 1.4)
-            }
-            .rotationEffect(.degrees(-2))
     }
 }
 
@@ -519,16 +507,32 @@ struct PassportRow: View {
 /// named a `StatisticsMetricGrid` as the component this one deliberately
 /// differed from; there is no such type any more.
 struct PassportMetricGrid: View {
+    /// How loud a grid's figures are.
+    ///
+    /// A card has ONE ``page`` grid — the row that answers its question — and
+    /// the rest are ``field``. Two loud rows is two cards.
+    enum Prominence {
+        case page
+        case field
+    }
+
     struct Item: Identifiable {
         let label: String
         let value: String
         var caption: String?
+        /// 0…1 for a cell whose figure is a proportion, drawn as a bar between
+        /// the figure and its caption. `nil` for every ordinary cell.
+        var fraction: Double?
         var id: String { label }
 
-        init(_ label: String, _ value: String, caption: String? = nil) {
+        init(
+            _ label: String, _ value: String, caption: String? = nil,
+            fraction: Double? = nil
+        ) {
             self.label = label
             self.value = value
             self.caption = caption
+            self.fraction = fraction
         }
     }
 
@@ -539,6 +543,7 @@ struct PassportMetricGrid: View {
     @ScaledMetric(relativeTo: .title2) private var columnMinimum: CGFloat = 120
 
     let items: [Item]
+    var prominence: Prominence = .field
 
     var body: some View {
         LazyVGrid(
@@ -556,7 +561,11 @@ struct PassportMetricGrid: View {
         VStack(alignment: .leading, spacing: 3) {
             PassportEyebrow(item.label)
             Text(item.value)
-                .font(.system(.title2, design: .rounded).weight(.bold))
+                .font(
+                    .system(
+                        prominence == .page ? .title : .title2,
+                        design: .rounded
+                    ).weight(.bold))
                 .monospacedDigit()
                 .foregroundStyle(ink.title)
                 .railType(.metricValueStacked)
@@ -566,6 +575,23 @@ struct PassportMetricGrid: View {
                 // what an audit greps for, and this is the deliberate case.
                 .contentTransition(.numericText())
                 .animation(RailMotion.replace, value: item.value)
+            if let fraction = item.fraction {
+                GeometryReader { geometry in
+                    Capsule()
+                        .fill(ink.track)
+                        .overlay(alignment: .leading) {
+                            Capsule()
+                                .fill(ink.fill)
+                                .frame(width: geometry.size.width * Self.clamp(fraction))
+                        }
+                }
+                .frame(height: 5)
+                .padding(.top, 2)
+                // One clock for the cell: the figure above this bar already
+                // rolls on `replace`, and the proportion under it is the same
+                // statement in the other notation.
+                .animation(RailMotion.replace, value: Self.clamp(fraction))
+            }
             if let caption = item.caption {
                 Text(caption)
                     .font(.caption2)
@@ -577,67 +603,8 @@ struct PassportMetricGrid: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
-}
 
-/// The block a card nests inside itself — the reference's footer chip.
-///
-/// Here it carries a figure rather than a navigation: the detail this would
-/// push to is the next card down in the same scroll view, and a button that
-/// scrolls the reader somewhere they can already see is furniture (§5.3.2 says
-/// the same thing about the inline map that used to sit here).
-struct PassportBand: View {
-    @Environment(\.passportInk) private var ink
-    let label: String
-    let value: String
-    var detail: String?
-    /// 0…1, or `nil` for a band with no proportion to show.
-    var fraction: Double?
-    let spoken: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                PassportEyebrow(label)
-                Spacer(minLength: 8)
-                Text(value)
-                    .font(.subheadline.weight(.bold))
-                    .monospacedDigit()
-                    .foregroundStyle(ink.title)
-                    .railType(.metricValue)
-            }
-            if let fraction {
-                GeometryReader { geometry in
-                    Capsule()
-                        .fill(ink.track)
-                        .overlay(alignment: .leading) {
-                            Capsule()
-                                .fill(ink.fill)
-                                .frame(width: geometry.size.width * clamp(fraction))
-                        }
-                }
-                .frame(height: 6)
-                // One clock for the band: the figure beside this bar already
-                // rolls on `replace` (see ``PassportMetric`` and
-                // ``PassportMetricGrid``), and the proportion under it is the
-                // same statement in the other notation. See `StatisticsBar`,
-                // which carries the same pair.
-                .animation(RailMotion.replace, value: clamp(fraction))
-            }
-            if let detail {
-                Text(detail)
-                    .font(.caption2)
-                    .monospacedDigit()
-                    .foregroundStyle(ink.caption)
-                    .railType(.metricLabel)
-            }
-        }
-        .passportBlock()
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(label))
-        .accessibilityValue(Text(spoken))
-    }
-
-    private func clamp(_ fraction: Double) -> CGFloat {
+    private static func clamp(_ fraction: Double) -> CGFloat {
         guard fraction.isFinite else { return 0 }
         return CGFloat(min(max(fraction, 0), 1))
     }

@@ -64,6 +64,16 @@ struct TransferGuideImportView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) { actionBar }
+            // This screen reads Japanese screenshots against the Japanese
+            // package, so it is the surface that knows it needs that region —
+            // which is where `RailNetworkStore.ensure(_:)` says the ask
+            // belongs. Until now nothing here asked: `hasNetwork` waited for a
+            // decode that only a pan across Japan with the network switched on
+            // (or a visit to Passport, which used to decode every region to
+            // frame a camera) would ever start, so opening the importer on a
+            // fresh launch could sit on 路網載入中 indefinitely. Idempotent —
+            // the second call is a set lookup.
+            .task { network?.ensure(.jp) }
             .onChange(of: picked) { _, items in load(items) }
             .fileImporter(
                 isPresented: $choosesFiles, allowedContentTypes: [.image],

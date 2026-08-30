@@ -326,23 +326,54 @@ struct RideDetailContent: View {
     /// question a list of bare times raises for a reader who is not in the
     /// region — which, with five networks in one store, is most of the time.
     ///
-    /// One line rather than a badge per row: the whole journey is on one
-    /// clock. ``JourneyClock`` is where that stops being true, and its own
-    /// documentation lists what changes here when it does.
+    /// One line rather than a badge per row, and two clocks named in it rather
+    /// than one when the journey changes clock on the way — which in the two
+    /// North American networks it can: the *Empire Builder* departs on Central
+    /// time and arrives on Pacific. Naming only the first would make the
+    /// second half of the list say something untrue, and naming a clock per
+    /// row would put an eight-word phrase beside forty times to state
+    /// something that changes twice.
     private var localTimeNote: some View {
-        let clock = train.journeyClock.home
-        return Text(
-            localization.journeyText(
+        Text(clockNote(train.journeyClock))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 12)
+    }
+
+    /// The sentence under the stop list, for one clock or for two.
+    ///
+    /// The offset is read on the JOURNEY's own day rather than on today's.
+    /// Seven of the nine North American zones move an hour twice a year, so a
+    /// ride recorded in January and read in July would otherwise be labelled
+    /// with an offset it never ran on.
+    private func clockNote(_ clock: JourneyClock) -> String {
+        guard clock.crossesTimeZones, train.stops.count > 1 else {
+            let home = clock.home
+            // On the journey's own day, not on today's: seven of the nine
+            // North American zones move an hour twice a year, so a ride
+            // recorded in January and read in July would otherwise be
+            // labelled with an offset it never ran on.
+            let instant = home.startOfDay(train.date) ?? Date()
+            return localization.journeyText(
                 "ios.clock.localTimes",
                 [
-                    "zone": .string(localization.journeyText(clock.name)),
-                    "offset": .string(clock.utcOffsetText(at: Date())),
+                    "zone": .string(localization.journeyText(home.name)),
+                    "offset": .string(home.utcOffsetText(at: instant)),
                 ])
-        )
-        .font(.caption)
-        .foregroundStyle(.secondary)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 12)
+        }
+        // Zone names only, no offsets. The crossing sentence already carries
+        // two of everything, and the offset that matters to a reader
+        // comparing two printed times is the DIFFERENCE, which the ride
+        // duration already accounts for.
+        let first = clock.clock(atStopIndex: 0)
+        let last = clock.clock(atStopIndex: train.stops.count - 1)
+        return localization.journeyText(
+            "ios.clock.localTimesCrossing",
+            [
+                "fromZone": .string(localization.journeyText(first.name)),
+                "toZone": .string(localization.journeyText(last.name)),
+            ])
     }
 
     private func timelineRow(_ stop: Stop, index: Int) -> some View {

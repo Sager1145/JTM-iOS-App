@@ -175,21 +175,31 @@ struct RouteBadgeIndex: Sendable {
 
     init() {}
 
-    init(region: Region, package: CompactPackage) {
+    /// Built from the package's line ATTRIBUTES, not from the package.
+    ///
+    /// Every field read below is a string on a line; not one of them is a
+    /// coordinate. Taking the whole package to get them decoded ~394,000
+    /// vertices per launch so they could be released again — see
+    /// ``CompactPackage/Headers``, which is the same decode eight times
+    /// cheaper. `CompactPackage.headers` is the projection a caller that
+    /// already holds a full package uses, so both reach this by one route.
+    init(region: Region, headers: CompactPackage.Headers) {
         // Two passes, and the order is the point: a railway with its own
         // published art claims a shared key before one that would only bring
         // its operator's company mark to it. 名城線 is in the package twice
         // (2号線 and 4号線) under one passenger name, and the reader should get
         // the route symbol from whichever of the two carries it.
-        add(package: package, region: region, withPackageArt: true)
-        add(package: package, region: region, withPackageArt: false)
+        add(headers: headers, region: region, withPackageArt: true)
+        add(headers: headers, region: region, withPackageArt: false)
     }
 
-    private mutating func add(package: CompactPackage, region: Region, withPackageArt: Bool) {
-        for line in package.lines where line.hasLogo == withPackageArt {
+    private mutating func add(
+        headers: CompactPackage.Headers, region: Region, withPackageArt: Bool
+    ) {
+        for line in headers.lines where line.hasLogo == withPackageArt {
             let packageLogo = line.hasLogo
                 ? "/rail/logos/\(StationDisplay.Network.badgeIDForLine(line.id)).png"
-                : nil
+                : line.operatorLogo
             guard let logo = OperatorBranding.logoForLine(
                 OperatorBranding.Line(
                     lineId: line.id, operator: line.operator, logo: packageLogo))

@@ -43,10 +43,15 @@ public enum StationDisplay {
     /// splits, interchange counts and the drawn line features belong to other
     /// ports (`DisplayParts`, `RouteFeature`) and are not rebuilt here.
     ///
-    /// Two fields come in separately because ``CompactPackage``'s decoder does
-    /// not carry them and this file may not change it: `isLoop`, which decides
-    /// whether a line has terminals at all, and the `logo` flag, which the
-    /// builder turns into a path.
+    /// Two fields come in as SETS of line ids rather than off each line:
+    /// `isLoop`, which decides whether a line has terminals at all, and the
+    /// `logo` flag, which the builder turns into a path. ``CompactPackage``
+    /// carries both now (it did not when this was written, which is how a loop
+    /// came to draw termini on the device and none on the web), so the caller
+    /// builds each set from the package it just decoded — see
+    /// `RailNetworkStore`. They stay parameters because the `logo` one is a
+    /// rule about what ARTWORK a build shipped, which a test has to be able to
+    /// state without a bundle underneath it.
     public struct Network: Sendable {
 
         /// One entry of `lineById`.
@@ -146,7 +151,7 @@ public enum StationDisplay {
                         color: firstTruthy(packageLine.color) ?? Self.defaultLineColor,
                         logo: packageLogoLineIDs.contains(packageLine.id)
                             ? "/rail/logos/\(Self.badgeIDForLine(packageLine.id)).png"
-                            : nil,
+                            : packageLine.operatorLogo,
                         isLoop: isLoop,
                         minZoom: lineZoom))
                 // `lineById.set` — last writer wins on a duplicate id, which

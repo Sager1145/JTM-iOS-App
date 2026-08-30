@@ -114,14 +114,23 @@ public enum Statistics {
     /// station-dot classifier, so hiding a category always hides its lines and
     /// its dots together. Taiwan records no JR-style union, so its incumbent
     /// conventional railway (臺鐵, CONV-only masks) fills the slot the filter
-    /// calls "jr" — the national-railway toggle.
+    /// calls "jr" — the national-railway toggle. The United States and Canada
+    /// fill it the same way, with Amtrak and VIA Rail: they are the one
+    /// intercity passenger railway each country has, which is exactly what
+    /// that toggle asks about.
     public static func filterCategoryForMask(_ mask: Int, country: String) -> String {
         if mask & maskHSR != 0 { return "hsr" }
         if mask & maskMETRO != 0 { return "metro" }
         if mask & maskJR != 0 { return "jr" }
-        if mask & maskCONV != 0 && country == "tw" { return "jr" }
+        if mask & maskCONV != 0 && nationalRailwayInConvSlot.contains(country) {
+            return "jr"
+        }
         return "priv"
     }
+
+    /// The countries whose national railway is recorded as CONV rather than
+    /// through a JR-style union bit. See ``filterCategoryForMask(_:country:)``.
+    static let nationalRailwayInConvSlot: Set<String> = ["tw", "us", "ca"]
 
     // MARK: - section attributes
 
@@ -291,8 +300,35 @@ public enum Statistics {
         case "hk": return classifyHkSectionMask(props)
         case "mo": return maskMETRO  // Macao's whole network is one automated LRT system.
         case "kr": return classifyKrSectionMask(props)
+        case "us", "ca": return classifyNorthAmericaSectionMask(props)
         default: return classifyJpSectionMask(props)
         }
+    }
+
+    /// The United States and Canada, over the code space the North American
+    /// package build assigns: institution 1 = the two services their operators
+    /// sell as high-speed (Acela, Brightline), 2 = the intercity passenger
+    /// railroads (Amtrak, VIA Rail, the Alaska Railroad, Ontario Northland),
+    /// 3 = the public transit authorities, 4 = private and heritage operators,
+    /// with the railway class separating rapid transit and light rail
+    /// (普通鉄道) from streetcars (軌道), people movers and monorails (案内軌条式)
+    /// and funiculars and heritage lines (特殊鉄道).
+    ///
+    /// The same rules as Taiwan's, and deliberately so rather than by
+    /// accident: the two builds emit the same code space because the two
+    /// networks decompose the same way — one national intercity railway, a
+    /// layer of publicly operated urban rail, and a private remainder. The
+    /// buckets are exclusive, as Taiwan's and Korea's are, because North
+    /// America has no JR-style union spanning two of them.
+    static func classifyNorthAmericaSectionMask(_ props: SectionProperties) -> Int {
+        let code = props.institutionTypeCodeString
+        let cls = props.railwayClassCodeString
+        if code == "1" { return maskHSR }
+        if cls == "21" { return maskTRAM }
+        if cls == "31" { return maskPRIV }
+        if code == "4" { return maskPRIV }
+        if code == "3" { return maskMETRO }
+        return maskCONV
     }
 
     /// Taiwan, over the code space the package build assigns: institution 1 =
@@ -1268,6 +1304,24 @@ public enum Statistics {
         public var hsr = ServiceGroup()
         public var ltd = ServiceGroup()
         public var other = ServiceGroup()
+
+        /// Every kilometre travelled — the ACCUMULATING answer, where a
+        /// section ridden twice counts twice.
+        ///
+        /// `serviceGroupOfTrain` returns exactly one of these three for every
+        /// journey, so the groups partition the journeys and their sum is the
+        /// sum of each journey's own `TrainEntry.km`. That is what 総乗車距離
+        /// asks for, and it is deliberately NOT ``MileageStats/riddenAll``:
+        /// that one is the deduped union over N02 edge ids, which answers how
+        /// much of the NETWORK has been covered. Twenty-one rides over
+        /// 三島↔沼津 are twenty-one rides here and one section there, and a
+        /// screen that prints the second under the first one's label is
+        /// telling the reader they travelled less than they did.
+        ///
+        /// The port fixtures record both beside each other for exactly this
+        /// reason — `summedTrainKm` next to `riddenAll` — "so the two can
+        /// never be confused for each other".
+        public var km: Double { hsr.km + ltd.km + other.km }
     }
 
     /// The three buckets are the same everywhere — high speed, the

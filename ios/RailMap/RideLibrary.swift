@@ -327,6 +327,14 @@ final class RideLibrary {
         case .hk: ["sample-data-hk"]
         case .mo: ["sample-data-mo"]
         case .kr: ["sample-data-kr"]
+        // No precomputed route dataset for the two North American networks,
+        // and that is a decision rather than a gap: a precomputed part exists
+        // to save the solver from re-deriving a route the web app already
+        // solved, and the web app has never had these packages open. Their
+        // sample journeys go through the on-device solver like any journey the
+        // reader records themselves, and are written into the route cache the
+        // first time — which is the same path, one solve later.
+        case .us, .ca: []
         }
     }
 

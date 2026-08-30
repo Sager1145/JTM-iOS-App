@@ -59,6 +59,35 @@
         }
       }
     },
+    "app.title.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canada Rail Manager"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カナダ鉄道列車管理"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大铁路列车管理"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大鐵路列車管理"
+          }
+        }
+      }
+    },
     "app.title.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -171,6 +200,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "TDX 台灣列車管理"
+          }
+        }
+      }
+    },
+    "app.title.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "United States Rail Manager"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アメリカ鉄道列車管理"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国铁路列车管理"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美國鐵路列車管理"
           }
         }
       }
@@ -1770,6 +1828,35 @@
         }
       }
     },
+    "country.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canada"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カナダ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大"
+          }
+        }
+      }
+    },
     "country.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1940,6 +2027,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "台灣"
+          }
+        }
+      }
+    },
+    "country.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "United States"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アメリカ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美國"
           }
         }
       }
@@ -3742,6 +3858,64 @@
         }
       }
     },
+    "info.caRailBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built from the Federal Railroad Administration / Bureau of Transportation Statistics North American Rail Network (NTAD), which surveys the Canadian network too, and from the published GTFS of VIA Rail, Metrolinx, exo, the STM, the TTC, TransLink and the rest; OpenStreetMap contributors' track (ODbL 1.0) serves as the cross-check."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カナダの路線網も収録する連邦鉄道局／運輸統計局『北米鉄道網（NTAD）』と、VIA Rail・Metrolinx・exo・STM・TTC・TransLink ほか各事業者が公開する GTFS を加工して作成しています。OpenStreetMap コントリビューターの線路データ（ODbL 1.0）は相互検証に使用します。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以联邦铁路管理局／运输统计局「北美铁路网（NTAD）」——其涵盖加拿大路网，与 VIA Rail、Metrolinx、exo、STM、TTC、TransLink 等营运机构自行公开的 GTFS 加工制作；OpenStreetMap 贡献者的轨道数据（ODbL 1.0）作为交叉验证。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以聯邦鐵路管理局／運輸統計局「北美鐵路網（NTAD）」——其涵蓋加拿大路網，與 VIA Rail、Metrolinx、exo、STM、TTC、TransLink 等營運機構自行公開的 GTFS 加工製作；OpenStreetMap 貢獻者的軌道資料（ODbL 1.0）作為交叉驗證。"
+          }
+        }
+      }
+    },
+    "info.caRailTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canada railway network"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カナダの鉄道網"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大铁路网"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加拿大鐵路網"
+          }
+        }
+      }
+    },
     "info.hkRailBody" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4061,6 +4235,93 @@
         }
       }
     },
+    "info.naGtfs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operator GTFS (each feed's own terms)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各事業者の GTFS（それぞれの公開条件による）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各营运机构 GTFS（依各自开放条款）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各營運機構 GTFS（依各自開放條款）"
+          }
+        }
+      }
+    },
+    "info.naNarn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "North American Rail Network (NTAD)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北米鉄道網（NTAD）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北美铁路网（NTAD）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北美鐵路網（NTAD）"
+          }
+        }
+      }
+    },
+    "info.naNarnLicense" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "US federal open data (public domain)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "米国連邦オープンデータ（パブリックドメイン）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国联邦公开数据（公有领域）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美國聯邦公開資料（公有領域）"
+          }
+        }
+      }
+    },
     "info.namesBody" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4206,6 +4467,35 @@
         }
       }
     },
+    "info.packageBody.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uses the us-2025 and ca-2025 packages together: the cross-border trains need both networks."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "us-2025 と ca-2025 の両パッケージを使用します。国境をまたぐ列車には両国の路線網が必要です。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同时使用 us-2025 与 ca-2025 数据包：跨境列车需要两国的路网。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同時使用 us-2025 與 ca-2025 資料包：跨境列車需要兩國的路網。"
+          }
+        }
+      }
+    },
     "info.packageBody.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4318,6 +4608,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用 railprint 的 tw-2025 台灣鐵路資料包。"
+          }
+        }
+      }
+    },
+    "info.packageBody.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uses the us-2025 and ca-2025 packages together: the cross-border trains need both networks."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "us-2025 と ca-2025 の両パッケージを使用します。国境をまたぐ列車には両国の路線網が必要です。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同时使用 us-2025 与 ca-2025 数据包：跨境列车需要两国的路网。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同時使用 us-2025 與 ca-2025 資料包：跨境列車需要兩國的路網。"
           }
         }
       }
@@ -4873,6 +5192,64 @@
         }
       }
     },
+    "info.usRailBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built from the Federal Railroad Administration / Bureau of Transportation Statistics North American Rail Network (NTAD) and each operator's own published GTFS feed; OpenStreetMap contributors' track (ODbL 1.0) serves as the cross-check, and as the source for the railways no operator publishes a feed for."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連邦鉄道局／運輸統計局『北米鉄道網（NTAD）』と、各事業者が自ら公開する GTFS を加工して作成しています。OpenStreetMap コントリビューターの線路データ（ODbL 1.0）は相互検証に、また GTFS を公開しない鉄道の出典として使用します。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以联邦铁路管理局／运输统计局「北美铁路网（NTAD）」与各营运机构自行公开的 GTFS 加工制作；OpenStreetMap 贡献者的轨道数据（ODbL 1.0）作为交叉验证，以及无机构公开班表之铁道的来源。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以聯邦鐵路管理局／運輸統計局「北美鐵路網（NTAD）」與各營運機構自行公開的 GTFS 加工製作；OpenStreetMap 貢獻者的軌道資料（ODbL 1.0）作為交叉驗證，以及無機構公開班表之鐵道的來源。"
+          }
+        }
+      }
+    },
+    "info.usRailTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "United States railway network"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アメリカの鉄道網"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国铁路网"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美國鐵路網"
+          }
+        }
+      }
+    },
     "lang.label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5279,6 +5656,35 @@
         }
       }
     },
+    "map.riddenJr.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
+          }
+        }
+      }
+    },
     "map.riddenJr.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5395,6 +5801,35 @@
         }
       }
     },
+    "map.riddenJr.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
+          }
+        }
+      }
+    },
     "map.riddenPriv" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5420,6 +5855,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "私鐵・其他"
+          }
+        }
+      }
+    },
+    "map.riddenPriv.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monorail & heritage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モノレール・観光鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单轨・观光铁道"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單軌・觀光鐵道"
           }
         }
       }
@@ -5536,6 +6000,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "輕軌・林鐵"
+          }
+        }
+      }
+    },
+    "map.riddenPriv.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monorail & heritage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モノレール・観光鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单轨・观光铁道"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單軌・觀光鐵道"
           }
         }
       }
@@ -6816,6 +7309,35 @@
         }
       }
     },
+    "ph.trainType.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VIA / Intercity / Commuter"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VIA／都市間／通勤"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VIA／城际／通勤"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VIA／城際／通勤"
+          }
+        }
+      }
+    },
     "ph.trainType.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -6928,6 +7450,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自強／區間／高鐵"
+          }
+        }
+      }
+    },
+    "ph.trainType.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acela / Intercity / Commuter"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acela／都市間／通勤"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acela／城际／通勤"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acela／城際／通勤"
           }
         }
       }
@@ -8585,6 +9136,35 @@
         }
       }
     },
+    "stat.all.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "North America"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北米全域"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全北美"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全北美"
+          }
+        }
+      }
+    },
     "stat.all.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8701,6 +9281,35 @@
         }
       }
     },
+    "stat.all.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "North America"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北米全域"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全北美"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全北美"
+          }
+        }
+      }
+    },
     "stat.allrail" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8755,6 +9364,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "普通鐵道（在來線）"
+          }
+        }
+      }
+    },
+    "stat.conv.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
           }
         }
       }
@@ -8817,6 +9455,35 @@
         }
       }
     },
+    "stat.conv.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
+          }
+        }
+      }
+    },
     "stat.hsr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8842,6 +9509,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新幹線"
+          }
+        }
+      }
+    },
+    "stat.hsr.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-speed rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鐵路"
           }
         }
       }
@@ -8904,6 +9600,35 @@
         }
       }
     },
+    "stat.hsr.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-speed rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鐵路"
+          }
+        }
+      }
+    },
     "stat.jr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8962,6 +9687,35 @@
         }
       }
     },
+    "stat.jrconv.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
+          }
+        }
+      }
+    },
     "stat.jrconv.kr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9016,6 +9770,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "臺鐵"
+          }
+        }
+      }
+    },
+    "stat.jrconv.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intercity rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市間鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城际铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城際鐵路"
           }
         }
       }
@@ -9136,6 +9919,35 @@
         }
       }
     },
+    "stat.metro.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urban & commuter rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市・通勤鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市与通勤铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市與通勤鐵路"
+          }
+        }
+      }
+    },
     "stat.metro.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9252,6 +10064,35 @@
         }
       }
     },
+    "stat.metro.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urban & commuter rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市・通勤鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市与通勤铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市與通勤鐵路"
+          }
+        }
+      }
+    },
     "stat.othertrains" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9306,6 +10147,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "私鐵・第三部門"
+          }
+        }
+      }
+    },
+    "stat.priv.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monorail, funicular & heritage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モノレール・ケーブル・観光鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单轨・缆索・观光铁道"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單軌・纜索・觀光鐵道"
           }
         }
       }
@@ -9393,6 +10263,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "阿里山林業鐵路"
+          }
+        }
+      }
+    },
+    "stat.priv.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monorail, funicular & heritage"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モノレール・ケーブル・観光鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "单轨・缆索・观光铁道"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單軌・纜索・觀光鐵道"
           }
         }
       }
@@ -9513,6 +10412,35 @@
         }
       }
     },
+    "stat.tram.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rail & streetcars"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライトレール・路面電車"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻轨与有轨电车"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輕軌與有軌電車"
+          }
+        }
+      }
+    },
     "stat.tram.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9596,6 +10524,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "輕軌"
+          }
+        }
+      }
+    },
+    "stat.tram.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rail & streetcars"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライトレール・路面電車"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻轨与有轨电车"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輕軌與有軌電車"
           }
         }
       }
@@ -9915,6 +10872,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自國土數值情報 N02-25 全路網。"
+          }
+        }
+      }
+    },
+    "stats.hint.ca" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Computed from every train's actually-ridden intervals (ride checkboxes), deduplicated across trains; totals come from the FRA North American Rail Network (NTAD) and each operator's published GTFS."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全列車で実際に乗車した区間を重複を除いて集計します。総延長は FRA 北米鉄道網（NTAD）と各事業者が公開する GTFS に基づきます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据全部列车的实际乘坐区间（乘坐勾选）去重合并计算；总里程来自联邦铁路管理局北美铁路网（NTAD）与各营运机构公开的 GTFS 路线。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自聯邦鐵路管理局北美鐵路網（NTAD）與各營運機構公開的 GTFS 路線。"
+          }
+        }
+      }
+    },
+    "stats.hint.us" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Computed from every train's actually-ridden intervals (ride checkboxes), deduplicated across trains; totals come from the FRA North American Rail Network (NTAD) and each operator's published GTFS."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全列車で実際に乗車した区間を重複を除いて集計します。総延長は FRA 北米鉄道網（NTAD）と各事業者が公開する GTFS に基づきます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根据全部列车的实际乘坐区间（乘坐勾选）去重合并计算；总里程来自联邦铁路管理局北美铁路网（NTAD）与各营运机构公开的 GTFS 路线。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依全部列車的實際乘坐區間（乘坐勾選）去重合併計算；總里程來自聯邦鐵路管理局北美鐵路網（NTAD）與各營運機構公開的 GTFS 路線。"
           }
         }
       }
