@@ -56,9 +56,9 @@ const LANGUAGES = ["zh-Hant", "zh-Hans", "ja", "en"];
 // The countries I18N.setCountry accepts, plus a set it does not. The whitelist
 // has bitten before: a country outside it silently becomes "jp", so every
 // country-variant string reverts to the Japanese copy rather than failing.
-const WHITELISTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr"];
-const REJECTED_COUNTRIES = ["us", "", null, "JP", "TW", "jp ", "japan"];
-const PROBED_COUNTRIES = [...WHITELISTED_COUNTRIES, "us"];
+const WHITELISTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr", "us", "ca"];
+const REJECTED_COUNTRIES = ["mx", "", null, "JP", "TW", "jp ", "japan"];
+const PROBED_COUNTRIES = [...WHITELISTED_COUNTRIES, "mx"];
 
 // Property names that exist on Object.prototype. STRINGS and JA_STRINGS are
 // plain object literals, so `STRINGS[key]` walks the prototype chain and these

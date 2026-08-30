@@ -8,7 +8,9 @@ The repository also retains the reduced JavaScript reference implementation used
 
 ## What you can do
 
-- Explore the railway networks of Japan, Taiwan, Hong Kong, Macao, and Korea on one map.
+- Explore the railway networks of Japan, Taiwan, Hong Kong, Macao, Korea,
+  the United States and Canada on one map, and record a journey that crosses
+  between two of them.
 - Add, edit, search, import, export, duplicate, reorder, hide, and delete journey records.
 - Import supported route-planner screenshots through Vision OCR and review the result before saving.
 - Resolve recorded stops onto real railway geometry instead of drawing straight-line fallbacks.
