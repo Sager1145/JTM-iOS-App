@@ -1,0 +1,4274 @@
+{
+ "findings": [
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-acela",
+   "message": "20 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 20
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-adirondack-us",
+   "message": "13 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 13
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-amtrak-cascades-us",
+   "message": "8 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 8
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-amtrak-hartford-line",
+   "message": "3 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-auto-train",
+   "message": "3 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-berkshire-flyer",
+   "message": "3 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-borealis",
+   "message": "5 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-california-zephyr",
+   "message": "251 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 251
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-capitol-corridor",
+   "message": "5 corners under half the regional band minimum radius of 250 m",
+   "band": "regional",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-cardinal",
+   "message": "70 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 70
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-carl-sandburg",
+   "message": "4 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-carolinian",
+   "message": "11 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 11
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-city-of-new-orleans",
+   "message": "12 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 12
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-crescent",
+   "message": "63 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 63
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-empire-builder",
+   "message": "50 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 50
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-empire-builder-b1",
+   "message": "3 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-empire-service",
+   "message": "10 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 10
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-ethan-allen-express",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-hiawatha-service",
+   "message": "3 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-keystone-service",
+   "message": "2 corners under half the regional band minimum radius of 250 m",
+   "band": "regional",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-lake-shore-limited",
+   "message": "11 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 11
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-lake-shore-limited-b1",
+   "message": "3 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-lincoln-service",
+   "message": "1 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-lincoln-service-missouri-river-runner",
+   "message": "3 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-missouri-river-runner",
+   "message": "2 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-northeast-regional",
+   "message": "32 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 32
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-northeast-regional-b2",
+   "message": "3 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-northeast-regional-b3",
+   "message": "4 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-palmetto",
+   "message": "15 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 15
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-pennsylvanian",
+   "message": "21 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 21
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-pere-marquette",
+   "message": "5 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-piedmont",
+   "message": "2 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-san-joaquins-gold-runner-b1",
+   "message": "7 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 7
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-silver-meteor",
+   "message": "29 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 29
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-southwest-chief",
+   "message": "64 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 64
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-valley-flyer",
+   "message": "3 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-vermonter",
+   "message": "32 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 32
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "amtrak-wolverine",
+   "message": "4 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "brightline-trains-llc-blfm",
+   "message": "1 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "calgary-transit-201",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "connecticut-transit-hartford-line",
+   "message": "3 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "cta-brown-line",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "cta-green-line-b1",
+   "message": "2 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "cta-purple-line",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "embark-bl",
+   "message": "15 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 15
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "embark-dl",
+   "message": "44 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 44
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "galveston-island-transit-rail",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "go-transit-br",
+   "message": "2 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301",
+   "message": "20 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 20
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b1",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b2",
+   "message": "4 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "hillsborough-area-regional-t-800",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "los-angeles-county-metropoli-metro-c-line",
+   "message": "1 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "maryland-transit-administrat-brunswick-washington-b1",
+   "message": "4 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "maryland-transit-administrat-brunswick-washington-b2",
+   "message": "4 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "maryland-transit-administrat-brunswick-washington-b3",
+   "message": "5 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "mbta-e",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "mckinney-avenue-trolley-m-line-ob",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metro-north-railroad-danbury",
+   "message": "2 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metro-transit-intercity-tran-amtrak-cascades",
+   "message": "4 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metro-transit-metro-blue-line",
+   "message": "1 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metro-transit-metro-green-line",
+   "message": "1 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metropolitan-atlanta-rapid-t-atlsc",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metropolitan-atlanta-rapid-t-green",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "metropolitan-transit-authori-z",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "miami-dade-transit-mmo",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "miami-dade-transit-mmo-b3",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "mta-long-island-rail-road-babylon-branch",
+   "message": "3 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "mta-long-island-rail-road-montauk-branch",
+   "message": "2 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "new-jersey-transit-nj-transi-rvln",
+   "message": "2 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "new-orleans-rta-12",
+   "message": "10 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 10
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "new-orleans-rta-48",
+   "message": "18 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 18
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "new-orleans-rta-49",
+   "message": "33 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 33
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "north-county-transit-distric-sprinter",
+   "message": "4 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ottawa-carleton-regional-tra-2",
+   "message": "7 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 7
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "regional-transportation-dist-l",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "regional-transportation-dist-r",
+   "message": "7 corners under half the commuter band minimum radius of 80 m",
+   "band": "commuter",
+   "count": 7
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-f",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-j",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-n",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-ph",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-pm",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "san-francisco-municipal-tran-t",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "septa-d1",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "septa-d2",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "septa-t1",
+   "message": "5 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "septa-t3-b4",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "south-florida-regional-trans-mce",
+   "message": "3 corners under half the longhaul band minimum radius of 400 m",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "suntran-790",
+   "message": "11 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 11
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "trimet-portland-streetcar-ns",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "trimet-portland-streetcar-ns-b2",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "trimet-portland-streetcar-wes-commuter-rail",
+   "message": "1 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304-b2",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304-b7",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-310",
+   "message": "5 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-310-b2",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-509",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "utah-transit-authority-uta-703",
+   "message": "3 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-jasper-prince-rupert",
+   "message": "38 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 38
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-montr-al-halifax",
+   "message": "25 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 25
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-ottawa-qu-bec",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-ottawa-toronto",
+   "message": "8 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 8
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-qu-bec-fallowfield",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-qu-bec-montr-al",
+   "message": "5 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "via-toronto-new-york-us",
+   "message": "9 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto",
+   "message": "119 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 119
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto-b1",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto-b2",
+   "message": "13 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 13
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "US",
+   "line": "vre-fredericksburg-line",
+   "message": "1 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-california-zephyr",
+   "message": "3 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-cardinal",
+   "message": "2 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-city-of-new-orleans",
+   "message": "4 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-crescent",
+   "message": "2 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-downeaster",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "regional",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-empire-builder",
+   "message": "3 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-empire-builder-b1",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-lake-shore-limited",
+   "message": "2 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-northeast-regional",
+   "message": "2 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-northeast-regional-b3",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "amtrak-silver-meteor",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "calgary-transit-201",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "cta-brown-line",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "cta-pink-line",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "cta-purple-line",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "embark-bl",
+   "message": "6 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 6
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "embark-dl",
+   "message": "13 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 13
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mbta-c",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mbta-e",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mckinney-avenue-trolley-m-line-ob",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-babylon-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-far-rockaway-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-long-beach-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-montauk-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "regional",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-oyster-bay-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-port-jefferson-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-port-washington-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "mta-long-island-rail-road-ronkonkoma-branch",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "commuter",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "ottawa-carleton-regional-tra-2",
+   "message": "5 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "regional-transportation-dist-e",
+   "message": "2 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "suntran-790",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "US",
+   "line": "utah-transit-authority-uta-703",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-montr-al-halifax",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-montr-al-toronto",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-vancouver-toronto",
+   "message": "5 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "metropolitan-atlanta-rapid-t-atlsc",
+   "message": "drawn 410 m between stations 174 m apart (2.4x)",
+   "interval": 5,
+   "fromStation": "Edgewood AVE @ Hilliard ST",
+   "toStation": "KING Historic District",
+   "ratio": 2.35
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "metropolitan-atlanta-rapid-t-atlsc",
+   "message": "drawn 3927 m between stations 264 m apart (14.9x)",
+   "interval": 10,
+   "fromStation": "Peachtree Center Station",
+   "toStation": "Carnegie WAY @ TED Turner DR",
+   "ratio": 14.85
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "miami-dade-transit-mmo",
+   "message": "drawn 371 m between stations 144 m apart (2.6x)",
+   "interval": 5,
+   "fromStation": "Riverwalk Metromover Station",
+   "toStation": "Knight Center Metromover Station",
+   "ratio": 2.57
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "new-orleans-rta-49",
+   "message": "drawn 897 m between stations 345 m apart (2.6x)",
+   "interval": 0,
+   "fromStation": "French Market Station",
+   "toStation": "Ursulines Station",
+   "ratio": 2.6
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "new-orleans-rta-49",
+   "message": "drawn 938 m between stations 284 m apart (3.3x)",
+   "interval": 4,
+   "fromStation": "Bienville Station",
+   "toStation": "Canal Street Station",
+   "ratio": 3.31
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "US",
+   "line": "new-orleans-rta-49",
+   "message": "drawn 586 m between stations 249 m apart (2.3x)",
+   "interval": 5,
+   "fromStation": "Canal Street Station",
+   "toStation": "Poydras Station",
+   "ratio": 2.35
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "CA",
+   "line": "ttc-503",
+   "message": "drawn 217 m between stations 84 m apart (2.6x)",
+   "interval": 46,
+   "fromStation": "Kingston Rd at Bingham Ave",
+   "toStation": "Bingham Loop",
+   "ratio": 2.57
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "cta-red-line",
+   "message": "station us-official-roosevelt is 67 m from where cta-green-line puts it, past the 40 m the band allows",
+   "station": "us-official-roosevelt",
+   "metres": 67
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "mbta-orange-line",
+   "message": "station us-official-state is 54 m from where mbta-blue-line puts it, past the 40 m the band allows",
+   "station": "us-official-state",
+   "metres": 54
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metra-ri",
+   "message": "station us-official-lasalle is 67 m from where cta-blue-line puts it, past the 40 m the band allows",
+   "station": "us-official-lasalle",
+   "metres": 67
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metra-ri",
+   "message": "station us-official-35th-st-lou-jones is 118 m from where cta-red-line puts it, past the 40 m the band allows",
+   "station": "us-official-35th-st-lou-jones",
+   "metres": 118
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metra-union-pacific",
+   "message": "station us-official-davis-2 is 113 m from where cta-purple-line puts it, past the 90 m the band allows",
+   "station": "us-official-davis-2",
+   "metres": 113
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metra-up-nw",
+   "message": "station us-official-jefferson-park is 168 m from where cta-blue-line puts it, past the 90 m the band allows",
+   "station": "us-official-jefferson-park",
+   "metres": 168
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metrolink-riv-line",
+   "message": "station us-official-l-a-union is 649 m from where amtrak-southwest-chief puts it, past the 400 m the band allows",
+   "station": "us-official-l-a-union",
+   "metres": 649
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-1",
+   "message": "station us-official-marble-hill is 113 m from where metro-north-railroad-hudson puts it, past the 90 m the band allows",
+   "station": "us-official-marble-hill",
+   "metres": 113
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-42-st-shuttle",
+   "message": "station us-official-times-sq-42-st is 125 m from where metropolitan-transit-authori-1 puts it, past the 25 m the band allows",
+   "station": "us-official-times-sq-42-st",
+   "metres": 125
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-c",
+   "message": "station us-official-168-st is 50 m from where metropolitan-transit-authori-1 puts it, past the 40 m the band allows",
+   "station": "us-official-168-st",
+   "metres": 50
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-franklin-avenue-shuttle",
+   "message": "station us-official-franklin-av is 64 m from where metropolitan-transit-authori-c puts it, past the 40 m the band allows",
+   "station": "us-official-franklin-av",
+   "metres": 64
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-fx",
+   "message": "station us-official-14-st is 340 m from where metropolitan-transit-authori-1 puts it, past the 40 m the band allows",
+   "station": "us-official-14-st",
+   "metres": 340
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-g",
+   "message": "station us-official-7-av is 154 m from where metropolitan-transit-authori-fx puts it, past the 40 m the band allows",
+   "station": "us-official-7-av",
+   "metres": 154
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-g",
+   "message": "station us-official-court-sq is 155 m from where metropolitan-transit-authori-fx puts it, past the 40 m the band allows",
+   "station": "us-official-court-sq",
+   "metres": 155
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-j",
+   "message": "station us-official-broadway-junction is 91 m from where metropolitan-transit-authori-c puts it, past the 40 m the band allows",
+   "station": "us-official-broadway-junction",
+   "metres": 91
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-j",
+   "message": "station us-official-delancey-st-essex-st is 64 m from where metropolitan-transit-authori-fx puts it, past the 40 m the band allows",
+   "station": "us-official-delancey-st-essex-st",
+   "metres": 64
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-l",
+   "message": "station us-official-8-av is 144 m from where metropolitan-transit-authori-c puts it, past the 40 m the band allows",
+   "station": "us-official-8-av",
+   "metres": 144
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-l",
+   "message": "station us-official-lorimer-st is 128 m from where metropolitan-transit-authori-g puts it, past the 40 m the band allows",
+   "station": "us-official-lorimer-st",
+   "metres": 128
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "metropolitan-transit-authori-z",
+   "message": "station us-official-myrtle-av is 88 m from where metropolitan-transit-authori-j puts it, past the 40 m the band allows",
+   "station": "us-official-myrtle-av",
+   "metres": 88
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "mta-long-island-rail-road-babylon-branch",
+   "message": "station us-official-jamaica is 90 m from where metropolitan-transit-authori-j puts it, past the 90 m the band allows",
+   "station": "us-official-jamaica",
+   "metres": 90
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "new-jersey-transit-nj-transi-bntn",
+   "message": "station us-official-new-york-penn is 107 m from where metropolitan-transit-authori-1 puts it, past the 90 m the band allows",
+   "station": "us-official-new-york-penn",
+   "metres": 107
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "new-orleans-rta-47",
+   "message": "station us-official-canal-st-at-carondelet-st is 30 m from where new-orleans-rta-12 puts it, past the 25 m the band allows",
+   "station": "us-official-canal-st-at-carondelet-st",
+   "metres": 30
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "new-orleans-rta-48",
+   "message": "station us-official-n-carrollton-ave-at-canal-st is 34 m from where new-orleans-rta-47 puts it, past the 25 m the band allows",
+   "station": "us-official-n-carrollton-ave-at-canal-st",
+   "metres": 34
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "north-county-transit-distric-498",
+   "message": "station us-official-oceanside is 270 m from where metrolink-ie-oc-line puts it, past the 200 m the band allows",
+   "station": "us-official-oceanside",
+   "metres": 270
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "port-authority-trans-hudson-hoboken-world-trade-center",
+   "message": "station us-official-world-trade-center is 46 m from where metropolitan-transit-authori-1 puts it, past the 40 m the band allows",
+   "station": "us-official-world-trade-center",
+   "metres": 46
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "regional-transportation-dist-l-b1",
+   "message": "station us-official-18th-st-stout is 101 m from where regional-transportation-dist-d-b1 puts it, past the 25 m the band allows",
+   "station": "us-official-18th-st-stout",
+   "metres": 101
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "regional-transportation-dist-r",
+   "message": "station us-official-peoria is 401 m from where regional-transportation-dist-a puts it, past the 90 m the band allows",
+   "station": "us-official-peoria",
+   "metres": 401
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "san-diego-international-airp-green",
+   "message": "station us-official-el-cajon is 92 m from where san-diego-international-airp-copper puts it, past the 40 m the band allows",
+   "station": "us-official-el-cajon",
+   "metres": 92
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "septa-b1",
+   "message": "station us-official-north-philadelphia is 374 m from where amtrak-keystone-service puts it, past the 200 m the band allows",
+   "station": "us-official-north-philadelphia",
+   "metres": 374
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "septa-l1",
+   "message": "station us-official-15th-st-city-hall is 142 m from where septa-b1 puts it, past the 40 m the band allows",
+   "station": "us-official-15th-st-city-hall",
+   "metres": 142
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "septa-m1",
+   "message": "station us-official-69th-street is 59 m from where septa-l1 puts it, past the 40 m the band allows",
+   "station": "us-official-69th-street",
+   "metres": 59
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "septa-t1",
+   "message": "station us-official-drexel-at-30th-st is 167 m from where septa-l1 puts it, past the 40 m the band allows",
+   "station": "us-official-drexel-at-30th-st",
+   "metres": 167
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "septa-t4",
+   "message": "station us-official-darby is 54 m from where septa-t3 puts it, past the 25 m the band allows",
+   "station": "us-official-darby",
+   "metres": 54
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "translink-expo-line",
+   "message": "station ca-official-waterfront is 169 m from where translink-canada-line puts it, past the 40 m the band allows",
+   "station": "ca-official-waterfront",
+   "metres": 169
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "translink-millennium-line",
+   "message": "station ca-official-commercial-broadway is 40 m from where translink-expo-line puts it, past the 40 m the band allows",
+   "station": "ca-official-commercial-broadway",
+   "metres": 40
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "trimet-portland-streetcar-ns-b2",
+   "message": "station us-official-sw-11th-clay is 86 m from where trimet-portland-streetcar-ns puts it, past the 25 m the band allows",
+   "station": "us-official-sw-11th-clay",
+   "metres": 86
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-2",
+   "message": "station ca-official-kipling-go is 125 m from where go-transit-mi puts it, past the 90 m the band allows",
+   "station": "ca-official-kipling-go",
+   "metres": 125
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-304",
+   "message": "station ca-official-broadview is 47 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-broadview",
+   "metres": 47
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-304-b7",
+   "message": "station ca-official-dufferin-gate-loop is 48 m from where ttc-304-b2 puts it, past the 25 m the band allows",
+   "station": "ca-official-dufferin-gate-loop",
+   "metres": 48
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-310",
+   "message": "station ca-official-spadina-2 is 40 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-spadina-2",
+   "metres": 40
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-310-b2",
+   "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave is 28 m from where ttc-310 puts it, past the 25 m the band allows",
+   "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
+   "metres": 28
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-4",
+   "message": "station ca-official-sheppard-yonge is 95 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-sheppard-yonge",
+   "metres": 95
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "station ca-official-bathurst is 70 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-bathurst",
+   "metres": 70
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "station ca-official-exhibition-loop is 32 m from where ttc-509 puts it, past the 25 m the band allows",
+   "station": "ca-official-exhibition-loop",
+   "metres": 32
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "US",
+   "line": "utah-transit-authority-uta-720",
+   "message": "station us-official-central-pointe is 108 m from where utah-transit-authority-uta-701 puts it, past the 40 m the band allows",
+   "station": "us-official-central-pointe",
+   "metres": 108
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:logo",
+   "country": "US",
+   "line": "-",
+   "message": "256 of 256 lines carry no `logo`",
+   "count": 256
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:logo",
+   "country": "CA",
+   "line": "-",
+   "message": "49 of 49 lines carry no `logo`",
+   "count": 49
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:operatorShort",
+   "country": "US",
+   "line": "-",
+   "message": "157 of 256 lines carry no `operatorShort`",
+   "count": 157
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:operatorShort",
+   "country": "CA",
+   "line": "-",
+   "message": "28 of 49 lines carry no `operatorShort`",
+   "count": 28
+  }
+ ],
+ "lines": [
+  {
+   "id": "ace-ace",
+   "band": "regional",
+   "lengthKm": 136.6,
+   "stations": 10,
+   "vertices": 565,
+   "country": "US"
+  },
+  {
+   "id": "mckinney-avenue-trolley-m-line-ob",
+   "band": "street",
+   "lengthKm": 3.4,
+   "stations": 29,
+   "vertices": 107,
+   "country": "US"
+  },
+  {
+   "id": "mckinney-avenue-trolley-m-line-ob-b2",
+   "band": "street",
+   "lengthKm": 1.3,
+   "stations": 9,
+   "vertices": 32,
+   "country": "US"
+  },
+  {
+   "id": "new-orleans-rta-12",
+   "band": "street",
+   "lengthKm": 10.6,
+   "stations": 61,
+   "vertices": 251,
+   "country": "US"
+  },
+  {
+   "id": "new-orleans-rta-47",
+   "band": "street",
+   "lengthKm": 5.9,
+   "stations": 25,
+   "vertices": 119,
+   "country": "US"
+  },
+  {
+   "id": "new-orleans-rta-48",
+   "band": "street",
+   "lengthKm": 5.9,
+   "stations": 25,
+   "vertices": 141,
+   "country": "US"
+  },
+  {
+   "id": "new-orleans-rta-49",
+   "band": "street",
+   "lengthKm": 4.1,
+   "stations": 8,
+   "vertices": 211,
+   "country": "US"
+  },
+  {
+   "id": "vre-fredericksburg-line",
+   "band": "regional",
+   "lengthKm": 96.7,
+   "stations": 13,
+   "vertices": 430,
+   "country": "US"
+  },
+  {
+   "id": "vre-manassas-line",
+   "band": "commuter",
+   "lengthKm": 57.6,
+   "stations": 10,
+   "vertices": 416,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-acela",
+   "band": "longhaul",
+   "lengthKm": 732.2,
+   "stations": 14,
+   "vertices": 1655,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-adirondack-us",
+   "band": "longhaul",
+   "lengthKm": 532.0,
+   "stations": 16,
+   "vertices": 1345,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-amtrak-cascades-us",
+   "band": "longhaul",
+   "lengthKm": 638.3,
+   "stations": 17,
+   "vertices": 1407,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-amtrak-hartford-line",
+   "band": "regional",
+   "lengthKm": 99.7,
+   "stations": 9,
+   "vertices": 404,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-amtrak-mardi-gras-service",
+   "band": "longhaul",
+   "lengthKm": 232.6,
+   "stations": 6,
+   "vertices": 450,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-auto-train",
+   "band": "longhaul",
+   "lengthKm": 1375.8,
+   "stations": 2,
+   "vertices": 2613,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-berkshire-flyer",
+   "band": "longhaul",
+   "lengthKm": 305.4,
+   "stations": 8,
+   "vertices": 804,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-blue-water",
+   "band": "longhaul",
+   "lengthKm": 510.5,
+   "stations": 11,
+   "vertices": 1015,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-borealis",
+   "band": "longhaul",
+   "lengthKm": 658.0,
+   "stations": 13,
+   "vertices": 1419,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-california-zephyr",
+   "band": "longhaul",
+   "lengthKm": 3868.1,
+   "stations": 35,
+   "vertices": 8429,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-capitol-corridor",
+   "band": "regional",
+   "lengthKm": 271.5,
+   "stations": 18,
+   "vertices": 998,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-cardinal",
+   "band": "longhaul",
+   "lengthKm": 1829.6,
+   "stations": 32,
+   "vertices": 4138,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-carl-sandburg",
+   "band": "longhaul",
+   "lengthKm": 414.6,
+   "stations": 10,
+   "vertices": 813,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-carolinian",
+   "band": "longhaul",
+   "lengthKm": 1126.7,
+   "stations": 28,
+   "vertices": 2487,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-city-of-new-orleans",
+   "band": "longhaul",
+   "lengthKm": 1499.0,
+   "stations": 20,
+   "vertices": 2954,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-crescent",
+   "band": "longhaul",
+   "lengthKm": 2203.9,
+   "stations": 35,
+   "vertices": 5084,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-downeaster",
+   "band": "regional",
+   "lengthKm": 231.5,
+   "stations": 12,
+   "vertices": 859,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-empire-builder",
+   "band": "longhaul",
+   "lengthKm": 3516.4,
+   "stations": 41,
+   "vertices": 7285,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-empire-builder-b1",
+   "band": "longhaul",
+   "lengthKm": 602.2,
+   "stations": 6,
+   "vertices": 1416,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-empire-service",
+   "band": "longhaul",
+   "lengthKm": 744.7,
+   "stations": 17,
+   "vertices": 1651,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-ethan-allen-express",
+   "band": "longhaul",
+   "lengthKm": 497.7,
+   "stations": 15,
+   "vertices": 1241,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-heartland-flyer",
+   "band": "longhaul",
+   "lengthKm": 328.3,
+   "stations": 7,
+   "vertices": 718,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-hiawatha-service",
+   "band": "longhaul",
+   "lengthKm": 137.8,
+   "stations": 5,
+   "vertices": 283,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-keystone-service",
+   "band": "regional",
+   "lengthKm": 310.4,
+   "stations": 21,
+   "vertices": 1146,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-lake-shore-limited",
+   "band": "longhaul",
+   "lengthKm": 1631.5,
+   "stations": 22,
+   "vertices": 3308,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-lake-shore-limited-b1",
+   "band": "longhaul",
+   "lengthKm": 226.5,
+   "stations": 5,
+   "vertices": 572,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-lincoln-service",
+   "band": "longhaul",
+   "lengthKm": 451.9,
+   "stations": 11,
+   "vertices": 891,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-lincoln-service-missouri-river-runner",
+   "band": "longhaul",
+   "lengthKm": 898.0,
+   "stations": 20,
+   "vertices": 1940,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-missouri-river-runner",
+   "band": "longhaul",
+   "lengthKm": 446.6,
+   "stations": 10,
+   "vertices": 1138,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-northeast-regional",
+   "band": "longhaul",
+   "lengthKm": 1021.9,
+   "stations": 37,
+   "vertices": 2342,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-northeast-regional-b1",
+   "band": "longhaul",
+   "lengthKm": 182.0,
+   "stations": 3,
+   "vertices": 360,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-northeast-regional-b2",
+   "band": "regional",
+   "lengthKm": 99.7,
+   "stations": 9,
+   "vertices": 404,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-northeast-regional-b3",
+   "band": "longhaul",
+   "lengthKm": 346.9,
+   "stations": 7,
+   "vertices": 892,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-palmetto",
+   "band": "longhaul",
+   "lengthKm": 1331.5,
+   "stations": 23,
+   "vertices": 2649,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-pennsylvanian",
+   "band": "longhaul",
+   "lengthKm": 699.5,
+   "stations": 17,
+   "vertices": 1716,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-pere-marquette",
+   "band": "longhaul",
+   "lengthKm": 283.2,
+   "stations": 5,
+   "vertices": 609,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-piedmont",
+   "band": "longhaul",
+   "lengthKm": 276.9,
+   "stations": 9,
+   "vertices": 711,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-silver-meteor",
+   "band": "longhaul",
+   "lengthKm": 2229.1,
+   "stations": 33,
+   "vertices": 4385,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-southwest-chief",
+   "band": "longhaul",
+   "lengthKm": 3579.1,
+   "stations": 32,
+   "vertices": 7374,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-valley-flyer",
+   "band": "regional",
+   "lengthKm": 157.7,
+   "stations": 12,
+   "vertices": 644,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-vermonter",
+   "band": "longhaul",
+   "lengthKm": 964.7,
+   "stations": 30,
+   "vertices": 2314,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-wolverine",
+   "band": "longhaul",
+   "lengthKm": 488.3,
+   "stations": 15,
+   "vertices": 1086,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-shore-line-east",
+   "band": "regional",
+   "lengthKm": 144.4,
+   "stations": 11,
+   "vertices": 615,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-san-joaquins-gold-runner",
+   "band": "longhaul",
+   "lengthKm": 507.2,
+   "stations": 15,
+   "vertices": 1003,
+   "country": "US"
+  },
+  {
+   "id": "amtrak-san-joaquins-gold-runner-b1",
+   "band": "longhaul",
+   "lengthKm": 125.5,
+   "stations": 4,
+   "vertices": 252,
+   "country": "US"
+  },
+  {
+   "id": "brightline-trains-llc-blfm",
+   "band": "longhaul",
+   "lengthKm": 376.2,
+   "stations": 6,
+   "vertices": 778,
+   "country": "US"
+  },
+  {
+   "id": "caltrain-express",
+   "band": "regional",
+   "lengthKm": 75.2,
+   "stations": 11,
+   "vertices": 269,
+   "country": "US"
+  },
+  {
+   "id": "caltrain-south-county",
+   "band": "regional",
+   "lengthKm": 48.1,
+   "stations": 7,
+   "vertices": 166,
+   "country": "US"
+  },
+  {
+   "id": "connecticut-transit-hartford-line",
+   "band": "regional",
+   "lengthKm": 99.8,
+   "stations": 9,
+   "vertices": 407,
+   "country": "US"
+  },
+  {
+   "id": "cta-blue-line",
+   "band": "metro",
+   "lengthKm": 44.4,
+   "stations": 33,
+   "vertices": 449,
+   "country": "US"
+  },
+  {
+   "id": "cta-brown-line",
+   "band": "street",
+   "lengthKm": 18.0,
+   "stations": 26,
+   "vertices": 343,
+   "country": "US"
+  },
+  {
+   "id": "cta-green-line",
+   "band": "metro",
+   "lengthKm": 30.6,
+   "stations": 28,
+   "vertices": 296,
+   "country": "US"
+  },
+  {
+   "id": "cta-green-line-b1",
+   "band": "commuter",
+   "lengthKm": 2.7,
+   "stations": 3,
+   "vertices": 18,
+   "country": "US"
+  },
+  {
+   "id": "cta-orange-line",
+   "band": "metro",
+   "lengthKm": 19.6,
+   "stations": 15,
+   "vertices": 234,
+   "country": "US"
+  },
+  {
+   "id": "cta-pink-line",
+   "band": "metro",
+   "lengthKm": 16.6,
+   "stations": 21,
+   "vertices": 174,
+   "country": "US"
+  },
+  {
+   "id": "cta-purple-line",
+   "band": "street",
+   "lengthKm": 25.8,
+   "stations": 25,
+   "vertices": 447,
+   "country": "US"
+  },
+  {
+   "id": "cta-red-line",
+   "band": "metro",
+   "lengthKm": 35.2,
+   "stations": 33,
+   "vertices": 364,
+   "country": "US"
+  },
+  {
+   "id": "cta-yellow-line",
+   "band": "regional",
+   "lengthKm": 7.9,
+   "stations": 3,
+   "vertices": 36,
+   "country": "US"
+  },
+  {
+   "id": "denton-county-transportation-a-train",
+   "band": "commuter",
+   "lengthKm": 33.7,
+   "stations": 6,
+   "vertices": 239,
+   "country": "US"
+  },
+  {
+   "id": "embark-bl",
+   "band": "street",
+   "lengthKm": 3.3,
+   "stations": 9,
+   "vertices": 117,
+   "country": "US"
+  },
+  {
+   "id": "embark-dl",
+   "band": "street",
+   "lengthKm": 7.8,
+   "stations": 22,
+   "vertices": 281,
+   "country": "US"
+  },
+  {
+   "id": "florida-department-of-transp-sunrail",
+   "band": "commuter",
+   "lengthKm": 97.6,
+   "stations": 17,
+   "vertices": 620,
+   "country": "US"
+  },
+  {
+   "id": "galveston-island-transit-rail",
+   "band": "street",
+   "lengthKm": 6.3,
+   "stations": 7,
+   "vertices": 117,
+   "country": "US"
+  },
+  {
+   "id": "hillsborough-area-regional-t-sky",
+   "band": "commuter",
+   "lengthKm": 2.2,
+   "stations": 3,
+   "vertices": 31,
+   "country": "US"
+  },
+  {
+   "id": "hillsborough-area-regional-t-800",
+   "band": "street",
+   "lengthKm": 4.2,
+   "stations": 11,
+   "vertices": 108,
+   "country": "US"
+  },
+  {
+   "id": "houston-metro-700",
+   "band": "metro",
+   "lengthKm": 20.2,
+   "stations": 26,
+   "vertices": 273,
+   "country": "US"
+  },
+  {
+   "id": "houston-metro-800",
+   "band": "metro",
+   "lengthKm": 7.1,
+   "stations": 9,
+   "vertices": 96,
+   "country": "US"
+  },
+  {
+   "id": "houston-metro-900",
+   "band": "metro",
+   "lengthKm": 9.7,
+   "stations": 10,
+   "vertices": 140,
+   "country": "US"
+  },
+  {
+   "id": "houston-metro-800-b1",
+   "band": "street",
+   "lengthKm": 1.7,
+   "stations": 4,
+   "vertices": 32,
+   "country": "US"
+  },
+  {
+   "id": "houston-metro-900-b1",
+   "band": "street",
+   "lengthKm": 1.8,
+   "stations": 4,
+   "vertices": 39,
+   "country": "US"
+  },
+  {
+   "id": "king-county-metro-south-lake-union-streetcar",
+   "band": "street",
+   "lengthKm": 2.0,
+   "stations": 7,
+   "vertices": 41,
+   "country": "US"
+  },
+  {
+   "id": "king-county-metro-south-lake-union-streetcar-b1",
+   "band": "street",
+   "lengthKm": 1.0,
+   "stations": 4,
+   "vertices": 32,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-b-line",
+   "band": "metro",
+   "lengthKm": 23.6,
+   "stations": 14,
+   "vertices": 249,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-d-line",
+   "band": "metro",
+   "lengthKm": 14.2,
+   "stations": 11,
+   "vertices": 157,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-a-line",
+   "band": "metro",
+   "lengthKm": 92.5,
+   "stations": 47,
+   "vertices": 918,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-a-line-b1",
+   "band": "metro",
+   "lengthKm": 2.0,
+   "stations": 3,
+   "vertices": 29,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-c-line",
+   "band": "commuter",
+   "lengthKm": 28.4,
+   "stations": 12,
+   "vertices": 186,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-e-line",
+   "band": "metro",
+   "lengthKm": 35.2,
+   "stations": 29,
+   "vertices": 354,
+   "country": "US"
+  },
+  {
+   "id": "los-angeles-county-metropoli-metro-k-line",
+   "band": "metro",
+   "lengthKm": 18.5,
+   "stations": 13,
+   "vertices": 205,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-brunswick-washington",
+   "band": "regional",
+   "lengthKm": 117.5,
+   "stations": 17,
+   "vertices": 544,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-brunswick-washington-b1",
+   "band": "longhaul",
+   "lengthKm": 33.3,
+   "stations": 3,
+   "vertices": 99,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-brunswick-washington-b2",
+   "band": "longhaul",
+   "lengthKm": 43.7,
+   "stations": 2,
+   "vertices": 121,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-brunswick-washington-b3",
+   "band": "longhaul",
+   "lengthKm": 33.1,
+   "stations": 2,
+   "vertices": 95,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-penn-washington",
+   "band": "regional",
+   "lengthKm": 122.6,
+   "stations": 13,
+   "vertices": 464,
+   "country": "US"
+  },
+  {
+   "id": "maryland-transit-administrat-2-metro-subwaylink",
+   "band": "metro",
+   "lengthKm": 23.4,
+   "stations": 14,
+   "vertices": 276,
+   "country": "US"
+  },
+  {
+   "id": "mbta-blue-line",
+   "band": "metro",
+   "lengthKm": 9.6,
+   "stations": 12,
+   "vertices": 132,
+   "country": "US"
+  },
+  {
+   "id": "mbta-capeflyer",
+   "band": "regional",
+   "lengthKm": 126.7,
+   "stations": 8,
+   "vertices": 503,
+   "country": "US"
+  },
+  {
+   "id": "mbta-fairmount-line",
+   "band": "metro",
+   "lengthKm": 14.7,
+   "stations": 9,
+   "vertices": 146,
+   "country": "US"
+  },
+  {
+   "id": "mbta-fitchburg-line",
+   "band": "commuter",
+   "lengthKm": 85.9,
+   "stations": 18,
+   "vertices": 585,
+   "country": "US"
+  },
+  {
+   "id": "mbta-framingham-worcester-line",
+   "band": "commuter",
+   "lengthKm": 71.2,
+   "stations": 18,
+   "vertices": 506,
+   "country": "US"
+  },
+  {
+   "id": "mbta-greenbush-line",
+   "band": "commuter",
+   "lengthKm": 44.5,
+   "stations": 10,
+   "vertices": 330,
+   "country": "US"
+  },
+  {
+   "id": "mbta-haverhill-line",
+   "band": "commuter",
+   "lengthKm": 52.9,
+   "stations": 15,
+   "vertices": 344,
+   "country": "US"
+  },
+  {
+   "id": "mbta-kingston-line",
+   "band": "commuter",
+   "lengthKm": 56.5,
+   "stations": 10,
+   "vertices": 355,
+   "country": "US"
+  },
+  {
+   "id": "mbta-lowell-line",
+   "band": "commuter",
+   "lengthKm": 40.6,
+   "stations": 8,
+   "vertices": 260,
+   "country": "US"
+  },
+  {
+   "id": "mbta-needham-line",
+   "band": "metro",
+   "lengthKm": 21.9,
+   "stations": 12,
+   "vertices": 233,
+   "country": "US"
+  },
+  {
+   "id": "mbta-newburyport-rockport-line",
+   "band": "commuter",
+   "lengthKm": 56.7,
+   "stations": 13,
+   "vertices": 390,
+   "country": "US"
+  },
+  {
+   "id": "mbta-newburyport-rockport-line-b1",
+   "band": "commuter",
+   "lengthKm": 28.8,
+   "stations": 6,
+   "vertices": 154,
+   "country": "US"
+  },
+  {
+   "id": "mbta-orange-line",
+   "band": "metro",
+   "lengthKm": 17.7,
+   "stations": 20,
+   "vertices": 195,
+   "country": "US"
+  },
+  {
+   "id": "mbta-d",
+   "band": "metro",
+   "lengthKm": 23.2,
+   "stations": 25,
+   "vertices": 294,
+   "country": "US"
+  },
+  {
+   "id": "mbta-e-b1",
+   "band": "metro",
+   "lengthKm": 1.7,
+   "stations": 2,
+   "vertices": 22,
+   "country": "US"
+  },
+  {
+   "id": "mbta-c",
+   "band": "street",
+   "lengthKm": 15.9,
+   "stations": 29,
+   "vertices": 297,
+   "country": "US"
+  },
+  {
+   "id": "mbta-e",
+   "band": "street",
+   "lengthKm": 13.8,
+   "stations": 25,
+   "vertices": 279,
+   "country": "US"
+  },
+  {
+   "id": "mbta-mattapan-line",
+   "band": "street",
+   "lengthKm": 4.1,
+   "stations": 8,
+   "vertices": 78,
+   "country": "US"
+  },
+  {
+   "id": "metra-bnsf",
+   "band": "metro",
+   "lengthKm": 59.4,
+   "stations": 26,
+   "vertices": 488,
+   "country": "US"
+  },
+  {
+   "id": "metra-me",
+   "band": "metro",
+   "lengthKm": 49.7,
+   "stations": 33,
+   "vertices": 421,
+   "country": "US"
+  },
+  {
+   "id": "metra-me-b1",
+   "band": "metro",
+   "lengthKm": 8.4,
+   "stations": 9,
+   "vertices": 109,
+   "country": "US"
+  },
+  {
+   "id": "metra-me-b2",
+   "band": "metro",
+   "lengthKm": 7.2,
+   "stations": 8,
+   "vertices": 73,
+   "country": "US"
+  },
+  {
+   "id": "metra-me-b3",
+   "band": "commuter",
+   "lengthKm": 2.8,
+   "stations": 2,
+   "vertices": 23,
+   "country": "US"
+  },
+  {
+   "id": "metra-milwaukee",
+   "band": "commuter",
+   "lengthKm": 80.0,
+   "stations": 22,
+   "vertices": 465,
+   "country": "US"
+  },
+  {
+   "id": "metra-milwaukee-2",
+   "band": "commuter",
+   "lengthKm": 64.3,
+   "stations": 22,
+   "vertices": 408,
+   "country": "US"
+  },
+  {
+   "id": "metra-ncs",
+   "band": "commuter",
+   "lengthKm": 85.1,
+   "stations": 18,
+   "vertices": 484,
+   "country": "US"
+  },
+  {
+   "id": "metra-ri",
+   "band": "metro",
+   "lengthKm": 65.6,
+   "stations": 24,
+   "vertices": 559,
+   "country": "US"
+  },
+  {
+   "id": "metra-ri-b2",
+   "band": "regional",
+   "lengthKm": 12.5,
+   "stations": 2,
+   "vertices": 42,
+   "country": "US"
+  },
+  {
+   "id": "metra-sws",
+   "band": "commuter",
+   "lengthKm": 64.6,
+   "stations": 13,
+   "vertices": 381,
+   "country": "US"
+  },
+  {
+   "id": "metra-union-pacific",
+   "band": "commuter",
+   "lengthKm": 83.1,
+   "stations": 28,
+   "vertices": 461,
+   "country": "US"
+  },
+  {
+   "id": "metra-up-nw",
+   "band": "commuter",
+   "lengthKm": 101.4,
+   "stations": 22,
+   "vertices": 542,
+   "country": "US"
+  },
+  {
+   "id": "metra-up-nw-b1",
+   "band": "regional",
+   "lengthKm": 13.5,
+   "stations": 2,
+   "vertices": 52,
+   "country": "US"
+  },
+  {
+   "id": "metra-hc",
+   "band": "regional",
+   "lengthKm": 59.5,
+   "stations": 7,
+   "vertices": 214,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-danbury",
+   "band": "regional",
+   "lengthKm": 103.8,
+   "stations": 15,
+   "vertices": 470,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-harlem",
+   "band": "commuter",
+   "lengthKm": 132.0,
+   "stations": 38,
+   "vertices": 837,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-hudson",
+   "band": "commuter",
+   "lengthKm": 117.0,
+   "stations": 29,
+   "vertices": 774,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-new-canaan",
+   "band": "commuter",
+   "lengthKm": 65.8,
+   "stations": 20,
+   "vertices": 435,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-new-haven",
+   "band": "commuter",
+   "lengthKm": 116.9,
+   "stations": 32,
+   "vertices": 735,
+   "country": "US"
+  },
+  {
+   "id": "metro-north-railroad-waterbury",
+   "band": "regional",
+   "lengthKm": 51.0,
+   "stations": 8,
+   "vertices": 268,
+   "country": "US"
+  },
+  {
+   "id": "metro-transit-airport-shuttle",
+   "band": "commuter",
+   "lengthKm": 3.5,
+   "stations": 3,
+   "vertices": 35,
+   "country": "US"
+  },
+  {
+   "id": "metro-transit-metro-blue-line",
+   "band": "metro",
+   "lengthKm": 19.6,
+   "stations": 19,
+   "vertices": 259,
+   "country": "US"
+  },
+  {
+   "id": "metro-transit-metro-green-line",
+   "band": "metro",
+   "lengthKm": 17.4,
+   "stations": 23,
+   "vertices": 206,
+   "country": "US"
+  },
+  {
+   "id": "metro-transit-intercity-tran-amtrak-cascades",
+   "band": "longhaul",
+   "lengthKm": 54.5,
+   "stations": 3,
+   "vertices": 187,
+   "country": "US"
+  },
+  {
+   "id": "metrolink-91-pv-line",
+   "band": "regional",
+   "lengthKm": 135.7,
+   "stations": 12,
+   "vertices": 552,
+   "country": "US"
+  },
+  {
+   "id": "metrolink-av-line",
+   "band": "regional",
+   "lengthKm": 122.7,
+   "stations": 13,
+   "vertices": 594,
+   "country": "US"
+  },
+  {
+   "id": "metrolink-ie-oc-line",
+   "band": "regional",
+   "lengthKm": 162.5,
+   "stations": 16,
+   "vertices": 631,
+   "country": "US"
+  },
+  {
+   "id": "metrolink-oc-line",
+   "band": "regional",
+   "lengthKm": 139.5,
+   "stations": 15,
+   "vertices": 523,
+   "country": "US"
+  },
+  {
+   "id": "metrolink-riv-line",
+   "band": "regional",
+   "lengthKm": 92.6,
+   "stations": 7,
+   "vertices": 323,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-atlanta-rapid-t-blue",
+   "band": "commuter",
+   "lengthKm": 24.1,
+   "stations": 15,
+   "vertices": 192,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-atlanta-rapid-t-gold",
+   "band": "commuter",
+   "lengthKm": 35.8,
+   "stations": 18,
+   "vertices": 300,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-atlanta-rapid-t-green",
+   "band": "metro",
+   "lengthKm": 10.0,
+   "stations": 9,
+   "vertices": 121,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-atlanta-rapid-t-atlsc",
+   "band": "street",
+   "lengthKm": 7.9,
+   "stations": 12,
+   "vertices": 176,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-1",
+   "band": "street",
+   "lengthKm": 23.5,
+   "stations": 38,
+   "vertices": 325,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-42-st-shuttle",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 2,
+   "vertices": 11,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-c",
+   "band": "metro",
+   "lengthKm": 29.9,
+   "stations": 40,
+   "vertices": 344,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-franklin-avenue-shuttle",
+   "band": "street",
+   "lengthKm": 2.1,
+   "stations": 4,
+   "vertices": 32,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-fx",
+   "band": "metro",
+   "lengthKm": 43.3,
+   "stations": 39,
+   "vertices": 508,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-g",
+   "band": "metro",
+   "lengthKm": 16.8,
+   "stations": 21,
+   "vertices": 226,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-j",
+   "band": "street",
+   "lengthKm": 21.5,
+   "stations": 30,
+   "vertices": 316,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-l",
+   "band": "street",
+   "lengthKm": 16.3,
+   "stations": 24,
+   "vertices": 259,
+   "country": "US"
+  },
+  {
+   "id": "metropolitan-transit-authori-z",
+   "band": "metro",
+   "lengthKm": 21.5,
+   "stations": 21,
+   "vertices": 236,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-2600",
+   "band": "metro",
+   "lengthKm": 36.2,
+   "stations": 22,
+   "vertices": 376,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-2600-b1",
+   "band": "commuter",
+   "lengthKm": 4.1,
+   "stations": 2,
+   "vertices": 38,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-mmi",
+   "band": "street",
+   "lengthKm": 3.2,
+   "stations": 9,
+   "vertices": 103,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-mmo",
+   "band": "street",
+   "lengthKm": 5.5,
+   "stations": 16,
+   "vertices": 173,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-mmo-b1",
+   "band": "street",
+   "lengthKm": 1.8,
+   "stations": 5,
+   "vertices": 52,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-mmo-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 8,
+   "country": "US"
+  },
+  {
+   "id": "miami-dade-transit-mmo-b3",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 12,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-babylon-branch",
+   "band": "commuter",
+   "lengthKm": 62.7,
+   "stations": 20,
+   "vertices": 375,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-far-rockaway-branch",
+   "band": "metro",
+   "lengthKm": 36.6,
+   "stations": 16,
+   "vertices": 338,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-greenport-service",
+   "band": "regional",
+   "lengthKm": 73.5,
+   "stations": 7,
+   "vertices": 237,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-long-beach-branch",
+   "band": "commuter",
+   "lengthKm": 39.8,
+   "stations": 15,
+   "vertices": 252,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-montauk-branch",
+   "band": "regional",
+   "lengthKm": 189.6,
+   "stations": 19,
+   "vertices": 693,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-oyster-bay-branch",
+   "band": "commuter",
+   "lengthKm": 56.2,
+   "stations": 13,
+   "vertices": 372,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-port-jefferson-branch",
+   "band": "commuter",
+   "lengthKm": 95.7,
+   "stations": 25,
+   "vertices": 603,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-port-washington-branch",
+   "band": "metro",
+   "lengthKm": 36.9,
+   "stations": 14,
+   "vertices": 372,
+   "country": "US"
+  },
+  {
+   "id": "mta-long-island-rail-road-ronkonkoma-branch",
+   "band": "commuter",
+   "lengthKm": 81.4,
+   "stations": 23,
+   "vertices": 441,
+   "country": "US"
+  },
+  {
+   "id": "nashville-mta-wego-public-tr-90",
+   "band": "regional",
+   "lengthKm": 50.0,
+   "stations": 7,
+   "vertices": 237,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-atlc",
+   "band": "regional",
+   "lengthKm": 108.6,
+   "stations": 9,
+   "vertices": 377,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-bntn",
+   "band": "commuter",
+   "lengthKm": 100.0,
+   "stations": 27,
+   "vertices": 699,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-bntn-b1",
+   "band": "regional",
+   "lengthKm": 12.5,
+   "stations": 2,
+   "vertices": 49,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mnbn",
+   "band": "commuter",
+   "lengthKm": 49.3,
+   "stations": 17,
+   "vertices": 305,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mnbn-b1",
+   "band": "commuter",
+   "lengthKm": 26.2,
+   "stations": 9,
+   "vertices": 162,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mnbnp",
+   "band": "commuter",
+   "lengthKm": 150.9,
+   "stations": 25,
+   "vertices": 975,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mnbnp-b1",
+   "band": "commuter",
+   "lengthKm": 28.0,
+   "stations": 9,
+   "vertices": 170,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mne",
+   "band": "commuter",
+   "lengthKm": 100.4,
+   "stations": 26,
+   "vertices": 728,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mne-b1",
+   "band": "regional",
+   "lengthKm": 12.5,
+   "stations": 2,
+   "vertices": 49,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mneg",
+   "band": "commuter",
+   "lengthKm": 67.9,
+   "stations": 24,
+   "vertices": 493,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mneg-b1",
+   "band": "regional",
+   "lengthKm": 21.2,
+   "stations": 2,
+   "vertices": 81,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mneg-b2",
+   "band": "regional",
+   "lengthKm": 28.6,
+   "stations": 3,
+   "vertices": 110,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-mrl",
+   "band": "regional",
+   "lengthKm": 16.9,
+   "stations": 3,
+   "vertices": 79,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-nec",
+   "band": "commuter",
+   "lengthKm": 93.4,
+   "stations": 16,
+   "vertices": 499,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-njcl",
+   "band": "commuter",
+   "lengthKm": 107.0,
+   "stations": 28,
+   "vertices": 607,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-pasc",
+   "band": "commuter",
+   "lengthKm": 49.4,
+   "stations": 18,
+   "vertices": 321,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-prin",
+   "band": "commuter",
+   "lengthKm": 4.2,
+   "stations": 2,
+   "vertices": 33,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-rarv",
+   "band": "commuter",
+   "lengthKm": 89.1,
+   "stations": 21,
+   "vertices": 501,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-rvln",
+   "band": "commuter",
+   "lengthKm": 54.2,
+   "stations": 21,
+   "vertices": 369,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-nlr",
+   "band": "metro",
+   "lengthKm": 9.7,
+   "stations": 16,
+   "vertices": 174,
+   "country": "US"
+  },
+  {
+   "id": "new-jersey-transit-nj-transi-nlr-b1",
+   "band": "metro",
+   "lengthKm": 1.1,
+   "stations": 3,
+   "vertices": 26,
+   "country": "US"
+  },
+  {
+   "id": "north-county-transit-distric-498",
+   "band": "regional",
+   "lengthKm": 65.4,
+   "stations": 8,
+   "vertices": 271,
+   "country": "US"
+  },
+  {
+   "id": "north-county-transit-distric-498-b1",
+   "band": "commuter",
+   "lengthKm": 5.4,
+   "stations": 2,
+   "vertices": 36,
+   "country": "US"
+  },
+  {
+   "id": "north-county-transit-distric-sprinter",
+   "band": "commuter",
+   "lengthKm": 35.2,
+   "stations": 15,
+   "vertices": 338,
+   "country": "US"
+  },
+  {
+   "id": "port-authority-trans-hudson-hoboken-world-trade-center",
+   "band": "metro",
+   "lengthKm": 4.6,
+   "stations": 4,
+   "vertices": 58,
+   "country": "US"
+  },
+  {
+   "id": "port-authority-trans-hudson-newark-harrison-shuttle-train",
+   "band": "metro",
+   "lengthKm": 0.9,
+   "stations": 2,
+   "vertices": 12,
+   "country": "US"
+  },
+  {
+   "id": "port-authority-trans-hudson-newark-world-trade-center",
+   "band": "metro",
+   "lengthKm": 14.1,
+   "stations": 6,
+   "vertices": 139,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-a",
+   "band": "commuter",
+   "lengthKm": 37.3,
+   "stations": 8,
+   "vertices": 250,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-b",
+   "band": "commuter",
+   "lengthKm": 8.9,
+   "stations": 4,
+   "vertices": 66,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-n",
+   "band": "commuter",
+   "lengthKm": 21.8,
+   "stations": 7,
+   "vertices": 142,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-d",
+   "band": "metro",
+   "lengthKm": 20.4,
+   "stations": 12,
+   "vertices": 207,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-e",
+   "band": "metro",
+   "lengthKm": 36.6,
+   "stations": 22,
+   "vertices": 424,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-h",
+   "band": "metro",
+   "lengthKm": 28.1,
+   "stations": 16,
+   "vertices": 332,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-r",
+   "band": "commuter",
+   "lengthKm": 32.0,
+   "stations": 16,
+   "vertices": 280,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-w",
+   "band": "metro",
+   "lengthKm": 21.2,
+   "stations": 15,
+   "vertices": 281,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-d-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 13,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-h-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 13,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-l",
+   "band": "street",
+   "lengthKm": 2.4,
+   "stations": 6,
+   "vertices": 46,
+   "country": "US"
+  },
+  {
+   "id": "regional-transportation-dist-l-b1",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 12,
+   "country": "US"
+  },
+  {
+   "id": "san-diego-international-airp-copper",
+   "band": "metro",
+   "lengthKm": 6.0,
+   "stations": 4,
+   "vertices": 83,
+   "country": "US"
+  },
+  {
+   "id": "san-diego-international-airp-green",
+   "band": "metro",
+   "lengthKm": 32.7,
+   "stations": 24,
+   "vertices": 466,
+   "country": "US"
+  },
+  {
+   "id": "san-diego-international-airp-mtg-event-line",
+   "band": "metro",
+   "lengthKm": 13.4,
+   "stations": 12,
+   "vertices": 138,
+   "country": "US"
+  },
+  {
+   "id": "san-diego-international-airp-orange",
+   "band": "metro",
+   "lengthKm": 26.9,
+   "stations": 18,
+   "vertices": 362,
+   "country": "US"
+  },
+  {
+   "id": "san-diego-international-airp-orange-b1",
+   "band": "street",
+   "lengthKm": 0.6,
+   "stations": 2,
+   "vertices": 12,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-ca",
+   "band": "street",
+   "lengthKm": 2.3,
+   "stations": 18,
+   "vertices": 44,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-f",
+   "band": "street",
+   "lengthKm": 8.2,
+   "stations": 41,
+   "vertices": 161,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-j",
+   "band": "street",
+   "lengthKm": 10.6,
+   "stations": 30,
+   "vertices": 201,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-n",
+   "band": "street",
+   "lengthKm": 13.9,
+   "stations": 41,
+   "vertices": 246,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-ph",
+   "band": "street",
+   "lengthKm": 3.3,
+   "stations": 32,
+   "vertices": 82,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-pm",
+   "band": "street",
+   "lengthKm": 2.5,
+   "stations": 25,
+   "vertices": 64,
+   "country": "US"
+  },
+  {
+   "id": "san-francisco-municipal-tran-t",
+   "band": "street",
+   "lengthKm": 10.6,
+   "stations": 24,
+   "vertices": 180,
+   "country": "US"
+  },
+  {
+   "id": "santa-clara-valley-transport-orange-line",
+   "band": "metro",
+   "lengthKm": 28.5,
+   "stations": 26,
+   "vertices": 385,
+   "country": "US"
+  },
+  {
+   "id": "septa-b1",
+   "band": "metro",
+   "lengthKm": 15.9,
+   "stations": 22,
+   "vertices": 142,
+   "country": "US"
+  },
+  {
+   "id": "septa-b3",
+   "band": "metro",
+   "lengthKm": 10.9,
+   "stations": 8,
+   "vertices": 91,
+   "country": "US"
+  },
+  {
+   "id": "septa-l1",
+   "band": "metro",
+   "lengthKm": 20.7,
+   "stations": 28,
+   "vertices": 214,
+   "country": "US"
+  },
+  {
+   "id": "septa-m1",
+   "band": "metro",
+   "lengthKm": 21.5,
+   "stations": 22,
+   "vertices": 296,
+   "country": "US"
+  },
+  {
+   "id": "septa-d1",
+   "band": "street",
+   "lengthKm": 13.8,
+   "stations": 35,
+   "vertices": 255,
+   "country": "US"
+  },
+  {
+   "id": "septa-d2",
+   "band": "street",
+   "lengthKm": 8.5,
+   "stations": 26,
+   "vertices": 189,
+   "country": "US"
+  },
+  {
+   "id": "septa-t1",
+   "band": "street",
+   "lengthKm": 9.4,
+   "stations": 52,
+   "vertices": 195,
+   "country": "US"
+  },
+  {
+   "id": "septa-t3",
+   "band": "street",
+   "lengthKm": 11.0,
+   "stations": 49,
+   "vertices": 231,
+   "country": "US"
+  },
+  {
+   "id": "septa-t3-b4",
+   "band": "street",
+   "lengthKm": 1.1,
+   "stations": 7,
+   "vertices": 30,
+   "country": "US"
+  },
+  {
+   "id": "septa-t4",
+   "band": "street",
+   "lengthKm": 10.7,
+   "stations": 51,
+   "vertices": 221,
+   "country": "US"
+  },
+  {
+   "id": "septa-t5",
+   "band": "street",
+   "lengthKm": 11.3,
+   "stations": 49,
+   "vertices": 231,
+   "country": "US"
+  },
+  {
+   "id": "shore-line-east-shore-line-east-train",
+   "band": "regional",
+   "lengthKm": 81.5,
+   "stations": 9,
+   "vertices": 354,
+   "country": "US"
+  },
+  {
+   "id": "sound-transit-n-line",
+   "band": "regional",
+   "lengthKm": 54.8,
+   "stations": 4,
+   "vertices": 261,
+   "country": "US"
+  },
+  {
+   "id": "sound-transit-t-line",
+   "band": "street",
+   "lengthKm": 6.2,
+   "stations": 12,
+   "vertices": 106,
+   "country": "US"
+  },
+  {
+   "id": "south-florida-regional-trans-dml",
+   "band": "regional",
+   "lengthKm": 14.2,
+   "stations": 2,
+   "vertices": 54,
+   "country": "US"
+  },
+  {
+   "id": "south-florida-regional-trans-mce",
+   "band": "longhaul",
+   "lengthKm": 117.6,
+   "stations": 5,
+   "vertices": 263,
+   "country": "US"
+  },
+  {
+   "id": "suntran-790",
+   "band": "street",
+   "lengthKm": 4.5,
+   "stations": 15,
+   "vertices": 145,
+   "country": "US"
+  },
+  {
+   "id": "thebus-skyline",
+   "band": "commuter",
+   "lengthKm": 25.1,
+   "stations": 13,
+   "vertices": 204,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-wes-commuter-rail",
+   "band": "regional",
+   "lengthKm": 23.4,
+   "stations": 5,
+   "vertices": 108,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-max-orange-line",
+   "band": "metro",
+   "lengthKm": 13.9,
+   "stations": 17,
+   "vertices": 193,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-max-orange-line-b1",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 2,
+   "vertices": 16,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-ns",
+   "band": "street",
+   "lengthKm": 9.7,
+   "stations": 34,
+   "vertices": 224,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-ns-b1",
+   "band": "street",
+   "lengthKm": 1.1,
+   "stations": 4,
+   "vertices": 22,
+   "country": "US"
+  },
+  {
+   "id": "trimet-portland-streetcar-ns-b2",
+   "band": "street",
+   "lengthKm": 1.0,
+   "stations": 5,
+   "vertices": 37,
+   "country": "US"
+  },
+  {
+   "id": "trinity-metro-texrail",
+   "band": "commuter",
+   "lengthKm": 42.1,
+   "stations": 9,
+   "vertices": 279,
+   "country": "US"
+  },
+  {
+   "id": "utah-transit-authority-uta-750",
+   "band": "regional",
+   "lengthKm": 130.9,
+   "stations": 16,
+   "vertices": 490,
+   "country": "US"
+  },
+  {
+   "id": "utah-transit-authority-uta-701",
+   "band": "metro",
+   "lengthKm": 30.7,
+   "stations": 25,
+   "vertices": 300,
+   "country": "US"
+  },
+  {
+   "id": "utah-transit-authority-uta-703",
+   "band": "metro",
+   "lengthKm": 37.7,
+   "stations": 28,
+   "vertices": 423,
+   "country": "US"
+  },
+  {
+   "id": "utah-transit-authority-uta-704",
+   "band": "metro",
+   "lengthKm": 23.9,
+   "stations": 19,
+   "vertices": 318,
+   "country": "US"
+  },
+  {
+   "id": "utah-transit-authority-uta-720",
+   "band": "street",
+   "lengthKm": 3.1,
+   "stations": 7,
+   "vertices": 53,
+   "country": "US"
+  },
+  {
+   "id": "valley-metro-vm-skyt",
+   "band": "metro",
+   "lengthKm": 7.8,
+   "stations": 6,
+   "vertices": 126,
+   "country": "US"
+  },
+  {
+   "id": "via-toronto-new-york-us",
+   "band": "longhaul",
+   "lengthKm": 743.7,
+   "stations": 16,
+   "vertices": 1617,
+   "country": "US"
+  },
+  {
+   "id": "go-transit-br",
+   "band": "regional",
+   "lengthKm": 101.1,
+   "stations": 11,
+   "vertices": 420,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-le",
+   "band": "commuter",
+   "lengthKm": 50.7,
+   "stations": 10,
+   "vertices": 300,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw",
+   "band": "regional",
+   "lengthKm": 132.2,
+   "stations": 15,
+   "vertices": 441,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw-b1",
+   "band": "regional",
+   "lengthKm": 9.1,
+   "stations": 2,
+   "vertices": 42,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-mi",
+   "band": "commuter",
+   "lengthKm": 50.4,
+   "stations": 9,
+   "vertices": 304,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-rh",
+   "band": "regional",
+   "lengthKm": 46.1,
+   "stations": 7,
+   "vertices": 238,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-st",
+   "band": "commuter",
+   "lengthKm": 48.5,
+   "stations": 10,
+   "vertices": 336,
+   "country": "CA"
+  },
+  {
+   "id": "amtrak-adirondack-ca",
+   "band": "regional",
+   "lengthKm": 6.1,
+   "stations": 2,
+   "vertices": 30,
+   "country": "CA"
+  },
+  {
+   "id": "calgary-transit-201",
+   "band": "metro",
+   "lengthKm": 34.5,
+   "stations": 37,
+   "vertices": 399,
+   "country": "CA"
+  },
+  {
+   "id": "calgary-transit-202",
+   "band": "metro",
+   "lengthKm": 24.8,
+   "stations": 32,
+   "vertices": 340,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-capital",
+   "band": "metro",
+   "lengthKm": 20.2,
+   "stations": 15,
+   "vertices": 235,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-metro",
+   "band": "metro",
+   "lengthKm": 15.4,
+   "stations": 14,
+   "vertices": 231,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-valley",
+   "band": "metro",
+   "lengthKm": 13.0,
+   "stations": 12,
+   "vertices": 182,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301",
+   "band": "metro",
+   "lengthKm": 16.2,
+   "stations": 16,
+   "vertices": 272,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b2",
+   "band": "metro",
+   "lengthKm": 1.8,
+   "stations": 3,
+   "vertices": 38,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b1",
+   "band": "street",
+   "lengthKm": 1.5,
+   "stations": 4,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-2",
+   "band": "metro",
+   "lengthKm": 19.0,
+   "stations": 11,
+   "vertices": 232,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line",
+   "band": "metro",
+   "lengthKm": 14.3,
+   "stations": 14,
+   "vertices": 174,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line-b1",
+   "band": "metro",
+   "lengthKm": 4.0,
+   "stations": 4,
+   "vertices": 53,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line",
+   "band": "metro",
+   "lengthKm": 28.2,
+   "stations": 20,
+   "vertices": 383,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line-b1",
+   "band": "commuter",
+   "lengthKm": 7.5,
+   "stations": 5,
+   "vertices": 66,
+   "country": "CA"
+  },
+  {
+   "id": "translink-millennium-line",
+   "band": "metro",
+   "lengthKm": 25.2,
+   "stations": 17,
+   "vertices": 321,
+   "country": "CA"
+  },
+  {
+   "id": "translink-wce",
+   "band": "commuter",
+   "lengthKm": 67.3,
+   "stations": 8,
+   "vertices": 510,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-1",
+   "band": "metro",
+   "lengthKm": 38.3,
+   "stations": 41,
+   "vertices": 468,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-2",
+   "band": "street",
+   "lengthKm": 26.1,
+   "stations": 34,
+   "vertices": 379,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-4",
+   "band": "metro",
+   "lengthKm": 5.4,
+   "stations": 6,
+   "vertices": 47,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304",
+   "band": "street",
+   "lengthKm": 12.7,
+   "stations": 60,
+   "vertices": 258,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304-b2",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-310",
+   "band": "street",
+   "lengthKm": 5.3,
+   "stations": 20,
+   "vertices": 120,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-310-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-503",
+   "band": "street",
+   "lengthKm": 9.3,
+   "stations": 48,
+   "vertices": 192,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509",
+   "band": "street",
+   "lengthKm": 3.9,
+   "stations": 14,
+   "vertices": 105,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511",
+   "band": "street",
+   "lengthKm": 4.7,
+   "stations": 19,
+   "vertices": 92,
+   "country": "CA"
+  },
+  {
+   "id": "via-jasper-prince-rupert",
+   "band": "longhaul",
+   "lengthKm": 1147.1,
+   "stations": 34,
+   "vertices": 3077,
+   "country": "CA"
+  },
+  {
+   "id": "via-montr-al-halifax",
+   "band": "longhaul",
+   "lengthKm": 1348.1,
+   "stations": 28,
+   "vertices": 2990,
+   "country": "CA"
+  },
+  {
+   "id": "via-montr-al-toronto",
+   "band": "longhaul",
+   "lengthKm": 545.2,
+   "stations": 10,
+   "vertices": 1128,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-montr-al",
+   "band": "longhaul",
+   "lengthKm": 185.3,
+   "stations": 5,
+   "vertices": 406,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-qu-bec",
+   "band": "longhaul",
+   "lengthKm": 454.7,
+   "stations": 12,
+   "vertices": 955,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-toronto",
+   "band": "longhaul",
+   "lengthKm": 443.6,
+   "stations": 14,
+   "vertices": 966,
+   "country": "CA"
+  },
+  {
+   "id": "via-qu-bec-fallowfield",
+   "band": "longhaul",
+   "lengthKm": 454.7,
+   "stations": 12,
+   "vertices": 955,
+   "country": "CA"
+  },
+  {
+   "id": "via-qu-bec-montr-al",
+   "band": "longhaul",
+   "lengthKm": 269.4,
+   "stations": 6,
+   "vertices": 564,
+   "country": "CA"
+  },
+  {
+   "id": "via-sudbury-white-river",
+   "band": "regional",
+   "lengthKm": 480.9,
+   "stations": 36,
+   "vertices": 2375,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-london",
+   "band": "longhaul",
+   "lengthKm": 184.6,
+   "stations": 5,
+   "vertices": 391,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-new-york-ca",
+   "band": "longhaul",
+   "lengthKm": 132.2,
+   "stations": 6,
+   "vertices": 263,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-windsor",
+   "band": "longhaul",
+   "lengthKm": 358.6,
+   "stations": 10,
+   "vertices": 686,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto",
+   "band": "longhaul",
+   "lengthKm": 4373.2,
+   "stations": 67,
+   "vertices": 9840,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto-b1",
+   "band": "longhaul",
+   "lengthKm": 276.7,
+   "stations": 3,
+   "vertices": 858,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto-b2",
+   "band": "longhaul",
+   "lengthKm": 330.6,
+   "stations": 6,
+   "vertices": 1042,
+   "country": "CA"
+  }
+ ]
+}

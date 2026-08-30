@@ -1,0 +1,758 @@
+{
+ "findings": [
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "calgary-transit-201",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "go-transit-br",
+   "message": "2 corners under half the regional band minimum radius of 200 m",
+   "band": "regional",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301",
+   "message": "20 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 20
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b1",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b2",
+   "message": "4 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ottawa-carleton-regional-tra-2",
+   "message": "7 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 7
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304-b2",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-304-b7",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-310",
+   "message": "5 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-310-b2",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-509",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-jasper-prince-rupert",
+   "message": "38 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 38
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-montr-al-halifax",
+   "message": "25 corners under half the longhaul band minimum radius of 640 m",
+   "band": "longhaul",
+   "count": 25
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-ottawa-qu-bec",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-ottawa-toronto",
+   "message": "8 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 8
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-qu-bec-fallowfield",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-qu-bec-montr-al",
+   "message": "5 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto",
+   "message": "119 corners under half the longhaul band minimum radius of 800 m",
+   "band": "longhaul",
+   "count": 119
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto-b1",
+   "message": "9 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 9
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "via-vancouver-toronto-b2",
+   "message": "13 corners under half the longhaul band minimum radius of 500 m",
+   "band": "longhaul",
+   "count": 13
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "calgary-transit-201",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "ottawa-carleton-regional-tra-2",
+   "message": "5 near-reversals the sawtooth pass left in",
+   "band": "metro",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-montr-al-halifax",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-montr-al-toronto",
+   "message": "1 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.spike",
+   "country": "CA",
+   "line": "via-vancouver-toronto",
+   "message": "5 near-reversals the sawtooth pass left in",
+   "band": "longhaul",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "CA",
+   "line": "ttc-503",
+   "message": "drawn 217 m between stations 84 m apart (2.6x)",
+   "interval": 46,
+   "fromStation": "Kingston Rd at Bingham Ave",
+   "toStation": "Bingham Loop",
+   "ratio": 2.57
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "translink-expo-line",
+   "message": "station ca-official-waterfront is 169 m from where translink-canada-line puts it, past the 40 m the band allows",
+   "station": "ca-official-waterfront",
+   "metres": 169
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "translink-millennium-line",
+   "message": "station ca-official-commercial-broadway is 40 m from where translink-expo-line puts it, past the 40 m the band allows",
+   "station": "ca-official-commercial-broadway",
+   "metres": 40
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-2",
+   "message": "station ca-official-kipling-go is 125 m from where go-transit-mi puts it, past the 90 m the band allows",
+   "station": "ca-official-kipling-go",
+   "metres": 125
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-304",
+   "message": "station ca-official-broadview is 47 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-broadview",
+   "metres": 47
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-304-b7",
+   "message": "station ca-official-dufferin-gate-loop is 48 m from where ttc-304-b2 puts it, past the 25 m the band allows",
+   "station": "ca-official-dufferin-gate-loop",
+   "metres": 48
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-310",
+   "message": "station ca-official-spadina-2 is 40 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-spadina-2",
+   "metres": 40
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-310-b2",
+   "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave is 28 m from where ttc-310 puts it, past the 25 m the band allows",
+   "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
+   "metres": 28
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-4",
+   "message": "station ca-official-sheppard-yonge is 95 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-sheppard-yonge",
+   "metres": 95
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "station ca-official-bathurst is 70 m from where ttc-2 puts it, past the 25 m the band allows",
+   "station": "ca-official-bathurst",
+   "metres": 70
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "station ca-official-exhibition-loop is 32 m from where ttc-509 puts it, past the 25 m the band allows",
+   "station": "ca-official-exhibition-loop",
+   "metres": 32
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:logo",
+   "country": "CA",
+   "line": "-",
+   "message": "49 of 49 lines carry no `logo`",
+   "count": 49
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:operatorShort",
+   "country": "CA",
+   "line": "-",
+   "message": "28 of 49 lines carry no `operatorShort`",
+   "count": 28
+  }
+ ],
+ "lines": [
+  {
+   "id": "go-transit-br",
+   "band": "regional",
+   "lengthKm": 101.1,
+   "stations": 11,
+   "vertices": 420,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-le",
+   "band": "commuter",
+   "lengthKm": 50.7,
+   "stations": 10,
+   "vertices": 300,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw",
+   "band": "regional",
+   "lengthKm": 132.2,
+   "stations": 15,
+   "vertices": 441,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw-b1",
+   "band": "regional",
+   "lengthKm": 9.1,
+   "stations": 2,
+   "vertices": 42,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-mi",
+   "band": "commuter",
+   "lengthKm": 50.4,
+   "stations": 9,
+   "vertices": 304,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-rh",
+   "band": "regional",
+   "lengthKm": 46.1,
+   "stations": 7,
+   "vertices": 238,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-st",
+   "band": "commuter",
+   "lengthKm": 48.5,
+   "stations": 10,
+   "vertices": 336,
+   "country": "CA"
+  },
+  {
+   "id": "amtrak-adirondack-ca",
+   "band": "regional",
+   "lengthKm": 6.1,
+   "stations": 2,
+   "vertices": 30,
+   "country": "CA"
+  },
+  {
+   "id": "calgary-transit-201",
+   "band": "metro",
+   "lengthKm": 34.5,
+   "stations": 37,
+   "vertices": 399,
+   "country": "CA"
+  },
+  {
+   "id": "calgary-transit-202",
+   "band": "metro",
+   "lengthKm": 24.8,
+   "stations": 32,
+   "vertices": 340,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-capital",
+   "band": "metro",
+   "lengthKm": 20.2,
+   "stations": 15,
+   "vertices": 235,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-metro",
+   "band": "metro",
+   "lengthKm": 15.4,
+   "stations": 14,
+   "vertices": 231,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-valley",
+   "band": "metro",
+   "lengthKm": 13.0,
+   "stations": 12,
+   "vertices": 182,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301",
+   "band": "metro",
+   "lengthKm": 16.2,
+   "stations": 16,
+   "vertices": 272,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b2",
+   "band": "metro",
+   "lengthKm": 1.8,
+   "stations": 3,
+   "vertices": 38,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b1",
+   "band": "street",
+   "lengthKm": 1.5,
+   "stations": 4,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-2",
+   "band": "metro",
+   "lengthKm": 19.0,
+   "stations": 11,
+   "vertices": 232,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line",
+   "band": "metro",
+   "lengthKm": 14.3,
+   "stations": 14,
+   "vertices": 174,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line-b1",
+   "band": "metro",
+   "lengthKm": 4.0,
+   "stations": 4,
+   "vertices": 53,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line",
+   "band": "metro",
+   "lengthKm": 28.2,
+   "stations": 20,
+   "vertices": 383,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line-b1",
+   "band": "commuter",
+   "lengthKm": 7.5,
+   "stations": 5,
+   "vertices": 66,
+   "country": "CA"
+  },
+  {
+   "id": "translink-millennium-line",
+   "band": "metro",
+   "lengthKm": 25.2,
+   "stations": 17,
+   "vertices": 321,
+   "country": "CA"
+  },
+  {
+   "id": "translink-wce",
+   "band": "commuter",
+   "lengthKm": 67.3,
+   "stations": 8,
+   "vertices": 510,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-1",
+   "band": "metro",
+   "lengthKm": 38.3,
+   "stations": 41,
+   "vertices": 468,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-2",
+   "band": "street",
+   "lengthKm": 26.1,
+   "stations": 34,
+   "vertices": 379,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-4",
+   "band": "metro",
+   "lengthKm": 5.4,
+   "stations": 6,
+   "vertices": 47,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304",
+   "band": "street",
+   "lengthKm": 12.7,
+   "stations": 60,
+   "vertices": 258,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304-b2",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-304-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-310",
+   "band": "street",
+   "lengthKm": 5.3,
+   "stations": 20,
+   "vertices": 120,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-310-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-503",
+   "band": "street",
+   "lengthKm": 9.3,
+   "stations": 48,
+   "vertices": 192,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509",
+   "band": "street",
+   "lengthKm": 3.9,
+   "stations": 14,
+   "vertices": 105,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511",
+   "band": "street",
+   "lengthKm": 4.7,
+   "stations": 19,
+   "vertices": 92,
+   "country": "CA"
+  },
+  {
+   "id": "via-jasper-prince-rupert",
+   "band": "longhaul",
+   "lengthKm": 1147.1,
+   "stations": 34,
+   "vertices": 3077,
+   "country": "CA"
+  },
+  {
+   "id": "via-montr-al-halifax",
+   "band": "longhaul",
+   "lengthKm": 1348.1,
+   "stations": 28,
+   "vertices": 2990,
+   "country": "CA"
+  },
+  {
+   "id": "via-montr-al-toronto",
+   "band": "longhaul",
+   "lengthKm": 545.2,
+   "stations": 10,
+   "vertices": 1128,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-montr-al",
+   "band": "longhaul",
+   "lengthKm": 185.3,
+   "stations": 5,
+   "vertices": 406,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-qu-bec",
+   "band": "longhaul",
+   "lengthKm": 454.7,
+   "stations": 12,
+   "vertices": 955,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-toronto",
+   "band": "longhaul",
+   "lengthKm": 443.6,
+   "stations": 14,
+   "vertices": 966,
+   "country": "CA"
+  },
+  {
+   "id": "via-qu-bec-fallowfield",
+   "band": "longhaul",
+   "lengthKm": 454.7,
+   "stations": 12,
+   "vertices": 955,
+   "country": "CA"
+  },
+  {
+   "id": "via-qu-bec-montr-al",
+   "band": "longhaul",
+   "lengthKm": 269.4,
+   "stations": 6,
+   "vertices": 564,
+   "country": "CA"
+  },
+  {
+   "id": "via-sudbury-white-river",
+   "band": "regional",
+   "lengthKm": 480.9,
+   "stations": 36,
+   "vertices": 2375,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-london",
+   "band": "longhaul",
+   "lengthKm": 184.6,
+   "stations": 5,
+   "vertices": 391,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-new-york-ca",
+   "band": "longhaul",
+   "lengthKm": 132.2,
+   "stations": 6,
+   "vertices": 263,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-windsor",
+   "band": "longhaul",
+   "lengthKm": 358.6,
+   "stations": 10,
+   "vertices": 686,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto",
+   "band": "longhaul",
+   "lengthKm": 4373.2,
+   "stations": 67,
+   "vertices": 9840,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto-b1",
+   "band": "longhaul",
+   "lengthKm": 276.7,
+   "stations": 3,
+   "vertices": 858,
+   "country": "CA"
+  },
+  {
+   "id": "via-vancouver-toronto-b2",
+   "band": "longhaul",
+   "lengthKm": 330.6,
+   "stations": 6,
+   "vertices": 1042,
+   "country": "CA"
+  }
+ ]
+}

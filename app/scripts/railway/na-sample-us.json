@@ -1,0 +1,46 @@
+[
+ {
+  "id": "US-SAMPLE-ACELA",
+  "date": "2026-08-14",
+  "number": "Acela 2172",
+  "trainType": "Acela",
+  "lines": [
+   {
+    "id": "amtrak-acela",
+    "from": "Washington Union Station",
+    "to": "South Station"
+   }
+  ]
+ },
+ {
+  "id": "US-SAMPLE-EMPIRE-BUILDER",
+  "date": "2026-08-16",
+  "number": "Empire Builder 7",
+  "trainType": "Superliner",
+  "lines": [
+   {
+    "id": "amtrak-empire-builder",
+    "from": "Chicago Union Station",
+    "to": "Seattle"
+   }
+  ]
+ },
+ {
+  "id": "US-SAMPLE-ADIRONDACK",
+  "date": "2026-08-19",
+  "number": "Adirondack 69",
+  "trainType": "Amfleet",
+  "lines": [
+   {
+    "id": "amtrak-adirondack-us",
+    "from": "Penn Station",
+    "to": "Rouses Point Amtrak"
+   },
+   {
+    "id": "amtrak-adirondack-ca",
+    "from": "Rouses Point Amtrak",
+    "to": "Montréal"
+   }
+  ]
+ }
+]

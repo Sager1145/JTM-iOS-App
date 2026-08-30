@@ -1,0 +1,215 @@
+{
+ "note": "The human half of the North American operator-mark resolution. The downloader finds most operators on its own by searching Wikidata for the names its feed publishes; this table is where a person had to answer instead, and every row says which operator the mark must belong to and why the automatic answer was not usable. It is deliberately a data file rather than a constant inside the resolver, because these are judgements about companies that need re-checking as marks change, not code.",
+ "checkedOn": "2026-08-30",
+ "howToRead": {
+  "operator": "The company the mark must belong to, written the way its feed or its own site writes it. Present on every row so a wrong pin is visible without opening Wikidata.",
+  "qid": "A Wikidata item whose current P154 (logo image) is the mark. Used when the item is right but the name search cannot reach it.",
+  "commonsFile": "A named Wikimedia Commons file, used when the operator's own item carries no P154 at all. The file still has to be the operator's own artwork; a photograph of a bus, a route diagram somebody drew, or a Wikivoyage icon is not.",
+  "why": "What went wrong without the pin, or what makes this file the right one. Read this before changing a row."
+ },
+ "brands": {
+  "brightline-trains-llc": {
+   "operator": "Brightline",
+   "qid": "Q27012668",
+   "why": "The feed's legal name 'Brightline Trains LLC' does not reach the service's item by search; carried over from the resolver's original hand-checked pair."
+  },
+  "thebus": {
+   "operator": "TheBus (Honolulu)",
+   "qid": "Q7711627",
+   "why": "'TheBus' is the name of several unrelated city bus systems; carried over from the resolver's original hand-checked pair."
+  },
+  "charlotte-area-transit-syste": {
+   "operator": "Charlotte Area Transit System",
+   "qid": "Q5085831",
+   "why": "The feed publishes the agency name as the bare initialism 'CATS', which the search answered with Q337097 — the 1981 Andrew Lloyd Webber musical, whose 'Cats Logo.svg' shipped as this operator's mark until this audit."
+  },
+  "exo": {
+   "operator": "exo (Réseau de transport métropolitain)",
+   "qid": "Q392496",
+   "why": "'exo' matched Q494717, the South Korean boy band, whose 'Logo de EXO.png' shipped as this operator's mark until this audit. Q392496 is the Montreal transit authority; Q48757841 carries the same file under the old Réseau de transport métropolitain name."
+  },
+  "mta-long-island-rail-road": {
+   "operator": "Long Island Rail Road",
+   "qid": "Q125943",
+   "why": "The feed calls its publisher 'Metropolitan Transit Authority (MTA)' and names no agency, so a search resolves to the MTA's subway subsidiary. The LIRR is a sibling railroad with its own mark; the registry previously pointed all 31 of its lines at the NYC Transit logo."
+  },
+  "san-francisco-municipal-tran": {
+   "operator": "San Francisco Municipal Transportation Agency (Muni)",
+   "qid": "Q1140138",
+   "why": "SFMTA's own item Q7414072 carries no P154. Q1140138 is the San Francisco Municipal Railway — the same agency's rail operation and the identity on its vehicles — and its current logo is the 1975 Landor 'worm'. The item's second P154 is the pre-1975 O'Shaughnessy mark and is ranked deprecated."
+  },
+  "metrolink": {
+   "operator": "Metrolink (Southern California)",
+   "commonsFile": "Metrolink logo 2022.svg",
+   "why": "Two problems at once. 'Metrolink' is Manchester's tram network, St. Louis's light rail, Dublin's proposed metro and Halifax's bus service before it is this railway; and Q766647, the right item, still carries the pre-2022 teal square as its P154 while the operator has used the blue wordmark since its 30th anniversary. This file is that wordmark, taken from metrolinktrains.com."
+  },
+  "capital-metro": {
+   "operator": "Capital Metropolitan Transportation Authority (CapMetro)",
+   "qid": "Q587830",
+   "why": "Pinned because 'Capital Metro' is one of at least five agencies in this registry whose name is some form of Metro. The item's older brand mark carries an end date of 2022 and is skipped in favour of the current one."
+  },
+  "cincinnati-metro": {
+   "operator": "Metro (Southwest Ohio Regional Transit Authority)",
+   "qid": "Q107710058",
+   "why": "The feed publishes its agency as the single word 'METRO', which matches every Metro in the dataset equally well. SORTA's own item Q7571329 has no P154; Q107710058 is its passenger-facing Metro brand and the file comes from go-metro.com."
+  },
+  "metro-st-louis": {
+   "operator": "Metro Transit (Bi-State Development Agency, St. Louis)",
+   "qid": "Q1632001",
+   "why": "Same collision: 'Metro St. Louis' must not land on Metro Transit in Minneapolis or on Metro in Los Angeles. Q1632001 is the St. Louis MetroLink system and its preferred P154 is the Metro Transit St. Louis mark taken from metrostlouis.org."
+  },
+  "loop-trolley": {
+   "operator": "Metro Transit (Bi-State Development Agency, St. Louis)",
+   "qid": "Q1632001",
+   "why": "The Loop Trolley's own feed names Metro St. Louis as its agency, because Metro operates the line. The mark therefore has to be Metro's, not the Loop Trolley Company's — the operator is what this field is about."
+  },
+  "capitol-corridor-joint-power": {
+   "operator": "Capitol Corridor Joint Powers Authority",
+   "qid": "Q510836",
+   "why": "The joint powers authority publishes no mark of its own; Capitol Corridor is the name it runs the service under and the only identity a passenger sees. The file is from capitolcorridor.org."
+  },
+  "connecticut-transit": {
+   "operator": "Connecticut Department of Transportation (CTrail)",
+   "qid": "Q105960269",
+   "why": "The feed's agency is 'CONN DOT' and its one route is the Hartford Line. CTDOT's own item has a state-department logo, which is the parent government's mark rather than the railway's; CTrail is the same operator's rail brand and the mark on the trains."
+  },
+  "shore-line-east": {
+   "operator": "Connecticut Department of Transportation (CTrail Shore Line East)",
+   "qid": "Q105960269",
+   "why": "Shore Line East has been CTrail Shore Line East since the 2018 rebrand, so it takes the same operator mark as the Hartford Line. Commons' 'SLE logo.svg' is the retired red Connecticut Commuter Rail roundel from a 2011 timetable and 'Shore Line East icon.png' is a Wikivoyage route icon somebody drew; neither is the current mark."
+  },
+  "florida-department-of-transp": {
+   "operator": "Florida Department of Transportation (SunRail)",
+   "qid": "Q3503715",
+   "why": "FDOT's own item has no P154, and a state department's seal would be the parent government's mark. SunRail is FDOT's own name for the railway and the file comes from corporate.sunrail.com."
+  },
+  "king-county-metro": {
+   "operator": "City of Seattle (Seattle Streetcar)",
+   "qid": "Q763309",
+   "why": "The feed is King County Metro's, but its two rail routes are published under the agency 'City of Seattle' — the South Lake Union and First Hill streetcars, which SDOT owns and Metro runs. Seattle Streetcar is the identity on those cars; King County Metro's item has no P154 in any case."
+  },
+  "wvu-prt": {
+   "operator": "West Virginia University",
+   "qid": "Q115376",
+   "why": "The Morgantown PRT is a university facility, not a separate company, and neither Q3375714 nor any transit item carries a mark for it. The university's own logo is therefore the operator's own mark rather than a parent's — the distinction that makes this acceptable where a city seal would not be."
+  },
+  "maryland-transit-administrat": {
+   "operator": "Maryland Transit Administration (MARC Train)",
+   "commonsFile": "MARC train.svg",
+   "why": "MDOT MTA publishes no agency mark on Commons — its category holds only service brands. This feed is MARC and nothing else, so it takes MARC's mark, which is the operator's own brand for the three commuter lines it contains. See the note on the Metro SubwayLink feed below: one operator deliberately ends up with two marks here."
+  },
+  "maryland-transit-administrat-2": {
+   "operator": "Maryland Transit Administration (Metro SubwayLink)",
+   "commonsFile": "METROSUBWAYLINK.svg",
+   "why": "The second Maryland feed is the Baltimore Metro SubwayLink and nothing else. Splitting MDOT MTA's two feeds across its two service brands is the honest reading of a registry that has no agency mark to give them: each mark is the operator's own, and each is the one printed on the service the feed describes."
+  },
+  "jacksonville-jta": {
+   "operator": "Jacksonville Transportation Authority",
+   "commonsFile": "Jacksonville Transportation Authority logo.svg",
+   "why": "JTA's item Q15051623 carries no P154 and neither does the Skyway's. The file is credited to the authority itself and described as its current logo."
+  },
+  "miami-dade-transit": {
+   "operator": "Miami-Dade Transit",
+   "commonsFile": "MDTMetro.svg",
+   "why": "Miami-Dade Transit's item has no P154. This is the green-over-blue M the county prints on its system map; it was checked against 'Miami-Dade Transit Logo.png', which is credited to the county's own Department of Transportation and Public Works and taken from a 2023 county document, and matches it. The 96-pixel official PNG was passed over only because this file is vector. 'Miami-Dade Transit logo.svg' is a Commons recombination of two other files and renders as a single flat colour."
+  },
+  "amtrak-san-joaquins": {
+   "operator": "Amtrak",
+   "qid": "Q23239",
+   "why": "The feed publishes its agency as 'Gold Runner', the service's 2025 brand, with amtrak.com as its agency URL. The train is Amtrak's; the service name survives as the line name, so the operator field and its mark are Amtrak's."
+  },
+  "amtrak-vermonter": {
+   "operator": "Amtrak",
+   "qid": "Q23239",
+   "why": "Same shape: the agencies are 'Amtrak Vermonter' and 'Amtrak Ethan Allen', which are two of Amtrak's trains rather than two companies. With the operator override in the registry the feed-wide mark reaches both lines and the package stops publishing Amtrak three times."
+  },
+  "rock-region-metro": {
+   "operator": "Rock Region METRO",
+   "commonsFile": "Rock Region Metro logo.svg",
+   "why": "Q5060353 carries no P154. The file is credited to Rock Region METRO and taken from its own streetcar brochure. Pinned rather than searched because this is the sixth agency in the registry called some form of Metro."
+  },
+  "sun-metro": {
+   "operator": "Sun Metro",
+   "qid": "Q7638408",
+   "why": "Pinned on the way in rather than trusted to a search that also offers Sun Metro Brio, the operator's bus rapid transit brand, and an unrelated software project."
+  },
+  "fort-worth-transit-authority": {
+   "operator": "Trinity Metro",
+   "qid": "Q5472408",
+   "why": "The registry entry is the authority's legal name, Fort Worth Transit Authority, which reaches no Wikidata item. The operator brands itself Trinity Metro, and its feed's second agency is the City of Grapevine's visitor shuttle — a different operator — so the agency names are not searched and the legal name has to be answered by hand."
+  },
+  "metropolitan-transit-authori": {
+   "operator": "MTA New York City Transit",
+   "qid": "Q1325591",
+   "why": "The feed's own name is 'Metropolitan Transit Authority (MTA)', which resolves to Q1146109, the parent authority, and would put the MTA's corporate mark on the subway. The operator of these 29 lines is its subsidiary New York City Transit, which has its own mark — the same reason the Long Island Rail Road above carries LIRR's rather than either of theirs."
+  },
+  "qline-detroit": {
+   "operator": "QLINE (M-1 Rail)",
+   "qid": "Q5265966",
+   "why": "Wikidata's entity search matches from the start of a label, so the feed's own name 'Qline Detroit' finds nothing at all — the item is labelled QLine. Nothing about the operator is ambiguous; the name simply cannot be searched."
+  },
+  "trimet-portland-streetcar": {
+   "operator": "TriMet",
+   "qid": "Q1766623",
+   "why": "The registry entry names two operators in one string, 'TriMet, Portland Streetcar', which matches no label. Splitting it on the comma is not the fix: the same rule applied to the San Diego entry would search 'San Diego International Airport' and put the airport's mark on the Metropolitan Transit System's trolley lines. Portland Streetcar's own two lines stay unbranded."
+  }
+ },
+ "unbranded": {
+  "houston-metro": {
+   "operator": "Metropolitan Transit Authority of Harris County (METRO)",
+   "why": "No Houston METRO operator logo has completed this repository's Wikidata/Commons asset audit. The rail lines remain explicitly unbranded instead of borrowing a route badge, municipal seal, or unaudited web image."
+  },
+  "metro-transit": {
+   "operator": "Airport (Metropolitan Airports Commission) when emitted from the shared Metro Transit feed",
+   "why": "Metro Transit's own Blue and Green lines use the existing audited Metro Transit asset. Route 906 is published under the separate 'Airport (MAC)' agency, and no audited MAC operator asset exists in this repository, so only that line remains explicitly unbranded."
+  },
+  "camtran-inclined-plane": {
+   "operator": "Cambria County Transit Authority (CamTran)",
+   "why": "Neither CamTran nor the Johnstown Inclined Plane has a Wikidata item with a logo, and Commons holds only photographs of the incline."
+  },
+  "galveston-island-transit": {
+   "operator": "Island Transit (City of Galveston)",
+   "why": "Neither Island Transit nor the Galveston Island Trolley has a logo on Commons, and 'Island Transit' also names an unrelated agency in Washington State."
+  },
+  "hampton-roads-transit-hrt": {
+   "operator": "Hampton Roads Transit",
+   "why": "Q5646293 has no P154 and HRT's Commons category is photographs of buses. The Tide's own item has none either."
+  },
+  "hillsborough-area-regional-t": {
+   "operator": "Hillsborough Area Regional Transit",
+   "why": "HART has no Wikidata logo. The one candidate on Commons, 'Hartlinelogo.JPG', is a photograph somebody took of a bus, not artwork. The feed's second agency, Tampa International Airport, is the SkyConnect people mover's own operator and is left unbranded for the same reason."
+  },
+  "kenosha-streetcar": {
+   "operator": "Kenosha Transit",
+   "why": "Q6391318 has no P154 and Commons holds no artwork for the city's transit system — only photographs of the cars."
+  },
+  "memphis-mata-trolley": {
+   "operator": "Memphis Area Transit Authority",
+   "why": "MATA has no Wikidata logo and its Commons category is photographs of buses and stop signs. Searching the initialism returns a Danish drug store, an Indonesian talk show and a Malaysian conglomerate."
+  },
+  "metro-transit-intercity-tran": {
+   "operator": "several — a consolidated feed with no single operator",
+   "why": "There is no company to give the Puget Sound consolidated feed a feed-wide mark, and the registry brands its rail lines per operator instead: Sound Transit, Amtrak and the City of Seattle streetcars. It previously resolved to Minneapolis's Metro Transit, because King County Metro publishes its agency name as 'Metro Transit' too — a mark for a different agency two thousand kilometres away."
+  },
+  "milwaukee-hop": {
+   "operator": "City of Milwaukee (The Hop MKE)",
+   "why": "The Hop's item Q19877002 has no P154 and Commons holds only video and photographs of the streetcar."
+  },
+  "new-orleans-rta": {
+   "operator": "New Orleans Regional Transit Authority",
+   "why": "Q2138272 has no P154 and the RTA's Commons category holds only photographs of buses, stop signs and streetcars. This is the largest gap left — nine streetcar lines — and it stays a gap rather than borrowing the city's seal."
+  },
+  "rio-metro-regional-transit-d": {
+   "operator": "Rio Metro Regional Transit District",
+   "why": "Neither the district nor the New Mexico Rail Runner Express has a logo on Wikidata or Commons. 'Nm-commuter-rail.svg' is a transit diagram a Commons user drew, not the operator's mark."
+  },
+  "sound-transit-metro-transit": {
+   "operator": "several — a consolidated feed with no single operator",
+   "why": "There is no company to give Sound Transit's joint feed with King County Metro a feed-wide mark, and the registry brands its rail lines per operator instead: the City of Seattle streetcars. It previously resolved to Minneapolis's Metro Transit, because King County Metro publishes its agency name as 'Metro Transit' too — a mark for a different agency two thousand kilometres away."
+  },
+  "suntran": {
+   "operator": "Sun Tran (City of Tucson, Sun Link streetcar)",
+   "why": "Sun Link's item Q7638399 has no P154 and Commons has no Sun Tran or Sun Link artwork. Not to be confused with Sun Metro in El Paso, which does have one."
+  }
+ }
+}

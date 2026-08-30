@@ -1,0 +1,46 @@
+[
+ {
+  "id": "CA-SAMPLE-MAPLE-LEAF",
+  "date": "2026-08-21",
+  "number": "Maple Leaf 64",
+  "trainType": "Amfleet",
+  "lines": [
+   {
+    "id": "amtrak-maple-leaf-ca",
+    "from": "Toronto",
+    "to": "Niagara Falls Station"
+   },
+   {
+    "id": "amtrak-maple-leaf-us",
+    "from": "Niagara Falls Amtrak Station",
+    "to": "Penn Station"
+   }
+  ]
+ },
+ {
+  "id": "CA-SAMPLE-CANADIAN",
+  "date": "2026-08-23",
+  "number": "The Canadian 1",
+  "trainType": "VIA Rail",
+  "lines": [
+   {
+    "id": "via-vancouver-toronto",
+    "from": "Toronto",
+    "to": "Vancouver"
+   }
+  ]
+ },
+ {
+  "id": "CA-SAMPLE-CORRIDOR",
+  "date": "2026-08-25",
+  "number": "VIA 622",
+  "trainType": "VIA Rail",
+  "lines": [
+   {
+    "id": "via-qu-bec-montr-al",
+    "from": "Montréal",
+    "to": "Québec"
+   }
+  ]
+ }
+]
