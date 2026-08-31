@@ -32,9 +32,16 @@ segments[i] = [km, continuesFromPrevious, coordinates]      # one row per statio
 
 ## Preflight
 
+The script sits beside this file in `scripts/`. Which path reaches it depends on where the skill is installed:
+
 ```bash
+# project install, from an iOS checkout
 python3 .claude/skills/jtm-railway-audit-repair/scripts/audit_jtm_packages.py --limit 40
+# user-level install, from any checkout — including the web-only repository
+python3 ~/.claude/skills/jtm-railway-audit-repair/scripts/audit_jtm_packages.py --repo . --limit 40
 ```
+
+It needs `app/public/rail/` and nothing else. In a checkout with no `ios/` — the web repository still owns the Japan, Taiwan, Hong Kong, Macao and Korea builders and has no iOS tree — it audits the packages and reports `WEB_ONLY_CHECKOUT`, naming the cross-platform contracts it could not check rather than calling them missing files.
 
 It audits every package it finds (`--countries jp,tw,hk,mo` narrows it), reconstructs chained geometry, and takes about ten seconds for all seven. Alongside header, identity and anchor errors it reports `INTERVAL_RETRACES_LINE` (an interval carrying an extra lap of its own line) and six review classes: `STRAIGHT_CHORD`/`SPARSE_GEOMETRY` (an interval drawn as a straight line instead of following track), `DETOUR_RATIO` (walking far further than the gap between its two stations), `SELF_OVERLAP` (a line drawn on top of itself, parallel and far apart along the line), `VERTEX_JUMP`, `REVERSAL_CANDIDATE` and `GEOGRAPHIC_OUTLIER`. Add `--json report.json` for the full list, `--strict` to fail on unreviewed warnings.
 

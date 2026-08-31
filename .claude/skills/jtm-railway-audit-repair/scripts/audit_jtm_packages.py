@@ -97,11 +97,18 @@ def finite_coordinate(value: Any) -> bool:
 
 
 def find_repo(start: Path) -> Path:
+    """The packages are the one thing every JTM checkout has.
+
+    `ios/` is not required: the repositories were split, and the web repository
+    that still owns the Japan/Taiwan/Hong Kong/Macao/Korea builders has no iOS
+    tree at all. Demanding both refused to run in exactly the checkout where a
+    railway rebuild happens.
+    """
     current = start.resolve()
     for candidate in (current, *current.parents):
-        if (candidate / "app/public/rail").is_dir() and (candidate / "ios").is_dir():
+        if (candidate / "app/public/rail").is_dir():
             return candidate
-    raise SystemExit(f"could not find a JTM repository above {start}")
+    raise SystemExit(f"no app/public/rail above {start} — is this a JTM checkout?")
 
 
 def discover_countries(repo: Path) -> list[str]:
@@ -603,6 +610,15 @@ class Audit:
             "regions": self.repo / "ios/RailMap/RegionCatalog.swift",
             "datum": self.repo / "ios/RailMap/AppleMapDatum.swift",
         }
+        # A web-only checkout is a valid subject, not a broken one. Say what
+        # went unchecked rather than reporting six missing files as defects.
+        if not (self.repo / "ios").is_dir():
+            self.issue(
+                "INFO", "WEB_ONLY_CHECKOUT",
+                "no ios/ here, so the simplify-tolerance, datum-boundary, region and bundle "
+                "contracts were NOT checked; run those against the iOS checkout",
+            )
+            return
         missing = [path for path in paths.values() if not path.is_file()]
         for path in missing:
             self.issue("ERROR", "MISSING_CROSS_PLATFORM_FILE", f"missing {path.relative_to(self.repo)}")
