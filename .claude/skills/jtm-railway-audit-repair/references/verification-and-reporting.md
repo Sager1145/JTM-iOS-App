@@ -18,7 +18,7 @@ SCRATCH=/tmp/jtm-rail-js   ./ios/verify.sh --js     # port-fixtures --check only
 SCRATCH=/tmp/jtm-rail-full ./ios/verify.sh          # + Swift textual contracts + app build
 ```
 
-None of these is quick. `--js` alone regenerates every fixture in `port-fixtures/` — 1.75 million lines of JSON — and runs for minutes, so budget for it rather than treating it as a fast inner-loop check; the preflight above is the ten-second one. `ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
+None of these is quick. `--js` alone regenerates every fixture in `port-fixtures/` — 1.75 million lines of JSON — and took 3m23s and 1.4 GB resident on a laptop; it completes, so do not read a long silence as a hang. Budget for it rather than treating it as a fast inner-loop check; the preflight above is the ten-second one. `ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
 
 North America has real Python tests, and they run in under a second. Do not quote a count: a parallel session added 59 of them in one afternoon.
 
