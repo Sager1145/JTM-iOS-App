@@ -60,6 +60,7 @@ OVERLAP_CELL_M = 30.0
 OVERLAP_MIN_ALONG_M = 750.0
 OVERLAP_ANGLE_DEG = 30.0
 OVERLAP_WARN = 0.10
+OVERLAP_WARN_M = 1_500.0
 RETRACE_STATION_SHARE = 0.8
 RETRACE_LINE_SHARE = 0.25
 RETRACE_NEAR_M = 40.0
@@ -491,11 +492,15 @@ class Audit:
                 overlapping += 1
 
         share = overlapping / len(samples)
-        if share >= OVERLAP_WARN:
+        overlapped_m = overlapping * OVERLAP_STEP_M
+        # Share alone dilutes a local defect on a long line: a 4 km out-and-back
+        # on the 宜蘭線 is 4% and would pass. Absolute length catches that half.
+        if share >= OVERLAP_WARN or overlapped_m >= OVERLAP_WARN_M:
             tally["selfOverlap"] += 1
             self.issue(
                 "WARNING", "SELF_OVERLAP",
-                f"{share * 100:.0f}% of this line is drawn on top of itself, parallel and far apart along the line",
+                f"{overlapped_m / 1000:.1f} km ({share * 100:.0f}%) of this line is drawn on top of itself, "
+                f"parallel and far apart along the line",
                 country=country, line=line_id,
             )
 
@@ -665,7 +670,7 @@ class Audit:
                 "correct topology, surveyed alignment, or what either client actually draws.",
                 "STRAIGHT_CHORD, SPARSE_GEOMETRY, VERTEX_JUMP, DETOUR_RATIO, SELF_OVERLAP and REVERSAL_CANDIDATE are "
                 "review candidates. Real switchbacks and street loops (Alishan, 木次線 出雲坂根, 영동선) "
-                "legitimately trigger the last two.",
+                "legitimately trigger DETOUR_RATIO and REVERSAL_CANDIDATE.",
                 "A clean run is not a PASS for a repair; it only means the contracts this file can "
                 "read are intact.",
             ],

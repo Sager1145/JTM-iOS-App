@@ -8,7 +8,7 @@ python3 .claude/skills/jtm-railway-audit-repair/scripts/audit_jtm_packages.py \
   --json /tmp/jtm-baseline.json --limit 40
 ```
 
-Record the affected package versions, line counts, station memberships, interval counts, warning codes and current test results. The tree is routinely dirty from parallel sessions — do not attribute pre-existing failures or unrelated edits to your repair.
+It exits 1 while any ERROR stands (two do today), so a non-zero baseline is the expected reading, not a broken command. Record the affected package versions, line counts, station memberships, interval counts, warning codes and current test results. The tree is routinely dirty from parallel sessions — do not attribute pre-existing failures or unrelated edits to your repair.
 
 ## Gates that exist in this repository
 
@@ -18,9 +18,9 @@ SCRATCH=/tmp/jtm-rail-js   ./ios/verify.sh --js     # port-fixtures --check only
 SCRATCH=/tmp/jtm-rail-full ./ios/verify.sh          # + Swift textual contracts + app build
 ```
 
-`ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
+None of these is quick. `--js` alone regenerates every fixture in `port-fixtures/` — 1.75 million lines of JSON — and runs for minutes, so budget for it rather than treating it as a fast inner-loop check; the preflight above is the ten-second one. `ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
 
-North America has real Python tests — 159 of them, in under a second:
+North America has real Python tests, and they run in under a second. Do not quote a count: a parallel session added 59 of them in one afternoon.
 
 ```bash
 (cd app/scripts/railway && python3 -m unittest discover tests)
@@ -38,6 +38,8 @@ tmp_bundle=$(mktemp -d /tmp/jtm-rail-resources.XXXXXX)
 **Do not cite these as evidence:** `npm run lint` fails (`check-source.mjs` was not carried over), `npm test` runs against a tree with no JS test files, and `audit:apple-tiles:jp` / `rebuild:railway:jp` / `generate:*` reference missing scripts. Report them as unavailable rather than as passing.
 
 ## Interpreting the preflight
+
+Scope, stated plainly: of the 31 defect classes in [history-and-failure-patterns.md](history-and-failure-patterns.md), this script mechanically detects about eight. Roughly half the rest are routed by this skill's prose but need you plus evidence to settle, and around seven — missing inventory, one railway built twice from two feeds, a service modelled as a railway, corridor extrapolation, shared vertices smoothed apart, pseudo-adjacency cliques, a wrong station coordinate — have no check here at all. A clean run means the format contracts hold. It does not mean the railway is right.
 
 `audit_jtm_packages.py` proves the format contracts and nothing else. Its review classes each have a legitimate cause:
 
@@ -59,6 +61,23 @@ Know what it **cannot** see, and cover those separately when they are in scope:
 - **Inventory.** It never asks whether a railway that should exist is absent.
 - **The same railway built twice from two feeds.** `SELF_OVERLAP` only sees a line lying on *itself*. Cross-line duplication needs a corridor comparison plus a station-set overlap test; the operator string is exactly the wrong key.
 - **Whether a station's coordinate is right.** It can tell you the geometry doubles back; it cannot tell you Fairbanks is on the wrong peninsula.
+- **A uniform shift.** Every geometric test here is relative, so a package shipped wholesale in GCJ-02 instead of WGS84 passes silently — verified by mutation. Datum questions need the multi-point audit in [regional-evidence.md](regional-evidence.md), never this.
+- **Seam-scale micro-kinks.** The 41% spike rate that multi-source splicing gave Hong Kong sits below `REVERSAL_CANDIDATE`'s 40 m minimum edge, by design — raising it would bury the real switchbacks.
+
+Measured sensitivity, from injecting each defect into a clean package and rewriting `km` the way a builder would:
+
+| Injected defect | Caught by |
+|---|---|
+| station-to-station chord | `STRAIGHT_CHORD` |
+| out-and-back excursion, +4 km on a long line (1.8x) | `SELF_OVERLAP` only — below `DETOUR_RATIO`'s 3x floor |
+| out-and-back, +24 km (4x) | `DETOUR_RATIO`, `SELF_OVERLAP` |
+| an extra lap of the line | `INTERVAL_RETRACES_LINE` + three others |
+| artificial spike at a vertex | `REVERSAL_CANDIDATE` |
+| anchor moved 220 m off its line | `ANCHOR_OFF_LINE` |
+| one interval teleported 300 km | `GEOGRAPHIC_OUTLIER` |
+| whole package shifted to GCJ-02 | **nothing** — see above |
+
+`DETOUR_RATIO`'s floor is deliberate: below about 3x, honestly winding track is indistinguishable from a fake excursion by ratio alone. `SELF_OVERLAP` covers that half instead, and fires on share **or** absolute length (≥10% or ≥1.5 km), because share alone dilutes a local defect on a long line — a 4 km excursion on the 宜蘭線 is 4%.
 - **What either client actually draws.** Everything after the package — grooming, lanes, simplification, LOD, the datum boundary, endpoint snapping, graph-edge geometry — is invisible here.
 
 ## Regeneration review
