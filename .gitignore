@@ -24,3 +24,36 @@ app/node_modules/
 # Local archives and reports.
 *.zip
 outputs/
+
+# ---------------------------------------------------------------------------
+# Railway source data. Local-only, never committed — here or in the web repo
+# (Japan-Train-Map), where the builders live.
+#
+# Official GIS/CSV/GTFS downloads (MLIT N02, data.go.kr, FRA/BTS NARN, the
+# state and operator publications behind us-2025/ca-2025), OpenStreetMap
+# extracts, and Apple Maps captures are not ours to redistribute: the
+# publications carry their own attribution and use terms, OSM is ODbL, and the
+# captures are Apple's imagery. What this repository ships is the processed
+# output in app/public/rail/ and app/data/, with per-source provenance recorded
+# in app/public/rail/*.sources.md.
+#
+# The North America fetchers in app/scripts/railway/ take an explicit
+# --output-dir. Point it outside the repository; the documented example is
+# /private/tmp/na-rail/gtfs.
+#
+# Never commit raw data, normalized extracts, screenshots, or coordinate-bearing
+# reports from these trees.
+# ---------------------------------------------------------------------------
+app/data/raw/
+.local/railway-reference-only/
+
+# Source GIS formats, wherever they land.
+*.osm
+*.osm.pbf
+*.osm.xml
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.gpkg
