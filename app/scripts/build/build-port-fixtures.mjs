@@ -253,7 +253,7 @@ function visibilityFixture() {
   // reader sees at a national view, and an off-by-one in the length ladder is
   // invisible in a sample and glaring on the map.
   const cases = [];
-  for (const country of ["mo", "hk", "tw", "kr", "jp"]) {
+  for (const country of ["mo", "hk", "tw", "kr", "jp", "us", "ca"]) {
     const file = path.join(APP_DIR, "public", "rail", `${country}-2025.json`);
     const pkg = JSON.parse(fs.readFileSync(file, "utf8"));
 

@@ -234,7 +234,7 @@ struct RouteFeatureParityTests {
         let fixture = try Self.load()
 
         let countries = Set(fixture.cases.map(\.country))
-        #expect(countries == Set(PortFixtures.countries), "all five packages")
+        #expect(countries == Set(PortFixtures.countries), "all seven packages")
 
         // A closed line drawn as one part, where the slice may wrap the seam.
         let loops = fixture.networks.flatMap(\.lines).filter(\.isLoop)
@@ -323,7 +323,7 @@ struct RouteFeatureParityTests {
 //     of the 14 chained cases and the seam degenerates into weighting the
 //     start endpoint twice — the same amount for every candidate. Searched
 //     for a counter-example over the 220 checked-in solver hops and over every
-//     station-to-station hop of every line in all five packages, about 30,000
+//     station-to-station hop of every line in the original five packages, about 30,000
 //     in total: none of them changes its answer when `continueFrom` is
 //     supplied. Whether the tie-break is reachable at all is a question for
 //     the JavaScript, not for this port.

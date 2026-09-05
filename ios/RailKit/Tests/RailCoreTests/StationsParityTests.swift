@@ -7,7 +7,7 @@ import Testing
 /// Resolution is the step that decides which feature a written name means, so
 /// a disagreement here is not a rendering difference — it is a train calling at
 /// a different station. The fixture therefore carries every station name in all
-/// five shipped packages, every stop name in all five committed train stores,
+/// seven shipped packages, every stop name in the five established train stores,
 /// and every station code, each resolved against the country index that has to
 /// answer it.
 ///
@@ -348,7 +348,7 @@ struct StationsParityTests {
 
     // MARK: - The index keys
 
-    /// `stationLookupKeys` over every feature of all five collections, which is
+    /// `stationLookupKeys` over every feature of all seven collections, which is
     /// the index-construction rule itself.
     ///
     /// The rows also pin the ACCESSORS: each carries the name and code the
@@ -837,22 +837,28 @@ struct StationsParityTests {
     @Test("the fixture covers every name the app has to resolve")
     func coverage() throws {
         let fixture = try Self.fixture()
-        #expect(fixture.countries.count == 5)
+        #expect(Set(fixture.countries.map(\.country)) == Set(PortFixtures.countries))
 
         var packageNames = 0
         var storeNames = 0
         for summary in fixture.countries {
             let features = try Self.collection(summary.country).features.count
             #expect(features == summary.features, "\(summary.country)")
+            let names = Set(
+                try PortFixtures.package(country: summary.country).lines
+                    .flatMap(\.stations)
+                    .map { Array($0.name.utf16) }
+            )
+            #expect(names.count == summary.packageNames, "\(summary.country) package names")
             packageNames += summary.packageNames
             storeNames += summary.storeNames
         }
-        // 10,361 package station names across the five packages (10,328
-        // distinct once the 33 names two countries share are counted once),
-        // and 1,689 stop names across the five committed stores.
-        #expect(packageNames == 10_361)
+        // The original five packages contributed 10,361 names. North America
+        // must increase that census, while store-only coverage intentionally
+        // remains on the five established itinerary corpora.
+        #expect(packageNames > 10_361)
         #expect(storeNames > 1_600)
-        #expect(fixture.sharedNames.count == 33)
+        #expect(fixture.sharedNames.count >= 33)
 
         // Every bare-name query in the fixture is one of those names, one of
         // the shared ones against a country that does not have it, or an
@@ -860,4 +866,87 @@ struct StationsParityTests {
         // every feature is also queried as a stop object, three ways.
         #expect(fixture.cases.count > packageNames + storeNames)
     }
+
+    // MARK: - the value decoder's case discrimination
+
+    @Test(
+        "the JSONSerialization reader answers what the Decodable conformance answers",
+        arguments: ["jp", "tw", "hk", "mo", "kr", "us", "ca"])
+    func loadMatchesTheDecodableConformance(country: String) throws {
+        // `FeatureCollection.load` reads through `JSONSerialization` because
+        // the `Decodable` path spends most of its time throwing and discarding
+        // errors it does not need. The conformance stays the DEFINITION of what
+        // a station file means, so the two have to answer identically — over
+        // the real shipped file, feature for feature, property for property,
+        // including which properties are absent and which are `.null`.
+        let suffix = country == "jp" ? "" : "-\(country)"
+        let url = try PortFixtures.repositoryRoot()
+            .appending(path: "app/data/stations\(suffix).json")
+        let bytes = try Data(contentsOf: url)
+
+        let viaSerialization = try Stations.FeatureCollection.decode(json: bytes)
+        let viaDecodable = try JSONDecoder().decode(
+            Stations.FeatureCollection.self, from: bytes)
+
+        #expect(viaSerialization.features.count == viaDecodable.features.count)
+        // Compared one at a time rather than as two arrays, so a disagreement
+        // names the feature it is in instead of printing both files.
+        for (offset, pair) in zip(viaSerialization.features, viaDecodable.features)
+            .enumerated()
+        {
+            #expect(
+                pair.0 == pair.1,
+                "\(country) feature \(offset): \(pair.0) vs \(pair.1)")
+        }
+        // And the corpus is not trivially empty.
+        #expect(viaSerialization.features.count > 0)
+    }
+
+    @Test("every JSON literal decodes to exactly one Value case")
+    func valueCasesAreDisjoint() throws {
+        // `Stations.Value.init(from:)` tries its cases in the order they occur
+        // in the data — string, number, array, bool — because each rejected
+        // attempt throws a `DecodingError` that is built and discarded. That
+        // reordering is only safe if at most ONE arm can ever succeed, which
+        // is this: `JSONDecoder` does not read `true` as a number, `1` as a
+        // string, or `"1"` as a number.
+        func decode(_ json: String) throws -> Stations.Value {
+            try JSONDecoder().decode(Stations.Value.self, from: Data(json.utf8))
+        }
+        #expect(try decode("null") == .null)
+        #expect(try decode("\"\"") == .string(""))
+        #expect(try decode("\"1\"") == .string("1"))
+        #expect(try decode("\"true\"") == .string("true"))
+        #expect(try decode("1") == .number(1))
+        #expect(try decode("0") == .number(0))
+        #expect(try decode("139.76661") == .number(139.76661))
+        #expect(try decode("-0.5") == .number(-0.5))
+        #expect(try decode("true") == .bool(true))
+        #expect(try decode("false") == .bool(false))
+        #expect(try decode("[]") == .array([]))
+        #expect(try decode("[1,\"a\",true,null]")
+            == .array([.number(1), .string("a"), .bool(true), .null]))
+        // The one case that is meant to fail loudly rather than be tried at
+        // all — see the comment on `Stations.Value`.
+        #expect(throws: DecodingError.self) { try decode("{\"a\":1}") }
+    }
+
+    @Test(
+        "the serialization reader rejects field types Decodable rejects",
+        arguments: [
+            #"{"features":[{"properties":1}]}"#,
+            #"{"features":[{"properties":[]}]}"#,
+            #"{"features":[{"geometry":"Point"}]}"#,
+            #"{"features":[{"geometry":{"type":1,"coordinates":[]}}]}"#,
+        ])
+    func serializationReaderRejectsInvalidFieldTypes(json: String) {
+        let bytes = Data(json.utf8)
+        #expect(throws: DecodingError.self) {
+            try Stations.FeatureCollection.decode(json: bytes)
+        }
+        #expect(throws: DecodingError.self) {
+            try JSONDecoder().decode(Stations.FeatureCollection.self, from: bytes)
+        }
+    }
+
 }

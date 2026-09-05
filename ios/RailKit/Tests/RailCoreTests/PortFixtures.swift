@@ -62,7 +62,11 @@ enum PortFixtures {
         return loaded
     }
 
-    static let countries = ["mo", "hk", "tw", "kr", "jp"]
+    /// Every region the app currently ships.
+    ///
+    /// Keep this as the single test-side inventory so a newly shipped package
+    /// cannot remain invisible to suites that promise whole-package parity.
+    static let countries = ["mo", "hk", "tw", "kr", "jp", "us", "ca"]
 
     /// Locked, not bare `nonisolated(unsafe)`.
     ///

@@ -4,7 +4,7 @@ import Testing
 @testable import RailCore
 
 /// `OperatorBranding` against `app-operator-branding.js`, over every distinct
-/// operator string and every line in all five shipped packages.
+/// operator string and every line in all seven shipped packages.
 ///
 /// The expected values in `port-fixtures/operator-branding.json` are whatever
 /// the JavaScript returns today, so a failure here means the two apps would
@@ -106,13 +106,13 @@ struct OperatorBrandingParityTests {
 
     // MARK: - company names
 
-    /// Every distinct operator string in mo, hk, tw, kr and jp, plus the
+    /// Every distinct operator string in all seven shipped regions, plus the
     /// inputs written to break a port. A classifier's failures are all in the
     /// strings nobody thought to sample, so this is a census, not a sample.
     @Test("company labels match, character for character")
     func companyLabels() throws {
         let fixture = try Self.load()
-        #expect(fixture.cases.count > 200, "the packages carry 208 distinct operators")
+        #expect(fixture.cases.count > 200, "the shipped packages carry hundreds of operators")
 
         for item in fixture.cases {
             let got = OperatorBranding.companyLabel(item.operator)
@@ -151,7 +151,10 @@ struct OperatorBrandingParityTests {
     @Test("the company beside a line name is suppressed on the same lines")
     func companyForLines() throws {
         let fixture = try Self.load()
-        #expect(fixture.companyFor.count > 800, "one per line, all five packages")
+        let shippedLineCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.count
+        }
+        #expect(fixture.companyFor.count > shippedLineCount, "one per shipped line plus probes")
 
         for item in fixture.companyFor {
             let got = OperatorBranding.companyFor(
@@ -191,7 +194,14 @@ struct OperatorBrandingParityTests {
     @Test("every line resolves to the same badge")
     func lineLogos() throws {
         let fixture = try Self.load()
-        #expect(fixture.lines.count > 800, "804 lines plus the synthetic ones")
+        let shippedLineCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.count
+        }
+        #expect(fixture.lines.count > shippedLineCount, "every shipped line plus probes")
+        #expect(
+            Set(fixture.lines.compactMap(\.country)) == Set(PortFixtures.countries),
+            "all seven shipped packages"
+        )
 
         for item in fixture.lines {
             let line = Self.line(item.input)

@@ -54,16 +54,23 @@ struct CompactPackageLoopTests {
         #expect(tokaido.isLoop == false)
     }
 
-    /// The North American packages include audited streetcar loops, while
-    /// Canada currently has none.  Use Atlanta Streetcar rather than a
-    /// fail-closed system so this decoder test follows the released package
-    /// without requiring an unverified alignment to remain published.
-    @Test("the North American packages' loops decode too")
-    func northAmericanSpelling() throws {
+    /// The strict North American release includes only the two loops whose
+    /// complete alignments have independent official geometry: Cincinnati's
+    /// Connector and Detroit People Mover. Atlanta Streetcar remains blocked
+    /// for a station/shape disagreement, and Galveston Rail remains blocked
+    /// because its OB/IB half-loop provenance is lost during cycle building.
+    @Test("the strict North American packages include only verified loops")
+    func northAmericanStrictRelease() throws {
         let unitedStates = try PortFixtures.package(country: "us")
-        let loops = unitedStates.lines.filter(\.isLoop)
-        #expect(!loops.isEmpty, "the US package ships streetcar loops")
-        #expect(loops.contains { $0.id == "metropolitan-atlanta-rapid-t-atlsc" })
+        let loopIDs = Set(unitedStates.lines.filter(\.isLoop).map(\.id))
+        #expect(loopIDs == Set([
+            "cincinnati-metro-100",
+            "detroit-people-mover-dpm",
+        ]))
+        #expect(!unitedStates.lines.contains {
+            $0.id == "metropolitan-atlanta-rapid-t-atlsc"
+                || $0.id == "galveston-island-transit-rail"
+        })
 
         let canada = try PortFixtures.package(country: "ca")
         #expect(canada.lines.contains { !$0.isLoop })

@@ -185,8 +185,8 @@ struct StationDisplayParityTests {
     }
 
     /// Every country's network, built once, the way the app builds it: the
-    /// shipped package plus the two fields `CompactPackage`'s decoder does not
-    /// carry.
+    /// shipped package, using the two structural flags decoded from that same
+    /// package rather than trying to infer them from display output.
     ///
     /// A `static let` rather than per-test: Swift Testing runs a suite's tests
     /// in parallel and a dozen of these want the same country, so building the
@@ -198,11 +198,11 @@ struct StationDisplayParityTests {
         var built: [String: StationDisplay.Network] = [:]
         for entry in fixture.packages {
             do {
+                let package = try PortFixtures.package(country: entry.country)
                 built[entry.country] = StationDisplay.Network(
-                    package: try PortFixtures.package(country: entry.country),
+                    package: package,
                     loopLineIDs: Set(entry.lines.filter(\.isLoop).map(\.lineId)),
-                    packageLogoLineIDs: Set(
-                        entry.lines.filter { $0.packageLogo != nil }.map(\.lineId)))
+                    packageLogoLineIDs: Set(package.lines.filter(\.hasLogo).map(\.id)))
             } catch {
                 fatalError("\(entry.country)-2025.json did not load: \(error)")
             }
@@ -218,8 +218,7 @@ struct StationDisplayParityTests {
         StationDisplay.Network(
             package: entry.package,
             loopLineIDs: Set(entry.lines.filter(\.isLoop).map(\.lineId)),
-            packageLogoLineIDs: Set(
-                entry.lines.filter { $0.packageLogo != nil }.map(\.lineId)))
+            packageLogoLineIDs: Set(entry.package.lines.filter(\.hasLogo).map(\.id)))
     }
 
     /// One tab-joined fixture row, split without dropping empty cells — an
@@ -279,7 +278,7 @@ struct StationDisplayParityTests {
     // MARK: - the network slice
 
     /// The part of `buildNetworkFromCompactPackage` this port rebuilds, over
-    /// all five packages.
+    /// all seven packages.
     ///
     /// `packageLogo` is the interesting column: the package's `logo` flag only
     /// ever meant "artwork was downloaded", and turning it into a path means
@@ -288,7 +287,10 @@ struct StationDisplayParityTests {
     @Test("the line table is rebuilt from the package identically")
     func lineTable() throws {
         let fixture = Self.fixture
-        #expect(fixture.packages.count == 5)
+        #expect(Set(fixture.packages.map(\.country)) == Set(PortFixtures.countries))
+        let shippedLineCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.count
+        }
         var lineCount = 0
         for entry in fixture.packages {
             let network = try Self.network(entry)
@@ -316,12 +318,17 @@ struct StationDisplayParityTests {
                 #expect(line.isLoop == expected.isLoop, "\(expected.lineId): isLoop disagrees")
             }
         }
-        #expect(lineCount == 804, "804 lines across the five packages, got \(lineCount)")
+        #expect(lineCount == shippedLineCount, "every shipped line, got \(lineCount)")
     }
 
     @Test("every station of every package is filed under its group")
     func stationTable() throws {
         let fixture = Self.fixture
+        let shippedStationCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.reduce(0) {
+                $0 + $1.stations.count
+            }
+        }
         var total = 0
         for entry in fixture.packages {
             let network = try Self.network(entry)
@@ -354,15 +361,15 @@ struct StationDisplayParityTests {
                 #expect(mine, "\(station.stationID) is not a member of its own group")
             }
         }
-        #expect(total == 12685, "12,685 stations across the five packages, got \(total)")
+        #expect(total == shippedStationCount, "every shipped station row, got \(total)")
     }
 
     // MARK: - the popup model
 
-    /// Every line in all five packages, through the row builder.
+    /// Every line in all seven packages, through the row builder.
     ///
     /// The row is a function of the line alone — company, bilingual label,
-    /// colour, badge and matte — so 804 rows is the whole domain rather than a
+    /// colour, badge and matte — so all 1,128 rows are the domain rather than a
     /// sample of it. Reached through `lineIDFallback`, which is the only door
     /// into the row builder that does not go via a station.
     @Test("every line's popup row matches, character for character")
@@ -403,7 +410,7 @@ struct StationDisplayParityTests {
         }
     }
 
-    /// Every station in all five packages, through the whole popup.
+    /// Every station in all seven packages, through the whole popup.
     ///
     /// This is where the dedupe and the label sort are checked together, and
     /// where a naive port fails: the multi-line complexes (東京, 新宿, 大阪,
@@ -412,7 +419,7 @@ struct StationDisplayParityTests {
     @Test("every station's popup lists the same lines in the same order")
     func popupOrder() throws {
         let fixture = Self.fixture
-        #expect(fixture.cases.count == 12685)
+        #expect(fixture.cases.count == fixture.packages.reduce(0) { $0 + $1.stationCount })
         var multiRow = 0
         var checked = 0
         for entry in fixture.packages {
@@ -453,8 +460,8 @@ struct StationDisplayParityTests {
                     """)
             }
         }
-        #expect(checked == 12685)
-        #expect(multiRow == 2894, "2,894 stations are served by more than one line")
+        #expect(checked == fixture.cases.count)
+        #expect(multiRow == 5700, "5,700 stations are served by more than one line")
     }
 
     /// The header, over the five reachable shapes of the app's i18n layer.
@@ -557,13 +564,13 @@ struct StationDisplayParityTests {
 
     // MARK: - the network's station labels
 
-    /// Every station complex in all five packages, through both passes.
+    /// Every station complex in all seven packages, through both passes.
     ///
     /// The elected list is the whole answer and it is compared in order, so a
     /// port that got the group pick right and the 600 m merge wrong fails on
     /// the count, and one that got both right and the SORT wrong fails on the
     /// order.
-    @Test("one platform per complex carries the name, in all five packages")
+    @Test("one platform per complex carries the name, in all seven packages")
     func labelElection() throws {
         let fixture = Self.fixture
         var totalElected = 0
@@ -603,10 +610,10 @@ struct StationDisplayParityTests {
                     """)
             }
         }
-        #expect(totalElected == 10881, "10,881 elected labels, got \(totalElected)")
+        #expect(totalElected == 15062, "15,062 elected labels, got \(totalElected)")
         #expect(
-            totalDropped == 57,
-            "57 complexes arrive as two groups and are named once, got \(totalDropped)")
+            totalDropped == 93,
+            "93 complexes arrive as two groups and are named once, got \(totalDropped)")
     }
 
     /// 東京 is the case the whole election exists for: eight platforms, TWO
@@ -834,7 +841,7 @@ struct StationDisplayParityTests {
     ///
     /// The fixture froze Node's answer, which resolves to `en-US`.
     /// `String.compare(options: [], locale: en_US)` reproduces it on every
-    /// ordered pair the five packages actually compare — all 3,511 of them,
+    /// ordered pair the seven packages actually compare — all 4,845 of them,
     /// including the only one where code-unit order would differ. It does NOT
     /// reproduce it below that level: Foundation collates at a strength that
     /// treats kana type and character width as equal where V8 orders them, so
@@ -869,15 +876,15 @@ struct StationDisplayParityTests {
             #expect(
                 pair.why != nil,
                 """
-                a pair the five packages really compare disagrees:
+                a pair the seven packages really compare disagrees:
                   \(Self.spell(pair.a))
                   \(Self.spell(pair.b))
                 Foundation says \(got.signum()), localeCompare says \(pair.sign)
                 """)
         }
         #expect(
-            realPairs == 3511,
-            "3,511 ordered label pairs come out of the five packages, got \(realPairs)")
+            realPairs == 6321,
+            "6,321 ordered label pairs come out of the seven packages, got \(realPairs)")
 
         let now = diverged.map { $0.map(Self.spell).joined(separator: " vs ") }.sorted()
         let was = knownDivergences.map { $0.map(Self.spell).joined(separator: " vs ") }.sorted()

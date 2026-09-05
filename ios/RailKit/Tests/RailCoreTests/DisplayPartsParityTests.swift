@@ -11,11 +11,11 @@ import Testing
 ///
 /// ── what is checked, and to what standard ────────────────────────────────
 ///
-/// Every line of all five packages — 804 of them, 437,725 output vertices —
+/// Every line of all seven packages — 1,128 of them, 581,905 output vertices —
 /// is run. The output splits into two kinds of vertex, and they are held to
 /// different standards on purpose:
 ///
-///   * **Copied vertices (98.55%).** Everything after the station-approach
+///   * **Copied vertices (93.18%: 542,234).** Everything after the station-approach
 ///     pass only selects, trims and drops, so almost every vertex the map
 ///     draws is a vertex the package handed over. A copy that differs is a
 ///     port bug and nothing else, so these are pinned bit for bit — by
@@ -23,16 +23,15 @@ import Testing
 ///     index as well as its two doubles. `(h ^ w) &* prime` is a bijection on
 ///     `UInt64`, so a single changed word necessarily changes the digest; the
 ///     digest is a *smaller* check than storing the coordinates, not a weaker
-///     one, and storing all 437,725 would be a ~10 MB fixture.
+///     one, and storing all of them would add roughly 12 MB to the fixture.
 ///
-///   * **Computed vertices (1.45%: 6,346 on 76 lines).**
+///   * **Computed vertices (6.82%: 39,671 on 320 lines).**
 ///     `nearestCutOnPath` interpolates where the alignment passes a platform
 ///     and `warpTipToAnchor` blends a run of vertices onto the anchor. Both
 ///     run on cumulative `distanceMeters`, which contains `Math.cos` — and V8
-///     does not call the platform's `cos`, it ships its own fdlibm port. Over
-///     the 60,001 real latitudes in these packages the two disagree by one ULP
-///     on 3.2% of them. So these vertices carry a **measured ULP ceiling**
-///     rather than bit equality, in the manner of
+///     does not call the platform's `cos`. The port now reuses
+///     ``JSMath/cos(_:)``; the remaining high-latitude runtime residue is held
+///     to a **measured ULP ceiling** rather than bit equality, in the manner of
 ///     `FixtureParityTests.distances`.
 ///
 /// ── and what the ceiling is NOT allowed to absorb ────────────────────────
@@ -144,7 +143,7 @@ struct DisplayPartsParityTests {
     /// A measured ULP budget, not a tolerance picked to make the test pass.
     ///
     /// The first run of this suite asserted bit-for-bit equality on every
-    /// vertex and found 17 of 804 lines disagreeing — always in a coordinate,
+    /// vertex and found 17 of the original 804 lines disagreeing — always in a coordinate,
     /// never in a part count or a vertex count. Two suspects were chased
     /// before the budget was accepted, and one of them was real:
     ///
@@ -157,25 +156,25 @@ struct DisplayPartsParityTests {
     ///      (verified 604/604) rather than tolerating it. Six of the 23
     ///      original disagreements were this.
     ///
-    ///   2. `Math.cos`. V8 ships its own fdlibm port rather than calling the
-    ///      platform's. Over the 60,001 real latitudes in these five packages
-    ///      the two disagree by one ULP on 1,927 (3.2%). That is not
-    ///      reproducible without shipping fdlibm, which is a far bigger
-    ///      decision than one function's port, so it is measured instead.
+    ///   2. `Math.cos`. The original implementation called Darwin directly.
+    ///      `JSMath` now supplies the shared V8-compatible implementation, so
+    ///      the original five-region residue disappeared instead of being
+    ///      hidden by this budget.
     ///
-    /// The residue reaches only the 1.45% of vertices the approach pass
-    /// computes, and a coordinate ULP at these magnitudes is about 2 × 10⁻⁹ m
+    /// The residue reaches only computed vertices, and a coordinate ULP at
+    /// these magnitudes is about 2 × 10⁻⁹ m
     /// on the ground — nine orders of magnitude below the tightest threshold
     /// anything here decides with (the 1 m `anchorOnTrackMeters` test). A
     /// relative epsilon loose enough to absorb a libm difference would also
     /// absorb a wrong constant or a reassociated term; this ceiling cannot.
     ///
-    /// Measured: the worst disagreement across all 6,346 computed vertices is
-    /// **4 ULP**, on tw-krtc-r (高雄捷運紅線) part 0 vertex 165 — a latitude of
-    /// 22.677946177640084 answered as 22.6779461776401. Four ULP of latitude
-    /// there is 3 × 10⁻⁹ m on the ground: nine orders of magnitude below the
-    /// tightest threshold anything in this file decides with (the 1 m
-    /// `anchorOnTrackMeters` test), and twelve below the 35 m retrace radius.
+    /// Measured across all seven packages: 15 of 39,671 computed vertices
+    /// differ, and the worst is **1 ULP**, at
+    /// `us:amtrak-empire-builder` part 0 vertex 3438. Those high northern
+    /// latitudes enter the cosine port's π/2-reduction branch; current V8 and
+    /// fdlibm differ in the last bit for a small subset. The ceiling stays at
+    /// four so a platform/compiler change can move a few final rounding steps,
+    /// while exact part counts and copied-vertex digests remain the hard gate.
     ///
     /// If it ever fails, the answer moved for a reason that is not the math
     /// library, and the diff is a real behavioural change.
@@ -183,12 +182,10 @@ struct DisplayPartsParityTests {
 
     /// The share of computed vertices allowed to be inexact at all.
     ///
-    /// Measured at 131 of 6,346 — 2.06% — which is itself a signal worth
+    /// Measured at 15 of 39,671 — 0.038% — which is itself a signal worth
     /// pinning: a port change that pushes it up is changing the arithmetic
-    /// even while staying inside the ULP ceiling. Note how much smaller it is
-    /// than the 3.2% of latitudes where the two `cos` implementations differ:
-    /// most of those differences are absorbed before they reach a coordinate.
-    static let inexactShareCeiling = 0.04
+    /// even while staying inside the ULP ceiling.
+    static let inexactShareCeiling = 0.001
 
     /// FNV-1a over 64-bit words, mirroring the generator exactly: each part
     /// mixes its vertex count, then each COPIED vertex mixes its index and the
@@ -304,10 +301,13 @@ struct DisplayPartsParityTests {
 
     // MARK: - every line of every package
 
-    @Test("every line of all five packages emits the same strokes")
+    @Test("every line of all seven packages emits the same strokes")
     func everyLine() throws {
         let fixture = try Self.load()
-        #expect(fixture.cases.count == 804)
+        let shippedLineCount = try PortFixtures.countries.reduce(into: 0) { count, country in
+            count += try PortFixtures.package(country: country).lines.count
+        }
+        #expect(fixture.cases.count == shippedLineCount)
         #expect(fixture.geometrySelection.lines == fixture.cases.count)
 
         var linesByCountry: [String: [String: CompactPackage.Line]] = [:]
@@ -381,7 +381,7 @@ struct DisplayPartsParityTests {
         #expect(computedVertices == fixture.synthesisedVertices.total)
     }
 
-    /// The 97 lines whose coordinates are stored, compared vertex by vertex.
+    /// The 129 lines whose coordinates are stored, compared vertex by vertex.
     ///
     /// Every multi-part line is in here unconditionally, plus Macao and Hong
     /// Kong entire, plus every line `rail-network.js` argues from by name
@@ -577,7 +577,7 @@ struct DisplayPartsParityTests {
     /// `reversalTails` and `extraSegments` read straight out of the shipped
     /// packages must find exactly the set the generator found in JavaScript.
     ///
-    /// Three lines in five countries carry either — 阿里山線's reversal tails
+    /// Three lines in seven countries carry either — 阿里山線's reversal tails
     /// and 輕鐵 505 / 751's extra segments — and the one with reversal tails is
     /// the one whose grooming needs thirteen passes to reach stability. A
     /// loader that quietly returned nothing would leave every real line
@@ -604,11 +604,17 @@ struct DisplayPartsParityTests {
             for index in expected.extraSegments.indices where index < actual.extraSegments.count {
                 #expect(actual.extraSegments[index].from == expected.extraSegments[index].from)
                 #expect(actual.extraSegments[index].to == expected.extraSegments[index].to)
-                // Every shipped row is a documented data gap carrying no
-                // geometry, so `extraSegmentParts` draws nothing today. If a
-                // package ever ships one WITH geometry this flips, and the
-                // synthetic case above is what proves the drawing path works.
-                #expect(actual.extraSegments[index].geometry == nil, "\(label)")
+                // Most shipped rows are a documented data gap carrying no
+                // geometry, so `extraSegmentParts` draws nothing for them —
+                // but SFMTA's N/PH/PM/F carry a real direction-1 divergence
+                // (attach_direction_extra_segments in
+                // build-north-america-rail-package.py), so this compares
+                // against whatever the generator actually found rather than
+                // hard-coding "no package ever ships geometry here".
+                #expect(
+                    actual.extraSegments[index].geometry == expected.extraSegments[index].geometry,
+                    "\(label)",
+                )
             }
         }
         #expect(fixture.topologyExtras.keys.contains("tw:tw-alsr-alishan"))

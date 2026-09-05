@@ -258,7 +258,7 @@ struct FixtureParityTests {
 
     /// Level of detail is a correctness property, not a performance knob: if
     /// the two apps disagree about which lines a zoom shows, they are showing
-    /// different railways. Every line of all five packages is checked, because
+    /// different railways. Every line of all seven packages is checked, because
     /// an off-by-one in the length ladder is invisible in a sample and obvious
     /// on the map.
     @Test("the level-of-detail rule keeps the same lines at each zoom")
@@ -284,11 +284,14 @@ struct FixtureParityTests {
     @Test("group totals drive visibility, not each piece's own length")
     func visibilityGrouping() throws {
         let fixture = try Self.decode(VisibilityFixture.self, "visibility.json")
-        for country in ["mo", "hk", "tw", "kr", "jp"] {
+        #expect(Set(fixture.cases.map(\.country)) == Set(PortFixtures.countries))
+        for country in PortFixtures.countries {
             let package = try Self.package(country: country)
             let groupLengths = Visibility.groupLengthByLineId(package)
             let computed = Visibility.minZoomByLineId(package)
+            var checked = 0
             for item in fixture.cases where item.country == country {
+                checked += 1
                 #expect(
                     groupLengths[item.lineId]?.bitPattern == item.groupKm.bitPattern,
                     "\(item.lineId): expose the complete visibility-group length"
@@ -298,6 +301,7 @@ struct FixtureParityTests {
                     "\(item.lineId): group key must be operator + NUL + name"
                 )
             }
+            #expect(checked == package.lines.count, "\(country) visibility census")
         }
     }
 

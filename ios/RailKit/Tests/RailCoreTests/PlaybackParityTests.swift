@@ -415,6 +415,35 @@ struct PlaybackParityTests {
         #expect(t.times.worst <= Self.TIME_ULP, "compiled paths:\n\(t.summary)")
     }
 
+    /// `pathCacheKey`'s fourth field — `RailMap._rideStrokeGeneration` in the
+    /// JavaScript, folded in so a compiled path built against one
+    /// continuous-stroke generation's drawn ink does not survive into the
+    /// next. The fixture keys (above) all end in `:0`, the no-drawn-stroke-
+    /// substitution value, so they alone cannot tell a wired-up fourth field
+    /// apart from one that is silently ignored. This does.
+    @Test("the cache key carries the ride-stroke generation as a fourth field")
+    func cacheKeyCarriesRideStrokeGeneration() throws {
+        let fixture = try Self.fixture()
+        let item = try #require(fixture.cases.first)
+        let train = try Self.train(item.trainId)
+
+        let defaulted = Playback.cacheKey(train: train)
+        let zero = Playback.cacheKey(train: train, rideStrokeGeneration: 0)
+        let seven = Playback.cacheKey(train: train, rideStrokeGeneration: 7)
+
+        // Defaulting to 0 keeps every existing call (and every fixture,
+        // none of which exercise NA drawn-ink substitution) byte-identical.
+        #expect(defaulted == zero)
+        #expect(defaulted == item.cacheKey)
+        #expect(defaulted.hasSuffix(":0"))
+
+        // A different generation is a different key, and only the trailing
+        // field moves.
+        #expect(seven != zero)
+        #expect(seven == zero.dropLast(1) + "7")
+        #expect(seven.hasSuffix(":7"))
+    }
+
     static func expectPath(
         _ got: Playback.Path, _ want: PathCase, label: String, into t: inout Trackers
     ) throws {

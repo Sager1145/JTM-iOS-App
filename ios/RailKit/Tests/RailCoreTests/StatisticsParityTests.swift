@@ -517,13 +517,25 @@ struct StatisticsParityTests {
         // The parallel arrays, sampled — and the keys they are reached by,
         // which is the part a port can get subtly wrong and still look right.
         for edge in expected.sampledEdges {
-            #expect(idx.km[edge.index].bitPattern == edge.km.bitPattern, "km of edge \(edge.index)")
+            // The five original regions stay bit-identical. North American
+            // latitudes cross π/4, where the Node/V8 cosine used to build the
+            // fixture and Swift's fdlibm port differ by the last one or two
+            // bits on a few sampled North American edges. Keep that measured
+            // allowance local to US/CA. Totals and category denominators above
+            // remain exact, so it cannot hide accumulated drift.
+            let ulpCeiling: Int64 = country == "us" ? 2 : (country == "ca" ? 1 : 0)
+            let ulp = idx.km[edge.index].ulpDistance(to: edge.km)
+            #expect(
+                ulp <= ulpCeiling,
+                "km of edge \(edge.index): \(idx.km[edge.index]) vs \(edge.km) (\(ulp) ULP)")
             #expect(idx.mask[edge.index] == edge.mask, "mask of edge \(edge.index)")
             #expect(idx.lineName[edge.index] == edge.line, "line of edge \(edge.index)")
             #expect(idx.lineMask[edge.index] == edge.lineMask)
         }
         for key in expected.sampledKeys {
-            #expect(idx.map[key.key] == key.index, "edge key \(key.key)")
+            let packed = try #require(
+                Self.packedKey(spelling: key.key), "unreadable fixture key \(key.key)")
+            #expect(idx.map[packed] == key.index, "edge key \(key.key)")
         }
 
         // The per-line breakdown, in full: this is the table the coverage rows
@@ -1045,5 +1057,88 @@ struct StatisticsParityTests {
         // whole reason JSNumber exists.
         #expect(Statistics.edgeKey(Coordinate(lon: 139, lat: 35), Coordinate(lon: 139, lat: 36))
             == "139,35|139,36")
+    }
+
+    /// The fixture files each sampled edge under ``Statistics/edgeKey(_:_:)``'s
+    /// printed form, while `EdgeIndex.map` is keyed on the packed form. This
+    /// reads the spelling back into the two node positions it prints, so the
+    /// assertion still says what it always said: the edge at this grid
+    /// position is at this index.
+    ///
+    /// Exact, because `JSNumber.string` is shortest-round-trip — `Double(_:)`
+    /// returns the very double that was printed — and `quant5` is idempotent
+    /// on a value already on the grid.
+    static func packedKey(spelling: String) -> Statistics.EdgeKey? {
+        let nodes = spelling.components(separatedBy: "|")
+        guard nodes.count == 2 else { return nil }
+        let first = nodes[0].components(separatedBy: ",")
+        let second = nodes[1].components(separatedBy: ",")
+        guard first.count == 2, second.count == 2,
+            let ax = Double(first[0]), let ay = Double(first[1]),
+            let bx = Double(second[0]), let by = Double(second[1])
+        else { return nil }
+        return Statistics.packedEdgeKey(
+            Coordinate(lon: ax, lat: ay), Coordinate(lon: bx, lat: by))
+    }
+
+    @Test("packedEdgeKey decides exactly what edgeKey's digits decide")
+    func packedEdgeKeyAgreesWithTheSpelling() throws {
+        // `EdgeIndex.map` is keyed on the packed form and `Span` on the
+        // string, so the two have to partition any set of segments the same
+        // way. Equality is the whole contract — the packed key never has to
+        // *print* as anything — so this asserts the two agree pairwise rather
+        // than asserting a spelling.
+        //
+        // The corpus is chosen for the cases where a bit pattern and a
+        // shortest-round-trip string can come apart: the two zeros (which
+        // print alike and have different bits), the two infinities and NaN
+        // (which `Double.==` refuses to call equal to itself), coordinates one
+        // grid step apart, and coordinates that differ only BELOW the grid and
+        // therefore must collapse.
+        let components: [Double] = [
+            0, -0.0, 1e-6, -1e-6, 0.000005, 0.0000049, 9, 10, 35, 35.000001,
+            35.00001, 139.76661, 139.766614, -139.76661, 140.45972, 38.76386,
+            .infinity, -.infinity, .nan,
+        ]
+        var coordinates: [Coordinate] = []
+        for lon in components {
+            for lat in components where coordinates.count < 400 {
+                coordinates.append(Coordinate(lon: lon, lat: lat))
+            }
+        }
+        var pairs: [(Coordinate, Coordinate)] = []
+        for (i, a) in coordinates.enumerated() {
+            // Both directions, so the ordering comparison is exercised in the
+            // presence of NaN — where `<` and `==` are both false and the
+            // branch therefore always takes its second arm.
+            let b = coordinates[(i * 7 + 3) % coordinates.count]
+            pairs.append((a, b))
+            pairs.append((b, a))
+            pairs.append((a, a))
+        }
+
+        var byString: [String: Int] = [:]
+        var byPacked: [Statistics.EdgeKey: Int] = [:]
+        for (index, pair) in pairs.enumerated() {
+            let stringGroup = byString[
+                Statistics.edgeKey(pair.0, pair.1), default: index]
+            byString[Statistics.edgeKey(pair.0, pair.1)] = stringGroup
+            let packedGroup = byPacked[
+                Statistics.packedEdgeKey(pair.0, pair.1), default: index]
+            byPacked[Statistics.packedEdgeKey(pair.0, pair.1)] = packedGroup
+            #expect(
+                stringGroup == packedGroup,
+                """
+                \(pair.0) → \(pair.1) was filed under a different group by the \
+                two keys: "\(Statistics.edgeKey(pair.0, pair.1))" grouped as \
+                \(stringGroup), packed grouped as \(packedGroup).
+                """)
+        }
+        // The partitions are the same size, which is the statement that
+        // neither key merges a pair the other separates.
+        #expect(byString.count == byPacked.count)
+        // And the corpus actually collapses things, or the assertion above
+        // would be satisfied by every key being distinct.
+        #expect(byString.count < pairs.count)
     }
 }

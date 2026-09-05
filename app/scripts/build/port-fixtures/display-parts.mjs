@@ -15,7 +15,7 @@
 //
 //  ── how the answers are recorded ──────────────────────────────────────
 //
-//  EVERY line of all five packages (804 of them) is run and pinned by:
+//  EVERY line of all seven packages (1,128 of them) is run and pinned by:
 //
 //    * how many parts it emits and how many vertices each part has — the
 //      STRUCTURAL answer, which must be exact, because every decision this
@@ -25,14 +25,15 @@
 //      exact, because a copy that differs is a port bug. The digest is not a
 //      weaker check than storing the coordinates (the mix is a bijection on
 //      64-bit words, so a single changed double always changes it), it is a
-//      smaller one: all 437,725 output vertices would be a ~10 MB file;
-//    * the 6,346 vertices (1.45%, on 76 lines) the station-approach pass
+//      smaller one: all 542,234 copied output vertices would add roughly
+//      12 MB to the fixture;
+//    * the 39,671 vertices (6.82%, on 320 lines) the station-approach pass
 //      COMPUTES rather than copies, listed explicitly with their positions
 //      and held to a measured ULP ceiling. See `tolerance` in the output for
 //      why bit equality is not available for those, and what was measured.
 //
 //  Full coordinates are ALSO stored, for every line whose output has more
-//  than one part (26 lines: those are the branch cases, and they are the
+//  than one part (34 lines: those are the branch cases, and they are the
 //  whole point) and for a chosen sample of the single-part ones, so that a
 //  port which disagrees can be told WHERE rather than only THAT. The sample
 //  is stated in `geometrySelection` in the output, so it can be read back.
@@ -40,7 +41,8 @@
 //  ── and why there are synthetic lines ─────────────────────────────────
 //
 //  Measured, by instrumenting a scratch copy of rail-network.js and running
-//  all 804 lines through it: three of `displayPartsForLine`'s branches are
+//  all 804 lines in the original five packages through it: three of
+//  `displayPartsForLine`'s branches are
 //  NEVER TAKEN by the shipped packages.
 //
 //    * the excursion split (the trunk carries on and the excursion becomes a
@@ -71,13 +73,13 @@
 
 export const name = "display-parts.json";
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
 
 // ── verbatim vertices, and the few that are computed ────────────────────
 //
-// 98.55% of what this function emits is a vertex it was GIVEN: the whole
+// 93.18% of what this function emits is a vertex it was GIVEN: the whole
 // pipeline after the station-approach pass only ever selects, trims and drops.
-// The other 1.45% — 6,346 vertices across 76 of the 804 lines — is computed:
+// Computed vertices are listed explicitly rather than hidden in the digest:
 // `nearestCutOnPath` interpolates the point where the alignment passes the
 // platform, and `warpTipToAnchor` blends a run of vertices onto the anchor.
 //
@@ -91,16 +93,14 @@ const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 //     2^64` is a bijection for any odd prime, so a change to any single word
 //     necessarily changes the result. That is what lets a digest stand in for
 //     the coordinates it summarises, and it is why one is used at all: storing
-//     all 437,725 output vertices would be a ~10 MB fixture.
+//     all 542,234 copied output vertices would add roughly 12 MB to the fixture.
 //
 //   * A **computed** vertex comes out of a chain of `distanceMeters` calls,
 //     and `distanceMeters` contains `Math.cos`. **V8 does not use the
-//     platform's `cos`** — it ships its own fdlibm port (`src/base/ieee754.cc`)
-//     — and over the 60,001 real latitudes in these five packages the two
-//     disagree by one ULP on 1,927 of them, 3.2%. That difference cannot be
-//     eliminated without shipping fdlibm in Swift, so these vertices are
-//     recorded EXPLICITLY, with their positions, and the port is held to a
-//     measured ULP ceiling rather than to bit equality. See `syntheticNote`.
+//     platform's `cos`**. The Swift port reuses its shared JSMath cosine; the
+//     small remaining high-latitude runtime residue is recorded EXPLICITLY,
+//     with positions, and held to a measured ULP ceiling rather than bit
+//     equality. See `syntheticNote`.
 //
 // The classification is a property of the JavaScript alone — "is this output
 // vertex one of the input vertices?" — so it is not shaped by what the port
@@ -473,7 +473,7 @@ export function syntheticLines() {
   // in the shipped packages are recorded WITHOUT geometry (the archived
   // alignment holds one centre-line for both directions, and cutting a
   // stroke from it would assert shared track the survey says is not shared),
-  // so nothing in five countries exercises the drawing path. This line does,
+  // so nothing in the original five countries exercises the drawing path. This line does,
   // alongside the three shapes that must be skipped.
   cases.push({
     label: "synthetic:extra-segments",
@@ -742,9 +742,9 @@ export function build({ RailNetwork, railPackage }) {
       "interval chain BEFORE any branch splitting, so a lead-in copied off a " +
       "trunk copies the finished geometry and the two strokes stay coincident " +
       "to the vertex. Fold trimming runs on both sides of grooming, and " +
-      "neither may touch a platform anchor. Every line of all five packages " +
+      "neither may touch a platform anchor. Every line of all seven packages " +
       "is pinned by part count, per-part vertex count and a digest of every " +
-      "COPIED output vertex; the 1.45% of vertices the approach pass computes " +
+      "COPIED output vertex; the 6.82% of vertices the approach pass computes " +
       "are listed explicitly and held to a measured ULP ceiling — see " +
       "`tolerance`.",
     digestAlgorithm:
@@ -759,12 +759,10 @@ export function build({ RailNetwork, railPackage }) {
       "and none is needed. Computed vertices — `nearestCutOnPath`'s " +
       "interpolated cut and `warpTipToAnchor`'s blend — are downstream of " +
       "distanceMeters, which contains Math.cos, and V8 does NOT use the " +
-      "platform's cos: it ships its own fdlibm port (src/base/ieee754.cc). " +
-      "Over the 60,001 real latitudes in these five packages the two disagree " +
-      "by one ULP on 1,927 of them (3.2%). A Swift port on Darwin therefore " +
-      "cannot reproduce these vertices bit for bit without shipping fdlibm, " +
-      "which is a bigger decision than one function's port should make. The " +
-      "port is held to a ULP ceiling instead, and — the part that actually " +
+      "platform's cos. The Swift port reuses its shared JSMath cosine, which " +
+      "eliminates the original Darwin-cos residue. A few high-latitude values " +
+      "still differ in the last bit between the fixture-building runtime and " +
+      "fdlibm, so the port is held to a tight ULP ceiling instead, and — the part that actually " +
       "matters — to EXACT part counts and vertex counts, because every " +
       "decision this function makes is a distance compared against a " +
       "threshold and a wrong decision moves a stroke boundary rather than a " +

@@ -328,7 +328,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
   //
   // Measured while building this: `continueFrom` never changes an answer. Not
   // here, not in any of the 220 checked-in solver hops, and not in any
-  // station-to-station hop of any line of any of the five packages. The reason
+  // station-to-station hop of any line of any of the original five packages. The reason
   // is structural — `snapEndpoint` pins each hop's drawn end to the solver's
   // station node and the next hop's raw start IS that node, so the seam term
   // adds the same amount to every candidate. The chained cases are kept
@@ -845,6 +845,31 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     "incheon-airport",
     "인천국제공항선 — a different operator's line sharing track and stations " +
       "with 서울 지하철 9호선, so the operator hint is what decides.",
+  );
+
+  // North America has no checked-in solver output yet. One real package hop
+  // per country keeps canonicalization parity honest without copying either
+  // complete network into the fixture: each subset is still checked against
+  // its complete country network before it is emitted below.
+  hop(
+    "us",
+    "amtrak-capitol-corridor",
+    2,
+    6,
+    "capitol-corridor",
+    "A real US intercity hop across the Capitol Corridor package. It proves " +
+      "English line/operator hints and western-hemisphere coordinates take " +
+      "the same display-geometry path as the five original countries.",
+  );
+  hop(
+    "ca",
+    "translink-canada-line",
+    2,
+    6,
+    "canada-line",
+    "A real Canadian rapid-transit hop on Vancouver's Canada Line. The case " +
+      "is verified against the complete Canadian network before its bounded " +
+      "network subset is serialized.",
   );
 
   // Japan: the topologies the two checked-in trains do not reach.

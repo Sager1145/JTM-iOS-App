@@ -1,0 +1,803 @@
+{
+  "fixture": "family-windows.json",
+  "describes": "rail-network.js familyWindowRowsByPart + railmap.js _applyContinuousStrokes' family-window slicing (build-display-lanes.mjs deriveFamilyWindows, via na-render-groups.json render groups and display-lanes.json familyWindowsByRegion), and rail-network.js's family-bead station suppression (D1/D2)",
+  "contract": "For a part with tenant and/or landlord family windows, the drawn corridor comes apart into pieces in measure order via the SHARED RailStroke.familyPartition: BASE pieces (this line's own colour) cover the complement of every tenant ∪ landlord window; a FAMILY piece (the group's colour, via familyFeatureIndex) covers each landlord window, one piece per window, never merged with a neighbour; a tenant window is drawn by neither — it is a gap, standing in for the corresponding landlord's own stroke drawn elsewhere. Piece boundaries are exact window edges (already snapped to a station measure by deriveFamilyWindows, on ONE ruler — D4), so the Swift port's own slicing is expected to land on identical `from`/`to` values and identical colours for every case here. A tenant's own station bead is suppressed only when a same-group sibling holds a LANDLORD window covering ITS OWN anchor at the same physical station (`beadDecisions` on the NYCT case); with no such sibling, exactly the lowest-lineId tenant keeps its bead.",
+  "cases": [
+    {
+      "label": "LIRR Jamaica throat — West Hempstead Branch landlord window",
+      "lineId": "mta-long-island-rail-road-west-hempstead-branch",
+      "partIndex": 0,
+      "totalMetres": 36065.8,
+      "familyWindows": [
+        {
+          "from": 0,
+          "to": 4675,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "tenantWindows": [
+        {
+          "from": 4675,
+          "to": 29300,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "hasFamilyFeature": true,
+      "baseColor": "#0039a6",
+      "familyColor": "#0039a6",
+      "emittedPieces": [
+        {
+          "feature": "family",
+          "from": 0,
+          "to": 4675,
+          "colorKey": "#0039a6",
+          "groupId": "lirr:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 29300,
+          "to": 36065.8,
+          "colorKey": "#0039a6"
+        }
+      ]
+    },
+    {
+      "label": "LIRR Valley Stream throat — Long Beach Branch landlord window",
+      "lineId": "mta-long-island-rail-road-long-beach-branch",
+      "partIndex": 0,
+      "totalMetres": 39523.7,
+      "familyWindows": [
+        {
+          "from": 15075,
+          "to": 20850,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "tenantWindows": [
+        {
+          "from": 8175,
+          "to": 15050,
+          "groupId": "lirr:trunk"
+        },
+        {
+          "from": 20850,
+          "to": 39523.7,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "hasFamilyFeature": true,
+      "baseColor": "#0039a6",
+      "familyColor": "#0039a6",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 8175,
+          "colorKey": "#0039a6"
+        },
+        {
+          "feature": "base",
+          "from": 15050,
+          "to": 15075,
+          "colorKey": "#0039a6"
+        },
+        {
+          "feature": "family",
+          "from": 15075,
+          "to": 20850,
+          "colorKey": "#0039a6",
+          "groupId": "lirr:trunk"
+        }
+      ]
+    },
+    {
+      "label": "LIRR Port Jefferson Branch landlord window",
+      "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+      "partIndex": 0,
+      "totalMetres": 95605.4,
+      "familyWindows": [
+        {
+          "from": 52250,
+          "to": 75200,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "tenantWindows": [
+        {
+          "from": 75200,
+          "to": 95605.4,
+          "groupId": "lirr:trunk"
+        }
+      ],
+      "hasFamilyFeature": true,
+      "baseColor": "#0039a6",
+      "familyColor": "#0039a6",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 52250,
+          "colorKey": "#0039a6"
+        },
+        {
+          "feature": "family",
+          "from": 52250,
+          "to": 75200,
+          "colorKey": "#0039a6",
+          "groupId": "lirr:trunk"
+        }
+      ]
+    },
+    {
+      "label": "Metro-North Park Avenue trunk — Harlem Line landlord window",
+      "lineId": "metro-north-railroad-harlem",
+      "partIndex": 0,
+      "totalMetres": 132016.4,
+      "familyWindows": [
+        {
+          "from": 0,
+          "to": 19650,
+          "groupId": "metro-north:trunk"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#0039a6",
+      "familyColor": "#0039a6",
+      "emittedPieces": [
+        {
+          "feature": "family",
+          "from": 0,
+          "to": 19650,
+          "colorKey": "#0039a6",
+          "groupId": "metro-north:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 19650,
+          "to": 132016.4,
+          "colorKey": "#0039a6"
+        }
+      ]
+    },
+    {
+      "label": "Metro-North Park Avenue trunk — Hudson Line tenant (pure tenant, no landlord window of its own)",
+      "lineId": "metro-north-railroad-hudson",
+      "partIndex": 0,
+      "totalMetres": 117079.5,
+      "familyWindows": [],
+      "tenantWindows": [
+        {
+          "from": 0,
+          "to": 8525,
+          "groupId": "metro-north:trunk"
+        }
+      ],
+      "hasFamilyFeature": false,
+      "baseColor": "#0039a6",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 8525,
+          "to": 117079.5,
+          "colorKey": "#0039a6"
+        }
+      ]
+    },
+    {
+      "label": "MBTA Green Line central subway — D branch landlord window",
+      "lineId": "mbta-d",
+      "partIndex": 0,
+      "totalMetres": 22837.3,
+      "familyWindows": [
+        {
+          "from": 15225,
+          "to": 22100,
+          "groupId": "mbta:green"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#00843d",
+      "familyColor": "#00843d",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 15225,
+          "colorKey": "#00843d"
+        },
+        {
+          "feature": "family",
+          "from": 15225,
+          "to": 22100,
+          "colorKey": "#00843d",
+          "groupId": "mbta:green"
+        },
+        {
+          "feature": "base",
+          "from": 22100,
+          "to": 22837.3,
+          "colorKey": "#00843d"
+        }
+      ]
+    },
+    {
+      "label": "MBTA Green Line central subway — C branch tenant (pure tenant)",
+      "lineId": "mbta-c",
+      "partIndex": 0,
+      "totalMetres": 15936.3,
+      "familyWindows": [],
+      "tenantWindows": [
+        {
+          "from": 4325,
+          "to": 15936.3,
+          "groupId": "mbta:green"
+        }
+      ],
+      "hasFamilyFeature": false,
+      "baseColor": "#00843d",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 4325,
+          "colorKey": "#00843d"
+        },
+        {
+          "feature": "base",
+          "from": 15936.3,
+          "to": 15936.3,
+          "colorKey": "#00843d"
+        }
+      ]
+    },
+    {
+      "label": "MBTA Southwest Corridor — Providence/Stoughton Line landlord windows (3 stretches)",
+      "lineId": "mbta-providence-stoughton-line",
+      "partIndex": 0,
+      "totalMetres": 101016.9,
+      "familyWindows": [
+        {
+          "from": 30959.6,
+          "to": 61275,
+          "groupId": "mbta-commuter-rail:trunk"
+        },
+        {
+          "from": 76800,
+          "to": 76884.6,
+          "groupId": "mbta-commuter-rail:trunk"
+        },
+        {
+          "from": 82246.4,
+          "to": 101016.9,
+          "groupId": "mbta-commuter-rail:trunk"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#80276c",
+      "familyColor": "#80276c",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 30959.6,
+          "colorKey": "#80276c"
+        },
+        {
+          "feature": "family",
+          "from": 30959.6,
+          "to": 61275,
+          "colorKey": "#80276c",
+          "groupId": "mbta-commuter-rail:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 61275,
+          "to": 76800,
+          "colorKey": "#80276c"
+        },
+        {
+          "feature": "family",
+          "from": 76800,
+          "to": 76884.6,
+          "colorKey": "#80276c",
+          "groupId": "mbta-commuter-rail:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 76884.6,
+          "to": 82246.4,
+          "colorKey": "#80276c"
+        },
+        {
+          "feature": "family",
+          "from": 82246.4,
+          "to": 101016.9,
+          "colorKey": "#80276c",
+          "groupId": "mbta-commuter-rail:trunk"
+        }
+      ]
+    },
+    {
+      "label": "MBTA Southwest Corridor throat — Fairmount Line tenant (pure tenant)",
+      "lineId": "mbta-fairmount-line",
+      "partIndex": 0,
+      "totalMetres": 14689.7,
+      "familyWindows": [],
+      "tenantWindows": [
+        {
+          "from": 2052.3,
+          "to": 14689.7,
+          "groupId": "mbta-commuter-rail:trunk"
+        }
+      ],
+      "hasFamilyFeature": false,
+      "baseColor": "#80276c",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 2052.3,
+          "colorKey": "#80276c"
+        }
+      ]
+    },
+    {
+      "label": "Metrolink LA Union Station approach — IE-OC Line landlord windows (2 stretches)",
+      "lineId": "metrolink-ie-oc-line",
+      "partIndex": 0,
+      "totalMetres": 162715.3,
+      "familyWindows": [
+        {
+          "from": 0,
+          "to": 87225,
+          "groupId": "metrolink:trunk"
+        },
+        {
+          "from": 95625,
+          "to": 149950,
+          "groupId": "metrolink:trunk"
+        }
+      ],
+      "tenantWindows": [
+        {
+          "from": 160575,
+          "to": 162715.3,
+          "groupId": "metrolink:trunk"
+        }
+      ],
+      "hasFamilyFeature": true,
+      "baseColor": "#006070",
+      "familyColor": "#006070",
+      "emittedPieces": [
+        {
+          "feature": "family",
+          "from": 0,
+          "to": 87225,
+          "colorKey": "#006070",
+          "groupId": "metrolink:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 87225,
+          "to": 95625,
+          "colorKey": "#006070"
+        },
+        {
+          "feature": "family",
+          "from": 95625,
+          "to": 149950,
+          "colorKey": "#006070",
+          "groupId": "metrolink:trunk"
+        },
+        {
+          "feature": "base",
+          "from": 149950,
+          "to": 160575,
+          "colorKey": "#006070"
+        }
+      ]
+    },
+    {
+      "label": "SFMTA Market Street throat — F Market & Wharves landlord windows (2 stretches, shared with the California St cable car)",
+      "lineId": "san-francisco-municipal-tran-f",
+      "partIndex": 0,
+      "totalMetres": 8184.6,
+      "familyWindows": [
+        {
+          "from": 875,
+          "to": 5186.7,
+          "groupId": "sfmta:f-market-wharves"
+        },
+        {
+          "from": 6464.5,
+          "to": 8184.6,
+          "groupId": "sfmta:f-market-wharves"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#b49a36",
+      "familyColor": "#b49a36",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 875,
+          "colorKey": "#b49a36"
+        },
+        {
+          "feature": "family",
+          "from": 875,
+          "to": 5186.7,
+          "colorKey": "#b49a36",
+          "groupId": "sfmta:f-market-wharves"
+        },
+        {
+          "feature": "base",
+          "from": 5186.7,
+          "to": 6464.5,
+          "colorKey": "#b49a36"
+        },
+        {
+          "feature": "family",
+          "from": 6464.5,
+          "to": 8184.6,
+          "colorKey": "#b49a36",
+          "groupId": "sfmta:f-market-wharves"
+        },
+        {
+          "feature": "base",
+          "from": 8184.6,
+          "to": 8184.6,
+          "colorKey": "#b49a36"
+        }
+      ]
+    },
+    {
+      "label": "NYCT Lexington Ave Line (nyct:green) — 5 (express) landlord window over the 4/6/6x shared local track",
+      "lineId": "metropolitan-transit-authori-5",
+      "partIndex": 0,
+      "totalMetres": 38737.9,
+      "familyWindows": [
+        {
+          "from": 8580.7,
+          "to": 25950,
+          "groupId": "nyct:green"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#009952",
+      "familyColor": "#009952",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 8580.7,
+          "colorKey": "#009952"
+        },
+        {
+          "feature": "family",
+          "from": 8580.7,
+          "to": 25950,
+          "colorKey": "#009952",
+          "groupId": "nyct:green"
+        },
+        {
+          "feature": "base",
+          "from": 25950,
+          "to": 38737.9,
+          "colorKey": "#009952"
+        }
+      ],
+      "beadDecisions": [
+        {
+          "stationGroupId": "us-official-125-st-3",
+          "name": "125 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-5"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-116-st-2",
+          "name": "116 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-110-st",
+          "name": "110 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-103-st-2",
+          "name": "103 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-96-st-2",
+          "name": "96 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-77-st",
+          "name": "77 St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-68-st-hunter-college",
+          "name": "68 St-Hunter College",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-astor-pl",
+          "name": "Astor Pl",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        },
+        {
+          "stationGroupId": "us-official-spring-st",
+          "name": "Spring St",
+          "groupId": "nyct:green",
+          "emittedLineIds": [
+            "metropolitan-transit-authori-6"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "九州旅客鉄道 長崎線 — base line landlord window over its own -2 branch-service split (2 stretches)",
+      "lineId": "jp-九州旅客鉄道-長崎線",
+      "partIndex": 0,
+      "totalMetres": 125400.6,
+      "familyWindows": [
+        {
+          "from": 107091.3,
+          "to": 107550,
+          "groupId": "九州旅客鉄道:長崎線"
+        },
+        {
+          "from": 121475,
+          "to": 123829.8,
+          "groupId": "九州旅客鉄道:長崎線"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#be8004",
+      "familyColor": "#be8004",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 107091.3,
+          "colorKey": "#be8004"
+        },
+        {
+          "feature": "family",
+          "from": 107091.3,
+          "to": 107550,
+          "colorKey": "#be8004",
+          "groupId": "九州旅客鉄道:長崎線"
+        },
+        {
+          "feature": "base",
+          "from": 107550,
+          "to": 121475,
+          "colorKey": "#be8004"
+        },
+        {
+          "feature": "family",
+          "from": 121475,
+          "to": 123829.8,
+          "colorKey": "#be8004",
+          "groupId": "九州旅客鉄道:長崎線"
+        },
+        {
+          "feature": "base",
+          "from": 123829.8,
+          "to": 125400.6,
+          "colorKey": "#be8004"
+        }
+      ]
+    },
+    {
+      "label": "九州旅客鉄道 長崎線-2 branch-service split — pure tenant (no landlord window of its own)",
+      "lineId": "jp-九州旅客鉄道-長崎線-2",
+      "partIndex": 0,
+      "totalMetres": 23402.5,
+      "familyWindows": [],
+      "tenantWindows": [
+        {
+          "from": 0,
+          "to": 475,
+          "groupId": "九州旅客鉄道:長崎線"
+        },
+        {
+          "from": 21050,
+          "to": 23402.5,
+          "groupId": "九州旅客鉄道:長崎線"
+        }
+      ],
+      "hasFamilyFeature": false,
+      "baseColor": "#be8004",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 475,
+          "to": 21050,
+          "colorKey": "#be8004"
+        }
+      ]
+    },
+    {
+      "label": "synthetic — reversed follow window (from > to, as a reversed correspondence hands build-display-lanes.mjs before normalisation)",
+      "lineId": "synthetic#reversed-follow",
+      "partIndex": 0,
+      "totalMetres": 1000,
+      "familyWindows": [],
+      "tenantWindows": [
+        {
+          "from": 600,
+          "to": 400,
+          "groupId": "synthetic:group"
+        }
+      ],
+      "hasFamilyFeature": false,
+      "baseColor": "#336699",
+      "familyColor": null,
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 400,
+          "colorKey": "#336699"
+        },
+        {
+          "feature": "base",
+          "from": 600,
+          "to": 1000,
+          "colorKey": "#336699"
+        }
+      ]
+    },
+    {
+      "label": "synthetic — two landlord windows meeting exactly end-to-end (kept as two family pieces, never merged into one — familyPartition's own contract, independent of build-display-lanes.mjs's unionWindows upstream)",
+      "lineId": "synthetic#adjacent-landlord-windows",
+      "partIndex": 0,
+      "totalMetres": 1000,
+      "familyWindows": [
+        {
+          "from": 200,
+          "to": 500,
+          "groupId": "synthetic:group"
+        },
+        {
+          "from": 500,
+          "to": 800,
+          "groupId": "synthetic:group"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#336699",
+      "familyColor": "#993366",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 200,
+          "colorKey": "#336699"
+        },
+        {
+          "feature": "family",
+          "from": 200,
+          "to": 500,
+          "colorKey": "#993366",
+          "groupId": "synthetic:group"
+        },
+        {
+          "feature": "family",
+          "from": 500,
+          "to": 800,
+          "colorKey": "#993366",
+          "groupId": "synthetic:group"
+        },
+        {
+          "feature": "base",
+          "from": 800,
+          "to": 1000,
+          "colorKey": "#336699"
+        }
+      ]
+    },
+    {
+      "label": "synthetic — withheld span straddling a landlord window's edge",
+      "lineId": "synthetic#withheld-straddles-landlord-edge",
+      "partIndex": 0,
+      "totalMetres": 1000,
+      "familyWindows": [
+        {
+          "from": 300,
+          "to": 700,
+          "groupId": "synthetic:group"
+        }
+      ],
+      "tenantWindows": [],
+      "hasFamilyFeature": true,
+      "baseColor": "#336699",
+      "familyColor": "#993366",
+      "emittedPieces": [
+        {
+          "feature": "base",
+          "from": 0,
+          "to": 300,
+          "colorKey": "#336699"
+        },
+        {
+          "feature": "family",
+          "from": 300,
+          "to": 700,
+          "colorKey": "#993366",
+          "groupId": "synthetic:group"
+        },
+        {
+          "feature": "base",
+          "from": 700,
+          "to": 1000,
+          "colorKey": "#336699"
+        }
+      ],
+      "withheld": [
+        [
+          100,
+          500
+        ]
+      ],
+      "withheldPieces": [
+        {
+          "from": 100,
+          "to": 300,
+          "colorKey": "#336699"
+        },
+        {
+          "from": 300,
+          "to": 500,
+          "colorKey": "#993366"
+        }
+      ]
+    }
+  ],
+  "caFamilyWindows": {
+    "region": "ca",
+    "hasFamilyWindows": false,
+    "note": "na-render-groups.json currently derives no ca family windows (no ca byLineId render group has a follow naming a same-group leader) — nothing to pin here yet."
+  }
+}

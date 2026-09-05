@@ -5,7 +5,7 @@ import Testing
 
 /// `app-route-graph.js` §27–28 against `port-fixtures/route-graph.json`.
 ///
-/// The fixture is the running JavaScript's own answers for all five shipped
+/// The fixture is the running JavaScript's own answers for all seven shipped
 /// countries — 377,098 Japanese nodes and 765,426 directed edges among them —
 /// so a failure here means this Swift disagrees with the app it was forked
 /// from, and the fixture's `contract` field says what the disagreement would

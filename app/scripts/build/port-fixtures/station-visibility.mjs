@@ -58,11 +58,11 @@ export function build({ RailNetwork, railPackage }) {
     });
   };
 
-  // ── every shipped line, all five countries ────────────────────────────
+  // ── every shipped line, all seven countries ───────────────────────────
   // Not a sample. This function decides what a reader sees, and the packages
   // are the only place the real spacing distribution lives: 255 m between
   // Hong Kong tram stops at one end, tens of km between Hokkaido stations at
-  // the other. 804 lines is cheap.
+  // the other. The compact structural cases remain cheap even at seven regions.
   //
   // The arguments come out of a real buildNetworkFromCompactPackage rather
   // than being re-derived, because the call site has an asymmetry that is the
@@ -71,7 +71,7 @@ export function build({ RailNetwork, railPackage }) {
   // one physical railway vanishes together — but `km` is the line's OWN
   // length, paired with its own station count. Building the network is how
   // the fixture states that pairing without restating the grouping rule.
-  for (const country of ["mo", "hk", "tw", "kr", "jp"]) {
+  for (const country of ["mo", "hk", "tw", "kr", "jp", "us", "ca"]) {
     const pkg = railPackage(country);
     const network = RailNetwork.buildNetworkFromCompactPackage(pkg);
     for (const line of pkg.lines) {
@@ -85,7 +85,7 @@ export function build({ RailNetwork, railPackage }) {
   }
 
   // ── the guard, which no shipped line reaches ──────────────────────────
-  // 0 of 804 lines have fewer than two stations or a non-positive length, so
+  // No shipped line has fewer than two stations or a non-positive length, so
   // the early return is untested by real data — and it carries a quirk worth
   // pinning: it hands back `lineMinZoom` RAW. Neither clamp is applied on
   // that path, so it is the one way this function answers above the cap.
@@ -129,7 +129,7 @@ export function build({ RailNetwork, railPackage }) {
     });
   }
   // The same enormous spacing under an ordinary line zoom, where Math.max
-  // discards the density entirely — a branch 0 of 804 shipped lines take.
+  // discards the density entirely — a branch 0 of 1,128 shipped lines take.
   emit("enormous spacing, ordinary line zoom", 3, spacingForZoom(-2.5), 2);
   emit("sparse trunk: the line's own zoom wins", 7, 700, 2);
 
