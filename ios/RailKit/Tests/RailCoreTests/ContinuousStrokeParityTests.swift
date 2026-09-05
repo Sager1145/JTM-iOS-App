@@ -99,6 +99,7 @@ struct ContinuousStrokeParityTests {
             let FILLET_MAX_TURN_DEGREES: Double
             let FILLET_MAX_TANGENT_SHARE: Double
             let FILLET_STEP_DEGREES: Double
+            let STROKE_SIMPLIFY_TOLERANCE_PX: Double
             let MITER_LIMIT: Double
             let LANE_JOIN_EXTENT_METRES: Double
         }
@@ -163,13 +164,14 @@ struct ContinuousStrokeParityTests {
     /// builds its stroke through this, so a new option cannot be honoured by
     /// one test and forgotten by the next.
     static func options(
-        _ probe: Fixture.Case, joined: Bool = true, floored: Bool = true
+        _ probe: Fixture.Case, joined: Bool = true, floored: Bool = true,
+        radiusPx: Double? = nil
     ) -> ContinuousStroke.Options {
         .init(
             measures: probe.measures ?? [],
             rows: rows(probe.rows), totalMetres: probe.totalMetres,
             laneGapPx: probe.laneGapPx, minRampPx: probe.minRampPx,
-            cornerRadiusPx: probe.cornerRadiusPx,
+            cornerRadiusPx: radiusPx ?? probe.cornerRadiusPx,
             minCornerRadiusPx: floored ? (probe.minCornerRadiusPx ?? 0) : 0,
             anchors: probe.anchors,
             follows: (probe.follows ?? []).map { follow in
@@ -182,11 +184,118 @@ struct ContinuousStrokeParityTests {
             joinEnd: joined ? join(probe.joinEnd) : nil)
     }
 
-    static func stroke(_ probe: Fixture.Case, joined: Bool = true, floored: Bool = true)
-        -> ContinuousStroke.Stroke
-    {
+    static func stroke(
+        _ probe: Fixture.Case, joined: Bool = true, floored: Bool = true,
+        radiusPx: Double? = nil
+    ) -> ContinuousStroke.Stroke {
         ContinuousStroke.buildStroke(
-            points(probe.points), options: options(probe, joined: joined, floored: floored))
+            points(probe.points),
+            options: options(probe, joined: joined, floored: floored, radiusPx: radiusPx))
+    }
+
+    /// The deflection at interior vertex `index`, in degrees.
+    static func turnDegrees(_ points: [ContinuousStroke.Point], _ index: Int) -> Double {
+        let ax = points[index].x - points[index - 1].x
+        let ay = points[index].y - points[index - 1].y
+        let bx = points[index + 1].x - points[index].x
+        let by = points[index + 1].y - points[index].y
+        let la = hypot(ax, ay)
+        let lb = hypot(bx, by)
+        guard la > 0, lb > 0 else { return 0 }
+        return acos(max(-1, min(1, (ax * bx + ay * by) / (la * lb)))) * 180 / Double.pi
+    }
+
+    // MARK: - properties of the DRAWN output
+    //
+    // The parity tests above pin the stroke against the JS answer coordinate
+    // by coordinate; these two pin what that answer has to BE, whatever both
+    // ports agree it is. They are the tests a change to the fillet cannot
+    // satisfy by regenerating the fixture, and `continuous-stroke-geometry.
+    // test.mjs` asserts the identical two properties over the identical cases
+    // on the JS side.
+
+    /// Nothing malformed reaches the renderer: no NaN, no measure that runs
+    /// backwards, no zero-length edge.
+    @Test func everyStrokeIsWellFormed() throws {
+        for (index, probe) in try Self.fixture().cases.enumerated() {
+            let stroke = Self.stroke(probe)
+            let where_ = "case \(index): \(probe.note)"
+            for point in stroke.points + stroke.anchors {
+                #expect(point.x.isFinite && point.y.isFinite, "\(where_) — non-finite point")
+            }
+            for measure in stroke.measures + stroke.anchorMeasures {
+                #expect(measure.isFinite, "\(where_) — non-finite measure")
+            }
+            #expect(stroke.measures.count == stroke.points.count, "\(where_) — measure count")
+            var backwards = -1
+            for at in 1..<stroke.measures.count
+            where stroke.measures[at] < stroke.measures[at - 1] && backwards < 0 {
+                backwards = at
+            }
+            #expect(backwards < 0, "\(where_) — measure runs backwards at \(backwards)")
+            // A part of fewer than two distinct vertices degenerates, on
+            // purpose, to two copies of its only point (see buildStroke's
+            // early return); every other stroke owes us distinct neighbours.
+            guard stroke.points.count > 2 else { continue }
+            var duplicate = -1
+            for at in 1..<stroke.points.count
+            where stroke.points[at].x == stroke.points[at - 1].x
+                && stroke.points[at].y == stroke.points[at - 1].y && duplicate < 0 {
+                duplicate = at
+            }
+            #expect(duplicate < 0, "\(where_) — duplicate point at \(duplicate)")
+        }
+    }
+
+    /// A rounded corner is sampled at most ``filletStepDegrees`` of turn at a
+    /// time — the promise the sample count has always made, and the one the
+    /// quadratic Bézier this fillet used to draw could not keep: sampled
+    /// uniformly in u it concentrated the rotation mid-arc, reaching 14.3
+    /// degrees at a 90-degree corner, 19.7 at 120, and 28.8 on the shipped
+    /// `cta-orange-line` case.
+    ///
+    /// Two kinds of vertex are exempt, and both are geometry the fillet is
+    /// forbidden to touch rather than geometry it drew badly: a surveyed
+    /// reversal (turn >= ``filletMaxTurnDegrees`` — a switchback is not a
+    /// corner) and a station anchor, whose arc is drawn THROUGH the platform
+    /// vertex and therefore meets the edges either side at an angle of its
+    /// own. They are excluded by POSITION, within two radii, because the
+    /// output has no index back to the input.
+    @Test func roundedCornersHonourTheSamplingStep() throws {
+        let ceiling = ContinuousStroke.filletStepDegrees + 0.5
+        for (index, probe) in try Self.fixture().cases.enumerated() {
+            guard probe.cornerRadiusPx > 0 else { continue }
+            let stroke = Self.stroke(probe)
+            guard stroke.points.count >= 3 else { continue }
+            // The polyline the fillet pass actually saw: the identical build
+            // with the rounding switched off, which is exactly what
+            // `fillet` receives (it returns its input unchanged at radius 0).
+            let pre = Self.stroke(probe, radiusPx: 0).points
+            var exempt = stroke.anchors
+            if pre.count >= 3 {
+                for at in 1..<(pre.count - 1)
+                where Self.turnDegrees(pre, at) >= ContinuousStroke.filletMaxTurnDegrees {
+                    exempt.append(pre[at])
+                }
+            }
+            let reach = 2 * probe.cornerRadiusPx
+            var worst = 0.0
+            var worstAt = -1
+            for at in 1..<(stroke.points.count - 1) {
+                let vertex = stroke.points[at]
+                if exempt.contains(where: { hypot($0.x - vertex.x, $0.y - vertex.y) <= reach }) {
+                    continue
+                }
+                let turn = Self.turnDegrees(stroke.points, at)
+                if turn > worst {
+                    worst = turn
+                    worstAt = at
+                }
+            }
+            #expect(
+                worst <= ceiling,
+                "case \(index): \(probe.note) — \(worst)° facet at vertex \(worstAt)")
+        }
     }
 
     static func find(_ note: String, in fixture: Fixture) throws -> Fixture.Case {
@@ -285,6 +394,8 @@ struct ContinuousStrokeParityTests {
         #expect(ContinuousStroke.filletMaxTurnDegrees == c.FILLET_MAX_TURN_DEGREES)
         #expect(ContinuousStroke.filletMaxTangentShare == c.FILLET_MAX_TANGENT_SHARE)
         #expect(ContinuousStroke.filletStepDegrees == c.FILLET_STEP_DEGREES)
+        #expect(
+            ContinuousStroke.strokeSimplifyTolerancePx == c.STROKE_SIMPLIFY_TOLERANCE_PX)
         #expect(ContinuousStroke.miterLimit == c.MITER_LIMIT)
         #expect(ContinuousStroke.laneJoinExtentMetres == c.LANE_JOIN_EXTENT_METRES)
     }
@@ -387,17 +498,28 @@ struct ContinuousStrokeParityTests {
 
     /// THE MINIMUM RADIUS IS AN OPERATION, NOT A PROMISE.
     ///
-    /// Four vertices 0.03 px apart carry 70° of turn between two 60 px edges.
-    /// Rounded one at a time, each fillet may borrow only 0.45 of a 0.03 px
-    /// edge, so the corner the reader sees is a bare kink whatever radius was
-    /// asked for. Rounded as ONE corner it reaches the full radius.
+    /// Four vertices carry 70° of turn between two 60 px edges. Rounded one at
+    /// a time, each fillet may borrow only 0.45 of the tiny edge beside it, so
+    /// the corner the reader sees is a bare kink whatever radius was asked
+    /// for. Rounded as ONE corner it reaches the full radius.
+    ///
+    /// Two spacings, because `buildStroke` now decimates to
+    /// ``strokeSimplifyTolerancePx`` BEFORE it rounds anything:
+    ///
+    ///   * 0.03 px apart the four vertices are far under that tolerance and
+    ///     are removed outright — a split that fine is a survey artefact, not
+    ///     a corner, and the floored and unfloored answers are now the same
+    ///     one, both reaching the radius;
+    ///   * 0.3 px apart they survive decimation and still starve a per-vertex
+    ///     fillet (0.45 of 0.3 px is 0.135 px), which is the case that holds
+    ///     the run merge to its job.
     ///
     /// Not a parity check — both ports could carry the same bug — so this
     /// measures the radius the OUTPUT actually presents, sampled ±0.5 px of
     /// arc length either side of every vertex, and compares the floored answer
     /// against the unfloored one built from the same points.
     @Test func splitCornerReachesTheMinimumRadius() throws {
-        let note = "a corner split across near-coincident vertices is rounded as ONE corner to the minimum radius"
+        let note = "a corner split coarser than the simplification tolerance is still rounded as ONE corner"
         let fixture = try Self.fixture()
         let probe = try Self.find(note, in: fixture)
         let floored = Self.stroke(probe)
@@ -410,6 +532,18 @@ struct ContinuousStrokeParityTests {
         #expect(
             looseRadius < probe.minCornerRadiusPx ?? 0,
             Comment(rawValue: "the unfloored corner should still collapse; got \(looseRadius) px"))
+        // The sub-pixel spelling of the same corner: decimated away before the
+        // fillet, so the floor has nothing left to rescue and both answers
+        // reach the radius on their own.
+        let fine = try Self.find(
+            "a corner split across near-coincident vertices is rounded as ONE corner to the minimum radius",
+            in: fixture)
+        let fineFloor = fine.minCornerRadiusPx ?? 0
+        #expect(
+            Self.minimumWindowedRadius(Self.stroke(fine).points, window: 0.5) >= fineFloor)
+        #expect(
+            Self.minimumWindowedRadius(Self.stroke(fine, floored: false).points, window: 0.5)
+                >= fineFloor)
         // Bounded: nothing the run swallowed may end up further from the drawn
         // line than the radius the corner was given.
         let inputs = Self.points(probe.points)
@@ -502,19 +636,36 @@ struct ContinuousStrokeParityTests {
         #expect(distance == 0, Comment(rawValue: "\(note): bead sits \(distance) px off the drawn line"))
     }
 
-    /// A switchback is not a corner. A reversal among near-coincident
-    /// vertices must survive the run merge exactly as surveyed.
+    /// A switchback is not a corner. A reversal among near-coincident vertices
+    /// must survive the run merge unrounded.
+    ///
+    /// Unrounded, not unmoved: the three vertices around the apex are
+    /// hundredths of a pixel apart, and `buildStroke`'s pre-fillet decimation
+    /// collapses them onto the outermost one. That SHARPENS the reversal
+    /// rather than softening it, and leaves the drawn line inside
+    /// ``strokeSimplifyTolerancePx`` of every surveyed vertex — which is the
+    /// same epsilon both renderers used to spend below this pass, where no
+    /// test could see it. What may never happen is a fillet: the deflection
+    /// stays above ``filletMaxTurnDegrees``, so nothing draws a curve the
+    /// railway does not have.
     @Test func hairpinAmongNearCoincidentVerticesStaysSharp() throws {
-        let note = "a hairpin among near-coincident vertices stays exactly as surveyed"
+        let note = "a hairpin among near-coincident vertices is never rounded"
         let fixture = try Self.fixture()
         let probe = try Self.find(note, in: fixture)
         let stroke = Self.stroke(probe)
         let inputs = Self.points(probe.points)
         let surveyed = Self.worstTurnDegrees(inputs)
         #expect(surveyed > ContinuousStroke.filletMaxTurnDegrees)
+        let drawn = Self.worstTurnDegrees(stroke.points)
         #expect(
-            abs(Self.worstTurnDegrees(stroke.points) - surveyed) < 1e-9,
-            Comment(rawValue: "the reversal was rounded"))
+            drawn > ContinuousStroke.filletMaxTurnDegrees,
+            Comment(rawValue: "the reversal was rounded: \(drawn)°"))
+        for point in inputs {
+            let off = ContinuousStroke.distanceToPolyline(point, stroke.points)
+            #expect(
+                off <= ContinuousStroke.strokeSimplifyTolerancePx,
+                Comment(rawValue: "a surveyed vertex sits \(off) px off the drawn line"))
+        }
     }
 
     /// ONE LINE CANNOT COME APART AT A PART BOUNDARY.

@@ -143,6 +143,7 @@
     HOVER_REGIONS_LINE_LAYER,
     stationFill,
     stationStroke,
+    strokeSourceTolerancePx,
   } = global.RailMapStyle;
   const {
     routeRecordsToFC,
@@ -1372,6 +1373,20 @@
           const t =
             force ||
             part.builtZoom == null ||
+            // Zooming OUT is not gated on `near`. Everything else in this
+            // test may wait for a part to come into view, because a stale
+            // FINER-zoom geometry is only ever too detailed for the camera —
+            // harmless, and caught on the next `moveend`. That stopped being
+            // true when the stroke sources dropped to `tolerance: 0`
+            // (railmap-style.js `strokeSourceTolerancePx`): geojson-vt no
+            // longer generalises what it is handed, so a part built at z13
+            // and then tiled at z6 puts its whole z13 vertex count into every
+            // z6 tile. The vertex ceiling this file respects is respected by
+            // the STROKE BUILDER now, at the zoom it builds for, so a part
+            // whose bucket is finer than the camera's has to be rebuilt at
+            // once, wherever it sits. Zoom-in is unchanged — a coarser stale
+            // part still waits for `near`, exactly as before.
+            part.builtZoomBucket > zoomBucket ||
             // The lane-LOD bucket is staleness like `builtZoomBucket` is —
             // its own bucket, checked the same `near` way, so an off-screen
             // part crossing z9/z12 keeps its old lane gap until it actually
@@ -2052,6 +2067,21 @@
     // `country` re-credits the segment source: the style is built once at boot
     // with the country that was active then, and switching swaps the geometry
     // underneath it, so the licence declaration has to move with the data.
+    // Re-point one geojson source's simplification tolerance for `country`.
+    //
+    // MapLibre reads `tolerance` once, in the GeoJSONSource constructor, and
+    // keeps it in the worker options it re-sends on every setData — there is
+    // no public setter, and rebuilding the source would mean tearing down and
+    // reinstalling every layer that draws from it. Writing the already-derived
+    // tile-unit value is the same in-place mutation `seg.attribution` above
+    // is, and it is read by the very next setData. Guarded on every field it
+    // touches so a MapLibre that has moved them simply keeps the boot value.
+    _setSourceTolerance(source, country) {
+      if (!source || typeof source._pixelsToTileUnits !== "function") return;
+      const options = source.workerOptions && source.workerOptions.geojsonVtOptions;
+      if (!options) return;
+      options.tolerance = source._pixelsToTileUnits(strokeSourceTolerancePx(country));
+    },
     switchNetworkCountry(country, packageUrl) {
       const shouldReload = Boolean(
         this._networkVisibleWanted ||
@@ -2087,6 +2117,28 @@
       const sta = this._src(STATIONS_SOURCE);
       const staLanes = this._src(STATION_LANES_SOURCE);
       const staLabels = this._src(STATION_LABELS_SOURCE);
+      // How much geojson-vt may generalise the stroke sources is a per-COUNTRY
+      // answer (railmap-style.js `strokeSourceTolerancePx`: a continuous-stroke
+      // region spends its epsilon inside rail-stroke.js, BEFORE its corners are
+      // rounded, and a second pass here would strip every fillet back to a
+      // chord), and the style is built once, at boot, for the country the map
+      // booted into. A switch across that boundary — jp/us/ca ⇄ tw/hk/mo/kr —
+      // therefore has to re-point it, exactly as it re-credits the attribution
+      // below. The sources are emptied here and refilled by ensureNetwork, so
+      // the new tolerance is in place before any geometry is uploaded under
+      // it. The list is every source that carries stroke geometry or a slice
+      // of it — the network, its withheld dashes, the ridden lines, their two
+      // touch targets, the tap fan and the playback trail — which is the same
+      // list railmap-style.js gives `strokeTolerance` to at build.
+      [
+        seg,
+        withheld,
+        this._src(TRAIN_ROUTES_SOURCE),
+        this._src(TRAIN_PICK_SOURCE),
+        this._src(TRAIN_PICK_FAN_SOURCE),
+        this._src(TRAIN_EXPAND_SOURCE),
+        this._src(PLAYBACK_SOURCE),
+      ].forEach((source) => this._setSourceTolerance(source, country));
       if (seg) {
         seg.setData(EMPTY_FC);
         if (country) seg.attribution = railAttributionForCountry(country);

@@ -156,6 +156,24 @@ if [ "$run_swift" = 1 ]; then
     [ "$js_tolerance" = "$swift_tolerance" ] || fail \
         "simplify tolerance disagrees: railmap-style.js $js_tolerance, RailStyle.swift ${swift_tolerance:-none}"
 
+    # There is a THIRD copy of that number, and it is the one the continuous
+    # regions actually spend. A continuous stroke is decimated inside the
+    # stroke builder, on the straight polyline, BEFORE its corners are
+    # rounded — decimating the rounded line instead deletes every shallow
+    # fillet — so the pair above never runs over it. If the builder's copy
+    # drifted from the renderers', jp/us/ca would decimate at one epsilon and
+    # tw/hk/mo/kr at another, and no fixture would say so: the port fixtures
+    # pin rail-stroke.js to ContinuousStroke.swift, not either of them to the
+    # style tier. Four declarations, one number.
+    js_stroke_tolerance=$(grep -oE 'STROKE_SIMPLIFY_TOLERANCE_PX = [0-9.]+' \
+        "$repo/app/public/rail-stroke.js" | sed 's/.*= //')
+    swift_stroke_tolerance=$(grep -oE 'strokeSimplifyTolerancePx: Double = [0-9.]+' \
+        "$here/RailKit/Sources/RailCore/ContinuousStroke.swift" | sed 's/.*= //')
+    [ "$js_tolerance" = "$js_stroke_tolerance" ] || fail \
+        "stroke simplify tolerance disagrees: railmap-style.js $js_tolerance, rail-stroke.js ${js_stroke_tolerance:-none}"
+    [ "$js_tolerance" = "$swift_stroke_tolerance" ] || fail \
+        "stroke simplify tolerance disagrees: railmap-style.js $js_tolerance, ContinuousStroke.swift ${swift_stroke_tolerance:-none}"
+
     # Equal declarations are not enough: the regression this contract exists
     # for lived in the final MapKit renderer, below every geometry parity test.
     # Keep the renderer wired to the shared value, and keep both subjects of
@@ -170,7 +188,8 @@ if [ "$run_swift" = 1 ]; then
         "$here/RailMap/RailMapView.swift" || true)
     [ "$renderer_simplifiers" = 2 ] || fail \
         "expected network and ridden-route simplifiers to share epsilon; found $renderer_simplifiers"
-    echo "  both renderers decimate to the same $js_tolerance pt"
+    echo "  survey regions decimate at $js_tolerance pt in both renderers;" \
+        "the continuous stroke pre-decimates at it in both ports"
 
     # The annotation layer is the map's, and only the map's.
     #

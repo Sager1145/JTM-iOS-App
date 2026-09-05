@@ -95,6 +95,25 @@ public enum ContinuousStroke {
     /// Two vertices closer than this, in pixels, are one vertex.
     static let degenerateEdge: Double = 1e-6
 
+    /// How far the DRAWN line may leave the surveyed one, in pixels — the
+    /// same number `railmap-style.js` gives its geojson sources as
+    /// `SEGMENT_SIMPLIFY_TOLERANCE_PX` and `RailStyle.simplifyTolerance`
+    /// declares for the MapKit renderer. One epsilon, three places that must
+    /// agree (`ios/verify.sh` pins all three against each other textually,
+    /// and the port fixture's `constants` pin this one to rail-stroke.js's).
+    ///
+    /// It is spent HERE, on the straight polyline, and never again on the
+    /// rounded one. Decimating a stroke AFTER its corners are rounded removes
+    /// every fillet whose sagitta r(1 − cos(T/2)) falls under the tolerance —
+    /// at r = 3.6 px that is every corner under about 21 degrees of turn,
+    /// rounded and then immediately redrawn as the chord it was drawn to
+    /// replace. Simplifying FIRST also feeds the fillet: the sub-pixel edges
+    /// a regional zoom leaves behind are what starved ``fillet(_:radius:floorRadius:anchors:measures:)``'s
+    /// tangent clamp of the radius it was promising. Both renderers therefore
+    /// hand the rounded output to their rasteriser untouched (geojson
+    /// `tolerance: 0` on the web, epsilon 0 in `RailMapView`).
+    public static let strokeSimplifyTolerancePx: Double = 0.0625
+
     static let worldPixelsAtZoomZero: Double = 512
 
     // MARK: - types
@@ -488,10 +507,17 @@ public enum ContinuousStroke {
         // needs no such lookup: it forces a hard vertex in fillet(), so its
         // own position passes through unchanged either way —
         // cleaned.points[resolved] already is the emitted point.
+        // Decimated BEFORE the corners are rounded, and never after — see
+        // ``strokeSimplifyTolerancePx``. Both the anchor set and the measures
+        // are carried across; the anchors, the two ends, and nothing else,
+        // are forced to survive.
+        let drawn = simplifyForFillet(
+            cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
+            tolerance: strokeSimplifyTolerancePx)
         let filleted = fillet(
-            cleaned.points, radius: options.cornerRadiusPx,
-            floorRadius: options.minCornerRadiusPx, anchors: finalAnchors,
-            measures: cleanedMeasures)
+            drawn.points, radius: options.cornerRadiusPx,
+            floorRadius: options.minCornerRadiusPx, anchors: drawn.anchors,
+            measures: drawn.measures)
         let anchors = options.anchors.map { index -> Point in
             guard index >= 0, index < anchorMap.count else { return offset[offset.count - 1] }
             let moved = tapered.map[anchorMap[index]]
@@ -1277,6 +1303,24 @@ public enum ContinuousStroke {
         let cumulative = cumulativeLengths(points)
         var out: [Point] = [points[0]]
         var outMeasures: [Double] = [measures[0]]
+        // Every vertex this function emits goes through here, and an emission
+        // that repeats the previous one EXACTLY is dropped.
+        //
+        // Corners are cut apart, not glued: the guard clamp below can shorten
+        // a corner's tangent to exactly `back - guardOffset`, which puts its
+        // `start` on the identical coordinate the previous corner's `end`
+        // already occupies. That is a harmless coincidence — the line is
+        // unchanged either way — but it is a zero-length edge, which is the
+        // one thing `everyStrokeIsWellFormed` refuses. Only bit-equal points
+        // are dropped, never merely near ones: a "close enough" test is a
+        // simplification, and this pass is the one place the stroke must not
+        // be simplified (see ``strokeSimplifyTolerancePx``).
+        func emit(_ point: Point, _ measure: Double) {
+            let last = out[out.count - 1]
+            if last.x == point.x && last.y == point.y { return }
+            out.append(point)
+            outMeasures.append(measure)
+        }
         // Where the previous corner left the polyline: the edge it ended on
         // (by its start vertex) and how far along that edge. A corner never
         // starts before it, so two corners can never cross however the runs
@@ -1342,15 +1386,42 @@ public enum ContinuousStroke {
             if !(tangent > degenerateEdge) { return nil }
             let start = Point(x: apex.x - t0x * tangent, y: apex.y - t0y * tangent)
             let end = Point(x: apex.x + t1x * tangent, y: apex.y + t1y * tangent)
+            // A TRUE circular arc, sampled at uniform ANGLE steps — the same
+            // construction `anchorCornerOf` below already uses, and for the
+            // same reason. This used to be a quadratic Bézier sampled
+            // uniformly in u, and a Bézier does not rotate its tangent
+            // uniformly with u: it turns slowly at the ends and fast in the
+            // middle, so the middle facet of a 90-degree corner reached 14.3
+            // degrees, of a 120-degree corner 19.7, and of a 150-degree one
+            // 29.9 — two and a half times the `filletStepDegrees` the sample
+            // count was chosen to honour, and plainly visible as a flat spot
+            // at the apex of every wide corner. The arc turns by exactly
+            // turn / samples between neighbours, so `filletStepDegrees` means
+            // what it says at every deflection.
+            //
+            // The radius is `tangent / half` — the same number reported as
+            // `achieved` — and the centre sits on the corner's bisector, one
+            // radius off the incoming edge on the side the corner turns
+            // toward. Solved RELATIVE to the apex, never in absolute
+            // (web-mercator, ~1e7) pixel coordinates: the arc is a few pixels
+            // across, and subtracting nearly-equal huge numbers to find its
+            // centre is ill conditioned. The two endpoints are appended
+            // VERBATIM, so the join with the straight segments either side
+            // stays exact whatever the trigonometry rounds to.
+            let arcRadius = tangent / half
+            let arcCross = t0x * t1y - t0y * t1x
+            let turnSign: Double = arcCross >= 0 ? 1 : -1
+            let centreX = -t0x * tangent - turnSign * t0y * arcRadius
+            let centreY = -t0y * tangent + turnSign * t0x * arcRadius
+            let a0 = atan2(-t0y * tangent - centreY, -t0x * tangent - centreX)
             let samples = max(2, Int((turn / step).rounded(.up)))
             var curve: [Point] = [start]
             if samples > 1 {
                 for sample in 1..<samples {
-                    let u = Double(sample) / Double(samples)
-                    let v = 1 - u
+                    let angle = a0 + turnSign * turn * (Double(sample) / Double(samples))
                     curve.append(Point(
-                        x: v * v * start.x + 2 * u * v * apex.x + u * u * end.x,
-                        y: v * v * start.y + 2 * u * v * apex.y + u * u * end.y))
+                        x: apex.x + centreX + arcRadius * cos(angle),
+                        y: apex.y + centreY + arcRadius * sin(angle)))
                 }
             }
             curve.append(end)
@@ -1454,12 +1525,23 @@ public enum ContinuousStroke {
                 sameSign && abs(toApex) <= abs(short)
                 ? short
                 : short - (short == 0 ? 1 : short.sign == .minus ? -1 : 1) * 2 * Double.pi
-            // An anchor arc always uses an EVEN sample count (twice the
-            // number of FILLET_STEP_DEGREES-sized half-steps the turn
-            // needs), so the forced apex sample below lands at index
-            // samples/2 exactly — the true analytic midpoint (u = 0.5) of
-            // the arc, not an approximation of it.
-            let samples = 2 * max(1, Int((turn / (2 * step)).rounded(.up)))
+            // An anchor arc always uses an EVEN sample count, so the forced
+            // apex sample below lands at index samples/2 exactly — the true
+            // analytic midpoint (u = 0.5) of the arc (V is equidistant from
+            // T1 and T2 along it, the triangle being isosceles), not an
+            // approximation of it. An odd count would put samples/2 between
+            // two samples and the bead would stop sitting on the drawn line.
+            //
+            // Sized by |sweep|, NOT by `turn`. The two are the same only
+            // while the arc takes the minor way round; a corner sharp enough
+            // to send the apex outside the minor arc takes the REFLEX one
+            // (see `sweep` above), and sizing 2·ceil(turn / 2·step) samples
+            // for a sweep of 360° − turn spends them at the wrong rate: the
+            // shipped 120-degree anchor case sweeps 240° over the 10 samples
+            // 120° asked for and drew 24-degree facets, twice what
+            // `filletStepDegrees` promises. Half-steps of the sweep keep the
+            // count even and the promise true at every deflection.
+            let samples = 2 * max(1, Int((abs(sweep) / (2 * step)).rounded(.up)))
             var curve: [Point] = [t1Point]
             for sample in 1..<samples {
                 let u = Double(sample) / Double(samples)
@@ -1486,8 +1568,7 @@ public enum ContinuousStroke {
             if anchors.contains(index), let arc = anchorCornerOf(index) {
                 for sample in 0..<arc.curve.count {
                     let u = Double(sample) / Double(arc.curve.count - 1)
-                    out.append(arc.curve[sample])
-                    outMeasures.append(arc.mStart + (arc.mEnd - arc.mStart) * u)
+                    emit(arc.curve[sample], arc.mStart + (arc.mEnd - arc.mStart) * u)
                 }
                 guardEdge = arc.last
                 guardOffset = arc.endOffset
@@ -1495,8 +1576,7 @@ public enum ContinuousStroke {
                 continue
             }
             if hard[index] || turns[index] < minTurn {
-                out.append(points[index])
-                outMeasures.append(measures[index])
+                emit(points[index], measures[index])
                 index += 1
                 continue
             }
@@ -1539,22 +1619,19 @@ public enum ContinuousStroke {
                 last += 1
             }
             guard let corner = best else {
-                out.append(points[index])
-                outMeasures.append(measures[index])
+                emit(points[index], measures[index])
                 index += 1
                 continue
             }
             for sample in 0..<corner.curve.count {
                 let u = Double(sample) / Double(corner.curve.count - 1)
-                out.append(corner.curve[sample])
-                outMeasures.append(corner.mStart + (corner.mEnd - corner.mStart) * u)
+                emit(corner.curve[sample], corner.mStart + (corner.mEnd - corner.mStart) * u)
             }
             guardEdge = corner.last
             guardOffset = corner.endOffset
             index = corner.last + 1
         }
-        out.append(points[count - 1])
-        outMeasures.append(measures[measures.count - 1])
+        emit(points[count - 1], measures[measures.count - 1])
         return (out, outMeasures)
     }
 
@@ -1573,6 +1650,87 @@ public enum ContinuousStroke {
             if held < best { best = held }
         }
         return best
+    }
+
+    /// The squared distance from `point` to the SEGMENT a→b, in pixel space.
+    /// Clamped to the segment (not the infinite line) so a vertex beyond
+    /// either end of a span cannot be judged near it.
+    static func segmentDistanceSquared(_ point: Point, _ a: Point, _ b: Point) -> Double {
+        let dx = b.x - a.x
+        let dy = b.y - a.y
+        let square = dx * dx + dy * dy
+        var t = square > 0 ? ((point.x - a.x) * dx + (point.y - a.y) * dy) / square : 0
+        t = max(0, min(1, t))
+        let ex = point.x - a.x - dx * t
+        let ey = point.y - a.y - dy * t
+        return ex * ex + ey * ey
+    }
+
+    /// Douglas–Peucker over one span, marking the vertices it keeps. An
+    /// explicit stack rather than recursion (a transcontinental part is
+    /// 40 000 vertices) and a strict `>` against the squared tolerance, with
+    /// the FIRST vertex to reach a new maximum winning a tie —
+    /// `rail-stroke.js` does exactly the same, so both languages keep the
+    /// identical vertex set.
+    static func simplifySpan(
+        _ points: [Point], _ lo: Int, _ hi: Int, _ toleranceSquared: Double, _ keep: inout [Bool]
+    ) {
+        var stack: [(Int, Int)] = [(lo, hi)]
+        while let span = stack.popLast() {
+            let first = span.0
+            let last = span.1
+            if last <= first + 1 { continue }
+            var bestIndex = -1
+            var bestSquared = toleranceSquared
+            for index in (first + 1)..<last {
+                let held = segmentDistanceSquared(points[index], points[first], points[last])
+                if held > bestSquared {
+                    bestSquared = held
+                    bestIndex = index
+                }
+            }
+            if bestIndex < 0 { continue }
+            keep[bestIndex] = true
+            stack.append((first, bestIndex))
+            stack.append((bestIndex, last))
+        }
+    }
+
+    /// Decimate the stroke to `tolerance` pixels BEFORE its corners are
+    /// rounded, carrying the measures and the anchor set across.
+    ///
+    /// Three kinds of vertex are never dropped: the two ends (they are the
+    /// part's own extent, and a joint's neighbour is welded to them), and
+    /// every station anchor — an anchor is where `fillet` draws an arc
+    /// THROUGH the vertex rather than cutting it away, and the bead read from
+    /// it in `buildStroke` must land on the drawn line. Each stretch between
+    /// two forced vertices is decimated on its own, so a kept vertex can
+    /// never let a span reach across one.
+    static func simplifyForFillet(
+        _ points: [Point], measures: [Double], anchors: Set<Int>, tolerance: Double
+    ) -> (points: [Point], measures: [Double], anchors: Set<Int>) {
+        let count = points.count
+        guard tolerance > 0, count >= 3 else { return (points, measures, anchors) }
+        var keep = [Bool](repeating: false, count: count)
+        keep[0] = true
+        keep[count - 1] = true
+        for index in anchors where index > 0 && index + 1 < count { keep[index] = true }
+        let toleranceSquared = tolerance * tolerance
+        var spanStart = 0
+        for index in 1..<count where keep[index] {
+            simplifySpan(points, spanStart, index, toleranceSquared, &keep)
+            spanStart = index
+        }
+        var outPoints: [Point] = []
+        var outMeasures: [Double] = []
+        var outAnchors = Set<Int>()
+        for index in 0..<count where keep[index] {
+            if anchors.contains(index) { outAnchors.insert(outPoints.count) }
+            outPoints.append(points[index])
+            outMeasures.append(measures[index])
+        }
+        if outPoints.count == count { return (points, measures, anchors) }
+        return (outPoints, outMeasures, outAnchors)
     }
 
     /// The nearest point on `polyline` to `target`, restricted to the

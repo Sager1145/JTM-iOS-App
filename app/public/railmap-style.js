@@ -287,6 +287,35 @@
   // a pixel. A sixteenth leaves that tile at 9,720 — 3.4× today's 2,818 and
   // 16× clear of the count that broke.
   const SEGMENT_SIMPLIFY_TOLERANCE_PX = 0.0625;
+  // …but a CONTINUOUS-STROKE region has already spent that epsilon.
+  // rail-stroke.js's `buildStroke` decimates the straight polyline to
+  // STROKE_SIMPLIFY_TOLERANCE_PX — the same number — and only then rounds its
+  // corners, because geojson-vt run over the ROUNDED line removes every
+  // fillet whose sagitta r(1 − cos(T/2)) falls under the tolerance: at a
+  // 3.6 px radius that is every corner under about 21 degrees of turn, drawn
+  // as an arc and then immediately redrawn as the chord it was there to
+  // replace. So those regions' stroke sources carry no tolerance of their
+  // own, and the vertex ceiling above is respected by the stroke builder
+  // instead of by geojson-vt — the geometry reaching the source is already
+  // decimated, at the zoom it was built for.
+  //
+  // The legacy multi-feature regions, whose lines are surveyed geometry that
+  // nothing rounds, still spend it here exactly as before. RailMapView.swift
+  // says the same thing in its own idiom (epsilon 0 for a continuous line).
+  //
+  // Country, not line: geojson-vt's tolerance is a SOURCE option and one
+  // source carries the whole active package. That matches how the decision is
+  // actually made — rail-network.js's CONTINUOUS_STROKE_COUNTRIES is a
+  // per-country set — but it does mean a country switch has to re-point it,
+  // which railmap.js's switchNetworkCountry does.
+  function strokeSourceTolerancePx(country) {
+    const network = global.RailNetwork;
+    if (!network || typeof network.drawsContinuousStroke !== "function")
+      return SEGMENT_SIMPLIFY_TOLERANCE_PX;
+    return network.drawsContinuousStroke({ country }, {})
+      ? 0
+      : SEGMENT_SIMPLIFY_TOLERANCE_PX;
+  }
   // The network under the map is a per-COUNTRY package (jp-2025 / tw-2025), so
   // the credit carried on its source is per-country too — crediting N02 for
   // Taiwanese geometry would be a false licence declaration. Japan's station
@@ -1162,11 +1191,16 @@
       : null;
     // ── §1 sources ──
     const sources = Object.assign({}, primaryStack ? primaryStack.sources : {});
+    // One number for every source that carries stroke geometry or a slice of
+    // it — see strokeSourceTolerancePx. Two tolerances would let the ridden
+    // stroke, the withheld dashes and the playback trail part company with
+    // the line they sit exactly on.
+    const strokeTolerance = strokeSourceTolerancePx(opts.country);
     sources[SEGMENTS_SOURCE] = {
       type: "geojson",
       data: network ? network.segments : EMPTY_FC,
       attribution: railAttributionForCountry(opts.country),
-      tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
+      tolerance: strokeTolerance,
     };
     // Same tolerance as SEGMENTS_SOURCE: this is a slice of the identical
     // stroke geometry, and a differing simplification would let the dashed
@@ -1174,7 +1208,7 @@
     sources[SEGMENTS_WITHHELD_SOURCE] = {
       type: "geojson",
       data: network ? network.segmentsWithheld || EMPTY_FC : EMPTY_FC,
-      tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
+      tolerance: strokeTolerance,
     };
     sources[STATIONS_SOURCE] = {
       type: "geojson",
@@ -1195,11 +1229,28 @@
     sources[TRAIN_ROUTES_SOURCE] = {
       type: "geojson",
       data: EMPTY_FC,
-      tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
+      tolerance: strokeTolerance,
     };
-    sources[TRAIN_PICK_SOURCE] = { type: "geojson", data: EMPTY_FC };
-    sources[TRAIN_PICK_FAN_SOURCE] = { type: "geojson", data: EMPTY_FC };
-    sources[TRAIN_EXPAND_SOURCE] = { type: "geojson", data: EMPTY_FC };
+    // Slices of the same stroke geometry too — the pick targets are the
+    // ridden lines widened for touch, and the expand source is the fan a tap
+    // opens over them. They have to generalise exactly as the line they sit
+    // on does, or the invisible target drifts off the visible stroke at a
+    // rounded corner.
+    sources[TRAIN_PICK_SOURCE] = {
+      type: "geojson",
+      data: EMPTY_FC,
+      tolerance: strokeTolerance,
+    };
+    sources[TRAIN_PICK_FAN_SOURCE] = {
+      type: "geojson",
+      data: EMPTY_FC,
+      tolerance: strokeTolerance,
+    };
+    sources[TRAIN_EXPAND_SOURCE] = {
+      type: "geojson",
+      data: EMPTY_FC,
+      tolerance: strokeTolerance,
+    };
     sources[TRAIN_MARKERS_SOURCE] = { type: "geojson", data: EMPTY_FC };
     sources[FIT_CURVES_SOURCE] = { type: "geojson", data: EMPTY_FC };
     sources[HOVER_REGIONS_SOURCE] = { type: "geojson", data: EMPTY_FC };
@@ -1212,7 +1263,7 @@
       type: "geojson",
       data: EMPTY_FC,
       lineMetrics: true,
-      tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
+      tolerance: strokeTolerance,
     };
     sources[PLAYBACK_STATIONS_SOURCE] = { type: "geojson", data: EMPTY_FC };
     sources[PLAYBACK_HEAD_SOURCE] = { type: "geojson", data: EMPTY_FC };
@@ -2286,6 +2337,7 @@
     LANE_LOD_BUCKETS,
     laneScaleForZoom,
     SEGMENT_SIMPLIFY_TOLERANCE_PX,
+    strokeSourceTolerancePx,
     evaluateScreenValue,
     stationFill,
     stationStroke,

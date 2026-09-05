@@ -126,10 +126,44 @@ const SYNTHETIC = [
     anchors: [],
   },
   {
-    // Same geometry, no floor: every vertex is rounded in isolation and the
-    // achieved radius collapses. Pinned so the two answers can be compared.
+    // Same geometry, no floor. Its four vertices are far under
+    // STROKE_SIMPLIFY_TOLERANCE_PX, so buildStroke's pre-fillet decimation
+    // now removes them whatever the floor says and the two answers are the
+    // same one — which is the point: a split this fine is a survey artefact,
+    // not a corner, and the run merge is no longer what rescues it.
     note: "the same split corner with no minimum radius: each vertex is rounded in isolation",
     points: splitCorner(70, 0.03),
+    rows: [],
+    totalMetres: 1200,
+    laneGapPx: 0,
+    minRampPx: 0,
+    cornerRadiusPx: 3.6,
+    anchors: [],
+  },
+  {
+    // The same defect at a spacing the pre-fillet decimation CANNOT remove.
+    // 0.03 px apart the four vertices are far under
+    // STROKE_SIMPLIFY_TOLERANCE_PX and buildStroke drops them before the
+    // fillet ever sees them, so the case above no longer reaches the run
+    // merge at all. At 0.3 px they survive decimation and still starve a
+    // per-vertex fillet — 0.45 of a 0.3 px edge is 0.135 px — so this is the
+    // case that holds the run merge to its job.
+    note: "a corner split coarser than the simplification tolerance is still rounded as ONE corner",
+    points: splitCorner(70, 0.3),
+    rows: [],
+    totalMetres: 1200,
+    laneGapPx: 0,
+    minRampPx: 0,
+    cornerRadiusPx: 3.6,
+    minCornerRadiusPx: 1.5,
+    anchors: [],
+  },
+  {
+    // The same coarse geometry with no floor: every vertex is rounded in
+    // isolation and the achieved radius collapses. Pinned so the two answers
+    // can be compared.
+    note: "the same coarse split corner with no minimum radius: each vertex is rounded in isolation",
+    points: splitCorner(70, 0.3),
     rows: [],
     totalMetres: 1200,
     laneGapPx: 0,
@@ -153,7 +187,16 @@ const SYNTHETIC = [
   {
     // 170° at the third vertex: a switchback, not a corner. The run may not
     // cross it and it may not be rounded, whatever the floor asks for.
-    note: "a hairpin among near-coincident vertices stays exactly as surveyed",
+    //
+    // The three vertices around x = 60 are hundredths of a pixel apart, so
+    // the pre-fillet decimation collapses them onto the outermost one before
+    // the fillet runs — which SHARPENS the reversal (163.9° surveyed, 175.2°
+    // drawn) rather than softening it, and leaves the drawn line inside
+    // STROKE_SIMPLIFY_TOLERANCE_PX of every surveyed vertex. What the case
+    // pins is that a reversal is never ROUNDED; the exact deflection was
+    // never the drawn one, because both renderers decimated the stroke on
+    // the way to the screen long before this pass moved inside buildStroke.
+    note: "a hairpin among near-coincident vertices is never rounded",
     points: [[0, 0], [60, 0], [60.02, 0.004], [60.04, 0.008], [0.04, 5.008], [-60, 10]],
     rows: [],
     totalMetres: 1200,
@@ -1062,6 +1105,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
       FILLET_MAX_TURN_DEGREES: RailStroke.FILLET_MAX_TURN_DEGREES,
       FILLET_MAX_TANGENT_SHARE: RailStroke.FILLET_MAX_TANGENT_SHARE,
       FILLET_STEP_DEGREES: RailStroke.FILLET_STEP_DEGREES,
+      STROKE_SIMPLIFY_TOLERANCE_PX: RailStroke.STROKE_SIMPLIFY_TOLERANCE_PX,
       MITER_LIMIT: RailStroke.MITER_LIMIT,
     },
     profiles,

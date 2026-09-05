@@ -1753,9 +1753,36 @@ struct RailMapView: View {
                 // was eight times it, and because the parity fixtures compare
                 // the two apps ABOVE this line, nothing reported the difference
                 // but the map.
-                let epsilon = MapProjection.metresPerPixel(
+                let surveyEpsilon = MapProjection.metresPerPixel(
                     zoom: zoom, latitude: mapView.region.center.latitude)
                     * RailStyle.simplifyTolerance
+                // …and a continuous-stroke SUBJECT has already spent it.
+                // `ContinuousStroke.buildStroke` decimates the straight
+                // polyline to `strokeSimplifyTolerancePx` — the same number —
+                // and only then rounds its corners, because decimating the
+                // ROUNDED line instead removes every fillet whose sagitta
+                // falls under the tolerance: at a 3.6 pt radius that is every
+                // corner under about 21 degrees of turn, drawn as an arc and
+                // then immediately redrawn as the chord it was there to
+                // replace. The web app says the same thing in its own idiom —
+                // those regions' geojson sources carry `tolerance: 0`
+                // (railmap-style.js `strokeSourceTolerancePx`) — and the
+                // legacy multi-feature regions, whose lines are surveyed
+                // geometry that nothing rounds, still spend it exactly as
+                // before.
+                //
+                // The exemption is decided PER SUBJECT, at each of the two
+                // sites below, and never once for the whole rebuild.
+                // `continuous` is a per-COUNTRY property but `lines` is every
+                // resident region at once (`RailNetworkStore` appends them
+                // all), so "is any line here continuous?" is true the moment
+                // a single jp/us/ca line is loaded — and would then hand every
+                // tw/hk/mo/kr line, and every ride segment drawn from raw
+                // surveyed coordinates, to MapKit undecimated. That is not
+                // just wasted vertices: `NetworkLOD.fitToBudget` spends a
+                // 40,000-vertex budget and stops at the first line that does
+                // not fit, so an undecimated survey region sheds LINES off the
+                // map.
                 let buildScale = MapProjection.quantised(
                     RailStyle.scale(atZoom: zoom), on: mapView)
                 let mapPointsPerScreenPoint = mapView.visibleMapRect.width
@@ -1832,6 +1859,10 @@ struct RailMapView: View {
                 var withheldRunsByLineID:
                     [String: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])]] = [:]
                 let builds: [LineBuild] = (selection?.lines ?? []).map { line in
+                    // This line's own epsilon: nothing for a stroke that has
+                    // already spent it, the shared survey tolerance for a
+                    // surveyed one. See `surveyEpsilon` above.
+                    let epsilon = line.continuous ? 0 : surveyEpsilon
                     var polylines: [MKPolyline] = []
                     var familyPolylines: [String: FamilyRunBuild] = [:]
                     let runs: [[Coordinate]]
@@ -2162,7 +2193,21 @@ struct RailMapView: View {
                         // The network's own offset pixels, sliced to this
                         // segment's own measures, when its `StrokeRef` names a
                         // chain built this frame — see ``drawnCoordinates(of:)``.
-                        let stroke = asCoordinates(drawnCoordinates(of: segment, ride: ride))
+                        // Whether this segment is drawn from the network's
+                        // own rounded stroke pixels or from its raw surveyed
+                        // coordinates decides its epsilon, exactly as
+                        // `line.continuous` does for the network above: only
+                        // the former has already been decimated (inside
+                        // `buildStroke`, BEFORE its corners were rounded), and
+                        // running the pass below over it again would strip
+                        // every shallow fillet back to the chord it replaced.
+                        // A segment that fell back to `segment.coordinates` —
+                        // a survey region, or a chain no line built this frame
+                        // — is surveyed geometry and owes the survey epsilon.
+                        let built = builtStrokeCoordinates(of: segment, ride: ride)
+                        let epsilon = built == nil ? surveyEpsilon : 0
+                        let stroke = asCoordinates(
+                            built ?? segment.coordinates.map(\.clLocation))
                         guard stroke.count >= 2 else { continue }
                         // Straight off the ride's own coordinates. Rule R14 is
                         // withdrawn (commit 38cf0a8): a drawn vertex is the
@@ -2996,13 +3041,30 @@ struct RailMapView: View {
             func drawnCoordinates(
                 of segment: RiddenRouteStore.DrawnSegment, ride: RiddenRouteStore.DrawnRide
             ) -> [CLLocationCoordinate2D] {
+                builtStrokeCoordinates(of: segment, ride: ride)
+                    ?? segment.coordinates.map(\.clLocation)
+            }
+
+            /// The stroke half of ``drawnCoordinates(of:ride:)``, or nil where
+            /// that method falls back to `segment.coordinates`.
+            ///
+            /// Split out so a caller can tell the two apart. The overlay loop
+            /// has to: geometry sliced out of a built stroke is already
+            /// decimated and must not be decimated again, and raw surveyed
+            /// coordinates have not been and must be. Answering that by
+            /// re-asking the same questions in a second place would be a copy
+            /// free to drift; this is the one implementation, and
+            /// `drawnCoordinates` is now its fallback.
+            func builtStrokeCoordinates(
+                of segment: RiddenRouteStore.DrawnSegment, ride: RiddenRouteStore.DrawnRide
+            ) -> [CLLocationCoordinate2D]? {
                 guard let ref = strokeRef(for: segment, of: ride),
                     let built = strokesByKey[ref.chainID]
-                else { return segment.coordinates.map(\.clLocation) }
+                else { return nil }
                 let sliced = ContinuousStroke.slice(
                     points: built.stroke.points, measures: built.stroke.measures,
                     from: ref.from, to: ref.to)
-                guard sliced.count >= 2 else { return segment.coordinates.map(\.clLocation) }
+                guard sliced.count >= 2 else { return nil }
                 return sliced.map {
                     MKMapPoint(
                         x: $0.x * built.mapPointsPerScreenPoint,

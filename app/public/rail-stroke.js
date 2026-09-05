@@ -173,6 +173,25 @@
   // Two vertices closer than this, in pixels, are one vertex.
   const DEGENERATE_EDGE_PX = 1e-6;
 
+  // ── pre-fillet simplification ───────────────────────────────────────────
+  // How far the DRAWN line may leave the surveyed one, in pixels. The same
+  // number railmap-style.js gives its geojson sources as
+  // SEGMENT_SIMPLIFY_TOLERANCE_PX and RailStyle.swift declares as
+  // `simplifyTolerance` — one epsilon, three places that must agree
+  // (ios/verify.sh pins all three against each other textually).
+  //
+  // It is spent HERE, on the straight polyline, and never again on the
+  // rounded one. Decimating a stroke AFTER its corners are rounded removes
+  // every fillet whose sagitta r(1 − cos(T/2)) falls under the tolerance —
+  // at r = 3.6 px that is every corner under about 21 degrees of turn,
+  // rounded and then immediately redrawn as the chord it was drawn to
+  // replace. Simplifying FIRST also feeds the fillet: the sub-pixel edges a
+  // regional zoom leaves behind are what starved `cornerOf`'s tangent clamp
+  // of the radius it was promising. Both renderers therefore hand the
+  // rounded output to their rasteriser untouched (geojson `tolerance: 0` on
+  // the web, epsilon 0 in RailMapView).
+  const STROKE_SIMPLIFY_TOLERANCE_PX = 0.0625;
+
   // ── family-collapse partition ───────────────────────────────────────────
   // A piece of a `familyPartition`/`clipRangesToComplement` result shorter
   // than this, in METRES, is boundary noise (two windows that snapped onto
@@ -901,6 +920,24 @@
     const cumulative = cumulativeLengths(points);
     const out = [points[0]];
     const outMeasures = [measures[0]];
+    // Every vertex this function emits goes through here, and an emission
+    // that repeats the previous one EXACTLY is dropped.
+    //
+    // Corners are cut apart, not glued: the guard clamp above can shorten a
+    // corner's tangent to exactly `back - guardOffset`, which puts its
+    // `start` on the identical coordinate the previous corner's `end`
+    // already occupies. That is a harmless coincidence — the line is
+    // unchanged either way — but it is a zero-length edge, which is the one
+    // thing `everyStrokeIsWellFormed` refuses. Only bit-equal points are
+    // dropped, never merely near ones: a "close enough" test is a
+    // simplification, and this pass is the one place the stroke must not be
+    // simplified (see STROKE_SIMPLIFY_TOLERANCE_PX).
+    const emit = (point, measure) => {
+      const last = out[out.length - 1];
+      if (last[0] === point[0] && last[1] === point[1]) return;
+      out.push(point);
+      outMeasures.push(measure);
+    };
     // Where the previous corner left the polyline: the edge it ended on (by
     // its start vertex) and how far along that edge. A corner never starts
     // before it, so two corners can never cross however the runs fell.
@@ -958,14 +995,39 @@
       if (!(tangent > DEGENERATE_EDGE_PX)) return null;
       const start = [apex[0] - t0x * tangent, apex[1] - t0y * tangent];
       const end = [apex[0] + t1x * tangent, apex[1] + t1y * tangent];
+      // A TRUE circular arc, sampled at uniform ANGLE steps — the same
+      // construction `anchorCornerOf` below already uses, and for the same
+      // reason. This used to be a quadratic Bézier sampled uniformly in u,
+      // and a Bézier does not rotate its tangent uniformly with u: it turns
+      // slowly at the ends and fast in the middle, so the middle facet of a
+      // 90-degree corner reached 14.3 degrees, of a 120-degree corner 19.7,
+      // and of a 150-degree one 29.9 — two and a half times the
+      // FILLET_STEP_DEGREES the sample count was chosen to honour, and
+      // plainly visible as a flat spot at the apex of every wide corner.
+      // The arc turns by exactly turn / samples between neighbours, so
+      // FILLET_STEP_DEGREES means what it says at every deflection.
+      //
+      // The radius is `tangent / half` — the same number reported as
+      // `achieved` — and the centre sits on the corner's bisector, one
+      // radius off the incoming edge on the side the corner turns toward.
+      // Solved RELATIVE to the apex, never in absolute (web-mercator, ~1e7)
+      // pixel coordinates: the arc is a few pixels across, and subtracting
+      // nearly-equal huge numbers to find its centre is ill conditioned.
+      // The two endpoints are pushed VERBATIM, so the join with the straight
+      // segments either side stays exact whatever the trigonometry rounds to.
+      const arcRadius = tangent / half;
+      const arcCross = t0x * t1y - t0y * t1x;
+      const turnSign = arcCross >= 0 ? 1 : -1;
+      const centreX = -t0x * tangent - turnSign * t0y * arcRadius;
+      const centreY = -t0y * tangent + turnSign * t0x * arcRadius;
+      const a0 = Math.atan2(-t0y * tangent - centreY, -t0x * tangent - centreX);
       const samples = Math.max(2, Math.ceil(turn / step));
       const curve = [start];
       for (let sample = 1; sample < samples; sample += 1) {
-        const u = sample / samples;
-        const v = 1 - u;
+        const angle = a0 + turnSign * turn * (sample / samples);
         curve.push([
-          v * v * start[0] + 2 * u * v * apex[0] + u * u * end[0],
-          v * v * start[1] + 2 * u * v * apex[1] + u * u * end[1],
+          apex[0] + centreX + arcRadius * Math.cos(angle),
+          apex[1] + centreY + arcRadius * Math.sin(angle),
         ]);
       }
       curve.push(end);
@@ -1074,11 +1136,22 @@
         sameSign && Math.abs(toApex) <= Math.abs(short)
           ? short
           : short - Math.sign(short || 1) * 2 * Math.PI;
-      // An anchor arc always uses an EVEN sample count (twice the number of
-      // FILLET_STEP_DEGREES-sized half-steps the turn needs), so the forced
-      // apex sample below lands at index samples/2 exactly — the true
-      // analytic midpoint (u = 0.5) of the arc, not an approximation of it.
-      const samples = 2 * Math.max(1, Math.ceil(turn / (2 * step)));
+      // An anchor arc always uses an EVEN sample count, so the forced apex
+      // sample below lands at index samples/2 exactly — the true analytic
+      // midpoint (u = 0.5) of the arc (V is equidistant from T1 and T2 along
+      // it, the triangle being isosceles), not an approximation of it. An odd
+      // count would put samples/2 between two samples and the bead would stop
+      // sitting on the drawn line.
+      //
+      // Sized by |sweep|, NOT by `turn`. The two are the same only while the
+      // arc takes the minor way round; a corner sharp enough to send the
+      // apex outside the minor arc takes the REFLEX one (see `sweep` above),
+      // and sizing 2·ceil(turn / 2·step) samples for a sweep of 360° − turn
+      // spends them at the wrong rate: the shipped 120-degree anchor case
+      // sweeps 240° over the 10 samples 120° asked for and drew 24-degree
+      // facets, twice what FILLET_STEP_DEGREES promises. Half-steps of the
+      // sweep keep the count even and the promise true at every deflection.
+      const samples = 2 * Math.max(1, Math.ceil(Math.abs(sweep) / (2 * step)));
       const curve = [t1Point];
       for (let sample = 1; sample < samples; sample += 1) {
         const u = sample / samples;
@@ -1110,8 +1183,7 @@
         if (arc) {
           for (let sample = 0; sample < arc.curve.length; sample += 1) {
             const u = sample / (arc.curve.length - 1);
-            out.push(arc.curve[sample]);
-            outMeasures.push(arc.mStart + (arc.mEnd - arc.mStart) * u);
+            emit(arc.curve[sample], arc.mStart + (arc.mEnd - arc.mStart) * u);
           }
           guardEdge = arc.last;
           guardOffset = arc.endOffset;
@@ -1120,8 +1192,7 @@
         }
       }
       if (hard[index] || turns[index] < minTurn) {
-        out.push(points[index]);
-        outMeasures.push(measures[index]);
+        emit(points[index], measures[index]);
         index += 1;
         continue;
       }
@@ -1160,22 +1231,19 @@
         last += 1;
       }
       if (!best) {
-        out.push(points[index]);
-        outMeasures.push(measures[index]);
+        emit(points[index], measures[index]);
         index += 1;
         continue;
       }
       for (let sample = 0; sample < best.curve.length; sample += 1) {
         const u = sample / (best.curve.length - 1);
-        out.push(best.curve[sample]);
-        outMeasures.push(best.mStart + (best.mEnd - best.mStart) * u);
+        emit(best.curve[sample], best.mStart + (best.mEnd - best.mStart) * u);
       }
       guardEdge = best.last;
       guardOffset = best.endOffset;
       index = best.last + 1;
     }
-    out.push(points[count - 1]);
-    outMeasures.push(measures[measures.length - 1]);
+    emit(points[count - 1], measures[measures.length - 1]);
     return { points: out, measures: outMeasures };
   }
 
@@ -1194,6 +1262,87 @@
       if (held < best) best = held;
     }
     return best;
+  }
+
+  // The squared distance from `point` to the SEGMENT a→b, in pixel space.
+  // Clamped to the segment (not the infinite line) so a vertex beyond either
+  // end of a span cannot be judged near it.
+  function segmentDistanceSq(point, a, b) {
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
+    const square = dx * dx + dy * dy;
+    let t = square > 0 ? ((point[0] - a[0]) * dx + (point[1] - a[1]) * dy) / square : 0;
+    t = Math.max(0, Math.min(1, t));
+    const ex = point[0] - a[0] - dx * t;
+    const ey = point[1] - a[1] - dy * t;
+    return ex * ex + ey * ey;
+  }
+
+  // Douglas–Peucker over one span, marking the vertices it keeps. An explicit
+  // stack rather than recursion (a transcontinental part is 40 000 vertices)
+  // and a strict `>` against the squared tolerance, with the FIRST vertex to
+  // reach a new maximum winning a tie — the Swift port does exactly the same,
+  // so both languages keep the identical vertex set.
+  function simplifySpan(points, lo, hi, toleranceSq, keep) {
+    const stack = [[lo, hi]];
+    while (stack.length) {
+      const span = stack.pop();
+      const first = span[0];
+      const last = span[1];
+      if (last <= first + 1) continue;
+      let bestIndex = -1;
+      let bestSq = toleranceSq;
+      for (let index = first + 1; index < last; index += 1) {
+        const held = segmentDistanceSq(points[index], points[first], points[last]);
+        if (held > bestSq) {
+          bestSq = held;
+          bestIndex = index;
+        }
+      }
+      if (bestIndex < 0) continue;
+      keep[bestIndex] = true;
+      stack.push([first, bestIndex]);
+      stack.push([bestIndex, last]);
+    }
+  }
+
+  // Decimate the stroke to `tolerance` pixels BEFORE its corners are rounded,
+  // carrying the measures and the anchor set across.
+  //
+  // Three kinds of vertex are never dropped: the two ends (they are the
+  // part's own extent, and a joint's neighbour is welded to them), and every
+  // station anchor — an anchor is where `filletPolyline` draws an arc THROUGH
+  // the vertex rather than cutting it away, and the bead read from it in
+  // buildStroke must land on the drawn line. Each stretch between two forced
+  // vertices is decimated on its own, so a kept vertex can never let a span
+  // reach across one.
+  function simplifyForFillet(points, measures, anchorSet, tolerance) {
+    const count = points.length;
+    if (!(tolerance > 0) || count < 3)
+      return { points, measures, anchors: anchorSet };
+    const keep = new Array(count).fill(false);
+    keep[0] = true;
+    keep[count - 1] = true;
+    for (const index of anchorSet)
+      if (index > 0 && index + 1 < count) keep[index] = true;
+    const toleranceSq = tolerance * tolerance;
+    let spanStart = 0;
+    for (let index = 1; index < count; index += 1) {
+      if (!keep[index]) continue;
+      simplifySpan(points, spanStart, index, toleranceSq, keep);
+      spanStart = index;
+    }
+    const outPoints = [];
+    const outMeasures = [];
+    const anchors = new Set();
+    for (let index = 0; index < count; index += 1) {
+      if (!keep[index]) continue;
+      if (anchorSet.has(index)) anchors.add(outPoints.length);
+      outPoints.push(points[index]);
+      outMeasures.push(measures[index]);
+    }
+    if (outPoints.length === count) return { points, measures, anchors: anchorSet };
+    return { points: outPoints, measures: outMeasures, anchors };
   }
 
   // The nearest point on `polyline` to `target`, restricted to the segments
@@ -1404,12 +1553,22 @@
     // forces a hard vertex in filletPolyline, so its own position passes
     // through unchanged either way — cleaned.points[resolved] already is
     // the emitted point.
-    const filleted = filletPolyline(
+    // Decimated BEFORE the corners are rounded, and never after — see
+    // STROKE_SIMPLIFY_TOLERANCE_PX. Both the anchor set and the measures are
+    // carried across; the anchors, the two ends, and nothing else, are forced
+    // to survive.
+    const drawn = simplifyForFillet(
       cleaned.points,
+      cleanedMeasures,
+      finalAnchors,
+      STROKE_SIMPLIFY_TOLERANCE_PX,
+    );
+    const filleted = filletPolyline(
+      drawn.points,
       Number(opts.cornerRadiusPx) || 0,
       Number(opts.minCornerRadiusPx) || 0,
-      finalAnchors,
-      cleanedMeasures,
+      drawn.anchors,
+      drawn.measures,
     );
     const anchors = (opts.anchors || []).map((index) => {
       const at = anchorMap[index];
@@ -1618,6 +1777,7 @@
     FILLET_MAX_TURN_DEGREES,
     FILLET_MAX_TANGENT_SHARE,
     FILLET_STEP_DEGREES,
+    STROKE_SIMPLIFY_TOLERANCE_PX,
     MITER_LIMIT,
     worldSize,
     project,

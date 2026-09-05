@@ -67,6 +67,16 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/build/build-port-fixtures.mjs --check
 
+      # The fixtures pin the two ports to each other; they cannot pin what the
+      # answer has to BE — regenerate and both sides agree on the new shape,
+      # however bad it is. app/tests/continuous-stroke-geometry.test.mjs is
+      # that missing half on the JavaScript side (its Swift twin runs in the
+      # `swift` job below), so it belongs on the same fixture bytes this job
+      # just verified.
+      - name: Drawn geometry is well formed
+        working-directory: app
+        run: npm test
+
   swift:
     name: RailCore matches the fixtures
     # This repository is developed and verified with Xcode 27 / Swift 6.4.
