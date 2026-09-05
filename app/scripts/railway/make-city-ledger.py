@@ -14,6 +14,10 @@ import pathlib
 REPO = pathlib.Path(__file__).resolve().parents[3]
 REVIEW = REPO / 'app/public/rail/na-2025-line-review.json'
 
+# Rows under this feed name a line that publishes; only one of its intervals is
+# withheld from display. They are not absent routes and must not be counted so.
+WITHHELD_FEED = 'geometry-release-blockers'
+
 # feed slug prefix -> (metro, kind)
 # kind: transit | intercity | airport | heritage | meta
 METRO = [
@@ -147,6 +151,7 @@ def main():
     lines = d['lines']
     cities = collections.defaultdict(lambda: {
         'blocked': [], 'published': 0, 'warned': 0, 'kinds': set()})
+    withheld = []
     for l in lines:
         feed = l.get('sourceFeed') or '?'
         city, kind = metro_of(feed)
@@ -156,6 +161,13 @@ def main():
             c['published'] += 1
             if l.get('review') == 'warning':
                 c['warned'] += 1
+        elif feed == WITHHELD_FEED:
+            # Not a missing line. These rows name a line that DOES publish and
+            # whose geometry cleared every gate except one interval, drawn
+            # dashed until it is measured. `amtrak-vermonter` is in this table
+            # and in us-2025.json at the same time. Counting it as blocked
+            # double-counts a published line as an absent one.
+            withheld.append(l)
         else:
             c['blocked'].append(l)
 
@@ -169,8 +181,17 @@ def main():
     s = d['summary']
     out.append('# North America rail — city-by-city repair ledger\n')
     out.append(f"Regenerate with `python3 app/scripts/railway/make-city-ledger.py`. Source: `na-2025-line-review.json` ({d['generatedAt']}).\n")
-    out.append(f"**{s['published']} published · {s['blocked']} blocked · "
+    real_blocked = s['blocked'] - len(withheld)
+    out.append(f"**{s['published']} published · {real_blocked} blocked · "
+               f"{len(withheld)} published with an interval withheld · "
                f"{s['warnings']} warnings · {s['publishedErrors']} errors in published lines**\n")
+    out.append(
+        f"> The review's own `blocked` total is {s['blocked']}. This ledger reports\n"
+        f"> {real_blocked}, because {len(withheld)} of those rows carry the feed\n"
+        f"> `{WITHHELD_FEED}`, which is not a list of missing lines — it is the\n"
+        "> display-blocked *interval* ledger for lines that publish. `amtrak-vermonter`\n"
+        "> appears there and in us-2025.json at the same time. Those rows are listed\n"
+        "> separately at the end rather than counted as absent routes.\n")
     out.append(
         "> This describes the package as built, which is not the same as the registry's\n"
         "> intent. A package can lag `na-feeds.json` indefinitely and no audit will say so:\n"
@@ -202,6 +223,17 @@ def main():
             iss = l.get('issues') or []
             why = norm_why(iss[0].get('why', '—')) if iss else '—'
             out.append(f"| {str(name)[:34]} | {op[:26]} | {l.get('sourceFeed','')[:24]} | {gs[:18]} | {why} |")
+    if withheld:
+        out.append('\n\n## Published, with an interval withheld\n')
+        out.append('These lines ship. One or more station intervals are drawn dashed until the')
+        out.append('track alignment is measured, and are listed here so the count above is honest.\n')
+        out.append('| line | withheld because |')
+        out.append('|---|---|')
+        for l in sorted(withheld, key=lambda x: str(x.get('lineId') or '')):
+            iss = l.get('issues') or []
+            why = norm_why(iss[0].get('why', '—')) if iss else '—'
+            out.append(f"| {str(l.get('lineId') or '—')[:44]} | {why} |")
+
     text = '\n'.join(out) + '\n'
     if len(sys.argv) > 1:
         pathlib.Path(sys.argv[1]).write_text(text)
