@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct RailMapApp: App {
     @AppStorage("appearance") private var appearance = "system"
+    @State private var localization = AppLocalization()
 
     var body: some Scene {
         WindowGroup {
@@ -38,7 +39,9 @@ struct RailMapApp: App {
     // `RailMotion` are read by views that would still be looking at the real
     // setting, so half the interface would degrade and half would not — and a
     // review run on that is worse than no review run at all.
-    private var testableContent: some View { ContentView() }
+    private var testableContent: some View {
+        ContentView(localization: localization)
+    }
 
     private var preferredColorScheme: ColorScheme? {
         switch appearance {

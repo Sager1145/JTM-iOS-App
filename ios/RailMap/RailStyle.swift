@@ -98,18 +98,34 @@ nonisolated public enum RailStyle {
     /// The clear map a reader needs between two DISTINCT railways sharing one
     /// corridor, edge to edge.
     ///
-    /// Carried for the corner-radius and topology relationships that quote it.
-    /// It is **not** a lane offset: commit `38cf0a8` (2026-08-19) removed
-    /// screen-space lanes end to end and rule R14 is withdrawn — every line
-    /// draws on its own surveyed geometry, and this app must not reintroduce
-    /// what the web app deliberately dropped.
     static let parallelGap: CGFloat = 1.2
+    /// Centre-to-centre spacing for distinct display lanes. It follows the
+    /// same scale ramp as the stroke, keeping the clear gap constant relative
+    /// to the railway rather than widening geographically during a zoom.
+    static let parallelLaneCentreDistance: CGFloat = railWidth + parallelGap
 
-    /// The smallest radius a corner may PRESENT on screen: one stroke width,
-    /// because the pen decides the floor. `line-join: round` already rounds the
-    /// outer edge to half the width about the vertex, so under W/2 there is
-    /// nothing a radius could add that the ink has not already drawn.
-    static let minCornerRadius: CGFloat = railWidth
+    /// The smallest radius a corner may PRESENT on screen: two stroke widths.
+    /// One stroke width (R = W) was the original floor — `line-join: round`
+    /// already rounds the outer edge to half the width about the vertex, so
+    /// at R = W the inner edge matches it, the first radius visible at all.
+    /// But an Opus measurement pass over the drawn corners found a real
+    /// share of them still landing under ONE stroke width with that floor in
+    /// force: `ContinuousStroke`'s run-merge was giving up on growing a run
+    /// of short edges before it could actually reach the floor it owed them.
+    /// That growth bug is fixed alongside this change; doubling the floor to
+    /// 2W also buys a visible margin over the single stroke width rather
+    /// than sitting right at its edge. Must equal the web app's
+    /// `RAILWAY_STYLE.minCornerRadiusPx` (app/public/railmap-style.js).
+    static let minCornerRadius: CGFloat = railWidth * 2
+
+    /// The radius a continuous stroke (`RailCore.ContinuousStroke`, the port of
+    /// rail-stroke.js) rounds its corners to where the surveyed polyline turns
+    /// on a vertex. The web app's `RAILWAY_STYLE.strokeCornerRadiusPx`: a
+    /// little over half a station dot, on the same scale ramp as the stroke.
+    static let strokeCornerRadius: CGFloat = stationDiameter * 0.6
+    /// A lane change drifts over at least this many points, whatever the zoom
+    /// makes of the 300 m ramp — railmap.js's STROKE_MIN_RAMP_PX.
+    static let strokeMinRamp: Double = 24
 
     // MARK: - §6.4's radius tokens
 
@@ -292,6 +308,14 @@ nonisolated public enum RailStyle {
     /// `UNRIDDEN_OPACITY` — the network field draws at full opacity in the
     /// package's own theme colour and is never blended again at paint time.
     static let networkOpacity: CGFloat = 1
+
+    /// `WITHHELD_LINE_OPACITY` — a continuous-stroke line's bridged blocked
+    /// interval (`DrawnLine.withheld`, see `RailCore` and
+    /// `build-display-network.py`'s `continuous_chains`) draws its dashed
+    /// overlay at this reduced opacity, in the line's own colour: dimmer than
+    /// the ordinary field so "surveyed but unconfirmed" reads as a real
+    /// difference. Matches `WITHHELD_LINE_OPACITY` in railmap-style.js.
+    static let withheldOpacity: CGFloat = 0.45
 
     /// `SELECT_DIM` — while one ride is selected, every other ride still drawn
     /// fades to this, station dots included. It is not

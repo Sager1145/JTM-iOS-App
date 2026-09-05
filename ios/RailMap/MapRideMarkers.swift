@@ -96,6 +96,11 @@ enum MapRideMarkers {
         /// The role/type/density floor in MapLibre zoom units. `nil` belongs
         /// to terminals and cross-day boundaries, which never disappear.
         var mapLibreMinZoom: Double?
+        /// The continuous-stroke platform anchor this bead sits on, when its
+        /// stop is a boarding/alighting boundary whose `StrokeRef` snapped to
+        /// one. `nil` keeps `record.position` — the plain drawn coordinate —
+        /// which is every stop outside a continuous-stroke region.
+        var strokeAnchor: StrokeAnchorRef?
     }
 
     // MARK: - the style numbers, from app-style.js
@@ -246,6 +251,65 @@ enum MapRideMarkers {
             == Stations.normalizeStationName(stopName)
     }
 
+    /// Which continuous-stroke chain a stop's bead belongs on, and where —
+    /// `RailMapView`'s own per-rebuild `strokeAnchors[chainID][vertexIndex]`
+    /// for a snapped platform, or the sliced stroke's own endpoint for a
+    /// boundary that resolved to a chain without snapping to one of its
+    /// platforms.
+    ///
+    /// `MapRideMarkers` knows nothing of pixel space — not the chain's own
+    /// offset geometry, and not `RailCore.StrokeRide`'s WGS84 matching either,
+    /// which is `RailMapView`'s to run (it alone holds the display chains a
+    /// `StrokeRef` is resolved against; see the coordinator's own
+    /// `strokeRef(for:of:)`). This carries only identity: which chain, which
+    /// vertex when one snapped, and — when none did — which of the ride's own
+    /// segments and which of its two ends, so the renderer can fall back to
+    /// that segment's own sliced stroke rather than to
+    /// ``stopPositions(of:)``'s un-offset canonical point.
+    struct StrokeAnchorRef: Equatable {
+        var chainID: String
+        /// The chain vertex this end snapped to, when `StrokeRef.fromAnchor`/
+        /// `.toAnchor` named one. `nil` means the end is a plain
+        /// interpolation on open track — still on this chain, just not at a
+        /// platform.
+        var vertexIndex: Int?
+        var segmentIndex: Int
+        /// `true` when this stop is the segment's `from` end, `false` for
+        /// `to` — which of the sliced stroke's two ends the fallback reads.
+        var isSegmentStart: Bool
+    }
+
+    /// The same pairing ``stopPositions(of:)`` makes, carrying the chain
+    /// identity instead of a plain coordinate — for the boarding/alighting
+    /// ends of a segment whose own drawn geometry `strokeRef` could resolve
+    /// against a continuous-stroke chain at all. `strokeRef` is the caller's
+    /// own resolver (`RailMapView.Coordinator.strokeRef(for:of:)`), since only
+    /// it holds this frame's display chains to match against.
+    static func stopStrokeAnchors(
+        of ride: RiddenRouteStore.DrawnRide,
+        strokeRef: (RiddenRouteStore.DrawnSegment) -> StrokeRef?
+    ) -> [Int: StrokeAnchorRef] {
+        var result: [Int: StrokeAnchorRef] = [:]
+        let stops = ride.stops
+        guard !stops.isEmpty else { return [:] }
+        for segment in ride.segments.sorted(by: { $0.segmentIndex < $1.segmentIndex }) {
+            guard let ref = strokeRef(segment) else { continue }
+            let index = segment.segmentIndex
+            guard index >= 0, index + 1 < stops.count else { continue }
+            if agrees(segment.from, stops[index].name), result[index] == nil {
+                result[index] = StrokeAnchorRef(
+                    chainID: ref.chainID, vertexIndex: ref.fromAnchor,
+                    segmentIndex: index, isSegmentStart: true)
+            }
+            if agrees(segment.to, stops[index + 1].name), result[index + 1] == nil {
+                result[index + 1] = StrokeAnchorRef(
+                    chainID: ref.chainID, vertexIndex: ref.toAnchor,
+                    segmentIndex: index, isSegmentStart: false)
+            }
+        }
+        return result
+    }
+
     // MARK: - building
 
     /// Every visible ride's calls, flattened into marker records.
@@ -257,14 +321,22 @@ enum MapRideMarkers {
     /// ties in favour of whichever record arrived FIRST, so a different order
     /// would hand a shared station's name to a different ride.
     static func records(
-        rides: [RiddenRouteStore.DrawnRide], settings: Settings
-    ) -> [(record: StationDisplay.MarkerRecord, code: String?, ride: RiddenRouteStore.DrawnRide)] {
+        rides: [RiddenRouteStore.DrawnRide], settings: Settings,
+        strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
+    ) -> [(
+        record: StationDisplay.MarkerRecord, code: String?, ride: RiddenRouteStore.DrawnRide,
+        strokeAnchor: StrokeAnchorRef?
+    )] {
         var records:
-            [(record: StationDisplay.MarkerRecord, code: String?, ride: RiddenRouteStore.DrawnRide)] = []
+            [(
+                record: StationDisplay.MarkerRecord, code: String?,
+                ride: RiddenRouteStore.DrawnRide, strokeAnchor: StrokeAnchorRef?
+            )] = []
         for ride in rides where ride.visible {
             let stops = ride.stops
             let flags = rideFlags(stops)
             let positions = stopPositions(of: ride)
+            let strokeAnchors = stopStrokeAnchors(of: ride) { strokeRef(ride, $0) }
             // First + last effectively-ridden STOPPING station: the prominent
             // endpoint pair. Pass-throughs are excluded by construction —
             // a ride does not begin at a station it rolled through.
@@ -342,11 +414,11 @@ enum MapRideMarkers {
                     // `buildDeckMarkerRecords` rewrites the role, so a break
                     // that lands on an intermediate stop keeps that stop's
                     // half-boost. Reproduced rather than tidied.
-                    records.append((record, stop.n02StationCode, ride))
+                    records.append((record, stop.n02StationCode, ride, strokeAnchors[index]))
                     continue
                 }
 
-                records.append((record, stop.n02StationCode, ride))
+                records.append((record, stop.n02StationCode, ride, strokeAnchors[index]))
                 guard !isPass, !isBoundary else { continue }
                 // 中途停靠站: a pass-through-sized circle plus a small centre,
                 // which is a second record on the same layer drawn on top.
@@ -360,7 +432,11 @@ enum MapRideMarkers {
                 // Preserve the centre/outer ratio when a selection enlarges
                 // both. `style.radius` is a display setting and could be zero.
                 core.focusScale = style.radius > 0 ? (centre / style.radius) * 0.5 : 0
-                records.append((core, stop.n02StationCode, ride))
+                // The centre draws INSIDE its outer dot's own annotation view
+                // rather than at a coordinate of its own — see the renderer's
+                // note on `feature.role == "stop-center"` — so it carries no
+                // anchor of its own.
+                records.append((core, stop.n02StationCode, ride, nil))
             }
 
             // `getComputedPassThroughFeatures` — a station a route SECTION
@@ -385,7 +461,7 @@ enum MapRideMarkers {
                         seed(
                             position, name: name, code: nil, category: "pass",
                             role: "pass", style: style, focusScale: 0.5),
-                        nil, ride))
+                        nil, ride, nil))
                 }
             }
         }
@@ -399,9 +475,10 @@ enum MapRideMarkers {
     /// deck.gl wanted, and parsing `"rgb(26,26,26)"` back into a `UIColor`
     /// would be a round trip through text for numbers this side already holds.
     static func drawn(
-        rides: [RiddenRouteStore.DrawnRide], settings: Settings
+        rides: [RiddenRouteStore.DrawnRide], settings: Settings,
+        strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef? = { _, _ in nil }
     ) -> [Drawn] {
-        let built = records(rides: rides, settings: settings)
+        let built = records(rides: rides, settings: settings, strokeRef: strokeRef)
         let features = StationDisplay.markerRecordsToFC(built.map(\.record))
 
         // Density is local rather than journey-wide. A five-station window
@@ -444,7 +521,8 @@ enum MapRideMarkers {
                     role: feature.role,
                     trainType: entry.ride.trainType,
                     country: entry.ride.country,
-                    densityMinZoom: densityByRide[entry.ride.id]?[entry.record.position] ?? 0))
+                    densityMinZoom: densityByRide[entry.ride.id]?[entry.record.position] ?? 0),
+                strokeAnchor: entry.strokeAnchor)
         }
     }
 }

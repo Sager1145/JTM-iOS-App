@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 
 /// One pass over every surface the app can reach, so the console has something
 /// to say.
@@ -20,7 +21,11 @@ final class ConsoleSweepTests: XCTestCase {
         continueAfterFailure = true
     }
 
-    func testWalkEverySurface() {
+    func testWalkEverySurface() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .phone,
+            "This console sweep drives the phone tab bar and compact sheet stops.")
+
         let app = launch(tab: "all", stage: "expanded")
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 20))
 

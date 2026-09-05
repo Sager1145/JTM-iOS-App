@@ -176,6 +176,22 @@ final class PlaybackController {
     @ObservationIgnored weak var mapRenderer: PlaybackMapRendering?
     @ObservationIgnored var onFrame: ((PlaybackMapSnapshot) -> Void)?
     @ObservationIgnored var onFinish: (() -> Void)?
+    /// A ride segment's ACTUALLY drawn coordinates, when the caller can say —
+    /// `RailMapView.Coordinator.drawnCoordinates(of:ride:)`, which resolves
+    /// the segment against this frame's continuous-stroke chains
+    /// (`RailCore.StrokeRide`) and slices that chain's own offset pixels when
+    /// one matched.
+    ///
+    /// This controller compiles a played journey's path from
+    /// `RiddenRouteStore`/`Train` alone — it has no pixel geometry of its own,
+    /// and no display-chain geometry to match against either — so the
+    /// smallest hook is a closure the map view sets once it exists to be
+    /// asked. Takes the ride alongside its segment because the resolver is
+    /// keyed and cached per ride. `nil` (the default, and the answer whenever
+    /// no map has attached yet) keeps ``playbackFeatures`` exactly what it
+    /// always was: `segment.coordinates`.
+    @ObservationIgnored var drawnCoordinates:
+        ((RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> [Coordinate])?
 
     private struct Entry {
         let train: Train
@@ -668,7 +684,7 @@ final class PlaybackController {
         }
         return ride.segments.sorted { $0.segmentIndex < $1.segmentIndex }.map { segment in
             Playback.RiddenFeature(
-                geometry: .lineString(segment.coordinates),
+                geometry: .lineString(drawnCoordinates?(ride, segment) ?? segment.coordinates),
                 rideSegment: Statistics.isRideSegment(stops, segmentIndex: segment.segmentIndex),
                 segmentIndex: Double(segment.segmentIndex))
         }

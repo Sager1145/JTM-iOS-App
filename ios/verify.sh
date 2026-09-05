@@ -78,11 +78,16 @@ if [ "$run_swift" = 1 ]; then
         grep -E '^✘|error:' "$scratch.log" | head -30
         fail "swift test (full log: $scratch.log)"
     fi
+    # Read Swift Testing's final summary rather than counting individual
+    # completion lines. Parallel tests write those lines concurrently, so two
+    # identical successful runs used to report different totals when output
+    # was interleaved (465, then 370, for a 277-test run).
+    #
     # Counted rather than described as "parity tests": most of them are, but
-    # RailPresentationTests checks an invariant no fixture can express — that
-    # one set of inputs resolves to one primary action — and calling that a
-    # parity test would misreport what the number means.
-    passed=$(grep -cE '^✔ Test ' "$scratch.log" || true)
+    # RailPresentationTests checks invariants no fixture can express.
+    passed=$(sed -nE 's/^.*Test run with ([0-9]+) tests? in [0-9]+ suites?.*/\1/p' \
+        "$scratch.log" | tail -1)
+    [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
     echo "  $passed tests pass"
 
     # Warnings in our own sources fail the gate.
@@ -207,15 +212,16 @@ if [ "$run_swift" = 1 ]; then
     # Apple's Taiwan, Hong Kong, Macao and Korea basemaps are presented in
     # GCJ-02. North America is not among them: Apple's basemap there is WGS84,
     # so `us` and `ca` deliberately stay out of the correction below.
-    # Keep the datum correction
-    # at the MapKit boundary and on every subject that can be drawn: network
-    # lines, network stations and ridden routes. The latter keeps its WGS84
-    # copy for statistics and the on-disk route cache, or fixing the picture
-    # would silently break route classification and double-shift cached rides.
+    # Keep the datum correction at the MapKit boundary and on every subject
+    # that can be drawn: package-decoded network lines/stations,
+    # display-network lines/stations, and ridden routes. The latter keeps its
+    # WGS84 copy for statistics and the on-disk route cache, or fixing the
+    # picture would silently break route classification and double-shift
+    # cached rides.
     datum_network_calls=$(grep -c 'AppleMapDatum\.display' \
         "$here/RailMap/RailNetworkStore.swift" || true)
-    [ "$datum_network_calls" = 2 ] || fail \
-        "expected Apple datum conversion on network lines and stations; found $datum_network_calls"
+    [ "$datum_network_calls" = 4 ] || fail \
+        "expected Apple datum conversion on package/display network lines and stations; found $datum_network_calls"
     grep -q 'self\.coordinates = AppleMapDatum\.display(coordinates, country: country)' \
         "$here/RailMap/RiddenRouteStore.swift" \
         || fail "ridden routes no longer enter MapKit through AppleMapDatum"
@@ -854,6 +860,16 @@ PY
     grep -q 'input\.isReadyForMoreMediaData' RailMap/PlaybackVideoExporter.swift \
         || fail "the video exporter no longer skips frames the writer cannot take"
     echo "  the video exporter stays on the main actor and allocates per run"
+
+    # The wide workspace docks its menu as a card over a full-window map
+    # rather than narrowing the map into a second column, so nothing else
+    # tells the map's own framing how much of its leading edge that card is
+    # covering. Without this line, "frame this" and MapKit's own Legal label
+    # both land under the card on every window wide enough to show one.
+    grep -q 'controller.leadingObstruction = panelWidth + Self.dockInset \* 2 + safeAreaLeading' \
+        RailMap/ContentView.swift \
+        || fail "the docked card no longer reports the leading strip it covers"
+    echo "  the docked card reports the leading strip it covers"
 fi
 
 echo "OK"

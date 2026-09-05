@@ -634,6 +634,11 @@ struct PanelHeader<Actions: View>: View {
                 .accessibilityIdentifier("panelHeader")
                 .accessibilityAddTraits(.isHeader)
                 .railSheetStageActions()
+                // Only the docked card ever has a gesture recognizer here
+                // (see ``RailPanelHeaderDrag``); the passthrough shape and
+                // modifier below cost the phone sheet nothing.
+                .contentShape(Rectangle())
+                .railPanelHeaderDrag()
                 .modifier(ReduceMotionUITestProbe(enabled: reduceMotion))
             if showsSubtitle {
                 // One shared slot for every destination, grown rather than
@@ -760,6 +765,7 @@ struct PanelHeader<Actions: View>: View {
                 RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
                 value: stage)
     }
+
 }
 
 /// A debug-only observation point for the UI test that is run after the
@@ -852,6 +858,74 @@ extension EnvironmentValues {
     var railSheetStageAction: RailSheetStageAction? {
         get { self[RailSheetStageActionKey.self] }
         set { self[RailSheetStageActionKey.self] = newValue }
+    }
+}
+
+/// How a docked card follows a drag on its header. Nil under the phone sheet,
+/// where the system presentation owns that drag (`ResidentBottomSheetModifier`
+/// already resizes on a drag that starts on the title — see its own note on
+/// `.presentationContentInteraction`).
+///
+/// A drag on `PanelHeader`'s title block, split into the two halves a
+/// `DragGesture` actually reports: `changed` is the finger moving, fired every
+/// frame so the card can track it with no animation of its own; `ended` is the
+/// release, carrying both the raw translation and the system's own projected
+/// resting point so the caller can settle toward wherever the finger was
+/// actually headed rather than where it happened to be at the last frame.
+/// Boxed for the same reason ``RailSheetStageAction`` is: a bare closure pair
+/// is not `Sendable`, and an `EnvironmentKey`'s `defaultValue` has to be.
+struct RailPanelHeaderDrag: Sendable {
+    var changed: @MainActor @Sendable (_ translation: CGSize) -> Void
+    var ended: @MainActor @Sendable (_ translation: CGSize, _ predictedEnd: CGSize) -> Void
+    var cancelled: @MainActor @Sendable () -> Void
+}
+
+struct RailPanelHeaderDragKey: EnvironmentKey {
+    static let defaultValue: RailPanelHeaderDrag? = nil
+}
+
+extension EnvironmentValues {
+    var railPanelHeaderDrag: RailPanelHeaderDrag? {
+        get { self[RailPanelHeaderDragKey.self] }
+        set { self[RailPanelHeaderDragKey.self] = newValue }
+    }
+}
+
+/// Attaches ``RailPanelHeaderDrag`` to the header title block, when something
+/// is listening for it.
+///
+/// A pure passthrough when nothing is — the same shape as
+/// ``SheetStageActions`` and for the same reason: the phone sheet never sets
+/// this environment value, so its header stays exactly as undraggable as it
+/// was before this existed.
+private struct PanelHeaderDrag: ViewModifier {
+    @Environment(\.railPanelHeaderDrag) private var drag
+    @GestureState private var isDragging = false
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if let drag {
+            content.gesture(
+                DragGesture(minimumDistance: 6)
+                    .updating($isDragging) { _, active, _ in active = true }
+                    .onChanged { drag.changed($0.translation) }
+                    .onEnded { drag.ended($0.translation, $0.predictedEndTranslation) })
+                .onChange(of: isDragging) { _, active in
+                    // GestureState also resets when the system cancels a drag.
+                    // This clears only transient translation, never the stop.
+                    if !active { drag.cancelled() }
+                }
+                .onDisappear { drag.cancelled() }
+        } else {
+            content
+        }
+    }
+}
+
+extension View {
+    /// Follows a drag on the docked card's header. See ``RailPanelHeaderDrag``.
+    func railPanelHeaderDrag() -> some View {
+        modifier(PanelHeaderDrag())
     }
 }
 

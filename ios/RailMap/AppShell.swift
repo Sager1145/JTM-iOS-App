@@ -33,6 +33,8 @@ import UniformTypeIdentifiers
 /// started in one going on playing, unreachable, while another drew a map that
 /// knew nothing about it.
 struct ContentView: View {
+    let localization: AppLocalization
+
     /// Which destination is on top. §2.1's first tab: what is coming is the
     /// question a journey app is opened with, and an Upcoming with nothing in
     /// it says so plainly and offers the log one tap away (§13.1).
@@ -43,7 +45,6 @@ struct ContentView: View {
     @State private var mapController = RailMapController()
     @State private var riddenRoutes = RiddenRouteStore()
     @State private var mileageStatistics = MileageStatisticsStore()
-    @State private var localization = AppLocalization()
     /// One transport for the whole app. See the type note above.
     @State private var playback = PlaybackController()
     /// Published into the environment rather than passed down: the two places
@@ -300,5 +301,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(localization: AppLocalization())
 }

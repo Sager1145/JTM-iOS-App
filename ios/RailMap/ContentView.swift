@@ -13,13 +13,13 @@ import SwiftUI
 /// the vertical resize gesture.
 ///
 /// The layout is chosen by the window's shape, not the device. A phone in
-/// landscape has almost no height for a sheet but plenty of width for a
-/// sidebar, and it reports a *compact* horizontal size class on every model
-/// but the largest — so size class alone would put a sheet there and leave the
-/// map a letterbox.
+/// landscape has almost no height for a sheet but plenty of width for the
+/// same menu docked as a floating card, and it reports a *compact*
+/// horizontal size class on every model but the largest — so size class alone
+/// would put a sheet there and leave the map a letterbox.
 ///
 ///   tall windows   a resizable persistent panel over the map
-///   wide windows   the ride list beside the map
+///   wide windows   the same menu docked as a card over a full-window map
 ///
 /// The map's controls run down the right edge in both, and in the panel
 /// layout they ride above it — at full height they are removed rather than
@@ -44,7 +44,6 @@ import SwiftUI
 /// with tests over 288 state combinations. What is left here is the wiring:
 /// which store call each resolved action makes.
 struct RailWorkspaceView: View {
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     /// Read for one reason: the share image is rendered off screen, and an
     /// `ImageRenderer` starts from the light appearance unless it is told
     /// otherwise — so a reader in Dark Mode would get a white poster of their
@@ -153,6 +152,14 @@ struct RailWorkspaceView: View {
     }
     /// The sheet's height right now, reported every frame while it is dragged.
     @State private var sheetHeight: CGFloat = 0
+
+    /// The docked card's own live drag, in points, while a finger is on its
+    /// header. Positive is a downward drag — retracting, the same direction
+    /// §10.2's grabber-less header drag collapses the phone sheet — and it is
+    /// subtracted from the settled stop's height rather than added to it. See
+    /// ``RailWorkspaceView/sideBySideLayout(in:panelWidth:)``.
+    @State private var dockDragOffset: CGFloat = 0
+    @State private var lastOpenDockStage: SheetStage = .medium
 
     /// How tall the map's control rail actually draws, so the fade that keeps
     /// it out from under the status bar knows where its top edge is. See
@@ -286,17 +293,16 @@ struct RailWorkspaceView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            // Wider than tall, or a regular-width window: sidebar. Read from
-            // the geometry so a rotation or an iPad window resize switches
-            // layouts as it happens.
-            Group {
-                if geometry.size.width > geometry.size.height
-                    || horizontalSizeClass == .regular
-                {
-                    sidebarLayout
-                } else {
-                    mapLayout(in: geometry)
-                }
+            let layout = WorkspaceLayoutMetrics(containerSize: geometry.size)
+
+            // One state graph, two compositions. Selection, search, filters,
+            // playback, map camera, and presentation state all remain owned by
+            // this view while the window crosses the breakpoint.
+            switch layout.mode {
+            case .compactOverlay:
+                mapLayout(in: geometry)
+            case .sideBySide:
+                sideBySideLayout(in: geometry, panelWidth: layout.sidePanelWidth)
             }
             // §4.3's bottom clearance is NOT published from here any more, and
             // there is nothing left to publish: the system already gives it to
@@ -442,11 +448,12 @@ struct RailWorkspaceView: View {
             if let camera = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_CAMERA"] {
                 let values = camera.split(separator: ",").compactMap { Double($0) }
                 if values.count == 3 {
-                    try? await Task.sleep(for: .milliseconds(700))
-                    controller.mapView?.setRegion(MKCoordinateRegion(
+                    do { try await Task.sleep(for: .milliseconds(700)) }
+                    catch { return }
+                    controller.frameForUITest(MKCoordinateRegion(
                         center: CLLocationCoordinate2D(latitude: values[0], longitude: values[1]),
-                        span: MKCoordinateSpan(latitudeDelta: values[2], longitudeDelta: values[2])),
-                        animated: false)
+                        span: MKCoordinateSpan(latitudeDelta: values[2], longitudeDelta: values[2])
+                    ))
                     return
                 }
             }
@@ -460,8 +467,12 @@ struct RailWorkspaceView: View {
             // is measured from have landed. `frameAtLaunch` will not fire
             // twice, so this is the last word on the camera either way.
             try? await Task.sleep(for: .milliseconds(700))
+            // `controller.framingInsets` rather than a bare margin: on a
+            // window wide enough for the docked card this harness's own shot
+            // would otherwise land half hidden behind it, the same way any
+            // other "frame this" would without the controller's padding.
             controller.mapView?.setVisibleMapRect(
-                rect, edgePadding: UIEdgeInsets(top: 40, left: 40, bottom: 40, right: 40),
+                rect, edgePadding: controller.framingInsets,
                 animated: false)
         }
         // A sheet, for the same reason `RAILMAP_UI_TEST_SELECT` exists: the
@@ -497,7 +508,7 @@ struct RailWorkspaceView: View {
                 // map would have handed one up: whichever the network store
                 // lists first, named and read exactly as the annotation names
                 // and reads it.
-                if let station = store.stations.first {
+                if let station = store.mapStations.first ?? store.stations.first {
                     sheet = .station(
                         StationCard(
                             station: station,
@@ -648,6 +659,16 @@ struct RailWorkspaceView: View {
         }
         .sheet(item: $sheet) { presented in
             presentedSheet(presented)
+        }
+        // Was attached to `statisticsPanel` directly, i.e. inside
+        // `workspaceTabs` — which under the docked card is a
+        // `.horizontalSizeClass` forced to `.compact` (see `dockedMenu`), so
+        // this sheet presented at a compact size even in `.sideBySide`. Every
+        // other presentation in this workspace already raises from here,
+        // outside that override, and reads the WINDOW's own size class; this
+        // one now does too.
+        .sheet(item: $statisticsImage) { file in
+            StatisticsShareView(file: file) { statisticsImage = nil }
         }
         // §13.2's harmony rule: the tap has to arrive with the change, so it is
         // driven by the same state the view is drawn from rather than by a
@@ -1013,6 +1034,30 @@ struct RailWorkspaceView: View {
         .onChange(of: sheetHeight) { _, height in
             controller.bottomObstruction = height + geometry.safeAreaInsets.bottom
         }
+        // This composition has no docked card, so nothing is covering the
+        // map's leading edge here. A large phone in landscape is wide enough
+        // to be `.sideBySide`, so rotating back to portrait can arrive here
+        // with `leadingObstruction` still set from that card — and
+        // `framingInsets` would keep every "frame this" shifted off-centre
+        // until something reset it. This is that reset.
+        //
+        // The bottom edge needs the same reset, and for a subtler reason:
+        // `sheetHeight` is `@State` on this view, so it survives the branch
+        // swap between compositions and does not change value on the way
+        // back here — it was already whatever the sheet last measured before
+        // the window went wide. `.onChange(of: sheetHeight)` above only fires
+        // on a change, so if the sheet re-presents at that same height it
+        // never runs, and `bottomObstruction` would still hold the
+        // side-by-side composition's number (typically 0, since that
+        // composition has no resident sheet). Recomputing it here, from the
+        // `sheetHeight` that is already current, keeps both edges consistent
+        // on arrival instead of one being reset and the other stale.
+        .onAppear {
+            controller.leadingObstruction = 0
+            controller.bottomObstruction = sheetHeight > 0
+                ? sheetHeight + geometry.safeAreaInsets.bottom
+                : 0
+        }
         .residentBottomSheet(
             metrics: metrics,
             detent: detentBinding(metrics),
@@ -1163,6 +1208,7 @@ struct RailWorkspaceView: View {
         // is drawn by `searchPanel` instead, on every OS version this app
         // deploys to. `railSearchFocused` went with it — ⌘F now moves focus to
         // that field directly, through the same `searchFocused` binding.
+        .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()
         .modifier(SystemSheetTabSurface())
         // The visible titles are already resolved through AppLocalization,
@@ -1224,10 +1270,10 @@ struct RailWorkspaceView: View {
     /// 91, the third with 54, and the fourth with 13 — and the frame after
     /// that walked into the guard page. `EXC_BAD_ACCESS`, "Could not determine
     /// thread index for stack guard region", every time. Rotating is what made
-    /// it certain rather than occasional: the sidebar builds the same four
-    /// pages INLINE in `body` (the sheet hosts them in a controller of its own,
-    /// which is a stack of its own), and UIKit's rotation runs that body
-    /// nested inside thirty-odd frames of its own transition machinery.
+    /// it certain rather than occasional: the docked card builds the same
+    /// four pages INLINE in `body` (the sheet hosts them in a controller of
+    /// its own, which is a stack of its own), and UIKit's rotation runs that
+    /// body nested inside thirty-odd frames of its own transition machinery.
     ///
     /// None of this is reproducible in the simulator, where the main thread is
     /// a macOS main thread with 8 MB: twenty scenarios across iOS 26.5 and
@@ -1416,9 +1462,6 @@ struct RailWorkspaceView: View {
             openJourney: { sheet = .detail($0) },
             openData: openData,
             openSettings: openSettings)
-        .sheet(item: $statisticsImage) { file in
-            StatisticsShareView(file: file) { statisticsImage = nil }
-        }
     }
 
     // MARK: - the panel header (§9.5.6: 左上大标题, 右上功能按钮)
@@ -2109,36 +2152,260 @@ struct RailWorkspaceView: View {
         }
     }
 
-    // MARK: - wide windows: a sidebar, on iPad and on a phone in landscape
+    // MARK: - the wide-window workspace
 
-    private var sidebarLayout: some View {
-        HStack(spacing: 0) {
-            withPresentations(workspaceTabs(stage: .expanded, headerExpansion: 1))
-            // Narrower on a phone, where the map has little enough width as it
-            // is; a fixed 320 would eat half of a landscape iPhone.
-            .frame(width: horizontalSizeClass == .regular ? 360 : 300)
-            // The same opaque reading surface the resident sheet uses, not a
-            // material. `RailSheetBackground`'s own note is the argument: the
-            // panel is where the reader READS, and a surface that takes its
-            // colour from whatever the map happens to be showing gives that
-            // text a different background in every part of the country. It
-            // applied only to the phone-portrait sheet, so one rotation turned
-            // the same workspace from an opaque page into a translucent one.
-            .background { RailSheetBackground() }
+    /// The docked card's own margin from the window's edges, and the corner
+    /// radius that reads as a card rather than a panel. Read from
+    /// `WorkspaceLayoutPolicy` rather than restated as a local 16, because
+    /// `mode`'s own breakpoint now spends that same number twice deciding
+    /// whether a window is wide enough to dock a card at all — a local
+    /// constant here could drift from the one the policy actually measured
+    /// against.
+    private static let dockInset = CGFloat(WorkspaceLayoutPolicy.dockInset)
+    private static let dockCornerRadius: CGFloat = 24
 
-            Divider()
-
-            ZStack(alignment: .bottomTrailing) {
-                map
-                controlStack().padding(12)
-                playbackBar
-                    .padding(12)
-                    .railAnimation(
-                        RailMotion.spring, value: showsPlaybackBar,
-                        reduceMotion: reduceMotion)
+    /// The one wide-window composition: a full-window map with the same menu
+    /// the phone presents as a resident sheet, docked as a floating card on
+    /// the leading edge instead.
+    ///
+    /// This used to be two shapes — a two-column split for medium windows and
+    /// a native three-column `NavigationSplitView` with its own `List`
+    /// sidebar above 1,180 pt — and the wider of the two is gone. It drew
+    /// iPadOS's own top tab capsule where the phone and the two-column
+    /// composition both drew a bottom tab bar, so which of the reader's four
+    /// destinations was a tap away, and which chrome was even on screen,
+    /// depended on a window's WIDTH rather than on what the reader was doing.
+    /// One docked card now covers every window from 692 pt up, on iPad and on
+    /// Mac Catalyst alike, and it is a function of window size the same way
+    /// `mapLayout` is: no idiom check, no Catalyst check.
+    ///
+    /// The card now retracts and expands between the phone sheet's own three
+    /// stops — compact, half, full — instead of always drawing expanded.
+    /// There is no system sheet here to measure a fraction of the window and
+    /// hand back a live height, so this function does by hand what
+    /// `chromeMetrics(in:)`/`chromeStage(_:contentHeight:)` do for the phone:
+    /// build a `BottomChromeMetrics` from the room the card actually has,
+    /// read the live height off the current drag, and derive the stage and
+    /// header-expansion progress from THAT rather than from the settled stop
+    /// — §9.5.5 point 6's reasoning again, this time with a header drag
+    /// standing in for the system sheet's own gesture.
+    private func sideBySideLayout(in geometry: GeometryProxy, panelWidth: CGFloat) -> some View {
+        let safeAreaLeading = geometry.safeAreaInsets.leading
+        // Kept out of `applyDockObstruction`'s inputs on purpose: the covered
+        // strip is a function of the card's WIDTH, not its height, so the
+        // camera does not get reframed every time the card breathes between
+        // its stops — only when the window itself, or the card's width in
+        // it, actually changes.
+        let room = geometry.size.height - Self.dockInset * 2
+        let metrics = BottomChromeMetrics(
+            screenHeight: room,
+            compactRow: BottomChromeMetrics.compactTabBand + compactHeaderRows,
+            isAccessibilitySize: dynamicTypeSize.isAccessibilitySize)
+        let settled = metrics.height(of: metrics.available(stageSelection))
+        let live = min(max(settled - dockDragOffset, metrics.compact), room)
+        let stage = metrics.stage(nearest: live)
+        let headerExpansion = metrics.headerExpansionProgress(for: live)
+        return ZStack(alignment: .bottomLeading) {
+            wideMapSurface
+            HStack(alignment: .top, spacing: 8) {
+                dockedMenu(
+                    width: panelWidth, height: live, stage: stage,
+                    headerExpansion: headerExpansion, metrics: metrics)
+                dockPanelToggle(stage: stage, metrics: metrics)
             }
+            // The settled height animates with the app's own spring; the
+            // live drag does not — `dockDragOffset` is written straight
+            // through in `RailPanelHeaderDrag.changed`, with no
+            // `withAnimation` around it, so the card tracks the finger on
+            // the same frame rather than chasing it a spring behind.
+            .railAnimation(RailMotion.spring, value: stageSelection, reduceMotion: reduceMotion)
+                // Inside the safe area, not clipped to it: the phone sheet
+                // reaches the same clearance from the status bar and the home
+                // indicator by riding the safe area rather than padding past
+                // it, and a card floating over a full-window map needs the
+                // same margin for the same reason — the window's own chrome,
+                // not this view's.
+                .padding(Self.dockInset)
         }
-        .ignoresSafeArea(edges: .bottom)
+        .onAppear { applyDockObstruction(panelWidth, safeAreaLeading: safeAreaLeading) }
+        .onChange(of: panelWidth) { _, width in
+            applyDockObstruction(width, safeAreaLeading: safeAreaLeading)
+        }
+        .onChange(of: safeAreaLeading) { _, leading in
+            applyDockObstruction(panelWidth, safeAreaLeading: leading)
+        }
+        .onChange(of: geometry.size) { _, _ in dockDragOffset = 0 }
+        // The card is only real while this composition is mounted. Without
+        // this, a resize down to `.compactOverlay` would leave the map
+        // framing and MapKit's own Legal label shifted off a card that no
+        // longer exists — `mapLayout`'s own `.onAppear` is the other half of
+        // this handoff.
+        .onDisappear {
+            dockDragOffset = 0
+            controller.leadingObstruction = 0
+        }
+    }
+
+    /// The phone's own menu, unmodified apart from the size class it reads
+    /// and the stop it is drawn at.
+    ///
+    /// `workspaceTabs` is what `mapLayout` puts inside the resident sheet —
+    /// same four tabs, same pages, same resident-layer state. The only
+    /// difference here is `.horizontalSizeClass`: a docked card is between
+    /// 300 and 440 pt wide, which is a compact width whatever the surrounding
+    /// window is, and forcing the environment to say so is what keeps its
+    /// `TabView` drawing the phone's bottom tab bar instead of iPadOS's top
+    /// tab capsule, which is what a `.regular` class would otherwise draw
+    /// once the window itself is wide enough to be `.sideBySide` at all.
+    ///
+    /// Applied INSIDE `withPresentations` rather than around this whole
+    /// function's result, so a sheet or confirmation dialog presented from
+    /// the card keeps the WINDOW's own size class — full-width on iPad,
+    /// exactly as `mapLayout`'s sheets already are — rather than inheriting a
+    /// forced-compact presentation style meant only for the tab bar.
+    ///
+    /// `stageSelection` is shared with the phone sheet's own state — a
+    /// rotation between the two compositions keeps the reader's stop instead
+    /// of resetting it, the same way `detentBinding(_:)` keeps it for a
+    /// rotation that stays on the phone. Nothing here writes it directly;
+    /// `metrics`/`settled` are recomputed from it (not threaded through as a
+    /// third stored value) so the closures below always answer against
+    /// whatever the reader is actually looking at.
+    private func dockedMenu(
+        width: CGFloat, height: CGFloat, stage: SheetStage, headerExpansion: CGFloat,
+        metrics: BottomChromeMetrics
+    ) -> some View {
+        let settled = metrics.height(of: metrics.available(stageSelection))
+        return withPresentations(
+            workspaceTabs(stage: stage, headerExpansion: headerExpansion)
+                .environment(\.horizontalSizeClass, .compact)
+                // §10.2's own reason, for a card that has no Pull Bar and no
+                // system sheet to drag: without this, VoiceOver and Switch
+                // Control readers — and anyone who cannot perform the header
+                // drag below — would have no way to reach Half or Compact at
+                // all once the card first draws Expanded.
+                .environment(
+                    \.railSheetStageAction,
+                    RailSheetStageAction(
+                        move: { requested in
+                            settleDock(at: requested, metrics: metrics)
+                        },
+                        stages: metrics.stages)
+                )
+                // The header drag itself. `changed` writes the live offset
+                // with no animation, so the card follows the finger; `ended`
+                // projects the RELEASE velocity (`predictedEnd`, not the
+                // translation at the moment the finger lifted) onto the same
+                // stops and settles there with the app's spring — the same
+                // shape of settle §9.5.5 gives the phone sheet, driven by a
+                // gesture instead of a system detent.
+                .environment(
+                    \.railPanelHeaderDrag,
+                    RailPanelHeaderDrag(
+                        changed: { translation in
+                            dockDragOffset = translation.height
+                        },
+                        ended: { _, predicted in
+                            let target = metrics.stage(nearest: settled - predicted.height)
+                            settleDock(at: target, metrics: metrics)
+                        },
+                        cancelled: {
+                            // onEnded already clears this on a normal release.
+                            guard dockDragOffset != 0 else { return }
+                            withAnimation(RailMotion.animation(
+                                RailMotion.spring, reduceMotion: reduceMotion)) {
+                                dockDragOffset = 0
+                            }
+                        })
+                )
+        )
+        .frame(width: width, height: height)
+        // The same opaque reading surface the resident sheet uses, not a
+        // material. `RailSheetBackground`'s own note is the argument: the
+        // panel is where the reader READS, and a surface that takes its
+        // colour from whatever the map happens to be showing gives that text
+        // a different background in every part of the country.
+        .background { RailSheetBackground() }
+        .clipShape(RoundedRectangle(cornerRadius: Self.dockCornerRadius, style: .continuous))
+        .shadow(color: .black.opacity(0.14), radius: 18, y: 6)
+    }
+
+    /// Beside the card so narrow windows retain the phone header's reading
+    /// width. This single control also owns the dock's keyboard shortcut.
+    private func dockPanelToggle(stage: SheetStage, metrics: BottomChromeMetrics) -> some View {
+        let label = stage == .compact
+            ? localization.text("ios.panel.reopen", fallback: "Expand panel")
+            : localization.text("ios.sheet.collapse", fallback: "Collapse panel")
+        return SheetIconButton(
+            systemImage: stage == .compact ? "chevron.up" : "chevron.down",
+            accessibilityLabel: Text(label)
+        ) {
+            // Accessibility layouts can omit the medium stop. Reopening
+            // must choose an offered open stop, never resolve back to compact.
+            let openStage = metrics.stages.contains(lastOpenDockStage)
+                && lastOpenDockStage != .compact ? lastOpenDockStage : .expanded
+            settleDock(
+                at: stage == .compact ? openStage : .compact,
+                metrics: metrics)
+        }
+        // Match the phone header's chrome glyph ceiling; reading text still
+        // follows the full accessibility size range.
+        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+        .railGlass(in: Circle(), interactive: true)
+        .help(label)
+        .keyboardShortcut("s", modifiers: [.command, .option])
+        .accessibilityIdentifier("dockPanelToggle")
+        .accessibilityValue(Text(String(describing: stage)))
+    }
+
+    private func settleDock(at requested: SheetStage, metrics: BottomChromeMetrics) {
+        let target = metrics.available(requested)
+        if target == .compact, stageSelection != .compact {
+            lastOpenDockStage = stageSelection
+        } else if target != .compact {
+            lastOpenDockStage = target
+        }
+        withAnimation(RailMotion.animation(RailMotion.spring, reduceMotion: reduceMotion)) {
+            stageSelection = target
+            dockDragOffset = 0
+        }
+    }
+
+    /// Tell the controller how much of the map's leading edge the card is
+    /// covering, so both halves of §9.5.6's clearance rule — "frame this"
+    /// and MapKit's own Legal label — read the strip the reader can actually
+    /// see rather than the strip behind the card.
+    ///
+    /// `bottomObstruction` is reset to zero rather than left alone: nothing
+    /// in this composition sits over the map's bottom edge, and a window that
+    /// crossed into `.sideBySide` FROM `.compactOverlay` would otherwise carry
+    /// the phone sheet's last reported height in ``RailMapController`` forever.
+    ///
+    /// `safeAreaLeading` accounts for a gap the root `GeometryReader` does
+    /// not: it reports the safe-area-INSET size, but the map itself
+    /// `.ignoresSafeArea()`, so on a notched phone in landscape the card's
+    /// `.padding(Self.dockInset)` lands `safeAreaInsets.leading` further from
+    /// the map's own left edge than `panelWidth + 2 × dockInset` alone would
+    /// say — the card's trailing edge sits over map content this number
+    /// leaves unaccounted for otherwise.
+    private func applyDockObstruction(_ panelWidth: CGFloat, safeAreaLeading: CGFloat) {
+        controller.leadingObstruction = panelWidth + Self.dockInset * 2 + safeAreaLeading
+        controller.bottomObstruction = 0
+    }
+
+    /// One map composition for the wide workspace. Kept separate from
+    /// ``sideBySideLayout(in:panelWidth:)`` so the docked card's own
+    /// `ZStack` reads as "map, then card" rather than as one long body.
+    private var wideMapSurface: some View {
+        ZStack(alignment: .bottomTrailing) {
+            map
+            controlStack().padding(12)
+            playbackBar
+                .padding(12)
+                .railAnimation(
+                    RailMotion.spring, value: showsPlaybackBar,
+                    reduceMotion: reduceMotion)
+        }
     }
 
     /// Which layer is on top. §4.4: closing a journey is returning to the list,
@@ -2910,7 +3177,7 @@ struct RailWorkspaceView: View {
     private var map: some View {
         RailMapView(
             lines: lines,
-            stations: store.stations,
+            stations: store.mapStations,
             rides: mapRides,
             selectedTrainID: itineraries.selectedTrainID,
             selectedDate: selectedDate,
@@ -2929,9 +3196,11 @@ struct RailWorkspaceView: View {
             // the map rebuilt for. Only while the network is on: with it off
             // there are no rails and no station dots to draw, so a pan across
             // Japan costs nothing at all.
-            onBuildRect: { rect in
+            // The loader's historical `cameraZoom` parameter receives the
+            // viewport-adjusted visibility zoom, matching the renderer's gate.
+            onBuildRect: { rect, visibilityZoom in
                 guard controller.showsNetwork else { return }
-                store.ensure(regionsIntersecting: rect)
+                store.ensure(regionsIntersecting: rect, cameraZoom: visibilityZoom)
             }
         ) { render = $0 }
         .ignoresSafeArea()
@@ -2946,9 +3215,9 @@ struct RailWorkspaceView: View {
         // "frame this" flew the camera with Reduce Motion on.
         //
         // Attached to `map` rather than to either layout, because both the
-        // sheet layout and the sidebar layout mount it and the controller must
-        // not depend on which one the window is in. `initial: true` is what
-        // covers a reader who already had the setting on at launch.
+        // sheet layout and the docked-card layout mount it and the controller
+        // must not depend on which one the window is in. `initial: true` is
+        // what covers a reader who already had the setting on at launch.
         .onChange(of: reduceMotion, initial: true) { _, reduced in
             controller.reduceMotion = reduced
         }
@@ -3212,7 +3481,7 @@ struct RailWorkspaceView: View {
     /// The store no longer holds them inside its `.loaded` case, because they
     /// arrive one region at a time and the map draws each as it lands rather
     /// than waiting for Japan.
-    private var lines: [RailNetworkStore.DrawnLine] { store.lines }
+    private var lines: [RailNetworkStore.DrawnLine] { store.mapLines }
 }
 
 /// A workspace destination's page, mounted rather than composed.

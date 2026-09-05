@@ -300,6 +300,7 @@ struct RideCard: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 Text(train.number)
+                    .accessibilityIdentifier("selectedJourney-\(train.id)")
                     // Interpolated rather than swapped between two `Font`s, for
                     // the reason ``RailInterpolatedFont`` gives and for the one
                     // `expansionProgress` gives above: this number and the panel
@@ -391,6 +392,7 @@ struct RideCard: View {
                             "ios.journey.backToList", fallback: "Back to the list")),
                     action: onClose
                 )
+                .accessibilityIdentifier("journeyBackToList")
             }
             .padding(.top, actionsTopInset)
         }

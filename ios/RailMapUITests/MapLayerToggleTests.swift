@@ -177,6 +177,85 @@ final class MapLayerToggleTests: XCTestCase {
         attach(app, named: "06-map-without-network-stations")
     }
 
+    /// Enabling the complete network must leave the app responsive while its
+    /// prebuilt viewport tiles are prepared and atomically installed.
+    func testAllRailwaysToggleDoesNotStallTheMap() {
+        XCUIDevice.shared.orientation = .portrait
+        // A fixed railway-dense camera makes an empty render unambiguous. The
+        // network still starts off and the store still starts without display
+        // geometry, so this exercises the cold request that regressed.
+        let app = launchOverTokyo()
+        let renderStatus = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(
+            renderStatus.waitForExistence(timeout: 12),
+            "the map's debug render status never mounted")
+        let network = app.buttons["mapNetworkToggle"]
+        XCTAssertTrue(network.waitForExistence(timeout: 12))
+        XCTAssertFalse(network.isSelected)
+
+        let started = ContinuousClock.now
+        network.tap()
+        XCTAssertTrue(network.isSelected, "全部線路 did not finish enabling")
+        let rendered = NSPredicate(format: "label BEGINSWITH %@", "network:rendered;")
+        expectation(for: rendered, evaluatedWith: renderStatus)
+        waitForExpectations(timeout: 3)
+        let elapsed = ContinuousClock.now - started
+        XCTAssertTrue(
+            !renderStatus.label.contains("overlays:0"),
+            "全部線路 was enabled but the map installed no railway overlays")
+        XCTAssertLessThan(
+            elapsed, .seconds(3),
+            "全部線路 took \(elapsed) to produce its first rendered viewport")
+        let layers = app.buttons["mapLayersButton"]
+        XCTAssertTrue(layers.isHittable, "map controls stalled while loading all railways")
+        layers.tap()
+        XCTAssertTrue(
+            app.switches["layerNetworkStations"].waitForExistence(timeout: 6),
+            "the layers sheet did not respond after enabling all railways")
+        attach(app, named: "11-all-railways-responsive")
+    }
+
+    /// Checks the actual renderer independently of XCTest's tap timing.
+    func testNetworkVisibilityUsesWindowDensity() throws {
+        XCUIDevice.shared.orientation = .portrait
+        try assertNetworkWindowDensity()
+    }
+
+    private func assertNetworkWindowDensity() throws {
+        let app = launchOverTokyo(hiding: "network")
+        let renderStatus = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(renderStatus.waitForExistence(timeout: 12))
+        expectation(
+            for: NSPredicate(format: "label BEGINSWITH %@", "network:rendered;"),
+            evaluatedWith: renderStatus)
+        waitForExpectations(timeout: 20)
+        // Read the real renderer's scales, rather than only testing the pure
+        // policy. This catches a viewport allowance that never reaches MapKit.
+        let status = renderStatus.label
+        let fields = status.split(separator: ";")
+        let cameraText = try XCTUnwrap(fields.first { $0.hasPrefix("camera:") })
+        let lodText = try XCTUnwrap(fields.first { $0.hasPrefix("lod:") })
+        let camera = try XCTUnwrap(Double(cameraText.dropFirst("camera:".count)))
+        let lod = try XCTUnwrap(Double(lodText.dropFirst("lod:".count)))
+        let windowFrame = app.frame
+        let shorterEdge = min(windowFrame.width, windowFrame.height)
+        let expectedAllowance = shorterEdge >= 900 ? 1.0 : shorterEdge >= 600 ? 0.5 : 0
+        XCTAssertEqual(
+            lod - camera, expectedAllowance, accuracy: 0.02,
+            "The rendered network must use this window's density allowance.")
+        let density = XCTAttachment(string: status)
+        density.name = "rendered-network-density"
+        density.lifetime = .keepAlways
+        add(density)
+        attach(app, named: "network-window-density")
+    }
+
+    func testLandscapeNetworkUsesWindowDensity() throws {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        defer { XCUIDevice.shared.orientation = .portrait }
+        try assertNetworkWindowDensity()
+    }
+
     // MARK: - helpers
 
     /// Press a row's switch, rather than its row.

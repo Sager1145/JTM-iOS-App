@@ -98,6 +98,10 @@ enum ShellStrings {
             .en: "Expand panel", .ja: "パネルを全画面にする",
             .zhHans: "展开面板", .zhHant: "展開面板",
         ],
+        "ios.panel.reopen": [
+            .en: "Expand panel", .ja: "パネルを開く",
+            .zhHans: "展开面板", .zhHant: "展開面板",
+        ],
         "ios.sheet.half": [
             .en: "Half-height panel", .ja: "パネルを半分の高さにする",
             .zhHans: "面板半屏", .zhHant: "面板半螢幕",
@@ -258,6 +262,16 @@ enum ShellStrings {
             .zhHant: "{code} · {count} 條線路",
         ],
         "ios.decodeTime": [.en: "Decode time", .ja: "解析時間", .zhHans: "解析耗时", .zhHant: "解析耗時"],
+        "ios.displayNetwork": [
+            .en: "Display network", .ja: "表示ネットワーク",
+            .zhHans: "显示路网", .zhHant: "顯示路網",
+        ],
+        "ios.displayNetworkValue": [
+            .en: "{loaded}/{requested} · {kb} KB",
+            .ja: "{loaded}/{requested}・{kb} KB",
+            .zhHans: "{loaded}/{requested} · {kb} KB",
+            .zhHant: "{loaded}/{requested} · {kb} KB",
+        ],
         "ios.renderer": [.en: "Renderer", .ja: "描画エンジン", .zhHans: "绘制引擎", .zhHant: "繪製引擎"],
 
         // -- Settings: the opening view --------------------------------------

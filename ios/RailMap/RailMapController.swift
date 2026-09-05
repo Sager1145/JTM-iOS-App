@@ -116,7 +116,15 @@ final class RailMapController {
     /// the interface has to *know* when one arrives rather than reading a
     /// non-observable reference and never being told.
     @ObservationIgnored weak var mapView: MKMapView? {
-        didSet { isMapReady = mapView != nil }
+        didSet {
+            isMapReady = mapView != nil
+            // A composition swap (phone ↔ docked) tears down the old
+            // `MKMapView` and `RailMapView.makeUIView` hands back a fresh
+            // one, which starts with zero margins. `leadingObstruction`'s
+            // own `didSet` already fired on the map that just died, so the
+            // new map never got the number unless it is re-applied here.
+            applyLeadingMargin()
+        }
     }
 
     private(set) var isMapReady = false
@@ -215,9 +223,19 @@ final class RailMapController {
     }
 
     /// The room a framed subject is given: the resident sheet's own height at
-    /// the bottom (§9.5.6), and a margin everywhere else.
-    private var framingInsets: UIEdgeInsets {
-        UIEdgeInsets(top: 40, left: 40, bottom: max(40, bottomObstruction + 20), right: 40)
+    /// the bottom (§9.5.6), the docked card's own width at the left in the
+    /// wide composition, and a margin everywhere else.
+    ///
+    /// Non-private because the launch-framing harness in `ContentView` needs
+    /// the same padding the reader's own "frame this" calls use — a debug
+    /// camera set with a bare `UIEdgeInsets(40,40,40,40)` would land a shot
+    /// half hidden under the card on any window wide enough to show one.
+    var framingInsets: UIEdgeInsets {
+        UIEdgeInsets(
+            top: 40,
+            left: max(40, leadingObstruction + 20),
+            bottom: max(40, bottomObstruction + 20),
+            right: 40)
     }
 
     /// The same rectangle, for the playback chase to centre its train in.
@@ -279,6 +297,17 @@ final class RailMapController {
         return true
     }
 
+#if DEBUG
+    /// Deterministic camera ownership for screenshot/UI-test harnesses.
+    /// Marking the opening move consumed prevents the normal launch framing
+    /// task from overwriting the requested audit location a moment later.
+    func frameForUITest(_ region: MKCoordinateRegion) {
+        guard let mapView else { return }
+        hasOpened = true
+        mapView.setRegion(region, animated: false)
+    }
+#endif
+
     /// Whether the map has already opened on its country.
     @ObservationIgnored private(set) var hasOpened = false
 
@@ -296,6 +325,36 @@ final class RailMapController {
     /// How much of the map's bottom edge the resident sheet is covering right
     /// now. Written by the workspace as the sheet moves.
     @ObservationIgnored var bottomObstruction: CGFloat = 0
+
+    /// How much of the map's leading edge the docked menu card is covering
+    /// right now, in the wide composition. Written by the workspace once,
+    /// from the panel width the same layout pass already computed — the
+    /// card does not move the way the resident sheet's height does, so this
+    /// has no per-frame drag to track.
+    ///
+    /// The `didSet` pushes the same number into the map's own
+    /// `directionalLayoutMargins`, because `framingInsets` only moves a
+    /// camera THIS object frames — it does nothing for MapKit's own Legal
+    /// label or any built-in control MapKit draws for itself, both of which
+    /// would otherwise sit under the card exactly where a reader would go
+    /// looking for them.
+    @ObservationIgnored var leadingObstruction: CGFloat = 0 {
+        didSet { applyLeadingMargin() }
+    }
+
+    /// Pushes `leadingObstruction` into whatever `MKMapView` is current.
+    ///
+    /// Split out of `leadingObstruction`'s `didSet` (and no longer guarded on
+    /// `oldValue`) so `mapView`'s own `didSet` can call it too — a fresh map
+    /// view from a composition swap needs the number applied even though
+    /// `leadingObstruction` itself did not change. The write is cheap enough
+    /// that re-applying an unchanged value costs nothing worth guarding.
+    private func applyLeadingMargin() {
+        guard let mapView else { return }
+        var margins = mapView.directionalLayoutMargins
+        margins.leading = leadingObstruction
+        mapView.directionalLayoutMargins = margins
+    }
 
     /// A region as the rect the padded framing call needs.
     private static func mapRect(of region: MKCoordinateRegion) -> MKMapRect {

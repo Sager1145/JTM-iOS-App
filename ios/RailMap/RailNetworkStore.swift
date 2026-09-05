@@ -15,6 +15,11 @@ final class RailNetworkStore {
 
     struct DrawnLine: Identifiable, Sendable {
         let id: String
+        /// The canonical package line id. A reviewed screen-space lane can
+        /// give one railway several entries, so `id` identifies the drawn
+        /// stroke while this identifies the railway beneath stations, badges
+        /// and LOD policy.
+        let lineID: String
         /// Which package this line came out of. Nothing about *drawing* needs
         /// it — every line draws in its own colour on its own geometry — but
         /// the statistics screen and the ride editor both scope by region, and
@@ -55,6 +60,26 @@ final class RailNetworkStore {
         /// deliberately stricter than the web app at low zoom, and
         /// deliberately not in `RailCore`.
         let lodMinZoom: Double
+        /// Signed screen-space corridor lane. Zero keeps canonical geometry;
+        /// fractional values form the short entry/exit ramps.
+        let lane: Double
+        /// A continuous stroke (North America): `intervals` is one uncut
+        /// chain, drawn as ONE polyline with the lane offset and corner
+        /// rounding baked in on device from `laneRows` (metres along the
+        /// chain) — see `RailCore.ContinuousStroke`.
+        let continuous: Bool
+        let laneRows: [ContinuousStroke.LaneRow]
+        let totalMetres: Double
+        /// Corridor follows: over `from…to` this chain is drawn from the
+        /// named stroke's alignment (`DrawnLine.id` of the canonical chain).
+        let follows: [StrokeFollow]
+        /// Spans this chain bridges rather than cuts (see `WithheldSpan`).
+        /// Always empty for a non-continuous line — the alignment gate still
+        /// splits those, exactly as before.
+        let withheld: [WithheldSpan]
+        /// Family-collapse windows along this chain (see `FamilyWindow`).
+        /// Always empty for a non-continuous line.
+        let familyWindows: [FamilyWindow]
         /// Bounding box in projected map space, computed once at decode time
         /// so the per-rebuild off-screen test is a rectangle intersection
         /// rather than a walk over 394,285 coordinates.
@@ -62,7 +87,79 @@ final class RailNetworkStore {
         /// One polyline per station-to-station interval, exactly as the web
         /// app draws them.
         let intervals: [[Coordinate]]
+        /// The same off-screen test one level down, and the reason a whole
+        /// railway can be resident without a whole railway being drawn.
+        ///
+        /// The line's own rect answers "is any of this near the camera". Over
+        /// a 4,000 km corridor that is true from Vancouver to Halifax, and the
+        /// build would then decimate every interval of it to draw the six that
+        /// are on screen — which is exactly what tiling used to avoid by
+        /// cutting the railway up in the bundle instead. One rect per
+        /// interval, computed here beside the geometry so it cannot fall out
+        /// of step with it, turns that into the same cheap rectangle test per
+        /// stroke. `NetworkLOD`'s own note measured the lever at a city view:
+        /// 22,185 drawn vertices to 2,460.
+        let intervalRects: [MKMapRect]
         var vertexCount: Int { intervals.reduce(0) { $0 + $1.count } }
+
+        /// The rects are derived rather than passed, because the one thing
+        /// that must never happen to them is disagreeing with `intervals`.
+        init(
+            id: String, lineID: String, region: Region, name: String,
+            nameRoma: String?, operatorName: String?, color: Color,
+            colorDark: Color, colorHex: String, colorDarkHex: String,
+            rank: Int, minZoom: Int, visibilityLengthKm: Double,
+            lodMinZoom: Double, lane: Double, intervals: [[Coordinate]],
+            continuous: Bool = false,
+            laneRows: [ContinuousStroke.LaneRow] = [],
+            totalMetres: Double = 0,
+            follows: [StrokeFollow] = [],
+            withheld: [WithheldSpan] = [],
+            familyWindows: [FamilyWindow] = []
+        ) {
+            self.id = id
+            self.lineID = lineID
+            self.region = region
+            self.name = name
+            self.nameRoma = nameRoma
+            self.operatorName = operatorName
+            self.color = color
+            self.colorDark = colorDark
+            self.colorHex = colorHex
+            self.colorDarkHex = colorDarkHex
+            self.rank = rank
+            self.minZoom = minZoom
+            self.visibilityLengthKm = visibilityLengthKm
+            self.lodMinZoom = lodMinZoom
+            self.lane = lane
+            self.continuous = continuous
+            self.laneRows = laneRows
+            self.totalMetres = totalMetres
+            self.follows = follows
+            self.withheld = withheld
+            self.familyWindows = familyWindows
+            self.intervals = intervals
+            let rects = intervals.map(Self.boundingRect(of:))
+            self.intervalRects = rects
+            self.mapRect = rects.reduce(MKMapRect.null) { $0.union($1) }
+        }
+
+        /// Union of one interval's vertices, in projected map space.
+        ///
+        /// `MKMapRect` rather than a latitude/longitude box because the
+        /// off-screen test compares against `MKMapView.visibleMapRect`, and
+        /// converting one rect per interval per rebuild would undo the point
+        /// of precomputing it.
+        private static func boundingRect(of interval: [Coordinate]) -> MKMapRect {
+            var rect = MKMapRect.null
+            for point in interval {
+                let mapPoint = MKMapPoint(
+                    CLLocationCoordinate2D(latitude: point.lat, longitude: point.lon))
+                rect = rect.union(
+                    MKMapRect(origin: mapPoint, size: MKMapSize(width: 0, height: 0)))
+            }
+            return rect
+        }
     }
 
     struct DrawnStation: Identifiable, Sendable {
@@ -95,6 +192,62 @@ final class RailNetworkStore {
         let isTerminal: Bool
         let showsLabel: Bool
         let popup: StationDisplay.PopupModel
+        /// The line lane at this platform, plus its clockwise-from-north
+        /// direction so the station bead follows the offset stroke.
+        let lane: Double
+        let laneBearing: Double?
+        /// On a continuous-stroke line, the chain and vertex this platform
+        /// sits on; its bead is that vertex's offset at every zoom.
+        var slot: StrokeSlot? = nil
+    }
+
+    struct StrokeSlot: Sendable, Hashable {
+        let chain: Int
+        let anchor: Int
+    }
+
+    struct StrokeFollow: Sendable, Hashable {
+        let from: Double
+        let to: Double
+        /// `DrawnLine.id` of the canonical chain (`lineKey#chain`).
+        let canonicalID: String
+        let canonicalFrom: Double
+        let canonicalTo: Double
+    }
+
+    /// A span a continuous-stroke chain draws THROUGH rather than around: the
+    /// alignment gate withheld it from the official-geometry comparison, but
+    /// the geometry is real, so `displayPartsForLine`
+    /// (`bridgeBlockedIntervals`) and this app's own `continuous_chains`
+    /// (`build-display-network.py`) both bridge it instead of cutting the
+    /// chain there. Metres, in the chain's own measure space — the same ruler
+    /// `laneRows`/`totalMetres` use — so the renderer can slice it straight
+    /// out of the already-built stroke the way a ride's own slice is cut.
+    struct WithheldSpan: Sendable, Hashable {
+        let from: Double
+        let to: Double
+    }
+
+    /// A stretch this chain shares its stroke with a sibling railway of the
+    /// same operator collapse (`na-render-groups.json`, `build-display-
+    /// network.py`'s `chain_family_windows`). Metres, in the chain's own
+    /// measure space — the same ruler `laneRows`/`totalMetres`/`withheld`
+    /// use — sliced straight out of the already-built stroke the same way
+    /// `WithheldSpan` is.
+    ///
+    /// `isLandlord` true: this chain draws the shared family stroke over the
+    /// window, in `colorHex`/`colorDarkHex` (the group's own colour, resolved
+    /// at load time from `RailDisplayNetworkFile.families` — see
+    /// `prepareDisplayRegion`). `isLandlord` false (tenant): this chain's own
+    /// stroke is withheld over the window; the chain is still built whole
+    /// underneath, so a ride or playback can still slice it there.
+    struct FamilyWindow: Sendable, Hashable {
+        let from: Double
+        let to: Double
+        let isLandlord: Bool
+        let groupID: String
+        let colorHex: String
+        let colorDarkHex: String
     }
 
     /// What one region's package cost and contributed, so the diagnostics
@@ -126,6 +279,22 @@ final class RailNetworkStore {
     private(set) var state: LoadState = .idle
     private(set) var lines: [DrawnLine] = []
     private(set) var stations: [DrawnStation] = []
+    /// Geometry currently resident for the map: the display network of every
+    /// region the padded visible rect has reached, whole. Full-region `lines`
+    /// and `stations` above remain available to explicit workflows such as the
+    /// station editor, but are never fed to the complete-network layer.
+    ///
+    /// Resident is not the same as drawn. What bounds the frame is the
+    /// renderer's cull — `NetworkLOD` by zoom and by rect, then the
+    /// per-interval rect test in `RailMapView.rebuild` — and it is applied to
+    /// continuous geometry, so a railway crossing the screen is one stroke
+    /// rather than the run of abutting fragments the storage tiles produced.
+    private(set) var mapLines: [DrawnLine] = []
+    private(set) var mapStations: [DrawnStation] = []
+    private(set) var activeRegionCount = 0
+    private(set) var requestedRegionCount = 0
+    private(set) var activeNetworkBytes = 0
+    private(set) var networkFailure: String?
     /// Which mark each railway wears, for the surfaces that hold a recorded
     /// journey rather than a network line — see ``RouteBadgeIndex``.
     ///
@@ -170,10 +339,10 @@ final class RailNetworkStore {
     /// journeys list is waiting for. A region's geometry is decoded when
     /// something asks for it, through ``ensure(_:)``.
     ///
-    /// A region that is asked for is read a second time, and that is the
-    /// deliberate trade: holding seven parsed packages alive to save it would
-    /// be holding 394,285 coordinates for countries the reader may never pan
-    /// to, to save one background read in the one case where they do.
+    /// A region that an editor or solver asks for is read a second time. The
+    /// map itself never takes that path: it draws the display derivative,
+    /// which carries the reviewed corridors and lanes and no topology at all,
+    /// and it reads a country's only when the camera reaches it.
     ///
     /// ## The two large regions are indexed after the five compact ones
     ///
@@ -194,6 +363,12 @@ final class RailNetworkStore {
         isIndexing = true
         lines = []
         stations = []
+        mapLines = []
+        mapStations = []
+        activeRegionCount = 0
+        requestedRegionCount = 0
+        activeNetworkBytes = 0
+        networkFailure = nil
         badges = RouteBadgeIndex()
         indexed = []
         requested = []
@@ -202,6 +377,31 @@ final class RailNetworkStore {
         failures = []
         pending = []
         state = .idle
+        displayLoadTask?.cancel()
+        displayLoadTask = nil
+        loadedDisplayRegions = [:]
+        displayAttempts = [:]
+        displayFailures = [:]
+        displayManifest = nil
+        lastDisplayRequest = nil
+        // Stored, rather than fire-and-forget, so `decodeGeometry` below can
+        // await this exact attempt before deciding whether the manifest's
+        // colour/render-group catalog is there to read — otherwise a canonical
+        // decode racing the manifest read would see `displayManifest == nil`
+        // and permanently miss the override, since nothing revisits `lines`/
+        // `stations` once built. See ``decodeGeometry(_:)``.
+        manifestLoadTask = Task(priority: .utility) {
+            do {
+                displayManifest = try await Self.loadDisplayManifest()
+                if let lastDisplayRequest {
+                    activateDisplayRegions(
+                        intersecting: lastDisplayRequest.rect,
+                        cameraZoom: lastDisplayRequest.cameraZoom)
+                }
+            } catch {
+                networkFailure = error.localizedDescription
+            }
+        }
         // The complete network is context and starts hidden; route restoration
         // and interaction work should outrank reading seven national packages.
         Task(priority: .utility) {
@@ -250,15 +450,25 @@ final class RailNetworkStore {
         if !isIndexing { decodeGeometry(region) }
     }
 
-    /// Every region whose network could be on screen in `rect`.
+    /// Bring in the display network of every region the padded rect reaches.
     ///
-    /// `Region.networkExtent` is a constant, so this answers without having
-    /// decoded anything — which is the whole point: the map can say which
-    /// countries it is looking at before any of them has been read.
-    func ensure(regionsIntersecting rect: MKMapRect) {
-        for region in Region.ordered where Self.mapRect(of: region).intersects(rect) {
-            ensure(region)
-        }
+    /// This intentionally does not call ``ensure(_:)``. The two are different
+    /// answers to different questions: this one reads the DISPLAY derivative,
+    /// which is geometry with the reviewed corridors and screen-space lanes
+    /// already applied and nothing else in it, while ``ensure(_:)`` decodes
+    /// the canonical package for the editor and the route solver. Map display
+    /// stays on the derivative, so panning across a border can never pull a
+    /// national package's topology in behind it.
+    ///
+    /// A region already read stays read. There are seven of them and 18 MB in
+    /// total, so the working set is bounded by the data rather than by a
+    /// policy — and dropping Japan the moment its edge left the padded rect
+    /// would mean re-reading 12 MB to pan back, which is the thrash the tile
+    /// pyramid used to have at a smaller granularity.
+    func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
+        lastDisplayRequest = (rect, cameraZoom)
+        guard displayManifest != nil else { return }
+        activateDisplayRegions(intersecting: rect, cameraZoom: cameraZoom)
     }
 
     // There is deliberately no `ensureAll()`.
@@ -281,8 +491,17 @@ final class RailNetworkStore {
         state = .loading(pending: pending)
         let started = ContinuousClock.now
         Task(priority: .utility) {
+            // The manifest and this region may both still be reading; wait
+            // for that ATTEMPT (not for success) so a region that finishes
+            // first does not permanently miss the manifest's colour and
+            // render-group catalog for lack of having waited a moment longer.
+            // A manifest that fails leaves `displayManifest` `nil`, and the
+            // catalog lookup below is then empty everywhere — the package's
+            // own colour, exactly as before this catalog existed.
+            await manifestLoadTask?.value
             do {
-                let decoded = try await Self.decode(region: region)
+                let decoded = try await Self.decode(
+                    region: region, catalog: displayManifest?.lines ?? [:])
                 lines.append(contentsOf: decoded.lines)
                 stations.append(contentsOf: decoded.stations)
                 loads.append(
@@ -309,20 +528,6 @@ final class RailNetworkStore {
         }
     }
 
-    /// The region's own extent, in the projected space the map tests against.
-    private static func mapRect(of region: Region) -> MKMapRect {
-        let extent = region.networkExtent
-        let north = extent.center.latitude + extent.span.latitudeDelta / 2
-        let south = extent.center.latitude - extent.span.latitudeDelta / 2
-        let west = extent.center.longitude - extent.span.longitudeDelta / 2
-        let east = extent.center.longitude + extent.span.longitudeDelta / 2
-        let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: north, longitude: west))
-        let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude: south, longitude: east))
-        return MKMapRect(
-            x: min(topLeft.x, bottomRight.x), y: min(topLeft.y, bottomRight.y),
-            width: abs(bottomRight.x - topLeft.x), height: abs(bottomRight.y - topLeft.y))
-    }
-
     @ObservationIgnored private var isIndexing = false
     @ObservationIgnored private var indexed: Set<Region> = []
     @ObservationIgnored private var requested: Set<Region> = []
@@ -330,6 +535,267 @@ final class RailNetworkStore {
     @ObservationIgnored private var pending: [Region] = []
     @ObservationIgnored private var loads: [RegionLoad] = []
     @ObservationIgnored private var failures: [RegionFailure] = []
+    @ObservationIgnored private var displayManifest: RailDisplayNetworkManifest?
+    /// The in-flight (or already finished) attempt to read the manifest,
+    /// started by ``loadAll()``. `decodeGeometry(_:)` awaits its `.value`
+    /// before reading `displayManifest`, which is the only thing that makes
+    /// "when the display manifest for a region is available" a promise
+    /// rather than a race — the two reads start concurrently in `loadAll()`
+    /// and a canonical package decode is the faster of the two for every
+    /// shipped region.
+    @ObservationIgnored private var manifestLoadTask: Task<Void, Never>?
+    @ObservationIgnored private var loadedDisplayRegions: [String: PreparedDisplayRegion] = [:]
+    /// How many times each region's file has been asked for. A bundle read is
+    /// not a network request and does not usually fail twice, but it CAN fail
+    /// once under memory pressure — and a rebuild happens on every zoom tier
+    /// and every pan out of the built rect, so a region that simply retried
+    /// would retry for the life of the app. Three attempts, then the failure
+    /// stands and the diagnostics panel names it.
+    @ObservationIgnored private var displayAttempts: [String: Int] = [:]
+    /// The last error each region's read produced, so a failure that clears on
+    /// a retry stops being reported and one that does not keeps its own name
+    /// rather than being replaced by whichever batch finished last.
+    @ObservationIgnored private var displayFailures: [String: String] = [:]
+    @ObservationIgnored private var displayLoadTask: Task<Void, Never>?
+    @ObservationIgnored private var lastDisplayRequest: (rect: MKMapRect, cameraZoom: Double)?
+
+    private static let displayAttemptLimit = 3
+
+    private func activateDisplayRegions(intersecting rect: MKMapRect, cameraZoom: Double) {
+        guard let manifest = displayManifest else { return }
+        let records = RailDisplayNetwork.records(
+            intersecting: rect, cameraZoom: cameraZoom, in: manifest)
+        // What the reader is looking at, plus whatever has already been read:
+        // a region does not stop being resident because the camera moved off
+        // it, so the denominator is the whole working set rather than only
+        // this camera's share of it.
+        requestedRegionCount = Set(
+            records.map(\.region) + Array(loadedDisplayRegions.keys)).count
+        // One batch at a time. These are national files — 12 MB for Japan —
+        // and a second batch started from the next camera callback would be
+        // decoding the same country twice.
+        guard displayLoadTask == nil else { return }
+        let missing = records.filter {
+            loadedDisplayRegions[$0.region] == nil
+                && (displayAttempts[$0.region] ?? 0) < Self.displayAttemptLimit
+        }
+        guard !missing.isEmpty else { return }
+        for record in missing {
+            displayAttempts[record.region, default: 0] += 1
+        }
+
+        // Two at a time rather than four. The tile batch was reading pieces of
+        // a few hundred kilobytes; these are whole countries, and the peak
+        // cost of preparing one is its decoded JSON plus the geometry built
+        // from it held at once.
+        //
+        // Interactive priority: this follows a reader action or a camera move
+        // and gates visible content, unlike the launch badge index.
+        displayLoadTask = Task(priority: .userInitiated) {
+            let result = await Self.loadDisplayRegions(
+                missing, catalog: manifest.lines, maximumConcurrent: 2)
+            // Cancellation first: a cancelled batch belongs to a store that
+            // has already been reset, and clearing the handle here would clear
+            // the replacement's.
+            guard !Task.isCancelled else { return }
+            displayLoadTask = nil
+            for record in missing { displayFailures[record.region] = nil }
+            displayFailures.merge(result.failures, uniquingKeysWith: { _, new in new })
+            networkFailure = displayFailures
+                .sorted { $0.key < $1.key }.first?.value
+            guard !result.regions.isEmpty else { return }
+            loadedDisplayRegions.merge(result.regions, uniquingKeysWith: { _, new in new })
+            publishDisplayNetwork()
+            // A region that arrived while the camera kept moving may have
+            // brought a neighbour into range. Ask again from where the map is
+            // now rather than from the rect this batch started for.
+            if let lastDisplayRequest {
+                activateDisplayRegions(
+                    intersecting: lastDisplayRequest.rect,
+                    cameraZoom: lastDisplayRequest.cameraZoom)
+            }
+        }
+    }
+
+    private func publishDisplayNetwork() {
+        guard let manifest = displayManifest else {
+            mapLines = []
+            mapStations = []
+            activeRegionCount = 0
+            activeNetworkBytes = 0
+            return
+        }
+        // The manifest's own order, so what the map holds does not depend on
+        // which country the reader happened to pan into first.
+        let ordered = manifest.regions.compactMap { record in
+            loadedDisplayRegions[record.region]
+        }
+        var nextLines: [DrawnLine] = []
+        var nextStations: [DrawnStation] = []
+        for region in ordered {
+            nextLines.append(contentsOf: region.lines)
+            nextStations.append(contentsOf: region.stations)
+        }
+        mapLines = nextLines
+        mapStations = nextStations
+        activeRegionCount = ordered.count
+        activeNetworkBytes = ordered.reduce(0) { $0 + $1.bytes }
+    }
+
+    private nonisolated static func loadDisplayManifest() async throws
+        -> RailDisplayNetworkManifest {
+        try RailDisplayNetwork.manifest()
+    }
+
+    private struct PreparedDisplayRegion: Sendable {
+        var lines: [DrawnLine]
+        var stations: [DrawnStation]
+        var bytes: Int
+    }
+
+    private struct DisplayRegionLoadItem: Sendable {
+        var region: String
+        var prepared: PreparedDisplayRegion?
+        var failure: String?
+    }
+
+    private struct DisplayRegionLoadResult: Sendable {
+        var regions: [String: PreparedDisplayRegion]
+        var failures: [String: String]
+    }
+
+    private nonisolated static func loadDisplayRegions(
+        _ records: [RailDisplayNetworkManifest.RegionRecord],
+        catalog: [String: RailDisplayNetworkManifest.Line],
+        maximumConcurrent: Int
+    ) async -> DisplayRegionLoadResult {
+        await withTaskGroup(of: DisplayRegionLoadItem.self) { group in
+            var next = 0
+            let limit = min(max(1, maximumConcurrent), records.count)
+            for _ in 0..<limit {
+                let record = records[next]
+                next += 1
+                group.addTask { loadDisplayRegion(record, catalog: catalog) }
+            }
+
+            var regions: [String: PreparedDisplayRegion] = [:]
+            var failures: [String: String] = [:]
+            while let item = await group.next() {
+                if let prepared = item.prepared { regions[item.region] = prepared }
+                if let failure = item.failure { failures[item.region] = failure }
+                if Task.isCancelled {
+                    group.cancelAll()
+                    break
+                }
+                if next < records.count {
+                    let record = records[next]
+                    next += 1
+                    group.addTask { loadDisplayRegion(record, catalog: catalog) }
+                }
+            }
+            return DisplayRegionLoadResult(regions: regions, failures: failures)
+        }
+    }
+
+    private nonisolated static func loadDisplayRegion(
+        _ record: RailDisplayNetworkManifest.RegionRecord,
+        catalog: [String: RailDisplayNetworkManifest.Line]
+    ) -> DisplayRegionLoadItem {
+        do {
+            try Task.checkCancellation()
+            let file = try RailDisplayNetwork.region(record, catalog: catalog)
+            try Task.checkCancellation()
+            return DisplayRegionLoadItem(
+                region: record.region,
+                prepared: prepareDisplayRegion(file, bytes: record.bytes, catalog: catalog),
+                failure: nil)
+        } catch is CancellationError {
+            return DisplayRegionLoadItem(region: record.region, prepared: nil, failure: nil)
+        } catch {
+            return DisplayRegionLoadItem(
+                region: record.region, prepared: nil,
+                failure: "\(record.region): \(error.localizedDescription)")
+        }
+    }
+
+    private nonisolated static func prepareDisplayRegion(
+        _ file: RailDisplayNetworkFile,
+        bytes: Int,
+        catalog: [String: RailDisplayNetworkManifest.Line]
+    ) -> PreparedDisplayRegion {
+        let lines = file.lines.compactMap { fragment -> DrawnLine? in
+            guard let metadata = catalog[fragment.lineKey],
+                  let region = Region(rawValue: metadata.region) else { return nil }
+            let intervals = fragment.parts.compactMap { part -> [Coordinate]? in
+                let source = part.compactMap(Coordinate.init(pair:))
+                guard source.count >= 2 else { return nil }
+                return AppleMapDatum.display(source, country: region.code)
+            }
+            guard !intervals.isEmpty else { return nil }
+            return DrawnLine(
+                // One fragment per railway and lane, so the lane is the whole
+                // of what distinguishes two entries of the same line.
+                id: fragment.continuous == true
+                    ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
+                    : "\(fragment.lineKey)@\(fragment.lane ?? 0)",
+                lineID: metadata.id,
+                region: region, name: metadata.name, nameRoma: metadata.nameRoma,
+                operatorName: metadata.operator,
+                color: Color(hex: metadata.color) ?? .accentColor,
+                colorDark: Color(hex: metadata.colorDark) ?? .accentColor,
+                colorHex: metadata.color.lowercased(),
+                colorDarkHex: metadata.colorDark.lowercased(),
+                rank: metadata.rank, minZoom: metadata.minZoomMapLibre,
+                visibilityLengthKm: metadata.visibilityLengthKm,
+                lodMinZoom: RailStyle.zoom(
+                    fromMapLibre: Double(metadata.lodMinZoomMapLibre)),
+                lane: fragment.lane ?? 0,
+                intervals: intervals,
+                continuous: fragment.continuous == true,
+                laneRows: (fragment.laneRows ?? []).map {
+                    ContinuousStroke.LaneRow(from: $0[0], to: $0[1], lane: $0[2])
+                },
+                totalMetres: fragment.totalMetres ?? 0,
+                follows: (fragment.follows ?? []).map {
+                    StrokeFollow(
+                        from: $0.from, to: $0.to,
+                        canonicalID: "\($0.canonicalLineKey)#\($0.canonicalChain)",
+                        canonicalFrom: $0.canonicalFrom, canonicalTo: $0.canonicalTo)
+                },
+                withheld: (fragment.withheld ?? []).compactMap {
+                    $0.count >= 2 ? WithheldSpan(from: $0[0], to: $0[1]) : nil
+                },
+                familyWindows: (fragment.familyWindows ?? []).compactMap { window in
+                    // The file already passed `validated()`, which requires
+                    // every window's groupID to resolve — this guard is
+                    // belt-and-braces against a caller that skipped it.
+                    guard let group = file.families[window.groupID] else { return nil }
+                    return FamilyWindow(
+                        from: window.from, to: window.to,
+                        isLandlord: window.isLandlord, groupID: window.groupID,
+                        colorHex: group.color.lowercased(),
+                        colorDarkHex: group.colorDark.lowercased())
+                })
+        }
+        let stations = file.stations.compactMap { station -> DrawnStation? in
+            guard let metadata = catalog[station.lineKey],
+                  let region = Region(rawValue: metadata.region) else { return nil }
+            let coordinate = AppleMapDatum.display(
+                Coordinate(lon: station.lon, lat: station.lat), country: region.code)
+            return DrawnStation(
+                id: station.id, region: region, lineID: metadata.id,
+                stationCode: station.stationCode, name: station.name,
+                nameRoma: station.nameRoma ?? "", coordinate: coordinate,
+                colorHex: metadata.color, minZoom: station.minZoomMapLibre,
+                lodMinZoom: RailStyle.zoom(
+                    fromMapLibre: Double(station.lodMinZoomMapLibre)),
+                isTerminal: station.isTerminal, showsLabel: station.showsLabel,
+                popup: RailDisplayNetwork.popup(for: station, catalog: catalog),
+                lane: station.lane ?? 0, laneBearing: station.bearing,
+                slot: station.slot.map { StrokeSlot(chain: $0[0], anchor: $0[1]) })
+        }
+        return PreparedDisplayRegion(lines: lines, stations: stations, bytes: bytes)
+    }
 
     /// The stations of one region only — the ride editor's picker, which is
     /// scoped to the region the itinerary being edited belongs to.
@@ -395,7 +861,18 @@ final class RailNetworkStore {
             region: region, headers: try CompactPackage.Headers.load(contentsOf: url))
     }
 
-    private nonisolated static func decode(region: Region) async throws -> Decoded {
+    /// - Parameter catalog: the display-network manifest's line catalog
+    ///   (``RailDisplayNetworkManifest/lines``), keyed `"{region}|{lineID}"`,
+    ///   or empty when the manifest has not loaded (or failed to). Where an
+    ///   entry exists its `color`/`colorDark`/`renderGroup` are applied to
+    ///   this region's canonical `DrawnLine`s and `DrawnStation`s — the same
+    ///   values the map's own fragments already draw in, so the two stop
+    ///   disagreeing. `sourceCoordinates`/routing are read from `package`
+    ///   exactly as before; only display metadata is touched.
+    private nonisolated static func decode(
+        region: Region,
+        catalog: [String: RailDisplayNetworkManifest.Line] = [:]
+    ) async throws -> Decoded {
         let interval = RailSignpost.data.begin("data.package.decode")
         defer { RailSignpost.data.end("data.package.decode", interval) }
         let started = ContinuousClock.now
@@ -430,6 +907,12 @@ final class RailNetworkStore {
                         visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0)
                 )
             }, uniquingKeysWith: { _, last in last })
+        // The manifest's own key shape (`build-display-network.py`'s
+        // `key = f"{region}|{line['id']}"`) — resolved once per line rather
+        // than reassembling the string per field below.
+        func displayMetadata(for lineID: String) -> RailDisplayNetworkManifest.Line? {
+            catalog["\(region.code)|\(lineID)"]
+        }
         let lines = package.lines.map { line in
             let sourceIntervals = DisplayParts.parts(
                 for: line, topology: topologies[line.id] ?? .init())
@@ -445,16 +928,26 @@ final class RailNetworkStore {
             // railway appears and vanishes together.
             let portedMinZoom = minZoomByLineId[line.id] ?? 0
             let visibilityLengthKm = visibilityLengthByLineId[line.id] ?? 0
+            // The manifest's colour, when the manifest is available, wins
+            // over the package's own — it is already the fully-resolved
+            // value (a render-group override where the reviewed policy names
+            // one, the package's own colour otherwise), and it is the value
+            // the map's own fragments (`mapLines`) are already drawn in. No
+            // manifest, or no entry for this line, falls back to the package
+            // exactly as before.
+            let display = displayMetadata(for: line.id)
+            let colorHex = display?.color ?? line.color
+            let colorDarkHex = display?.colorDark ?? line.colorDark ?? line.color
             return DrawnLine(
-                id: line.id,
+                id: line.id, lineID: line.id,
                 region: region,
                 name: line.name,
                 nameRoma: line.nameRoma,
                 operatorName: line.operator,
-                color: Color(hex: line.color) ?? .accentColor,
-                colorDark: Color(hex: line.colorDark ?? line.color) ?? .accentColor,
-                colorHex: (line.color ?? "#7a7a7a").lowercased(),
-                colorDarkHex: (line.colorDark ?? line.color ?? "#7a7a7a").lowercased(),
+                color: Color(hex: colorHex) ?? .accentColor,
+                colorDark: Color(hex: colorDarkHex) ?? .accentColor,
+                colorHex: (colorHex ?? "#7a7a7a").lowercased(),
+                colorDarkHex: (colorDarkHex ?? "#7a7a7a").lowercased(),
                 rank: line.rank,
                 minZoom: portedMinZoom,
                 visibilityLengthKm: visibilityLengthKm,
@@ -462,7 +955,7 @@ final class RailNetworkStore {
                     portedMinZoom: portedMinZoom,
                     rank: line.rank,
                     visibilityLengthKm: visibilityLengthKm),
-                mapRect: Self.boundingRect(of: intervals),
+                lane: 0,
                 intervals: intervals
             )
         }
@@ -479,10 +972,26 @@ final class RailNetworkStore {
         // defaults to empty, no caller but a parity test ever supplied it, and
         // a circular railway was therefore drawn with a terminus at each end
         // of a line that has neither.
+        // The same manifest lookup the lines above used, reduced to the two
+        // primitive maps `StationDisplay.Network` can take without knowing
+        // this module's `RailDisplayNetworkManifest` type — RailCore sits
+        // below RailMap and cannot import it. Built once here rather than
+        // inside the `Network` initializer's own per-line loop.
+        var colorOverrideByLineID: [String: String] = [:]
+        var renderGroupByLineID: [String: String] = [:]
+        for line in package.lines {
+            guard let display = displayMetadata(for: line.id) else { continue }
+            colorOverrideByLineID[line.id] = display.color
+            if let renderGroup = display.renderGroup {
+                renderGroupByLineID[line.id] = renderGroup
+            }
+        }
         let stationNetwork = StationDisplay.Network(
             package: package,
             loopLineIDs: Set(package.lines.filter(\.isLoop).map(\.id)),
-            packageLogoLineIDs: Set(package.lines.filter(\.hasLogo).map(\.id)))
+            packageLogoLineIDs: Set(package.lines.filter(\.hasLogo).map(\.id)),
+            colorOverrideByLineID: colorOverrideByLineID,
+            renderGroupByLineID: renderGroupByLineID)
         func lineThreshold(under station: StationDisplay.Network.Station) -> Int {
             lodMinZoomByLineId[stationNetwork.lines[station.lineIndex].lineID] ?? 0
         }
@@ -522,27 +1031,11 @@ final class RailNetworkStore {
                     lineMinZoomMapLibre: lineThreshold(under: station)),
                 isTerminal: station.isTerminal, showsLabel: labelWinners.contains(index),
                 popup: StationDisplay.buildPopupModel(
-                    network: stationNetwork, stationID: station.stationID))
+                    network: stationNetwork, stationID: station.stationID),
+                lane: 0, laneBearing: nil)
         }
         return Decoded(
             lines: lines, stations: stations, elapsed: ContinuousClock.now - started)
-    }
-
-    /// Union of every vertex, in projected map space.
-    ///
-    /// `MKMapRect` rather than a latitude/longitude box because the off-screen
-    /// test compares against `MKMapView.visibleMapRect`, and converting one
-    /// rect per line per rebuild would undo the point of precomputing it.
-    private nonisolated static func boundingRect(of intervals: [[Coordinate]]) -> MKMapRect {
-        var rect = MKMapRect.null
-        for interval in intervals {
-            for point in interval {
-                let mapPoint = MKMapPoint(
-                    CLLocationCoordinate2D(latitude: point.lat, longitude: point.lon))
-                rect = rect.union(MKMapRect(origin: mapPoint, size: MKMapSize(width: 0, height: 0)))
-            }
-        }
-        return rect
     }
 
     enum LoadError: LocalizedError {

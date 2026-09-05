@@ -32,6 +32,19 @@ for country in jp tw hk mo kr us ca; do
     cp -p "$package" "$target_dir/$country-2025.json"
 done
 
+# The map never decodes one of the national packages merely to draw it. Build
+# a display-only derivative — the same station-to-station geometry with the
+# reviewed shared corridors and screen-space lanes already applied, and no
+# topology, mileage or routing in it at all — and copy that directory as a
+# bundle subresource. One file per region, uncut: a railway crossing the
+# viewport is one continuous stroke, and what keeps a national network off the
+# GPU is the renderer's own per-interval viewport cull rather than the shape of
+# the storage. compact-v1 files above remain the route solver/statistics source
+# of truth.
+network_dir="$target_dir/rail-display-network"
+python3 "$source_dir/../../scripts/railway/build-display-network.py" \
+    --rail-dir "$source_dir" --output "$network_dir"
+
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply
 # the same `countrySuffixed` rule without maintaining a second manifest.

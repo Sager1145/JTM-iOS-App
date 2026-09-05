@@ -178,7 +178,7 @@ actor EdgeIndexCache {
             return "\(name)（\(country.uppercased())）"
         }
 
-        var map: [String: Int] = [:]
+        var map: [Statistics.EdgeKey: Int] = [:]
         var km: [Double] = []
         var mask: [Int] = []
         var lineName: [String] = []
@@ -315,7 +315,7 @@ actor EdgeIndexCache {
 
             for part in line.parts where part.count >= 2 {
                 for index in 1..<part.count {
-                    let key = Statistics.edgeKey(part[index - 1], part[index])
+                    let key = Statistics.packedEdgeKey(part[index - 1], part[index])
                     // N02 first, and first wins.
                     if map[key] != nil { continue }
                     map[key] = km.count
