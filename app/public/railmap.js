@@ -62,6 +62,8 @@
     riddenHoverLineWidth,
     riddenFocusLineWidth,
     railwayScreenPaintEntries,
+    railwayScaleAt,
+    laneScaleForZoom,
     markerRadiusExpr,
     selectedStopRadiusExpr,
     EMPTY_FC,
@@ -75,12 +77,21 @@
     SELECT_DIM,
     SEGMENTS_SOURCE,
     STATIONS_SOURCE,
+    STATION_LANES_SOURCE,
     STATION_LABELS_SOURCE,
     SEGMENTS_LAYER,
     SEGMENTS_CASING_LAYER,
     SEGMENTS_SUSPENDED_LAYER,
     SEGMENTS_SUSPENDED_CASING_LAYER,
+    SEGMENTS_WITHHELD_SOURCE,
+    SEGMENTS_WITHHELD_LAYER,
+    SEGMENTS_WITHHELD_CASING_LAYER,
     STATIONS_LAYER,
+    STATION_LANES_LAYER,
+    STATION_ICON_BASE_PX,
+    RAILWAY_STYLE,
+    stationIconId,
+    stationIconImage,
     STATIONS_LABEL_LAYER,
     SEGMENTS_LABEL_LAYER,
     networkLabelTextColor,
@@ -161,26 +172,163 @@
   //   station row: [stationGroupId, name, lon, lat, (nameRoma, romaSourceCode)]
   //   segment row: [km, sharedFirstPoint, coordinates, (arcDirection)]
   //   segment i joins station i to station (i+1) % n (loop lines close the ring)
+  async function loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl) {
+    const responses = await Promise.all(
+      packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
+    );
+    if (responses.some((response) => !response.ok)) return null;
+    const packages = await Promise.all(responses.map((response) => response.json()));
+    const merged = global.RailNetwork.mergeCompactPackages(packages);
+    let reviewedSharedCorridors = null;
+    try {
+      const reviewedResponse = await fetch(reviewedUrl, { cache: "no-cache" });
+      if (reviewedResponse.ok) reviewedSharedCorridors = await reviewedResponse.json();
+    } catch (e) {
+      console.warn("[railmap] shared-corridor review unavailable:", e);
+    }
+    let displayLanes = null;
+    try {
+      const laneResponse = await fetch(lanesUrl, { cache: "no-cache" });
+      if (laneResponse.ok) displayLanes = await laneResponse.json();
+      else
+        console.warn(
+          `[railmap] display lanes unavailable: ${laneResponse.status} ${laneResponse.statusText} (${lanesUrl})`,
+        );
+    } catch (e) {
+      console.warn("[railmap] display lanes unavailable:", lanesUrl, e);
+    }
+    return global.RailNetwork.buildNetworkFromCompactPackage(
+      merged,
+      reviewedSharedCorridors,
+      displayLanes,
+    );
+  }
+
+  function loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl) {
+    return new Promise((resolve, reject) => {
+      const workerUrl = new URL(
+        "./rail-network-worker.js?v=20260901-stroke1",
+        global.location.href,
+      );
+      const worker = new Worker(workerUrl);
+      const finish = (callback, value) => {
+        worker.terminate();
+        callback(value);
+      };
+      worker.onmessage = (event) => {
+        const message = event.data || {};
+        if (message.ok) finish(resolve, message.network);
+        else finish(reject, new Error(message.error || "rail network worker failed"));
+      };
+      worker.onerror = (event) => {
+        finish(reject, new Error(event.message || "rail network worker failed"));
+      };
+      worker.postMessage({ packageUrls, reviewedUrl, lanesUrl });
+    });
+  }
+
   async function loadNetwork(packageUrl) {
     try {
       if (!packageUrl) throw new Error("A rail package URL is required.");
-      const packageUrls = Array.isArray(packageUrl) ? packageUrl : [packageUrl];
-      // Rail packages are replaced in place. Revalidate the URL so a newly
-      // rebuilt official package cannot be shadowed by the 24-hour static
-      // JSON browser cache.
-      const responses = await Promise.all(
-        packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
+      // Resolve URLs before crossing the worker boundary. This keeps the same
+      // resource names on a root deploy and on a sub-path static deploy.
+      const packageUrls = (Array.isArray(packageUrl) ? packageUrl : [packageUrl]).map(
+        (url) => new URL(url, global.location.href).href,
       );
-      if (responses.some((response) => !response.ok)) return null;
-      const packages = await Promise.all(
-        responses.map((response) => response.json()),
-      );
-      const merged = global.RailNetwork.mergeCompactPackages(packages);
-      return global.RailNetwork.buildNetworkFromCompactPackage(merged);
+      const reviewedUrl = new URL("shared-corridors.json", packageUrls[0]).href;
+      const lanesUrl = new URL("display-lanes.json", packageUrls[0]).href;
+
+      // JSON.parse plus compact-v1 display derivation takes about one second
+      // for Japan on the shipped package. Doing both on the window event loop
+      // made the whole client unresponsive exactly when 全部鐵路線 was enabled.
+      // A classic worker loads the same authoritative decoder and returns the
+      // completed immutable network; MapLibre upload remains on its own worker
+      // path after this hand-off.
+      if (typeof Worker === "function") {
+        try {
+          return await loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl);
+        } catch (workerError) {
+          console.warn("[railmap] background network load unavailable:", workerError);
+        }
+      }
+      return await loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl);
     } catch (e) {
       console.warn("[railmap] rail package unavailable:", e);
       return null;
     }
+  }
+
+  // How far the zoom may move before a continuous stroke's baked pixel lane
+  // gap is rebuilt. An eighth of a level, matching iOS's rebuild step
+  // (RailMapView.swift): a quarter-level band let the visible lane gap swing
+  // 0.77–1.71 px before it was rebuilt, visibly wider than the stroke itself.
+  const STROKE_REBUILD_ZOOM_STEP = 0.125;
+  // Rebuild cadence while a zoom gesture is in flight; `zoomend` settles it.
+  const STROKE_REBUILD_DELAY_MS = 120;
+  // A lane change drifts over at least this many pixels per lane whatever the
+  // zoom: at a regional zoom the metre ramp is under a pixel.
+  const STROKE_MIN_RAMP_PX = 24;
+  // How far beyond the viewport, as a fraction of it, a part still counts as
+  // near enough to be rebuilt with the camera.
+  const STROKE_REBUILD_PAD = 1;
+  // Per-part zoom staleness (_applyContinuousStrokes) is bucketed rather than
+  // driven off the live, continuously-changing camera zoom: `zoomBucket =
+  // round(zoom / STROKE_REBUILD_ZOOM_STEP)` and every part built for that
+  // bucket is built at the bucket's own NOMINAL zoom (`zoomBucket *
+  // STROKE_REBUILD_ZOOM_STEP`), never the exact live zoom. Two consequences:
+  // a slow pinch that keeps re-entering the same eighth-level band does not
+  // re-run RailStroke.buildStroke on every frame (STROKE_LRU_SIZE below), and
+  // a part's build is a pure function of (zoomBucket, lane-LOD bucket) —
+  // required for that cache to be sound, and for two parts of the same line
+  // built in different rebuild passes to still be comparable/reproducible.
+  const STROKE_LRU_SIZE = 3;
+
+  // Slice a just-built pixel stroke (RailStroke.buildStroke's `{points,
+  // measures}`) into one screen-space polyline per metre `range`, dropping
+  // any slice RailStroke.sliceStroke collapses to under 2 points (a window
+  // that snapped onto the part's own start/end, or a rounding sliver).
+  function familySliceRanges(strokePoints, strokeMeasures, ranges) {
+    const pieces = [];
+    for (const range of ranges) {
+      const sliced = RailStroke.sliceStroke(strokePoints, strokeMeasures, range.from, range.to);
+      if (sliced.length >= 2) pieces.push(sliced);
+    }
+    return pieces;
+  }
+
+  // ── the per-part stroke LRU (_applyContinuousStrokes) ───────────────────
+  // Up to STROKE_LRU_SIZE recent RailStroke.buildStroke results per part,
+  // keyed by the (zoomBucket, laneLodBucket) pair the geometry was built
+  // for — both integers, so a slow pinch that oscillates across one eighth-
+  // level boundary reuses the SAME two cached builds instead of re-running
+  // buildStroke's offset/fillet passes every frame. Stored on the part
+  // object itself (`part._strokeLRU`) rather than in a shared Map so a
+  // part's cache dies with the part (network reload / country switch), not
+  // with a rebuild pass.
+  function strokeCacheGet(part, zoomBucket, laneLodBucket) {
+    const cache = part._strokeLRU;
+    if (!cache) return null;
+    for (let i = 0; i < cache.length; i++) {
+      const entry = cache[i];
+      if (entry.zoomBucket === zoomBucket && entry.laneLodBucket === laneLodBucket) {
+        if (i !== cache.length - 1) {
+          cache.splice(i, 1);
+          cache.push(entry);
+        }
+        return entry;
+      }
+    }
+    return null;
+  }
+
+  function strokeCachePut(part, entry) {
+    let cache = part._strokeLRU;
+    if (!cache) {
+      cache = [];
+      part._strokeLRU = cache;
+    }
+    cache.push(entry);
+    if (cache.length > STROKE_LRU_SIZE) cache.shift();
   }
 
   // ───────────────────────────── the overlay manager ─────────────────────────────
@@ -200,6 +348,25 @@
     _expandRecords: [],
     _groupInfo: null, // groupKey → { sx, sy, mults } (rigid lane shifts)
     _laneSpacingPx: 0,
+    // Continuous strokes (rail-stroke.js): the zoom the network's stroke
+    // geometry was last built for, and the pending rebuild during a zoom.
+    _strokeZoom: null,
+    _strokeRebuildTimer: null,
+    // Per-rebuild instrumentation (_applyContinuousStrokes): how long the
+    // last pass took and how much of the network it actually touched. Read
+    // by anything that wants to see the per-part scheduler's cost without
+    // profiling — a debug console, a test harness — never written outside
+    // that method.
+    _strokeStats: null,
+    // Bumped every time _applyRideStrokes actually changes a ridden route's
+    // drawn path (a fresh setData, or a zoom/pan stroke rebuild). Playback
+    // (app-playback.js compilePath) folds this into its cache key so a
+    // compiled path sampling the drawn ink re-samples onto the new geometry
+    // instead of riding stale ink after a zoom.
+    _rideStrokeGeneration: 0,
+    // Set by setData() — true when at least one current record can ride the
+    // continuous stroke. See _scheduleStrokeRebuild.
+    _hasStrokeRefRecords: false,
     _fanLanePool: [],
     _fanPickEnabled: false,
     _markers: [],
@@ -311,12 +478,15 @@
       // frames. Pin every animated opacity prop to zero so the rAF loop is
       // the single source of animation truth.
       this._ensureXDayIcon();
+      this._ensureStationIcons();
       // A basemap/theme swap installs a fresh style, which drops runtime
       // images; MapLibre asks for the missing one instead of silently drawing
       // nothing, so re-rasterize on demand.
       map.on("styleimagemissing", (e) => {
         if (!e) return;
         if (e.id === XDAY_ICON_ID) this._ensureXDayIcon();
+        else if (String(e.id).startsWith("rn-station-"))
+          this._ensureStationIcons(String(e.id));
       });
       const ZERO_T = { duration: 0, delay: 0 };
       [
@@ -362,7 +532,13 @@
         // An open fan needs nothing here: its lane offsets are pixel constants
         // along a direction that does not depend on zoom either, so a zoom
         // leaves every line-translate exactly where it was.
+        // A continuous stroke's lane gap is a pixel constant baked into
+        // geometry, so it IS zoom-dependent: rebuild once the zoom has moved
+        // far enough for the gap to drift.
+        this._scheduleStrokeRebuild();
       });
+      map.on("zoomend", () => this._scheduleStrokeRebuild(true));
+      map.on("moveend", () => this._scheduleStrokeRebuild(true));
       return this;
     },
 
@@ -380,6 +556,19 @@
       this._expandRecords = expandRecords || [];
       this._groupInfo = groupInfo || new Map();
       this._laneSpacingPx = Math.max(0, Number(laneSpacingPx) || 0);
+      // Whether ANY record in this set can ride the network's continuous
+      // stroke. _scheduleStrokeRebuild reads this to keep re-slicing rides
+      // on zoom/pan even while the railway overlay layer itself is hidden —
+      // a ride is drawn on the TRAINS source, independent of whether the
+      // network's own segments/stations layers are toggled on.
+      this._hasStrokeRefRecords =
+        this._records.some((r) => r.strokeRef) ||
+        this._expandRecords.some((r) => r.strokeRef);
+      // A freshly built record set carries strokeRef but not yet the
+      // network's pixel geometry to slice — substitute it now, once, so the
+      // very first paint already shows rides on the network stroke rather
+      // than one frame of the route-solver fit.
+      this._applyRideStrokes();
       // Pre-grow outside the hover path. Cross-group transitions can still
       // add a rare overflow slot, but ordinary first-open fans do no style
       // mutation at pointer time.
@@ -781,6 +970,68 @@
         // A concurrent styleimagemissing can add it first; that is fine.
       }
     },
+    // Laned platforms use symbols because MapLibre cannot data-drive a
+    // circle's screen-space translation per feature. These bitmaps are made
+    // from the same size, ring and surface colours as the ordinary station
+    // circles, so shifting a platform never changes its visual vocabulary.
+    _ensureStationIcons(requestedId) {
+      const m = this._map;
+      if (!m || typeof m.addImage !== "function") return;
+      const base = STATION_ICON_BASE_PX;
+      const ring =
+        (base * RAILWAY_STYLE.stationRingPx) / RAILWAY_STYLE.stationDiameterPx;
+      const ratio = 2;
+      const span = base + 2 * ring;
+      const size = Math.round(span * ratio);
+      const requested = String(requestedId || "").match(
+        /^rn-station-(light|dark)-([0-9a-f]{6})(-interchange)?$/i,
+      );
+      const colorKeys = new Set();
+      if (requested) colorKeys.add(requested[2].toLowerCase());
+      else if (this._network && this._network.stations)
+        for (const feature of this._network.stations.features || []) {
+          const key = feature.properties && feature.properties.colorKey;
+          if (/^[0-9a-f]{6}$/i.test(String(key || "")))
+            colorKeys.add(String(key).toLowerCase());
+        }
+      if (!colorKeys.size) colorKeys.add("7c8a82");
+      const themes = requested ? [requested[1].toLowerCase()] : ["light", "dark"];
+      const interchangeStates = requested ? [Boolean(requested[3])] : [false, true];
+      for (const theme of themes)
+        for (const colorKey of colorKeys)
+          for (const interchange of interchangeStates) {
+            const id = stationIconId(theme, interchange, colorKey);
+            if (m.hasImage && m.hasImage(id)) continue;
+            const canvas =
+              typeof document !== "undefined" ? document.createElement("canvas") : null;
+            if (!canvas) return;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+            const colors = MAP_SURFACE_COLORS[theme === "dark" ? "dark" : "light"];
+            const lineColor = `#${colorKey}`;
+            const fill = interchange ? colors.stationRing : lineColor;
+            const stroke = interchange ? lineColor : networkCasingColor(theme);
+            const centre = size / 2;
+            const ringPx = ring * ratio;
+            const radius = (base * ratio) / 2;
+            ctx.beginPath();
+            ctx.arc(centre, centre, radius + ringPx / 2, 0, Math.PI * 2);
+            ctx.lineWidth = ringPx;
+            ctx.strokeStyle = stroke;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(centre, centre, radius, 0, Math.PI * 2);
+            ctx.fillStyle = fill;
+            ctx.fill();
+            try {
+              m.addImage(id, ctx.getImageData(0, 0, size, size), { pixelRatio: ratio });
+            } catch {
+              // A concurrent styleimagemissing can add it first.
+            }
+          }
+    },
     // Re-assert every railway weight and lane offset from the ONE table in
     // railmap-style.js. There is nothing to re-anchor: the scale ramp those
     // values ride is a pure function of zoom (see the screen-space weight
@@ -988,19 +1239,729 @@
         SEGMENTS_LAYER,
         SEGMENTS_SUSPENDED_CASING_LAYER,
         SEGMENTS_SUSPENDED_LAYER,
+        SEGMENTS_WITHHELD_LAYER,
+        SEGMENTS_WITHHELD_CASING_LAYER,
         SEGMENTS_LABEL_LAYER,
       ])
         this._setVisibility(layer, visibility);
+      if (this._networkVisibleWanted) this._scheduleStrokeRebuild(true);
+    },
+    // ── continuous strokes ──────────────────────────────────────────────────
+    // North American railways arrive as a stroke MODEL (rail-network.js
+    // `strokeModel`) rather than as finished geometry: one canonical polyline
+    // per part plus its lane rows in metres. The drawn polyline — lane offset
+    // and corner rounding baked into the vertices, in world pixels at the
+    // current zoom — is built here, so that a railway is ONE feature the
+    // renderer can never break, and rebuilt when the zoom moves far enough
+    // that the pixel lane gap has drifted. See rail-stroke.js.
+    _applyContinuousStrokes(force) {
+      const m = this._map;
+      const network = this._network;
+      const model = network && network.strokeModel;
+      if (!m || !model || typeof RailStroke === "undefined") return false;
+      const startedAt =
+        typeof performance !== "undefined" && performance.now ? performance.now() : 0;
+      const zoom = m.getZoom();
+      // Discrete, hysteretic lane-offset LOD (railmap-style.js
+      // `laneScaleForZoom`): below z9 lanes draw with no offset at all, z9–z12
+      // offsets at half the resolved gap, z12+ at the full gap — collapsing
+      // the multi-kilometre lane spread a hub throat's lane-7 line would
+      // otherwise carry at a regional zoom. `this._laneLodBucket` is the
+      // controller's own memory of which band the stroke was last built at,
+      // so the hysteresis has something to hold against across rebuilds —
+      // tracked off the live zoom on every call, whether or not anything
+      // below actually rebuilds, or a resting camera near a boundary could
+      // never accumulate the crossing.
+      const laneLod = laneScaleForZoom(zoom, this._laneLodBucket);
+      this._laneLodBucket = laneLod.bucket;
+      // Per-part zoom staleness (STROKE_LRU_SIZE doc above) is bucketed: every
+      // part built THIS pass is built for `zoomBucket`, at that bucket's own
+      // NOMINAL zoom — never the exact live `zoom` — so revisiting the same
+      // bucket always reproduces the same geometry, which is what makes the
+      // LRU below sound and a rebuilt part's output checkable against a
+      // full-line rebuild "at the same nominal zoom".
+      const zoomBucket = Math.round(zoom / STROKE_REBUILD_ZOOM_STEP);
+      const nominalZoom = zoomBucket * STROKE_REBUILD_ZOOM_STEP;
+      const scale = railwayScaleAt(nominalZoom);
+      const laneGapPx =
+        scale * (RAILWAY_STYLE.railWidthPx + RAILWAY_STYLE.parallelGapPx) *
+        laneLod.scale;
+      const cornerRadiusPx = scale * RAILWAY_STYLE.strokeCornerRadiusPx;
+      // The radius the map PROMISES to present (one stroke width). Passing it
+      // is what turns that promise into an operation: where a corner's own
+      // edges are too short to carry it, rail-stroke.js rounds the run of
+      // vertices as one corner rather than leaving a kink at each of them.
+      const minCornerRadiusPx = scale * RAILWAY_STYLE.minCornerRadiusPx;
+      const lineFeatures = network.segments.features;
+      // Only what is near the camera is rebuilt for a zoom change; a part
+      // off screen keeps the geometry of the bucket it was last built for,
+      // and is caught up the next time it comes into view (`moveend`). The
+      // first build, and any forced one, covers everything so no feature is
+      // ever without geometry.
+      //
+      // A part is also pulled into this pass — even off screen — when it
+      // TOUCHES a rebuilt neighbour at a joint that actually carries a lane
+      // offset (see boundaryIsLaned below): offsetPolyline bakes that offset
+      // into the vertex in PIXELS at this pass's own scale, so two touching
+      // parts built at two different scales would part company at the
+      // shared vertex. A joint at lane 0 needs no such rescue —
+      // RailStroke.project/unproject are exact inverses at any single zoom,
+      // so an unlaned boundary vertex round-trips to the same lon/lat
+      // whichever bucket built it, and a cached (kept) neighbour's own
+      // geometry already agrees with a freshly rebuilt one there for free.
+      const bounds = m.getBounds();
+      const west = bounds.getWest();
+      const east = bounds.getEast();
+      const south = bounds.getSouth();
+      const north = bounds.getNorth();
+      const padLon = (east - west) * STROKE_REBUILD_PAD;
+      const padLat = (north - south) * STROKE_REBUILD_PAD;
+      const near = (bbox) =>
+        bbox[2] >= west - padLon &&
+        bbox[0] <= east + padLon &&
+        bbox[3] >= south - padLat &&
+        bbox[1] <= north + padLat;
+      // Canonical parts a follow names, resolved once per rebuild and
+      // projected on demand at this pass's nominal zoom.
+      const partsByLine = new Map(model.lines.map((line) => [line.lineId, line.parts]));
+      const projectedCanon = new Map();
+      const canonPixels = (lineId, partIndex) => {
+        const key = `${lineId}#${partIndex}`;
+        let held = projectedCanon.get(key);
+        if (held) return held;
+        const part = partsByLine.get(lineId)?.[partIndex];
+        if (!part) return null;
+        held = {
+          points: part.coordinates.map((point) => RailStroke.project(point, nominalZoom)),
+          measures: part.measures,
+        };
+        projectedCanon.set(key, held);
+        return held;
+      };
+      let linesTouched = 0;
+      let partsTotal = 0;
+      let verticesBuilt = 0;
+      let anchorsChanged = false;
+      // Mirrors `anchorsChanged`'s own gate, for the withheld source: most
+      // rebuild passes touch ordinary lines with no `displayBlockedIntervals`
+      // at all (18 of jp's 1200+ lines carry one), so re-uploading
+      // `network.segmentsWithheld` on every one of those passes was pure
+      // waste — the collection had not moved. `network.segments` itself gets
+      // no equivalent flag: a triggered line's OWN feature.geometry is always
+      // reassigned (the rebuild loop below only ever runs for `trigger[i]`
+      // parts, which by construction are never already at this pass's target
+      // bucket — see `atTarget`), so segments genuinely changed whenever
+      // `linesTouched` is nonzero and the existing `if (!strokeResult)
+      // return` in `_scheduleStrokeRebuild` is already that gate.
+      let withheldChanged = false;
+      const rebuiltParts = new Set();
+      for (const line of model.lines) {
+        const feature = lineFeatures[line.featureIndex];
+        partsTotal += line.parts.length;
+        if (!feature) continue;
+        const parts = line.parts;
+        const n = parts.length;
+        // Which parts want a rebuild THIS pass, for their own reason: never
+        // built, the shared lane-LOD bucket moved (ungated — see the comment
+        // on that clause below, unchanged from the old per-line test), or
+        // individually near the camera with its own zoom bucket stale.
+        const trigger = new Array(n);
+        let anyTrigger = false;
+        for (let i = 0; i < n; i++) {
+          const part = parts[i];
+          const t =
+            force ||
+            part.builtZoom == null ||
+            // The lane-LOD bucket is staleness like `builtZoomBucket` is —
+            // its own bucket, checked the same `near` way, so an off-screen
+            // part crossing z9/z12 keeps its old lane gap until it actually
+            // comes into view instead of every part in the network
+            // rebuilding synchronously on that one pan (jp's 669 parts cost
+            // ~152ms doing exactly that). It is a SEPARATE bucket from
+            // `zoomBucket`, not folded into it, because the two move at
+            // different granularities: the laneLod threshold can cross
+            // within a single STROKE_REBUILD_ZOOM_STEP, so a part whose
+            // `builtZoomBucket` already reads fresh would otherwise keep
+            // the wrong lane gap for a step. The dilation walk below still
+            // pulls in an off-screen neighbour across a LANED joint
+            // regardless of `near`, so a joint that actually carries an
+            // offset never straddles two lane-LOD buckets.
+            (near(part.bbox) &&
+              (part.builtLaneLodBucket !== laneLod.bucket ||
+                part.builtZoomBucket !== zoomBucket));
+          trigger[i] = t;
+          if (t) anyTrigger = true;
+        }
+        if (!anyTrigger) continue;
+        const partSpan = (part) =>
+          part.measures[part.measures.length - 1] - part.measures[0];
+        const touches = (before, after) => {
+          const a = before.coordinates[before.coordinates.length - 1];
+          const b = after.coordinates[0];
+          return a[0] === b[0] && a[1] === b[1];
+        };
+        // A touching boundary needs both sides built for the SAME
+        // (zoomBucket, laneLodBucket) pair only when it actually carries a
+        // lane offset — see the note above `bounds`. Purely static: rows and
+        // measures, no projection, so cheap to check on every boundary.
+        const boundaryIsLaned = (before, after) =>
+          RailStroke.terminalLanes(before.rows, partSpan(before)).end !== 0 ||
+          RailStroke.terminalLanes(after.rows, partSpan(after)).start !== 0;
+        // Dilate `trigger` across laned touching boundaries: a part pulled
+        // in this way is built for the SAME (zoomBucket, laneLodBucket) as
+        // the part that pulled it in, so the walk stops the instant it
+        // reaches a part already built for that exact pair (bucket-keyed
+        // builds are deterministic, so that part's existing geometry already
+        // agrees with a fresh one — see atTarget) or an unlaned boundary (no
+        // offset to reconcile). In practice this only ever walks the
+        // shared-corridor throat around a junction; an ordinary single-track
+        // split is unlaned and the walk never leaves the parts already near.
+        const atTarget = (part) =>
+          part.builtZoom != null &&
+          part.builtZoomBucket === zoomBucket &&
+          part.builtLaneLodBucket === laneLod.bucket;
+        const queue = [];
+        for (let i = 0; i < n; i++) if (trigger[i]) queue.push(i);
+        while (queue.length) {
+          const i = queue.pop();
+          if (
+            i > 0 && !trigger[i - 1] &&
+            touches(parts[i - 1], parts[i]) &&
+            boundaryIsLaned(parts[i - 1], parts[i]) &&
+            !atTarget(parts[i - 1])
+          ) {
+            trigger[i - 1] = true;
+            queue.push(i - 1);
+          }
+          if (
+            i + 1 < n && !trigger[i + 1] &&
+            touches(parts[i], parts[i + 1]) &&
+            boundaryIsLaned(parts[i], parts[i + 1]) &&
+            !atTarget(parts[i + 1])
+          ) {
+            trigger[i + 1] = true;
+            queue.push(i + 1);
+          }
+        }
+        // Raw part coordinates, projected at this pass's nominal zoom on
+        // demand and memoized — needed for a triggered part's own build AND
+        // for jointAt's tangent at a KEPT neighbour's shared vertex. Never
+        // needed for a kept neighbour's full geometry: jointAt reads only
+        // the neighbour's raw coordinates and its static row lanes, never
+        // its built/offset stroke — a cached part.strokePx of the neighbour
+        // simply is not part of what a joint needs.
+        const projectedAt = new Array(n);
+        const projectPart = (i) => {
+          if (i < 0 || i >= n) return null;
+          let px = projectedAt[i];
+          if (!px) {
+            px = parts[i].coordinates.map((point) => RailStroke.project(point, nominalZoom));
+            projectedAt[i] = px;
+          }
+          return px;
+        };
+        const unit = (from, to) => {
+          const dx = to[0] - from[0];
+          const dy = to[1] - from[1];
+          const length = Math.hypot(dx, dy);
+          return length > 0 ? [dx / length, dy / length] : null;
+        };
+        // The joint between parts `index - 1` and `index`, or null. Reads
+        // only raw projected coordinates and static row lanes, so it is
+        // bit-identical whether or not either side is being rebuilt this
+        // pass — see the doc on `projectPart` above.
+        const jointAt = (index) => {
+          const before = parts[index - 1];
+          const after = parts[index];
+          if (!before || !after || !touches(before, after)) return null;
+          const beforePx = projectPart(index - 1);
+          const afterPx = projectPart(index);
+          if (beforePx.length < 2 || afterPx.length < 2) return null;
+          const incoming = unit(beforePx[beforePx.length - 2], beforePx[beforePx.length - 1]);
+          const outgoing = unit(afterPx[0], afterPx[1]);
+          if (!incoming || !outgoing) return null;
+          return {
+            incoming,
+            outgoing,
+            beforeLane: RailStroke.terminalLanes(before.rows, partSpan(before)).end,
+            afterLane: RailStroke.terminalLanes(after.rows, partSpan(after)).start,
+          };
+        };
+        for (let i = 0; i < n; i++) {
+          if (!trigger[i]) continue;
+          const part = parts[i];
+          // A slow pinch that keeps re-entering the same eighth-level band
+          // (or a pan that revisits a bucket it already built) reuses this
+          // exact result instead of re-running buildStroke's offset/fillet
+          // passes — see the LRU doc above strokeCacheGet.
+          let entry = strokeCacheGet(part, zoomBucket, laneLod.bucket);
+          if (!entry) {
+            const px = projectPart(i);
+            const startJoint = jointAt(i);
+            const endJoint = jointAt(i + 1);
+            const follows = (part.follows || [])
+              .map((follow) => {
+                const canon = canonPixels(follow.canonLineId, follow.canonPartIndex);
+                return canon
+                  ? {
+                      from: follow.from,
+                      to: follow.to,
+                      canonFrom: follow.canonFrom,
+                      canonTo: follow.canonTo,
+                      points: canon.points,
+                      measures: canon.measures,
+                    }
+                  : null;
+              })
+              .filter(Boolean);
+            const stroke = RailStroke.buildStroke(px, {
+              measures: part.measures,
+              rows: part.rows,
+              totalMetres: part.totalMetres,
+              laneGapPx,
+              minRampPx: STROKE_MIN_RAMP_PX,
+              cornerRadiusPx,
+              minCornerRadiusPx,
+              anchors: part.anchors,
+              follows,
+              joinStart: startJoint
+                ? {
+                    lane: startJoint.beforeLane,
+                    incoming: startJoint.incoming,
+                    outgoing: startJoint.outgoing,
+                  }
+                : null,
+              joinEnd: endJoint
+                ? {
+                    lane: endJoint.afterLane,
+                    incoming: endJoint.incoming,
+                    outgoing: endJoint.outgoing,
+                  }
+                : null,
+            });
+            entry = { zoomBucket, laneLodBucket: laneLod.bucket, stroke };
+            strokeCachePut(part, entry);
+            verticesBuilt += px.length;
+          }
+          const stroke = entry.stroke;
+          part.anchorPoints = stroke.anchors.map((point) =>
+            RailStroke.unproject(point, nominalZoom),
+          );
+          // Kept in pixel space, with the metre measure of every vertex and
+          // the NOMINAL zoom it was built for (never the live camera zoom,
+          // which may have moved on by the time a kept part's stroke is next
+          // read) — so a ridden route's slice (see _applyRideStrokes) and
+          // the withheld/family assembly below always unproject a part's
+          // stroke at the exact zoom it was projected at, whether that
+          // stroke is fresh from this pass or untouched from an earlier one.
+          // Always the FULL built stroke, tenant/family windows included: a
+          // ride recorded on a tenant window is a real ride on real track,
+          // whichever member's stroke draws it, so playback slices from this
+          // regardless of what the BASE feature below draws.
+          part.strokePx = { points: stroke.points, measures: stroke.measures, zoom: nominalZoom };
+          part.builtZoom = nominalZoom;
+          part.builtZoomBucket = zoomBucket;
+          part.builtLaneLodBucket = laneLod.bucket;
+          rebuiltParts.add(part);
+        }
+        // Base feature: reassembled from EVERY part's CURRENT strokePx —
+        // freshly built above for a triggered part, exactly as it already
+        // was for a kept one — each unprojected at ITS OWN strokePx.zoom, so
+        // a kept part's drawn geometry is untouched down to the coordinate,
+        // not merely left alone in intent. The base feature draws only the
+        // COMPLEMENT of a part's own tenant windows (this line's stroke
+        // withheld here — another family member's landlord window stands
+        // for it) and landlord windows (drawn instead by this line's OWN
+        // family feature, so the corridor is not drawn twice under two
+        // features of the same line) — see familyFeatureIndex below and
+        // deriveFamilyWindows in build-display-lanes.mjs. A part with
+        // neither is unaffected: one full-length piece, as always.
+        // Every part's family/withheld split, computed ONCE per part here
+        // via the shared `RailStroke.familyPartition` (rail-stroke.js,
+        // answer-identical to RailCore's `ContinuousStroke.familyPartition`
+        // to 1e-9 m — see the fixture doc on that function) and reused by
+        // the base feature below, the withheld overlay, and the family
+        // stroke, so the three can never disagree on where a window's edge
+        // actually falls. Clamped to the STROKE's own measure range
+        // (`strokePx.measures[0]`/`[last]`), not `[0, part.totalMetres]`: a
+        // joint's extension or a follow's own vertices can leave the built
+        // stroke short of the part's nominal total, and clamping to the
+        // wrong bound would manufacture a sliver of base colour past
+        // geometry that does not exist (see the doc on `familyPartition`
+        // itself).
+        const partitionByPart = new Map();
+        const built = parts.map((part) => {
+          const strokePx = part.strokePx;
+          const z = strokePx.zoom;
+          if (!(part.tenantWindows || []).length && !(part.familyWindows || []).length)
+            return [strokePx.points.map((point) => RailStroke.unproject(point, z))];
+          const measures = strokePx.measures;
+          const partition = RailStroke.familyPartition(
+            part.totalMetres,
+            part.tenantWindows,
+            part.familyWindows,
+            { measureStart: measures[0], measureEnd: measures[measures.length - 1] },
+          );
+          partitionByPart.set(part, partition);
+          return familySliceRanges(strokePx.points, strokePx.measures, partition.base).map((piece) =>
+            piece.map((point) => RailStroke.unproject(point, z)),
+          );
+        }).flat();
+        feature.geometry =
+          built.length === 1
+            ? { type: "LineString", coordinates: built[0] }
+            : { type: "MultiLineString", coordinates: built };
+        // Bridged blocked-interval spans (rail-network.js `part.withheld`,
+        // metres in this part's own measure space) — sliced from each
+        // part's own CURRENT pixel stroke, the same way a ride is sliced
+        // from it in _applyRideStrokes, so the dashed overlay can never sit
+        // a fraction of a pixel off the field it is meant to trace.
+        if (line.withheldFeatureIndex != null) {
+          const withheldFeature =
+            network.segmentsWithheld.features[line.withheldFeatureIndex];
+          if (withheldFeature) {
+            const withheldCoords = [];
+            for (const part of parts) {
+              const strokePx = part.strokePx;
+              if (!strokePx || !part.withheld || !part.withheld.length) continue;
+              // A withheld span drawn over this line's own tenant window
+              // would dash track this line draws NOWHERE (the base feature
+              // just excluded that exact stretch, and the landlord's own
+              // stroke — not this feature — draws it) — a dash with no
+              // solid stroke under it. Clip every span to the complement of
+              // this part's OWN tenant windows via the shared
+              // `RailStroke.clipRangesToComplement` (mirrors
+              // RailMapView.swift's withheld-run build) before slicing. A
+              // landlord window stays clipped in: it is still solid track,
+              // just drawn by this line's OWN familyFeatureIndex feature
+              // rather than the base one below — so each surviving piece is
+              // split again at every landlord-window edge strictly inside
+              // it, the same way iOS colours each final sub-piece by its
+              // own midpoint. On the web both this feature and
+              // familyFeatureIndex already share this line's own
+              // featureColor/featureColorDark (a render-group colour
+              // override applies to the whole line, never to only part of
+              // it — see colorOverrideByLine in rail-network.js), so every
+              // sub-piece here is already in the family's own colour
+              // whenever it falls inside a landlord window; the split
+              // still runs so the piece BOUNDARIES match iOS exactly, not
+              // merely the colour.
+              const visibleRanges = RailStroke.clipRangesToComplement(
+                part.withheld.map((span) => ({ from: span[0], to: span[1] })),
+                part.tenantWindows || [],
+              );
+              const familyWindows = part.familyWindows || [];
+              for (const range of visibleRanges) {
+                const cuts = new Set([range.from, range.to]);
+                for (const window of familyWindows) {
+                  const lo = Math.min(window.from, window.to);
+                  const hi = Math.max(window.from, window.to);
+                  if (lo > range.from && lo < range.to) cuts.add(lo);
+                  if (hi > range.from && hi < range.to) cuts.add(hi);
+                }
+                const points = [...cuts].sort((a, b) => a - b);
+                for (let index = 0; index < points.length - 1; index += 1) {
+                  const from = points[index];
+                  const to = points[index + 1];
+                  if (to - from <= RailStroke.FAMILY_PARTITION_EPSILON_METRES) continue;
+                  const sliced = RailStroke.sliceStroke(
+                    strokePx.points,
+                    strokePx.measures,
+                    from,
+                    to,
+                  );
+                  if (sliced.length >= 2)
+                    withheldCoords.push(
+                      sliced.map((point) => RailStroke.unproject(point, strokePx.zoom)),
+                    );
+                }
+              }
+            }
+            withheldFeature.geometry = {
+              type: "MultiLineString",
+              coordinates: withheldCoords,
+            };
+            withheldChanged = true;
+          }
+        }
+        // Family stroke (rail-network.js `line.familyFeatureIndex`, set
+        // when any part has a landlord window — see deriveFamilyWindows in
+        // build-display-lanes.mjs): the shared corridor stroke for a
+        // same-family follow, sliced from each part's own CURRENT pixel
+        // stroke — the SAME `familyPartition` result the base feature above
+        // already computed for this part (`partitionByPart`), so the two
+        // can never sit a fraction of a pixel off each other. Its colour is
+        // already this line's own featureColor/featureColorDark (a
+        // render-group colour override applies to every family member), so
+        // this draws the ONE stroke the corridor needs, in the family's
+        // colour, once — not once per member.
+        if (line.familyFeatureIndex != null) {
+          const familyFeature = lineFeatures[line.familyFeatureIndex];
+          if (familyFeature) {
+            const familyCoords = [];
+            for (const part of parts) {
+              const strokePx = part.strokePx;
+              const partition = partitionByPart.get(part);
+              if (!strokePx || !partition || !partition.family.length) continue;
+              for (const piece of familySliceRanges(strokePx.points, strokePx.measures, partition.family))
+                familyCoords.push(piece.map((point) => RailStroke.unproject(point, strokePx.zoom)));
+            }
+            familyFeature.geometry = {
+              type: "MultiLineString",
+              coordinates: familyCoords,
+            };
+          }
+        }
+        linesTouched += 1;
+      }
+      if (!linesTouched) return false;
+      // Station anchors: only a part this pass actually rebuilt (fresh
+      // build or LRU reuse of a DIFFERENT bucket than it already had) can
+      // have moved — a kept part's anchorPoints is the same array it
+      // already had — so only those parts' station slots are worth
+      // comparing. Exact equality against the feature's current
+      // coordinates: a pinch that lands back on an already-drawn bucket
+      // (LRU hit, same value as what's already uploaded) costs a compare,
+      // not a re-upload.
+      if (rebuiltParts.size) {
+        const stationFeatures = network.stations.features;
+        for (const slot of model.stations) {
+          const part = model.lines[slot.lineIndex]?.parts[slot.partIndex];
+          if (!part || !rebuiltParts.has(part)) continue;
+          const point = part.anchorPoints?.[slot.anchorSlot];
+          const feature = stationFeatures[slot.featureIndex];
+          if (!point || !feature) continue;
+          const prev = feature.geometry && feature.geometry.coordinates;
+          if (!prev || prev[0] !== point[0] || prev[1] !== point[1]) {
+            feature.geometry = { type: "Point", coordinates: [point[0], point[1]] };
+            anchorsChanged = true;
+          }
+        }
+      }
+      this._strokeZoom = zoom;
+      const elapsed =
+        typeof performance !== "undefined" && performance.now
+          ? performance.now() - startedAt
+          : 0;
+      this._strokeStats = {
+        lastRebuildMs: elapsed,
+        partsRebuilt: rebuiltParts.size,
+        partsKept: partsTotal - rebuiltParts.size,
+        verticesBuilt,
+      };
+      if (typeof window !== "undefined" && window.PERF_DEBUG) {
+        console.log(
+          `[railmap] stroke rebuild: ${elapsed.toFixed(1)}ms, ` +
+            `${rebuiltParts.size}/${partsTotal} parts rebuilt, ` +
+            `${verticesBuilt} vertices built, anchorsChanged=${anchorsChanged}`,
+        );
+      }
+      return { anchorsChanged, withheldChanged };
+    },
+    // A ridden route sliced from a continuous-stroke part (rail-network.js
+    // `strokeRefFor`/`canonicalizeRouteFeature`, carried onto the record by
+    // app-deck-records.js as `record.strokeRef`) is redrawn HERE, straight
+    // from that part's own just-built pixel stroke (`part.strokePx`,
+    // written by _applyContinuousStrokes above), instead of drifting a
+    // fraction of a pixel from an independent fit. Called right after the
+    // network rebuild and before the route/pick sources are re-uploaded, so
+    // a ride can never lag the network stroke by a frame.
+    //
+    // A record's very first substitution keeps its prior path as
+    // `record.canonicalPath` — the route-solver-fitted geometry
+    // canonicalizeRouteFeature produced — so it stays recoverable. A record
+    // whose slice comes back empty (the part isn't built yet, or the ref
+    // measures collapsed) is left exactly as it was; the next rebuild tries
+    // again once the part it names has geometry.
+    _applyRideStrokes() {
+      const network = this._network;
+      const model = network && network.strokeModel;
+      if (!model || typeof RailStroke === "undefined") return false;
+      const partsByLine = new Map(model.lines.map((line) => [line.lineId, line.parts]));
+      let changed = false;
+      const applyTo = (records) => {
+        if (!records) return;
+        for (const record of records) {
+          const ref = record.strokeRef;
+          if (!ref) continue;
+          const part = partsByLine.get(ref.lineId)?.[ref.partIndex];
+          const strokePx = part && part.strokePx;
+          if (!strokePx) continue;
+          const sliced = RailStroke.sliceStroke(
+            strokePx.points,
+            strokePx.measures,
+            ref.from,
+            ref.to,
+          );
+          if (!sliced.length) continue;
+          if (!record.canonicalPath) record.canonicalPath = record.path;
+          record.path = sliced.map((point) => RailStroke.unproject(point, strokePx.zoom));
+          changed = true;
+        }
+      };
+      applyTo(this._records);
+      applyTo(this._expandRecords);
+      if (changed) {
+        this._rideStrokeGeneration += 1;
+        // gi.curve / gi._line for an `_allStrokeRef` corridor (app-deck-
+        // records.js resolveCorridorComponent / fitCorridorRunsIndependently)
+        // were built from the PRE-substitution path — refresh them from the
+        // record paths just resliced above, or the hover-fan direction and
+        // fit-curve diagnostics keep reading stale, off-network geometry.
+        // refreshExactStrokeCorridorCurves is a bare global published by
+        // app-overlap-lanes.js (the app-*.js family shares one lexical
+        // scope, unlike this RailMap namespace) — guarded the same way
+        // RailStroke is above, since a standalone embed of this file has
+        // no app layer at all.
+        if (typeof refreshExactStrokeCorridorCurves === "function")
+          refreshExactStrokeCorridorCurves(this._groupInfo);
+      }
+      return changed;
+    },
+    // Undoes _applyRideStrokes' substitution: any record still holding a
+    // `canonicalPath` (its pre-substitution, solver-fitted path) gets it
+    // back as `record.path`, and the marker is cleared. Called when the
+    // strokeModel a record's slice depended on is gone (switchNetworkCountry
+    // nulls `this._network`) — the OLD country's pixel stroke must not keep
+    // being shown once it no longer corresponds to any live network.
+    _restoreCanonicalPaths(records) {
+      if (!records) return false;
+      let restored = false;
+      for (const record of records) {
+        if (!record.canonicalPath) continue;
+        record.path = record.canonicalPath;
+        record.canonicalPath = null;
+        restored = true;
+      }
+      return restored;
+    },
+    // A ridden route substituted onto the continuous-stroke network above
+    // draws exact ink app-playback.js's compilePath cannot see on its own —
+    // it samples the solver-fitted CANONICAL route geometry, which on a
+    // laned/rounded stretch sits a few pixels off what is actually drawn.
+    //
+    // Returns, for one train, each ridden route feature's CURRENT drawn path
+    // (`record.path`, straight from _applyRideStrokes above), keyed by the
+    // feature's own segment_index and given in feature-segment order, so
+    // compilePath can zip them against getMatchedRouteFeatures(train). Only
+    // strokeRef-backed records are returned: those alone are guaranteed to
+    // sit on the drawn network centreline (rail-network.js strokeRefFor /
+    // canonicalizeRouteFeature) — a record with no strokeRef draws the
+    // corridor/Douglas-Peucker DISPLAY geometry, which is NOT a faithful
+    // stand-in for the raw route feature compilePath otherwise samples, and
+    // substituting it would change a non-NA train's playback path (which
+    // must stay byte-identical to before this accessor existed).
+    //
+    // One (train, feature) pair can own more than one record — a corridor/
+    // lane change cuts a "run" wherever the shared track changes lane, even
+    // mid-feature — so every matching record's path is concatenated here in
+    // array order, which is along-the-line order (appendDeckRouteLineRecords
+    // in app-deck-records.js pushes a line's runs in ascending position).
+    // Adjoining runs share an exact boundary vertex, deduped like
+    // compilePath's own run-stitcher.
+    drawnRidePaths(trainId) {
+      const records = this._records;
+      if (!records || trainId == null) return null;
+      const bySeg = new Map();
+      for (let i = 0; i < records.length; i += 1) {
+        const record = records[i];
+        if (!record.strokeRef) continue;
+        const train = record.train;
+        if (!train || train.id !== trainId) continue;
+        const feature = record.feature;
+        const segIndex =
+          feature && feature.properties
+            ? Number(feature.properties.segment_index ?? -1)
+            : -1;
+        if (segIndex < 0) continue;
+        const path = record.path;
+        if (!Array.isArray(path) || path.length < 2) continue;
+        let entry = bySeg.get(segIndex);
+        if (!entry) {
+          entry = { segmentIndex: segIndex, coords: [] };
+          bySeg.set(segIndex, entry);
+        }
+        for (let k = 0; k < path.length; k += 1) {
+          const c = path[k];
+          const last = entry.coords[entry.coords.length - 1];
+          if (last && distanceMeters(last, c) <= 0) continue;
+          entry.coords.push(c);
+        }
+      }
+      if (!bySeg.size) return null;
+      const out = Array.from(bySeg.values()).filter(
+        (entry) => entry.coords.length >= 2,
+      );
+      if (!out.length) return null;
+      out.sort((a, b) => a.segmentIndex - b.segmentIndex);
+      return out;
+    },
+    _scheduleStrokeRebuild(now) {
+      const network = this._network;
+      if (!network || !network.strokeModel || !this._map) return;
+      // Gate on whether there is anything to rebuild FOR — the visible
+      // network layers, or a ride that must stay glued to the network's
+      // pixel stroke — not on the network layer's own visibility. A ride is
+      // drawn on the TRAINS/expand sources, independent of whether "全部鐵路
+      // 線"/station dots are toggled on, so hiding the network must not also
+      // stop rides from tracking it across a zoom.
+      const networkVisible =
+        this._networkVisibleWanted || this._networkStationsVisibleWanted;
+      if (!networkVisible && !this._hasStrokeRefRecords) return;
+      const run = () => {
+        this._strokeRebuildTimer = null;
+        // _applyContinuousStrokes only rebuilds near-camera/stale-zoom parts
+        // (its own perf guard) and, unlike this method, does not look at
+        // layer visibility at all — reaching it now even while the network
+        // layer is hidden keeps every part a ride might reference at a
+        // current part.strokePx. Nothing rebuilt means part.strokePx is
+        // unchanged, so a ride's slice would come out byte-identical —
+        // skip the re-slice and re-upload rather than pay for a no-op.
+        const strokeResult = this._applyContinuousStrokes(false);
+        if (!strokeResult) return;
+        this._applyRideStrokes();
+        const seg = this._src(SEGMENTS_SOURCE);
+        if (seg) seg.setData(network.segments);
+        // The withheld source is its own upload, skipped independently: most
+        // rebuild passes touch only lines with no `displayBlockedIntervals`
+        // at all, and re-uploading `network.segmentsWithheld` on every one of
+        // those passes moved nothing — see `withheldChanged`'s own doc above.
+        if (strokeResult.withheldChanged) {
+          const withheld = this._src(SEGMENTS_WITHHELD_SOURCE);
+          if (withheld) withheld.setData(network.segmentsWithheld || EMPTY_FC);
+        }
+        // Stations/labels are a SEPARATE source pair from segments, so their
+        // re-upload can be skipped independently: a rebuild that only moved
+        // parts with no station anchor on them (or whose anchors landed back
+        // on their exact prior coordinates) leaves `network.stations` byte-
+        // for-byte the same FeatureCollection object it already was.
+        if (strokeResult.anchorsChanged) {
+          const sta = this._src(STATIONS_SOURCE);
+          const labels = this._src(STATION_LABELS_SOURCE);
+          if (sta) sta.setData(network.stations);
+          if (labels) labels.setData(network.stationLabels || EMPTY_FC);
+        }
+        this._pushRoutes();
+        this._pushPickFan();
+      };
+      if (now) {
+        if (this._strokeRebuildTimer) clearTimeout(this._strokeRebuildTimer);
+        run();
+        return;
+      }
+      if (this._strokeRebuildTimer) return;
+      this._strokeRebuildTimer = setTimeout(run, STROKE_REBUILD_DELAY_MS);
     },
     setNetworkStationsVisible(v) {
       this._networkStationsVisibleWanted = Boolean(v);
       const visibility = this._networkStationsVisibleWanted ? "visible" : "none";
       // The station names ride with the station dots. A name without its
       // bead would be a place, not a station.
-      for (const layer of [STATIONS_LAYER, STATIONS_LABEL_LAYER])
+      for (const layer of [STATIONS_LAYER, STATION_LANES_LAYER, STATIONS_LABEL_LAYER])
         this._setVisibility(layer, visibility);
       // …and when they go, the rides' own names take over naming the map.
       this._applyRiddenLabelVisibility();
+      if (this._networkStationsVisibleWanted) this._scheduleStrokeRebuild(true);
     },
     // Fetch + build + upload the active country's network package when it was
     // not supplied at attach time, or retry after a failed boot/country load.
@@ -1027,11 +1988,34 @@
             const applyNetwork = () => {
               if (generation !== this._networkGeneration) return false;
               const seg = m.getSource(SEGMENTS_SOURCE);
+              const withheld = m.getSource(SEGMENTS_WITHHELD_SOURCE);
               const sta = m.getSource(STATIONS_SOURCE);
+              const lanes = m.getSource(STATION_LANES_SOURCE);
               const labels = m.getSource(STATION_LABELS_SOURCE);
+              // A throw here must not leave the sources empty for good: the
+              // canonical geometry is still a drawable fallback.
+              try {
+                this._applyContinuousStrokes(true);
+                // The network's own stroke geometry just landed for the
+                // first time (or was rebuilt from scratch here) — any
+                // already-ridden record carrying a strokeRef (set before the
+                // network finished loading, e.g. a country switch mid-ride)
+                // must be resliced onto it now, not wait for the next
+                // zoom/pan-triggered rebuild. Without this a ride stays on
+                // its solver-fitted canonical path — visibly off the drawn
+                // network — until the map is next zoomed or panned.
+                this._applyRideStrokes();
+              } catch (error) {
+                console.warn("[railmap] continuous strokes failed:", error);
+              }
               if (seg) seg.setData(network.segments);
+              if (withheld) withheld.setData(network.segmentsWithheld || EMPTY_FC);
               if (sta) sta.setData(network.stations);
+              if (lanes) lanes.setData(network.stationLanes || EMPTY_FC);
               if (labels) labels.setData(network.stationLabels || EMPTY_FC);
+              this._ensureStationIcons();
+              this._pushRoutes();
+              this._pushPickFan();
               // Re-assert the recorded visibility intent: a toggle made while
               // the style was still loading hit _setVisibility before the
               // layers existed and was silently dropped, leaving a checked
@@ -1078,16 +2062,38 @@
       this._networkGeneration += 1;
       this._network = null;
       this._networkPromise = null;
+      // The old country's strokeModel is gone, so any record still sliced
+      // onto it (record.canonicalPath set by _applyRideStrokes) can no
+      // longer be kept in sync — undo the substitution and go back to the
+      // solver-fitted canonical path until the new country's network (and,
+      // if this record's line still exists there, a fresh strokeRef) loads.
+      // Without this a ride would keep showing the OLD country's stroke
+      // geometry — coordinates that have nothing to do with the network
+      // about to replace it — until app.js happens to rebuild this record.
+      // Both calls must run — no `||` short-circuit — so an expand-only
+      // restoration is never skipped just because _records had none.
+      const restoredRecords = this._restoreCanonicalPaths(this._records);
+      const restoredExpand = this._restoreCanonicalPaths(this._expandRecords);
+      if (restoredRecords || restoredExpand) {
+        this._rideStrokeGeneration += 1;
+        this._pushRoutes();
+        this._pushPickFan();
+      }
+      this._strokeZoom = null;
       this._stationPopupKey = null;
       if (this._stationPopup) this._stationPopup.remove();
       const seg = this._src(SEGMENTS_SOURCE);
+      const withheld = this._src(SEGMENTS_WITHHELD_SOURCE);
       const sta = this._src(STATIONS_SOURCE);
+      const staLanes = this._src(STATION_LANES_SOURCE);
       const staLabels = this._src(STATION_LABELS_SOURCE);
       if (seg) {
         seg.setData(EMPTY_FC);
         if (country) seg.attribution = railAttributionForCountry(country);
       }
+      if (withheld) withheld.setData(EMPTY_FC);
       if (sta) sta.setData(EMPTY_FC);
+      if (staLanes) staLanes.setData(EMPTY_FC);
       if (staLabels) staLabels.setData(EMPTY_FC);
       if (!shouldReload) return Promise.resolve(null);
       return this.ensureNetwork(packageUrl).then((network) => {
@@ -1222,6 +2228,33 @@
           networkLineColor(theme),
         );
       }
+      // A bridged blocked interval (see SEGMENTS_WITHHELD_LAYER in
+      // railmap-style.js) is the same field in the line's own colour, and its
+      // dashed casing is the surface colour itself — both follow the theme.
+      if (m.getLayer(SEGMENTS_WITHHELD_LAYER)) {
+        m.setPaintProperty(
+          SEGMENTS_WITHHELD_LAYER,
+          "line-color-transition",
+          transition,
+        );
+        m.setPaintProperty(
+          SEGMENTS_WITHHELD_LAYER,
+          "line-color",
+          networkLineColor(theme),
+        );
+      }
+      if (m.getLayer(SEGMENTS_WITHHELD_CASING_LAYER)) {
+        m.setPaintProperty(
+          SEGMENTS_WITHHELD_CASING_LAYER,
+          "line-color-transition",
+          transition,
+        );
+        m.setPaintProperty(
+          SEGMENTS_WITHHELD_CASING_LAYER,
+          "line-color",
+          colors.background,
+        );
+      }
       if (m.getLayer(STATIONS_LAYER)) {
         m.setPaintProperty(
           STATIONS_LAYER,
@@ -1242,6 +2275,13 @@
           stationStroke(theme),
         );
       }
+      this._ensureStationIcons();
+      if (m.getLayer(STATION_LANES_LAYER))
+        m.setLayoutProperty(
+          STATION_LANES_LAYER,
+          "icon-image",
+          stationIconImage(theme),
+        );
       // Names: ink and halo are both surface-derived, so both flip with the
       // theme. The line name keeps its hue and only re-anchors the contrast
       // half of its blend (networkLineLabelColor).
@@ -1776,7 +2816,7 @@
       if (exp)
         exp.setData(
           tids && tids.length
-            ? routeExpandBaseFC(this._expandRecords, tids)
+            ? routeExpandBaseFC(this._expandRecords, tids, this._rideStrokeGeneration)
             : EMPTY_FC,
         );
       const pick = this._src(TRAIN_PICK_FAN_SOURCE);

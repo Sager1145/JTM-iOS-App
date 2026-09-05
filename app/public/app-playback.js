@@ -168,11 +168,22 @@ const Playback = (function () {
     return distanceMeters(a, b);
   }
 
+  // The active country's continuous-stroke generation (railmap.js
+  // `_rideStrokeGeneration`, bumped whenever `_applyRideStrokes` actually
+  // moves a ridden route's drawn path — a fresh setData, or a zoom/pan
+  // stroke rebuild). Folded into the cache key so a compiled path is never
+  // reused once the drawn ink it sampled has moved.
+  function rideStrokeGeneration() {
+    return typeof RailMap !== "undefined"
+      ? RailMap._rideStrokeGeneration || 0
+      : 0;
+  }
+
   function pathCacheKey(train) {
     const rides = (train.stops || [])
       .map((s) => (s && s.ride_segment ? 1 : 0))
       .join("");
-    return `${train.id}:${getTrainRouteTemplateKey(train)}:${rides}`;
+    return `${train.id}:${getTrainRouteTemplateKey(train)}:${rides}:${rideStrokeGeneration()}`;
   }
 
   // Raw (unquantized) coordinate lines of one route feature. Deliberately NOT
@@ -251,7 +262,9 @@ const Playback = (function () {
 
     // Run offsets in the GLOBAL arc coordinate: runs concatenate, so a gap
     // between them contributes zero length and the marker crosses it in one
-    // frame rather than sliding over open country.
+    // frame rather than sliding over open country. This is the CANONICAL
+    // (solver-fitted) geometry, and it stays the fallback position source —
+    // see buildDrawnHopRuns below for when it is not the one actually used.
     let offset = 0;
     runs.forEach((r) => {
       r.offset = offset;
@@ -272,6 +285,25 @@ const Playback = (function () {
       h.t1 = clock;
     });
 
+    // ── drawn-ink substitution (North America) ────────────────────────────
+    // Every distance above (globalS, hop meters, the time budget, the zoom
+    // below) is derived purely from the CANONICAL route geometry, so none of
+    // it — and therefore playback speed — changes with zoom. When every
+    // ridden hop also has a drawn stand-in (RailMap.drawnRidePaths, only
+    // true for a hop actually cut from the continuous-stroke network — see
+    // railmap.js), buildDrawnHopRuns hands back one run per hop plus each
+    // hop's own drawn arc-length span (h.ds0/h.ds1); positions are then
+    // sampled off THAT instead, by carrying a hop-local canonical fraction
+    // over onto the drawn span (remapHopDistance) — so the marker and trail
+    // ride exactly beside the drawn ink on a laned/rounded stretch, while a
+    // non-NA train (no strokeRef anywhere) always fails this and samples the
+    // canonical geometry exactly as before.
+    const { drawnRuns, drawnActive } = buildDrawnHopRuns(train, hops);
+    const sampleAt = (s) =>
+      drawnActive
+        ? positionAtDistance(drawnRuns, remapHopDistance(hops, s))
+        : positionAtDistance(runs, s);
+
     // ONE zoom for the whole journey. It used to be computed per ridden
     // interval, which is where the "short interval closer, long interval
     // further" reading came from — but a limited express with thirty-odd
@@ -282,7 +314,7 @@ const Playback = (function () {
     // a long one still plays pulled back, and nothing moves in between.
     // (Which intervals feel slow or fast is unchanged — that lives in the
     // time split above, not in the scale.)
-    const midPoint = positionAtDistance(runs, globalS / 2);
+    const midPoint = sampleAt(globalS / 2);
     const lat = midPoint ? midPoint[1] : 36;
     const averageSpeed = globalS / Math.max(0.001, clock);
     const zoom = Math.min(
@@ -298,18 +330,82 @@ const Playback = (function () {
 
     const compiled = {
       zoom,
-      stations: buildStationList(train, runs, hops),
+      stations: buildStationList(train, runs, hops, drawnActive ? drawnRuns : null),
       trainId: train.id,
       color: (train.style && train.style.color) || DEFAULT_TRAIN_COLOR,
-      runs,
+      runs: drawnActive ? drawnRuns : runs,
       hops,
+      drawnActive,
+      strokeGen: rideStrokeGeneration(),
       totalMeters: globalS,
       duration: clock,
-      start: positionAtDistance(runs, 0),
-      end: positionAtDistance(runs, globalS),
+      start: sampleAt(0),
+      end: sampleAt(globalS),
     };
     pathCache.set(key, compiled);
     return compiled;
+  }
+
+  // One run per RIDDEN hop, built from RailMap.drawnRidePaths(train.id) (see
+  // railmap.js) — the current, exactly-drawn slice of the continuous-stroke
+  // network for every ridden route feature that was cut from it. All-or-
+  // nothing: if even one hop has no strokeRef-backed drawn stand-in (a
+  // non-NA train, or an NA one whose network stroke has not reached this
+  // segment yet), every hop falls back to canonical geometry, so a train
+  // never rides half on solver-fit ink and half on drawn ink.
+  //
+  // Mutates each hop with its own drawn arc-length span (ds0/ds1) alongside
+  // its existing canonical one (s0/s1) — remapHopDistance carries a
+  // canonical fraction from one onto the other.
+  function buildDrawnHopRuns(train, hops) {
+    const none = { drawnRuns: null, drawnActive: false };
+    if (
+      typeof RailMap === "undefined" ||
+      typeof RailMap.drawnRidePaths !== "function"
+    )
+      return none;
+    const entries = RailMap.drawnRidePaths(train.id);
+    if (!entries || !entries.length) return none;
+    const bySeg = new Map(entries.map((e) => [e.segmentIndex, e.coords]));
+    const drawnRuns = [];
+    let offset = 0;
+    for (const h of hops) {
+      if (h.segIndex < 0) return none;
+      const coords = bySeg.get(h.segIndex);
+      if (!coords || coords.length < 2) return none;
+      const cum = [0];
+      let total = 0;
+      for (let i = 1; i < coords.length; i += 1) {
+        total += metersBetween(coords[i - 1], coords[i]);
+        cum.push(total);
+      }
+      if (total <= 0) return none;
+      drawnRuns.push({ coords, cum, total, offset });
+      h.ds0 = offset;
+      offset += total;
+      h.ds1 = offset;
+    }
+    return { drawnRuns, drawnActive: true };
+  }
+
+  // Canonical arc-length s (from distanceAtTime, or any point in [0,
+  // globalS]) → the matching arc length on the DRAWN run set built above:
+  // the same fraction WITHIN the owning hop, carried onto that hop's own
+  // drawn span. Station stops sit exactly on hop boundaries, so they land on
+  // the exact same drawn point either way; only the ground covered INSIDE a
+  // hop can differ in shape from the canonical geometry it stands in for.
+  function remapHopDistance(hops, s) {
+    let lo = 0;
+    let hi = hops.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (hops[mid].s1 < s) lo = mid + 1;
+      else hi = mid;
+    }
+    const h = hops[lo];
+    const span = h.s1 - h.s0;
+    const frac = span > 0 ? Math.max(0, Math.min(1, (s - h.s0) / span)) : 0;
+    return h.ds0 + frac * (h.ds1 - h.ds0);
   }
 
   // The stations the running train actually STOPS at, in running order, with
@@ -321,7 +417,7 @@ const Playback = (function () {
   // hidden stretch contributes no stations, exactly as it contributes no
   // geometry. origin / passenger_stop / operational_stop / destination all
   // qualify, and so does a stop that declares no type.
-  function buildStationList(train, runs, hops) {
+  function buildStationList(train, runs, hops, drawnRuns) {
     const stops = train.stops || [];
     const color = (train.style && train.style.color) || DEFAULT_TRAIN_COLOR;
     // stop index → arc distance, from the intervals that survived the filter.
@@ -340,7 +436,9 @@ const Playback = (function () {
         const name = stopName(stop);
         if (!name) return;
         const s = distanceByStop.get(stopIndex);
-        const coord = positionAtDistance(runs, s);
+        const coord = drawnRuns
+          ? positionAtDistance(drawnRuns, remapHopDistance(hops, s))
+          : positionAtDistance(runs, s);
         if (!coord) return;
         stations.push({
           s,
@@ -518,6 +616,31 @@ const Playback = (function () {
   function frame(now) {
     rafId = null;
     if (phase !== "playing" || !path) return;
+    // A zoom or pan mid-run can rebuild the NA network's continuous strokes
+    // (railmap.js `_scheduleStrokeRebuild` → `_applyRideStrokes`), which
+    // bumps `_rideStrokeGeneration` and — via pathCacheKey — makes the
+    // compiled path stale. Re-fetch it (a cheap cache hit whenever nothing
+    // changed) so this frame samples the CURRENT drawn ink; `elapsed` and
+    // every other clock/camera variable carry over untouched, since the
+    // timing model (hops/duration/zoom) is derived from canonical geometry
+    // and comes back numerically identical. Same array, no restart.
+    if (path.strokeGen !== rideStrokeGeneration()) {
+      // Every cached entry keys on the generation it was built for (see
+      // pathCacheKey), so a bump orphans the whole cache rather than just
+      // this train's entry — drop it here instead of letting it accumulate
+      // one dead generation's worth of compiled paths per rebuild.
+      invalidatePaths();
+      const train = queue[queueIndex];
+      const fresh = train && compilePath(train);
+      if (fresh) {
+        path = fresh;
+        RailMap.setPlaybackTrail(
+          trailDone,
+          path.runs.map((r) => r.coords),
+          path.color,
+        );
+      }
+    }
     const dt = Math.min(
       TUNE.MAX_FRAME_S,
       Math.max(0, (now - lastFrameMs) / 1000),
@@ -528,7 +651,8 @@ const Playback = (function () {
     const done = elapsed >= path.duration;
     const t = done ? path.duration : elapsed;
     const s = distanceAtTime(path, t);
-    const coord = positionAtDistance(path.runs, s);
+    const ds = path.drawnActive ? remapHopDistance(path.hops, s) : s;
+    const coord = positionAtDistance(path.runs, ds);
     if (!coord) {
       finishTrain();
       return;
@@ -555,7 +679,7 @@ const Playback = (function () {
     // camera — during a catch-up those differ, and the train is the truth.
     map.jumpTo({ center, zoom: zoomSmoothed });
     placeHead(coord, path.color);
-    const rp = runProgressAtDistance(path.runs, s);
+    const rp = runProgressAtDistance(path.runs, ds);
     RailMap.setPlaybackProgress(rp.index, rp.t);
     advanceStations(s, dt);
     renderProgress(t / path.duration);
@@ -797,7 +921,11 @@ const Playback = (function () {
     // Wherever the reader left the camera IS the new offset; the chase closes
     // it from there rather than snapping.
     const from = map.getCenter();
-    const at = positionAtDistance(path.runs, distanceAtTime(path, elapsed));
+    const resumeS = distanceAtTime(path, elapsed);
+    const at = positionAtDistance(
+      path.runs,
+      path.drawnActive ? remapHopDistance(path.hops, resumeS) : resumeS,
+    );
     if (at) camError = [from.lng - at[0], from.lat - at[1]];
     zoomSmoothed = map.getZoom();
     phase = "playing";

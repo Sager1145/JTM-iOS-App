@@ -347,13 +347,21 @@ function buildCorridorChain(c, groupInfo, joins) {
   const unused = new Set(c.keys);
   const usedJoins = new Set();
   const chain = [];
+  // Direct `gi` OBJECT references (not groupKey strings) walked in chain
+  // order, with which side each was entered from — read back later by
+  // refreshExactStrokeCorridorCurves. Object references survive
+  // dropAliasedGroupEntries deleting a non-master member's `groupInfo`
+  // entry; a string key looked up after that point would come back empty.
+  const walk = [];
   let key = startKey;
   while (key && unused.has(key)) {
     unused.delete(key);
     const gi = groupInfo.get(key);
     let line = gi && gi._line;
     if (!line || line.length < 2) break;
-    if (fromSide === 1) line = line.slice().reverse();
+    const reversed = fromSide === 1;
+    if (reversed) line = line.slice().reverse();
+    walk.push({ gi, reversed });
     for (let i = 0; i < line.length; i += 1) {
       if (!chain.length || distanceMeters(chain[chain.length - 1], line[i]) > 0.05)
         chain.push(line[i]);
@@ -370,7 +378,14 @@ function buildCorridorChain(c, groupInfo, joins) {
     key = nextEnd.key;
     fromSide = nextEnd.side;
   }
-  return chain.length >= 2 ? chain : null;
+  if (chain.length < 2) return null;
+  // Attached rather than returned alongside `chain`: every existing caller
+  // treats this function's result as a plain coordinate array (indexing,
+  // `.length`, handing it straight to smoothCorridorCurve/
+  // curveFromExactGeometry) — piggybacking the walk as a property keeps
+  // all of that code unchanged.
+  chain.walk = walk;
+  return chain;
 }
 
 // One near-parallel interaction key may be encountered on several physical
@@ -1491,6 +1506,85 @@ function smoothStandaloneCorridorRun(line, isClosed) {
   return isClosed ? null : smoothCorridorCurve(line);
 }
 
+// The fan-direction / diagnostics curve for a corridor whose every member run
+// is drawn straight off the continuous-stroke network (rail-network.js
+// strokeRefFor, us/ca — see app-deck-records.js resolveCorridorComponent /
+// fitCorridorRunsIndependently). That geometry is already the exact shared
+// centreline every member train rides — there is no survey drift left for
+// the B-spline solve above to remove — so this skips it entirely and wraps
+// the run geometry itself in the same {pts, cum, totalMeters, dirs, coslat}
+// shape smoothCorridorCurve produces, via the same field-rebuild the
+// station-join pass already uses on a curve whose points changed
+// (refreshFittedCurveGeometry).
+function curveFromExactGeometry(line) {
+  const inputs = normalizeFitCurveInputs(line);
+  if (!inputs) return null;
+  const lat0 = line.reduce((sum, p) => sum + p[1], 0) / line.length;
+  const curve = {
+    pts: line.map((p) => [p[0], p[1]]),
+    coslat: Math.cos((lat0 * Math.PI) / 180) || 1e-6,
+    requestedMinRadiusMeters: inputs.requestedMinRadius,
+    minDetailMeters: inputs.minDetail,
+    maxDeviationMeters: inputs.maxDeviation,
+    actualMaxDeviationMeters: 0,
+    samplingPrecision: inputs.precision,
+    fitType: "continuous-stroke-exact",
+    _sourceLines: [line],
+  };
+  refreshFittedCurveGeometry(curve);
+  return curve;
+}
+
+// Rebuilds `gi.curve` for every `_allStrokeRef` group/chain-master straight
+// from each member's CURRENT `record.path` — called by railmap.js
+// `_applyRideStrokes` right after it has resliced ride records onto the
+// network's own pixel stroke. Every curve above (curveFromExactGeometry,
+// called from fitCorridorRunsIndependently/resolveCorridorComponent) was
+// built during buildDeckRouteRecords, strictly BEFORE that substitution
+// exists — `gi._line`/the chain array are snapshots of the pre-substitution
+// solver-fitted path, and nothing keeps them in sync afterward on their own.
+//
+// `_exactChainWalk` (stamped by those two functions) holds direct `gi`
+// OBJECT references in chain order, not groupInfo keys: a multi-run chain's
+// non-master members are deleted from groupInfo by dropAliasedGroupEntries
+// once the chain is resolved, so a key lookup after that point would come
+// back empty. Each walk step's `gi._representativeRecord` is the ONE record
+// whose `.path` was captured as that member's `_line` at build time — the
+// same record `_applyRideStrokes` reslices — so reading `.path` off it here
+// always sees the current, substituted geometry.
+function refreshExactStrokeCorridorCurves(groupInfo) {
+  if (!groupInfo) return;
+  groupInfo.forEach((gi) => {
+    const walk = gi && gi._exactChainWalk;
+    if (!walk || !walk.length) return;
+    const chain = [];
+    for (const step of walk) {
+      const record = step.gi && step.gi._representativeRecord;
+      let line = record && record.path;
+      if (!line || line.length < 2) {
+        // The record this step depends on has no usable path (a slice that
+        // came back empty this round, or a group built before its record
+        // existed) — leave the PREVIOUS curve in place rather than publish
+        // a broken partial chain.
+        return;
+      }
+      if (step.reversed) line = line.slice().reverse();
+      for (let i = 0; i < line.length; i += 1) {
+        if (!chain.length || distanceMeters(chain[chain.length - 1], line[i]) > 0.05)
+          chain.push(line[i]);
+      }
+    }
+    if (chain.length < 2) return;
+    const curve = curveFromExactGeometry(chain);
+    // A degenerate refreshed chain keeps whatever curve (exact or
+    // fallback-fitted) this group already had — never regress to no curve.
+    if (curve) {
+      gi.curve = curve;
+      gi._line = chain;
+    }
+  });
+}
+
 // Station-join probing may see a curve mid-rebuild, so verify the pts/cum pair
 // and return null instead of sampling garbage.
 //
@@ -1810,6 +1904,14 @@ const STATION_JOIN_RADIUS_RELAX = 0.4;
 function indexStationJoinCurveOwners(groupInfo) {
   const owners = new Map();
   groupInfo.forEach((gi, groupKey) => {
+    // An `_allStrokeRef` group/chain already sits on the network's own
+    // exact, anchor-snapped centreline (curveFromExactGeometry) — there is
+    // no survey drift at its station ends for this pass to round away, and
+    // replacing it with a B-spline refit here would throw away that exact
+    // fit AND go stale the next time railmap.js `_applyRideStrokes` reslices
+    // it onto a new zoom's stroke (refreshExactStrokeCorridorCurves only
+    // knows how to rebuild the exact shape, not a joined B-spline refit).
+    if (gi && gi._allStrokeRef) return;
     const curve = gi && gi.curve;
     if (!curve || !curve.pts || curve.pts.length < 4) return;
     let list = owners.get(curve);

@@ -751,7 +751,11 @@ function corridorRunShiftAxis(overlap, orig, segKeys, ra, rb) {
 // physical run. Keep distinct geometry here; after every record has been
 // seen, rebuildGroupRepresentativeGeometry joins compatible sequential
 // fragments and recomputes the whole axis.
-function mergeRunLineIntoGroup(gi, runLine) {
+// `strokeRef` is the JOINING run's own ref (null when it has none); the
+// group stays "every member has a strokeRef" only while every run merged
+// into it — the first and every later one — carried one. See
+// createCorridorRunGroup's `_allStrokeRef` for what reads this.
+function mergeRunLineIntoGroup(gi, runLine, strokeRef) {
   if (!gi._lines) gi._lines = [gi._line];
   const duplicate = gi._lines.some((other) => {
     const same =
@@ -764,6 +768,7 @@ function mergeRunLineIntoGroup(gi, runLine) {
     return same || reverse;
   });
   if (!duplicate) gi._lines.push(runLine);
+  if (!strokeRef) gi._allStrokeRef = false;
 }
 
 // INTERMEDIATE PRODUCT: a run's lane group — the group-wide shift vector, and
@@ -780,6 +785,7 @@ function createCorridorRunGroup(
   groupKey,
   ids,
   runLine,
+  strokeRef,
 ) {
   const { latRef, coslatRef, dx, dy, len } = corridorRunShiftAxis(
     overlap,
@@ -805,6 +811,14 @@ function createCorridorRunGroup(
     _lines: [runLine],
     _latRef: latRef,
     _nearParallel: overlap.nearGroupInfo(groupKey),
+    // True while every run merged into this group (see mergeRunLineIntoGroup)
+    // is drawn straight off the continuous-stroke network (rail-network.js
+    // strokeRefFor). Read by resolveCorridorComponent/fitCorridorRunsIndependently
+    // to skip the B-spline fit — the members already share one exact
+    // centreline, so there is no survey drift left for it to remove — and by
+    // stampCorridorRepresentativeGeometry to keep this run's own geometry as
+    // the group's representative instead of re-chaining it.
+    _allStrokeRef: Boolean(strokeRef),
   };
 }
 
@@ -876,6 +890,40 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
   );
   drawnLenByTid.set(tid, (drawnLenByTid.get(tid) || 0) + drawnLen);
 
+  // Set only when canonicalizeRouteFeature (rail-network.js) sliced this
+  // whole feature from one continuous-stroke part: `orig` is then exactly
+  // that slice's coordinates, and `featureMeasures[i]` is `orig[i]`'s own
+  // metre measure along the part. A run or the expand record cut from `orig`
+  // reads its own two endpoints out of this SAME array, so its strokeRef
+  // always agrees with the feature's — see railmap.js `_applyRideStrokes`.
+  const featureStrokeRef = feature?.properties?.display_stroke_ref || null;
+  const featureMeasures = Array.isArray(feature?.properties?.display_measures)
+    ? feature.properties.display_measures
+    : null;
+  // `featureStrokeRef.from`/`.to` are the ANCHOR-SNAPPED measures
+  // strokeRefFor (rail-network.js) computed for the feature's own two
+  // endpoints — exactly the measure rail-stroke.js anchors the platform
+  // bead to, which the plain per-vertex `featureMeasures[i]` projection is
+  // not (it is only ever the nearest point ON THE TRACK, a fraction of a
+  // metre short of the platform). A run/expand record whose own endpoint
+  // IS the feature's endpoint (ra === 0 or rb === last) uses that snapped
+  // measure instead, so its terminus lands on the exact same bead the
+  // network draws; every other run boundary — a mid-hop lane change, never
+  // a platform — has no anchor to snap to and keeps the plain projection.
+  const lastIdx = orig.length - 1;
+  const strokeRefAt = (fromIdx, toIdx) =>
+    featureStrokeRef &&
+    featureMeasures &&
+    featureMeasures[fromIdx] != null &&
+    featureMeasures[toIdx] != null
+      ? {
+          lineId: featureStrokeRef.lineId,
+          partIndex: featureStrokeRef.partIndex,
+          from: fromIdx === 0 ? featureStrokeRef.from : featureMeasures[fromIdx],
+          to: toIdx === lastIdx ? featureStrokeRef.to : featureMeasures[toIdx],
+        }
+      : null;
+
   // ── base + pick records, one per run ──
   // The visible line stays on its TRUE track at full width (no permanent
   // fan-out). The invisible PICK target is translated into per-train
@@ -893,6 +941,7 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
     const ids = segIds[ra];
     const n = ids ? ids.size : 1;
     const mult = segMult[ra];
+    const runStrokeRef = strokeRefAt(ra, rb);
     let groupKey = "";
     if (n > 1)
       groupKey = canonicalRunGroupKey(overlap, segKeys, segBridged, ra, rb);
@@ -900,9 +949,10 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
     // translates along ONE consistent axis no matter where on the run the
     // pointer hovers or how the track curves in between.
     let gi = null;
+    let giIsNew = false;
     if (n > 1) {
       gi = groupInfo.get(groupKey);
-      if (gi) mergeRunLineIntoGroup(gi, runLine);
+      if (gi) mergeRunLineIntoGroup(gi, runLine, runStrokeRef);
       else {
         gi = createCorridorRunGroup(
           overlap,
@@ -913,8 +963,10 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
           groupKey,
           ids,
           runLine,
+          runStrokeRef,
         );
         groupInfo.set(groupKey, gi);
+        giIsNew = true;
       }
     }
     // The run is cut once more, where the railway under it changes lane.
@@ -944,14 +996,34 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
       edate,
       dspan,
     };
-    records.push({ ...base, path: runLine, lane: 0 });
+    const record = {
+      ...base,
+      path: runLine,
+      lane: 0,
+      ...(runStrokeRef ? { strokeRef: runStrokeRef } : {}),
+    };
+    records.push(record);
+    // The ONE record whose `.path` literally IS `gi._line` (same array,
+    // stamped by createCorridorRunGroup above) — railmap.js `_applyRideStrokes`
+    // reslices THIS record's `.path` after the network's own pixel stroke
+    // lands, and refreshExactStrokeCorridorCurves (app-overlap-lanes.js)
+    // reads it back through this reference to keep an `_allStrokeRef`
+    // group's `curve` in sync, since `gi._line` itself is never updated.
+    if (giIsNew) gi._representativeRecord = record;
   });
 
   // ── one expand record for the whole line (true-track geometry) ──
   // Every line of every train gets one, so a hovered group can translate
   // each member train's COMPLETE course intact — including sections that
   // overlap nothing.
-  expandRecords.push({ path: drawn, color, width, train });
+  const expandStrokeRef = strokeRefAt(0, orig.length - 1);
+  expandRecords.push({
+    path: drawn,
+    color,
+    width,
+    train,
+    ...(expandStrokeRef ? { strokeRef: expandStrokeRef } : {}),
+  });
 }
 
 // Each group's representative geometry + the snapped node keys of the curve
@@ -959,7 +1031,14 @@ function appendDeckRouteLineRecords(build, style, pair, spacingPx) {
 // reads gi._line.
 function stampCorridorRepresentativeGeometry(groupInfo) {
   groupInfo.forEach((gi) => {
-    rebuildGroupRepresentativeGeometry(gi);
+    // A group whose every member run is drawn straight off the continuous-
+    // stroke network (createCorridorRunGroup's `_allStrokeRef`) already has
+    // its exact, single centreline in `gi._line` (the first run's own drawn
+    // geometry — every later merge is the SAME track, just seen from another
+    // train). Re-chaining it through rebuildGroupRepresentativeGeometry would
+    // only risk picking a different join order; the run geometry already IS
+    // the representative geometry.
+    if (!gi._allStrokeRef) rebuildGroupRepresentativeGeometry(gi);
     gi._curveEndpointNodeKeys = [
       overlapNodeKey(gi._line[0]),
       overlapNodeKey(gi._line[gi._line.length - 1]),
@@ -1195,7 +1274,27 @@ function fitCorridorRunsIndependently(c, ctx) {
       overlapNodeKey(g._line[0]),
       overlapNodeKey(g._line[g._line.length - 1]),
     ];
-    if (ctx.deferFit) {
+    // See resolveCorridorComponent: a run whose every member reads its
+    // geometry off the continuous-stroke network needs no B-spline fit —
+    // wrap the exact run geometry in the curve shape the fan direction and
+    // fit-curve diagnostics expect.
+    if (g._allStrokeRef) {
+      // A trivial one-member "chain" — refreshExactStrokeCorridorCurves
+      // (app-overlap-lanes.js) uses this the same way it uses a real
+      // multi-run chain's walk, to rebuild g.curve from g's own
+      // `_representativeRecord.path` once railmap.js `_applyRideStrokes`
+      // has resliced it (this curve is built here, before that exists).
+      g._exactChainWalk = [{ gi: g, reversed: false }];
+      g.curve = curveFromExactGeometry(g._line);
+      if (!g.curve) {
+        // Degenerate exact geometry (normalizeFitCurveInputs rejected it —
+        // e.g. a run collapsed to a single point) — fall back to the
+        // ordinary fit path rather than leave this group with NO curve at
+        // all: no hover-fan direction, no fit-curve diagnostics entry.
+        if (ctx.deferFit) ctx.queueFitJob(k, g._line);
+        else g.curve = smoothStandaloneCorridorRun(g._line, false);
+      }
+    } else if (ctx.deferFit) {
       g.curve = null;
       ctx.queueFitJob(k, g._line);
     } else g.curve = smoothStandaloneCorridorRun(g._line, false);
@@ -1248,9 +1347,38 @@ function resolveCorridorComponent(c, ctx) {
     fitCorridorRunsIndependently(c, ctx);
     return;
   }
-  const curve = !deferFit && chain ? smoothCorridorCurve(chain) : null;
+  // Every member of this chain already draws straight off the continuous-
+  // stroke network's own built geometry (rail-network.js strokeRefFor →
+  // app-deck-records.js appendDeckRouteLineRecords → railmap.js
+  // _applyRideStrokes): the runs share one exact centreline with no survey
+  // drift for the B-spline solve to remove, so skip it — and the worker
+  // round-trip — and use the chain itself as the representative geometry.
+  const exactChain =
+    chain && c.keys.every((k) => groupInfo.get(k)?._allStrokeRef);
+  let curve = exactChain
+    ? curveFromExactGeometry(chain)
+    : !deferFit && chain
+      ? smoothCorridorCurve(chain)
+      : null;
+  if (exactChain && !curve) {
+    // Degenerate exact geometry (normalizeFitCurveInputs rejected the
+    // stitched chain) — fall back to the ordinary fit path for this chain,
+    // same as fitCorridorRunsIndependently does for a single run, instead
+    // of publishing a validly-joined chain with no curve at all. The
+    // `!deferFit && !curve` / `deferFit && chain` branches below still
+    // apply afterward exactly as they do for a non-exact chain.
+    curve = !deferFit && chain ? smoothCorridorCurve(chain) : null;
+  }
   const canonicalKey = c.keys.slice().sort()[0];
   const master = groupInfo.get(canonicalKey);
+  // See buildCorridorChain: `chain.walk` holds direct `gi` object refs (not
+  // groupKey strings — dropAliasedGroupEntries below deletes every
+  // non-master member's groupInfo entry) in chain order, so
+  // refreshExactStrokeCorridorCurves can re-stitch this exact chain from
+  // each member's CURRENT record.path after railmap.js `_applyRideStrokes`
+  // resliced it — this curve is built here, before that substitution
+  // exists, straight off the pre-substitution `_line`s.
+  if (exactChain) master._exactChainWalk = chain.walk;
   if (chain)
     master._curveEndpointNodeKeys = [
       overlapNodeKey(chain[0]),

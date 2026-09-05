@@ -145,15 +145,33 @@
   // ── expand-FC template cache ──────────────────────────────────────────
   // Opening a fan uploads each member's true complete course exactly once.
   // Animation changes only per-layer line-translate paint values afterwards.
-  let _expandTpl = { records: null, key: "", features: null, indices: null };
-  function _expandTemplate(expandRecords, memberOf) {
+  //
+  // The memo key folds in `generation` (railmap.js `_rideStrokeGeneration`)
+  // alongside the member-index list: a ride substitution
+  // (railmap.js `_applyRideStrokes`) mutates `record.path` IN PLACE on the
+  // same `expandRecords` array and the same member indices, so identity +
+  // indices alone cannot see the change — the generation bump is the only
+  // signal that this record's coordinates moved and the template must be
+  // rebuilt rather than re-served stale.
+  let _expandTpl = {
+    records: null,
+    key: "",
+    generation: null,
+    features: null,
+    indices: null,
+  };
+  function _expandTemplate(expandRecords, memberOf, generation) {
     const indices = [];
     for (let i = 0; i < expandRecords.length; i += 1) {
       const r = expandRecords[i];
       if (memberOf((r.train && r.train.id) || "")) indices.push(i);
     }
     const key = indices.join(",");
-    if (_expandTpl.records === expandRecords && _expandTpl.key === key)
+    if (
+      _expandTpl.records === expandRecords &&
+      _expandTpl.key === key &&
+      _expandTpl.generation === generation
+    )
       return _expandTpl;
     const features = indices.map((i) => {
       const r = expandRecords[i];
@@ -171,14 +189,18 @@
         },
       };
     });
-    _expandTpl = { records: expandRecords, key, features, indices };
+    _expandTpl = { records: expandRecords, key, generation, features, indices };
     return _expandTpl;
   }
 
-  function routeExpandBaseFC(expandRecords, tids) {
+  function routeExpandBaseFC(expandRecords, tids, generation) {
     const members = new Set((tids || []).filter(Boolean));
     if (!members.size) return EMPTY_FC;
-    const tpl = _expandTemplate(expandRecords, (tid) => members.has(tid));
+    const tpl = _expandTemplate(
+      expandRecords,
+      (tid) => members.has(tid),
+      generation,
+    );
     return { type: "FeatureCollection", features: tpl.features };
   }
 

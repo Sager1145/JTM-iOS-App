@@ -89,14 +89,19 @@
     // surveyed alignment turns on a curve at least this wide, the drawn line
     // still turns on a curve there rather than on one vertex.
     //
-    // One stroke width, because the pen decides the floor. Every railway here
-    // is drawn `line-join: round`, which rounds the OUTER edge of the stroke
-    // to half its width about the vertex — so under W/2 there is nothing a
-    // radius could add that the ink has not already drawn. At R = W the INNER
-    // edge has radius W/2 too, both boundaries of the ink are arcs of the same
-    // order, and a right angle's inner edge stands 0.414 × W/2 ≈ 0.62 px clear
-    // of where the mitred apex would be — about 1.2 device pixels on a 2×
-    // display, the first radius that is visible at all.
+    // Two stroke widths. One stroke width (R = W) was the original floor —
+    // every railway here is drawn `line-join: round`, which already rounds
+    // the OUTER edge of the stroke to half its width about the vertex, so at
+    // R = W the INNER edge matches it and a right angle's inner edge stands
+    // 0.414 × W/2 ≈ 0.62 px clear of the mitred apex, the first radius that
+    // is visible at all. But an Opus measurement pass over the drawn corners
+    // found a real share of them (838 of 1,103 under-floor corners at z13
+    // alone) still landing under ONE stroke width with that floor in force —
+    // filletPolyline's run-merge (rail-stroke.js) was giving up on growing a
+    // run of short edges before it could actually reach the floor it owed
+    // them. That growth bug is fixed alongside this change, but doubling the
+    // floor to 2W also buys a visible margin over the single stroke width
+    // rather than sitting right at its edge.
     //
     // A screen-space token like the rest, not an absolute pixel count: it
     // rides railwayScale() with the stroke it is a multiple of, so the
@@ -105,7 +110,12 @@
     // scripts/validation/validate-corner-radius.mjs measures the drawn
     // corners against this number, the way validate-railway-topology.mjs
     // measures real corridors against parallelGapPx.
-    minCornerRadiusPx: STATION_DIAMETER_PX * RAIL_WIDTH_TO_STATION_DIAMETER,
+    minCornerRadiusPx: STATION_DIAMETER_PX * RAIL_WIDTH_TO_STATION_DIAMETER * 2,
+    // The radius a continuous stroke (rail-stroke.js's `filletPolyline`)
+    // rounds its corners to where the surveyed polyline turns on a vertex.
+    // A little over half a station dot, on the same scale ramp as the
+    // stroke. Must equal ios/RailMap/RailStyle.swift's `strokeCornerRadius`.
+    strokeCornerRadiusPx: STATION_DIAMETER_PX * 0.6,
     // The clear map a reader sees between two DISTINCT railways that share one
     // corridor, edge to edge. Since 38cf0a8 dropped screen-space lanes, nothing
     // OFFSETS a railway by this: every line is drawn on its own surveyed
@@ -146,6 +156,82 @@
     // How near a junction the geometry pipeline must stop grooming.
     junctionProtectionPx: 6,
   });
+
+  // ───────────────── lane-offset LOD (North America continuous strokes) ─────────────────
+  // `laneGapPx` (railmap.js `_applyContinuousStrokes`) is a pure screen
+  // constant — railwayScaleAt(zoom) × (railWidthPx + parallelGapPx) — with no
+  // low-zoom collapse of its own, so a lane-1 line sits 156 m off its track at
+  // z10 and roughly 12 km off it at z6, where a hub throat's lane index can
+  // reach 7. The fix is not a continuous ramp: the rules contract for the
+  // continuous-stroke engine (rail-stroke.js) allows changing offsets or
+  // visibility but never lane MEMBERSHIP or ORDER, and a ramp that keeps
+  // moving under the reader's eye reads as the railway itself drifting.
+  // A small number of DISCRETE bands, each held for a real span of zoom, is
+  // what the reader instead sees as "the lanes are gone" / "the lanes are
+  // half-spread" / "the lanes are full width" — three states, not a slide.
+  //
+  // Below z9 lanes are not offset at all (scale 0): at a scale where 7 lanes
+  // would already be kilometres apart, showing any offset is worse than
+  // showing none. Between z9 and z12 they are offset at HALF the resolved
+  // gap: still separated enough to read as parallel tracks through a hub
+  // without yet paying the full metres-equivalent spread. At z12 and above —
+  // city scale, where laneGapPx first drops under the distance an offset
+  // is supposed to buy — lanes draw at their full resolved gap.
+  //
+  // The boundaries need hysteresis or a camera sitting exactly on z9 or z12
+  // rebuilds every near part on every frame the zoom control's rounding
+  // jitters across it. ±0.25 of a zoom level — double the STROKE_REBUILD_ZOOM_STEP
+  // this shares a rebuild key with (railmap.js) — is the band a bucket must
+  // clear before it moves again, so a resting camera can only be on one side
+  // of it, never oscillating.
+  //
+  // Must equal ios/RailKit/Sources/RailCore/LaneLOD.swift's `boundaries` /
+  // `hysteresis` / `resolve` — LaneLODTests.swift asserts the two agree over a
+  // table generated from this function.
+  const LANE_LOD_BUCKETS = Object.freeze([
+    { bucket: 0, minZoom: -Infinity, scale: 0 },
+    { bucket: 1, minZoom: 9, scale: 0.5 },
+    { bucket: 2, minZoom: 12, scale: 1 },
+  ]);
+  const LANE_LOD_HYSTERESIS = 0.25;
+
+  // Resolves the lane-offset LOD bucket for `zoom`, given the bucket the
+  // stroke was last built at (`previousBucket`, or null/undefined on the
+  // first build). Without a previous bucket the plain boundaries apply; with
+  // one, the bucket only moves up once zoom clears its target boundary by
+  // LANE_LOD_HYSTERESIS and only moves down once zoom falls that far short of
+  // its OWN boundary — so from bucket 1 (z9–z12) the map must reach z12.25 to
+  // reach bucket 2, and must fall back under z11.75 to return to bucket 1.
+  function laneScaleForZoom(zoom, previousBucket) {
+    let plainIndex = LANE_LOD_BUCKETS.length - 1;
+    for (let i = 0; i < LANE_LOD_BUCKETS.length; i++) {
+      if (zoom < LANE_LOD_BUCKETS[i].minZoom) {
+        plainIndex = i - 1;
+        break;
+      }
+    }
+    if (previousBucket == null) {
+      const resolved = LANE_LOD_BUCKETS[plainIndex];
+      return { bucket: resolved.bucket, scale: resolved.scale };
+    }
+    let index = LANE_LOD_BUCKETS.findIndex((b) => b.bucket === previousBucket);
+    if (index < 0) index = plainIndex;
+    // Move up only once zoom clears the NEXT bucket's own boundary by the
+    // hysteresis band.
+    while (
+      index < LANE_LOD_BUCKETS.length - 1 &&
+      zoom >= LANE_LOD_BUCKETS[index + 1].minZoom + LANE_LOD_HYSTERESIS
+    ) {
+      index++;
+    }
+    // Move down only once zoom falls short of THIS bucket's own boundary by
+    // the hysteresis band.
+    while (index > 0 && zoom < LANE_LOD_BUCKETS[index].minZoom - LANE_LOD_HYSTERESIS) {
+      index--;
+    }
+    const resolved = LANE_LOD_BUCKETS[index];
+    return { bucket: resolved.bucket, scale: resolved.scale };
+  }
 
   // ───────────────── how far off the surveyed line the map may draw ─────────────────
   // MapLibre runs every GeoJSON source through geojson-vt, which scores each
@@ -225,25 +311,6 @@
       "자료: 국토교통부·국가철도공단·한국철도공사·서울교통공사 공공데이터" +
       "（이용허락범위 제한 없음）를 가공하여 제작" +
       "｜선로 기하 © OpenStreetMap contributors, ODbL",
-    // The two North American strings name the network by the name its
-    // publisher gives it — the FRA/BTS North American Rail Network (NTAD) — and
-    // say which licence covers which part, because three different ones do:
-    // NTAD is United States federal open data in the public domain, each
-    // operator's GTFS keeps its own open-data terms, and the OpenStreetMap
-    // track is ODbL 1.0. The previous pair credited a "U.S. DOT/FRA National
-    // Rail Network" (no such dataset) and, for Canada, a "Government of Canada
-    // transit inventory" that is a registry of WHERE the feeds are, not a
-    // source of any coordinate — while attributing all the geometry to OSM,
-    // which supplies 32 of the 470 American lines and 3 of the 92 Canadian
-    // ones. Keep each string in sync with the package's own .sources.md.
-    us:
-      "Sources: FRA/BTS North American Rail Network (NTAD), US federal open data" +
-      "; operator-published GTFS under each feed's own terms" +
-      "｜cross-check and remaining track © OpenStreetMap contributors, ODbL 1.0",
-    ca:
-      "Sources: FRA/BTS North American Rail Network (NTAD), US federal open data" +
-      "; operator-published GTFS under each feed's own terms" +
-      "｜cross-check © OpenStreetMap contributors, ODbL 1.0",
   };
   function railAttributionForCountry(country) {
     return RAIL_ATTRIBUTIONS[country] || RAIL_ATTRIBUTIONS.jp;
@@ -256,6 +323,12 @@
   // into this app's light or dark surface. Never blend again at paint time: the
   // audited HEX must remain the HEX MapLibre draws.
   const UNRIDDEN_OPACITY = 1;
+  // A continuous-stroke line's bridged blocked interval (rail-network.js
+  // `withheld` — see `bridgeBlockedIntervals` on displayPartsForLine) draws
+  // at this reduced opacity under its dashed casing: dimmer than the
+  // ordinary field so "surveyed but unconfirmed" reads as a real difference,
+  // not a rounding error next to it.
+  const WITHHELD_LINE_OPACITY = 0.45;
   const RIDDEN_WIDTH_SCALE = 1.18;
   // How far the playback trail stands proud of the ride on EACH side, in
   // full-scale pixels (it rides railwayScale like every other weight).
@@ -470,6 +543,44 @@
       ["==", ["get", "interchange"], 1],
       featureLineColor(theme),
       networkCasingColor(theme),
+    ];
+  }
+
+  // The laned-platform icon bitmaps (RailMap._ensureStationIcons) are drawn
+  // at this CSS px diameter before their ring — the same diameter the
+  // ordinary circle layer (STATIONS_LAYER) draws its dot at — so a laned
+  // platform reads as the identical mark, just repositioned. Derived from
+  // RAILWAY_STYLE rather than a second literal, for the reason
+  // RAILWAY_STYLE.stationDiameterPx itself gives: one number moves every
+  // station dot AND every laned platform together.
+  const STATION_ICON_BASE_PX = RAILWAY_STYLE.stationDiameterPx;
+
+  // One bitmap per theme × colorKey × interchange-ness — never per feature,
+  // since the palette is small and the map can hold thousands of platforms.
+  // `interchange` accepts either the raw feature value (0/1) or a boolean.
+  function stationIconId(theme, interchange, colorKey) {
+    const t = theme === "dark" ? "dark" : "light";
+    const key = String(colorKey || "").toLowerCase();
+    return `rn-station-${t}-${key}${interchange ? "-interchange" : ""}`;
+  }
+
+  // The layout expression STATION_LANES_LAYER's icon-image is set to: builds
+  // the SAME id `stationIconId` builds, but per-feature from `colorKey` and
+  // `interchange` rather than from called arguments — `theme` is still fixed
+  // per call because RailMap re-sets this whole expression on every theme
+  // switch (see _applyThemePaint) rather than branching inside it.
+  function stationIconImage(theme) {
+    const t = theme === "dark" ? "dark" : "light";
+    return [
+      "concat",
+      `rn-station-${t}-`,
+      // `stationIconId` above lowercases `colorKey` before building the id
+      // it registers with `m.addImage` — match that here, or a feature
+      // whose `colorKey` ever arrives with any uppercase hex digit resolves
+      // to an icon id nothing registered and the platform's mark silently
+      // fails to draw.
+      ["downcase", ["get", "colorKey"]],
+      ["case", ["==", ["get", "interchange"], 1], "-interchange", ""],
     ];
   }
 
@@ -703,6 +814,14 @@
   // ───────────────────────────── source / layer ids ─────────────────────────────
   const SEGMENTS_SOURCE = "rn-segments";
   const STATIONS_SOURCE = "rn-stations";
+  // Laned platforms: the same physical stations as `rn-stations`, but only
+  // the ones rail-network.js gave a lane offset + bearing (stationLane in
+  // the compact package). Its own source because these draw on a SYMBOL
+  // layer (see STATION_LANES_LAYER) rather than the circle layer everything
+  // else in `rn-stations` uses — MapLibre cannot data-drive a circle's
+  // screen-space translation per feature, so a laned platform is a small
+  // pre-rendered bitmap instead. See RailMap._ensureStationIcons.
+  const STATION_LANES_SOURCE = "rn-station-lanes";
   // The elected station names — the same platform features `rn-stations`
   // carries, minus the ones whose complex is already named. A source of its
   // own rather than a filter, so the render model that feeds the DOTS is
@@ -721,6 +840,14 @@
   // in test/apple-maps-railway-contract.test.js was waiting on.
   const SEGMENTS_SUSPENDED_LAYER = "rn-segments-suspended-line";
   const SEGMENTS_SUSPENDED_CASING_LAYER = "rn-segments-suspended-casing";
+  // Bridged blocked-interval spans on a continuous-stroke line (see
+  // `network.segmentsWithheld` in rail-network.js). Its own source: the
+  // geometry is a per-zoom SLICE of the just-built stroke
+  // (railmap.js `_applyContinuousStrokes`), not a static feature, and must
+  // never be confused with SEGMENTS_SOURCE's whole-line features.
+  const SEGMENTS_WITHHELD_SOURCE = "rn-segments-withheld";
+  const SEGMENTS_WITHHELD_LAYER = "rn-segments-withheld-line";
+  const SEGMENTS_WITHHELD_CASING_LAYER = "rn-segments-withheld-casing";
   // Drawn only on the features rail-network.js flagged, and correspondingly
   // kept OFF the field's own three layers, so the two can never both claim a
   // metre of track.
@@ -733,6 +860,10 @@
   // is displaced from its line, so none needs the rotated, icon-offset marker
   // that used to stand in for a circle MapLibre cannot offset per feature.
   const STATIONS_LAYER = "rn-stations-dot";
+  // The laned-platform symbol layer fed by STATION_LANES_SOURCE. Kept in the
+  // same paint order slot as STATIONS_LAYER (RailMap toggles the two
+  // together — see setNetworkStationsVisible).
+  const STATION_LANES_LAYER = "rn-station-lanes-icon";
   // Names. Both are text-only symbol layers with no icon of any kind: a
   // station is named beside its bead, never replaced by one (see the station
   // glyph contract — no logo, no badge, at any zoom).
@@ -819,6 +950,18 @@
     [SEGMENTS_SUSPENDED_CASING_LAYER, "line-width", networkCasingWidth],
     [
       SEGMENTS_SUSPENDED_LAYER,
+      "line-width",
+      () => railwayScale(RAILWAY_STYLE.railWidthPx),
+    ],
+    // …and a continuous-stroke line's bridged blocked interval: same width
+    // as the field it overlays, on both the tint and its dashed casing.
+    [
+      SEGMENTS_WITHHELD_LAYER,
+      "line-width",
+      () => railwayScale(RAILWAY_STYLE.railWidthPx),
+    ],
+    [
+      SEGMENTS_WITHHELD_CASING_LAYER,
       "line-width",
       () => railwayScale(RAILWAY_STYLE.railWidthPx),
     ],
@@ -1025,9 +1168,21 @@
       attribution: railAttributionForCountry(opts.country),
       tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
     };
+    // Same tolerance as SEGMENTS_SOURCE: this is a slice of the identical
+    // stroke geometry, and a differing simplification would let the dashed
+    // overlay drift off the line it is meant to sit exactly on.
+    sources[SEGMENTS_WITHHELD_SOURCE] = {
+      type: "geojson",
+      data: network ? network.segmentsWithheld || EMPTY_FC : EMPTY_FC,
+      tolerance: SEGMENT_SIMPLIFY_TOLERANCE_PX,
+    };
     sources[STATIONS_SOURCE] = {
       type: "geojson",
       data: network ? network.stations : EMPTY_FC,
+    };
+    sources[STATION_LANES_SOURCE] = {
+      type: "geojson",
+      data: network ? network.stationLanes || EMPTY_FC : EMPTY_FC,
     };
     sources[STATION_LABELS_SOURCE] = {
       type: "geojson",
@@ -1151,6 +1306,40 @@
         "line-width": railwayScale(RAILWAY_STYLE.railWidthPx),
       },
     });
+    // A continuous-stroke line's bridged blocked interval (rail-network.js
+    // `network.segmentsWithheld` — the span the alignment gate withheld from
+    // the official-geometry comparison, but which displayPartsForLine now
+    // draws through rather than around). Drawn ABOVE the ordinary field so
+    // it is never hidden under it, as two layers over the SAME
+    // uninterrupted geometry: a dimmed tint of the line's own colour, then
+    // a background-coloured dashed casing on top that visually punches the
+    // dashes into it. The chain itself never breaks — only the paint reads
+    // as "surveyed but unconfirmed".
+    layers.push({
+      id: SEGMENTS_WITHHELD_LAYER,
+      type: "line",
+      source: SEGMENTS_WITHHELD_SOURCE,
+      layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
+      paint: {
+        "line-color": networkLineColor(theme),
+        "line-opacity": lineLengthVisibilityOpacity(WITHHELD_LINE_OPACITY),
+        "line-width": railwayScale(RAILWAY_STYLE.railWidthPx),
+      },
+    });
+    layers.push({
+      id: SEGMENTS_WITHHELD_CASING_LAYER,
+      type: "line",
+      source: SEGMENTS_WITHHELD_SOURCE,
+      // Butt caps, same reason as the suspended dash below: a round cap
+      // would lengthen each dash by half a line width and eat its gap.
+      layout: { "line-cap": "butt", "line-join": "round", visibility: "none" },
+      paint: {
+        "line-color": themeColors.background,
+        "line-opacity": lineLengthVisibilityOpacity(1),
+        "line-width": railwayScale(RAILWAY_STYLE.railWidthPx),
+        "line-dasharray": [2, 2],
+      },
+    });
     // The same railway, over the stretches where the trains have stopped. Same
     // hue, same weight, same casing, same LOD — only the continuity differs,
     // because that is the only thing that differs on the ground. Drawn
@@ -1208,6 +1397,49 @@
         "circle-stroke-color": stationStroke(theme),
         "circle-stroke-opacity": lineLengthVisibilityOpacity(1),
         "circle-stroke-width": railwayScale(RAILWAY_STYLE.stationRingPx),
+      },
+    });
+    // …and the laned platforms among them — or rather, NONE of them, on
+    // purpose. This layer is what used to stand in for a circle MapLibre
+    // cannot offset per feature, back when a laned platform's dot had to
+    // follow its line's own screen-space offset (see the STATIONS_LAYER
+    // comment above: "with lanes gone (38cf0a8) no platform is displaced
+    // from its line"). That retirement covers every package this map draws
+    // as per-lane pieces (jp/tw/hk/mo/kr): each one now draws on its true
+    // surveyed geometry with no rendered offset, so no platform on it is
+    // ever displaced either, and this layer would only ever repaint a
+    // STATIONS_LAYER dot exactly on top of itself — literally the same
+    // unoffset [lon, lat] rail-network.js gives both `stationFeatures` and
+    // `stationLaneFeatures` (rail-network.js's `stationLane` block). North
+    // America (us/ca) is the one region that DOES draw a real screen-space
+    // lane offset, but it does so on a continuous stroke (rail-stroke.js),
+    // whose platform beads are placed straight from that stroke's own
+    // lane-offset anchors (`part.anchorPoints`, from `stroke.anchors`, in
+    // railmap.js `_applyContinuousStrokes`) — a second, symbol-layer offset
+    // on top of an already-offset point would double-count the lane. So
+    // there is no package, old or new, this layer needs to draw for. The
+    // `["==", ["get", "lane"], -1]` filter below matches no real feature
+    // (rail-network.js never emits a negative lane) and keeps the layer
+    // permanently empty without deleting it: STATION_LANES_SOURCE,
+    // STATION_LANES_LAYER, stationIconId and stationIconImage stay exported
+    // API, and RailMap.setNetworkStationsVisible/_ensureStationIcons stay
+    // working no-ops, so a future package format that revives per-platform
+    // screen-space offsets (or an iOS-parity check that expects the layer
+    // to exist) has something to attach real icon-offset/icon-rotate to
+    // instead of re-inventing the plumbing.
+    layers.push({
+      id: STATION_LANES_LAYER,
+      type: "symbol",
+      source: STATION_LANES_SOURCE,
+      filter: ["==", ["get", "lane"], -1],
+      layout: {
+        visibility: "none",
+        "icon-image": stationIconImage(theme),
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+      },
+      paint: {
+        "icon-opacity": lineLengthVisibilityOpacity(1),
       },
     });
 
@@ -2051,6 +2283,8 @@
     railwayScaleAt,
     railwayScreenPaintEntries,
     RAILWAY_STYLE,
+    LANE_LOD_BUCKETS,
+    laneScaleForZoom,
     SEGMENT_SIMPLIFY_TOLERANCE_PX,
     evaluateScreenValue,
     stationFill,
@@ -2074,13 +2308,22 @@
     SELECT_DIM,
     SEGMENTS_SOURCE,
     STATIONS_SOURCE,
+    STATION_LANES_SOURCE,
     SEGMENTS_LAYER,
     SEGMENTS_CASING_LAYER,
     SEGMENTS_SUSPENDED_LAYER,
     SEGMENTS_SUSPENDED_CASING_LAYER,
+    SEGMENTS_WITHHELD_SOURCE,
+    SEGMENTS_WITHHELD_LAYER,
+    SEGMENTS_WITHHELD_CASING_LAYER,
+    WITHHELD_LINE_OPACITY,
     networkSuspendedDash,
     networkSuspendedCasingDash,
     STATIONS_LAYER,
+    STATION_LANES_LAYER,
+    STATION_ICON_BASE_PX,
+    stationIconId,
+    stationIconImage,
     STATION_LABELS_SOURCE,
     STATIONS_LABEL_LAYER,
     SEGMENTS_LABEL_LAYER,
