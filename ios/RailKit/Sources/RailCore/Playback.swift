@@ -943,8 +943,19 @@ public enum Playback {
     /// not — and on the ride flags as well, because those decide which
     /// features survive the filter and therefore the whole arc coordinate.
     ///
+    /// `rideStrokeGeneration` is the fourth field the JavaScript folded in
+    /// (`RailMap._rideStrokeGeneration`, bumped by `_applyRideStrokes`
+    /// whenever a ridden route's drawn stand-in is resliced off a rebuilt
+    /// continuous stroke): a path compiled against one generation's drawn
+    /// ink must not survive into the next, or the marker keeps riding a
+    /// stroke that has since moved under it. It defaults to 0 — the value
+    /// with no drawn-stroke substitution in play, same as the JavaScript's
+    /// `RailMap === undefined` / no-continuous-stroke fallback — so every
+    /// existing call site (and every fixture, none of which exercise NA
+    /// drawn-ink substitution) keeps producing the same key it always has.
+    ///
     /// The cache itself belongs to the shell; only the key is a contract.
-    public static func cacheKey(train: Train) -> String {
+    public static func cacheKey(train: Train, rideStrokeGeneration: Int = 0) -> String {
         let rides = train.stops.map { $0.rideSegment ? "1" : "0" }.joined()
         let sections = (train.routeSections ?? []).map {
             RouteGraph.RouteSection(
@@ -954,6 +965,7 @@ public enum Playback {
                 lineNames: $0.lineNames ?? [], operatorNames: $0.operatorNames ?? []
             )
         }
-        return "\(train.id):\(RouteGraph.templateKey(sections: sections)):\(rides)"
+        return "\(train.id):\(RouteGraph.templateKey(sections: sections))"
+            + ":\(rides):\(rideStrokeGeneration)"
     }
 }

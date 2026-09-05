@@ -62,6 +62,11 @@ public enum StationDisplay {
             public let `operator`: String?
             /// `compactLine.color || DEFAULT_LINE_COLOR` — a `||`, so an
             /// EMPTY colour string falls through to the default as well.
+            ///
+            /// `colorOverrideByLineID` (below) wins over the package's own
+            /// value where the caller has one: the display-network manifest's
+            /// per-line colour, the same one the map's own fragments are drawn
+            /// in, so a popup row and the stroke it names never disagree.
             public let color: String
             /// The package's own badge, as a path. nil where the package
             /// carries no artwork for the line.
@@ -70,6 +75,13 @@ public enum StationDisplay {
             /// The line's own length-derived minimum zoom, which its two
             /// terminals inherit.
             public let minZoom: Int
+            /// The render group this line was collapsed into for colour and
+            /// lane purposes (`renderGroupByLineID` below) — North America's
+            /// operator-level grouping (LIRR, Metro-North, Metrolink), ported
+            /// from `na-render-groups.json` via the display-network manifest.
+            /// `nil` for a line the reviewed policy does not name, which keeps
+            /// deciding railway identity from operator+name exactly as before.
+            public let renderGroup: String?
         }
 
         /// One entry of `stationById`, plus the `minz` its map feature carries.
@@ -122,7 +134,9 @@ public enum StationDisplay {
         public init(
             package: CompactPackage,
             loopLineIDs: Set<String> = [],
-            packageLogoLineIDs: Set<String> = []
+            packageLogoLineIDs: Set<String> = [],
+            colorOverrideByLineID: [String: String] = [:],
+            renderGroupByLineID: [String: String] = [:]
         ) {
             // Both ladders come from the already-ported `Visibility`, which
             // reproduces the asymmetry the JavaScript is deliberate about: a
@@ -148,12 +162,14 @@ public enum StationDisplay {
                         name: packageLine.name,
                         nameRoma: packageLine.nameRoma,
                         operator: packageLine.operator,
-                        color: firstTruthy(packageLine.color) ?? Self.defaultLineColor,
+                        color: colorOverrideByLineID[packageLine.id]
+                            ?? firstTruthy(packageLine.color) ?? Self.defaultLineColor,
                         logo: packageLogoLineIDs.contains(packageLine.id)
                             ? "/rail/logos/\(Self.badgeIDForLine(packageLine.id)).png"
                             : packageLine.operatorLogo,
                         isLoop: isLoop,
-                        minZoom: lineZoom))
+                        minZoom: lineZoom,
+                        renderGroup: renderGroupByLineID[packageLine.id]))
                 // `lineById.set` — last writer wins on a duplicate id, which
                 // is a package question rather than a display one.
                 lineIndexByID[CodeUnits(packageLine.id)] = lineIndex
@@ -293,6 +309,18 @@ public enum StationDisplay {
         public let color: String
         public let logo: String?
         public let logoNeedsDarkMatte: Bool
+
+        public init(
+            lineID: String, company: String, label: String, color: String,
+            logo: String?, logoNeedsDarkMatte: Bool
+        ) {
+            self.lineID = lineID
+            self.company = company
+            self.label = label
+            self.color = color
+            self.logo = logo
+            self.logoNeedsDarkMatte = logoNeedsDarkMatte
+        }
     }
 
     public struct PopupModel: Sendable, Equatable {
@@ -304,6 +332,15 @@ public enum StationDisplay {
         /// two are different answers and the shell draws them differently.
         public let readings: [String]?
         public let lines: [PopupRow]
+
+        public init(
+            name: String, nameRoma: String, readings: [String]?, lines: [PopupRow]
+        ) {
+            self.name = name
+            self.nameRoma = nameRoma
+            self.readings = readings
+            self.lines = lines
+        }
     }
 
     /// Every line through the hovered platform's station complex, deduped.
@@ -333,10 +370,23 @@ public enum StationDisplay {
         func add(lineIndex: Int?) {
             guard let lineIndex else { return }
             let line = network.lines[lineIndex]
-            // The NUL separator is not decoration: it cannot appear in either
-            // half, so a name containing the separator cannot forge a key that
-            // collides with a different operator's.
-            let displayKey = "\(line.operator ?? "")\u{0000}\(line.name)"
+            // A render group is the finer identity: two lines the reviewed
+            // NA policy has already collapsed for colour and lane purposes
+            // (LIRR's branches, Metro-North, Metrolink) are one railway for
+            // this dedupe too, even when their names differ enough that the
+            // operator+name fallback below would not have caught it — which
+            // is what used to draw a false interchange ring at a station one
+            // of those railways serves with two administratively distinct
+            // lines. `"group\u{0000}"` cannot collide with the fallback key:
+            // that one always carries its OWN embedded NUL one level in, so
+            // a render group id (which does not) can never equal it.
+            //
+            // The NUL separator in the fallback is not decoration either: it
+            // cannot appear in either half, so a name containing the
+            // separator cannot forge a key that collides with a different
+            // operator's.
+            let displayKey = line.renderGroup.map { "group\u{0000}\($0)" }
+                ?? "\(line.operator ?? "")\u{0000}\(line.name)"
             guard seen.insert(CodeUnits(displayKey)).inserted else { return }
             let brandingLine = OperatorBranding.Line(
                 lineId: line.lineID, operator: line.operator, logo: line.logo)

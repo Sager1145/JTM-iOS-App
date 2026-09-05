@@ -35,7 +35,7 @@ import Foundation
 /// **The branch machinery looks dead and is not.** The shipped packages were
 /// rebuilt to split interleaved branches out ahead of time — 室蘭線 ships as
 /// 室蘭線 + 室蘭線-2, 阪和線 as 阪和線 + 阪和線-2, 成田線 as three lines — so
-/// measured across all 804 lines of five countries, the excursion split, the
+/// measured across all 1,128 lines of seven regions, the excursion split, the
 /// retrace onto a closed part, the pure-duplicate skip, the empty-groomed
 /// fallback, the lost-anchor restore and ``extraSegmentParts(_:stationPoints:limits:)``
 /// drawing anything are taken ZERO times. They are covered instead by eight
@@ -44,12 +44,11 @@ import Foundation
 /// here breaks the first package rebuilt without the pre-split.
 ///
 /// **Parity is exact where it decides and measured where it does not.** All
-/// 804 lines agree with the JavaScript on part count, on every part's vertex
-/// count, and on all 431,379 copied vertices bit for bit. The remaining
-/// 6,346 vertices are computed by the station-approach pass, and 131 of them
-/// differ by at most 4 ULP because V8 ships its own `cos`; see ``jsHypot(_:_:)``
-/// and `DisplayPartsParityTests` for the measurement and for why `hypot`,
-/// unlike `cos`, had to be reproduced rather than tolerated.
+/// 1,128 lines agree with the JavaScript on part count, on every part's vertex
+/// count, and on all 542,234 copied vertices bit for bit. The remaining
+/// 39,671 vertices are computed by the station-approach pass. Reusing
+/// ``JSMath/cos(_:)`` reduced the measured residue to 15 high-latitude
+/// vertices at one ULP; see `DisplayPartsParityTests` for the bounded check.
 public enum DisplayParts {
 
     // MARK: - branch topology thresholds
@@ -227,7 +226,7 @@ public enum DisplayParts {
     ///
     /// They are kept out here rather than added there because
     /// `CompactPackage.swift` is shared with other ports in flight and because
-    /// both fields are rare: across five countries exactly one line carries
+    /// both fields are rare: across seven regions exactly one line carries
     /// `reversalTails` (阿里山線) and two carry `extraSegments` (輕鐵 505 and
     /// 751). Rare is not the same as ignorable — the one line that has
     /// reversal tails is the one whose grooming needs thirteen passes.
@@ -298,7 +297,7 @@ public enum DisplayParts {
     /// The two halves are decoded apart for the reason ``LineTopology`` gives,
     /// and a caller that wanted both used to ask each for itself — which read
     /// the same file twice and ran the JSON scanner over it twice. That is
-    /// 9.1 MB re-read and re-scanned for Japan alone, with all five regions
+    /// 9.1 MB re-read and re-scanned for Japan alone, with all seven regions
     /// decoding at once, and it bought nothing: they are the same bytes and
     /// the same rows.
     ///
@@ -344,22 +343,15 @@ public enum DisplayParts {
     //     vertex — measured on 野田線, 小田急箱根 鉄道線 and 土讃線, whose
     //     strokes split one vertex differently under libm's hypot.
     //
-    // Measured with libm's hypot: 23 of 804 lines disagreed with the
-    // JavaScript, three of them in their PART LENGTHS. With V8's: 787 lines
-    // agree bit for bit, the other 17 agree in every part length and every
-    // copied vertex and differ only in computed coordinates, by at most 4 ULP.
+    // Historically, with libm's hypot, 23 of the original 804 lines
+    // disagreed with JavaScript and three differed in their PART LENGTHS.
+    // JSMath.hypot removed those structural disagreements.
     //
-    // That residue is `Math.cos`, which V8 also implements itself (its own
-    // fdlibm port, same file) and which differs from Darwin's on 3.2% of the
-    // 60,001 real latitudes in these packages. It is deliberately NOT chased:
-    // reproducing it means shipping a hand-written transcendental in RailCore
-    // that every later port then depends on, and the difference reaches
-    // nothing that matters — it lands only in the 1.45% of vertices the
-    // approach pass computes, at 3 × 10⁻⁹ m on the ground, and it moves no
-    // decision. `DisplayPartsParityTests` states the measurement and holds the
-    // port to it. `Math.hypot` is a different case precisely because it DID
-    // move decisions, and because it is plain algebra rather than a
-    // transcendental.
+    // The original Darwin-cos residue is likewise gone: Grooming.localMetric
+    // now reuses JSMath.cos. Across all seven packages the remaining runtime
+    // difference is 15 of 39,671 computed vertices, one ULP each, at northern
+    // latitudes that enter the π/2-reduction branch. It moves no decision;
+    // `DisplayPartsParityTests` keeps a tight measured ceiling around it.
     //
     // `Grooming` still calls the platform's `hypot`, and its own parity holds
     // because `smoothMicroKinks` only ever SELECTS vertices — every one of its
@@ -1262,7 +1254,7 @@ public enum DisplayParts {
         // A line with no stations returns `[[undefined, undefined]]` in
         // JavaScript — the fallback below indexes an empty array — which is
         // not a value Swift can produce and not a value anything downstream
-        // could draw. No line in the five shipped packages is stationless, so
+        // could draw. No line in the seven shipped packages is stationless, so
         // this returns nothing rather than inventing a shape to disagree over.
         guard !stationPoints.isEmpty else { return [] }
 
