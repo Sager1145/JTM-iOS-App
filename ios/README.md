@@ -101,15 +101,43 @@ is worth being explicit about it.
 
 Two layouts, chosen by the window's shape rather than the device. A phone in
 landscape has almost no height for a bottom sheet but plenty of width for a
-sidebar, and it reports a *compact* horizontal size class on every model but
+side panel, and it reports a *compact* horizontal size class on every model but
 the largest — so size class alone would put a sheet there and leave the map a
 letterbox.
 
     tall windows   a sheet over the map, dragged between three stops
-    wide windows   the same tabs at the foot of a sidebar, always open
+    wide windows   the same menu docked as a floating card on the leading edge
 
-The sidebar is a plain `HStack`, not `NavigationSplitView`, which collapses to
-a stack at compact width — exactly the case it would be needed for.
+Both are the same four destinations in the same `TabView`. The wide
+composition docks that menu as a card — 300 to 440 pt, `RailSheetBackground`
+behind it, rounded corners and a shadow — over a full-window map rather than
+narrowing the map into a second column. Its `TabView` is forced to a compact
+horizontal size class from inside the card, which is what keeps the tab bar in
+its phone form (four icon tabs at the bottom) instead of iPadOS's own top tab
+capsule — a `.regular` size class is what draws that capsule, and the window
+around the card is regular-width on any iPad or Mac Catalyst screen wide
+enough to dock one. This used to be two separate wide compositions, the
+narrower one docked like this and a third, native `NavigationSplitView` with
+its own `List` sidebar above 1,180 pt; the sidebar is gone; one docked
+composition now covers every window from 692 pt up, because size alone is what
+this rule has ever been about — no idiom check, no Catalyst check.
+
+The docked card keeps the sheet's own three stops — compact, half, full —
+rather than always sitting expanded: anchored to the window's bottom-leading
+corner and growing upward as it opens, dragged by its own panel header since
+there is no system sheet here to drag, and reachable by the same VoiceOver
+stage actions ("Expand panel", "Half-height panel", "Collapse panel") the
+phone sheet offers. A visible button beside the card's upper trailing corner
+and ⌘⌥S also collapse and reopen the docked menu on iPad and Mac, restoring
+the previous open height. The dock width leaves at least 360 pt of map
+plus its gutters, including portrait windows near the 692 pt breakpoint.
+Cancelling a header drag releases its temporary offset.
+
+The map's own framing follows the card rather than sitting under it: the
+controller is told how wide the docked card is and pads its camera calls by
+that much on the leading edge, the same way it already pads them by the
+resident sheet's height on the bottom, so "frame this" and the map's own Legal
+label both land in the strip the reader can actually see.
 
 The map's controls run down the right edge in both, because they act on the map
 rather than on the app: network, 定位, zoom in, zoom out, compass, and the

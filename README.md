@@ -1,6 +1,6 @@
 # JTM iOS App
 
-**A native SwiftUI journey ledger that turns railway travel across East Asia into a live Apple Maps record.**
+**A native SwiftUI journey ledger that turns railway travel across seven regions into a live Apple Maps record.**
 
 JTM iOS App is the native iPhone and iPad edition of Japan Train Map. It records journeys, resolves them against bundled railway networks, draws ridden routes over Apple Maps, and turns the same local data into statistics, playback, and shareable JSON.
 
@@ -95,6 +95,8 @@ JavaScript reference + port-fixtures
 | [User guide](docs/USER_GUIDE.md) | Use the app, manage journey data, or solve a common problem |
 | [RailKit API reference](docs/API_REFERENCE.md) | Integrate with or maintain the public Swift package interfaces |
 | [Build and release runbook](docs/RUNBOOK.md) | Verify, archive, release, troubleshoot, or roll back a build |
+| [North America rail optimization](docs/NORTH_AMERICA_RAIL_OPTIMIZATION.md) | Audit, repair, reject, or hand off United States and Canada railway data |
+| [Architecture decisions](docs/decisions/) | Understand the durable choices behind module boundaries, storage, data, routing, and rendering |
 | [Documentation strategy](docs/DOCUMENTATION_STRATEGY.md) | Find the canonical document, assign ownership, or record a decision |
 | [Feature parity matrix](ios/FEATURES.md) | Check whether a web feature is implemented, adapted, or intentionally omitted |
 | [Porting guide](ios/PORTING.md) | Port another pure function from JavaScript to Swift |

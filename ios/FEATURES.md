@@ -28,9 +28,9 @@ A ported function nobody can reach is not a feature.
 ## The one place this app is deliberately not the web app
 
 **There is no region switch.** The web app has one package loaded, one store
-open, and an `activeCountry` every function reads. This app draws all five
+open, and an `activeCountry` every function reads. This app can draw all seven
 networks at once and each itinerary carries its own `region` (see
-`RegionCatalog.swift`), which is what lets one store hold rides in five
+`RegionCatalog.swift`), which is what lets one store hold rides in seven
 countries. The consequences are listed where they land — samples, statistics,
 the editor, import — and the reasoning is in `RegionCatalog`'s and
 `MergedStore`'s own documentation. Everything else on this page is still
@@ -39,7 +39,7 @@ measured against the web app.
 What the three journey destinations do have is a region **scope**: a globe
 button in the panel header that narrows what Upcoming, 全部行程 and 統計 report
 on, with 全部地區 as its off position. That is a filter over one store, not the
-web app's switch between five of them — nothing is loaded or unloaded, the
+web app's switch between regions — nothing is removed from the workspace, the
 editor and the data screen still hold every region at once, and the value is
 shared by the three so they cannot answer differently.
 
@@ -97,18 +97,29 @@ packages, and the two cases are not the same:
 A printed stop time is still never converted. `25:10` stays `25:10`; the note
 under the stop list names the clock at each end instead.
 
+## Parallel railway display lanes
+
+Distinct railways that share a visually coincident corridor are separated at
+presentation time, in the Chicago Loop style: each keeps its own colour and a
+fixed screen-space lane, while canonical WGS84 geometry, routing and statistics
+remain unchanged. `app/public/rail/display-lanes.json` is the shared derived
+contract. The WebUI consumes it with MapLibre `line-offset`; the native display
+network derivative (`build-display-network.py`) carries the same lane and
+direction into MapKit, where both the polyline and its station bead receive the
+offset. Entry and exit ramps use four
+short fractional steps so a lane does not jump sideways.
+
+North America groups coincident services by operator, transport kind and
+official route colour. A different company or transport kind therefore gets a
+separate lane; separately branded urban routes such as CTA or RTD colours also
+remain distinct. Same-company, same-kind, same-colour services share the
+centreline, so Amtrak and VIA Rail route names do not become an unreadable
+main-line ribbon. Reviewed corridors in `shared-corridors.json` continue to
+provide the evidence-backed common geometry before lanes are measured.
+
 ## 0 · What is deliberately not ported
 
-Three groups, so they stop being re-discovered as gaps.
-
-**Withdrawn from the web app.** Screen-space lane offsets — the `lanes` table's
-render consumption, `line-offset`, `icon-offset`, the laned-platform layer and
-its 42 contract tests — were removed end to end by commit `38cf0a8`
-(2026-08-19) at the user's direction, and rule R14 is marked 廢止 in
-`RAILWAY_DATA_TOPOLOGY_AND_APPLE_MAPS_DISPLAY_RULES.md`. Every line now draws on
-its own surveyed geometry. The `lanes` key is still generated into each package
-(198 rows for jp) but **nothing reads it**. Porting it here would not close a
-gap; it would fork the two clients apart.
+Two groups, so they stop being re-discovered as gaps.
 
 **No pointer to hover with.** The overlapping-line fan (`railmap.js`
 `_setExpandedGroup`) exists because a mouse can rest on a line without
@@ -167,7 +178,7 @@ That is its own cleanup, not this one.
 | Feature | Source | logic | app |
 | --- | --- | :-: | :-: |
 | Draw the national network | `rail-network.js`, `railmap-style.js` | ✅ | ✅ |
-| All five regions drawn at once | — | ✅ | ✅ replaces the region switch; `RailNetworkStore.loadAll` decodes the five packages concurrently and publishes each as it lands |
+| All seven regions available in one map | — | ✅ | ✅ replaces the region switch; `RailNetworkStore.loadAll` indexes compact regions first and large regions second, while geometry loads on demand for the visible map |
 | Zoom-tiered visibility | `rail-network.js` `minZoomFor*` | ✅ | ✅ off-by-one fixed; rank plus a finer native wide-view length ladder |
 | Official line colours, light and dark | package `color`/`colorDark` | ✅ | ✅ |
 | Display parts — branches split from trunks | `rail-network.js:908` | ✅ | ✅ `RailNetworkStore` builds every line through `DisplayParts.parts` |
@@ -180,9 +191,9 @@ That is its own cleanup, not this one.
 | Endpoint labels, with collision layout | `app-display-features.js` (493) | ✅ | ✅ badge, times and reading lines |
 | Basemap opacity | `app-display-features.js` `applyMapOpacity` | — | ✅ |
 | Legend and data sources, with licences | `app-map-init.js` `buildMapInfoControl` | — | ✅ `MapInfoView`, plus a Korean article the web app has never had and an Apple-Maps basemap article in place of OpenFreeMap's |
-| Map layer toggles (routes / stops / terminals / pass / four ridden categories) | `app-map-init.js` `buildMapLayersControl` | ✅ | ✅ `MapLayersView`, all nine — the categories classify through the ported `Statistics.riddenFeatureCategory`, and are labelled from the BASE keys because each filter acts on all five networks |
+| Map layer toggles (routes / stops / terminals / pass / four ridden categories) | `app-map-init.js` `buildMapLayersControl` | ✅ | ✅ `MapLayersView`, all nine — the categories classify through the ported `Statistics.riddenFeatureCategory`, and are labelled from the BASE keys because each filter acts across the unified network workspace |
 | One basemap, scoped by the destination on top | — | — | ✅ native-only. Upcoming draws the journeys still ahead and only those, Passport the records its numbers counted, All journeys and Search everything on record. It is the ride LIST that narrows, never the drawing: what is ahead and what is behind share one set of 已乘坐線路 switches, so there is no second layer menu for a second kind of line (`RailWorkspaceView.mapRides`) |
-| Region scope: one region, or 全部 | — | — | ✅ native-only, and shared by Upcoming, 全部行程 and 統計 — a round globe button in each of their headers. It offers only the regions the store has journeys in, plus 全部地區, which is always there and is the way back: a scope whose every result is an empty list is not a choice. The five networks are disjoint, so their edge indexes merge into one denominator (`EdgeIndexCache.merged`); switching the scope narrows the list, narrows what the map draws under it, and frames that network, while 全部 frames all of them |
+| Region scope: one region, or 全部 | — | — | ✅ native-only, and shared by Upcoming, 全部行程 and 統計 — a round globe button in each of their headers. It offers only the regions the store has journeys in, plus 全部地區, which is always there and is the way back: a scope whose every result is an empty list is not a choice. The seven networks are geographically disjoint, so their edge indexes merge into one denominator (`EdgeIndexCache.merged`); switching the scope narrows the list, narrows what the map draws under it, and frames that network, while 全部 frames all of them |
 | Basemap picker (Positron / none) | `buildMapLayersControl` | — | — Apple Maps is the basemap; the opacity slider covers "less of it" |
 | Hover fan for overlapping lines | `railmap.js` `_setExpandedGroup` | — | — not ported, see §0 |
 
@@ -200,7 +211,19 @@ line's own length where `Visibility.minZoomByLineId` deliberately uses the
 line's visibility GROUP — after which the rank ladder was recalibrated to
 3,3,4,5,6. The native renderer now also reads the unbucketed group length and
 uses 300/120/50/20 km floors across app zoom 4/5/6/7; zoom 8 remains the
-unchanged all-lines stop.
+unchanged all-lines stop for phone-sized windows.
+
+**Window-aware visibility.** Native clients share one visibility policy based
+on the map viewport's shorter edge in logical points. Below 600 pt, the phone
+thresholds apply; from 600 to below 900 pt, lines and stations become eligible
+half a zoom level earlier; at 900 pt and above, one level earlier. This follows
+window resizing and rotation rather than device names or Retina pixel counts.
+The same effective zoom drives regional data loading, line selection, and
+station visibility, including generated display-network thresholds. Geometry,
+stroke width, and parallel-lane spacing continue to use the actual camera zoom.
+The renderer invalidates its visibility cache at effective-zoom boundaries and
+viewport size changes. The existing vertex budget can still omit lines in dense
+views; these thresholds determine eligibility, not a guarantee to draw every line.
 
 **And the dots follow the lines.** Those extra terms apply to a LINE, while a
 station kept the web app's own threshold, so the wide views drew the terminals
@@ -213,6 +236,29 @@ those same numbers: electing on the package's instead handed 高崎's name to it
 北陸新幹線 platforms are on screen. Eleven jp complexes were in that position;
 39 of the 9,021 names move to a different platform of the same complex, and no
 complex gains or loses a name.
+
+**Continuous lines, and nothing off screen.** The map draws a display
+derivative rather than the canonical packages — the same station-to-station
+geometry with the reviewed shared corridors and screen-space lanes applied
+(`build-display-network.py`), one file per region, 18 MB for all seven. It is
+not cut up: a railway crossing the viewport is one continuous stroke.
+
+Bounding what reaches the GPU is therefore entirely the renderer's job, in
+three tiers. A REGION's file is read only once the padded visible rect reaches
+its extent and the camera has passed the earliest zoom at which any of its
+railways can be drawn — both measured from the data and recorded in the
+manifest, so the widest launch camera reads nothing at all. A LINE is dropped
+when its own extent misses the padded rect or its threshold exceeds the zoom
+(`NetworkLOD.select`). An INTERVAL is dropped by the same rectangle test one
+level down, against `DrawnLine.intervalRects`, which is what keeps a 4,000 km
+corridor from decimating its whole length to draw the six intervals on screen.
+Measured at a Tokyo city view: 190 lines drawn of 907 resident, 11,457
+vertices, against a 40,000 budget.
+
+This replaced a z4/z6/z8/z10 tile pyramid that bounded the read by clipping
+every railway at the tile boundaries — 49 MB of fragments in the bundle, each
+with its own id and its own moment of arrival, so a pan rebuilt the network
+from a different set of pieces.
 
 ## 2 · Rides — the point of the app
 
@@ -232,7 +278,7 @@ complex gains or loses a name.
 | Ride station labels | `app-deck-records.js` `markerRecordsToFC` | ✅ | ✅ three tiers, elected, haloed |
 | Select a train, clear selection | `#fit-selected`, `#clear-selection` | — | ✅ |
 | Fit to selection (定位) | `app-map-fit.js` (216) | — | ✅ |
-| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all five. **設定 › 啟動地圖範圍** decides: 自動 (the default), 全球 (`Region.everyNetworkExtent`), or one country the reader names. 自動 takes the country of the first journey still ahead, else of the first in the log — counting only journeys that carry a time on some stop, so the bundled demonstration routes cannot decide it. Framed once, from a written-down country extent rather than from lines that land seconds apart, and never over a camera the reader has already taken. Nothing closer than a country: everything narrower is something the reader asks for |
+| The camera's opening view | — | — | ✅ native-only. The web app switches regions, so it opens on the one that is loaded; this app holds all seven. **設定 › 啟動地圖範圍** decides: 自動 (the default), 全球 (`Region.everyNetworkExtent`), or one country the reader names. 自動 takes the country of the first journey still ahead, else of the first in the log — counting only journeys that carry a time on some stop, so the bundled demonstration routes cannot decide it. Framed once, from a written-down country extent rather than from lines that land seconds apart, and never over a camera the reader has already taken. Nothing closer than a country: everything narrower is something the reader asks for |
 
 ## 3 · The itinerary list and editor
 
@@ -399,7 +445,7 @@ than remove one. See §0.
 marker-type toggles, 全部鐵路線, and the four ridden-category filters
 (新幹線 / JR在來線 / 地下鐵 / 私鐵).
 
-Two differences from the web app, both consequences of drawing five regions at
+Two differences from the web app, both consequences of drawing seven regions at
 once:
 
 - The category filter needs an N02 edge index per region, and building one
@@ -421,7 +467,7 @@ is the block of ✅ rows at the end of §7.
 
 **What has and has not been run.** Everything below has been driven on an
 iPhone 17 Pro simulator by `simctl` and the DEBUG-only `RAILMAP_UI_TEST_*`
-hooks — the five networks, the merged store, the sample merge, the legend
+hooks — the seven networks, the merged store, the sample merge, the legend
 sheet, the data screen, the statistics screen at two regions, the
 ambiguous-tap chooser, the editor's region row, and the whole journey panel at
 AX5 with Increase Contrast on.
