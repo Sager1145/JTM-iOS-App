@@ -1,0 +1,257 @@
+{
+  "format": "jtm-railway-audit-hotspots-v1",
+  "reviewedAt": "2026-08-31",
+  "hotspots": [
+    {
+      "id": "us-bronx-melrose-yankee-stadium",
+      "region": "us",
+      "camera": [40.824, -73.925, 0.075],
+      "reason": "Metro-North branch fallbacks produced parallel and crossing strokes near Melrose and Yankee Stadium.",
+      "lineIds": ["metro-north-railroad-harlem", "metro-north-railroad-new-haven"]
+    },
+    {
+      "id": "us-seattle-king-street",
+      "region": "us",
+      "camera": [47.607, -122.326, 0.065],
+      "reason": "A lower-priority regional feed duplicated a short Amtrak Cascades extract beside Sounder and the complete Amtrak publication.",
+      "lineIds": [
+        "amtrak-amtrak-cascades-us",
+        "sound-transit-n-line",
+        "metro-transit-intercity-tran-s-line"
+      ]
+    },
+    {
+      "id": "us-bellingham-fairhaven",
+      "region": "us",
+      "camera": [48.72, -122.49, 0.06],
+      "reason": "The long-distance centreline visibly diverged from the basemap railway and rejoined the station with a diagonal connector.",
+      "lineIds": ["amtrak-amtrak-cascades-us"]
+    },
+    {
+      "id": "us-spokane-empire-builder",
+      "region": "us",
+      "camera": [47.655, -117.425, 0.06],
+      "reason": "The Empire Builder trunk and Portland branch share a reviewed station approach but previously used separately routed display arms.",
+      "lineIds": ["amtrak-empire-builder", "amtrak-empire-builder-b1"]
+    },
+    {
+      "id": "us-boston-north-station",
+      "region": "us",
+      "camera": [42.371, -71.066, 0.035],
+      "reason": "Fitchburg and Haverhill services share a reviewed North Station approach before their junction.",
+      "lineIds": ["mbta-fitchburg-line", "mbta-haverhill-line"]
+    },
+    {
+      "id": "us-boston-south-station",
+      "region": "us",
+      "camera": [42.344, -71.058, 0.035],
+      "reason": "Amtrak and MBTA services share the Back Bay and South Station approaches, where separately sourced centrelines previously diverged into parallel strokes and sharp dog-legs near Cove interlocking.",
+      "lineIds": [
+        "amtrak-lake-shore-limited",
+        "mbta-framingham-worcester-line",
+        "mbta-needham-line",
+        "mbta-providence-stoughton-line",
+        "mbta-foxboro-event-service"
+      ]
+    },
+    {
+      "id": "us-atlanta-five-points",
+      "region": "us",
+      "camera": [
+        33.755,
+        -84.405,
+        0.055
+      ],
+      "reason": "MARTA Blue and Green services share the east-west trunk; the Blue source retains additional blocked offset intervals outside the reviewed shared station pairs.",
+      "lineIds": [
+        "metropolitan-atlanta-rapid-t-blue",
+        "metropolitan-atlanta-rapid-t-green"
+      ]
+    },
+    {
+      "id": "us-dallas-downtown-trunk",
+      "region": "us",
+      "camera": [
+        32.787,
+        -96.798,
+        0.045
+      ],
+      "reason": "DART Blue, Green, Orange and Red services share the downtown light-rail tracks, where independent route geometries previously produced multiple parallel strokes and one blocked Red interval.",
+      "lineIds": [
+        "dallas-area-rapid-transit-da-blue",
+        "dallas-area-rapid-transit-da-green",
+        "dallas-area-rapid-transit-da-orange",
+        "dallas-area-rapid-transit-da-red"
+      ]
+    },
+    {
+      "id": "us-path-newport-exchange-place",
+      "region": "us",
+      "camera": [
+        40.716,
+        -74.026,
+        0.04
+      ],
+      "reason": "PATH services share the reviewed Newport-Exchange Place tubes; the World Trade Center endpoint remains withheld because its candidate station anchors disagree by 174.5 metres.",
+      "lineIds": [
+        "port-authority-trans-hudson-hoboken-world-trade-center",
+        "port-authority-trans-hudson-world-trade-center-33rd-street"
+      ]
+    },
+    {
+      "id": "us-chicago-south-shore-trunk",
+      "region": "us",
+      "camera": [
+        41.765,
+        -87.59,
+        0.09
+      ],
+      "reason": "Metra Electric and both South Shore services share the reviewed physical centreline from Millennium to Kensington; the separate Hammond Gateway-East Chicago Lakeshore interval remains fail-closed after a 49.0 metre independent-reference disagreement.",
+      "lineIds": [
+        "metra-me",
+        "south-shore-line-lakeshore",
+        "south-shore-line-monon"
+      ]
+    },
+    {
+      "id": "us-chicago-south-shore-kensington",
+      "region": "us",
+      "camera": [
+        41.687,
+        -87.612,
+        0.028
+      ],
+      "reason": "Metra Electric and both South Shore services are co-linear on the reviewed Chicago approach through Kensington Interlocking. South of the exact junction, Metra main, Blue Island Branch and South Shore retain their three real physical directions without a gap or synthetic branch.",
+      "lineIds": [
+        "metra-me",
+        "metra-me-b2",
+        "south-shore-line-lakeshore",
+        "south-shore-line-monon"
+      ]
+    },
+    {
+      "id": "us-amtrak-red-wing-winona",
+      "region": "us",
+      "camera": [
+        44.31,
+        -92.09,
+        0.72
+      ],
+      "reason": "Borealis and Empire Builder use the same reviewed Red Wing-Winona railway; independently sampled source strokes previously crossed 37 times inside one station interval.",
+      "lineIds": [
+        "amtrak-borealis",
+        "amtrak-empire-builder"
+      ]
+    },
+    {
+      "id": "us-amtrak-edmonds-seattle",
+      "region": "us",
+      "camera": [
+        47.705,
+        -122.36,
+        0.24
+      ],
+      "reason": "Amtrak Cascades and Empire Builder share the reviewed Edmonds-Seattle approach; their former independent centrelines crossed 16 times.",
+      "lineIds": [
+        "amtrak-amtrak-cascades-us",
+        "amtrak-empire-builder"
+      ]
+    },
+    {
+      "id": "ca-via-aldershot-woodstock",
+      "region": "ca",
+      "camera": [
+        43.17,
+        -80.18,
+        0.72
+      ],
+      "reason": "VIA Toronto-London and Toronto-Windsor share the reviewed Aldershot-Brantford-Woodstock track; independent official extracts previously crossed eight times.",
+      "lineIds": [
+        "via-toronto-london",
+        "via-toronto-windsor"
+      ]
+    },
+    {
+      "id": "us-tri-rail-miami-link",
+      "region": "us",
+      "camera": [
+        25.85,
+        -80.22,
+        0.13
+      ],
+      "reason": "Tri-Rail Downtown Miami Link and Metrorail Connection share the reviewed Metrorail Transfer-MiamiCentral railway; separately sampled display strokes previously crossed twice.",
+      "lineIds": [
+        "south-florida-regional-trans-dml",
+        "south-florida-regional-trans-mce"
+      ]
+    },
+    {
+      "id": "us-lirr-jamaica-kew-gardens",
+      "region": "us",
+      "camera": [
+        40.705,
+        -73.81,
+        0.075
+      ],
+      "reason": "LIRR City Terminal, Hempstead and West Hempstead services share the reviewed Jamaica-Kew Gardens track; each branch now uses one centreline before receiving a display lane.",
+      "lineIds": [
+        "mta-long-island-rail-road-city-terminal-zone",
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-west-hempstead-branch"
+      ]
+    },
+    {
+      "id": "us-metrolink-san-bernardino-terminal",
+      "region": "us",
+      "camera": [
+        34.105,
+        -117.3,
+        0.04
+      ],
+      "reason": "Metrolink IE-OC and San Bernardino lines share the reviewed Depot-Downtown terminal link; their former independently sampled strokes crossed inside the short interval.",
+      "lineIds": [
+        "metrolink-ie-oc-line",
+        "metrolink-sb-line"
+      ]
+    },
+    {
+      "id": "us-amtrak-ethan-allen-rutland",
+      "region": "us",
+      "camera": [
+        43.606,
+        -73.0,
+        0.065
+      ],
+      "reason": "The structural self-overlap warning is a reviewed real station approach: Ethan Allen Express enters Rutland and reverses over a short shared lead before continuing west, so the overlap must not be straightened away.",
+      "lineIds": [
+        "amtrak-ethan-allen-express"
+      ]
+    },
+    {
+      "id": "us-cta-blue-division-damen",
+      "region": "us",
+      "camera": [
+        41.9066,
+        -87.672,
+        0.025
+      ],
+      "reason": "CTA Blue Line Division-Damen is a regression location for verified official geometry that was previously cut when a lower-authority visual reference exceeded the metro review threshold.",
+      "lineIds": [
+        "cta-blue-line"
+      ]
+    },
+    {
+      "id": "us-brightline-orlando-west-palm",
+      "region": "us",
+      "camera": [
+        27.55,
+        -80.65,
+        1.0
+      ],
+      "reason": "The geographic-outlier warning is a reviewed length-distribution false positive: Orlando-West Palm Beach is the real 269.5 km first interval of Brightline's otherwise closely spaced South Florida station sequence.",
+      "lineIds": [
+        "brightline-trains-llc-blfm"
+      ]
+    }
+  ]
+}
