@@ -171,6 +171,14 @@ def main():
     out.append(f"Regenerate with `python3 app/scripts/railway/make-city-ledger.py`. Source: `na-2025-line-review.json` ({d['generatedAt']}).\n")
     out.append(f"**{s['published']} published · {s['blocked']} blocked · "
                f"{s['warnings']} warnings · {s['publishedErrors']} errors in published lines**\n")
+    out.append(
+        "> This describes the package as built, which is not the same as the registry's\n"
+        "> intent. A package can lag `na-feeds.json` indefinitely and no audit will say so:\n"
+        "> the only registry-vs-package check is `registry.silentFeed`, which fires only when\n"
+        "> a feed yields *zero* lines. TTC yielded 32 while Line 1 and Line 2 were missing, so\n"
+        "> the audit reported no errors. Before reading a city's blocked count as a geometry\n"
+        "> problem, confirm the package was rebuilt after the last registry edit — otherwise a\n"
+        "> line listed here as blocked may already be fixed in the registry and merely unbuilt.\n")
 
     for city, c in sorted(cities.items(), key=rank):
         nb = len(c['blocked'])
