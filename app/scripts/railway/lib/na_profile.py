@@ -163,3 +163,15 @@ CROSSCHECK_TOLERANCE_M = {
     'regional': 200.0,
     'longhaul': 400.0,
 }
+
+# Release-quality limits for geometry that remains visible at street zoom.
+# ``CROSSCHECK_TOLERANCE_M`` above only establishes that two sources describe
+# the same broad corridor; it is intentionally too loose to promise that a
+# rendered stroke follows the basemap railway.
+DISPLAY_ALIGNMENT_TOLERANCE_M = {
+    'street': 20.0,
+    'metro': 25.0,
+    'commuter': 30.0,
+    'regional': 35.0,
+    'longhaul': 50.0,
+}

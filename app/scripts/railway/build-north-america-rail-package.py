@@ -130,6 +130,24 @@ def partition_station_order_reversals(points, station_ids,
     return blocked, approved
 
 
+def official_keys_for_entry(mapping):
+    """Every official-network key an ``officialNetworkByRouteId`` map can name.
+
+    A route's value is either its one key (the historical shape) or a
+    per-direction map ``{"0": key, "1": key}`` naming direction 0's and
+    direction 1's own alignment separately, for the routes where the two
+    physically diverge. Either shape can repeat the same key more than once,
+    so this returns the flattened set a caller needs to load or fingerprint.
+    """
+    keys = set()
+    for value in (mapping or {}).values():
+        if isinstance(value, dict):
+            keys.update(v for v in value.values() if v)
+        elif value:
+            keys.add(value)
+    return keys
+
+
 def feed_cache_fingerprint(entry, source_dir):
     """Invalidate routed output when either GTFS bytes or build rules change.
 
@@ -148,9 +166,16 @@ def feed_cache_fingerprint(entry, source_dir):
                                   if os.path.isdir(library) else ())
                      if name.endswith('.py'))
     source_paths = [os.path.join(source_dir, 'gtfs', f"{entry['mdb']}.zip")]
-    official_keys = set((entry.get('officialNetworkByRouteId') or {}).values())
+    official_keys = official_keys_for_entry(entry.get('officialNetworkByRouteId'))
     if entry.get('officialNetwork'):
         official_keys.add(entry['officialNetwork'])
+    if official_keys:
+        # Provenance is part of the routed output.  A manifest change can
+        # revoke an extract or change the publisher/raw hash accepted for the
+        # same GeoJSON bytes; reusing a per-feed cache across that change
+        # would preserve a line the current verifier no longer authorizes.
+        source_paths.append(os.path.join(
+            source_dir, 'official-networks', 'manifest.json'))
     for key in sorted(official_keys):
         if key == 'quebec-mtq-via':
             source_paths.append(os.path.join(source_dir,
@@ -391,6 +416,87 @@ def median_snap(routing):
     return snaps[len(snaps) // 2] if snaps else None
 
 
+#: Registry settings that name a route. A feed that renumbers its routes — and
+#: several do, at every timetable change — would otherwise silently lose every
+#: one of these, and the loss reads in the output as "this railway has no
+#: official alignment" rather than "the key moved".
+ROUTE_KEYED_MAPS = (
+    'officialNetworkByRouteId', 'officialColorByRouteId',
+    'officialColorSourceByRouteId', 'classificationByRouteId',
+    'kindOverrideByRouteId', 'stationOrderByRouteId',
+    'stationOrderEvidenceByRouteId', 'osmRelationByRouteId',
+    'stationTurnaroundTriplesByRouteId', 'preferredTripByRouteId',
+    'officialShapeIdByRouteId', 'blockedRouteIds',
+    'officialNetworkDefectByRouteId', 'geometryReviewByRouteId',
+    'referenceValidatedGeometryByRouteId', 'osmRelationEvidenceByRouteId',
+)
+ROUTE_KEYED_LISTS = ('includeRouteIds', 'excludeRoutes',
+                     'preferOperatorShapeByRouteId',
+                     'forbidOfficialNetworkFallbackByRouteId',
+                     'primaryRouteIds')
+
+
+def resolve_route_keys(entry, routes):
+    """Re-key the registry's per-route settings onto this feed's route ids.
+
+    MARTA is the case that made this necessary: its five rail routes were
+    ``29224``–``29229`` when their official alignments were reviewed and are
+    ``26982``–``26987`` in the feed published since. Nothing about the railway
+    changed. With the old exact-id lookup the reviewed mapping matched nothing,
+    `requireOfficialMappingForAllRoutes` refused every route, and Atlanta's
+    subway left the package without one line in the ledger to say why.
+
+    So a registry key may also be a route's ``route_short_name`` or its
+    ``route_long_name`` — the things an operator publishes to its passengers
+    and therefore does not renumber. Ids still win: an operator that reuses a
+    short name across two routes is not overridden by accident, because the
+    exact id is applied last.
+
+    Returns a shallow copy; the registry entry itself is left alone so the
+    cache fingerprint keeps hashing what the file says.
+    """
+    alias = {}
+    for route in routes:
+        rid = str(route.get('route_id') or '')
+        for field in ('route_short_name', 'route_long_name'):
+            name = str(route.get(field) or '').strip()
+            if name and name.casefold() not in alias:
+                alias[name.casefold()] = rid
+    if not alias:
+        return entry
+    ids = {str(route.get('route_id') or '') for route in routes}
+    resolved = dict(entry)
+    renamed = []
+    for key in ROUTE_KEYED_MAPS:
+        table = entry.get(key)
+        if not isinstance(table, dict):
+            continue
+        out = {}
+        for name, value in table.items():
+            rid = alias.get(str(name).casefold())
+            if str(name) not in ids and rid:
+                renamed.append(f'{key}[{name}] -> {rid}')
+                out[rid] = value
+            else:
+                out[str(name)] = value
+        resolved[key] = out
+    for key in ROUTE_KEYED_LISTS:
+        table = entry.get(key)
+        if not isinstance(table, (list, tuple)):
+            continue
+        out = []
+        for name in table:
+            rid = alias.get(str(name).casefold())
+            if str(name) not in ids and rid:
+                renamed.append(f'{key}[{name}] -> {rid}')
+                out.append(rid)
+            else:
+                out.append(str(name))
+        resolved[key] = out
+    resolved['_routeKeyAliases'] = renamed
+    return resolved
+
+
 # ------------------------------------------------------------------ one feed
 
 class FeedBuild:
@@ -404,6 +510,68 @@ class FeedBuild:
         self.report = {'slug': self.slug, 'lines': 0, 'dropped': [], 'notes': [],
                        'syntheticConnectors': 0}
         self.synthetic = 0
+        #: (route id, suffix) -> the official network key that could not route
+        #: the line, for the lines whose alignment fell back to the operator's
+        #: own. Carried into the package so a reader can tell a line drawn
+        #: from a reviewed government centreline from one drawn from the
+        #: operator's feed after that centreline came up short.
+        self.fallbacks = {}
+        #: (route id, suffix) -> a reviewer's open question about this line's
+        #: alignment, carried into the package rather than used to delete it.
+        self.geometry_reviews = {}
+        #: (route id, suffix) -> which audited OpenStreetMap relation drew the
+        #: line and the registry's evidence for accepting it. See
+        #: `accepted_osm_relation`.
+        self.osm_relation_evidence = {}
+
+    def accepted_osm_relation(self, rid):
+        """The audited OSM relation the registry accepts as this route's track.
+
+        ``osmRelationByRouteId`` alone is the source of last resort: it is
+        consulted only after every official and operator alignment has failed.
+        Paired with ``osmRelationEvidenceByRouteId`` it becomes the route's
+        primary alignment, tried ahead of the operator's own shape. The
+        evidence is what earns that: Toronto's Line 1 and Line 2 are the case
+        that made it necessary. The City's subway route layer and the TTC's
+        GTFS shape are one geometry, and where the City's own topographic
+        survey can see that geometry -- the open-cut and surface sections --
+        it sits a median 62 m and up to 140 m off the surveyed track on
+        Line 2, while the OSM relation sits within a metre or two of the same
+        survey. In the tunnels nobody has published a survey at all, so the
+        relation that matches the survey wherever a survey exists is the best
+        statement of where the railway is, and the operator's shape is a
+        schematic that must not draw it.
+
+        Returns ``(relation id, shape, evidence)`` or ``None``. A declared
+        relation whose extract is missing from ``--osm-routes`` is reported
+        and returns ``None``, so the route falls back to whatever the rest of
+        the ladder decides -- which, for a route whose official layer is
+        declared defective, is the fail-closed refusal.
+        """
+        relation_id = (self.entry.get('osmRelationByRouteId') or {}).get(rid)
+        evidence = (self.entry.get('osmRelationEvidenceByRouteId') or {}).get(rid)
+        if relation_id is None or not evidence:
+            return None
+        shapes = getattr(self.options, 'osm_relation_shapes', None) or {}
+        shape = shapes.get(int(relation_id))
+        if not shape or len(shape) < 2:
+            self.report.setdefault('notes', []).append(
+                f'{rid}: audited OSM relation {relation_id} is not in the '
+                '--osm-routes extracts, so its evidence cannot be applied')
+            return None
+        return int(relation_id), shape, evidence
+
+    def note_fallback(self, rid, suffix, official_key, why):
+        """Record that a reviewed centreline could not draw this line."""
+        if getattr(self, 'fallbacks', None) is None:
+            self.fallbacks = {}
+        self.fallbacks[(rid, suffix)] = official_key
+        self.report.setdefault('notes', []).append(
+            f'{rid}{suffix}: {official_key} {why}; falling back to the '
+            'operator alignment, which the independent cross-check measures')
+
+    def fallback_for(self, rid, suffix):
+        return (getattr(self, 'fallbacks', None) or {}).get((rid, suffix))
 
     # ................................................................ reading
 
@@ -418,8 +586,13 @@ class FeedBuild:
         stops = self.apply_station_coordinate_overrides(stops)
         agencies = feed.agencies()
         weights = feed.service_weights()
+        all_routes = list(feed.rows('routes.txt'))
+        self.entry = resolve_route_keys(self.entry, all_routes)
+        for renamed in self.entry.get('_routeKeyAliases') or ():
+            self.report['notes'].append(
+                f'registry route key matched by published name: {renamed}')
         include_routes = set(self.entry.get('includeRouteIds') or ())
-        routes = [row for row in feed.rows('routes.txt')
+        routes = [row for row in all_routes
                   if (gtfs.is_rail_type(row.get('route_type'))
                       or row.get('route_id') in include_routes)]
         drop = set(self.entry.get('excludeRoutes') or ())
@@ -471,7 +644,8 @@ class FeedBuild:
         for group in group_routes(
                 routes, trips, sequences, stops, parent, agencies,
                 preserve_route_ids=bool(self.entry.get('preserveRouteIds')),
-                merge_route_id_groups=self.entry.get('mergeRouteIdGroups') or ()):
+                merge_route_id_groups=self.entry.get('mergeRouteIdGroups') or (),
+                primary_route_ids=self.entry.get('primaryRouteIds') or ()):
             built.extend(self.build_route(group, trips, sequences, stops, shapes,
                                           weights, agencies, parent))
         built = drop_subsets(
@@ -579,9 +753,57 @@ class FeedBuild:
         route = routes[0]
         rid = route['route_id']
         route_trips = [t for r in routes for t in trips.get(r['route_id'], [])]
+        headsign_pattern = self.entry.get('excludeTripHeadsignPattern')
+        if headsign_pattern:
+            route_trips, excluded = exclude_trips_by_headsign(
+                route_trips, headsign_pattern)
+            if excluded:
+                self.report['notes'].append(
+                    f'{rid}: {excluded} trips whose headsign matches '
+                    f'/{headsign_pattern}/ are not railway service and were '
+                    'left out of pattern selection')
         patterns = lines.build_patterns(rid, route_trips, sequences, stops,
                                         parent, weights)
-        selection = lines.select_lines(patterns)
+        preferred_trunk = ((self.entry.get('preferredTrunkStationOrderByRouteId')
+                            or {}).get(rid))
+        if preferred_trunk:
+            evidence = ((self.entry.get('preferredTrunkEvidenceByRouteId') or {})
+                        .get(rid) or ())
+            if len(evidence) < 2:
+                raise ValueError(
+                    f'{self.slug} {rid}: preferred trunk requires at least '
+                    'two evidence records')
+            selected_trunk = []
+            missing = []
+            for stop_id in map(str, preferred_trunk):
+                stop = stops.get(stop_id)
+                if stop is None:
+                    missing.append(stop_id)
+                    continue
+                station = parent(stop)
+                if not selected_trunk or selected_trunk[-1] != station:
+                    selected_trunk.append(station)
+            if missing or len(selected_trunk) < 2:
+                self.report['dropped'].append({
+                    'route': rid,
+                    'why': 'preferred trunk no longer matches feed',
+                    'missingStopIds': missing,
+                })
+                return []
+            selection = lines.select_lines(
+                patterns, preferred_trunk=selected_trunk)
+            if not selection:
+                self.report['dropped'].append({
+                    'route': rid,
+                    'why': 'preferred trunk contains an unpublished station step',
+                })
+                return []
+            self.report['notes'].append(
+                f'{rid}: trunk pinned to {len(selected_trunk)} official stops '
+                f'after {len(evidence)}-source validation; published variants '
+                'remain branches')
+        else:
+            selection = lines.select_lines(patterns)
         preferred_trip = (self.entry.get('preferredTripByRouteId') or {}).get(rid)
         if preferred_trip:
             trip = next((row for row in route_trips
@@ -680,6 +902,12 @@ class FeedBuild:
                     self.report['notes'].append(
                         f'{rid}{suffix}: closing interval not buildable, '
                         f'shipped as an open line')
+            if line and not suffix:
+                # Direction-1 divergence is a property of the trunk's own
+                # station list, not of a branch's — a branch is already a
+                # single physical alignment by construction.
+                self.attach_direction_extra_segments(line, rid, station_ids,
+                                                     patterns)
             if line:
                 out.append(line)
             elif selection_index == 0:
@@ -692,6 +920,110 @@ class FeedBuild:
                     })
                 return []
         return out
+
+    def attach_direction_extra_segments(self, line, rid, station_ids, patterns):
+        """Direction 1's own physical track, as ``extraSegments``, where it diverges.
+
+        A route whose registry entry names both directions
+        (``officialNetworkByRouteId[rid] == {"0": key, "1": key}``) has
+        already drawn its canonical geometry from direction 0's key —
+        `geometry_for` never sees the other one. This runs *after* that
+        line exists: it routes the SAME trunk station list through
+        direction 1's own official network, compares the two station-by-
+        station, and where a run of consecutive intervals disagrees by more
+        than `na_lines.DIVERGENCE_THRESHOLD_M`, records that run as one
+        `extraSegments` entry rather than silently drawing only one of the
+        two physical alignments.
+
+        Both endpoints of every emitted run are, by construction, stations
+        already in `station_ids` — the same list direction 0 was routed
+        against — so this can never produce the orphan-branch/split-stop
+        failure a naive per-direction *network* (routing its own, possibly
+        different, station set) produced before. Nothing here changes the
+        canonical line: on any failure this only reports and leaves `line`
+        exactly as `build_line` produced it.
+        """
+        official_entry = (self.entry.get('officialNetworkByRouteId') or {}).get(rid)
+        if not isinstance(official_entry, dict):
+            return
+        key0, key1 = official_entry.get('0'), official_entry.get('1')
+        if line.get('isLoop'):
+            # `stationPoints` excludes the wrap-closing duplicate a loop's
+            # own `intervals`/`anchors` carry, so re-routing it here would
+            # compare one interval short of what actually shipped. None of
+            # the routes this feature exists for are loops; a future one
+            # gets a clean skip instead of an off-by-one.
+            return
+        if not key0 or not key1 or line.get('geometrySource') != key0:
+            # Either this route is not actually direction-split, or its
+            # canonical geometry did not come from direction 0's own key
+            # (a defect or fallback took over) — in both cases there is no
+            # direction-0 official routing here to compare direction 1
+            # against.
+            return
+        network0 = self.options.official_networks.get(key0)
+        network1 = self.options.official_networks.get(key1)
+        if network0 is None or network1 is None:
+            missing = key0 if network0 is None else key1
+            self.report['notes'].append(
+                f'{rid}: direction network {missing} unavailable; '
+                'direction-1 divergence was not checked')
+            return
+        points = line.get('stationPoints')
+        if not points or len(points) != len(station_ids):
+            return
+        official_snap_m = min(
+            self.options.anchor_m,
+            float(self.entry.get('officialNetworkMaxSnapMeters')
+                  or self.options.anchor_m))
+        intervals0, _ = network0.route_stations(points, max_snap_m=official_snap_m)
+        intervals1, routing1 = network1.route_stations(
+            points, max_snap_m=official_snap_m)
+        if not intervals0:
+            return
+        if not intervals1:
+            self.report['notes'].append(
+                f'{rid}: direction-1 network {key1} could not route every '
+                f'trunk station (snap {routing1.get("snapMeters")}); '
+                'direction-1 divergence withheld for this route')
+            return
+        runs = lines.direction_divergence_runs(intervals0, intervals1)
+        if not runs:
+            return
+        measured = time.strftime('%Y-%m-%d')
+        extra = []
+        for start, end, worst in runs:
+            geometry = lines.extra_segment_for_run(intervals1, start, end)
+            km = round(sum(geo.line_length(intervals1[i])
+                           for i in range(start, end + 1)) / 1000.0, 3)
+            from_id, to_id = station_ids[start], station_ids[end + 1]
+            evidence = (
+                f'SFMTA {key1}.geojson direction 1 alignment; diverges from '
+                f'direction 0 by up to {worst:.0f} m between {from_id} and '
+                f'{to_id} (measured {measured})')
+            extra.append({
+                'fromStationId': from_id,
+                'toStationId': to_id,
+                'geometry': geometry,
+                'km': km,
+                'maxDeviationMeters': round(worst, 1),
+                'evidence': evidence,
+            })
+            self.report['notes'].append(
+                f'{rid}: direction-1 alignment diverges from direction 0 by '
+                f'up to {worst:.0f} m between {from_id} and {to_id} '
+                f'({km:.2f} km); recorded as an extraSegments row')
+        only_other = lines.direction_only_stations(patterns, station_ids)
+        if only_other:
+            note = (f'{rid}: stop(s) {", ".join(only_other)} exist only on '
+                    'the direction folded onto the trunk\'s reverse and are '
+                    'not represented as trunk stations')
+            self.report['notes'].append(note)
+            for row in extra:
+                row['evidence'] += (
+                    f'; direction-1-only stop(s) not added as trunk '
+                    f'stations: {", ".join(only_other)}')
+        line['extraSegments'] = extra
 
     def build_line(self, route, rid, suffix, station_ids, pattern, loop, stops,
                    shapes, agency, agency_name, kind, route_name, route_slug,
@@ -763,6 +1095,23 @@ class FeedBuild:
         route_points = (points + [points[0]]) if loop else points
 
         shape_id, shape = lines.shape_for(pattern, shapes)
+        pinned_shape_id = ((self.entry.get('officialShapeIdByRouteId') or {})
+                           .get(rid))
+        if pinned_shape_id:
+            selected_id, selected_shape = trusted_shape_fallback(
+                points, route_patterns, shapes, self.options.anchor_m,
+                allowed_shape_ids={pinned_shape_id})
+            if selected_shape is None:
+                self.report['dropped'].append({
+                    'route': rid, 'suffix': suffix,
+                    'why': 'reviewed operator shape no longer matches route stations',
+                    'shapeId': pinned_shape_id,
+                })
+                return None
+            shape_id, shape = selected_id, selected_shape
+            self.report['notes'].append(
+                f'{rid}{suffix}: selected reviewed operator GTFS shape '
+                f'{shape_id} after comparison with the current official route map')
         # Some authorities publish one authoritative shape on every selected
         # trip.  In that case keep the trip's own shape: looking for a second
         # candidate is both unnecessary and, on branched systems such as
@@ -796,7 +1145,13 @@ class FeedBuild:
         # Trust means that the operator's alignment may win over another
         # pattern's shape; it never means that a polyline manufactured from
         # straight station chords becomes surveyed track.
-        schematic = shape is None or build.shape_is_schematic(shape, points)
+        # A reviewed shape id is pinned only after the operator's current
+        # route map independently confirms that alignment.  Short, nearly
+        # straight railways (New Orleans' Riverfront line) otherwise look
+        # indistinguishable from stop-to-stop chords to the generic heuristic.
+        schematic = (shape is None or
+                     (not pinned_shape_id
+                      and build.shape_is_schematic(shape, points)))
 
         chords = [geo.haversine(route_points[i], route_points[i + 1])
                   for i in range(len(route_points) - 1)]
@@ -862,8 +1217,15 @@ class FeedBuild:
             'colorSource': colour_source,
             'isLoop': loop,
             'geometrySource': source,
+            'geometryFallbackFrom': self.fallback_for(rid, suffix),
+            'geometryReview': (getattr(self, 'geometry_reviews', None)
+                               or {}).get((rid, suffix)),
+            'osmRelationEvidence': (getattr(self, 'osm_relation_evidence', None)
+                                    or {}).get((rid, suffix)),
             'shapeId': shape_id,
             'stationIds': station_ids,
+            'crossFeedDistinctStopIds': list(
+                self.entry.get('crossFeedDistinctStopIds') or ()),
             # Official station-complex identity is carried to the final
             # cross-line grouping without replacing the physical GTFS parent
             # station.  A line therefore keeps its own platform/track anchor
@@ -894,27 +1256,227 @@ class FeedBuild:
         """
         intervals = None
         source = None
-        official_key = ((self.entry.get('officialNetworkByRouteId') or {})
-                        .get(rid) or self.entry.get('officialNetwork'))
+        #: Set when `forbidOfficialNetworkFallback` withholds the operator's
+        #: own alignment for this route. It withholds the SHAPE, not the line:
+        #: the surveyed network below may still draw it.
+        shape_forbidden = False
+        official_entry = (self.entry.get('officialNetworkByRouteId') or {}).get(rid)
+        # A route whose two physical directions diverge names direction 0's
+        # key and direction 1's key separately (`{"0": key, "1": key}`).
+        # Direction 0 remains this line's canonical geometry — the only thing
+        # that changes here is where its key comes from; direction 1's own
+        # alignment is compared against it, and shipped as `extraSegments`
+        # where the two disagree, in `attach_direction_extra_segments` once
+        # the trunk line itself has been built.
+        official_key = (official_entry.get('0') if isinstance(official_entry, dict)
+                        else official_entry) or self.entry.get('officialNetwork')
+        # A route-specific defect disqualifies that LAYER, and nothing else.
+        # Switching to the next source is not silent: the reason is recorded
+        # here, travels into the package as `geometryReview`, and appears in
+        # the ledger row for the line. The failures this key was introduced
+        # for — disconnected trunks, offsets, direction reversals — are caught
+        # downstream by the tests that name them (`interval.straight`,
+        # `interval.detour`, `geometry.spike`, `geometry.deviation`), and each
+        # of those measures the geometry that actually shipped rather than
+        # trusting the label on its source.
+        # Two defensible answers exist to "the only alignment we have for this
+        # railway is weaker than we would like", and which one a release wants
+        # is a policy, not a fact about the data:
+        #
+        #   completeness  the railway ships, drawn from the best source that
+        #                 survives the geometry gates, with the reservation
+        #                 recorded per line in the package and the ledger;
+        #   strict        the railway is withheld until the reservation is
+        #                 resolved.
+        #
+        # The registry states which, once, and both are honest as long as the
+        # reader is told: a `strict` package is smaller than the railway
+        # network it describes, and a `completeness` package says on every
+        # line which source drew it and what is still open about it.
+        # Fail closed when a caller constructs ``FeedBuild`` directly and
+        # does not provide a policy.  ``completeness`` remains available for
+        # explicit comparison builds, but omission must never turn an
+        # unresolved route into a published one.
+        strict = getattr(self.options, 'release_policy', 'strict') == 'strict'
+        defect = (self.entry.get('officialNetworkDefectByRouteId') or {}).get(rid)
+        # Whether the registry named a centreline for this route at all, taken
+        # before a defect clears it: a route whose declared layer is defective
+        # has satisfied `requireOfficialMappingForAllRoutes`, which asks that
+        # a mapping was reviewed, not that it survived review.
+        mapping_declared = bool(official_key)
+        # Same opt-in `acceptOperatorShapeByRouteId` the review gate below
+        # honours, checked here too: a defective official layer and an
+        # unreviewed one are both "this source is broken, ship the next one
+        # down with the reservation recorded", and the defect gate should
+        # not be strictly weaker just because it fires first. This is what
+        # lets a route stay declared in `officialNetworkByRouteId` (so
+        # `requireOfficialMappingForAllRoutes` still sees a reviewed
+        # mapping) while the build actually draws it from the operator's
+        # GTFS shape instead, once a newer official centreline has been
+        # checked for and evidenced as still unavailable -- LA Metro's B
+        # Line GIS disagrees with the independent tunnel reference by
+        # 158 m near Hollywood and Metro has not re-cut that layer since
+        # 2016 (checked developer.metro.net/gis-data 2026-09-04: '802_
+        # Red_Purple_Track_0316.zip', last touched 2019-10, is still the
+        # newest B/D Line track upload there; the live ArcGIS layer this
+        # feed reads is the same government source, not a newer one).
+        defect_shape_evidence = (
+            self.entry.get('acceptOperatorShapeByRouteId') or {}).get(rid)
+        # The other way out of a defective official layer: an audited OSM
+        # relation with recorded evidence draws the route instead, and the
+        # operator's shape -- which for Toronto IS the defective layer -- is
+        # never reached.
+        osm_relation = self.accepted_osm_relation(rid)
+        if (defect and strict and not defect_shape_evidence
+                and not osm_relation):
+            self.report['dropped'].append({
+                'route': rid, 'suffix': suffix,
+                'why': f'fail-closed: {defect}',
+            })
+            return None, None
+        if defect:
+            note = (f'{rid}{suffix}: {official_key or "the reviewed centreline"} '
+                    f'is not used for this route ({defect}); the alignment comes '
+                    'from the next source down')
+            if defect_shape_evidence:
+                note += f'; independent-survey requirement waived — {defect_shape_evidence}'
+            if osm_relation:
+                note += (f'; audited OSM relation {osm_relation[0]} is accepted '
+                         f'as the alignment — {osm_relation[2]}')
+            self.report['notes'].append(note)
+            official_key = None
+        # An open review is a work item, not a refusal. "The operator
+        # published it" is a weaker statement than "a government surveyed it",
+        # and the package says which of the two drew every line — but a
+        # railway drawn from its operator's own alignment, measured against an
+        # independent reference and shipped with the disagreement recorded, is
+        # a better answer to "where is this railway" than no railway at all.
+        # ``referenceValidatedGeometryByRouteId`` remains the narrower case:
+        # a redistributable candidate checked against a survey whose licence
+        # forbids shipping its coordinates.
+        review = (self.entry.get('geometryReviewByRouteId') or {}).get(rid)
+        # An opt-in, per-route escape from the review gate above — and only
+        # that gate. It exists for the narrow case the gate cannot otherwise
+        # express: no official or independent survey exists (or is ever
+        # likely to exist) for this specific route, so "shipped for review"
+        # is the wrong sentence — there is nothing left to review — and
+        # withholding the line indefinitely does not make the operator's own
+        # alignment more trustworthy. Every other gate downstream (station
+        # snapping, chord/detour rejection, reversal checks, the display-
+        # blocked-interval audit) still runs unchanged; this key only stops
+        # `review and strict` from returning early. A route absent from this
+        # map gets no benefit from an entry that names a different route.
+        accepted_shape_evidence = (
+            self.entry.get('acceptOperatorShapeByRouteId') or {}).get(rid)
+        operator_shape_accepted = bool(review and accepted_shape_evidence)
+        if review and strict and not operator_shape_accepted:
+            self.report['dropped'].append({
+                'route': rid, 'suffix': suffix,
+                'why': f'fail-closed: {review}',
+            })
+            return None, None
+        if operator_shape_accepted:
+            self.report['notes'].append(
+                f'{rid}{suffix}: independent survey requirement waived — '
+                f'{accepted_shape_evidence}')
+        elif review:
+            self.report['notes'].append(
+                f'{rid}{suffix}: shipped for review — {review}')
+        validated_review = (
+            self.entry.get('referenceValidatedGeometryByRouteId') or {}
+        ).get(rid)
+        if validated_review:
+            self.report['notes'].append(
+                f'{rid}{suffix}: local reference validation — '
+                f'{validated_review}')
+        if getattr(self, 'geometry_reviews', None) is None:
+            self.geometry_reviews = {}
+        self.geometry_reviews[(rid, suffix)] = (
+            accepted_shape_evidence if operator_shape_accepted
+            else review or validated_review)
         official_network = (getattr(self.options, 'official_networks', {})
                             .get(official_key))
+        operator_shape_first = rid in set(
+            self.entry.get('preferOperatorShapeByRouteId') or ())
         official_required = bool(
             official_key and self.entry.get('requireVerifiedOfficialNetwork'))
+        # A route whose reviewed centreline is declared defective has no
+        # centreline to protect, so the whole ladder is open to it: the flag
+        # exists to stop an operator's shape quietly replacing a GOOD official
+        # layer, not to delete a railway whose official layer we rejected.
+        fallback_forbidden = bool(
+            not defect
+            and ((strict and official_required and mapping_declared)
+                 or self.entry.get('forbidOfficialNetworkFallback')
+                 or rid in set(self.entry.get(
+                     'forbidOfficialNetworkFallbackByRouteId') or ())
+                 or (suffix and self.entry.get(
+                     'forbidOfficialNetworkFallbackForBranches'))))
         if (self.entry.get('requireOfficialMappingForAllRoutes')
-                and not official_key):
+                and not mapping_declared):
             self.report['dropped'].append({
                 'route': rid, 'suffix': suffix,
                 'why': 'required official route mapping is unavailable',
             })
             return None, None
         if official_required and official_network is None:
-            self.report['dropped'].append({
-                'route': rid, 'suffix': suffix,
-                'why': 'required verified official route network is unavailable',
-                'officialNetwork': official_key,
-            })
-            return None, None
-        if official_network is not None:
+            if fallback_forbidden:
+                if (suffix and self.entry.get(
+                        'forbidOfficialNetworkFallbackForBranches')):
+                    self.report['dropped'].append({
+                        'route': rid, 'suffix': suffix,
+                        'why': 'required official branch alignment is unavailable',
+                        'officialNetwork': official_key,
+                    })
+                    return None, None
+                # `forbidOfficialNetworkFallback` says: do not quietly draw
+                # this railway from the operator's own feed when the reviewed
+                # centreline is the thing that was checked. It does not say
+                # "delete the railway": the FRA/provincial survey below is a
+                # government measurement, independent of both the operator and
+                # the failed extract, and it is what Amtrak's and VIA's
+                # long-distance network was drawn from before this flag
+                # existed. So the operator SHAPE is withheld and the surveyed
+                # network is still asked.
+                self.report['notes'].append(
+                    f'{rid}{suffix}: {official_key} is unavailable; the '
+                    'operator alignment is forbidden for this route, so only '
+                    'the surveyed network may draw it')
+                shape = None
+                shape_forbidden = True
+            else:
+                # A route extract that is absent, or whose publisher/URL/hash
+                # no longer matches the reviewed manifest, is a failure of
+                # this repository's plumbing — an endpoint that moved, a layer
+                # that was republished — not evidence that the railway is
+                # unknown. Deleting the railway is the one response that hides
+                # the failure instead of reporting it: the build already says
+                # loudly on stderr which keys failed provenance, and the
+                # package now says per line which centreline it wanted and did
+                # not get.
+                self.note_fallback(rid, suffix, official_key,
+                                   'is unavailable or failed provenance review')
+        if operator_shape_first:
+            # Some municipal centreline layers contain all of the right
+            # surveyed street segments but do not encode the service path
+            # through their junctions.  Atlanta Streetcar is the concrete
+            # case: the City layer routes two consecutive official stops
+            # around almost the whole loop, while MARTA's own GTFS shape and
+            # published stop order describe the short connecting leg.  This
+            # switch is route-specific and opt-in; it never promotes an
+            # inferred or third-party line over an authority's alignment.
+            if not shape or schematic:
+                self.report['dropped'].append({
+                    'route': rid, 'suffix': suffix,
+                    'why': 'preferred operator alignment is unavailable or schematic',
+                })
+                return None, None
+            self.report['notes'].append(
+                f'{rid}{suffix}: operator GTFS alignment selected ahead of '
+                f'{official_key or "NARN fallback"}; the reviewed centreline '
+                'remains an independent '
+                'geometry reference')
+        elif official_network is not None:
             official_snap_m = min(
                 self.options.anchor_m,
                 float(self.entry.get('officialNetworkMaxSnapMeters')
@@ -947,11 +1509,83 @@ class FeedBuild:
                 })
                 intervals = None
             if official_required and source is None:
+                if fallback_forbidden:
+                    if (suffix and self.entry.get(
+                            'forbidOfficialNetworkFallbackForBranches')):
+                        self.report['dropped'].append({
+                            'route': rid, 'suffix': suffix,
+                            'why': 'required official branch alignment could '
+                                   'not route every station',
+                            'officialNetwork': official_key,
+                        })
+                        return None, None
+                    # Same rule as above: withhold the operator's own shape,
+                    # keep the independent surveyed network. A line that no
+                    # tier can draw still ends at the "no usable alignment"
+                    # refusal below, with the ladder exhausted rather than cut
+                    # short.
+                    self.report['notes'].append(
+                        f'{rid}{suffix}: {official_key} could not route every '
+                        'station; the operator alignment is forbidden for '
+                        'this route, so only the surveyed network may draw it')
+                    shape = None
+                    shape_forbidden = True
+
+                else:
+                    # The reviewed centreline is the best statement of where
+                    # this railway is; it is not the only one. An official
+                    # layer that ends at a state line, predates an extension,
+                    # or omits the subway half of a light-rail route cannot
+                    # join every station, and refusing the line there deletes
+                    # a railway to protect a preference between two official
+                    # sources.
+                    #
+                    # So the operator's own published alignment takes over for
+                    # the WHOLE line — never interval by interval, which would
+                    # seam two different anchor sets together — and the package
+                    # records that it did. What stops that becoming a licence
+                    # to ship a wrong corridor is downstream and independent:
+                    # the straight-interval gate and `geometry.deviation` both
+                    # measure the result against the survey that did not draw
+                    # it.
+                    self.note_fallback(rid, suffix, official_key,
+                                       'could not route every station')
+        if intervals is None and osm_relation:
+            # Ahead of the surveyed network and of the operator's shape, and
+            # fail-closed when it cannot reach every station: the registry
+            # said this relation is the railway, so a station it does not
+            # reach is a finding, not a reason to draw the line from the
+            # schematic it was accepted instead of.
+            relation_id, osm_shape, evidence = osm_relation
+            cut, _, cut_report = build.cut_at_stations(
+                osm_shape, points, self.options.anchor_m)
+            # `cut_at_stations` keeps a station the alignment does not reach
+            # at its own published coordinate and stamps it on the interval,
+            # which draws a chord to it. Here that is a refusal, not a
+            # repair: the relation was accepted as the railway, so a station
+            # it does not reach means either the relation or the station is
+            # wrong, and both are findings for the reviewer.
+            if cut_report.get('offAlignment'):
+                cut = None
+            checked = (self.reject_detours(cut, points, None, False, kindname)
+                       if cut else None)
+            if checked and all(piece and len(piece) > 1 for piece in checked):
+                intervals = checked
+                source = 'osm'
+                if getattr(self, 'osm_relation_evidence', None) is None:
+                    self.osm_relation_evidence = {}
+                self.osm_relation_evidence[(rid, suffix)] = {
+                    'relation': relation_id, 'evidence': evidence}
+                self.report['notes'].append(
+                    f'{rid}{suffix}: alignment from audited OSM relation '
+                    f'{relation_id}, accepted on recorded evidence; station '
+                    'identity and order remain from the operator GTFS')
+            else:
                 self.report['dropped'].append({
                     'route': rid, 'suffix': suffix,
-                    'why': 'required verified official route network failed; '
-                           'fallback forbidden',
-                    'officialNetwork': official_key,
+                    'why': (f'audited OSM relation {relation_id} could not be '
+                            'cut at every station of this pattern'),
+                    'relation': relation_id,
                 })
                 return None, None
         if (source is None
@@ -986,7 +1620,7 @@ class FeedBuild:
                     source = self.SHAPE_SOURCE if had_gap and intervals else 'narn'
                 else:
                     intervals = None
-        if intervals is None and shape and not schematic:
+        if intervals is None and shape and not schematic and not shape_forbidden:
             cut, _, _ = build.cut_at_stations(
                 shape, points, self.options.anchor_m)
             # The same plausibility test the routed path gets: an alignment
@@ -1082,6 +1716,16 @@ class FeedBuild:
                     'interval': i,
                 })
                 return None, None
+        # The waiver above only ever reaches this point by falling all the
+        # way through the ladder to the operator's own GTFS shape (no
+        # official/independent network is declared for a route named here,
+        # or this line would not have hit the review gate in the first
+        # place). Label it distinctly from an ordinary `gtfs-shape` fallback
+        # so the package, the ledger, and `verifiedOfficialNetworks` never
+        # count an explicitly-unsurveyed alignment as one of the sources
+        # this build otherwise verifies.
+        if operator_shape_accepted and source == self.SHAPE_SOURCE:
+            source = 'gtfs-official'
         return intervals, source
 
     def reject_far_snap_intervals(self, intervals, routing, rid='', suffix=''):
@@ -1306,8 +1950,31 @@ def jaccard(a, b):
     return len(a & b) / float(len(a | b))
 
 
+def exclude_trips_by_headsign(trips, pattern):
+    """Drop the trips an operator publishes under a rail route that are buses.
+
+    Toronto publishes its replacement buses inside the streetcar routes they
+    replace: every current 503 and 507 trip, and the 506B and 512B diversions,
+    are ``route_type`` 0 trips headed "… Replacement Bus". Their shapes are
+    road alignments, and a pattern built from them draws a streetcar down a
+    street with no rails in it. The registry names the headsign text once per
+    feed as ``excludeTripHeadsignPattern``; a route left with no trip at all
+    is then refused as "no pattern", which is the honest reading of a rail
+    route whose every trip is a bus.
+
+    Returns ``(kept trips, number excluded)``.
+    """
+    if not pattern:
+        return list(trips), 0
+    matcher = re.compile(pattern, re.IGNORECASE)
+    kept = [trip for trip in trips
+            if not matcher.search(trip.get('trip_headsign') or '')]
+    return kept, len(trips) - len(kept)
+
+
 def group_routes(routes, trips, sequences, stops, parent, agencies,
-                 preserve_route_ids=False, merge_route_id_groups=()):
+                 preserve_route_ids=False, merge_route_id_groups=(),
+                 primary_route_ids=()):
     """Fold the several routes one railway is published as into one.
 
     Two feeds' worth of reasons, and the rules are one each:
@@ -1331,6 +1998,16 @@ def group_routes(routes, trips, sequences, stops, parent, agencies,
     distinct official lines, not directional publications of one line.  A
     registry entry may therefore set ``preserveRouteIds``; for that feed the
     operator's route identity wins and neither heuristic is applied.
+
+    A merged group takes its id, short name and colour from the first route
+    the feed lists, which is an accident of the feed's own sort. Toronto lists
+    its 3xx Blue Night streetcars before the 5xx day routes they share a name
+    and a track with, so King shipped as ``304`` in the night network's blue
+    rather than as ``504`` in the streetcar red every passenger knows.
+    ``primary_route_ids`` names the routes that carry a railway's public
+    identity; they are moved to the front before grouping, so wherever one
+    of them lands in a group it is the route the group is named, coloured
+    and numbered after. It changes nothing about which routes merge.
     """
     merge_group = {}
     for index, route_ids in enumerate(merge_route_id_groups):
@@ -1353,6 +2030,12 @@ def group_routes(routes, trips, sequences, stops, parent, agencies,
             'colour': (route.get('route_color') or '').strip().upper(),
             'stations': stations,
         })
+    primary = {str(route_id) for route_id in primary_route_ids}
+    if primary:
+        # A stable sort: primaries keep the feed's order among themselves,
+        # and so does everything else.
+        prepared.sort(key=lambda item: 0 if str(
+            item['route'].get('route_id')) in primary else 1)
 
     groups = []
     for item in prepared:
@@ -1450,7 +2133,8 @@ def sample_trips(rows, cap):
     return [rows[int(i * stride)] for i in range(cap)]
 
 
-def trusted_shape_fallback(station_points, patterns, shapes, anchor_m):
+def trusted_shape_fallback(station_points, patterns, shapes, anchor_m,
+                           allowed_shape_ids=None):
     """Choose a shape from another pattern of the same official route.
 
     NYC's 3 and 6X longest (night/local) station patterns have no shape_id,
@@ -1463,6 +2147,9 @@ def trusted_shape_fallback(station_points, patterns, shapes, anchor_m):
     candidates = {}
     for pattern in patterns:
         for shape_id, weight in pattern.shape_ids.items():
+            if (allowed_shape_ids is not None
+                    and shape_id not in allowed_shape_ids):
+                continue
             candidates[shape_id] = max(candidates.get(shape_id, 0.0), weight)
     best = None
     for shape_id, weight in candidates.items():
@@ -1701,9 +2388,12 @@ def drop_cross_feed_duplicates(built, feed_metadata, reports,
     agency (Puget Sound), and a renamed agency can leave both its old and new
     feeds in a national catalogue (TEXRail). Geometry alone must not decide:
     different services legitimately share track. A duplicate is removed only
-    when operator, public line name, station count and every named station all
-    agree spatially, and when the registry gives one source a strictly higher
-    ``duplicatePriority``. Equal priority is deliberately a refusal to guess.
+    when operator/public-line identity agrees, every station in the
+    lower-priority publication is a spatial subset of the preferred one, and
+    the registry gives one source a strictly higher ``duplicatePriority``.
+    Requiring equal station counts left a short regional-feed extract of
+    Amtrak Cascades beside Amtrak's complete publication around Seattle.
+    Equal priority is deliberately a refusal to guess.
     """
     groups = defaultdict(list)
     for line in built:
@@ -1715,17 +2405,18 @@ def drop_cross_feed_duplicates(built, feed_metadata, reports,
                 (line.get('name') or '').strip().casefold()))
         groups[key].append(line)
 
-    def same_stations(a, b):
-        if len(a['stationNames']) != len(b['stationNames']):
+    def station_subset(candidate, complete):
+        if (not candidate['stationNames']
+                or len(candidate['stationNames']) > len(complete['stationNames'])):
             return False
-        unmatched = list(range(len(b['stationNames'])))
-        for point in a['stationPoints']:
+        unmatched = list(range(len(complete['stationNames'])))
+        for point in candidate['stationPoints']:
             # The same official station may be published as "Burlington" in
             # one feed and "Burlington, VT - Union Station" in another. Once
             # operator/public-line identity and explicit source priority have
             # matched, one-to-one spatial identity is the stronger test. It
             # also works in reverse direction and never uses fuzzy names.
-            candidates = [(geo.haversine(point, b['stationPoints'][j]), j)
+            candidates = [(geo.haversine(point, complete['stationPoints'][j]), j)
                           for j in unmatched]
             distance, hit = min(candidates, default=(float('inf'), None))
             if distance > station_tolerance_m:
@@ -1733,7 +2424,7 @@ def drop_cross_feed_duplicates(built, feed_metadata, reports,
             if hit is None:
                 return False
             unmatched.remove(hit)
-        return not unmatched
+        return True
 
     dropped = set()
     detail = []
@@ -1755,14 +2446,15 @@ def drop_cross_feed_duplicates(built, feed_metadata, reports,
                                      .get('duplicatePriority', 0))
                 if winner_priority <= loser_priority:
                     continue
-                if not same_stations(winner, loser):
+                if not station_subset(loser, winner):
                     continue
                 dropped.add(id(loser))
                 detail.append({
                     'line': loser['lineId'], 'feed': loser.get('feed'),
                     'kept': winner['lineId'], 'keptFeed': winner.get('feed'),
-                    'why': 'same operator, line name and spatial station set; '
-                           'registry duplicatePriority selects the source',
+                    'why': 'same operator and line name; lower-priority '
+                           'spatial station set is contained by the preferred '
+                           'publication selected by registry duplicatePriority',
                 })
     if detail:
         reports.append({
@@ -1796,7 +2488,15 @@ def absorb_duplicate_branches(built, tolerance_m=250.0, share=0.85):
     the graph merge cannot tell that apart from a real branch, because in the
     station graph it is exactly the same shape.
 
-    Geometry can. A branch drawn within ``tolerance_m`` of the trunk for
+    Geometry can, but only for timetable railways where a sparse pattern can
+    genuinely mean optional flag stops.  On metros and street railways a
+    same-track pattern is ordinarily an express, short turn, or temporary
+    reroute.  Absorbing it changes which stations the public route serves:
+    MTA's 2 train acquired South Ferry and WTC Cortlandt from a 1-line reroute,
+    while the R acquired Roosevelt Island from an F-line reroute.
+
+    For intercity and commuter services, a branch drawn within
+    ``tolerance_m`` of the trunk for
     ``share`` of its length is the trunk, so its stations are projected onto
     the trunk's own geometry and spliced into the trunk's station list at the
     place they actually stand — which is where they belong, and where drawing
@@ -1812,6 +2512,10 @@ def absorb_duplicate_branches(built, tolerance_m=250.0, share=0.85):
                                   -len(b['stationIds'])))
         trunk = group[0]
         out.append(trunk)
+        if trunk.get('kind') not in (
+                'commuter', 'intercity', 'highspeed', 'heritage'):
+            out.extend(group[1:])
+            continue
         for branch in group[1:]:
             if not absorb(trunk, branch, tolerance_m, share):
                 out.append(branch)
@@ -2250,6 +2954,9 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
         norm = normalise_station_name(entry['name'])
         feed = entry['line']['feed']
         identity = entry.get('identity') or entry.get('feedStop')
+        cross_feed_distinct = (
+            str(entry.get('feedStop')) in set(
+                map(str, entry['line'].get('crossFeedDistinctStopIds') or ())))
         exact = official_identities.get((feed, identity))
         if exact is not None:
             # The official parent/complex wins even when its several lines use
@@ -2274,6 +2981,23 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
                                 (member.get('identity') or member.get('feedStop'))
                                 != identity for member in same_feed):
                             continue
+                        # A reviewed operator stop can be physically close to
+                        # another authority's station without being the same
+                        # station complex. Metra LaSalle Street / CTA LaSalle
+                        # and Lou Jones / Sox-35th are the concrete cases.
+                        # Keep the opt-in symmetric so input order cannot
+                        # change whether the two official identities merge.
+                        member_is_distinct = any(
+                            member['line']['feed'] != feed
+                            and str(member.get('feedStop')) in set(map(
+                                str, member['line'].get(
+                                    'crossFeedDistinctStopIds') or ()))
+                            for member in group['members'])
+                        if ((cross_feed_distinct and any(
+                                member['line']['feed'] != feed
+                                for member in group['members']))
+                                or member_is_distinct):
+                            continue
                         if d > near_m and not names_agree:
                             continue
                         if best is None or d < best[0]:
@@ -2295,6 +3019,109 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
         official_identities[(feed, identity)] = group_index
     return groups
 
+
+
+def apply_reviewed_station_complexes(region, group_meta, codes, names,
+                                     complexes):
+    """Give one physical station complex one station code.
+
+    ``group_stations`` has two deliberately narrow rules — 140 m name-blind,
+    400 m same-name — and a complex whose operators share no stop vocabulary
+    and whose concourse is wider than that band arrives as SEVERAL package
+    station ids. Washington Union Station comes out as three ids 280 m apart,
+    and no anchor sees more than three of the seven railways that call there.
+    ``stationComplexes`` is the reviewed, evidence-carrying statement that
+    those ids are one place, and this is where the build honours it; the
+    audit's ``station.complex.unmerged`` warning is the gate that says whether
+    it has.
+
+    Each entry is keyed by the group code that SURVIVES. Every code in
+    ``absorbs`` is rewritten to that key, and ONLY for a platform whose own
+    coordinate is within ``maxMeters`` of ``center``. That circle is
+    load-bearing rather than decorative: ``us-official-penn`` holds both
+    LIRR's platforms at New York Penn and NJ Transit's Newark Light Rail
+    platform 14.4 km away, so it is named by two entries, and a code-to-code
+    rename would put one of them in the wrong city.
+
+    A complex carries TRANSFER semantics and nothing else. It assigns a
+    station code, and where ``name`` is given the one name the place is called
+    by. It READS coordinates and never writes one: no anchor moves, no
+    centroid is computed, no railway is pulled onto another's alignment, and
+    each line keeps its own station slot on its own geometry -- which is
+    exactly what rail-network.js already does with the code it is given,
+    counting railways per group for the hollow interchange mark and electing
+    one platform per group to carry the label.
+
+    Returns one record per entry that moved a platform, for the build log.
+    """
+    if not complexes:
+        return []
+    for station_id, record in complexes.items():
+        for absorbed in record.get('absorbs') or ():
+            if absorbed in complexes:
+                # A merge that chains is order-dependent, and the answer would
+                # then depend on which entry the build read first.
+                raise ValueError(
+                    f'stationComplexes: {station_id} absorbs {absorbed}, '
+                    'which is itself a complex')
+        if (not record.get('absorbs')
+                or len(record.get('center') or ()) != 2
+                or not float(record.get('maxMeters') or 0) > 0):
+            raise ValueError(
+                f'stationComplexes: {station_id} needs center, maxMeters '
+                'and absorbs')
+    by_code = {row['code']: row for row in group_meta}
+    applied = []
+    for station_id, record in sorted(complexes.items()):
+        if not station_id.startswith(region + '-'):
+            continue
+        centre = tuple(record['center'])
+        radius = float(record['maxMeters'])
+        survivor = by_code.get(station_id)
+        moved = []
+        for absorbed in record['absorbs']:
+            row = by_code.get(absorbed)
+            if row is None or absorbed == station_id:
+                continue
+            inside = [member for member in row['members']
+                      if geo.haversine(centre, member['point']) <= radius]
+            if not inside:
+                continue
+            if survivor is None:
+                # The surviving code is not a group of this build: the complex
+                # becomes the group, and it takes the point of the first
+                # platform that joins it. Nothing is averaged and no anchor is
+                # invented -- this is the coordinate grouping would have left
+                # on that group had the platform been first into it.
+                survivor = {'code': station_id,
+                            'name': record.get('name') or row['name'],
+                            'point': list(inside[0]['point']),
+                            'members': []}
+                group_meta.append(survivor)
+                by_code[station_id] = survivor
+            claimed = {id(member) for member in inside}
+            row['members'] = [member for member in row['members']
+                              if id(member) not in claimed]
+            survivor['members'].extend(inside)
+            for member in inside:
+                codes[(id(member['line']), member['index'])] = station_id
+            moved.append((absorbed, len(inside)))
+        if survivor is None or not moved:
+            continue
+        if record.get('name'):
+            # The place has one name, and it is the name of the place rather
+            # than of the train you arrived on. Only the platforms inside the
+            # circle are that place: a group can hold a platform the complex
+            # does not claim, and it keeps the name grouping gave it.
+            survivor['name'] = record['name']
+            for member in survivor['members']:
+                if geo.haversine(centre, member['point']) <= radius:
+                    names[(id(member['line']), member['index'])] = record['name']
+        applied.append({'station': station_id, 'absorbed': moved,
+                        'platforms': len(survivor['members'])})
+    # A group every one of whose platforms was claimed is no longer a station.
+    group_meta[:] = [row for row in group_meta if row['members']]
+    return applied
 
 # ------------------------------------------------------------- border splitting
 
@@ -2364,6 +3191,138 @@ def assemble(built, countries, options):
             per_region.setdefault(code, []).append(
                 slice_line(line, first, last, code, suffix))
     return per_region
+
+
+def line_path(line):
+    """Join a compact line's station intervals into one directed polyline."""
+    points = []
+    for piece in line.get('intervals') or ():
+        if not piece or len(piece) < 2:
+            raise ValueError(f"{line.get('lineId')}: empty shared-track interval")
+        points.extend(piece[1:] if points else piece)
+    if len(points) < 2:
+        raise ValueError(f"{line.get('lineId')}: shared-track path is empty")
+    return geo.dedupe(points)
+
+
+def directed_slice(points, start_m, end_m):
+    """Slice a path while retaining the requested travel direction."""
+    cumul = geo.cumulative(points)
+    piece = geo.slice_between(points, cumul, start_m, end_m)
+    if end_m < start_m:
+        piece.reverse()
+    return piece
+
+
+def apply_reviewed_shared_track_alignments(region_lines, feed_entries):
+    """Put named services on one reviewed physical-track centreline.
+
+    GTFS shapes are service geometry, not a physical-track inventory. An
+    operator may publish a parallel-looking shape for trains that actually use
+    another operator's tracks. ``reviewedSharedTrack`` is the narrow,
+    evidence-backed registry declaration for that case: its members inherit
+    the canonical line from a named city terminal to a surveyed junction, and
+    retain their own geometry beyond the junction. This removes false gaps
+    and branches without smoothing away a real switch.
+    """
+    by_id = {line['lineId']: line for line in region_lines}
+    applied = []
+    for entry in feed_entries:
+        policy = entry.get('reviewedSharedTrack')
+        if not policy:
+            continue
+        evidence = policy.get('evidence') or []
+        if not evidence:
+            raise ValueError(f"{entry['slug']}: reviewedSharedTrack needs evidence")
+        canonical_id = policy['canonicalLineId']
+        canonical = by_id.get(canonical_id)
+        if canonical is None:
+            raise ValueError(
+                f"{entry['slug']}: canonical shared-track line {canonical_id} missing")
+        canonical_path = line_path(canonical)
+        canonical_cumul = geo.cumulative(canonical_path)
+        junction_hint = policy['junction']
+        max_junction_m = float(policy.get('maxJunctionOffsetMeters', 50.0))
+        junction_gap, _, _, junction, junction_m = geo.project_to_line(
+            junction_hint, canonical_path, canonical_cumul)
+        if junction_gap > max_junction_m:
+            raise ValueError(
+                f"{entry['slug']}: reviewed junction is {junction_gap:.1f} m "
+                f"from {canonical_id}")
+
+        terminal_id = policy['canonicalTerminalStationId']
+        try:
+            terminal_index = canonical['stationIds'].index(terminal_id)
+        except ValueError as exc:
+            raise ValueError(
+                f"{entry['slug']}: canonical terminal {terminal_id} missing") from exc
+        terminal = canonical['anchors'][terminal_index]
+        terminal_gap, _, _, _, terminal_m = geo.project_to_line(
+            terminal, canonical_path, canonical_cumul)
+        if terminal_gap > 1.0:
+            raise ValueError(
+                f"{canonical_id}: terminal anchor is {terminal_gap:.1f} m off path")
+        canonical_spine = directed_slice(canonical_path, terminal_m, junction_m)
+        canonical_spine[-1] = list(junction)
+
+        for member_policy in policy.get('members') or ():
+            member_id = member_policy['lineId']
+            side = member_policy['terminalSide']
+            if side not in ('start', 'end'):
+                raise ValueError(
+                    f"{member_id}: terminalSide must be 'start' or 'end'")
+            member = by_id.get(member_id)
+            if member is None:
+                raise ValueError(
+                    f"{entry['slug']}: shared-track member {member_id} missing")
+            member_path = line_path(member)
+            member_cumul = geo.cumulative(member_path)
+            member_gap, _, _, _, member_junction_m = geo.project_to_line(
+                junction_hint, member_path, member_cumul)
+            if member_gap > max_junction_m:
+                raise ValueError(
+                    f"{member_id}: reviewed junction is {member_gap:.1f} m off path")
+
+            if side == 'start':
+                tail = directed_slice(
+                    member_path, member_junction_m, member_cumul[-1])
+                tail[0] = list(junction)
+                replacement = geo.dedupe(canonical_spine + tail[1:])
+            else:
+                head = directed_slice(member_path, 0.0, member_junction_m)
+                head[-1] = list(junction)
+                replacement = geo.dedupe(
+                    head + list(reversed(canonical_spine))[1:])
+
+            maximum_station_m = float(
+                policy.get('maxStationOffsetMeters', 120.0))
+            intervals, anchors, report = build.cut_at_stations(
+                replacement, member['stationPoints'], maximum_station_m)
+            if report['offAlignment']:
+                farthest = max(distance for _, distance in report['offAlignment'])
+                raise ValueError(
+                    f"{member_id}: station remains {farthest:.1f} m off reviewed "
+                    'shared track')
+            member['intervals'] = intervals
+            member['anchors'] = anchors
+            member['lengthKm'] = round(
+                sum(geo.line_length(piece) for piece in intervals) / 1000.0, 3)
+            # Grooming has already happened. A second, service-specific pass
+            # would make the two copies of the physical track diverge again.
+            member.pop('needsRegroom', None)
+            member['sharedTrackCanonicalLineId'] = canonical_id
+            faults = validate_line_chain(member)
+            if faults:
+                raise ValueError(
+                    f"{member_id}: reviewed shared-track chain invalid: "
+                    + '; '.join(faults))
+            applied.append({
+                'line': member_id,
+                'canonicalLine': canonical_id,
+                'junction': [round(junction[0], 6), round(junction[1], 6)],
+                'evidence': evidence,
+            })
+    return applied
 
 
 #: The same wall clock, named for the country it is being read in.
@@ -2598,8 +3557,44 @@ def serialized_intervals(line):
                       round(anchors[index][1], 6)]
         end = anchors[(index + 1) % len(anchors)]
         rounded[-1] = [round(end[0], 6), round(end[1], 6)]
+        rounded = clip_short_endpoint_overshoots(rounded)
         out.append(rounded)
     return out
+
+
+def clip_short_endpoint_overshoots(points, maximum_m=30.0,
+                                   minimum_turn=155.0):
+    """Clip a centreline projection that lies just beyond a station anchor.
+
+    Compact-v1 replaces routed endpoints with published station coordinates.
+    If a nearest centreline projection is a few metres beyond a platform
+    marker, that replacement creates a tiny endpoint return although the
+    surveyed centreline is sound.  Only that adjacent projection vertex may
+    be removed; internal vertices are never touched.
+    """
+    clipped = [list(point) for point in points]
+
+    def turn(a, b, c):
+        latitude = (a[1] + b[1] + c[1]) / 3.0
+        xscale = 111_320.0 * math.cos(math.radians(latitude))
+        yscale = 110_540.0
+        ux, uy = ((a[0] - b[0]) * xscale, (a[1] - b[1]) * yscale)
+        vx, vy = ((c[0] - b[0]) * xscale, (c[1] - b[1]) * yscale)
+        nu, nv = math.hypot(ux, uy), math.hypot(vx, vy)
+        if nu < 1e-9 or nv < 1e-9:
+            return 0.0
+        cosine = max(-1.0, min(1.0, (ux * vx + uy * vy) / (nu * nv)))
+        return 180.0 - math.degrees(math.acos(cosine))
+
+    while (len(clipped) >= 3
+           and geo.haversine(clipped[0], clipped[1]) <= maximum_m
+           and turn(clipped[0], clipped[1], clipped[2]) >= minimum_turn):
+        del clipped[1]
+    while (len(clipped) >= 3
+           and geo.haversine(clipped[-2], clipped[-1]) <= maximum_m
+           and turn(clipped[-3], clipped[-2], clipped[-1]) >= minimum_turn):
+        del clipped[-2]
+    return clipped
 
 
 def max_endpoint_chord_deviation(points):
@@ -2651,8 +3646,55 @@ def suspicious_straight_intervals(line):
     return found
 
 
-def filter_unresolved_geometry(region_lines, options):
-    """Fail closed on direct chords and on branches orphaned by that refusal."""
+def corroborate_straight_intervals(line, indices, reference):
+    """Split suspected chords into "surveyed straight" and "still a guess".
+
+    Returns ``(corroborated, evidence, refused)``.  A straight interval is
+    kept only when the source that did not build it puts real track along the
+    whole of it, inside the same band tolerance the finished line is measured
+    against; anything else stays refused, because a chord drawn where the
+    railway curves is exactly the failure this gate exists for.
+    """
+    if reference is None:
+        return [], None, list(indices)
+    tolerance = profile.CROSSCHECK_TOLERANCE_M.get(line.get('profile'), 90.0)
+    corroborated = []
+    refused = []
+    worst = 0.0
+    worst_at = None
+    agreed = Counter()
+    for index in indices:
+        piece = (line.get('intervals') or [])[index]
+        verdict = reference.straight_is_surveyed(
+            piece, line.get('geometrySource'), tolerance)
+        if not verdict or not verdict['agrees']:
+            refused.append(index)
+            continue
+        corroborated.append(index)
+        agreed.update(verdict['agreedWith'])
+        if verdict['maxDeviationMeters'] > worst:
+            worst = verdict['maxDeviationMeters']
+            worst_at = verdict['worstAt']
+    evidence = None
+    if corroborated:
+        evidence = {
+            'intervals': corroborated,
+            'toleranceMeters': tolerance,
+            'maxDeviationMeters': worst,
+            'worstAt': worst_at,
+            'corroboratedBy': dict(agreed),
+        }
+    return corroborated, evidence, refused
+
+
+def filter_unresolved_geometry(region_lines, options, reference=None):
+    """Fail closed on geometry that cannot support a track-accurate display.
+
+    A detailed but parallel centreline is just as visibly wrong as a direct
+    station chord.  The old cross-check limits established only that a line
+    occupied the right broad corridor; they allowed offsets up to 400 metres.
+    The final release gate below checks every vertex at street-zoom scale.
+    """
     blocked = set()
     blocked_roots = set()
     for line in region_lines:
@@ -2661,8 +3703,26 @@ def filter_unresolved_geometry(region_lines, options):
         # earns this exception only after endpoint identity and both raw and
         # normalized hashes have been verified from the official manifest.
         verified = getattr(options, 'verified_official_sources', {})
-        intervals = ([] if line.get('geometrySource') in verified
+        # An audited OSM relation accepted on recorded evidence gets the same
+        # exception: a straight tunnel under a straight street is straight in
+        # the relation for the same reason it is straight in a survey.
+        intervals = ([] if (line.get('geometrySource') in verified
+                            or line.get('osmRelationEvidence'))
                      else suspicious_straight_intervals(line))
+        if intervals:
+            # An operator's own published alignment gets the same exception on
+            # the same terms, one interval at a time, when the independent
+            # survey agrees the track really is straight there.  See
+            # `CrossCheck.straight_is_surveyed`.
+            kept, evidence, intervals = corroborate_straight_intervals(
+                line, intervals, reference)
+            if kept:
+                line['straightSurvey'] = evidence
+                print(f"  {line['lineId']}: {len(kept)} straight interval"
+                      f"{'s' if len(kept) != 1 else ''} corroborated by "
+                      f"independent survey (worst "
+                      f"{evidence['maxDeviationMeters']:.1f} m of "
+                      f"{evidence['toleranceMeters']:.0f} m)", file=sys.stderr)
         if not intervals:
             continue
         blocked.add(id(line))
@@ -2677,6 +3737,105 @@ def filter_unresolved_geometry(region_lines, options):
         })
         print(f"  refused {line['lineId']}: {len(intervals)} direct station "
               f"chord{'s' if len(intervals) != 1 else ''}", file=sys.stderr)
+
+    if reference is not None:
+        for line in region_lines:
+            if id(line) in blocked:
+                continue
+            interval_checks = [
+                reference.measure([piece], line.get('geometrySource'),
+                                  sample_every=1)
+                for piece in (line.get('intervals') or ())
+            ]
+            check = {
+                'vertices': sum(int(row.get('vertices') or 0)
+                                for row in interval_checks),
+                'unmatched': sum(int(row.get('unmatched') or 0)
+                                 for row in interval_checks),
+                'maxDeviationMeters': max(
+                    (float(row.get('maxDeviationMeters') or 0.0)
+                     for row in interval_checks), default=0.0),
+                'worstAt': None,
+                'agreedWith': {},
+                'builtFrom': line.get('geometrySource'),
+                'independent': True,
+            }
+            worst = max(interval_checks,
+                        key=lambda row: float(
+                            row.get('maxDeviationMeters') or 0.0),
+                        default=None)
+            if worst:
+                check['worstAt'] = worst.get('worstAt')
+            agreed = Counter()
+            for row in interval_checks:
+                agreed.update(row.get('agreedWith') or {})
+            check['agreedWith'] = dict(agreed)
+            line['_alignmentCheck'] = check
+            limit = profile.DISPLAY_ALIGNMENT_TOLERANCE_M.get(
+                line.get('profile'), 20.0)
+            over_limit = [
+                index for index, row in enumerate(interval_checks)
+                if (int(row.get('unmatched') or 0) > 0
+                    or float(row.get('maxDeviationMeters') or 0.0) > limit)
+            ]
+            if not over_limit:
+                continue
+            unmatched = int(check.get('unmatched') or 0)
+            deviation = float(check.get('maxDeviationMeters') or 0.0)
+            # A provenance-verified operator/government centreline is the
+            # highest-authority geometry in the North America contract.  The
+            # independent reference is still valuable evidence of a survey or
+            # basemap disagreement, but it must not cut holes in that primary
+            # source merely because the lower-authority trace is farther away.
+            # Keep the exact intervals in package metadata so the audit can
+            # report the disagreement without asking either renderer to hide
+            # verified track.
+            if line.get('geometrySource') in verified:
+                check['officialSourceRetainedIntervals'] = over_limit
+                reason = (f'{deviation:.1f} m > {limit:.0f} m'
+                          if deviation > limit
+                          else f'{unmatched} unmatched vertices')
+                print(f"  retained {line['lineId']}: {len(over_limit)} "
+                      f"official display interval"
+                      f"{'s' if len(over_limit) != 1 else ''}; independent "
+                      f"reference {reason}", file=sys.stderr)
+                continue
+            # An audited OSM relation is retained on the same terms. Nothing
+            # independent surveys a subway tunnel, so its vertices there find
+            # no reference at all; the registry evidence says the relation
+            # was checked against the survey wherever one exists, and the
+            # unmatched count and worst disagreement are still recorded.
+            if line.get('osmRelationEvidence'):
+                check['osmReferenceRetainedIntervals'] = over_limit
+                reason = (f'{deviation:.1f} m > {limit:.0f} m'
+                          if deviation > limit
+                          else f'{unmatched} unmatched vertices')
+                print(f"  retained {line['lineId']}: {len(over_limit)} "
+                      f"audited-OSM display interval"
+                      f"{'s' if len(over_limit) != 1 else ''}; independent "
+                      f"reference {reason}", file=sys.stderr)
+                continue
+
+            check['displayBlockedIntervals'] = over_limit
+            options.geometry_blockers.append({
+                'line': line['lineId'], 'feed': line.get('feed'),
+                'why': 'station intervals withheld from display because '
+                       'independent track alignment exceeds tolerance',
+                'intervals': over_limit,
+                'profile': line.get('profile'),
+                'limitMeters': limit,
+                'maxDeviationMeters': deviation,
+                'unmatchedVertices': unmatched,
+                'checkedVertices': int(check.get('vertices') or 0),
+                'worstAt': check.get('worstAt'),
+                'geometrySource': line.get('geometrySource'),
+            })
+            reason = (f'{deviation:.1f} m > {limit:.0f} m'
+                      if deviation > limit
+                      else f'{unmatched} unmatched vertices')
+            print(f"  withheld {line['lineId']}: {len(over_limit)} display "
+                  f"interval{'s' if len(over_limit) != 1 else ''}; track "
+                  f"alignment {reason}", file=sys.stderr)
 
     kept = []
     for line in region_lines:
@@ -2702,7 +3861,7 @@ def build_region(region, region_lines, options, reference):
         if regroom_after_station_edits(line):
             print(f"  {line['lineId']}: recomputed {line['profile']} grooming "
                   'after regional slicing', file=sys.stderr)
-    region_lines = filter_unresolved_geometry(region_lines, options)
+    region_lines = filter_unresolved_geometry(region_lines, options, reference)
     entries = station_entries(region_lines, region)
     groups = group_stations(entries)
     codes = {}
@@ -2727,6 +3886,20 @@ def build_region(region, region_lines, options, reference):
             # the alignment of the railway that serves it — but the NAME is a
             # property of the place, not of the train you arrived on.
             names[(id(member['line']), member['index'])] = group['name']
+
+    # The reviewed complexes are applied on the group codes, before the codes
+    # reach a line: a merge can leave a line calling at the same station twice
+    # running, and `collapse_repeats` below is what already knows how to fold
+    # that back into one call and one interval.
+    for record in apply_reviewed_station_complexes(
+            region, group_meta, codes, names,
+            getattr(options, 'station_complexes', None) or {}):
+        print('  %s: reviewed station complex absorbed %s; now %d platforms'
+              % (record['station'],
+                 ', '.join('%s (%d platform%s)'
+                           % (absorbed, n, '' if n == 1 else 's')
+                           for absorbed, n in record['absorbed']),
+                 record['platforms']), file=sys.stderr)
 
     zones = []
     zone_index = {}
@@ -2755,8 +3928,25 @@ def build_region(region, region_lines, options, reference):
             print(f"  {line['lineId']}: recomputed {line['profile']} grooming "
                   'after station topology changed', file=sys.stderr)
         verified = getattr(options, 'verified_official_sources', {})
-        late_chords = ([] if line.get('geometrySource') in verified
+        late_chords = ([] if (line.get('geometrySource') in verified
+                              or line.get('osmRelationEvidence'))
                        else suspicious_straight_intervals(line))
+        if late_chords:
+            # Station grouping can move an anchor and turn a slightly curved
+            # interval into a straight one. It is the same question as before
+            # grooming, so it gets the same independent answer rather than an
+            # automatic refusal.
+            kept, evidence, late_chords = corroborate_straight_intervals(
+                line, late_chords, reference)
+            if kept:
+                merged = dict(line.get('straightSurvey') or {})
+                if merged:
+                    evidence['intervals'] = sorted(
+                        set(merged.get('intervals') or []) | set(kept))
+                    evidence['maxDeviationMeters'] = max(
+                        evidence['maxDeviationMeters'],
+                        merged.get('maxDeviationMeters', 0.0))
+                line['straightSurvey'] = evidence
         if late_chords:
             options.geometry_blockers.append({
                 'line': line['lineId'], 'feed': line.get('feed'),
@@ -2833,11 +4023,62 @@ def build_region(region, region_lines, options, reference):
             entry['isLoop'] = 1
         if line['kind'] == 'highspeed':
             entry['isHSR'] = 1
+        # A straight interval ships only with the evidence that it is straight
+        # in the world, so a reader of the package — and the audit — can tell
+        # a surveyed tunnel under a straight street from a guessed connector
+        # without re-deriving it.
+        if line.get('straightSurvey'):
+            entry['straightIntervals'] = line['straightSurvey']
+        # Which reviewed centreline this line would have used, when it could
+        # not route every station and the operator's own alignment took over.
+        if line.get('geometryFallbackFrom'):
+            entry['geometryFallbackFrom'] = line['geometryFallbackFrom']
+        if line.get('geometryReview'):
+            entry['geometryReview'] = line['geometryReview']
+        # Which audited OpenStreetMap relation drew this line, and why the
+        # registry accepted it ahead of the operator's shape. A reader of the
+        # package can tell such a line from a surveyed one without re-deriving.
+        if line.get('osmRelationEvidence'):
+            entry['osmRelationEvidence'] = line['osmRelationEvidence']
+        if line.get('sharedTrackCanonicalLineId'):
+            entry['sharedTrackCanonicalLineId'] = (
+                line['sharedTrackCanonicalLineId'])
+        # A direction whose own physical track diverges from the canonical
+        # one (`attach_direction_extra_segments`, above): `from`/`to` are
+        # rewritten here from station ids to the numeric indices this
+        # line's own `stations` table uses, which is what
+        # `extraSegmentParts` in rail-network.js reads. Both were validated
+        # to be trunk stations already; a run whose endpoint no longer
+        # names a station in THIS line's final table (never expected, since
+        # both come from the same `station_ids` that built it) is reported
+        # and dropped rather than shipped with a dangling index.
+        if line.get('extraSegments'):
+            index_of = {sid: i for i, sid in enumerate(line['stationIds'])}
+            extra_rows = []
+            for row in line['extraSegments']:
+                from_index = index_of.get(row['fromStationId'])
+                to_index = index_of.get(row['toStationId'])
+                if from_index is None or to_index is None:
+                    print(f"  {line['lineId']}: dropped an extraSegments row "
+                          f"whose endpoint is not a trunk station "
+                          f"({row['fromStationId']} -> {row['toStationId']})",
+                          file=sys.stderr)
+                    continue
+                extra_rows.append({
+                    'from': from_index,
+                    'to': to_index,
+                    'geometry': [[round(x, 6), round(y, 6)]
+                                for x, y in row['geometry']],
+                    'km': row['km'],
+                    'evidence': row['evidence'],
+                })
+            if extra_rows:
+                entry['extraSegments'] = extra_rows
         package_lines.append(entry)
 
         if reference is not None:
-            checks[line['lineId']] = reference.measure(
-                line['intervals'], line['geometrySource'])
+            checks[line['lineId']] = line.get('_alignmentCheck') or reference.measure(
+                line['intervals'], line['geometrySource'], sample_every=1)
 
         # Solver sections are generated from the exact rounded geometry the
         # clients decode, not from a higher-precision pre-serialization copy.
@@ -2961,7 +4202,7 @@ class CrossCheck:
         self.osm = osm
         self.official = official
 
-    def measure(self, intervals, geometry_source, sample_every=3,
+    def measure(self, intervals, geometry_source, sample_every=1,
                 unmatched_m=400.0):
         worst = 0.0
         worst_at = None
@@ -3004,6 +4245,77 @@ class CrossCheck:
             'agreedWith': dict(sources),
             'builtFrom': geometry_source,
             'independent': True,
+        }
+
+    def straight_is_surveyed(self, piece, geometry_source, tolerance_m,
+                             minimum_matched=0.8):
+        """Does an independent survey agree that the railway is straight here?
+
+        The chord test in ``suspicious_straight_intervals`` asks a question
+        about shape — "is there any information between these two stations
+        beyond their endpoints?" — and shape alone cannot separate a guessed
+        connector from a railway that is genuinely straight.  Market Street in
+        San Francisco, G Street in Washington and Mission Street are straight,
+        so BART's, WMATA's and BART's own downtown tunnels under them are
+        straight, and their operators publish them as the straight lines they
+        are.  Refusing those is not caution; it deletes six of the largest
+        rapid-transit networks on the continent for drawing themselves
+        correctly.
+
+        The separation that does work is provenance plus an independent
+        opinion: sample the interval against the source that did NOT build it
+        and ask whether real surveyed track lies along it the whole way.  A
+        guessed chord across a curve leaves the reference by far more than the
+        band allows at its middle; a straight tunnel stays on top of the
+        surveyed track for its whole length.
+
+        Every vertex is sampled rather than every third one: the question is
+        about the worst point of one short interval, not about a line-wide
+        average, and these intervals are hundreds of metres, not hundreds of
+        kilometres.
+        """
+        if not piece or len(piece) < 2:
+            return None
+        worst = 0.0
+        worst_at = None
+        matched = 0
+        sources = Counter()
+        for point in piece:
+            best = float('inf')
+            source = None
+            if self.network is not None and geometry_source != 'narn':
+                for edge in self.network.edges_near(point, 1):
+                    pts = self.network.edges[edge][2]
+                    d, _, _, _, _ = geo.project_to_line(point, pts)
+                    if d < best:
+                        best, source = d, 'narn'
+            if (self.osm is not None and self.osm.way_count
+                    and geometry_source != 'osm'):
+                d, _ = self.osm.nearest(point, 1)
+                if d < best:
+                    best, source = d, 'osm'
+            if self.official is not None:
+                d, tag = self.official.nearest(point, 2)
+                if d < best:
+                    best, source = d, tag
+            if source is None or best > tolerance_m:
+                if best > worst:
+                    worst = best
+                    worst_at = [round(point[0], 6), round(point[1], 6)]
+                continue
+            matched += 1
+            sources[source] += 1
+            if best > worst:
+                worst, worst_at = best, [round(point[0], 6), round(point[1], 6)]
+        share = matched / float(len(piece))
+        return {
+            'agrees': share >= minimum_matched and matched > 0,
+            'vertices': len(piece),
+            'matched': matched,
+            'maxDeviationMeters': round(worst, 2),
+            'worstAt': worst_at,
+            'toleranceMeters': tolerance_m,
+            'agreedWith': dict(sources),
         }
 
 
@@ -3429,6 +4741,14 @@ def build_osm_systems(options, countries, network, already, reports):
     ever meaningful between two relations of one system.
     """
     routes = na_osmlines.load_dir(options.osm_routes)
+    # A relation the registry pins to a feed's route (`osmRelationByRouteId`)
+    # is that route's alignment, drawn under the feed's own station identity;
+    # it is not a railway with no feed, and must not become a second line
+    # with OSM's station names if the feed's own build of it is refused.
+    audited = getattr(options, 'audited_osm_relations', None) or set()
+    if audited:
+        routes = [route for route in routes
+                  if route.get('relation') not in audited]
     if not routes:
         return []
     report = osm_report(reports)
@@ -3468,8 +4788,13 @@ def build_osm_systems(options, countries, network, already, reports):
     for operator, group in sorted(systems.items(), key=lambda kv: -len(kv[1])):
         slug = 'osm-' + slugify(operator, 'system')[:26]
         region = country_of(group, countries)
+        published = getattr(options, 'osm_line_colours', {}) or {}
         entry = {'slug': slug, 'name': operator, 'region': region, 'mdb': None,
-                 'timezone': None}
+                 'timezone': None,
+                 'officialColorByRelation': {
+                     str(route['relation']): published[str(route['relation'])]
+                     for route in group
+                     if str(route['relation']) in published}}
         builder = OsmBuild(entry, group, countries, network, options)
         try:
             produced = builder.run()
@@ -3607,6 +4932,21 @@ def load_registry(path):
         return json.load(fh)
 
 
+def registry_release_policy(registry):
+    """Return the explicitly supported release policy, defaulting safely.
+
+    The distributable registry currently chooses ``strict``.  Comparison
+    builds may still request ``completeness`` explicitly, but a missing or
+    misspelled value must not silently widen the public package.
+    """
+    value = registry.get('releasePolicy', 'strict')
+    if value not in {'strict', 'completeness'}:
+        raise ValueError(
+            'releasePolicy must be "strict" or "completeness"; '
+            f'got {value!r}')
+    return value
+
+
 def sha256(path):
     h = hashlib.sha256()
     with open(path, 'rb') as fh:
@@ -3616,6 +4956,7 @@ def sha256(path):
 
 
 def write_json(path, payload):
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     tmp = path + '.tmp'
     with open(tmp, 'w') as fh:
         json.dump(payload, fh, ensure_ascii=False, separators=(', ', ': '))
@@ -3623,12 +4964,59 @@ def write_json(path, payload):
     return os.path.getsize(path)
 
 
+#: The real shipped data directory (`app/data`) -- the one place a scoped
+#: build must never write to by accident. See `resolve_data_dir()`.
+SHIPPED_DATA_DIR = os.path.join(HERE, '..', '..', 'data')
+
+
+def resolve_data_dir(output_dir, data_dir_arg, write_shipped_data):
+    """The effective `--data-dir`, guarding against an accidental shipped-data write.
+
+    A scoped build (`--only <feed>`, typically pointed at a scratch
+    `--output-dir` to review one feed's fresh package before merging it) has
+    no business touching the checked-in `app/data/*.json` unless its caller
+    explicitly says so. Before this guard, `--data-dir` defaulted straight
+    to `app/data` regardless of `--output-dir`, so a scoped build that
+    forgot `--data-dir` silently overwrote the shipped stations/sections/
+    readings files -- exactly the incident this function exists to prevent.
+
+    Resolution order:
+
+    * `data_dir_arg` explicit (not None) -- always honoured, even if it
+      points at the shipped `app/data` directory. An explicit path is, by
+      definition, not an accident.
+    * `write_shipped_data` -- an opt-in flag for the one caller that
+      legitimately wants the old default (a real, full package build that
+      is meant to update the shipped data): defaults to `SHIPPED_DATA_DIR`.
+    * otherwise -- defaults to `<output_dir>/data`, alongside the scoped
+      build's own package output instead of the shipped tree.
+    """
+    if data_dir_arg is not None:
+        return data_dir_arg
+    if write_shipped_data:
+        return SHIPPED_DATA_DIR
+    return os.path.join(output_dir, 'data')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--source-dir', required=True)
     ap.add_argument('--registry', default=os.path.join(HERE, 'na-feeds.json'))
     ap.add_argument('--output-dir', default=os.path.join(HERE, '..', '..', 'public', 'rail'))
-    ap.add_argument('--data-dir', default=os.path.join(HERE, '..', '..', 'data'))
+    ap.add_argument('--data-dir', default=None,
+                    help='Where to write stations/sections/readings JSON. '
+                         'Defaults to <output-dir>/data unless '
+                         '--write-shipped-data is passed, in which case it '
+                         'defaults to the shipped app/data directory. Pass '
+                         'this explicitly to write anywhere else, including '
+                         'app/data itself.')
+    ap.add_argument('--write-shipped-data', action='store_true',
+                    help='Allow --data-dir to default to the shipped '
+                         'app/data directory when --data-dir is not given. '
+                         'Without this flag, a build that omits --data-dir '
+                         'writes its data files under <output-dir>/data '
+                         'instead, so a scoped review build never silently '
+                         'overwrites the checked-in app/data/*.json.')
     ap.add_argument('--cache-dir', default=None)
     ap.add_argument('--only', action='append', default=None)
     ap.add_argument('--corridor-m', type=float, default=1_500.0)
@@ -3641,10 +5029,32 @@ def main():
     ap.add_argument('--skip-crosscheck', action='store_true')
     ap.add_argument('--report', default=None)
     options = ap.parse_args()
+    options.data_dir = resolve_data_dir(
+        options.output_dir, options.data_dir, options.write_shipped_data)
 
     registry = load_registry(options.registry)
     feeds = registry['feeds']
     feed_metadata = {entry['slug']: entry for entry in registry['feeds']}
+    # The colour an operator publishes for a railway that reaches the package
+    # only through OpenStreetMap. Keyed by relation because that is the only
+    # identity such a line has; the value is the operator's own statement of
+    # its colour with the page it was read from, exactly as
+    # `officialColorByRouteId` is for a feed. OSM's own `colour` tag is not
+    # accepted, here or anywhere: it is a contributor's reading of a map.
+    options.osm_line_colours = registry.get('osmLineColors') or {}
+    # One physical station complex that arrived as several package station
+    # ids, named by review with the evidence that it is one place. Applied in
+    # `build_region` once the grouping has assigned its codes; see
+    # `apply_reviewed_station_complexes`.
+    options.station_complexes = registry.get('stationComplexes') or {}
+    # See `geometry_for`: `completeness` is an explicit comparison mode;
+    # `strict` withholds unresolved alignments and is also the safe default.
+    # The registry is where a release states that choice.
+    try:
+        options.release_policy = registry_release_policy(registry)
+    except ValueError as error:
+        ap.error(str(error))
+    print(f'release policy: {options.release_policy}', file=sys.stderr)
     brand_audit_path = os.path.join(HERE, 'na-operator-brands.json')
     brand_audit = (load_registry(brand_audit_path)
                    if os.path.exists(brand_audit_path) else {})
@@ -3662,16 +5072,19 @@ def main():
           f'{len(countries.buckets)} border cells ({time.time() - started:.1f}s)',
           file=sys.stderr)
     options.osm_relation_shapes = load_osm_relation_shapes(options.osm_routes)
+    options.audited_osm_relations = {
+        int(relation_id) for entry in feeds
+        for relation_id in (entry.get('osmRelationByRouteId') or {}).values()}
     options.official_networks = {}
     options.verified_official_sources = {}
     requested_official = {entry.get('officialNetwork') for entry in feeds}
     official_endpoint_join_m = {}
     for entry in feeds:
         requested_official.update(
-            (entry.get('officialNetworkByRouteId') or {}).values())
+            official_keys_for_entry(entry.get('officialNetworkByRouteId')))
         join_m = float(entry.get('officialNetworkEndpointJoinMeters') or 0.0)
         if join_m:
-            keys = set((entry.get('officialNetworkByRouteId') or {}).values())
+            keys = official_keys_for_entry(entry.get('officialNetworkByRouteId'))
             if entry.get('officialNetwork'):
                 keys.add(entry['officialNetwork'])
             for key in keys:
@@ -3805,6 +5218,18 @@ def main():
             else (operator_brand_status.get(operator_key) or 'unverified'))
 
     per_region = assemble(built, countries, options)
+    reviewed_shared_track = apply_reviewed_shared_track_alignments(
+        per_region.get('us') or [], feeds)
+    if reviewed_shared_track:
+        reports.append({
+            'slug': 'reviewed-shared-track-alignments',
+            'lines': len(reviewed_shared_track),
+            'dropped': [],
+            'notes': reviewed_shared_track,
+            'syntheticConnectors': 0,
+        })
+        print(f'  aligned {len(reviewed_shared_track)} services to reviewed '
+              'shared physical track', file=sys.stderr)
     reference = None
     if not options.skip_crosscheck:
         osm = load_osm(options.source_dir)

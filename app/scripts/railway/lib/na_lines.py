@@ -285,7 +285,7 @@ def longest_path(succ, order):
 
 
 def select_lines(patterns, max_branches=8, min_branch_stations=2,
-                 branch_weight_floor=0.0):
+                 branch_weight_floor=0.0, preferred_trunk=None):
     """The trunk, then the branches, in the order they are drawn.
 
     Returns ``[(suffix, stations, pattern, is_loop), …]`` with ``suffix`` empty
@@ -306,9 +306,36 @@ def select_lines(patterns, max_branches=8, min_branch_stations=2,
         # order the operator never publishes.
         trunk = patterns[0]
         return [('', trunk.stations, trunk, is_loop(trunk.stations))]
-    trunk = longest_path(succ, order)
-    if len(trunk) < 2:
-        trunk = patterns[0].stations
+    if preferred_trunk:
+        trunk = list(preferred_trunk)
+        published_edges = {
+            (a, b) for a, outs in succ.items() for b in outs
+        }
+
+        def missing_steps(candidate):
+            return [
+                (candidate[i], candidate[i + 1])
+                for i in range(len(candidate) - 1)
+                if (candidate[i], candidate[i + 1]) not in published_edges
+            ]
+
+        missing = missing_steps(trunk)
+        if missing:
+            # A fresh GTFS drop can flip which direction a route's patterns
+            # merge onto (merge_directions folds onto the heavier of the two
+            # equal-length directions). The preferred trunk is a station
+            # sequence, not a direction claim, so accept it reversed too and
+            # emit whichever orientation actually matches the published
+            # edges.
+            reversed_trunk = list(reversed(trunk))
+            reversed_missing = missing_steps(reversed_trunk)
+            if reversed_missing:
+                return []
+            trunk = reversed_trunk
+    else:
+        trunk = longest_path(succ, order)
+        if len(trunk) < 2:
+            trunk = patterns[0].stations
 
     position = {s: i for i, s in enumerate(trunk)}
     covered = set()
@@ -409,3 +436,105 @@ def shape_for(pattern, shapes):
         if best is None or weight > best[0] or (weight == best[0] and length > best[2]):
             best = (weight, shape_id, length, points)
     return (best[1], best[3]) if best else (None, None)
+
+
+# ------------------------------------------------------- direction divergence
+
+#: A run of consecutive intervals is treated as one railway's own noise, not
+#: two different physical tracks, below this. 30 m clears ordinary snap and
+#: resample jitter while still catching a one-way couplet a block wide.
+DIVERGENCE_THRESHOLD_M = 30.0
+
+
+def interval_divergence_m(a_points, b_points):
+    """How far apart two routings of the same station-to-station step run.
+
+    Point-to-polyline, both ways: every vertex of ``a`` against the whole of
+    ``b``, and every vertex of ``b`` against the whole of ``a``. A single
+    direction of comparison would miss a divergence that only one of the two
+    polylines samples densely enough to register, so the worse of the two
+    directions is what is reported.
+    """
+    if not a_points or not b_points or len(a_points) < 2 or len(b_points) < 2:
+        return 0.0
+    cumul_a = geo.cumulative(a_points)
+    cumul_b = geo.cumulative(b_points)
+    forward = max(geo.project_to_line(p, b_points, cumul_b)[0] for p in a_points)
+    backward = max(geo.project_to_line(p, a_points, cumul_a)[0] for p in b_points)
+    return max(forward, backward)
+
+
+def direction_divergence_runs(intervals_a, intervals_b,
+                              threshold_m=DIVERGENCE_THRESHOLD_M):
+    """Consecutive-interval runs where two routings of one station list disagree.
+
+    ``intervals_a``/``intervals_b`` are two independently routed alignments of
+    the SAME ordered station list — same length, same stations at each index
+    — so interval *i* of one is directly comparable with interval *i* of the
+    other; there is nothing here that could invent a station or reorder one.
+
+    Returns ``[(start, end, max_deviation_m), …]`` with ``start``/``end`` the
+    inclusive interval indices of each run (interval *i* joins station *i*
+    and *i + 1*, so a run's station span is ``start .. end + 1``). Adjacent
+    diverging intervals are merged into one run — and therefore one
+    ``extraSegments`` row — rather than shipped as separate one-interval
+    rows, because the run's ends, not its middle, are what a reader needs to
+    place the alternate track between.
+    """
+    if len(intervals_a) != len(intervals_b):
+        return []
+    deviations = [interval_divergence_m(a, b)
+                 for a, b in zip(intervals_a, intervals_b)]
+    runs = []
+    start = None
+    worst = 0.0
+    for i, deviation in enumerate(deviations):
+        if deviation > threshold_m:
+            if start is None:
+                start = i
+            worst = max(worst, deviation)
+        elif start is not None:
+            runs.append((start, i - 1, worst))
+            start = None
+            worst = 0.0
+    if start is not None:
+        runs.append((start, len(deviations) - 1, worst))
+    return runs
+
+
+def extra_segment_for_run(intervals, start, end):
+    """One continuous polyline for interval run ``[start, end]``.
+
+    Consecutive intervals from the same ``route_stations`` call already meet
+    at an identical shared vertex (that is the routing contract each interval
+    is built under), so concatenation drops only that duplicate — never a
+    real vertex.
+    """
+    coordinates = [list(point) for point in intervals[start]]
+    for index in range(start + 1, end + 1):
+        piece = intervals[index]
+        coordinates.extend(list(point) for point in piece[1:])
+    return coordinates
+
+
+def direction_only_stations(patterns, trunk_stations):
+    """Stations a route calls at only when running the other physical way.
+
+    ``merge_directions`` folds every raw pattern onto the trunk's own
+    orientation before ``select_lines`` ever sees it (see
+    ``canonical_direction`` above), so a stop a route makes only in the
+    direction that gets reversed to match the trunk is invisible to the
+    station list the package draws — it is real service, on a leg the drawn
+    line does not walk, not a station to invent onto the trunk. This says
+    which stations those are, so the caller can record them as evidence
+    instead.
+    """
+    trunk_set = set(trunk_stations)
+    other = set()
+    for pattern in patterns:
+        stations = list(pattern.stations)
+        folded = canonical_direction(stations, trunk_stations)
+        if folded == stations:
+            continue                        # already runs the trunk's own way
+        other.update(stations)
+    return sorted(other - trunk_set)
