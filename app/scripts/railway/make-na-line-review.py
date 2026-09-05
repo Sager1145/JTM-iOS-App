@@ -44,6 +44,15 @@ def published_rows(packages, audits):
                 'sourceRouteId': None,
                 'geometrySource': source,
                 'officialSpatialGeometry': source in verified,
+                # Which reviewed centreline this line wanted and did not get,
+                # and what a reviewer already knows is open about the
+                # alignment that shipped instead. Both come from the package,
+                # so the ledger states them per line instead of leaving them
+                # in a build log nobody keeps.
+                'geometryFallbackFrom': line.get('geometryFallbackFrom'),
+                'geometryReview': line.get('geometryReview'),
+                'surveyedStraightIntervals': len(
+                    (line.get('straightIntervals') or {}).get('intervals') or ()),
                 'colorReference': line.get('colorReference'),
                 'colorSource': line.get('colorSource'),
                 'stationCount': len(line.get('stations') or ()),
@@ -106,18 +115,28 @@ def write_markdown(path, payload):
         target.write(f"Published: {summary['published']}; blocked findings: ")
         target.write(f"{summary['blocked']}; warnings: {summary['warnings']}; ")
         target.write(f"errors among published lines: {summary['publishedErrors']}.\n\n")
-        target.write('| Status | Country | Feed / line | Name | Geometry | Colour | Findings |\n')
-        target.write('|---|---|---|---|---|---|---|\n')
+        target.write('| Status | Country | Feed / line | Name | Geometry | '
+                     'Instead of | Colour | Findings |\n')
+        target.write('|---|---|---|---|---|---|---|---|\n')
         for row in payload['lines']:
             identity = row.get('lineId') or (
                 f"{row.get('sourceFeed')}:{row.get('sourceRouteId')}")
             issues = '; '.join(str(x.get('why') or x.get('message') or
                                    x.get('check') or 'review required')
                                for x in row.get('issues') or ())
-            target.write('| %s | %s | %s | %s | %s | %s | %s |\n' % (
+            # A line that fell back from a reviewed centreline, or that ships
+            # with an open review note, says so in its own row: the reader of
+            # the ledger should not have to open the package to find out that
+            # this railway is drawn from the operator's own alignment.
+            instead = row.get('geometryFallbackFrom') or ''
+            if row.get('geometryReview'):
+                issues = '; '.join(
+                    x for x in (issues, 'open review: %s'
+                                % row['geometryReview']) if x)
+            target.write('| %s | %s | %s | %s | %s | %s | %s | %s |\n' % (
                 row['status'], row.get('country') or '', identity or '',
                 (row.get('name') or '').replace('|', '\\|'),
-                row.get('geometrySource') or '',
+                row.get('geometrySource') or '', instead,
                 row.get('colorReference') or '', issues.replace('|', '\\|')))
     os.replace(path + '.tmp', path)
 

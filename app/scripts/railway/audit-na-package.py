@@ -38,8 +38,9 @@ import sys
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
-from na_profile import (CROSSCHECK_TOLERANCE_M, median_spacing_m,   # noqa: E402
-                        profile_for)
+from na_profile import (CROSSCHECK_TOLERANCE_M,                    # noqa: E402
+                        DISPLAY_ALIGNMENT_TOLERANCE_M,
+                        median_spacing_m, profile_for)
 from na_provenance import SOURCES as OFFICIAL_NETWORK_SOURCES       # noqa: E402
 
 EARTH_R = 6_371_008.8
@@ -229,6 +230,53 @@ def audit_line(line, country, found, verified_official=()):
                   'segment count does not match the station table',
                   segments=len(segments), stations=len(stations), isLoop=is_loop)
 
+    # -- extraSegments -------------------------------------------------
+    # A second physical alignment for one run of a line -- a direction that
+    # genuinely diverges from the canonical stroke (SFMTA's N/PH/PM near
+    # Embarcadero), or, for the five older regions, a documented gap in a
+    # source that draws two tracks as one polyline. Either way it must name
+    # two real stations and carry the evidence a reader needs to trust it;
+    # an entry that draws an alternate alignment with no evidence for it is
+    # exactly the silent-divergence failure this field exists to prevent.
+    for index, row in enumerate(line.get('extraSegments') or ()):
+        if not isinstance(row, dict):
+            found.add('ERROR', 'extraSegments.row', country, lid,
+                      'extraSegments entry is not an object', index=index)
+            continue
+        frm, to = row.get('from'), row.get('to')
+        valid_endpoints = (
+            isinstance(frm, int) and isinstance(to, int)
+            and 0 <= frm < len(stations) and 0 <= to < len(stations)
+            and frm != to)
+        if not valid_endpoints:
+            found.add('ERROR', 'extraSegments.endpoints', country, lid,
+                      'extraSegments entry does not name two distinct, '
+                      'valid station indices', index=index,
+                      **{'from': frm, 'to': to})
+        evidence = row.get('evidence')
+        if not (isinstance(evidence, str) and evidence.strip()):
+            found.add('ERROR', 'extraSegments.evidence', country, lid,
+                      'extraSegments entry has no evidence', index=index)
+        geometry = row.get('geometry')
+        if geometry is not None:
+            if not (isinstance(geometry, list) and len(geometry) >= 2
+                    and all(isinstance(p, list) and len(p) == 2
+                           for p in geometry)):
+                found.add('ERROR', 'extraSegments.geometry', country, lid,
+                          'extraSegments geometry must be at least two '
+                          '[lon, lat] points', index=index)
+            elif valid_endpoints:
+                from_station, to_station = stations[frm], stations[to]
+                for end_name, station, point in (
+                        ('from', from_station, geometry[0]),
+                        ('to', to_station, geometry[-1])):
+                    gap = haversine((station[2], station[3]), tuple(point))
+                    if gap > 50.0:
+                        found.add('ERROR', 'extraSegments.anchor', country, lid,
+                                  'extraSegments geometry does not reach its '
+                                  f'{end_name} station',
+                                  index=index, metres=round(gap, 1))
+
     intervals = decode_intervals(line)
     lengths = [polyline_length(p) for p in intervals if len(p) > 1]
     if not lengths:
@@ -276,7 +324,15 @@ def audit_line(line, country, found, verified_official=()):
         # also names genuinely straight railway; provenance, not visual shape,
         # is what lets a reviewer clear that warning.
         chord_deviation = max_chord_deviation(points)
+        # …and provenance is exactly what `straightIntervals` carries: the
+        # build measured this interval against the source that did not draw
+        # it and recorded that surveyed track lies along the whole of it. A
+        # straight railway that can show that is cleared here; one that cannot
+        # is still an error.
+        surveyed_straight = set(
+            (line.get('straightIntervals') or {}).get('intervals') or ())
         if (line.get('geometrySource') not in verified_official
+                and index not in surveyed_straight
                 and drawn > max(500.0, profile.max_edge_m * 2.0)
                 and direct > 0 and drawn <= direct * 1.005
                 and chord_deviation <= 1.5):
@@ -372,9 +428,11 @@ def audit_line(line, country, found, verified_official=()):
 CAPS = re.compile(r'^[^a-z]*[A-Z]{4,}[^a-z]*$')
 
 
-def audit_package(package, found, band_by_line):
+def audit_package(package, found, band_by_line, station_split_exceptions=None,
+                  verified_official=()):
     country = package.get('country')
     lines = package['lines']
+    station_split_exceptions = station_split_exceptions or {}
 
     ids = Counter(l.get('id') for l in lines)
     for lid, count in ids.items():
@@ -393,6 +451,80 @@ def audit_package(package, found, band_by_line):
             found.add('ERROR', 'line.orphanBranch', country, line['id'],
                       'branch is present but its trunk is absent',
                       trunk=branch_of)
+
+    # How far the shipped line is from the survey that did not draw it. The
+    # build already measures this and writes it into the package; auditing it
+    # here turns it from a number a reader would have to go looking for into a
+    # finding with a name — "this railway is drawn beside the real one" is the
+    # defect a station-chord check cannot see, because a wrong corridor can be
+    # as detailed as a right one.
+    #
+    # Corridor identity is not display accuracy.  The release-quality table is
+    # deliberately tighter than the older 25--400 m corridor bands so a line
+    # cannot pass while visibly running beside the basemap track.
+    comparison = ((package.get('geometrySource') or {})
+                  .get('officialGeometryComparison') or {})
+    for lid, row in (comparison.get('byLine') or {}).items():
+        band = band_by_line.get(lid)
+        tolerance = DISPLAY_ALIGNMENT_TOLERANCE_M.get(band, 20.0)
+        deviation = float(row.get('maxDeviationMeters') or 0.0)
+        vertices = int(row.get('vertices') or 0)
+        unmatched = int(row.get('unmatched') or 0)
+        withheld = list(row.get('displayBlockedIntervals') or [])
+        retained = list(row.get('officialSourceRetainedIntervals') or [])
+        source_is_verified = row.get('builtFrom') in verified_official
+        if retained and not source_is_verified:
+            found.add('ERROR', 'source.provenance', country, lid,
+                      'unverified geometry claims the official-source display exception',
+                      builtFrom=row.get('builtFrom'), intervals=retained)
+        if deviation > tolerance:
+            if withheld:
+                severity = 'NOTE'
+                check = 'geometry.deviation.withheld'
+                message = ('%d station interval(s) are withheld from display; '
+                           'the source geometry reaches %.0f m from the '
+                           'independent survey, past the %.0f m %s limit'
+                           % (len(withheld), deviation, tolerance,
+                              band or 'default'))
+            elif retained and source_is_verified:
+                severity = 'WARN'
+                check = 'geometry.deviation.officialRetained'
+                message = ('%d station interval(s) retain the verified official '
+                           'centreline although the independent visual reference '
+                           'differs by up to %.0f m, past the %.0f m %s review limit'
+                           % (len(retained), deviation, tolerance,
+                              band or 'default'))
+            else:
+                severity = 'ERROR'
+                check = 'geometry.deviation'
+                message = ('drawn up to %.0f m from the independent survey, past '
+                           'the %.0f m the %s band allows'
+                           % (deviation, tolerance, band or 'default'))
+            found.add(severity, check, country, lid, message,
+                      metres=round(deviation, 1), toleranceMetres=tolerance,
+                      intervals=withheld or retained, at=row.get('worstAt'),
+                      builtFrom=row.get('builtFrom'))
+        if unmatched:
+            if withheld:
+                severity = 'NOTE'
+                check = 'geometry.unchecked.withheld'
+                message = ('%d of %d vertices had no independent reference; '
+                           'affected station intervals are withheld from display'
+                           % (unmatched, vertices))
+            elif retained and source_is_verified:
+                severity = 'WARN'
+                check = 'geometry.unchecked.officialRetained'
+                message = ('%d of %d vertices had no independent visual reference; '
+                           'the provenance-verified official centreline remains visible'
+                           % (unmatched, vertices))
+            else:
+                severity = 'ERROR'
+                check = 'geometry.unchecked'
+                message = ('%d of %d vertices had no independent reference'
+                           % (unmatched, vertices))
+            found.add(severity, check, country, lid, message,
+                      vertices=vertices, unmatched=unmatched,
+                      intervals=withheld or retained)
 
     # Operator identity. The packages this family is modelled on name one
     # company one way; a GTFS feed names it however its author typed it, and
@@ -473,17 +605,241 @@ def audit_package(package, found, band_by_line):
             allowed = max(CROSSCHECK_TOLERANCE_M.get(base[4], 90.0),
                           CROSSCHECK_TOLERANCE_M.get(row[4], 90.0))
             if drift > allowed:
-                found.add('WARN', 'station.split', country, row[0],
-                          'station %s is %.0f m from where %s puts it, past '
-                          'the %.0f m the band allows' % (sid, drift, base[0],
-                                                          allowed),
-                          station=sid, metres=round(drift))
+                reviewed = station_split_exceptions.get(sid) or {}
+                reviewed_limit = float(reviewed.get('maxMeters') or 0.0)
+                if reviewed_limit and drift <= reviewed_limit:
+                    found.add(
+                        'NOTE', 'station.split.reviewed', country, row[0],
+                        'station %s spans %.0f m inside a reviewed official '
+                        'complex (exact limit %.0f m)' % (
+                            sid, drift, reviewed_limit),
+                        station=sid, metres=round(drift),
+                        maxMeters=reviewed_limit,
+                        evidence=reviewed.get('evidence'),
+                        evidenceUrl=reviewed.get('evidenceUrl'),
+                        sourceSha256=reviewed.get('sourceSha256'),
+                        stopIds=reviewed.get('stopIds'))
+                else:
+                    found.add('WARN', 'station.split', country, row[0],
+                              'station %s is %.0f m from where %s puts it, '
+                              'past the %.0f m the band allows' % (
+                                  sid, drift, base[0], allowed),
+                              station=sid, metres=round(drift))
                 break
         names = {r[1] for r in rows}
         if len(names) > 1:
             found.add('NOTE', 'station.names', country, '-',
                       'station %s is named %d ways: %s'
                       % (sid, len(names), ' / '.join(sorted(names))), station=sid)
+
+
+def read_station_split_exceptions(registry_path, found):
+    """Load only exact, evidenced station-complex span exceptions.
+
+    These do not widen a service-band tolerance.  One final package station
+    id gets one finite ceiling and retains an audit NOTE on every run; a new
+    or enlarged split still warns normally.
+    """
+    if not registry_path:
+        return {}
+    try:
+        with open(registry_path, encoding='utf-8') as source:
+            records = json.load(source).get('stationSplitExceptions') or {}
+    except (OSError, AttributeError, ValueError) as exc:
+        found.add('ERROR', 'registry.stationSplitException', '-', '-',
+                  'could not read station split exceptions: %s' % exc)
+        return {}
+    if not isinstance(records, dict):
+        found.add('ERROR', 'registry.stationSplitException', '-', '-',
+                  'stationSplitExceptions must be an object')
+        return {}
+    accepted = {}
+    for station_id, record in records.items():
+        source_hashes = (record.get('sourceSha256')
+                         if isinstance(record, dict) else None)
+        source_hashes = (source_hashes if isinstance(source_hashes, list)
+                         else [source_hashes])
+        valid_hashes = (bool(source_hashes)
+                        and all(isinstance(value, str)
+                                and re.fullmatch(r'[0-9a-f]{64}', value)
+                                for value in source_hashes))
+        valid = (isinstance(station_id, str)
+                 and station_id.startswith(('us-', 'ca-'))
+                 and isinstance(record, dict)
+                 and isinstance(record.get('maxMeters'), (int, float))
+                 and 0 < record['maxMeters'] <= 1000
+                 and isinstance(record.get('evidence'), str)
+                 and bool(record['evidence'].strip())
+                 and isinstance(record.get('evidenceUrl'), str)
+                 and record['evidenceUrl'].startswith(('http://', 'https://'))
+                 and valid_hashes
+                 and isinstance(record.get('stopIds'), list)
+                 # A complex assembled from distinct operator stop ids needs
+                 # every member listed. A single exact GTFS station id reused
+                 # by multiple route patterns is already an unambiguous
+                 # identity assertion and must not be duplicated artificially.
+                 and len(record['stopIds']) >= 1)
+        if not valid:
+            found.add('ERROR', 'registry.stationSplitException', '-',
+                      str(station_id),
+                      'station split exception is incomplete or invalid')
+            continue
+        accepted[station_id] = record
+    return accepted
+
+
+def read_station_complexes(registry_path, found):
+    """Load the reviewed `stationComplexes` table — one place, several ids.
+
+    `stationSplitExceptions` forgives one package station id whose platforms
+    are further apart than the band allows. This is its inverse: the case
+    where one physical station complex arrived as SEVERAL ids because no two
+    of its operators share a stop vocabulary. Washington Union Station is
+    three ids 280 m apart, so no anchor sees more than three of the seven
+    railways that call there.
+
+    A complex is a TRANSFER assertion and nothing else — it names the station
+    code that survives and, optionally, the one name the place is called by.
+    `center`/`maxMeters` are a read-only guard, not a move: a member only
+    joins if its OWN coordinate is already inside the circle, which is what
+    keeps a slug collision out (`us-official-penn` holds LIRR's platforms at
+    New York Penn and NJ Transit's Newark Light Rail platform 14.4 km away,
+    and only the first is inside the New York circle).
+    """
+    if not registry_path:
+        return {}
+    try:
+        with open(registry_path, encoding='utf-8') as source:
+            records = json.load(source).get('stationComplexes') or {}
+    except (OSError, AttributeError, ValueError) as exc:
+        found.add('ERROR', 'registry.stationComplex', '-', '-',
+                  'could not read station complexes: %s' % exc)
+        return {}
+    if not isinstance(records, dict):
+        found.add('ERROR', 'registry.stationComplex', '-', '-',
+                  'stationComplexes must be an object')
+        return {}
+    accepted = {}
+    for station_id, record in records.items():
+        centre = record.get('center') if isinstance(record, dict) else None
+        valid = (isinstance(station_id, str)
+                 and station_id.startswith(('us-', 'ca-'))
+                 and isinstance(record, dict)
+                 and isinstance(centre, list) and len(centre) == 2
+                 and all(isinstance(v, (int, float)) for v in centre)
+                 and isinstance(record.get('maxMeters'), (int, float))
+                 # Wider than this is not a concourse anyone walks across, and
+                 # a complex that needs it is two stations.
+                 and 0 < record['maxMeters'] <= 600
+                 and isinstance(record.get('absorbs'), list)
+                 and record['absorbs']
+                 and all(isinstance(v, str) and v.startswith(('us-', 'ca-'))
+                         and v != station_id for v in record['absorbs'])
+                 and isinstance(record.get('evidence'), str)
+                 and bool(record['evidence'].strip())
+                 and isinstance(record.get('evidenceUrl'), str)
+                 and record['evidenceUrl'].startswith(('http://', 'https://'))
+                 # The GTFS hashes stationSplitExceptions carry are not
+                 # obtainable for an entry written after the North America
+                 # source tree was purged, so a complex must instead carry a
+                 # measurement a reader can reproduce from the package alone.
+                 and isinstance(record.get('packageEvidence'), str)
+                 and bool(record['packageEvidence'].strip()))
+        if not valid:
+            found.add('ERROR', 'registry.stationComplex', '-', str(station_id),
+                      'station complex is incomplete or invalid')
+            continue
+        accepted[station_id] = record
+    # A merge must not chain: an id that survives one entry cannot be eaten by
+    # another, or the answer depends on which entry is read first.
+    for station_id, record in accepted.items():
+        for absorbed in record['absorbs']:
+            if absorbed in accepted:
+                found.add('ERROR', 'registry.stationComplex', '-', station_id,
+                          'complex absorbs %s, which is itself a complex'
+                          % absorbed)
+    return accepted
+
+
+def audit_station_complexes(package, complexes, found, corridor_path=None):
+    """Is each reviewed complex actually one station in the built package?
+
+    The table is reviewed data; this is the gate that says whether the build
+    has caught up with it. It also asks the question that the coupling makes
+    necessary: every reviewed override table addresses a station BY ITS GROUP
+    CODE — `shared-corridors.json` names station PAIRS, and
+    `reviewedSharedCorridorOverrides` in rail-network.js MOVES a station
+    anchor and rewrites the neighbouring interval to match it. So a merge that
+    renames a code and leaves that table naming the old one does not fail
+    loudly: the corridor simply stops matching, and the line's drawn geometry
+    silently reverts. Measured on the shipped package, that is six Amtrak
+    lines and six anchors moving up to 8.2 m.
+    """
+    country = (package.get('country') or '').lower()
+    anchors = defaultdict(list)
+    for line in package['lines']:
+        for station in line.get('stations') or []:
+            anchors[station[0]].append((station[2], station[3]))
+    corridor_text = ''
+    if corridor_path:
+        try:
+            with open(corridor_path, encoding='utf-8') as source:
+                corridor_text = source.read()
+        except OSError as exc:
+            found.add('NOTE', 'station.complex.corridors', '-', '-',
+                      'could not read %s: %s' % (corridor_path, exc))
+    for station_id, record in complexes.items():
+        if not station_id.startswith(country + '-'):
+            continue
+        centre = tuple(record['center'])
+        stranded = []
+        for absorbed in record['absorbs']:
+            inside = [p for p in anchors.get(absorbed, ())
+                      if haversine(centre, p) <= record['maxMeters']]
+            if inside:
+                stranded.append((absorbed, len(inside)))
+            if not corridor_text or ('"%s"' % absorbed) not in corridor_text:
+                continue
+            if inside:
+                # The merge has not landed yet, so the override still matches
+                # and nothing is broken. This is the reminder that the two
+                # changes are one change.
+                found.add('NOTE', 'station.complex.pendingReference',
+                          country.upper(), station_id,
+                          '%s is named in %s; when it is absorbed into %s the '
+                          'corridor must be renamed in the same change, or '
+                          'the override stops matching and the lines it holds '
+                          'revert their drawn geometry'
+                          % (absorbed, os.path.basename(corridor_path),
+                             station_id),
+                          station=station_id, absorbed=absorbed)
+            else:
+                found.add('ERROR', 'station.complex.staleReference',
+                          country.upper(), station_id,
+                          '%s is absorbed into %s and no longer exists in the '
+                          'package, but %s still names it — that override is '
+                          'dead and the lines it held have silently reverted'
+                          % (absorbed, station_id,
+                             os.path.basename(corridor_path)),
+                          station=station_id, absorbed=absorbed)
+        if stranded:
+            found.add('WARN', 'station.complex.unmerged', country.upper(),
+                      station_id,
+                      '%s is one reviewed complex but the package still ships '
+                      'it as %d station ids: %s'
+                      % (station_id, len(stranded) + 1,
+                         ', '.join('%s (%d call%s)'
+                                   % (code, n, '' if n == 1 else 's')
+                                   for code, n in stranded)),
+                      station=station_id,
+                      unmerged=[code for code, _ in stranded],
+                      evidence=record.get('evidence'),
+                      evidenceUrl=record.get('evidenceUrl'))
+        else:
+            found.add('NOTE', 'station.complex', country.upper(), station_id,
+                      '%s ships as one station complex of %d platforms'
+                      % (station_id, len(anchors.get(station_id, ()))),
+                      station=station_id)
 
 
 def audit_registry(registry_path, summaries, found):
@@ -549,12 +905,20 @@ def main():
                     help='scripts/railway/na-feeds.json — enables the check '
                          'that every feed the registry names actually built '
                          'something')
+    ap.add_argument('--shared-corridors',
+                    help='public/rail/shared-corridors.json — enables the '
+                         'check that no station code a reviewed complex '
+                         'absorbs is still named by a corridor override, '
+                         'which addresses stations by code and moves anchors')
     ap.add_argument('--out')
     ap.add_argument('--max-print', type=int, default=40)
     options = ap.parse_args()
 
     found = Findings()
     summaries = []
+    station_split_exceptions = read_station_split_exceptions(
+        options.registry, found)
+    station_complexes = read_station_complexes(options.registry, found)
     for path in options.package:
         with open(path) as fh:
             package = json.load(fh)
@@ -566,8 +930,11 @@ def main():
             if row:
                 row['country'] = country
                 summaries.append(row)
-        audit_package(package, found,
-                      {r['id']: r['band'] for r in summaries})
+        audit_package(
+            package, found, {r['id']: r['band'] for r in summaries},
+            station_split_exceptions, verified_official)
+        audit_station_complexes(package, station_complexes, found,
+                                options.shared_corridors)
 
     if options.registry:
         audit_registry(options.registry, summaries, found)
