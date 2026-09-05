@@ -460,3 +460,64 @@ fact.
 still in the package, and no longer read: `build-display-lanes.mjs` says so on
 stdout every run. `tw`, `hk`, `mo` and `kr` still pass their package rows
 through unchanged and are unaffected by any of this.
+
+---
+
+## Scope: which rail services the packages ship
+
+A line is in scope when it is a scheduled, publicly boardable passenger railway
+or rail transit service: heavy rail, metro, light rail, streetcar, commuter and
+intercity rail, monorail and automated people-movers that the public can ride
+without a ticket for another mode. Seasonal but scheduled services count (Alaska
+Railroad, Keewatin Railway, Tshiuetin, Ontario Northland's Polar Bear Express).
+Frequency, operator type and whether the operator publishes GTFS do not decide
+scope; only the service does.
+
+Two boundary cases are decided as follows.
+
+**Airport people-movers** are in scope when they are landside connectors — a
+rider can board them from outside airport security, and they link the airport to
+the public transit network or to a parking, rental-car or intermodal facility
+that is itself public: AirTrain Newark, AirTrain JFK, SFO AirTrain, Atlanta's
+SkyTrain, O'Hare's ATS, Orlando's Terminal Link. They are out of scope when they
+run only airside, between concourses or gates behind security, where the only
+riders are ticketed air passengers: DFW Skylink, Orlando's Gate Link, Denver's
+AGT, Houston's Skyway, Detroit's ExpressTram, Tampa's airside shuttles, Las
+Vegas's terminal trams, Dulles's AeroTrain. Apple Maps draws the same line: it
+shows the landside connectors as transit and omits the airside shuttles, and the
+cartographic audit this project follows records AirTrain JFK and AirTrain Newark
+as visible transit lines.
+
+**Heritage, excursion and tourist railways** are out of scope: Strasburg, Niles
+Canyon, Roaring Camp, Great Smoky Mountains, Andrews Valley, Rocky Mountaineer,
+the Denver Tramway and Edmonton Radial Railway heritage operations. They run for
+the ride rather than for travel, are not part of any network, and usually do not
+run to a timetable a transit rider could plan against. Private trams that serve
+one property (the Aria Express) are out of scope for the same reason.
+Freight-only and abandoned lines are never drawn.
+
+A line that is in scope but cannot yet be published stays in the blocked ledger
+with the gate that stops it; suppressing it is preferable to drawing invented or
+uncorroborated track. Kenosha is the case where scope and tooling meet: its
+streetcar is plainly in scope, yet the city has zero coverage, because the
+OpenStreetMap fallback was suppressed as "already built from a feed as
+`kenosha-streetcar-sc`" while the feed it deferred to was itself blocked by the
+release gate. The duplicate check compares against the line id the other feed
+*would* have produced rather than against what it did publish, so when the
+primary feed fails the fallback is discarded in favour of nothing. That ordering
+bug is recorded here until the check is moved after the release gate.
+
+## What the blocked count means
+
+The line review counts every dropped route, so its blocked total overstates the
+work remaining. As of the 2026-09-05 review: 423 lines are published (357 US, 66
+Canada) and 25 published lines carry an interval withheld from display, drawn
+dashed; those 25 are not missing lines and are listed in their own section. Of
+the 356 routes counted as blocked, 35 are correct suppressions of duplicates
+already published from a better-provenanced feed (12 cross-feed duplicates and
+23 OpenStreetMap fallbacks whose target line exists), and 21 are out of scope
+under the rule above (12 airside airport shuttles, 7 heritage railways, 2 private
+trams). That leaves 356 − 35 − 21 = 300 in-scope routes that the packages should
+eventually publish. The per-route disposition behind these numbers is the
+blocked-line disposition file in the review set; when it changes, change the
+arithmetic here with it.
