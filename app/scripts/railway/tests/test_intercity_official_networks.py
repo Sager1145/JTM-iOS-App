@@ -48,6 +48,14 @@ class IntercityOfficialNetworkTests(unittest.TestCase):
             entry = by_slug[slug]
             self.assertTrue(entry['requireVerifiedOfficialNetwork'])
             self.assertEqual(set(entry['officialNetworkByRouteId'].values()), keys)
+        metrolink = by_slug['metrolink']
+        self.assertEqual(set(metrolink['officialNetworkDefectByRouteId']), {'Riverside Line'})
+        self.assertIn('649 m', metrolink['officialNetworkDefectByRouteId']['Riverside Line'])
+        amtrak = by_slug['amtrak']
+        self.assertIn('31 official components', amtrak['officialNetworkDefectByRouteId']['96'])
+        self.assertIn('6 official components',
+                      amtrak['officialNetworkDefectByRouteId']['42946'])
+        self.assertNotIn('75', amtrak['officialNetworkDefectByRouteId'])
 
     def test_amtrak_names_are_exact_and_missing_service_fails_closed(self):
         features = [feature('name', name) for name in normalizer.AMTRAK]
@@ -57,6 +65,14 @@ class IntercityOfficialNetworkTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, 'expected exactly one'):
             normalizer.exact_groups(
                 features[:-1], 'name', normalizer.AMTRAK)
+
+    def test_three_reversal_routes_use_exact_fra_ntad_features(self):
+        self.assertEqual(normalizer.AMTRAK['California Zephyr'],
+                         'amtrak-ntad-california-zephyr')
+        self.assertEqual(normalizer.AMTRAK['Empire Builder'],
+                         'amtrak-ntad-empire-builder')
+        self.assertEqual(normalizer.AMTRAK['City Of New Orleans'],
+                         'amtrak-ntad-city-of-new-orleans')
 
     def test_metro_north_branches_include_official_new_haven_trunk(self):
         features = [feature('route_name', name) for name in normalizer.MNR]

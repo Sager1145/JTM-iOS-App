@@ -115,7 +115,18 @@ class NortheastOfficialNetworkTests(unittest.TestCase):
                 source_file, object_pairs_hook=reject_duplicates)
         by_slug = {entry['slug']: entry for entry in registry['feeds']}
         expected = {
-            'mta-long-island-rail-road': set(normalizer.LIRR),
+            # All ten SEAM-sourced routes carry the 'lirr-seam-' prefix
+            # (route 13's Greenport branch is not part of the SEAM delivery
+            # and has never carried it) -- see na-feeds.json's
+            # mta-long-island-rail-road.officialNetworkByRouteId, which is
+            # the actual source of truth this test is meant to guard.
+            'mta-long-island-rail-road': {
+                'lirr-seam-1-babylon', 'lirr-seam-2-hempstead',
+                'lirr-seam-3-oyster-bay', 'lirr-seam-4-ronkonkoma',
+                'lirr-seam-5-montauk', 'lirr-seam-6-long-beach',
+                'lirr-seam-7-far-rockaway', 'lirr-seam-8-west-hempstead',
+                'lirr-seam-9-port-washington', 'lirr-seam-10-port-jefferson',
+                'lirr-seam-12-city-terminal', 'lirr-13-greenport'},
             'new-jersey-transit-nj-transi': (
                 set(normalizer.NJT_RAIL) | set(normalizer.NJT_LIGHT)),
             'port-authority-trans-hudson': set(normalizer.PATH),

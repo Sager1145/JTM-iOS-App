@@ -56,11 +56,16 @@ class SoutheastMidwestOfficialTests(unittest.TestCase):
 
     def test_exact_route_network_ownership_and_fail_closed_blockers(self):
         feeds = self.feeds()
+        # Keyed by the names MARTA publishes to its passengers, not by the
+        # numeric ids its feed renumbers: the reviewed mapping was written
+        # against 29224-29229 and the feed published since uses 26982-26987.
+        # `build.resolve_route_keys` resolves a published name onto whatever
+        # id the current feed carries, so the alignment survives a renumber.
         self.assertEqual(
             feeds['metropolitan-atlanta-rapid-t']['officialNetworkByRouteId'], {
-                '29224': 'marta-streetcar', '29226': 'marta-blue',
-                '29227': 'marta-gold', '29228': 'marta-green',
-                '29229': 'marta-red'})
+                'ATLSC': 'marta-streetcar', 'BLUE': 'marta-blue',
+                'GOLD': 'marta-gold', 'GREEN': 'marta-green',
+                'RED': 'marta-red'})
         self.assertEqual(
             feeds['miami-dade-transit']['officialNetworkByRouteId'], {
                 '31009': 'miami-metrorail',
@@ -72,10 +77,10 @@ class SoutheastMidwestOfficialTests(unittest.TestCase):
         self.assertEqual(
             feeds['maryland-transit-administrat-light-rail']
             ['officialNetworkByRouteId'], {'11693': 'maryland-light-rail'})
-        self.assertEqual(set(feeds['wmata']['blockedRouteIds']), {
+        self.assertEqual(set(feeds['wmata']['officialNetworkByRouteId']), {
             'RED', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'SILVER'})
         self.assertEqual(set(feeds['port-authority-of-allegheny']
-                             ['blockedRouteIds']), {
+                             ['officialNetworkByRouteId']), {
             'BLUE', 'RED', 'SLVR', 'DQI', 'MI'})
 
 

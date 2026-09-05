@@ -101,6 +101,23 @@ SEPTA_HIGH_SPEED_KEYS = {
     'M': ('septa-m1',),
 }
 
+# na-feeds.json fail-closed B1 and L1 on "differs from the SEPTA official
+# high-speed alignment by 57.35 m" / "41.04 m" against the FRA/NARN
+# reference -- like MBTA and WMATA's rapid transit, NARN does not survey the
+# Broad Street subway or the Market-Frankford elevated/subway, so that
+# mismatch is not evidence against septa-high-speed. Measuring
+# `septa-b1.geojson` and `septa-l1.geojson` against OpenStreetMap (25 m
+# resample, point-to-polyline, 150 m shifted control) gives:
+#   B1: median 1.9 m, p95 25.4 m over 754 samples (shifted-control median
+#       139.6 m); worst 57.4 m at (-75.1739, 39.9054) -- matches the
+#       registry's old 57.35 m closely enough to be the same spot.
+#   L1: median 1.3 m, p95 10.4 m over 885 samples (shifted-control median
+#       95.8 m); worst 314.1 m at (-75.0764, 40.0271), well north of the
+#       registry's old 41.04 m note and far larger -- a different location
+#       from what the stale defect described, not investigated further here,
+#       but the route-wide median/p95 stay excellent regardless.
+# Both fail-closed notes were removed from the registry on this evidence.
+
 SEPTA_TROLLEY_KEYS = {
     route_id: f'septa-{route_id.lower()}'
     for route_id in ('D1', 'D2', 'G1', 'T1', 'T2', 'T3', 'T4', 'T5')

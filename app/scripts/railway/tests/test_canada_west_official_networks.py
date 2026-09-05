@@ -40,14 +40,47 @@ class CanadaWestTests(unittest.TestCase):
             '201-20785': 'EC3001', '201-20786': 'EC3001',
             '202-20785': '5B9EC9', '202-20786': '5B9EC9',
         })
-        self.assertNotIn('officialNetworkByRouteId', feeds['vre'])
-        self.assertNotIn('requireVerifiedOfficialNetwork', feeds['vre'])
+        self.assertEqual(set(calgary['officialNetworkDefectByRouteId']),
+                         {'201-20785', '201-20786',
+                          '202-20785', '202-20786'})
+        self.assertIn('39 Avenue',
+                      calgary['officialNetworkDefectByRouteId']['201-20785'])
+        self.assertIn('3.9x', calgary['officialNetworkDefectByRouteId']['202-20785'])
+        self.assertIn('branch b1', calgary['officialNetworkDefectByRouteId']['202-20785'])
+        self.assertNotIn(
+            'calgary-red', feeds['vre'].get('officialNetworkByRouteId', {}).values())
+        self.assertNotIn(
+            'calgary-blue', feeds['vre'].get('officialNetworkByRouteId', {}).values())
 
     def test_calgary_shared_downtown_track_enters_both_routes(self):
         shared = feature(full_name='FREE FARE ZONE')
         groups = west.calgary_groups([
-            feature(full_name='RED LINE'), feature(full_name='BLUE LINE'),
+            feature(full_name='RED LINE', direction_code='Southbound'),
+            feature(full_name='BLUE LINE', direction_code='Westbound'),
             shared, feature(full_name='BLUE LINE - RED LINE')])
+        self.assertIn(shared, groups['calgary-red'])
+        self.assertIn(shared, groups['calgary-blue'])
+
+    def test_calgary_sunalta_crossover_does_not_enter_passenger_route_graph(self):
+        ordinary_crossover = feature(
+            full_name='BLUE LINE', direction_code='Unspecified Bidirectional')
+        sunalta_crossover = feature(
+            full_name='BLUE LINE', direction_code='Unspecified Bidirectional')
+        sunalta_crossover['geometry'] = {
+            'type': 'MultiLineString',
+            'coordinates': [[
+                [-114.0979228, 51.0447458],
+                [-114.0981677, 51.0447722],
+            ]],
+        }
+        shared = feature(full_name='BLUE LINE - RED LINE',
+                         direction_code='Unspecified Bidirectional')
+
+        groups = west.calgary_groups(
+            [ordinary_crossover, sunalta_crossover, shared])
+
+        self.assertIn(ordinary_crossover, groups['calgary-blue'])
+        self.assertNotIn(sunalta_crossover, groups['calgary-blue'])
         self.assertIn(shared, groups['calgary-red'])
         self.assertIn(shared, groups['calgary-blue'])
 

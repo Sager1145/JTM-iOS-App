@@ -92,19 +92,41 @@ class WesternMetroOfficialTests(unittest.TestCase):
         self.assertEqual(set(feed['officialNetworkByRouteId']),
                          {'801', '802', '803', '804', '805', '807'})
 
-    def test_sfmta_uses_one_audited_direction_and_blocks_uncovered_routes(self):
+    def test_sfmta_directions_diverge_and_are_named_per_direction(self):
+        # SFMTA's inbound and outbound alignments physically diverge for
+        # several routes (a one-way couplet, surface vs subway near
+        # Embarcadero), which `build_route`/`attach_direction_extra_segments`
+        # handles by naming direction 0 and direction 1 separately and
+        # shipping direction 1's own track as `extraSegments` wherever it
+        # disagrees with direction 0 -- never by excluding the route or by
+        # blocking it outright the way K/L/M and N/PH/PM previously were.
         feed = self.feed('san-francisco-municipal-tran')
         self.assertTrue(feed['requireVerifiedOfficialNetwork'])
-        self.assertEqual(set(feed['excludeRoutes']), {'K', 'L', 'M'})
-        self.assertEqual(feed['officialNetworkByRouteId']['CA'], 'sfmta-ca-i')
-        self.assertTrue(all(key.endswith('-i')
-                            for key in feed['officialNetworkByRouteId'].values()))
+        self.assertNotIn('excludeRoutes', feed)
+        self.assertNotIn('officialNetworkDefectByRouteId', feed)
+        mapping = feed['officialNetworkByRouteId']
+        # CA, J and T call at the same track both directions and keep a
+        # single key -- unchanged from before this feature existed.
+        self.assertEqual(mapping['CA'], 'sfmta-ca-i')
+        self.assertEqual(mapping['J'], 'sfmta-j-i')
+        self.assertEqual(mapping['T'], 'sfmta-t-i')
+        # K, L, M, N, F, PH and PM name direction 0 (still each line's
+        # canonical geometry) and direction 1 (compared against it)
+        # separately.
+        for route in ('K', 'L', 'M', 'N', 'F', 'PH', 'PM'):
+            self.assertEqual(
+                mapping[route],
+                {'0': f'sfmta-{route.lower()}-i',
+                 '1': f'sfmta-{route.lower()}-o'},
+                route)
 
-    def test_bart_is_fail_closed_while_operator_kmz_is_unavailable(self):
+    def test_bart_direction_pairs_merge_instead_of_being_excluded(self):
+        # See `test_bart_publishes_its_six_lines_rather_than_none`: the
+        # exclusion ran before the merge, so excluding the directions removed
+        # the railway rather than the duplication.
         feed = self.feed('bart')
-        self.assertEqual(set(feed['excludeRoutes']),
-                         {'1', '2', '3', '4', '5', '6', '7', '8',
-                          '11', '12', '19', '20'})
+        self.assertNotIn('excludeRoutes', feed)
+        self.assertEqual(len(feed['mergeRouteIdGroups']), 6)
 
     def test_route_keys_have_exact_provenance_mappings(self):
         self.assertEqual(na_provenance.KEY_SOURCE_EXACT['la-metro-801'],

@@ -64,9 +64,10 @@ class MidwestOfficialTests(unittest.TestCase):
             feeds['metra']['officialNetworkByRouteId'], {
                 'BNSF': 'metra-bnsf', 'HC': 'metra-hc',
                 'MD-N': 'metra-md-n', 'MD-W': 'metra-md-w',
-                'ME': 'metra-me', 'NCS': 'metra-ncs', 'RI': 'metra-ri',
-                'SWS': 'metra-sws', 'UP-N': 'metra-up-n',
-                'UP-NW': 'metra-up-nw', 'UP-W': 'metra-up-w'})
+                'ME': 'metra-me', 'NCS': 'metra-ncs',
+                'RI': 'rta-metra-ri',
+                'SWS': 'metra-sws', 'UP-N': 'rta-metra-up-n',
+                'UP-NW': 'metra-up-nw', 'UP-W': 'rta-metra-up-w'})
         self.assertEqual(
             feeds['metro-transit']['officialNetworkByRouteId'], {
                 '901': 'metro-transit-blue',
@@ -74,16 +75,16 @@ class MidwestOfficialTests(unittest.TestCase):
                 '906': 'metro-transit-blue'})
         self.assertEqual(feeds['metro-transit']['stationIdentityGroups'],
                          [['56333', '56334', '56335', '56339']])
-        self.assertEqual(set(feeds['cleveland-rta']['blockedRouteIds']),
+        self.assertEqual(set(feeds['cleveland-rta']['geometryReviewByRouteId']),
                          {'66', '67', '68', '69'})
-        self.assertEqual(set(feeds['qline-detroit']['blockedRouteIds']),
-                         {'13578'})
-        self.assertEqual(set(feeds['detroit-people-mover']['blockedRouteIds']),
-                         {'DPM'})
-        self.assertEqual(set(feeds['cincinnati-metro']['blockedRouteIds']),
-                         {'100'})
-        self.assertEqual(set(feeds['milwaukee-hop']['blockedRouteIds']),
-                         {'TL-9'})
+        self.assertEqual(feeds['qline-detroit']['officialNetworkByRouteId'],
+                         {'13578': 'qline'})
+        self.assertEqual(feeds['detroit-people-mover']['officialNetworkByRouteId'],
+                         {'DPM': 'detroit-dpm'})
+        self.assertEqual(feeds['cincinnati-metro']['officialNetworkByRouteId'],
+                         {'100': 'cincinnati-connector'})
+        self.assertEqual(feeds['milwaukee-hop']['officialNetworkByRouteId'],
+                         {'TL-9': 'milwaukee-hop'})
 
 
 if __name__ == '__main__':
