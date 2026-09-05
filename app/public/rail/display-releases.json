@@ -1,0 +1,831 @@
+{
+  "format": "jtm-display-releases-v1",
+  "reviewedAt": "2026-09-02",
+  "method": "Interval geometry rebuilt with the compact-v1 chain rule and measured against the nearest active OpenStreetMap railway way of the line's own type (service tracks excluded) via Overpass; long intervals sampled at 20 points plus every vertex within 150 m of a sample. A = consistent (median well inside the kind limit, no localised excursion); C = only OSM's tunnel approximation disagrees. B (package wrong) and D (not measured) are never released.",
+  "releases": [
+    {
+      "region": "ca",
+      "lineId": "ttc-5",
+      "interval": 21,
+      "stations": [
+        "Fairbank Station",
+        "Caledonia Station"
+      ],
+      "verdict": "C",
+      "limitMetres": 20,
+      "packageMaxDeviationMetres": 34.52,
+      "osmMedianMetres": 3.2,
+      "osmP95Metres": 23.7,
+      "osmMaxMetres": 32.4,
+      "osmMaxAt": [
+        -79.464939,
+        43.692058
+      ],
+      "note": "max 32.4 m at the shared Caledonia station vertex against the OSM Line 5 way tagged tunnel=yes (same point as [22]); only 2 vertices over 20 m, median 3.2 m; OSM tunnel geometry is the coarse side; release with note"
+    },
+    {
+      "region": "ca",
+      "lineId": "ttc-5",
+      "interval": 22,
+      "stations": [
+        "Caledonia Station",
+        "Keelesdale Station"
+      ],
+      "verdict": "C",
+      "limitMetres": 20,
+      "packageMaxDeviationMetres": 34.52,
+      "osmMedianMetres": 2.4,
+      "osmP95Metres": 34.6,
+      "osmMaxMetres": 34.6,
+      "osmMaxAt": [
+        -79.46538,
+        43.691943
+      ],
+      "note": "max 34.6 m at the Caledonia end against the OSM Line 5 way tagged tunnel=yes (OSM tunnel geometry is the coarse side); median 2.4 m; release with note"
+    },
+    {
+      "region": "ca",
+      "lineId": "ttc-5",
+      "interval": 23,
+      "stations": [
+        "Keelesdale Station",
+        "Mount Dennis GO"
+      ],
+      "verdict": "A",
+      "limitMetres": 20,
+      "packageMaxDeviationMetres": 34.52,
+      "osmMedianMetres": 12.6,
+      "osmP95Metres": 27.4,
+      "osmMaxMetres": 27.4,
+      "osmMaxAt": [
+        -79.485674,
+        43.687749
+      ],
+      "note": "max 27.4 m <= 1.5x limit (30 m), median 12.6 m, 44% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-adirondack-us",
+      "interval": 4,
+      "stations": [
+        "Ticonderoga Amtrak",
+        "Whitehall Amtrak"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 61.67,
+      "osmMedianMetres": 8.8,
+      "osmP95Metres": 29.3,
+      "osmMaxMetres": 33.9,
+      "osmMaxAt": [
+        -73.413692,
+        43.665918
+      ],
+      "note": "max 33.9 m <= 1.5x limit (75 m), median 8.8 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-borealis",
+      "interval": 10,
+      "stations": [
+        "Winona",
+        "Red Wing Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 62.33,
+      "osmMedianMetres": 7.1,
+      "osmP95Metres": 21.9,
+      "osmMaxMetres": 27.6,
+      "osmMaxAt": [
+        -91.991148,
+        44.302402
+      ],
+      "note": "max 27.6 m <= 1.5x limit (75 m), median 7.1 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-carolinian",
+      "interval": 7,
+      "stations": [
+        "Wilmington",
+        "Baltimore Penn Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.2,
+      "osmP95Metres": 13,
+      "osmMaxMetres": 26.9,
+      "osmMaxAt": [
+        -76.320559,
+        39.403908
+      ],
+      "note": "max 26.9 m <= 1.5x limit (75 m), median 2.2 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-carolinian",
+      "interval": 8,
+      "stations": [
+        "Baltimore Penn Station",
+        "Bwi Thurgood Marshall Airport Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.8,
+      "osmP95Metres": 21.1,
+      "osmMaxMetres": 65.4,
+      "osmMaxAt": [
+        -76.636267,
+        39.30324
+      ],
+      "note": "single vertex 65.4 m (<=1.5x50) against the B&P tunnel way (OSM tunnel=yes); median 2.8 m, all else <=21 m"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-lake-shore-limited",
+      "interval": 5,
+      "stations": [
+        "Pittsfield Amtrak Station",
+        "Albany-Rensselaer Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 71.92,
+      "osmMedianMetres": 10.3,
+      "osmP95Metres": 26.8,
+      "osmMaxMetres": 68.6,
+      "osmMaxAt": [
+        -73.588254,
+        42.373298
+      ],
+      "note": "single sample 68.6 m (<=75) on CSX Berkshire Sub near Chatham NY; median 10.3 m, p95 26.8 m, no multi-vertex excursion"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-lake-shore-limited",
+      "interval": 9,
+      "stations": [
+        "Syracuse Regional Transportation Center",
+        "Rochester"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 71.92,
+      "osmMedianMetres": 6.5,
+      "osmP95Metres": 30.1,
+      "osmMaxMetres": 30.4,
+      "osmMaxAt": [
+        -76.952932,
+        43.071232
+      ],
+      "note": "max 30.4 m <= 1.5x limit (75 m), median 6.5 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-lake-shore-limited-b1",
+      "interval": 0,
+      "stations": [
+        "Ny Moynihan Train Hall At Penn Station",
+        "Croton-Harmon Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 82.37,
+      "osmMedianMetres": 1.7,
+      "osmP95Metres": 29.7,
+      "osmMaxMetres": 31.2,
+      "osmMaxAt": [
+        -73.973829,
+        40.798842
+      ],
+      "note": "max 31.2 m <= 1.5x limit (75 m), median 1.7 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-palmetto",
+      "interval": 5,
+      "stations": [
+        "Wilmington",
+        "Baltimore Penn Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.2,
+      "osmP95Metres": 13,
+      "osmMaxMetres": 26.9,
+      "osmMaxAt": [
+        -76.320559,
+        39.403908
+      ],
+      "note": "max 26.9 m <= 1.5x limit (75 m), median 2.2 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-palmetto",
+      "interval": 6,
+      "stations": [
+        "Baltimore Penn Station",
+        "Bwi Thurgood Marshall Airport Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.8,
+      "osmP95Metres": 21.1,
+      "osmMaxMetres": 65.4,
+      "osmMaxAt": [
+        -76.636267,
+        39.30324
+      ],
+      "note": "duplicate geometry of carolinian[8]: single vertex 65.4 m against B&P tunnel way; median 2.8 m"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-palmetto",
+      "interval": 20,
+      "stations": [
+        "Charleston Amtrak Station",
+        "Yemassee Amtrak"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 8.4,
+      "osmP95Metres": 19.7,
+      "osmMaxMetres": 21.3,
+      "osmMaxAt": [
+        -80.335118,
+        32.754753
+      ],
+      "note": "max 21.3 m <= 1.5x limit (75 m), median 8.4 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-pennsylvanian",
+      "interval": 6,
+      "stations": [
+        "Huntingdon Amtrak Station",
+        "Lewistown Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 297.14,
+      "osmMedianMetres": 5.8,
+      "osmP95Metres": 22,
+      "osmMaxMetres": 36.4,
+      "osmMaxAt": [
+        -77.975064,
+        40.456717
+      ],
+      "note": "max 36.4 m <= 1.5x limit (75 m), median 5.8 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-pennsylvanian",
+      "interval": 12,
+      "stations": [
+        "Paoli Amtrak Station",
+        "Philadelphia"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 297.14,
+      "osmMedianMetres": 5.1,
+      "osmP95Metres": 20,
+      "osmMaxMetres": 67.4,
+      "osmMaxAt": [
+        -75.199389,
+        39.97029
+      ],
+      "note": "single sample 67.4 m (<=75) at Zoo interlocking, 36 m from nearest track of any kind; median 5.1 m"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 7,
+      "stations": [
+        "Kansas City",
+        "Lawrence Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "osmMedianMetres": 4.6,
+      "osmP95Metres": 32.8,
+      "osmMaxMetres": 54.1,
+      "osmMaxAt": [
+        -95.182556,
+        38.95063
+      ],
+      "note": "one vertex 53-54 m (<=75) near Lawrence KS; median 4.6 m"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 9,
+      "stations": [
+        "Topeka Amtrak Station",
+        "Newton"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "osmMedianMetres": 9.1,
+      "osmP95Metres": 37.7,
+      "osmMaxMetres": 51.1,
+      "osmMaxAt": [
+        -96.778709,
+        38.27864
+      ],
+      "note": "one vertex 51.1 m (<=75) on BNSF La Junta Sub; median 9.1 m, p95 37.7 m"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 11,
+      "stations": [
+        "Hutchinson Amtrak Station",
+        "Dodge City Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "osmMedianMetres": 10,
+      "osmP95Metres": 22,
+      "osmMaxMetres": 26.1,
+      "osmMaxAt": [
+        -98.605439,
+        37.969253
+      ],
+      "note": "max 26.1 m <= 1.5x limit (75 m), median 10.0 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 14,
+      "stations": [
+        "Lamar Amtrak",
+        "La Junta Amtrak Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "osmMedianMetres": 4.5,
+      "osmP95Metres": 25.1,
+      "osmMaxMetres": 36.8,
+      "osmMaxAt": [
+        -103.393053,
+        38.041924
+      ],
+      "note": "max 36.8 m <= 1.5x limit (75 m), median 4.5 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 17,
+      "stations": [
+        "Raton",
+        "Las Vegas Amtrak Station"
+      ],
+      "verdict": "A",
+      "reference": "narn",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "narnMedianMetres": 7.2,
+      "narnP95Metres": 25.3,
+      "narnMaxMetres": 50.9,
+      "narnMaxAt": [
+        -104.546275,
+        36.512855
+      ],
+      "method": "narn-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct measurement against the FRA/BTS North American Rail Network (54 candidate main-track ways, NET=M only, shifted-control median 142.3 m) supersedes the earlier package-bound release: median 7.2 m, p95 25.3 m, single-vertex max 50.9 m (0.3% of 373 vertices over the 50 m longhaul limit) on Raton Pass, walked 176.30 km on a 161.15 km chord. No OSM tile covers this interval; the FRA/BTS network does."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 23,
+      "stations": [
+        "Flagstaff",
+        "Kingman"
+      ],
+      "verdict": "A",
+      "reference": "narn",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "narnMedianMetres": 8.6,
+      "narnP95Metres": 27.6,
+      "narnMaxMetres": 57.2,
+      "narnMaxAt": [
+        -113.221687,
+        35.494902
+      ],
+      "method": "narn-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct measurement against the FRA/BTS North American Rail Network (86 candidate main-track ways, NET=M only, shifted-control median 130.2 m) supersedes the earlier package-bound release: median 8.6 m, p95 27.6 m, single-vertex max 57.2 m (0.2% of 631 vertices over the 50 m longhaul limit) on the BNSF Seligman Sub, walked 276.57 km on a 218.43 km chord. No OSM tile covers this interval; the FRA/BTS network does."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 25,
+      "stations": [
+        "Needles Amtrak",
+        "Barstow"
+      ],
+      "verdict": "A",
+      "reference": "narn",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "narnMedianMetres": 7.9,
+      "narnP95Metres": 27.6,
+      "narnMaxMetres": 57.9,
+      "narnMaxAt": [
+        -116.281504,
+        34.726157
+      ],
+      "method": "narn-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct measurement against the FRA/BTS North American Rail Network (81 candidate main-track ways, NET=M only, shifted-control median 137.0 m) supersedes the earlier package-bound release: median 7.9 m, p95 27.6 m, single-vertex max 57.9 m (0.4% of 542 vertices over the 50 m longhaul limit) on the BNSF Mojave Sub, walked 264.43 km on a 220.84 km chord. No OSM tile covers this interval; the FRA/BTS network does."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-southwest-chief",
+      "interval": 28,
+      "stations": [
+        "San Bernardino Depot",
+        "Riverside - Downtown"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 72.76,
+      "osmMedianMetres": 7.4,
+      "osmP95Metres": 24.8,
+      "osmMaxMetres": 72.5,
+      "osmMaxAt": [
+        -117.324825,
+        34.10334
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "max 72.5 m at a single vertex (402 candidate ways, shifted-control median 137.9 m), median 7.4 m. This is the line's own worst package-vs-reference point (packageMaxDeviationMetres 72.76 at the same coordinate) — the already-released package-bound rows for intervals 17/23/25 cite this same vertex as their bound; this direct OSM measurement confirms it."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-vermonter",
+      "interval": 1,
+      "stations": [
+        "Essex Junction-Burlington Amtrak Station",
+        "Waterbury-Stowe Amtrak Station"
+      ],
+      "verdict": "A",
+      "reference": "narn",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "narnMedianMetres": 6.5,
+      "narnP95Metres": 25.1,
+      "narnMaxMetres": 55.7,
+      "narnMaxAt": [
+        -73.109741,
+        44.487354
+      ],
+      "method": "narn-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct measurement against the FRA/BTS North American Rail Network (16 candidate main-track ways, NET=M only, shifted-control median 141.8 m) supersedes the earlier package-bound release: median 6.5 m, p95 25.1 m, single-vertex max 55.7 m (1.2% of 84 vertices over the 50 m longhaul limit) through the Winooski valley on the New England Central, walked 35.80 km on a 33.42 km chord. No OSM tile covers this interval; the FRA/BTS network does."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-vermonter",
+      "interval": 17,
+      "stations": [
+        "New Haven",
+        "Bridgeport"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 1.5,
+      "osmP95Metres": 13.8,
+      "osmMaxMetres": 56.1,
+      "osmMaxAt": [
+        -73.184706,
+        41.183625
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "max 56.1 m at a single vertex (1.6% of 64 vertices over the 50 m limit), median 1.5 m against the OSM Metro-North New Haven Line (1209 candidate ways); shifted 150 m control median 137.8 m confirms the low raw median is not an artifact of an over-wide candidate way set."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-vermonter",
+      "interval": 25,
+      "stations": [
+        "Wilmington",
+        "Baltimore Penn Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.2,
+      "osmP95Metres": 13,
+      "osmMaxMetres": 26.9,
+      "osmMaxAt": [
+        -76.320559,
+        39.403908
+      ],
+      "note": "max 26.9 m <= 1.5x limit (75 m), median 2.2 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-vermonter",
+      "interval": 26,
+      "stations": [
+        "Baltimore Penn Station",
+        "Bwi Thurgood Marshall Airport Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 50,
+      "packageMaxDeviationMetres": 67.26,
+      "osmMedianMetres": 2.2,
+      "osmP95Metres": 24.5,
+      "osmMaxMetres": 65.0,
+      "osmMaxAt": [
+        -76.636267,
+        39.30324
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct OSM measurement (476 candidate ways, shifted-control median 128.5 m) supersedes the earlier package-bound release: median 2.2 m, single-vertex max 65.0 m at the B&P tunnel portal, matching amtrak-carolinian[8]'s already-released 65.4 m at the same coordinate — duplicate geometry of the same tunnel approach."
+    },
+    {
+      "region": "us",
+      "lineId": "bart-blue",
+      "interval": 9,
+      "stations": [
+        "West Oakland",
+        "Lake Merritt"
+      ],
+      "verdict": "C",
+      "limitMetres": 30,
+      "packageMaxDeviationMetres": 60.23,
+      "osmMedianMetres": 1.8,
+      "osmP95Metres": 52.9,
+      "osmMaxMetres": 60.0,
+      "osmMaxAt": [
+        -122.272967,
+        37.799893
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "median 1.8 m, but 16.7% of 30 vertices exceed the 30 m limit (112 candidate ways, shifted-control median 142.0 m); the excess is confined to the downtown Oakland tunnel, where the OSM subway alignment is the coarse side of the comparison."
+    },
+    {
+      "region": "us",
+      "lineId": "bart-green",
+      "interval": 9,
+      "stations": [
+        "West Oakland",
+        "Lake Merritt"
+      ],
+      "verdict": "C",
+      "limitMetres": 30,
+      "packageMaxDeviationMetres": 60.23,
+      "osmMedianMetres": 1.8,
+      "osmP95Metres": 52.9,
+      "osmMaxMetres": 60.0,
+      "osmMaxAt": [
+        -122.272967,
+        37.799893
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Same Lake Merritt leg and same measurement as bart-blue[9]: median 1.8 m, 16.7% of vertices over the 30 m limit, all in the downtown Oakland tunnel where the OSM subway alignment is the coarse side."
+    },
+    {
+      "region": "us",
+      "lineId": "maryland-transit-administrat-brunswick-washington",
+      "interval": 11,
+      "stations": [
+        "DICKERSON MARC",
+        "POINT OF ROCKS MARC"
+      ],
+      "verdict": "A",
+      "limitMetres": 35,
+      "packageMaxDeviationMetres": 47.31,
+      "osmMedianMetres": 5.8,
+      "osmP95Metres": 26.3,
+      "osmMaxMetres": 39.0,
+      "osmMaxAt": [
+        -77.527933,
+        39.270228
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct OSM measurement (43 candidate ways, shifted-control median 134.8 m) supersedes the earlier package-bound release: median 5.8 m, only 2.0% of 49 vertices over the 35 m limit, max 39.0 m."
+    },
+    {
+      "region": "us",
+      "lineId": "maryland-transit-administrat-brunswick-washington",
+      "interval": 13,
+      "stations": [
+        "BRUNSWICK MD MARC",
+        "HARPERS FERRY W VA MARC"
+      ],
+      "verdict": "C",
+      "limitMetres": 35,
+      "packageMaxDeviationMetres": 47.31,
+      "osmMedianMetres": 8.3,
+      "osmP95Metres": 39.0,
+      "osmMaxMetres": 45.5,
+      "osmMaxAt": [
+        -77.708653,
+        39.325623
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct OSM measurement (40 candidate ways, shifted-control median 132.5 m) supersedes the earlier package-bound release: median 8.3 m, but 10.4% of 48 vertices (5 of 48) exceed the 35 m limit by up to 11 m through the Potomac gorge near Harpers Ferry, where the CSX Cumberland Sub's OSM digitisation is the coarser side."
+    },
+    {
+      "region": "us",
+      "lineId": "maryland-transit-administrat-brunswick-washington",
+      "interval": 15,
+      "stations": [
+        "DUFFIELDS W VA MARC",
+        "Martinsburg W VA MARC"
+      ],
+      "verdict": "A",
+      "limitMetres": 30,
+      "packageMaxDeviationMetres": 47.31,
+      "osmMedianMetres": 1.5,
+      "osmP95Metres": 6.7,
+      "osmMaxMetres": 41.4,
+      "osmMaxAt": [
+        -77.885442,
+        39.381657
+      ],
+      "note": "max 41.4 m (<=45) at one sample/vertex near Shenandoah Jct on CSX Cumberland Sub; median 1.5 m, p95 6.7 m"
+    },
+    {
+      "region": "us",
+      "lineId": "mbta-providence-stoughton-line-b5",
+      "interval": 7,
+      "stations": [
+        "Newmarket",
+        "South Station"
+      ],
+      "verdict": "A",
+      "limitMetres": 30,
+      "packageMaxDeviationMetres": 69.99,
+      "osmMedianMetres": 1.4,
+      "osmP95Metres": 21.9,
+      "osmMaxMetres": 70.1,
+      "osmMaxAt": [
+        -71.055417,
+        42.351858
+      ],
+      "note": "only over-limit point is the South Station terminal vertex itself (chainage 2896 = end), 70.1 m from the nearest rail track (Track 3, building_passage) - the station point sits in the headhouse beyond the bumpers; all other 35 vertices <=28 m (median 1.4 m); not an alignment defect, release"
+    },
+    {
+      "region": "us",
+      "lineId": "patco-speedline-patco",
+      "interval": 8,
+      "stations": [
+        "City Hall",
+        "Franklin Square"
+      ],
+      "verdict": "A",
+      "limitMetres": 25,
+      "packageMaxDeviationMetres": 26.57,
+      "osmMedianMetres": 7.4,
+      "osmP95Metres": 17.8,
+      "osmMaxMetres": 26.6,
+      "osmMaxAt": [
+        -75.149956,
+        39.955583
+      ],
+      "note": "max 26.6 m <= 1.5x limit (38 m), median 7.4 m, 5% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "sound-transit-n-line",
+      "interval": 2,
+      "stations": [
+        "Edmonds",
+        "Seattle"
+      ],
+      "verdict": "A",
+      "limitMetres": 30,
+      "packageMaxDeviationMetres": 44.02,
+      "osmMedianMetres": 2.5,
+      "osmP95Metres": 9.3,
+      "osmMaxMetres": 18.4,
+      "osmMaxAt": [
+        -122.331068,
+        47.603713
+      ],
+      "note": "max 18.4 m <= 1.5x limit (45 m), median 2.5 m, 0% of points over limit"
+    },
+    {
+      "region": "us",
+      "lineId": "south-shore-line-lakeshore",
+      "interval": 5,
+      "stations": [
+        "Hegewisch",
+        "Hammond Gateway"
+      ],
+      "verdict": "C",
+      "limitMetres": 35,
+      "packageMaxDeviationMetres": 49.01,
+      "osmMedianMetres": 2.8,
+      "osmP95Metres": 47.9,
+      "osmMaxMetres": 48.7,
+      "osmMaxAt": [
+        -87.521538,
+        41.632001
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Direct OSM measurement (57 candidate ways, shifted-control median 145.5 m) supersedes the earlier package-bound release: median 2.8 m; the 47.9 m p95 / 48.7 m max sit at the Hammond Gateway station-anchor vertex itself (n=13 vertices), the same pattern already released on mbta-providence-stoughton-line-b5[7] and south-shore-line-monon's own terminal vertex."
+    }
+  ],
+  "withheldAfterMeasurement": [
+    {
+      "region": "ca",
+      "lineId": "via-ottawa-montr-al",
+      "interval": 0,
+      "stations": [
+        "Montréal",
+        "Dorval"
+      ],
+      "verdict": "B",
+      "limitMetres": 50,
+      "osmMedianMetres": 1.7,
+      "osmMaxMetres": 311.9,
+      "osmMaxAt": [
+        -73.616979,
+        45.457877
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Measured against OSM (712 candidate ways, shifted-control median 134.0 m): median 1.7 m looks clean, but p95 242.6 m / max 311.9 m is a sustained mid-interval excursion at chainage ~8 of 18 km (16.3% of vertices over the 50 m limit), not a station-anchor or tunnel artifact. Stays withheld."
+    },
+    {
+      "region": "us",
+      "lineId": "amtrak-pennsylvanian",
+      "interval": 13,
+      "stations": [
+        "Philadelphia",
+        "Trenton"
+      ],
+      "verdict": "B",
+      "limitMetres": 50,
+      "osmMedianMetres": 3,
+      "osmMaxMetres": 277,
+      "osmMaxAt": [
+        -75.1911,
+        39.9644
+      ],
+      "note": "Localised defect near Zoo interlocking, West Philadelphia: one interpolated sample is 277 m from any OSM rail while the other 33 points are within 16 m (median 3.0) — a chord or misrouting across the curve. Stays withheld; the display draws this interval from the reviewed Amtrak shared-station-interval canonical instead."
+    },
+    {
+      "region": "us",
+      "lineId": "nashville-mta-wego-public-tr-90",
+      "interval": 2,
+      "stations": [
+        "Martha Station",
+        "Mt. Juliet Station"
+      ],
+      "verdict": "B",
+      "limitMetres": 30,
+      "osmMedianMetres": 1.7,
+      "osmMaxMetres": 67.1,
+      "note": "Chord across a curve: package vertices at chainage 3120/3360/3600 m sit on a constant bearing at exactly 240 m spacing while the OSM Nashville & Eastern way curves; sustained 67 m off. Stays withheld."
+    },
+    {
+      "region": "us",
+      "lineId": "south-florida-regional-trans-mce",
+      "interval": 1,
+      "stations": [
+        "Metrorail Transfer Station",
+        "Ft Lauderdale Airport Station"
+      ],
+      "verdict": "B",
+      "limitMetres": 50,
+      "osmMedianMetres": 20.5,
+      "osmMaxMetres": 62.9,
+      "osmMaxAt": [
+        -80.233949,
+        25.908642
+      ],
+      "method": "osm-polyline-measured",
+      "measuredAt": "2026-09-02",
+      "note": "Measured against OSM (131 candidate ways, shifted-control median 111.9 m): median 20.5 m is past the 10 m A/C bar, p95 50.1 m, max 62.9 m. Stays withheld; consistent with na-2025-blocked-intervals.md's prior finding that Tri-Rail's own NARN-built south-florida-regional-trans-tr shard on the same SFRC tracks sits at median 23.8 m — a wants-a-shared-corridor case, not a release."
+    }
+  ],
+  "notMeasured": [],
+  "packageBoundMethod": "Rows tagged \"method\": \"package-bound\" were NOT re-measured against OpenStreetMap: that session had no Overpass access and no local source tree. They are released on evidence already in this repository. (R1) The package's own per-line maxDeviationMeters - measured at every vertex against the independent reference, and therefore an upper bound on this interval's own worst deviation - is within 1.5x the profile limit, the same bar every A row above states; worstAt says whether that number belongs to this interval or to another one. (R2) The line's unmatched count is 0, so no drawn vertex is more than 400 m from surveyed track. (R3) The rebuilt interval shows none of this project's known failure modes: no chord across a curve, no detour, no internal reversal, no self-overlap, no vertex jump past the profile's densify cap, and both endpoints exactly on their station anchors. (R4) It is not an interval the Overpass run measured and rejected. Where another line in the packages runs the same corridor, its vertex-by-vertex agreement is recorded in peerMedianMetres / peerP95Metres / peerMaxMetres together with that peer's own geometry source and recorded maxDeviationMeters. Applied line-wide this rule refuses both intervals the Overpass run rejected as B, so it contradicts no measured verdict in this table. These rows stay listed in notMeasured, which records what the Overpass run covered. Full working, and the three intervals that stay withheld for want of that feed: app/public/rail/na-2025-blocked-intervals.md."
+}

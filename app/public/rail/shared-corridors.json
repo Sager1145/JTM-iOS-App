@@ -1,0 +1,2319 @@
+{
+  "format": "jtm-shared-corridors-v1",
+  "reviewedAt": "2026-08-31",
+  "displayLanePolicy": {
+    "excludedLineIds": [
+      "metra-me",
+      "south-shore-line-lakeshore",
+      "south-shore-line-monon"
+    ],
+    "reason": "Keep the reviewed Metra Electric/South Shore physical corridor co-linear through Kensington. Synthetic screen offsets ended at the interlocking and rendered false stubs and branch jumps.",
+    "evidence": [
+      {
+        "type": "operator",
+        "name": "South Shore Line — Kensington entry to Metra tracks",
+        "url": "https://mysouthshoreline.com/final-letter-from-south-shore-line-president-michael-noland/"
+      },
+      {
+        "type": "operator",
+        "name": "Metra Electric main line and Blue Island Branch",
+        "url": "https://metra.com/metra-electric"
+      }
+    ]
+  },
+  "corridors": [
+    {
+      "id": "us-mbta-north-station-fitchburg-haverhill",
+      "region": "us",
+      "kind": "commuter",
+      "canonicalLineId": "mbta-fitchburg-line",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 60,
+      "maxCutSeparationMeters": 90,
+      "evidence": [
+        {
+          "type": "government-gis",
+          "name": "MassGIS Trains — MBTA commuter rail",
+          "url": "https://services9.arcgis.com/zkB26wYVlNoTUmsC/ArcGIS/rest/services/MassGIS_trains/FeatureServer/2"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap physical railway ways at Boston North Station",
+          "url": "https://www.openstreetmap.org/#map=16/42.371/-71.066"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=42.371&lon=-71.066&zoom=16"
+        }
+      ],
+      "members": [
+        {
+          "lineId": "mbta-fitchburg-line",
+          "stationCode": "us-official-north",
+          "intervalIndex": 0,
+          "side": "start",
+          "cut": [
+            -71.0693,
+            42.371671
+          ]
+        },
+        {
+          "lineId": "mbta-haverhill-line",
+          "stationCode": "us-official-north",
+          "intervalIndex": 13,
+          "side": "end",
+          "cut": [
+            -71.069789,
+            42.37223
+          ]
+        }
+      ]
+    },
+    {
+      "id": "us-amtrak-reviewed-shared-station-intervals",
+      "region": "us",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 120,
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap physical railway ways",
+          "url": "https://www.openstreetmap.org/"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/"
+        }
+      ],
+      "lineIds": [
+        "amtrak-valley-flyer",
+        "amtrak-hiawatha-service",
+        "amtrak-piedmont",
+        "amtrak-missouri-river-runner",
+        "amtrak-ethan-allen-express",
+        "amtrak-carl-sandburg",
+        "amtrak-empire-builder-b1",
+        "amtrak-empire-service",
+        "amtrak-lincoln-service-missouri-river-runner",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-adirondack-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-vermonter",
+        "amtrak-lake-shore-limited",
+        "amtrak-southwest-chief",
+        "amtrak-lake-shore-limited-b1",
+        "amtrak-empire-builder",
+        "amtrak-pennsylvanian"
+      ],
+      "canonicalLinePriority": [
+        "amtrak-valley-flyer",
+        "amtrak-hiawatha-service",
+        "amtrak-piedmont",
+        "amtrak-missouri-river-runner",
+        "amtrak-ethan-allen-express",
+        "amtrak-carl-sandburg",
+        "amtrak-empire-builder-b1",
+        "amtrak-empire-service",
+        "amtrak-lincoln-service-missouri-river-runner",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-adirondack-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-vermonter",
+        "amtrak-lake-shore-limited",
+        "amtrak-southwest-chief",
+        "amtrak-lake-shore-limited-b1",
+        "amtrak-empire-builder",
+        "amtrak-pennsylvanian"
+      ],
+      "stationPairs": [
+        [
+          "us-official-albany-rensselaer",
+          "us-official-hudson"
+        ],
+        [
+          "us-official-albany-rensselaer",
+          "us-official-schenectady"
+        ],
+        [
+          "us-official-alexandria",
+          "us-official-washington-union"
+        ],
+        [
+          "us-official-buffalo-depew",
+          "us-official-rochester"
+        ],
+        [
+          "us-official-burlington",
+          "us-official-durham"
+        ],
+        [
+          "us-official-burlington",
+          "us-official-greensboro"
+        ],
+        [
+          "us-official-bwi-thurgood-marshall-airport",
+          "us-official-new-carrollton"
+        ],
+        [
+          "us-official-cary",
+          "us-official-durham"
+        ],
+        [
+          "us-official-cary",
+          "us-official-raleigh-union"
+        ],
+        [
+          "us-official-charlotte",
+          "us-official-kannapolis"
+        ],
+        [
+          "us-official-chicago-union",
+          "us-official-glenview"
+        ],
+        [
+          "us-official-columbus",
+          "us-official-milwaukee"
+        ],
+        [
+          "us-official-columbus",
+          "us-official-portage"
+        ],
+        [
+          "us-official-croton-harmon",
+          "us-official-poughkeepsie"
+        ],
+        [
+          "us-official-croton-harmon",
+          "us-official-yonkers"
+        ],
+        [
+          "us-official-edmonds",
+          "us-official-everett"
+        ],
+        [
+          "us-official-general-mitchell-intl-airport",
+          "us-official-milwaukee"
+        ],
+        [
+          "us-official-general-mitchell-intl-airport",
+          "us-official-sturtevant"
+        ],
+        [
+          "us-official-glenview",
+          "us-official-sturtevant"
+        ],
+        [
+          "us-official-greenfield",
+          "us-official-northampton"
+        ],
+        [
+          "us-official-greensboro",
+          "us-official-high-point"
+        ],
+        [
+          "us-official-hermann",
+          "us-official-jefferson-city"
+        ],
+        [
+          "us-official-hermann",
+          "us-official-washington"
+        ],
+        [
+          "us-official-high-point",
+          "us-official-salisbury"
+        ],
+        [
+          "us-official-holyoke",
+          "us-official-northampton"
+        ],
+        [
+          "us-official-hudson",
+          "us-official-rhinecliff"
+        ],
+        [
+          "us-official-independence",
+          "us-official-kansas-city"
+        ],
+        [
+          "us-official-independence",
+          "us-official-lee-s-summit"
+        ],
+        [
+          "us-official-jefferson-city",
+          "us-official-sedalia"
+        ],
+        [
+          "us-official-kannapolis",
+          "us-official-salisbury"
+        ],
+        [
+          "us-official-kirkwood",
+          "us-official-st-louis"
+        ],
+        [
+          "us-official-kirkwood",
+          "us-official-washington"
+        ],
+        [
+          "us-official-lee-s-summit",
+          "us-official-warrensburg"
+        ],
+        [
+          "us-official-mendota",
+          "us-official-princeton"
+        ],
+        [
+          "us-official-metropark",
+          "us-official-newark"
+        ],
+        [
+          "us-official-metropark",
+          "us-official-trenton"
+        ],
+        [
+          "us-official-new-carrollton",
+          "us-official-washington-union"
+        ],
+        [
+          "us-official-ny-moynihan-train-hall-at-penn",
+          "us-official-yonkers"
+        ],
+        [
+          "us-official-newark",
+          "us-official-ny-moynihan-train-hall-at-penn"
+        ],
+        [
+          "us-official-philadelphia",
+          "us-official-trenton"
+        ],
+        [
+          "us-official-portland",
+          "us-official-vancouver"
+        ],
+        [
+          "us-official-poughkeepsie",
+          "us-official-rhinecliff"
+        ],
+        [
+          "us-official-red-wing",
+          "us-official-st-paul-minneapolis"
+        ],
+        [
+          "us-official-rocky-mount",
+          "us-official-wilson"
+        ],
+        [
+          "us-official-sedalia",
+          "us-official-warrensburg"
+        ],
+        [
+          "us-official-selma",
+          "us-official-wilson"
+        ],
+        [
+          "us-official-tomah",
+          "us-official-wisconsin-dells"
+        ]
+      ]
+    },
+    {
+      "id": "us-amtrak-empire-builder-spokane",
+      "region": "us",
+      "kind": "intercity",
+      "canonicalLineId": "amtrak-empire-builder-b1",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 15,
+      "maxCutSeparationMeters": 50,
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap BNSF Spokane Subdivision ways",
+          "url": "https://www.openstreetmap.org/#map=15/47.652/-117.434"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=47.652&lon=-117.434&zoom=15"
+        }
+      ],
+      "members": [
+        {
+          "lineId": "amtrak-empire-builder",
+          "stationCode": "us-official-spokane",
+          "intervalIndex": 34,
+          "side": "start",
+          "cut": [
+            -117.449963,
+            47.648105
+          ]
+        },
+        {
+          "lineId": "amtrak-empire-builder-b1",
+          "stationCode": "us-official-spokane",
+          "intervalIndex": 0,
+          "side": "start",
+          "cut": [
+            -117.450265,
+            47.647897
+          ]
+        }
+      ]
+    },
+    {
+      "id": "us-marta-blue-green-west-trunk",
+      "region": "us",
+      "kind": "metro",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 60,
+      "canonicalLinePriority": [
+        "metropolitan-atlanta-rapid-t-green",
+        "metropolitan-atlanta-rapid-t-blue"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MARTA static GTFS",
+          "url": "https://www.itsmarta.com/google_transit_feed/google_transit.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap MARTA east-west physical railway",
+          "url": "https://www.openstreetmap.org/#map=14/33.755/-84.405"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap Atlanta infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=33.755&lon=-84.405&zoom=14"
+        }
+      ],
+      "lineIds": [
+        "metropolitan-atlanta-rapid-t-green",
+        "metropolitan-atlanta-rapid-t-blue"
+      ],
+      "stationPairs": [
+        [
+          "us-official-ashby-2",
+          "us-official-vine-city"
+        ],
+        [
+          "us-official-vine-city",
+          "us-official-sec-district"
+        ],
+        [
+          "us-official-sec-district",
+          "us-official-five-points"
+        ],
+        [
+          "us-official-five-points",
+          "us-official-georgia-state"
+        ],
+        [
+          "us-official-georgia-state",
+          "us-official-king-memorial"
+        ],
+        [
+          "us-official-king-memorial",
+          "us-official-inman-park-reynoldstown"
+        ],
+        [
+          "us-official-inman-park-reynoldstown",
+          "us-official-edgewood-candler-park"
+        ]
+      ]
+    },
+    {
+      "id": "us-dart-reviewed-shared-trunks",
+      "region": "us",
+      "kind": "lightrail",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 35,
+      "canonicalLinePriority": [
+        "dallas-area-rapid-transit-da-blue",
+        "dallas-area-rapid-transit-da-green",
+        "dallas-area-rapid-transit-da-orange",
+        "dallas-area-rapid-transit-da-red"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "DART static GTFS",
+          "url": "http://www.dart.org/transitdata/latest/google_transit.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap DART physical light-rail ways",
+          "url": "https://www.openstreetmap.org/#map=13/32.795/-96.800"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap Dallas infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=32.795&lon=-96.800&zoom=13"
+        }
+      ],
+      "lineIds": [
+        "dallas-area-rapid-transit-da-blue",
+        "dallas-area-rapid-transit-da-green",
+        "dallas-area-rapid-transit-da-orange",
+        "dallas-area-rapid-transit-da-red"
+      ],
+      "stationPairs": [
+        [
+          "us-official-8th-corinth",
+          "us-official-cedars"
+        ],
+        [
+          "us-official-cedars",
+          "us-official-ebj-union"
+        ],
+        [
+          "us-official-ebj-union",
+          "us-official-west-end"
+        ],
+        [
+          "us-official-west-end",
+          "us-official-akard"
+        ],
+        [
+          "us-official-akard",
+          "us-official-st-paul"
+        ],
+        [
+          "us-official-st-paul",
+          "us-official-pearl-arts-district"
+        ],
+        [
+          "us-official-pearl-arts-district",
+          "us-official-cityplace-uptown"
+        ],
+        [
+          "us-official-cityplace-uptown",
+          "us-official-smu-mockingbird"
+        ],
+        [
+          "us-official-smu-mockingbird",
+          "us-official-lovers-lane"
+        ],
+        [
+          "us-official-lovers-lane",
+          "us-official-park-lane"
+        ],
+        [
+          "us-official-park-lane",
+          "us-official-walnut-hill"
+        ],
+        [
+          "us-official-walnut-hill",
+          "us-official-forest-ln"
+        ],
+        [
+          "us-official-forest-ln",
+          "us-official-lbj-central"
+        ],
+        [
+          "us-official-lbj-central",
+          "us-official-spring-valley"
+        ],
+        [
+          "us-official-spring-valley",
+          "us-official-arapaho-center"
+        ],
+        [
+          "us-official-arapaho-center",
+          "us-official-galatyn-park"
+        ],
+        [
+          "us-official-galatyn-park",
+          "us-official-cityline-bush"
+        ],
+        [
+          "us-official-cityline-bush",
+          "us-official-12th-street"
+        ],
+        [
+          "us-official-12th-street",
+          "us-official-downtown-plano"
+        ],
+        [
+          "us-official-downtown-plano",
+          "us-official-parker-road"
+        ],
+        [
+          "us-official-west-end",
+          "us-official-victory"
+        ],
+        [
+          "us-official-victory",
+          "us-official-market-center"
+        ],
+        [
+          "us-official-market-center",
+          "us-official-southwest-medical-district-parkland"
+        ],
+        [
+          "us-official-southwest-medical-district-parkland",
+          "us-official-inwood-love-field"
+        ],
+        [
+          "us-official-inwood-love-field",
+          "us-official-burbank"
+        ],
+        [
+          "us-official-burbank",
+          "us-official-bachman"
+        ]
+      ]
+    },
+    {
+      "id": "us-path-world-trade-center-trunk",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 45,
+      "canonicalLinePriority": [
+        "port-authority-trans-hudson-world-trade-center-33rd-street",
+        "port-authority-trans-hudson-hoboken-world-trade-center"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "PATH static GTFS",
+          "url": "http://data.trilliumtransit.com/gtfs/path-nj-us/path-nj-us.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap PATH Hudson tubes",
+          "url": "https://www.openstreetmap.org/#map=14/40.716/-74.026"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap PATH infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=40.716&lon=-74.026&zoom=14"
+        }
+      ],
+      "lineIds": [
+        "port-authority-trans-hudson-hoboken-world-trade-center",
+        "port-authority-trans-hudson-world-trade-center-33rd-street"
+      ],
+      "stationPairs": [
+        [
+          "us-official-newport",
+          "us-official-exchange-place"
+        ]
+      ]
+    },
+    {
+      "id": "us-south-shore-shared-chicago-trunk",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 45,
+      "canonicalLinePriority": [
+        "south-shore-line-monon",
+        "south-shore-line-lakeshore"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "South Shore Line static GTFS",
+          "url": "http://www.mysouthshoreline.com/google/google_transit.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap South Shore physical railway",
+          "url": "https://www.openstreetmap.org/#map=12/41.730/-87.605"
+        }
+      ],
+      "lineIds": [
+        "south-shore-line-lakeshore",
+        "south-shore-line-monon"
+      ],
+      "stationPairs": [
+        [
+          "us-official-57th-st-hyde-park",
+          "us-official-museum-campus-11th-st"
+        ],
+        [
+          "us-official-museum-campus-11th-st",
+          "us-official-van-buren-st"
+        ],
+        [
+          "us-official-van-buren-st",
+          "us-official-millennium"
+        ]
+      ]
+    },
+    {
+      "id": "us-amtrak-shore-line-east-nec",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "amtrak-shore-line-east",
+        "amtrak-vermonter"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak-hosted intercity and Shore Line East GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Northeast Corridor railway",
+          "url": "https://www.openstreetmap.org/#map=11/41.235/-72.985"
+        }
+      ],
+      "lineIds": [
+        "amtrak-shore-line-east",
+        "amtrak-vermonter"
+      ],
+      "stationPairs": [
+        [
+          "us-official-new-haven-2",
+          "us-official-bridgeport"
+        ]
+      ]
+    },
+    {
+      "id": "us-amtrak-metrolink-riverside-san-bernardino",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "metrolink-ie-oc-line",
+        "amtrak-southwest-chief"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Metrolink static GTFS",
+          "url": "https://metrolinktrains.com/globalassets/about/gtfs/gtfs.zip"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": [
+        "metrolink-ie-oc-line",
+        "amtrak-southwest-chief"
+      ],
+      "stationPairs": [
+        [
+          "us-official-riverside-downtown",
+          "us-official-san-bernardino"
+        ]
+      ]
+    },
+    {
+      "id": "us-mbta-providence-fairmount-diversion",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "mbta-fairmount-line",
+        "mbta-providence-stoughton-line-b5"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "MassGIS MBTA Commuter Rail Lines",
+          "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Commuter_Rail/FeatureServer/3"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Fairmount Line physical railway",
+          "url": "https://www.openstreetmap.org/#map=13/42.298/-71.083"
+        }
+      ],
+      "lineIds": [
+        "mbta-fairmount-line",
+        "mbta-providence-stoughton-line-b5"
+      ],
+      "stationPairs": [
+        [
+          "us-official-fairmount",
+          "us-official-blue-hill-avenue"
+        ],
+        [
+          "us-official-blue-hill-avenue",
+          "us-official-morton-street"
+        ],
+        [
+          "us-official-morton-street",
+          "us-official-talbot-avenue"
+        ],
+        [
+          "us-official-talbot-avenue",
+          "us-official-four-corners-geneva"
+        ],
+        [
+          "us-official-four-corners-geneva",
+          "us-official-uphams-corner"
+        ],
+        [
+          "us-official-uphams-corner",
+          "us-official-newmarket"
+        ],
+        [
+          "us-official-newmarket",
+          "us-official-south"
+        ]
+      ]
+    },
+    {
+      "id": "us-boston-back-bay-south-station",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "mbta-providence-stoughton-line",
+        "mbta-foxboro-event-service",
+        "mbta-needham-line",
+        "mbta-framingham-worcester-line",
+        "amtrak-lake-shore-limited"
+      ],
+      "evidence": [
+        {
+          "type": "government-gis",
+          "name": "MassGIS MBTA Commuter Rail Lines",
+          "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Commuter_Rail/FeatureServer/3"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Back Bay-South Station physical railway",
+          "url": "https://www.openstreetmap.org/#map=15/42.349/-71.066"
+        }
+      ],
+      "lineIds": [
+        "amtrak-lake-shore-limited",
+        "mbta-foxboro-event-service",
+        "mbta-framingham-worcester-line",
+        "mbta-needham-line",
+        "mbta-providence-stoughton-line"
+      ],
+      "stationPairs": [
+        [
+          "us-official-back-bay",
+          "us-official-south"
+        ]
+      ]
+    },
+    {
+      "id": "us-amtrak-interior-crossing-intervals",
+      "region": "us",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 120,
+      "canonicalLinePriority": [
+        "amtrak-empire-builder",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-borealis",
+        "amtrak-vermonter"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Amtrak current route timetables",
+          "url": "https://www.amtrak.com/train-schedules-timetables"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": [
+        "amtrak-amtrak-cascades-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-empire-builder",
+        "amtrak-palmetto",
+        "amtrak-vermonter"
+      ],
+      "stationPairs": [
+        [
+          "us-official-red-wing",
+          "us-official-winona"
+        ],
+        [
+          "us-official-edmonds",
+          "us-official-seattle"
+        ]
+      ]
+    },
+    {
+      "id": "ca-via-southwestern-ontario-shared-track",
+      "region": "ca",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "via-toronto-windsor",
+        "via-toronto-london"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "VIA Rail static GTFS",
+          "url": "https://www.viarail.ca/sites/all/files/gtfs/viarail.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "VIA Rail Windsor-London-Toronto schedule",
+          "url": "https://www.viarail.ca/en/plan/train-schedules/windsor-london-toronto"
+        },
+        {
+          "type": "government-gis",
+          "name": "Ontario Railway Network tracks",
+          "url": "https://ws.gisetl.lrc.gov.on.ca/fmedatadownload/Packages/ORWNTRK.zip"
+        }
+      ],
+      "lineIds": [
+        "via-toronto-london",
+        "via-toronto-windsor"
+      ],
+      "stationPairs": [
+        [
+          "ca-official-aldershot",
+          "ca-official-brantford"
+        ],
+        [
+          "ca-official-brantford",
+          "ca-official-woodstock"
+        ]
+      ]
+    },
+    {
+      "id": "us-tri-rail-downtown-miami-link",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "south-florida-regional-trans-mce",
+        "south-florida-regional-trans-dml"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Tri-Rail static GTFS",
+          "url": "http://www.tri-rail.com/GTDF/Current/google_transit.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Tri-Rail Downtown Miami Link schedule",
+          "url": "https://www1.tri-rail.com/ScheduleTable/1"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": [
+        "south-florida-regional-trans-dml",
+        "south-florida-regional-trans-mce"
+      ],
+      "stationPairs": [
+        [
+          "us-official-metrorail-transfer",
+          "us-official-miamicentral"
+        ]
+      ]
+    },
+    {
+      "id": "us-lirr-jamaica-kew-gardens-shared-track",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-west-hempstead-branch",
+        "mta-long-island-rail-road-city-terminal-zone"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MTA Long Island Rail Road static GTFS",
+          "url": "http://web.mta.info/developers/data/lirr/google_transit.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "MTA Rail Branches GIS",
+          "url": "https://data.ny.gov/resource/2vcb-zrh4.geojson?$limit=50000"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "MTA LIRR branch timetables",
+          "url": "https://new.mta.info/schedules/long-island-rail-road"
+        }
+      ],
+      "lineIds": [
+        "mta-long-island-rail-road-city-terminal-zone",
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-west-hempstead-branch"
+      ],
+      "stationPairs": [
+        [
+          "us-official-jamaica",
+          "us-official-kew-gardens"
+        ]
+      ]
+    },
+    {
+      "id": "us-metrolink-san-bernardino-terminal-link",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "metrolink-ie-oc-line",
+        "metrolink-sb-line"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Metrolink static GTFS",
+          "url": "https://metrolinktrains.com/globalassets/about/gtfs/gtfs.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Metrolink current system timetable",
+          "url": "https://metrolinktrains.com/globalassets/schedules/timetables/2026/ml-timetable-current.pdf"
+        },
+        {
+          "type": "government-gis",
+          "name": "SCRRA/SCAG Metrolink line centreline",
+          "url": "https://maps.scag.ca.gov/scaggis/rest/services/OpenData/Metrolinklinescag/MapServer/0/query?where=1%3D1&outFields=*&returnGeometry=true&outSR=4326&f=geojson"
+        }
+      ],
+      "lineIds": [
+        "metrolink-ie-oc-line",
+        "metrolink-sb-line"
+      ],
+      "stationPairs": [
+        [
+          "us-official-san-bernardino",
+          "us-official-san-bernardino-downtown"
+        ]
+      ]
+    }
+  ],
+  "displayLandlordPolicy": {
+    "why": [
+      "Which of two lines sharing one physical track is DRAWN and which is drawn from the other's alignment. build-display-lanes.mjs discovers this by measurement everywhere it can, but measurement alone cannot separate the two things japan_line_by_line_audit/02 separates by hand: 342 spans of 坐标精确重合 (exact coordinate coincidence, median lateral 0.0 m — one physical track digitised twice) from 245 spans of 真实几何平行 (genuinely independent centrelines on their own roadbeds). 35 of those 245 run closer than FOLLOW_MAX_MEDIAN_METRES and all 245 are longer than FOLLOW_MIN_RUN_METRES, so an unaided measurement pass would draw 35 independent railways off a neighbour's centreline.",
+      "So under the route-preserving profile (jp-render-groups.json) a follow needs a reviewed reason as well as a measurement, and this table is that reason. Only the coincident pairs are seeded; not one of the 245 true-parallel spans appears here, and each of those keeps its own centreline and takes a parallel lane instead.",
+      "Entries are recorded per CLASS — `tenantLineIds` / `landlordLineIds` list every geometry-part row (-2/-3/-p1 …) on each side — because the relationship is between two railways, not between two of their parts."
+    ],
+    "method": "japan_line_by_line_audit/02_共线与平行区间明细.csv rows of type 坐标精确重合, adjudicated into tenant/landlord by jp-corridor-landlords.csv (N02 rank, then operator tier, then digitised length). 62 of that file's 113 rows are UNRESOLVED and are not seeded; 51 rows resolved, expanding to the directed class pairs below because a row may name several lines on one side.",
+    "unresolved": [
+      {
+        "lineIds": [
+          "jp-京成電鉄-成田空港線",
+          "jp-北総鉄道-北総線"
+        ],
+        "why": "The reviewed rows contradict each other on direction: one row makes the first line the landlord over one span and another makes it the tenant of the second over an adjacent span. A landlord seed that names both directions is not evidence, so neither direction is seeded and the pair falls back to the ordinary lane pass. jp-corridor-landlords.csv itself flags the 信越線/羽越線 adjudication as low confidence and asks for an N02 track-ownership review; the 京成成田空港線/北総線 pair needs the same, since Narita Sky Access genuinely changes which company owns the track along its length."
+      },
+      {
+        "lineIds": [
+          "jp-東日本旅客鉄道-信越線",
+          "jp-東日本旅客鉄道-羽越線"
+        ],
+        "why": "The reviewed rows contradict each other on direction: one row makes the first line the landlord over one span and another makes it the tenant of the second over an adjacent span. A landlord seed that names both directions is not evidence, so neither direction is seeded and the pair falls back to the ordinary lane pass. jp-corridor-landlords.csv itself flags the 信越線/羽越線 adjudication as low confidence and asks for an N02 track-ownership review; the 京成成田空港線/北総線 pair needs the same, since Narita Sky Access genuinely changes which company owns the track along its length."
+      }
+    ]
+  },
+  "displayLandlords": [
+    {
+      "region": "jp",
+      "tenantLineId": "jp-しなの鉄道-しなの鉄道線",
+      "landlordLineId": "jp-東日本旅客鉄道-篠ノ井線",
+      "tenantLineIds": [
+        "jp-しなの鉄道-しなの鉄道線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-篠ノ井線"
+      ],
+      "spans": [
+        "篠ノ井附近—篠ノ井"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (しなの鉄道 tier 3 vs 東日本旅客鉄道 tier 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線",
+      "landlordLineId": "jp-東日本旅客鉄道-山田線",
+      "tenantLineIds": [
+        "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-山田線"
+      ],
+      "spans": [
+        "盛岡附近—盛岡",
+        "盛岡"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (アイジーアールいわて銀河鉄道 tier 3 vs 東日本旅客鉄道 tier 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線",
+      "landlordLineId": "jp-東日本旅客鉄道-東北線",
+      "tenantLineIds": [
+        "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北線-3",
+        "jp-東日本旅客鉄道-東北線-4",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-東北線-p1",
+        "jp-東日本旅客鉄道-東北線-p2"
+      ],
+      "spans": [
+        "盛岡"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (アイジーアールいわて銀河鉄道 tier 3 vs 東日本旅客鉄道 tier 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-上毛電気鉄道-上毛線",
+      "landlordLineId": "jp-東武鉄道-桐生線",
+      "tenantLineIds": [
+        "jp-上毛電気鉄道-上毛線"
+      ],
+      "landlordLineIds": [
+        "jp-東武鉄道-桐生線"
+      ],
+      "spans": [
+        "赤城—桐生球場前"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 2)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-九州旅客鉄道-大村線",
+      "landlordLineId": "jp-九州旅客鉄道-長崎線",
+      "tenantLineIds": [
+        "jp-九州旅客鉄道-大村線"
+      ],
+      "landlordLineIds": [
+        "jp-九州旅客鉄道-長崎線",
+        "jp-九州旅客鉄道-長崎線-2"
+      ],
+      "spans": [
+        "諫早",
+        "諫早附近—諫早"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-九州旅客鉄道-大村線",
+      "landlordLineId": "jp-島原鉄道-島原鉄道線",
+      "tenantLineIds": [
+        "jp-九州旅客鉄道-大村線"
+      ],
+      "landlordLineIds": [
+        "jp-島原鉄道-島原鉄道線"
+      ],
+      "spans": [
+        "諫早"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-九州旅客鉄道-豊肥線",
+      "landlordLineId": "jp-九州旅客鉄道-日豊線",
+      "tenantLineIds": [
+        "jp-九州旅客鉄道-豊肥線"
+      ],
+      "landlordLineIds": [
+        "jp-九州旅客鉄道-日豊線",
+        "jp-九州旅客鉄道-日豊線-p1"
+      ],
+      "spans": [
+        "大分附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-九州旅客鉄道-豊肥線",
+      "landlordLineId": "jp-九州旅客鉄道-鹿児島線",
+      "tenantLineIds": [
+        "jp-九州旅客鉄道-豊肥線"
+      ],
+      "landlordLineIds": [
+        "jp-九州旅客鉄道-鹿児島線",
+        "jp-九州旅客鉄道-鹿児島線-2",
+        "jp-九州旅客鉄道-鹿児島線-2-p1",
+        "jp-九州旅客鉄道-鹿児島線-p1"
+      ],
+      "spans": [
+        "熊本"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-井原鉄道-井原線",
+      "landlordLineId": "jp-西日本旅客鉄道-伯備線",
+      "tenantLineIds": [
+        "jp-井原鉄道-井原線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-伯備線"
+      ],
+      "spans": [
+        "清音附近—総社",
+        "総社"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (井原鉄道 tier 3 vs 西日本旅客鉄道 tier 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-井原鉄道-井原線",
+      "landlordLineId": "jp-西日本旅客鉄道-吉備線",
+      "tenantLineIds": [
+        "jp-井原鉄道-井原線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-吉備線"
+      ],
+      "spans": [
+        "総社"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (井原鉄道 tier 3 vs 西日本旅客鉄道 tier 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-京成電鉄-成田空港線",
+      "landlordLineId": "jp-京成電鉄-本線",
+      "tenantLineIds": [
+        "jp-京成電鉄-成田空港線"
+      ],
+      "landlordLineIds": [
+        "jp-京成電鉄-本線"
+      ],
+      "spans": [
+        "京成高砂"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-京成電鉄-成田空港線",
+      "landlordLineId": "jp-京成電鉄-金町線",
+      "tenantLineIds": [
+        "jp-京成電鉄-成田空港線"
+      ],
+      "landlordLineIds": [
+        "jp-京成電鉄-金町線"
+      ],
+      "spans": [
+        "京成高砂"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-北海道旅客鉄道-千歳線",
+      "landlordLineId": "jp-北海道旅客鉄道-函館線",
+      "tenantLineIds": [
+        "jp-北海道旅客鉄道-千歳線",
+        "jp-北海道旅客鉄道-千歳線-2"
+      ],
+      "landlordLineIds": [
+        "jp-北海道旅客鉄道-函館線",
+        "jp-北海道旅客鉄道-函館線-2",
+        "jp-北海道旅客鉄道-函館線-p1"
+      ],
+      "spans": [
+        "白石附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-南海電気鉄道-空港線",
+      "landlordLineId": "jp-西日本旅客鉄道-関西空港線",
+      "tenantLineIds": [
+        "jp-南海電気鉄道-空港線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-関西空港線"
+      ],
+      "spans": [
+        "関西空港附近—りんくうタウン附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 4 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-名古屋市-2号線名港線",
+      "landlordLineId": "jp-名古屋市-4号線名城線",
+      "tenantLineIds": [
+        "jp-名古屋市-2号線名港線"
+      ],
+      "landlordLineIds": [
+        "jp-名古屋市-4号線名城線"
+      ],
+      "spans": [
+        "金山附近—金山"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (7 vs 18 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-智頭急行-智頭線",
+      "landlordLineId": "jp-西日本旅客鉄道-山陽線",
+      "tenantLineIds": [
+        "jp-智頭急行-智頭線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-山陽線",
+        "jp-西日本旅客鉄道-山陽線-2",
+        "jp-西日本旅客鉄道-山陽線-3"
+      ],
+      "spans": [
+        "上郡附近—上郡"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東京地下鉄-13号線副都心線",
+      "landlordLineId": "jp-東京地下鉄-8号線有楽町線",
+      "tenantLineIds": [
+        "jp-東京地下鉄-13号線副都心線"
+      ],
+      "landlordLineIds": [
+        "jp-東京地下鉄-8号線有楽町線"
+      ],
+      "spans": [
+        "小竹向原"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (11 vs 24 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東京地下鉄-13号線副都心線",
+      "landlordLineId": "jp-西武鉄道-西武有楽町線",
+      "tenantLineIds": [
+        "jp-東京地下鉄-13号線副都心線"
+      ],
+      "landlordLineIds": [
+        "jp-西武鉄道-西武有楽町線"
+      ],
+      "spans": [
+        "小竹向原"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (11 vs 24 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東京地下鉄-7号線南北線",
+      "landlordLineId": "jp-東京都-6号線三田線",
+      "tenantLineIds": [
+        "jp-東京地下鉄-7号線南北線"
+      ],
+      "landlordLineIds": [
+        "jp-東京都-6号線三田線"
+      ],
+      "spans": [
+        "目黒—白金高輪附近"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (19 vs 27 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東急電鉄-目黒線",
+      "landlordLineId": "jp-東急電鉄-東横線",
+      "tenantLineIds": [
+        "jp-東急電鉄-目黒線"
+      ],
+      "landlordLineIds": [
+        "jp-東急電鉄-東横線"
+      ],
+      "spans": [
+        "田園調布"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (21 vs 8 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-八高線",
+      "landlordLineId": "jp-東日本旅客鉄道-高崎線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-八高線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-高崎線"
+      ],
+      "spans": [
+        "倉賀野—倉賀野附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 3 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-弥彦線",
+      "landlordLineId": "jp-東日本旅客鉄道-越後線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-弥彦線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-越後線"
+      ],
+      "spans": [
+        "吉田附近—吉田"
+      ],
+      "reason": "rank/operator tier tied (rank 3); longer digitised line wins as trunk (8 vs 33 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-白新線",
+      "landlordLineId": "jp-東日本旅客鉄道-信越線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-白新線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-信越線",
+        "jp-東日本旅客鉄道-信越線-2",
+        "jp-東日本旅客鉄道-信越線-3"
+      ],
+      "spans": [
+        "新潟"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-磐越東線",
+      "landlordLineId": "jp-東日本旅客鉄道-東北線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-磐越東線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北線-3",
+        "jp-東日本旅客鉄道-東北線-4",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-東北線-p1",
+        "jp-東日本旅客鉄道-東北線-p2"
+      ],
+      "spans": [
+        "郡山—郡山附近",
+        "郡山附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-磐越西線",
+      "landlordLineId": "jp-東日本旅客鉄道-信越線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-磐越西線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-信越線",
+        "jp-東日本旅客鉄道-信越線-2",
+        "jp-東日本旅客鉄道-信越線-3"
+      ],
+      "spans": [
+        "新津",
+        "新津—新津附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-磐越西線",
+      "landlordLineId": "jp-東日本旅客鉄道-東北線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-磐越西線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北線-3",
+        "jp-東日本旅客鉄道-東北線-4",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-東北線-p1",
+        "jp-東日本旅客鉄道-東北線-p2"
+      ],
+      "spans": [
+        "郡山—郡山附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-越後線",
+      "landlordLineId": "jp-東日本旅客鉄道-信越線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-越後線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-信越線",
+        "jp-東日本旅客鉄道-信越線-2",
+        "jp-東日本旅客鉄道-信越線-3"
+      ],
+      "spans": [
+        "新潟"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-陸羽東線",
+      "landlordLineId": "jp-東日本旅客鉄道-奥羽線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-陸羽東線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-奥羽線",
+        "jp-東日本旅客鉄道-奥羽線-p1"
+      ],
+      "spans": [
+        "新庄"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-陸羽東線",
+      "landlordLineId": "jp-東日本旅客鉄道-東北線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-陸羽東線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北線-3",
+        "jp-東日本旅客鉄道-東北線-4",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-東北線-p1",
+        "jp-東日本旅客鉄道-東北線-p2"
+      ],
+      "spans": [
+        "小牛田附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東日本旅客鉄道-陸羽西線",
+      "landlordLineId": "jp-東日本旅客鉄道-奥羽線",
+      "tenantLineIds": [
+        "jp-東日本旅客鉄道-陸羽西線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-奥羽線",
+        "jp-東日本旅客鉄道-奥羽線-p1"
+      ],
+      "spans": [
+        "新庄",
+        "新庄附近—新庄"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東武鉄道-佐野線",
+      "landlordLineId": "jp-東武鉄道-伊勢崎線",
+      "tenantLineIds": [
+        "jp-東武鉄道-佐野線"
+      ],
+      "landlordLineIds": [
+        "jp-東武鉄道-伊勢崎線"
+      ],
+      "spans": [
+        "館林附近—館林",
+        "館林附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 2)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東武鉄道-小泉線",
+      "landlordLineId": "jp-東武鉄道-伊勢崎線",
+      "tenantLineIds": [
+        "jp-東武鉄道-小泉線",
+        "jp-東武鉄道-小泉線-2"
+      ],
+      "landlordLineIds": [
+        "jp-東武鉄道-伊勢崎線"
+      ],
+      "spans": [
+        "館林附近—館林"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 2)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東海旅客鉄道-太多線",
+      "landlordLineId": "jp-東海旅客鉄道-高山線",
+      "tenantLineIds": [
+        "jp-東海旅客鉄道-太多線"
+      ],
+      "landlordLineIds": [
+        "jp-東海旅客鉄道-高山線"
+      ],
+      "spans": [
+        "美濃太田",
+        "美濃太田—美濃太田附近"
+      ],
+      "reason": "rank/operator tier tied (rank 3); longer digitised line wins as trunk (8 vs 36 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-東海旅客鉄道-太多線",
+      "landlordLineId": "jp-長良川鉄道-越美南線",
+      "tenantLineIds": [
+        "jp-東海旅客鉄道-太多線"
+      ],
+      "landlordLineIds": [
+        "jp-長良川鉄道-越美南線"
+      ],
+      "spans": [
+        "美濃太田"
+      ],
+      "reason": "rank/operator tier tied (rank 3); longer digitised line wins as trunk (8 vs 36 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-相模鉄道-相鉄新横浜線",
+      "landlordLineId": "jp-東日本旅客鉄道-東海道線",
+      "tenantLineIds": [
+        "jp-相模鉄道-相鉄新横浜線"
+      ],
+      "landlordLineIds": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-東海道線-3"
+      ],
+      "spans": [
+        "羽沢横浜国大"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 4)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-JR東西線",
+      "landlordLineId": "jp-西日本旅客鉄道-東海道線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-JR東西線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-東海道線-2"
+      ],
+      "spans": [
+        "尼崎"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-JR東西線",
+      "landlordLineId": "jp-西日本旅客鉄道-福知山線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-JR東西線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-福知山線"
+      ],
+      "spans": [
+        "尼崎"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-博多南線",
+      "landlordLineId": "jp-九州旅客鉄道-九州新幹線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-博多南線"
+      ],
+      "landlordLineIds": [
+        "jp-九州旅客鉄道-九州新幹線"
+      ],
+      "spans": [
+        "博多"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 0 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-和歌山線",
+      "landlordLineId": "jp-西日本旅客鉄道-紀勢線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-和歌山線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-紀勢線"
+      ],
+      "spans": [
+        "和歌山附近"
+      ],
+      "reason": "rank/operator tier tied (rank 3); longer digitised line wins as trunk (36 vs 56 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-大阪環状線",
+      "landlordLineId": "jp-西日本旅客鉄道-関西線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-大阪環状線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-関西線"
+      ],
+      "spans": [
+        "今宮—天王寺"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-山陽新幹線",
+      "landlordLineId": "jp-九州旅客鉄道-九州新幹線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-山陽新幹線"
+      ],
+      "landlordLineIds": [
+        "jp-九州旅客鉄道-九州新幹線"
+      ],
+      "spans": [
+        "博多"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 0 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-山陽線",
+      "landlordLineId": "jp-西日本旅客鉄道-山陽新幹線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-山陽線",
+        "jp-西日本旅客鉄道-山陽線-2",
+        "jp-西日本旅客鉄道-山陽線-3"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-山陽新幹線"
+      ],
+      "spans": [
+        "福山附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 0 vs 1)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-片町線",
+      "landlordLineId": "jp-西日本旅客鉄道-おおさか東線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-片町線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-おおさか東線"
+      ],
+      "spans": [
+        "鴫野—放出附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西日本旅客鉄道-福知山線",
+      "landlordLineId": "jp-西日本旅客鉄道-東海道線",
+      "tenantLineIds": [
+        "jp-西日本旅客鉄道-福知山線"
+      ],
+      "landlordLineIds": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-東海道線-2"
+      ],
+      "spans": [
+        "尼崎附近—尼崎"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 1 vs 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西武鉄道-国分寺線",
+      "landlordLineId": "jp-西武鉄道-新宿線",
+      "tenantLineIds": [
+        "jp-西武鉄道-国分寺線"
+      ],
+      "landlordLineIds": [
+        "jp-西武鉄道-新宿線"
+      ],
+      "spans": [
+        "東村山",
+        "東村山附近—東村山"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (5 vs 29 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西武鉄道-国分寺線",
+      "landlordLineId": "jp-西武鉄道-西武園線",
+      "tenantLineIds": [
+        "jp-西武鉄道-国分寺線"
+      ],
+      "landlordLineIds": [
+        "jp-西武鉄道-西武園線"
+      ],
+      "spans": [
+        "東村山"
+      ],
+      "reason": "rank/operator tier tied (rank 2); longer digitised line wins as trunk (5 vs 29 stations) — low confidence, needs N02 track-ownership review",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西武鉄道-西武園線",
+      "landlordLineId": "jp-西武鉄道-新宿線",
+      "tenantLineIds": [
+        "jp-西武鉄道-西武園線"
+      ],
+      "landlordLineIds": [
+        "jp-西武鉄道-新宿線"
+      ],
+      "spans": [
+        "東村山—東村山附近"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 4)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西武鉄道-西武有楽町線",
+      "landlordLineId": "jp-東京地下鉄-8号線有楽町線",
+      "tenantLineIds": [
+        "jp-西武鉄道-西武有楽町線"
+      ],
+      "landlordLineIds": [
+        "jp-東京地下鉄-8号線有楽町線"
+      ],
+      "spans": [
+        "小竹向原附近—小竹向原"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 4)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-西武鉄道-豊島線",
+      "landlordLineId": "jp-西武鉄道-池袋線",
+      "tenantLineIds": [
+        "jp-西武鉄道-豊島線"
+      ],
+      "landlordLineIds": [
+        "jp-西武鉄道-池袋線"
+      ],
+      "spans": [
+        "練馬附近—練馬"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 2 vs 4)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-近畿日本鉄道-京都線",
+      "landlordLineId": "jp-京都市-烏丸線",
+      "tenantLineIds": [
+        "jp-近畿日本鉄道-京都線"
+      ],
+      "landlordLineIds": [
+        "jp-京都市-烏丸線"
+      ],
+      "spans": [
+        "竹田"
+      ],
+      "reason": "cross-operator tie at rank 2; JR/mainline operator tier wins (京都市 tier 2 vs 近畿日本鉄道 tier 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-長良川鉄道-越美南線",
+      "landlordLineId": "jp-東海旅客鉄道-高山線",
+      "tenantLineIds": [
+        "jp-長良川鉄道-越美南線"
+      ],
+      "landlordLineIds": [
+        "jp-東海旅客鉄道-高山線"
+      ],
+      "spans": [
+        "美濃太田附近—美濃太田"
+      ],
+      "reason": "cross-operator tie at rank 3; JR/mainline operator tier wins (東海旅客鉄道 tier 1 vs 長良川鉄道 tier 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-阪堺電気軌道-上町線",
+      "landlordLineId": "jp-大阪市高速電気軌道-2号線(谷町線)",
+      "tenantLineIds": [
+        "jp-阪堺電気軌道-上町線"
+      ],
+      "landlordLineIds": [
+        "jp-大阪市高速電気軌道-2号線(谷町線)"
+      ],
+      "spans": [
+        "阿倍野"
+      ],
+      "reason": "cross-operator tie at rank 4; JR/mainline operator tier wins (Osaka Metro tier 2 vs 阪堺電気軌道 tier 3)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    },
+    {
+      "region": "jp",
+      "tenantLineId": "jp-阪急電鉄-神戸高速線",
+      "landlordLineId": "jp-阪神電気鉄道-神戸高速線",
+      "tenantLineIds": [
+        "jp-阪急電鉄-神戸高速線"
+      ],
+      "landlordLineIds": [
+        "jp-阪神電気鉄道-神戸高速線"
+      ],
+      "spans": [
+        "新開地—高速神戸"
+      ],
+      "reason": "lower N02 rank wins as mainline railway (rank 4 vs 2)",
+      "evidence": [
+        {
+          "type": "measurement",
+          "name": "measured 2026-09-04 point-to-polyline median <= 3 m",
+          "detail": "japan_line_by_line_audit 02_共线与平行区间明細: this pair is one of the 342 '坐标精确重合（共享走廊候選）' rows (median lateral 0.0 m over the named span), re-measured point-to-polyline against jp-2025.json's own N02 geometry at 25 m sampling; the 245 '真实几何平行（独立centerline）' rows are deliberately NOT seeded here."
+        }
+      ]
+    }
+  ]
+}

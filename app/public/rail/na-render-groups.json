@@ -1,0 +1,745 @@
+{
+  "format": "jtm-na-render-groups-v2",
+  "reviewedAt": "2026-09-04",
+  "scope": [
+    "us",
+    "ca"
+  ],
+  "policy": {
+    "profile": "Apple-profile per network (rules.md §5): trunk-family collapses the NYC Subway's letters into their eight audited trunk families and SEPTA's T1/T3/T4/T5 into the Center City trolley tunnel; operator-family collapses LIRR, Metro-North, Metrolink and MBTA commuter rail into one operator-level stroke each; hybrid collapses MBTA's Green Line B/C/D/E onto its shared trunk while every other MBTA rapid-transit line stays route-preserving; route-preserving is the default everywhere else (PATH, NJ Transit outside the NEC/Princeton Shuttle pair, Metra, GO, exo, SEPTA Regional Rail, RTD and all ungrouped lines) — unverified operator collapses are left route-preserving rather than assumed.",
+    "renderGroupId": "operator + operator-published route colour",
+    "renderKey": "region + renderGroupId",
+    "why": [
+      "A render group is the unit two clients merge onto one lane. Lines that share one keep the centreline; lines that do not are held apart in parallel screen lanes.",
+      "The grouping was previously operator + kind + colour. `kind` is a mode attribute, not an identity: the same railway carries `lightrail` on its reserved track and `streetcar` where it runs in the street, so seven railways were split from their own branch parts and drawn as two parallel strokes of one colour.",
+      "The operator's own published route colour is the branding grouping every audited North American network uses, so it stays the default. It is not a licence to merge by colour: where two different railways happen to publish the same hex, `byLineId` below separates them by identity."
+    ],
+    "divergenceFromAppleMaps": [
+      "Apple Maps collapses PATH to one operator-level stroke; this project keeps PATH's officially coloured routes visible, which is the route-preserving profile the same rule set sanctions for DART, BART, CTA, WMATA and PRT. That divergence is deliberate and recorded here rather than in renderer code.",
+      "LIRR, Metro-North and Metrolink are no longer part of that divergence: the operator collapse the all_visible_transit_lines_line_by_line_audit.csv render keys call for (`lirr_purple`, `metro_north_purple`, `metrolink_purple`) is now applied via the `lirr`, `metro-north` and `metrolink` groups above — each railroad draws as one operator-coloured stroke, matching Apple Maps. MBTA commuter rail was never a divergence: its lines already publish one identical hex (`mbta_commuter_magenta`), and the `mbta-commuter-rail` group above records that as a reviewed decision rather than a coincidence.",
+      "PATH remains route-preserving (one renderGroupId per route, following the operator's own per-route colours) because the 2026-09-01 audit (all_visible_transit_lines_line_by_line_audit.csv) captured only one PATH route (Newark–World Trade Center) in isolation — it never shows two PATH routes sharing a corridor, so it cannot confirm or refute whether Apple Maps actually collapses PATH to one operator-level stroke the way it does LIRR, Metro-North and Metrolink. An earlier, broader capture apparently did show that (see the pre-existing note above), but that evidence was not part of the audit bundle supplied for this review. Recorded as an open question rather than acted on — see Uncertainties."
+    ]
+  },
+  "evidence": [
+    {
+      "type": "cartographic-audit",
+      "name": "Apple Maps transit rendering audit — 36 captures, 132 lines, 2026-09-01",
+      "detail": "Per-line merged / parallel / split / independent findings for MTA, LIRR, Metro-North, PATH, NJ Transit, SEPTA, WMATA, DART, CTA, Metra, LA Metro, Metrolink, BART, Muni, PRT and MBTA, cross-checked against official network topology.",
+      "documents": [
+        "all_visible_transit_lines_line_by_line_audit.md",
+        "all_visible_transit_lines_line_by_line_audit.csv",
+        "rail_transit_shared_corridor_parallel_rendering_rules.md"
+      ]
+    },
+    {
+      "type": "operator",
+      "name": "MBTA Green Line B/C/D/E share the Kenmore–Copley–Government Center central subway",
+      "url": "https://www.mbta.com/schedules/Green/line"
+    },
+    {
+      "type": "operator",
+      "name": "METRORAIL Red/Green/Purple run on street track downtown and on reserved track outside it",
+      "url": "https://www.ridemetro.org/rider-tools/system-maps"
+    }
+  ],
+  "byLineId": {
+    "king-county-metro-first-hill-streetcar": "seattle:first-hill-streetcar",
+    "king-county-metro-south-lake-union-streetcar": "seattle:south-lake-union-streetcar",
+    "king-county-metro-south-lake-union-streetcar-b1": "seattle:south-lake-union-streetcar",
+    "maryland-transit-administrat-brunswick-washington": "marc:brunswick",
+    "maryland-transit-administrat-brunswick-washington-b1": "marc:brunswick",
+    "maryland-transit-administrat-brunswick-washington-b2": "marc:brunswick",
+    "maryland-transit-administrat-brunswick-washington-b3": "marc:brunswick",
+    "maryland-transit-administrat-camden-washington": "marc:camden",
+    "maryland-transit-administrat-penn-washington": "marc:penn",
+    "mbta-b": "mbta:green",
+    "mbta-c": "mbta:green",
+    "mbta-d": "mbta:green",
+    "mbta-e": "mbta:green",
+    "mbta-e-b1": "mbta:green",
+    "mbta-fairmount-line": "mbta-commuter-rail:trunk",
+    "mbta-fall-river-new-bedford-line": "mbta-commuter-rail:trunk",
+    "mbta-fall-river-new-bedford-line-b1": "mbta-commuter-rail:trunk",
+    "mbta-fitchburg-line": "mbta-commuter-rail:trunk",
+    "mbta-foxboro-event-service": "mbta-commuter-rail:trunk",
+    "mbta-framingham-worcester-line": "mbta-commuter-rail:trunk",
+    "mbta-greenbush-line": "mbta-commuter-rail:trunk",
+    "mbta-haverhill-line": "mbta-commuter-rail:trunk",
+    "mbta-kingston-line": "mbta-commuter-rail:trunk",
+    "mbta-lowell-line": "mbta-commuter-rail:trunk",
+    "mbta-needham-line": "mbta-commuter-rail:trunk",
+    "mbta-newburyport-rockport-line": "mbta-commuter-rail:trunk",
+    "mbta-newburyport-rockport-line-b1": "mbta-commuter-rail:trunk",
+    "mbta-providence-stoughton-line": "mbta-commuter-rail:trunk",
+    "mbta-providence-stoughton-line-b2": "mbta-commuter-rail:trunk",
+    "mbta-providence-stoughton-line-b5": "mbta-commuter-rail:trunk",
+    "metro-north-railroad-danbury": "metro-north:trunk",
+    "metro-north-railroad-harlem": "metro-north:trunk",
+    "metro-north-railroad-hudson": "metro-north:trunk",
+    "metro-north-railroad-new-canaan": "metro-north:trunk",
+    "metro-north-railroad-new-haven": "metro-north:trunk",
+    "metro-north-railroad-waterbury": "metro-north:trunk",
+    "metro-transit-intercity-tran-s-line": "sounder:s-line",
+    "metrolink-91-pv-line": "metrolink:trunk",
+    "metrolink-av-line": "metrolink:trunk",
+    "metrolink-ie-oc-line": "metrolink:trunk",
+    "metrolink-oc-line": "metrolink:trunk",
+    "metrolink-sb-line": "metrolink:trunk",
+    "metropolitan-transit-authori-42-st-shuttle": "nyct:shuttles",
+    "metropolitan-transit-authori-franklin-avenue-shuttle": "nyct:shuttles",
+    "metropolitan-transit-authori-l": "nyct:l",
+    "metropolitan-transit-authori-rockaway-park-shuttle": "nyct:shuttles",
+    "mta-long-island-rail-road-babylon-branch": "lirr:trunk",
+    "mta-long-island-rail-road-city-terminal-zone": "lirr:trunk",
+    "mta-long-island-rail-road-far-rockaway-branch": "lirr:trunk",
+    "mta-long-island-rail-road-greenport-service": "lirr:trunk",
+    "mta-long-island-rail-road-hempstead-branch": "lirr:trunk",
+    "mta-long-island-rail-road-long-beach-branch": "lirr:trunk",
+    "mta-long-island-rail-road-montauk-branch": "lirr:trunk",
+    "mta-long-island-rail-road-oyster-bay-branch": "lirr:trunk",
+    "mta-long-island-rail-road-port-jefferson-branch": "lirr:trunk",
+    "mta-long-island-rail-road-ronkonkoma-branch": "lirr:trunk",
+    "mta-long-island-rail-road-west-hempstead-branch": "lirr:trunk",
+    "new-jersey-transit-nj-transi-nec": "njt:nec",
+    "new-jersey-transit-nj-transi-prin": "njt:princeton-shuttle",
+    "san-francisco-municipal-tran-ca": "sfmta:california-cable-car",
+    "san-francisco-municipal-tran-f": "sfmta:f-market-wharves",
+    "san-francisco-municipal-tran-f-b1": "sfmta:f-market-wharves",
+    "san-francisco-municipal-tran-f-b2": "sfmta:f-market-wharves",
+    "sound-transit-n-line": "sounder:n-line",
+    "metropolitan-transit-authori-1": "nyct:red",
+    "metropolitan-transit-authori-2": "nyct:red",
+    "metropolitan-transit-authori-3": "nyct:red",
+    "metropolitan-transit-authori-4": "nyct:green",
+    "metropolitan-transit-authori-5": "nyct:green",
+    "metropolitan-transit-authori-5-b1": "nyct:green",
+    "metropolitan-transit-authori-6": "nyct:green",
+    "metropolitan-transit-authori-6x": "nyct:green",
+    "metropolitan-transit-authori-a": "nyct:blue",
+    "metropolitan-transit-authori-a-b1": "nyct:blue",
+    "metropolitan-transit-authori-a-b2": "nyct:blue",
+    "metropolitan-transit-authori-c": "nyct:blue",
+    "metropolitan-transit-authori-e": "nyct:blue",
+    "metropolitan-transit-authori-b": "nyct:orange",
+    "metropolitan-transit-authori-d": "nyct:orange",
+    "metropolitan-transit-authori-f": "nyct:orange",
+    "metropolitan-transit-authori-f-b1": "nyct:orange",
+    "metropolitan-transit-authori-f-b2": "nyct:orange",
+    "metropolitan-transit-authori-fx": "nyct:orange",
+    "metropolitan-transit-authori-m": "nyct:orange",
+    "metropolitan-transit-authori-n": "nyct:yellow",
+    "metropolitan-transit-authori-n-b1": "nyct:yellow",
+    "metropolitan-transit-authori-r": "nyct:yellow",
+    "metropolitan-transit-authori-w": "nyct:yellow",
+    "metropolitan-transit-authori-7": "nyct:purple-7",
+    "metropolitan-transit-authori-7x": "nyct:purple-7",
+    "metropolitan-transit-authori-g": "nyct:green-g",
+    "metropolitan-transit-authori-j": "nyct:brown",
+    "metropolitan-transit-authori-z": "nyct:brown",
+    "septa-t1": "septa:trolley-tunnel",
+    "septa-t1-b1": "septa:trolley-tunnel",
+    "septa-t1-b2": "septa:trolley-tunnel",
+    "septa-t1-b3": "septa:trolley-tunnel",
+    "septa-t1-b4": "septa:trolley-tunnel",
+    "septa-t1-b5": "septa:trolley-tunnel",
+    "septa-t3": "septa:trolley-tunnel",
+    "septa-t3-b1": "septa:trolley-tunnel",
+    "septa-t3-b2": "septa:trolley-tunnel",
+    "septa-t3-b5": "septa:trolley-tunnel",
+    "septa-t3-b6": "septa:trolley-tunnel",
+    "septa-t4": "septa:trolley-tunnel",
+    "septa-t4-b2": "septa:trolley-tunnel",
+    "septa-t4-b3": "septa:trolley-tunnel",
+    "septa-t5": "septa:trolley-tunnel",
+    "septa-t5-b1": "septa:trolley-tunnel",
+    "septa-t5-b3": "septa:trolley-tunnel",
+    "septa-t5-b4": "septa:trolley-tunnel",
+    "septa-t5-b5": "septa:trolley-tunnel",
+    "septa-t5-b7": "septa:trolley-tunnel",
+    "septa-t5-b8": "septa:trolley-tunnel"
+  },
+  "byLineIdReasons": [
+    {
+      "renderGroupIds": [
+        "mbta:green"
+      ],
+      "lineIds": [
+        "mbta-b",
+        "mbta-c",
+        "mbta-d",
+        "mbta-e",
+        "mbta-e-b1"
+      ],
+      "why": "The Green Line's four branches are one stroke from Kenmore through Copley to Government Center; the audit reads B/C/D/E as a single render key there and station badges, not parallel lanes, as what tells the branches apart. Named here rather than left to the shared hex so the merge is a reviewed decision.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "nyct:l",
+        "nyct:shuttles"
+      ],
+      "lineIds": [
+        "metropolitan-transit-authori-l",
+        "metropolitan-transit-authori-42-st-shuttle",
+        "metropolitan-transit-authori-franklin-avenue-shuttle",
+        "metropolitan-transit-authori-rockaway-park-shuttle"
+      ],
+      "why": "The audit reads the 14 St–Canarsie Local and the three shuttles as two different render keys. MTA publishes #447ba7 for both, so the colour default would have merged four unrelated railways into one lane.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "seattle:first-hill-streetcar",
+        "seattle:south-lake-union-streetcar"
+      ],
+      "lineIds": [
+        "king-county-metro-first-hill-streetcar",
+        "king-county-metro-south-lake-union-streetcar",
+        "king-county-metro-south-lake-union-streetcar-b1"
+      ],
+      "why": "Two physically separate Seattle streetcar lines that share one published hex. They meet nowhere, and a shared render key would silently merge them if the connector between them is ever built.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "njt:nec",
+        "njt:princeton-shuttle"
+      ],
+      "lineIds": [
+        "new-jersey-transit-nj-transi-nec",
+        "new-jersey-transit-nj-transi-prin"
+      ],
+      "why": "The Princeton Shuttle is a separate branch off the Northeast Corridor at Princeton Junction, not part of the NEC stroke. NJ Transit publishes the corridor's red for both.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "marc:brunswick",
+        "marc:camden",
+        "marc:penn"
+      ],
+      "lineIds": [
+        "maryland-transit-administrat-brunswick-washington",
+        "maryland-transit-administrat-camden-washington",
+        "maryland-transit-administrat-penn-washington"
+      ],
+      "why": "Three separately named MARC lines on three different alignments that all publish MDOT MTA's #eb7600. They converge on the Washington Union Station approach, which is exactly where a false merge hides two of them under the third.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "sounder:n-line",
+        "sounder:s-line"
+      ],
+      "lineIds": [
+        "sound-transit-n-line",
+        "metro-transit-intercity-tran-s-line"
+      ],
+      "why": "Sounder North and Sounder South are two corridors that share only the King Street Station throat. One published Sounder hex is branding, not one railway.",
+      "confidence": "B"
+    },
+    {
+      "renderGroupIds": [
+        "sfmta:california-cable-car",
+        "sfmta:f-market-wharves"
+      ],
+      "lineIds": [
+        "san-francisco-municipal-tran-ca",
+        "san-francisco-municipal-tran-f",
+        "san-francisco-municipal-tran-f-b1",
+        "san-francisco-municipal-tran-f-b2"
+      ],
+      "why": "SFMTA publishes one heritage hex for the California Street cable car and the F Market & Wharves streetcar. They are two railways that meet at the foot of Market Street, which is exactly where one lane would hide one of them.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "lirr:trunk"
+      ],
+      "lineIds": [
+        "mta-long-island-rail-road-babylon-branch",
+        "mta-long-island-rail-road-city-terminal-zone",
+        "mta-long-island-rail-road-far-rockaway-branch",
+        "mta-long-island-rail-road-greenport-service",
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-long-beach-branch",
+        "mta-long-island-rail-road-montauk-branch",
+        "mta-long-island-rail-road-oyster-bay-branch",
+        "mta-long-island-rail-road-port-jefferson-branch",
+        "mta-long-island-rail-road-ronkonkoma-branch",
+        "mta-long-island-rail-road-west-hempstead-branch"
+      ],
+      "why": "all_visible_transit_lines_line_by_line_audit.csv reads every LIRR branch as one render key (`lirr_purple`): Apple Maps draws the whole railroad as one operator-level stroke rather than 11 parallel branch colours. Applied here per the audit rather than left to the (non-uniform) per-branch GTFS hex.",
+      "confidence": "B"
+    },
+    {
+      "renderGroupIds": [
+        "metro-north:trunk"
+      ],
+      "lineIds": [
+        "metro-north-railroad-danbury",
+        "metro-north-railroad-harlem",
+        "metro-north-railroad-hudson",
+        "metro-north-railroad-new-canaan",
+        "metro-north-railroad-new-haven",
+        "metro-north-railroad-waterbury"
+      ],
+      "why": "all_visible_transit_lines_line_by_line_audit.csv reads every Metro-North line as one render key (`metro_north_purple`): Apple Maps draws the whole railroad as one operator-level stroke. Applied here per the audit rather than left to the (non-uniform) per-branch GTFS hex.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "metrolink:trunk"
+      ],
+      "lineIds": [
+        "metrolink-91-pv-line",
+        "metrolink-av-line",
+        "metrolink-ie-oc-line",
+        "metrolink-oc-line",
+        "metrolink-sb-line"
+      ],
+      "why": "all_visible_transit_lines_line_by_line_audit.csv reads every Metrolink line as one render key (`metrolink_purple`): Apple Maps draws the whole system as one operator-level stroke through LA Union Station. Applied here per the audit rather than left to the (non-uniform) per-line GTFS hex.",
+      "confidence": "B"
+    },
+    {
+      "renderGroupIds": [
+        "mbta-commuter-rail:trunk"
+      ],
+      "lineIds": [
+        "mbta-fairmount-line",
+        "mbta-fall-river-new-bedford-line",
+        "mbta-fall-river-new-bedford-line-b1",
+        "mbta-fitchburg-line",
+        "mbta-foxboro-event-service",
+        "mbta-framingham-worcester-line",
+        "mbta-greenbush-line",
+        "mbta-haverhill-line",
+        "mbta-kingston-line",
+        "mbta-lowell-line",
+        "mbta-needham-line",
+        "mbta-newburyport-rockport-line",
+        "mbta-newburyport-rockport-line-b1",
+        "mbta-providence-stoughton-line",
+        "mbta-providence-stoughton-line-b2",
+        "mbta-providence-stoughton-line-b5"
+      ],
+      "why": "all_visible_transit_lines_line_by_line_audit.csv reads every MBTA commuter rail line (excluding the seasonal CapeFLYER) as one render key (`mbta_commuter_magenta`). The lines already share one GTFS hex, so this reason records the collapse as reviewed rather than incidental.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "nyct:red",
+        "nyct:green",
+        "nyct:blue",
+        "nyct:orange",
+        "nyct:yellow",
+        "nyct:purple-7",
+        "nyct:green-g",
+        "nyct:brown"
+      ],
+      "lineIds": [
+        "metropolitan-transit-authori-1",
+        "metropolitan-transit-authori-2",
+        "metropolitan-transit-authori-3",
+        "metropolitan-transit-authori-4",
+        "metropolitan-transit-authori-5",
+        "metropolitan-transit-authori-5-b1",
+        "metropolitan-transit-authori-6",
+        "metropolitan-transit-authori-6x",
+        "metropolitan-transit-authori-a",
+        "metropolitan-transit-authori-a-b1",
+        "metropolitan-transit-authori-a-b2",
+        "metropolitan-transit-authori-c",
+        "metropolitan-transit-authori-e",
+        "metropolitan-transit-authori-b",
+        "metropolitan-transit-authori-d",
+        "metropolitan-transit-authori-f",
+        "metropolitan-transit-authori-f-b1",
+        "metropolitan-transit-authori-f-b2",
+        "metropolitan-transit-authori-fx",
+        "metropolitan-transit-authori-m",
+        "metropolitan-transit-authori-n",
+        "metropolitan-transit-authori-n-b1",
+        "metropolitan-transit-authori-r",
+        "metropolitan-transit-authori-w",
+        "metropolitan-transit-authori-7",
+        "metropolitan-transit-authori-7x",
+        "metropolitan-transit-authori-g",
+        "metropolitan-transit-authori-j",
+        "metropolitan-transit-authori-z"
+      ],
+      "why": "The 2026-09-01 Apple Maps audit (all_visible_transit_lines_line_by_line_audit.csv, 23 NYC Subway rows, all confidence A) reads exactly the classic trunk-color families: 1/2/3 red, 4/5/6 green, A/C/E blue, B/D/F/M orange, N/Q/R/W yellow, plus three independents (7 purple, G green — a different green from 4/5/6 — and J/Z brown). MTA's own GTFS route_color already happens to produce this grouping under the operator+colour default, so no renderKey behaviour changes today. Pinned explicitly so the grouping survives a future GTFS colour refresh instead of depending on today's coincidence (rules.md 5.5: renderGroupId must be explicit, not implied by colour).",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "septa:trolley-tunnel"
+      ],
+      "lineIds": [
+        "septa-t1",
+        "septa-t1-b1",
+        "septa-t1-b2",
+        "septa-t1-b3",
+        "septa-t1-b4",
+        "septa-t1-b5",
+        "septa-t3",
+        "septa-t3-b1",
+        "septa-t3-b2",
+        "septa-t3-b5",
+        "septa-t3-b6",
+        "septa-t4",
+        "septa-t4-b2",
+        "septa-t4-b3",
+        "septa-t5",
+        "septa-t5-b1",
+        "septa-t5-b3",
+        "septa-t5-b4",
+        "septa-t5-b5",
+        "septa-t5-b7",
+        "septa-t5-b8"
+      ],
+      "why": "The audit reads T1/T3/T4/T5 as one green RenderKey through the Center City subway-surface trolley tunnel (13th St to the 36th/40th St portals), splitting into independent branch geometry beyond each portal. SEPTA's GTFS route_color for these four already matches (#5a960a); pinned explicitly for the same reason as the NYC Subway trunk families. Route 34 (T2) was in the audit but is not present in the current us-2025.json package, so it is not pinned.",
+      "confidence": "A"
+    }
+  ],
+  "schemaChangeNote": [
+    "v2 renames every renderGroupId from a flat network-prefixed string to the '<networkId>:<familyId>' scheme used throughout the 2026-09-04 Apple Maps render-profile review (all_visible_transit_lines_line_by_line_audit.csv/.md), so a group id always states which network owns it and which family within that network's Network Render Profile (rules.md 1.13/5) it is. No renderKey semantics change: renderKey is still `region + renderGroupId`, so every renamed id changes the on-disk key but not which lines draw as one stroke.",
+    "`groups` is renamed `families` and gains two required fields per rules.md 1.13: `networkId` (the Network Render Profile this family belongs to) and `mode` (GTFS-style mode, for station-symbol and line-width policy lookups). `colorSource` replaces the old free-text `evidence` list with a single {url, name} citation, matching the `evidence[].url`/`evidence[].name` shape already used elsewhere in this file.",
+    "New families added by this review: nine NYC Subway trunk families (nyct:red, nyct:green, nyct:blue, nyct:orange, nyct:yellow, nyct:purple-7, nyct:green-g, nyct:brown — nyct:l and nyct:shuttles already existed under the old flat ids) and one SEPTA family (septa:trolley-tunnel). All ten were already produced by the operator+colour default — GTFS route_color already happens to match the audited trunk grouping — but rules.md 5.5 requires renderGroupId to be 'explicit, stable, versioned', not an accidental colour coincidence a future GTFS refresh could silently break. Pinning them in byLineId makes the audited grouping durable the same way mbta-commuter-rail and mbta:green already were."
+  ],
+  "families": {
+    "lirr:trunk": {
+      "color": "#0039a6",
+      "colorDark": "#004ad6",
+      "colorSource": {
+        "url": "https://www.mta.info/",
+        "name": "MTA brand blue used across the authority's own agencies (LIRR included)"
+      },
+      "networkId": "lirr",
+      "mode": "commuter",
+      "name": "Long Island Rail Road (operator collapse)",
+      "why": "LIRR's 11 branches each publish their own GTFS route_color (green, orange, purple, brown, teal…); there is no single LIRR hex already in this package to reuse. The all_visible_transit_lines_line_by_line_audit.csv render key for every LIRR branch is `lirr_purple`: Apple Maps draws the whole railroad as one operator-level stroke inside NYC. No official LIRR-specific brand hex was found beyond the per-branch GTFS palette, so this uses the MTA's own agency blue, shared by the parent authority and already present in this package as Metro-North Harlem's colorReference.",
+      "confidence": "B"
+    },
+    "metro-north:trunk": {
+      "color": "#0039a6",
+      "colorDark": "#004ad6",
+      "colorSource": {
+        "url": "https://www.mta.info/",
+        "name": "MTA brand blue used across the authority's own agencies (Metro-North included)"
+      },
+      "networkId": "metro-north",
+      "mode": "commuter",
+      "name": "Metro-North Railroad (operator collapse)",
+      "why": "Metro-North's Harlem Line already carries colorReference #0039a6 in this package (operator GTFS routes.txt route_color) — the other five lines (Hudson, New Haven, Danbury, New Canaan, Waterbury) publish different per-branch hexes. The audit's render key for every Metro-North line is `metro_north_purple`: Apple Maps draws the whole railroad as one operator-level stroke. #0039a6 is already in this package, not a value invented for this group.",
+      "confidence": "A"
+    },
+    "metrolink:trunk": {
+      "color": "#006070",
+      "colorDark": "#1a707e",
+      "colorSource": {
+        "url": "https://metrolinktrains.com/news/metrolink-introduces-new-logo/",
+        "name": "Metrolink: \"the color teal has been Metrolink's standard color since Metrolink's founding in 1992\""
+      },
+      "networkId": "metrolink",
+      "mode": "commuter",
+      "name": "Metrolink (operator collapse)",
+      "why": "Metrolink's 5 lines each publish their own GTFS route_color; the audit's render key for every Metrolink line is `metrolink_purple` — Apple Maps draws the whole system as one operator-level stroke through Los Angeles Union Station. Metrolink's own published statement names teal as its standard colour since 1992, not any of the per-line GTFS hexes; #006070 is the closest sourced hex for that teal.",
+      "confidence": "C"
+    },
+    "mbta-commuter-rail:trunk": {
+      "color": "#80276c",
+      "colorDark": "#a4328b",
+      "colorSource": {
+        "url": "https://www.mbta.com/schedules/commuter-rail",
+        "name": "MBTA publishes one commuter rail magenta (#80276c) across all lines"
+      },
+      "networkId": "mbta-commuter-rail",
+      "mode": "commuter",
+      "name": "MBTA Commuter Rail (already-uniform operator colour)",
+      "why": "All 16 MBTA commuter rail lines (excluding the seasonal CapeFLYER, which MBTA brands separately) already publish the identical #80276c in this package's own GTFS-sourced colours — the audit's render key `mbta_commuter_magenta` matches the existing colour default with no override needed. Listed here so the operator collapse is a reviewed decision like the other three, not merely a coincidence of matching hexes.",
+      "confidence": "A"
+    },
+    "nyct:red": {
+      "color": "#cb2030",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "1/2/3 (Broadway–7 Av / Lenox Av trunk)",
+      "why": "Audit rows 1/2/3: all three collapse to one red RenderKey on the shared Broadway–7 Av / Lexington/Lenox trunk; local/express does not add a lane.",
+      "confidence": "A"
+    },
+    "nyct:green": {
+      "color": "#009952",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "4/5/6 (Lexington Av trunk)",
+      "why": "Audit rows 4/5/6: collapse to one green RenderKey on the Lexington Av trunk into Brooklyn; 6 exits at Brooklyn Bridge–City Hall while 4/5 continue.",
+      "confidence": "A"
+    },
+    "nyct:blue": {
+      "color": "#0062cf",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "A/C/E (8 Av trunk)",
+      "why": "Audit rows A/C/E: collapse to one blue RenderKey on the 8 Av / Queens Blvd trunk; E's weekday/weekend routing via 53rd vs 63rd St is a service-profile detail, not a topology change.",
+      "confidence": "A"
+    },
+    "nyct:orange": {
+      "color": "#eb6800",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "B/D/F/M (6 Av trunk)",
+      "why": "Audit rows B/D/F/M: collapse to one orange RenderKey on 6 Av / Queens Blvd; the four split into distinct branch geometries at Broadway–Lafayette, 47–50 Sts and Queens junctions.",
+      "confidence": "A"
+    },
+    "nyct:yellow": {
+      "color": "#e1a509",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "N/Q/R/W (Broadway trunk)",
+      "why": "Audit rows N/Q/R/W: collapse to one yellow RenderKey on the Broadway trunk between 57 St–7 Av and Canal St; each splits off at its own junction (63 St, Montague/Court St, Astoria).",
+      "confidence": "A"
+    },
+    "nyct:purple-7": {
+      "color": "#9a38a1",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "7 (Flushing Local/Express)",
+      "why": "Audit row 7: local and express variants are one 7 RenderKey; Queensboro Plaza is same-station, not shared-corridor, with N/W.",
+      "confidence": "A"
+    },
+    "nyct:green-g": {
+      "color": "#799534",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "G (Brooklyn–Queens Crosstown)",
+      "why": "Audit row G: independent green Crosstown RenderKey, deliberately not merged with the darker 4/5/6 green despite colour proximity.",
+      "confidence": "A"
+    },
+    "nyct:brown": {
+      "color": "#8e5c33",
+      "colorSource": {
+        "name": "MTA New York City Transit GTFS routes.txt route_color (already uniform across the trunk's letters)"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "J/Z (Nassau St / Williamsburg Bridge)",
+      "why": "Audit rows J/Z: collapse to one brown RenderKey on their common Bowery–Delancey/Essex–Queens segment; skip-stop service does not add a lane.",
+      "confidence": "A"
+    },
+    "septa:trolley-tunnel": {
+      "color": "#5a960a",
+      "colorSource": {
+        "name": "SEPTA GTFS routes.txt route_color (already uniform across T1/T3/T4/T5; T2/Route 34 not present in this package)"
+      },
+      "networkId": "septa",
+      "mode": "streetcar",
+      "name": "T1/T3/T4/T5 (13th St subway-surface tunnel)",
+      "why": "Audit rows T1/T3/T4/T5: collapse to one green RenderKey through the Center City trolley tunnel; each peels off at its own 36th/40th St Portal branch point (T2/Route 34 audited but not present in the current package).",
+      "confidence": "A"
+    },
+    "marc:brunswick": {
+      "color": "#eb7600",
+      "colorDark": "#ff8000",
+      "colorSource": {
+        "url": "https://www.mta.maryland.gov/",
+        "name": "MDOT MTA GTFS routes.txt route_color, shared across all three MARC lines"
+      },
+      "networkId": "marc",
+      "mode": "commuter",
+      "name": "MARC Brunswick Line",
+      "why": "MDOT MTA publishes #eb7600 for all three MARC lines (Brunswick, Camden, Penn) in this package's own GTFS-sourced colours. They converge on the Washington Union Station approach, which is exactly where a false merge would hide two of the three railways, so each keeps its own group entry with the shared hex recorded rather than left to the colour default.",
+      "confidence": "A"
+    },
+    "marc:camden": {
+      "color": "#eb7600",
+      "colorDark": "#ff8000",
+      "colorSource": {
+        "url": "https://www.mta.maryland.gov/",
+        "name": "MDOT MTA GTFS routes.txt route_color, shared across all three MARC lines"
+      },
+      "networkId": "marc",
+      "mode": "commuter",
+      "name": "MARC Camden Line",
+      "why": "MDOT MTA publishes #eb7600 for all three MARC lines (Brunswick, Camden, Penn) in this package's own GTFS-sourced colours. They converge on the Washington Union Station approach, which is exactly where a false merge would hide two of the three railways, so each keeps its own group entry with the shared hex recorded rather than left to the colour default.",
+      "confidence": "A"
+    },
+    "marc:penn": {
+      "color": "#eb7600",
+      "colorDark": "#ff8000",
+      "colorSource": {
+        "url": "https://www.mta.maryland.gov/",
+        "name": "MDOT MTA GTFS routes.txt route_color, shared across all three MARC lines"
+      },
+      "networkId": "marc",
+      "mode": "commuter",
+      "name": "MARC Penn Line",
+      "why": "MDOT MTA publishes #eb7600 for all three MARC lines (Brunswick, Camden, Penn) in this package's own GTFS-sourced colours. They converge on the Washington Union Station approach, which is exactly where a false merge would hide two of the three railways, so each keeps its own group entry with the shared hex recorded rather than left to the colour default.",
+      "confidence": "A"
+    },
+    "mbta:green": {
+      "color": "#00843d",
+      "colorDark": "#00d663",
+      "colorSource": {
+        "url": "https://www.mbta.com/schedules/Green/line",
+        "name": "MBTA GTFS routes.txt route_color, identical across the Green Line branches"
+      },
+      "networkId": "mbta",
+      "mode": "light-rail",
+      "name": "MBTA Green Line (B/C/D/E)",
+      "why": "The Green Line's four branches (B, C, D, E, plus E's short-turn variant) already publish the identical GTFS route_color #00843d in this package. The audit reads B/C/D/E as one render key from Kenmore through Copley to Government Center; recorded here so the merge is a reviewed decision like the other operator-collapse groups, not merely a coincidence of matching hexes.",
+      "confidence": "A"
+    },
+    "njt:nec": {
+      "color": "#c92227",
+      "colorDark": "#dd3439",
+      "colorSource": {
+        "url": "https://www.njtransit.com/",
+        "name": "NJ Transit GTFS routes.txt route_color, shared with the Princeton Shuttle"
+      },
+      "networkId": "njt",
+      "mode": "commuter",
+      "name": "NJ Transit Northeast Corridor Line",
+      "why": "NJ Transit publishes the corridor's red (#c92227) for both the Northeast Corridor Line and the Princeton Shuttle in this package's own GTFS colours. The shuttle branches off the NEC at Princeton Junction rather than continuing the NEC stroke, so each keeps its own group entry rather than the colour default silently merging them.",
+      "confidence": "A"
+    },
+    "njt:princeton-shuttle": {
+      "color": "#c92227",
+      "colorDark": "#dd3439",
+      "colorSource": {
+        "url": "https://www.njtransit.com/",
+        "name": "NJ Transit GTFS routes.txt route_color, shared with the Northeast Corridor Line"
+      },
+      "networkId": "njt",
+      "mode": "commuter",
+      "name": "NJ Transit Princeton Shuttle",
+      "why": "NJ Transit publishes the corridor's red (#c92227) for both the Northeast Corridor Line and the Princeton Shuttle in this package's own GTFS colours. The shuttle branches off the NEC at Princeton Junction rather than continuing the NEC stroke, so each keeps its own group entry rather than the colour default silently merging them.",
+      "confidence": "A"
+    },
+    "nyct:l": {
+      "color": "#447ba7",
+      "colorDark": "#508ab8",
+      "colorSource": {
+        "url": "https://new.mta.info/",
+        "name": "MTA GTFS routes.txt route_color, shared with the NYCT shuttles"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "NYCT L (14 St-Canarsie Local)",
+      "why": "MTA publishes #447ba7 for both the L train and the three NYCT shuttles in this package's own GTFS colours. The audit reads the L and the shuttles as two different render keys, so each keeps its own group entry rather than the colour default merging four unrelated railways into one lane.",
+      "confidence": "A"
+    },
+    "nyct:shuttles": {
+      "color": "#447ba7",
+      "colorDark": "#508ab8",
+      "colorSource": {
+        "url": "https://new.mta.info/",
+        "name": "MTA GTFS routes.txt route_color, shared with the L train"
+      },
+      "networkId": "nyct",
+      "mode": "metro",
+      "name": "NYCT shuttles (42 St, Franklin Ave, Rockaway Park)",
+      "why": "MTA publishes #447ba7 for both the L train and the three NYCT shuttles in this package's own GTFS colours. The audit reads the L and the shuttles as two different render keys, so each keeps its own group entry rather than the colour default merging four unrelated railways into one lane.",
+      "confidence": "A"
+    },
+    "seattle:first-hill-streetcar": {
+      "color": "#de550c",
+      "colorDark": "#f47836",
+      "colorSource": {
+        "url": "https://kingcounty.gov/en/dept/metro",
+        "name": "King County Metro GTFS routes.txt route_color, shared with the South Lake Union Streetcar"
+      },
+      "networkId": "seattle",
+      "mode": "streetcar",
+      "name": "Seattle First Hill Streetcar",
+      "why": "King County Metro publishes #de550c for both the First Hill and South Lake Union streetcars in this package's own GTFS colours. The two lines are physically separate and meet nowhere; each keeps its own group entry so a shared render key never silently merges them if the connector between them is ever built.",
+      "confidence": "A"
+    },
+    "seattle:south-lake-union-streetcar": {
+      "color": "#de550c",
+      "colorDark": "#f47836",
+      "colorSource": {
+        "url": "https://kingcounty.gov/en/dept/metro",
+        "name": "King County Metro GTFS routes.txt route_color, shared with the First Hill Streetcar"
+      },
+      "networkId": "seattle",
+      "mode": "streetcar",
+      "name": "Seattle South Lake Union Streetcar",
+      "why": "King County Metro publishes #de550c for both the First Hill and South Lake Union streetcars in this package's own GTFS colours. The two lines are physically separate and meet nowhere; each keeps its own group entry so a shared render key never silently merges them if the connector between them is ever built.",
+      "confidence": "A"
+    },
+    "sfmta:california-cable-car": {
+      "color": "#b49a36",
+      "colorDark": "#b49a36",
+      "colorSource": {
+        "url": "https://www.sfmta.com/",
+        "name": "SFMTA GTFS routes.txt route_color, shared with F Market & Wharves"
+      },
+      "networkId": "sfmta",
+      "mode": "cable-car",
+      "name": "SFMTA California Street Cable Car",
+      "why": "SFMTA publishes one heritage hex (#b49a36) for the California Street cable car and the F Market & Wharves streetcar in this package's own GTFS colours. The two railways meet at the foot of Market Street, which is exactly where one lane would hide one of them, so each keeps its own group entry.",
+      "confidence": "A"
+    },
+    "sfmta:f-market-wharves": {
+      "color": "#b49a36",
+      "colorDark": "#b49a36",
+      "colorSource": {
+        "url": "https://www.sfmta.com/",
+        "name": "SFMTA GTFS routes.txt route_color, shared with the California Street cable car"
+      },
+      "networkId": "sfmta",
+      "mode": "streetcar",
+      "name": "SFMTA F Market & Wharves",
+      "why": "SFMTA publishes one heritage hex (#b49a36) for the California Street cable car and the F Market & Wharves streetcar in this package's own GTFS colours. The two railways meet at the foot of Market Street, which is exactly where one lane would hide one of them, so each keeps its own group entry.",
+      "confidence": "A"
+    },
+    "sounder:n-line": {
+      "color": "#4474a7",
+      "colorDark": "#98b6d5",
+      "colorSource": {
+        "url": "https://www.soundtransit.org/",
+        "name": "Sound Transit GTFS routes.txt route_color, shared with Sounder S Line"
+      },
+      "networkId": "sounder",
+      "mode": "commuter",
+      "name": "Sound Transit Sounder North Line",
+      "why": "Sound Transit and Metro Transit publish the identical Sounder hex (#4474a7) for both the N and S lines in this package's own GTFS colours. The two corridors share only the King Street Station throat; each keeps its own group entry since one published Sounder hex is branding, not evidence of one railway.",
+      "confidence": "A"
+    },
+    "sounder:s-line": {
+      "color": "#4474a7",
+      "colorDark": "#98b6d5",
+      "colorSource": {
+        "url": "https://www.soundtransit.org/",
+        "name": "Metro Transit GTFS routes.txt route_color, shared with Sounder N Line"
+      },
+      "networkId": "sounder",
+      "mode": "commuter",
+      "name": "Sound Transit Sounder South Line",
+      "why": "Sound Transit and Metro Transit publish the identical Sounder hex (#4474a7) for both the N and S lines in this package's own GTFS colours. The two corridors share only the King Street Station throat; each keeps its own group entry since one published Sounder hex is branding, not evidence of one railway.",
+      "confidence": "A"
+    }
+  }
+}

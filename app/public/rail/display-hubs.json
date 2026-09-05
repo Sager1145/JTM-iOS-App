@@ -1,0 +1,674 @@
+{
+  "format": "jtm-display-hubs-v1",
+  "reviewedAt": "2026-09-04",
+  "why": [
+    "A convergence hub is a place where several lines' own digitised geometry — or, more often, several FOLLOWERS of one canonical part — sit inside one small radius of a shared terminal or junction throat. The general lane pass ranks lanes by measured lateral offset over a window at least MIN_RUN_METRES long, then may flatten a whole display class onto its busiest lane (DOMINANT_LANE_SHARE). Both rules are right for a normal corridor and both are wrong inside a hub: the convergence itself is shorter than MIN_RUN_METRES by construction (that is what makes it a throat rather than a corridor), and a hub routinely bundles several lines of the SAME display class (same operator/colour) that the general pass never even compares to each other, because same-class parts are deliberately excluded from being neighbours (see displayClassKey / the neighbour scan in build-display-lanes.mjs) — that exclusion exists so one line's own repeated geometry never fights itself for a lane, but it also means two DIFFERENT branches of one operator that happen to converge on the same platform throat never get measured against one another at all, and both default to lane 0.",
+    "The hub pass in build-display-lanes.mjs runs after the general pass and only touches rows inside a hub radius: for every canonical part crossing the radius, it collects that part plus every part (of any display class) whose OWN geometry also passes inside the radius, orders them by branch-block (which side each one's geometry departs to beyond the hub, left before continue before right), and assigns evenly spaced half-integer slots centred on zero — the same i-(n-1)/2 scheme rail-stroke.js already ramps smoothly to and from.",
+    "The 17 Japanese hubs added 2026-09-04 name the throats where the Japan audit found several operators' own digitised geometry inside one small radius. Three of them (新宿, 池袋, 札幌) deliberately declare NO trunkLineId: at 新宿 and 池袋 no single railway owns the alignment the others converge on — the JR lines, the 私鉄 termini and the subways each approach on their own structure — and at 札幌 the convergence is one JR line meeting two subways that cross it underground. Left without a trunk, computeHubOverrides picks the member the most follow rows name as canonical, which is the right default exactly when no railway can be said to own the place."
+  ],
+  "hubs": [
+    {
+      "id": "chicago-union",
+      "region": "us",
+      "name": "Chicago Union Station throat",
+      "centre": [
+        -87.6403,
+        41.8787
+      ],
+      "radiusMetres": 2500,
+      "trunkLineId": "metra-sws",
+      "evidence": [
+        "review-flagged: metra-sws, metra-hc, amtrak-carl-sandburg, amtrak-lincoln-service, amtrak-southwest-chief, amtrak-wolverine and metra-bnsf all approach Union Station on metra-sws part 0's alignment; the general pass drops the < 3 km approach run (MIN_RUN_METRES) and leaves most of them at lane 0",
+        "auto-detection sweep (2026-09-02) independently found the same canonical part (metra-sws#0) followed by 7 distinct lines concurrently over a 2.7 km span, centred 1.35 km from the part's own terminal end",
+        "2026-09-05: the auto-picked trunk (whichever member the most follow rows name canonical) drifted from metra-sws to amtrak-lincoln-service once the Cardinal/City of New Orleans/Borealis/Empire Builder/Hiawatha merge added several more Amtrak followers of that line through the throat — the same failure mode already documented at chicago-loop. That reassigned metra-bnsf's hub slot to the same numeric value (0.5) as its general-corridor lane beyond the throat, collapsing the two into one row. metra-sws is declared explicitly, as the hub's own name and evidence already say it should be: Union Station's own approach tracks are the throat, not whichever Amtrak service the follow-count heuristic currently favours."
+      ]
+    },
+    {
+      "id": "chicago-loop",
+      "region": "us",
+      "name": "Chicago Loop elevated",
+      "centre": [
+        -87.6298,
+        41.8819
+      ],
+      "radiusMetres": 650,
+      "trunkLineId": "cta-green-line",
+      "evidence": [
+        "review-flagged: cta-green-line (-0.5) and cta-orange-line (-1) sit 0.5 lane apart on the Loop structure — 1.35 px at the zooms the DOMINANT_LANE_SHARE flatten and the < 3 km elevated runs leave too little separation for the CTA lines that share the structure (Green, Orange, Brown, Pink, Purple, plus the Loop's own routing)",
+        "the auto-picked trunk (whichever member the most followers name canonical) lands on amtrak-hiawatha-service, which is not the Loop structure the hub is named for, so the trunk is declared: cta-green-line runs the full rectangle every other Loop-structure member departs from. The radius was cut from 2500m to 650m (measured 2026-09-03: every CTA Loop line's own geometry passes within 173-304m of this centre; the nearest Metra/Amtrak geometry — the Union Station approach tracks chicago-union already owns — is 737m+ away) so the hub stops reaching past the elevated structure into the Union Station throat a few blocks over"
+      ]
+    },
+    {
+      "id": "la-union",
+      "region": "us",
+      "name": "Los Angeles Union Station throat",
+      "centre": [
+        -118.2365,
+        34.056
+      ],
+      "radiusMetres": 2000,
+      "evidence": [
+        "review-flagged: LA Metro's A Line branches converge with Metrolink and Amtrak Pacific Surfliner/Southwest Chief on the shared approach into Union Station; several branches carry no lane row at all because they share the A Line's own display class"
+      ]
+    },
+    {
+      "id": "toronto-union",
+      "region": "ca",
+      "name": "Toronto Union Station throat",
+      "centre": [
+        -79.3806,
+        43.6453
+      ],
+      "radiusMetres": 2000,
+      "evidence": [
+        "review-flagged convergence of GO Transit's rail corridors (Lakeshore East/West, Kitchener, Barrie, Milton, Stouffville) with UP Express and VIA Rail on Union Station's approach tracks",
+        "auto-detection sweep (2026-09-02) found ttc-310 followed by 4 distinct lines (ttc-310-b1/b2/b3, ttc-509) within 19 m of a terminal, inside this hub's own radius"
+      ]
+    },
+    {
+      "id": "boston-north",
+      "region": "us",
+      "name": "Boston North Station throat",
+      "centre": [
+        -71.0616,
+        42.3664
+      ],
+      "radiusMetres": 1500,
+      "evidence": [
+        "review-flagged: MBTA Commuter Rail's northside lines (Newburyport/Rockport, Haverhill, Lowell, Fitchburg) converge on North Station's approach and share display classes with each other",
+        "auto-detection sweep (2026-09-02) found mbta-d (Green Line trunk) followed by mbta-b/mbta-c/mbta-e-b1 concurrently for 625 m centred 301 m from a terminal, and mbta-providence-stoughton-line followed by 5 distinct lines 1.1 km from a terminal, both inside this hub's radius"
+      ]
+    },
+    {
+      "id": "boston-south",
+      "region": "us",
+      "name": "Boston South Station throat",
+      "centre": [
+        -71.0552,
+        42.3519
+      ],
+      "radiusMetres": 1500,
+      "evidence": [
+        "review-flagged: MBTA Commuter Rail's southside lines (Providence/Stoughton, Franklin, Fairmount, Needham, Old Colony) converge on South Station's approach",
+        "auto-detection sweep (2026-09-02) found mbta-providence-stoughton-line-b5 followed by 5 distinct lines (CapeFLYER, Fairmount, Fall River/New Bedford, Kingston, Providence/Stoughton) concurrently for 1.8 km centred 886 m from a terminal"
+      ]
+    },
+    {
+      "id": "nyc-penn",
+      "region": "us",
+      "name": "New York Penn Station throat",
+      "centre": [
+        -73.9935,
+        40.7506
+      ],
+      "radiusMetres": 2500,
+      "evidence": [
+        "review-flagged convergence of NJ Transit's Northeast Corridor group, LIRR's western branches, and Amtrak's Northeast Corridor / Empire Service on Penn Station's North River and East River approaches"
+      ]
+    },
+    {
+      "id": "oakland-wye",
+      "region": "us",
+      "name": "Oakland Wye",
+      "centre": [
+        -122.268,
+        37.8099
+      ],
+      "radiusMetres": 1500,
+      "evidence": [
+        "review-flagged convergence of Amtrak Capitol Corridor, San Joaquins and Coast Starlight with BART's Oakland Wye trackage rights corridor"
+      ]
+    },
+    {
+      "id": "dc-lenfant-wmata",
+      "region": "us",
+      "name": "WMATA Blue/Orange/Silver trunk (Capitol South)",
+      "centre": [
+        -76.982,
+        38.8817
+      ],
+      "radiusMetres": 900,
+      "trunkLineId": "wmata-blue",
+      "evidence": [
+        "Split out of the former single dc-lenfant hub (2026-09-03): a single hub centred on L'Enfant Plaza with trunk wmata-blue also swept in amtrak-carolinian/amtrak-palmetto, because Amtrak's own NEC alignment and WMATA's Blue/Orange tunnel cross within 12-65m of each other right at L'Enfant (measured 2026-09-03) — closer to each other there than either is to wmata-green/yellow's own genuine L'Enfant crossing (2-9m). No radius centred on L'Enfant can admit WMATA's own Blue/Orange convergence without also admitting that Amtrak crossing, so this hub is centred instead on the shared Blue/Orange/Silver trunk itself, a couple of stations east at Capitol South, where wmata-blue and wmata-orange run 6m apart continuously but wmata-green (1775m), wmata-yellow (3471m), wmata-red (2763m) and every Amtrak line (2120m+) are all far outside a 900m radius. wmata-silver is not yet in the package; add it here (member, not trunk) once it lands, on the same 60m-from-wmata-blue test that already admits wmata-orange."
+      ]
+    },
+    {
+      "id": "dc-lenfant-amtrak",
+      "region": "us",
+      "name": "Washington Union Station Amtrak throat",
+      "centre": [
+        -77.0068,
+        38.8977
+      ],
+      "radiusMetres": 900,
+      "trunkLineId": "amtrak-palmetto",
+      "evidence": [
+        "Split out of the former single dc-lenfant hub (2026-09-03) — see dc-lenfant-wmata's evidence for why one hub could not hold both. Centred on Union Station, where amtrak-palmetto/amtrak-carolinian/amtrak-vermonter all pass within 169m of each other (they share the NEC) but wmata-blue/orange/green/yellow are all 1300m+ away, so a 900m radius keeps the WMATA Blue/Orange trunk out. wmata-red is 67m from this centre — Union Station is also a Red Line stop — so wmata-red may legitimately join this hub's members on the same near-trunk test as everyone else; that is a real convergence at Union Station, not the L'Enfant crossing this split exists to avoid."
+      ]
+    },
+    {
+      "id": "nj-transit-newark-broad-street",
+      "region": "us",
+      "name": "Newark Broad Street throat",
+      "centre": [
+        -74.1769,
+        40.7487
+      ],
+      "radiusMetres": 1200,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part new-jersey-transit-nj-transi-mne#0 followed concurrently by 5 distinct lines (bntn, mne-b1, mneg, mneg-b1, mneg-b2 — NJ Transit's Morris & Essex / Montclair-Boonton / Gladstone group) over an 8.0 km span centred 436 m from a terminal"
+      ]
+    },
+    {
+      "id": "nj-transit-hoboken-approach",
+      "region": "us",
+      "name": "Hoboken Terminal approach",
+      "centre": [
+        -74.0476,
+        40.7371
+      ],
+      "radiusMetres": 1500,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part new-jersey-transit-nj-transi-mnbnp#0 followed concurrently by 6 distinct lines (NJ Transit's Bergen County/Main, Montclair-Boonton, Pascack Valley and Gladstone branches) over a 3.4 km span centred 1.67 km from a terminal"
+      ]
+    },
+    {
+      "id": "chicago-kensington",
+      "region": "us",
+      "name": "Kensington interlocking",
+      "centre": [
+        -87.5916,
+        41.7744
+      ],
+      "radiusMetres": 1000,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part metra-me#0 followed concurrently by metra-me-b1, metra-me-b2, metra-me-b3 and south-shore-line-lakeshore over a 1.3 km span centred 658 m from a terminal — the same Metra Electric/South Shore interlocking shared-corridors.json's displayLanePolicy.excludedLineIds records as reviewed evidence"
+      ]
+    },
+    {
+      "id": "sf-market-street",
+      "region": "us",
+      "name": "San Francisco Market Street subway",
+      "centre": [
+        -122.4082,
+        37.7839
+      ],
+      "radiusMetres": 1200,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part bart-green#0 followed concurrently by bart-blue, bart-orange, bart-red and Muni's J-Church (both digitisations) over a 2.9 km span centred 1.38 km from a terminal"
+      ]
+    },
+    {
+      "id": "toronto-aldershot",
+      "region": "ca",
+      "name": "Aldershot / Hamilton GO throat",
+      "centre": [
+        -79.873,
+        43.3018
+      ],
+      "radiusMetres": 1800,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part go-transit-lw#0 (Lakeshore West) followed concurrently by go-transit-br (Barrie), go-transit-ki (Kitchener), go-transit-lw-b1, UP Express and VIA's London/Windsor services over a 3.8 km span centred 1.9 km from a terminal"
+      ]
+    },
+    {
+      "id": "toronto-bathurst-junction",
+      "region": "ca",
+      "name": "Bathurst North Junction",
+      "centre": [
+        -79.4182,
+        43.6406
+      ],
+      "radiusMetres": 1500,
+      "evidence": [
+        "auto-detected 2026-09-02: canonical part go-transit-br#0 (Barrie) followed concurrently by go-transit-ki (Kitchener), go-transit-mi (Milton), UP Express and VIA's Sarnia/Windsor services over a 4.3 km span centred 2.8 km from a terminal — just outside the toronto-union hub's own radius, so kept as a separate throat rather than merged"
+      ]
+    },
+    {
+      "id": "jp-tokyo",
+      "region": "jp",
+      "name": "Tokyo Station throat",
+      "centre": [
+        139.7664,
+        35.6809
+      ],
+      "radiusMetres": 2200,
+      "trunkLineId": "jp-東日本旅客鉄道-東海道線",
+      "laneOrder": [
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-東日本旅客鉄道-東北新幹線",
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-山手線",
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-総武線",
+        "jp-東京地下鉄-4号線丸ノ内線"
+      ],
+      "laneOrderOnly": true,
+      "unbundled": [
+        {
+          "lineId": "jp-東日本旅客鉄道-中央線",
+          "reason": "elevated/separate level, > 60 m from the trunk (HUB_MEMBER_METRES) — 1-2番線 sit on their own elevated deck, not the surface throat"
+        },
+        {
+          "lineId": "jp-東日本旅客鉄道-総武線",
+          "reason": "elevated/separate level, > 60 m from the trunk (HUB_MEMBER_METRES) — the 地下 Sobu platforms approach from their own tunnel, not the surface throat"
+        },
+        {
+          "lineId": "jp-東日本旅客鉄道-山手線",
+          "reason": "no-geometry: this package's 山手線 row is the open west arc 品川→田端 and carries no geometry through 東京 at all (see display-loops.json jp-yamanote)"
+        }
+      ],
+      "laneOrderWhy": "東京 is the one hub in this table whose radius unavoidably contains railways that do not converge here — the throat is a few hundred metres wide and the 2.2 km radius that covers it also covers Marunouchi and Yaesu, where a dozen unrelated lines pass through on their own alignments. A hub slot is index - (n-1)/2 and the iOS renderer refuses |lane| > 8, so bundling all of them would spend the whole slot budget on a convergence that is not there. `laneOrderOnly` bundles exactly the classes named below and leaves every other class inside the radius on the lane the general pass gave it. 京葉線 is deliberately NOT named: its platforms sit about 400 m south-west of the main throat, under Yaesu, reached by their own tunnel — it shares the station name, not the corridor (japan_parallel_rail_rendering_rules.md: 'lines sharing only a station with different approach directions' do not bundle). 山手線 is named but is not expected to appear: this package's 山手線 row is the open west arc 品川→田端 and carries no geometry through 東京 at all (see display-loops.json jp-yamanote). TRACK ORDER, east (Yaesu) to west (Marunouchi), CONFIRMED against 東京's own platform numbering: 東海道新幹線 (platforms 14–19, Yaesu side) | 東北・上越・北陸新幹線 (20–23) | 東海道線/上野東京ライン (7–10) | 山手線/京浜東北線 (3–6) | 中央線 (1–2, elevated) — 総武線 (地下) and 丸ノ内線 (地下) continue further west/below, off the surface platform numbering, per the audit's 品川–田町 precedent for the relative order of the Shinkansen/conventional/山手線 block. The encoded laneOrder above matches this evidence and is not reversed.",
+      "evidence": [
+        "jp-2025.json: 8 line-station rows named 東京 across 3 operators (JR East, JR Central, Tokyo Metro), clustered within ~350m (spread 0.0033°lon x 0.0042°lat)",
+        "東海道線 is JR's historic Tokyo terminus (opened 1914 for this station; the Tokaido Main Line's own km-zero point); every JR East line named here shares its approach tracks or platforms at Tokyo Station",
+        "京浜東北線 (see notInPackage in jp-render-groups.proposed.json) also converges here on the same platforms as 東海道線/山手線 but has no package line row — a real member this hub cannot yet represent"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北新幹線",
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-東日本旅客鉄道-総武線",
+        "jp-東日本旅客鉄道-京葉線",
+        "jp-東京地下鉄-4号線丸ノ内線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-ueno",
+      "region": "jp",
+      "name": "Ueno Station throat",
+      "centre": [
+        139.7765,
+        35.7125
+      ],
+      "radiusMetres": 1200,
+      "trunkLineId": "jp-東日本旅客鉄道-東北線-2",
+      "evidence": [
+        "jp-2025.json: 4 line-station rows named 上野, JR East + Tokyo Metro, within ~180m",
+        "Ueno was the Tohoku Main Line's historic terminus (1883) before the Ueno-Tokyo Line connector opened in 2015; 上越/北陸/東北新幹線 all terminate/pass through on the same throat"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北新幹線",
+        "jp-東京地下鉄-2号線日比谷線",
+        "jp-東京地下鉄-3号線銀座線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-shinagawa",
+      "region": "jp",
+      "name": "Shinagawa Station throat",
+      "centre": [
+        139.7389,
+        35.6285
+      ],
+      "radiusMetres": 1500,
+      "trunkLineId": "jp-東日本旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json: 5 line-station rows named 品川 across 3 operators, within ~230m",
+        "Task brief's own example: 品川–田町 real track order is 東海道線 | 京浜東北線 | 山手線"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-山手線",
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-東日本旅客鉄道-総武線-3",
+        "jp-京浜急行電鉄-本線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-shinjuku",
+      "region": "jp",
+      "name": "Shinjuku Station complex",
+      "centre": [
+        139.6997,
+        35.6899
+      ],
+      "radiusMetres": 1400,
+      "evidence": [
+        "jp-2025.json: 8 line-station rows named 新宿 across 5 operators, within ~400m (unusually tall spread: 0.0048° lat, reflecting the concourse's vertical/multi-level layout as much as horizontal spread)",
+        "No trunkLineId set: Shinjuku is a stacked multi-level interchange (JR surface concourse, Keio/Odakyu west-side terminal platforms, Toei/Metro underground) rather than one dominant alignment other operators' approach tracks parallel — assigning a single landlord here would misrepresent the station, unlike Tokyo/Ueno/Shinagawa where one JR mainline's own historic alignment is unambiguous"
+      ],
+      "trunkConfidence": "none — see note",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-山手線",
+        "jp-京王電鉄-京王線",
+        "jp-京王電鉄-京王新線",
+        "jp-小田急電鉄-小田原線",
+        "jp-東京地下鉄-4号線丸ノ内線",
+        "jp-東京都-10号線新宿線",
+        "jp-東京都-12号線大江戸線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-ikebukuro",
+      "region": "jp",
+      "name": "Ikebukuro Station throat",
+      "centre": [
+        139.7106,
+        35.73
+      ],
+      "radiusMetres": 1200,
+      "evidence": [
+        "jp-2025.json: 7 line-station rows named 池袋 across 4 operators, within ~400m",
+        "No trunkLineId set: 東上本線 carries this package's rank 1 (vs rank 2 for 山手線/池袋線), but that rank reflects 東上本線's own importance on its Saitama run, not a claim that Tobu's geometry is what JR/Seibu coincide with at Ikebukuro — needs a real coincidence measurement before a landlord call, not a rank lookup"
+      ],
+      "trunkConfidence": "none — see note",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-山手線",
+        "jp-東日本旅客鉄道-赤羽線",
+        "jp-東武鉄道-東上本線",
+        "jp-西武鉄道-池袋線",
+        "jp-東京地下鉄-4号線丸ノ内線",
+        "jp-東京地下鉄-8号線有楽町線",
+        "jp-東京地下鉄-13号線副都心線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-shibuya",
+      "region": "jp",
+      "name": "Shibuya Station throat",
+      "centre": [
+        139.7016,
+        35.659
+      ],
+      "radiusMetres": 900,
+      "trunkLineId": "jp-東日本旅客鉄道-山手線",
+      "evidence": [
+        "jp-2025.json: 7 line-station rows named 渋谷 across 4 operators, within ~320m",
+        "山手線's predecessor (Nippon Railway) reached this valley site in 1885, before Tokyu's 1927 Toyoko Line; kept at B confidence because Tokyu Toyoko now runs through-tunnel with Fukutoshin Line here, sharing infrastructure that isn't 山手線's own"
+      ],
+      "trunkConfidence": "B",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-山手線",
+        "jp-東急電鉄-東横線",
+        "jp-東急電鉄-田園都市線",
+        "jp-京王電鉄-井の頭線",
+        "jp-東京地下鉄-3号線銀座線",
+        "jp-東京地下鉄-11号線半蔵門線",
+        "jp-東京地下鉄-13号線副都心線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-yokohama",
+      "region": "jp",
+      "name": "Yokohama Station throat",
+      "centre": [
+        139.6219,
+        35.4658
+      ],
+      "radiusMetres": 1300,
+      "trunkLineId": "jp-東日本旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json: 7 line-station rows named 横浜 across 6 operators, within ~300m",
+        "東海道線 reached Yokohama in 1872 (Japan's first railway); every other operator's own line was built to converge on this station afterward"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-根岸線",
+        "jp-東急電鉄-東横線",
+        "jp-京浜急行電鉄-本線",
+        "jp-相模鉄道-相鉄本線",
+        "jp-横浜市-3号線",
+        "jp-横浜高速鉄道-みなとみらい21線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-omiya",
+      "region": "jp",
+      "name": "Omiya Station throat",
+      "centre": [
+        139.6234,
+        35.9066
+      ],
+      "radiusMetres": 1500,
+      "trunkLineId": "jp-東日本旅客鉄道-東北線",
+      "evidence": [
+        "jp-2025.json: 8 line-station rows named 大宮 restricted to the Saitama bounding box (a same-named 大宮 station on 阪急電鉄 in Kyoto was excluded — see Uncertainties)",
+        "Omiya is the historic Tohoku Main Line junction where the Takasaki and Tohoku lines diverge; both share 東北線's own alignment into Omiya"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-高崎線",
+        "jp-東日本旅客鉄道-川越線",
+        "jp-東日本旅客鉄道-東北新幹線",
+        "jp-東日本旅客鉄道-上越新幹線",
+        "jp-東武鉄道-野田線",
+        "jp-埼玉新都市交通-伊奈線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-chiba",
+      "region": "jp",
+      "name": "Chiba Station throat",
+      "centre": [
+        140.1137,
+        35.6127
+      ],
+      "radiusMetres": 900,
+      "trunkLineId": "jp-東日本旅客鉄道-総武線",
+      "evidence": [
+        "jp-2025.json: 4 line-station rows named 千葉 across 2 operators, within ~110m",
+        "総武線 (Sobu Main Line) is Chiba's historic trunk (1894); 外房/内房/成田 lines all diverge from it here. Kept at B: rank ties 総武線/外房線 at 3 in this package, so the trunk call rests on route history, not the rank field"
+      ],
+      "trunkConfidence": "B",
+      "reviewedMembers": [
+        "jp-東日本旅客鉄道-総武線",
+        "jp-東日本旅客鉄道-外房線",
+        "jp-千葉都市モノレール-1号線",
+        "jp-千葉都市モノレール-2号線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-nagoya",
+      "region": "jp",
+      "name": "Nagoya Station throat",
+      "centre": [
+        136.8821,
+        35.1707
+      ],
+      "radiusMetres": 2000,
+      "trunkLineId": "jp-東海旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json: 7 line-station rows named 名古屋 across 3 operators, within ~330m",
+        "東海道線 reached Nagoya in 1886, before Chuo (1900) and Kansai (1895) Lines were built to converge on the same station"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-東海旅客鉄道-東海道線",
+        "jp-東海旅客鉄道-中央線",
+        "jp-東海旅客鉄道-関西線",
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-名古屋市-1号線東山線",
+        "jp-名古屋市-6号線桜通線",
+        "jp-名古屋臨海高速鉄道-西名古屋港線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-kyoto",
+      "region": "jp",
+      "name": "Kyoto Station throat",
+      "centre": [
+        135.7591,
+        34.9854
+      ],
+      "radiusMetres": 1800,
+      "trunkLineId": "jp-西日本旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json: 6 line-station rows named 京都 across 4 operators, within ~220m",
+        "東海道線 reached Kyoto in 1877; every other line here was built to meet it"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-山陰線",
+        "jp-西日本旅客鉄道-奈良線",
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-京都市-烏丸線",
+        "jp-近畿日本鉄道-京都線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-osaka-umeda",
+      "region": "jp",
+      "name": "Osaka / Umeda Station throat",
+      "centre": [
+        135.4954,
+        34.7026
+      ],
+      "radiusMetres": 1500,
+      "trunkLineId": "jp-西日本旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json search widened to include 梅田/大阪梅田/西梅田/東梅田 station-name variants (JR names its own platforms 大阪 while Hankyu/Hanshin/Metro name theirs 梅田) — 9 line-station rows across 4 operators within ~700m",
+        "東海道線 reached Osaka in 1874 (Osaka–Kobe segment) and 1876 (Osaka–Kyoto); Hankyu/Hanshin/Metro's own Umeda terminals were all built afterward to meet it, and 大阪環状線 begins its loop from the same throat"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-大阪環状線",
+        "jp-大阪市高速電気軌道-1号線(御堂筋線)",
+        "jp-阪急電鉄-宝塚線",
+        "jp-阪急電鉄-神戸線",
+        "jp-阪神電気鉄道-本線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-shin-osaka",
+      "region": "jp",
+      "name": "Shin-Osaka Shinkansen throat",
+      "centre": [
+        135.5004,
+        34.7336
+      ],
+      "radiusMetres": 1200,
+      "trunkLineId": "jp-東海旅客鉄道-東海道新幹線",
+      "evidence": [
+        "jp-2025.json: 5 line-station rows named 新大阪 across 3 operators, within ~340m",
+        "Shin-Osaka exists because of the Shinkansen (opened 1964 specifically to build this interchange); conventional-line and Metro platforms were added around it. B confidence: JR Central and JR West's Shinkansen lines are two different render groups already (different operator), so 'trunk' here really names a shared throat between two peer mainlines rather than one clear landlord"
+      ],
+      "trunkConfidence": "B",
+      "reviewedMembers": [
+        "jp-東海旅客鉄道-東海道新幹線",
+        "jp-西日本旅客鉄道-山陽新幹線",
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-西日本旅客鉄道-おおさか東線",
+        "jp-大阪市高速電気軌道-1号線(御堂筋線)"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-tennoji",
+      "region": "jp",
+      "name": "Tennoji Station throat",
+      "centre": [
+        135.5149,
+        34.6471
+      ],
+      "radiusMetres": 1200,
+      "trunkLineId": "jp-西日本旅客鉄道-関西線",
+      "evidence": [
+        "jp-2025.json: 5 line-station rows named 天王寺 across 2 operators, within ~250m",
+        "関西線 (Kansai Main Line) reached Tennoji first in 1889 as Osaka's second terminus, before the Loop Line (1961) and Hanwa Line (1929 as a separate company) were routed through it"
+      ],
+      "trunkConfidence": "B",
+      "reviewedMembers": [
+        "jp-西日本旅客鉄道-関西線",
+        "jp-西日本旅客鉄道-大阪環状線",
+        "jp-西日本旅客鉄道-阪和線",
+        "jp-大阪市高速電気軌道-1号線(御堂筋線)",
+        "jp-大阪市高速電気軌道-2号線(谷町線)"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-sannomiya",
+      "region": "jp",
+      "name": "Sannomiya Station throat",
+      "centre": [
+        135.1943,
+        34.6944
+      ],
+      "radiusMetres": 900,
+      "trunkLineId": "jp-西日本旅客鉄道-東海道線",
+      "evidence": [
+        "jp-2025.json: only 3 line-station rows matched 三ノ宮/三宮 in this package (JR West, Kobe Municipal Subway, Port Liner) — Hankyu and Hanshin's own Sannomiya stations were not returned by name search, likely stored under a differently-formatted station name; treat the member list as a lower bound, not the full real-world convergence (Hankyu Kobe Line and Hanshin Main Line both terminate/pass through the same throat in reality)",
+        "東海道線 reached Kobe in 1874, before the municipal subway (1977) and Port Liner (1981)"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-西日本旅客鉄道-東海道線",
+        "jp-神戸市-山手線",
+        "jp-神戸新交通-ポートアイランド線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-hakata",
+      "region": "jp",
+      "name": "Hakata Station throat",
+      "centre": [
+        130.4206,
+        33.5897
+      ],
+      "radiusMetres": 1500,
+      "trunkLineId": "jp-九州旅客鉄道-鹿児島線",
+      "evidence": [
+        "jp-2025.json: 6 line-station rows named 博多 across 3 operators, within ~250m",
+        "鹿児島線 (Kagoshima Main Line) reached Hakata in 1889, the original railway the station was built around; Sanyo/Kyushu Shinkansen platforms and the Fukuoka Municipal Subway were added later on the same throat"
+      ],
+      "trunkConfidence": "A",
+      "reviewedMembers": [
+        "jp-九州旅客鉄道-鹿児島線",
+        "jp-西日本旅客鉄道-山陽新幹線",
+        "jp-九州旅客鉄道-九州新幹線",
+        "jp-西日本旅客鉄道-博多南線",
+        "jp-福岡市-1号線(空港線)",
+        "jp-福岡市-3号線(七隈線)"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    },
+    {
+      "id": "jp-sapporo",
+      "region": "jp",
+      "name": "Sapporo Station area",
+      "centre": [
+        141.3516,
+        43.0669
+      ],
+      "radiusMetres": 700,
+      "evidence": [
+        "jp-2025.json: only 3 line-station rows matched 札幌/さっぽろ, 1 JR + 2 Sapporo Municipal Subway lines, within ~400m",
+        "No trunkLineId set and this hub's status is weaker than the others: JR Sapporo Station and the Sapporo Municipal Subway's Sapporo/Odori stations are separate underground complexes roughly 200-400m apart connected by a concourse, not lines that share or parallel one alignment — it satisfies the task's ≥3-render-classes-within-2km convergence test on proximity alone, but 'trunk' (whose geometry the others coincide with) does not apply here the way it does at the JR-only or JR-vs-one-subway hubs above"
+      ],
+      "trunkConfidence": "none — see note",
+      "reviewedMembers": [
+        "jp-北海道旅客鉄道-函館線",
+        "jp-札幌市-南北線",
+        "jp-札幌市-東豊線"
+      ],
+      "reviewedMembersNote": "Documentation of what the review expected to find inside this radius. Membership itself is measured, not declared: computeHubOverrides admits a part whose own geometry comes within HUB_MEMBER_METRES of the trunk's alignment inside the window, so a line listed here that does not actually reach the throat is simply absent from the hub report."
+    }
+  ]
+}

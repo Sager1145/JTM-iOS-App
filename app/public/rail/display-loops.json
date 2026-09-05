@@ -1,0 +1,118 @@
+{
+  "format": "jtm-display-loops-v1",
+  "reviewedAt": "2026-09-04",
+  "why": [
+    "rules.md §7.8 and japan_parallel_rail_rendering_rules.md §6.5 both require a closed corridor to have ONE fixed seam and ONE fixed orientation, held globally, so that a lane index stays continuous across the wrap-around instead of being recomputed from the current viewport. A lane index is only meaningful relative to a direction of travel: the same ring digitised the other way puts the outer track on the other side of the stroke.",
+    "The winding half of that contract is enforced in code — build-display-lanes.mjs's partRowsForLine reverses any `loop` part whose shoelace area is negative, so every ring in a continuous-stroke region is emitted anticlockwise in lon/lat (\"positive signed area\"). This file carries the half that cannot be measured: WHICH station the seam is at, what the canonical direction is called in the operator's own language, and — for the rings this package does not store as one closed line — which rows actually make up the ring.",
+    "Every entry below was checked against jp-2025.json's own arrays rather than assumed from what a loop line ought to look like: only one of the four railways named in the Japan brief is stored as a closed line at all."
+  ],
+  "loops": [
+    {
+      "id": "jp-osaka-loop",
+      "region": "jp",
+      "name": "大阪環状線",
+      "kind": "closed-line",
+      "lineIds": ["jp-西日本旅客鉄道-大阪環状線"],
+      "seamStationCode": "007050",
+      "seamStationName": "桜ノ宮",
+      "canonicalWinding": "positive-signed-area",
+      "orientation": {
+        "canonicalDirectionIs": "内回り (uchi-mawari, the inner loop)",
+        "reverseDirectionIs": "外回り (soto-mawari, the outer loop)",
+        "note": "The user-facing fact is that 外回り runs clockwise on a north-up map (大阪 → 京橋 → 鶴橋 → 天王寺 → 西九条 → 大阪). A positive shoelace area in (lon, lat) is ANTIclockwise on that same map, so the canonical winding this file pins is 内回り and 外回り is its reverse. Stated this way round on purpose: the winding is the thing code can check, and the Japanese name is the thing a reader can check."
+      },
+      "packageRepresentation": "isLoop = 1, 19 stations and 19 intervals — the 19th interval wraps 京橋 back to 桜ノ宮, so the ring is genuinely closed in the package even though the stations array is stored open (stations[0] = 桜ノ宮, stations[-1] = 京橋). Its one display part is already anticlockwise, so the winding normalisation leaves it untouched.",
+      "evidence": [
+        "jp-2025.json: jp-西日本旅客鉄道-大阪環状線 isLoop = 1, stations = 19, segments = 19",
+        "measured 2026-09-04: the line's single display part closes (first vertex == last vertex) with signed area +2.96e-3 deg^2, i.e. already the canonical winding",
+        "corrected 2026-09-05: seamStationCode/seamStationName previously named 007068/大阪, which is not stations[0] — the closed part's own wrap seam is its first vertex, stations[0] = 007050/桜ノ宮 (see packageRepresentation above and stations[-1] = 京橋, the 19th interval wrapping 京橋 back to 桜ノ宮). validateReviewedLoops now checks this directly against the part's own first vertex rather than only checking the code is on the line."
+      ],
+      "confidence": "A"
+    },
+    {
+      "id": "jp-nagoya-meijo",
+      "region": "jp",
+      "name": "名古屋市営地下鉄 名城線",
+      "kind": "composite-ring",
+      "lineIds": ["jp-名古屋市-2号線名城線", "jp-名古屋市-4号線名城線"],
+      "seamStationCodes": ["005551", "005387"],
+      "seamStationNames": ["金山", "大曽根"],
+      "canonicalWinding": "positive-signed-area",
+      "orientation": {
+        "canonicalDirectionIs": "右回り / 左回り are the operator's own names for the two directions; this package cannot assign them, because neither member row is a ring on its own.",
+        "note": "名城線 is Japan's only full subway ring, but N02 stores it as TWO open railways — 2号線名城線 (12 stations) and 4号線名城線 (18 stations) — that both run 金山 → 大曽根 and meet at those two stations. Neither carries isLoop, so neither takes the `loop` part branch and neither is winding-normalised; the ring only exists once the two are drawn together. 2号線名港線 also touches 金山 and is NOT part of the ring: it is the 名古屋港 branch."
+      },
+      "packageRepresentation": "Two open lines, each stations[0] = 金山 and stations[-1] = 大曽根, isLoop unset on both.",
+      "evidence": [
+        "jp-2025.json: jp-名古屋市-2号線名城線 stations 12 (金山 → 大曽根), jp-名古屋市-4号線名城線 stations 18 (金山 → 大曽根), isLoop unset on both",
+        "jp-2025.json: jp-名古屋市-2号線名港線 (7 stations, 名古屋港 → 金山) shares only the 金山 seam and is excluded"
+      ],
+      "confidence": "A"
+    },
+    {
+      "id": "jp-yamanote",
+      "region": "jp",
+      "name": "山手線",
+      "kind": "not-a-ring",
+      "lineIds": ["jp-東日本旅客鉄道-山手線"],
+      "canonicalWinding": null,
+      "packageRepresentation": "An OPEN arc, not a loop: 17 stations from 品川 through 渋谷 / 新宿 / 池袋 to 田端, isLoop unset, 16 intervals. The east side of the circle (田端 → 上野 → 東京 → 新橋 → 品川) has no 山手線 geometry in N02 at all — that stretch is the 東北線's and 東海道線's own surveyed track, which the 山手線 service rides. No seam and no orientation are recorded here because there is no ring to seam: treating this row as a loop would invent about 9 km of railway.",
+      "evidence": [
+        "jp-2025.json: jp-東日本旅客鉄道-山手線 isLoop unset, stations 17, stations[0] = 品川 (004095), stations[-1] = 田端 (003335)",
+        "jp-render-groups.json notInPackage: 京浜東北線 has no line row either, so the east-side platforms it shares are only present as 東北線 / 東海道線 geometry"
+      ],
+      "confidence": "A"
+    },
+    {
+      "id": "jp-oedo",
+      "region": "jp",
+      "name": "都営大江戸線",
+      "kind": "lasso",
+      "lineIds": ["jp-東京都-12号線大江戸線"],
+      "canonicalWinding": null,
+      "packageRepresentation": "A lasso, not a ring: one open row of 38 stations from 光が丘 to 新宿, whose tail closes onto its own loop at 都庁前 rather than onto its own start. isLoop unset, so it never takes the `loop` part branch; displayPartsForLine cuts it where it retraces itself and the pieces are ordinary parts. Recorded here so that a later reviewer does not mistake the self-approach for a ring and give it a seam.",
+      "evidence": [
+        "jp-2025.json: jp-東京都-12号線大江戸線 isLoop unset, stations 38, stations[0] = 光が丘 (003225), stations[-1] = 新宿 (003700)"
+      ],
+      "confidence": "A"
+    },
+    {
+      "id": "jp-yukarigaoka",
+      "region": "jp",
+      "name": "山万 ユーカリが丘線",
+      "kind": "closed-line",
+      "lineIds": ["jp-山万-ユーカリが丘線"],
+      "seamStationCode": "003316",
+      "seamStationName": "中学校",
+      "canonicalWinding": "positive-signed-area",
+      "orientation": {
+        "canonicalDirectionIs": "anticlockwise in lon/lat, after normalisation",
+        "note": "A single-track AGT loop with a stem; the package stores it isLoop = 1 and displayPartsForLine cuts it into two parts where it retraces the stem, so neither part is a closed ring on its own. Both were digitised clockwise and are reversed by the winding normalisation."
+      },
+      "packageRepresentation": "isLoop = 1, 4 stations, 4 intervals; two display parts (63 and 45 vertices), neither closed.",
+      "evidence": [
+        "measured 2026-09-04: parts #0 and #1 signed area -3.64e-5 and -2.39e-5 deg^2, both reversed by the normalisation"
+      ],
+      "confidence": "B"
+    },
+    {
+      "id": "jp-disney-resort-line",
+      "region": "jp",
+      "name": "ディズニーリゾートライン",
+      "kind": "closed-line",
+      "lineIds": ["jp-舞浜リゾートライン-ディズニーリゾートライン"],
+      "seamStationCode": "004058",
+      "seamStationName": "東京ディズニーランド･ステーション",
+      "canonicalWinding": "positive-signed-area",
+      "orientation": {
+        "canonicalDirectionIs": "anticlockwise in lon/lat, after normalisation",
+        "note": "The monorail runs one way only, clockwise around the resort; the canonical winding here is a data convention, not a direction of service."
+      },
+      "packageRepresentation": "isLoop = 1, 4 stations, 4 intervals, one closed display part (49 vertices).",
+      "evidence": [
+        "measured 2026-09-04: part #0 closes, signed area -1.45e-4 deg^2, reversed by the normalisation"
+      ],
+      "confidence": "A"
+    }
+  ]
+}
