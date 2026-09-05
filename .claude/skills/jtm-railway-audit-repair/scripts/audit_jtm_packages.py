@@ -65,6 +65,67 @@ RETRACE_STATION_SHARE = 0.8
 RETRACE_LINE_SHARE = 0.25
 RETRACE_NEAR_M = 40.0
 
+# STRAIGHT_INTERVAL — chord-deviation review class ------------------------
+#
+# `na_geo.densify()` (app/scripts/railway/lib/na_geo.py, bands in
+# lib/na_profile.py) subdivides every edge COLLINEARLY to <= max_edge_m by
+# band (street 120 / metro 160 / commuter 220 / regional 350 / longhaul
+# 600 m). A station-to-station straight line therefore ships as a chain of
+# short straight pieces: STRAIGHT_CHORD only fires on a bare 2-point
+# interval, and SPARSE_GEOMETRY only on low vertex density — a densified
+# straight interval can carry a dozen healthily-spaced vertices and still
+# be perfectly straight, so both read zero on it. Collinear subdivision
+# cannot hide only one thing: the maximum perpendicular deviation of the
+# interval's INTERIOR vertices from the chord between its two station
+# endpoints. A straight line densified into N pieces has interior vertices
+# that all sit exactly ON that chord; a curve's do not.
+#
+# STRAIGHT_INTERVAL_CHORD_MIN_M = 1,500 m. The coarsest densify band
+# (longhaul) caps a sub-edge at 600 m, so any chord under about 1,200 m
+# could in principle BE a single un-subdivided densify edge with no
+# interior vertex to measure at all — that case proves nothing, it is just
+# how the densifier writes any edge, straight or not. 1,500 m sits
+# comfortably above 2x that ceiling, so a finding always spans at least two
+# densified sub-edges: it is evidence about the interval's own recorded
+# shape, not an artifact of how finely one edge happened to be cut.
+#
+# STRAIGHT_INTERVAL_DEVIATION_MAX_M = 25 m. A chord of length L drawn along
+# a constant-radius curve of radius R sags by L^2/(8R) at its midpoint. At
+# the threshold chord (1,500 m) a 25 m sag corresponds to R = 1500^2 /
+# (8*25) ~= 11.25 km — far broader than a turnout or station-throat curve,
+# and broader than most mainline curve radii. Below this deviation the
+# interval reads, at any zoom a renderer draws it at, as dead straight;
+# above it, real curvature is visible. 25 m is also well clear of
+# coordinate rounding and GPS jitter in the shipped packages (compare
+# `check_anchor`'s 5 m WARN floor).
+#
+# Sensitivity (measured against the shipped packages, 2026-09-02):
+#   chord>1,000 m dev<25 m -> US 344 intervals/114 lines/882 km   CA 47/22/153 km
+#   chord>1,500 m dev<25 m -> US 242 intervals/81 lines/753 km    CA 34/15/137 km  <- chosen
+#   chord>2,000 m dev<25 m -> US 145 intervals/59 lines/587 km    CA 27/12/125 km
+#   chord>1,500 m dev<15 m -> US 213 intervals/77 lines/664 km    CA 34/15/137 km
+#   chord>1,500 m dev<40 m -> US 279 intervals/87 lines/883 km    CA 42/16/163 km
+# Every CA count is identical at dev<15/25 m — CA's straight intervals sit
+# at 0.06-0.10 m deviation, nowhere near either knob, which is itself
+# evidence that they are dead-straight synthetic chords rather than gentle
+# real curves sitting just inside a threshold. Neither knob shows a cliff:
+# the count moves smoothly as each one moves, so no pair is "obviously
+# correct" — 1,500 m / 25 m was chosen mid-way through a smooth trade-off,
+# not at an edge where a small change in the source data would flip many
+# findings at once.
+#
+# This class is a REVIEW CANDIDATE, never an automatic verdict: a real
+# dead-straight high-speed viaduct or a prairie mainline draws exactly the
+# same signature as a synthetic straight line copied station-to-station.
+# The jp/tw/hk/kr packages (surveyed, not densified) DO trigger it —
+# JR Hokkaido's flat-plain lines, TRA's Chianan-plain running, MTR's West
+# Rail viaduct, and KTX/Airport Railroad express track are all genuinely
+# straight over multi-km chords — which is the expected true-positive case
+# this class exists to distinguish from densified filler, not a bug in the
+# detector. See STRAIGHT_INTERVAL's entry in `result()["limitations"]`.
+STRAIGHT_INTERVAL_CHORD_MIN_M = 1_500.0
+STRAIGHT_INTERVAL_DEVIATION_MAX_M = 25.0
+
 
 def haversine(a: list[float], b: list[float]) -> float:
     lon1, lat1 = math.radians(a[0]), math.radians(a[1])
@@ -96,6 +157,44 @@ def finite_coordinate(value: Any) -> bool:
     )
 
 
+def orient_path_to_anchors(
+    path: list[list[float]], start: list[float] | None, end: list[float] | None
+) -> list[list[float]]:
+    """Return an interval in station order without changing its geometry.
+
+    `compact-v1` permits a self-contained interval to be digitised in either
+    direction.  Whole-line checks must orient each interval before assigning
+    along-line distance; otherwise two adjacent, oppositely digitised intervals
+    manufacture an artificial out-and-back between them.
+    """
+    if not start or not end or len(path) < 2:
+        return path
+    forward = max(haversine(path[0], start), haversine(path[-1], end))
+    reverse = max(haversine(path[-1], start), haversine(path[0], end))
+    return list(reversed(path)) if reverse < forward else path
+
+
+def point_to_segment_distance_m(point: list[float], a: list[float], b: list[float]) -> float:
+    """Local equirectangular point-to-segment distance in metres."""
+    latitude = math.radians(point[1])
+    x_scale = 111_320.0 * max(0.2, math.cos(latitude))
+    y_scale = 110_540.0
+    ax, ay = (a[0] - point[0]) * x_scale, (a[1] - point[1]) * y_scale
+    bx, by = (b[0] - point[0]) * x_scale, (b[1] - point[1]) * y_scale
+    dx, dy = bx - ax, by - ay
+    denominator = dx * dx + dy * dy
+    if denominator <= 0:
+        return math.hypot(ax, ay)
+    ratio = max(0.0, min(1.0, -(ax * dx + ay * dy) / denominator))
+    return math.hypot(ax + ratio * dx, ay + ratio * dy)
+
+
+def point_to_polyline_distance_m(point: list[float], path: list[list[float]]) -> float:
+    if len(path) < 2:
+        return math.inf
+    return min(point_to_segment_distance_m(point, a, b) for a, b in zip(path, path[1:]))
+
+
 def find_repo(start: Path) -> Path:
     """The packages are the one thing every JTM checkout has.
 
@@ -121,6 +220,13 @@ class Audit:
         self.repo = repo
         self.issues: list[dict[str, Any]] = []
         self.packages: dict[str, dict[str, Any]] = {}
+        # STRAIGHT_INTERVAL per-line rollup: country -> line_id -> {count,
+        # chordKm, worst, markedByPackage, smoothingProfile}. The per-package
+        # `tally` Counter only holds a package-wide total, which cannot answer
+        # "which lines, how bad, worst interval" — the ledger this feeds
+        # needs the per-line breakdown, so it is kept here rather than
+        # recomputed from `issues` after the fact.
+        self.straight_lines: dict[str, dict[str, dict[str, Any]]] = {}
 
     # ------------------------------------------------------------------ util
 
@@ -182,10 +288,16 @@ class Audit:
             "vertices": tally["vertices"],
             "extraSegments": tally["extraSegments"],
             "straightChords": tally["chords"],
+            "straightIntervals": tally["straightIntervals"],
+            "straightIntervalKm": round(tally["straightIntervalKm"], 1),
             "reversalCandidates": tally["reversals"],
             "detours": tally["detours"],
             "selfOverlap": tally["selfOverlap"],
             "lengthMismatches": tally["lengthMismatch"],
+            "geometrySources": dict(sorted(Counter(
+                str(line.get("geometrySource", "<unspecified>"))
+                for line in lines if isinstance(line, dict)
+            ).items())),
         }
 
         self.require_file(rail_dir / f"{country}-2025.sources.md", country, "MISSING_SOURCE_NOTES")
@@ -219,6 +331,7 @@ class Audit:
         tally["segments"] += len(segments)
 
         anchors: list[list[float] | None] = []
+        station_names: list[str] = []
         local_ids: list[str] = []
         for station_index, station in enumerate(stations):
             if not isinstance(station, list) or len(station) < 4:
@@ -227,8 +340,10 @@ class Audit:
                     country=country, line=line_id,
                 )
                 anchors.append(None)
+                station_names.append("?")
                 continue
             local_ids.append(str(station[0]))
+            station_names.append(str(station[1]) if len(station) > 1 else "?")
             point = [station[2], station[3]]
             if finite_coordinate(point):
                 anchors.append(point)
@@ -246,16 +361,34 @@ class Audit:
                     f"station id {station_id} occurs {count} times", country=country, line=line_id,
                 )
 
-        chain = self.audit_geometry(country, line_id, anchors, segments, tally)
-        self.check_self_overlap(country, line_id, chain, tally)
+        # The NA builders leave a `straightIntervals` marker (interval
+        # ordinals + the tolerance they were confirmed under) on lines whose
+        # straightness was already investigated. It only exists for NA
+        # (18 US / 6 CA lines) — cross-referencing it tells us how much of
+        # what STRAIGHT_INTERVAL finds was already known versus new.
+        straight_marker = line.get("straightIntervals")
+        marked_intervals: set[int] = set()
+        if isinstance(straight_marker, dict) and isinstance(straight_marker.get("intervals"), list):
+            marked_intervals = {value for value in straight_marker["intervals"] if isinstance(value, int)}
+        smoothing_profile = line.get("smoothingProfile")
+
+        paths = self.audit_geometry(
+            country, line_id, anchors, segments, tally,
+            station_names=station_names, marked_intervals=marked_intervals, smoothing_profile=smoothing_profile,
+        )
+        self.check_self_overlap(country, line_id, paths, tally)
         self.audit_extra_segments(country, line_id, line, len(stations), tally)
 
     def audit_geometry(
-        self, country: str, line_id: str, anchors: list[list[float] | None], segments: list[Any], tally: Counter
-    ) -> list[list[float]]:
+        self, country: str, line_id: str, anchors: list[list[float] | None], segments: list[Any], tally: Counter,
+        *, station_names: list[str] | None = None, marked_intervals: set[int] | None = None,
+        smoothing_profile: Any = None,
+    ) -> list[list[list[float]]]:
+        station_names = station_names or []
+        marked_intervals = marked_intervals or set()
         previous_end: list[float] | None = None
         centroids: list[tuple[list[float], int, str]] = []
-        chain: list[list[float]] = []
+        paths: list[list[list[float]]] = []
         line_total = sum(
             row[0] for row in segments
             if isinstance(row, list) and row and isinstance(row[0], (int, float))
@@ -310,18 +443,25 @@ class Audit:
             walked = sum(haversine(a, b) for a, b in zip(path, path[1:]))
             direct = haversine(path[0], path[-1])
             centroids.append((path[len(path) // 2], ordinal, line_id))
-            chain.extend(path[1:] if chain and chain[-1] == path[0] else path)
+            start = anchors[ordinal] if ordinal < len(anchors) else None
+            end = anchors[(ordinal + 1) % len(anchors)] if anchors else None
+            path = orient_path_to_anchors(path, start, end)
+            paths.append(path)
             self.check_retrace(country, line_id, ordinal, path, walked, line_total, anchors)
 
             self.check_anchor(country, line_id, ordinal, path, anchors)
             self.check_declared_length(country, line_id, ordinal, declared_km, walked, tally)
             self.check_chord(country, line_id, ordinal, path, walked, direct, tally)
+            self.check_straight_interval(
+                country, line_id, ordinal, path, start, end, station_names, marked_intervals,
+                smoothing_profile, tally,
+            )
             self.check_detour(country, line_id, ordinal, walked, direct, tally)
             self.check_vertex_jumps(country, line_id, ordinal, path)
             self.check_reversal(country, line_id, ordinal, path, tally)
 
         self.check_outliers(country, line_id, centroids)
-        return chain
+        return paths
 
     def check_anchor(
         self, country: str, line_id: str, ordinal: int, path: list[list[float]], anchors: list[list[float] | None]
@@ -394,6 +534,62 @@ class Audit:
                 country=country, line=line_id,
             )
 
+    def check_straight_interval(
+        self, country: str, line_id: str, ordinal: int, path: list[list[float]],
+        start: list[float] | None, end: list[float] | None, station_names: list[str],
+        marked_intervals: set[int], smoothing_profile: Any, tally: Counter,
+    ) -> None:
+        """Chord-deviation review class — see the STRAIGHT_INTERVAL_* constants.
+
+        STRAIGHT_CHORD only fires on a bare 2-point interval, which is
+        exactly the shape `na_geo.densify()` never leaves behind: every edge
+        it touches is cut to <= max_edge_m, so a real station-to-station
+        straight line ships as several short straight pieces and both
+        STRAIGHT_CHORD and SPARSE_GEOMETRY read zero on it (the piece count
+        keeps density healthy). The only signal collinear subdivision cannot
+        hide is how far the interval's own interior vertices sit off the
+        straight line between its two station anchors.
+        """
+        if len(path) < 3:
+            return  # a 2-point interval is STRAIGHT_CHORD's case, not this one
+        chord_a = start or path[0]
+        chord_b = end or path[-1]
+        chord_len = haversine(chord_a, chord_b)
+        if chord_len < STRAIGHT_INTERVAL_CHORD_MIN_M:
+            return
+        max_deviation = max(point_to_segment_distance_m(vertex, chord_a, chord_b) for vertex in path[1:-1])
+        if max_deviation >= STRAIGHT_INTERVAL_DEVIATION_MAX_M:
+            return
+
+        tally["straightIntervals"] += 1
+        tally["straightIntervalKm"] += chord_len / 1000.0
+        name_a = station_names[ordinal] if ordinal < len(station_names) else "?"
+        name_b = station_names[(ordinal + 1) % len(station_names)] if station_names else "?"
+        already_marked = ordinal in marked_intervals
+
+        line_entry = self.straight_lines.setdefault(country, {}).setdefault(
+            line_id,
+            {"count": 0, "chordKm": 0.0, "worst": None, "markedByPackage": False, "smoothingProfile": smoothing_profile},
+        )
+        line_entry["count"] += 1
+        line_entry["chordKm"] += chord_len / 1000.0
+        if already_marked:
+            line_entry["markedByPackage"] = True
+        worst = line_entry["worst"]
+        if worst is None or chord_len > worst["chordM"]:
+            line_entry["worst"] = {
+                "ordinal": ordinal, "chordM": chord_len, "deviationM": max_deviation,
+                "stationA": name_a, "stationB": name_b,
+            }
+
+        self.issue(
+            "WARNING", "STRAIGHT_INTERVAL",
+            f"segment {ordinal} ({name_a} -> {name_b}) is a {chord_len / 1000:.2f} km chord with "
+            f"{max_deviation:.1f} m max interior deviation from it -- densified into pieces but not curved"
+            + (" [already carries the package's straightIntervals marker]" if already_marked else ""),
+            country=country, line=line_id,
+        )
+
     def check_detour(
         self, country: str, line_id: str, ordinal: int, walked: float, direct: float, tally: Counter
     ) -> None:
@@ -431,11 +627,14 @@ class Audit:
         interval does not pass by nearly every station on its own line.
         """
         stations = [point for point in anchors if point]
-        if len(stations) < 5 or len(path) < 20 or line_total <= 0:
+        if len(stations) < 5 or len(path) < 2 or line_total <= 0:
             return
         if walked < line_total * RETRACE_LINE_SHARE:
             return
-        near = sum(1 for station in stations if min(haversine(v, station) for v in path) < RETRACE_NEAR_M)
+        near = sum(
+            1 for station in stations
+            if point_to_polyline_distance_m(station, path) < RETRACE_NEAR_M
+        )
         if near >= len(stations) * RETRACE_STATION_SHARE:
             self.issue(
                 "ERROR", "INTERVAL_RETRACES_LINE",
@@ -444,7 +643,9 @@ class Audit:
                 country=country, line=line_id,
             )
 
-    def check_self_overlap(self, country: str, line_id: str, chain: list[list[float]], tally: Counter) -> None:
+    def check_self_overlap(
+        self, country: str, line_id: str, paths: list[list[list[float]]], tally: Counter
+    ) -> None:
         """How much of a line is drawn on top of itself.
 
         Alaska's Aurora Winter lay on itself for 72.8% of its length after the
@@ -455,35 +656,44 @@ class Audit:
         antiparallel, and they must be far apart ALONG the line. A horseshoe
         curve fails both; a line drawn twice fails neither.
         """
-        if len(chain) < 3:
+        if sum(len(path) for path in paths) < 3:
             return
-        samples: list[tuple[list[float], float, float]] = []
+        samples: list[tuple[list[float], float, float, float]] = []
         along = 0.0
-        for a, b in zip(chain, chain[1:]):
-            span = haversine(a, b)
-            if span <= 0:
-                continue
-            bearing = math.degrees(
-                math.atan2((b[0] - a[0]) * math.cos(math.radians((a[1] + b[1]) / 2)), b[1] - a[1])
-            ) % 180
-            steps = max(1, int(span // OVERLAP_STEP_M))
-            for step in range(steps):
-                ratio = step / steps
-                samples.append(
-                    ([a[0] + (b[0] - a[0]) * ratio, a[1] + (b[1] - a[1]) * ratio], along + span * ratio, bearing)
-                )
-            along += span
+        for path in paths:
+            for a, b in zip(path, path[1:]):
+                span = haversine(a, b)
+                if span <= 0:
+                    continue
+                bearing = math.degrees(
+                    math.atan2(
+                        (b[0] - a[0]) * math.cos(math.radians((a[1] + b[1]) / 2)),
+                        b[1] - a[1],
+                    )
+                ) % 180
+                steps = max(1, math.ceil(span / OVERLAP_STEP_M))
+                weight = span / steps
+                for step in range(steps):
+                    ratio = step / steps
+                    samples.append((
+                        [a[0] + (b[0] - a[0]) * ratio, a[1] + (b[1] - a[1]) * ratio],
+                        along + span * ratio,
+                        bearing,
+                        weight,
+                    ))
+                along += span
         if len(samples) < 20:
             return
 
-        cell_lon = OVERLAP_CELL_M / (111_320 * max(0.2, math.cos(math.radians(samples[0][0][1]))))
+        minimum_cosine = min(max(0.2, math.cos(math.radians(sample[0][1]))) for sample in samples)
+        cell_lon = OVERLAP_CELL_M / (111_320 * minimum_cosine)
         cell_lat = OVERLAP_CELL_M / 110_540
         grid: dict[tuple[int, int], list[int]] = {}
-        for index, (point, _, _) in enumerate(samples):
+        for index, (point, _, _, _) in enumerate(samples):
             grid.setdefault((int(point[0] / cell_lon), int(point[1] / cell_lat)), []).append(index)
 
-        overlapping = 0
-        for index, (point, distance, bearing) in enumerate(samples):
+        overlapped_m = 0.0
+        for index, (point, distance, bearing, weight) in enumerate(samples):
             cx, cy = int(point[0] / cell_lon), int(point[1] / cell_lat)
             if any(
                 other != index
@@ -496,10 +706,9 @@ class Audit:
                 for dy in (-1, 0, 1)
                 for other in grid.get((cx + dx, cy + dy), ())
             ):
-                overlapping += 1
+                overlapped_m += weight
 
-        share = overlapping / len(samples)
-        overlapped_m = overlapping * OVERLAP_STEP_M
+        share = overlapped_m / along if along else 0.0
         # Share alone dilutes a local defect on a long line: a 4 km out-and-back
         # on the 宜蘭線 is 4% and would pass. Absolute length catches that half.
         if share >= OVERLAP_WARN or overlapped_m >= OVERLAP_WARN_M:
@@ -681,12 +890,24 @@ class Audit:
             "counts": {level: counts.get(level, 0) for level in ("ERROR", "WARNING", "INFO")},
             "codes": dict(Counter(issue["code"] for issue in self.issues)),
             "issues": self.issues,
+            "straightIntervalsByLine": self.straight_lines,
             "limitations": [
                 "Structural preflight only: it cannot prove official inventory completeness, "
                 "correct topology, surveyed alignment, or what either client actually draws.",
                 "STRAIGHT_CHORD, SPARSE_GEOMETRY, VERTEX_JUMP, DETOUR_RATIO, SELF_OVERLAP and REVERSAL_CANDIDATE are "
                 "review candidates. Real switchbacks and street loops (Alishan, 木次線 出雲坂根, 영동선) "
                 "legitimately trigger DETOUR_RATIO and REVERSAL_CANDIDATE.",
+                "STRAIGHT_INTERVAL is also a review candidate, not a defect verdict, and it cannot see "
+                "what it is being asked to distinguish: a real dead-straight viaduct or prairie mainline "
+                "produces the exact same near-zero-deviation signature as a synthetic straight line copied "
+                "station-to-station. It only reads the geometry that shipped -- it has no track elevation, "
+                "no source provenance, and cannot tell 'never curved' from 'curve not recorded'. The "
+                "jp/tw/hk/kr packages (surveyed, not collinearly densified) do trigger it -- JR Hokkaido's "
+                "flat-plain running, TRA's Chianan-plain line, MTR's West Rail viaduct, and KTX/Airport "
+                "Railroad express track all carry genuinely straight multi-km chords -- which is the correct "
+                "true-positive behaviour this class exists to surface, confirming it is not NA-only wiring, "
+                "not a bug specific to `na_geo.densify()`'s output shape, and every finding still needs a "
+                "human to look at the actual railway before being called broken.",
                 "A clean run is not a PASS for a repair; it only means the contracts this file can "
                 "read are intact.",
             ],
@@ -733,6 +954,25 @@ def main() -> int:
                 f"{summary['detours']} detours, {summary['selfOverlap']} self-overlapping lines, "
                 f"{summary['reversalCandidates']} reversals, {summary['lengthMismatches']} length disagreements"
             )
+            by_line = result["straightIntervalsByLine"].get(country, {})
+            if by_line:
+                print(
+                    f"      STRAIGHT_INTERVAL (chord-deviation, densify()-proof): "
+                    f"{summary['straightIntervals']} intervals across {len(by_line)} lines, "
+                    f"{summary['straightIntervalKm']:.0f} km total"
+                )
+                worst_lines = sorted(by_line.items(), key=lambda item: -item[1]["chordKm"])[:5]
+                for worst_line_id, entry in worst_lines:
+                    worst = entry["worst"] or {}
+                    marked = "marked" if entry["markedByPackage"] else "UNMARKED"
+                    print(
+                        f"        {worst_line_id} [{entry['smoothingProfile']}, {marked}]: "
+                        f"{entry['count']} intervals, {entry['chordKm']:.1f} km; worst "
+                        f"{worst.get('chordM', 0) / 1000:.2f} km @ {worst.get('deviationM', 0):.1f} m dev "
+                        f"({worst.get('stationA')} -> {worst.get('stationB')})"
+                    )
+                if len(by_line) > 5:
+                    print(f"        … {len(by_line) - 5} more lines (use --json for the full per-line ledger)")
         counts = result["counts"]
         print(f"  findings: {counts['ERROR']} errors, {counts['WARNING']} warnings, {counts['INFO']} info")
         for level in ("ERROR", "WARNING", "INFO"):
