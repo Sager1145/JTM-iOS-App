@@ -16,7 +16,8 @@ about which square of Web Mercator it fell in.
 
 Usage:
     python3 app/scripts/railway/build-display-network.py \
-        --rail-dir app/public/rail --output /tmp/rail-display-network
+        --rail-dir app/public/rail \
+        --output app/data/raw/na-rail/display-network
 """
 
 from __future__ import annotations

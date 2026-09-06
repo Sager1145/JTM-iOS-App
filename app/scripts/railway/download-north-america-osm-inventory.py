@@ -2,7 +2,7 @@
 """Enumerate every passenger railway OpenStreetMap knows about in North America.
 
     python3 scripts/railway/download-north-america-osm-inventory.py \
-        --output /private/tmp/na-rail/osm-inventory.json
+        --output data/raw/na-rail/osm-inventory.json
 
 This is the list `report-na-coverage.py` measures the packages against, and it
 is the whole basis of the claim that the packages contain every passenger

@@ -3,7 +3,7 @@
 
     python3 scripts/railway/download-north-america-osm-crosscheck.py \
         --package public/rail/us-2025.json --package public/rail/ca-2025.json \
-        --output-dir /private/tmp/na-rail/osm-geom
+        --output-dir data/raw/na-rail/osm-geom
 
 ## Why this is a separate step, and why it is driven by the packages
 

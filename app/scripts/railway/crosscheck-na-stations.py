@@ -3,8 +3,8 @@
 
     python3 scripts/railway/crosscheck-na-stations.py \
         --package public/rail/us-2025.json --package public/rail/ca-2025.json \
-        --tile-dir /private/tmp/na-rail/osm-stations \
-        --out /private/tmp/na-rail/station-crosscheck.json
+        --tile-dir data/raw/na-rail/osm-stations \
+        --out data/raw/na-rail/station-crosscheck.json
 
 ## Why this exists separately from the line cross-check
 

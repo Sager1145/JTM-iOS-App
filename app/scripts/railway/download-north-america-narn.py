@@ -2,7 +2,7 @@
 """Fetch the FRA/BTS North American Rail Network.
 
     python3 scripts/railway/download-north-america-narn.py \
-        --output-dir /private/tmp/na-rail/narn
+        --output-dir data/raw/na-rail/narn
 
 This is the official record of where mainline track is in the United States and
 Canada, published by the Federal Railroad Administration through the Bureau of

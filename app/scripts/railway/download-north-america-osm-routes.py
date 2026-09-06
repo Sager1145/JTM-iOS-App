@@ -2,8 +2,8 @@
 """Fetch the OpenStreetMap route relations for railways no operator publishes.
 
     python3 scripts/railway/download-north-america-osm-routes.py \
-        --coverage /private/tmp/na-rail/coverage.json \
-        --output-dir /private/tmp/na-rail/osm-routes
+        --coverage data/raw/na-rail/coverage.json \
+        --output-dir data/raw/na-rail/osm-routes
 
 Most of the continent's passenger railways publish a GTFS feed and are built
 from it. A long tail does not: the Alaska Railroad, the heritage and tourist

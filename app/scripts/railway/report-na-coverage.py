@@ -2,9 +2,9 @@
 """Say which passenger railways the packages do NOT contain.
 
     python3 scripts/railway/report-na-coverage.py \
-        --inventory /private/tmp/na-rail/osm-inventory.json \
+        --inventory data/raw/na-rail/osm-inventory.json \
         --package public/rail/us-2025.json --package public/rail/ca-2025.json \
-        --out /private/tmp/na-rail/coverage.json
+        --out data/raw/na-rail/coverage.json
 
 "Every passenger railway" is a claim, and the honest way to make it is to name
 an independent inventory and say what is in it that is not in the packages.

@@ -3,7 +3,7 @@
 
     python3 scripts/railway/download-north-america-gtfs.py \
         --registry scripts/railway/na-feeds.json \
-        --output-dir /private/tmp/na-rail/gtfs
+        --output-dir data/raw/na-rail/gtfs
 
 The operator's OWN url is tried first and the MobilityData mirror second, and
 which one answered is recorded beside the file. That order matters for what the

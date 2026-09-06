@@ -2,7 +2,7 @@
 """Turn a scan of every United States and Canadian GTFS feed into the registry.
 
     python3 scripts/railway/make-na-feed-registry.py \
-        --scan /private/tmp/na-rail/feed-scan.json \
+        --scan data/raw/na-rail/feed-scan.json \
         --out scripts/railway/na-feeds.json
 
 ## Why the registry is generated rather than written by hand
