@@ -21,13 +21,11 @@ Two facts about a line decide its band:
   300 m; an intercity route every 60 km. This is the same signal
   ``Grooming.microKinkLimits`` uses at draw time, so the build and the
   renderer agree about what they are looking at.
-* **total length** — how far it is drawn zoomed out. A 3,000 km route is
-  almost never on screen at a zoom where 20 m is a pixel, so it is allowed a
-  coarser record than a 40 km commuter line of the same station spacing.
-
-The length term is a multiplier rather than a second table because it is a
-*correction* to the kind of railway, not a different kind: a long streetcar
-network is still a streetcar network.
+* **total length** — retained in the signature but no longer a correction.
+  It used to coarsen a long line's record on the argument that a 3,000 km
+  route is never on screen at a zoom where 20 m is a pixel. That argument is
+  about pixels and is now made in pixel space by the stroke simplifier, where
+  it can be made per zoom instead of per line; see ``LENGTH_STEPS``.
 
 ## What the numbers mean
 
@@ -76,21 +74,35 @@ BANDS = (
     # Commuter rail and the outer ends of light-rail systems.
     Profile('commuter', 6_000, 4.0, 24, 60, 2.5, 60, 80, 180, 10, 220),
     # Regional intercity: corridor services, most of Amtrak's day trains.
-    Profile('regional', 25_000, 9.0, 40, 55, 4.0, 140, 200, 450, 20, 350),
+    # Regional intercity and long-distance are drawn FAITHFULLY: a 3 m
+    # simplifier budget, no corner fillet, no minimum-radius floor. These two
+    # bands are the ones whose geometry is a survey of real main-line track,
+    # and the old settings did not smooth that survey so much as overwrite it
+    # -- a 140 m fillet and a 200 m radius floor invent arcs the railway does
+    # not have, and 445 km of built line ended up more than 30 m from the FRA
+    # centreline as a result. Rounding a corner so it does not read as a kink
+    # is a drawing problem and it is now solved where it belongs: the
+    # pixel-space stroke DP in ``rail-stroke.js`` / ``ContinuousStroke``
+    # rounds at the zoom the line is actually drawn at, which is the argument
+    # ``LENGTH_STEPS`` below used to make badly in metres.
+    Profile('regional', 25_000, 3.0, 40, 55, 4.0, 0, 0, 450, 20, 350),
     # Long-distance: the transcontinental routes, and VIA's Canadian.
-    Profile('longhaul', float('inf'), 16.0, 60, 55, 6.0, 260, 400, 900, 35, 600),
+    Profile('longhaul', float('inf'), 3.0, 60, 55, 6.0, 0, 0, 900, 35, 600),
 )
 
-#: Length multipliers applied on top of the band. A line that runs a long way
-#: is drawn zoomed further out, so its record may be coarser — but only up to
-#: a point: past ~2,000 km the multiplier stops growing, because beyond that
-#: the limit on what is visible is the screen, not the tolerance.
-LENGTH_STEPS = (
-    (200_000, 1.0),
-    (600_000, 1.25),
-    (1_500_000, 1.6),
-    (float('inf'), 2.0),
-)
+#: No length multiplier. This used to coarsen a long line's record on the
+#: argument that it is drawn zoomed further out — up to 2x past 1,500 km — and
+#: measurement retired it: the multiplier ALONE put 445 km of built North
+#: American line more than 30 m from the FRA centreline, because it does not
+#: scale a tolerance, it scales the fillet and the radius floor too, and those
+#: invent geometry. The argument itself was never wrong, only misplaced: "how
+#: much of this line's detail is visible" is a question about pixels, and the
+#: pixel-space stroke DP (``rail-stroke.js`` / ``RailPresentation``'s
+#: ``ContinuousStroke``) now owns it, deciding at the zoom the line is drawn
+#: at rather than guessing from its length at build time. Kept as a table, at
+#: unity, so ``length_factor`` and ``profile_for`` keep their shape and the
+#: policy stays one edit away.
+LENGTH_STEPS = ((float('inf'), 1.0),)
 
 
 def length_factor(length_m: float) -> float:
