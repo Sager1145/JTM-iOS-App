@@ -4,26 +4,6 @@
    "severity": "WARN",
    "check": "geometry.deviation.officialRetained",
    "country": "US",
-   "line": "amtrak-amtrak-cascades-us",
-   "message": "4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 59 m, past the 50 m longhaul review limit",
-   "metres": 58.9,
-   "toleranceMetres": 50.0,
-   "intervals": [
-    2,
-    11,
-    13,
-    15
-   ],
-   "at": [
-    -122.517449,
-    48.717009
-   ],
-   "builtFrom": "amtrak-ntad-cascades"
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.deviation.officialRetained",
-   "country": "US",
    "line": "amtrak-cardinal",
    "message": "9 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 79 m, past the 50 m longhaul review limit",
    "metres": 79.2,
@@ -888,321 +868,6 @@
    "severity": "WARN",
    "check": "geometry.radius",
    "country": "US",
-   "line": "alaska-railroad-aurora-winter",
-   "message": "9 corners under half the regional band minimum radius of 250 m",
-   "band": "regional",
-   "count": 9
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "alaska-railroad-coastal-classic",
-   "message": "16 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 16
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "alaska-railroad-denali-star",
-   "message": "41 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 41
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-acela",
-   "message": "20 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 20
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-adirondack-us",
-   "message": "13 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 13
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-amtrak-cascades-us",
-   "message": "11 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 11
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-amtrak-hartford-line",
-   "message": "3 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-borealis",
-   "message": "5 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 5
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-capitol-corridor",
-   "message": "5 corners under half the regional band minimum radius of 250 m",
-   "band": "regional",
-   "count": 5
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-cardinal",
-   "message": "65 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 65
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-carl-sandburg",
-   "message": "4 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 4
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-carolinian",
-   "message": "11 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 11
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-city-of-new-orleans",
-   "message": "12 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 12
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-crescent",
-   "message": "63 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 63
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-empire-builder",
-   "message": "52 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 52
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-empire-builder-b1",
-   "message": "2 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 2
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-empire-service",
-   "message": "10 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 10
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-ethan-allen-express",
-   "message": "9 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 9
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-hiawatha-service",
-   "message": "3 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-lake-shore-limited",
-   "message": "10 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 10
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-lake-shore-limited-b1",
-   "message": "3 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-lincoln-service",
-   "message": "1 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 1
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-lincoln-service-missouri-river-runner",
-   "message": "3 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-missouri-river-runner",
-   "message": "2 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 2
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-northeast-regional",
-   "message": "38 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 38
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-northeast-regional-b2",
-   "message": "3 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-northeast-regional-b3",
-   "message": "3 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-palmetto",
-   "message": "15 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 15
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-pennsylvanian",
-   "message": "21 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 21
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-piedmont",
-   "message": "2 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 2
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-silver-meteor",
-   "message": "29 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 29
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-southwest-chief",
-   "message": "64 corners under half the longhaul band minimum radius of 800 m",
-   "band": "longhaul",
-   "count": 64
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-valley-flyer",
-   "message": "3 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-vermonter",
-   "message": "32 corners under half the longhaul band minimum radius of 640 m",
-   "band": "longhaul",
-   "count": 32
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "amtrak-wolverine",
-   "message": "2 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 2
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
    "line": "bart-grey",
    "message": "3 corners under half the commuter band minimum radius of 80 m",
    "band": "commuter",
@@ -1212,28 +877,10 @@
    "severity": "WARN",
    "check": "geometry.radius",
    "country": "US",
-   "line": "brightline-trains-llc-blfm",
-   "message": "1 corners under half the longhaul band minimum radius of 500 m",
-   "band": "longhaul",
-   "count": 1
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
    "line": "cincinnati-metro-100",
    "message": "2 corners under half the street band minimum radius of 15 m",
    "band": "street",
    "count": 2
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "connecticut-transit-hartford-line",
-   "message": "3 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 3
   },
   {
    "severity": "WARN",
@@ -1284,46 +931,10 @@
    "severity": "WARN",
    "check": "geometry.radius",
    "country": "US",
-   "line": "maryland-transit-administrat-brunswick-washington-b1",
-   "message": "4 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 4
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "maryland-transit-administrat-brunswick-washington-b2",
-   "message": "4 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 4
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "maryland-transit-administrat-brunswick-washington-b3",
-   "message": "5 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 5
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
    "line": "mbta-e",
    "message": "1 corners under half the street band minimum radius of 15 m",
    "band": "street",
    "count": 1
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "mbta-foxboro-event-service",
-   "message": "2 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 2
   },
   {
    "severity": "WARN",
@@ -1342,15 +953,6 @@
    "message": "3 corners under half the street band minimum radius of 15 m",
    "band": "street",
    "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "metro-north-railroad-danbury",
-   "message": "2 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 2
   },
   {
    "severity": "WARN",
@@ -1414,15 +1016,6 @@
    "message": "3 corners under half the commuter band minimum radius of 80 m",
    "band": "commuter",
    "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "mta-long-island-rail-road-montauk-branch",
-   "message": "2 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 2
   },
   {
    "severity": "WARN",
@@ -1770,15 +1363,6 @@
    "severity": "WARN",
    "check": "geometry.radius",
    "country": "US",
-   "line": "south-florida-regional-trans-mce",
-   "message": "3 corners under half the longhaul band minimum radius of 400 m",
-   "band": "longhaul",
-   "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
    "line": "utah-transit-authority-uta-703-b1",
    "message": "3 corners under half the metro band minimum radius of 30 m",
    "band": "metro",
@@ -1795,21 +1379,12 @@
   },
   {
    "severity": "WARN",
-   "check": "geometry.radius",
-   "country": "US",
-   "line": "utah-transit-authority-uta-750",
-   "message": "1 corners under half the regional band minimum radius of 200 m",
-   "band": "regional",
-   "count": 1
-  },
-  {
-   "severity": "WARN",
    "check": "geometry.spike",
    "country": "US",
    "line": "amtrak-city-of-new-orleans",
-   "message": "4 near-reversals the sawtooth pass left in",
+   "message": "1 near-reversals the sawtooth pass left in",
    "band": "longhaul",
-   "count": 4
+   "count": 1
   },
   {
    "severity": "WARN",
@@ -1828,15 +1403,6 @@
    "message": "3 near-reversals the sawtooth pass left in",
    "band": "longhaul",
    "count": 3
-  },
-  {
-   "severity": "WARN",
-   "check": "geometry.spike",
-   "country": "US",
-   "line": "amtrak-northeast-regional-b3",
-   "message": "1 near-reversals the sawtooth pass left in",
-   "band": "longhaul",
-   "count": 1
   },
   {
    "severity": "WARN",
@@ -3699,6 +3265,94 @@
    "severity": "NOTE",
    "check": "geometry.deviation.withheld",
    "country": "US",
+   "line": "alaska-railroad-aurora-winter",
+   "message": "11 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit",
+   "metres": 223.2,
+   "toleranceMetres": 35.0,
+   "intervals": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "at": [
+    -149.2388,
+    61.49607
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "US",
+   "line": "alaska-railroad-coastal-classic",
+   "message": "2 station interval(s) are withheld from display; the source geometry reaches 208 m from the independent survey, past the 50 m longhaul limit",
+   "metres": 208.2,
+   "toleranceMetres": 50.0,
+   "intervals": [
+    0,
+    1
+   ],
+   "at": [
+    -149.06817,
+    60.90055
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "US",
+   "line": "alaska-railroad-denali-star",
+   "message": "4 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 50 m longhaul limit",
+   "metres": 223.2,
+   "toleranceMetres": 50.0,
+   "intervals": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "at": [
+    -149.2388,
+    61.49607
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "US",
+   "line": "alaska-railroad-hurricane-turn",
+   "message": "7 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit",
+   "metres": 223.2,
+   "toleranceMetres": 35.0,
+   "intervals": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    8
+   ],
+   "at": [
+    -149.2388,
+    61.49607
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "US",
    "line": "amtrak-acela",
    "message": "7 station interval(s) are withheld from display; the source geometry reaches 247 m from the independent survey, past the 50 m longhaul limit",
    "metres": 246.6,
@@ -3857,6 +3511,23 @@
    "at": [
     -88.105119,
     41.420019
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "US",
+   "line": "amtrak-northeast-regional-b1",
+   "message": "1 station interval(s) are withheld from display; the source geometry reaches 54 m from the independent survey, past the 50 m longhaul limit",
+   "metres": 53.6,
+   "toleranceMetres": 50.0,
+   "intervals": [
+    1
+   ],
+   "at": [
+    -77.450549,
+    37.462346
    ],
    "builtFrom": "narn"
   },
@@ -4081,15 +3752,15 @@
    "check": "geometry.deviation.withheld",
    "country": "US",
    "line": "nashville-mta-wego-public-tr-90",
-   "message": "1 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 35 m regional limit",
-   "metres": 67.0,
+   "message": "1 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 35 m regional limit",
+   "metres": 72.5,
    "toleranceMetres": 35.0,
    "intervals": [
     2
    ],
    "at": [
-    -86.453239,
-    36.210633
+    -86.453956,
+    36.210188
    ],
    "builtFrom": "narn"
   },
@@ -4170,15 +3841,15 @@
    "check": "geometry.deviation.withheld",
    "country": "US",
    "line": "sound-transit-n-line",
-   "message": "1 station interval(s) are withheld from display; the source geometry reaches 44 m from the independent survey, past the 35 m regional limit",
-   "metres": 44.0,
+   "message": "1 station interval(s) are withheld from display; the source geometry reaches 43 m from the independent survey, past the 35 m regional limit",
+   "metres": 43.1,
    "toleranceMetres": 35.0,
    "intervals": [
     2
    ],
    "at": [
-    -122.333972,
-    47.606438
+    -122.33407,
+    47.606553
    ],
    "builtFrom": "narn"
   },
@@ -4221,13 +3892,12 @@
    "check": "geometry.unchecked.withheld",
    "country": "US",
    "line": "alaska-railroad-aurora-winter",
-   "message": "2424 of 2424 vertices had no independent reference; affected station intervals are withheld from display",
-   "vertices": 2424,
-   "unmatched": 2424,
+   "message": "293 of 2935 vertices had no independent reference; affected station intervals are withheld from display",
+   "vertices": 2935,
+   "unmatched": 293,
    "intervals": [
     0,
     1,
-    2,
     3,
     4,
     5,
@@ -4236,21 +3906,7 @@
     8,
     9,
     10,
-    11,
-    12
-   ]
-  },
-  {
-   "severity": "NOTE",
-   "check": "geometry.unchecked.withheld",
-   "country": "US",
-   "line": "alaska-railroad-coastal-classic",
-   "message": "609 of 609 vertices had no independent reference; affected station intervals are withheld from display",
-   "vertices": 609,
-   "unmatched": 609,
-   "intervals": [
-    0,
-    1
+    11
    ]
   },
   {
@@ -4258,9 +3914,9 @@
    "check": "geometry.unchecked.withheld",
    "country": "US",
    "line": "alaska-railroad-denali-star",
-   "message": "1585 of 1585 vertices had no independent reference; affected station intervals are withheld from display",
-   "vertices": 1585,
-   "unmatched": 1585,
+   "message": "262 of 2444 vertices had no independent reference; affected station intervals are withheld from display",
+   "vertices": 2444,
+   "unmatched": 262,
    "intervals": [
     0,
     1,
@@ -4273,18 +3929,16 @@
    "check": "geometry.unchecked.withheld",
    "country": "US",
    "line": "alaska-railroad-hurricane-turn",
-   "message": "1135 of 1135 vertices had no independent reference; affected station intervals are withheld from display",
-   "vertices": 1135,
-   "unmatched": 1135,
+   "message": "293 of 1342 vertices had no independent reference; affected station intervals are withheld from display",
+   "vertices": 1342,
+   "unmatched": 293,
    "intervals": [
     0,
     1,
-    2,
     3,
     4,
     5,
     6,
-    7,
     8
    ]
   },
@@ -4330,11 +3984,10 @@
    "check": "geometry.unchecked.withheld",
    "country": "US",
    "line": "amtrak-northeast-regional-b1",
-   "message": "360 of 360 vertices had no independent reference; affected station intervals are withheld from display",
-   "vertices": 360,
-   "unmatched": 360,
+   "message": "377 of 453 vertices had no independent reference; affected station intervals are withheld from display",
+   "vertices": 453,
+   "unmatched": 377,
    "intervals": [
-    0,
     1
    ]
   },
@@ -5830,9 +5483,9 @@
   {
    "id": "ace-ace",
    "band": "regional",
-   "lengthKm": 136.6,
+   "lengthKm": 136.8,
    "stations": 10,
-   "vertices": 565,
+   "vertices": 695,
    "country": "US"
   },
   {
@@ -5942,9 +5595,9 @@
   {
    "id": "amtrak-amtrak-cascades-us",
    "band": "longhaul",
-   "lengthKm": 638.3,
+   "lengthKm": 641.4,
    "stations": 17,
-   "vertices": 1411,
+   "vertices": 2312,
    "country": "US"
   },
   {
@@ -5958,9 +5611,9 @@
   {
    "id": "amtrak-amtrak-mardi-gras-service",
    "band": "longhaul",
-   "lengthKm": 232.6,
+   "lengthKm": 232.8,
    "stations": 6,
-   "vertices": 450,
+   "vertices": 555,
    "country": "US"
   },
   {
@@ -5974,9 +5627,9 @@
   {
    "id": "amtrak-capitol-corridor",
    "band": "regional",
-   "lengthKm": 271.5,
+   "lengthKm": 271.7,
    "stations": 18,
-   "vertices": 996,
+   "vertices": 1200,
    "country": "US"
   },
   {
@@ -5990,9 +5643,9 @@
   {
    "id": "amtrak-carl-sandburg",
    "band": "longhaul",
-   "lengthKm": 414.6,
+   "lengthKm": 414.8,
    "stations": 10,
-   "vertices": 813,
+   "vertices": 1032,
    "country": "US"
   },
   {
@@ -6006,9 +5659,9 @@
   {
    "id": "amtrak-city-of-new-orleans",
    "band": "longhaul",
-   "lengthKm": 1499.0,
+   "lengthKm": 1500.9,
    "stations": 20,
-   "vertices": 2954,
+   "vertices": 4034,
    "country": "US"
   },
   {
@@ -6062,9 +5715,9 @@
   {
    "id": "amtrak-hiawatha-service",
    "band": "longhaul",
-   "lengthKm": 137.8,
+   "lengthKm": 137.9,
    "stations": 5,
-   "vertices": 283,
+   "vertices": 334,
    "country": "US"
   },
   {
@@ -6126,9 +5779,9 @@
   {
    "id": "amtrak-northeast-regional-b1",
    "band": "longhaul",
-   "lengthKm": 182.0,
+   "lengthKm": 182.1,
    "stations": 3,
-   "vertices": 360,
+   "vertices": 453,
    "country": "US"
   },
   {
@@ -6142,9 +5795,9 @@
   {
    "id": "amtrak-northeast-regional-b3",
    "band": "longhaul",
-   "lengthKm": 346.5,
+   "lengthKm": 347.5,
    "stations": 7,
-   "vertices": 889,
+   "vertices": 1440,
    "country": "US"
   },
   {
@@ -6384,7 +6037,7 @@
    "band": "regional",
    "lengthKm": 7.9,
    "stations": 3,
-   "vertices": 36,
+   "vertices": 44,
    "country": "US"
   },
   {
@@ -6622,25 +6275,25 @@
   {
    "id": "maryland-transit-administrat-brunswick-washington-b1",
    "band": "longhaul",
-   "lengthKm": 33.3,
+   "lengthKm": 33.4,
    "stations": 3,
-   "vertices": 99,
+   "vertices": 143,
    "country": "US"
   },
   {
    "id": "maryland-transit-administrat-brunswick-washington-b2",
    "band": "longhaul",
-   "lengthKm": 43.7,
+   "lengthKm": 43.8,
    "stations": 2,
-   "vertices": 121,
+   "vertices": 181,
    "country": "US"
   },
   {
    "id": "maryland-transit-administrat-brunswick-washington-b3",
    "band": "longhaul",
-   "lengthKm": 33.1,
+   "lengthKm": 33.2,
    "stations": 2,
-   "vertices": 95,
+   "vertices": 137,
    "country": "US"
   },
   {
@@ -6678,9 +6331,9 @@
   {
    "id": "mbta-capeflyer",
    "band": "regional",
-   "lengthKm": 126.7,
+   "lengthKm": 126.8,
    "stations": 8,
-   "vertices": 504,
+   "vertices": 606,
    "country": "US"
   },
   {
@@ -6696,7 +6349,7 @@
    "band": "regional",
    "lengthKm": 96.5,
    "stations": 13,
-   "vertices": 359,
+   "vertices": 421,
    "country": "US"
   },
   {
@@ -6704,7 +6357,7 @@
    "band": "regional",
    "lengthKm": 22.4,
    "stations": 3,
-   "vertices": 87,
+   "vertices": 104,
    "country": "US"
   },
   {
@@ -6720,7 +6373,7 @@
    "band": "regional",
    "lengthKm": 74.6,
    "stations": 8,
-   "vertices": 295,
+   "vertices": 350,
    "country": "US"
   },
   {
@@ -6968,7 +6621,7 @@
    "band": "regional",
    "lengthKm": 12.5,
    "stations": 2,
-   "vertices": 42,
+   "vertices": 44,
    "country": "US"
   },
   {
@@ -7008,7 +6661,7 @@
    "band": "regional",
    "lengthKm": 13.5,
    "stations": 2,
-   "vertices": 52,
+   "vertices": 58,
    "country": "US"
   },
   {
@@ -7016,15 +6669,15 @@
    "band": "regional",
    "lengthKm": 59.5,
    "stations": 7,
-   "vertices": 214,
+   "vertices": 232,
    "country": "US"
   },
   {
    "id": "metro-north-railroad-danbury",
    "band": "regional",
-   "lengthKm": 103.7,
+   "lengthKm": 103.8,
    "stations": 15,
-   "vertices": 471,
+   "vertices": 591,
    "country": "US"
   },
   {
@@ -7062,9 +6715,9 @@
   {
    "id": "metro-north-railroad-waterbury",
    "band": "regional",
-   "lengthKm": 51.0,
+   "lengthKm": 51.2,
    "stations": 8,
-   "vertices": 267,
+   "vertices": 351,
    "country": "US"
   },
   {
@@ -7078,9 +6731,9 @@
   {
    "id": "metro-transit-intercity-tran-s-line",
    "band": "regional",
-   "lengthKm": 76.5,
+   "lengthKm": 76.6,
    "stations": 9,
-   "vertices": 297,
+   "vertices": 346,
    "country": "US"
   },
   {
@@ -7094,25 +6747,25 @@
   {
    "id": "metrolink-91-pv-line",
    "band": "regional",
-   "lengthKm": 135.7,
+   "lengthKm": 135.9,
    "stations": 12,
-   "vertices": 551,
+   "vertices": 670,
    "country": "US"
   },
   {
    "id": "metrolink-av-line",
    "band": "regional",
-   "lengthKm": 122.7,
+   "lengthKm": 123.0,
    "stations": 13,
-   "vertices": 594,
+   "vertices": 733,
    "country": "US"
   },
   {
    "id": "metrolink-ie-oc-line",
    "band": "regional",
-   "lengthKm": 162.5,
+   "lengthKm": 162.7,
    "stations": 16,
-   "vertices": 631,
+   "vertices": 731,
    "country": "US"
   },
   {
@@ -7126,9 +6779,9 @@
   {
    "id": "metrolink-sb-line",
    "band": "regional",
-   "lengthKm": 106.6,
+   "lengthKm": 106.7,
    "stations": 18,
-   "vertices": 417,
+   "vertices": 496,
    "country": "US"
   },
   {
@@ -7558,9 +7211,9 @@
   {
    "id": "nashville-mta-wego-public-tr-90",
    "band": "regional",
-   "lengthKm": 50.0,
+   "lengthKm": 50.1,
    "stations": 7,
-   "vertices": 237,
+   "vertices": 298,
    "country": "US"
   },
   {
@@ -7584,7 +7237,7 @@
    "band": "regional",
    "lengthKm": 12.5,
    "stations": 2,
-   "vertices": 49,
+   "vertices": 55,
    "country": "US"
   },
   {
@@ -7632,7 +7285,7 @@
    "band": "regional",
    "lengthKm": 12.5,
    "stations": 2,
-   "vertices": 49,
+   "vertices": 55,
    "country": "US"
   },
   {
@@ -7648,7 +7301,7 @@
    "band": "regional",
    "lengthKm": 21.2,
    "stations": 2,
-   "vertices": 81,
+   "vertices": 93,
    "country": "US"
   },
   {
@@ -7656,7 +7309,7 @@
    "band": "regional",
    "lengthKm": 28.6,
    "stations": 3,
-   "vertices": 110,
+   "vertices": 133,
    "country": "US"
   },
   {
@@ -7664,7 +7317,7 @@
    "band": "regional",
    "lengthKm": 17.0,
    "stations": 3,
-   "vertices": 79,
+   "vertices": 94,
    "country": "US"
   },
   {
@@ -7750,9 +7403,9 @@
   {
    "id": "north-county-transit-distric-498",
    "band": "regional",
-   "lengthKm": 65.4,
+   "lengthKm": 65.5,
    "stations": 8,
-   "vertices": 271,
+   "vertices": 329,
    "country": "US"
   },
   {
@@ -8342,9 +7995,9 @@
   {
    "id": "sound-transit-n-line",
    "band": "regional",
-   "lengthKm": 54.7,
+   "lengthKm": 54.8,
    "stations": 4,
-   "vertices": 267,
+   "vertices": 351,
    "country": "US"
   },
   {
@@ -8360,7 +8013,7 @@
    "band": "regional",
    "lengthKm": 14.2,
    "stations": 2,
-   "vertices": 54,
+   "vertices": 59,
    "country": "US"
   },
   {
@@ -8550,33 +8203,33 @@
   {
    "id": "alaska-railroad-aurora-winter",
    "band": "regional",
-   "lengthKm": 571.2,
+   "lengthKm": 572.6,
    "stations": 14,
-   "vertices": 2424,
+   "vertices": 2935,
    "country": "US"
   },
   {
    "id": "alaska-railroad-coastal-classic",
    "band": "longhaul",
-   "lengthKm": 174.6,
+   "lengthKm": 175.6,
    "stations": 3,
-   "vertices": 609,
+   "vertices": 913,
    "country": "US"
   },
   {
    "id": "alaska-railroad-denali-star",
    "band": "longhaul",
-   "lengthKm": 570.2,
+   "lengthKm": 572.6,
    "stations": 5,
-   "vertices": 1585,
+   "vertices": 2444,
    "country": "US"
   },
   {
    "id": "alaska-railroad-hurricane-turn",
    "band": "regional",
-   "lengthKm": 267.1,
+   "lengthKm": 267.7,
    "stations": 10,
-   "vertices": 1135,
+   "vertices": 1342,
    "country": "US"
   },
   {

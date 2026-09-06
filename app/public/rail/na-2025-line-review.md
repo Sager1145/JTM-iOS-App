@@ -1,6 +1,6 @@
 # North America line-by-line review
 
-Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 381; warnings: 228; errors among published lines: 0.
+Generated 2026-09-06T02:06:43.218463+00:00. Published: 440; blocked findings: 374; warnings: 223; errors among published lines: 0.
 
 | Status | Country | Feed / line | Name | Geometry | Instead of | Colour | Findings |
 |---|---|---|---|---|---|---|---|
@@ -13,7 +13,7 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | CA | exo-sh | 13 - Mont-Saint-Hilaire | mtq-exo-3 |  | #999ac6 |  |
 | published | CA | exo-sj | 12 - Saint-Jérôme | mtq-exo-4 |  | #fdd26e |  |
 | published | CA | exo-vh | 11 - Vaudreuil/Hudson | mtq-exo-1 |  | #f16179 |  |
-| published | CA | go-transit-br | Barrie | orwn-go-br |  | #003767 | 2 corners under half the regional band minimum radius of 200 m |
+| published | CA | go-transit-br | Barrie | orwn-go-br |  | #003767 |  |
 | published | CA | go-transit-ki | Kitchener | nrwn-on-go-ki |  | #00853e |  |
 | published | CA | go-transit-le | Lakeshore | orwn-go-le |  | #ff0d00 |  |
 | published | CA | go-transit-lw | Lakeshore | orwn-go-lw |  | #98002e |  |
@@ -33,97 +33,114 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | CA | translink-expo-line-b1 | Expo Line | translink-expo |  | #0033a0 |  |
 | published | CA | translink-millennium-line | Millennium Line | translink-millennium |  | #ffcd00 | 2 corners under half the metro band minimum radius of 30 m; station ca-official-commercial-broadway is 56 m from where translink-expo-line puts it, past the 40 m the band allows |
 | published | CA | translink-wce | West Coast Express | translink-wce |  | #87189d |  |
-| published | CA | ttc-304 | King | gtfs-shape |  | #0054a6 | 1 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-304-b1 | King | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-304-b2 | King | gtfs-shape |  | #0054a6 | 4 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-304-b3 | King | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-304-b4 | King | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-304-b5 | King | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-304-b6 | King | gtfs-shape |  | #0054a6 | 3 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-304-b7 | King | gtfs-shape |  | #0054a6 | 2 corners under half the street band minimum radius of 15 m; station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m) |
-| published | CA | ttc-304-b8 | King | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-306 | Carlton | ttc-streetcar-306 |  | #0054a6 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit; 8 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-306-b2 | Carlton | ttc-streetcar-306 |  | #0054a6 | 1 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-306-b4 | Carlton | ttc-streetcar-306 |  | #0054a6 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit; 2 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-306-b5 | Carlton | ttc-streetcar-306 |  | #0054a6 | 2 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-306-b6 | Carlton | ttc-streetcar-306 |  | #0054a6 |  |
-| published | CA | ttc-306-b7 | Carlton | ttc-streetcar-306 |  | #0054a6 |  |
-| published | CA | ttc-306-b8 | Carlton | ttc-streetcar-306 |  | #0054a6 |  |
-| published | CA | ttc-310 | Spadina | gtfs-shape |  | #0054a6 | 5 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-310-b1 | Spadina | gtfs-shape |  | #0054a6 |  |
-| published | CA | ttc-310-b2 | Spadina | gtfs-shape |  | #0054a6 | 1 corners under half the street band minimum radius of 15 m |
-| published | CA | ttc-310-b3 | Spadina | gtfs-shape |  | #0054a6 | station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m) |
-| published | CA | ttc-4 | Line 4 (Sheppard) | ttc-subway-4 |  | #b300b3 | 2 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit |
-| published | CA | ttc-4-b1 | Line 4 (Sheppard) | ttc-subway-4 |  | #b300b3 |  |
-| published | CA | ttc-4-b2 | Line 4 (Sheppard) | ttc-subway-4 |  | #b300b3 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit |
-| published | CA | ttc-5 | Line 5 Eglinton | gtfs-shape |  | #ff8000 | 3 station interval(s) are withheld from display; the source geometry reaches 35 m from the independent survey, past the 25 m metro limit |
-| published | CA | ttc-5-b1 | Line 5 Eglinton | gtfs-shape |  | #ff8000 |  |
-| published | CA | ttc-5-b2 | Line 5 Eglinton | gtfs-shape |  | #ff8000 |  |
+| published | CA | ttc-1 | Line 1 (Yonge-University) | osm |  | #d5c82b | 35 station interval(s) are drawn from an audited OpenStreetMap relation; the 393 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment; 2 corners under half the metro band minimum radius of 30 m; 305 of 443 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment |
+| published | CA | ttc-2 | Line 2 (Bloor - Danforth) | osm |  | #008000 | 30 station interval(s) are drawn from an audited OpenStreetMap relation; the 396 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment; 173 of 275 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment; station ca-official-spadina is 345 m from where ttc-1 puts it, past the 40 m the band allows |
+| published | CA | ttc-4 | Line 4 (Sheppard) | ttc-subway-4 |  | #b300b3 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit |
+| published | CA | ttc-5 | Line 5 Eglinton | gtfs-shape |  | #ff8000 | station ca-official-cedarvale is 69 m from where ttc-1 puts it, past the 40 m the band allows; station ca-official-kennedy is 108 m from where ttc-2 puts it, past the 40 m the band allows; 3 station interval(s) are withheld from display; the source geometry reaches 35 m from the independent survey, past the 25 m metro limit |
+| published | CA | ttc-501 | Queen | ttc-streetcar-501 |  | #ed1c24 | 3 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-501-b1 | Queen | ttc-streetcar-501 |  | #ed1c24 | station ca-official-queen-st-east-at-woodfield-rd is 34 m from where ttc-501 puts it, past the 25 m the band allows |
+| published | CA | ttc-501-b2 | Queen | ttc-streetcar-501 |  | #ed1c24 | station ca-official-queen-st-east-at-pape-ave is 42 m from where ttc-501 puts it, past the 25 m the band allows |
+| published | CA | ttc-501-b3 | Queen | ttc-streetcar-501 |  | #ed1c24 | station ca-official-queen-st-east-at-broadview-ave is 52 m from where ttc-501 puts it, past the 25 m the band allows |
+| published | CA | ttc-501-b4 | Queen | ttc-streetcar-501 |  | #ed1c24 | 6 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-501-b5 | Queen | ttc-streetcar-501 |  | #ed1c24 |  |
+| published | CA | ttc-501-b6 | Queen | ttc-streetcar-501 |  | #ed1c24 | station ca-official-queen-st-west-at-strachan-ave is 25 m from where ttc-501 puts it, past the 25 m the band allows |
+| published | CA | ttc-501-b7 | Queen | ttc-streetcar-501 |  | #ed1c24 | station ca-official-queen-st-west-at-dufferin-st is 43 m from where ttc-501 puts it, past the 25 m the band allows |
+| published | CA | ttc-501-b8 | Queen | ttc-streetcar-501 |  | #ed1c24 |  |
+| published | CA | ttc-504 | King | gtfs-shape |  | #ed1c24 | 1 corners under half the street band minimum radius of 15 m; station ca-official-dundas-west is 200 m from where ttc-2 puts it, past the 40 m the band allows; station ca-official-broadview is 62 m from where ttc-2 puts it, past the 40 m the band allows |
+| published | CA | ttc-504-b1 | King | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-504-b2 | King | gtfs-shape |  | #ed1c24 | 4 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-504-b3 | King | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-504-b4 | King | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-504-b5 | King | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-504-b6 | King | gtfs-shape |  | #ed1c24 | 3 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-504-b7 | King | gtfs-shape |  | #ed1c24 | 2 corners under half the street band minimum radius of 15 m; station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m) |
+| published | CA | ttc-504-b8 | King | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-505 | Dundas | ttc-streetcar-505 |  | #ed1c24 | station ca-official-broadview-ave-at-dundas-st is 29 m from where ttc-504 puts it, past the 25 m the band allows |
+| published | CA | ttc-505-b1 | Dundas | ttc-streetcar-505 |  | #ed1c24 |  |
+| published | CA | ttc-505-b2 | Dundas | ttc-streetcar-505 |  | #ed1c24 |  |
+| published | CA | ttc-505-b3 | Dundas | ttc-streetcar-505 |  | #ed1c24 |  |
+| published | CA | ttc-505-b4 | Dundas | ttc-streetcar-505 |  | #ed1c24 |  |
+| published | CA | ttc-505-b5 | Dundas | ttc-streetcar-505 |  | #ed1c24 | station ca-official-edna-ave-at-dundas-st is 79 m from where ttc-505-b4 puts it, past the 25 m the band allows |
+| published | CA | ttc-506 | Carlton | ttc-streetcar-506 |  | #ed1c24 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit; 8 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-506-b1 | Carlton | ttc-streetcar-506 |  | #ed1c24 | station ca-official-main-street is 72 m from where ttc-2 puts it, past the 40 m the band allows |
+| published | CA | ttc-506-b2 | Carlton | ttc-streetcar-506 |  | #ed1c24 | station ca-official-gerrard-st-east-at-woodfield-rd is 212 m from where ttc-506 puts it, past the 25 m the band allows |
+| published | CA | ttc-506-b3 | Carlton | ttc-streetcar-506 |  | #ed1c24 | station ca-official-dundas-st-west-at-howard-park-ave is 33 m from where ttc-505 puts it, past the 25 m the band allows; station ca-official-howard-park-ave-at-roncesvalles-ave is 33 m from where ttc-506 puts it, past the 25 m the band allows |
+| published | CA | ttc-506-b4 | Carlton | ttc-streetcar-506 |  | #ed1c24 |  |
+| published | CA | ttc-506-b5 | Carlton | ttc-streetcar-506 |  | #ed1c24 | 2 corners under half the street band minimum radius of 15 m; station ca-official-college-st-at-spadina-ave is 68 m from where ttc-506 puts it, past the 25 m the band allows |
+| published | CA | ttc-506-b6 | Carlton | ttc-streetcar-506 |  | #ed1c24 | 1 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-506-b7 | Carlton | ttc-streetcar-506 |  | #ed1c24 | 1 corners under half the street band minimum radius of 15 m; station ca-official-dundas-st-east-at-ontario-st is 29 m from where ttc-505 puts it, past the 25 m the band allows |
+| published | CA | ttc-506-b8 | Carlton | ttc-streetcar-506 |  | #ed1c24 | station ca-official-gerrard-st-east-at-river-st is 32 m from where ttc-506 puts it, past the 25 m the band allows |
 | published | CA | ttc-509 | Harbourfront | gtfs-shape |  | #ed1c24 | 6 corners under half the street band minimum radius of 15 m |
 | published | CA | ttc-509-b1 | Harbourfront | gtfs-shape |  | #ed1c24 | 3 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-510 | Spadina | gtfs-shape |  | #ed1c24 | 5 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-510-b1 | Spadina | gtfs-shape |  | #ed1c24 |  |
+| published | CA | ttc-510-b2 | Spadina | gtfs-shape |  | #ed1c24 | 1 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-510-b3 | Spadina | gtfs-shape |  | #ed1c24 | station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m) |
 | published | CA | ttc-511 | Bathurst | gtfs-shape |  | #ed1c24 | 1 corners under half the street band minimum radius of 15 m; station ca-official-exhibition-loop spans 32 m inside a reviewed official complex (exact limit 40 m) |
 | published | CA | ttc-511-b1 | Bathurst | gtfs-shape |  | #ed1c24 |  |
 | published | CA | ttc-511-b2 | Bathurst | gtfs-shape |  | #ed1c24 |  |
-| published | CA | ttc-6 | Line 6 Finch | gtfs-shape |  | #808080 |  |
+| published | CA | ttc-512 | St Clair | gtfs-shape |  | #ed1c24 | 3 corners under half the street band minimum radius of 15 m; drawn 350 m between stations 112 m apart (3.1x); station ca-official-st-clair is 90 m from where ttc-1 puts it, past the 40 m the band allows |
+| published | CA | ttc-512-b1 | St Clair | gtfs-shape |  | #ed1c24 | 2 corners under half the street band minimum radius of 15 m |
+| published | CA | ttc-6 | Line 6 Finch | gtfs-shape |  | #808080 | station ca-official-finch-west is 186 m from where ttc-1 puts it, past the 40 m the band allows |
 | published | CA | union-pearson-express-up-exp-up | Union Pearson Express | nrwn-on-up-up |  | #0075d2 |  |
 | published | CA | via-ottawa-montr-al | Ottawa - Montréal | narn |  | #ffcb06 | 1 station interval(s) are withheld from display; the source geometry reaches 313 m from the independent survey, past the 50 m longhaul limit |
 | published | CA | via-toronto-london | Toronto - London | orwn-via-119-93 |  | #ffcb06 |  |
 | published | CA | via-toronto-sarnia | Toronto - Sarnia | orwn-via-119-341 |  | #ffcb06 |  |
 | published | CA | via-toronto-windsor | Toronto - Windsor | orwn-via-119-618 |  | #ffcb06 |  |
 | published | US | ace-ace | Altamont Commuter Express | narn |  | #77297d |  |
-| published | US | alaska-railroad-aurora-winter | Aurora Winter | narn |  | #04234b | 9 corners under half the regional band minimum radius of 250 m; station us-official-healy is 4531417 m from where metra-milwaukee puts it, past the 200 m the band allows; 2424 of 2424 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | alaska-railroad-coastal-classic | Coastal Classic | narn |  | #04234b | 16 corners under half the longhaul band minimum radius of 400 m; 609 of 609 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | alaska-railroad-denali-star | Denali Star | narn |  | #04234b | 41 corners under half the longhaul band minimum radius of 500 m; 1585 of 1585 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | alaska-railroad-hurricane-turn | Hurricane Turn | narn |  | #04234b | 1135 of 1135 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-acela | Acela | narn |  | #cae4f1 | 20 corners under half the longhaul band minimum radius of 640 m; 7 station interval(s) are withheld from display; the source geometry reaches 247 m from the independent survey, past the 50 m longhaul limit; 239 of 1655 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-adirondack-us | Adirondack | gtfs-shape |  | #cae4f1 | 13 corners under half the longhaul band minimum radius of 500 m; 1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-amtrak-cascades-us | Amtrak Cascades | amtrak-ntad-cascades |  | #cae4f1 | 4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 59 m, past the 50 m longhaul review limit; 11 corners under half the longhaul band minimum radius of 640 m |
-| published | US | amtrak-amtrak-hartford-line | Amtrak Hartford Line | narn |  | #cae4f1 | 3 corners under half the regional band minimum radius of 200 m |
+| published | US | alaska-railroad-aurora-winter | Aurora Winter | narn |  | #04234b | station us-official-healy is 4531417 m from where metra-milwaukee puts it, past the 200 m the band allows; 11 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit; 293 of 2935 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | alaska-railroad-coastal-classic | Coastal Classic | narn |  | #04234b | 2 station interval(s) are withheld from display; the source geometry reaches 208 m from the independent survey, past the 50 m longhaul limit |
+| published | US | alaska-railroad-denali-star | Denali Star | narn |  | #04234b | 4 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 50 m longhaul limit; 262 of 2444 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | alaska-railroad-hurricane-turn | Hurricane Turn | narn |  | #04234b | 7 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit; 293 of 1342 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | amtrak-acela | Acela | narn |  | #cae4f1 | 7 station interval(s) are withheld from display; the source geometry reaches 247 m from the independent survey, past the 50 m longhaul limit; 239 of 1655 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | amtrak-adirondack-us | Adirondack | gtfs-shape |  | #cae4f1 | 1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-amtrak-cascades-us | Amtrak Cascades | amtrak-ntad-cascades |  | #cae4f1 |  |
+| published | US | amtrak-amtrak-hartford-line | Amtrak Hartford Line | narn |  | #cae4f1 |  |
 | published | US | amtrak-amtrak-mardi-gras-service | Amtrak Mardi Gras Service | narn |  | #cae4f1 |  |
-| published | US | amtrak-borealis | Borealis | gtfs-shape |  | #cae4f1 | 5 corners under half the longhaul band minimum radius of 640 m; 1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-capitol-corridor | Capitol Corridor | amtrak-ntad-capitol-corridor |  | #cae4f1 | 5 corners under half the regional band minimum radius of 250 m |
-| published | US | amtrak-cardinal | Cardinal | amtrak-ntad-cardinal |  | #cae4f1 | 9 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 79 m, past the 50 m longhaul review limit; 65 corners under half the longhaul band minimum radius of 800 m |
-| published | US | amtrak-carl-sandburg | Carl Sandburg | gtfs-shape |  | #cae4f1 | 4 corners under half the longhaul band minimum radius of 500 m |
-| published | US | amtrak-carolinian | Carolinian | gtfs-shape |  | #cae4f1 | 11 corners under half the longhaul band minimum radius of 640 m; 2 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-city-of-new-orleans | City of New Orleans | gtfs-shape |  | #cae4f1 | 12 corners under half the longhaul band minimum radius of 640 m; 4 near-reversals the sawtooth pass left in |
-| published | US | amtrak-crescent | Crescent | gtfs-shape |  | #cae4f1 | 63 corners under half the longhaul band minimum radius of 800 m; 2 near-reversals the sawtooth pass left in; 15 station interval(s) are withheld from display; the source geometry reaches 115 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-empire-builder | Empire Builder | amtrak-ntad-empire-builder |  | #cae4f1 | 38 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 107 m, past the 50 m longhaul review limit; 52 corners under half the longhaul band minimum radius of 800 m; 3 near-reversals the sawtooth pass left in |
-| published | US | amtrak-empire-builder-b1 | Empire Builder | amtrak-ntad-empire-builder |  | #cae4f1 | 2 corners under half the longhaul band minimum radius of 640 m |
-| published | US | amtrak-empire-service | Empire Service | gtfs-shape |  | #cae4f1 | 10 corners under half the longhaul band minimum radius of 640 m |
-| published | US | amtrak-ethan-allen-express | Ethan Allen Express | gtfs-shape |  | #cae4f1 | 9 corners under half the longhaul band minimum radius of 500 m |
+| published | US | amtrak-borealis | Borealis | gtfs-shape |  | #cae4f1 | 1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-capitol-corridor | Capitol Corridor | amtrak-ntad-capitol-corridor |  | #cae4f1 |  |
+| published | US | amtrak-cardinal | Cardinal | amtrak-ntad-cardinal |  | #cae4f1 | 9 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 79 m, past the 50 m longhaul review limit |
+| published | US | amtrak-carl-sandburg | Carl Sandburg | gtfs-shape |  | #cae4f1 |  |
+| published | US | amtrak-carolinian | Carolinian | gtfs-shape |  | #cae4f1 | 2 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-city-of-new-orleans | City of New Orleans | gtfs-shape |  | #cae4f1 | 1 near-reversals the sawtooth pass left in |
+| published | US | amtrak-crescent | Crescent | gtfs-shape |  | #cae4f1 | 2 near-reversals the sawtooth pass left in; 15 station interval(s) are withheld from display; the source geometry reaches 115 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-empire-builder | Empire Builder | amtrak-ntad-empire-builder |  | #cae4f1 | 38 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 107 m, past the 50 m longhaul review limit; 3 near-reversals the sawtooth pass left in |
+| published | US | amtrak-empire-builder-b1 | Empire Builder | amtrak-ntad-empire-builder |  | #cae4f1 |  |
+| published | US | amtrak-empire-service | Empire Service | gtfs-shape |  | #cae4f1 |  |
+| published | US | amtrak-ethan-allen-express | Ethan Allen Express | gtfs-shape |  | #cae4f1 |  |
 | published | US | amtrak-heartland-flyer | Heartland Flyer | gtfs-shape |  | #cae4f1 | station us-official-gainesville is 1229970 m from where amtrak-crescent puts it, past the 400 m the band allows |
-| published | US | amtrak-hiawatha-service | Hiawatha Service | narn |  | #cae4f1 | 3 corners under half the longhaul band minimum radius of 400 m |
+| published | US | amtrak-hiawatha-service | Hiawatha Service | narn |  | #cae4f1 |  |
 | published | US | amtrak-keystone-service | Keystone Service | amtrak-ntad-keystone-service |  | #cae4f1 |  |
-| published | US | amtrak-lake-shore-limited | Lake Shore Limited | gtfs-shape |  | #cae4f1 | 10 corners under half the longhaul band minimum radius of 800 m; 2 station interval(s) are withheld from display; the source geometry reaches 72 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-lake-shore-limited-b1 | Lake Shore Limited | narn |  | #cae4f1 | 3 corners under half the longhaul band minimum radius of 500 m; 1 station interval(s) are withheld from display; the source geometry reaches 82 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-lincoln-service | Lincoln Service | narn |  | #cae4f1 | 1 corners under half the longhaul band minimum radius of 500 m; 8 station interval(s) are withheld from display; the source geometry reaches 366 m from the independent survey, past the 50 m longhaul limit; 734 of 891 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-lincoln-service-missouri-river-runner | Lincoln Service Missouri River Runner | gtfs-shape |  | #cae4f1 | 3 corners under half the longhaul band minimum radius of 640 m |
-| published | US | amtrak-missouri-river-runner | Missouri River Runner | gtfs-shape |  | #cae4f1 | 2 corners under half the longhaul band minimum radius of 500 m |
-| published | US | amtrak-northeast-regional | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 | 4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 64 m, past the 50 m longhaul review limit; 38 corners under half the longhaul band minimum radius of 640 m |
-| published | US | amtrak-northeast-regional-b1 | Northeast Regional | narn |  | #cae4f1 | 360 of 360 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-northeast-regional-b2 | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 | 3 corners under half the regional band minimum radius of 200 m |
-| published | US | amtrak-northeast-regional-b3 | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 | 3 corners under half the longhaul band minimum radius of 500 m; 1 near-reversals the sawtooth pass left in |
+| published | US | amtrak-lake-shore-limited | Lake Shore Limited | gtfs-shape |  | #cae4f1 | 2 station interval(s) are withheld from display; the source geometry reaches 72 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-lake-shore-limited-b1 | Lake Shore Limited | narn |  | #cae4f1 | 1 station interval(s) are withheld from display; the source geometry reaches 82 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-lincoln-service | Lincoln Service | narn |  | #cae4f1 | 8 station interval(s) are withheld from display; the source geometry reaches 366 m from the independent survey, past the 50 m longhaul limit; 734 of 891 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | amtrak-lincoln-service-missouri-river-runner | Lincoln Service Missouri River Runner | gtfs-shape |  | #cae4f1 |  |
+| published | US | amtrak-missouri-river-runner | Missouri River Runner | gtfs-shape |  | #cae4f1 |  |
+| published | US | amtrak-northeast-regional | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 | 4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 64 m, past the 50 m longhaul review limit |
+| published | US | amtrak-northeast-regional-b1 | Northeast Regional | narn |  | #cae4f1 | 1 station interval(s) are withheld from display; the source geometry reaches 54 m from the independent survey, past the 50 m longhaul limit; 377 of 453 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | amtrak-northeast-regional-b2 | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 |  |
+| published | US | amtrak-northeast-regional-b3 | Northeast Regional | amtrak-ntad-northeast-regional |  | #cae4f1 |  |
 | published | US | amtrak-pacific-surfliner | Pacific Surfliner | narn |  | #cae4f1 | 8 station interval(s) are withheld from display; the source geometry reaches 342 m from the independent survey, past the 35 m regional limit; 970 of 2169 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-palmetto | Palmetto | gtfs-shape |  | #cae4f1 | 15 corners under half the longhaul band minimum radius of 640 m; station us-official-charleston is 626122 m from where amtrak-cardinal puts it, past the 400 m the band allows; 3 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-pennsylvanian | Pennsylvanian | gtfs-shape |  | #cae4f1 | 21 corners under half the longhaul band minimum radius of 640 m; 3 station interval(s) are withheld from display; the source geometry reaches 297 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-piedmont | Piedmont | gtfs-shape |  | #cae4f1 | 2 corners under half the longhaul band minimum radius of 500 m |
+| published | US | amtrak-palmetto | Palmetto | gtfs-shape |  | #cae4f1 | station us-official-charleston is 626122 m from where amtrak-cardinal puts it, past the 400 m the band allows; 3 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-pennsylvanian | Pennsylvanian | gtfs-shape |  | #cae4f1 | 3 station interval(s) are withheld from display; the source geometry reaches 297 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-piedmont | Piedmont | gtfs-shape |  | #cae4f1 |  |
 | published | US | amtrak-shore-line-east | Shore Line East | narn |  | #cae4f1 |  |
-| published | US | amtrak-silver-meteor | Silver Meteor | narn |  | #cae4f1 | 29 corners under half the longhaul band minimum radius of 800 m; 1 near-reversals the sawtooth pass left in; 21 station interval(s) are withheld from display; the source geometry reaches 360 m from the independent survey, past the 50 m longhaul limit; 3205 of 4385 vertices had no independent reference; affected station intervals are withheld from display |
-| published | US | amtrak-southwest-chief | Southwest Chief | gtfs-shape |  | #cae4f1 | 64 corners under half the longhaul band minimum radius of 800 m; 8 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-valley-flyer | Valley Flyer | narn |  | #cae4f1 | 3 corners under half the regional band minimum radius of 200 m |
-| published | US | amtrak-vermonter | Vermonter | gtfs-shape |  | #cae4f1 | 32 corners under half the longhaul band minimum radius of 640 m; 4 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
-| published | US | amtrak-wolverine | Wolverine | amtrak-ntad-wolverine |  | #cae4f1 | 2 corners under half the longhaul band minimum radius of 500 m; station us-official-jackson is 1218226 m from where amtrak-city-of-new-orleans puts it, past the 400 m the band allows |
+| published | US | amtrak-silver-meteor | Silver Meteor | narn |  | #cae4f1 | 1 near-reversals the sawtooth pass left in; 21 station interval(s) are withheld from display; the source geometry reaches 360 m from the independent survey, past the 50 m longhaul limit; 3205 of 4385 vertices had no independent reference; affected station intervals are withheld from display |
+| published | US | amtrak-southwest-chief | Southwest Chief | gtfs-shape |  | #cae4f1 | 8 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-valley-flyer | Valley Flyer | narn |  | #cae4f1 |  |
+| published | US | amtrak-vermonter | Vermonter | gtfs-shape |  | #cae4f1 | 4 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 50 m longhaul limit |
+| published | US | amtrak-wolverine | Wolverine | amtrak-ntad-wolverine |  | #cae4f1 | station us-official-jackson is 1218226 m from where amtrak-city-of-new-orleans puts it, past the 400 m the band allows |
 | published | US | bart-blue | Dublin/Pleasanton to Daly City | gtfs-shape |  | #0099cc | 1 station interval(s) are withheld from display; the source geometry reaches 60 m from the independent survey, past the 30 m commuter limit |
 | published | US | bart-green | Berryessa/North San Jose to Daly City | gtfs-shape |  | #339933 | 1 station interval(s) are withheld from display; the source geometry reaches 60 m from the independent survey, past the 30 m commuter limit |
 | published | US | bart-grey | Oakland Int'l Airport OAK to Coliseum | gtfs-shape |  | #b0bec7 | 3 corners under half the commuter band minimum radius of 80 m |
 | published | US | bart-orange | Berryessa/North San Jose to Richmond | gtfs-shape |  | #ff9933 |  |
 | published | US | bart-red | Richmond to SF Int'l Airport SFO/Millbrae | gtfs-shape |  | #ff0000 |  |
 | published | US | bart-yellow | Antioch to SF Int'l Airport SFO/Millbrae | bart-sfo-millbrae-wye |  | #ffff33 | 5 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 391 m, past the 30 m commuter review limit; 144 of 678 vertices had no independent visual reference; the provenance-verified official centreline remains visible; station us-official-lafayette is 3030330 m from where amtrak-cardinal puts it, past the 400 m the band allows; station us-official-millbrae is 106 m from where bart-red puts it, past the 90 m the band allows |
-| published | US | brightline-trains-llc-blfm | Mainline | fdot-brightline |  | #f2e205 | 1 corners under half the longhaul band minimum radius of 500 m; station us-official-fort-lauderdale is 2467 m from where amtrak-silver-meteor puts it, past the 400 m the band allows; station us-official-west-palm-beach is 709 m from where amtrak-silver-meteor puts it, past the 400 m the band allows; station us-official-orlando is 14450 m from where amtrak-silver-meteor puts it, past the 400 m the band allows |
+| published | US | brightline-trains-llc-blfm | Mainline | fdot-brightline |  | #f2e205 | station us-official-fort-lauderdale is 2467 m from where amtrak-silver-meteor puts it, past the 400 m the band allows; station us-official-west-palm-beach is 709 m from where amtrak-silver-meteor puts it, past the 400 m the band allows; station us-official-orlando is 14450 m from where amtrak-silver-meteor puts it, past the 400 m the band allows |
 | published | US | caltrain-local-weekday | Local Weekday | caltrans-caltrain |  | #dcddde |  |
 | published | US | capital-metro-550 | 550-Metro Rail Red Line | gtfs-shape |  | #e2231a |  |
 | published | US | cincinnati-metro-100 | Streetcar - OTR - Banks | cincinnati-connector |  | #68c9f2 | 2 corners under half the street band minimum radius of 15 m |
-| published | US | connecticut-transit-hartford-line | Hartford Line | narn |  | #ea0d2a | 3 corners under half the regional band minimum radius of 200 m |
+| published | US | connecticut-transit-hartford-line | Hartford Line | narn |  | #ea0d2a |  |
 | published | US | cta-blue-line | Blue Line | cta-blue |  | #00a1de | 2 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 29 m, past the 25 m metro review limit; station us-official-washington is 467776 m from where amtrak-lincoln-service-missouri-river-runner puts it, past the 400 m the band allows |
 | published | US | cta-brown-line | Brown Line | cta-brown |  | #62361b | station us-official-quincy is 379593 m from where amtrak-carl-sandburg puts it, past the 400 m the band allows; station us-official-fullerton is 2785971 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows |
 | published | US | cta-green-line | Green Line | cta-green |  | #009b3a |  |
@@ -163,9 +180,9 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | los-angeles-county-metropoli-metro-k-line | Metro K Line | la-metro-807 |  | #e56db1 | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 32 m, past the 25 m metro review limit |
 | published | US | maryland-transit-administrat-2-metro-subwaylink | Owings Mills - Johns Hopkins | maryland-metro |  | #008000 |  |
 | published | US | maryland-transit-administrat-brunswick-washington | BRUNSWICK - WASHINGTON | gtfs-shape |  | #ff8000 | 3 station interval(s) are withheld from display; the source geometry reaches 47 m from the independent survey, past the 35 m regional limit |
-| published | US | maryland-transit-administrat-brunswick-washington-b1 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 | 4 corners under half the longhaul band minimum radius of 400 m |
-| published | US | maryland-transit-administrat-brunswick-washington-b2 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 | 4 corners under half the longhaul band minimum radius of 400 m |
-| published | US | maryland-transit-administrat-brunswick-washington-b3 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 | 5 corners under half the longhaul band minimum radius of 400 m |
+| published | US | maryland-transit-administrat-brunswick-washington-b1 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 |  |
+| published | US | maryland-transit-administrat-brunswick-washington-b2 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 |  |
+| published | US | maryland-transit-administrat-brunswick-washington-b3 | BRUNSWICK - WASHINGTON | narn |  | #ff8000 |  |
 | published | US | maryland-transit-administrat-camden-washington | CAMDEN - WASHINGTON | gtfs-shape |  | #ff8000 |  |
 | published | US | maryland-transit-administrat-penn-washington | PENN - WASHINGTON | narn |  | #ff8000 |  |
 | published | US | mbta-b | Green Line B | mbta-rapid-green-b |  | #00843d | 1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit |
@@ -179,7 +196,7 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | mbta-fall-river-new-bedford-line | Fall River/New Bedford Line | mbta-cr-newbedford |  | #80276c |  |
 | published | US | mbta-fall-river-new-bedford-line-b1 | Fall River/New Bedford Line | mbta-cr-newbedford |  | #80276c |  |
 | published | US | mbta-fitchburg-line | Fitchburg Line | mbta-commuter-cr-fitchburg |  | #80276c | station us-official-concord is 4267337 m from where bart-yellow puts it, past the 90 m the band allows |
-| published | US | mbta-foxboro-event-service | Foxboro Event Service | mbta-cr-foxboro |  | #80276c | 2 corners under half the regional band minimum radius of 200 m |
+| published | US | mbta-foxboro-event-service | Foxboro Event Service | mbta-cr-foxboro |  | #80276c |  |
 | published | US | mbta-framingham-worcester-line | Framingham/Worcester Line | mbta-commuter-cr-worcester |  | #80276c | station us-official-ashland is 1033374 m from where amtrak-cardinal puts it, past the 400 m the band allows |
 | published | US | mbta-greenbush-line | Greenbush Line | mbta-commuter-cr-greenbush |  | #80276c |  |
 | published | US | mbta-haverhill-line | Haverhill Line | mbta-commuter-cr-haverhill |  | #80276c | station us-official-greenwood is 1941991 m from where amtrak-city-of-new-orleans puts it, past the 400 m the band allows |
@@ -215,7 +232,7 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | metra-union-pacific-2 | Union Pacific | narn |  | #fe8d81 |  |
 | published | US | metra-up-nw | Union Pacific Northwest | metra-up-nw |  | #ffe600 | station us-official-harvard is 1434377 m from where mbta-red-line puts it, past the 90 m the band allows; station us-official-jefferson-park spans 187 m inside a reviewed official complex (exact limit 190 m) |
 | published | US | metra-up-nw-b1 | Union Pacific Northwest | metra-up-nw |  | #ffe600 |  |
-| published | US | metro-north-railroad-danbury | Danbury | mnr-danbury |  | #ee0034 | 2 corners under half the regional band minimum radius of 200 m |
+| published | US | metro-north-railroad-danbury | Danbury | mnr-danbury |  | #ee0034 |  |
 | published | US | metro-north-railroad-harlem | Harlem | mnr-harlem |  | #0039a6 |  |
 | published | US | metro-north-railroad-hudson | Hudson | mnr-hudson |  | #009b3a |  |
 | published | US | metro-north-railroad-new-canaan | New Canaan | mnr-new-canaan |  | #ee0034 |  |
@@ -278,12 +295,12 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | mta-long-island-rail-road-greenport-service | Greenport Service | lirr-13-greenport |  | #a626aa | 237 of 237 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
 | published | US | mta-long-island-rail-road-hempstead-branch | Hempstead Branch | lirr-seam-2-hempstead |  | #ce8e00 | 220 of 220 vertices had no independent visual reference; the provenance-verified official centreline remains visible; station us-official-garden-city is 2352297 m from where amtrak-southwest-chief puts it, past the 400 m the band allows |
 | published | US | mta-long-island-rail-road-long-beach-branch | Long Beach Branch | lirr-seam-6-long-beach |  | #ff6319 | 249 of 249 vertices had no independent visual reference; the provenance-verified official centreline remains visible; station us-official-oceanside is 3932749 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows |
-| published | US | mta-long-island-rail-road-montauk-branch | Montauk Branch | lirr-seam-5-montauk |  | #00b2a9 | 2 corners under half the regional band minimum radius of 200 m; 691 of 691 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
+| published | US | mta-long-island-rail-road-montauk-branch | Montauk Branch | lirr-seam-5-montauk |  | #00b2a9 | 691 of 691 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
 | published | US | mta-long-island-rail-road-oyster-bay-branch | Oyster Bay Branch | lirr-seam-3-oyster-bay |  | #00af3f | 373 of 373 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
 | published | US | mta-long-island-rail-road-port-jefferson-branch | Port Jefferson Branch | lirr-seam-10-port-jefferson |  | #006ec7 | 603 of 603 vertices had no independent visual reference; the provenance-verified official centreline remains visible; station us-official-huntington is 818930 m from where amtrak-cardinal puts it, past the 400 m the band allows; station us-official-stony-brook is 228987 m from where mbta-orange-line puts it, past the 90 m the band allows |
 | published | US | mta-long-island-rail-road-ronkonkoma-branch | Ronkonkoma Branch | lirr-seam-4-ronkonkoma |  | #a626aa | 440 of 440 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
 | published | US | mta-long-island-rail-road-west-hempstead-branch | West Hempstead Branch | lirr-seam-8-west-hempstead |  | #00a1de | 3 corners under half the commuter band minimum radius of 80 m; 234 of 234 vertices had no independent visual reference; the provenance-verified official centreline remains visible |
-| published | US | nashville-mta-wego-public-tr-90 | WEGO STAR | narn |  | #001e61 | 1 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 35 m regional limit |
+| published | US | nashville-mta-wego-public-tr-90 | WEGO STAR | narn |  | #001e61 | 1 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 35 m regional limit |
 | published | US | new-jersey-transit-nj-transi-atlc | Atlantic City Rail Line | njt-rail-1-atlantic-city |  | #075aaa |  |
 | published | US | new-jersey-transit-nj-transi-bntn | Montclair-Boonton Line | njt-rail-2-montclair-boonton |  | #e66859 | station us-official-new-york-penn spans 109 m inside a reviewed official complex (exact limit 115 m) |
 | published | US | new-jersey-transit-nj-transi-bntn-b1 | Montclair-Boonton Line | njt-rail-2-montclair-boonton |  | #e66859 |  |
@@ -402,10 +419,10 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | septa-t5-b7 | 13th St to 80th St/Eastwick | septa-t5 |  | #5a960a | 4 corners under half the street band minimum radius of 15 m |
 | published | US | shore-line-east-shore-line-east-train | Shore Line East Train | narn |  | #ef3e42 |  |
 | published | US | smart-smart | Main Line | gtfs-shape |  | #4d6d51 | 1 corners under half the commuter band minimum radius of 80 m |
-| published | US | sound-transit-n-line | Everett - Seattle | narn |  | #9ab6d3 | 1 station interval(s) are withheld from display; the source geometry reaches 44 m from the independent survey, past the 35 m regional limit; open review: operator GTFS shape passed local comparison against restricted Sound Transit engineering GIS; restricted coordinates are not distributed |
+| published | US | sound-transit-n-line | Everett - Seattle | narn |  | #9ab6d3 | 1 station interval(s) are withheld from display; the source geometry reaches 43 m from the independent survey, past the 35 m regional limit; open review: operator GTFS shape passed local comparison against restricted Sound Transit engineering GIS; restricted coordinates are not distributed |
 | published | US | sound-transit-t-line | Tacoma Dome - St Joseph | gtfs-shape |  | #f38b00 | open review: operator GTFS shape passed local comparison against restricted Sound Transit engineering GIS; restricted coordinates are not distributed |
 | published | US | south-florida-regional-trans-dml | Downtown Miami Link | gtfs-shape |  | #f3be18 |  |
-| published | US | south-florida-regional-trans-mce | MiamiCentral Express | gtfs-shape |  | #9bcd65 | 3 corners under half the longhaul band minimum radius of 400 m; 1 station interval(s) are withheld from display; the source geometry reaches 63 m from the independent survey, past the 50 m longhaul limit |
+| published | US | south-florida-regional-trans-mce | MiamiCentral Express | gtfs-shape |  | #9bcd65 | 1 station interval(s) are withheld from display; the source geometry reaches 63 m from the independent survey, past the 50 m longhaul limit |
 | published | US | south-florida-regional-trans-tr | Tri-Rail | narn |  | #006c86 |  |
 | published | US | south-shore-line-lakeshore | Lakeshore Corridor | narn |  | #f6931c | 1 station interval(s) are withheld from display; the source geometry reaches 49 m from the independent survey, past the 35 m regional limit |
 | published | US | south-shore-line-monon | Monon Corridor | gtfs-shape |  | #ed1b24 |  |
@@ -420,7 +437,7 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | published | US | utah-transit-authority-uta-704 | Green Line | uta-704 |  | #2eb566 |  |
 | published | US | utah-transit-authority-uta-704-b1 | Green Line | uta-704 |  | #2eb566 | 7 corners under half the commuter band minimum radius of 80 m |
 | published | US | utah-transit-authority-uta-720 | S-Line | uta-720 |  | #77777a |  |
-| published | US | utah-transit-authority-uta-750 | FrontRunner | uta-750 |  | #c227b9 | 1 corners under half the regional band minimum radius of 200 m |
+| published | US | utah-transit-authority-uta-750 | FrontRunner | uta-750 |  | #c227b9 |  |
 | published | US | wmata-blue | Metrorail Blue Line | wmata-metrorail-blue |  | #0076c0 |  |
 | published | US | wmata-green | Metrorail Green Line | wmata-metrorail-green |  | #00a94f |  |
 | published | US | wmata-orange | Metrorail Orange Line | wmata-metrorail-orange |  | #f7941e |  |
@@ -717,15 +734,9 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | blocked |  | trimet-portland-streetcar:203 |  |  |  |  | fail-closed: WES alignment lacks a verified independent state/agency centreline extract |
 | blocked |  | trimet-portland-streetcar:290 |  |  |  |  | fail-closed: TriMet public rail route GIS has no independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
 | blocked |  | trimet-portland-streetcar:90 |  |  |  |  | fail-closed: TriMet public rail route GIS has no independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
-| blocked |  | ttc:1 |  |  |  |  | fail-closed: City of Toronto/TTC subway centreline disagrees by 125.2 m with the independent second-track reference near 43.754055, -79.465486; no second independent official survey explains the offset; trunk has no usable alignment; branches suppressed |
-| blocked |  | ttc:2 |  |  |  |  | fail-closed: City of Toronto/TTC subway centreline disagrees by 78.8 m with the independent second-track reference near 43.643698, -79.529452; no second independent official survey explains the offset; trunk has no usable alignment; branches suppressed |
-| blocked |  | ttc:301 |  |  |  |  | no usable alignment; trunk has no usable alignment; branches suppressed |
 | blocked |  | ttc:303 |  |  |  |  | no pattern |
-| blocked |  | ttc:305 |  |  |  |  | no usable alignment; trunk has no usable alignment; branches suppressed |
-| blocked |  | ttc:306 |  |  |  |  | official route network does not reach every station; no usable alignment |
-| blocked |  | ttc:312 |  |  |  |  | no usable alignment; trunk has no usable alignment; branches suppressed |
 | blocked |  | ttc:503 |  |  |  |  | fail-closed: official TTC GTFS publishes every current route 503 trip as Kingston Rd Replacement Bus; current TTC route page confirms streetcar service is replaced by buses, so the road alignment is not railway geometry |
-| blocked |  | ttc:507 |  |  |  |  | no usable alignment; trunk has no usable alignment; branches suppressed |
+| blocked |  | ttc:507 |  |  |  |  | fail-closed: official TTC GTFS (calendar 2026-09-06 to 2026-10-31) publishes every current route 507 trip as Long Branch Replacement Bus (1,603 trips, headsigns 507/507M ... Replacement Bus, none as a streetcar), so the road alignment is not railway geometry; the Lake Shore track it would use is drawn by 501 Queen |
 | blocked |  | ttc:508 |  |  |  |  | no usable alignment; trunk has no usable alignment; branches suppressed |
 | blocked |  | valley-metro-vm:A |  |  |  |  | fail-closed: MAG/Valley Metro public route layer has no documented independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
 | blocked |  | valley-metro-vm:B |  |  |  |  | fail-closed: MAG/Valley Metro public route layer has no documented independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
@@ -805,6 +816,5 @@ Generated 2026-09-05T08:47:27.709338+00:00. Published: 423; blocked findings: 38
 | blocked |  | sound-transit-n-line |  | narn |  |  | station intervals withheld from display because independent track alignment exceeds tolerance |
 | blocked |  | south-florida-regional-trans-mce |  | gtfs-shape |  |  | station intervals withheld from display because independent track alignment exceeds tolerance |
 | blocked |  | south-shore-line-lakeshore |  | narn |  |  | station intervals withheld from display because independent track alignment exceeds tolerance |
-| blocked |  | ttc-306-b3 |  |  |  |  | compact-v1 geometry invariant failed |
 | blocked |  | ttc-5 |  | gtfs-shape |  |  | station intervals withheld from display because independent track alignment exceeds tolerance |
 | blocked |  | via-ottawa-montr-al |  | narn |  |  | station intervals withheld from display because independent track alignment exceeds tolerance |

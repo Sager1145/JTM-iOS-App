@@ -1,899 +1,2085 @@
 {
-  "findings": [
-    {
-      "severity": "WARN",
-      "check": "geometry.deviation.officialRetained",
-      "country": "CA",
-      "line": "ttc-306",
-      "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
-      "metres": 22.0,
-      "toleranceMetres": 20.0,
-      "intervals": [
-        62
-      ],
-      "at": [
-        -79.301722,
-        43.688671
-      ],
-      "builtFrom": "ttc-streetcar-306"
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.deviation.officialRetained",
-      "country": "CA",
-      "line": "ttc-306-b4",
-      "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
-      "metres": 22.0,
-      "toleranceMetres": 20.0,
-      "intervals": [
-        1
-      ],
-      "at": [
-        -79.301722,
-        43.688671
-      ],
-      "builtFrom": "ttc-streetcar-306"
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.deviation.officialRetained",
-      "country": "CA",
-      "line": "ttc-4",
-      "message": "2 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit",
-      "metres": 34.5,
-      "toleranceMetres": 25.0,
-      "intervals": [
-        0,
-        1
-      ],
-      "at": [
-        -79.367827,
-        43.771068
-      ],
-      "builtFrom": "ttc-subway-4"
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.deviation.officialRetained",
-      "country": "CA",
-      "line": "ttc-4-b2",
-      "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit",
-      "metres": 34.1,
-      "toleranceMetres": 25.0,
-      "intervals": [
-        0
-      ],
-      "at": [
-        -79.367737,
-        43.771081
-      ],
-      "builtFrom": "ttc-subway-4"
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "go-transit-br",
-      "message": "2 corners under half the regional band minimum radius of 200 m",
-      "band": "regional",
-      "count": 2
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "grt-ion-light-rail-301",
-      "message": "19 corners under half the metro band minimum radius of 30 m",
-      "band": "metro",
-      "count": 19
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "grt-ion-light-rail-301-b1",
-      "message": "4 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 4
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "grt-ion-light-rail-301-b2",
-      "message": "3 corners under half the metro band minimum radius of 30 m",
-      "band": "metro",
-      "count": 3
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ottawa-carleton-regional-tra-1",
-      "message": "1 corners under half the metro band minimum radius of 30 m",
-      "band": "metro",
-      "count": 1
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "translink-millennium-line",
-      "message": "2 corners under half the metro band minimum radius of 30 m",
-      "band": "metro",
-      "count": 2
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-304",
-      "message": "1 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 1
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-304-b2",
-      "message": "4 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 4
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-304-b6",
-      "message": "3 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 3
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-304-b7",
-      "message": "2 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 2
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-306",
-      "message": "8 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 8
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-306-b2",
-      "message": "1 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 1
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-306-b4",
-      "message": "2 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 2
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-306-b5",
-      "message": "2 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 2
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-310",
-      "message": "5 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 5
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-310-b2",
-      "message": "1 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 1
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-509",
-      "message": "6 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 6
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-509-b1",
-      "message": "3 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 3
-    },
-    {
-      "severity": "WARN",
-      "check": "geometry.radius",
-      "country": "CA",
-      "line": "ttc-511",
-      "message": "1 corners under half the street band minimum radius of 15 m",
-      "band": "street",
-      "count": 1
-    },
-    {
-      "severity": "WARN",
-      "check": "station.split",
-      "country": "CA",
-      "line": "translink-millennium-line",
-      "message": "station ca-official-commercial-broadway is 56 m from where translink-expo-line puts it, past the 40 m the band allows",
-      "station": "ca-official-commercial-broadway",
-      "metres": 56
-    },
-    {
-      "severity": "NOTE",
-      "check": "geometry.deviation.withheld",
-      "country": "CA",
-      "line": "ttc-5",
-      "message": "3 station interval(s) are withheld from display; the source geometry reaches 35 m from the independent survey, past the 25 m metro limit",
-      "metres": 34.5,
-      "toleranceMetres": 25.0,
-      "intervals": [
-        21,
-        22,
-        23
-      ],
-      "at": [
-        -79.46538,
-        43.691943
-      ],
-      "builtFrom": "gtfs-shape"
-    },
-    {
-      "severity": "NOTE",
-      "check": "geometry.deviation.withheld",
-      "country": "CA",
-      "line": "via-ottawa-montr-al",
-      "message": "1 station interval(s) are withheld from display; the source geometry reaches 313 m from the independent survey, past the 50 m longhaul limit",
-      "metres": 313.0,
-      "toleranceMetres": 50.0,
-      "intervals": [
-        0
-      ],
-      "at": [
-        -73.616979,
-        45.457877
-      ],
-      "builtFrom": "narn"
-    },
-    {
-      "severity": "NOTE",
-      "check": "package.field:logo",
-      "country": "CA",
-      "line": "-",
-      "message": "66 of 66 lines carry no `logo`",
-      "count": 66
-    },
-    {
-      "severity": "NOTE",
-      "check": "package.field:operatorShort",
-      "country": "CA",
-      "line": "-",
-      "message": "51 of 66 lines carry no `operatorShort`",
-      "count": 51
-    },
-    {
-      "severity": "NOTE",
-      "check": "station.split.reviewed",
-      "country": "CA",
-      "line": "translink-expo-line",
-      "message": "station ca-official-waterfront spans 169 m inside a reviewed official complex (exact limit 175 m)",
-      "station": "ca-official-waterfront",
-      "metres": 169,
-      "maxMeters": 175.0,
-      "evidence": "TransLink official GTFS publishes location_type=1 station 12034 once and uses that exact station identity for Canada Line, Expo Line, and West Coast Express; the audited anchors represent platforms within Waterfront Station",
-      "evidenceUrl": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
-      "sourceSha256": "585343a3607618024e9ebcfa7d770c6d785e647ae93895eebeb5e5bdad6887a8",
-      "stopIds": [
-        "12034"
-      ]
-    },
-    {
-      "severity": "NOTE",
-      "check": "station.split.reviewed",
-      "country": "CA",
-      "line": "ttc-304-b7",
-      "message": "station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m)",
-      "station": "ca-official-dufferin-gate-loop",
-      "metres": 48,
-      "maxMeters": 55.0,
-      "evidence": "TTC official GTFS uses exact stop 2032 Dufferin Gate Loop in both published 304 route patterns; the audited anchors remain within the same loop",
-      "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
-      "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
-      "stopIds": [
-        "2032"
-      ]
-    },
-    {
-      "severity": "NOTE",
-      "check": "station.split.reviewed",
-      "country": "CA",
-      "line": "ttc-310-b3",
-      "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m)",
-      "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
-      "metres": 29,
-      "maxMeters": 35.0,
-      "evidence": "TTC official GTFS uses exact stop 10927 Queens Quay Loop at Lower Spadina Ave in both published 310 route patterns; the audited anchors remain within the same loop",
-      "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
-      "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
-      "stopIds": [
-        "10927"
-      ]
-    },
-    {
-      "severity": "NOTE",
-      "check": "station.split.reviewed",
-      "country": "CA",
-      "line": "ttc-511",
-      "message": "station ca-official-exhibition-loop spans 32 m inside a reviewed official complex (exact limit 40 m)",
-      "station": "ca-official-exhibition-loop",
-      "metres": 32,
-      "maxMeters": 40.0,
-      "evidence": "TTC official GTFS uses exact stop 12584 Exhibition Loop on routes 509 and 511; the audited anchors remain within the same terminal loop",
-      "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
-      "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
-      "stopIds": [
-        "12584"
-      ]
-    }
-  ],
-  "lines": [
-    {
-      "id": "go-transit-br",
-      "band": "regional",
-      "lengthKm": 101.1,
-      "stations": 11,
-      "vertices": 420,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-ki",
-      "band": "regional",
-      "lengthKm": 142.1,
-      "stations": 14,
-      "vertices": 479,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-le",
-      "band": "commuter",
-      "lengthKm": 50.7,
-      "stations": 10,
-      "vertices": 300,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-lw",
-      "band": "regional",
-      "lengthKm": 132.2,
-      "stations": 15,
-      "vertices": 441,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-lw-b1",
-      "band": "regional",
-      "lengthKm": 9.1,
-      "stations": 2,
-      "vertices": 42,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-mi",
-      "band": "commuter",
-      "lengthKm": 50.4,
-      "stations": 9,
-      "vertices": 304,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-rh",
-      "band": "regional",
-      "lengthKm": 46.1,
-      "stations": 7,
-      "vertices": 238,
-      "country": "CA"
-    },
-    {
-      "id": "go-transit-st",
-      "band": "commuter",
-      "lengthKm": 48.5,
-      "stations": 10,
-      "vertices": 336,
-      "country": "CA"
-    },
-    {
-      "id": "amtrak-adirondack-ca",
-      "band": "regional",
-      "lengthKm": 6.1,
-      "stations": 2,
-      "vertices": 30,
-      "country": "CA"
-    },
-    {
-      "id": "edmonton-transit-system-capital",
-      "band": "metro",
-      "lengthKm": 20.2,
-      "stations": 15,
-      "vertices": 235,
-      "country": "CA"
-    },
-    {
-      "id": "edmonton-transit-system-metro",
-      "band": "metro",
-      "lengthKm": 15.4,
-      "stations": 14,
-      "vertices": 231,
-      "country": "CA"
-    },
-    {
-      "id": "edmonton-transit-system-valley",
-      "band": "metro",
-      "lengthKm": 13.0,
-      "stations": 12,
-      "vertices": 185,
-      "country": "CA"
-    },
-    {
-      "id": "exo-ca",
-      "band": "commuter",
-      "lengthKm": 25.8,
-      "stations": 9,
-      "vertices": 151,
-      "country": "CA"
-    },
-    {
-      "id": "exo-ma",
-      "band": "commuter",
-      "lengthKm": 41.5,
-      "stations": 11,
-      "vertices": 255,
-      "country": "CA"
-    },
-    {
-      "id": "exo-sh",
-      "band": "commuter",
-      "lengthKm": 34.4,
-      "stations": 7,
-      "vertices": 198,
-      "country": "CA"
-    },
-    {
-      "id": "exo-sj",
-      "band": "commuter",
-      "lengthKm": 62.0,
-      "stations": 14,
-      "vertices": 379,
-      "country": "CA"
-    },
-    {
-      "id": "exo-vh",
-      "band": "commuter",
-      "lengthKm": 51.4,
-      "stations": 18,
-      "vertices": 309,
-      "country": "CA"
-    },
-    {
-      "id": "grt-ion-light-rail-301",
-      "band": "metro",
-      "lengthKm": 16.2,
-      "stations": 16,
-      "vertices": 271,
-      "country": "CA"
-    },
-    {
-      "id": "grt-ion-light-rail-301-b2",
-      "band": "metro",
-      "lengthKm": 1.8,
-      "stations": 3,
-      "vertices": 37,
-      "country": "CA"
-    },
-    {
-      "id": "grt-ion-light-rail-301-b1",
-      "band": "street",
-      "lengthKm": 1.5,
-      "stations": 4,
-      "vertices": 46,
-      "country": "CA"
-    },
-    {
-      "id": "ottawa-carleton-regional-tra-1",
-      "band": "metro",
-      "lengthKm": 12.3,
-      "stations": 13,
-      "vertices": 179,
-      "country": "CA"
-    },
-    {
-      "id": "ottawa-carleton-regional-tra-2",
-      "band": "metro",
-      "lengthKm": 19.0,
-      "stations": 11,
-      "vertices": 191,
-      "country": "CA"
-    },
-    {
-      "id": "ottawa-carleton-regional-tra-4",
-      "band": "commuter",
-      "lengthKm": 4.1,
-      "stations": 3,
-      "vertices": 34,
-      "country": "CA"
-    },
-    {
-      "id": "translink-canada-line",
-      "band": "metro",
-      "lengthKm": 14.3,
-      "stations": 14,
-      "vertices": 174,
-      "country": "CA"
-    },
-    {
-      "id": "translink-canada-line-b1",
-      "band": "metro",
-      "lengthKm": 4.0,
-      "stations": 4,
-      "vertices": 54,
-      "country": "CA"
-    },
-    {
-      "id": "translink-expo-line",
-      "band": "metro",
-      "lengthKm": 28.2,
-      "stations": 20,
-      "vertices": 386,
-      "country": "CA"
-    },
-    {
-      "id": "translink-expo-line-b1",
-      "band": "commuter",
-      "lengthKm": 7.5,
-      "stations": 5,
-      "vertices": 66,
-      "country": "CA"
-    },
-    {
-      "id": "translink-millennium-line",
-      "band": "metro",
-      "lengthKm": 25.1,
-      "stations": 17,
-      "vertices": 314,
-      "country": "CA"
-    },
-    {
-      "id": "translink-wce",
-      "band": "commuter",
-      "lengthKm": 67.3,
-      "stations": 8,
-      "vertices": 511,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-4",
-      "band": "metro",
-      "lengthKm": 5.4,
-      "stations": 5,
-      "vertices": 46,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-4-b1",
-      "band": "metro",
-      "lengthKm": 1.5,
-      "stations": 2,
-      "vertices": 14,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-4-b2",
-      "band": "metro",
-      "lengthKm": 0.9,
-      "stations": 2,
-      "vertices": 9,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-5",
-      "band": "metro",
-      "lengthKm": 18.6,
-      "stations": 25,
-      "vertices": 185,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-5-b2",
-      "band": "metro",
-      "lengthKm": 1.5,
-      "stations": 3,
-      "vertices": 12,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-6",
-      "band": "street",
-      "lengthKm": 10.4,
-      "stations": 18,
-      "vertices": 165,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304",
-      "band": "street",
-      "lengthKm": 12.7,
-      "stations": 51,
-      "vertices": 245,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b1",
-      "band": "street",
-      "lengthKm": 1.8,
-      "stations": 7,
-      "vertices": 29,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b2",
-      "band": "street",
-      "lengthKm": 1.4,
-      "stations": 7,
-      "vertices": 29,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b3",
-      "band": "street",
-      "lengthKm": 0.4,
-      "stations": 2,
-      "vertices": 10,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b4",
-      "band": "street",
-      "lengthKm": 0.9,
-      "stations": 4,
-      "vertices": 12,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b5",
-      "band": "street",
-      "lengthKm": 0.7,
-      "stations": 3,
-      "vertices": 18,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b6",
-      "band": "street",
-      "lengthKm": 0.4,
-      "stations": 2,
-      "vertices": 10,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b7",
-      "band": "street",
-      "lengthKm": 0.5,
-      "stations": 3,
-      "vertices": 16,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-304-b8",
-      "band": "street",
-      "lengthKm": 0.2,
-      "stations": 2,
-      "vertices": 6,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306",
-      "band": "street",
-      "lengthKm": 15.4,
-      "stations": 64,
-      "vertices": 339,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b2",
-      "band": "street",
-      "lengthKm": 0.8,
-      "stations": 5,
-      "vertices": 20,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b4",
-      "band": "street",
-      "lengthKm": 0.8,
-      "stations": 3,
-      "vertices": 20,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b5",
-      "band": "street",
-      "lengthKm": 1.0,
-      "stations": 4,
-      "vertices": 29,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b6",
-      "band": "street",
-      "lengthKm": 0.6,
-      "stations": 3,
-      "vertices": 9,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b7",
-      "band": "street",
-      "lengthKm": 0.5,
-      "stations": 3,
-      "vertices": 14,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-306-b8",
-      "band": "street",
-      "lengthKm": 0.5,
-      "stations": 3,
-      "vertices": 15,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-310",
-      "band": "street",
-      "lengthKm": 5.3,
-      "stations": 18,
-      "vertices": 121,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-310-b1",
-      "band": "street",
-      "lengthKm": 0.8,
-      "stations": 3,
-      "vertices": 16,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-310-b2",
-      "band": "street",
-      "lengthKm": 0.1,
-      "stations": 2,
-      "vertices": 11,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-310-b3",
-      "band": "street",
-      "lengthKm": 0.3,
-      "stations": 2,
-      "vertices": 5,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-5-b1",
-      "band": "street",
-      "lengthKm": 1.7,
-      "stations": 4,
-      "vertices": 19,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-509",
-      "band": "street",
-      "lengthKm": 3.9,
-      "stations": 13,
-      "vertices": 112,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-509-b1",
-      "band": "street",
-      "lengthKm": 0.3,
-      "stations": 3,
-      "vertices": 19,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-511",
-      "band": "street",
-      "lengthKm": 4.7,
-      "stations": 17,
-      "vertices": 94,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-511-b1",
-      "band": "street",
-      "lengthKm": 0.6,
-      "stations": 3,
-      "vertices": 8,
-      "country": "CA"
-    },
-    {
-      "id": "ttc-511-b2",
-      "band": "street",
-      "lengthKm": 0.1,
-      "stations": 2,
-      "vertices": 3,
-      "country": "CA"
-    },
-    {
-      "id": "union-pearson-express-up-exp-up",
-      "band": "regional",
-      "lengthKm": 24.2,
-      "stations": 5,
-      "vertices": 102,
-      "country": "CA"
-    },
-    {
-      "id": "via-ottawa-montr-al",
-      "band": "longhaul",
-      "lengthKm": 185.3,
-      "stations": 5,
-      "vertices": 406,
-      "country": "CA"
-    },
-    {
-      "id": "via-toronto-london",
-      "band": "longhaul",
-      "lengthKm": 184.6,
-      "stations": 5,
-      "vertices": 388,
-      "country": "CA"
-    },
-    {
-      "id": "via-toronto-sarnia",
-      "band": "regional",
-      "lengthKm": 289.4,
-      "stations": 12,
-      "vertices": 926,
-      "country": "CA"
-    },
-    {
-      "id": "via-toronto-windsor",
-      "band": "longhaul",
-      "lengthKm": 358.6,
-      "stations": 10,
-      "vertices": 682,
-      "country": "CA"
-    }
-  ]
+ "findings": [
+  {
+   "severity": "WARN",
+   "check": "geometry.deviation.officialRetained",
+   "country": "CA",
+   "line": "ttc-4",
+   "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit",
+   "metres": 34.1,
+   "toleranceMetres": 25.0,
+   "intervals": [
+    1
+   ],
+   "at": [
+    -79.367737,
+    43.771081
+   ],
+   "builtFrom": "ttc-subway-4"
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.deviation.officialRetained",
+   "country": "CA",
+   "line": "ttc-506",
+   "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
+   "metres": 22.0,
+   "toleranceMetres": 20.0,
+   "intervals": [
+    62
+   ],
+   "at": [
+    -79.301722,
+    43.688671
+   ],
+   "builtFrom": "ttc-streetcar-506"
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.deviation.osmReferenceRetained",
+   "country": "CA",
+   "line": "ttc-1",
+   "message": "35 station interval(s) are drawn from an audited OpenStreetMap relation; the 393 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment",
+   "metres": 392.7,
+   "toleranceMetres": 25.0,
+   "intervals": [],
+   "at": [
+    -79.394032,
+    43.689215
+   ],
+   "builtFrom": "osm"
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.deviation.osmReferenceRetained",
+   "country": "CA",
+   "line": "ttc-2",
+   "message": "30 station interval(s) are drawn from an audited OpenStreetMap relation; the 396 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment",
+   "metres": 396.2,
+   "toleranceMetres": 25.0,
+   "intervals": [],
+   "at": [
+    -79.463053,
+    43.654774
+   ],
+   "builtFrom": "osm"
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301",
+   "message": "19 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 19
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b1",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "grt-ion-light-rail-301-b2",
+   "message": "3 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ottawa-carleton-regional-tra-1",
+   "message": "1 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "translink-millennium-line",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-1",
+   "message": "2 corners under half the metro band minimum radius of 30 m",
+   "band": "metro",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-501",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-501-b4",
+   "message": "6 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 6
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-504",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-504-b2",
+   "message": "4 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 4
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-504-b6",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-504-b7",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-506",
+   "message": "8 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 8
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-506-b5",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-506-b6",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-506-b7",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-509",
+   "message": "6 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 6
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-509-b1",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-510",
+   "message": "5 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 5
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-510-b2",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "1 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 1
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-512",
+   "message": "3 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 3
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.radius",
+   "country": "CA",
+   "line": "ttc-512-b1",
+   "message": "2 corners under half the street band minimum radius of 15 m",
+   "band": "street",
+   "count": 2
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.unchecked.osmReferenceRetained",
+   "country": "CA",
+   "line": "ttc-1",
+   "message": "305 of 443 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment",
+   "vertices": 443,
+   "unmatched": 305,
+   "intervals": []
+  },
+  {
+   "severity": "WARN",
+   "check": "geometry.unchecked.osmReferenceRetained",
+   "country": "CA",
+   "line": "ttc-2",
+   "message": "173 of 275 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment",
+   "vertices": 275,
+   "unmatched": 173,
+   "intervals": []
+  },
+  {
+   "severity": "WARN",
+   "check": "interval.detour",
+   "country": "CA",
+   "line": "ttc-512",
+   "message": "drawn 350 m between stations 112 m apart (3.1x)",
+   "interval": 7,
+   "fromStation": "St Clair Ave West at Tweedsmuir Ave",
+   "toStation": "St Clair West Station",
+   "ratio": 3.11
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "ace",
+   "message": "the registry names 1 rail route(s) for Altamont Corridor Express and the build produced none",
+   "declared": 1,
+   "operator": "Altamont Corridor Express"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "alaska-railroad",
+   "message": "the registry names 1 rail route(s) for Alaska Railroad Corporation and the build produced none",
+   "declared": 1,
+   "operator": "Alaska Railroad Corporation"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "amtrak-san-joaquins",
+   "message": "the registry names 1 rail route(s) for Amtrak San Joaquins and the build produced none",
+   "declared": 1,
+   "operator": "Amtrak San Joaquins"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "amtrak-vermonter",
+   "message": "the registry names 2 rail route(s) for Amtrak Vermonter and the build produced none",
+   "declared": 2,
+   "operator": "Amtrak Vermonter"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "bart",
+   "message": "the registry names 12 rail route(s) for Bay Area Rapid Transit (BART) and the build produced none",
+   "declared": 12,
+   "operator": "Bay Area Rapid Transit (BART)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "brightline-trains-llc",
+   "message": "the registry names 1 rail route(s) for Brightline Trains LLC and the build produced none",
+   "declared": 1,
+   "operator": "Brightline Trains LLC"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "ca",
+   "line": "calgary-transit",
+   "message": "the registry names 2 rail route(s) for Calgary Transit and the build produced none",
+   "declared": 2,
+   "operator": "Calgary Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "caltrain",
+   "message": "the registry names 5 rail route(s) for Caltrain and the build produced none",
+   "declared": 5,
+   "operator": "Caltrain"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "camtran-inclined-plane",
+   "message": "the registry names 1 rail route(s) for Cambria County Transit Authority (CamTran) and the build produced none",
+   "declared": 1,
+   "operator": "Cambria County Transit Authority (CamTran)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "capital-metro",
+   "message": "the registry names 1 rail route(s) for Capital Metro and the build produced none",
+   "declared": 1,
+   "operator": "Capital Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "capitol-corridor-joint-power",
+   "message": "the registry names 1 rail route(s) for Capitol Corridor Joint Powers Authority (Capitol Corridor) and the build produced none",
+   "declared": 1,
+   "operator": "Capitol Corridor Joint Powers Authority (Capitol Corridor)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "charlotte-area-transit-syste",
+   "message": "the registry names 2 rail route(s) for Charlotte Area Transit System (CATS) and the build produced none",
+   "declared": 2,
+   "operator": "Charlotte Area Transit System (CATS)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "chattanooga-carta",
+   "message": "the registry names 1 rail route(s) for Chattanooga Area Regional Transportation Authority (CARTA) and the build produced none",
+   "declared": 1,
+   "operator": "Chattanooga Area Regional Transportation Authority (CARTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "cincinnati-metro",
+   "message": "the registry names 1 rail route(s) for Cincinnati Metro and the build produced none",
+   "declared": 1,
+   "operator": "Cincinnati Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "cleveland-rta",
+   "message": "the registry names 3 rail route(s) for Greater Cleveland Regional Transit Authority and the build produced none",
+   "declared": 3,
+   "operator": "Greater Cleveland Regional Transit Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "connecticut-transit",
+   "message": "the registry names 1 rail route(s) for Connecticut Transit and the build produced none",
+   "declared": 1,
+   "operator": "Connecticut Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "cta",
+   "message": "the registry names 8 rail route(s) for Chicago Transit Authority (CTA) and the build produced none",
+   "declared": 8,
+   "operator": "Chicago Transit Authority (CTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "dallas-area-rapid-transit-da",
+   "message": "the registry names 8 rail route(s) for Dallas Area Rapid Transit (DART) and the build produced none",
+   "declared": 8,
+   "operator": "Dallas Area Rapid Transit (DART)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "dc-streetcar",
+   "message": "the registry names 1 rail route(s) for DC Streetcar and the build produced none",
+   "declared": 1,
+   "operator": "DC Streetcar"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "denton-county-transportation",
+   "message": "the registry names 1 rail route(s) for Denton County Transportation Authority (DCTA) and the build produced none",
+   "declared": 1,
+   "operator": "Denton County Transportation Authority (DCTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "detroit-people-mover",
+   "message": "the registry names 1 rail route(s) for Detroit People Mover and the build produced none",
+   "declared": 1,
+   "operator": "Detroit People Mover"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "embark",
+   "message": "the registry names 3 rail route(s) for Embark and the build produced none",
+   "declared": 3,
+   "operator": "Embark"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "florida-department-of-transp",
+   "message": "the registry names 1 rail route(s) for Florida Department of Transportation (SunRail) and the build produced none",
+   "declared": 1,
+   "operator": "Florida Department of Transportation (SunRail)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "fort-worth-transit-authority",
+   "message": "the registry names 1 rail route(s) for Fort Worth Transit Authority and the build produced none",
+   "declared": 1,
+   "operator": "Fort Worth Transit Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "galveston-island-transit",
+   "message": "the registry names 1 rail route(s) for Galveston Island Transit and the build produced none",
+   "declared": 1,
+   "operator": "Galveston Island Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "hampton-roads-transit-hrt",
+   "message": "the registry names 1 rail route(s) for Hampton Roads Transit (HRT) and the build produced none",
+   "declared": 1,
+   "operator": "Hampton Roads Transit (HRT)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "hillsborough-area-regional-t",
+   "message": "the registry names 2 rail route(s) for Hillsborough Area Regional Transit (HART) and the build produced none",
+   "declared": 2,
+   "operator": "Hillsborough Area Regional Transit (HART)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "houston-metro",
+   "message": "the registry names 3 rail route(s) for Metropolitan Transit Authority of Harris County (METRO) and the build produced none",
+   "declared": 3,
+   "operator": "Metropolitan Transit Authority of Harris County (METRO)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "jacksonville-jta",
+   "message": "the registry names 1 rail route(s) for Jacksonville Transportation Authority and the build produced none",
+   "declared": 1,
+   "operator": "Jacksonville Transportation Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "kansas-city-area-transportat",
+   "message": "the registry names 1 rail route(s) for Kansas City Area Transportation Authority (KCATA) and the build produced none",
+   "declared": 1,
+   "operator": "Kansas City Area Transportation Authority (KCATA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "kenosha-streetcar",
+   "message": "the registry names 1 rail route(s) for City of Kenosha and the build produced none",
+   "declared": 1,
+   "operator": "City of Kenosha"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "king-county-metro",
+   "message": "the registry names 2 rail route(s) for King County Metro and the build produced none",
+   "declared": 2,
+   "operator": "King County Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "loop-trolley",
+   "message": "the registry names 1 rail route(s) for Loop Trolley and the build produced none",
+   "declared": 1,
+   "operator": "Loop Trolley"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "los-angeles-county-metropoli",
+   "message": "the registry names 6 rail route(s) for Los Angeles County Metropolitan Transportation Authority (LA Metro) and the build produced none",
+   "declared": 6,
+   "operator": "Los Angeles County Metropolitan Transportation Authority (LA Metro)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "maryland-transit-administrat",
+   "message": "the registry names 3 rail route(s) for Maryland Transit Administration and the build produced none",
+   "declared": 3,
+   "operator": "Maryland Transit Administration"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "maryland-transit-administrat-2",
+   "message": "the registry names 1 rail route(s) for Maryland Transit Administration Metro Subway and the build produced none",
+   "declared": 1,
+   "operator": "Maryland Transit Administration Metro Subway"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "maryland-transit-administrat-light-rail",
+   "message": "the registry names 1 rail route(s) for Maryland Transit Administration Light RailLink and the build produced none",
+   "declared": 1,
+   "operator": "Maryland Transit Administration Light RailLink"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "mbta",
+   "message": "the registry names 22 rail route(s) for Massachusetts Bay Transportation Authority (MBTA) and the build produced none",
+   "declared": 22,
+   "operator": "Massachusetts Bay Transportation Authority (MBTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "mckinney-avenue-trolley",
+   "message": "the registry names 1 rail route(s) for McKinney Avenue Transit Authority and the build produced none",
+   "declared": 1,
+   "operator": "McKinney Avenue Transit Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "memphis-mata-trolley",
+   "message": "the registry names 3 rail route(s) for Memphis Area Transit Authority and the build produced none",
+   "declared": 3,
+   "operator": "Memphis Area Transit Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metra",
+   "message": "the registry names 11 rail route(s) for Metra and the build produced none",
+   "declared": 11,
+   "operator": "Metra"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metro-north-railroad",
+   "message": "the registry names 6 rail route(s) for Metro-North Railroad and the build produced none",
+   "declared": 6,
+   "operator": "Metro-North Railroad"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metro-st-louis",
+   "message": "the registry names 4 rail route(s) for Metro St. Louis and the build produced none",
+   "declared": 4,
+   "operator": "Metro St. Louis"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metro-transit",
+   "message": "the registry names 3 rail route(s) for Metro Transit and the build produced none",
+   "declared": 3,
+   "operator": "Metro Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metro-transit-intercity-tran",
+   "message": "the registry names 9 rail route(s) for Metro Transit, Intercity Transit, City of Seattle, Community Transit, Pierce Transit, Sound Transit, Washington State Ferries, SeattleCenterMonorail, Everett Transit, Seattle Children's Hospital and the build produced none",
+   "declared": 9,
+   "operator": "Metro Transit, Intercity Transit, City of Seattle, Community Transit, Pierce Transit, Sound Transit, Washington State Ferries, SeattleCenterMonorail, Everett Transit, Seattle Children's Hospital"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metrolink",
+   "message": "the registry names 7 rail route(s) for Metrolink and the build produced none",
+   "declared": 7,
+   "operator": "Metrolink"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metropolitan-atlanta-rapid-t",
+   "message": "the registry names 5 rail route(s) for Metropolitan Atlanta Rapid Transit Authority (MARTA) and the build produced none",
+   "declared": 5,
+   "operator": "Metropolitan Atlanta Rapid Transit Authority (MARTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "metropolitan-transit-authori",
+   "message": "the registry names 29 rail route(s) for Metropolitan Transit Authority (MTA) and the build produced none",
+   "declared": 29,
+   "operator": "Metropolitan Transit Authority (MTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "miami-dade-transit",
+   "message": "the registry names 4 rail route(s) for Miami-Dade Transit and the build produced none",
+   "declared": 4,
+   "operator": "Miami-Dade Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "milwaukee-hop",
+   "message": "the registry names 1 rail route(s) for City of Milwaukee (The Hop MKE) and the build produced none",
+   "declared": 1,
+   "operator": "City of Milwaukee (The Hop MKE)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "mta-long-island-rail-road",
+   "message": "the registry names 13 rail route(s) for Metropolitan Transit Authority (MTA) and the build produced none",
+   "declared": 13,
+   "operator": "Metropolitan Transit Authority (MTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "nashville-mta-wego-public-tr",
+   "message": "the registry names 1 rail route(s) for Nashville MTA WeGo Public Transit and the build produced none",
+   "declared": 1,
+   "operator": "Nashville MTA WeGo Public Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "new-jersey-transit-nj-transi",
+   "message": "the registry names 17 rail route(s) for New Jersey Transit (NJ Transit) and the build produced none",
+   "declared": 17,
+   "operator": "New Jersey Transit (NJ Transit)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "new-orleans-rta",
+   "message": "the registry names 5 rail route(s) for New Orleans Regional Transit Authority and the build produced none",
+   "declared": 5,
+   "operator": "New Orleans Regional Transit Authority"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "north-county-transit-distric",
+   "message": "the registry names 3 rail route(s) for North County Transit District (NCTD) and the build produced none",
+   "declared": 3,
+   "operator": "North County Transit District (NCTD)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "patco-speedline",
+   "message": "the registry names 1 rail route(s) for PATCO Speedline and the build produced none",
+   "declared": 1,
+   "operator": "PATCO Speedline"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "port-authority-of-allegheny",
+   "message": "the registry names 5 rail route(s) for Port Authority of Allegheny County and the build produced none",
+   "declared": 5,
+   "operator": "Port Authority of Allegheny County"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "port-authority-trans-hudson",
+   "message": "the registry names 7 rail route(s) for Port Authority Trans-Hudson (PATH) and the build produced none",
+   "declared": 7,
+   "operator": "Port Authority Trans-Hudson (PATH)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "puerto-rico-ati",
+   "message": "the registry names 1 rail route(s) for Autoridad de Transporte Integrado de Puerto Rico and the build produced none",
+   "declared": 1,
+   "operator": "Autoridad de Transporte Integrado de Puerto Rico"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "qline-detroit",
+   "message": "the registry names 1 rail route(s) for Qline Detroit and the build produced none",
+   "declared": 1,
+   "operator": "Qline Detroit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "regional-transportation-dist",
+   "message": "the registry names 10 rail route(s) for Regional Transportation District and the build produced none",
+   "declared": 10,
+   "operator": "Regional Transportation District"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "ca",
+   "line": "rem",
+   "message": "the registry names 1 rail route(s) for R\u00e9seau express m\u00e9tropolitain and the build produced none",
+   "declared": 1,
+   "operator": "R\u00e9seau express m\u00e9tropolitain"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "rio-metro-regional-transit-d",
+   "message": "the registry names 1 rail route(s) for Rio Metro Regional Transit District and the build produced none",
+   "declared": 1,
+   "operator": "Rio Metro Regional Transit District"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "rock-region-metro",
+   "message": "the registry names 1 rail route(s) for Rock Region METRO and the build produced none",
+   "declared": 1,
+   "operator": "Rock Region METRO"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "sacramento-regional-transit",
+   "message": "the registry names 3 rail route(s) for Sacramento Regional Transit (SacRT) and the build produced none",
+   "declared": 3,
+   "operator": "Sacramento Regional Transit (SacRT)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "san-diego-international-airp",
+   "message": "the registry names 6 rail route(s) for San Diego International Airport, Metropolitan Transit System (MTS) and the build produced none",
+   "declared": 6,
+   "operator": "San Diego International Airport, Metropolitan Transit System (MTS)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "san-francisco-municipal-tran",
+   "message": "the registry names 10 rail route(s) for San Francisco Municipal Transportation Agency (SFMTA - Muni) and the build produced none",
+   "declared": 10,
+   "operator": "San Francisco Municipal Transportation Agency (SFMTA - Muni)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "santa-clara-valley-transport",
+   "message": "the registry names 7 rail route(s) for Santa Clara Valley Transportation Authority (VTA) and the build produced none",
+   "declared": 7,
+   "operator": "Santa Clara Valley Transportation Authority (VTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "septa",
+   "message": "the registry names 13 rail route(s) for Southeastern Pennsylvania Transportation Authority (SEPTA) and the build produced none",
+   "declared": 13,
+   "operator": "Southeastern Pennsylvania Transportation Authority (SEPTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "septa-regional-rail",
+   "message": "the registry names 13 rail route(s) for SEPTA Regional Rail and the build produced none",
+   "declared": 13,
+   "operator": "SEPTA Regional Rail"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "shore-line-east",
+   "message": "the registry names 1 rail route(s) for Shore Line East and the build produced none",
+   "declared": 1,
+   "operator": "Shore Line East"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "smart",
+   "message": "the registry names 1 rail route(s) for Sonoma-Marin Area Rail Transit and the build produced none",
+   "declared": 1,
+   "operator": "Sonoma-Marin Area Rail Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "ca",
+   "line": "soci-t-de-transport-de-montr",
+   "message": "the registry names 4 rail route(s) for Soci\u00e9t\u00e9 de transport de Montr\u00e9al (STM) and the build produced none",
+   "declared": 4,
+   "operator": "Soci\u00e9t\u00e9 de transport de Montr\u00e9al (STM)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "sound-transit",
+   "message": "the registry names 5 rail route(s) for Sound Transit and the build produced none",
+   "declared": 5,
+   "operator": "Sound Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "sound-transit-metro-transit",
+   "message": "the registry names 2 rail route(s) for Sound Transit, Metro Transit, City of Seattle - King County Metro and the build produced none",
+   "declared": 2,
+   "operator": "Sound Transit, Metro Transit, City of Seattle - King County Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "south-florida-regional-trans",
+   "message": "the registry names 3 rail route(s) for South Florida Regional Transportation Authority (Tri-Rail) and the build produced none",
+   "declared": 3,
+   "operator": "South Florida Regional Transportation Authority (Tri-Rail)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "south-shore-line",
+   "message": "the registry names 2 rail route(s) for South Shore Line and the build produced none",
+   "declared": 2,
+   "operator": "South Shore Line"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "sun-metro",
+   "message": "the registry names 1 rail route(s) for Sun Metro and the build produced none",
+   "declared": 1,
+   "operator": "Sun Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "suntran",
+   "message": "the registry names 3 rail route(s) for SunTran and the build produced none",
+   "declared": 3,
+   "operator": "SunTran"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "thebus",
+   "message": "the registry names 1 rail route(s) for TheBus and the build produced none",
+   "declared": 1,
+   "operator": "TheBus"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "trimet-portland-streetcar",
+   "message": "the registry names 10 rail route(s) for TriMet, Portland Streetcar and the build produced none",
+   "declared": 10,
+   "operator": "TriMet, Portland Streetcar"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "trinity-metro",
+   "message": "the registry names 1 rail route(s) for Trinity Metro and the build produced none",
+   "declared": 1,
+   "operator": "Trinity Metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "utah-transit-authority-uta",
+   "message": "the registry names 5 rail route(s) for Utah Transit Authority (UTA) and the build produced none",
+   "declared": 5,
+   "operator": "Utah Transit Authority (UTA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "valley-metro-vm",
+   "message": "the registry names 4 rail route(s) for Valley Metro (VM) and the build produced none",
+   "declared": 4,
+   "operator": "Valley Metro (VM)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "vre",
+   "message": "the registry names 2 rail route(s) for Virginia Railway Express and the build produced none",
+   "declared": 2,
+   "operator": "Virginia Railway Express"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "wmata",
+   "message": "the registry names 6 rail route(s) for Washington Metropolitan Area Transit Authority (WMATA) and the build produced none",
+   "declared": 6,
+   "operator": "Washington Metropolitan Area Transit Authority (WMATA)"
+  },
+  {
+   "severity": "WARN",
+   "check": "registry.silentFeed",
+   "country": "us",
+   "line": "wvu-prt",
+   "message": "the registry names 1 rail route(s) for West Virginia University Personal Rapid Transit and the build produced none",
+   "declared": 1,
+   "operator": "West Virginia University Personal Rapid Transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "translink-millennium-line",
+   "message": "station ca-official-commercial-broadway is 56 m from where translink-expo-line puts it, past the 40 m the band allows",
+   "station": "ca-official-commercial-broadway",
+   "metres": 56
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-2",
+   "message": "station ca-official-spadina is 345 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-spadina",
+   "metres": 345
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-5",
+   "message": "station ca-official-cedarvale is 69 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-cedarvale",
+   "metres": 69
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-5",
+   "message": "station ca-official-kennedy is 108 m from where ttc-2 puts it, past the 40 m the band allows",
+   "station": "ca-official-kennedy",
+   "metres": 108
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-501-b1",
+   "message": "station ca-official-queen-st-east-at-woodfield-rd is 34 m from where ttc-501 puts it, past the 25 m the band allows",
+   "station": "ca-official-queen-st-east-at-woodfield-rd",
+   "metres": 34
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-501-b2",
+   "message": "station ca-official-queen-st-east-at-pape-ave is 42 m from where ttc-501 puts it, past the 25 m the band allows",
+   "station": "ca-official-queen-st-east-at-pape-ave",
+   "metres": 42
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-501-b3",
+   "message": "station ca-official-queen-st-east-at-broadview-ave is 52 m from where ttc-501 puts it, past the 25 m the band allows",
+   "station": "ca-official-queen-st-east-at-broadview-ave",
+   "metres": 52
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-501-b6",
+   "message": "station ca-official-queen-st-west-at-strachan-ave is 25 m from where ttc-501 puts it, past the 25 m the band allows",
+   "station": "ca-official-queen-st-west-at-strachan-ave",
+   "metres": 25
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-501-b7",
+   "message": "station ca-official-queen-st-west-at-dufferin-st is 43 m from where ttc-501 puts it, past the 25 m the band allows",
+   "station": "ca-official-queen-st-west-at-dufferin-st",
+   "metres": 43
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-504",
+   "message": "station ca-official-dundas-west is 200 m from where ttc-2 puts it, past the 40 m the band allows",
+   "station": "ca-official-dundas-west",
+   "metres": 200
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-504",
+   "message": "station ca-official-broadview is 62 m from where ttc-2 puts it, past the 40 m the band allows",
+   "station": "ca-official-broadview",
+   "metres": 62
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-505",
+   "message": "station ca-official-broadview-ave-at-dundas-st is 29 m from where ttc-504 puts it, past the 25 m the band allows",
+   "station": "ca-official-broadview-ave-at-dundas-st",
+   "metres": 29
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-505-b5",
+   "message": "station ca-official-edna-ave-at-dundas-st is 79 m from where ttc-505-b4 puts it, past the 25 m the band allows",
+   "station": "ca-official-edna-ave-at-dundas-st",
+   "metres": 79
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b1",
+   "message": "station ca-official-main-street is 72 m from where ttc-2 puts it, past the 40 m the band allows",
+   "station": "ca-official-main-street",
+   "metres": 72
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b2",
+   "message": "station ca-official-gerrard-st-east-at-woodfield-rd is 212 m from where ttc-506 puts it, past the 25 m the band allows",
+   "station": "ca-official-gerrard-st-east-at-woodfield-rd",
+   "metres": 212
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b3",
+   "message": "station ca-official-dundas-st-west-at-howard-park-ave is 33 m from where ttc-505 puts it, past the 25 m the band allows",
+   "station": "ca-official-dundas-st-west-at-howard-park-ave",
+   "metres": 33
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b3",
+   "message": "station ca-official-howard-park-ave-at-roncesvalles-ave is 33 m from where ttc-506 puts it, past the 25 m the band allows",
+   "station": "ca-official-howard-park-ave-at-roncesvalles-ave",
+   "metres": 33
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b5",
+   "message": "station ca-official-college-st-at-spadina-ave is 68 m from where ttc-506 puts it, past the 25 m the band allows",
+   "station": "ca-official-college-st-at-spadina-ave",
+   "metres": 68
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b7",
+   "message": "station ca-official-dundas-st-east-at-ontario-st is 29 m from where ttc-505 puts it, past the 25 m the band allows",
+   "station": "ca-official-dundas-st-east-at-ontario-st",
+   "metres": 29
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-506-b8",
+   "message": "station ca-official-gerrard-st-east-at-river-st is 32 m from where ttc-506 puts it, past the 25 m the band allows",
+   "station": "ca-official-gerrard-st-east-at-river-st",
+   "metres": 32
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-512",
+   "message": "station ca-official-st-clair is 90 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-st-clair",
+   "metres": 90
+  },
+  {
+   "severity": "WARN",
+   "check": "station.split",
+   "country": "CA",
+   "line": "ttc-6",
+   "message": "station ca-official-finch-west is 186 m from where ttc-1 puts it, past the 40 m the band allows",
+   "station": "ca-official-finch-west",
+   "metres": 186
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "CA",
+   "line": "ttc-5",
+   "message": "3 station interval(s) are withheld from display; the source geometry reaches 35 m from the independent survey, past the 25 m metro limit",
+   "metres": 34.5,
+   "toleranceMetres": 25.0,
+   "intervals": [
+    21,
+    22,
+    23
+   ],
+   "at": [
+    -79.46538,
+    43.691943
+   ],
+   "builtFrom": "gtfs-shape"
+  },
+  {
+   "severity": "NOTE",
+   "check": "geometry.deviation.withheld",
+   "country": "CA",
+   "line": "via-ottawa-montr-al",
+   "message": "1 station interval(s) are withheld from display; the source geometry reaches 313 m from the independent survey, past the 50 m longhaul limit",
+   "metres": 313.0,
+   "toleranceMetres": 50.0,
+   "intervals": [
+    0
+   ],
+   "at": [
+    -73.616979,
+    45.457877
+   ],
+   "builtFrom": "narn"
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:logo",
+   "country": "CA",
+   "line": "-",
+   "message": "83 of 83 lines carry no `logo`",
+   "count": 83
+  },
+  {
+   "severity": "NOTE",
+   "check": "package.field:operatorShort",
+   "country": "CA",
+   "line": "-",
+   "message": "68 of 83 lines carry no `operatorShort`",
+   "count": 68
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-mount-dennis-go is named 2 ways: Mount Dennis GO / Mount Dennis Station LRT Platform",
+   "station": "ca-official-mount-dennis-go"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-finch-west is named 2 ways: Finch West Station / Finch West Station LRT Platform",
+   "station": "ca-official-finch-west"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.split.reviewed",
+   "country": "CA",
+   "line": "translink-expo-line",
+   "message": "station ca-official-waterfront spans 169 m inside a reviewed official complex (exact limit 175 m)",
+   "station": "ca-official-waterfront",
+   "metres": 169,
+   "maxMeters": 175.0,
+   "evidence": "TransLink official GTFS publishes location_type=1 station 12034 once and uses that exact station identity for Canada Line, Expo Line, and West Coast Express; the audited anchors represent platforms within Waterfront Station",
+   "evidenceUrl": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
+   "sourceSha256": "585343a3607618024e9ebcfa7d770c6d785e647ae93895eebeb5e5bdad6887a8",
+   "stopIds": [
+    "12034"
+   ]
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.split.reviewed",
+   "country": "CA",
+   "line": "ttc-504-b7",
+   "message": "station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m)",
+   "station": "ca-official-dufferin-gate-loop",
+   "metres": 48,
+   "maxMeters": 55.0,
+   "evidence": "TTC official GTFS uses exact stop 2032 Dufferin Gate Loop in both published 304 route patterns; the audited anchors remain within the same loop",
+   "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
+   "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
+   "stopIds": [
+    "2032"
+   ]
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.split.reviewed",
+   "country": "CA",
+   "line": "ttc-510-b3",
+   "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m)",
+   "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
+   "metres": 29,
+   "maxMeters": 35.0,
+   "evidence": "TTC official GTFS uses exact stop 10927 Queens Quay Loop at Lower Spadina Ave in both published 310 route patterns; the audited anchors remain within the same loop",
+   "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
+   "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
+   "stopIds": [
+    "10927"
+   ]
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.split.reviewed",
+   "country": "CA",
+   "line": "ttc-511",
+   "message": "station ca-official-exhibition-loop spans 32 m inside a reviewed official complex (exact limit 40 m)",
+   "station": "ca-official-exhibition-loop",
+   "metres": 32,
+   "maxMeters": 40.0,
+   "evidence": "TTC official GTFS uses exact stop 12584 Exhibition Loop on routes 509 and 511; the audited anchors remain within the same terminal loop",
+   "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
+   "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
+   "stopIds": [
+    "12584"
+   ]
+  }
+ ],
+ "lines": [
+  {
+   "id": "go-transit-br",
+   "band": "regional",
+   "lengthKm": 101.1,
+   "stations": 11,
+   "vertices": 420,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-ki",
+   "band": "regional",
+   "lengthKm": 142.1,
+   "stations": 14,
+   "vertices": 479,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-le",
+   "band": "commuter",
+   "lengthKm": 50.7,
+   "stations": 10,
+   "vertices": 300,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw",
+   "band": "regional",
+   "lengthKm": 132.2,
+   "stations": 15,
+   "vertices": 441,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw-b1",
+   "band": "regional",
+   "lengthKm": 9.1,
+   "stations": 2,
+   "vertices": 42,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-mi",
+   "band": "commuter",
+   "lengthKm": 50.4,
+   "stations": 9,
+   "vertices": 304,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-rh",
+   "band": "regional",
+   "lengthKm": 46.1,
+   "stations": 7,
+   "vertices": 238,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-st",
+   "band": "commuter",
+   "lengthKm": 48.5,
+   "stations": 10,
+   "vertices": 336,
+   "country": "CA"
+  },
+  {
+   "id": "amtrak-adirondack-ca",
+   "band": "regional",
+   "lengthKm": 6.1,
+   "stations": 2,
+   "vertices": 30,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-capital",
+   "band": "metro",
+   "lengthKm": 20.2,
+   "stations": 15,
+   "vertices": 235,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-metro",
+   "band": "metro",
+   "lengthKm": 15.4,
+   "stations": 14,
+   "vertices": 231,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-valley",
+   "band": "metro",
+   "lengthKm": 13.0,
+   "stations": 12,
+   "vertices": 185,
+   "country": "CA"
+  },
+  {
+   "id": "exo-ca",
+   "band": "commuter",
+   "lengthKm": 25.8,
+   "stations": 9,
+   "vertices": 151,
+   "country": "CA"
+  },
+  {
+   "id": "exo-ma",
+   "band": "commuter",
+   "lengthKm": 41.5,
+   "stations": 11,
+   "vertices": 255,
+   "country": "CA"
+  },
+  {
+   "id": "exo-sh",
+   "band": "commuter",
+   "lengthKm": 34.4,
+   "stations": 7,
+   "vertices": 198,
+   "country": "CA"
+  },
+  {
+   "id": "exo-sj",
+   "band": "commuter",
+   "lengthKm": 62.0,
+   "stations": 14,
+   "vertices": 379,
+   "country": "CA"
+  },
+  {
+   "id": "exo-vh",
+   "band": "commuter",
+   "lengthKm": 51.4,
+   "stations": 18,
+   "vertices": 309,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301",
+   "band": "metro",
+   "lengthKm": 16.2,
+   "stations": 16,
+   "vertices": 271,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b2",
+   "band": "metro",
+   "lengthKm": 1.8,
+   "stations": 3,
+   "vertices": 37,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b1",
+   "band": "street",
+   "lengthKm": 1.5,
+   "stations": 4,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-1",
+   "band": "metro",
+   "lengthKm": 12.3,
+   "stations": 13,
+   "vertices": 179,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-2",
+   "band": "metro",
+   "lengthKm": 19.0,
+   "stations": 11,
+   "vertices": 191,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-4",
+   "band": "commuter",
+   "lengthKm": 4.1,
+   "stations": 3,
+   "vertices": 34,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line",
+   "band": "metro",
+   "lengthKm": 14.3,
+   "stations": 14,
+   "vertices": 174,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line-b1",
+   "band": "metro",
+   "lengthKm": 4.0,
+   "stations": 4,
+   "vertices": 54,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line",
+   "band": "metro",
+   "lengthKm": 28.2,
+   "stations": 20,
+   "vertices": 386,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line-b1",
+   "band": "commuter",
+   "lengthKm": 7.5,
+   "stations": 5,
+   "vertices": 66,
+   "country": "CA"
+  },
+  {
+   "id": "translink-millennium-line",
+   "band": "metro",
+   "lengthKm": 25.1,
+   "stations": 17,
+   "vertices": 314,
+   "country": "CA"
+  },
+  {
+   "id": "translink-wce",
+   "band": "commuter",
+   "lengthKm": 67.3,
+   "stations": 8,
+   "vertices": 511,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-1",
+   "band": "metro",
+   "lengthKm": 38.6,
+   "stations": 38,
+   "vertices": 443,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-2",
+   "band": "metro",
+   "lengthKm": 26.3,
+   "stations": 31,
+   "vertices": 275,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-4",
+   "band": "metro",
+   "lengthKm": 5.3,
+   "stations": 5,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-5",
+   "band": "metro",
+   "lengthKm": 18.6,
+   "stations": 25,
+   "vertices": 185,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-6",
+   "band": "street",
+   "lengthKm": 10.4,
+   "stations": 18,
+   "vertices": 165,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501",
+   "band": "street",
+   "lengthKm": 16.9,
+   "stations": 63,
+   "vertices": 291,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b1",
+   "band": "street",
+   "lengthKm": 1.3,
+   "stations": 5,
+   "vertices": 17,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b2",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b3",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b4",
+   "band": "street",
+   "lengthKm": 1.2,
+   "stations": 5,
+   "vertices": 34,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b5",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 6,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b6",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 4,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b8",
+   "band": "street",
+   "lengthKm": 0.9,
+   "stations": 5,
+   "vertices": 13,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504",
+   "band": "street",
+   "lengthKm": 12.7,
+   "stations": 51,
+   "vertices": 245,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b1",
+   "band": "street",
+   "lengthKm": 1.8,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b2",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b3",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 2,
+   "vertices": 10,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b4",
+   "band": "street",
+   "lengthKm": 0.9,
+   "stations": 4,
+   "vertices": 12,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b5",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 18,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b6",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 2,
+   "vertices": 10,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b8",
+   "band": "street",
+   "lengthKm": 0.2,
+   "stations": 2,
+   "vertices": 6,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505",
+   "band": "street",
+   "lengthKm": 10.6,
+   "stations": 43,
+   "vertices": 218,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 13,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b2",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 15,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b3",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b4",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 3,
+   "vertices": 9,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b5",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506",
+   "band": "street",
+   "lengthKm": 15.4,
+   "stations": 64,
+   "vertices": 317,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 12,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b2",
+   "band": "street",
+   "lengthKm": 0.8,
+   "stations": 4,
+   "vertices": 19,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b3",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b4",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 15,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b5",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 24,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b6",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 4,
+   "vertices": 21,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b7",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 5,
+   "vertices": 20,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b8",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 9,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509",
+   "band": "street",
+   "lengthKm": 3.9,
+   "stations": 13,
+   "vertices": 112,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509-b1",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 3,
+   "vertices": 19,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510",
+   "band": "street",
+   "lengthKm": 5.3,
+   "stations": 18,
+   "vertices": 121,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b1",
+   "band": "street",
+   "lengthKm": 0.8,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b3",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 5,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511",
+   "band": "street",
+   "lengthKm": 4.7,
+   "stations": 17,
+   "vertices": 94,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511-b1",
+   "band": "street",
+   "lengthKm": 0.6,
+   "stations": 3,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 3,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-512",
+   "band": "street",
+   "lengthKm": 5.1,
+   "stations": 21,
+   "vertices": 108,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-512-b1",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "union-pearson-express-up-exp-up",
+   "band": "regional",
+   "lengthKm": 24.2,
+   "stations": 5,
+   "vertices": 102,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-montr-al",
+   "band": "longhaul",
+   "lengthKm": 185.3,
+   "stations": 5,
+   "vertices": 406,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-london",
+   "band": "longhaul",
+   "lengthKm": 184.6,
+   "stations": 5,
+   "vertices": 388,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-sarnia",
+   "band": "regional",
+   "lengthKm": 289.4,
+   "stations": 12,
+   "vertices": 926,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-windsor",
+   "band": "longhaul",
+   "lengthKm": 358.6,
+   "stations": 10,
+   "vertices": 682,
+   "country": "CA"
+  }
+ ]
 }

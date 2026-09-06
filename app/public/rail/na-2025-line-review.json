@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-05T08:47:27.709338+00:00",
+  "generatedAt": "2026-09-06T02:06:43.218463+00:00",
   "summary": {
-    "published": 423,
-    "blocked": 381,
-    "warnings": 228,
+    "published": 440,
+    "blocked": 374,
+    "warnings": 223,
     "publishedErrors": 0
   },
   "lines": [
@@ -192,7 +192,7 @@
       "lineId": "go-transit-br",
       "country": "CA",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "GO Transit",
       "name": "Barrie",
       "sourceFeed": "go-transit",
@@ -206,15 +206,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 11,
       "lengthKm": 101.128,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 2
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "go-transit-ki",
@@ -659,541 +651,100 @@
       "issues": []
     },
     {
-      "lineId": "ttc-304",
+      "lineId": "ttc-1",
       "country": "CA",
       "status": "published",
       "review": "warning",
       "operator": "TTC",
-      "name": "King",
+      "name": "Line 1 (Yonge-University)",
       "sourceFeed": "ttc",
       "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
+      "geometrySource": "osm",
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
+      "surveyedStraightIntervals": 5,
+      "colorReference": "#d5c82b",
       "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 51,
-      "lengthKm": 12.671,
+      "stationCount": 38,
+      "lengthKm": 38.602,
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 1
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-304-b1",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 1,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 7,
-      "lengthKm": 1.842,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-304-b2",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 7,
-      "lengthKm": 1.384,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "4 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 4
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-304-b3",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.394,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-304-b4",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 4,
-      "lengthKm": 0.919,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-304-b5",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 3,
-      "lengthKm": 0.713,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-304-b6",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.406,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 3
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-304-b7",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 3,
-      "lengthKm": 0.516,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 2
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m)",
-          "station": "ca-official-dufferin-gate-loop",
-          "metres": 48,
-          "maxMeters": 55.0,
-          "evidence": "TTC official GTFS uses exact stop 2032 Dufferin Gate Loop in both published 304 route patterns; the audited anchors remain within the same loop",
-          "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
-          "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
-          "stopIds": [
-            "2032"
-          ]
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-304-b8",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "King",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.247,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-306",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 64,
-      "lengthKm": 15.444,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
-          "metres": 22.0,
-          "toleranceMetres": 20.0,
-          "intervals": [
-            62
-          ],
+          "check": "geometry.deviation.osmReferenceRetained",
+          "message": "35 station interval(s) are drawn from an audited OpenStreetMap relation; the 393 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment",
+          "metres": 392.7,
+          "toleranceMetres": 25.0,
+          "intervals": [],
           "at": [
-            -79.301722,
-            43.688671
+            -79.394032,
+            43.689215
           ],
-          "builtFrom": "ttc-streetcar-306"
+          "builtFrom": "osm"
         },
         {
           "severity": "WARN",
           "check": "geometry.radius",
-          "message": "8 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 8
+          "message": "2 corners under half the metro band minimum radius of 30 m",
+          "band": "metro",
+          "count": 2
+        },
+        {
+          "severity": "WARN",
+          "check": "geometry.unchecked.osmReferenceRetained",
+          "message": "305 of 443 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment",
+          "vertices": 443,
+          "unmatched": 305,
+          "intervals": []
         }
       ]
     },
     {
-      "lineId": "ttc-306-b2",
+      "lineId": "ttc-2",
       "country": "CA",
       "status": "published",
       "review": "warning",
       "operator": "TTC",
-      "name": "Carlton",
+      "name": "Line 2 (Bloor - Danforth)",
       "sourceFeed": "ttc",
       "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 5,
-      "lengthKm": 0.767,
+      "surveyedStraightIntervals": 7,
+      "colorReference": "#008000",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 31,
+      "lengthKm": 26.254,
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 1
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-306-b4",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 3,
-      "lengthKm": 0.761,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
-          "metres": 22.0,
-          "toleranceMetres": 20.0,
-          "intervals": [
-            1
-          ],
+          "check": "geometry.deviation.osmReferenceRetained",
+          "message": "30 station interval(s) are drawn from an audited OpenStreetMap relation; the 396 m figure is the distance to the nearest OTHER railway, because the reference excludes OpenStreetMap as a self-reference and so cannot disagree with this alignment",
+          "metres": 396.2,
+          "toleranceMetres": 25.0,
+          "intervals": [],
           "at": [
-            -79.301722,
-            43.688671
+            -79.463053,
+            43.654774
           ],
-          "builtFrom": "ttc-streetcar-306"
+          "builtFrom": "osm"
         },
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 2
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-306-b5",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 4,
-      "lengthKm": 0.99,
-      "issues": [
+          "check": "geometry.unchecked.osmReferenceRetained",
+          "message": "173 of 275 vertices had no independent reference; the geometry is an audited OpenStreetMap relation and no published survey covers this alignment",
+          "vertices": 275,
+          "unmatched": 173,
+          "intervals": []
+        },
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 2
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-306-b6",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 3,
-      "lengthKm": 0.555,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-306-b7",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 3,
-      "lengthKm": 0.532,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-306-b8",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "Carlton",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-streetcar-306",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
-      "stationCount": 3,
-      "lengthKm": 0.518,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-310",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Spadina",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 18,
-      "lengthKm": 5.309,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "5 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 5
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-310-b1",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "Spadina",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 3,
-      "lengthKm": 0.762,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-310-b2",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Spadina",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.146,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the street band minimum radius of 15 m",
-          "band": "street",
-          "count": 1
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-310-b3",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Spadina",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#0054a6",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.286,
-      "issues": [
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m)",
-          "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
-          "metres": 29,
-          "maxMeters": 35.0,
-          "evidence": "TTC official GTFS uses exact stop 10927 Queens Quay Loop at Lower Spadina Ave in both published 310 route patterns; the audited anchors remain within the same loop",
-          "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
-          "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
-          "stopIds": [
-            "10927"
-          ]
+          "check": "station.split",
+          "message": "station ca-official-spadina is 345 m from where ttc-1 puts it, past the 40 m the band allows",
+          "station": "ca-official-spadina",
+          "metres": 345
         }
       ]
     },
@@ -1214,64 +765,7 @@
       "colorReference": "#b300b3",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 5.353,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "2 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 25 m metro review limit",
-          "metres": 34.5,
-          "toleranceMetres": 25.0,
-          "intervals": [
-            0,
-            1
-          ],
-          "at": [
-            -79.367827,
-            43.771068
-          ],
-          "builtFrom": "ttc-subway-4"
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-4-b1",
-      "country": "CA",
-      "status": "published",
-      "review": "passed",
-      "operator": "TTC",
-      "name": "Line 4 (Sheppard)",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-subway-4",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#b300b3",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 1.485,
-      "issues": []
-    },
-    {
-      "lineId": "ttc-4-b2",
-      "country": "CA",
-      "status": "published",
-      "review": "warning",
-      "operator": "TTC",
-      "name": "Line 4 (Sheppard)",
-      "sourceFeed": "ttc",
-      "sourceRouteId": null,
-      "geometrySource": "ttc-subway-4",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#b300b3",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.942,
+      "lengthKm": 5.328,
       "issues": [
         {
           "severity": "WARN",
@@ -1280,7 +774,7 @@
           "metres": 34.1,
           "toleranceMetres": 25.0,
           "intervals": [
-            0
+            1
           ],
           "at": [
             -79.367737,
@@ -1310,6 +804,20 @@
       "lengthKm": 18.588,
       "issues": [
         {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-cedarvale is 69 m from where ttc-1 puts it, past the 40 m the band allows",
+          "station": "ca-official-cedarvale",
+          "metres": 69
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-kennedy is 108 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-kennedy",
+          "metres": 108
+        },
+        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "3 station interval(s) are withheld from display; the source geometry reaches 35 m from the independent survey, past the 25 m metro limit",
@@ -1329,12 +837,248 @@
       ]
     },
     {
-      "lineId": "ttc-5-b1",
+      "lineId": "ttc-501",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 63,
+      "lengthKm": 16.941,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "3 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b1",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 5,
+      "lengthKm": 1.278,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-east-at-woodfield-rd is 34 m from where ttc-501 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-east-at-woodfield-rd",
+          "metres": 34
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b2",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.425,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-east-at-pape-ave is 42 m from where ttc-501 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-east-at-pape-ave",
+          "metres": 42
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b3",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.455,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-east-at-broadview-ave is 52 m from where ttc-501 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-east-at-broadview-ave",
+          "metres": 52
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b4",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 5,
+      "lengthKm": 1.227,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "6 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b5",
       "country": "CA",
       "status": "published",
       "review": "passed",
       "operator": "TTC",
-      "name": "Line 5 Eglinton",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.403,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-501-b6",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 4,
+      "lengthKm": 0.737,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-west-at-strachan-ave is 25 m from where ttc-501 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-west-at-strachan-ave",
+          "metres": 25
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b7",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.481,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-west-at-dufferin-st is 43 m from where ttc-501 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-west-at-dufferin-st",
+          "metres": 43
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-501-b8",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Queen",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-501",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 5,
+      "lengthKm": 0.93,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-504",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "King",
       "sourceFeed": "ttc",
       "sourceRouteId": null,
       "geometrySource": "gtfs-shape",
@@ -1342,31 +1086,647 @@
       "geometryFallbackFrom": null,
       "geometryReview": null,
       "surveyedStraightIntervals": 0,
-      "colorReference": "#ff8000",
+      "colorReference": "#ed1c24",
       "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 4,
-      "lengthKm": 1.654,
-      "issues": []
+      "stationCount": 51,
+      "lengthKm": 12.671,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "1 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 1
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-dundas-west is 200 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-dundas-west",
+          "metres": 200
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-broadview is 62 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-broadview",
+          "metres": 62
+        }
+      ]
     },
     {
-      "lineId": "ttc-5-b2",
+      "lineId": "ttc-504-b1",
       "country": "CA",
       "status": "published",
       "review": "passed",
       "operator": "TTC",
-      "name": "Line 5 Eglinton",
+      "name": "King",
       "sourceFeed": "ttc",
       "sourceRouteId": null,
       "geometrySource": "gtfs-shape",
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 2,
-      "colorReference": "#ff8000",
+      "surveyedStraightIntervals": 1,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 7,
+      "lengthKm": 1.842,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-504-b2",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 7,
+      "lengthKm": 1.384,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "4 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-504-b3",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.394,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-504-b4",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 4,
+      "lengthKm": 0.919,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-504-b5",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 1.477,
+      "lengthKm": 0.713,
       "issues": []
+    },
+    {
+      "lineId": "ttc-504-b6",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.406,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "3 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-504-b7",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.516,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "2 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 2
+        },
+        {
+          "severity": "NOTE",
+          "check": "station.split.reviewed",
+          "message": "station ca-official-dufferin-gate-loop spans 48 m inside a reviewed official complex (exact limit 55 m)",
+          "station": "ca-official-dufferin-gate-loop",
+          "metres": 48,
+          "maxMeters": 55.0,
+          "evidence": "TTC official GTFS uses exact stop 2032 Dufferin Gate Loop in both published 304 route patterns; the audited anchors remain within the same loop",
+          "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
+          "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
+          "stopIds": [
+            "2032"
+          ]
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-504-b8",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "King",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.247,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-505",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 43,
+      "lengthKm": 10.627,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-broadview-ave-at-dundas-st is 29 m from where ttc-504 puts it, past the 25 m the band allows",
+          "station": "ca-official-broadview-ave-at-dundas-st",
+          "metres": 29
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-505-b1",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.684,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-505-b2",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.543,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-505-b3",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.382,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-505-b4",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.093,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-505-b5",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Dundas",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-505",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.287,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-edna-ave-at-dundas-st is 79 m from where ttc-505-b4 puts it, past the 25 m the band allows",
+          "station": "ca-official-edna-ave-at-dundas-st",
+          "metres": 79
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 64,
+      "lengthKm": 15.382,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.deviation.officialRetained",
+          "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 22 m, past the 20 m street review limit",
+          "metres": 22.0,
+          "toleranceMetres": 20.0,
+          "intervals": [
+            62
+          ],
+          "at": [
+            -79.301722,
+            43.688671
+          ],
+          "builtFrom": "ttc-streetcar-506"
+        },
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "8 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b1",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 3,
+      "lengthKm": 0.708,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-main-street is 72 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-main-street",
+          "metres": 72
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b2",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 4,
+      "lengthKm": 0.755,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-gerrard-st-east-at-woodfield-rd is 212 m from where ttc-506 puts it, past the 25 m the band allows",
+          "station": "ca-official-gerrard-st-east-at-woodfield-rd",
+          "metres": 212
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b3",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 3,
+      "lengthKm": 0.493,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-dundas-st-west-at-howard-park-ave is 33 m from where ttc-505 puts it, past the 25 m the band allows",
+          "station": "ca-official-dundas-st-west-at-howard-park-ave",
+          "metres": 33
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-howard-park-ave-at-roncesvalles-ave is 33 m from where ttc-506 puts it, past the 25 m the band allows",
+          "station": "ca-official-howard-park-ave-at-roncesvalles-ave",
+          "metres": 33
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b4",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 3,
+      "lengthKm": 0.517,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-506-b5",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 7,
+      "lengthKm": 1.391,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "2 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 2
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-college-st-at-spadina-ave is 68 m from where ttc-506 puts it, past the 25 m the band allows",
+          "station": "ca-official-college-st-at-spadina-ave",
+          "metres": 68
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b6",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 4,
+      "lengthKm": 0.72,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "1 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b7",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 5,
+      "lengthKm": 0.738,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "1 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 1
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-dundas-st-east-at-ontario-st is 29 m from where ttc-505 puts it, past the 25 m the band allows",
+          "station": "ca-official-dundas-st-east-at-ontario-st",
+          "metres": 29
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-506-b8",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Carlton",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "ttc-streetcar-506",
+      "officialSpatialGeometry": true,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "City of Toronto ROUTE_COLOR, https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COT_Geospatial_TTC_Streetcar_Route_view/FeatureServer/0",
+      "stationCount": 3,
+      "lengthKm": 0.522,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-gerrard-st-east-at-river-st is 32 m from where ttc-506 puts it, past the 25 m the band allows",
+          "station": "ca-official-gerrard-st-east-at-river-st",
+          "metres": 32
+        }
+      ]
     },
     {
       "lineId": "ttc-509",
@@ -1421,6 +1781,117 @@
           "message": "3 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 3
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-510",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Spadina",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 18,
+      "lengthKm": 5.309,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "5 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-510-b1",
+      "country": "CA",
+      "status": "published",
+      "review": "passed",
+      "operator": "TTC",
+      "name": "Spadina",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 3,
+      "lengthKm": 0.762,
+      "issues": []
+    },
+    {
+      "lineId": "ttc-510-b2",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Spadina",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.146,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "1 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-510-b3",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "Spadina",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.286,
+      "issues": [
+        {
+          "severity": "NOTE",
+          "check": "station.split.reviewed",
+          "message": "station ca-official-queens-quay-loop-at-lower-spadina-ave spans 29 m inside a reviewed official complex (exact limit 35 m)",
+          "station": "ca-official-queens-quay-loop-at-lower-spadina-ave",
+          "metres": 29,
+          "maxMeters": 35.0,
+          "evidence": "TTC official GTFS uses exact stop 10927 Queens Quay Loop at Lower Spadina Ave in both published 310 route patterns; the audited anchors remain within the same loop",
+          "evidenceUrl": "https://open.toronto.ca/dataset/ttc-routes-and-schedules/",
+          "sourceSha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d",
+          "stopIds": [
+            "10927"
+          ]
         }
       ]
     },
@@ -1507,10 +1978,82 @@
       "issues": []
     },
     {
+      "lineId": "ttc-512",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "St Clair",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 21,
+      "lengthKm": 5.138,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "3 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 3
+        },
+        {
+          "severity": "WARN",
+          "check": "interval.detour",
+          "message": "drawn 350 m between stations 112 m apart (3.1x)",
+          "interval": 7,
+          "fromStation": "St Clair Ave West at Tweedsmuir Ave",
+          "toStation": "St Clair West Station",
+          "ratio": 3.11
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-st-clair is 90 m from where ttc-1 puts it, past the 40 m the band allows",
+          "station": "ca-official-st-clair",
+          "metres": 90
+        }
+      ]
+    },
+    {
+      "lineId": "ttc-512-b1",
+      "country": "CA",
+      "status": "published",
+      "review": "warning",
+      "operator": "TTC",
+      "name": "St Clair",
+      "sourceFeed": "ttc",
+      "sourceRouteId": null,
+      "geometrySource": "gtfs-shape",
+      "officialSpatialGeometry": false,
+      "geometryFallbackFrom": null,
+      "geometryReview": null,
+      "surveyedStraightIntervals": 0,
+      "colorReference": "#ed1c24",
+      "colorSource": "operator GTFS routes.txt route_color",
+      "stationCount": 2,
+      "lengthKm": 0.274,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.radius",
+          "message": "2 corners under half the street band minimum radius of 15 m",
+          "band": "street",
+          "count": 2
+        }
+      ]
+    },
+    {
       "lineId": "ttc-6",
       "country": "CA",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "TTC",
       "name": "Line 6 Finch",
       "sourceFeed": "ttc",
@@ -1524,7 +2067,15 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
       "lengthKm": 10.422,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-finch-west is 186 m from where ttc-1 puts it, past the 40 m the band allows",
+          "station": "ca-official-finch-west",
+          "metres": 186
+        }
+      ]
     },
     {
       "lineId": "union-pearson-express-up-exp-up",
@@ -1659,7 +2210,7 @@
       "colorReference": "#77297d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 136.638,
+      "lengthKm": 136.843,
       "issues": []
     },
     {
@@ -1679,15 +2230,8 @@
       "colorReference": "#04234b",
       "colorSource": "See CoastalSB's source: the same operator logo colour applies to every Alaska Railroad route.",
       "stationCount": 14,
-      "lengthKm": 571.216,
+      "lengthKm": 572.585,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "9 corners under half the regional band minimum radius of 250 m",
-          "band": "regional",
-          "count": 9
-        },
         {
           "severity": "WARN",
           "check": "station.split",
@@ -1697,14 +2241,13 @@
         },
         {
           "severity": "NOTE",
-          "check": "geometry.unchecked.withheld",
-          "message": "2424 of 2424 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 2424,
-          "unmatched": 2424,
+          "check": "geometry.deviation.withheld",
+          "message": "11 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit",
+          "metres": 223.2,
+          "toleranceMetres": 35.0,
           "intervals": [
             0,
             1,
-            2,
             3,
             4,
             5,
@@ -1713,8 +2256,32 @@
             8,
             9,
             10,
-            11,
-            12
+            11
+          ],
+          "at": [
+            -149.2388,
+            61.49607
+          ],
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "293 of 2935 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 2935,
+          "unmatched": 293,
+          "intervals": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
           ]
         }
       ]
@@ -1736,25 +2303,23 @@
       "colorReference": "#04234b",
       "colorSource": "No per-route colour is published in GTFS routes.txt (route_color blank for all 7 routes); Alaska Railroad's own site logo (https://www.alaskarailroad.com/themes/custom/arrc/logo.png, retrieved 2026-09-04) is a single solid navy, #04234b, applied as the operator's own brand colour to every route.",
       "stationCount": 3,
-      "lengthKm": 174.558,
+      "lengthKm": 175.552,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "16 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 16
-        },
-        {
           "severity": "NOTE",
-          "check": "geometry.unchecked.withheld",
-          "message": "609 of 609 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 609,
-          "unmatched": 609,
+          "check": "geometry.deviation.withheld",
+          "message": "2 station interval(s) are withheld from display; the source geometry reaches 208 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 208.2,
+          "toleranceMetres": 50.0,
           "intervals": [
             0,
             1
-          ]
+          ],
+          "at": [
+            -149.06817,
+            60.90055
+          ],
+          "builtFrom": "narn"
         }
       ]
     },
@@ -1775,21 +2340,32 @@
       "colorReference": "#04234b",
       "colorSource": "See CoastalSB's source: the same operator logo colour applies to every Alaska Railroad route.",
       "stationCount": 5,
-      "lengthKm": 570.202,
+      "lengthKm": 572.572,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "41 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 41
+          "severity": "NOTE",
+          "check": "geometry.deviation.withheld",
+          "message": "4 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 223.2,
+          "toleranceMetres": 50.0,
+          "intervals": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "at": [
+            -149.2388,
+            61.49607
+          ],
+          "builtFrom": "narn"
         },
         {
           "severity": "NOTE",
           "check": "geometry.unchecked.withheld",
-          "message": "1585 of 1585 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 1585,
-          "unmatched": 1585,
+          "message": "262 of 2444 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 2444,
+          "unmatched": 262,
           "intervals": [
             0,
             1,
@@ -1816,23 +2392,42 @@
       "colorReference": "#04234b",
       "colorSource": "See CoastalSB's source: the same operator logo colour applies to every Alaska Railroad route.",
       "stationCount": 10,
-      "lengthKm": 267.082,
+      "lengthKm": 267.684,
       "issues": [
         {
           "severity": "NOTE",
-          "check": "geometry.unchecked.withheld",
-          "message": "1135 of 1135 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 1135,
-          "unmatched": 1135,
+          "check": "geometry.deviation.withheld",
+          "message": "7 station interval(s) are withheld from display; the source geometry reaches 223 m from the independent survey, past the 35 m regional limit",
+          "metres": 223.2,
+          "toleranceMetres": 35.0,
           "intervals": [
             0,
             1,
-            2,
             3,
             4,
             5,
             6,
-            7,
+            8
+          ],
+          "at": [
+            -149.2388,
+            61.49607
+          ],
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "293 of 1342 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 1342,
+          "unmatched": 293,
+          "intervals": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
             8
           ]
         }
@@ -1857,13 +2452,6 @@
       "stationCount": 14,
       "lengthKm": 732.211,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "20 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 20
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -1923,13 +2511,6 @@
       "lengthKm": 532.006,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "13 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 13
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit",
@@ -1950,7 +2531,7 @@
       "lineId": "amtrak-amtrak-cascades-us",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Amtrak Cascades",
       "sourceFeed": "amtrak",
@@ -1963,40 +2544,14 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 17,
-      "lengthKm": 638.281,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 59 m, past the 50 m longhaul review limit",
-          "metres": 58.9,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            2,
-            11,
-            13,
-            15
-          ],
-          "at": [
-            -122.517449,
-            48.717009
-          ],
-          "builtFrom": "amtrak-ntad-cascades"
-        },
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "11 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 11
-        }
-      ]
+      "lengthKm": 641.432,
+      "issues": []
     },
     {
       "lineId": "amtrak-amtrak-hartford-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Amtrak Hartford Line",
       "sourceFeed": "amtrak",
@@ -2010,15 +2565,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
       "lengthKm": 99.743,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 3
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-amtrak-mardi-gras-service",
@@ -2037,7 +2584,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 232.63,
+      "lengthKm": 232.774,
       "issues": []
     },
     {
@@ -2060,13 +2607,6 @@
       "lengthKm": 658.042,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "5 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 5
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit",
@@ -2087,7 +2627,7 @@
       "lineId": "amtrak-capitol-corridor",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Capitol Corridor",
       "sourceFeed": "amtrak",
@@ -2100,16 +2640,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 271.456,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "5 corners under half the regional band minimum radius of 250 m",
-          "band": "regional",
-          "count": 5
-        }
-      ]
+      "lengthKm": 271.734,
+      "issues": []
     },
     {
       "lineId": "amtrak-cardinal",
@@ -2152,13 +2684,6 @@
             37.965541
           ],
           "builtFrom": "amtrak-ntad-cardinal"
-        },
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "65 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 65
         }
       ]
     },
@@ -2166,7 +2691,7 @@
       "lineId": "amtrak-carl-sandburg",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Carl Sandburg",
       "sourceFeed": "amtrak",
@@ -2179,16 +2704,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 414.585,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "4 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 4
-        }
-      ]
+      "lengthKm": 414.836,
+      "issues": []
     },
     {
       "lineId": "amtrak-carolinian",
@@ -2209,13 +2726,6 @@
       "stationCount": 28,
       "lengthKm": 1126.728,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "11 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 11
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -2251,21 +2761,14 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 20,
-      "lengthKm": 1498.953,
+      "lengthKm": 1500.928,
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "12 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 12
-        },
-        {
-          "severity": "WARN",
           "check": "geometry.spike",
-          "message": "4 near-reversals the sawtooth pass left in",
+          "message": "1 near-reversals the sawtooth pass left in",
           "band": "longhaul",
-          "count": 4
+          "count": 1
         }
       ]
     },
@@ -2288,13 +2791,6 @@
       "stationCount": 35,
       "lengthKm": 2203.923,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "63 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 63
-        },
         {
           "severity": "WARN",
           "check": "geometry.spike",
@@ -2406,13 +2902,6 @@
         },
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "52 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 52
-        },
-        {
-          "severity": "WARN",
           "check": "geometry.spike",
           "message": "3 near-reversals the sawtooth pass left in",
           "band": "longhaul",
@@ -2424,7 +2913,7 @@
       "lineId": "amtrak-empire-builder-b1",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Empire Builder",
       "sourceFeed": "amtrak",
@@ -2438,21 +2927,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
       "lengthKm": 601.992,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 2
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-empire-service",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Empire Service",
       "sourceFeed": "amtrak",
@@ -2466,21 +2947,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 17,
       "lengthKm": 744.706,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "10 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 10
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-ethan-allen-express",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Ethan Allen Express",
       "sourceFeed": "amtrak",
@@ -2494,15 +2967,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
       "lengthKm": 497.665,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "9 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 9
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-heartland-flyer",
@@ -2536,7 +3001,7 @@
       "lineId": "amtrak-hiawatha-service",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Hiawatha Service",
       "sourceFeed": "amtrak",
@@ -2549,16 +3014,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 137.845,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 3
-        }
-      ]
+      "lengthKm": 137.902,
+      "issues": []
     },
     {
       "lineId": "amtrak-keystone-service",
@@ -2600,13 +3057,6 @@
       "lengthKm": 1631.468,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "10 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 10
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "2 station interval(s) are withheld from display; the source geometry reaches 72 m from the independent survey, past the 50 m longhaul limit",
@@ -2644,13 +3094,6 @@
       "lengthKm": 226.51,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 3
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "1 station interval(s) are withheld from display; the source geometry reaches 82 m from the independent survey, past the 50 m longhaul limit",
@@ -2686,13 +3129,6 @@
       "stationCount": 11,
       "lengthKm": 451.925,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 1
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -2738,7 +3174,7 @@
       "lineId": "amtrak-lincoln-service-missouri-river-runner",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Lincoln Service Missouri River Runner",
       "sourceFeed": "amtrak",
@@ -2752,21 +3188,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 20,
       "lengthKm": 898.034,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 3
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-missouri-river-runner",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Missouri River Runner",
       "sourceFeed": "amtrak",
@@ -2780,15 +3208,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
       "lengthKm": 446.603,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 2
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-northeast-regional",
@@ -2826,13 +3246,6 @@
             42.346659
           ],
           "builtFrom": "amtrak-ntad-northeast-regional"
-        },
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "38 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 38
         }
       ]
     },
@@ -2853,16 +3266,30 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 182.025,
+      "lengthKm": 182.133,
       "issues": [
         {
           "severity": "NOTE",
-          "check": "geometry.unchecked.withheld",
-          "message": "360 of 360 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 360,
-          "unmatched": 360,
+          "check": "geometry.deviation.withheld",
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 54 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 53.6,
+          "toleranceMetres": 50.0,
           "intervals": [
-            0,
+            1
+          ],
+          "at": [
+            -77.450549,
+            37.462346
+          ],
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "377 of 453 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 453,
+          "unmatched": 377,
+          "intervals": [
             1
           ]
         }
@@ -2872,7 +3299,7 @@
       "lineId": "amtrak-northeast-regional-b2",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Northeast Regional",
       "sourceFeed": "amtrak",
@@ -2886,21 +3313,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
       "lengthKm": 99.757,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 3
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-northeast-regional-b3",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Northeast Regional",
       "sourceFeed": "amtrak",
@@ -2913,23 +3332,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 346.494,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 3
-        },
-        {
-          "severity": "WARN",
-          "check": "geometry.spike",
-          "message": "1 near-reversals the sawtooth pass left in",
-          "band": "longhaul",
-          "count": 1
-        }
-      ]
+      "lengthKm": 347.513,
+      "issues": []
     },
     {
       "lineId": "amtrak-pacific-surfliner",
@@ -3012,13 +3416,6 @@
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "15 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 15
-        },
-        {
-          "severity": "WARN",
           "check": "station.split",
           "message": "station us-official-charleston is 626122 m from where amtrak-cardinal puts it, past the 400 m the band allows",
           "station": "us-official-charleston",
@@ -3063,13 +3460,6 @@
       "lengthKm": 699.464,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "21 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 21
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "3 station interval(s) are withheld from display; the source geometry reaches 297 m from the independent survey, past the 50 m longhaul limit",
@@ -3092,7 +3482,7 @@
       "lineId": "amtrak-piedmont",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Piedmont",
       "sourceFeed": "amtrak",
@@ -3106,15 +3496,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
       "lengthKm": 276.893,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 2
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-shore-line-east",
@@ -3155,13 +3537,6 @@
       "stationCount": 33,
       "lengthKm": 2229.072,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "29 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 29
-        },
         {
           "severity": "WARN",
           "check": "geometry.spike",
@@ -3256,13 +3631,6 @@
       "lengthKm": 3579.125,
       "issues": [
         {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "64 corners under half the longhaul band minimum radius of 800 m",
-          "band": "longhaul",
-          "count": 64
-        },
-        {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
           "message": "8 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 50 m longhaul limit",
@@ -3290,7 +3658,7 @@
       "lineId": "amtrak-valley-flyer",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Valley Flyer",
       "sourceFeed": "amtrak",
@@ -3304,15 +3672,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 12,
       "lengthKm": 157.655,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 3
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "amtrak-vermonter",
@@ -3333,13 +3693,6 @@
       "stationCount": 30,
       "lengthKm": 964.701,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "32 corners under half the longhaul band minimum radius of 640 m",
-          "band": "longhaul",
-          "count": 32
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -3379,13 +3732,6 @@
       "stationCount": 15,
       "lengthKm": 488.276,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 2
-        },
         {
           "severity": "WARN",
           "check": "station.split",
@@ -3624,13 +3970,6 @@
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the longhaul band minimum radius of 500 m",
-          "band": "longhaul",
-          "count": 1
-        },
-        {
-          "severity": "WARN",
           "check": "station.split",
           "message": "station us-official-fort-lauderdale is 2467 m from where amtrak-silver-meteor puts it, past the 400 m the band allows",
           "station": "us-official-fort-lauderdale",
@@ -3724,7 +4063,7 @@
       "lineId": "connecticut-transit-hartford-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Conn DOT",
       "name": "Hartford Line",
       "sourceFeed": "connecticut-transit",
@@ -3738,15 +4077,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
       "lengthKm": 99.783,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 3
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "cta-blue-line",
@@ -4013,7 +4344,7 @@
       "colorReference": "#f9e300",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 7.903,
+      "lengthKm": 7.916,
       "issues": []
     },
     {
@@ -4743,7 +5074,7 @@
       "lineId": "maryland-transit-administrat-brunswick-washington-b1",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Maryland Transit Administration",
       "name": "BRUNSWICK - WASHINGTON",
       "sourceFeed": "maryland-transit-administrat",
@@ -4756,22 +5087,14 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 33.32,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "4 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 4
-        }
-      ]
+      "lengthKm": 33.413,
+      "issues": []
     },
     {
       "lineId": "maryland-transit-administrat-brunswick-washington-b2",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Maryland Transit Administration",
       "name": "BRUNSWICK - WASHINGTON",
       "sourceFeed": "maryland-transit-administrat",
@@ -4784,22 +5107,14 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 43.744,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "4 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 4
-        }
-      ]
+      "lengthKm": 43.846,
+      "issues": []
     },
     {
       "lineId": "maryland-transit-administrat-brunswick-washington-b3",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Maryland Transit Administration",
       "name": "BRUNSWICK - WASHINGTON",
       "sourceFeed": "maryland-transit-administrat",
@@ -4812,16 +5127,8 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 33.097,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "5 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 5
-        }
-      ]
+      "lengthKm": 33.178,
+      "issues": []
     },
     {
       "lineId": "maryland-transit-administrat-camden-washington",
@@ -4989,7 +5296,7 @@
       "colorReference": "#006595",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
-      "lengthKm": 126.657,
+      "lengthKm": 126.765,
       "issues": []
     },
     {
@@ -5144,7 +5451,7 @@
       "colorReference": "#80276c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 96.451,
+      "lengthKm": 96.527,
       "issues": []
     },
     {
@@ -5164,7 +5471,7 @@
       "colorReference": "#80276c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 22.422,
+      "lengthKm": 22.439,
       "issues": []
     },
     {
@@ -5199,7 +5506,7 @@
       "lineId": "mbta-foxboro-event-service",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Foxboro Event Service",
       "sourceFeed": "mbta",
@@ -5212,16 +5519,8 @@
       "colorReference": "#80276c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
-      "lengthKm": 74.558,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 2
-        }
-      ]
+      "lengthKm": 74.615,
+      "issues": []
     },
     {
       "lineId": "mbta-framingham-worcester-line",
@@ -5770,7 +6069,7 @@
       "colorReference": "#550e0c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 59.45,
+      "lengthKm": 59.477,
       "issues": []
     },
     {
@@ -5994,7 +6293,7 @@
       "colorReference": "#e02400",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 12.516,
+      "lengthKm": 12.517,
       "issues": []
     },
     {
@@ -6153,14 +6452,14 @@
       "colorReference": "#ffe600",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 13.5,
+      "lengthKm": 13.509,
       "issues": []
     },
     {
       "lineId": "metro-north-railroad-danbury",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Metro-North Railroad",
       "name": "Danbury",
       "sourceFeed": "metro-north-railroad",
@@ -6173,16 +6472,8 @@
       "colorReference": "#ee0034",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 103.685,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 2
-        }
-      ]
+      "lengthKm": 103.848,
+      "issues": []
     },
     {
       "lineId": "metro-north-railroad-harlem",
@@ -6289,7 +6580,7 @@
       "colorReference": "#ee0034",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
-      "lengthKm": 51.027,
+      "lengthKm": 51.159,
       "issues": []
     },
     {
@@ -6390,11 +6681,11 @@
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 1,
+      "surveyedStraightIntervals": 0,
       "colorReference": "#9ab6d3",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 76.497,
+      "lengthKm": 76.566,
       "issues": []
     },
     {
@@ -6449,7 +6740,7 @@
       "colorReference": "#0071ce",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 12,
-      "lengthKm": 135.736,
+      "lengthKm": 135.907,
       "issues": []
     },
     {
@@ -6469,7 +6760,7 @@
       "colorReference": "#00af43",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 122.727,
+      "lengthKm": 123.019,
       "issues": []
     },
     {
@@ -6489,7 +6780,7 @@
       "colorReference": "#e92076",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
-      "lengthKm": 162.531,
+      "lengthKm": 162.67,
       "issues": []
     },
     {
@@ -6525,11 +6816,11 @@
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 4,
+      "surveyedStraightIntervals": 1,
       "colorReference": "#a32136",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 106.572,
+      "lengthKm": 106.678,
       "issues": []
     },
     {
@@ -8426,13 +8717,6 @@
       "issues": [
         {
           "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "2 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 2
-        },
-        {
-          "severity": "WARN",
           "check": "geometry.unchecked.officialRetained",
           "message": "691 of 691 vertices had no independent visual reference; the provenance-verified official centreline remains visible",
           "vertices": 691,
@@ -8685,20 +8969,20 @@
       "colorReference": "#001e61",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 50.006,
+      "lengthKm": 50.103,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 67 m from the independent survey, past the 35 m regional limit",
-          "metres": 67.0,
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 35 m regional limit",
+          "metres": 72.5,
           "toleranceMetres": 35.0,
           "intervals": [
             2
           ],
           "at": [
-            -86.453239,
-            36.210633
+            -86.453956,
+            36.210188
           ],
           "builtFrom": "narn"
         }
@@ -8781,7 +9065,7 @@
       "colorReference": "#e66859",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 12.496,
+      "lengthKm": 12.505,
       "issues": []
     },
     {
@@ -8996,7 +9280,7 @@
       "colorReference": "#08a652",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 12.496,
+      "lengthKm": 12.505,
       "issues": []
     },
     {
@@ -9036,7 +9320,7 @@
       "colorReference": "#a4c9aa",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 21.176,
+      "lengthKm": 21.192,
       "issues": []
     },
     {
@@ -9056,7 +9340,7 @@
       "colorReference": "#a4c9aa",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 28.566,
+      "lengthKm": 28.586,
       "issues": []
     },
     {
@@ -9076,7 +9360,7 @@
       "colorReference": "#c1aa72",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 16.97,
+      "lengthKm": 17.004,
       "issues": []
     },
     {
@@ -9520,7 +9804,7 @@
       "colorReference": "#00459d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
-      "lengthKm": 65.435,
+      "lengthKm": 65.515,
       "issues": [
         {
           "severity": "WARN",
@@ -12177,20 +12461,20 @@
       "colorReference": "#9ab6d3",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 4,
-      "lengthKm": 54.722,
+      "lengthKm": 54.837,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 44 m from the independent survey, past the 35 m regional limit",
-          "metres": 44.0,
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 43 m from the independent survey, past the 35 m regional limit",
+          "metres": 43.1,
           "toleranceMetres": 35.0,
           "intervals": [
             2
           ],
           "at": [
-            -122.333972,
-            47.606438
+            -122.33407,
+            47.606553
           ],
           "builtFrom": "narn"
         }
@@ -12233,7 +12517,7 @@
       "colorReference": "#f3be18",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 14.215,
+      "lengthKm": 14.228,
       "issues": []
     },
     {
@@ -12255,13 +12539,6 @@
       "stationCount": 5,
       "lengthKm": 117.612,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "3 corners under half the longhaul band minimum radius of 400 m",
-          "band": "longhaul",
-          "count": 3
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -12595,7 +12872,7 @@
       "lineId": "utah-transit-authority-uta-750",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Utah Transit Authority",
       "name": "FrontRunner",
       "sourceFeed": "utah-transit-authority-uta",
@@ -12609,15 +12886,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
       "lengthKm": 130.899,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.radius",
-          "message": "1 corners under half the regional band minimum radius of 200 m",
-          "band": "regional",
-          "count": 1
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "wmata-blue",
@@ -21252,85 +21521,6 @@
       "operator": null,
       "name": null,
       "sourceFeed": "ttc",
-      "sourceRouteId": "1",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "fail-closed: City of Toronto/TTC subway centreline disagrees by 125.2 m with the independent second-track reference near 43.754055, -79.465486; no second independent official survey explains the offset"
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 1
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
-      "sourceRouteId": "2",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "fail-closed: City of Toronto/TTC subway centreline disagrees by 78.8 m with the independent second-track reference near 43.643698, -79.529452; no second independent official survey explains the offset"
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 2
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
-      "sourceRouteId": "301",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": true
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 8
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
       "sourceRouteId": "303",
       "geometrySource": null,
       "officialSpatialGeometry": false,
@@ -21341,103 +21531,6 @@
       "issues": [
         {
           "why": "no pattern"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
-      "sourceRouteId": "305",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": true
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 5
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
-      "sourceRouteId": "306",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "-b1",
-          "why": "official route network does not reach every station",
-          "officialNetwork": "ttc-streetcar-306",
-          "snapMeters": [
-            null,
-            null,
-            null,
-            null,
-            397.6917648175391,
-            9.876406460603945,
-            6.010891789204931,
-            10.62900441420643,
-            9.788380633185982,
-            7.904248035909446,
-            6.829978367852782,
-            8.592647258594525
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "-b1",
-          "why": "no usable alignment",
-          "schematicShape": false
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "ttc",
-      "sourceRouteId": "312",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": true
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 4
         }
       ]
     },
@@ -21479,13 +21572,7 @@
       "lengthKm": null,
       "issues": [
         {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": true
-        },
-        {
-          "why": "trunk has no usable alignment; branches suppressed",
-          "branches": 8
+          "why": "fail-closed: official TTC GTFS (calendar 2026-09-06 to 2026-10-31) publishes every current route 507 trip as Long Branch Replacement Bus (1,603 trips, headsigns 507/507M ... Replacement Bus, none as a streetcar), so the road alignment is not railway geometry; the Lake Shore track it would use is drawn by 501 Queen"
         }
       ]
     },
@@ -23566,31 +23653,6 @@
             41.632001
           ],
           "geometrySource": "narn"
-        }
-      ]
-    },
-    {
-      "lineId": "ttc-306-b3",
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "geometry-release-blockers",
-      "sourceRouteId": null,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "feed": "ttc",
-          "why": "compact-v1 geometry invariant failed",
-          "faults": [
-            "interval 1 is only 0.00 m"
-          ]
         }
       ]
     },

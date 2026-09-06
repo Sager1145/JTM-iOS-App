@@ -6,8 +6,8 @@ remains open until operator data and physical-track evidence both confirm it.
 
 | Region | Open candidates | Reviewed fixes | Already coincident | Different identity | Different corridor |
 |---|---:|---:|---:|---:|---:|
-| US | 184 | 17 | 346 | 17 | 27 |
-| CA | 5 | 1 | 20 | 2 | 0 |
+| US | 841 | 15 | 740 | 17 | 60 |
+| CA | 10 | 1 | 22 | 2 | 1 |
 
 ## Reviewed fixes
 
@@ -18,8 +18,6 @@ remains open until operator data and physical-track evidence both confirm it.
 - **US · us-dart-reviewed-shared-trunks** — `dallas-area-rapid-transit-da-blue`, `dallas-area-rapid-transit-da-green`, `dallas-area-rapid-transit-da-orange`, `dallas-area-rapid-transit-da-red`; 3 source types
 - **US · us-path-world-trade-center-trunk** — `port-authority-trans-hudson-hoboken-world-trade-center`, `port-authority-trans-hudson-world-trade-center-33rd-street`; 3 source types
 - **US · us-south-shore-shared-chicago-trunk** — `south-shore-line-lakeshore`, `south-shore-line-monon`; 3 source types
-- **US · us-south-shore-57th-to-63rd** — `south-shore-line-lakeshore`, `south-shore-line-monon`; 3 source types
-- **US · us-south-shore-63rd-to-hegewisch** — `south-shore-line-lakeshore`, `south-shore-line-monon`; 3 source types
 - **US · us-amtrak-shore-line-east-nec** — `amtrak-shore-line-east`, `amtrak-vermonter`; 3 source types
 - **US · us-amtrak-metrolink-riverside-san-bernardino** — `amtrak-southwest-chief`, `metrolink-ie-oc-line`; 2 source types
 - **US · us-mbta-providence-fairmount-diversion** — `mbta-fairmount-line`, `mbta-providence-stoughton-line-b5`; 3 source types
@@ -32,192 +30,854 @@ remains open until operator data and physical-track evidence both confirm it.
 
 ## Open review candidates
 
+- **US · ['Charlottesville', 'Lynchburg']** — `amtrak-crescent` / `amtrak-northeast-regional-b3`; 96465 m, median 23.8 m, p95 50.4 m, 50 interior crossings
+- **US · ['Alton Amtrak Station', 'Carlinville Amtrak Station']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 50425 m, median 3.7 m, p95 14.7 m, 21 interior crossings
+- **US · ['High Point', 'Salisbury']** — `amtrak-crescent` / `amtrak-piedmont`; 55302 m, median 5.9 m, p95 27.5 m, 20 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 46113 m, median 8.3 m, p95 21.4 m, 20 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 46113 m, median 8.3 m, p95 21.4 m, 20 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 41141 m, median 21.7 m, p95 50.0 m, 20 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 41141 m, median 21.7 m, p95 50.0 m, 20 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-silver-meteor` / `amtrak-vermonter`; 41141 m, median 21.7 m, p95 50.0 m, 20 interior crossings
+- **US · ['High Point', 'Salisbury']** — `amtrak-carolinian` / `amtrak-crescent`; 55302 m, median 5.9 m, p95 26.2 m, 17 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 51977 m, median 19.9 m, p95 48.2 m, 17 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 51977 m, median 19.9 m, p95 48.2 m, 17 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-silver-meteor` / `amtrak-vermonter`; 51977 m, median 19.9 m, p95 48.2 m, 17 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-carolinian`; 41125 m, median 10.3 m, p95 21.0 m, 17 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-palmetto`; 41125 m, median 10.3 m, p95 21.0 m, 17 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-vermonter`; 41125 m, median 10.3 m, p95 21.0 m, 17 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Rocky Mount']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 156292 m, median 24.7 m, p95 47.1 m, 16 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Rocky Mount']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 156292 m, median 24.7 m, p95 47.1 m, 16 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-carolinian` / `amtrak-crescent`; 109781 m, median 25.5 m, p95 47.7 m, 16 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-crescent` / `amtrak-palmetto`; 109781 m, median 25.5 m, p95 47.7 m, 16 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-crescent` / `amtrak-vermonter`; 109781 m, median 25.5 m, p95 47.7 m, 16 interior crossings
+- **US · ['Fredericksburg Amtrak', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 87719 m, median 12.1 m, p95 26.3 m, 16 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-crescent` / `amtrak-pennsylvanian`; 51840 m, median 16.5 m, p95 36.8 m, 16 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-crescent` / `amtrak-silver-meteor`; 41131 m, median 20.2 m, p95 45.5 m, 16 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-crescent` / `amtrak-northeast-regional`; 51939 m, median 3.9 m, p95 26.1 m, 15 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-northeast-regional` / `amtrak-silver-meteor`; 41168 m, median 23.9 m, p95 47.2 m, 15 interior crossings
+- **US · ['Charleston Amtrak Station', 'Yemassee Amtrak']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 85874 m, median 2.4 m, p95 10.4 m, 14 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-carolinian`; 51927 m, median 17.6 m, p95 29.2 m, 14 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-palmetto`; 51927 m, median 17.6 m, p95 29.2 m, 14 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-vermonter`; 51927 m, median 17.6 m, p95 29.2 m, 14 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-crescent` / `amtrak-northeast-regional`; 41131 m, median 6.9 m, p95 22.7 m, 14 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-crescent` / `amtrak-silver-meteor`; 51939 m, median 16.7 m, p95 49.7 m, 13 interior crossings
+- **US · ['Alton Amtrak Station', 'St. Louis']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 41889 m, median 25.9 m, p95 48.1 m, 13 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-crescent`; 41125 m, median 13.5 m, p95 17.3 m, 13 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-northeast-regional`; 41125 m, median 9.9 m, p95 20.0 m, 13 interior crossings
+- **US · ['Alexandria', 'Manassas Amtrak Station']** — `amtrak-cardinal` / `amtrak-crescent`; 38967 m, median 16.0 m, p95 27.4 m, 13 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 51965 m, median 5.2 m, p95 22.3 m, 12 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 51965 m, median 5.2 m, p95 22.3 m, 12 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 51965 m, median 5.2 m, p95 22.3 m, 12 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-pennsylvanian` / `amtrak-silver-meteor`; 51840 m, median 23.7 m, p95 49.6 m, 12 interior crossings
+- **US · ['Newark', 'Trenton']** — `amtrak-cardinal` / `amtrak-pennsylvanian`; 77125 m, median 3.4 m, p95 20.3 m, 11 interior crossings
+- **US · ['Newark', 'Trenton']** — `amtrak-pennsylvanian` / `amtrak-silver-meteor`; 77116 m, median 4.4 m, p95 21.7 m, 11 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-northeast-regional` / `amtrak-silver-meteor`; 51965 m, median 14.7 m, p95 41.9 m, 11 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-carolinian` / `amtrak-crescent`; 41131 m, median 3.6 m, p95 16.3 m, 11 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-crescent` / `amtrak-palmetto`; 41131 m, median 3.6 m, p95 16.3 m, 11 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-crescent` / `amtrak-vermonter`; 41131 m, median 3.6 m, p95 16.3 m, 11 interior crossings
+- **US · ['Fullerton Amtrak Station', 'Los Angeles']** — `amtrak-pacific-surfliner` / `amtrak-southwest-chief`; 40834 m, median 24.0 m, p95 49.1 m, 11 interior crossings
+- **US · ['Baltimore Penn Station', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 64451 m, median 8.8 m, p95 18.2 m, 10 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-crescent`; 51927 m, median 15.1 m, p95 24.0 m, 10 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 51927 m, median 28.6 m, p95 49.5 m, 10 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-pennsylvanian`; 51840 m, median 5.2 m, p95 30.7 m, 9 interior crossings
+- **US · ['Bwi Thurgood Marshall Airport Station', 'Washington Union Station']** — `amtrak-carolinian` / `amtrak-crescent`; 47632 m, median 5.0 m, p95 14.6 m, 9 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 41141 m, median 6.2 m, p95 15.7 m, 9 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 41141 m, median 6.2 m, p95 15.7 m, 9 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 41141 m, median 6.2 m, p95 15.7 m, 9 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-crescent` / `amtrak-silver-meteor`; 109724 m, median 14.3 m, p95 39.7 m, 8 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-cardinal` / `amtrak-crescent`; 109724 m, median 14.4 m, p95 39.6 m, 8 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-crescent` / `amtrak-silver-meteor`; 13056 m, median 17.2 m, p95 67.2 m, 8 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-carolinian`; 13028 m, median 20.5 m, p95 34.2 m, 7 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 13028 m, median 4.5 m, p95 34.6 m, 7 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-crescent` / `amtrak-northeast-regional`; 13028 m, median 21.6 m, p95 36.1 m, 7 interior crossings
+- **US · ['Savannah', 'Yemassee Amtrak']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 77614 m, median 12.1 m, p95 25.4 m, 6 interior crossings
+- **US · ['Metropark Amtrak Station', 'Trenton']** — `amtrak-crescent` / `amtrak-palmetto`; 53741 m, median 5.2 m, p95 24.1 m, 6 interior crossings
+- **US · ['Metropark Amtrak Station', 'Trenton']** — `amtrak-crescent` / `amtrak-vermonter`; 53741 m, median 4.6 m, p95 23.5 m, 6 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-carolinian` / `amtrak-crescent`; 51939 m, median 4.9 m, p95 23.4 m, 6 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-crescent` / `amtrak-palmetto`; 51939 m, median 4.9 m, p95 23.4 m, 6 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-crescent` / `amtrak-vermonter`; 51939 m, median 4.9 m, p95 23.4 m, 6 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-northeast-regional` / `amtrak-pennsylvanian`; 51840 m, median 12.5 m, p95 34.8 m, 6 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-northeast-regional-b1` / `amtrak-silver-meteor`; 46113 m, median 22.2 m, p95 41.7 m, 6 interior crossings
+- **US · ['Bwi Thurgood Marshall Airport Station', 'New Carrollton Amtrak Station']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 33356 m, median 0.1 m, p95 4.0 m, 6 interior crossings
+- **US · ['Fredericksburg Amtrak', 'Quantico Amtrak']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 31125 m, median 0.6 m, p95 7.8 m, 6 interior crossings
+- **US · ['Greensboro', 'High Point']** — `amtrak-crescent` / `amtrak-piedmont`; 24603 m, median 17.5 m, p95 29.5 m, 6 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-palmetto`; 13028 m, median 20.4 m, p95 34.1 m, 6 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 13028 m, median 4.2 m, p95 34.5 m, 6 interior crossings
+- **US · ['Metropark Amtrak Station', 'New Brunswick Amtrak Station']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 12996 m, median 26.3 m, p95 47.2 m, 6 interior crossings
+- **US · ['Metropark Amtrak Station', 'New Brunswick Amtrak Station']** — `amtrak-carolinian` / `amtrak-keystone-service`; 12996 m, median 26.7 m, p95 47.6 m, 6 interior crossings
+- **US · ['Dwight Amtrak Station', 'Joliet Gateway Center']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 58945 m, median 8.7 m, p95 19.6 m, 5 interior crossings
+- **US · ['Philadelphia', 'Trenton']** — `amtrak-cardinal` / `amtrak-northeast-regional`; 51927 m, median 12.4 m, p95 19.4 m, 5 interior crossings
+- **US · ['Bloomington-Normal', 'Lincoln Amtrak Station']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 51827 m, median 2.0 m, p95 4.1 m, 5 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-carolinian` / `amtrak-northeast-regional-b1`; 46154 m, median 29.3 m, p95 46.1 m, 5 interior crossings
+- **US · ['Petersburg Amtrak Station', 'Richmond Staples Mill Road Amtrak Station']** — `amtrak-northeast-regional-b1` / `amtrak-palmetto`; 46154 m, median 29.3 m, p95 46.1 m, 5 interior crossings
+- **US · ['Joliet Gateway Center', 'Summit Amtrak']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 40592 m, median 26.0 m, p95 44.6 m, 5 interior crossings
+- **US · ['Bridgeport Amtrak Station', 'Stamford Amtrak Station']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 36008 m, median 0.2 m, p95 1.3 m, 5 interior crossings
+- **US · ['Greensboro', 'High Point']** — `amtrak-carolinian` / `amtrak-crescent`; 24603 m, median 12.0 m, p95 27.3 m, 5 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 16875 m, median 6.4 m, p95 11.0 m, 5 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 16875 m, median 6.4 m, p95 11.0 m, 5 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 13057 m, median 16.5 m, p95 66.6 m, 5 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-crescent` / `amtrak-palmetto`; 13028 m, median 21.0 m, p95 34.6 m, 5 interior crossings
+- **US · ['Philadelphia', 'Wilmington']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 41125 m, median 32.6 m, p95 49.5 m, 4 interior crossings
+- **US · ['Metropark Amtrak Station', 'Newark Liberty International Airport']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 19369 m, median 2.8 m, p95 19.0 m, 4 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 16875 m, median 6.2 m, p95 11.0 m, 4 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-northeast-regional`; 13028 m, median 21.0 m, p95 34.8 m, 4 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-carolinian` / `amtrak-crescent`; 13028 m, median 21.2 m, p95 34.6 m, 4 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-northeast-regional` / `amtrak-silver-meteor`; 13028 m, median 4.2 m, p95 34.6 m, 4 interior crossings
+- **US · ['Charleston Amtrak Station', 'Kingstree Amtrak Station']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 91374 m, median 0.8 m, p95 6.5 m, 3 interior crossings
+- **US · ['Florence Amtrak Station', 'Kingstree Amtrak Station']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 61149 m, median 10.2 m, p95 17.0 m, 3 interior crossings
+- **US · ['Culpeper Amtrak Station', 'Manassas Amtrak Station']** — `amtrak-cardinal` / `amtrak-northeast-regional-b3`; 55862 m, median 8.5 m, p95 24.7 m, 3 interior crossings
+- **US · ['Culpeper Amtrak Station', 'Manassas Amtrak Station']** — `amtrak-crescent` / `amtrak-northeast-regional-b3`; 55862 m, median 8.5 m, p95 24.7 m, 3 interior crossings
+- **US · ['Lincoln Amtrak Station', 'Springfield']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 46327 m, median 1.1 m, p95 7.9 m, 3 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-carolinian` / `amtrak-crescent`; 16848 m, median 17.3 m, p95 34.2 m, 3 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-crescent` / `amtrak-northeast-regional`; 16848 m, median 12.3 m, p95 24.2 m, 3 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-crescent` / `amtrak-palmetto`; 16848 m, median 17.3 m, p95 34.2 m, 3 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-cardinal` / `amtrak-crescent`; 13056 m, median 0.7 m, p95 5.6 m, 3 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 13028 m, median 0.6 m, p95 8.5 m, 3 interior crossings
+- **US · ['Boston']** — `amtrak-lake-shore-limited` / `amtrak-northeast-regional`; 2115 m, median 9.7 m, p95 27.4 m, 3 interior crossings
+- **US · ['Bloomington-Normal', 'Pontiac Amtrak Station']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 51508 m, median 2.0 m, p95 20.1 m, 2 interior crossings
+- **US · ['Bridgeport Amtrak Station', 'New Haven']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 26789 m, median 29.9 m, p95 47.8 m, 2 interior crossings
+- **US · ['Metropark Amtrak Station', 'Newark']** — `amtrak-carolinian` / `amtrak-crescent`; 23389 m, median 1.6 m, p95 8.1 m, 2 interior crossings
+- **US · ['Metropark Amtrak Station', 'Newark']** — `amtrak-crescent` / `amtrak-palmetto`; 23389 m, median 1.6 m, p95 8.1 m, 2 interior crossings
+- **US · ['Metropark Amtrak Station', 'Newark']** — `amtrak-crescent` / `amtrak-vermonter`; 23389 m, median 1.6 m, p95 8.1 m, 2 interior crossings
+- **US · ['Chicago Union Station', 'Summit Amtrak']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 18804 m, median 8.0 m, p95 17.5 m, 2 interior crossings
+- **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-crescent` / `amtrak-vermonter`; 16848 m, median 17.1 m, p95 34.2 m, 2 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-carolinian`; 15969 m, median 7.5 m, p95 24.4 m, 2 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-carolinian` / `amtrak-silver-meteor`; 15969 m, median 7.5 m, p95 24.4 m, 2 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-palmetto`; 15963 m, median 11.9 m, p95 27.0 m, 2 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-palmetto` / `amtrak-silver-meteor`; 15963 m, median 11.9 m, p95 27.0 m, 2 interior crossings
+- **US · ['Princeton Junction Amtrak Station', 'Trenton']** — `amtrak-carolinian` / `amtrak-keystone-service`; 15442 m, median 1.1 m, p95 18.3 m, 2 interior crossings
+- **US · ['Princeton Junction Amtrak Station', 'Trenton']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 15442 m, median 1.1 m, p95 18.3 m, 2 interior crossings
+- **US · ['Alexandria', 'Washington Union Station']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 13028 m, median 0.6 m, p95 5.4 m, 2 interior crossings
+- **US · ['Carlinville Amtrak Station', 'Springfield']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 62246 m, median 1.3 m, p95 19.9 m, 1 interior crossings
+- **US · ['Bwi Thurgood Marshall Airport Station', 'New Carrollton Amtrak Station']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 33356 m, median 0.1 m, p95 1.2 m, 1 interior crossings
+- **US · ['Springfield', 'Windsor Locks']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 23466 m, median 7.4 m, p95 13.9 m, 1 interior crossings
+- **US · ['Springfield', 'Windsor Locks']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 23466 m, median 7.4 m, p95 13.9 m, 1 interior crossings
+- **US · ['Jamaica', 'Penn Station']** — `mta-long-island-rail-road-montauk-branch` / `mta-long-island-rail-road-oyster-bay-branch`; 18068 m, median 2.0 m, p95 7.3 m, 1 interior crossings
 - **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-carolinian` / `amtrak-vermonter`; 16886 m, median 0.1 m, p95 1.2 m, 1 interior crossings
 - **US · ['Baltimore Penn Station', 'Bwi Thurgood Marshall Airport Station']** — `amtrak-palmetto` / `amtrak-vermonter`; 16886 m, median 0.1 m, p95 1.2 m, 1 interior crossings
-- **US · ['Hoboken', 'Newark Broad ST']** — `new-jersey-transit-nj-transi-bntn-b1` / `new-jersey-transit-nj-transi-mneg`; 12496 m, median 26.4 m, p95 47.6 m
-- **US · ['Hoboken', 'Newark Broad ST']** — `new-jersey-transit-nj-transi-mne-b1` / `new-jersey-transit-nj-transi-mneg`; 12496 m, median 26.4 m, p95 47.6 m
-- **US · ['Attleboro', 'Mansfield']** — `mbta-foxboro-event-service` / `mbta-providence-stoughton-line`; 11566 m, median 0.0 m, p95 0.1 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-carolinian` / `amtrak-keystone-service`; 15971 m, median 30.7 m, p95 48.5 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 15971 m, median 6.7 m, p95 18.0 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-keystone-service`; 15969 m, median 33.5 m, p95 49.2 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-vermonter`; 15969 m, median 1.8 m, p95 23.2 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-keystone-service` / `amtrak-silver-meteor`; 15969 m, median 33.5 m, p95 49.1 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-silver-meteor` / `amtrak-vermonter`; 15969 m, median 1.8 m, p95 23.2 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-keystone-service` / `amtrak-palmetto`; 15963 m, median 31.2 m, p95 48.4 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 15963 m, median 11.1 m, p95 18.2 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-crescent`; 15962 m, median 4.4 m, p95 7.5 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-keystone-service`; 15962 m, median 34.0 m, p95 49.1 m, 1 interior crossings
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-silver-meteor`; 15962 m, median 4.4 m, p95 7.5 m, 1 interior crossings
+- **US · ['New Carrollton Amtrak Station', 'Washington Union Station']** — `amtrak-northeast-regional` / `amtrak-palmetto`; 14305 m, median 0.2 m, p95 0.9 m, 1 interior crossings
+- **US · ['New Carrollton Amtrak Station', 'Washington Union Station']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 14304 m, median 0.3 m, p95 3.5 m, 1 interior crossings
+- **US · ['Exton Amtrak', 'Paoli Amtrak Station']** — `amtrak-keystone-service` / `amtrak-pennsylvanian`; 12188 m, median 5.2 m, p95 17.3 m, 1 interior crossings
+- **US · ['Glendale', 'L.A. Union Station']** — `metrolink-av-line` / `metrolink-vc-line`; 9039 m, median 5.9 m, p95 10.5 m, 1 interior crossings
+- **US · ['Newark', 'Newark Liberty International Airport']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 4025 m, median 5.8 m, p95 24.5 m, 1 interior crossings
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-city-terminal-zone`; 2435 m, median 3.1 m, p95 9.1 m, 1 interior crossings
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-long-beach-branch`; 2435 m, median 3.1 m, p95 9.1 m, 1 interior crossings
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-port-jefferson-branch`; 2435 m, median 3.1 m, p95 9.1 m, 1 interior crossings
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-ronkonkoma-branch`; 2435 m, median 3.1 m, p95 9.1 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-lan`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-lan`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-lan`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-cyn` / `septa-regional-rail-lan`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-lan`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-med`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-nor`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-pao`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-wil`; 1224 m, median 7.4 m, p95 27.4 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-tre`; 1223 m, median 8.6 m, p95 28.3 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 1223 m, median 8.6 m, p95 28.3 m, 1 interior crossings
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 1223 m, median 8.6 m, p95 28.3 m, 1 interior crossings
+- **US · ['Baltimore Penn Station', 'Wilmington']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 109724 m, median 0.3 m, p95 0.5 m
+- **US · ['Talkeetna', 'Wasilla']** — `alaska-railroad-aurora-winter` / `alaska-railroad-denali-star`; 107195 m, median 0.0 m, p95 0.0 m
+- **US · ['Talkeetna', 'Wasilla']** — `alaska-railroad-denali-star` / `alaska-railroad-hurricane-turn`; 107195 m, median 0.0 m, p95 0.0 m
+- **US · ['Newark', 'Trenton']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 77116 m, median 2.7 m, p95 12.1 m
+- **US · ['Anchorage', 'Wasilla']** — `alaska-railroad-aurora-winter` / `alaska-railroad-denali-star`; 72274 m, median 0.0 m, p95 0.0 m
+- **US · ['Anchorage', 'Wasilla']** — `alaska-railroad-denali-star` / `alaska-railroad-hurricane-turn`; 72274 m, median 0.0 m, p95 0.0 m
+- **US · ['Culpeper Amtrak Station', 'Manassas Amtrak Station']** — `amtrak-cardinal` / `amtrak-crescent`; 55862 m, median 0.0 m, p95 0.0 m
+- **US · ['Oceanside', 'San Clemente Pier']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 34603 m, median 3.5 m, p95 8.7 m
+- **US · ['Dwight Amtrak Station', 'Pontiac Amtrak Station']** — `amtrak-lincoln-service` / `amtrak-lincoln-service-missouri-river-runner`; 29262 m, median 0.3 m, p95 0.5 m
+- **US · ['New Brunswick Amtrak Station', 'Princeton Junction Amtrak Station']** — `amtrak-carolinian` / `amtrak-keystone-service`; 25313 m, median 0.9 m, p95 19.7 m
+- **US · ['New Brunswick Amtrak Station', 'Princeton Junction Amtrak Station']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 25313 m, median 0.0 m, p95 0.9 m
+- **US · ['New Brunswick Amtrak Station', 'Princeton Junction Amtrak Station']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 25313 m, median 0.8 m, p95 19.6 m
+- **US · ['New Haven', 'Wallingford Amtrak']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 19488 m, median 0.0 m, p95 0.0 m
+- **US · ['New Haven', 'Wallingford Amtrak']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 19488 m, median 0.0 m, p95 0.0 m
+- **US · ['Berlin Amtrak', 'Hartford Amtrak Station']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 17253 m, median 0.0 m, p95 0.0 m
+- **US · ['Berlin Amtrak', 'Hartford Amtrak Station']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 17253 m, median 0.0 m, p95 0.0 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 15975 m, median 34.1 m, p95 49.0 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-keystone-service` / `amtrak-vermonter`; 15973 m, median 33.3 m, p95 49.0 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-northeast-regional` / `amtrak-vermonter`; 15973 m, median 1.2 m, p95 8.0 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-northeast-regional`; 15969 m, median 2.9 m, p95 25.1 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-silver-meteor`; 15969 m, median 0.0 m, p95 0.1 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-northeast-regional` / `amtrak-silver-meteor`; 15969 m, median 2.9 m, p95 25.1 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-carolinian` / `amtrak-crescent`; 15962 m, median 5.0 m, p95 24.4 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-northeast-regional`; 15962 m, median 3.8 m, p95 24.5 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-palmetto`; 15962 m, median 7.4 m, p95 24.8 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-vermonter`; 15962 m, median 4.4 m, p95 24.6 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-cardinal` / `amtrak-pennsylvanian`; 15960 m, median 10.3 m, p95 27.5 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-crescent` / `amtrak-pennsylvanian`; 15960 m, median 6.0 m, p95 24.0 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-keystone-service` / `amtrak-pennsylvanian`; 15960 m, median 33.1 m, p95 48.9 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-northeast-regional` / `amtrak-pennsylvanian`; 15960 m, median 8.0 m, p95 15.1 m
+- **US · ['New York Penn Station', 'Newark']** — `amtrak-pennsylvanian` / `amtrak-silver-meteor`; 15960 m, median 10.3 m, p95 27.5 m
+- **US · ['Princeton Junction Amtrak Station', 'Trenton']** — `amtrak-keystone-service` / `amtrak-northeast-regional`; 15442 m, median 0.0 m, p95 0.1 m
+- **US · ['Irvine', 'Laguna Niguel / Mission Viejo']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 13605 m, median 1.2 m, p95 7.6 m
+- **US · ['Metropark Amtrak Station', 'New Brunswick Amtrak Station']** — `amtrak-carolinian` / `amtrak-northeast-regional`; 12996 m, median 0.4 m, p95 1.0 m
+- **US · ['Hoboken', 'Newark Broad ST']** — `new-jersey-transit-nj-transi-bntn-b1` / `new-jersey-transit-nj-transi-mneg`; 12502 m, median 0.7 m, p95 1.7 m
+- **US · ['Hoboken', 'Newark Broad ST']** — `new-jersey-transit-nj-transi-mne-b1` / `new-jersey-transit-nj-transi-mneg`; 12502 m, median 0.7 m, p95 1.7 m
+- **US · ['Attleboro', 'Mansfield']** — `mbta-foxboro-event-service` / `mbta-providence-stoughton-line`; 11566 m, median 1.8 m, p95 3.5 m
+- **US · ['Berlin Amtrak', 'Meriden']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 11501 m, median 0.1 m, p95 0.3 m
+- **US · ['Berlin Amtrak', 'Meriden']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 11501 m, median 0.1 m, p95 0.3 m
 - **US · ['Milpitas', 'Warm Springs / South Fremont']** — `bart-green` / `bart-orange`; 11086 m, median 0.0 m, p95 0.3 m
+- **US · ['San Clemente', 'San Juan Capistrano']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 10338 m, median 3.9 m, p95 8.2 m
+- **US · ['Meriden', 'Wallingford Amtrak']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 9760 m, median 0.1 m, p95 0.1 m
+- **US · ['Meriden', 'Wallingford Amtrak']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 9760 m, median 0.1 m, p95 0.1 m
 - **US · ['Embarcadero', 'West Oakland']** — `bart-blue` / `bart-red`; 9422 m, median 0.1 m, p95 1.0 m
 - **US · ['Embarcadero', 'West Oakland']** — `bart-green` / `bart-red`; 9422 m, median 0.1 m, p95 1.0 m
-- **US · ['JFK/UMass', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-greenbush-line`; 9092 m, median 24.5 m, p95 47.0 m
-- **US · ['JFK/UMass', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 9092 m, median 24.5 m, p95 47.0 m
-- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-bntn` / `new-jersey-transit-nj-transi-mneg-b2`; 8022 m, median 0.1 m, p95 0.1 m
-- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mne` / `new-jersey-transit-nj-transi-mneg-b2`; 8022 m, median 0.1 m, p95 0.1 m
-- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-nec`; 8022 m, median 0.1 m, p95 0.1 m
-- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-njcl`; 8022 m, median 0.1 m, p95 0.1 m
-- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-rarv`; 8022 m, median 0.1 m, p95 0.1 m
+- **US · ['Embarcadero', 'West Oakland']** — `bart-blue` / `bart-yellow`; 9415 m, median 8.9 m, p95 10.1 m
+- **US · ['Embarcadero', 'West Oakland']** — `bart-green` / `bart-yellow`; 9415 m, median 8.9 m, p95 10.1 m
+- **US · ['Embarcadero', 'West Oakland']** — `bart-red` / `bart-yellow`; 9415 m, median 8.9 m, p95 10.2 m
+- **US · ['JFK/UMass', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-greenbush-line`; 9101 m, median 0.6 m, p95 3.3 m
+- **US · ['JFK/UMass', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 9101 m, median 0.6 m, p95 3.3 m
+- **US · ['Penn Station', 'Woodside']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-far-rockaway-branch`; 8236 m, median 0.8 m, p95 2.5 m
+- **US · ['Penn Station', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 8236 m, median 0.8 m, p95 2.5 m
+- **US · ['Penn Station', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-port-jefferson-branch`; 8236 m, median 0.8 m, p95 2.5 m
+- **US · ['Penn Station', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-ronkonkoma-branch`; 8236 m, median 0.8 m, p95 2.5 m
+- **US · ['Burbank - Downtown', 'Glendale']** — `metrolink-av-line` / `metrolink-vc-line`; 8188 m, median 0.8 m, p95 5.6 m
+- **US · ['Buena Park', 'Norwalk / Santa Fe Springs']** — `metrolink-91-pv-line` / `metrolink-oc-line`; 8160 m, median 1.9 m, p95 5.0 m
+- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-bntn` / `new-jersey-transit-nj-transi-mneg-b2`; 8023 m, median 1.0 m, p95 3.6 m
+- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mne` / `new-jersey-transit-nj-transi-mneg-b2`; 8023 m, median 1.0 m, p95 3.6 m
+- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-nec`; 8023 m, median 1.0 m, p95 3.6 m
+- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-njcl`; 8023 m, median 1.0 m, p95 3.6 m
+- **US · ['NEW YORK PENN Station', 'Secaucus Upper Level']** — `new-jersey-transit-nj-transi-mneg-b2` / `new-jersey-transit-nj-transi-rarv`; 8023 m, median 1.0 m, p95 3.6 m
 - **US · ['Fremont', 'Warm Springs / South Fremont']** — `bart-green` / `bart-orange`; 7471 m, median 0.1 m, p95 1.2 m
 - **US · ['Grand Central', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-hempstead-branch`; 7278 m, median 2.0 m, p95 7.3 m
+- **US · ['Windsor', 'Windsor Locks']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 7156 m, median 0.0 m, p95 0.0 m
+- **US · ['Windsor', 'Windsor Locks']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 7156 m, median 0.0 m, p95 0.0 m
+- **US · ['Santa Ana', 'Tustin']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 6894 m, median 3.4 m, p95 6.8 m
 - **US · ['Denville', 'Dover']** — `new-jersey-transit-nj-transi-bntn` / `new-jersey-transit-nj-transi-mne`; 6761 m, median 8.3 m, p95 16.3 m
 - **US · ['Grand Central', 'Harlem-125 St']** — `metro-north-railroad-danbury` / `metro-north-railroad-harlem`; 6620 m, median 0.0 m, p95 0.1 m
 - **US · ['Grand Central', 'Harlem-125 St']** — `metro-north-railroad-danbury` / `metro-north-railroad-hudson`; 6620 m, median 0.0 m, p95 0.1 m
 - **US · ['Grand Central', 'Harlem-125 St']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-canaan`; 6620 m, median 0.0 m, p95 0.1 m
 - **US · ['Grand Central', 'Harlem-125 St']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 6620 m, median 0.0 m, p95 0.1 m
-- **US · ['Pawtucket/Central Falls', 'Providence']** — `mbta-foxboro-event-service` / `mbta-providence-stoughton-line`; 6140 m, median 2.0 m, p95 3.2 m
+- **US · ['Pawtucket/Central Falls', 'Providence']** — `mbta-foxboro-event-service` / `mbta-providence-stoughton-line`; 6140 m, median 4.0 m, p95 8.0 m
+- **US · ['Buena Park', 'Fullerton']** — `metrolink-91-pv-line` / `metrolink-oc-line`; 6054 m, median 1.5 m, p95 7.3 m
 - **US · ['South Hayward', 'Union City']** — `bart-green` / `bart-orange`; 6038 m, median 0.1 m, p95 0.9 m
+- **US · ['Laguna Niguel / Mission Viejo', 'San Juan Capistrano']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 6016 m, median 0.8 m, p95 4.9 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-far-rockaway-branch`; 5775 m, median 0.4 m, p95 3.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-hempstead-branch`; 5775 m, median 0.4 m, p95 3.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 5775 m, median 0.4 m, p95 3.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-port-jefferson-branch`; 5775 m, median 0.4 m, p95 3.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-ronkonkoma-branch`; 5775 m, median 0.4 m, p95 3.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-city-terminal-zone`; 5775 m, median 0.3 m, p95 1.6 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-far-rockaway-branch`; 5775 m, median 0.7 m, p95 4.3 m
 - **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-hempstead-branch`; 5775 m, median 0.3 m, p95 1.6 m
-- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mnbn` / `new-jersey-transit-nj-transi-mrl`; 5710 m, median 0.4 m, p95 3.9 m
-- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mnbnp` / `new-jersey-transit-nj-transi-mrl`; 5710 m, median 0.4 m, p95 3.9 m
-- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mrl` / `new-jersey-transit-nj-transi-pasc`; 5710 m, median 0.4 m, p95 3.9 m
-- **US · ['Bridgeport', 'Stratford']** — `metro-north-railroad-new-haven` / `metro-north-railroad-waterbury`; 5561 m, median 2.2 m, p95 8.4 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-long-beach-branch`; 5775 m, median 0.3 m, p95 1.6 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-port-jefferson-branch`; 5775 m, median 0.3 m, p95 1.6 m
+- **US · ['Forest Hills', 'Woodside']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-ronkonkoma-branch`; 5775 m, median 0.3 m, p95 1.6 m
+- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mnbn` / `new-jersey-transit-nj-transi-mrl`; 5712 m, median 0.4 m, p95 0.8 m
+- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mnbnp` / `new-jersey-transit-nj-transi-mrl`; 5712 m, median 0.4 m, p95 0.8 m
+- **US · ['Hoboken', 'Secaucus Lower Level']** — `new-jersey-transit-nj-transi-mrl` / `new-jersey-transit-nj-transi-pasc`; 5712 m, median 0.4 m, p95 0.8 m
+- **US · ['Bridgeport', 'Stratford']** — `metro-north-railroad-new-haven` / `metro-north-railroad-waterbury`; 5568 m, median 1.5 m, p95 3.6 m
 - **US · ['Fremont', 'Union City']** — `bart-green` / `bart-orange`; 5161 m, median 0.1 m, p95 0.1 m
-- **US · ['Noroton Heights', 'Stamford']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 5141 m, median 3.8 m, p95 7.2 m
-- **US · ['Braintree', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 5071 m, median 1.9 m, p95 6.2 m
+- **US · ['Noroton Heights', 'Stamford']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 5148 m, median 0.4 m, p95 3.6 m
+- **US · ['Braintree', 'Quincy Center']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 5078 m, median 0.3 m, p95 1.4 m
+- **US · ['Forest Hills-71 Av', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 4947 m, median 6.7 m, p95 9.6 m
 - **US · ['Berryessa / North San Jose', 'Milpitas']** — `bart-green` / `bart-orange`; 4878 m, median 0.1 m, p95 0.1 m
+- **US · ['Jamaica', 'Locust Manor']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 4846 m, median 0.7 m, p95 2.7 m
+- **US · ['Temple University', 'Wayne Junction']** — `septa-regional-rail-che` / `septa-regional-rail-fox`; 4786 m, median 4.6 m, p95 16.7 m
+- **US · ['Temple University', 'Wayne Junction']** — `septa-regional-rail-che` / `septa-regional-rail-war`; 4784 m, median 5.0 m, p95 17.4 m
+- **US · ['Temple University', 'Wayne Junction']** — `septa-regional-rail-fox` / `septa-regional-rail-war`; 4784 m, median 0.9 m, p95 3.7 m
 - **US · ['Coliseum', 'San Leandro']** — `bart-blue` / `bart-orange`; 4757 m, median 0.0 m, p95 0.1 m
 - **US · ['Coliseum', 'San Leandro']** — `bart-green` / `bart-orange`; 4757 m, median 0.0 m, p95 0.1 m
 - **US · ['Hayward', 'South Hayward']** — `bart-green` / `bart-orange`; 4742 m, median 0.1 m, p95 0.1 m
+- **US · ['Chicago OTC', 'Clybourn']** — `metra-union-pacific` / `metra-up-nw`; 4667 m, median 1.2 m, p95 6.0 m
 - **US · ['Bay Fair', 'Hayward']** — `bart-green` / `bart-orange`; 4608 m, median 0.1 m, p95 0.1 m
 - **US · ['Forest Hills', 'Ruggles']** — `mbta-needham-line` / `mbta-providence-stoughton-line`; 4510 m, median 1.7 m, p95 6.4 m
 - **US · ['Fruitvale', 'Lake Merritt']** — `bart-blue` / `bart-orange`; 4422 m, median 0.1 m, p95 2.3 m
 - **US · ['Fruitvale', 'Lake Merritt']** — `bart-green` / `bart-orange`; 4422 m, median 0.1 m, p95 2.3 m
+- **US · ['Jackson Hts-Roosevelt Av', 'Queens Plaza']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f-b1`; 4213 m, median 5.5 m, p95 6.1 m
+- **US · ['Jackson Hts-Roosevelt Av', 'Queens Plaza']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 4213 m, median 5.5 m, p95 6.1 m
+- **US · ['Orange', 'Santa Ana']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 4164 m, median 1.7 m, p95 4.5 m
 - **US · ['Bay Fair', 'San Leandro']** — `bart-blue` / `bart-orange`; 4110 m, median 0.1 m, p95 0.1 m
 - **US · ['Bay Fair', 'San Leandro']** — `bart-green` / `bart-orange`; 4110 m, median 0.1 m, p95 0.1 m
+- **US · ['Benning RD Metrorail Station', 'Stadium-armory Metrorail Station']** — `wmata-blue` / `wmata-silver`; 4082 m, median 6.7 m, p95 7.7 m
+- **US · ['Ballston-mu Metrorail Station', 'EAST Falls Church Metrorail Station']** — `wmata-orange` / `wmata-silver`; 3999 m, median 22.9 m, p95 47.4 m
+- **US · ['San Bruno', 'South San Francisco']** — `bart-red` / `bart-yellow`; 3914 m, median 16.9 m, p95 24.6 m
 - **CA · ['Gare Montréal-Ouest', 'Gare Vendôme']** — `exo-ca` / `exo-sj`; 3750 m, median 0.6 m, p95 6.7 m
 - **CA · ['Gare Montréal-Ouest', 'Gare Vendôme']** — `exo-sj` / `exo-vh`; 3750 m, median 0.6 m, p95 6.7 m
 - **US · ['El Cerrito Del Norte', 'Richmond']** — `bart-orange` / `bart-red`; 3715 m, median 0.4 m, p95 2.7 m
-- **US · ['JFK/UMass', 'South Station']** — `mbta-fall-river-new-bedford-line` / `mbta-greenbush-line`; 3651 m, median 1.5 m, p95 5.7 m
-- **US · ['JFK/UMass', 'South Station']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 3651 m, median 1.5 m, p95 5.7 m
+- **US · ['JFK/UMass', 'South Station']** — `mbta-fall-river-new-bedford-line` / `mbta-greenbush-line`; 3656 m, median 0.4 m, p95 2.7 m
+- **US · ['JFK/UMass', 'South Station']** — `mbta-fall-river-new-bedford-line` / `mbta-kingston-line`; 3656 m, median 0.4 m, p95 2.7 m
 - **US · ['El Cerrito Plaza', 'North Berkeley']** — `bart-orange` / `bart-red`; 3549 m, median 1.6 m, p95 4.8 m
+- **US · ['San Bruno', 'San Francisco International Airport']** — `bart-red` / `bart-yellow`; 3546 m, median 24.4 m, p95 48.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-air` / `septa-regional-rail-lan`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-che` / `septa-regional-rail-lan`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-chw` / `septa-regional-rail-lan`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-fox` / `septa-regional-rail-lan`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-med`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-nor`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-pao`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-wil`; 3522 m, median 7.9 m, p95 9.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-air` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-air` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-air` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-che` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-che` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-che` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-chw` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-chw` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-chw` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-fox` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-fox` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-fox` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-tre`; 3520 m, median 8.7 m, p95 10.5 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 3520 m, median 8.7 m, p95 10.5 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 3520 m, median 8.7 m, p95 10.5 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-med` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-med` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-med` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-nor` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-nor` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-nor` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-pao` / `septa-regional-rail-tre`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-pao` / `septa-regional-rail-war`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-pao` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-tre` / `septa-regional-rail-wil`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-war` / `septa-regional-rail-wil`; 3520 m, median 1.2 m, p95 2.8 m
+- **US · ['Jefferson Station', 'Temple University']** — `septa-regional-rail-wil` / `septa-regional-rail-wtr`; 3520 m, median 1.2 m, p95 2.8 m
 - **US · ['Coliseum', 'Fruitvale']** — `bart-blue` / `bart-orange`; 3391 m, median 0.0 m, p95 0.2 m
 - **US · ['Coliseum', 'Fruitvale']** — `bart-green` / `bart-orange`; 3391 m, median 0.0 m, p95 0.2 m
-- **US · ['Rowayton', 'South Norwalk']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 3213 m, median 2.1 m, p95 8.5 m
+- **US · ['Erie', 'Olney Transit Center']** — `septa-b2` / `septa-b3`; 3336 m, median 1.0 m, p95 1.3 m
+- **US · ['Rowayton', 'South Norwalk']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 3216 m, median 0.6 m, p95 4.6 m
+- **US · ['Fern Rock Transit Center', 'Wayne Junction']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 3054 m, median 1.8 m, p95 6.6 m
+- **US · ['Colma', 'South San Francisco']** — `bart-red` / `bart-yellow`; 2993 m, median 5.2 m, p95 12.9 m
 - **US · ['El Cerrito Del Norte', 'El Cerrito Plaza']** — `bart-orange` / `bart-red`; 2964 m, median 0.1 m, p95 0.2 m
 - **US · ['Balboa Park', 'Daly City']** — `bart-blue` / `bart-red`; 2884 m, median 0.4 m, p95 2.1 m
 - **US · ['Balboa Park', 'Daly City']** — `bart-green` / `bart-red`; 2884 m, median 0.4 m, p95 2.1 m
+- **US · ['Balboa Park', 'Daly City']** — `bart-blue` / `bart-yellow`; 2882 m, median 5.3 m, p95 7.7 m
+- **US · ['Balboa Park', 'Daly City']** — `bart-green` / `bart-yellow`; 2882 m, median 5.3 m, p95 7.7 m
+- **US · ['Balboa Park', 'Daly City']** — `bart-red` / `bart-yellow`; 2882 m, median 4.8 m, p95 7.6 m
 - **US · ['Ashby', 'MacArthur']** — `bart-orange` / `bart-red`; 2803 m, median 0.6 m, p95 2.7 m
 - **US · ['Delancey St-Essex St', 'Marcy Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 2751 m, median 6.7 m, p95 8.2 m
 - **US · ['Delancey St-Essex St', 'Marcy Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 2750 m, median 0.6 m, p95 1.7 m
 - **US · ['Delancey St-Essex St', 'Marcy Av']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-z`; 2750 m, median 6.7 m, p95 7.2 m
+- **US · ['Rosedale', 'Valley Stream']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 2681 m, median 0.1 m, p95 1.5 m
+- **US · ['59 St', 'Queensboro Plaza']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 2648 m, median 0.2 m, p95 0.8 m
+- **US · ['24th Street / Mission', 'Glen Park']** — `bart-red` / `bart-yellow`; 2643 m, median 3.9 m, p95 10.7 m
 - **US · ['24th Street / Mission', 'Glen Park']** — `bart-blue` / `bart-red`; 2643 m, median 0.1 m, p95 0.6 m
+- **US · ['24th Street / Mission', 'Glen Park']** — `bart-blue` / `bart-yellow`; 2643 m, median 3.9 m, p95 10.7 m
 - **US · ['24th Street / Mission', 'Glen Park']** — `bart-green` / `bart-red`; 2643 m, median 0.1 m, p95 0.6 m
+- **US · ['24th Street / Mission', 'Glen Park']** — `bart-green` / `bart-yellow`; 2643 m, median 3.9 m, p95 10.7 m
+- **US · ['Millbrae', 'San Francisco International Airport']** — `bart-red` / `bart-yellow`; 2613 m, median 26.1 m, p95 49.0 m
 - **US · ['Potomac Yard/vt Metrorail Station', 'Ronald Reagan Washington National Airport Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 2610 m, median 6.3 m, p95 9.7 m
 - **US · ['Maplewood', 'Millburn']** — `new-jersey-transit-nj-transi-mne` / `new-jersey-transit-nj-transi-mneg`; 2586 m, median 0.0 m, p95 0.1 m
+- **US · ['Colma', 'Daly City']** — `bart-red` / `bart-yellow`; 2559 m, median 5.9 m, p95 9.4 m
+- **US · ['12th Street / Oakland City Center', 'West Oakland']** — `bart-red` / `bart-yellow`; 2530 m, median 7.1 m, p95 15.3 m
+- **US · ['Elkins Park', 'Jenkintown-Wyncote']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 2528 m, median 4.7 m, p95 5.8 m
+- **US · ['Elkins Park', 'Jenkintown-Wyncote']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 2528 m, median 4.7 m, p95 5.6 m
+- **US · ['Elkins Park', 'Jenkintown-Wyncote']** — `septa-regional-rail-war` / `septa-regional-rail-wtr`; 2528 m, median 0.0 m, p95 0.4 m
+- **US · ['Addison RD Metrorail Station', 'Morgan BLVD Metrorail Station']** — `wmata-blue` / `wmata-silver`; 2466 m, median 5.0 m, p95 5.7 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-far-rockaway-branch`; 2442 m, median 0.8 m, p95 2.5 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-hempstead-branch`; 2442 m, median 0.8 m, p95 2.5 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 2442 m, median 0.8 m, p95 2.5 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-port-jefferson-branch`; 2442 m, median 0.8 m, p95 2.5 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-ronkonkoma-branch`; 2442 m, median 0.8 m, p95 2.5 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-west-hempstead-branch`; 2442 m, median 0.8 m, p95 2.5 m
 - **US · ['19th Street Oakland', 'MacArthur']** — `bart-orange` / `bart-red`; 2442 m, median 1.0 m, p95 3.4 m
-- **US · ['Darien', 'Noroton Heights']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 2360 m, median 0.9 m, p95 8.8 m
-- **US · ['Darien', 'Rowayton']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 2310 m, median 1.7 m, p95 6.2 m
+- **US · ['Jamaica', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-far-rockaway-branch`; 2435 m, median 3.2 m, p95 9.5 m
+- **US · ['19th Street Oakland', 'MacArthur']** — `bart-orange` / `bart-yellow`; 2430 m, median 6.8 m, p95 12.2 m
+- **US · ['19th Street Oakland', 'MacArthur']** — `bart-red` / `bart-yellow`; 2430 m, median 7.2 m, p95 13.5 m
+- **US · ['Darien', 'Noroton Heights']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 2364 m, median 0.9 m, p95 3.6 m
+- **US · ['Benning RD Metrorail Station', 'Capitol Heights Metrorail Station']** — `wmata-blue` / `wmata-silver`; 2360 m, median 6.0 m, p95 6.3 m
+- **US · ['Darien', 'Rowayton']** — `metro-north-railroad-danbury` / `metro-north-railroad-new-haven`; 2311 m, median 0.3 m, p95 2.2 m
 - **US · ['Braddock RD Metrorail Station', 'Potomac Yard/vt Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 2290 m, median 6.1 m, p95 6.3 m
+- **US · ['Court Sq', 'Lexington Av/53 St']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f-b1`; 2261 m, median 3.2 m, p95 4.1 m
+- **US · ['Court Sq', 'Lexington Av/53 St']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 2261 m, median 3.2 m, p95 4.1 m
+- **US · ['Downtown Largo Metrorail Station', 'Morgan BLVD Metrorail Station']** — `wmata-blue` / `wmata-silver`; 2206 m, median 5.7 m, p95 6.5 m
+- **US · ['Fern Rock Transit Center', 'Melrose Park']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 2196 m, median 5.3 m, p95 7.8 m
+- **US · ['Fern Rock Transit Center', 'Melrose Park']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 2196 m, median 5.3 m, p95 7.8 m
 - **US · ['Foggy Bottom-gwu Metrorail Station', 'Rosslyn Metrorail Station']** — `wmata-blue` / `wmata-orange`; 2141 m, median 6.8 m, p95 8.8 m
 - **US · ['Grand Central-42 St', 'Vernon Blvd-Jackson Av']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 2138 m, median 0.1 m, p95 0.8 m
+- **US · ['Foggy Bottom-gwu Metrorail Station', 'Rosslyn Metrorail Station']** — `wmata-blue` / `wmata-silver`; 2131 m, median 6.4 m, p95 8.1 m
+- **US · ['Foggy Bottom-gwu Metrorail Station', 'Rosslyn Metrorail Station']** — `wmata-orange` / `wmata-silver`; 2131 m, median 13.3 m, p95 16.9 m
 - **US · ['Ashby', 'Downtown Berkeley']** — `bart-orange` / `bart-red`; 1929 m, median 0.2 m, p95 1.4 m
-- **US · ['121 St', 'Jamaica']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 1880 m, median 3.3 m, p95 3.8 m
+- **US · ['7 Av', 'Prospect Park']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-q`; 1926 m, median 13.3 m, p95 14.0 m
+- **US · ['Clark St', 'Wall St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-3`; 1906 m, median 0.0 m, p95 0.0 m
+- **US · ['121 St', 'Sutphin Blvd-Archer Av-JFK Airport']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 1880 m, median 3.3 m, p95 3.8 m
+- **US · ['San Clemente', 'San Clemente Pier']** — `metrolink-ie-oc-line` / `metrolink-oc-line`; 1863 m, median 3.4 m, p95 10.1 m
 - **US · ['Balboa Park', 'Glen Park']** — `bart-blue` / `bart-red`; 1855 m, median 0.1 m, p95 0.4 m
 - **US · ['Balboa Park', 'Glen Park']** — `bart-green` / `bart-red`; 1855 m, median 0.1 m, p95 0.4 m
+- **US · ['Balboa Park', 'Glen Park']** — `bart-blue` / `bart-yellow`; 1851 m, median 3.2 m, p95 5.4 m
+- **US · ['Balboa Park', 'Glen Park']** — `bart-green` / `bart-yellow`; 1851 m, median 3.2 m, p95 5.4 m
+- **US · ['Balboa Park', 'Glen Park']** — `bart-red` / `bart-yellow`; 1851 m, median 3.1 m, p95 5.4 m
 - **US · ['16th Street / Mission', 'Civic Center / UN Plaza']** — `bart-blue` / `bart-red`; 1796 m, median 0.3 m, p95 3.7 m
 - **US · ['16th Street / Mission', 'Civic Center / UN Plaza']** — `bart-green` / `bart-red`; 1796 m, median 0.3 m, p95 3.7 m
+- **US · ['16th Street / Mission', 'Civic Center / UN Plaza']** — `bart-blue` / `bart-yellow`; 1792 m, median 6.4 m, p95 10.5 m
+- **US · ['16th Street / Mission', 'Civic Center / UN Plaza']** — `bart-green` / `bart-yellow`; 1792 m, median 6.4 m, p95 10.5 m
+- **US · ['16th Street / Mission', 'Civic Center / UN Plaza']** — `bart-red` / `bart-yellow`; 1792 m, median 6.4 m, p95 13.6 m
+- **US · ['Glenside', 'Jenkintown-Wyncote']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 1756 m, median 3.6 m, p95 7.7 m
+- **US · ['Court House Metrorail Station', 'Rosslyn Metrorail Station']** — `wmata-orange` / `wmata-silver`; 1752 m, median 10.2 m, p95 12.3 m
 - **US · ['Millburn', 'Short Hills']** — `new-jersey-transit-nj-transi-mne` / `new-jersey-transit-nj-transi-mneg`; 1729 m, median 0.0 m, p95 0.1 m
+- **US · ['7th Street / Metro Center Station', 'Westlake / MacArthur Park Station']** — `los-angeles-county-metropoli-metro-b-line` / `los-angeles-county-metropoli-metro-d-line`; 1726 m, median 6.0 m, p95 6.8 m
 - **US · ['Downtown Berkeley', 'North Berkeley']** — `bart-orange` / `bart-red`; 1684 m, median 0.4 m, p95 1.4 m
 - **CA · ['Lougheed Town Centre Station', 'Production Way-University Station']** — `translink-expo-line-b1` / `translink-millennium-line`; 1665 m, median 0.6 m, p95 7.2 m
 - **US · ['Back Bay', 'Ruggles']** — `mbta-needham-line` / `mbta-providence-stoughton-line`; 1638 m, median 1.4 m, p95 8.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-far-rockaway-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-hempstead-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-port-jefferson-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-ronkonkoma-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-west-hempstead-branch`; 1630 m, median 0.0 m, p95 1.5 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-babylon-branch` / `mta-long-island-rail-road-city-terminal-zone`; 1628 m, median 1.0 m, p95 7.1 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-far-rockaway-branch`; 1628 m, median 1.0 m, p95 7.9 m
 - **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-hempstead-branch`; 1628 m, median 1.0 m, p95 7.1 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-long-beach-branch`; 1628 m, median 1.0 m, p95 7.1 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-port-jefferson-branch`; 1628 m, median 1.0 m, p95 7.1 m
+- **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-ronkonkoma-branch`; 1628 m, median 1.0 m, p95 7.1 m
 - **US · ['Forest Hills', 'Kew Gardens']** — `mta-long-island-rail-road-city-terminal-zone` / `mta-long-island-rail-road-west-hempstead-branch`; 1628 m, median 1.0 m, p95 7.1 m
+- **US · ['Westlake / MacArthur Park Station', 'Wilshire / Vermont Station']** — `los-angeles-county-metropoli-metro-b-line` / `los-angeles-county-metropoli-metro-d-line`; 1624 m, median 5.8 m, p95 6.6 m
+- **US · ['Addison RD Metrorail Station', 'Capitol Heights Metrorail Station']** — `wmata-blue` / `wmata-silver`; 1584 m, median 5.6 m, p95 5.7 m
 - **US · ['34 St-Hudson Yards', 'Times Sq-42 St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 1526 m, median 0.5 m, p95 1.3 m
+- **US · ['Gray 30th St Station', 'Penn Medicine Station']** — `septa-regional-rail-air` / `septa-regional-rail-med`; 1439 m, median 0.2 m, p95 0.5 m
+- **US · ['Gray 30th St Station', 'Penn Medicine Station']** — `septa-regional-rail-air` / `septa-regional-rail-nor`; 1439 m, median 0.2 m, p95 0.5 m
+- **US · ['Gray 30th St Station', 'Penn Medicine Station']** — `septa-regional-rail-air` / `septa-regional-rail-wil`; 1439 m, median 0.2 m, p95 0.5 m
+- **US · ['South Hills Junction Station', 'Station Square Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 1438 m, median 0.3 m, p95 1.4 m
+- **US · ['South Hills Junction Station', 'Station Square Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 1438 m, median 0.3 m, p95 1.4 m
 - **US · ['Flushing-Main St', 'Mets-Willets Point']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 1430 m, median 0.1 m, p95 1.6 m
-- **US · ['East Somerville', 'Lechmere']** — `mbta-b` / `mbta-e`; 1219 m, median 0.0 m, p95 0.0 m
-- **US · ['East Somerville', 'Lechmere']** — `mbta-c` / `mbta-e`; 1219 m, median 0.0 m, p95 0.0 m
+- **US · ['Laurelton', 'Rosedale']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 1426 m, median 0.1 m, p95 1.6 m
+- **US · ['16th Street / Mission', '24th Street / Mission']** — `bart-blue` / `bart-yellow`; 1422 m, median 5.6 m, p95 6.4 m
+- **US · ['16th Street / Mission', '24th Street / Mission']** — `bart-green` / `bart-yellow`; 1422 m, median 5.6 m, p95 6.4 m
+- **US · ['16th Street / Mission', '24th Street / Mission']** — `bart-red` / `bart-yellow`; 1422 m, median 5.6 m, p95 6.4 m
+- **US · ['Elkins Park', 'Melrose Park']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 1382 m, median 3.1 m, p95 5.4 m
+- **US · ['Elkins Park', 'Melrose Park']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 1382 m, median 3.1 m, p95 5.4 m
+- **US · ['Laurelton', 'Locust Manor']** — `mta-long-island-rail-road-far-rockaway-branch` / `mta-long-island-rail-road-long-beach-branch`; 1347 m, median 0.0 m, p95 0.1 m
+- **US · ['Civic Center / Grand Park Station', 'Union Station']** — `los-angeles-county-metropoli-metro-b-line` / `los-angeles-county-metropoli-metro-d-line`; 1293 m, median 22.1 m, p95 44.8 m
+- **US · ['North Broad', 'Temple University']** — `septa-regional-rail-lan` / `septa-regional-rail-nor`; 1279 m, median 7.6 m, p95 10.4 m
+- **US · ['Brighton Beach', 'Sheepshead Bay']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-q`; 1244 m, median 13.9 m, p95 17.7 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-cyn` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-cyn` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-cyn` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-tre`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-war`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-tre` / `septa-regional-rail-wil`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-war` / `septa-regional-rail-wil`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['Gray 30th St Station', 'Suburban Station']** — `septa-regional-rail-wil` / `septa-regional-rail-wtr`; 1223 m, median 0.4 m, p95 4.0 m
+- **US · ['15 St-Prospect Park', 'Fort Hamilton Pkwy']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 1221 m, median 7.0 m, p95 10.6 m
 - **US · ['Crystal CITY Metrorail Station', 'Pentagon CITY Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 1166 m, median 6.2 m, p95 6.8 m
+- **US · ['Potomac AVE Metrorail Station', 'Stadium-armory Metrorail Station']** — `wmata-blue` / `wmata-silver`; 1126 m, median 6.4 m, p95 7.5 m
 - **US · ['Potomac AVE Metrorail Station', 'Stadium-armory Metrorail Station']** — `wmata-blue` / `wmata-orange`; 1116 m, median 6.1 m, p95 6.6 m
+- **US · ['Potomac AVE Metrorail Station', 'Stadium-armory Metrorail Station']** — `wmata-orange` / `wmata-silver`; 1116 m, median 12.7 m, p95 13.7 m
+- **US · ['Briarwood', 'Kew Gardens-Union Tpke']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f`; 1071 m, median 8.5 m, p95 9.5 m
+- **US · ['Briarwood', 'Kew Gardens-Union Tpke']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 1071 m, median 8.5 m, p95 9.5 m
 - **US · ['33 St-Rawson St', 'Queensboro Plaza']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 1057 m, median 0.3 m, p95 1.8 m
-- **US · ['Alexandria', 'Braddock RD Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 1048 m, median 6.1 m, p95 6.2 m
+- **US · ['Braddock RD Metrorail Station', 'KING St-old TOWN Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 1048 m, median 6.1 m, p95 6.2 m
+- **US · ['14 St', 'W 4 St-Wash Sq']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 1037 m, median 1.6 m, p95 3.5 m
+- **US · ['14 St', 'W 4 St-Wash Sq']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 1037 m, median 1.6 m, p95 3.5 m
+- **US · ['Eastern Market Metrorail Station', 'Potomac AVE Metrorail Station']** — `wmata-blue` / `wmata-silver`; 996 m, median 6.4 m, p95 6.7 m
 - **US · ['Eastern Market Metrorail Station', 'Potomac AVE Metrorail Station']** — `wmata-blue` / `wmata-orange`; 993 m, median 6.2 m, p95 6.4 m
+- **US · ['Eastern Market Metrorail Station', 'Potomac AVE Metrorail Station']** — `wmata-orange` / `wmata-silver`; 993 m, median 12.6 m, p95 13.1 m
 - **US · ['Pentagon CITY Metrorail Station', 'Pentagon Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 984 m, median 6.1 m, p95 6.3 m
+- **US · ['Fern Rock Transit Center', 'Olney Transit Center']** — `septa-b1` / `septa-b2`; 958 m, median 5.4 m, p95 12.7 m
+- **US · ['Fern Rock Transit Center', 'Olney Transit Center']** — `septa-b2` / `septa-b3`; 958 m, median 5.4 m, p95 12.7 m
+- **US · ['36 St', 'Steinway St']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 948 m, median 6.8 m, p95 7.6 m
 - **US · ['36 St', 'Steinway St']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 948 m, median 6.8 m, p95 7.6 m
+- **US · ['Bronx Park', 'Pelham Pkwy']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 939 m, median 6.8 m, p95 7.0 m
+- **US · ['Gateway Station', 'North SIDE Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 938 m, median 0.2 m, p95 0.8 m
+- **US · ['Gateway Station', 'North SIDE Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 938 m, median 0.2 m, p95 0.8 m
+- **US · ['New Haven']** — `amtrak-amtrak-hartford-line` / `amtrak-northeast-regional-b2`; 937 m, median 0.1 m, p95 0.8 m
+- **US · ['New Haven']** — `amtrak-northeast-regional-b2` / `amtrak-valley-flyer`; 937 m, median 0.1 m, p95 0.8 m
 - **US · ['Capitol South Metrorail Station', 'Federal Center SW Metrorail Station']** — `wmata-blue` / `wmata-orange`; 928 m, median 6.1 m, p95 6.1 m
+- **US · ['Capitol South Metrorail Station', 'Federal Center SW Metrorail Station']** — `wmata-blue` / `wmata-silver`; 928 m, median 6.1 m, p95 6.1 m
+- **US · ['Capitol South Metrorail Station', 'Federal Center SW Metrorail Station']** — `wmata-orange` / `wmata-silver`; 928 m, median 12.2 m, p95 12.2 m
 - **US · ['59 St-Columbus Circle', '72 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 927 m, median 13.7 m, p95 13.8 m
 - **US · ['59 St-Columbus Circle', '72 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 927 m, median 13.7 m, p95 13.8 m
 - **US · ['Archives Metrorail Station', "L'enfant Plaza"]** — `wmata-green` / `wmata-yellow`; 926 m, median 6.4 m, p95 7.7 m
+- **US · ['4 Av-9 St', '7 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 921 m, median 6.7 m, p95 7.0 m
+- **US · ['Allerton Av', 'Pelham Pkwy']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 920 m, median 6.7 m, p95 6.7 m
 - **US · ['Elmhurst Av', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 914 m, median 6.7 m, p95 6.8 m
+- **US · ['Elmhurst Av', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 914 m, median 9.2 m, p95 9.3 m
+- **US · ['Elmhurst Av', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 914 m, median 2.4 m, p95 2.6 m
+- **US · ['7 Av', 'Atlantic Av-Barclays Ctr']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-q`; 912 m, median 6.2 m, p95 7.8 m
+- **US · ['Atlantic Av-Barclays Ctr', 'DeKalb Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 910 m, median 13.8 m, p95 17.8 m
 - **US · ['Atlantic Av-Barclays Ctr', 'DeKalb Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 910 m, median 13.8 m, p95 17.8 m
+- **US · ['Ballston-mu Metrorail Station', 'Virginia Sq-gmu Metrorail Station']** — `wmata-orange` / `wmata-silver`; 904 m, median 8.1 m, p95 8.3 m
 - **US · ['Gallery Place Metrorail Station', 'MT Vernon SQ Metrorail Station']** — `wmata-green` / `wmata-yellow`; 896 m, median 25.9 m, p95 42.4 m
+- **US · ['Bronx Park', 'E 180 St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 893 m, median 32.7 m, p95 61.9 m
+- **US · ['Church Av', 'Fort Hamilton Pkwy']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 892 m, median 8.6 m, p95 10.3 m
 - **US · ['Crystal CITY Metrorail Station', 'Ronald Reagan Washington National Airport Metrorail Station']** — `wmata-blue` / `wmata-yellow`; 882 m, median 6.2 m, p95 6.8 m
+- **US · ['67 Av', 'Forest Hills-71 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 881 m, median 2.5 m, p95 2.6 m
+- **US · ['174 St', 'Freeman St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 881 m, median 13.4 m, p95 15.3 m
+- **US · ['67 Av', 'Forest Hills-71 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 881 m, median 9.2 m, p95 9.5 m
 - **US · ['67 Av', 'Forest Hills-71 Av']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 881 m, median 6.7 m, p95 6.9 m
+- **US · ['39 Av-Dutch Kills', 'Queensboro Plaza']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 866 m, median 0.1 m, p95 1.2 m
+- **US · ['3 Av-149 St', 'Jackson Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 865 m, median 13.9 m, p95 14.9 m
+- **US · ['Atlantic Av-Barclays Ctr', 'DeKalb Av']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-q`; 864 m, median 12.2 m, p95 15.0 m
 - **US · ['125 St', '135 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 857 m, median 13.4 m, p95 14.2 m
 - **US · ['125 St', '135 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 857 m, median 13.4 m, p95 14.2 m
 - **US · ['Farragut WEST  Metrorail Station', 'Foggy Bottom-gwu Metrorail Station']** — `wmata-blue` / `wmata-orange`; 844 m, median 6.1 m, p95 6.5 m
+- **US · ['Farragut WEST  Metrorail Station', 'Foggy Bottom-gwu Metrorail Station']** — `wmata-blue` / `wmata-silver`; 844 m, median 5.5 m, p95 7.2 m
+- **US · ['Farragut WEST  Metrorail Station', 'Foggy Bottom-gwu Metrorail Station']** — `wmata-orange` / `wmata-silver`; 844 m, median 11.6 m, p95 13.6 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-lan`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-lan`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-lan`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-lan`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-med`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-nor`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-pao`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-wil`; 843 m, median 1.8 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-air` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-che` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-chw` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-fox` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-tre`; 843 m, median 2.2 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-war`; 843 m, median 2.2 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-lan` / `septa-regional-rail-wtr`; 843 m, median 2.2 m, p95 6.0 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-med` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-nor` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-tre`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-war`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-pao` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-tre` / `septa-regional-rail-wil`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-war` / `septa-regional-rail-wil`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['Jefferson Station', 'Suburban Station']** — `septa-regional-rail-wil` / `septa-regional-rail-wtr`; 843 m, median 0.3 m, p95 3.5 m
+- **US · ['4 Av-9 St', 'Union St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 842 m, median 13.4 m, p95 13.4 m
 - **US · ['4 Av-9 St', 'Union St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 842 m, median 13.4 m, p95 13.4 m
+- **US · ['15 St-Prospect Park', '7 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 842 m, median 7.0 m, p95 7.7 m
+- **US · ['7th Street / Metro Center Station', 'Pershing Square Station']** — `los-angeles-county-metropoli-metro-b-line` / `los-angeles-county-metropoli-metro-d-line`; 840 m, median 6.1 m, p95 7.2 m
+- **US · ['Grand Av-Newtown', 'Woodhaven Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 838 m, median 8.9 m, p95 10.5 m
+- **US · ['36 St', 'Queens Plaza']** — `metropolitan-transit-authori-f-b2` / `metropolitan-transit-authori-r`; 836 m, median 6.9 m, p95 8.6 m
 - **US · ['63 Dr-Rego Park', '67 Av']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 836 m, median 6.8 m, p95 6.8 m
+- **US · ['63 Dr-Rego Park', '67 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 836 m, median 9.3 m, p95 9.4 m
+- **US · ['63 Dr-Rego Park', '67 Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 836 m, median 2.4 m, p95 2.6 m
+- **US · ['Grand Av-Newtown', 'Woodhaven Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 833 m, median 3.3 m, p95 9.1 m
 - **US · ['Grand Av-Newtown', 'Woodhaven Blvd']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 833 m, median 6.9 m, p95 7.5 m
-- **US · ['52 St', 'Woodside']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 828 m, median 0.0 m, p95 1.0 m
+- **US · ['52 St', '61 St-Woodside']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 828 m, median 0.0 m, p95 1.0 m
 - **US · ['Capitol South Metrorail Station', 'Eastern Market Metrorail Station']** — `wmata-blue` / `wmata-orange`; 826 m, median 6.1 m, p95 6.9 m
+- **US · ['Capitol South Metrorail Station', 'Eastern Market Metrorail Station']** — `wmata-blue` / `wmata-silver`; 822 m, median 6.2 m, p95 6.4 m
+- **US · ['Capitol South Metrorail Station', 'Eastern Market Metrorail Station']** — `wmata-orange` / `wmata-silver`; 822 m, median 12.5 m, p95 12.9 m
+- **US · ['Canal St', 'City Hall']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 821 m, median 0.0 m, p95 0.3 m
+- **US · ['Carroll St', 'Smith-9 Sts']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 821 m, median 6.7 m, p95 7.6 m
+- **US · ['5 Av/59 St', '57 St-7 Av']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 820 m, median 0.6 m, p95 1.8 m
+- **US · ['5 Av/59 St', '57 St-7 Av']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 820 m, median 0.6 m, p95 1.8 m
 - **US · ['135 St', '145 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 818 m, median 13.2 m, p95 13.8 m
 - **US · ['135 St', '145 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 818 m, median 13.2 m, p95 13.8 m
+- **US · ["L'enfant Plaza", 'Smithsonian Metrorail Station']** — `wmata-blue` / `wmata-silver`; 816 m, median 6.4 m, p95 6.9 m
+- **US · ['Clarendon Metrorail Station', 'Court House Metrorail Station']** — `wmata-orange` / `wmata-silver`; 812 m, median 8.1 m, p95 8.4 m
+- **US · ['Civic Center / UN Plaza', 'Powell Street']** — `bart-blue` / `bart-yellow`; 812 m, median 5.6 m, p95 8.7 m
+- **US · ['Civic Center / UN Plaza', 'Powell Street']** — `bart-green` / `bart-yellow`; 812 m, median 5.6 m, p95 8.7 m
 - **US · ['Civic Center / UN Plaza', 'Powell Street']** — `bart-blue` / `bart-red`; 812 m, median 0.1 m, p95 0.1 m
 - **US · ['Civic Center / UN Plaza', 'Powell Street']** — `bart-green` / `bart-red`; 812 m, median 0.1 m, p95 0.1 m
+- **US · ['Civic Center / UN Plaza', 'Powell Street']** — `bart-red` / `bart-yellow`; 812 m, median 5.7 m, p95 8.7 m
+- **US · ['23 St', '34 St-Penn Station']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 810 m, median 3.5 m, p95 3.5 m
+- **US · ['23 St', '34 St-Penn Station']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 810 m, median 3.5 m, p95 3.5 m
 - **US · ["L'enfant Plaza", 'Smithsonian Metrorail Station']** — `wmata-blue` / `wmata-orange`; 808 m, median 6.1 m, p95 6.5 m
+- **US · ["L'enfant Plaza", 'Smithsonian Metrorail Station']** — `wmata-orange` / `wmata-silver`; 808 m, median 12.7 m, p95 13.1 m
+- **US · ['Franklin Av-Medgar Evers College', 'President St-Medgar Evers College']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 808 m, median 6.3 m, p95 8.6 m
+- **US · ['First Avenue Station', 'Station Square Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 808 m, median 0.1 m, p95 0.9 m
+- **US · ['First Avenue Station', 'Station Square Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 808 m, median 0.1 m, p95 0.9 m
+- **US · ['149 St-Hostos', '3 Av-149 St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 796 m, median 13.3 m, p95 13.4 m
+- **US · ['Flatbush Av-Brooklyn College', 'Newkirk Av-Little Haiti']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 796 m, median 6.1 m, p95 6.2 m
+- **US · ['Bethel Village', 'Highland']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 795 m, median 0.1 m, p95 1.7 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Union St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 794 m, median 13.4 m, p95 13.4 m
 - **US · ['Atlantic Av-Barclays Ctr', 'Union St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 794 m, median 13.4 m, p95 13.4 m
+- **US · ['Canal St', 'Prince St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 794 m, median 0.0 m, p95 0.4 m
+- **US · ['8 St-NYU', 'Prince St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 792 m, median 0.0 m, p95 0.1 m
+- **US · ['8 St-NYU', 'Prince St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-r`; 792 m, median 0.0 m, p95 0.1 m
+- **US · ['8 St-NYU', 'Prince St']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 792 m, median 0.0 m, p95 0.1 m
+- **US · ['8 St-NYU', 'Prince St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 792 m, median 0.0 m, p95 0.1 m
 - **US · ['23rd Street', '33rd Street']** — `port-authority-trans-hudson-hoboken-33rd-street` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 788 m, median 2.9 m, p95 3.8 m
 - **US · ['23rd Street', '33rd Street']** — `port-authority-trans-hudson-journal-square-33rd-street-via-hoboken` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 788 m, median 2.9 m, p95 3.8 m
+- **US · ['Court Sq', 'Queens Plaza']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f-b1`; 788 m, median 2.2 m, p95 3.7 m
+- **US · ['Court Sq', 'Queens Plaza']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 788 m, median 2.2 m, p95 3.7 m
+- **US · ['Casswell', 'Washington Junction']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 788 m, median 0.2 m, p95 0.5 m
+- **US · ['Civic Center / Grand Park Station', 'Pershing Square Station']** — `los-angeles-county-metropoli-metro-b-line` / `los-angeles-county-metropoli-metro-d-line`; 784 m, median 5.3 m, p95 5.4 m
+- **US · ['50 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 782 m, median 0.0 m, p95 0.1 m
 - **US · ['50 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-3`; 782 m, median 0.0 m, p95 0.1 m
+- **US · ['46 St', 'Steinway St']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 780 m, median 6.9 m, p95 8.4 m
 - **US · ['46 St', 'Steinway St']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 780 m, median 6.9 m, p95 8.4 m
+- **US · ['Crown Hts-Utica Av', 'Kingston Av']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 779 m, median 6.1 m, p95 6.2 m
 - **US · ['Court Sq', 'Hunters Point Av']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 775 m, median 0.1 m, p95 1.6 m
+- **US · ['Clarendon Metrorail Station', 'Virginia Sq-gmu Metrorail Station']** — `wmata-orange` / `wmata-silver`; 752 m, median 8.1 m, p95 8.4 m
+- **US · ['174 St', 'West Farms Sq-E Tremont Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 747 m, median 13.9 m, p95 16.2 m
+- **US · ['25 St', '36 St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 744 m, median 13.4 m, p95 13.4 m
 - **US · ['25 St', '36 St']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 744 m, median 13.4 m, p95 13.4 m
+- **US · ['Elmhurst Av', 'Grand Av-Newtown']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 743 m, median 2.2 m, p95 9.2 m
 - **US · ['72 St', '81 St-Museum of Natural History']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 742 m, median 13.7 m, p95 13.8 m
 - **US · ['72 St', '81 St-Museum of Natural History']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 742 m, median 13.7 m, p95 13.8 m
+- **US · ['Bergen St', 'Carroll St']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 740 m, median 6.7 m, p95 6.7 m
+- **US · ['Elmhurst Av', 'Grand Av-Newtown']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 739 m, median 7.0 m, p95 7.8 m
 - **US · ['Elmhurst Av', 'Grand Av-Newtown']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 739 m, median 6.7 m, p95 6.8 m
+- **US · ['63 Dr-Rego Park', 'Woodhaven Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 739 m, median 2.4 m, p95 2.5 m
+- **US · ['63 Dr-Rego Park', 'Woodhaven Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 739 m, median 9.1 m, p95 9.2 m
 - **US · ['63 Dr-Rego Park', 'Woodhaven Blvd']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 739 m, median 6.7 m, p95 6.8 m
+- **US · ['219 St', 'Gun Hill Rd']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 738 m, median 6.7 m, p95 6.7 m
+- **US · ['Spring St', 'W 4 St-Wash Sq']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 735 m, median 2.9 m, p95 3.5 m
+- **US · ['Spring St', 'W 4 St-Wash Sq']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 735 m, median 2.9 m, p95 3.5 m
 - **US · ['86 St', '96 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 734 m, median 13.7 m, p95 13.8 m
 - **US · ['86 St', '96 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 734 m, median 13.7 m, p95 13.8 m
+- **US · ['Burke Av', 'Gun Hill Rd']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 731 m, median 7.3 m, p95 8.3 m
+- **US · ['65 St', 'Northern Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 730 m, median 9.1 m, p95 9.2 m
+- **US · ['65 St', 'Northern Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 730 m, median 2.4 m, p95 2.5 m
 - **US · ['65 St', 'Northern Blvd']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 730 m, median 6.7 m, p95 6.7 m
 - **US · ['116 St', '125 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 727 m, median 13.7 m, p95 13.9 m
 - **US · ['116 St', '125 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 727 m, median 13.7 m, p95 13.9 m
+- **US · ['46 St', 'Northern Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 726 m, median 7.0 m, p95 8.3 m
+- **US · ['46 St', 'Northern Blvd']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 725 m, median 2.8 m, p95 9.1 m
 - **US · ['46 St', 'Northern Blvd']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 725 m, median 6.7 m, p95 6.8 m
 - **US · ['Court Sq', 'Queensboro Plaza']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 725 m, median 0.1 m, p95 1.7 m
+- **US · ['Astoria Blvd', 'Astoria-Ditmars Blvd']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 722 m, median 0.0 m, p95 0.1 m
+- **US · ['4 Av-9 St', 'Prospect Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 716 m, median 13.4 m, p95 13.4 m
 - **US · ['4 Av-9 St', 'Prospect Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 716 m, median 13.4 m, p95 13.4 m
 - **US · ['Montgomery Street', 'Powell Street']** — `bart-blue` / `bart-red`; 716 m, median 0.0 m, p95 0.1 m
+- **US · ['Montgomery Street', 'Powell Street']** — `bart-blue` / `bart-yellow`; 716 m, median 9.3 m, p95 9.7 m
 - **US · ['Montgomery Street', 'Powell Street']** — `bart-green` / `bart-red`; 716 m, median 0.0 m, p95 0.1 m
+- **US · ['Montgomery Street', 'Powell Street']** — `bart-green` / `bart-yellow`; 716 m, median 9.3 m, p95 9.7 m
+- **US · ['Montgomery Street', 'Powell Street']** — `bart-red` / `bart-yellow`; 716 m, median 9.3 m, p95 9.8 m
+- **US · ['75 Av', 'Forest Hills-71 Av']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f`; 712 m, median 7.6 m, p95 7.7 m
+- **US · ['75 Av', 'Forest Hills-71 Av']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 712 m, median 7.6 m, p95 7.7 m
+- **US · ['25 St', 'Prospect Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-n`; 710 m, median 13.4 m, p95 13.4 m
 - **US · ['25 St', 'Prospect Av']** — `metropolitan-transit-authori-d` / `metropolitan-transit-authori-r`; 710 m, median 13.4 m, p95 13.4 m
+- **US · ['Bergen St', 'Grand Army Plaza']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-4`; 710 m, median 6.0 m, p95 6.2 m
+- **US · ['Bergen St', 'Grand Army Plaza']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 710 m, median 6.0 m, p95 6.2 m
 - **US · ['Mcpherson SQ Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-blue` / `wmata-orange`; 710 m, median 6.2 m, p95 7.1 m
 - **US · ['14th Street', '23rd Street']** — `port-authority-trans-hudson-hoboken-33rd-street` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 706 m, median 3.0 m, p95 3.2 m
 - **US · ['14th Street', '23rd Street']** — `port-authority-trans-hudson-journal-square-33rd-street-via-hoboken` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 706 m, median 3.0 m, p95 3.2 m
+- **US · ['Allegheny Station', 'North SIDE Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 705 m, median 0.3 m, p95 1.1 m
+- **US · ['Allegheny Station', 'North SIDE Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 705 m, median 0.3 m, p95 1.1 m
+- **US · ['Kingston Av', 'Nostrand Av']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 702 m, median 6.1 m, p95 6.1 m
 - **US · ['Bowery', 'Canal St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 701 m, median 0.3 m, p95 0.8 m
+- **US · ['Mcpherson SQ Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-blue` / `wmata-silver`; 700 m, median 23.1 m, p95 49.1 m
+- **US · ['Mcpherson SQ Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-orange` / `wmata-silver`; 700 m, median 23.2 m, p95 49.3 m
+- **US · ['Eastern Pkwy-Brooklyn Museum', 'Grand Army Plaza']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-4`; 699 m, median 24.5 m, p95 47.3 m
+- **US · ['Eastern Pkwy-Brooklyn Museum', 'Grand Army Plaza']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 699 m, median 24.5 m, p95 47.3 m
+- **US · ['Freeman St', 'Simpson St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 698 m, median 25.0 m, p95 46.9 m
 - **US · ['65 St', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-m` / `metropolitan-transit-authori-r`; 687 m, median 6.7 m, p95 6.7 m
+- **US · ['65 St', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-m`; 687 m, median 9.2 m, p95 9.2 m
+- **US · ['65 St', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-r`; 687 m, median 2.4 m, p95 2.5 m
+- **US · ['75 Av', 'Kew Gardens-Union Tpke']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f`; 687 m, median 8.2 m, p95 9.6 m
+- **US · ['75 Av', 'Kew Gardens-Union Tpke']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 687 m, median 8.2 m, p95 9.6 m
 - **US · ['9th Street', 'Christopher Street']** — `port-authority-trans-hudson-hoboken-33rd-street` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 686 m, median 2.6 m, p95 7.8 m
 - **US · ['9th Street', 'Christopher Street']** — `port-authority-trans-hudson-journal-square-33rd-street-via-hoboken` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 686 m, median 2.6 m, p95 7.8 m
+- **US · ['Sterling St', 'Winthrop St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 679 m, median 6.2 m, p95 6.2 m
 - **US · ['Flushing Av', 'Lorimer St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 664 m, median 7.5 m, p95 7.6 m
+- **US · ['Allerton Av', 'Burke Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 656 m, median 6.7 m, p95 6.7 m
+- **US · ['Franklin Av-Medgar Evers College', 'Nostrand Av']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 655 m, median 6.4 m, p95 7.8 m
+- **US · ['36 Av', 'Broadway']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 654 m, median 0.0 m, p95 0.0 m
+- **US · ['50 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 654 m, median 3.5 m, p95 3.5 m
+- **US · ['50 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 654 m, median 3.5 m, p95 3.5 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-brown-line` / `cta-green-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-brown-line` / `cta-orange-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-brown-line` / `cta-pink-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-green-line` / `cta-purple-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-orange-line` / `cta-purple-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['Clark/Lake', 'Washington/Wabash']** — `cta-pink-line` / `cta-purple-line`; 654 m, median 0.0 m, p95 0.7 m
+- **US · ['E 180 St', 'West Farms Sq-E Tremont Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 652 m, median 14.6 m, p95 21.4 m
+- **US · ['Church Av', 'Winthrop St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 648 m, median 6.2 m, p95 6.2 m
+- **US · ['30 Av', 'Broadway']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 648 m, median 0.0 m, p95 0.1 m
+- **US · ['Beverly Rd', 'Church Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 641 m, median 6.2 m, p95 6.2 m
+- **US · ['4 Av-9 St', 'Smith-9 Sts']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-g`; 638 m, median 6.7 m, p95 6.8 m
+- **US · ['34 St-Penn Station', 'Times Sq-42 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 637 m, median 3.5 m, p95 3.5 m
+- **US · ['34 St-Penn Station', 'Times Sq-42 St']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 637 m, median 3.5 m, p95 3.5 m
+- **US · ['14 St', '23 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 637 m, median 3.5 m, p95 3.5 m
+- **US · ['14 St', '23 St']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 637 m, median 3.5 m, p95 3.5 m
+- **US · ['14 St-Union Sq', '8 St-NYU']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 636 m, median 0.5 m, p95 1.4 m
+- **US · ['14 St-Union Sq', '8 St-NYU']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-r`; 636 m, median 0.5 m, p95 1.4 m
+- **US · ['14 St-Union Sq', '8 St-NYU']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 636 m, median 0.5 m, p95 1.4 m
+- **US · ['14 St-Union Sq', '8 St-NYU']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 636 m, median 0.5 m, p95 1.4 m
+- **US · ['Canal St', 'Prince St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 635 m, median 0.0 m, p95 0.1 m
+- **US · ['233 St', 'Nereid Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 633 m, median 6.8 m, p95 6.9 m
 - **US · ['104 St', 'Woodhaven Blvd']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 631 m, median 2.9 m, p95 3.0 m
-- **US · ['Hynes Convention Center', 'Kenmore']** — `mbta-b` / `mbta-c`; 630 m, median 0.3 m, p95 9.8 m
+- **US · ['Hynes Convention Center', 'Kenmore']** — `mbta-b` / `mbta-c`; 630 m, median 0.2 m, p95 9.8 m
+- **US · ['14 St-Union Sq', '23 St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 628 m, median 0.0 m, p95 1.0 m
+- **US · ['14 St-Union Sq', '23 St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-r`; 628 m, median 0.0 m, p95 1.0 m
+- **US · ['14 St-Union Sq', '23 St']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 628 m, median 0.0 m, p95 1.0 m
+- **US · ['14 St-Union Sq', '23 St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 628 m, median 0.0 m, p95 1.0 m
 - **US · ['Broadway Junction', 'Chauncey St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 627 m, median 1.2 m, p95 1.7 m
-- **US · ['NEW YORK PENN Station', 'Times Sq-42 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-3`; 624 m, median 0.1 m, p95 0.3 m
-- **US · ['Canal St', 'Chambers St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 616 m, median 0.1 m, p95 0.3 m
+- **US · ['49 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 625 m, median 0.5 m, p95 1.1 m
+- **US · ['49 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 625 m, median 0.5 m, p95 1.1 m
+- **US · ['49 St', 'Times Sq-42 St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 625 m, median 0.5 m, p95 1.1 m
+- **US · ['New York Penn Station', 'Times Sq-42 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 624 m, median 0.1 m, p95 0.2 m
+- **US · ['New York Penn Station', 'Times Sq-42 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-3`; 624 m, median 0.1 m, p95 0.2 m
+- **US · ['225 St', '233 St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 624 m, median 6.7 m, p95 6.7 m
+- **US · ['Canal St', 'Spring St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-e`; 619 m, median 2.6 m, p95 2.6 m
+- **US · ['Canal St', 'Spring St']** — `metropolitan-transit-authori-c` / `metropolitan-transit-authori-e`; 619 m, median 2.6 m, p95 2.6 m
+- **US · ['Brooklyn Bridge-City Hall', 'Canal St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 616 m, median 0.1 m, p95 0.3 m
+- **US · ['Christopher St-Stonewall', 'Houston St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 614 m, median 1.2 m, p95 2.0 m
+- **US · ['Jackson Av', 'Prospect Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 614 m, median 13.9 m, p95 14.7 m
 - **US · ['Hewes St', 'Lorimer St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 610 m, median 7.3 m, p95 7.5 m
+- **US · ['Federal Triangle Metrorail Station', 'Smithsonian Metrorail Station']** — `wmata-blue` / `wmata-silver`; 610 m, median 6.5 m, p95 6.7 m
 - **US · ['Farragut WEST  Metrorail Station', 'Mcpherson SQ Metrorail Station']** — `wmata-blue` / `wmata-orange`; 608 m, median 6.1 m, p95 6.1 m
+- **US · ['Farragut WEST  Metrorail Station', 'Mcpherson SQ Metrorail Station']** — `wmata-blue` / `wmata-silver`; 608 m, median 5.3 m, p95 5.3 m
+- **US · ['Farragut WEST  Metrorail Station', 'Mcpherson SQ Metrorail Station']** — `wmata-orange` / `wmata-silver`; 608 m, median 11.5 m, p95 11.5 m
 - **US · ['Federal Triangle Metrorail Station', 'Smithsonian Metrorail Station']** — `wmata-blue` / `wmata-orange`; 608 m, median 6.1 m, p95 6.8 m
-- **US · ['Jamaica', 'Jamaica Center-Parsons/Archer']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 607 m, median 3.8 m, p95 4.4 m
+- **US · ['Federal Triangle Metrorail Station', 'Smithsonian Metrorail Station']** — `wmata-orange` / `wmata-silver`; 608 m, median 12.8 m, p95 13.5 m
+- **US · ['Jamaica Center-Parsons/Archer', 'Sutphin Blvd-Archer Av-JFK Airport']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-z`; 607 m, median 4.9 m, p95 5.3 m
+- **US · ['Jamaica Center-Parsons/Archer', 'Sutphin Blvd-Archer Av-JFK Airport']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-j`; 607 m, median 8.8 m, p95 9.1 m
+- **US · ['Jamaica Center-Parsons/Archer', 'Sutphin Blvd-Archer Av-JFK Airport']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 607 m, median 3.8 m, p95 4.4 m
+- **US · ['49 St', '57 St-7 Av']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 605 m, median 0.0 m, p95 0.1 m
+- **US · ['49 St', '57 St-7 Av']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 605 m, median 0.0 m, p95 0.1 m
+- **US · ['49 St', '57 St-7 Av']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 605 m, median 0.0 m, p95 0.1 m
+- **US · ['Canal St', 'Houston St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 605 m, median 2.1 m, p95 2.1 m
+- **US · ['Broad-Spring Garden', 'Race Vine Station - BSL']** — `septa-b1` / `septa-b2`; 603 m, median 0.8 m, p95 1.5 m
 - **US · ['Alabama Av', 'Van Siclen Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 598 m, median 2.1 m, p95 2.3 m
 - **US · ['Alabama Av', 'Broadway Junction']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 596 m, median 2.1 m, p95 3.6 m
+- **US · ['5 Av/53 St', 'Lexington Av/53 St']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-f-b1`; 596 m, median 3.6 m, p95 4.1 m
+- **US · ['5 Av/53 St', 'Lexington Av/53 St']** — `metropolitan-transit-authori-e` / `metropolitan-transit-authori-fx`; 596 m, median 3.6 m, p95 4.1 m
 - **US · ['33 St-Rawson St', '40 St-Lowery St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 595 m, median 0.0 m, p95 0.1 m
 - **US · ['Bowery', 'Delancey St-Essex St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 588 m, median 0.1 m, p95 0.9 m
+- **US · ['33rd St', '36th-Sansom']** — `septa-t3` / `septa-t5`; 582 m, median 0.2 m, p95 0.5 m
+- **US · ['33rd St', '36th-Sansom']** — `septa-t4` / `septa-t5`; 582 m, median 0.2 m, p95 0.5 m
+- **US · ['34 St-Herald Sq', 'Times Sq-42 St']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 577 m, median 0.6 m, p95 1.3 m
+- **US · ['34 St-Herald Sq', 'Times Sq-42 St']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 577 m, median 0.6 m, p95 1.3 m
+- **US · ['34 St-Herald Sq', 'Times Sq-42 St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 577 m, median 0.6 m, p95 1.3 m
 - **US · ['Archives Metrorail Station', 'Gallery Place Metrorail Station']** — `wmata-green` / `wmata-yellow`; 573 m, median 6.0 m, p95 6.1 m
+- **US · ['5 Av/59 St', '59 St']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 573 m, median 0.1 m, p95 1.1 m
+- **US · ['5 Av/59 St', '59 St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 573 m, median 0.1 m, p95 1.1 m
+- **US · ['President St-Medgar Evers College', 'Sterling St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 573 m, median 6.1 m, p95 6.2 m
 - **US · ['103 St', 'Cathedral Pkwy (110 St)']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 573 m, median 13.7 m, p95 13.8 m
 - **US · ['103 St', 'Cathedral Pkwy (110 St)']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 573 m, median 13.7 m, p95 13.8 m
-- **US · ['Flushing Av', 'Myrtle Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 572 m, median 7.6 m, p95 7.7 m
+- **US · ['Flushing Av', 'Myrtle Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 572 m, median 7.7 m, p95 7.7 m
+- **US · ['Beverly Rd', 'Newkirk Av-Little Haiti']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 572 m, median 6.2 m, p95 6.2 m
 - **US · ['12th Street / Oakland City Center', '19th Street Oakland']** — `bart-orange` / `bart-red`; 570 m, median 0.1 m, p95 0.3 m
+- **US · ['12th Street / Oakland City Center', '19th Street Oakland']** — `bart-orange` / `bart-yellow`; 570 m, median 13.4 m, p95 13.5 m
+- **US · ['12th Street / Oakland City Center', '19th Street Oakland']** — `bart-red` / `bart-yellow`; 570 m, median 13.2 m, p95 13.5 m
 - **US · ['116 St', 'Cathedral Pkwy (110 St)']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 570 m, median 13.7 m, p95 13.7 m
 - **US · ['116 St', 'Cathedral Pkwy (110 St)']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 570 m, median 13.7 m, p95 13.7 m
 - **US · ['42 St-Bryant Pk', 'Grand Central-42 St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 566 m, median 0.0 m, p95 1.1 m
 - **US · ['103 St', '96 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 565 m, median 13.7 m, p95 13.8 m
 - **US · ['103 St', '96 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 565 m, median 13.7 m, p95 13.8 m
+- **US · ['Embarcadero', 'Montgomery Street']** — `bart-red` / `bart-yellow`; 565 m, median 9.8 m, p95 9.9 m
 - **US · ['Embarcadero', 'Montgomery Street']** — `bart-blue` / `bart-red`; 565 m, median 0.1 m, p95 0.1 m
+- **US · ['Embarcadero', 'Montgomery Street']** — `bart-blue` / `bart-yellow`; 565 m, median 9.8 m, p95 9.9 m
 - **US · ['Embarcadero', 'Montgomery Street']** — `bart-green` / `bart-red`; 565 m, median 0.1 m, p95 0.1 m
+- **US · ['Embarcadero', 'Montgomery Street']** — `bart-green` / `bart-yellow`; 565 m, median 9.8 m, p95 9.9 m
 - **US · ['Crescent St', 'Norwood Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 563 m, median 2.3 m, p95 2.5 m
 - **US · ['81 St-Museum of Natural History', '86 St']** — `metropolitan-transit-authori-a` / `metropolitan-transit-authori-b`; 563 m, median 13.7 m, p95 13.7 m
 - **US · ['81 St-Museum of Natural History', '86 St']** — `metropolitan-transit-authori-b` / `metropolitan-transit-authori-c`; 563 m, median 13.7 m, p95 13.7 m
-- **US · ['69 St', 'Woodside']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 560 m, median 0.0 m, p95 0.0 m
+- **US · ['61 St-Woodside', '69 St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 560 m, median 0.0 m, p95 0.0 m
+- **US · ['Coney Island-Stillwell Av', 'W 8 St-NY Aquarium']** — `metropolitan-transit-authori-f` / `metropolitan-transit-authori-q`; 547 m, median 6.8 m, p95 7.8 m
+- **US · ['Coney Island-Stillwell Av', 'W 8 St-NY Aquarium']** — `metropolitan-transit-authori-fx` / `metropolitan-transit-authori-q`; 547 m, median 6.8 m, p95 7.8 m
+- **US · ['Eastern Pkwy-Brooklyn Museum', 'Franklin Av-Medgar Evers College']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-4`; 545 m, median 6.1 m, p95 6.1 m
+- **US · ['Eastern Pkwy-Brooklyn Museum', 'Franklin Av-Medgar Evers College']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 545 m, median 6.1 m, p95 6.1 m
+- **US · ['14 St', 'Christopher St-Stonewall']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 541 m, median 0.9 m, p95 1.1 m
 - **US · ['42 St-Bryant Pk', 'Times Sq-42 St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 529 m, median 0.3 m, p95 1.6 m
+- **US · ['Borough Hall', 'Hoyt St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-3`; 528 m, median 0.0 m, p95 0.1 m
 - **US · ['Broad St', 'Fulton St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 525 m, median 0.0 m, p95 1.2 m
+- **US · ['15th St/City Hall Station', 'Race Vine Station - BSL']** — `septa-b1` / `septa-b2`; 524 m, median 7.4 m, p95 67.3 m
 - **US · ['46 St-Bliss St', '52 St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 524 m, median 0.2 m, p95 0.7 m
+- **US · ['Fulton St', 'Park Place']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-3`; 523 m, median 0.0 m, p95 0.0 m
+- **US · ['Federal Center SW Metrorail Station', "L'enfant Plaza"]** — `wmata-orange` / `wmata-silver`; 518 m, median 12.2 m, p95 12.2 m
 - **US · ['Federal Center SW Metrorail Station', "L'enfant Plaza"]** — `wmata-blue` / `wmata-orange`; 518 m, median 6.1 m, p95 6.2 m
+- **US · ['Federal Center SW Metrorail Station', "L'enfant Plaza"]** — `wmata-blue` / `wmata-silver`; 518 m, median 6.1 m, p95 6.1 m
+- **US · ['Casswell', 'Highland']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 518 m, median 0.0 m, p95 0.3 m
+- **US · ['First Avenue Station', 'Steel Plaza Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 513 m, median 0.0 m, p95 0.8 m
+- **US · ['First Avenue Station', 'Steel Plaza Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 513 m, median 0.0 m, p95 0.8 m
+- **US · ['Intervale Av', 'Prospect Av']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 512 m, median 13.4 m, p95 13.5 m
+- **US · ['36 Av', '39 Av-Dutch Kills']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 512 m, median 0.0 m, p95 0.0 m
+- **US · ['City Hall', 'Park Place']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 508 m, median 0.2 m, p95 1.2 m
 - **US · ['Federal Triangle Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-blue` / `wmata-orange`; 499 m, median 6.1 m, p95 6.1 m
-- **US · ['Chambers St', 'Fulton St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 487 m, median 0.3 m, p95 1.5 m
+- **US · ['Federal Triangle Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-blue` / `wmata-silver`; 499 m, median 6.3 m, p95 6.3 m
+- **US · ['Federal Triangle Metrorail Station', 'Metro Center Metrorail Station']** — `wmata-orange` / `wmata-silver`; 499 m, median 12.4 m, p95 12.4 m
+- **US · ['219 St', '225 St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5-b2`; 498 m, median 6.7 m, p95 6.7 m
+- **US · ['30 Av', 'Astoria Blvd']** — `metropolitan-transit-authori-n` / `metropolitan-transit-authori-w`; 494 m, median 0.2 m, p95 0.6 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Nevins St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-4`; 494 m, median 6.1 m, p95 6.1 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Nevins St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 494 m, median 6.1 m, p95 6.1 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Nevins St']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 494 m, median 6.1 m, p95 6.1 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Nevins St']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-5`; 494 m, median 6.1 m, p95 6.1 m
+- **US · ['Rector St', 'Whitehall St-South Ferry']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 490 m, median 0.2 m, p95 1.4 m
+- **US · ['Brooklyn Bridge-City Hall', 'Fulton St']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-z`; 487 m, median 0.3 m, p95 1.5 m
 - **US · ['Aviation / Century Station', 'LAX / Metro Transit Center']** — `los-angeles-county-metropoli-metro-c-line` / `los-angeles-county-metropoli-metro-k-line`; 478 m, median 24.3 m, p95 47.1 m
+- **US · ['Chambers St', 'Franklin St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 478 m, median 0.9 m, p95 2.2 m
 - **US · ['40 St-Lowery St', '46 St-Bliss St']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 476 m, median 0.0 m, p95 0.0 m
-- **CA · ['Queens Quay/Ferry Docks Station', 'Union Station']** — `ttc-310` / `ttc-509`; 462 m, median 0.3 m, p95 1.6 m
+- **US · ['23 St', '28 St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 469 m, median 0.0 m, p95 0.6 m
+- **US · ['23 St', '28 St']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-r`; 469 m, median 0.0 m, p95 0.6 m
+- **US · ['23 St', '28 St']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 469 m, median 0.0 m, p95 0.6 m
+- **US · ['23 St', '28 St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 469 m, median 0.0 m, p95 0.6 m
+- **US · ['Dorchester', 'South Hills Village Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 462 m, median 0.2 m, p95 0.6 m
+- **CA · ['Queens Quay/Ferry Docks Station', 'Union Station']** — `ttc-509` / `ttc-510`; 462 m, median 0.3 m, p95 1.6 m
 - **CA · ['Exhibition Loop', 'Manitoba Dr at Strachan Ave']** — `ttc-509` / `ttc-511`; 460 m, median 19.3 m, p95 32.4 m
+- **US · ['Gateway Station', 'WOOD Street Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 458 m, median 0.0 m, p95 0.1 m
+- **US · ['Gateway Station', 'WOOD Street Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 458 m, median 0.0 m, p95 0.1 m
+- **US · ['28 St', '34 St-Herald Sq']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-q`; 457 m, median 0.0 m, p95 0.8 m
+- **US · ['28 St', '34 St-Herald Sq']** — `metropolitan-transit-authori-n-b1` / `metropolitan-transit-authori-r`; 457 m, median 0.0 m, p95 0.8 m
+- **US · ['28 St', '34 St-Herald Sq']** — `metropolitan-transit-authori-q` / `metropolitan-transit-authori-w`; 457 m, median 0.0 m, p95 0.8 m
+- **US · ['28 St', '34 St-Herald Sq']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 457 m, median 0.0 m, p95 0.8 m
+- **US · ["ST Anne's", 'Smith ROAD']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 450 m, median 0.0 m, p95 0.3 m
+- **US · ["ST Anne's", 'Smith ROAD']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 450 m, median 0.0 m, p95 0.3 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Bergen St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-4`; 448 m, median 6.1 m, p95 6.2 m
+- **US · ['Atlantic Av-Barclays Ctr', 'Bergen St']** — `metropolitan-transit-authori-3` / `metropolitan-transit-authori-4`; 448 m, median 6.1 m, p95 6.2 m
+- **US · ['Adams/Wabash', 'Harold Washington Library-State/Van Buren']** — `cta-brown-line` / `cta-pink-line`; 444 m, median 0.4 m, p95 1.0 m
+- **US · ['Adams/Wabash', 'Harold Washington Library-State/Van Buren']** — `cta-pink-line` / `cta-purple-line`; 444 m, median 0.4 m, p95 1.0 m
+- **US · ['Quincy', 'Washington/Wells']** — `cta-brown-line` / `cta-orange-line`; 442 m, median 0.1 m, p95 0.8 m
+- **US · ['Quincy', 'Washington/Wells']** — `cta-brown-line` / `cta-pink-line`; 442 m, median 0.1 m, p95 0.8 m
+- **US · ['Quincy', 'Washington/Wells']** — `cta-orange-line` / `cta-purple-line`; 442 m, median 0.1 m, p95 0.8 m
+- **US · ['Quincy', 'Washington/Wells']** — `cta-pink-line` / `cta-purple-line`; 442 m, median 0.1 m, p95 0.8 m
+- **US · ['Park Place', 'Rector St']** — `metropolitan-transit-authori-r` / `metropolitan-transit-authori-w`; 430 m, median 0.4 m, p95 1.1 m
+- **US · ['Beverly Blvd', 'Congress Av']** — `septa-d1` / `septa-d2`; 427 m, median 0.1 m, p95 1.6 m
 - **US · ['69 St', 'Jackson Hts-Roosevelt Av']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 426 m, median 0.0 m, p95 0.0 m
+- **US · ['Steel Plaza Station', 'WOOD Street Station']** — `port-authority-of-allegheny-blue` / `port-authority-of-allegheny-red`; 422 m, median 0.2 m, p95 0.5 m
+- **US · ['Steel Plaza Station', 'WOOD Street Station']** — `port-authority-of-allegheny-red` / `port-authority-of-allegheny-slvr`; 422 m, median 0.2 m, p95 0.5 m
+- **US · ['15th St/City Hall Station', 'Walnut-Locust']** — `septa-b1` / `septa-b2`; 414 m, median 11.5 m, p95 48.8 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-brown-line` / `cta-green-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-brown-line` / `cta-orange-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-brown-line` / `cta-pink-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-green-line` / `cta-purple-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-orange-line` / `cta-purple-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['Adams/Wabash', 'Washington/Wabash']** — `cta-pink-line` / `cta-purple-line`; 413 m, median 0.0 m, p95 0.0 m
+- **US · ['14 St', '18 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 408 m, median 0.7 m, p95 0.7 m
 - **US · ['Hunters Point Av', 'Vernon Blvd-Jackson Av']** — `metropolitan-transit-authori-7` / `metropolitan-transit-authori-7x`; 406 m, median 0.3 m, p95 1.9 m
+- **US · ['28 St', 'New York Penn Station']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 401 m, median 0.3 m, p95 0.4 m
 - **US · ['Hewes St', 'Marcy Av']** — `metropolitan-transit-authori-j` / `metropolitan-transit-authori-m`; 400 m, median 7.5 m, p95 7.5 m
+- **US · ['23 St', '28 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 398 m, median 0.5 m, p95 0.5 m
+- **US · ['69th Street Transit Center', 'Fairfield Av']** — `septa-d1` / `septa-d2`; 398 m, median 0.0 m, p95 0.0 m
+- **US · ['Canal St', 'Franklin St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 396 m, median 2.1 m, p95 2.2 m
 - **US · ['14th Street', '9th Street']** — `port-authority-trans-hudson-hoboken-33rd-street` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 394 m, median 4.7 m, p95 6.5 m
 - **US · ['14th Street', '9th Street']** — `port-authority-trans-hudson-journal-square-33rd-street-via-hoboken` / `port-authority-trans-hudson-world-trade-center-33rd-street`; 394 m, median 4.7 m, p95 6.5 m
+- **US · ['18 St', '23 St']** — `metropolitan-transit-authori-1` / `metropolitan-transit-authori-2`; 386 m, median 0.6 m, p95 0.6 m
+- **US · ['Intervale Av', 'Simpson St']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-5`; 374 m, median 13.4 m, p95 13.4 m
+- **US · ['LaSalle/Van Buren', 'Quincy']** — `cta-brown-line` / `cta-orange-line`; 358 m, median 0.0 m, p95 0.6 m
+- **US · ['LaSalle/Van Buren', 'Quincy']** — `cta-brown-line` / `cta-pink-line`; 358 m, median 0.0 m, p95 0.6 m
+- **US · ['LaSalle/Van Buren', 'Quincy']** — `cta-orange-line` / `cta-purple-line`; 358 m, median 0.0 m, p95 0.6 m
+- **US · ['LaSalle/Van Buren', 'Quincy']** — `cta-pink-line` / `cta-purple-line`; 358 m, median 0.0 m, p95 0.6 m
+- **CA · ['Dundas St East at Church St', 'Dundas St West at Yonge St - TMU Station']** — `ttc-505` / `ttc-506`; 355 m, median 0.2 m, p95 0.3 m
+- **US · ['Chambers St', 'Park Place']** — `metropolitan-transit-authori-2` / `metropolitan-transit-authori-3`; 354 m, median 0.0 m, p95 0.1 m
+- **CA · ['Broadview Ave at Millbrook Cres', 'Broadview Ave at Wolfrey Ave']** — `ttc-504` / `ttc-505`; 351 m, median 2.2 m, p95 3.8 m
+- **CA · ['Dundas St East at Church St', 'Dundas St East at Yonge St - TMU Station']** — `ttc-505-b2` / `ttc-506-b6`; 314 m, median 0.1 m, p95 0.2 m
+- **CA · ['Dundas St West at Howard Park Ave', 'Dundas St West at Sorauren Ave']** — `ttc-505` / `ttc-506-b3`; 297 m, median 30.5 m, p95 45.5 m
+- **US · ['Harold Washington Library-State/Van Buren', 'LaSalle/Van Buren']** — `cta-brown-line` / `cta-orange-line`; 293 m, median 0.0 m, p95 0.0 m
+- **US · ['Harold Washington Library-State/Van Buren', 'LaSalle/Van Buren']** — `cta-brown-line` / `cta-pink-line`; 293 m, median 0.0 m, p95 0.0 m
+- **US · ['Harold Washington Library-State/Van Buren', 'LaSalle/Van Buren']** — `cta-orange-line` / `cta-purple-line`; 293 m, median 0.0 m, p95 0.0 m
+- **US · ['Harold Washington Library-State/Van Buren', 'LaSalle/Van Buren']** — `cta-pink-line` / `cta-purple-line`; 293 m, median 0.0 m, p95 0.0 m
 - **US · ['Canal at S. White', 'Canal at Salcedo']** — `new-orleans-rta-47` / `new-orleans-rta-48`; 285 m, median 6.8 m, p95 11.6 m
 - **US · ['Canal at Scott', 'N. Carrollton Ave. at Canal St.']** — `new-orleans-rta-47` / `new-orleans-rta-48`; 274 m, median 10.6 m, p95 34.4 m
+- **CA · ['Broadview Ave at Millbrook Cres', 'Broadview Ave at Withrow Ave']** — `ttc-504` / `ttc-505`; 250 m, median 1.2 m, p95 1.4 m

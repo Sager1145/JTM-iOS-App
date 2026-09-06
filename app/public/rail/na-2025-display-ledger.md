@@ -1,5 +1,11 @@
 # North America display review — full line ledger
 
+> **Note (2026-09-05):** the TTC line ids below predate the correction of the
+> Blue Night numbering and no longer exist. `ttc-304*` → `ttc-504*` (King),
+> `ttc-306*` → `ttc-506*` (Carlton), `ttc-310*` → `ttc-510*` (Spadina); the branch
+> shards were re-cut at the same time, so a `-bN` here does not map to the same
+> `-bN` now. The review this ledger records is unchanged; only the names moved.
+
 Walks every flagged row in `na-2025-display-review.json` (62 lines) and every line with
 follow rows in `display-lanes.json` (221 unique `(line, canonical)` pairs across us+ca,
 259 raw follow rows). Evidence pulled from `na-2025-line-review.json`, `display-releases.json`,
