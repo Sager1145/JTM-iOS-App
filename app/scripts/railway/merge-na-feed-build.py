@@ -85,6 +85,18 @@ STATION_IDENTITY_COORD_TOLERANCE_M = 15.0
 #: without treating every unrelated same-named station pair as one place.
 STATION_IDENTITY_NAME_TOLERANCE_M = 60.0
 
+#: How close a candidate station must be to a DIFFERENT operator's station of
+#: the same id before the shared id is read as one interchange rather than a
+#: collision. Sharing an id across operators is normal and load-bearing -- it
+#: is how an interchange is modelled -- so this cannot simply forbid it. In the
+#: shipped Canadian package the fourteen genuine cases span 0.0 m (Weston GO,
+#: GO Transit + UP Express) to 147.6 m (Montréal, Amtrak + VIA + exo), while
+#: the three collisions this guard exists to catch sat at 92.3 km, 100.8 km and
+#: 3,356.8 km. Three orders of magnitude separate the two populations, so the
+#: exact figure is not delicate; 400 m is chosen to match the same-name station
+#: grouping radius the registry already uses rather than to invent a number.
+FOREIGN_ID_INTERCHANGE_TOLERANCE_M = 400.0
+
 
 def resolve_feed_slug(feed_arg):
     return FEED_ALIASES.get(feed_arg, feed_arg)
@@ -498,6 +510,73 @@ def station_identity_map(build_module, shipped_features, candidate_features,
     return rename_map
 
 
+def disambiguate_foreign_ids(build_module, shipped_features,
+                            candidate_features, operators, rename_map,
+                            interchange_tolerance_m=(
+                                FOREIGN_ID_INTERCHANGE_TOLERANCE_M)):
+    """candidate id -> a free id, for ids another operator already holds.
+
+    `station_identity_map()` asks whether a candidate station is the same
+    place as one that already shipped FOR THIS FEED, and it answers well.
+    What it never asks is whether the id itself is already spoken for by a
+    DIFFERENT operator -- and a scoped build cannot know. `build_region()`
+    assigns `{region}-official-{slug}[-N]` in first-seen order across the
+    feeds it actually built, so a TTC-only candidate names Toronto's
+    Lansdowne `ca-official-lansdowne` with no idea that TransLink's
+    Lansdowne in Vancouver, 3,357 km away, already holds it in the shipped
+    package. Merging that puts two stations on one id: `stations-ca.json`
+    then carries two features for it and a lookup returns whichever the
+    iteration order reaches first.
+
+    This is invisible to `station_identity_map()`'s own rename pass, which
+    only ever sees this feed's operator on the shipped side, and it appears
+    only when a feed gains a station it did not ship before -- exactly what
+    happens when a previously withheld line is published. TTC Lines 1 and 2
+    landing on 2026-09-05 collided on `lansdowne`, `queen` and
+    `victoria-park` for that reason.
+
+    A shared id is kept whenever the two are plausibly one place
+    (`FOREIGN_ID_INTERCHANGE_TOLERANCE_M`); otherwise the next free `-N` is
+    allocated the way `build_region()` would have, skipping anything either
+    package or an earlier rename already claims.
+    """
+    def by_code(features, want_ours):
+        out = {}
+        for feature in features:
+            props = feature.get('properties', {})
+            if (props.get('operator') in operators) is not want_ours:
+                continue
+            code = props.get('n02_group_code')
+            if code is None:
+                continue
+            out.setdefault(code, []).append(tuple(props['display_point']))
+        return out
+
+    foreign = by_code(shipped_features, want_ours=False)
+    ours = by_code(candidate_features, want_ours=True)
+
+    taken = {f.get('properties', {}).get('n02_group_code')
+             for f in list(shipped_features) + list(candidate_features)}
+    taken.discard(None)
+    taken.update(rename_map.values())
+
+    extra = {}
+    for code in sorted(ours):
+        if code in rename_map or code not in foreign:
+            continue
+        if _min_distance(build_module, ours[code],
+                         foreign[code]) <= interchange_tolerance_m:
+            continue
+        base = re.sub(r'-\d+$', '', code)
+        index = 2
+        while '%s-%d' % (base, index) in taken:
+            index += 1
+        new_code = '%s-%d' % (base, index)
+        taken.add(new_code)
+        extra[code] = new_code
+    return extra
+
+
 def apply_station_identity(candidate_lines, candidate_station_features,
                            feed_slug, operators, rename_map):
     """Rewrite every candidate id `station_identity_map` says to preserve.
@@ -807,6 +886,7 @@ class MergePlan:
         self.removed_ids = []
         self.added_ids = []
         self.preserved_station_ids = {}
+        self.disambiguated_station_ids = {}
         self.package = None
         self.stations = None
         self.sections = None
@@ -828,6 +908,13 @@ class MergePlan:
                 len(self.preserved_station_ids),
                 ', '.join('%s -> %s' % (new, old) for new, old in
                          sorted(self.preserved_station_ids.items()))
+                or '(none)'),
+            'disambiguated station ids (%d, candidate id already held by '
+            'another operator): %s' % (
+                len(self.disambiguated_station_ids),
+                ', '.join('%s -> %s' % (old_code, new_code)
+                          for old_code, new_code in
+                          sorted(self.disambiguated_station_ids.items()))
                 or '(none)'),
             'readings.stats: %s' % (self.readings['stats'] if self.readings
                                     else '?'),
@@ -906,11 +993,16 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
     # new code/name and must ship under the old one instead. Every later
     # step (line splicing, feature splicing, readings) then works off the
     # already-corrected candidate data and needs no knowledge of the swap.
-    rename_map = station_identity_map(
+    identity_map = station_identity_map(
         build_module, shipped['stations']['features'],
         candidate['stations']['features'], operators,
         shipped_group_codes=shipped_group_codes, feed_prefix=feed_prefix)
-    plan.preserved_station_ids = rename_map
+    plan.preserved_station_ids = identity_map
+    plan.disambiguated_station_ids = disambiguate_foreign_ids(
+        build_module, shipped['stations']['features'],
+        candidate['stations']['features'], operators, identity_map)
+    rename_map = dict(identity_map)
+    rename_map.update(plan.disambiguated_station_ids)
     candidate_lines, candidate_station_features = apply_station_identity(
         candidate['package']['lines'], candidate['stations']['features'],
         feed_slug, operators, rename_map)

@@ -1177,5 +1177,151 @@ class StationIdentityContinuityTests(unittest.TestCase):
                          self.plan.preserved_station_ids)
 
 
+
+class DisambiguateForeignIdsTests(unittest.TestCase):
+    """`disambiguate_foreign_ids()` -- the cross-operator id guard.
+
+    `station_identity_map()` asks whether a candidate station is the same
+    place as one this FEED already shipped. It cannot see that the id itself
+    belongs to a different operator, because a scoped build never loads that
+    operator. The real incident: publishing TTC Lines 1 and 2 on 2026-09-05
+    put Toronto's Lansdowne on `ca-official-lansdowne`, which TransLink's
+    Lansdowne in Vancouver -- 3,357 km away -- already held, and
+    `stations-ca.json` ended up with two features on one id.
+
+    The coordinates below are the real ones from that incident and from the
+    interchanges that must survive it, because the whole design rests on the
+    two populations being far apart: in the shipped Canadian package the
+    fourteen legitimate cross-operator ids run 0.0 m to 147.6 m, and the
+    three collisions sat at 92.3 km, 100.8 km and 3,356.8 km.
+    """
+
+    OURS = ('TTC',)
+
+    def setUp(self):
+        self.build_module = merge.load_build_module()
+
+    def run_guard(self, shipped, candidate, rename_map=None):
+        return merge.disambiguate_foreign_ids(
+            self.build_module, shipped, candidate, self.OURS,
+            rename_map or {})
+
+    def ttc(self, group_code, name, x, y):
+        return station_feature('TTC', 'ttc', group_code, '1', None, name, x, y)
+
+    def other(self, operator, group_code, name, x, y):
+        return station_feature(operator, 'other', group_code, '9', None,
+                               name, x, y)
+
+    def test_a_foreign_id_beyond_the_tolerance_is_renamed(self):
+        shipped = [self.other('TransLink', 'ca-official-lansdowne',
+                              'Lansdowne', -123.136400, 49.170600)]
+        candidate = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
+                              -79.442600, 43.659800)]
+        self.assertEqual(
+            self.run_guard(shipped, candidate),
+            {'ca-official-lansdowne': 'ca-official-lansdowne-2'})
+
+    def test_the_allocated_suffix_skips_ids_either_package_already_holds(self):
+        shipped = [
+            self.other('TransLink', 'ca-official-lansdowne', 'Lansdowne',
+                       -123.136400, 49.170600),
+            self.other('TransLink', 'ca-official-lansdowne-2', 'Lansdowne',
+                       -123.136500, 49.170700),
+        ]
+        candidate = [
+            self.ttc('ca-official-lansdowne', 'Lansdowne Station',
+                     -79.442600, 43.659800),
+            self.ttc('ca-official-lansdowne-3', 'Somewhere Else',
+                     -79.400000, 43.700000),
+        ]
+        # -2 is taken by the shipped package and -3 by the candidate's own
+        # station, so the only free slot is -4.
+        self.assertEqual(
+            self.run_guard(shipped, candidate),
+            {'ca-official-lansdowne': 'ca-official-lansdowne-4'})
+
+    def test_a_coincident_foreign_id_is_kept_because_it_is_an_interchange(self):
+        """Weston GO: GO Transit and UP Express, 0.0 m apart, one id.
+
+        Forbidding cross-operator ids outright would be simpler and would
+        break every interchange in the packages.
+        """
+        shipped = [self.other('GO Transit', 'ca-official-weston-go',
+                              'Weston GO', -79.517700, 43.700900)]
+        candidate = [self.ttc('ca-official-weston-go', 'Weston GO',
+                              -79.517700, 43.700900)]
+        self.assertEqual(self.run_guard(shipped, candidate), {})
+
+    def test_a_nearby_foreign_id_is_kept_because_it_is_still_one_complex(self):
+        """Mount Dennis: GO Transit, TTC and UP Express share one id at 128.1 m.
+
+        This is the case that rules out a tight radius: the three platforms
+        are further apart than any same-operator identity tolerance, and
+        they are still one place.
+        """
+        shipped = [self.other('GO Transit', 'ca-official-mount-dennis-go',
+                              'Mount Dennis GO', -79.494400, 43.688100)]
+        candidate = [self.ttc('ca-official-mount-dennis-go',
+                              'Mount Dennis Station',
+                              -79.493000, 43.687500)]
+        separation = self.build_module.geo.haversine(
+            (-79.494400, 43.688100), (-79.493000, 43.687500))
+        self.assertGreater(separation, 100.0)
+        self.assertLess(separation, merge.FOREIGN_ID_INTERCHANGE_TOLERANCE_M)
+        self.assertEqual(self.run_guard(shipped, candidate), {})
+
+    def test_a_same_operator_id_is_left_to_the_identity_map(self):
+        """This pass must not second-guess `station_identity_map()`.
+
+        A shipped station of THIS feed's own operator, however far away, is
+        that function's business: it matches by coordinate and renames the
+        candidate onto the shipped code. Renaming it here too would race it.
+        """
+        shipped = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
+                            -123.136400, 49.170600)]
+        candidate = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
+                              -79.442600, 43.659800)]
+        self.assertEqual(self.run_guard(shipped, candidate), {})
+
+    def test_an_id_the_identity_map_already_claimed_is_not_touched(self):
+        shipped = [self.other('TransLink', 'ca-official-lansdowne',
+                              'Lansdowne', -123.136400, 49.170600)]
+        candidate = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
+                              -79.442600, 43.659800)]
+        rename_map = {'ca-official-lansdowne': 'ca-official-lansdowne-7'}
+        self.assertEqual(self.run_guard(shipped, candidate, rename_map), {})
+
+    def test_the_plan_reports_preserved_and_disambiguated_separately(self):
+        """A preserved id must never be logged as a disambiguated one.
+
+        They mean opposite things. A preserved id is one this feed already
+        shipped, kept so saved rides and reviewed corridor files still
+        resolve; a disambiguated id is one that was about to collide with a
+        different operator's station. Reporting them in one list would hide
+        a collision inside a routine rename.
+        """
+        plan = merge.MergePlan('ca', 'ttc')
+        plan.preserved_station_ids = {
+            'ca-official-bayview': 'ca-official-bayview-2'}
+        plan.disambiguated_station_ids = {
+            'ca-official-lansdowne': 'ca-official-lansdowne-2'}
+        described = plan.describe()
+        if not isinstance(described, str):
+            described = '\n'.join(described)
+
+        preserved = [l for l in described.splitlines()
+                     if l.startswith('preserved station ids')]
+        disambiguated = [l for l in described.splitlines()
+                         if l.startswith('disambiguated station ids')]
+        self.assertEqual(len(preserved), 1, described)
+        self.assertEqual(len(disambiguated), 1, described)
+        self.assertIn('bayview', preserved[0])
+        self.assertNotIn('lansdowne', preserved[0])
+        self.assertIn('lansdowne', disambiguated[0])
+        self.assertNotIn('bayview', disambiguated[0])
+        self.assertIn('another operator', disambiguated[0])
+
+
 if __name__ == '__main__':
     unittest.main()
