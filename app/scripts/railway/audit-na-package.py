@@ -464,6 +464,8 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
     # cannot pass while visibly running beside the basemap track.
     comparison = ((package.get('geometrySource') or {})
                   .get('officialGeometryComparison') or {})
+    osm_relation_evidence = {line['id']: line.get('osmRelationEvidence')
+                             for line in lines}
     for lid, row in (comparison.get('byLine') or {}).items():
         band = band_by_line.get(lid)
         tolerance = DISPLAY_ALIGNMENT_TOLERANCE_M.get(band, 20.0)
@@ -472,6 +474,22 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
         unmatched = int(row.get('unmatched') or 0)
         withheld = list(row.get('displayBlockedIntervals') or [])
         retained = list(row.get('officialSourceRetainedIntervals') or [])
+        # The build writes a third list beside those two, for a line drawn from
+        # an OpenStreetMap relation that was itself audited against a
+        # government survey. Reading only the first two left that case with no
+        # rung: OpenStreetMap is deliberately absent from `verified_official`,
+        # so the WARN below cannot apply, and the line fell to ERROR whatever
+        # its evidence. The reported deviation is then not a disagreement at
+        # all -- the reference excludes OpenStreetMap as a self-reference, so
+        # what it measures is the distance to the nearest OTHER railway, which
+        # for TTC Lines 1 and 2 is a freight subdivision ~390 m away.
+        #
+        # This is a rung, not a relaxation. It moves nothing else: the
+        # tolerance is untouched, `verified_official` is untouched, and the
+        # exception is gated on the line carrying the reviewed evidence chain,
+        # so a line built from OpenStreetMap without one still ERRORs.
+        osm_retained = list(row.get('osmReferenceRetainedIntervals') or [])
+        relation_evidence = osm_relation_evidence.get(lid)
         source_is_verified = row.get('builtFrom') in verified_official
         if retained and not source_is_verified:
             found.add('ERROR', 'source.provenance', country, lid,
@@ -494,6 +512,15 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
                            'differs by up to %.0f m, past the %.0f m %s review limit'
                            % (len(retained), deviation, tolerance,
                               band or 'default'))
+            elif osm_retained and relation_evidence:
+                severity = 'WARN'
+                check = 'geometry.deviation.osmReferenceRetained'
+                message = ('%d station interval(s) are drawn from an audited '
+                           'OpenStreetMap relation; the %.0f m figure is the '
+                           'distance to the nearest OTHER railway, because the '
+                           'reference excludes OpenStreetMap as a self-reference '
+                           'and so cannot disagree with this alignment'
+                           % (len(osm_retained), deviation))
             else:
                 severity = 'ERROR'
                 check = 'geometry.deviation'
@@ -516,6 +543,13 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
                 check = 'geometry.unchecked.officialRetained'
                 message = ('%d of %d vertices had no independent visual reference; '
                            'the provenance-verified official centreline remains visible'
+                           % (unmatched, vertices))
+            elif osm_retained and relation_evidence:
+                severity = 'WARN'
+                check = 'geometry.unchecked.osmReferenceRetained'
+                message = ('%d of %d vertices had no independent reference; the '
+                           'geometry is an audited OpenStreetMap relation and no '
+                           'published survey covers this alignment'
                            % (unmatched, vertices))
             else:
                 severity = 'ERROR'
