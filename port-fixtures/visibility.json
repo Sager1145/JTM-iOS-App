@@ -6439,7 +6439,7 @@
       "country": "us",
       "lineId": "ace-ace",
       "rank": 2,
-      "groupKm": 136.637,
+      "groupKm": 136.84300000000002,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -6551,7 +6551,7 @@
       "country": "us",
       "lineId": "amtrak-amtrak-cascades-us",
       "rank": 1,
-      "groupKm": 638.2810000000001,
+      "groupKm": 641.4319999999998,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6567,7 +6567,7 @@
       "country": "us",
       "lineId": "amtrak-amtrak-mardi-gras-service",
       "rank": 1,
-      "groupKm": 232.63,
+      "groupKm": 232.774,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6583,7 +6583,7 @@
       "country": "us",
       "lineId": "amtrak-capitol-corridor",
       "rank": 1,
-      "groupKm": 271.457,
+      "groupKm": 271.73499999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6599,7 +6599,7 @@
       "country": "us",
       "lineId": "amtrak-carl-sandburg",
       "rank": 1,
-      "groupKm": 414.58500000000004,
+      "groupKm": 414.837,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6615,7 +6615,7 @@
       "country": "us",
       "lineId": "amtrak-city-of-new-orleans",
       "rank": 1,
-      "groupKm": 1498.954,
+      "groupKm": 1500.927,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6671,7 +6671,7 @@
       "country": "us",
       "lineId": "amtrak-hiawatha-service",
       "rank": 1,
-      "groupKm": 137.845,
+      "groupKm": 137.90200000000002,
       "minZoomForRank": 4,
       "minZoomForLength": 4
     },
@@ -6727,7 +6727,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional",
       "rank": 1,
-      "groupKm": 1648.493,
+      "groupKm": 1649.619,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6735,7 +6735,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b1",
       "rank": 1,
-      "groupKm": 1648.493,
+      "groupKm": 1649.619,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6743,7 +6743,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b2",
       "rank": 1,
-      "groupKm": 1648.493,
+      "groupKm": 1649.619,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6751,7 +6751,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b3",
       "rank": 1,
-      "groupKm": 1648.493,
+      "groupKm": 1649.619,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6991,7 +6991,7 @@
       "country": "us",
       "lineId": "cta-yellow-line",
       "rank": 2,
-      "groupKm": 7.904,
+      "groupKm": 7.916,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -7223,7 +7223,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington",
       "rank": 2,
-      "groupKm": 227.614,
+      "groupKm": 227.888,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7231,7 +7231,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b1",
       "rank": 2,
-      "groupKm": 227.614,
+      "groupKm": 227.888,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7239,7 +7239,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b2",
       "rank": 2,
-      "groupKm": 227.614,
+      "groupKm": 227.888,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7247,7 +7247,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b3",
       "rank": 2,
-      "groupKm": 227.614,
+      "groupKm": 227.888,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7287,7 +7287,7 @@
       "country": "us",
       "lineId": "mbta-capeflyer",
       "rank": 2,
-      "groupKm": 126.65699999999998,
+      "groupKm": 126.766,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7303,7 +7303,7 @@
       "country": "us",
       "lineId": "mbta-fall-river-new-bedford-line",
       "rank": 2,
-      "groupKm": 118.873,
+      "groupKm": 118.96800000000002,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7311,7 +7311,7 @@
       "country": "us",
       "lineId": "mbta-fall-river-new-bedford-line-b1",
       "rank": 2,
-      "groupKm": 118.873,
+      "groupKm": 118.96800000000002,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7327,7 +7327,7 @@
       "country": "us",
       "lineId": "mbta-foxboro-event-service",
       "rank": 2,
-      "groupKm": 74.558,
+      "groupKm": 74.61399999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7559,7 +7559,7 @@
       "country": "us",
       "lineId": "metra-ri",
       "rank": 2,
-      "groupKm": 88.21600000000001,
+      "groupKm": 88.217,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7567,7 +7567,7 @@
       "country": "us",
       "lineId": "metra-ri-b1",
       "rank": 2,
-      "groupKm": 88.21600000000001,
+      "groupKm": 88.217,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7575,7 +7575,7 @@
       "country": "us",
       "lineId": "metra-ri-b2",
       "rank": 2,
-      "groupKm": 88.21600000000001,
+      "groupKm": 88.217,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7607,7 +7607,7 @@
       "country": "us",
       "lineId": "metra-up-nw",
       "rank": 2,
-      "groupKm": 114.936,
+      "groupKm": 114.94500000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7615,7 +7615,7 @@
       "country": "us",
       "lineId": "metra-up-nw-b1",
       "rank": 2,
-      "groupKm": 114.936,
+      "groupKm": 114.94500000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7623,7 +7623,7 @@
       "country": "us",
       "lineId": "metra-hc",
       "rank": 4,
-      "groupKm": 59.45,
+      "groupKm": 59.477,
       "minZoomForRank": 7,
       "minZoomForLength": 5
     },
@@ -7631,7 +7631,7 @@
       "country": "us",
       "lineId": "metro-north-railroad-danbury",
       "rank": 2,
-      "groupKm": 103.68599999999999,
+      "groupKm": 103.84700000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7671,7 +7671,7 @@
       "country": "us",
       "lineId": "metro-north-railroad-waterbury",
       "rank": 2,
-      "groupKm": 51.028000000000006,
+      "groupKm": 51.159,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7687,7 +7687,7 @@
       "country": "us",
       "lineId": "metro-transit-intercity-tran-s-line",
       "rank": 2,
-      "groupKm": 76.497,
+      "groupKm": 76.56500000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7703,7 +7703,7 @@
       "country": "us",
       "lineId": "metrolink-91-pv-line",
       "rank": 2,
-      "groupKm": 135.73600000000002,
+      "groupKm": 135.907,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7711,7 +7711,7 @@
       "country": "us",
       "lineId": "metrolink-av-line",
       "rank": 2,
-      "groupKm": 122.729,
+      "groupKm": 123.01899999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7719,7 +7719,7 @@
       "country": "us",
       "lineId": "metrolink-ie-oc-line",
       "rank": 2,
-      "groupKm": 162.53099999999998,
+      "groupKm": 162.671,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7735,7 +7735,7 @@
       "country": "us",
       "lineId": "metrolink-sb-line",
       "rank": 2,
-      "groupKm": 106.573,
+      "groupKm": 106.67900000000002,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8167,7 +8167,7 @@
       "country": "us",
       "lineId": "nashville-mta-wego-public-tr-90",
       "rank": 2,
-      "groupKm": 50.00500000000001,
+      "groupKm": 50.102999999999994,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -8183,7 +8183,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-bntn",
       "rank": 2,
-      "groupKm": 112.51499999999999,
+      "groupKm": 112.52399999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8191,7 +8191,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-bntn-b1",
       "rank": 2,
-      "groupKm": 112.51499999999999,
+      "groupKm": 112.52399999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8231,7 +8231,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mne",
       "rank": 2,
-      "groupKm": 112.91499999999998,
+      "groupKm": 112.92399999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8239,7 +8239,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mne-b1",
       "rank": 2,
-      "groupKm": 112.91499999999998,
+      "groupKm": 112.92399999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8247,7 +8247,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mneg",
       "rank": 2,
-      "groupKm": 117.588,
+      "groupKm": 117.62499999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8255,7 +8255,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mneg-b1",
       "rank": 2,
-      "groupKm": 117.588,
+      "groupKm": 117.62499999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8263,7 +8263,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mneg-b2",
       "rank": 2,
-      "groupKm": 117.588,
+      "groupKm": 117.62499999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8271,7 +8271,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mrl",
       "rank": 2,
-      "groupKm": 16.971,
+      "groupKm": 17.003999999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 6
     },
@@ -8359,7 +8359,7 @@
       "country": "us",
       "lineId": "north-county-transit-distric-498",
       "rank": 2,
-      "groupKm": 70.809,
+      "groupKm": 70.89,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8367,7 +8367,7 @@
       "country": "us",
       "lineId": "north-county-transit-distric-498-b1",
       "rank": 2,
-      "groupKm": 70.809,
+      "groupKm": 70.89,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8951,7 +8951,7 @@
       "country": "us",
       "lineId": "sound-transit-n-line",
       "rank": 2,
-      "groupKm": 54.722,
+      "groupKm": 54.837,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -8967,7 +8967,7 @@
       "country": "us",
       "lineId": "south-florida-regional-trans-dml",
       "rank": 2,
-      "groupKm": 14.215,
+      "groupKm": 14.228,
       "minZoomForRank": 5,
       "minZoomForLength": 6
     },
@@ -9159,7 +9159,7 @@
       "country": "us",
       "lineId": "alaska-railroad-aurora-winter",
       "rank": 1,
-      "groupKm": 571.216,
+      "groupKm": 572.585,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9167,7 +9167,7 @@
       "country": "us",
       "lineId": "alaska-railroad-coastal-classic",
       "rank": 1,
-      "groupKm": 174.558,
+      "groupKm": 175.552,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9175,7 +9175,7 @@
       "country": "us",
       "lineId": "alaska-railroad-denali-star",
       "rank": 1,
-      "groupKm": 570.202,
+      "groupKm": 572.573,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9183,7 +9183,7 @@
       "country": "us",
       "lineId": "alaska-railroad-hurricane-turn",
       "rank": 1,
-      "groupKm": 267.082,
+      "groupKm": 267.684,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9525,25 +9525,25 @@
     },
     {
       "country": "ca",
+      "lineId": "ttc-1",
+      "rank": 2,
+      "groupKm": 38.601,
+      "minZoomForRank": 5,
+      "minZoomForLength": 5
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-2",
+      "rank": 2,
+      "groupKm": 26.251999999999995,
+      "minZoomForRank": 5,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
       "lineId": "ttc-4",
       "rank": 2,
-      "groupKm": 7.78,
-      "minZoomForRank": 5,
-      "minZoomForLength": 7
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-4-b1",
-      "rank": 2,
-      "groupKm": 7.78,
-      "minZoomForRank": 5,
-      "minZoomForLength": 7
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-4-b2",
-      "rank": 2,
-      "groupKm": 7.78,
+      "groupKm": 5.328,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -9551,15 +9551,7 @@
       "country": "ca",
       "lineId": "ttc-5",
       "rank": 3,
-      "groupKm": 21.718000000000004,
-      "minZoomForRank": 6,
-      "minZoomForLength": 6
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-5-b2",
-      "rank": 3,
-      "groupKm": 21.718000000000004,
+      "groupKm": 18.587000000000003,
       "minZoomForRank": 6,
       "minZoomForLength": 6
     },
@@ -9573,7 +9565,79 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304",
+      "lineId": "ttc-501",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b1",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b2",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b3",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b4",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b5",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b6",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b7",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b8",
+      "rank": 4,
+      "groupKm": 22.880999999999986,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9581,7 +9645,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b1",
+      "lineId": "ttc-504-b1",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9589,7 +9653,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b2",
+      "lineId": "ttc-504-b2",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9597,7 +9661,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b3",
+      "lineId": "ttc-504-b3",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9605,7 +9669,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b4",
+      "lineId": "ttc-504-b4",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9613,7 +9677,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b5",
+      "lineId": "ttc-504-b5",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9621,7 +9685,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b6",
+      "lineId": "ttc-504-b6",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9629,7 +9693,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b7",
+      "lineId": "ttc-504-b7",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9637,7 +9701,7 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b8",
+      "lineId": "ttc-504-b8",
       "rank": 4,
       "groupKm": 19.095,
       "minZoomForRank": 7,
@@ -9645,97 +9709,121 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-306",
+      "lineId": "ttc-505",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b2",
+      "lineId": "ttc-505-b1",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b4",
+      "lineId": "ttc-505-b2",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b5",
+      "lineId": "ttc-505-b3",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b6",
+      "lineId": "ttc-505-b4",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b7",
+      "lineId": "ttc-505-b5",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 12.621999999999998,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-306-b8",
+      "lineId": "ttc-506",
       "rank": 4,
-      "groupKm": 19.567999999999994,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-310",
+      "lineId": "ttc-506-b1",
       "rank": 4,
-      "groupKm": 6.504999999999999,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
-      "minZoomForLength": 7
+      "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b1",
+      "lineId": "ttc-506-b2",
       "rank": 4,
-      "groupKm": 6.504999999999999,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
-      "minZoomForLength": 7
+      "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b2",
+      "lineId": "ttc-506-b3",
       "rank": 4,
-      "groupKm": 6.504999999999999,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
-      "minZoomForLength": 7
+      "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b3",
+      "lineId": "ttc-506-b4",
       "rank": 4,
-      "groupKm": 6.504999999999999,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
-      "minZoomForLength": 7
+      "minZoomForLength": 6
     },
     {
       "country": "ca",
-      "lineId": "ttc-5-b1",
+      "lineId": "ttc-506-b5",
       "rank": 4,
-      "groupKm": 21.718000000000004,
+      "groupKm": 21.233,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b6",
+      "rank": 4,
+      "groupKm": 21.233,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b7",
+      "rank": 4,
+      "groupKm": 21.233,
+      "minZoomForRank": 7,
+      "minZoomForLength": 6
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b8",
+      "rank": 4,
+      "groupKm": 21.233,
       "minZoomForRank": 7,
       "minZoomForLength": 6
     },
@@ -9752,6 +9840,38 @@
       "lineId": "ttc-509-b1",
       "rank": 4,
       "groupKm": 4.2490000000000006,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510",
+      "rank": 4,
+      "groupKm": 6.504999999999999,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b1",
+      "rank": 4,
+      "groupKm": 6.504999999999999,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b2",
+      "rank": 4,
+      "groupKm": 6.504999999999999,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b3",
+      "rank": 4,
+      "groupKm": 6.504999999999999,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -9776,6 +9896,22 @@
       "lineId": "ttc-511-b2",
       "rank": 4,
       "groupKm": 5.468,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-512",
+      "rank": 4,
+      "groupKm": 5.413,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-512-b1",
+      "rank": 4,
+      "groupKm": 5.413,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },

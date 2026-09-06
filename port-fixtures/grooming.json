@@ -4851,7 +4851,7 @@
     {
       "country": "us",
       "lineId": "ace-ace",
-      "medianSpacingMeters": 17763,
+      "medianSpacingMeters": 17767,
       "limitsIndex": 2
     },
     {
@@ -4935,7 +4935,7 @@
     {
       "country": "us",
       "lineId": "amtrak-amtrak-cascades-us",
-      "medianSpacingMeters": 39917,
+      "medianSpacingMeters": 40285,
       "limitsIndex": 2
     },
     {
@@ -4947,7 +4947,7 @@
     {
       "country": "us",
       "lineId": "amtrak-amtrak-mardi-gras-service",
-      "medianSpacingMeters": 32764.000000000004,
+      "medianSpacingMeters": 32776,
       "limitsIndex": 2
     },
     {
@@ -4971,7 +4971,7 @@
     {
       "country": "us",
       "lineId": "amtrak-carl-sandburg",
-      "medianSpacingMeters": 42938,
+      "medianSpacingMeters": 42983,
       "limitsIndex": 2
     },
     {
@@ -4983,7 +4983,7 @@
     {
       "country": "us",
       "lineId": "amtrak-city-of-new-orleans",
-      "medianSpacingMeters": 83960,
+      "medianSpacingMeters": 84064,
       "limitsIndex": 2
     },
     {
@@ -5025,7 +5025,7 @@
     {
       "country": "us",
       "lineId": "amtrak-hiawatha-service",
-      "medianSpacingMeters": 28302,
+      "medianSpacingMeters": 28322,
       "limitsIndex": 2
     },
     {
@@ -5073,7 +5073,7 @@
     {
       "country": "us",
       "lineId": "amtrak-northeast-regional-b1",
-      "medianSpacingMeters": 135810,
+      "medianSpacingMeters": 135860,
       "limitsIndex": 2
     },
     {
@@ -5085,7 +5085,7 @@
     {
       "country": "us",
       "lineId": "amtrak-northeast-regional-b3",
-      "medianSpacingMeters": 71977,
+      "medianSpacingMeters": 72170,
       "limitsIndex": 2
     },
     {
@@ -5265,7 +5265,7 @@
     {
       "country": "us",
       "lineId": "cta-yellow-line",
-      "medianSpacingMeters": 6437,
+      "medianSpacingMeters": 6449,
       "limitsIndex": 2
     },
     {
@@ -5445,19 +5445,19 @@
     {
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b1",
-      "medianSpacingMeters": 29440,
+      "medianSpacingMeters": 29520,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b2",
-      "medianSpacingMeters": 43745,
+      "medianSpacingMeters": 43846,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b3",
-      "medianSpacingMeters": 33097,
+      "medianSpacingMeters": 33178,
       "limitsIndex": 2
     },
     {
@@ -5487,7 +5487,7 @@
     {
       "country": "us",
       "lineId": "mbta-capeflyer",
-      "medianSpacingMeters": 17817,
+      "medianSpacingMeters": 17843,
       "limitsIndex": 2
     },
     {
@@ -5499,13 +5499,13 @@
     {
       "country": "us",
       "lineId": "mbta-fall-river-new-bedford-line",
-      "medianSpacingMeters": 6272,
+      "medianSpacingMeters": 6281,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "mbta-fall-river-new-bedford-line-b1",
-      "medianSpacingMeters": 13565,
+      "medianSpacingMeters": 13571,
       "limitsIndex": 2
     },
     {
@@ -5703,7 +5703,7 @@
     {
       "country": "us",
       "lineId": "metra-ri-b2",
-      "medianSpacingMeters": 12516,
+      "medianSpacingMeters": 12517,
       "limitsIndex": 2
     },
     {
@@ -5733,19 +5733,19 @@
     {
       "country": "us",
       "lineId": "metra-up-nw-b1",
-      "medianSpacingMeters": 13500,
+      "medianSpacingMeters": 13509,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "metra-hc",
-      "medianSpacingMeters": 8974,
+      "medianSpacingMeters": 8976,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "metro-north-railroad-danbury",
-      "medianSpacingMeters": 6123,
+      "medianSpacingMeters": 6138,
       "limitsIndex": 2
     },
     {
@@ -5775,7 +5775,7 @@
     {
       "country": "us",
       "lineId": "metro-north-railroad-waterbury",
-      "medianSpacingMeters": 6201,
+      "medianSpacingMeters": 6213,
       "limitsIndex": 2
     },
     {
@@ -5799,13 +5799,13 @@
     {
       "country": "us",
       "lineId": "metrolink-91-pv-line",
-      "medianSpacingMeters": 8160,
+      "medianSpacingMeters": 8163,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "metrolink-av-line",
-      "medianSpacingMeters": 9039,
+      "medianSpacingMeters": 9070,
       "limitsIndex": 2
     },
     {
@@ -6147,7 +6147,7 @@
     {
       "country": "us",
       "lineId": "nashville-mta-wego-public-tr-90",
-      "medianSpacingMeters": 8743,
+      "medianSpacingMeters": 8760,
       "limitsIndex": 2
     },
     {
@@ -6165,7 +6165,7 @@
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-bntn-b1",
-      "medianSpacingMeters": 12496,
+      "medianSpacingMeters": 12505,
       "limitsIndex": 2
     },
     {
@@ -6201,7 +6201,7 @@
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mne-b1",
-      "medianSpacingMeters": 12496,
+      "medianSpacingMeters": 12505,
       "limitsIndex": 2
     },
     {
@@ -6213,19 +6213,19 @@
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mneg-b1",
-      "medianSpacingMeters": 21176,
+      "medianSpacingMeters": 21192,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mneg-b2",
-      "medianSpacingMeters": 20543,
+      "medianSpacingMeters": 20561,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-mrl",
-      "medianSpacingMeters": 11261,
+      "medianSpacingMeters": 11290,
       "limitsIndex": 2
     },
     {
@@ -6291,7 +6291,7 @@
     {
       "country": "us",
       "lineId": "north-county-transit-distric-498",
-      "medianSpacingMeters": 6547,
+      "medianSpacingMeters": 6548,
       "limitsIndex": 2
     },
     {
@@ -6735,7 +6735,7 @@
     {
       "country": "us",
       "lineId": "sound-transit-n-line",
-      "medianSpacingMeters": 17462,
+      "medianSpacingMeters": 17500,
       "limitsIndex": 2
     },
     {
@@ -6747,7 +6747,7 @@
     {
       "country": "us",
       "lineId": "south-florida-regional-trans-dml",
-      "medianSpacingMeters": 14215,
+      "medianSpacingMeters": 14228,
       "limitsIndex": 2
     },
     {
@@ -6891,25 +6891,25 @@
     {
       "country": "us",
       "lineId": "alaska-railroad-aurora-winter",
-      "medianSpacingMeters": 17163,
+      "medianSpacingMeters": 17315,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "alaska-railroad-coastal-classic",
-      "medianSpacingMeters": 111576,
+      "medianSpacingMeters": 112288,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "alaska-railroad-denali-star",
-      "medianSpacingMeters": 193791,
+      "medianSpacingMeters": 194726,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "alaska-railroad-hurricane-turn",
-      "medianSpacingMeters": 14636,
+      "medianSpacingMeters": 14681,
       "limitsIndex": 2
     },
     {
@@ -7166,20 +7166,20 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-4",
-      "medianSpacingMeters": 1715,
-      "limitsIndex": 2
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-4-b1",
-      "medianSpacingMeters": 1485,
+      "lineId": "ttc-1",
+      "medianSpacingMeters": 811,
       "limitsIndex": 1
     },
     {
       "country": "ca",
-      "lineId": "ttc-4-b2",
-      "medianSpacingMeters": 942,
+      "lineId": "ttc-2",
+      "medianSpacingMeters": 711,
+      "limitsIndex": 1
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-4",
+      "medianSpacingMeters": 1485,
       "limitsIndex": 1
     },
     {
@@ -7190,140 +7190,206 @@
     },
     {
       "country": "ca",
-      "lineId": "ttc-5-b2",
-      "medianSpacingMeters": 883,
-      "limitsIndex": 1
-    },
-    {
-      "country": "ca",
       "lineId": "ttc-6",
       "medianSpacingMeters": 549,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-304",
-      "medianSpacingMeters": 263,
+      "lineId": "ttc-501",
+      "medianSpacingMeters": 248,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b1",
-      "medianSpacingMeters": 288,
+      "lineId": "ttc-501-b1",
+      "medianSpacingMeters": 323,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-304-b2",
-      "medianSpacingMeters": 304,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b3",
-      "medianSpacingMeters": 394,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b4",
-      "medianSpacingMeters": 310,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b5",
-      "medianSpacingMeters": 489,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b6",
-      "medianSpacingMeters": 406,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b7",
-      "medianSpacingMeters": 312,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-304-b8",
-      "medianSpacingMeters": 247,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306",
-      "medianSpacingMeters": 236,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b2",
-      "medianSpacingMeters": 235,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b4",
-      "medianSpacingMeters": 549,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b5",
-      "medianSpacingMeters": 326,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b6",
-      "medianSpacingMeters": 341,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b7",
-      "medianSpacingMeters": 303,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-306-b8",
-      "medianSpacingMeters": 264,
-      "limitsIndex": 0
-    },
-    {
-      "country": "ca",
-      "lineId": "ttc-310",
+      "lineId": "ttc-501-b2",
       "medianSpacingMeters": 246,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b1",
-      "medianSpacingMeters": 451,
+      "lineId": "ttc-501-b3",
+      "medianSpacingMeters": 257,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b2",
-      "medianSpacingMeters": 146,
+      "lineId": "ttc-501-b4",
+      "medianSpacingMeters": 367,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-310-b3",
-      "medianSpacingMeters": 286,
+      "lineId": "ttc-501-b5",
+      "medianSpacingMeters": 216,
       "limitsIndex": 0
     },
     {
       "country": "ca",
-      "lineId": "ttc-5-b1",
-      "medianSpacingMeters": 328,
+      "lineId": "ttc-501-b6",
+      "medianSpacingMeters": 250,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b7",
+      "medianSpacingMeters": 403,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-501-b8",
+      "medianSpacingMeters": 237,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504",
+      "medianSpacingMeters": 263,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b1",
+      "medianSpacingMeters": 288,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b2",
+      "medianSpacingMeters": 304,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b3",
+      "medianSpacingMeters": 394,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b4",
+      "medianSpacingMeters": 310,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b5",
+      "medianSpacingMeters": 489,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b6",
+      "medianSpacingMeters": 406,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b7",
+      "medianSpacingMeters": 312,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-504-b8",
+      "medianSpacingMeters": 247,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505",
+      "medianSpacingMeters": 228,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505-b1",
+      "medianSpacingMeters": 509,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505-b2",
+      "medianSpacingMeters": 313,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505-b3",
+      "medianSpacingMeters": 254,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505-b4",
+      "medianSpacingMeters": 55,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-505-b5",
+      "medianSpacingMeters": 287,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506",
+      "medianSpacingMeters": 237,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b1",
+      "medianSpacingMeters": 496,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b2",
+      "medianSpacingMeters": 256,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b3",
+      "medianSpacingMeters": 297,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b4",
+      "medianSpacingMeters": 264,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b5",
+      "medianSpacingMeters": 220,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b6",
+      "medianSpacingMeters": 230,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b7",
+      "medianSpacingMeters": 207,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-506-b8",
+      "medianSpacingMeters": 357,
       "limitsIndex": 0
     },
     {
@@ -7336,6 +7402,30 @@
       "country": "ca",
       "lineId": "ttc-509-b1",
       "medianSpacingMeters": 251,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510",
+      "medianSpacingMeters": 246,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b1",
+      "medianSpacingMeters": 451,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b2",
+      "medianSpacingMeters": 146,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-510-b3",
+      "medianSpacingMeters": 286,
       "limitsIndex": 0
     },
     {
@@ -7354,6 +7444,18 @@
       "country": "ca",
       "lineId": "ttc-511-b2",
       "medianSpacingMeters": 149,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-512",
+      "medianSpacingMeters": 262,
+      "limitsIndex": 0
+    },
+    {
+      "country": "ca",
+      "lineId": "ttc-512-b1",
+      "medianSpacingMeters": 274,
       "limitsIndex": 0
     },
     {
@@ -80403,9 +80505,9 @@
       ]
     },
     {
-      "label": "ca:ttc-310-b3",
+      "label": "ca:ttc-510-b3",
       "country": "ca",
-      "lineId": "ttc-310-b3",
+      "lineId": "ttc-510-b3",
       "medianSpacingMeters": 286,
       "ownLimitsIndex": 0,
       "coordinates": [
@@ -181485,7 +181587,7 @@
       ]
     },
     {
-      "note": "ca:ttc-310-b3 under rung 0 (its own)",
+      "note": "ca:ttc-510-b3 under rung 0 (its own)",
       "input": 69,
       "limitsIndex": 0,
       "limits": {
@@ -181504,7 +181606,7 @@
       ]
     },
     {
-      "note": "ca:ttc-310-b3 under rung 1",
+      "note": "ca:ttc-510-b3 under rung 1",
       "input": 69,
       "limitsIndex": 1,
       "limits": {
@@ -181523,7 +181625,7 @@
       ]
     },
     {
-      "note": "ca:ttc-310-b3 under rung 2",
+      "note": "ca:ttc-510-b3 under rung 2",
       "input": 69,
       "limitsIndex": 2,
       "limits": {
@@ -181542,7 +181644,7 @@
       ]
     },
     {
-      "note": "ca:ttc-310-b3: station anchors protected",
+      "note": "ca:ttc-510-b3: station anchors protected",
       "input": 69,
       "limitsIndex": 0,
       "limits": {

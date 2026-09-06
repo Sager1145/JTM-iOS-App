@@ -62,7 +62,7 @@
       "radiusMetres": 2000,
       "evidence": [
         "review-flagged convergence of GO Transit's rail corridors (Lakeshore East/West, Kitchener, Barrie, Milton, Stouffville) with UP Express and VIA Rail on Union Station's approach tracks",
-        "auto-detection sweep (2026-09-02) found ttc-310 followed by 4 distinct lines (ttc-310-b1/b2/b3, ttc-509) within 19 m of a terminal, inside this hub's own radius"
+        "auto-detection sweep (2026-09-02) found ttc-510 followed by 4 distinct lines (ttc-510-b1/b2/b3, ttc-509) within 19 m of a terminal, inside this hub's own radius; the sweep ran before the Blue Night numbering was corrected and recorded these as ttc-310*, renamed to the ttc-510* day identities on 2026-09-05"
       ]
     },
     {

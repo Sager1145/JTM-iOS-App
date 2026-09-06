@@ -8112,22 +8112,17 @@
     },
     {
       "operator": "TTC",
-      "lineName": "Line 4 (Sheppard)",
+      "lineName": "Line 1 (Yonge-University)",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Line 2 (Bloor - Danforth)",
       "company": "TTC"
     },
     {
       "operator": "TTC",
       "lineName": "Line 4 (Sheppard)",
-      "company": "TTC"
-    },
-    {
-      "operator": "TTC",
-      "lineName": "Line 4 (Sheppard)",
-      "company": "TTC"
-    },
-    {
-      "operator": "TTC",
-      "lineName": "Line 5 Eglinton",
       "company": "TTC"
     },
     {
@@ -8142,7 +8137,47 @@
     },
     {
       "operator": "TTC",
-      "lineName": "King",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Queen",
       "company": "TTC"
     },
     {
@@ -8183,6 +8218,41 @@
     {
       "operator": "TTC",
       "lineName": "King",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "King",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Dundas",
       "company": "TTC"
     },
     {
@@ -8222,27 +8292,12 @@
     },
     {
       "operator": "TTC",
-      "lineName": "Spadina",
+      "lineName": "Carlton",
       "company": "TTC"
     },
     {
       "operator": "TTC",
-      "lineName": "Spadina",
-      "company": "TTC"
-    },
-    {
-      "operator": "TTC",
-      "lineName": "Spadina",
-      "company": "TTC"
-    },
-    {
-      "operator": "TTC",
-      "lineName": "Spadina",
-      "company": "TTC"
-    },
-    {
-      "operator": "TTC",
-      "lineName": "Line 5 Eglinton",
+      "lineName": "Carlton",
       "company": "TTC"
     },
     {
@@ -8257,7 +8312,22 @@
     },
     {
       "operator": "TTC",
-      "lineName": "Bathurst",
+      "lineName": "Spadina",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Spadina",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Spadina",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Spadina",
       "company": "TTC"
     },
     {
@@ -8268,6 +8338,21 @@
     {
       "operator": "TTC",
       "lineName": "Bathurst",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "Bathurst",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "St Clair",
+      "company": "TTC"
+    },
+    {
+      "operator": "TTC",
+      "lineName": "St Clair",
       "company": "TTC"
     },
     {
@@ -22646,31 +22731,31 @@
     {
       "country": "ca",
       "input": {
+        "lineId": "ttc-1",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-2",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
         "lineId": "ttc-4",
-        "id": null,
-        "operator": "TTC",
-        "logo": "/rail/operator-logos/na/ttc.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/ttc.png"
-    },
-    {
-      "country": "ca",
-      "input": {
-        "lineId": "ttc-4-b1",
-        "id": null,
-        "operator": "TTC",
-        "logo": "/rail/operator-logos/na/ttc.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/ttc.png"
-    },
-    {
-      "country": "ca",
-      "input": {
-        "lineId": "ttc-4-b2",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22694,18 +22779,6 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-5-b2",
-        "id": null,
-        "operator": "TTC",
-        "logo": "/rail/operator-logos/na/ttc.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/ttc.png"
-    },
-    {
-      "country": "ca",
-      "input": {
         "lineId": "ttc-6",
         "id": null,
         "operator": "TTC",
@@ -22718,7 +22791,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304",
+        "lineId": "ttc-501",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22730,7 +22803,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b1",
+        "lineId": "ttc-501-b1",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22742,7 +22815,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b2",
+        "lineId": "ttc-501-b2",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22754,7 +22827,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b3",
+        "lineId": "ttc-501-b3",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22766,7 +22839,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b4",
+        "lineId": "ttc-501-b4",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22778,7 +22851,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b5",
+        "lineId": "ttc-501-b5",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22790,7 +22863,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b6",
+        "lineId": "ttc-501-b6",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22802,7 +22875,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b7",
+        "lineId": "ttc-501-b7",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22814,7 +22887,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-304-b8",
+        "lineId": "ttc-501-b8",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22826,7 +22899,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306",
+        "lineId": "ttc-504",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22838,7 +22911,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b2",
+        "lineId": "ttc-504-b1",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22850,7 +22923,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b4",
+        "lineId": "ttc-504-b2",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22862,7 +22935,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b5",
+        "lineId": "ttc-504-b3",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22874,7 +22947,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b6",
+        "lineId": "ttc-504-b4",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22886,7 +22959,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b7",
+        "lineId": "ttc-504-b5",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22898,7 +22971,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-306-b8",
+        "lineId": "ttc-504-b6",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22910,7 +22983,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-310",
+        "lineId": "ttc-504-b7",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22922,7 +22995,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-310-b1",
+        "lineId": "ttc-504-b8",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22934,7 +23007,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-310-b2",
+        "lineId": "ttc-505",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22946,7 +23019,7 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-310-b3",
+        "lineId": "ttc-505-b1",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22958,7 +23031,151 @@
     {
       "country": "ca",
       "input": {
-        "lineId": "ttc-5-b1",
+        "lineId": "ttc-505-b2",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-505-b3",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-505-b4",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-505-b5",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b1",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b2",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b3",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b4",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b5",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b6",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b7",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-506-b8",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -22983,6 +23200,54 @@
       "country": "ca",
       "input": {
         "lineId": "ttc-509-b1",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-510",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-510-b1",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-510-b2",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-510-b3",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"
@@ -23019,6 +23284,30 @@
       "country": "ca",
       "input": {
         "lineId": "ttc-511-b2",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-512",
+        "id": null,
+        "operator": "TTC",
+        "logo": "/rail/operator-logos/na/ttc.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/ttc.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/ttc.png"
+    },
+    {
+      "country": "ca",
+      "input": {
+        "lineId": "ttc-512-b1",
         "id": null,
         "operator": "TTC",
         "logo": "/rail/operator-logos/na/ttc.png"

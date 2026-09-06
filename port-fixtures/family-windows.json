@@ -351,23 +351,23 @@
       "label": "Metrolink LA Union Station approach — IE-OC Line landlord windows (2 stretches)",
       "lineId": "metrolink-ie-oc-line",
       "partIndex": 0,
-      "totalMetres": 162715.3,
+      "totalMetres": 162852.6,
       "familyWindows": [
         {
           "from": 0,
-          "to": 87225,
+          "to": 87250,
           "groupId": "metrolink:trunk"
         },
         {
-          "from": 95625,
-          "to": 149950,
+          "from": 95675,
+          "to": 150100,
           "groupId": "metrolink:trunk"
         }
       ],
       "tenantWindows": [
         {
-          "from": 160575,
-          "to": 162715.3,
+          "from": 160675,
+          "to": 162846.2,
           "groupId": "metrolink:trunk"
         }
       ],
@@ -378,27 +378,33 @@
         {
           "feature": "family",
           "from": 0,
-          "to": 87225,
+          "to": 87250,
           "colorKey": "#006070",
           "groupId": "metrolink:trunk"
         },
         {
           "feature": "base",
-          "from": 87225,
-          "to": 95625,
+          "from": 87250,
+          "to": 95675,
           "colorKey": "#006070"
         },
         {
           "feature": "family",
-          "from": 95625,
-          "to": 149950,
+          "from": 95675,
+          "to": 150100,
           "colorKey": "#006070",
           "groupId": "metrolink:trunk"
         },
         {
           "feature": "base",
-          "from": 149950,
-          "to": 160575,
+          "from": 150100,
+          "to": 160675,
+          "colorKey": "#006070"
+        },
+        {
+          "feature": "base",
+          "from": 162846.2,
+          "to": 162852.6,
           "colorKey": "#006070"
         }
       ]
