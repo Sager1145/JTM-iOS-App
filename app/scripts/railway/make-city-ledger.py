@@ -236,6 +236,12 @@ def main():
 
     text = '\n'.join(out) + '\n'
     if len(sys.argv) > 1:
+        # `--help` is not an output path. Taking argv[1] literally wrote a
+        # 49 KB ledger into a file called `--help` in the repository root,
+        # which then sat there as junk nobody could account for.
+        if sys.argv[1].startswith('-'):
+            sys.stderr.write(__doc__ or '')
+            raise SystemExit(0 if sys.argv[1] in ('-h', '--help') else 2)
         pathlib.Path(sys.argv[1]).write_text(text)
     else:
         sys.stdout.write(text)
