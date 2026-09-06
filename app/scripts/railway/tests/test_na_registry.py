@@ -128,6 +128,8 @@ class RegistryIntegrityTests(unittest.TestCase):
             ['21105', '25779'],
             ['20986', '21103'],
             ['20965', '841'],
+            ['31038', '32185'],
+            ['31031', '32189'],
         ])
         self.assertIn('SEPTA official GTFS', feed['stationIdentityEvidence'])
         self.assertIn('exact stop-id', feed['stationIdentityEvidence'])
@@ -135,6 +137,39 @@ class RegistryIntegrityTests(unittest.TestCase):
         # first so it stays the merge's canonical stop; the default same-
         # name merge would otherwise pick the unrelated bus stop 841.
         self.assertIn('Fern Rock', feed['stationIdentityEvidence'])
+        # The last two pairs are the M1 case, and a different mechanism: a
+        # location_type=1 station parent resolves to itself before the name
+        # clustering runs, so an unparented platform 8-11 m away has nothing
+        # to match and escapes as a second station.  SEPTA's own station id
+        # leads each pair so the survivor keeps the declared coordinate.
+        for station_id in ('31038', '31031'):
+            self.assertEqual(
+                [group[0] for group in feed['stationIdentityGroups']
+                 if station_id in group], [station_id])
+        self.assertIn('location_type=1', feed['stationIdentityEvidence'])
+        self.assertIn('septa-m1-b2', feed['stationIdentityEvidence'])
+        self.assertIn('septa-m1-b1', feed['stationIdentityEvidence'])
+
+    def test_same_name_platforms_just_past_the_radius_are_one_station(self):
+        # Houston's Main Street Square and NCTD's San Diego - Santa Fe Depot
+        # are one station published as two same-name stops 211 m and 220 m
+        # apart -- just outside canonical_feed_parents' 200 m platform radius
+        # -- and each escaped platform carried a stopping pattern out as a
+        # phantom branch.  Registry groups, not a wider radius: the radius is
+        # shared by all 97 feeds and these two cases are 11 m and 20 m over.
+        feeds = {row['slug']: row for row in self.registry()['feeds']}
+        for slug, groups, branch in (
+                ('houston-metro', [['25027', '25028']],
+                 'houston-metro-700-b1'),
+                ('north-county-transit-distric', [['28007', '28107']],
+                 'north-county-transit-distric-498-b1')):
+            feed = feeds[slug]
+            self.assertEqual(feed['stationIdentityGroups'], groups)
+            evidence = feed['stationIdentityEvidence']
+            for stop_id in groups[0]:
+                self.assertIn(stop_id, evidence)
+            self.assertIn(branch, evidence)
+            self.assertIn('200 m', evidence)
 
     def test_mta_service_specific_networks_cover_every_route(self):
         feed = next(row for row in self.registry()['feeds']

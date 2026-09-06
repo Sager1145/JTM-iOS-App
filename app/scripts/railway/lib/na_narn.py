@@ -39,6 +39,7 @@ class Network:
         self.node_edges = defaultdict(list)
         self.grid = defaultdict(list)
         self.cell = 0.05
+        self._connected_edges = None
         for feature in features:
             props = feature.get('properties') or {}
             if country and props.get('COUNTRY') not in country:
@@ -63,6 +64,46 @@ class Network:
 
     def _key(self, p):
         return (int(math.floor(p[0] / self.cell)), int(math.floor(p[1] / self.cell)))
+
+    def connected_edges(self):
+        """Every edge index in the network's LARGEST connected component.
+
+        The FRA network is not one graph. Alongside the continent-spanning
+        component there are thousands of small islands: sidings whose
+        connection to the main line is not digitised, industrial spurs, ferry
+        and abandoned fragments. A station that snaps onto one of those is
+        spliced onto a formation the router can never leave, and both of its
+        intervals die. Membership of the main component is therefore the
+        strongest single signal that a candidate edge is real railway a train
+        could be on, and it is the first key ``snap`` ranks a near-tie by.
+
+        Computed once, over ``self.edges``, and memoised.
+        """
+        if self._connected_edges is not None:
+            return self._connected_edges
+        parent = {}
+
+        def find(x):
+            root = x
+            while parent.get(root, root) != root:
+                root = parent[root]
+            while parent.get(x, x) != x:
+                parent[x], x = root, parent[x]
+            return root
+
+        for a, b, *_ in self.edges:
+            parent.setdefault(a, a)
+            parent.setdefault(b, b)
+            ra, rb = find(a), find(b)
+            if ra != rb:
+                parent[ra] = rb
+        size = defaultdict(int)
+        for node in parent:
+            size[find(node)] += 1
+        main = max(size, key=lambda root: size[root]) if size else None
+        self._connected_edges = {
+            i for i, edge in enumerate(self.edges) if find(edge[0]) == main}
+        return self._connected_edges
 
     # ------------------------------------------------------------------ lookup
 
@@ -102,18 +143,80 @@ class Network:
                 out.update(self.grid.get((kx, ky), ()))
         return out
 
-    def snap(self, point, candidates=None, max_m=4_000):
-        """The closest place on the network to a station's published position."""
+    def snap(self, point, candidates=None, max_m=4_000, prefer_m=0.0,
+             corridor=None):
+        """The closest place on the network to a station's published position.
+
+        With ``prefer_m`` at its default the answer is nearest-wins, which is
+        what the network is asked for everywhere the caller has no opinion.
+
+        Nearest-wins is wrong wherever somebody else's track passes closer to
+        the published stop than the line's own railway does. Newton, Kansas is
+        the clean case: the Amtrak stop is 27.6 m from a ``NET='S'`` BNSF
+        siding stub that forms a four-edge island, and 36.7 m from the
+        ``NET='M'``, ``PASSNGR='A'`` main line the train is actually on. Nine
+        metres of survey noise decide it, the station is spliced onto an island
+        the router can never leave, and both adjacent intervals die.
+
+        So a caller that knows better passes ``prefer_m``: every candidate
+        within that band of the nearest is a plausible reading of the same
+        stop, and the band is ranked by what a railway would say rather than by
+        centimetres — in the main connected component first, then near the
+        operator's own corridor, then carrying a passenger tag, then nearest.
+        """
         pool = candidates if candidates is not None else self.edges_near(point, 2)
-        best = None
+        if prefer_m <= 0:
+            best = None
+            for index in pool:
+                _, _, points, _, _ = self.edges[index]
+                d, i, t, coord, measure = geo.project_to_line(point, points)
+                if d > max_m:
+                    continue
+                if best is None or d < best[0]:
+                    best = (d, index, measure, coord)
+            return best
+
+        rows = []
         for index in pool:
             _, _, points, _, _ = self.edges[index]
             d, i, t, coord, measure = geo.project_to_line(point, points)
             if d > max_m:
                 continue
-            if best is None or d < best[0]:
-                best = (d, index, measure, coord)
-        return best
+            rows.append((d, index, measure, coord))
+        if not rows:
+            return None
+        floor = min(row[0] for row in rows)
+        band = sorted((row for row in rows if row[0] <= floor + prefer_m),
+                      key=lambda row: (row[0], row[1]))
+        connected = self.connected_edges()
+
+        def rank(row):
+            edge = row[1]
+            props = self.edges[edge][4]
+            if corridor is None:
+                corridor_key = 0
+            else:
+                points = self.edges[edge][2]
+                mid = points[len(points) // 2]
+                d, _ = corridor.nearest(mid, search_cells=2)
+                if d == float('inf'):
+                    # Out of the index's reach entirely: worse than anything
+                    # measurable, but a finite key so the sort still works.
+                    d = 1e9
+                # Deliberately coarsened to 25 m buckets. The corridor distance
+                # is a continuous number and two candidate tracks are never
+                # exactly the same distance from it, so used raw it decides
+                # every tie by itself and the passenger tag below never gets a
+                # vote. Rounded, "as near the corridor as makes any difference"
+                # is one bucket, and inside that bucket the tag is allowed to
+                # win.
+                corridor_key = round(d / 25.0)
+            return (0 if edge in connected else 1,
+                    corridor_key,
+                    0 if (props.get('PASSNGR') or '').strip() else 1,
+                    row[0])
+
+        return min(band, key=rank)
 
     # ----------------------------------------------------------------- routing
 
@@ -136,10 +239,16 @@ class Network:
         which where the shape says nothing is the truth and better than a
         seven-times penalty on the real track.
         """
-        index = geo.ReferenceIndex(cell_deg=0.05)
-        for corridor in corridors:
-            if corridor and len(corridor) > 1:
-                index.add_line(corridor)
+        return self.corridor_costs_from_index(
+            corridor_index(corridors), pool, width_m)
+
+    def corridor_costs_from_index(self, index, pool, width_m):
+        """``corridor_costs`` over an index that has already been built.
+
+        The index is also what ``snap`` measures a near-tie's distance to the
+        operator's own corridor with, so a route builds it once and hands the
+        same object to both.
+        """
         costs = {}
         for e in pool:
             _, _, points, length, _ = self.edges[e]
@@ -200,7 +309,16 @@ class Network:
         return points
 
 
-def _direct(net, start, end, max_snap_m, ratio_cap):
+def corridor_index(corridors):
+    """A spatial index of the corridors a line is allowed to be routed inside."""
+    index = geo.ReferenceIndex(cell_deg=0.05)
+    for corridor in corridors:
+        if corridor and len(corridor) > 1:
+            index.add_line(corridor)
+    return index
+
+
+def _direct(net, start, end, max_snap_m, ratio_cap, prefer_m=0.0):
     """One station pair, over the official network, with no corridor at all.
 
     Bounded by a box around the pair rather than by a corridor, and accepted
@@ -217,7 +335,11 @@ def _direct(net, start, end, max_snap_m, ratio_cap):
     splits = defaultdict(list)
     anchors = []
     for index, point in enumerate((start, end)):
-        hit = net.snap(point, pool, max_snap_m)
+        # No corridor here by construction -- ``_direct`` is what is asked
+        # when the corridor could not answer -- so the preference ranks on
+        # connectedness and the passenger tag alone.
+        hit = net.snap(point, pool, max_snap_m, prefer_m=prefer_m,
+                       corridor=None)
         if hit is None:
             return None
         _, edge, measure, coord = hit
@@ -309,7 +431,7 @@ class RoutingGraph:
 
 
 def route_stations(net, corridors, station_points, width_m=1_500,
-                   max_snap_m=3_000, pad_cells=1):
+                   max_snap_m=3_000, pad_cells=1, prefer_m=0.0):
     """Route one line's ordered stations through the official network.
 
     Returns ``(intervals, report)``. ``intervals[i]`` is the geometry from
@@ -323,12 +445,13 @@ def route_stations(net, corridors, station_points, width_m=1_500,
         pool |= net.edges_near_line(geo.densify(corridor, 2_000), pad_cells)
     if not pool:
         return [None] * (len(station_points) - 1), {'reason': 'no candidate track'}
-    costs = net.corridor_costs(corridors, pool, width_m)
+    index = corridor_index(corridors)
+    costs = net.corridor_costs_from_index(index, pool, width_m)
     splits = defaultdict(list)
     anchors = []
     unsnapped = []
     for i, p in enumerate(station_points):
-        hit = net.snap(p, pool, max_snap_m)
+        hit = net.snap(p, pool, max_snap_m, prefer_m=prefer_m, corridor=index)
         if hit is None:
             anchors.append(None)
             unsnapped.append(i)
@@ -358,7 +481,7 @@ def route_stations(net, corridors, station_points, width_m=1_500,
             # corridor and a box around just those two stations, the answer is
             # the line that is actually there.
             path = _direct(net, station_points[i], station_points[i + 1],
-                           max_snap_m, ratio_cap=2.2)
+                           max_snap_m, ratio_cap=2.2, prefer_m=prefer_m)
             if path is not None:
                 rescued.append(i)
         if path is None or len(path) < 2:
@@ -368,6 +491,7 @@ def route_stations(net, corridors, station_points, width_m=1_500,
             intervals.append(path)
     report = {
         'rescued': rescued,
+        'preferMeters': prefer_m,
         'snapped': sum(1 for a in anchors if a is not None),
         'unsnapped': unsnapped,
         'unrouted': misses,

@@ -2,7 +2,7 @@
 """Build the United States and Canada rail packages.
 
     python3 scripts/railway/build-north-america-rail-package.py \
-        --source-dir /private/tmp/na-rail \
+        --source-dir data/raw/na-rail \
         --registry scripts/railway/na-feeds.json
 
 Writes, under the same rules every other country package family follows:
@@ -429,6 +429,7 @@ ROUTE_KEYED_MAPS = (
     'officialShapeIdByRouteId', 'blockedRouteIds',
     'officialNetworkDefectByRouteId', 'geometryReviewByRouteId',
     'referenceValidatedGeometryByRouteId', 'osmRelationEvidenceByRouteId',
+    'osmRelationValidationByRouteId',
 )
 ROUTE_KEYED_LISTS = ('includeRouteIds', 'excludeRoutes',
                      'preferOperatorShapeByRouteId',
@@ -1576,6 +1577,16 @@ class FeedBuild:
                     self.osm_relation_evidence = {}
                 self.osm_relation_evidence[(rid, suffix)] = {
                     'relation': relation_id, 'evidence': evidence}
+                # Which independent survey the relation was validated against,
+                # and by which script.  The relation cannot corroborate its own
+                # straight track; this names the chain that can, so each
+                # straight-interval record can cite it instead of asserting an
+                # exception.
+                validation = (self.entry.get('osmRelationValidationByRouteId')
+                              or {}).get(rid)
+                if validation:
+                    self.osm_relation_evidence[(rid, suffix)]['validation'] = (
+                        validation)
                 self.report['notes'].append(
                     f'{rid}{suffix}: alignment from audited OSM relation '
                     f'{relation_id}, accepted on recorded evidence; station '
@@ -1595,12 +1606,14 @@ class FeedBuild:
             # the continent graph for the territory it covers.  Only fall
             # back to NARN when that official survey could not join every
             # station on this line.
-            intervals, routing = narn.route_stations(
+            prefer_m = self.snap_prefer_m(rid)
+            routed, routing = narn.route_stations(
                 self.network, corridors, points,
                 width_m=self.options.corridor_m,
-                max_snap_m=self.options.snap_m)
-            intervals = self.reject_far_snap_intervals(
-                intervals, routing, rid, suffix)
+                max_snap_m=self.options.snap_m,
+                prefer_m=prefer_m)
+            snapped = self.reject_far_snap_intervals(
+                routed, routing, rid, suffix)
             if shape and not schematic and not self.network_surveys(routing):
                 self.report['dropped'].append({
                     'route': rid, 'suffix': suffix,
@@ -1610,15 +1623,57 @@ class FeedBuild:
                 })
                 intervals = None
             else:
-                intervals = self.reject_detours(intervals, points, shape,
+                def stage_of(i):
+                    # Which of the three NARN stages actually let this
+                    # interval down. ``routed[i]`` is ``None`` when
+                    # ``route_stations`` itself could not join the pair
+                    # inside the corridor; ``snapped[i]`` is ``None`` when it
+                    # *was* joined but ``reject_far_snap_intervals`` then
+                    # decided one of its two endpoints landed on the wrong
+                    # railway; anything that survives both and still comes
+                    # back ``None`` below was thrown out by
+                    # ``reject_detours`` for a wrong-way turn or a shortest
+                    # path that went round the long way.
+                    if routed[i] is None:
+                        return 'unrouted'
+                    if snapped[i] is None:
+                        return 'far-snap'
+                    return 'detour-or-reversal'
+
+                intervals = self.reject_detours(snapped, points, shape,
                                                 schematic, kindname)
                 covered = sum(1 for x in intervals if x)
+                total = len(intervals)
                 if covered >= max(1, int(0.8 * (len(points) - 1))):
                     had_gap = any(x is None for x in intervals)
+                    failed = [i for i, x in enumerate(intervals) if x is None]
                     intervals = self.patch_with_shape(intervals, points, shape,
                                                       schematic, kindname)
                     source = self.SHAPE_SOURCE if had_gap and intervals else 'narn'
+                    if had_gap and intervals:
+                        self.report['dropped'].append({
+                            'route': rid, 'suffix': suffix,
+                            'why': ('NARN routed most but not all stations '
+                                    'of this pattern'),
+                            'covered': covered,
+                            'total': total,
+                            'failedIntervals': [
+                                f'{i}:{stage_of(i)}' for i in failed],
+                            'preferMeters': prefer_m,
+                            'usedInstead': self.SHAPE_SOURCE,
+                        })
                 else:
+                    failed = [i for i, x in enumerate(intervals) if x is None]
+                    self.report['dropped'].append({
+                        'route': rid, 'suffix': suffix,
+                        'why': 'NARN could not route enough of this pattern',
+                        'covered': covered,
+                        'total': total,
+                        'failedIntervals': [
+                            f'{i}:{stage_of(i)}' for i in failed],
+                        'preferMeters': prefer_m,
+                        'usedInstead': self.SHAPE_SOURCE,
+                    })
                     intervals = None
         if intervals is None and shape and not schematic and not shape_forbidden:
             cut, _, _ = build.cut_at_stations(
@@ -1782,6 +1837,24 @@ class FeedBuild:
         """
         median = median_snap(routing)
         return median is not None and median <= self.options.anchor_m
+
+    def snap_prefer_m(self, rid):
+        """How wide a band above the nearest NARN candidate this route trusts.
+
+        Route-level beats feed-level beats the CLI default, the same order
+        every other per-route override in this file resolves in. Zero -- no
+        registry entry, no ``--snap-prefer-m``, or an explicit zero at any
+        level -- keeps ``Network.snap`` at nearest-wins, which is correct
+        everywhere a reviewer has not looked at a specific mis-snap and named
+        the width that fixes it without also pulling in a *different* wrong
+        candidate. See ``Network.snap`` in ``lib/na_narn.py`` for what the
+        band is ranked by once it is non-zero.
+        """
+        return float(
+            ((self.entry.get('narnSnapPreferMetersByRouteId') or {}).get(rid))
+            or self.entry.get('narnSnapPreferMeters')
+            or getattr(self.options, 'snap_prefer_m', 0.0)
+            or 0.0)
 
     #: What ``geometry_for`` calls the operator's own alignment. Overridden by
     #: the OpenStreetMap builder, which has a different one.
@@ -3646,6 +3719,14 @@ def suspicious_straight_intervals(line):
     return found
 
 
+def interval_station_pair(line, index):
+    """The two station names an interval runs between, for a review record."""
+    names = line.get('stationNames') or ()
+    if index + 1 < len(names):
+        return names[index], names[index + 1]
+    return None, None
+
+
 def corroborate_straight_intervals(line, indices, reference):
     """Split suspected chords into "surveyed straight" and "still a guess".
 
@@ -3654,12 +3735,18 @@ def corroborate_straight_intervals(line, indices, reference):
     whole of it, inside the same band tolerance the finished line is measured
     against; anything else stays refused, because a chord drawn where the
     railway curves is exactly the failure this gate exists for.
+
+    Every interval that clears carries its own record: what was measured, over
+    what length, against which source.  A line-wide "corroborated" flag says
+    nothing a reviewer can check; an interval that names its own chord length
+    and its own worst disagreement can be argued with.
     """
     if reference is None:
         return [], None, list(indices)
     tolerance = profile.CROSSCHECK_TOLERANCE_M.get(line.get('profile'), 90.0)
     corroborated = []
     refused = []
+    records = []
     worst = 0.0
     worst_at = None
     agreed = Counter()
@@ -3672,6 +3759,19 @@ def corroborate_straight_intervals(line, indices, reference):
             continue
         corroborated.append(index)
         agreed.update(verdict['agreedWith'])
+        start, end = interval_station_pair(line, index)
+        records.append({
+            'interval': index,
+            'fromStation': start,
+            'toStation': end,
+            'chordMeters': round(geo.line_length(piece), 1),
+            'basis': 'independent-survey',
+            'maxDeviationMeters': verdict['maxDeviationMeters'],
+            'toleranceMeters': tolerance,
+            'vertices': verdict['vertices'],
+            'matchedVertices': verdict['matched'],
+            'corroboratedBy': dict(verdict['agreedWith']),
+        })
         if verdict['maxDeviationMeters'] > worst:
             worst = verdict['maxDeviationMeters']
             worst_at = verdict['worstAt']
@@ -3683,8 +3783,158 @@ def corroborate_straight_intervals(line, indices, reference):
             'maxDeviationMeters': worst,
             'worstAt': worst_at,
             'corroboratedBy': dict(agreed),
+            'records': records,
         }
     return corroborated, evidence, refused
+
+
+def audited_relation_slice(line, index, shapes, anchor_m=5.0):
+    """The audited relation's own geometry between one interval's endpoints.
+
+    The interval was cut from this relation, so its endpoints project onto it;
+    slicing the relation back out between those two projections recovers what
+    the source itself says about the railway there, before any densification
+    or grooming.  Returns ``None`` when the evidence chain does not hold — no
+    relation extract, or endpoints that do not sit on the relation at all.
+    """
+    evidence = line.get('osmRelationEvidence') or {}
+    relation_id = evidence.get('relation')
+    if relation_id is None:
+        return None
+    raw = (shapes or {}).get(int(relation_id))
+    if not raw or len(raw) < 2:
+        return None
+    piece = (line.get('intervals') or [])[index]
+    if not piece or len(piece) < 2:
+        return None
+    cumul = geo.cumulative(raw)
+    start_d, _, _, _, start_m = geo.project_to_line(piece[0], raw, cumul)
+    end_d, _, _, _, end_m = geo.project_to_line(piece[-1], raw, cumul)
+    if max(start_d, end_d) > anchor_m:
+        return None
+    sliced = geo.slice_between(raw, cumul, start_m, end_m)
+    if len(sliced) < 2:
+        return None
+    return {
+        'relation': int(relation_id),
+        'sliceMeters': round(geo.line_length(sliced), 1),
+        'interiorVertices': len(sliced) - 2,
+        'maxDeviationMeters': round(max_endpoint_chord_deviation(sliced), 2),
+        'anchorProjectionMeters': round(max(start_d, end_d), 2),
+    }
+
+
+def reviewed_straight_exception(line, index, reviewed):
+    """A reviewer's declared exception for this exact station pair, if any."""
+    start, end = interval_station_pair(line, index)
+    for row in (reviewed or {}).get(line.get('lineId')) or ():
+        if row.get('from') == start and row.get('to') == end:
+            return row
+    return None
+
+
+def record_audited_relation_straights(line, indices, options,
+                                      maximum_deviation_m=2.0):
+    """Measure a straight interval against the relation that actually drew it.
+
+    An audited OSM relation is accepted as a route's alignment only when the
+    registry can show it was validated against an *independent government
+    survey* — for Toronto's Line 1 and Line 2, `validate-ttc-subway-osm.py`
+    against the City's `COTGEO_TOPO_RAILWAY` subtype 2005 topographic mapping
+    of subway track.  That validation is what earns the exception; the
+    relation cannot corroborate itself, and `CrossCheck.straight_is_surveyed`
+    deliberately refuses to let it try.
+
+    What this adds is the half the validation cannot supply: whether the
+    straightness of *this interval* is the source's own statement or something
+    the builder introduced.  Slice the relation back out between the
+    interval's endpoints and measure it.  A slice that is straight to within
+    the same two metres `piece_is_station_chord` allows says the railway is
+    drawn straight in the source; a slice that curves means densification or
+    grooming flattened real shape, and that interval is refused like any other
+    guessed chord.
+
+    Returns ``(kept, records, refused)``.
+    """
+    shapes = getattr(options, 'osm_relation_shapes', None) or {}
+    reviewed = getattr(options, 'reviewed_straight_intervals', None) or {}
+    validation = (line.get('osmRelationEvidence') or {}).get('validation')
+    kept = []
+    records = []
+    refused = []
+    for index in indices:
+        measured = audited_relation_slice(line, index, shapes)
+        if (measured is None
+                or measured['maxDeviationMeters'] > maximum_deviation_m):
+            refused.append(index)
+            continue
+        start, end = interval_station_pair(line, index)
+        piece = (line.get('intervals') or [])[index]
+        record = {
+            'interval': index,
+            'fromStation': start,
+            'toStation': end,
+            'chordMeters': round(geo.line_length(piece), 1),
+            'basis': 'audited-relation',
+            'relation': measured['relation'],
+            'sourceMaxDeviationMeters': measured['maxDeviationMeters'],
+            'sourceInteriorVertices': measured['interiorVertices'],
+            'anchorProjectionMeters': measured['anchorProjectionMeters'],
+        }
+        if validation:
+            record['validatedBy'] = validation.get('validator')
+            record['validatedAgainst'] = validation.get('reference')
+        exception = reviewed_straight_exception(line, index, reviewed)
+        if exception:
+            record['reviewedException'] = {
+                key: value for key, value in exception.items()
+                if key not in ('from', 'to')
+            }
+        kept.append(index)
+        records.append(record)
+    return kept, records, refused
+
+
+def merge_straight_survey(line, records, tolerance, corroborated_by=None,
+                          worst_at=None):
+    """Fold new per-interval straight records into the line's own artifact.
+
+    One artifact, one shape: `straightIntervals` in the package is the list of
+    intervals a reviewer has been given a reason for, and `records` is the
+    reason, one entry per interval.  Station grouping can raise the question a
+    second time for the same line, so this merges rather than replaces — an
+    interval cleared before grooming must not lose its record afterwards.
+    """
+    if not records:
+        return
+    survey = dict(line.get('straightSurvey') or {})
+    existing = {row['interval']: row for row in survey.get('records') or ()}
+    for row in records:
+        existing[row['interval']] = row
+    survey['records'] = [existing[key] for key in sorted(existing)]
+    survey['intervals'] = sorted(existing)
+    survey.setdefault('toleranceMeters', tolerance)
+    agreed = Counter(survey.get('corroboratedBy') or {})
+    agreed.update(corroborated_by or {})
+    survey['corroboratedBy'] = dict(agreed)
+    worst = max(
+        [float(survey.get('maxDeviationMeters') or 0.0)]
+        + [float(row.get('maxDeviationMeters') or 0.0)
+           for row in survey['records']])
+    if worst_at is not None and worst > float(
+            survey.get('maxDeviationMeters') or 0.0):
+        survey['worstAt'] = worst_at
+    survey.setdefault('worstAt', None)
+    survey['maxDeviationMeters'] = worst
+    line['straightSurvey'] = survey
+
+
+#: Lines drawn from a surveyed government network (FRA/BTS National Rail
+#: Network). `unmatched` for these sources measures OSM download coverage
+#: (the OSM crosscheck downloader skips routes over 250 km), not whether
+#: the line itself is real, so it must not block them; measured deviation
+#: still does.
+SURVEYED_GEOMETRY_SOURCES = frozenset({'narn'})
 
 
 def filter_unresolved_geometry(region_lines, options, reference=None):
@@ -3703,11 +3953,7 @@ def filter_unresolved_geometry(region_lines, options, reference=None):
         # earns this exception only after endpoint identity and both raw and
         # normalized hashes have been verified from the official manifest.
         verified = getattr(options, 'verified_official_sources', {})
-        # An audited OSM relation accepted on recorded evidence gets the same
-        # exception: a straight tunnel under a straight street is straight in
-        # the relation for the same reason it is straight in a survey.
-        intervals = ([] if (line.get('geometrySource') in verified
-                            or line.get('osmRelationEvidence'))
+        intervals = ([] if line.get('geometrySource') in verified
                      else suspicious_straight_intervals(line))
         if intervals:
             # An operator's own published alignment gets the same exception on
@@ -3723,6 +3969,31 @@ def filter_unresolved_geometry(region_lines, options, reference=None):
                       f"independent survey (worst "
                       f"{evidence['maxDeviationMeters']:.1f} m of "
                       f"{evidence['toleranceMeters']:.0f} m)", file=sys.stderr)
+        if intervals and line.get('osmRelationEvidence'):
+            # An audited OSM relation is not exempt as a line; each interval
+            # is measured against the relation's own geometry and clears on
+            # that measurement, on the evidence chain the registry records —
+            # the relation validated against an independent government survey.
+            # A line-wide skip here hid both the measurement and the intervals
+            # where the relation carries no interior node at all.
+            kept, records, intervals = record_audited_relation_straights(
+                line, intervals, options)
+            if kept:
+                merge_straight_survey(
+                    line, records,
+                    profile.CROSSCHECK_TOLERANCE_M.get(
+                        line.get('profile'), 90.0))
+                bare = [row['interval'] for row in records
+                        if not row['sourceInteriorVertices']]
+                worst = max(row['sourceMaxDeviationMeters']
+                            for row in records)
+                print(f"  {line['lineId']}: {len(kept)} straight interval"
+                      f"{'s' if len(kept) != 1 else ''} recorded against "
+                      f"audited relation {records[0]['relation']} "
+                      f"(worst source deviation {worst:.2f} m"
+                      + (f"; {len(bare)} with no interior relation node: "
+                         + ', '.join(str(index) for index in bare)
+                         if bare else '') + ')', file=sys.stderr)
         if not intervals:
             continue
         blocked.add(id(line))
@@ -3773,9 +4044,15 @@ def filter_unresolved_geometry(region_lines, options, reference=None):
             line['_alignmentCheck'] = check
             limit = profile.DISPLAY_ALIGNMENT_TOLERANCE_M.get(
                 line.get('profile'), 20.0)
+            # A line routed over the FRA's own surveyed centrelines carries
+            # "there is track here" by construction; its unmatched count
+            # measures OSM download coverage, not the line.  Measured
+            # disagreement still blocks.
+            unmatched_blocks = (
+                line.get('geometrySource') not in SURVEYED_GEOMETRY_SOURCES)
             over_limit = [
                 index for index, row in enumerate(interval_checks)
-                if (int(row.get('unmatched') or 0) > 0
+                if ((unmatched_blocks and int(row.get('unmatched') or 0) > 0)
                     or float(row.get('maxDeviationMeters') or 0.0) > limit)
             ]
             if not over_limit:
@@ -3928,8 +4205,7 @@ def build_region(region, region_lines, options, reference):
             print(f"  {line['lineId']}: recomputed {line['profile']} grooming "
                   'after station topology changed', file=sys.stderr)
         verified = getattr(options, 'verified_official_sources', {})
-        late_chords = ([] if (line.get('geometrySource') in verified
-                              or line.get('osmRelationEvidence'))
+        late_chords = ([] if line.get('geometrySource') in verified
                        else suspicious_straight_intervals(line))
         if late_chords:
             # Station grouping can move an anchor and turn a slightly curved
@@ -3939,14 +4215,20 @@ def build_region(region, region_lines, options, reference):
             kept, evidence, late_chords = corroborate_straight_intervals(
                 line, late_chords, reference)
             if kept:
-                merged = dict(line.get('straightSurvey') or {})
-                if merged:
-                    evidence['intervals'] = sorted(
-                        set(merged.get('intervals') or []) | set(kept))
-                    evidence['maxDeviationMeters'] = max(
-                        evidence['maxDeviationMeters'],
-                        merged.get('maxDeviationMeters', 0.0))
-                line['straightSurvey'] = evidence
+                merge_straight_survey(
+                    line, evidence['records'], evidence['toleranceMeters'],
+                    evidence['corroboratedBy'], evidence['worstAt'])
+        if late_chords and line.get('osmRelationEvidence'):
+            # Same measurement as before grooming, for the same reason: the
+            # relation's own geometry between these two stations, recorded
+            # interval by interval rather than skipped line by line.
+            kept, records, late_chords = record_audited_relation_straights(
+                line, late_chords, options)
+            if kept:
+                merge_straight_survey(
+                    line, records,
+                    profile.CROSSCHECK_TOLERANCE_M.get(
+                        line.get('profile'), 90.0))
         if late_chords:
             options.geometry_blockers.append({
                 'line': line['lineId'], 'feed': line.get('feed'),
@@ -4894,16 +5176,68 @@ def load_osm_relation_shapes(path):
     return out
 
 
+#: Government survey layers admitted to the independent cross-check and to
+#: nothing else.  `na_provenance` registers these as validation references,
+#: never build inputs, and that registration is respected here: the
+#: cross-check is validation.  Nothing draws from this index — `CrossCheck`
+#: only measures already-built geometry against it — so a file listed here can
+#: corroborate a line but can never become one.  The list is explicit so that
+#: "validation only" stays true by review rather than by accident: a survey
+#: appears here because someone put it here, not because it happened to be in
+#: the download directory.
+CROSSCHECK_ONLY_SURVEYS = {
+    #: The City of Toronto's topographic mapping of subway track
+    #: (`COTGEO_TOPO_RAILWAY` subtype 2005) covers the open-cut and surface
+    #: sections and nothing in a tunnel.  `validate-ttc-subway-osm.py`
+    #: measures the audited Line 1 and Line 2 OSM relations against it; this
+    #: puts the same survey in front of the per-vertex and per-interval
+    #: checks, so the parts of those lines a surveyor can actually see are
+    #: corroborated by independent government geometry rather than exempted.
+    'toronto-topo-railway-subway.geojson': 'toronto-topo-railway-subway',
+}
+
+
+def geojson_lines(payload):
+    """Every LineString in a GeoJSON FeatureCollection, as ``[lon, lat]``."""
+    for feature in payload.get('features') or ():
+        geometry = feature.get('geometry') or {}
+        kind = geometry.get('type')
+        coordinates = geometry.get('coordinates') or []
+        parts = ([coordinates] if kind == 'LineString'
+                 else coordinates if kind == 'MultiLineString' else [])
+        for points in parts:
+            cleaned = [[float(p[0]), float(p[1])] for p in points
+                       if isinstance(p, (list, tuple)) and len(p) >= 2]
+            if len(cleaned) > 1:
+                yield cleaned
+
+
 def load_official_geometry(sources):
     """Independent operator/government geometry not represented by NARN.
 
     Files are normalized extracts written by source-specific downloaders
-    (currently ATI Puerto Rico). Keeping them separate from OSM preserves both
-    provenance and the rule that a source never verifies itself.
+    (currently ATI Puerto Rico), plus the validation-only survey layers listed
+    in `CROSSCHECK_ONLY_SURVEYS`, read straight from `official-raw`. Keeping
+    them separate from OSM preserves both provenance and the rule that a
+    source never verifies itself.
     """
     index = geo.ReferenceIndex(cell_deg=0.02)
-    directory = os.path.join(sources, 'official-geom')
     files = lines_count = 0
+    raw = os.path.join(sources, 'official-raw')
+    for name, tag in sorted(CROSSCHECK_ONLY_SURVEYS.items()):
+        path = os.path.join(raw, name)
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, 'rt', encoding='utf-8') as source:
+                payload = json.load(source)
+        except (OSError, ValueError):
+            continue
+        for points in geojson_lines(payload):
+            index.add_line(points, tag=tag)
+            lines_count += 1
+        files += 1
+    directory = os.path.join(sources, 'official-geom')
     if not os.path.isdir(directory):
         return index, files, lines_count
     for name in sorted(os.listdir(directory)):
@@ -5022,6 +5356,14 @@ def main():
     ap.add_argument('--corridor-m', type=float, default=1_500.0)
     ap.add_argument('--snap-m', type=float, default=3_000.0)
     ap.add_argument('--anchor-m', type=float, default=600.0)
+    ap.add_argument('--snap-prefer-m', type=float, default=0.0,
+                    help='Width, in metres, of the band above the nearest '
+                         'NARN candidate within which a station snap is '
+                         'reranked by connectedness, corridor distance and '
+                         'the PASSNGR tag instead of by raw distance alone. '
+                         '0 (the default) keeps nearest-wins everywhere the '
+                         'registry does not override it per feed or per '
+                         'route; see Network.snap in lib/na_narn.py.')
     ap.add_argument('--max-trips-per-route', type=int, default=1500)
     ap.add_argument('--osm-routes', default=None,
                     help='directory of OpenStreetMap route extracts for the '
@@ -5047,6 +5389,12 @@ def main():
     # `build_region` once the grouping has assigned its codes; see
     # `apply_reviewed_station_complexes`.
     options.station_complexes = registry.get('stationComplexes') or {}
+    # Straight intervals a reviewer has looked at one at a time, keyed by the
+    # station pair rather than by an index a merge could shift. See
+    # `record_audited_relation_straights`: the exception is an annotation on a
+    # measured record, not a way past the measurement.
+    options.reviewed_straight_intervals = (
+        registry.get('reviewedStraightIntervals') or {})
     # See `geometry_for`: `completeness` is an explicit comparison mode;
     # `strict` withholds unresolved alignments and is also the safe default.
     # The registry is where a release states that choice.

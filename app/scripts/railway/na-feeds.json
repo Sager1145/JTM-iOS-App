@@ -240,6 +240,12 @@
    "packageEvidence": "In us-2025.json `us-official-newark` holds 8 station calls of 3 railways within 26 m of `center`; the claimed row 'PENN Station Light RAIL Departure' is at -74.163454,40.734965, 54 m from the NJ Transit rail anchor and 71 m from `center`, and 14435 m from the New York Penn centre."
   }
  },
+ "reviewedStraightIntervalsNote": "A straight station interval on a line drawn from an audited OpenStreetMap relation, looked at one at a time. The relation is accepted as the alignment only because the registry can show it was validated against an independent government survey, and record_audited_relation_straights measures each straight interval against the relation's own geometry before recording it; this table is the annotation on that record, for the interval where the relation carries no interior node and only a worst-case bound can be stated. It is not a way past the measurement: an interval whose relation slice is not straight is refused whether or not it appears here. Keyed by package line id, then by the ordered station pair, so a folded or renumbered interval cannot inherit someone else's review.",
+ "reviewedStraightIntervals": {
+  "ttc-2": [
+   {"from": "Woodbine Station", "to": "Main Street Station", "sagittaBoundMeters": 2.23, "why": "OSM relation 102386 draws Woodbine to Main Street as a single straight way with no interior node on either running track, so the relation states the track is straight here but carries no vertex that measures it; the reviewed worst-case sagitta consistent with the mapped geometry at either end is 2.23 m, above the 1.5 m the public audit treats as straight, so the interval is recorded as a reviewed exception rather than as a measured one. The City of Toronto topographic subway-track survey COTGEO_TOPO_RAILWAY subtype 2005 does not reach this section, which is in tunnel. Reviewed 2026-09-05.", "reviewedOn": "2026-09-05"}
+  ]
+ },
  "osmLineColorsNote": "The colour an operator publishes for a railway that reaches the package only through OpenStreetMap, keyed by relation id, as {\"color\": \"#RRGGBB\", \"source\": \"<the page it was read from>\"}. OSM's own colour tag is not accepted here or anywhere: it is a contributor's reading of a map. 52 verified entries are waiting in /private/tmp/jtm-na-rail/patches/patch-canada2.json.",
  "osmLineColors": {},
  "feeds": [
@@ -653,6 +659,8 @@
    "railRoutes": 49,
    "requireVerifiedOfficialNetwork": true,
    "forbidOfficialNetworkFallback": true,
+   "narnSnapPreferMeters": 30,
+   "narnSnapPreferEvidence": "Measured 2026-09-05 on all 38 Amtrak lines: a 30 m preference band moves 15 routes to 28 clean routes with zero regressions on the 22 controls that were already clean. Newton, KS: the published stop is 27.6 m from a 4-edge NET='S' BNSF siding island and 36.7 m from the NET='M', PASSNGR='A' La Junta main it is actually served by; a 30 m band reaches the main. Lewistown, PA: 27.1 m to a Juniata Valley RR spur vs 30.2 m to the Norfolk Southern Pittsburgh Line the station is actually on. A 150 m band was tried and rejected: it pulls the Northeast Regional onto a wrong candidate and regresses it.",
    "blockedRouteIds": {
     "42985": "GTFS route is ambiguously named Commuter Rail and has no exact independently published FRA route identity or usable alignment"
    },
@@ -1336,6 +1344,10 @@
    "name": "Metropolitan Transit Authority of Harris County (METRO)",
    "url": "https://metro.resourcespace.com/pages/download.php?ref=4835&ext=zip",
    "railRoutes": 3,
+   "stationIdentityGroups": [
+    ["25027", "25028"]
+   ],
+   "stationIdentityEvidence": "METRO's official GTFS publishes the two METRORail Red Line platforms at Main Street Square as stops 25027 'Main Street Square Stn NB' and 25028 'Main Street Square Stn SB', with no parent_station and no location_type on either row, and no other stop in the feed carries that name. Both normalise to 'main street square' once canonical_feed_parents strips the directional tail, but the Red Line runs the two directions on Main Street's one-way pair and the platforms stand 211.4 m apart, 11.4 m outside the default 200 m platform radius, so one station arrived as two package ids -- us-official-main-street-square and us-official-main-street-square-2 -- and the stopping pattern that used the southbound platform survived drop_subsets as the branch houston-metro-700-b1, redrawing track the trunk already draws. Route 700 calls at each of the two stops on 356 trips, the same count on both, which is one station served in both directions and not two stations one after the other. Listing 25027 first keeps the surviving station on the northbound platform the trunk already anchors on. Measured from app/data/raw/na-rail/gtfs/2060.zip stops.txt and stop_times.txt with canonical_feed_parents at its default 200 m, 2026-09-05",
    "officialNetworkEndpointJoinMeters": 25,
    "officialNetworkMaxSnapMeters": 125,
    "requireVerifiedOfficialNetwork": true,
@@ -2074,6 +2086,10 @@
    "mirror": "https://storage.googleapis.com/storage/v1/b/mdb-latest/o/us-california-north-county-transit-district-nctd-gtfs-3093.zip?alt=media",
    "railRoutes": 3,
    "stationIdentityField": "reference_place",
+   "stationIdentityGroups": [
+    ["28007", "28107"]
+   ],
+   "stationIdentityEvidence": "NCTD publishes reference_place on only 33 of its 1,734 stops and leaves it empty on both San Diego - Santa Fe Depot rows, so stationIdentityField cannot join them and the name/proximity fallback is the only thing deciding their identity. Stops 28007 and 28107 carry the identical name 'San Diego - Santa Fe Depot' 219.6 m apart along the depot's platforms, 19.6 m outside the default 200 m radius, with no parent_station and no location_type on either row; one station therefore arrived as us-official-san-diego-santa-fe and us-official-san-diego-santa-fe-2, and the COASTER pattern using the second one survived drop_subsets as the branch north-county-transit-distric-498-b1. COASTER route 398 calls at each of the two stops on 84 trips, the same count on both, which is the terminal's two platform tracks and not two stations. Listing 28007 first keeps the surviving station on the anchor the package already uses for us-official-san-diego-santa-fe. Measured from app/data/raw/na-rail/gtfs/3093.zip stops.txt and stop_times.txt with canonical_feed_parents at its default 200 m, 2026-09-05",
    "agencies": [
     "North County Transit District"
    ],
@@ -2429,9 +2445,11 @@
     ["649", "650"],
     ["21105", "25779"],
     ["20986", "21103"],
-    ["20965", "841"]
+    ["20965", "841"],
+    ["31038", "32185"],
+    ["31031", "32189"]
    ],
-   "stationIdentityEvidence": "SEPTA official GTFS stops.txt publishes these as the opposite-direction platforms at Richmond/Cumberland, Richmond/Girard, and Girard/Berks; exact stop-id pairing prevents the reverse G1 segment from escaping as a separate branch. Stop 20965 (called by B1/B2/B3 trips) and stop 841 (called only by bus routes 28/57/70/B1_OWL) publish the identical name 'Fern Rock Transit Center' 21 m apart, so the default same-name merge already folds them into one station; listing 20965 first keeps the merged station's coordinate on the rail platform (about 59 m from the surveyed septa-b1/b3 Fern Rock terminal vertex) instead of the unrelated bus stop, which the same merge would otherwise apply to every B1/B2/B3 trip calling at Fern Rock",
+   "stationIdentityEvidence": "SEPTA official GTFS stops.txt publishes these as the opposite-direction platforms at Richmond/Cumberland, Richmond/Girard, and Girard/Berks; exact stop-id pairing prevents the reverse G1 segment from escaping as a separate branch. Stop 20965 (called by B1/B2/B3 trips) and stop 841 (called only by bus routes 28/57/70/B1_OWL) publish the identical name 'Fern Rock Transit Center' 21 m apart, so the default same-name merge already folds them into one station; listing 20965 first keeps the merged station's coordinate on the rail platform (about 59 m from the surveyed septa-b1/b3 Fern Rock terminal vertex) instead of the unrelated bus stop, which the same merge would otherwise apply to every B1/B2/B3 trip calling at Fern Rock. The last two groups repair a different SEPTA case, and one the 200 m radius cannot reach: SEPTA publishes a location_type=1 station parent, which canonical_feed_parents resolves to itself before the name clustering runs and therefore never seeds a name cluster, so an unparented platform standing beside that parent has nothing to match and escapes as a second package station however close it is. At Norristown Transit Center route M1 calls at stop 30520 (parent_station 31038) and at stop 32185 (no parent_station), 8.2 m apart, both published as 'Norristown Transit Center' and both 22.5-33.3 m from parent 31038; 32185 became us-official-norristown-2, and because it was a station the trunk lacked, the M1 pattern running over it survived drop_subsets as the branch septa-m1-b2. At Gulph Mills route M1 calls at stop 1895 (parent_station 31031) and at stop 32189 (no parent_station), 10.5 m apart and both published as 'Gulph Mills'; 32189 had no parented sibling to join either and clustered instead with 30332, an unparented stop 22.6 m away that only bus route 95 calls at, so the escaped rail platform took a bus stop's coordinate and became us-official-gulph-mills-2 behind the branch septa-m1-b1. Both groups list SEPTA's own location_type=1 station id first so the surviving station keeps the coordinate the operator declares for the station rather than a platform's or the bus stop's; 30332 is deliberately left out, because no rail route calls there. Measured from app/data/raw/na-rail/gtfs/502.zip stops.txt and stop_times.txt with canonical_feed_parents at its default 200 m, 2026-09-05",
    "crossFeedDistinctStopIds": ["2439", "32150"],
    "agencies": [
     "SEPTA"
@@ -2779,6 +2797,8 @@
     "2": "ttc-subway-2",
     "4": "ttc-subway-4",
     "306": "ttc-streetcar-306",
+    "501": "ttc-streetcar-501",
+    "505": "ttc-streetcar-505",
     "506": "ttc-streetcar-506"
    },
    "officialColorByRouteId": {
@@ -2806,6 +2826,10 @@
     "1": 102388,
     "2": 102386
    },
+   "osmRelationValidationByRouteId": {
+    "1": {"validator": "app/scripts/railway/validate-ttc-subway-osm.py", "reference": "City of Toronto COTGEO_TOPO_RAILWAY subtype 2005 subway-track topographic survey (official-raw/toronto-topo-railway-subway.geojson)", "publisher": "City of Toronto - Geospatial Competency Centre", "checked": "2026-09-04"},
+    "2": {"validator": "app/scripts/railway/validate-ttc-subway-osm.py", "reference": "City of Toronto COTGEO_TOPO_RAILWAY subtype 2005 subway-track topographic survey (official-raw/toronto-topo-railway-subway.geojson)", "publisher": "City of Toronto - Geospatial Competency Centre", "checked": "2026-09-04"}
+   },
    "osmRelationEvidenceByRouteId": {
     "1": "OSM relation 102388 (Line 1 Yonge-University, Vaughan Metropolitan Centre to Finch, 39.1 km, 467 vertices; official 38.8 km) checked 2026-09-04 with validate-ttc-subway-osm.py against the City of Toronto topographic subway-track survey COTGEO_TOPO_RAILWAY subtype 2005 (349 records, open-cut and surface sections only): the 178 surveyed records that run along the line sit a median 4.8 m from the relation, 66% within 10 m, against a median 15.8 m and 30% within 10 m from the City route layer/TTC GTFS shape; no published survey covers the tunnels, where the relation and the City layer disagree by up to 129 m; ODbL, OpenStreetMap contributors",
     "2": "OSM relation 102386 (Line 2 Bloor-Danforth, Kipling to Kennedy, 26.3 km, 529 vertices; official 26.2 km) checked 2026-09-04 with validate-ttc-subway-osm.py against the City of Toronto topographic subway-track survey COTGEO_TOPO_RAILWAY subtype 2005: the 15 surveyed records that run along the line sit a median 4.0 m from the relation, 74% within 10 m, against 7.1 m and 60% from the City route layer/TTC GTFS shape; between Islington and Kipling, beyond the survey's reach, the relation stays 21 m from the independently mapped CP Galt Subdivision the railway runs beside while the City layer leaves that corridor by up to 95 m; ODbL, OpenStreetMap contributors"
@@ -2815,8 +2839,19 @@
     "6": "lightrail"
    },
    "stationIdentityGroups": [
-    ["13815", "13816"]
+    ["13815", "13816"],
+    ["13831", "13832", "16069", "16070"],
+    ["13769", "13770"],
+    ["13796", "13795", "16073", "16074"],
+    ["16085", "16086"],
+    ["16226", "16227"],
+    ["13774", "13773"],
+    ["13848", "13847"],
+    ["13781", "13782"],
+    ["13859", "13860", "13861", "13862"],
+    ["13791", "13792"]
    ],
+   "stationIdentityEvidence": "TTC official GTFS publishes no parent_station and no location_type on any of its 9,402 stops, so station identity has to be rebuilt from stop names, and canonical_feed_parents merges two same-name stops only when the newcomer is within 200 m of EVERY stop already in the cluster. Two things defeat that here. (1) At Cedarvale, Dundas West, Eglinton, High Park, Leslie, Royal York, Sheppard-Yonge and York Mills the station's bus bays are published under the bare station name (ten stops called 'York Mills Station', eight called 'Cedarvale Station'), so the name cluster is seeded by a bus terminal that is itself 50-150 m across; the second rail platform is only 130-147 m from the nearest member of that cluster but 208-241 m from its far side, and the all-pairs test rejects it -- 'York Mills Station - Southbound Platform' (13792) is 134.4 m from 'York Mills Station - Northbound Platform' (13791) but 236.3 m from bus bay 14810, and 'Sheppard-Yonge Station - Southbound Platform' (13860) is 129.6 m from the nearest member of the 14771 cluster and 218.6 m from its farthest. (2) Line 5's two surface pairs, 'Golden Mile Station Eastbound Platform'/'Golden Mile Station Westbound Platform' (16085/16086, 211.4 m) and 'Hakimi Lebovic Station Eastbound Platform'/'Hakimi Lebovic Station Westbound Platform' (16226/16227, 208.3 m), straddle a wide intersection and simply exceed 200 m with no bus stop involved. Either way one physical station arrived as two package station ids, and because the second id was a station the trunk lacked, the short-turn stopping patterns that run over the opposite platform survived drop_subsets as branches: ttc-1-b1 (North York Centre to Davisville, 7.85 km), ttc-2-b1 (Islington to Old Mill), ttc-2-b2 (Runnymede to Lansdowne), ttc-4-b1 and ttc-4-b2 -- Line 4 has no branches at all, its five stations are all on the trunk -- plus ttc-5-b1 and ttc-5-b2; seven strokes redrawing track the trunk already draws. Every group below lists only platforms the TTC itself names for one station, and the first id in each group is the platform the trunk pattern already anchors on, so the surviving station keeps its coordinate and only the duplicate disappears. Sheppard-Yonge additionally folds the Line 4 platforms 13861/13862 ('Sheppard-Yonge Station - Subway Platform', 'Sheppard-Yonge Station - Eastbound Platform', 152.4 m across the group), Eglinton the Line 5 platforms 16073/16074 and Cedarvale the Line 5 platforms 16069/16070, all published under the same station name within 215 m. Three further same-name TTC pairs are deliberately NOT listed and remain separate package stations pending review: Spadina (Line 1 platforms 13853/13854 vs Line 2 platforms 13851/13852, 202-369 m apart), Finch West (Line 1 15658/15659 vs 'Finch West Station LRT Platform' 16323/16324, 154-247 m), and the two stops both called 'Gerrard St East at Coxwell Ave' (1085 and 1117, 322 m apart on different legs of the Coxwell junction), which are two streetcar stops and not one station. Measured from app/data/raw/na-rail/gtfs/732.zip stops.txt with canonical_feed_parents at its default 200 m, 2026-09-05",
    "agencies": [
     "TTC"
    ],

@@ -2267,10 +2267,6 @@ class ReviewedStationComplexTests(unittest.TestCase):
         self.assertEqual(len(applied), 2)
 
 
-if __name__ == '__main__':
-    unittest.main()
-
-
 class PrimaryRouteIdTests(unittest.TestCase):
     """A merged group is named after the route that carries its identity.
 
@@ -2423,27 +2419,212 @@ class AcceptedOsmRelationTests(unittest.TestCase):
 
 
 class AcceptedOsmRelationDisplayTests(unittest.TestCase):
-    def test_accepted_relation_is_retained_where_no_survey_reaches(self):
-        class Survey:
-            @staticmethod
-            def measure(_intervals, _source, sample_every):
-                return {'vertices': 3, 'unmatched': 2,
-                        'maxDeviationMeters': 0.0, 'worstAt': None}
+    """A straight interval on an audited relation is measured, not waved through.
 
-        line = {
+    The relation cannot corroborate its own straight track — that is why
+    `CrossCheck.straight_is_surveyed` refuses to consult OSM for a line OSM
+    drew. What the builder can still establish, and what the whole-line skip
+    hid, is whether the straightness is the source's own statement: slice the
+    relation back out between the interval's endpoints and measure it.
+    """
+
+    RELATION = [[-0.001, 0.0], [0.0, 0.0], [0.003, 0.0],
+                [0.007, 0.0], [0.01, 0.0], [0.011, 0.0]]
+
+    class Survey:
+        @staticmethod
+        def measure(_intervals, _source, sample_every):
+            return {'vertices': 3, 'unmatched': 2,
+                    'maxDeviationMeters': 0.0, 'worstAt': None}
+
+        @staticmethod
+        def straight_is_surveyed(piece, _source, tolerance_m,
+                                 minimum_matched=0.8):
+            # Nothing independent surveys a subway tunnel.
+            return {'agrees': False, 'vertices': len(piece), 'matched': 0,
+                    'maxDeviationMeters': 0.0, 'worstAt': None,
+                    'toleranceMeters': tolerance_m, 'agreedWith': {}}
+
+    def line(self):
+        return {
             'lineId': 'ttc-1', 'feed': 'ttc', 'sourceRouteId': '1',
             'branchOf': None, 'profile': 'metro', 'geometrySource': 'osm',
-            'osmRelationEvidence': {'relation': 20, 'evidence': 'checked'},
+            'osmRelationEvidence': {
+                'relation': 20, 'evidence': 'checked',
+                'validation': {'validator': 'validate-ttc-subway-osm.py',
+                               'reference': 'COTGEO_TOPO_RAILWAY 2005'},
+            },
+            'stationNames': ['Woodbine Station', 'Main Street Station'],
             'anchors': [[0.0, 0.0], [0.01, 0.0]],
             'intervals': [[[0.0, 0.0], [0.005, 0.0], [0.01, 0.0]]],
         }
-        options = SimpleNamespace(geometry_blockers=[],
-                                  verified_official_sources={})
 
-        kept = builder.filter_unresolved_geometry([line], options, Survey())
+    def options(self, relation=None, reviewed=None):
+        return SimpleNamespace(
+            geometry_blockers=[], verified_official_sources={},
+            osm_relation_shapes={20: list(relation or self.RELATION)},
+            reviewed_straight_intervals=reviewed or {})
+
+    def test_accepted_relation_is_retained_where_no_survey_reaches(self):
+        line = self.line()
+        options = self.options()
+
+        kept = builder.filter_unresolved_geometry([line], options, self.Survey())
 
         self.assertEqual(kept, [line])
         self.assertEqual(line['_alignmentCheck']['osmReferenceRetainedIntervals'],
                          [0])
         self.assertNotIn('displayBlockedIntervals', line['_alignmentCheck'])
         self.assertEqual(options.geometry_blockers, [])
+
+    def test_straight_interval_records_what_was_measured(self):
+        line = self.line()
+
+        kept = builder.filter_unresolved_geometry(
+            [line], self.options(), self.Survey())
+
+        self.assertEqual(kept, [line])
+        survey = line['straightSurvey']
+        self.assertEqual(survey['intervals'], [0])
+        record, = survey['records']
+        self.assertEqual(record['interval'], 0)
+        self.assertEqual(record['basis'], 'audited-relation')
+        self.assertEqual(record['relation'], 20)
+        self.assertEqual(record['fromStation'], 'Woodbine Station')
+        self.assertEqual(record['toStation'], 'Main Street Station')
+        self.assertGreater(record['chordMeters'], 1000.0)
+        # Two relation nodes lie inside the interval and neither leaves the
+        # chord: the source says this track is straight.
+        self.assertEqual(record['sourceInteriorVertices'], 2)
+        self.assertLess(record['sourceMaxDeviationMeters'], 0.01)
+        self.assertEqual(record['validatedBy'], 'validate-ttc-subway-osm.py')
+        self.assertEqual(record['validatedAgainst'], 'COTGEO_TOPO_RAILWAY 2005')
+        # The relation is not written as its own corroborating source.
+        self.assertEqual(survey['corroboratedBy'], {})
+        self.assertNotIn('reviewedException', record)
+
+    def test_interval_with_no_interior_node_says_so(self):
+        line = self.line()
+
+        builder.filter_unresolved_geometry(
+            [line], self.options(relation=[[0.0, 0.0], [0.01, 0.0]]),
+            self.Survey())
+
+        record, = line['straightSurvey']['records']
+        self.assertEqual(record['sourceInteriorVertices'], 0)
+        self.assertNotIn('reviewedException', record)
+
+    def test_reviewed_exception_travels_with_the_interval_it_reviews(self):
+        line = self.line()
+        reviewed = {'ttc-1': [{'from': 'Woodbine Station',
+                               'to': 'Main Street Station',
+                               'sagittaBoundMeters': 2.23,
+                               'why': 'no interior node on either track'}]}
+
+        builder.filter_unresolved_geometry(
+            [line],
+            self.options(relation=[[0.0, 0.0], [0.01, 0.0]], reviewed=reviewed),
+            self.Survey())
+
+        record, = line['straightSurvey']['records']
+        self.assertEqual(record['sourceInteriorVertices'], 0)
+        self.assertEqual(record['reviewedException']['sagittaBoundMeters'], 2.23)
+        self.assertNotIn('from', record['reviewedException'])
+
+    def test_reviewed_exception_for_another_station_pair_is_not_applied(self):
+        line = self.line()
+        reviewed = {'ttc-1': [{'from': 'Chester Station', 'to': 'Pape Station',
+                               'sagittaBoundMeters': 0.99}]}
+
+        builder.filter_unresolved_geometry(
+            [line],
+            self.options(relation=[[0.0, 0.0], [0.01, 0.0]], reviewed=reviewed),
+            self.Survey())
+
+        record, = line['straightSurvey']['records']
+        self.assertNotIn('reviewedException', record)
+
+    def test_relation_that_curves_here_refuses_the_flattened_interval(self):
+        """The exemption is a measurement, so it can fail.
+
+        A relation that bends between these two stations and a shipped
+        interval that does not means the shape was lost on the way to the
+        package. That is the defect the straight-interval gate exists for, and
+        the old line-wide skip could not see it.
+        """
+        line = self.line()
+        curved = [[0.0, 0.0], [0.005, 0.00005], [0.01, 0.0]]
+
+        kept = builder.filter_unresolved_geometry(
+            [line], self.options(relation=curved), self.Survey())
+
+        self.assertEqual(kept, [])
+        self.assertNotIn('straightSurvey', line)
+        self.assertEqual(len(builder.suspicious_straight_intervals(line)), 1)
+
+    def test_missing_relation_extract_refuses_rather_than_exempts(self):
+        line = self.line()
+        options = self.options()
+        options.osm_relation_shapes = {}
+
+        kept = builder.filter_unresolved_geometry([line], options, self.Survey())
+
+        self.assertEqual(kept, [])
+        self.assertNotIn('straightSurvey', line)
+
+
+class CrosscheckOnlySurveyTests(unittest.TestCase):
+    """A validation-only survey reaches the cross-check and nothing else.
+
+    `na_provenance` registers the City of Toronto topographic subway-track
+    layer as a validation reference, never a build input. The independent
+    cross-check IS validation: it only ever measures geometry somebody else
+    already drew, so admitting the survey there corroborates the intervals it
+    can actually see instead of exempting them.
+    """
+
+    SURVEY = {
+        'type': 'FeatureCollection',
+        'features': [
+            {'type': 'Feature', 'properties': {'SUBTYPE_CODE': 2005},
+             'geometry': {'type': 'LineString',
+                          'coordinates': [[-79.3, 43.7], [-79.29, 43.7]]}},
+            {'type': 'Feature', 'properties': {},
+             'geometry': {'type': 'MultiLineString',
+                          'coordinates': [[[-79.28, 43.7], [-79.27, 43.7]]]}},
+            {'type': 'Feature', 'properties': {},
+             'geometry': {'type': 'Point', 'coordinates': [-79.26, 43.7]}},
+        ],
+    }
+
+    def test_registered_survey_is_read_from_official_raw(self):
+        name, = builder.CROSSCHECK_ONLY_SURVEYS
+        with tempfile.TemporaryDirectory() as sources:
+            raw = os.path.join(sources, 'official-raw')
+            os.makedirs(raw)
+            with open(os.path.join(raw, name), 'w') as handle:
+                json.dump(self.SURVEY, handle)
+
+            index, files, lines = builder.load_official_geometry(sources)
+
+        self.assertEqual(files, 1)
+        self.assertEqual(lines, 2)
+        distance, tag = index.nearest([-79.295, 43.7], 2)
+        self.assertLess(distance, 1.0)
+        self.assertEqual(tag, builder.CROSSCHECK_ONLY_SURVEYS[name])
+
+    def test_unregistered_raw_file_is_not_admitted(self):
+        with tempfile.TemporaryDirectory() as sources:
+            raw = os.path.join(sources, 'official-raw')
+            os.makedirs(raw)
+            with open(os.path.join(raw, 'some-other-layer.geojson'),
+                      'w') as handle:
+                json.dump(self.SURVEY, handle)
+
+            _index, files, lines = builder.load_official_geometry(sources)
+
+        self.assertEqual((files, lines), (0, 0))
+
+
+if __name__ == '__main__':
+    unittest.main()

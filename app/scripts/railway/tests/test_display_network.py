@@ -524,9 +524,14 @@ class DisplayNetworkTests(unittest.TestCase):
         published subset of — the two were drawn as independent, stacked
         strokes. `isKin` (build-display-lanes.mjs) now exempts a line from
         its own trunk (or a sibling branch of the same trunk) from that
-        length gate. ttc-306-b5 (995 m total) is the shortest of the CA
-        branch shards the audit found stacked on their trunk; new-orleans-
-        rta-12-b2 (517 m) is its US analogue.
+        length gate. FOLLOW_MIN_RUN_METRES is 1000 m, and every branch
+        named below runs shorter than that against its own trunk:
+        ttc-510-b2 (146 m) is the shortest of the CA branch shards stacked
+        on their trunk, and new-orleans-rta-12-b2 (517 m) is its US
+        analogue. The TTC ids here are the day-route identities (504/506/
+        510); they were 304/306/310 before the Blue Night numbering was
+        corrected, and the branch shards were renumbered with them, so do
+        not assume b5 here is the b5 that was here before.
         """
         rail = SCRIPT.parents[2] / "public" / "rail"
         lanes = json.loads((rail / "display-lanes.json").read_text())
@@ -538,13 +543,14 @@ class DisplayNetworkTests(unittest.TestCase):
                 row[0] == branch and row[4] == trunk for row in follows)
 
         for branch in (
-                "ttc-306-b5", "ttc-306-b2", "ttc-306-b4",
-                "ttc-306-b7", "ttc-306-b8"):
+                "ttc-506-b1", "ttc-506-b2", "ttc-506-b3",
+                "ttc-506-b4", "ttc-506-b6", "ttc-506-b7", "ttc-506-b8"):
             self.assertTrue(
-                follows_its_trunk(ca_follows, branch, "ttc-306"),
-                f"{branch} should follow its trunk ttc-306")
-        self.assertTrue(follows_its_trunk(ca_follows, "ttc-304-b5", "ttc-304"))
-        self.assertTrue(follows_its_trunk(ca_follows, "ttc-310-b1", "ttc-310"))
+                follows_its_trunk(ca_follows, branch, "ttc-506"),
+                f"{branch} should follow its trunk ttc-506")
+        self.assertTrue(follows_its_trunk(ca_follows, "ttc-504-b5", "ttc-504"))
+        self.assertTrue(follows_its_trunk(ca_follows, "ttc-510-b1", "ttc-510"))
+        self.assertTrue(follows_its_trunk(ca_follows, "ttc-510-b2", "ttc-510"))
         self.assertTrue(
             follows_its_trunk(
                 us_follows, "new-orleans-rta-12-b2", "new-orleans-rta-12"))
