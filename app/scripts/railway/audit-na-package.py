@@ -4,7 +4,7 @@
     python3 scripts/railway/audit-na-package.py \
         --package public/rail/us-2025.json \
         --package public/rail/ca-2025.json \
-        --out /private/tmp/na-rail/audit.json
+        --out data/raw/na-rail/audit.json
 
 The builder decides; this asks, afterwards and from the outside, whether what
 it shipped is what it said it would ship. That is a different question from
@@ -19,6 +19,13 @@ a policy the package states in its own `sources.md` and can therefore be held
 to (`na_profile`'s chord cap, the 2.2× detour test, the country's own
 bounding box). Cross-source agreement is `report-na-coverage.py`'s job and
 the builder's own cross-check; this is the layer between them.
+
+One check reaches past the file, and only as far as the file itself points:
+`audit_freshness` recomputes the digests the package records for its OWN
+inputs and compares them with those files on disk. It reads no source — the
+registry and the normalised official networks are the build's inputs, not the
+railway's — and it is here because every other check in this module passes
+happily on a package that is simply old.
 
 Findings are graded, because a hundred cosmetic notes and one broken polyline
 in the same list is a list nobody reads:
@@ -41,7 +48,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib
 from na_profile import (CROSSCHECK_TOLERANCE_M,                    # noqa: E402
                         DISPLAY_ALIGNMENT_TOLERANCE_M,
                         median_spacing_m, profile_for)
-from na_provenance import SOURCES as OFFICIAL_NETWORK_SOURCES       # noqa: E402
+from na_provenance import (SOURCES as OFFICIAL_NETWORK_SOURCES,  # noqa: E402
+                           file_sha256)
 
 EARTH_R = 6_371_008.8
 
@@ -167,6 +175,88 @@ def max_chord_deviation(points):
     return worst
 
 
+#: What the two renderers paint underneath a railway, per theme. Taken from
+#: `MAP_SURFACE_COLORS` in `app/public/railmap-basemap.js`: the ground the
+#: basemap fills, and the open middle a station marker leaves in the stroke
+#: that runs through it. An unselected line has no casing — the dark ink
+#: casing in `railmap-style.js` is drawn for the SELECTED route only — so
+#: these are the colours a railway is seen against.
+BASEMAP_SURFACES = {
+    'light': ((242, 243, 240), (255, 255, 255)),
+    'dark': ((12, 12, 12), (44, 44, 46)),
+}
+
+#: How far a line colour must be from the nearest of those surfaces, as
+#: CIE ΔE*ab.
+#:
+#: 5.0 is the classical "different at a glance" step: ΔE*ab 1 is a just
+#: noticeable difference between two large flat patches under laboratory
+#: light, 2–3 is what a careful observer finds by comparing them, and 5 is
+#: where two colours read as different colours without being compared. A
+#: railway is a four-point anti-aliased stroke over a busy basemap and is
+#: never compared side by side with the paper under it, so the glance step is
+#: the floor, not the target.
+#:
+#: Measured against what ships, the threshold has room on both sides. The
+#: palest colour any operator in these packages publishes is Caltrain's
+#: #dcddde at ΔE 7.9, and the palest after that is Pittsburgh's Silver Line
+#: #dbdbdb at 8.4; every colour the map actually draws — `color` and
+#: `colorDark`, which `display_colours` has already moved down or up its own
+#: lightness axis — is at least ΔE 27 from its own theme's surfaces. Pure
+#: white is ΔE 0.0, because #ffffff is itself one of the light theme's
+#: surfaces.
+MIN_COLOUR_SEPARATION = 5.0
+
+
+def parse_hex_colour(value):
+    rgb = str(value or '').strip().lstrip('#')
+    if not re.fullmatch(r'[0-9a-fA-F]{6}', rgb):
+        return None
+    return tuple(int(rgb[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def cielab(rgb):
+    """sRGB bytes to CIE L*a*b* under D65."""
+    def linear(value):
+        channel = value / 255.0
+        return (channel / 12.92 if channel <= 0.04045
+                else ((channel + 0.055) / 1.055) ** 2.4)
+
+    r, g, b = (linear(c) for c in rgb)
+    x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.950489
+    y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b
+    z = (0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / 1.088840
+
+    def f(t):
+        return t ** (1 / 3) if t > 216 / 24389 else (841 / 108) * t + 4 / 29
+
+    fx, fy, fz = f(x), f(y), f(z)
+    return 116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)
+
+
+def colour_separation(rgb, theme):
+    """How far a colour is from the nearest thing the basemap paints, in ΔE*ab.
+
+    Colour DIFFERENCE, not luminance contrast, and the distinction is the
+    whole check. WCAG's contrast ratio is a function of relative luminance
+    alone, and by that measure pure yellow scores 1.07:1 against the light
+    basemap while pure white scores 1.00:1 — four hundredths apart, with
+    #ffff00 shipping today as BART Yellow, the CTA Yellow Line and Metra's
+    UP-NW. A rule that cannot tell those two apart is not a rule about
+    whether a railway can be seen. ΔE*ab counts the hue and chroma the eye
+    actually separates a yellow line from grey paper with, and it puts the
+    same pair 95.4 apart.
+
+    CIE76 rather than CIEDE2000: the pairs that decide anything here are far
+    apart or nearly identical, never in the middle where the 2000 revision's
+    corrections matter, and forty lines of arithmetic nobody in this
+    repository can check by hand would buy nothing.
+    """
+    lab = cielab(rgb)
+    return min(math.dist(lab, cielab(surface))
+               for surface in BASEMAP_SURFACES[theme])
+
+
 class Findings:
     def __init__(self):
         self.rows = []
@@ -217,6 +307,31 @@ def audit_line(line, country, found, verified_official=()):
     if not line.get('colorSource'):
         found.add('ERROR', 'colour.source', country, lid,
                   'line colour has no official provenance')
+
+    # A colour can be well formed, officially published, and still not be a
+    # colour a map can draw a railway in. The Loop Trolley's GTFS publishes
+    # route_color FFFFFF; that passes both checks above and would put a white
+    # railway on white paper. `color` and `colorDark` are measured against the
+    # theme each is drawn in; `colorReference` is measured against the light
+    # basemap because that is the paper the published colour has to be inked
+    # onto — a dark reference such as TexRail's #000000 is a fine colour for
+    # it, and is what `display_colours` lightens for the dark theme.
+    for field, theme in (('colorReference', 'light'), ('color', 'light'),
+                         ('colorDark', 'dark')):
+        rgb = parse_hex_colour(line.get(field))
+        if rgb is None:
+            continue
+        separation = colour_separation(rgb, theme)
+        if separation < MIN_COLOUR_SEPARATION:
+            found.add('ERROR', 'colour.invisible', country, lid,
+                      '`%s` %s is ΔE*ab %.1f from what the %s basemap paints '
+                      'under it, inside the %.1f a colour needs to read as a '
+                      'different colour at a glance'
+                      % (field, line.get(field), separation, theme,
+                         MIN_COLOUR_SEPARATION),
+                      field=field, colour=line.get(field), theme=theme,
+                      separation=round(separation, 1),
+                      minimumSeparation=MIN_COLOUR_SEPARATION)
 
     # -- structure ---------------------------------------------------------
     if len(stations) < 2:
@@ -427,12 +542,168 @@ def audit_line(line, country, found, verified_official=()):
 
 CAPS = re.compile(r'^[^a-z]*[A-Z]{4,}[^a-z]*$')
 
+#: A generated branch: `<trunk>-b1`, `<trunk>-b2`.
+BRANCH_ID = re.compile(r'^(?P<trunk>.+)-b\d+$')
+
+#: A station id the build had to disambiguate: `<base>-2`, `<base>-3`. The
+#: suffix says the slug collided, and NOTHING else — in us-2025, 91 of the 144
+#: pairs are more than 2 km apart (median 17 km, and belmont-2, hyde-park-2 and
+#: chinatown-2 are in different cities). It is the first of three conditions,
+#: never evidence on its own.
+NUMBERED_ID = re.compile(r'^(?P<base>.+?)-\d+$')
+
+#: How far apart two ids may be and still be inferred to be one station.
+#: `read_station_complexes` refuses a REVIEWED complex wider than 600 m —
+#: "not a concourse anyone walks across, and a complex that needs it is two
+#: stations" — and an inference must not claim more than a reviewed record
+#: with an evidence URL behind it. It is what keeps Amtrak's New Haven Union
+#: Station and New Haven State Street, 931 m apart on one route with nothing
+#: between them, two stations.
+FOLD_MAX_M = 600.0
+
+
+def fold_duplicate_stations(anchors):
+    """One station published under two ids, decided per route, not by distance.
+
+    Returns a map from station id to the id it is the same station as.
+
+    The problem this answers is that a trailing `-2` proves nothing and a
+    metre count proves nothing either. Toronto has both failures inside one
+    city: the two stops both called `gerrard-st-east-at-coxwell-ave` are 311 m
+    apart and are two real streetcar stops on different legs of a junction,
+    while Line 5's `golden-mile` and `golden-mile-2` are 211 m apart across
+    one intersection and are one station whose platforms the TTC publishes
+    under one name. Any threshold that folds the second folds the first.
+
+    So the discriminator is the route, and three conditions must all hold:
+
+    1. the two ids share a base once a numeric disambiguation suffix is
+       stripped — they are the same slug, not merely near each other;
+    2. one route calls at both. `anchors` is built from a trunk and its own
+       branches together, so this is asking whether ONE railway stops twice
+       under one name. It is what keeps Spadina apart: Line 1 calls at
+       `spadina` and Line 2 at `spadina-2`, 357 m away, and two lines
+       meeting at an interchange need two anchors, one on each alignment;
+    3. no other stop of that route lies between them — no third stop of the
+       route is nearer to each of them than they are to each other. This is
+       what keeps the Coxwell junction apart: the route turns through it and
+       calls at two further stops inside those 311 m.
+
+    Conservative in the direction that matters. Refusing a fold hides a
+    finding; making a wrong one accuses a correct branch, so a pair that
+    fails any condition stays two stations.
+
+    ``anchors`` is the package's own station rows — where the two clients
+    actually draw the dot — so the check needs nothing but the file it is
+    auditing. The other place these coordinates exist is
+    `app/data/stations-<region>.json`, one canonical point per
+    `n02_group_code`, and it does not change the answer: run over the shipped
+    packages against that table instead, with a median anchor-to-table drift
+    of 57 m in Canada and 68 m in the United States, this names the same eight
+    branches. No pair either table decides sits anywhere near the 600 m
+    ceiling.
+    """
+    groups = defaultdict(list)
+    for station_id in anchors:
+        match = NUMBERED_ID.match(station_id)
+        groups[match.group('base') if match else station_id].append(station_id)
+    fold = {}
+    for members in groups.values():
+        if len(members) < 2:
+            continue
+        members.sort()
+        for index, first in enumerate(members):
+            for second in members[index + 1:]:
+                gap = haversine(anchors[first], anchors[second])
+                if gap > FOLD_MAX_M:
+                    continue
+                if any(haversine(anchors[first], anchors[other]) < gap
+                       and haversine(anchors[second], anchors[other]) < gap
+                       for other in anchors if other not in members):
+                    continue
+                fold[second] = fold[first] = fold.get(first, first)
+    return fold
+
+
+def audit_branch_duplicates(package, found):
+    """A branch that draws nothing its own trunk does not already draw.
+
+    A branch exists to carry the piece of railway the trunk's stopping
+    pattern misses. One whose stations are all the trunk's stations is a
+    second stroke laid over the first: the same track drawn twice, in the same
+    colour, with the extra weight and the doubled ridden-length that follows.
+
+    The builder already refuses this — `drop_subsets` deletes a line whose
+    station set another line of the same name contains — and the eight that
+    ship past it do so because the sets are disjoint by IDENTITY, not by
+    railway. TTC publishes no `parent_station`, so a station whose bus bays
+    carry the bare station name arrives as two package ids, and a short-turn
+    pattern that runs over the second one is, to a set comparison, a branch
+    calling somewhere the trunk never goes. `ttc-4-b1` is Don Mills to
+    Leslie-2 on a five-station line with no branches at all.
+
+    So the subset test is repeated here modulo station identity, which is the
+    only thing the builder could not do at the point it ran: the fold below
+    needs the trunk and every one of its branches in front of it at once, and
+    `drop_subsets` is deciding which of them exist.
+
+    An ERROR, not a warning. A branch whose folded stations are its trunk's
+    draws wrongly — the file is a piece of railway drawn twice. A branch that
+    genuinely runs a second alignment between the same stations is not this:
+    that is what `extraSegments` carries, with the evidence for the divergence
+    attached to it, and a bare duplicate line carries none.
+    """
+    country = package.get('country')
+    lines = package['lines']
+    by_id = {line.get('id'): line for line in lines}
+    routes = defaultdict(list)
+    for line in lines:
+        # `branchOf` is the builder's own word for it and is preferred; the id
+        # is the fallback for a package built before that field, and is only
+        # ever believed when the trunk it names is actually in the package —
+        # `septa-m1` is a route id, and SEPTA really does run a route B1.
+        match = BRANCH_ID.match(line.get('id') or '')
+        trunk = line.get('branchOf')
+        if not trunk and match and match.group('trunk') in by_id:
+            trunk = match.group('trunk')
+        routes[trunk or line.get('id')].append(line.get('id'))
+    for trunk, members in routes.items():
+        if trunk not in by_id or len(members) < 2:
+            continue
+        anchors = {}
+        for line_id in members:
+            for station in by_id[line_id].get('stations') or ():
+                anchors.setdefault(station[0], (station[2], station[3]))
+        fold = fold_duplicate_stations(anchors)
+        trunk_stations = {fold.get(station[0], station[0])
+                          for station in by_id[trunk].get('stations') or ()}
+        for line_id in members:
+            if line_id == trunk:
+                continue
+            stations = by_id[line_id].get('stations') or ()
+            drawn = {fold.get(station[0], station[0]) for station in stations}
+            if not drawn or not drawn <= trunk_stations:
+                continue
+            folded = sorted({station[0] for station in stations
+                             if fold.get(station[0], station[0]) != station[0]})
+            found.add('ERROR', 'line.branchDuplicatesTrunk', country, line_id,
+                      'every station this branch calls at is one %s already '
+                      'calls at%s, so it redraws track the trunk already draws'
+                      % (trunk,
+                         (', once %d duplicate station %s folded (%s)'
+                          % (len(folded), 'identity is' if len(folded) == 1
+                             else 'identities are', ', '.join(folded)))
+                         if folded else ''),
+                      trunk=trunk, folded=folded, stations=len(stations))
+
 
 def audit_package(package, found, band_by_line, station_split_exceptions=None,
                   verified_official=()):
     country = package.get('country')
     lines = package['lines']
     station_split_exceptions = station_split_exceptions or {}
+
+    audit_branch_duplicates(package, found)
 
     ids = Counter(l.get('id') for l in lines)
     for lid, count in ids.items():
@@ -876,6 +1147,131 @@ def audit_station_complexes(package, complexes, found, corridor_path=None):
                       station=station_id)
 
 
+def audit_freshness(package, registry_path, input_root,
+                    official_networks_dir, found):
+    """Was this package built from the inputs that are on disk now?
+
+    Every other check in this module reads the package alone, and a package
+    that is simply OLD passes all of them. `ca-2025.json` shipped for days
+    without TTC Lines 1 and 2 while `na-feeds.json` already carried their
+    OpenStreetMap relations and the builder already knew what to do with
+    them; the audit reported no error, because everything it looked at was
+    internally consistent — it was consistent with a registry that no longer
+    existed.
+
+    Not a declared-versus-built count. `na-feeds.json` declares
+    ``railRoutes: 23`` for the TTC and the package holds 32 TTC lines,
+    because the registry counts the operator's parent routes and the package
+    counts the strokes they are drawn as. Comparing those two numbers fires
+    on half the continent and says nothing about staleness in either
+    direction.
+
+    Not a modification time either. A `git checkout` stamps every file it
+    writes with the moment of the checkout, so in a fresh clone — or in one
+    of this repository's worktrees — every input is "newer" than every
+    package, and a check built on mtime is a check that cries wolf on a tree
+    where nothing is wrong at all.
+
+    What is left is content. A digest recorded at build time and recomputed
+    here is a proof either way: if it still matches, the package was built
+    from these exact bytes; if it does not, the package was built from
+    something else, and no ordering of clocks or checkouts can explain that
+    away. The build already thinks this way — `feed_cache_fingerprint` in the
+    builder hashes the registry entry, the builder's own source and its `lib`
+    modules to decide when a cached line must be rebuilt — so the only thing
+    missing is that the package does not carry the answer out with it.
+
+    Two things are checked, and they differ in what they can do today:
+
+    * `buildInputs`, an object mapping a path (relative to `--input-root`,
+      which is the directory the build and this audit are run from) to the
+      lowercase hex SHA-256 of that file at build time. The builder does not
+      write this field yet; until it does, this reports a WARN naming the
+      registry it could not vouch for, because an unprovable invariant that
+      says nothing is how the TTC miss stayed quiet.
+    * `geometrySource.verifiedOfficialNetworks`, which the package ALREADY
+      carries, and whose ``sha256`` is the digest of the normalised
+      `<key>.geojson` the build routed that line from — `verify_route_networks`
+      computes it from the file itself. Given `--official-networks`, that
+      digest is recomputed here. The normalised networks live outside the
+      repository, so the flag is opt-in and silence without it is correct.
+
+    ERROR for a digest that does not match: the shipped package is provably
+    not the package these inputs build.
+    """
+    country = package.get('country')
+    recorded = package.get('buildInputs')
+    root = input_root or '.'
+    if recorded and not isinstance(recorded, dict):
+        found.add('ERROR', 'package.buildInputs', country, '-',
+                  'buildInputs must be an object of path to SHA-256')
+        recorded = None
+    for relative, digest in sorted((recorded or {}).items()):
+        if not (isinstance(relative, str) and isinstance(digest, str)
+                and re.fullmatch(r'[0-9a-f]{64}', digest.lower())):
+            found.add('ERROR', 'package.buildInputs', country, '-',
+                      'buildInputs entry for %s is not a SHA-256' % relative,
+                      input=relative)
+            continue
+        path = os.path.join(root, relative)
+        try:
+            actual = file_sha256(path)
+        except OSError as exc:
+            found.add('WARN', 'package.freshness', country, '-',
+                      'the package names %s as a build input and it cannot be '
+                      'read: %s' % (relative, exc), input=relative)
+            continue
+        if actual != digest.lower():
+            found.add('ERROR', 'package.stale', country, '-',
+                      'built from a different %s than the one on disk, so '
+                      'this package is not what its own inputs build'
+                      % relative,
+                      input=relative, recordedSha256=digest.lower(),
+                      actualSha256=actual, generatedAt=package.get('generatedAt'))
+
+    # The registry is the input the audit knows for certain the build read,
+    # and the one whose changes went unnoticed. A manifest that covers
+    # everything except it is the manifest this check exists to refuse.
+    if registry_path:
+        covered = any(
+            os.path.realpath(os.path.join(root, relative))
+            == os.path.realpath(registry_path)
+            for relative in (recorded or {}) if isinstance(relative, str))
+        if not covered:
+            found.add('WARN', 'package.freshness', country, '-',
+                      'the package records no build-time digest for %s, so '
+                      'nothing here can tell whether it was built before the '
+                      'registry last changed'
+                      % os.path.basename(registry_path),
+                      input=os.path.basename(registry_path),
+                      generatedAt=package.get('generatedAt'))
+
+    if not official_networks_dir:
+        return
+    declared = ((package.get('geometrySource') or {})
+                .get('verifiedOfficialNetworks') or {})
+    for key, provenance in sorted(declared.items()):
+        digest = str((provenance or {}).get('sha256') or '').lower()
+        if not re.fullmatch(r'[0-9a-f]{64}', digest):
+            continue        # `verified_official_networks` already reported it
+        path = os.path.join(official_networks_dir, '%s.geojson' % key)
+        try:
+            actual = file_sha256(path)
+        except OSError as exc:
+            found.add('WARN', 'package.freshness', country, '-',
+                      'the normalised official network %s cannot be read: %s'
+                      % (key, exc), geometrySource=key)
+            continue
+        if actual != digest:
+            found.add('ERROR', 'package.stale', country, '-',
+                      'drawn from a %s.geojson that has since been '
+                      'renormalised; the lines built from it are the old '
+                      'ones' % key,
+                      geometrySource=key, recordedSha256=digest,
+                      actualSha256=actual,
+                      generatedAt=package.get('generatedAt'))
+
+
 def audit_registry(registry_path, summaries, found):
     """Did every feed the registry names actually produce a railway?
 
@@ -944,6 +1340,14 @@ def main():
                          'check that no station code a reviewed complex '
                          'absorbs is still named by a corridor override, '
                          'which addresses stations by code and moves anchors')
+    ap.add_argument('--input-root', default='.',
+                    help='the directory the build was run from, which the '
+                         'package\'s own `buildInputs` paths are relative to '
+                         '(default: the current directory)')
+    ap.add_argument('--official-networks',
+                    help='<source>/official-networks — enables the check that '
+                         'the normalised networks the package says it was '
+                         'drawn from still hash to what it recorded')
     ap.add_argument('--out')
     ap.add_argument('--max-print', type=int, default=40)
     options = ap.parse_args()
@@ -969,6 +1373,8 @@ def main():
             station_split_exceptions, verified_official)
         audit_station_complexes(package, station_complexes, found,
                                 options.shared_corridors)
+        audit_freshness(package, options.registry, options.input_root,
+                        options.official_networks, found)
 
     if options.registry:
         audit_registry(options.registry, summaries, found)
