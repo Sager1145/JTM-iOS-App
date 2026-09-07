@@ -45,6 +45,8 @@ outputs/
 # reports from these trees.
 # ---------------------------------------------------------------------------
 app/data/raw/
+app/data/.na-rail.lock
+app/public/rail/.na-rail.lock
 .local/railway-reference-only/
 
 # Source GIS formats, wherever they land.

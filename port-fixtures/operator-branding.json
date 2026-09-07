@@ -6302,6 +6302,16 @@
     },
     {
       "operator": "Amtrak",
+      "lineName": "Lincoln Service",
+      "company": "Amtrak"
+    },
+    {
+      "operator": "Amtrak",
+      "lineName": "Southwest Chief",
+      "company": "Amtrak"
+    },
+    {
+      "operator": "Amtrak",
       "lineName": "Empire Builder",
       "company": "Amtrak"
     },
@@ -6343,11 +6353,6 @@
     {
       "operator": "Amtrak",
       "lineName": "Lake Shore Limited",
-      "company": "Amtrak"
-    },
-    {
-      "operator": "Amtrak",
-      "lineName": "Lincoln Service",
       "company": "Amtrak"
     },
     {
@@ -6403,11 +6408,6 @@
     {
       "operator": "Amtrak",
       "lineName": "Silver Meteor",
-      "company": "Amtrak"
-    },
-    {
-      "operator": "Amtrak",
-      "lineName": "Southwest Chief",
       "company": "Amtrak"
     },
     {
@@ -6603,11 +6603,6 @@
     {
       "operator": "Metropolitan Transit Authority of Harris County",
       "lineName": "METRORAIL PURPLE LINE",
-      "company": "Metropolitan Transit Authority of Harris County"
-    },
-    {
-      "operator": "Metropolitan Transit Authority of Harris County",
-      "lineName": "METRORAIL RED LINE",
       "company": "Metropolitan Transit Authority of Harris County"
     },
     {
@@ -7387,11 +7382,6 @@
     },
     {
       "operator": "North County Transit District",
-      "lineName": "COASTER",
-      "company": "North County Transit District"
-    },
-    {
-      "operator": "North County Transit District",
       "lineName": "SPRINTER",
       "company": "North County Transit District"
     },
@@ -7583,16 +7573,6 @@
     {
       "operator": "SEPTA",
       "lineName": "Market-Frankford Line All Stops",
-      "company": "SEPTA"
-    },
-    {
-      "operator": "SEPTA",
-      "lineName": "Norristown High Speed Line Local",
-      "company": "SEPTA"
-    },
-    {
-      "operator": "SEPTA",
-      "lineName": "Norristown High Speed Line Local",
       "company": "SEPTA"
     },
     {
@@ -18387,6 +18367,30 @@
     {
       "country": "us",
       "input": {
+        "lineId": "amtrak-lincoln-service",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "us",
+      "input": {
+        "lineId": "amtrak-southwest-chief",
+        "id": null,
+        "operator": "Amtrak",
+        "logo": "/rail/operator-logos/na/amtrak.png"
+      },
+      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/na/amtrak.png"
+    },
+    {
+      "country": "us",
+      "input": {
         "lineId": "amtrak-empire-builder",
         "id": null,
         "operator": "Amtrak",
@@ -18484,18 +18488,6 @@
       "country": "us",
       "input": {
         "lineId": "amtrak-lake-shore-limited-b1",
-        "id": null,
-        "operator": "Amtrak",
-        "logo": "/rail/operator-logos/na/amtrak.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/amtrak.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "amtrak-lincoln-service",
         "id": null,
         "operator": "Amtrak",
         "logo": "/rail/operator-logos/na/amtrak.png"
@@ -18628,18 +18620,6 @@
       "country": "us",
       "input": {
         "lineId": "amtrak-silver-meteor",
-        "id": null,
-        "operator": "Amtrak",
-        "logo": "/rail/operator-logos/na/amtrak.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/amtrak.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/amtrak.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "amtrak-southwest-chief",
         "id": null,
         "operator": "Amtrak",
         "logo": "/rail/operator-logos/na/amtrak.png"
@@ -19108,18 +19088,6 @@
       "country": "us",
       "input": {
         "lineId": "houston-metro-900",
-        "id": null,
-        "operator": "Metropolitan Transit Authority of Harris County",
-        "logo": null
-      },
-      "verifiedPackageLineLogo": null,
-      "lineLogo": null,
-      "logoForLine": null
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "houston-metro-700-b1",
         "id": null,
         "operator": "Metropolitan Transit Authority of Harris County",
         "logo": null
@@ -20991,18 +20959,6 @@
     {
       "country": "us",
       "input": {
-        "lineId": "north-county-transit-distric-498-b1",
-        "id": null,
-        "operator": "North County Transit District",
-        "logo": "/rail/operator-logos/na/north-county-transit-distric.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/north-county-transit-distric.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/north-county-transit-distric.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "north-county-transit-distric-sprinter",
         "id": null,
         "operator": "North County Transit District",
@@ -21472,30 +21428,6 @@
       "country": "us",
       "input": {
         "lineId": "septa-m1",
-        "id": null,
-        "operator": "SEPTA",
-        "logo": "/rail/operator-logos/na/septa.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/septa.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/septa.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "septa-m1-b1",
-        "id": null,
-        "operator": "SEPTA",
-        "logo": "/rail/operator-logos/na/septa.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/septa.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/septa.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "septa-m1-b2",
         "id": null,
         "operator": "SEPTA",
         "logo": "/rail/operator-logos/na/septa.png"

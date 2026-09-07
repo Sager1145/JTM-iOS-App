@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T02:06:43.218463+00:00",
+  "generatedAt": "2026-09-07T01:29:52.458015+00:00",
   "summary": {
-    "published": 440,
-    "blocked": 374,
-    "warnings": 223,
-    "publishedErrors": 0
+    "published": 436,
+    "blocked": 371,
+    "warnings": 191,
+    "publishedErrors": 6
   },
   "lines": [
     {
@@ -205,7 +205,7 @@
       "colorReference": "#003767",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 11,
-      "lengthKm": 101.128,
+      "lengthKm": 101.229,
       "issues": []
     },
     {
@@ -225,7 +225,7 @@
       "colorReference": "#00853e",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 14,
-      "lengthKm": 142.144,
+      "lengthKm": 142.174,
       "issues": []
     },
     {
@@ -245,7 +245,7 @@
       "colorReference": "#ff0d00",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 50.669,
+      "lengthKm": 50.671,
       "issues": []
     },
     {
@@ -265,7 +265,7 @@
       "colorReference": "#98002e",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 132.18,
+      "lengthKm": 132.213,
       "issues": []
     },
     {
@@ -285,7 +285,7 @@
       "colorReference": "#98002e",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 9.108,
+      "lengthKm": 9.131,
       "issues": []
     },
     {
@@ -305,7 +305,7 @@
       "colorReference": "#f57f25",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 50.363,
+      "lengthKm": 50.362,
       "issues": []
     },
     {
@@ -325,7 +325,7 @@
       "colorReference": "#0099c7",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 46.089,
+      "lengthKm": 46.207,
       "issues": []
     },
     {
@@ -345,7 +345,7 @@
       "colorReference": "#794500",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 48.479,
+      "lengthKm": 48.478,
       "issues": []
     },
     {
@@ -477,7 +477,7 @@
       "colorReference": "#508128",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 11,
-      "lengthKm": 19.018,
+      "lengthKm": 18.984,
       "issues": []
     },
     {
@@ -497,7 +497,7 @@
       "colorReference": "#0980a5",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
-      "lengthKm": 4.114,
+      "lengthKm": 4.107,
       "issues": []
     },
     {
@@ -544,7 +544,7 @@
       "lineId": "translink-expo-line",
       "country": "CA",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "TransLink",
       "name": "Expo Line",
       "sourceFeed": "translink",
@@ -558,22 +558,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 20,
       "lengthKm": 28.24,
-      "issues": [
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station ca-official-waterfront spans 169 m inside a reviewed official complex (exact limit 175 m)",
-          "station": "ca-official-waterfront",
-          "metres": 169,
-          "maxMeters": 175.0,
-          "evidence": "TransLink official GTFS publishes location_type=1 station 12034 once and uses that exact station identity for Canada Line, Expo Line, and West Coast Express; the audited anchors represent platforms within Waterfront Station",
-          "evidenceUrl": "https://gtfs-static.translink.ca/gtfs/google_transit.zip",
-          "sourceSha256": "585343a3607618024e9ebcfa7d770c6d785e647ae93895eebeb5e5bdad6887a8",
-          "stopIds": [
-            "12034"
-          ]
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "translink-expo-line-b1",
@@ -634,7 +619,7 @@
       "lineId": "translink-wce",
       "country": "CA",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "TransLink",
       "name": "West Coast Express",
       "sourceFeed": "translink",
@@ -648,7 +633,15 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
       "lengthKm": 67.318,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-waterfront is 219 m from where translink-canada-line puts it, past the 90 m the band allows",
+          "station": "ca-official-waterfront",
+          "metres": 219
+        }
+      ]
     },
     {
       "lineId": "ttc-1",
@@ -738,13 +731,6 @@
           "vertices": 275,
           "unmatched": 173,
           "intervals": []
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station ca-official-spadina is 345 m from where ttc-1 puts it, past the 40 m the band allows",
-          "station": "ca-official-spadina",
-          "metres": 345
         }
       ]
     },
@@ -924,7 +910,7 @@
       "lineId": "ttc-501-b3",
       "country": "CA",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "TTC",
       "name": "Queen",
       "sourceFeed": "ttc",
@@ -938,15 +924,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 3,
       "lengthKm": 0.455,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station ca-official-queen-st-east-at-broadview-ave is 52 m from where ttc-501 puts it, past the 25 m the band allows",
-          "station": "ca-official-queen-st-east-at-broadview-ave",
-          "metres": 52
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "ttc-501-b4",
@@ -1097,20 +1075,6 @@
           "message": "1 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 1
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station ca-official-dundas-west is 200 m from where ttc-2 puts it, past the 40 m the band allows",
-          "station": "ca-official-dundas-west",
-          "metres": 200
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station ca-official-broadview is 62 m from where ttc-2 puts it, past the 40 m the band allows",
-          "station": "ca-official-broadview",
-          "metres": 62
         }
       ]
     },
@@ -1247,6 +1211,13 @@
           "message": "3 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 3
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-queen-st-east-at-broadview-ave is 52 m from where ttc-501-b3 puts it, past the 25 m the band allows",
+          "station": "ca-official-queen-st-east-at-broadview-ave",
+          "metres": 52
         }
       ]
     },
@@ -1331,6 +1302,20 @@
       "stationCount": 43,
       "lengthKm": 10.627,
       "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-dundas-west is 202 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-dundas-west",
+          "metres": 202
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-broadview is 64 m from where ttc-2 puts it, past the 40 m the band allows",
+          "station": "ca-official-broadview",
+          "metres": 64
+        },
         {
           "severity": "WARN",
           "check": "station.split",
@@ -1809,6 +1794,13 @@
           "message": "5 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 5
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station ca-official-spadina is 358 m from where ttc-1 puts it, past the 40 m the band allows",
+          "station": "ca-official-spadina",
+          "metres": 358
         }
       ]
     },
@@ -2094,7 +2086,7 @@
       "colorReference": "#0075d2",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 24.231,
+      "lengthKm": 24.262,
       "issues": []
     },
     {
@@ -2232,13 +2224,6 @@
       "stationCount": 14,
       "lengthKm": 572.585,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-healy is 4531417 m from where metra-milwaukee puts it, past the 200 m the band allows",
-          "station": "us-official-healy",
-          "metres": 4531417
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -2495,7 +2480,7 @@
       "lineId": "amtrak-adirondack-us",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Adirondack",
       "sourceFeed": "amtrak",
@@ -2508,24 +2493,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
-      "lengthKm": 532.006,
-      "issues": [
-        {
-          "severity": "NOTE",
-          "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 61.7,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            4
-          ],
-          "at": [
-            -73.38908,
-            43.850714
-          ],
-          "builtFrom": "gtfs-shape"
-        }
-      ]
+      "lengthKm": 532.854,
+      "issues": []
     },
     {
       "lineId": "amtrak-amtrak-cascades-us",
@@ -2564,7 +2533,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.743,
+      "lengthKm": 99.362,
       "issues": []
     },
     {
@@ -2596,7 +2565,7 @@
       "name": "Borealis",
       "sourceFeed": "amtrak",
       "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
+      "geometrySource": "narn",
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
@@ -2604,22 +2573,38 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 658.042,
+      "lengthKm": 657.991,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 62 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 62.3,
+          "message": "4 station interval(s) are withheld from display; the source geometry reaches 397 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 396.6,
           "toleranceMetres": 50.0,
           "intervals": [
-            10
+            4,
+            5,
+            10,
+            11
           ],
           "at": [
-            -92.5324,
-            44.569206
+            -93.0226,
+            44.92677
           ],
-          "builtFrom": "gtfs-shape"
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "1187 of 2064 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 2064,
+          "unmatched": 1187,
+          "intervals": [
+            4,
+            5,
+            10,
+            11
+          ]
         }
       ]
     },
@@ -2647,7 +2632,7 @@
       "lineId": "amtrak-cardinal",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Cardinal",
       "sourceFeed": "amtrak",
@@ -2660,32 +2645,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 32,
-      "lengthKm": 1829.486,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "9 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 79 m, past the 50 m longhaul review limit",
-          "metres": 79.2,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            7,
-            13,
-            14,
-            15,
-            16,
-            18,
-            21,
-            25,
-            26
-          ],
-          "at": [
-            -81.076814,
-            37.965541
-          ],
-          "builtFrom": "amtrak-ntad-cardinal"
-        }
-      ]
+      "lengthKm": 1833.6,
+      "issues": []
     },
     {
       "lineId": "amtrak-carl-sandburg",
@@ -2776,12 +2737,12 @@
       "lineId": "amtrak-crescent",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Amtrak",
       "name": "Crescent",
       "sourceFeed": "amtrak",
       "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
+      "geometrySource": "narn",
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
@@ -2789,43 +2750,89 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 35,
-      "lengthKm": 2203.923,
+      "lengthKm": 2215.564,
       "issues": [
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
         {
           "severity": "WARN",
           "check": "geometry.spike",
-          "message": "2 near-reversals the sawtooth pass left in",
+          "message": "1 near-reversals the sawtooth pass left in",
           "band": "longhaul",
-          "count": 2
+          "count": 1
         },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "15 station interval(s) are withheld from display; the source geometry reaches 115 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 115.0,
+          "message": "11 station interval(s) are withheld from display; the source geometry reaches 389 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 389.2,
           "toleranceMetres": 50.0,
           "intervals": [
-            0,
             2,
-            4,
-            5,
+            3,
+            8,
             9,
             10,
-            11,
-            12,
-            13,
-            14,
-            16,
-            19,
-            27,
+            22,
+            23,
+            25,
+            26,
             28,
             29
           ],
           "at": [
-            -90.086918,
-            29.952511
+            -78.11,
+            38.244044
           ],
-          "builtFrom": "gtfs-shape"
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "5657 of 8954 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 8954,
+          "unmatched": 5657,
+          "intervals": [
+            2,
+            3,
+            8,
+            9,
+            10,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29
+          ]
         }
       ]
     },
@@ -2833,7 +2840,7 @@
       "lineId": "amtrak-empire-builder",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Empire Builder",
       "sourceFeed": "amtrak",
@@ -2846,68 +2853,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 41,
-      "lengthKm": 3516.356,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "38 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 107 m, past the 50 m longhaul review limit",
-          "metres": 106.7,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            18,
-            19,
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            30,
-            31,
-            32,
-            33,
-            34,
-            35,
-            36,
-            37,
-            38,
-            39
-          ],
-          "at": [
-            -113.023068,
-            48.532247
-          ],
-          "builtFrom": "amtrak-ntad-empire-builder"
-        },
-        {
-          "severity": "WARN",
-          "check": "geometry.spike",
-          "message": "3 near-reversals the sawtooth pass left in",
-          "band": "longhaul",
-          "count": 3
-        }
-      ]
+      "lengthKm": 3530.029,
+      "issues": []
     },
     {
       "lineId": "amtrak-empire-builder-b1",
@@ -2926,7 +2873,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 601.992,
+      "lengthKm": 603.34,
       "issues": []
     },
     {
@@ -2966,14 +2913,14 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 497.665,
+      "lengthKm": 496.778,
       "issues": []
     },
     {
       "lineId": "amtrak-heartland-flyer",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Heartland Flyer",
       "sourceFeed": "amtrak",
@@ -2986,16 +2933,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 328.333,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-gainesville is 1229970 m from where amtrak-crescent puts it, past the 400 m the band allows",
-          "station": "us-official-gainesville",
-          "metres": 1229970
-        }
-      ]
+      "lengthKm": 327.286,
+      "issues": []
     },
     {
       "lineId": "amtrak-hiawatha-service",
@@ -3034,7 +2973,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 21,
-      "lengthKm": 308.97,
+      "lengthKm": 308.882,
       "issues": []
     },
     {
@@ -3091,20 +3030,20 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 226.51,
+      "lengthKm": 225.948,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 82 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 82.4,
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 91 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 91.3,
           "toleranceMetres": 50.0,
           "intervals": [
             0
           ],
           "at": [
-            -73.982811,
-            40.785562
+            -73.982712,
+            40.785532
           ],
           "builtFrom": "narn"
         }
@@ -3114,7 +3053,7 @@
       "lineId": "amtrak-lincoln-service",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Amtrak",
       "name": "Lincoln Service",
       "sourceFeed": "amtrak",
@@ -3127,46 +3066,45 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 11,
-      "lengthKm": 451.925,
+      "lengthKm": 452.253,
       "issues": [
         {
-          "severity": "NOTE",
-          "check": "geometry.deviation.withheld",
-          "message": "8 station interval(s) are withheld from display; the source geometry reaches 366 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 366.0,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9
-          ],
-          "at": [
-            -88.105119,
-            41.420019
-          ],
-          "builtFrom": "narn"
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "amtrak"
         },
         {
-          "severity": "NOTE",
-          "check": "geometry.unchecked.withheld",
-          "message": "734 of 891 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 891,
-          "unmatched": 734,
-          "intervals": [
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9
-          ]
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "WARN",
+          "check": "geometry.unchecked.narnReferenceMissing",
+          "message": "914 of 1126 vertices have no independent visual reference; the build records the primary NARN survey inputs, whose freshness is checked separately",
+          "vertices": 1126,
+          "unmatched": 914,
+          "intervals": []
         }
       ]
     },
@@ -3214,7 +3152,7 @@
       "lineId": "amtrak-northeast-regional",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Northeast Regional",
       "sourceFeed": "amtrak",
@@ -3227,27 +3165,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 37,
-      "lengthKm": 1020.218,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "4 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 64 m, past the 50 m longhaul review limit",
-          "metres": 64.0,
-          "toleranceMetres": 50.0,
-          "intervals": [
-            11,
-            14,
-            26,
-            35
-          ],
-          "at": [
-            -71.059006,
-            42.346659
-          ],
-          "builtFrom": "amtrak-ntad-northeast-regional"
-        }
-      ]
+      "lengthKm": 1020.477,
+      "issues": []
     },
     {
       "lineId": "amtrak-northeast-regional-b1",
@@ -3312,7 +3231,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.757,
+      "lengthKm": 99.375,
       "issues": []
     },
     {
@@ -3348,49 +3267,35 @@
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 2,
+      "surveyedStraightIntervals": 0,
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 29,
-      "lengthKm": 561.357,
+      "lengthKm": 561.004,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "8 station interval(s) are withheld from display; the source geometry reaches 342 m from the independent survey, past the 35 m regional limit",
-          "metres": 341.9,
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 356 m from the independent survey, past the 35 m regional limit",
+          "metres": 356.1,
           "toleranceMetres": 35.0,
           "intervals": [
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27
+            20
           ],
           "at": [
-            -119.226101,
-            34.248016
+            -119.226253,
+            34.248045
           ],
           "builtFrom": "narn"
         },
         {
           "severity": "NOTE",
           "check": "geometry.unchecked.withheld",
-          "message": "970 of 2169 vertices had no independent reference; affected station intervals are withheld from display",
-          "vertices": 2169,
-          "unmatched": 970,
+          "message": "1257 of 2726 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 2726,
+          "unmatched": 1257,
           "intervals": [
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27
+            20
           ]
         }
       ]
@@ -3414,13 +3319,6 @@
       "stationCount": 23,
       "lengthKm": 1331.482,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-charleston is 626122 m from where amtrak-cardinal puts it, past the 400 m the band allows",
-          "station": "us-official-charleston",
-          "metres": 626122
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -3615,12 +3513,12 @@
       "lineId": "amtrak-southwest-chief",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Amtrak",
       "name": "Southwest Chief",
       "sourceFeed": "amtrak",
       "sourceRouteId": null,
-      "geometrySource": "gtfs-shape",
+      "geometrySource": "narn",
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
@@ -3628,29 +3526,64 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 32,
-      "lengthKm": 3579.125,
+      "lengthKm": 3587.349,
       "issues": [
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "amtrak"
+        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "8 station interval(s) are withheld from display; the source geometry reaches 73 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 72.8,
+          "message": "2 station interval(s) are withheld from display; the source geometry reaches 389 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 388.7,
           "toleranceMetres": 50.0,
           "intervals": [
-            7,
-            9,
-            11,
-            14,
-            17,
-            23,
-            25,
-            28
+            1,
+            27
           ],
           "at": [
-            -117.324825,
-            34.10334
+            -88.329913,
+            41.747753
           ],
-          "builtFrom": "gtfs-shape"
+          "builtFrom": "narn"
+        },
+        {
+          "severity": "NOTE",
+          "check": "geometry.unchecked.withheld",
+          "message": "10099 of 11247 vertices had no independent reference; affected station intervals are withheld from display",
+          "vertices": 11247,
+          "unmatched": 10099,
+          "intervals": [
+            1,
+            27
+          ]
         }
       ]
     },
@@ -3717,7 +3650,7 @@
       "lineId": "amtrak-wolverine",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Amtrak",
       "name": "Wolverine",
       "sourceFeed": "amtrak",
@@ -3730,16 +3663,8 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 488.276,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-jackson is 1218226 m from where amtrak-city-of-new-orleans puts it, past the 400 m the band allows",
-          "station": "us-official-jackson",
-          "metres": 1218226
-        }
-      ]
+      "lengthKm": 488.593,
+      "issues": []
     },
     {
       "lineId": "bart-blue",
@@ -3903,8 +3828,8 @@
         {
           "severity": "WARN",
           "check": "geometry.deviation.officialRetained",
-          "message": "5 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 391 m, past the 30 m commuter review limit",
-          "metres": 390.8,
+          "message": "5 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 398 m, past the 30 m commuter review limit",
+          "metres": 397.5,
           "toleranceMetres": 30.0,
           "intervals": [
             0,
@@ -3914,17 +3839,17 @@
             4
           ],
           "at": [
-            -121.800886,
-            37.998257
+            -122.275257,
+            37.798782
           ],
           "builtFrom": "bart-sfo-millbrae-wye"
         },
         {
           "severity": "WARN",
           "check": "geometry.unchecked.officialRetained",
-          "message": "144 of 678 vertices had no independent visual reference; the provenance-verified official centreline remains visible",
+          "message": "612 of 678 vertices had no independent visual reference; the provenance-verified official centreline remains visible",
           "vertices": 678,
-          "unmatched": 144,
+          "unmatched": 612,
           "intervals": [
             0,
             1,
@@ -3932,20 +3857,6 @@
             3,
             4
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-lafayette is 3030330 m from where amtrak-cardinal puts it, past the 400 m the band allows",
-          "station": "us-official-lafayette",
-          "metres": 3030330
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-millbrae is 106 m from where bart-red puts it, past the 90 m the band allows",
-          "station": "us-official-millbrae",
-          "metres": 106
         }
       ]
     },
@@ -3966,28 +3877,14 @@
       "colorReference": "#f2e205",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 376.18,
+      "lengthKm": 375.085,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-fort-lauderdale is 2467 m from where amtrak-silver-meteor puts it, past the 400 m the band allows",
-          "station": "us-official-fort-lauderdale",
-          "metres": 2467
-        },
         {
           "severity": "WARN",
           "check": "station.split",
           "message": "station us-official-west-palm-beach is 709 m from where amtrak-silver-meteor puts it, past the 400 m the band allows",
           "station": "us-official-west-palm-beach",
           "metres": 709
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-orlando is 14450 m from where amtrak-silver-meteor puts it, past the 400 m the band allows",
-          "station": "us-official-orlando",
-          "metres": 14450
         }
       ]
     },
@@ -3995,7 +3892,7 @@
       "lineId": "caltrain-local-weekday",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "Caltrain",
       "name": "Local Weekday",
       "sourceFeed": "caltrain",
@@ -4009,7 +3906,22 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 30,
       "lengthKm": 123.441,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-san-jose is 221 m from where amtrak-capitol-corridor puts it, past the 200 m the band allows",
+          "station": "us-official-san-jose",
+          "metres": 221
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-millbrae is 137 m from where bart-yellow puts it, past the 90 m the band allows",
+          "station": "us-official-millbrae",
+          "metres": 137
+        }
+      ]
     },
     {
       "lineId": "capital-metro-550",
@@ -4076,7 +3988,7 @@
       "colorReference": "#ea0d2a",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.783,
+      "lengthKm": 99.403,
       "issues": []
     },
     {
@@ -4113,13 +4025,6 @@
             41.904457
           ],
           "builtFrom": "cta-blue"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-washington is 467776 m from where amtrak-lincoln-service-missouri-river-runner puts it, past the 400 m the band allows",
-          "station": "us-official-washington",
-          "metres": 467776
         }
       ]
     },
@@ -4127,7 +4032,7 @@
       "lineId": "cta-brown-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Chicago Transit Authority",
       "name": "Brown Line",
       "sourceFeed": "cta",
@@ -4141,22 +4046,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 26,
       "lengthKm": 17.949,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-quincy is 379593 m from where amtrak-carl-sandburg puts it, past the 400 m the band allows",
-          "station": "us-official-quincy",
-          "metres": 379593
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-fullerton is 2785971 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows",
-          "station": "us-official-fullerton",
-          "metres": 2785971
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "cta-green-line",
@@ -4250,7 +4140,7 @@
       "lineId": "cta-purple-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Chicago Transit Authority",
       "name": "Purple Line",
       "sourceFeed": "cta",
@@ -4264,22 +4154,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 25,
       "lengthKm": 25.772,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-davis is 2894928 m from where amtrak-capitol-corridor puts it, past the 200 m the band allows",
-          "station": "us-official-davis",
-          "metres": 2894928
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-wilson is 1091846 m from where amtrak-carolinian puts it, past the 400 m the band allows",
-          "station": "us-official-wilson",
-          "metres": 1091846
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "cta-red-line",
@@ -4300,13 +4175,6 @@
       "stationCount": 33,
       "lengthKm": 35.229,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-lawrence is 721667 m from where amtrak-southwest-chief puts it, past the 400 m the band allows",
-          "station": "us-official-lawrence",
-          "metres": 721667
-        },
         {
           "severity": "NOTE",
           "check": "station.split.reviewed",
@@ -4399,7 +4267,7 @@
       "lineId": "dallas-area-rapid-transit-da-green",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Dallas Area Rapid Transit",
       "name": "DART LIGHT RAIL - GREEN LINE",
       "sourceFeed": "dallas-area-rapid-transit-da",
@@ -4413,15 +4281,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 24,
       "lengthKm": 45.559,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-burbank is 1990554 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows",
-          "station": "us-official-burbank",
-          "metres": 1990554
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "dallas-area-rapid-transit-da-orange",
@@ -4476,20 +4336,6 @@
             32.796956
           ],
           "builtFrom": "dart-red"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-cityplace-uptown is 86 m from where mckinney-avenue-trolley-m-line-ob puts it, past the 40 m the band allows",
-          "station": "us-official-cityplace-uptown",
-          "metres": 86
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-st-paul is 75 m from where mckinney-avenue-trolley-m-line-ob puts it, past the 40 m the band allows",
-          "station": "us-official-st-paul",
-          "metres": 75
         }
       ]
     },
@@ -4662,26 +4508,6 @@
       "issues": []
     },
     {
-      "lineId": "houston-metro-700-b1",
-      "country": "US",
-      "status": "published",
-      "review": "passed",
-      "operator": "Metropolitan Transit Authority of Harris County",
-      "name": "METRORAIL RED LINE",
-      "sourceFeed": "houston-metro",
-      "sourceRouteId": null,
-      "geometrySource": "houston-metro-700",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#ef0000",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 3,
-      "lengthKm": 0.699,
-      "issues": []
-    },
-    {
       "lineId": "houston-metro-800",
       "country": "US",
       "status": "published",
@@ -4705,7 +4531,7 @@
       "lineId": "houston-metro-800-b1",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "Metropolitan Transit Authority of Harris County",
       "name": "METRORAIL GREEN LINE",
       "sourceFeed": "houston-metro",
@@ -4718,8 +4544,24 @@
       "colorReference": "#3e7e00",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 4,
-      "lengthKm": 1.664,
-      "issues": []
+      "lengthKm": 1.642,
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "geometry.deviation.officialRetained",
+          "message": "1 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 34 m, past the 20 m street review limit",
+          "metres": 34.2,
+          "toleranceMetres": 20.0,
+          "intervals": [
+            2
+          ],
+          "at": [
+            -95.35568,
+            29.755005
+          ],
+          "builtFrom": "houston-metro-800"
+        }
+      ]
     },
     {
       "lineId": "houston-metro-900",
@@ -4738,7 +4580,7 @@
       "colorReference": "#40007e",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 9.651,
+      "lengthKm": 9.629,
       "issues": []
     },
     {
@@ -5049,22 +4891,23 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 17,
-      "lengthKm": 117.45,
+      "lengthKm": 117.426,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "3 station interval(s) are withheld from display; the source geometry reaches 47 m from the independent survey, past the 35 m regional limit",
-          "metres": 47.3,
+          "message": "4 station interval(s) are withheld from display; the source geometry reaches 48 m from the independent survey, past the 35 m regional limit",
+          "metres": 48.1,
           "toleranceMetres": 35.0,
           "intervals": [
             11,
+            12,
             13,
             15
           ],
           "at": [
-            -77.885723,
-            39.380218
+            -77.885758,
+            39.380044
           ],
           "builtFrom": "gtfs-shape"
         }
@@ -5167,7 +5010,7 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 122.61,
+      "lengthKm": 122.419,
       "issues": []
     },
     {
@@ -5316,24 +5159,8 @@
       "colorReference": "#00843d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 25,
-      "lengthKm": 22.807,
+      "lengthKm": 23.164,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.deviation.officialRetained",
-          "message": "2 station interval(s) retain the verified official centreline although the independent visual reference differs by up to 75 m, past the 25 m metro review limit",
-          "metres": 74.6,
-          "toleranceMetres": 25.0,
-          "intervals": [
-            12,
-            23
-          ],
-          "at": [
-            -71.101532,
-            42.346701
-          ],
-          "builtFrom": "mbta-rapid-green-d"
-        },
         {
           "severity": "WARN",
           "check": "station.split",
@@ -5390,7 +5217,7 @@
       "lineId": "mbta-e-b1",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Green Line",
       "sourceFeed": "mbta",
@@ -5403,16 +5230,8 @@
       "colorReference": "#00843d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 0.904,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-lechmere is 452 m from where mbta-d puts it, past the 40 m the band allows",
-          "station": "us-official-lechmere",
-          "metres": 452
-        }
-      ]
+      "lengthKm": 1.682,
+      "issues": []
     },
     {
       "lineId": "mbta-fairmount-line",
@@ -5478,7 +5297,7 @@
       "lineId": "mbta-fitchburg-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Fitchburg Line",
       "sourceFeed": "mbta",
@@ -5492,15 +5311,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
       "lengthKm": 85.944,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-concord is 4267337 m from where bart-yellow puts it, past the 90 m the band allows",
-          "station": "us-official-concord",
-          "metres": 4267337
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "mbta-foxboro-event-service",
@@ -5526,7 +5337,7 @@
       "lineId": "mbta-framingham-worcester-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Framingham/Worcester Line",
       "sourceFeed": "mbta",
@@ -5540,15 +5351,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
       "lengthKm": 71.24,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-ashland is 1033374 m from where amtrak-cardinal puts it, past the 400 m the band allows",
-          "station": "us-official-ashland",
-          "metres": 1033374
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "mbta-greenbush-line",
@@ -5574,7 +5377,7 @@
       "lineId": "mbta-haverhill-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Haverhill Line",
       "sourceFeed": "mbta",
@@ -5588,21 +5391,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
       "lengthKm": 52.934,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-greenwood is 1941991 m from where amtrak-city-of-new-orleans puts it, past the 400 m the band allows",
-          "station": "us-official-greenwood",
-          "metres": 1941991
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "mbta-kingston-line",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MBTA",
       "name": "Kingston Line",
       "sourceFeed": "mbta",
@@ -5616,15 +5411,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
       "lengthKm": 56.481,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-kingston is 88652 m from where amtrak-northeast-regional puts it, past the 400 m the band allows",
-          "station": "us-official-kingston",
-          "metres": 88652
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "mbta-lowell-line",
@@ -5769,13 +5556,6 @@
           "builtFrom": "mbta-rapid-orange"
         },
         {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-forest-hills is 166 m from where mbta-needham-line puts it, past the 40 m the band allows",
-          "station": "us-official-forest-hills",
-          "metres": 166
-        },
-        {
           "severity": "NOTE",
           "check": "station.split.reviewed",
           "message": "station us-official-north spans 143 m inside a reviewed official complex (exact limit 155 m)",
@@ -5797,7 +5577,7 @@
       "lineId": "mbta-providence-stoughton-line",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "MBTA",
       "name": "Providence/Stoughton Line",
       "sourceFeed": "mbta",
@@ -5811,7 +5591,15 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
       "lengthKm": 100.902,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-forest-hills is 166 m from where mbta-orange-line puts it, past the 90 m the band allows",
+          "station": "us-official-forest-hills",
+          "metres": 166
+        }
+      ]
     },
     {
       "lineId": "mbta-providence-stoughton-line-b2",
@@ -5910,13 +5698,6 @@
           "message": "2 corners under half the metro band minimum radius of 30 m",
           "band": "metro",
           "count": 2
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-broadway is 4337857 m from where caltrain-local-weekday puts it, past the 90 m the band allows",
-          "station": "us-official-broadway",
-          "metres": 4337857
         }
       ]
     },
@@ -6028,7 +5809,7 @@
       "lineId": "metra-bnsf",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Metra",
       "name": "Burlington Northern",
       "sourceFeed": "metra",
@@ -6042,15 +5823,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 26,
       "lengthKm": 59.437,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-hollywood is 1893197 m from where amtrak-silver-meteor puts it, past the 400 m the band allows",
-          "station": "us-official-hollywood",
-          "metres": 1893197
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "metra-hc",
@@ -6116,7 +5889,7 @@
       "lineId": "metra-me-b2",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Metra",
       "name": "Metra Electric",
       "sourceFeed": "metra",
@@ -6130,15 +5903,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
       "lengthKm": 7.183,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-ashland-2 is 972335 m from where amtrak-northeast-regional puts it, past the 400 m the band allows",
-          "station": "us-official-ashland-2",
-          "metres": 972335
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "metra-me-b3",
@@ -6164,7 +5929,7 @@
       "lineId": "metra-milwaukee",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "Metra",
       "name": "Milwaukee",
       "sourceFeed": "metra",
@@ -6178,7 +5943,15 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 22,
       "lengthKm": 79.99,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-chicago-union is 139 m from where metra-bnsf puts it, past the 90 m the band allows",
+          "station": "us-official-chicago-union",
+          "metres": 139
+        }
+      ]
     },
     {
       "lineId": "metra-milwaukee-2",
@@ -6204,7 +5977,7 @@
       "lineId": "metra-ncs",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Metra",
       "name": "North Central Service",
       "sourceFeed": "metra",
@@ -6218,15 +5991,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
       "lengthKm": 85.065,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-antioch is 2883193 m from where bart-yellow puts it, past the 90 m the band allows",
-          "station": "us-official-antioch",
-          "metres": 2883193
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "metra-ri",
@@ -6359,13 +6124,6 @@
           "intervals": [
             0
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-highland-park is 2787980 m from where los-angeles-county-metropoli-metro-a-line puts it, past the 90 m the band allows",
-          "station": "us-official-highland-park",
-          "metres": 2787980
         }
       ]
     },
@@ -6408,13 +6166,6 @@
       "stationCount": 22,
       "lengthKm": 101.435,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-harvard is 1434377 m from where mbta-red-line puts it, past the 90 m the band allows",
-          "station": "us-official-harvard",
-          "metres": 1434377
-        },
         {
           "severity": "NOTE",
           "check": "station.split.reviewed",
@@ -6539,7 +6290,7 @@
       "lineId": "metro-north-railroad-new-haven",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Metro-North Railroad",
       "name": "New Haven",
       "sourceFeed": "metro-north-railroad",
@@ -6553,15 +6304,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 32,
       "lengthKm": 116.84,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-southport is 1198370 m from where cta-brown-line puts it, past the 90 m the band allows",
-          "station": "us-official-southport",
-          "metres": 1198370
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "metro-north-railroad-waterbury",
@@ -6713,13 +6456,6 @@
           "message": "1 corners under half the metro band minimum radius of 30 m",
           "band": "metro",
           "count": 1
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-central is 1786394 m from where mbta-red-line puts it, past the 40 m the band allows",
-          "station": "us-official-central",
-          "metres": 1786394
         }
       ]
     },
@@ -6800,7 +6536,7 @@
       "colorReference": "#ff8400",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 139.474,
+      "lengthKm": 139.197,
       "issues": []
     },
     {
@@ -6840,7 +6576,7 @@
       "colorReference": "#ffb81d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 12,
-      "lengthKm": 113.762,
+      "lengthKm": 113.784,
       "issues": [
         {
           "severity": "WARN",
@@ -6848,13 +6584,6 @@
           "message": "1 near-reversals the sawtooth pass left in",
           "band": "regional",
           "count": 1
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-ventura is 9216 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows",
-          "station": "us-official-ventura",
-          "metres": 9216
         }
       ]
     },
@@ -6940,13 +6669,6 @@
             33.773381
           ],
           "builtFrom": "marta-gold"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-airport is 1521400 m from where mbta-blue-line puts it, past the 90 m the band allows",
-          "station": "us-official-airport",
-          "metres": 1521400
         }
       ]
     },
@@ -7141,20 +6863,6 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-woodlawn is 1695 m from where metro-north-railroad-harlem puts it, past the 90 m the band allows",
-          "station": "us-official-woodlawn",
-          "metres": 1695
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-court-st is 93 m from where metropolitan-transit-authori-2 puts it, past the 40 m the band allows",
-          "station": "us-official-court-st",
-          "metres": 93
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
           "message": "station us-official-149-st-hostos is 55 m from where metropolitan-transit-authori-2 puts it, past the 40 m the band allows",
           "station": "us-official-149-st-hostos",
           "metres": 55
@@ -7182,7 +6890,7 @@
       "lineId": "metropolitan-transit-authori-42-st-shuttle",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "MTA New York City Transit",
       "name": "42 St Shuttle",
       "sourceFeed": "metropolitan-transit-authori",
@@ -7196,33 +6904,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
       "lengthKm": 0.695,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-grand-central-42-st is 226 m from where metropolitan-transit-authori-4 puts it, past the 40 m the band allows",
-          "station": "us-official-grand-central-42-st",
-          "metres": 226
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-times-sq-42-st spans 127 m inside a reviewed official complex (exact limit 130 m)",
-          "station": "us-official-times-sq-42-st",
-          "metres": 127,
-          "maxMeters": 130.0,
-          "evidence": "MTA official GTFS transfers.txt connects parent stops 127, 725, 902, A27 and R16 as one Times Square complex",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "127",
-            "725",
-            "902",
-            "A27",
-            "R16"
-          ]
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "metropolitan-transit-authori-5",
@@ -7324,7 +7006,7 @@
       "lineId": "metropolitan-transit-authori-7",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "MTA New York City Transit",
       "name": "Flushing Local",
       "sourceFeed": "metropolitan-transit-authori",
@@ -7338,7 +7020,15 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 22,
       "lengthKm": 16.537,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-grand-central-42-st is 304 m from where metropolitan-transit-authori-42-st-shuttle puts it, past the 25 m the band allows",
+          "station": "us-official-grand-central-42-st",
+          "metres": 304
+        }
+      ]
     },
     {
       "lineId": "metropolitan-transit-authori-7x",
@@ -7393,13 +7083,6 @@
             40.703042
           ],
           "builtFrom": "mta-subway-service-a"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-chambers-st-2 is 125 m from where metropolitan-transit-authori-2 puts it, past the 40 m the band allows",
-          "station": "us-official-chambers-st-2",
-          "metres": 125
         },
         {
           "severity": "NOTE",
@@ -7491,22 +7174,6 @@
             40.828571
           ],
           "builtFrom": "mta-subway-service-b"
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-atlantic-av-barclays-ctr spans 80 m inside a reviewed official complex (exact limit 190 m)",
-          "station": "us-official-atlantic-av-barclays-ctr",
-          "metres": 80,
-          "maxMeters": 190.0,
-          "evidence": "MTA official GTFS transfers.txt connects parents 235, D24 and R31 as Atlantic Av-Barclays Ctr",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "235",
-            "D24",
-            "R31"
-          ]
         },
         {
           "severity": "NOTE",
@@ -7644,22 +7311,6 @@
           "message": "station us-official-51-st is 247 m from where metropolitan-transit-authori-6 puts it, past the 40 m the band allows",
           "station": "us-official-51-st",
           "metres": 247
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-court-sq spans 108 m inside a reviewed official complex (exact limit 130 m)",
-          "station": "us-official-court-sq",
-          "metres": 108,
-          "maxMeters": 130.0,
-          "evidence": "MTA official GTFS transfers.txt connects parents 719, F09 and G22 as Court Sq",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "719",
-            "F09",
-            "G22"
-          ]
         }
       ]
     },
@@ -7718,22 +7369,6 @@
             "132",
             "D19",
             "L02"
-          ]
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-59-st spans 276 m inside a reviewed official complex (exact limit 285 m)",
-          "station": "us-official-59-st",
-          "metres": 276,
-          "maxMeters": 285.0,
-          "evidence": "MTA official GTFS transfers.txt directly and bidirectionally connects parent stops 629, B08, and R11 as one transfer complex",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "629",
-            "B08",
-            "R11"
           ]
         },
         {
@@ -7815,9 +7450,9 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-botanic-garden is 98 m from where metropolitan-transit-authori-2 puts it, past the 25 m the band allows",
+          "message": "station us-official-botanic-garden is 101 m from where metropolitan-transit-authori-4 puts it, past the 40 m the band allows",
           "station": "us-official-botanic-garden",
-          "metres": 98
+          "metres": 101
         },
         {
           "severity": "WARN",
@@ -7825,21 +7460,6 @@
           "message": "station us-official-franklin-av is 127 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
           "station": "us-official-franklin-av",
           "metres": 127
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-prospect-park-2 spans 76 m inside a reviewed official complex (exact limit 80 m)",
-          "station": "us-official-prospect-park-2",
-          "metres": 76,
-          "maxMeters": 80.0,
-          "evidence": "MTA official GTFS uses parent D26 for both B/Q trains and the Franklin Avenue Shuttle at Prospect Park",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "D26N",
-            "D26S"
-          ]
         }
       ]
     },
@@ -7913,6 +7533,13 @@
             40.664232
           ],
           "builtFrom": "mta-subway-service-g"
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-court-sq is 227 m from where metropolitan-transit-authori-e puts it, past the 40 m the band allows",
+          "station": "us-official-court-sq",
+          "metres": 227
         }
       ]
     },
@@ -7945,33 +7572,9 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-broadway-junction is 140 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
-          "station": "us-official-broadway-junction",
-          "metres": 140
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
           "message": "station us-official-delancey-st-essex-st is 64 m from where metropolitan-transit-authori-f puts it, past the 40 m the band allows",
           "station": "us-official-delancey-st-essex-st",
           "metres": 64
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-canal-st-2 spans 81 m inside a reviewed official complex (exact limit 85 m)",
-          "station": "us-official-canal-st-2",
-          "metres": 81,
-          "maxMeters": 85.0,
-          "evidence": "MTA official GTFS transfers.txt connects parents 639, M20, Q01 and R23 as the Canal St complex",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "639",
-            "M20",
-            "Q01",
-            "R23"
-          ]
         }
       ]
     },
@@ -8004,25 +7607,16 @@
         {
           "severity": "WARN",
           "check": "station.split",
+          "message": "station us-official-broadway-junction is 182 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
+          "station": "us-official-broadway-junction",
+          "metres": 182
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
           "message": "station us-official-lorimer-st is 168 m from where metropolitan-transit-authori-g puts it, past the 40 m the band allows",
           "station": "us-official-lorimer-st",
           "metres": 168
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-14-st-union-sq spans 65 m inside a reviewed official complex (exact limit 70 m)",
-          "station": "us-official-14-st-union-sq",
-          "metres": 65,
-          "maxMeters": 70.0,
-          "evidence": "MTA official GTFS transfers.txt connects parents 635, L03 and R20 as 14 St-Union Sq",
-          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
-          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
-          "stopIds": [
-            "635",
-            "L03",
-            "R20"
-          ]
         },
         {
           "severity": "NOTE",
@@ -8114,9 +7708,23 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-broadway-2 is 778655 m from where detroit-people-mover-dpm puts it, past the 40 m the band allows",
-          "station": "us-official-broadway-2",
-          "metres": 778655
+          "message": "station us-official-times-sq-42-st is 393 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
+          "station": "us-official-times-sq-42-st",
+          "metres": 393
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-atlantic-av-barclays-ctr is 195 m from where metropolitan-transit-authori-b puts it, past the 40 m the band allows",
+          "station": "us-official-atlantic-av-barclays-ctr",
+          "metres": 195
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-14-st-union-sq is 128 m from where metropolitan-transit-authori-4 puts it, past the 40 m the band allows",
+          "station": "us-official-14-st-union-sq",
+          "metres": 128
         },
         {
           "severity": "WARN",
@@ -8179,6 +7787,28 @@
           "message": "1 near-reversals the sawtooth pass left in",
           "band": "metro",
           "count": 1
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-59-st is 287 m from where metropolitan-transit-authori-4 puts it, past the 40 m the band allows",
+          "station": "us-official-59-st",
+          "metres": 287
+        },
+        {
+          "severity": "NOTE",
+          "check": "station.split.reviewed",
+          "message": "station us-official-prospect-park-2 spans 76 m inside a reviewed official complex (exact limit 80 m)",
+          "station": "us-official-prospect-park-2",
+          "metres": 76,
+          "maxMeters": 80.0,
+          "evidence": "MTA official GTFS uses parent D26 for both B/Q trains and the Franklin Avenue Shuttle at Prospect Park",
+          "evidenceUrl": "http://web.mta.info/developers/files/google_transit_supplemented.zip",
+          "sourceSha256": "53689f93b2a3e40347dbe8108de818e893875238f5ee4f95dd8076e1bb79b35e",
+          "stopIds": [
+            "D26N",
+            "D26S"
+          ]
         }
       ]
     },
@@ -8204,16 +7834,30 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-jay-st-metrotech is 141 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
-          "station": "us-official-jay-st-metrotech",
-          "metres": 141
+          "message": "station us-official-court-st is 231 m from where metropolitan-transit-authori-4 puts it, past the 40 m the band allows",
+          "station": "us-official-court-st",
+          "metres": 231
         },
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-86-st-5 is 18425 m from where metropolitan-transit-authori-q puts it, past the 40 m the band allows",
-          "station": "us-official-86-st-5",
-          "metres": 18425
+          "message": "station us-official-chambers-st-2 is 436 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
+          "station": "us-official-chambers-st-2",
+          "metres": 436
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-canal-st-2 is 220 m from where metropolitan-transit-authori-j puts it, past the 40 m the band allows",
+          "station": "us-official-canal-st-2",
+          "metres": 220
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-jay-st-metrotech is 141 m from where metropolitan-transit-authori-a puts it, past the 40 m the band allows",
+          "station": "us-official-jay-st-metrotech",
+          "metres": 141
         }
       ]
     },
@@ -8438,13 +8082,6 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-st-albans is 461561 m from where amtrak-vermonter puts it, past the 400 m the band allows",
-          "station": "us-official-st-albans",
-          "metres": 461561
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
           "message": "station us-official-jamaica is 103 m from where metropolitan-transit-authori-e puts it, past the 90 m the band allows",
           "station": "us-official-jamaica",
           "metres": 103
@@ -8485,13 +8122,6 @@
             5,
             6
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-atlantic is 3932124 m from where los-angeles-county-metropoli-metro-e-line puts it, past the 90 m the band allows",
-          "station": "us-official-atlantic",
-          "metres": 3932124
         },
         {
           "severity": "NOTE",
@@ -8635,13 +8265,6 @@
             12,
             13
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-garden-city is 2352297 m from where amtrak-southwest-chief puts it, past the 400 m the band allows",
-          "station": "us-official-garden-city",
-          "metres": 2352297
         }
       ]
     },
@@ -8686,13 +8309,6 @@
             12,
             13
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-oceanside is 3932749 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows",
-          "station": "us-official-oceanside",
-          "metres": 3932749
         }
       ]
     },
@@ -8700,7 +8316,7 @@
       "lineId": "mta-long-island-rail-road-montauk-branch",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "Long Island Rail Road",
       "name": "Montauk Branch",
       "sourceFeed": "mta-long-island-rail-road",
@@ -8713,36 +8329,8 @@
       "colorReference": "#00b2a9",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 19,
-      "lengthKm": 189.343,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "geometry.unchecked.officialRetained",
-          "message": "691 of 691 vertices had no independent visual reference; the provenance-verified official centreline remains visible",
-          "vertices": 691,
-          "unmatched": 691,
-          "intervals": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17
-          ]
-        }
-      ]
+      "lengthKm": 189.464,
+      "issues": []
     },
     {
       "lineId": "mta-long-island-rail-road-oyster-bay-branch",
@@ -8837,20 +8425,6 @@
             22,
             23
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-huntington is 818930 m from where amtrak-cardinal puts it, past the 400 m the band allows",
-          "station": "us-official-huntington",
-          "metres": 818930
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-stony-brook is 228987 m from where mbta-orange-line puts it, past the 90 m the band allows",
-          "station": "us-official-stony-brook",
-          "metres": 228987
         }
       ]
     },
@@ -9005,7 +8579,7 @@
       "colorReference": "#075aaa",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 108.658,
+      "lengthKm": 108.437,
       "issues": []
     },
     {
@@ -9093,13 +8667,6 @@
           "message": "2 corners under half the metro band minimum radius of 30 m",
           "band": "metro",
           "count": 2
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-22nd-street is 4119575 m from where caltrain-local-weekday puts it, past the 90 m the band allows",
-          "station": "us-official-22nd-street",
-          "metres": 4119575
         }
       ]
     },
@@ -9367,7 +8934,7 @@
       "lineId": "new-jersey-transit-nj-transi-nec",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "NJ Transit Rail",
       "name": "Northeast Corridor",
       "sourceFeed": "new-jersey-transit-nj-transi",
@@ -9381,21 +8948,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
       "lengthKm": 93.397,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-linden is 1131978 m from where cta-purple-line puts it, past the 90 m the band allows",
-          "station": "us-official-linden",
-          "metres": 1131978
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "new-jersey-transit-nj-transi-njcl",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "NJ Transit Rail",
       "name": "North Jersey Coast Line",
       "sourceFeed": "new-jersey-transit-nj-transi",
@@ -9409,21 +8968,13 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 28,
       "lengthKm": 107.01,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-woodbridge is 330536 m from where amtrak-northeast-regional puts it, past the 400 m the band allows",
-          "station": "us-official-woodbridge",
-          "metres": 330536
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "new-jersey-transit-nj-transi-nlr",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "NJ Transit Rail",
       "name": "Newark Light Rail",
       "sourceFeed": "new-jersey-transit-nj-transi",
@@ -9437,15 +8988,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
       "lengthKm": 9.7,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-penn is 14435 m from where mta-long-island-rail-road-babylon-branch puts it, past the 90 m the band allows",
-          "station": "us-official-penn",
-          "metres": 14435
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "new-jersey-transit-nj-transi-nlr-b1",
@@ -9552,13 +9095,6 @@
           "message": "2 corners under half the commuter band minimum radius of 80 m",
           "band": "commuter",
           "count": 2
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-aquarium is 434163 m from where mbta-blue-line puts it, past the 90 m the band allows",
-          "station": "us-official-aquarium",
-          "metres": 434163
         }
       ]
     },
@@ -9812,28 +9348,28 @@
           "message": "station us-official-solana-beach is 234 m from where amtrak-pacific-surfliner puts it, past the 200 m the band allows",
           "station": "us-official-solana-beach",
           "metres": 234
+        },
+        {
+          "severity": "NOTE",
+          "check": "station.split.reviewed",
+          "message": "station us-official-oceanside spans 271 m inside a reviewed official complex (exact limit 300 m)",
+          "station": "us-official-oceanside",
+          "metres": 271,
+          "maxMeters": 300.0,
+          "evidence": "NCTD publishes COASTER platforms 28000/28100 and SPRINTER stop 27000 as Oceanside Transit Center; Metrolink publishes stop 144 at the same named interchange",
+          "evidenceUrl": "https://gonctd.com/services/transit-centers/",
+          "sourceSha256": [
+            "47300785dfb1773e096a35c85a287c81a90023e2c178bd85a290d2893f37ea42",
+            "8d691922fbec7ed4d2e17955085f1ff228f5b6e3e38f2139f8629e612dd18098"
+          ],
+          "stopIds": [
+            "27000",
+            "28000",
+            "28100",
+            "144"
+          ]
         }
       ]
-    },
-    {
-      "lineId": "north-county-transit-distric-498-b1",
-      "country": "US",
-      "status": "published",
-      "review": "passed",
-      "operator": "North County Transit District",
-      "name": "COASTER",
-      "sourceFeed": "north-county-transit-distric",
-      "sourceRouteId": null,
-      "geometrySource": "narn",
-      "officialSpatialGeometry": false,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#00459d",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 5.374,
-      "issues": []
     },
     {
       "lineId": "north-county-transit-distric-sprinter",
@@ -9951,13 +9487,6 @@
             21,
             22
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-highland is 1946489 m from where capital-metro-550 puts it, past the 90 m the band allows",
-          "station": "us-official-highland",
-          "metres": 1946489
         }
       ]
     },
@@ -10008,20 +9537,6 @@
             1,
             12
           ]
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-arlington is 779346 m from where mbta-d puts it, past the 40 m the band allows",
-          "station": "us-official-arlington",
-          "metres": 779346
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-westfield is 480050 m from where new-jersey-transit-nj-transi-rarv puts it, past the 90 m the band allows",
-          "station": "us-official-westfield",
-          "metres": 480050
         }
       ]
     },
@@ -10049,7 +9564,7 @@
       "lineId": "port-authority-trans-hudson-hoboken-33rd-street",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Hoboken - 33rd Street",
       "sourceFeed": "port-authority-trans-hudson",
@@ -10062,8 +9577,38 @@
       "colorReference": "#4d92fb",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 4.632,
+      "lengthKm": 5.737,
       "issues": [
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
         {
           "severity": "WARN",
           "check": "geometry.radius",
@@ -10074,9 +9619,9 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-9th-street is 3698 m from where new-jersey-transit-nj-transi-hblr puts it, past the 40 m the band allows",
-          "station": "us-official-9th-street",
-          "metres": 3698
+          "message": "station us-official-hoboken is 157 m from where new-jersey-transit-nj-transi-hblr puts it, past the 40 m the band allows",
+          "station": "us-official-hoboken",
+          "metres": 157
         }
       ]
     },
@@ -10084,7 +9629,7 @@
       "lineId": "port-authority-trans-hudson-hoboken-world-trade-center",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Hoboken - World Trade Center",
       "sourceFeed": "port-authority-trans-hudson",
@@ -10099,6 +9644,36 @@
       "stationCount": 4,
       "lengthKm": 4.551,
       "issues": [
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
         {
           "severity": "WARN",
           "check": "geometry.deviation.officialRetained",
@@ -10117,30 +9692,9 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-world-trade-center is 56 m from where metropolitan-transit-authori-1 puts it, past the 40 m the band allows",
-          "station": "us-official-world-trade-center",
-          "metres": 56
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-newport is 133 m from where new-jersey-transit-nj-transi-hblr puts it, past the 40 m the band allows",
-          "station": "us-official-newport",
-          "metres": 133
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
           "message": "station us-official-exchange-place is 175 m from where new-jersey-transit-nj-transi-hblr puts it, past the 40 m the band allows",
           "station": "us-official-exchange-place",
           "metres": 175
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-hoboken-2 is 457 m from where port-authority-trans-hudson-hoboken-33rd-street puts it, past the 40 m the band allows",
-          "station": "us-official-hoboken-2",
-          "metres": 457
         }
       ]
     },
@@ -10148,7 +9702,7 @@
       "lineId": "port-authority-trans-hudson-journal-square-33rd-street-via-hoboken",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "error",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Journal Square - 33rd Street (via Hoboken)",
       "sourceFeed": "port-authority-trans-hudson",
@@ -10163,6 +9717,36 @@
       "stationCount": 9,
       "lengthKm": 10.86,
       "issues": [
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/build-north-america-rail-package.py",
+          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
+          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/lib/na_official.py",
+          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
+          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
+        {
+          "severity": "ERROR",
+          "check": "package.stale",
+          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
+          "input": "app/scripts/railway/na-feeds.json",
+          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
+          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
+          "generatedAt": null,
+          "feed": "port-authority-trans-hudson"
+        },
         {
           "severity": "WARN",
           "check": "geometry.radius",
@@ -10217,6 +9801,20 @@
           "message": "3 corners under half the metro band minimum radius of 30 m",
           "band": "metro",
           "count": 3
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-world-trade-center is 174 m from where port-authority-trans-hudson-hoboken-world-trade-center puts it, past the 40 m the band allows",
+          "station": "us-official-world-trade-center",
+          "metres": 174
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-newport is 139 m from where new-jersey-transit-nj-transi-hblr puts it, past the 40 m the band allows",
+          "station": "us-official-newport",
+          "metres": 139
         }
       ]
     },
@@ -10539,7 +10137,7 @@
       "lineId": "san-francisco-municipal-tran-n-b4",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "San Francisco Municipal Transportation Agency",
       "name": "JUDAH",
       "sourceFeed": "san-francisco-municipal-tran",
@@ -10553,15 +10151,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
       "lengthKm": 2.834,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-montgomery is 3570287 m from where amtrak-cardinal puts it, past the 400 m the band allows",
-          "station": "us-official-montgomery",
-          "metres": 3570287
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "san-francisco-municipal-tran-ph",
@@ -10871,34 +10461,6 @@
             39.905434
           ],
           "builtFrom": "septa-b1"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-north-philadelphia is 367 m from where amtrak-keystone-service puts it, past the 200 m the band allows",
-          "station": "us-official-north-philadelphia",
-          "metres": 367
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-erie is 475293 m from where amtrak-lake-shore-limited puts it, past the 400 m the band allows",
-          "station": "us-official-erie",
-          "metres": 475293
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-fairmount is 423323 m from where mbta-fairmount-line puts it, past the 40 m the band allows",
-          "station": "us-official-fairmount",
-          "metres": 423323
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-lombard is 1100282 m from where metra-union-pacific-2 puts it, past the 90 m the band allows",
-          "station": "us-official-lombard",
-          "metres": 1100282
         }
       ]
     },
@@ -10936,23 +10498,6 @@
             39.906723
           ],
           "builtFrom": "gtfs-shape"
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-15th-st-city-hall spans 49 m inside a reviewed official complex (exact limit 110 m)",
-          "station": "us-official-15th-st-city-hall",
-          "metres": 49,
-          "maxMeters": 110.0,
-          "evidence": "SEPTA official GTFS assigns trolley platforms 1281, 1392 and 20659 to parent 33034 at 15th St/City Hall",
-          "evidenceUrl": "https://www3.septa.org/developer/google_bus.zip",
-          "sourceSha256": "d8d68e9c3191b3dc2d05fd4952b72bb40ef1f3a964996a4a7b93874e472f8215",
-          "stopIds": [
-            "33034",
-            "1281",
-            "1392",
-            "20659"
-          ]
         }
       ]
     },
@@ -10960,7 +10505,7 @@
       "lineId": "septa-b3",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Broad-Ridge Spur",
       "sourceFeed": "septa",
@@ -10974,15 +10519,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 8,
       "lengthKm": 10.975,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-chinatown is 3843315 m from where los-angeles-county-metropoli-metro-a-line puts it, past the 40 m the band allows",
-          "station": "us-official-chinatown",
-          "metres": 3843315
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-d1",
@@ -11009,6 +10546,13 @@
           "message": "1 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 1
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-69th-street is 94 m from where septa-l1 puts it, past the 40 m the band allows",
+          "station": "us-official-69th-street",
+          "metres": 94
         }
       ]
     },
@@ -11248,20 +10792,6 @@
             39.949696
           ],
           "builtFrom": "septa-l1"
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-huntingdon is 250943 m from where amtrak-pennsylvanian puts it, past the 400 m the band allows",
-          "station": "us-official-huntingdon",
-          "metres": 250943
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-63rd-st is 1056398 m from where metra-me puts it, past the 40 m the band allows",
-          "station": "us-official-63rd-st",
-          "metres": 1056398
         }
       ]
     },
@@ -11269,7 +10799,7 @@
       "lineId": "septa-m1",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Norristown High Speed Line Local",
       "sourceFeed": "septa",
@@ -11282,86 +10812,7 @@
       "colorReference": "#5f249f",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 22,
-      "lengthKm": 21.476,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-bridgeport is 217927 m from where amtrak-northeast-regional puts it, past the 400 m the band allows",
-          "station": "us-official-bridgeport",
-          "metres": 217927
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-bryn-mawr is 1056987 m from where cta-red-line puts it, past the 40 m the band allows",
-          "station": "us-official-bryn-mawr",
-          "metres": 1056987
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-stadium is 3801646 m from where metro-transit-intercity-tran-1-line puts it, past the 90 m the band allows",
-          "station": "us-official-stadium",
-          "metres": 3801646
-        },
-        {
-          "severity": "NOTE",
-          "check": "station.split.reviewed",
-          "message": "station us-official-69th-street spans 49 m inside a reviewed official complex (exact limit 90 m)",
-          "station": "us-official-69th-street",
-          "metres": 49,
-          "maxMeters": 90.0,
-          "evidence": "SEPTA official GTFS assigns D1 stop 15497 and M1 stops 31790/32206 to the same 69th Street Transit Center parent 31034",
-          "evidenceUrl": "https://www3.septa.org/developer/google_bus.zip",
-          "sourceSha256": "d8d68e9c3191b3dc2d05fd4952b72bb40ef1f3a964996a4a7b93874e472f8215",
-          "stopIds": [
-            "31034",
-            "15497",
-            "31790",
-            "32206"
-          ]
-        }
-      ]
-    },
-    {
-      "lineId": "septa-m1-b1",
-      "country": "US",
-      "status": "published",
-      "review": "passed",
-      "operator": "SEPTA",
-      "name": "Norristown High Speed Line Local",
-      "sourceFeed": "septa",
-      "sourceRouteId": null,
-      "geometrySource": "septa-m1",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#5f249f",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 3,
-      "lengthKm": 2.791,
-      "issues": []
-    },
-    {
-      "lineId": "septa-m1-b2",
-      "country": "US",
-      "status": "published",
-      "review": "passed",
-      "operator": "SEPTA",
-      "name": "Norristown High Speed Line Local",
-      "sourceFeed": "septa",
-      "sourceRouteId": null,
-      "geometrySource": "septa-m1",
-      "officialSpatialGeometry": true,
-      "geometryFallbackFrom": null,
-      "geometryReview": null,
-      "surveyedStraightIntervals": 0,
-      "colorReference": "#5f249f",
-      "colorSource": "operator GTFS routes.txt route_color",
-      "stationCount": 2,
-      "lengthKm": 0.996,
+      "lengthKm": 21.48,
       "issues": []
     },
     {
@@ -11388,7 +10839,7 @@
       "lineId": "septa-regional-rail-che",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Chestnut Hill East Line",
       "sourceFeed": "septa-regional-rail",
@@ -11402,15 +10853,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 14,
       "lengthKm": 19.429,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-chestnut-hill is 420315 m from where mbta-d puts it, past the 40 m the band allows",
-          "station": "us-official-chestnut-hill",
-          "metres": 420315
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-regional-rail-chw",
@@ -11456,7 +10899,7 @@
       "lineId": "septa-regional-rail-fox",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Fox Chase Line",
       "sourceFeed": "septa-regional-rail",
@@ -11470,15 +10913,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
       "lengthKm": 20.104,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-olney is 1975 m from where septa-b1 puts it, past the 40 m the band allows",
-          "station": "us-official-olney",
-          "metres": 1975
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-regional-rail-lan",
@@ -11499,13 +10934,6 @@
       "stationCount": 29,
       "lengthKm": 58.69,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-melrose-park is 1086555 m from where metra-union-pacific-2 puts it, past the 90 m the band allows",
-          "station": "us-official-melrose-park",
-          "metres": 1086555
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -11560,27 +10988,6 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-wallingford is 275566 m from where amtrak-amtrak-hartford-line puts it, past the 200 m the band allows",
-          "station": "us-official-wallingford",
-          "metres": 275566
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-lansdowne is 440143 m from where mbta-framingham-worcester-line puts it, past the 90 m the band allows",
-          "station": "us-official-lansdowne",
-          "metres": 440143
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-gladstone is 101947 m from where new-jersey-transit-nj-transi-mneg puts it, past the 90 m the band allows",
-          "station": "us-official-gladstone",
-          "metres": 101947
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
           "message": "station us-official-clifton-aldan is 109 m from where septa-d2 puts it, past the 40 m the band allows",
           "station": "us-official-clifton-aldan",
           "metres": 109
@@ -11591,7 +10998,7 @@
       "lineId": "septa-regional-rail-nor",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Manayunk/Norristown Line",
       "sourceFeed": "septa-regional-rail",
@@ -11605,29 +11012,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 17,
       "lengthKm": 32.767,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-main-st is 1054408 m from where metra-union-pacific puts it, past the 90 m the band allows",
-          "station": "us-official-main-st",
-          "metres": 1054408
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-allegheny is 414914 m from where port-authority-of-allegheny-blue puts it, past the 40 m the band allows",
-          "station": "us-official-allegheny",
-          "metres": 414914
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-norristown is 122 m from where septa-m1 puts it, past the 40 m the band allows",
-          "station": "us-official-norristown",
-          "metres": 122
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-regional-rail-pao",
@@ -11648,34 +11033,6 @@
       "stationCount": 26,
       "lengthKm": 60.903,
       "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-ardmore is 2036297 m from where amtrak-heartland-flyer puts it, past the 400 m the band allows",
-          "station": "us-official-ardmore",
-          "metres": 2036297
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-rosemont is 1072845 m from where cta-blue-line puts it, past the 40 m the band allows",
-          "station": "us-official-rosemont",
-          "metres": 1072845
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-berwyn is 1046239 m from where cta-red-line puts it, past the 40 m the band allows",
-          "station": "us-official-berwyn",
-          "metres": 1046239
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-thorndale is 1021961 m from where cta-red-line puts it, past the 40 m the band allows",
-          "station": "us-official-thorndale",
-          "metres": 1021961
-        },
         {
           "severity": "WARN",
           "check": "station.split",
@@ -11703,7 +11060,7 @@
       "lineId": "septa-regional-rail-tre",
       "country": "US",
       "status": "published",
-      "review": "passed",
+      "review": "warning",
       "operator": "SEPTA",
       "name": "Trenton Line",
       "sourceFeed": "septa-regional-rail",
@@ -11717,13 +11074,21 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
       "lengthKm": 57.767,
-      "issues": []
+      "issues": [
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-north-philadelphia is 372 m from where septa-b1 puts it, past the 90 m the band allows",
+          "station": "us-official-north-philadelphia",
+          "metres": 372
+        }
+      ]
     },
     {
       "lineId": "septa-regional-rail-war",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "Warminster Line",
       "sourceFeed": "septa-regional-rail",
@@ -11737,15 +11102,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
       "lengthKm": 34.515,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-roslyn is 146476 m from where mta-long-island-rail-road-oyster-bay-branch puts it, past the 90 m the band allows",
-          "station": "us-official-roslyn",
-          "metres": 146476
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-regional-rail-wil",
@@ -11784,9 +11141,9 @@
         {
           "severity": "WARN",
           "check": "station.split",
-          "message": "station us-official-prospect-park is 1570455 m from where metro-transit-metro-green-line puts it, past the 40 m the band allows",
-          "station": "us-official-prospect-park",
-          "metres": 1570455
+          "message": "station us-official-darby is 995 m from where septa-t3 puts it, past the 40 m the band allows",
+          "station": "us-official-darby",
+          "metres": 995
         }
       ]
     },
@@ -11794,7 +11151,7 @@
       "lineId": "septa-regional-rail-wtr",
       "country": "US",
       "status": "published",
-      "review": "warning",
+      "review": "passed",
       "operator": "SEPTA",
       "name": "West Trenton Line",
       "sourceFeed": "septa-regional-rail",
@@ -11808,15 +11165,7 @@
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 21,
       "lengthKm": 54.478,
-      "issues": [
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-meadowbrook is 3094190 m from where utah-transit-authority-uta-701 puts it, past the 90 m the band allows",
-          "station": "us-official-meadowbrook",
-          "metres": 3094190
-        }
-      ]
+      "issues": []
     },
     {
       "lineId": "septa-t1",
@@ -11859,6 +11208,13 @@
           "message": "9 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 9
+        },
+        {
+          "severity": "WARN",
+          "check": "station.split",
+          "message": "station us-official-15th-st-city-hall is 146 m from where septa-b1 puts it, past the 40 m the band allows",
+          "station": "us-official-15th-st-city-hall",
+          "metres": 146
         }
       ]
     },
@@ -12177,13 +11533,6 @@
           "message": "4 corners under half the street band minimum radius of 15 m",
           "band": "street",
           "count": 4
-        },
-        {
-          "severity": "WARN",
-          "check": "station.split",
-          "message": "station us-official-darby is 41 m from where septa-t3 puts it, past the 25 m the band allows",
-          "station": "us-official-darby",
-          "metres": 41
         }
       ]
     },
@@ -12413,7 +11762,7 @@
       "colorReference": "#ef3e42",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 81.514,
+      "lengthKm": 81.593,
       "issues": []
     },
     {
@@ -12537,20 +11886,20 @@
       "colorReference": "#9bcd65",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 117.612,
+      "lengthKm": 117.173,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 63 m from the independent survey, past the 50 m longhaul limit",
-          "metres": 63.2,
+          "message": "1 station interval(s) are withheld from display; the source geometry reaches 70 m from the independent survey, past the 50 m longhaul limit",
+          "metres": 70.4,
           "toleranceMetres": 50.0,
           "intervals": [
             1
           ],
           "at": [
-            -80.233949,
-            25.908642
+            -80.23447,
+            25.90831
           ],
           "builtFrom": "gtfs-shape"
         }
@@ -12569,11 +11918,11 @@
       "officialSpatialGeometry": false,
       "geometryFallbackFrom": null,
       "geometryReview": null,
-      "surveyedStraightIntervals": 4,
+      "surveyedStraightIntervals": 1,
       "colorReference": "#006c86",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 114.516,
+      "lengthKm": 113.976,
       "issues": []
     },
     {
@@ -12593,20 +11942,21 @@
       "colorReference": "#f6931c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 144.103,
+      "lengthKm": 144.085,
       "issues": [
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
-          "message": "1 station interval(s) are withheld from display; the source geometry reaches 49 m from the independent survey, past the 35 m regional limit",
-          "metres": 49.0,
+          "message": "2 station interval(s) are withheld from display; the source geometry reaches 54 m from the independent survey, past the 35 m regional limit",
+          "metres": 54.3,
           "toleranceMetres": 35.0,
           "intervals": [
-            5
+            5,
+            9
           ],
           "at": [
-            -87.521538,
-            41.632001
+            -87.520996,
+            41.631985
           ],
           "builtFrom": "narn"
         }
@@ -12885,7 +12235,7 @@
       "colorReference": "#c227b9",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
-      "lengthKm": 130.899,
+      "lengthKm": 130.428,
       "issues": []
     },
     {
@@ -13068,21 +12418,6 @@
       "issues": [
         {
           "why": "routed interval contains an internal reversal",
-          "interval": 11,
-          "turnDegrees": 171.6
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 21,
-          "turnDegrees": 177.5
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 13,
-          "turnDegrees": 177.1
-        },
-        {
-          "why": "routed interval contains an internal reversal",
           "interval": 9,
           "turnDegrees": 175.5
         },
@@ -13093,53 +12428,8 @@
         },
         {
           "why": "routed interval contains an internal reversal",
-          "interval": 4,
-          "turnDegrees": 171.6
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 27,
-          "turnDegrees": 174.9
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 6,
-          "turnDegrees": 177.7
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 7,
-          "turnDegrees": 175.7
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 15,
-          "turnDegrees": 174.7
-        },
-        {
-          "why": "routed interval contains an internal reversal",
           "interval": 7,
           "turnDegrees": 176.4
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 6,
-          "turnDegrees": 169.9
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 1,
-          "turnDegrees": 160.9
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 2,
-          "turnDegrees": 156.8
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 20,
-          "turnDegrees": 169.9
         },
         {
           "why": "routed interval contains an internal reversal",
@@ -13158,18 +12448,8 @@
         },
         {
           "why": "routed interval contains an internal reversal",
-          "interval": 4,
-          "turnDegrees": 168.6
-        },
-        {
-          "why": "routed interval contains an internal reversal",
           "interval": 9,
           "turnDegrees": 165.3
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 1,
-          "turnDegrees": 164.9
         },
         {
           "why": "routed interval contains an internal reversal",
@@ -13183,11 +12463,6 @@
         },
         {
           "why": "routed interval contains an internal reversal",
-          "interval": 17,
-          "turnDegrees": 164.9
-        },
-        {
-          "why": "routed interval contains an internal reversal",
           "interval": 15,
           "turnDegrees": 158.8
         },
@@ -13195,11 +12470,6 @@
           "why": "routed interval contains an internal reversal",
           "interval": 0,
           "turnDegrees": 173.6
-        },
-        {
-          "why": "routed interval contains an internal reversal",
-          "interval": 5,
-          "turnDegrees": 174.7
         }
       ]
     },
@@ -13249,11 +12519,6 @@
             75.54202995648048
           ],
           "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": false
         }
       ]
     },
@@ -13368,6 +12633,64 @@
           "suffix": "",
           "why": "no usable alignment",
           "schematicShape": false
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "amtrak",
+      "sourceRouteId": "36949",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 13,
+          "total": 14,
+          "failedIntervals": [
+            "6:detour-or-reversal"
+          ],
+          "preferMeters": 30.0,
+          "usedInstead": "gtfs-shape"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "amtrak",
+      "sourceRouteId": "42946",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 18,
+          "total": 19,
+          "failedIntervals": [
+            "0:detour-or-reversal"
+          ],
+          "preferMeters": 30.0,
+          "usedInstead": "gtfs-shape"
         }
       ]
     },
@@ -13592,6 +12915,35 @@
       "operator": null,
       "name": null,
       "sourceFeed": "amtrak",
+      "sourceRouteId": "72",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 8,
+          "total": 9,
+          "failedIntervals": [
+            "7:detour-or-reversal"
+          ],
+          "preferMeters": 30.0,
+          "usedInstead": "gtfs-shape"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "amtrak",
       "sourceRouteId": "77",
       "geometrySource": null,
       "officialSpatialGeometry": false,
@@ -13603,6 +12955,35 @@
         {
           "suffix": "",
           "why": "fail-closed: Auto Train has no accepted route-isolated independent track centreline; 718 of 871 sampled vertices in the full audit lack a second reference"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "amtrak",
+      "sourceRouteId": "86",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 5,
+          "total": 6,
+          "failedIntervals": [
+            "0:detour-or-reversal"
+          ],
+          "preferMeters": 30.0,
+          "usedInstead": "gtfs-shape"
         }
       ]
     },
@@ -13706,6 +13087,35 @@
             48.0306325746618
           ],
           "limitMeters": 600.0
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "amtrak",
+      "sourceRouteId": "95",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 16,
+          "total": 17,
+          "failedIntervals": [
+            "9:detour-or-reversal"
+          ],
+          "preferMeters": 30.0,
+          "usedInstead": "gtfs-shape"
         }
       ]
     },
@@ -16830,6 +16240,35 @@
       "status": "blocked",
       "review": "error",
       "operator": null,
+      "name": null,
+      "sourceFeed": "north-county-transit-distric",
+      "sourceRouteId": "398",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "NARN routed most but not all stations of this pattern",
+          "covered": 6,
+          "total": 7,
+          "failedIntervals": [
+            "0:detour-or-reversal"
+          ],
+          "preferMeters": 0.0,
+          "usedInstead": "gtfs-shape"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
       "name": "Andrews Valley Rail Tour: Valley River Tunnel => Andrews",
       "sourceFeed": "osm-andrews-valley-rail-tours",
       "sourceRouteId": 16215780,
@@ -17884,6 +17323,28 @@
       "status": "blocked",
       "review": "error",
       "operator": null,
+      "name": "QLine: Grand Boulevard => Congress Street",
+      "sourceFeed": "osm-routes",
+      "sourceRouteId": 12330590,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "operator": "Qline Detroit",
+          "why": "the other direction of relation 12330591 (QLine: Congress Street => Grand Boulevard)"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
       "name": "METRORail Purple Line: Palm Center TC → Theater District",
       "sourceFeed": "osm-routes",
       "sourceRouteId": 12356336,
@@ -18324,28 +17785,6 @@
       "status": "blocked",
       "review": "error",
       "operator": null,
-      "name": "Kenosha Streetcar",
-      "sourceFeed": "osm-routes",
-      "sourceRouteId": 1647145,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "operator": "Kenosha Area Transit",
-          "why": "already built from a feed as kenosha-streetcar-sc (5 of 5 stops within 250 m)"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
       "name": "METRORail Red Line: Fannin South → Northline TC",
       "sourceFeed": "osm-routes",
       "sourceRouteId": 1741729,
@@ -18491,6 +17930,50 @@
         {
           "operator": "Aria Resort and Casino",
           "why": "inside a paid attraction: matched 'aria resort'"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A1 : Deux-Montagnes → Brossard",
+      "sourceFeed": "osm-routes",
+      "sourceRouteId": 19668643,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "operator": "Réseau express métropolitain",
+          "why": "the other direction of relation 19669299 (REM A4 : Brossard → Deux-Montagnes)"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A1 : Anse-à-l'Orme → Brossard",
+      "sourceFeed": "osm-routes",
+      "sourceRouteId": 19668926,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "operator": "Réseau express métropolitain",
+          "why": "the other direction of relation 19672327 (REM A3 : Brossard → Anse-à-l'Orme)"
         }
       ]
     },
@@ -19182,6 +18665,52 @@
       "status": "blocked",
       "review": "error",
       "operator": null,
+      "name": null,
+      "sourceFeed": "osm-san-diego-international-ai",
+      "sourceRouteId": null,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "routed interval is a detour",
+          "interval": 3,
+          "routedKm": 4.24,
+          "straightKm": 0.62
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "osm-san-diego-international-ai",
+      "sourceRouteId": "4729047",
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "suffix": "",
+          "why": "operator alignment contains an implausible interval"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
       "name": "AirTrain Blue Line",
       "sourceFeed": "osm-sfo-airtrain",
       "sourceRouteId": 6043603,
@@ -19227,90 +18756,6 @@
       "name": "Sacramento River Train",
       "sourceFeed": "osm-sierra-northern-railway",
       "sourceRouteId": 6142319,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "why": "OSM colour is not an official colour source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": "Ligne orange vers Montmorency",
-      "sourceFeed": "osm-soci-t-de-transport-de-mon",
-      "sourceRouteId": 270251,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "why": "OSM colour is not an official colour source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": "Ligne jaune vers Berri-UQAM",
-      "sourceFeed": "osm-soci-t-de-transport-de-mon",
-      "sourceRouteId": 270252,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "why": "OSM colour is not an official colour source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": "Ligne bleue vers Saint-Michel",
-      "sourceFeed": "osm-soci-t-de-transport-de-mon",
-      "sourceRouteId": 270255,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "why": "OSM colour is not an official colour source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": "Ligne verte vers Honoré-Beaugrand",
-      "sourceFeed": "osm-soci-t-de-transport-de-mon",
-      "sourceRouteId": 58433,
       "geometrySource": null,
       "officialSpatialGeometry": false,
       "colorReference": null,
@@ -19476,27 +18921,6 @@
       "status": "blocked",
       "review": "error",
       "operator": null,
-      "name": "WVU PRT: Medical → Walnut",
-      "sourceFeed": "osm-west-virginia-university-p",
-      "sourceRouteId": 6504062,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "why": "OSM colour is not an official colour source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
       "name": null,
       "sourceFeed": "port-authority-of-allegheny",
       "sourceRouteId": "DQI",
@@ -19624,115 +19048,6 @@
           "why": "railway is not in the surveyed network",
           "medianSnapMeters": 1735.3,
           "usedInstead": "gtfs-shape"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "port-authority-trans-hudson",
-      "sourceRouteId": "861",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "official route network does not reach every station",
-          "officialNetwork": "path-njt-861-jsq-33",
-          "snapMeters": [
-            114.11411303856818,
-            32.83870802179395,
-            69.41122623644046,
-            8.626302783180952,
-            3.781482633469132,
-            2.3159317098535412,
-            1.0542517845526225,
-            2.6001973820830218
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 0,
-          "snapMeters": [
-            72.85906768767354,
-            1036.8105235298551
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 1,
-          "snapMeters": [
-            1036.8105235298551,
-            864.708825034181
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 2,
-          "snapMeters": [
-            864.708825034181,
-            1735.347866615019
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 3,
-          "snapMeters": [
-            1735.347866615019,
-            1776.4643385684926
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 4,
-          "snapMeters": [
-            1776.4643385684926,
-            1408.8397670628476
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 5,
-          "snapMeters": [
-            1408.8397670628476,
-            703.3504201184412
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "NARN interval endpoint snapped too far from station",
-          "interval": 6,
-          "snapMeters": [
-            703.3504201184412,
-            8.29945670692401
-          ],
-          "limitMeters": 600.0
-        },
-        {
-          "suffix": "",
-          "why": "no usable alignment",
-          "schematicShape": false
         }
       ]
     },
@@ -22178,425 +21493,8 @@
       "issues": [
         {
           "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "10",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "11",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "12",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "13",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "14",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "15",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "16",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "17",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "18",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "19",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "2",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "20",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "3",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "4",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "5",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "6",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "7",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "8",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "wvu-prt",
-      "sourceRouteId": "9",
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
-          "suffix": "",
-          "why": "no operator-published line colour with source"
+          "why": "no usable alignment",
+          "schematicShape": true
         }
       ]
     },
@@ -23441,6 +22339,543 @@
             36.210633
           ],
           "geometrySource": "narn"
+        }
+      ]
+    },
+    {
+      "lineId": "osm-city-of-kenosha-6075",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-city-of-kenosha",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "profile": "street",
+          "limitMeters": 20.0,
+          "maxDeviationMeters": 396.15,
+          "unmatchedVertices": 54,
+          "checkedVertices": 79,
+          "worstAt": [
+            -87.821143,
+            42.584687
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-city-of-kenosha",
+          "why": "not promoted: every station interval failed independent track alignment",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "stationCount": 18
+        }
+      ]
+    },
+    {
+      "lineId": "osm-city-of-milwaukee-the-hop--tl-7",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-city-of-milwaukee-the-hop-",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "profile": "street",
+          "limitMeters": 20.0,
+          "maxDeviationMeters": 355.64,
+          "unmatchedVertices": 55,
+          "checkedVertices": 73,
+          "worstAt": [
+            -87.908473,
+            43.035027
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-city-of-milwaukee-the-hop-",
+          "why": "not promoted: every station interval failed independent track alignment",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "stationCount": 10
+        }
+      ]
+    },
+    {
+      "lineId": "osm-port-authority-trans-hudso-862",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-port-authority-trans-hudso",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "profile": "metro",
+          "limitMeters": 25.0,
+          "maxDeviationMeters": 285.88,
+          "unmatchedVertices": 36,
+          "checkedVertices": 145,
+          "worstAt": [
+            -74.05085,
+            40.721946
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-port-authority-trans-hudso",
+          "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "stationCount": 6
+        }
+      ]
+    },
+    {
+      "lineId": "osm-qline-detroit-13578",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-qline-detroit",
+          "why": "densified station-to-station chord is not an alignment",
+          "intervals": [
+            4,
+            5
+          ],
+          "geometrySource": "osm"
+        }
+      ]
+    },
+    {
+      "lineId": "osm-r-seau-express-m-tropolita-s1",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-r-seau-express-m-tropolita",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1,
+            2,
+            3,
+            17
+          ],
+          "profile": "commuter",
+          "limitMeters": 30.0,
+          "maxDeviationMeters": 386.15,
+          "unmatchedVertices": 81,
+          "checkedVertices": 309,
+          "worstAt": [
+            -73.442611,
+            45.453461
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-r-seau-express-m-tropolita",
+          "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1,
+            2,
+            3,
+            17
+          ],
+          "stationCount": 19
+        }
+      ]
+    },
+    {
+      "lineId": "osm-r-seau-express-m-tropolita-s3",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-r-seau-express-m-tropolita",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1,
+            2,
+            3,
+            12,
+            13,
+            14,
+            15
+          ],
+          "profile": "commuter",
+          "limitMeters": 30.0,
+          "maxDeviationMeters": 386.15,
+          "unmatchedVertices": 165,
+          "checkedVertices": 319,
+          "worstAt": [
+            -73.442611,
+            45.453461
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-r-seau-express-m-tropolita",
+          "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1,
+            2,
+            3,
+            12,
+            13,
+            14,
+            15
+          ],
+          "stationCount": 17
+        }
+      ]
+    },
+    {
+      "lineId": "osm-shore-line-east-slet",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "narn",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-shore-line-east",
+          "why": "not promoted: OSM includes South Norwalk but the official SLE THRU 1633/1638 timetable does not show a stop there",
+          "geometrySource": "narn",
+          "withheldIntervals": [],
+          "evidence": "https://shorelineeast.com/wp-content/uploads/2026/03/SLE-3_29-MNR-Schedule-Change.pdf",
+          "stationCount": 15
+        }
+      ]
+    },
+    {
+      "lineId": "osm-soci-t-de-transport-de-mon-1",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-soci-t-de-transport-de-mon",
+          "why": "densified station-to-station chord is not an alignment",
+          "intervals": [
+            10,
+            13,
+            18,
+            24
+          ],
+          "geometrySource": "osm"
+        }
+      ]
+    },
+    {
+      "lineId": "osm-soci-t-de-transport-de-mon-2",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-soci-t-de-transport-de-mon",
+          "why": "densified station-to-station chord is not an alignment",
+          "intervals": [
+            0,
+            2,
+            12,
+            13,
+            14,
+            15,
+            17,
+            21,
+            23,
+            24
+          ],
+          "geometrySource": "osm"
+        }
+      ]
+    },
+    {
+      "lineId": "osm-soci-t-de-transport-de-mon-4",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-soci-t-de-transport-de-mon",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1
+          ],
+          "profile": "commuter",
+          "limitMeters": 30.0,
+          "maxDeviationMeters": 342.08,
+          "unmatchedVertices": 27,
+          "checkedVertices": 33,
+          "worstAt": [
+            -73.546174,
+            45.508689
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-soci-t-de-transport-de-mon",
+          "why": "not promoted: every station interval failed independent track alignment",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1
+          ],
+          "stationCount": 3
+        }
+      ]
+    },
+    {
+      "lineId": "osm-soci-t-de-transport-de-mon-5",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-soci-t-de-transport-de-mon",
+          "why": "densified station-to-station chord is not an alignment",
+          "intervals": [
+            9
+          ],
+          "geometrySource": "osm"
+        }
+      ]
+    },
+    {
+      "lineId": "osm-west-virginia-university-p-prt",
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": null,
+      "sourceFeed": "geometry-release-blockers",
+      "sourceRouteId": null,
+      "geometrySource": "osm",
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "feed": "osm-west-virginia-university-p",
+          "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+          "intervals": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "profile": "metro",
+          "limitMeters": 25.0,
+          "maxDeviationMeters": 365.72,
+          "unmatchedVertices": 61,
+          "checkedVertices": 118,
+          "worstAt": [
+            -79.973647,
+            39.64345
+          ],
+          "geometrySource": "osm"
+        },
+        {
+          "feed": "osm-west-virginia-university-p",
+          "why": "not promoted: every station interval failed independent track alignment",
+          "geometrySource": "osm",
+          "withheldIntervals": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "stationCount": 5
         }
       ]
     },

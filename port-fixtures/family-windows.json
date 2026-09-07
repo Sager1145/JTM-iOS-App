@@ -51,6 +51,11 @@
           "from": 15075,
           "to": 20850,
           "groupId": "lirr:trunk"
+        },
+        {
+          "from": 39523.7,
+          "to": 39523.7,
+          "groupId": "lirr:trunk"
         }
       ],
       "tenantWindows": [
@@ -99,6 +104,11 @@
         {
           "from": 52250,
           "to": 75200,
+          "groupId": "lirr:trunk"
+        },
+        {
+          "from": 95605.4,
+          "to": 95605.4,
           "groupId": "lirr:trunk"
         }
       ],
@@ -189,11 +199,11 @@
       "label": "MBTA Green Line central subway — D branch landlord window",
       "lineId": "mbta-d",
       "partIndex": 0,
-      "totalMetres": 22837.3,
+      "totalMetres": 23194.2,
       "familyWindows": [
         {
-          "from": 15225,
-          "to": 22100,
+          "from": 15000,
+          "to": 23194.2,
           "groupId": "mbta:green"
         }
       ],
@@ -205,20 +215,20 @@
         {
           "feature": "base",
           "from": 0,
-          "to": 15225,
+          "to": 15000,
           "colorKey": "#00843d"
         },
         {
           "feature": "family",
-          "from": 15225,
-          "to": 22100,
+          "from": 15000,
+          "to": 23194.2,
           "colorKey": "#00843d",
           "groupId": "mbta:green"
         },
         {
           "feature": "base",
-          "from": 22100,
-          "to": 22837.3,
+          "from": 23194.2,
+          "to": 23194.2,
           "colorKey": "#00843d"
         }
       ]
@@ -231,7 +241,7 @@
       "familyWindows": [],
       "tenantWindows": [
         {
-          "from": 4325,
+          "from": 4075,
           "to": 15936.3,
           "groupId": "mbta:green"
         }
@@ -243,7 +253,7 @@
         {
           "feature": "base",
           "from": 0,
-          "to": 4325,
+          "to": 4075,
           "colorKey": "#00843d"
         },
         {
@@ -355,7 +365,7 @@
       "familyWindows": [
         {
           "from": 0,
-          "to": 87250,
+          "to": 87275,
           "groupId": "metrolink:trunk"
         },
         {
@@ -378,13 +388,13 @@
         {
           "feature": "family",
           "from": 0,
-          "to": 87250,
+          "to": 87275,
           "colorKey": "#006070",
           "groupId": "metrolink:trunk"
         },
         {
           "feature": "base",
-          "from": 87250,
+          "from": 87275,
           "to": 95675,
           "colorKey": "#006070"
         },

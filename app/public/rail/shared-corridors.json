@@ -361,6 +361,11 @@
           "type": "openrailwaymap",
           "name": "OpenRailwayMap infrastructure view",
           "url": "https://www.openrailwaymap.org/?style=standard&lat=47.652&lon=-117.434&zoom=15"
+        },
+        {
+          "type": "geometry-review",
+          "name": "2026-09-06 cut re-derivation on rebuilt Spokane geometry",
+          "note": "The 2026-08-31 review fixed each cut on a vertex of the then-current polyline; the faithful re-densification of interval 34 (trunk, 421 -> 748 vertices) and interval 0 (b1, 548 -> 964 vertices) draws the same track without those vertices, leaving the reviewed points 8.5 m (trunk) and 0.8 m (b1) off the redrawn line while their nearest vertices moved 106.8 m and 41.2 m along it. Both cuts are restated on the nearest vertex of the new geometry, 106.4 m (trunk) and 41.1 m (b1) along-track from the reviewed points and 33.9 m apart; the reviewed fact -- where the two arms part at the Spokane throat -- is unchanged, reviewedAt stays 2026-08-31, and maxCutSearchMeters keeps its 5 m default."
         }
       ],
       "members": [
@@ -370,8 +375,8 @@
           "intervalIndex": 34,
           "side": "start",
           "cut": [
-            -117.449963,
-            47.648105
+            -117.451111,
+            47.647534
           ]
         },
         {
@@ -380,8 +385,8 @@
           "intervalIndex": 0,
           "side": "start",
           "cut": [
-            -117.450265,
-            47.647897
+            -117.450726,
+            47.647695
           ]
         }
       ]
