@@ -129,4 +129,46 @@ struct StrokeRideTests {
         #expect(ref.fromAnchor == a.points.count - 1)
         #expect(ref.toAnchor == 0)
     }
+    @Test("prepared index preserves exhaustive matching across block seams, ties and rejected bends")
+    func preparedIndexMatchesExhaustive() {
+        let points = (0..<160).map { i in
+            Coordinate(lon: -100 + Double(i) * 0.0001,
+                lat: 40 + sin(Double(i) * 0.12) * 0.001)
+        }
+        let a = Self.chain(id: "first", points: points, anchors: [0, 31, 32, 63, 64, 159])
+        let duplicate = Self.chain(id: "second", points: points, anchors: a.anchors)
+        let remote = Self.chain(id: "remote", points: points.map { .init(lon: $0.lon + 1, lat: $0.lat) })
+        let chains = [remote, a, duplicate]
+        let index = StrokeRide.Index(chains: chains)
+        for start in stride(from: 0, to: 140, by: 7) {
+            for count in [2, 15, 20] {
+                let original = Array(points[start..<(start + count)])
+                for offset in [0.0, 0.0002, 0.002] {
+                    let segment = original.map { Coordinate(lon: $0.lon, lat: $0.lat + offset) }
+                    for candidate in [segment, Array(segment.reversed())] {
+                        #expect(index.resolve(segment: candidate) == StrokeRide.resolve(segment: candidate, chains: chains))
+                    }
+                }
+                var bowed = original
+                if bowed.count > 2 { bowed[1].lat += 0.01 }
+                #expect(index.resolve(segment: bowed) == StrokeRide.resolve(segment: bowed, chains: chains))
+            }
+        }
+        #expect(index.resolve(segment: []) == nil)
+        #expect(index.resolve(segment: [points[0]]) == nil)
+    }
+
+    @Test("prepared index is an immutable snapshot and ignores malformed chains")
+    func preparedIndexSnapshot() {
+        var chain = Self.straightChain()
+        let segment = [chain.points[0], chain.points.last!]
+        let expected = StrokeRide.resolve(segment: segment, chains: [chain])
+        let index = StrokeRide.Index(chains: [chain])
+        chain.points = chain.points.map { .init(lon: $0.lon + 1, lat: $0.lat) }
+        #expect(index.resolve(segment: segment) == expected)
+        #expect(StrokeRide.Index(chains: [chain]).resolve(segment: segment) == nil)
+        chain.measures = []
+        #expect(StrokeRide.Index(chains: [chain]).resolve(segment: segment) == nil)
+    }
+
 }

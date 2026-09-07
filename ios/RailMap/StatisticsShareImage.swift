@@ -1,3 +1,5 @@
+import ImageIO
+import UniformTypeIdentifiers
 import RailCore
 import RailPresentation
 import SwiftUI
@@ -51,6 +53,8 @@ enum StatisticsPoster {
     /// gives a picture of the screen the reader is looking at rather than a
     /// wide-format re-flow of it nobody has ever seen.
     private static let pageWidth: CGFloat = 400
+    /// Keep this process's files alive for share sheets in other windows.
+    private static let sessionStarted = Date()
 
     /// Render the statistics page and write it out as a PNG.
     ///
@@ -67,7 +71,8 @@ enum StatisticsPoster {
         localization: AppLocalization,
         journeyPresentation: @escaping (Train) -> JourneyPresentation,
         colorScheme: ColorScheme
-    ) -> File? {
+    ) async -> File? {
+        let retirementDate = sessionStarted
         let page = StatisticsPosterPage(
             itineraries: itineraries,
             statistics: statistics,
@@ -86,7 +91,7 @@ enum StatisticsPoster {
         // white text would arrive in a chat app as an unreadable rectangle.
         renderer.isOpaque = true
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("rail-statistics.png")
+            .appendingPathComponent("rail-statistics-\(UUID().uuidString).png")
         // Down the scales rather than at one of them. The budget below is a
         // guess at what the bitmap will cost; `uiImage` is the answer, and a
         // renderer that declines to allocate must not leave the reader with a
@@ -94,10 +99,41 @@ enum StatisticsPoster {
         // page, so the fallback is a worse image and never a wrong one.
         for scale in scales(for: renderer) {
             renderer.scale = scale
-            guard let image = renderer.uiImage, let data = image.pngData() else { continue }
-            do {
-                try data.write(to: url, options: .atomic)
-            } catch {
+            guard !Task.isCancelled else { return nil }
+            guard let image = renderer.uiImage, let bitmap = image.cgImage else { continue }
+            let worker = Task.detached(priority: .userInitiated) {
+                guard !Task.isCancelled else { return false }
+                // Retire files from earlier sessions. Another window may
+                // still be sharing a poster created during this session.
+                let directory = FileManager.default.temporaryDirectory
+                if let existing = try? FileManager.default.contentsOfDirectory(
+                    at: directory, includingPropertiesForKeys: [.contentModificationDateKey]
+                ) {
+                    for file in existing
+                    where file.lastPathComponent.hasPrefix("rail-statistics")
+                        && file.pathExtension == "png" {
+                        guard let modified = try? file.resourceValues(
+                            forKeys: [.contentModificationDateKey]).contentModificationDate,
+                            modified < retirementDate else { continue }
+                        try? FileManager.default.removeItem(at: file)
+                    }
+                }
+                guard let destination = CGImageDestinationCreateWithURL(
+                    url as CFURL, UTType.png.identifier as CFString, 1, nil)
+                else { return false }
+                CGImageDestinationAddImage(destination, bitmap, nil)
+                let written = CGImageDestinationFinalize(destination)
+                guard written, !Task.isCancelled else {
+                    try? FileManager.default.removeItem(at: url)
+                    return false
+                }
+                return true
+            }
+            let written = await withTaskCancellationHandler {
+                await worker.value
+            } onCancel: { worker.cancel() }
+            guard written, !Task.isCancelled else {
+                try? FileManager.default.removeItem(at: url)
                 return nil
             }
             return File(url: url, image: image)

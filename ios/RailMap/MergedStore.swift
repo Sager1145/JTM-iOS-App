@@ -9,6 +9,49 @@ import RailCore
 /// canonical export, which normalises each train against a region's rules, and
 /// merging a sample into a working set that already holds other regions.
 enum MergedStore {
+    /// Canonical train fragments, owned by the serial persistence actor.
+    /// Editing one record re-encodes that record only. The complete snapshot
+    /// is still written atomically, in its current order.
+    struct ExportCache {
+        private var entries: [String: (input: TrainValidation.JSON, text: String)] = [:]
+        private(set) var encodedTrainCount = 0
+
+        mutating func export(_ store: TrainStore) -> String {
+            var next: [String: (input: TrainValidation.JSON, text: String)] = [:]
+            var fragments: [String] = []
+            encodedTrainCount = 0
+            for train in store.trains {
+                // JSON equality compares code units and field presence.
+                // Train's Swift equality can equate two Unicode spellings
+                // whose canonical export bytes are different.
+                let input = StoreOperations.json(train)
+                let text: String
+                if let cached = entries[train.id], cached.input == input {
+                    text = cached.text
+                } else {
+                    let normalized = TrainValidation.normalizeExportTrain(
+                        train.taggingRegion(), country: Region.resolved(train).code)
+                    text = "    " + StoreOperations.stringify(
+                        StoreOperations.json(normalized), indent: 2)
+                        .replacingOccurrences(of: "\n", with: "\n    ")
+                    encodedTrainCount += 1
+                }
+                fragments.append(text)
+                next[train.id] = (input, text)
+            }
+            entries = next
+            // Derive the envelope from the canonical writer too: schema
+            // version, property ordering, escaping and indentation stay shared.
+            let envelope = StoreOperations.stringify(StoreOperations.json(TrainStore()), indent: 2)
+            guard !fragments.isEmpty else { return envelope }
+            return envelope.replacingOccurrences(of: "\"trains\": []",
+                with: "\"trains\": [\n" + fragments.joined(separator: ",\n") + "\n  ]")
+        }
+    }
+
+    static func export(_ store: TrainStore, cache: inout ExportCache) -> String {
+        cache.export(store)
+    }
 
     /// The canonical bytes for a store whose trains may belong to different
     /// regions.

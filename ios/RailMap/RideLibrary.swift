@@ -139,6 +139,21 @@ final class RideLibrary {
     /// read that ``ItineraryStore`` does after a restore see the restored file
     /// rather than the one it replaced.
     private var queue: Task<Void, Never>?
+    /// Consecutive saves waiting behind the same operation may share one
+    /// write. A read, backup, restore or delete seals the batch immediately.
+    @MainActor
+    private final class SaveBatch {
+        var store: TrainStore
+        var started = false
+        var completion: Task<Void, Never>?
+        init(_ store: TrainStore) { self.store = store }
+        func take() -> TrainStore {
+            started = true
+            return store
+        }
+    }
+    private var pendingSave: SaveBatch?
+    private var deletionRevision = 0
 
     /// Put one operation at the back of the queue.
     ///
@@ -149,6 +164,7 @@ final class RideLibrary {
     private func enqueue<T: Sendable>(
         _ work: @escaping @Sendable (RideStorage) async throws -> T
     ) -> Task<T, Error> {
+        pendingSave = nil
         let previous = queue
         let operation = Task<T, Error> {
             await previous?.value
@@ -205,8 +221,9 @@ final class RideLibrary {
     /// mid-save is worse than no store, because the reader would not find out
     /// until the next launch.
     ///
-    /// Returns before the file exists. `store` is a value, so what is written
-    /// is what the caller handed over however long the queue ahead of it is.
+    /// Returns before the file exists. Consecutive saves that have not started
+    /// serialize their latest snapshot once. Every intervening file operation
+    /// seals that snapshot, preserving read/backup/restore/delete ordering.
     ///
     /// The returned task finishes once the outcome has been published, which
     /// is what a caller that has to *report* the save waits for: the import
@@ -216,15 +233,30 @@ final class RideLibrary {
     @discardableResult
     func save(_ store: TrainStore) -> Task<Void, Never> {
         lastSaveError = nil
-        let write = enqueue { try await $0.writeStore(store) }
-        return Task {
+        if let batch = pendingSave, !batch.started, let completion = batch.completion {
+            batch.store = store
+            return completion
+        }
+        let batch = SaveBatch(store)
+        let revision = deletionRevision
+        let write = enqueue { storage in
+            let snapshot = await batch.take()
+            return try await storage.writeStore(snapshot)
+        }
+        let completion = Task {
             do {
-                savedStoreDate = try await write.value
+                let date = try await write.value
+                guard deletionRevision == revision else { return }
+                savedStoreDate = date
                 hasSavedStore = true
             } catch {
+                guard deletionRevision == revision else { return }
                 lastSaveError = error.localizedDescription
             }
         }
+        batch.completion = completion
+        pendingSave = batch
+        return completion
     }
 
     /// Writes the recovery copy a destructive action can be undone from.
@@ -285,6 +317,7 @@ final class RideLibrary {
     }
 
     func deleteSavedStore() {
+        deletionRevision += 1
         enqueue { await $0.removeStore() }
         hasSavedStore = false
         savedStoreDate = nil
@@ -392,6 +425,7 @@ final class RideLibrary {
 actor RideStorage {
 
     static let shared = RideStorage()
+    private var exportCache = MergedStore.ExportCache()
 
     /// What the data screen says about the copy on this device, read in one
     /// pass so the screen does not pay for four separate trips to the disk.
@@ -442,13 +476,13 @@ actor RideStorage {
     /// The canonical bytes, atomically, and the moment they landed.
     func writeStore(_ store: TrainStore) throws -> Date {
         try createDirectory()
-        try Data(MergedStore.export(store).utf8).write(to: Self.storeURL(), options: .atomic)
+        try Data(MergedStore.export(store, cache: &exportCache).utf8).write(to: Self.storeURL(), options: .atomic)
         return Date()
     }
 
     func writeBackup(_ store: TrainStore, meta: RideLibrary.Backup) throws {
         try createDirectory()
-        try Data(MergedStore.export(store).utf8).write(to: Self.backupURL(), options: .atomic)
+        try Data(MergedStore.export(store, cache: &exportCache).utf8).write(to: Self.backupURL(), options: .atomic)
         try metaEncoder.encode(meta).write(to: Self.backupMetaURL(), options: .atomic)
     }
 

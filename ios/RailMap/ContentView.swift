@@ -108,6 +108,7 @@ struct RailWorkspaceView: View {
     /// expensive questions several times per pass, and a sheet drag is one
     /// pass per frame.
     @State private var derived = WorkspaceDerived()
+    @State private var journeySearch = JourneySearch()
     /// The dates the reader typed in — see ``ManualDates``, which owns them
     /// and their persistence.
     @State private var manualDates = ManualDates()
@@ -408,6 +409,10 @@ struct RailWorkspaceView: View {
         // `RegionCatalog` to the metre. The complete network starts hidden and
         // is decoded when it is turned on, region by visible region, through
         // `ensure(regionsIntersecting:)`; nothing on this screen draws it.
+        .task(id: journeySearchRequest) {
+            await journeySearch.search(journeySearchRequest,
+                alsoNamed: localization.localizedStationNames(of:))
+        }
         .task(id: selection == .stats) {
             guard selection == .stats else { return }
             frameRegionScope(regionScope)
@@ -1386,13 +1391,6 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// The journeys the statistics destination is reporting on.
-    ///
-    /// The same two filters `PassportWorkspaceView` applies, spelled here as
-    /// well because the map is outside that view now — and derived from the
-    /// same two values, so the two cannot disagree about what is in scope.
-    private var statisticsScopedTrains: [Train] { statisticsScope.trains }
-
     /// §5.3's scope, and the same answer as a set of ids for the map filter.
     ///
     /// Memoised together because the two are the same pass: `mapRides` used to
@@ -1447,6 +1445,7 @@ struct RailWorkspaceView: View {
     /// nothing in the console about presenting twice. What makes it safe is
     /// that the destinations are mutually exclusive — only the tab on screen
     /// can be trying to present.
+    @State private var isRenderingStatistics = false
     @State private var statisticsImage: StatisticsPoster.File?
 
     private var statisticsPanel: some View {
@@ -1458,6 +1457,8 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             region: $regionScope,
+            scopedTrains: statisticsScope.trains,
+            derived: derived,
             journeyPresentation: { presentation(for: $0) },
             openJourney: { sheet = .detail($0) },
             openData: openData,
@@ -1860,13 +1861,11 @@ struct RailWorkspaceView: View {
     /// takes, so the menu cannot offer a day the numbers have no rides for.
     private var statisticsDates: [String] {
         guard let loaded = itineraries.loaded else { return [] }
-        let trains = regionScope.map { region in
-            loaded.trains.filter { Region.resolved($0) == region }
-        } ?? loaded.trains
-        let ids = Set(trains.map(\.id))
-        return loaded.days.compactMap { day in
-            day.trains.contains { ids.contains($0.id) } ? day.date : nil
-        }
+        // Memoised: this menu is rebuilt on every body evaluation the header
+        // causes (a sheet drag included), and the region + membership scan
+        // over every journey and every day only needs to redo when the
+        // journeys or the region actually changed. See ``WorkspaceDerived``.
+        return derived.scopedDates(trains: loaded.trains, days: loaded.days, region: regionScope)
     }
 
     /// §5.3.1's region scope, in the header rather than in a card — and now on
@@ -1943,17 +1942,23 @@ struct RailWorkspaceView: View {
             systemImage: "square.and.arrow.up",
             accessibilityLabel: Text(localization.statsText("ios.stats.shareImage"))
         ) {
-            guard let file = renderStatisticsImage() else { return }
+            isRenderingStatistics = true
+        }
+        .disabled(statistics.view == nil || isRenderingStatistics)
+        .overlay { if isRenderingStatistics { ProgressView().allowsHitTesting(false) } }
+        .task(id: isRenderingStatistics) {
+            guard isRenderingStatistics else { return }
+            defer { isRenderingStatistics = false }
+            guard let file = await renderStatisticsImage(), !Task.isCancelled else { return }
             PresentationHost.afterTeardown { statisticsImage = file }
         }
-        .disabled(statistics.view == nil)
         .accessibilityIdentifier("statisticsShareButton")
     }
 
     /// The statistics page, as a PNG on disk. `nil` if it could not be drawn
     /// or could not be written, in which case nothing is presented.
-    private func renderStatisticsImage() -> StatisticsPoster.File? {
-        StatisticsPoster.render(
+    private func renderStatisticsImage() async -> StatisticsPoster.File? {
+        await StatisticsPoster.render(
             itineraries: itineraries,
             statistics: statistics,
             region: regionScope,
@@ -2609,7 +2614,15 @@ struct RailWorkspaceView: View {
             .scrollContentBackground(.hidden)
             .background { keyboardShortcuts }
             .overlay {
-                if days.isEmpty {
+                // The spinner is for "nothing to show yet" only: `days` is
+                // empty AND the in-flight search (if any) hasn't produced a
+                // result — never merely "a newer query is still running",
+                // since `days` keeps showing the previous completed results
+                // through that window (see `filteredDays`).
+                if !searchQuery.isEmpty && days.isEmpty
+                    && journeySearch.completed != journeySearchRequest {
+                    ProgressView()
+                } else if days.isEmpty {
                     // §13.1: three empty states, three different single primary
                     // actions — and the search text is kept, not cleared.
                     workspaceUnavailable(
@@ -2858,29 +2871,34 @@ struct RailWorkspaceView: View {
         region: Region?,
         query searchQuery: String = ""
     ) -> [ItineraryStore.Loaded.Day] {
-        // Memoised, because one body evaluation asks this up to three times —
-        // the header's count, the list itself, and `playbackScope` behind the
-        // play button's `disabled` — and with a query in the field each of
-        // those is a locale-aware substring search over every field of every
-        // journey. See ``WorkspaceDerived``.
-        //
-        // Keyed on the naming generation as well, because the search now reads
-        // names the store does not carry: the same query over the same store
-        // answers differently once the reader switches language, or once a
-        // readings table lands. See ``StationNamingGeneration``.
-        derived.days(
+        if !searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // `journeySearch.days` already holds exactly "the last completed
+            // result": a cancelled search (superseded by a newer keystroke)
+            // never touches it — see `JourneySearch.search`'s `catch {}` — so
+            // it is always either this query's own answer or the previous
+            // query's. Blanking here on every keystroke (while
+            // `completed != journeySearchRequest`) was the bug: the 150 ms
+            // debounce plus an off-main filter pass emptied the list on every
+            // character typed. The matching "nothing to show yet" spinner is
+            // the overlay in `journeyList(for:)`, keyed off this same array
+            // being empty rather than off `completed`.
+            return journeySearch.days
+        }
+        // Empty-query date/region filtering is cheap and memoized for the
+        // header, list and playback scope. Nonempty queries read only the
+        // completed background result above.
+        return derived.days(
             of: loaded, selectedDate: selectedDate, region: region,
             query: searchQuery,
             naming: localization.stationNamingGeneration
         ) {
-            computeFilteredDays(loaded, region: region, query: searchQuery)
+            computeFilteredDays(loaded, region: region)
         }
     }
 
     private func computeFilteredDays(
         _ loaded: ItineraryStore.Loaded,
-        region: Region?,
-        query searchQuery: String
+        region: Region?
     ) -> [ItineraryStore.Loaded.Day] {
         var source = selectedDate == Dates.allDates
             ? loaded.days
@@ -2895,28 +2913,13 @@ struct RailWorkspaceView: View {
                 return trains.isEmpty ? nil : .init(date: day.date, trains: trains)
             }
         }
-        let needle = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty else { return source }
-        // §5.1's field list lives in `JourneySearchMatcher`, not in this
-        // closure. It used to be spelled here, and it was missing `date` and
-        // `direction` — which no test noticed, because every test searched by
-        // train number. A contract that exists in one place can be checked;
-        // one that exists inside a filter cannot.
-        //
-        // `alsoNamed` is the one field the matcher cannot see for itself: the
-        // journey surfaces name stations through the readings table, so a
-        // Taiwanese ride reads "Taipei Main Station" to an English reader
-        // while the record says 台北車站. Searching only the record meant the
-        // name on the screen found nothing. The table is in the app bundle
-        // behind a `@MainActor` object, which is why this is the caller that
-        // supplies it — see ``AppLocalization/localizedStationNames(of:)``
-        // for what it costs and why it costs nothing in Japan.
-        let alsoNamed = localization.localizedStationNames(of:)
-        return source.compactMap { day in
-            let trains = JourneySearchMatcher.filter(
-                day.trains, query: needle, alsoNamed: alsoNamed)
-            return trains.isEmpty ? nil : .init(date: day.date, trains: trains)
-        }
+        return source
+    }
+
+    private var journeySearchRequest: JourneySearch.Request {
+        .init(days: itineraries.loaded?.days ?? [], date: selectedDate,
+            query: selection == .search ? query.trimmingCharacters(in: .whitespacesAndNewlines) : "",
+            naming: localization.stationNamingGeneration)
     }
 
     /// §5.1's date filter, as a submenu of the header's gear menu.

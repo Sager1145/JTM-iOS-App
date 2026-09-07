@@ -292,4 +292,63 @@ final class WorkspaceDerived {
         regionScopeKey = (trains, region)
         return regionScopeIDs
     }
+
+    // MARK: - the passport's region + ridden scope
+
+    private struct PassportScopeKey {
+        let trains: [Train]
+        let days: [ItineraryStore.Loaded.Day]
+        let region: Region?
+    }
+
+    private var passportScopeKey: PassportScopeKey?
+    private var passportScopeValue: (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int) = ([], [], 0)
+
+    /// `StatisticsDashboardContent.scoped(_:)`, memoised. No date in the key —
+    /// that function does not filter by one either, because the date-scoped
+    /// figures beside it come from `MileageStatisticsStore` and this slice
+    /// only has to agree with the calendar menu (``scopedDates``) about which
+    /// journeys count at all.
+    func passportScope(
+        trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?,
+        compute: () -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int)
+    ) -> (trains: [Train], days: [ItineraryStore.Loaded.Day], unconfirmed: Int) {
+        if let passportScopeKey, passportScopeKey.region == region,
+           ArrayGeneration.same(passportScopeKey.trains, trains),
+           ArrayGeneration.same(passportScopeKey.days, days) {
+            return passportScopeValue
+        }
+        let value = compute()
+        passportScopeValue = value
+        passportScopeKey = PassportScopeKey(trains: trains, days: days, region: region)
+        return value
+    }
+
+    // MARK: - the days a region has records for
+
+    private struct RegionDatesKey {
+        let trains: [Train]
+        let days: [ItineraryStore.Loaded.Day]
+        let region: Region?
+    }
+
+    private var regionDatesKey: RegionDatesKey?
+    private var regionDatesValue: [String] = []
+
+    /// `RailWorkspaceView.statisticsDates`, memoised — the calendar menu's own
+    /// question, asked again on every body evaluation a sheet drag causes.
+    func scopedDates(trains: [Train], days: [ItineraryStore.Loaded.Day], region: Region?) -> [String] {
+        if let regionDatesKey, regionDatesKey.region == region,
+           ArrayGeneration.same(regionDatesKey.trains, trains),
+           ArrayGeneration.same(regionDatesKey.days, days) {
+            return regionDatesValue
+        }
+        let scoped = region.map { r in trains.filter { Region.resolved($0) == r } } ?? trains
+        let ids = Set(scoped.map(\.id))
+        regionDatesValue = days.compactMap { day in
+            day.trains.contains { ids.contains($0.id) } ? day.date : nil
+        }
+        regionDatesKey = RegionDatesKey(trains: trains, days: days, region: region)
+        return regionDatesValue
+    }
 }

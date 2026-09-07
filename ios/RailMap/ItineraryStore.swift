@@ -41,7 +41,7 @@ final class ItineraryStore {
         var days: [Day]
         var elapsed: Duration
 
-        struct Day: Identifiable {
+        struct Day: Identifiable, Sendable {
             var date: String
             var trains: [Train]
             var id: String { date }
@@ -419,9 +419,13 @@ final class ItineraryStore {
     }
 
     /// The canonical JSON for every ride, whatever region each belongs to.
-    func exportJSON() -> String? {
+    func exportJSON() async -> String? {
         guard let store else { return nil }
-        return MergedStore.export(store)
+        let worker = Task.detached(priority: .userInitiated) { MergedStore.export(store) }
+        return await withTaskCancellationHandler {
+            let text = await worker.value
+            return Task.isCancelled ? nil : text
+        } onCancel: { worker.cancel() }
     }
 
     /// Run one of RailCore's verified store transitions and rebuild the view

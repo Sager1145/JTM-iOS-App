@@ -594,6 +594,10 @@ struct PanelHeader<Actions: View>: View {
         .padding(.trailing, 16)
         .padding(.top, interpolated(collapsedTopInset, 10))
         .padding(.bottom, interpolated(2, 6))
+        // Include the title's surrounding padding as a grab area. Buttons
+        // still receive taps; a deliberate drag resizes the resident panel.
+        .contentShape(Rectangle())
+        .railPanelHeaderDrag()
         // Normal motion is driven directly by the live sheet height and must
         // not lag behind it. Under Reduce Motion the named-state typography
         // change is deliberately immediate: applying a 160 ms curve here would
@@ -634,11 +638,6 @@ struct PanelHeader<Actions: View>: View {
                 .accessibilityIdentifier("panelHeader")
                 .accessibilityAddTraits(.isHeader)
                 .railSheetStageActions()
-                // Only the docked card ever has a gesture recognizer here
-                // (see ``RailPanelHeaderDrag``); the passthrough shape and
-                // modifier below cost the phone sheet nothing.
-                .contentShape(Rectangle())
-                .railPanelHeaderDrag()
                 .modifier(ReduceMotionUITestProbe(enabled: reduceMotion))
             if showsSubtitle {
                 // One shared slot for every destination, grown rather than
@@ -891,7 +890,7 @@ extension EnvironmentValues {
     }
 }
 
-/// Attaches ``RailPanelHeaderDrag`` to the header title block, when something
+/// Attaches ``RailPanelHeaderDrag`` to the padded header, when something
 /// is listening for it.
 ///
 /// A pure passthrough when nothing is — the same shape as
@@ -906,7 +905,10 @@ private struct PanelHeaderDrag: ViewModifier {
     func body(content: Content) -> some View {
         if let drag {
             content.gesture(
-                DragGesture(minimumDistance: 6)
+                // The header moves as the panel changes height. Measure in
+                // the window's stable space so that movement cannot feed back
+                // into the mouse/finger translation on the next frame.
+                DragGesture(minimumDistance: 6, coordinateSpace: .global)
                     .updating($isDragging) { _, active, _ in active = true }
                     .onChanged { drag.changed($0.translation) }
                     .onEnded { drag.ended($0.translation, $0.predictedEndTranslation) })

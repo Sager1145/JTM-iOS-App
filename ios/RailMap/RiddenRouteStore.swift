@@ -1,4 +1,5 @@
 import Foundation
+import MapKit
 import Observation
 import RailCore
 import RailPresentation
@@ -26,6 +27,7 @@ final class RiddenRouteStore {
         /// Geometry presented to MapKit. This differs for Taiwan, Hong Kong,
         /// Macao and Korea, where Apple's basemap is displaced to GCJ-02.
         let coordinates: [Coordinate]
+        let boundingRect: MKMapRect
 
         /// - Parameter sourceCoordinates: the N02-datum path, when it is not
         ///   the same array as what gets drawn. A hop re-drawn against the
@@ -53,6 +55,12 @@ final class RiddenRouteStore {
             self.sourceCoordinates = sourceCoordinates ?? coordinates
             drawnCoordinates = coordinates
             self.coordinates = AppleMapDatum.display(coordinates, country: country)
+            var bounds = MKMapRect.null
+            for coordinate in self.coordinates {
+                let point = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.lat, longitude: coordinate.lon))
+                bounds = bounds.union(MKMapRect(origin: point, size: MKMapSize(width: 0.001, height: 0.001)))
+            }
+            boundingRect = bounds
         }
     }
 
@@ -129,6 +137,11 @@ final class RiddenRouteStore {
     /// even when no journey had changed.
     private(set) var visibleRides: [DrawnRide] = []
     private var loadTask: Task<Void, Never>?
+    private var loadRevision = 0
+    /// Full records remain the invalidation boundary. Reuse happens per
+    /// journey, so a same-ID edit cannot leave stale route geometry behind.
+    private var completedInputs: [String: Train] = [:]
+    private var resolutionTickets: [String: UUID] = [:]
 
     /// Solve and draw every ride, whatever region each belongs to.
     ///
@@ -139,67 +152,73 @@ final class RiddenRouteStore {
     /// per region that actually has rides rather than once per app.
     func load(trains: [Train], preferredTrainID: String? = nil) {
         loadTask?.cancel()
-        state = .loading
-        // The status centre is how the journey detail and the editor — neither
-        // of which is handed this store — learn what became of a route. See
-        // `RideStatusCenter` for why that is a published projection rather
-        // than an initialiser argument.
+        loadRevision += 1
+        let revision = loadRevision
         RideStatusCenter.shared.routeStore = self
-        RideStatusCenter.shared.publish(phase: .loading)
-        // Duplicate ids cannot survive `StoreOperations`, but a store merged
-        // out of five files once could carry one, and a trap here would be a
-        // crash on a data fault rather than a drawing of it.
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
+        let unchanged = Set(wanted.compactMap { id, train in
+            completedInputs[id] == train ? id : nil
+        })
+        let retained = rides.filter { unchanged.contains($0.id) }
+        let pending = wanted.filter { !unchanged.contains($0.key) }
+        completedInputs = completedInputs.filter { unchanged.contains($0.key) }
+
+        @Sendable func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
+            let byID = Dictionary(values.map { ($0.id, $0) },
+                uniquingKeysWith: { _, last in last })
+            return wantedIDs.compactMap { byID[$0] }
+        }
+        rides = ordered(retained)
+        visibleRides = rides.filter(\.visible)
+        if pending.isEmpty {
+            state = .loaded(rides: rides)
+            RideStatusCenter.shared.publish(
+                entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
+            return
+        }
+        state = .loading
+        RideStatusCenter.shared.publish(
+            entries: Self.statusEntries(for: rides, wanted: []), phase: .loading)
         loadTask = Task(priority: .userInitiated) {
             do {
-                // Publish the one route the reader last looked at before the
-                // all-route scan. Its cache is a single small file; the old
-                // path withheld even that hit until every cached route had
-                // been read and every miss had been solved.
-                let primed = await Self.loadPreferred(
-                    id: preferredTrainID, wanted: wanted)
+                let primed = await Self.loadPreferred(id: preferredTrainID, wanted: pending)
                 try Task.checkCancellation()
+                guard loadRevision == revision else { return }
                 if let primed {
-                    rides = [primed]
-                    visibleRides = primed.visible ? [primed] : []
+                    rides = ordered(retained + [primed])
+                    visibleRides = rides.filter(\.visible)
+                    completedInputs[primed.id] = wanted[primed.id]
                     RideStatusCenter.shared.publish(
-                        entries: Self.statusEntries(for: [primed], wanted: []),
-                        phase: .loading)
+                        entries: Self.statusEntries(for: rides, wanted: []), phase: .loading)
                 }
-
-                // Each scope's rides are handed over as that scope lands, so
-                // the map fills in while the rest is still being read. The
-                // status centre stays on `.loading` throughout: a journey that
-                // has not been reached yet is not a journey that failed, and
-                // `wanted: []` is what keeps the ones still coming out of the
-                // "unavailable" bucket. See `decode(wanted:primed:publish:)`.
-                let decoded = try await Self.decode(wanted: wanted, primed: primed) { partial in
+                let decoded = try await Self.decode(wanted: pending, primed: primed) { partial in
                     await MainActor.run {
-                        guard !Task.isCancelled else { return }
-                        self.rides = partial
-                        self.visibleRides = partial.filter(\.visible)
+                        guard !Task.isCancelled, self.loadRevision == revision else { return }
+                        self.rides = ordered(retained + partial)
+                        self.visibleRides = self.rides.filter(\.visible)
+                        for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
                         RideStatusCenter.shared.publish(
-                            entries: Self.statusEntries(for: partial, wanted: []),
-                            phase: .loading)
+                            entries: Self.statusEntries(for: self.rides, wanted: []), phase: .loading)
                     }
                 }
                 try Task.checkCancellation()
-                rides = decoded
-                visibleRides = decoded.filter(\.visible)
-                state = .loaded(rides: decoded)
+                guard loadRevision == revision else { return }
+                rides = ordered(retained + decoded)
+                visibleRides = rides.filter(\.visible)
+                completedInputs = wanted
+                state = .loaded(rides: rides)
                 RideStatusCenter.shared.publish(
-                    entries: Self.statusEntries(for: decoded, wanted: wantedIDs),
-                    phase: .loaded)
+                    entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
                 return
             } catch {
-                rides = []
-                visibleRides = []
+                guard loadRevision == revision else { return }
                 state = .failed(error.localizedDescription)
                 RideStatusCenter.shared.publish(
-                    entries: [:], phase: .failed(error.localizedDescription))
+                    entries: Self.statusEntries(for: rides, wanted: []),
+                    phase: .failed(error.localizedDescription))
             }
         }
     }
@@ -214,6 +233,9 @@ final class RiddenRouteStore {
     }
 
     func clear() {
+        loadRevision += 1
+        completedInputs = [:]
+        resolutionTickets = [:]
         loadTask?.cancel()
         rides = []
         visibleRides = []
@@ -236,12 +258,18 @@ final class RiddenRouteStore {
     func resolve(_ train: Train) {
         let scope = RouteScope(train)
         let id = train.id
+        let revision = loadRevision
+        let ticket = UUID()
+        resolutionTickets[id] = ticket
         RideStatusCenter.shared.beginResolving(id)
         Task {
             let solved = await Task.detached(priority: .userInitiated) { () -> DrawnRide? in
                 try? await Self.resolveOne(train, scope: scope)
             }.value
 
+            guard loadRevision == revision, resolutionTickets[id] == ticket else { return }
+            resolutionTickets[id] = nil
+            completedInputs[id] = train
             if let solved {
                 if let index = rides.firstIndex(where: { $0.id == id }) {
                     rides[index] = solved
@@ -433,6 +461,18 @@ final class RiddenRouteStore {
             .sorted { $0.position < $1.position }
         var result: [DrawnRide] = []
         result.reserveCapacity(hits.count)
+        // A journey whose route spans several bundled parts hits this loop
+        // once per part but is the same `wanted` train every time — normalised
+        // once here and reused for the digest, the template digest, the
+        // expected sections, and the cache write below, all of which used to
+        // each normalise it again.
+        var normalizedByID: [String: Train] = [:]
+        func canonical(for train: Train) -> Train {
+            if let cached = normalizedByID[train.id] { return cached }
+            let value = normalizedTrain(train, country: country)
+            normalizedByID[train.id] = value
+            return value
+        }
         for hit in hits {
             try Task.checkCancellation()
             guard let partURL = Bundle.main.url(
@@ -442,9 +482,12 @@ final class RiddenRouteStore {
             ) else { throw LoadError.missingPart(dataset, hit.name) }
             let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
             guard let train = wanted[part.train.id] else { continue }
-            guard routeCacheDigest(train, country: country)
-                    == routeCacheDigest(part.train, country: country) else { continue }
-            let expectedTemplate = routeTemplateDigest(train, country: country)
+            let trainCanonical = canonical(for: train)
+            let trainDigest = routeCacheDigest(trainCanonical, country: country)
+            guard trainDigest == routeCacheDigest(
+                normalizedTrain(part.train, country: country), country: country
+            ) else { continue }
+            let expectedTemplate = routeTemplateDigest(trainCanonical, country: country)
             let matchingFeatures = part.route.features.filter { feature in
                 guard let expectedTemplate else { return true }
                 return feature.properties?.routeTemplateKey == expectedTemplate
@@ -478,13 +521,13 @@ final class RiddenRouteStore {
                 train,
                 country: country,
                 segments: segments,
-                expectedSections: canonicalSections(train, country: country),
+                expectedSections: canonicalSections(trainCanonical),
                 indicesAreAuthoritative: indicesAreAuthoritative)
             // Written into the same cache a solve writes to, so the next load
             // finds this journey without opening a dataset at all. That is
             // what keeps the dataset search a first-load cost rather than a
             // per-load one.
-            try? saveCache(ride, train: train, country: country)
+            if let trainDigest { try? saveCache(ride, digest: trainDigest, country: country) }
             result.append(ride)
         }
         return result
@@ -545,15 +588,25 @@ final class RiddenRouteStore {
             geometryDigest: geometryHasher.finalize())
     }
 
+    /// The one normalisation the solver, the cache digest, and the template
+    /// digest all read from — computed once per train and passed to whichever
+    /// of them needs it, instead of each calling `normalizeExportTrain` again
+    /// for a train a caller a few lines up had just normalised.
+    private nonisolated static func normalizedTrain(
+        _ train: Train, country: String
+    ) -> Train {
+        TrainValidation.normalizeExportTrain(
+            train, country: country, stations: TrainValidation.StationTable.empty)
+    }
+
     /// The canonical route sections a journey asks for — the same normalisation
     /// the solver and the cache digest run, so "expected" means the same thing
-    /// in all three.
+    /// in all three. Takes the already-normalised train; see
+    /// ``normalizedTrain(_:country:)``.
     private nonisolated static func canonicalSections(
-        _ train: Train, country: String
+        _ canonical: Train
     ) -> [RouteSection] {
-        TrainValidation.normalizeExportTrain(
-            train, country: country, stations: TrainValidation.StationTable.empty
-        ).routeSections ?? []
+        canonical.routeSections ?? []
     }
 
     /// Solve the journeys no cache and no dataset could answer for.
@@ -626,8 +679,7 @@ final class RiddenRouteStore {
         var rides: [DrawnRide] = []
         for train in trains {
             try Task.checkCancellation()
-            let canonical = TrainValidation.normalizeExportTrain(
-                train, country: country, stations: TrainValidation.StationTable.empty)
+            let canonical = normalizedTrain(train, country: country)
             let sections = canonical.routeSections ?? []
             guard !sections.isEmpty else { continue }
             let context = routeContext(train)
@@ -695,7 +747,9 @@ final class RiddenRouteStore {
             let ride = drawnRide(
                 train, country: country, segments: segments, expectedSections: sections)
             rides.append(ride)
-            if !segments.isEmpty { try? saveCache(ride, train: train, country: country) }
+            if !segments.isEmpty, let digest = routeCacheDigest(canonical, country: country) {
+                try? saveCache(ride, digest: digest, country: country)
+            }
         }
         return rides
     }
@@ -712,10 +766,8 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func routeTemplateDigest(
-        _ train: Train, country: String
+        _ canonical: Train, country: String
     ) -> String? {
-        let canonical = TrainValidation.normalizeExportTrain(
-            train, country: country, stations: TrainValidation.StationTable.empty)
         let canonicalSections = canonical.routeSections ?? []
         let sections: [RouteGraph.RouteSection] = canonicalSections.map { section in
             RouteGraph.RouteSection(
@@ -730,10 +782,8 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func routeCacheDigest(
-        _ train: Train, country: String
+        _ canonical: Train, country: String
     ) -> String? {
-        let canonical = TrainValidation.normalizeExportTrain(
-            train, country: country, stations: TrainValidation.StationTable.empty)
         let canonicalSections = canonical.routeSections ?? []
         let sections = canonicalSections.map { section in
             RouteGraph.RouteSection(
@@ -834,7 +884,11 @@ final class RiddenRouteStore {
     private nonisolated static func readCached(
         _ train: Train, country: String
     ) -> DrawnRide? {
-        guard let digest = routeCacheDigest(train, country: country),
+        // Normalised once and reused for the digest and the expected
+        // sections below, instead of each calling `normalizeExportTrain`
+        // again for the same train.
+        let canonical = normalizedTrain(train, country: country)
+        guard let digest = routeCacheDigest(canonical, country: country),
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
               cache.version == RouteGraph.routeSolverCacheVersion,
@@ -856,13 +910,16 @@ final class RiddenRouteStore {
             train,
             country: country,
             segments: segments,
-            expectedSections: canonicalSections(train, country: country))
+            expectedSections: canonicalSections(canonical))
     }
 
+    /// Writes the route cache entry for an already-computed digest. The
+    /// caller normalises the train once (for the digest, the sections, or
+    /// both) and passes the digest through rather than this function
+    /// re-deriving it from the train again.
     private nonisolated static func saveCache(
-        _ ride: DrawnRide, train: Train, country: String
+        _ ride: DrawnRide, digest: String, country: String
     ) throws {
-        guard let digest = routeCacheDigest(train, country: country) else { return }
         let directory = cacheDirectory(country: country)
         try FileManager.default.createDirectory(
             at: directory, withIntermediateDirectories: true)

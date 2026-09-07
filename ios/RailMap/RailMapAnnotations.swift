@@ -319,6 +319,66 @@ final class EndpointLabelAnnotation: NSObject, MKAnnotation {
     }
 }
 
+/// Preserve MapKit annotation identity when its complete presentation is
+/// unchanged. Buckets support coincident ride markers without merging them.
+@MainActor
+enum MapAnnotationReconciler {
+    static func reconcile(_ desired: [MKAnnotation], replacing old: [MKAnnotation],
+                          on mapView: MKMapView) -> [MKAnnotation] {
+        var available = Dictionary(grouping: old, by: key)
+        var added: [MKAnnotation] = []
+        let installed = desired.map { candidate -> MKAnnotation in
+            let id = key(candidate)
+            if let index = available[id]?.firstIndex(where: { sameContent($0, candidate) }),
+               let retained = available[id]?.remove(at: index) {
+                return retained
+            }
+            added.append(candidate)
+            return candidate
+        }
+        let removed = available.values.flatMap { $0 }
+        if !removed.isEmpty { mapView.removeAnnotations(removed) }
+        if !added.isEmpty { mapView.addAnnotations(added) }
+        return installed
+    }
+
+    private static func key(_ annotation: MKAnnotation) -> String {
+        switch annotation {
+        case let item as StationAnnotation:
+            return "network|\(item.station.region.rawValue)|\(item.station.lineID)|\(item.station.id)"
+        case let item as RideStationAnnotation:
+            return "ride|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.role)|\(item.rawName)"
+        case let item as RideLabelAnnotation:
+            return "label|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.rawName)"
+        default:
+            return "\(ObjectIdentifier(annotation))"
+        }
+    }
+
+    private static func sameContent(_ lhs: MKAnnotation, _ rhs: MKAnnotation) -> Bool {
+        guard lhs.coordinate.latitude == rhs.coordinate.latitude,
+              lhs.coordinate.longitude == rhs.coordinate.longitude else { return false }
+        switch (lhs, rhs) {
+        case let (a as StationAnnotation, b as StationAnnotation):
+            return a.station.contentID == b.station.contentID && a.displayName == b.displayName
+                && a.readings == b.readings && a.showsName == b.showsName
+        case let (a as RideLabelAnnotation, b as RideLabelAnnotation):
+            return a.text == b.text && a.rawName == b.rawName && a.stationCode == b.stationCode
+                && a.tier == b.tier && a.dotRadiusToken == b.dotRadiusToken && a.selected == b.selected
+        case let (a as RideStationAnnotation, b as RideStationAnnotation):
+            return a.name == b.name && a.rawName == b.rawName && a.stationCode == b.stationCode
+                && a.role == b.role && a.radius == b.radius && a.lineWidth == b.lineWidth
+                && a.ordinaryRadius == b.ordinaryRadius && a.ordinaryLineWidth == b.ordinaryLineWidth
+                && a.focusScale == b.focusScale && a.fill == b.fill && a.stroke == b.stroke
+                && a.alpha == b.alpha && a.focusBoost == b.focusBoost && a.selected == b.selected
+                && a.core?.radius == b.core?.radius && a.core?.focusScale == b.core?.focusScale
+                && a.core?.color == b.core?.color
+        default:
+            return false
+        }
+    }
+}
+
 final class StationAnnotationView: MKAnnotationView {
     private let dot = UIView()
     private let nameLabel = HaloLabel()

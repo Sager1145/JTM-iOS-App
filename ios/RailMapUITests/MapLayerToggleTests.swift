@@ -179,7 +179,7 @@ final class MapLayerToggleTests: XCTestCase {
 
     /// Enabling the complete network must leave the app responsive while its
     /// prebuilt viewport tiles are prepared and atomically installed.
-    func testAllRailwaysToggleDoesNotStallTheMap() {
+    func testAllRailwaysToggleDoesNotStallTheMap() throws {
         XCUIDevice.shared.orientation = .portrait
         // A fixed railway-dense camera makes an empty render unambiguous. The
         // network still starts off and the store still starts without display
@@ -193,19 +193,28 @@ final class MapLayerToggleTests: XCTestCase {
         XCTAssertTrue(network.waitForExistence(timeout: 12))
         XCTAssertFalse(network.isSelected)
 
-        let started = ContinuousClock.now
         network.tap()
         XCTAssertTrue(network.isSelected, "全部線路 did not finish enabling")
         let rendered = NSPredicate(format: "label BEGINSWITH %@", "network:rendered;")
         expectation(for: rendered, evaluatedWith: renderStatus)
-        waitForExpectations(timeout: 3)
-        let elapsed = ContinuousClock.now - started
+        waitForExpectations(timeout: 20)
+        let status = renderStatus.label
         XCTAssertTrue(
-            !renderStatus.label.contains("overlays:0"),
+            !status.contains("overlays:0"),
             "全部線路 was enabled but the map installed no railway overlays")
-        XCTAssertLessThan(
-            elapsed, .seconds(3),
-            "全部線路 took \(elapsed) to produce its first rendered viewport")
+        // The time to query thousands of MapKit accessibility descendants is
+        // XCTest overhead, not time to draw. Keep the 3-second gate on the
+        // app's interval from enabling the network through its first render.
+        let timing = try XCTUnwrap(status.split(separator: ";").first {
+            $0.hasPrefix("firstNetworkMs:")
+        })
+        let milliseconds = try XCTUnwrap(Double(timing.dropFirst("firstNetworkMs:".count)))
+        XCTAssertGreaterThanOrEqual(milliseconds, 0)
+        XCTAssertLessThan(milliseconds, 3_000, "First network render took \(milliseconds) ms")
+        let measurement = XCTAttachment(string: status)
+        measurement.name = "first-network-render-timing"
+        measurement.lifetime = .keepAlways
+        add(measurement)
         let layers = app.buttons["mapLayersButton"]
         XCTAssertTrue(layers.isHittable, "map controls stalled while loading all railways")
         layers.tap()
@@ -230,7 +239,7 @@ final class MapLayerToggleTests: XCTestCase {
             evaluatedWith: renderStatus)
         waitForExpectations(timeout: 20)
         // Read the real renderer's scales, rather than only testing the pure
-        // policy. This catches a viewport allowance that never reaches MapKit.
+        // policy. This catches a detail delay that never reaches MapKit.
         let status = renderStatus.label
         let fields = status.split(separator: ";")
         let cameraText = try XCTUnwrap(fields.first { $0.hasPrefix("camera:") })
@@ -239,10 +248,10 @@ final class MapLayerToggleTests: XCTestCase {
         let lod = try XCTUnwrap(Double(lodText.dropFirst("lod:".count)))
         let windowFrame = app.frame
         let shorterEdge = min(windowFrame.width, windowFrame.height)
-        let expectedAllowance = shorterEdge >= 900 ? 1.0 : shorterEdge >= 600 ? 0.5 : 0
+        let expectedDelay = shorterEdge >= 900 ? 1.0 : shorterEdge >= 600 ? 0.5 : 0
         XCTAssertEqual(
-            lod - camera, expectedAllowance, accuracy: 0.02,
-            "The rendered network must use this window's density allowance.")
+            camera - lod, expectedDelay, accuracy: 0.02,
+            "The rendered network must defer detail for this window's workload.")
         let density = XCTAttachment(string: status)
         density.name = "rendered-network-density"
         density.lifetime = .keepAlways
@@ -254,6 +263,46 @@ final class MapLayerToggleTests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         defer { XCUIDevice.shared.orientation = .portrait }
         try assertNetworkWindowDensity()
+    }
+
+    /// Cross the padded viewport in both directions with the network mounted.
+    /// First-render timing cannot detect repeated rebuilds inside a gesture.
+    func testAllRailwaysContinuousPanReusesGeometryAndAnnotations() throws {
+        XCUIDevice.shared.orientation = .portrait
+        let app = launchOverTokyo(hiding: "network")
+        let status = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 12))
+        XCTAssertTrue(waitFor(timeout: 20) { status.label.hasPrefix("network:rendered;") })
+        func value(_ field: String, in text: String) throws -> Int {
+            let part = try XCTUnwrap(text.split(separator: ";").first { $0.hasPrefix(field + ":") })
+            return try XCTUnwrap(Int(part.dropFirst(field.count + 1)))
+        }
+        let before = status.label
+        let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.90, dy: 0.12))
+        let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.10, dy: 0.12))
+        start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
+        // Let inertia and the settle task finish before requesting a large
+        // MapKit accessibility snapshot, which can itself stall a simulator.
+        Thread.sleep(forTimeInterval: 2)
+        let outward = status.label
+        end.press(forDuration: 0.05, thenDragTo: start, withVelocity: .slow, thenHoldForDuration: 0.1)
+        Thread.sleep(forTimeInterval: 2)
+        let returned = status.label
+        let measurements = XCTAttachment(string: [before, outward, returned].joined(separator: "\n"))
+        measurements.name = "continuous-network-pan"
+        measurements.lifetime = .keepAlways
+        add(measurements)
+        XCTAssertGreaterThan(try value("panCallbacks", in: returned), 10)
+        XCTAssertEqual(try value("gestureBuilds", in: returned), 0)
+        XCTAssertGreaterThan(try value("rebuilds", in: outward), try value("rebuilds", in: before))
+        XCTAssertGreaterThan(try value("rebuilds", in: returned), try value("rebuilds", in: outward))
+        XCTAssertGreaterThan(try value("cacheHits", in: returned), try value("cacheHits", in: before))
+        XCTAssertGreaterThan(try value("annotationReuses", in: returned), try value("annotationReuses", in: before))
+        for snapshot in [outward, returned] {
+            XCTAssertEqual(try value("covered", in: snapshot), 1)
+            XCTAssertGreaterThan(try value("lines", in: snapshot), 0)
+        }
+        attach(app, named: "network-after-return-pan")
     }
 
     // MARK: - helpers
@@ -335,6 +384,8 @@ final class MapLayerToggleTests: XCTestCase {
     /// Launch over ``tokyoCamera``, with `layers` switched off.
     private func launchOverTokyo(hiding layers: String? = nil) -> XCUIApplication {
         let app = XCUIApplication()
+        // The renderer fixture must not depend on a previous simulator session.
+        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
         app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = Self.tokyoCamera

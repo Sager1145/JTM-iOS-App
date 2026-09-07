@@ -92,6 +92,97 @@ public struct StrokeRef: Sendable, Equatable {
 /// never a second, independently decimated one that could disagree with it
 /// pixel for pixel.
 public enum StrokeRide {
+    /// Prepared once per immutable display-network generation. Blocks retain
+    /// edge order, so equal-distance projections and first-chain ties have
+    /// exactly the same answer as the exhaustive matcher.
+    public struct Index: Sendable {
+        private struct Bounds: Sendable {
+            let minLat: Double, maxLat: Double, minLon: Double, maxLon: Double
+
+            init(_ points: ArraySlice<Coordinate>) {
+                minLat = points.map(\.lat).min() ?? 0
+                maxLat = points.map(\.lat).max() ?? 0
+                minLon = points.map(\.lon).min() ?? 0
+                maxLon = points.map(\.lon).max() ?? 0
+            }
+
+            func contains(_ point: Coordinate, pad: Double) -> Bool {
+                point.lat >= minLat - pad && point.lat <= maxLat + pad
+                    && point.lon >= minLon - pad && point.lon <= maxLon + pad
+            }
+
+            func distance(to point: Coordinate, sx: Double) -> Double {
+                let dx = max(minLon - point.lon, 0, point.lon - maxLon) * abs(sx)
+                let dy = max(minLat - point.lat, 0, point.lat - maxLat) * 111_320
+                return hypot(dx, dy)
+            }
+        }
+
+        private struct Entry: Sendable {
+            let chain: ChainRef
+            let bounds: Bounds
+            let blocks: [(edges: Range<Int>, bounds: Bounds)]
+
+            init(_ chain: ChainRef) {
+                self.chain = chain
+                bounds = Bounds(chain.points[...])
+                blocks = stride(from: 1, to: chain.points.count, by: 32).map { start in
+                    let end = min(start + 32, chain.points.count)
+                    return (start..<end, Bounds(chain.points[(start - 1)..<end]))
+                }
+            }
+
+            func project(_ point: Coordinate, tolerance: Double) -> Projection? {
+                let sx = 111_320.0 * cos(point.lat * .pi / 180)
+                var best: Projection?
+                for block in blocks {
+                    // Small rounding allowance keeps an edge on the exact
+                    // tolerance boundary eligible for the precise test.
+                    guard block.bounds.distance(to: point, sx: sx)
+                        <= (best?.distance ?? tolerance) + 0.000001 else { continue }
+                    if let candidate = StrokeRide.project(
+                        point, onto: chain.points, measures: chain.measures, edges: block.edges),
+                        candidate.distance <= tolerance,
+                        best == nil || candidate.distance < best!.distance {
+                        best = candidate
+                    }
+                }
+                return best
+            }
+        }
+
+        private let entries: [Entry]
+
+        public init(chains: [ChainRef]) {
+            entries = chains.filter {
+                $0.points.count >= 2 && $0.points.count == $0.measures.count
+            }.map(Entry.init)
+        }
+
+        public func resolve(segment: [Coordinate]) -> StrokeRef? {
+            guard segment.count >= 2 else { return nil }
+            let first = segment[0], last = segment[segment.count - 1]
+            let length = StrokeRide.polylineLength(segment)
+            for entry in entries {
+                guard entry.bounds.contains(first, pad: boundsPadDegrees),
+                    entry.bounds.contains(last, pad: boundsPadDegrees),
+                    let p1 = entry.project(first, tolerance: endpointToleranceMeters),
+                    let p2 = entry.project(last, tolerance: endpointToleranceMeters),
+                    abs(abs(p2.measure - p1.measure) - length) <= max(0.25 * length, 500)
+                else { continue }
+                let step = max(1, (segment.count - 2) / maxMiddleSamples)
+                guard stride(from: 1, to: segment.count - 1, by: step).allSatisfy({
+                    entry.project(segment[$0], tolerance: middleToleranceMeters) != nil
+                }) else { continue }
+                let (from, fromAnchor) = StrokeRide.snap(p1, chain: entry.chain)
+                let (to, toAnchor) = StrokeRide.snap(p2, chain: entry.chain)
+                return StrokeRef(chainID: entry.chain.id, from: from, to: to,
+                    fromAnchor: fromAnchor, toAnchor: toAnchor)
+            }
+            return nil
+        }
+    }
+
     /// Both endpoints must land on one chain within this many metres —
     /// generous enough for a platform whose recorded stop and the display
     /// line's own survey disagree by a station's width, tight enough that a
@@ -193,14 +284,15 @@ public enum StrokeRide {
     /// equirectangular scaling, the same ruler ``ChainRef/measures`` and
     /// `rail-network.js`'s own `distanceMeters` use.
     private static func project(
-        _ point: Coordinate, onto points: [Coordinate], measures: [Double]
+        _ point: Coordinate, onto points: [Coordinate], measures: [Double],
+        edges: Range<Int>? = nil
     ) -> Projection? {
         guard points.count >= 2 else { return nil }
         let sx = 111_320.0 * cos(point.lat * .pi / 180)
         let sy = 111_320.0
         let px = point.lon * sx, py = point.lat * sy
         var best: Projection?
-        for index in 1..<points.count {
+        for index in edges ?? 1..<points.count {
             let a = points[index - 1]
             let b = points[index]
             let ax = a.lon * sx, ay = a.lat * sy

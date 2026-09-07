@@ -78,6 +78,12 @@ final class RailMapUITests: XCTestCase {
         try assertRepeatedHeaderDrags(isDocked: true)
     }
 
+    #if targetEnvironment(macCatalyst)
+    func testMacMenuHeaderDragsInBothDirectionsRepeatedly() throws {
+        try assertRepeatedHeaderDrags(isDocked: true)
+    }
+    #endif
+
     func testIPadMenuHeaderPaddingDragExpands() throws {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .pad)
         XCUIDevice.shared.orientation = .landscapeLeft
@@ -108,7 +114,11 @@ final class RailMapUITests: XCTestCase {
         XCTAssertFalse(search.exists)
         let compactTop = header.frame.minY
         let stage = element("dockPanelToggle", in: app)
+        #if targetEnvironment(macCatalyst)
+        let device = "mac"
+        #else
         let device = isDocked ? "ipad" : "iphone"
+        #endif
 
         for cycle in 1...2 {
             dragHeader(header, by: -360)
@@ -145,7 +155,11 @@ final class RailMapUITests: XCTestCase {
 
     private func dragHeader(_ header: XCUIElement, by verticalDistance: CGFloat) {
         let start = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        #if targetEnvironment(macCatalyst)
+        start.click(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: verticalDistance)))
+        #else
         start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: verticalDistance)))
+        #endif
     }
 
     /// This test is intentionally skipped unless the simulator's real system

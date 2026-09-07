@@ -674,6 +674,12 @@ final class PlaybackController {
         clockTarget = nil
     }
 
+    // The clock target holds this controller weakly. If its last owner goes
+    // away on another executor, Swift schedules cleanup on the main actor.
+    isolated deinit {
+        displayLink?.invalidate()
+    }
+
     private func playbackFeatures(
         train: Train, ride: RiddenRouteStore.DrawnRide
     ) -> [Playback.RiddenFeature] {

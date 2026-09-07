@@ -76,6 +76,14 @@ struct StatisticsDashboardContent: View {
     /// `nil` is 全部 — every network in one denominator.
     @Binding var region: Region?
 
+    /// The workspace's shared memoisation cache — see ``WorkspaceDerived`` —
+    /// so ``scoped(_:)`` computes its region + ridden slice once per (trains
+    /// generation, region) rather than rebuilding a whole
+    /// `ItineraryStore.Loaded` on every body evaluation. Defaulted rather than
+    /// required so `StatisticsPosterPage` — a one-shot render for the share
+    /// image, not a per-frame surface — need not supply one of its own.
+    var derived: WorkspaceDerived = WorkspaceDerived()
+
     /// §11.2's resolved surface for one journey, from the app's ONE caller of
     /// `JourneyPresentationResolver`.
     ///
@@ -1618,29 +1626,39 @@ struct StatisticsDashboardContent: View {
     /// and a card that said "8 journeys, 0 km" because two of them were never
     /// confirmed would be this screen disagreeing with itself.
     private func scoped(_ loaded: ItineraryStore.Loaded) -> Scope {
-        var trains: [Train] = []
-        var unconfirmed = 0
-        trains.reserveCapacity(loaded.trains.count)
-        for train in loaded.trains {
-            if let region, Region.resolved(train) != region { continue }
-            if RideLedger.hasBeenRidden(train) {
-                trains.append(train)
-            } else {
-                unconfirmed += 1
+        // The region + ridden filter, memoised: this used to re-run over
+        // every journey and rebuild every `days` bucket on every body
+        // evaluation, including the ones a sheet drag causes while nothing
+        // about the scope changed.
+        let slice = derived.passportScope(
+            trains: loaded.trains, days: loaded.days, region: region
+        ) {
+            var trains: [Train] = []
+            var unconfirmed = 0
+            trains.reserveCapacity(loaded.trains.count)
+            for train in loaded.trains {
+                if let region, Region.resolved(train) != region { continue }
+                if RideLedger.hasBeenRidden(train) {
+                    trains.append(train)
+                } else {
+                    unconfirmed += 1
+                }
             }
+            let ids = Set(trains.map(\.id))
+            let days = loaded.days.compactMap { day -> ItineraryStore.Loaded.Day? in
+                let kept = day.trains.filter { ids.contains($0.id) }
+                return kept.isEmpty
+                    ? nil : ItineraryStore.Loaded.Day(date: day.date, trains: kept)
+            }
+            return (trains, days, unconfirmed)
         }
-        let ids = Set(trains.map(\.id))
         return Scope(
             loaded: ItineraryStore.Loaded(
                 regions: region.map { [$0] } ?? Region.ordered,
-                trains: trains,
-                days: loaded.days.compactMap { day in
-                    let kept = day.trains.filter { ids.contains($0.id) }
-                    return kept.isEmpty
-                        ? nil : ItineraryStore.Loaded.Day(date: day.date, trains: kept)
-                },
+                trains: slice.trains,
+                days: slice.days,
                 elapsed: loaded.elapsed),
-            unconfirmed: unconfirmed)
+            unconfirmed: slice.unconfirmed)
     }
 
     private func stopCount(_ trains: [Train]) -> Int {

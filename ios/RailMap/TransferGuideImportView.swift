@@ -32,11 +32,16 @@ struct TransferGuideImportView: View {
     @State private var choosesFiles = false
     @State private var expandedLeg: Int?
     @State private var showsRaw = false
+    @State private var loadTask: Task<Void, Never>?
+    @State private var isLoadingPages = false
+    @State private var loadError: String?
 
     var body: some View {
         NavigationStack {
             Form {
                 sourceSection
+                if isLoadingPages { readingSection(done: 0, total: 1) }
+                if let loadError { failureSection(key: "ios.guide.failUndecodable", detail: loadError) }
                 switch flow.phase {
                 case .waiting: EmptyView()
                 case .reading(let done, let total): readingSection(done: done, total: total)
@@ -58,6 +63,7 @@ struct TransferGuideImportView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(localization.text("ios.cancel", fallback: "Cancel")) {
+                        loadTask?.cancel()
                         flow.cancel()
                         dismiss()
                     }
@@ -74,6 +80,7 @@ struct TransferGuideImportView: View {
             // fresh launch could sit on 路網載入中 indefinitely. Idempotent —
             // the second call is a set lookup.
             .task { network?.ensure(.jp) }
+            .onDisappear { loadTask?.cancel(); flow.cancel() }
             .onChange(of: picked) { _, items in load(items) }
             .fileImporter(
                 isPresented: $choosesFiles, allowedContentTypes: [.image],
@@ -103,13 +110,13 @@ struct TransferGuideImportView: View {
                 Label(choosePhotos, systemImage: "photo")
             }
             .accessibilityIdentifier("guidePhotoPicker")
-            .disabled(flow.isRunning || !hasNetwork)
+            .disabled(isLoadingPages || flow.isRunning || !hasNetwork)
 
             Button { choosesFiles = true } label: {
                 Label(localization.guideText("ios.guide.chooseFiles"), systemImage: "folder")
             }
             .accessibilityIdentifier("guideFilePicker")
-            .disabled(flow.isRunning || !hasNetwork)
+            .disabled(isLoadingPages || flow.isRunning || !hasNetwork)
 
             if !flow.pageNames.isEmpty {
                 LabeledContent(
@@ -509,32 +516,53 @@ struct TransferGuideImportView: View {
 
     private func load(_ items: [PhotosPickerItem]) {
         guard !items.isEmpty else { return }
-        Task {
-            var pages: [Data] = []
-            for item in items {
-                if let data = try? await item.loadTransferable(type: Data.self) {
-                    pages.append(data)
+        loadTask?.cancel()
+        isLoadingPages = true
+        loadError = nil
+        loadTask = Task {
+            do {
+                var pages: [Data] = []
+                for item in items {
+                    try Task.checkCancellation()
+                    if let data = try await item.loadTransferable(type: Data.self) { pages.append(data) }
                 }
+                try Task.checkCancellation()
+                isLoadingPages = false
+                guard !pages.isEmpty else { return }
+                start(pages: pages, names: [])
+            } catch is CancellationError {
+            } catch {
+                guard !Task.isCancelled else { return }
+                isLoadingPages = false
+                loadError = error.localizedDescription
             }
-            guard !pages.isEmpty else { return }
-            start(pages: pages, names: [])
         }
     }
 
     private func load(files result: Result<[URL], Error>) {
         guard case .success(let urls) = result, !urls.isEmpty else { return }
-        var pages: [Data] = []
-        var names: [String] = []
-        for url in urls {
-            let scoped = url.startAccessingSecurityScopedResource()
-            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-            if let data = try? Data(contentsOf: url) {
-                pages.append(data)
-                names.append(url.lastPathComponent)
+        loadTask?.cancel()
+        isLoadingPages = true
+        loadError = nil
+        loadTask = Task {
+            do {
+                var pages: [Data] = []
+                var names: [String] = []
+                for url in urls {
+                    try Task.checkCancellation()
+                    pages.append(try await ImportFileReader.read(url))
+                    names.append(url.lastPathComponent)
+                }
+                try Task.checkCancellation()
+                isLoadingPages = false
+                start(pages: pages, names: names)
+            } catch is CancellationError {
+            } catch {
+                guard !Task.isCancelled else { return }
+                isLoadingPages = false
+                loadError = error.localizedDescription
             }
         }
-        guard !pages.isEmpty else { return }
-        start(pages: pages, names: names)
     }
 
     private func start(pages: [Data], names: [String]) {

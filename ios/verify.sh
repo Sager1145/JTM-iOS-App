@@ -541,11 +541,18 @@ PY
     # contradicts itself: a log listing a trip the total above it did not
     # count, or a map drawing a line the percentage beside it excludes. One
     # rule (`RideLedger.hasBeenRidden`), named in all four.
-    for file in AppShell.swift ContentView.swift StatisticsView.swift \
-        PassportWorkspaceView.swift; do
+    for file in AppShell.swift ContentView.swift StatisticsView.swift; do
         grep -q 'RideLedger\.hasBeenRidden(' "RailMap/$file" \
             || fail "RailMap/$file scopes the passport without excluding what is not confirmed"
     done
+    # Passport receives the already-filtered scope; filtering it again here
+    # would undo the memoization and pay a full journey scan on every frame.
+    grep -q 'scopedTrains: statisticsScope.trains,' RailMap/ContentView.swift \
+        || fail "Passport no longer receives the workspace's confirmed-ride scope"
+    grep -q 'var scopedTrains: \[Train\]' RailMap/PassportWorkspaceView.swift \
+        || fail "Passport no longer holds the supplied confirmed-ride scope"
+    grep -q 'replay(scopedTrains)' RailMap/PassportWorkspaceView.swift \
+        || fail "Passport replay no longer uses its confirmed-ride scope"
     echo "  the passport counts only journeys the record says were ridden"
 
     # And that rule has no clock in it.
@@ -807,7 +814,7 @@ PY
     if grep -n '\.write(to:' RailMap/RideLibrary.swift | grep -v 'options: \.atomic'; then
         fail "a store or backup file is written non-atomically (lines above)"
     fi
-    [ "$(grep -c 'MergedStore.export(store)' RailMap/RideLibrary.swift)" = 2 ] \
+    [ "$(grep -c 'MergedStore.export(store, cache: &exportCache)' RailMap/RideLibrary.swift)" = 2 ] \
         || fail "the saved store or its backup is no longer written canonically"
     echo "  saved stores are written in order, atomically, in the canonical spelling"
 

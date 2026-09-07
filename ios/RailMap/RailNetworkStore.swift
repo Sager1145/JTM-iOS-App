@@ -15,6 +15,9 @@ final class RailNetworkStore {
 
     struct DrawnLine: Identifiable, Sendable {
         let id: String
+        /// Identity of this immutable decoded content. Copies retain it; a
+        /// re-decoded line gets a new one even if its public ID is unchanged.
+        let contentID = UUID()
         /// The canonical package line id. A reviewed screen-space lane can
         /// give one railway several entries, so `id` identifies the drawn
         /// stroke while this identifies the railway beneath stations, badges
@@ -164,6 +167,7 @@ final class RailNetworkStore {
 
     struct DrawnStation: Identifiable, Sendable {
         let id: String
+        let contentID = UUID()
         /// The package this station came out of — the ride editor's picker is
         /// scoped to the region of the itinerary being edited, so that a
         /// Japanese ride cannot pick up a Korean platform.

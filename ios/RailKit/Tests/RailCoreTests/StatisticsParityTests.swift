@@ -523,7 +523,11 @@ struct StatisticsParityTests {
             // bits on a few sampled North American edges. Keep that measured
             // allowance local to US/CA. Totals and category denominators above
             // remain exact, so it cannot hide accumulated drift.
-            let ulpCeiling: Int64 = country == "us" ? 2 : (country == "ca" ? 1 : 0)
+            // Rechecked on 2026-09-06 against Node 26.4 / V8 14.6:
+            // all 11,874 Canadian source edges, 41 distance disagreements,
+            // maximum 2 ULP (cos itself differs by at most 1 ULP). The
+            // sampled edges 4321 and 4350 both reach that measured ceiling.
+            let ulpCeiling: Int64 = (country == "us" || country == "ca") ? 2 : 0
             let ulp = idx.km[edge.index].ulpDistance(to: edge.km)
             #expect(
                 ulp <= ulpCeiling,

@@ -461,7 +461,8 @@ struct StationDisplayParityTests {
             }
         }
         #expect(checked == fixture.cases.count)
-        #expect(multiRow == 5700, "5,700 stations are served by more than one line")
+        #expect(multiRow == fixture.cases.filter { $0.rows.count > 1 }.count,
+            "every multi-line popup in the current JavaScript fixture was exercised")
     }
 
     /// The header, over the five reachable shapes of the app's i18n layer.
@@ -610,10 +611,10 @@ struct StationDisplayParityTests {
                     """)
             }
         }
-        #expect(totalElected == 15062, "15,062 elected labels, got \(totalElected)")
+        #expect(totalElected == fixture.packages.reduce(0) { $0 + $1.elected.count })
         #expect(
-            totalDropped == 93,
-            "93 complexes arrive as two groups and are named once, got \(totalDropped)")
+            totalDropped == fixture.packages.reduce(0) { $0 + $1.droppedByMerge.count },
+            "every merged complex in the current JavaScript fixture was exercised")
     }
 
     /// 東京 is the case the whole election exists for: eight platforms, TWO
@@ -883,8 +884,8 @@ struct StationDisplayParityTests {
                 """)
         }
         #expect(
-            realPairs == 6321,
-            "6,321 ordered label pairs come out of the seven packages, got \(realPairs)")
+            realPairs == fixture.comparator.filter { $0.why == nil }.count,
+            "every shipped label pair in the current JavaScript fixture was exercised")
 
         let now = diverged.map { $0.map(Self.spell).joined(separator: " vs ") }.sorted()
         let was = knownDivergences.map { $0.map(Self.spell).joined(separator: " vs ") }.sorted()

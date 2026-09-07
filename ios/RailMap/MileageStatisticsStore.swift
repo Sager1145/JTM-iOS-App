@@ -159,10 +159,18 @@ final class MileageStatisticsStore {
         let country = Self.categoryCountry(for: countries)
         task = Task { [weak self] in
             guard let self else { return }
+            let interval = RailSignpost.jobs.begin("stats.load")
+            defer { RailSignpost.jobs.end("stats.load", interval) }
+#if DEBUG
+            let started = ContinuousClock.now
+#endif
             do {
                 self.progress = Progress(stage: .readingNetwork)
                 let index = try await Self.readNetwork(countries: countries)
                 try Task.checkCancellation()
+#if DEBUG
+                let indexed = ContinuousClock.now
+#endif
 
                 self.progress = Progress(stage: .matchingRides, completed: 0, total: total)
                 // The entry cache is only valid against the index it was
@@ -178,12 +186,16 @@ final class MileageStatisticsStore {
                     cache: self.entryCache,
                     report: { [weak self] done in
                         Task { @MainActor in
-                            guard let self, self.progress?.stage == .matchingRides else { return }
+                            guard let self, self.servedFingerprint == fingerprint,
+                                self.progress?.stage == .matchingRides else { return }
                             self.progress = Progress(
                                 stage: .matchingRides, completed: done, total: total)
                         }
                     })
                 try Task.checkCancellation()
+#if DEBUG
+                let matched = ContinuousClock.now
+#endif
 
                 self.progress = Progress(stage: .aggregating)
                 let context = Context(
@@ -211,6 +223,15 @@ final class MileageStatisticsStore {
                 // lands in is a scroll view the reader may already be moving.
                 let grouped = await Self.group(trains: trains, entries: prepared.entries)
                 try Task.checkCancellation()
+#if DEBUG
+                let finished = ContinuousClock.now
+                NSLog("[stats.timing] regions=%@ rides=%d read=%@ match=%@ aggregate=%@ total=%@",
+                    countries.joined(separator: ","), total,
+                    String(describing: started.duration(to: indexed)),
+                    String(describing: indexed.duration(to: matched)),
+                    String(describing: matched.duration(to: finished)),
+                    String(describing: started.duration(to: finished)))
+#endif
 
                 self.context = context
                 self.entryCache = prepared.cache

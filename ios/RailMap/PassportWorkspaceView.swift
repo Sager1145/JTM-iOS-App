@@ -41,6 +41,17 @@ struct PassportWorkspaceView: View {
     @Bindable var playback: PlaybackController
     /// `nil` is 全部 — see `StatisticsView.region`.
     @Binding var region: Region?
+    /// `RailWorkspaceView.statisticsScope.trains`, computed once there and
+    /// handed down rather than re-filtered here: the two used to run the same
+    /// region + ridden + date scan over every journey on every body
+    /// evaluation — once for the map's scope, once for this screen's replay
+    /// button — and a sheet drag is one body evaluation per frame.
+    var scopedTrains: [Train]
+    /// The workspace's shared memoisation cache — see ``WorkspaceDerived`` —
+    /// threaded through so ``StatisticsDashboardContent`` can cache its own
+    /// region-scoped slice the same way rather than rebuilding a whole
+    /// `ItineraryStore.Loaded` on every body evaluation.
+    var derived: WorkspaceDerived
     /// Threaded straight through to ``StatisticsDashboardContent`` — see the
     /// two properties there for why the resolver and the record sheet are the
     /// workspace's to supply rather than the statistics screen's to reach for.
@@ -71,6 +82,7 @@ struct PassportWorkspaceView: View {
                     itineraries: itineraries,
                     statistics: statistics,
                     region: $region,
+                    derived: derived,
                     journeyPresentation: journeyPresentation,
                     openJourney: openJourney)
 
@@ -94,26 +106,14 @@ struct PassportWorkspaceView: View {
     }
 
     // MARK: - what is in scope
-
-    /// The journeys this Passport is reporting on: one region, either one day
-    /// or all of them, and only what the records say was ridden.
-    ///
-    /// The same three filters the statistics store applies, so 回放 can never
-    /// play a journey the numbers above it excluded — which is now also true
-    /// of one nobody has confirmed riding. Passport is the recollection
-    /// surface (§5.3); an unconfirmed journey is still in 全部行程, where it
-    /// can be confirmed with one swipe, and the statistics card above says how
-    /// many are waiting rather than leaving them to be missed here. No clock
-    /// takes part — see ``RailPresentation/RideLedger``.
-    private var scopedTrains: [Train] {
-        let trains = itineraries.loaded?.trains ?? []
-        return trains.filter { train in
-            if let region, Region.resolved(train) != region { return false }
-            guard RideLedger.hasBeenRidden(train) else { return false }
-            guard statistics.selectedDate != Dates.allDates else { return true }
-            return Dates.trainSpans(train.forDates, date: statistics.selectedDate)
-        }
-    }
+    //
+    // `scopedTrains` — one region, either one day or all of them, and only
+    // what the records say was ridden — used to be computed here on every
+    // body evaluation. It is now `RailWorkspaceView.statisticsScope.trains`,
+    // handed down as a stored property: the same three filters (region,
+    // ``RailPresentation/RideLedger``, date), so 回放 still can never play a
+    // journey the numbers above it excluded, computed once per (trains
+    // generation, region, date) instead of once per screen.
 
     private func replay(_ trains: [Train]) {
         guard !trains.isEmpty else { return }

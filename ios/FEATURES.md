@@ -216,7 +216,10 @@ unchanged all-lines stop for phone-sized windows.
 **Window-aware visibility.** Native clients share one visibility policy based
 on the map viewport's shorter edge in logical points. Below 600 pt, the phone
 thresholds apply; from 600 to below 900 pt, lines and stations become eligible
-half a zoom level earlier; at 900 pt and above, one level earlier. This follows
+half a zoom level later; at 900 pt and above, one level later. Larger viewports
+cover more railway geometry at the same scale, so they defer fine detail before
+loading and building it rather than relying only on the final vertex budget.
+This follows
 window resizing and rotation rather than device names or Retina pixel counts.
 The same effective zoom drives regional data loading, line selection, and
 station visibility, including generated display-network thresholds. Geometry,

@@ -30,6 +30,9 @@ struct DataManagerView: View {
     @State private var rawPreviewExpanded = false
     @State private var rawPreview = ""
     @State private var copied = false
+    @State private var fileToImport: URL?
+    @State private var exportAction: ExportAction?
+    private enum ExportAction { case file, clipboard }
 
     @State private var confirmDeleteSaved = false
     @State private var confirmDeleteAll = false
@@ -87,20 +90,45 @@ struct DataManagerView: View {
             }
         }
         .fileImporter(isPresented: $importsFile, allowedContentTypes: [.json]) { result in
-            do {
-                let url = try result.get()
-                let scoped = url.startAccessingSecurityScopedResource()
-                defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                flow.load(
-                    String(decoding: try Data(contentsOf: url), as: UTF8.self),
-                    origin: .file(url.lastPathComponent))
-                showsImporter = true
-            } catch {
-                operationError = OperationError(
-                    titleKey: "data.errorImportTitle",
-                    detail: error.localizedDescription,
-                    keptKey: "data.errorNothingChanged")
+            switch result {
+            case .success(let url): fileToImport = url
+            case .failure(let error): showImportError(error)
             }
+        }
+        .task(id: fileToImport) {
+            guard let url = fileToImport else { return }
+            defer { if fileToImport == url { fileToImport = nil } }
+            do {
+                let data = try await ImportFileReader.read(url)
+                let text = await Task.detached(priority: .userInitiated) {
+                    String(decoding: data, as: UTF8.self)
+                }.value
+                try Task.checkCancellation()
+                flow.load(text, origin: .file(url.lastPathComponent))
+                showsImporter = true
+            } catch is CancellationError {
+            } catch { showImportError(error) }
+        }
+        .task(id: exportAction) {
+            guard let action = exportAction else { return }
+            defer { exportAction = nil }
+            guard let text = await itineraries.exportJSON(), !Task.isCancelled else { return }
+            switch action {
+            case .file:
+                exportDocument = TrainStoreDocument(text: text)
+                exportsFile = true
+            case .clipboard:
+                UIPasteboard.general.string = text
+                copied = true
+            }
+        }
+        .task(id: copied) {
+            guard copied else { return }
+            do { try await Task.sleep(for: .seconds(2)); copied = false }
+            catch { }
+        }
+        .overlay {
+            if fileToImport != nil || exportAction != nil { ProgressView().padding().background(.regularMaterial, in: Capsule()) }
         }
         .fileExporter(
             isPresented: $exportsFile,
@@ -115,11 +143,17 @@ struct DataManagerView: View {
                     keptKey: "data.errorNothingChanged")
             }
         }
-        .onChange(of: rawPreviewExpanded) {
-            // A national store is a megabyte of JSON. It is built when the
-            // disclosure opens, and not before.
-            rawPreview = rawPreviewExpanded ? (itineraries.exportJSON() ?? "") : ""
+        .task(id: rawPreviewExpanded) {
+            rawPreview = ""
+            guard rawPreviewExpanded, let text = await itineraries.exportJSON(),
+                !Task.isCancelled else { return }
+            rawPreview = text
         }
+    }
+
+    private func showImportError(_ error: Error) {
+        operationError = OperationError(titleKey: "data.errorImportTitle",
+            detail: error.localizedDescription, keptKey: "data.errorNothingChanged")
     }
 
     // MARK: - §5.8 source hero
@@ -158,7 +192,7 @@ struct DataManagerView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .railMinimumTouchTarget()
-                .disabled(itineraries.isImporting)
+                .disabled(itineraries.isImporting || fileToImport != nil)
             }
             .padding(.vertical, 6)
         } footer: {
@@ -203,7 +237,7 @@ struct DataManagerView: View {
                     guard let store = itineraries.store else { return }
                     library.save(store)
                 }
-                .disabled(itineraries.store == nil)
+                .disabled(itineraries.store == nil || exportAction != nil)
             }
         }
 
@@ -252,7 +286,7 @@ struct DataManagerView: View {
         } footer: {
             Text(localization.dataText("data.preflightDateNote"))
         }
-        .disabled(itineraries.isImporting)
+        .disabled(itineraries.isImporting || fileToImport != nil)
     }
 
     // MARK: - export, in one task group with the raw preview
@@ -260,24 +294,16 @@ struct DataManagerView: View {
     private var exportSection: some View {
         Section {
             Button {
-                guard let text = itineraries.exportJSON() else { return }
-                exportDocument = TrainStoreDocument(text: text)
-                exportsFile = true
+                exportAction = .file
             } label: {
                 Label(
                     localization.text("btn.exportJson", fallback: "Export JSON"),
                     systemImage: "square.and.arrow.up")
             }
-            .disabled(itineraries.store == nil)
+            .disabled(itineraries.store == nil || exportAction != nil)
 
             Button {
-                guard let text = itineraries.exportJSON() else { return }
-                UIPasteboard.general.string = text
-                copied = true
-                Task {
-                    try? await Task.sleep(for: .seconds(2))
-                    copied = false
-                }
+                exportAction = .clipboard
             } label: {
                 Label(
                     copied
@@ -285,7 +311,7 @@ struct DataManagerView: View {
                         : localization.dataText("data.copyJSON"),
                     systemImage: copied ? "checkmark" : "doc.on.doc")
             }
-            .disabled(itineraries.store == nil)
+            .disabled(itineraries.store == nil || exportAction != nil)
 
             // §5.8: the raw JSON preview is L4, and ships folded.
             DisclosureGroup(
@@ -324,7 +350,7 @@ struct DataManagerView: View {
                     localization.text("btn.saveAsMine", fallback: "Save current rides"),
                     systemImage: "square.and.arrow.down")
             }
-            .disabled(itineraries.store == nil)
+            .disabled(itineraries.store == nil || exportAction != nil)
 
             Button {
                 itineraries.load(from: library)
@@ -339,7 +365,7 @@ struct DataManagerView: View {
         } footer: {
             Text(localization.dataText("data.storageFootnote"))
         }
-        .disabled(itineraries.isImporting)
+        .disabled(itineraries.isImporting || fileToImport != nil)
     }
 
     /// The seven samples, grouped by the region each belongs to.
@@ -392,7 +418,7 @@ struct DataManagerView: View {
                 }
             }
         }
-        .disabled(itineraries.isImporting)
+        .disabled(itineraries.isImporting || fileToImport != nil)
     }
 
     /// Fold a sample in, or — from the long-press action — make it the whole
@@ -537,7 +563,7 @@ struct DataManagerView: View {
             } header: {
                 Text(localization.dataText("data.recovery"))
             }
-            .disabled(itineraries.isImporting)
+            .disabled(itineraries.isImporting || fileToImport != nil)
             .confirmationDialog(
                 localization.dataText("data.restoreBackup"),
                 isPresented: $confirmRestore,
@@ -594,7 +620,7 @@ struct DataManagerView: View {
             }
         }
         .listSectionSpacing(.custom(44))
-        .disabled(itineraries.isImporting)
+        .disabled(itineraries.isImporting || fileToImport != nil)
         .confirmationDialog(
             localization.text("btn.clearStorage", fallback: "Delete saved rides"),
             isPresented: $confirmDeleteSaved,

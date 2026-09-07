@@ -100,10 +100,17 @@ final class MapOverlayStyles {
             let style = styles[key]
             let width = Self.drawnWidth(style, atScale: scale)
             let dash = style?.dashed == true ? RailStyle.dashPattern(atScale: scale) : nil
+            let color = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
             if let polyline = renderer as? MKPolylineRenderer {
+                guard polyline.strokeColor != color || polyline.lineWidth != width
+                    || polyline.lineDashPattern != dash else { continue }
+                polyline.strokeColor = color
                 polyline.lineWidth = width
                 polyline.lineDashPattern = dash
             } else if let multi = renderer as? MKMultiPolylineRenderer {
+                guard multi.strokeColor != color || multi.lineWidth != width
+                    || multi.lineDashPattern != dash else { continue }
+                multi.strokeColor = color
                 multi.lineWidth = width
                 multi.lineDashPattern = dash
             } else {

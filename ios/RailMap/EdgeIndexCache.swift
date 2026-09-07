@@ -26,6 +26,10 @@ actor EdgeIndexCache {
 
     private var indexes: [String: Statistics.EdgeIndex] = [:]
     private var inFlight: [String: Task<Statistics.EdgeIndex, Error>] = [:]
+    /// Keep the last multi-region merge as well as its component indexes.
+    /// Returning to All Regions after a single-region visit must not copy
+    /// every edge dictionary again. One slot bounds the extra memory.
+    private var mergedIndex: (countries: [String], index: Statistics.EdgeIndex)?
 
     /// The index for one region, building it if this is the first ask.
     func index(country: String) async throws -> Statistics.EdgeIndex {
@@ -126,6 +130,7 @@ actor EdgeIndexCache {
     /// comes first and lays down edge offsets that index into the arrays it
     /// builds, so the order it sees may not become a property of the schedule.
     func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
+        if let mergedIndex, mergedIndex.countries == countries { return mergedIndex.index }
         guard countries.count > 1 else {
             // One region needs no group, and none at all still answers what
             // the sequential version answered: `merge` of nothing.
@@ -155,9 +160,14 @@ actor EdgeIndexCache {
             byPosition[entry.position] = try await index(country: entry.country)
         }
 
-        return Self.merge(countries.enumerated().compactMap { position, country in
+        // Another caller may have completed this merge while we awaited its
+        // component indexes. Reuse that answer instead of duplicating it.
+        if let mergedIndex, mergedIndex.countries == countries { return mergedIndex.index }
+        let result = Self.merge(countries.enumerated().compactMap { position, country in
             byPosition[position].map { (country, $0) }
         })
+        mergedIndex = (countries, result)
+        return result
     }
 
     nonisolated static func merge(

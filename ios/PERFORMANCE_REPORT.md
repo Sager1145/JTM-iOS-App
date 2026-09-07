@@ -1,5 +1,130 @@
 # iOS performance pass — what was measured, what moved, what did not
 
+## 2026-09-06 follow-up: cache correctness, persistence and remaining gates
+
+This section supersedes the outstanding-item descriptions in older passes.
+The working tree includes earlier changes by other sessions; the items below
+are the follow-up to the seven-fix handoff.
+
+| Item | Result |
+| --- | --- |
+| Stroke references across generations | Each immutable decoded line/station now carries a content identity. A reference from an older network generation is usable only while its target line, anchors, neighboring chains and canonical follows remain unchanged. No coordinate-count or public-ID approximation is used. |
+| Per-line geometry cache | Unrelated region arrivals retain line/stroke builds. Changed content or dependencies invalidate only their consumers; viewport and scale changes still invalidate frame geometry. |
+| Save coalescing and export | Consecutive unstarted saves share the latest snapshot. Reads, backups, restores and deletes seal that batch. A per-record canonical fragment cache avoids normalizing and stringifying unchanged journeys; its key uses code-unit-aware JSON equality, including Unicode spelling and field presence. Full files remain atomically written in order. |
+| Whole-route reload on edit | Full records still trigger the load. The store decodes only changed/new journeys, keeps untouched route identities and removes deleted journeys immediately. Cancelled/older work cannot republish after a newer load or clear. |
+| Station lookup | A six-second budget covers the complete query plan. Requests coalesce; the last cancelled waiter cancels MapKit and ends the continuation. Hits and definitive misses (including `placemarkNotFound`) cache; misses expire after five minutes. New aliases re-key the lookup; transient failures and timeouts can retry. |
+| Statistics | Retain one multi-region merged edge index across region-scope visits. Add total-load signposts and Debug phase timings; reject stale progress callbacks. The UI sweep now waits for actual share-button readiness, not just existence. |
+| Sharing and playback cleanup | PNG cleanup retires earlier-session files without deleting another window's current share. Cancelled output is removed. `isolated deinit` invalidates the display link on its owning actor. |
+| LOD sign | Retained the performance-first policy: short edge below 600 pt delays nothing, 600–899 pt delays 0.5 zoom, and 900 pt or more delays 1 zoom. Existing boundary, rotation and monotonicity tests pass. This is intentional delayed detail, not a reversed sign. |
+| Mac configuration | Retained Catalyst support and `SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO`. Catalyst builds successfully. `AppLocalization.swift` has no working-tree diff; timestamps alone cannot identify an editor. |
+
+### Measurements
+
+Same 201-journey store and all seven regions, iPhone 17 Pro simulator on iOS
+26.5, Xcode 27 beta. The Release run uses `-O` with Debug diagnostic hooks
+explicitly enabled; it is a fresh process measured after this task's concurrent
+builds finished.
+
+| Build | Read/index | Match | Aggregate/group | Completed load |
+| --- | ---: | ---: | ---: | ---: |
+| Debug | 26.597 s | 0.370 s | 1.851 s | 28.817 s |
+| Release optimization with diagnostic hooks | 4.812 s | 0.051 s | 0.059 s | 4.922 s |
+
+These are build-mode observations, not a before/after speedup claim. The
+handoff's 14-second result has different/unspecified conditions. The paired
+physical iPhone 13 and iPhone 16 Pro remain unavailable, so physical-device
+cold-open timing and Instruments frame/memory acceptance remain unverified.
+The `stats.load`, `stats.readNetwork`, `stats.matchRides`, and `stats.aggregate`
+signposts remain available in ordinary Release builds for that check.
+
+### Verification
+
+- `SCRATCH=/tmp/jtm-followup-swift ./verify.sh --swift` returns **OK**: 310
+  RailKit tests, simulator app build, bundled resources and all app contracts.
+  No compiler warnings in application sources. Per-station/order/label comparisons remain exact;
+  obsolete hand-written corpus totals now derive from the current JS fixture.
+- Canadian precision was measured over all 11,874 source edges against Node
+  26.4 / V8 14.6: 41 distance differences, maximum 2 ULP; cosine differs by at
+  most 1 ULP. Canada's sampled-edge ceiling now matches the existing US 2-ULP
+  ceiling. Network totals, category denominators and line totals remain exact.
+- Six targeted UI tests passed: statistics/surface sweep, hidden-ride hit
+  exclusion, all-railways response, journey rows, compact header and search.
+- Recording-transport harnesses compile the actual queue/query/cache logic:
+  save ordering, failures, cancellation, late callbacks, same-ID edits and
+  line dependency invalidation all pass. Cached exports compare **UTF-8 bytes**
+  with the uncached writer over five real samples plus Unicode variants,
+  special characters, reorder, delete/re-add and empty-store cases.
+- The gate's Passport check now follows the supplied cached scope rather than
+  requiring a second filter in the child view. Both renderer simplifiers still
+  use the shared epsilon contract.
+
+Re-run the focused behavioral checks after building RailKit with the gate's
+Xcode toolchain (pass its SPM scratch directory):
+Set `DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer` when using
+the scratch directory from this run.
+
+```sh
+python3 ios/tools/verify-store-ordering.py /tmp/jtm-followup-swift
+python3 ios/tools/verify-station-lookups.py /tmp/jtm-followup-swift
+python3 ios/tools/verify-route-caches.py /tmp/jtm-followup-swift
+```
+
+Evidence: [follow-up logs](/Users/sager/.codex/visualizations/2026/09/06/01a076aa-f264-7640-bad8-366be83bdffd/performance-followup/README.md).
+
+
+## 2026-09-05 follow-up: main-thread stalls
+
+This follow-up supersedes older implementation descriptions below. It addresses
+all six findings from the September 5 operation audit; it does not claim physical-device
+frame-rate, energy or long-running playback acceptance.
+
+| Path | Change |
+| --- | --- |
+| Continuous route matching | `StrokeRide.Index` prepares chain and 32-edge-block bounds once. Joining, indexing and per-ride matching run in a cancellable worker; generation checks reject stale results. The main actor only reads matching results. |
+| Map updates | Precomputed ride bounds reject offscreen segments before matching/building. Continuous strokes, line builds and ride polylines are reused while their geometry inputs match. Installed overlay identity and renderer identity survive unchanged geometry; selection preserves stacking order. Route-width/opacity changes repaint directly. |
+| JSON export/copy/preview | Serialize an immutable store snapshot off the main actor; publish only if the requesting task is still active. The existing preview stays capped at 4,000 characters. |
+| JSON and screenshot files | `ImportFileReader` performs scoped reads off the main actor, keeping access open throughout file-provider I/O. UI shows loading and ignores cancelled results. File failures are shown without importing a partial screenshot selection. |
+| Statistics PNG | Keep SwiftUI rendering on the main actor; pass the immutable CGImage to background ImageIO encoding/writing. Preserve the 8,000-pixel height budget, with in-progress feedback and duplicate-request prevention. |
+| Journey search | Snapshot localized aliases once per data/language generation, debounce 150 ms, filter off the main actor, cancel obsolete queries, and publish one result shared by the list/header/playback scope. Empty queries use the existing immediate date/region filter. |
+
+Same-run host `-O` comparison, seven measurements after warm-up: 669 display
+chains / 377,730 vertices / 2,303 real Japanese sample segments. Exhaustive
+matching median **1,707.20 ms**, prepared matching **155.92 ms** (about **11×**);
+index preparation median **53.23 ms**. Every result was compared with the
+exhaustive implementation and was exactly equal (2,284 matches). These are host
+algorithm timings under concurrent build/test load, not iPhone UI latency.
+
+The formerly failing all-railways test now passes its **3,000 ms app-internal
+first-render gate** (measured **1,900 ms** in the full-suite attachment). The earlier audit's 68.9-second XCTest observation includes
+automation overhead, so it is not used as a directly comparable new timer.
+Debug simulator map logs show a Tokyo cold network build at **457 ms** and a
+same-viewport follow-up at **88 ms**; the old main-thread build was **60,264 ms**.
+Without the network, viewport culling reduces this sample from 201 to 52 route
+overlays, with warm rebuilds around **52–90 ms** in the observed flows.
+
+Validation: Debug test build and Release app build succeeded; the rebuilt UI
+runner passes `codesign --verify --deep --strict`. Seven matching tests pass,
+including block seams, ties, reverse directions, rejected deviations and immutable
+snapshots. A host harness compiling the actual `JourneySearch` and `ImportFileReader`
+checks localized aliases, alias-cache reuse, language invalidation, cancellation,
+same-count edits, clear-query behavior, file byte equality and read failures; the
+harness supplies only small app-owned state-type stand-ins.
+
+The full core gate ran **504 tests** and remains red on **four tests / six
+assertions** in untouched station-display/statistics code: three station fixture
+count expectations and Canada's 2-ULP edge-total difference against a 1-ULP limit.
+Those data/fixture edits were already present at task start; no assertion was
+relaxed. The complete iPhone UI suite finished **18 passed / 5 skipped / 0 failed**
+(23 tests, 737.74 seconds). Four skips require iPad, one requires system Reduce
+Motion enabled. The final stable-overlay-key build also passed both targeted map tests
+(route selection/hidden-route exclusion and all-railways responsiveness), with
+**1,258 ms** first-network time in its attachment. Final Debug and Release
+builds both succeeded.
+
+Evidence: [performance fixes](/Users/sager/.codex/visualizations/2026/09/05/01a07194-65d2-7662-9b40-057680ec1109/performance-fixes/README.md).
+
+---
+
 ## 0. What this report can and cannot claim
 
 Read this first, because it decides how every number below should be taken.

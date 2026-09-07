@@ -65,9 +65,9 @@ final class ConsoleSweepTests: XCTestCase {
         // Disabled while the figures are still being computed — an image of a
         // screen that is calculating is a picture of a spinner. Give it the
         // time the sweep gives a sheet rather than failing on a cold launch.
-        guard share.isEnabled || share.waitForExistence(timeout: 6) else { return }
-        settle(1.5)
-        guard share.isEnabled else {
+        let ready = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in share.exists && share.isEnabled }, object: nil)
+        guard XCTWaiter.wait(for: [ready], timeout: 30) == .completed else {
             XCTFail("the statistics share button never became enabled")
             return
         }

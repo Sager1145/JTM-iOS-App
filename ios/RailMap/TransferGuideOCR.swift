@@ -100,22 +100,28 @@ enum TransferGuideOCR {
         guard !pages.isEmpty else { throw Failure.undecodable }
         guard supportsJapanese() else { throw Failure.unavailable }
 
-        var images: [CGImage] = []
-        for page in pages {
-            guard let image = decode(page) else { throw Failure.undecodable }
-            let pixels = image.width * image.height
+        // Sizes come from each page's own metadata — a header read, not a
+        // decode — so every page's tile plan and the pixel cap below are
+        // known before a single bitmap exists. The bitmap itself is decoded
+        // fresh inside the page loop further down and goes out of scope
+        // before the next page's is made, so the peak cost is one page's
+        // pixels rather than every page's at once.
+        var documentWidth = 0.0
+        var plans: [(width: Int, height: Int, scale: Double, tiles: [Int])] = []
+        for (index, page) in pages.enumerated() {
+            guard let size = imageSize(page) else { throw Failure.undecodable }
+            let pixels = size.width * size.height
             if pixels > pixelLimit { throw Failure.tooLarge(megapixels: pixels / 1_000_000) }
-            images.append(image)
-        }
-
-        // One document width, so a route captured on two devices — or the same
-        // device before and after a text-size change — still lines its columns
-        // up. Everything after this point is in document points.
-        let documentWidth = Double(images[0].width)
-        let plans = images.map { image in
-            (image: image,
-             scale: documentWidth / Double(image.width),
-             tiles: tileOrigins(height: image.height, scale: recognitionScale(image)))
+            // One document width, so a route captured on two devices — or the
+            // same device before and after a text-size change — still lines
+            // its columns up. Everything after this point is in document
+            // points.
+            if index == 0 { documentWidth = Double(size.width) }
+            plans.append((
+                width: size.width, height: size.height,
+                scale: documentWidth / Double(size.width),
+                tiles: tileOrigins(
+                    height: size.height, scale: recognitionScale(width: size.width))))
         }
         let totalTiles = plans.reduce(0) { $0 + $1.tiles.count }
 
@@ -125,18 +131,19 @@ enum TransferGuideOCR {
         var read: [[TransferGuide.TextLine]] = []
         var done = 0
         onProgress(0, totalTiles)
-        for plan in plans {
-            let scale = recognitionScale(plan.image)
+        for (index, plan) in plans.enumerated() {
+            guard let image = decode(pages[index]) else { throw Failure.undecodable }
+            let scale = recognitionScale(width: plan.width)
             let tileSourceHeight = Int((tileHeight / scale).rounded())
             var collected = Collector()
             for origin in plan.tiles {
                 try Task.checkCancellation()
-                let height = min(tileSourceHeight, plan.image.height - origin)
-                if let tile = render(plan.image, sourceY: origin, sourceHeight: height, scale: scale)
+                let height = min(tileSourceHeight, plan.height - origin)
+                if let tile = render(image, sourceY: origin, sourceHeight: height, scale: scale)
                 {
                     let edges = Edges(
                         cutAtTop: origin > 0,
-                        cutAtBottom: origin + height < plan.image.height)
+                        cutAtBottom: origin + height < plan.height)
                     for found in recognize(tile.image, edges: edges) {
                         collected.add(
                             found.mapped(
@@ -157,7 +164,7 @@ enum TransferGuideOCR {
             lines: stitched,
             documentWidth: documentWidth,
             documentHeight: (stitched.map(\.box.maxY).max() ?? 0),
-            pageCount: images.count,
+            pageCount: pages.count,
             tileCount: totalTiles,
             rawRows: stitched.map(\.text))
     }
@@ -254,13 +261,26 @@ enum TransferGuideOCR {
             source, 0, [kCGImageSourceShouldCache: false] as CFDictionary)
     }
 
+    /// A page's pixel dimensions, read from its header rather than a full
+    /// decode — this is what lets ``read(_:onProgress:)`` size every page's
+    /// tile plan and check the pixel cap before any page is decoded.
+    private static func imageSize(_ data: Data) -> (width: Int, height: Int)? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil),
+            let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil)
+                as? [CFString: Any],
+            let width = properties[kCGImagePropertyPixelWidth] as? Int,
+            let height = properties[kCGImagePropertyPixelHeight] as? Int
+        else { return nil }
+        return (width, height)
+    }
+
     /// How much to enlarge a page so its text reaches the recogniser's stride.
     ///
     /// Never shrinks: a screenshot captured at 3× is already at a good size,
     /// and a downscale would throw away the only thing that makes the small
     /// intermediate-stop rows legible.
-    private static func recognitionScale(_ image: CGImage) -> Double {
-        min(4, max(1, recognitionWidth / Double(image.width)))
+    private static func recognitionScale(width: Int) -> Double {
+        min(4, max(1, recognitionWidth / Double(width)))
     }
 
     private static func tileOrigins(height: Int, scale: Double) -> [Int] {

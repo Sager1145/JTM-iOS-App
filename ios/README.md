@@ -26,6 +26,21 @@ phase. There are no remote dependencies.
 Built and run against **Xcode 27.0 beta (27A5237l), Swift 6.4, iOS 27 SDK**,
 deployment target iOS 17.
 
+For Mac development, select **My Mac (Mac Catalyst)**. The target enables
+Mac Catalyst and disables the separate **Designed for iPad/iPhone** destination
+so Xcode does not offer two different builds under the same Mac name. A Mac
+build belongs in `Debug-maccatalyst`; `Debug-iphoneos` is the iOS executable.
+After changing destinations, stop the previous run and select My Mac again.
+
+When using Xcode beta in the app, point command-line builds at that same Xcode
+without changing the machine-wide selection:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
+  xcodebuild -project ios/RailMap.xcodeproj -scheme RailMap \
+  -destination 'platform=macOS,variant=Mac Catalyst' build
+```
+
 ## The rule this whole directory exists to enforce
 
 `RailCore` imports Foundation and nothing else. No MapKit, no SwiftUI, no
@@ -132,6 +147,9 @@ and ⌘⌥S also collapse and reopen the docked menu on iPad and Mac, restoring
 the previous open height. The dock width leaves at least 360 pt of map
 plus its gutters, including portrait windows near the 692 pt breakpoint.
 Cancelling a header drag releases its temporary offset.
+The whole padded header accepts mouse or touch drags, including the blank area
+around its title. Drag translation is measured in window coordinates so moving
+the header does not change the gesture's own reference point.
 
 The map's own framing follows the card rather than sitting under it: the
 controller is told how wide the docked card is and pads its camera calls by

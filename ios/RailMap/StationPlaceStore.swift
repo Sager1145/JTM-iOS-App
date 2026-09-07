@@ -51,29 +51,67 @@ final class StationPlaceStore {
         let url: URL?
     }
 
-    /// Answered stations, and the ones that answered with nothing. `Place?` as
-    /// the VALUE rather than removing the key: a miss is a cached answer.
-    private var resolved: [String: Place?] = [:]
-    /// Lookups already running, so two cards for one station make one search.
-    private var running: [String: Task<Place?, Never>] = [:]
+    private struct Cached {
+        let place: Place?
+        let expires: ContinuousClock.Instant?
+    }
+    private struct Resolution {
+        let place: Place?
+        let definitive: Bool
+    }
+    private struct Lookup {
+        let id: UUID
+        let task: Task<Resolution, Never>
+        var waiters: Set<UUID>
+    }
+    private var resolved: [String: Cached] = [:]
+    private var running: [String: Lookup] = [:]
+    /// One budget for the entire alias/fallback plan, not six seconds per query.
+    private static let lookupBudget: Duration = .seconds(6)
 
-    /// The place this card is, or `nil` when Apple Maps has no such station.
-    ///
-    /// `aliases` is every OTHER name the readings table holds for the station —
-    /// the caller's, because the readings engine lives above this. They are
-    /// what makes a lookup work when the app's language and the device's
-    /// disagree: the service answers Taibei Station to an English phone, and
-    /// a card whose header says 臺北 has nothing to compare that to.
     func place(for card: StationCard, aliases: [String] = []) async -> Place? {
-        let key = card.id
-        if let cached = resolved[key] { return cached }
-        if let task = running[key] { return await task.value }
-        let task = Task { await Self.resolve(card, aliases: aliases) }
-        running[key] = task
-        let place = await task.value
-        running.removeValue(forKey: key)
-        resolved[key] = place
-        return place
+        guard !Task.isCancelled else { return nil }
+        // Aliases may arrive after the first card opens. A prior miss must not
+        // suppress a later lookup that now has the station's local spelling.
+        let key = ([card.id, card.region.code, String(card.coordinate.lon),
+            String(card.coordinate.lat)] + card.searchNames + aliases).joined(separator: "\u{1f}")
+        if let cached = resolved[key], cached.expires.map({ $0 > .now }) ?? true {
+            return cached.place
+        }
+        resolved[key] = nil
+        let waiter = UUID()
+        let lookup: Lookup
+        if var existing = running[key] {
+            existing.waiters.insert(waiter)
+            running[key] = existing
+            lookup = existing
+        } else {
+            lookup = Lookup(id: UUID(), task: Task { await Self.resolve(card, aliases: aliases) },
+                waiters: [waiter])
+            running[key] = lookup
+        }
+        return await withTaskCancellationHandler {
+            let answer = await lookup.task.value
+            if running[key]?.id == lookup.id {
+                running[key] = nil
+                if !lookup.task.isCancelled, answer.definitive {
+                    resolved[key] = Cached(place: answer.place,
+                        expires: answer.place == nil ? .now.advanced(by: .seconds(300)) : nil)
+                }
+            }
+            return Task.isCancelled ? nil : answer.place
+        } onCancel: {
+            Task { @MainActor [weak self] in
+                guard let self, var active = self.running[key], active.id == lookup.id else { return }
+                active.waiters.remove(waiter)
+                if active.waiters.isEmpty {
+                    active.task.cancel()
+                    self.running[key] = nil
+                } else {
+                    self.running[key] = active
+                }
+            }
+        }
     }
 
     // MARK: - The lookup
@@ -86,18 +124,29 @@ final class StationPlaceStore {
     /// categorisation of a place, and a station it has failed to categorise is
     /// exactly the case a filtered search cannot see. It costs one request on
     /// stations that were going to miss anyway.
-    private static func resolve(_ card: StationCard, aliases: [String]) async -> Place? {
+    private static func resolve(_ card: StationCard, aliases: [String]) async -> Resolution {
         let station = StationPlaceLink.Station(
             names: card.searchNames + aliases, country: card.region.code)
         let queries = StationPlaceLink.queries(for: station)
-        guard let first = queries.first else { return nil }
+        guard let first = queries.first else { return Resolution(place: nil, definitive: true) }
         let plan = queries.map { ($0, true) } + [(first, false)]
 
+        let deadline = ContinuousClock.now.advanced(by: lookupBudget)
+        var definitive = true
         for (query, transportOnly) in plan {
-            guard
-                let items = try? await search(
-                    query, near: card.coordinate, transportOnly: transportOnly)
-            else { continue }
+            guard !Task.isCancelled, ContinuousClock.now < deadline else {
+                return Resolution(place: nil, definitive: false)
+            }
+            let items: [MKMapItem]
+            do {
+                items = try await search(query, near: card.coordinate,
+                    transportOnly: transportOnly, deadline: deadline)
+            } catch {
+                // MapKit also reports an empty result as placemarkNotFound.
+                // Cache that miss; connectivity and deadline failures can retry.
+                if (error as? MKError)?.code != .placemarkNotFound { definitive = false }
+                continue
+            }
             let candidates = items.map { item in
                 StationPlaceLink.Candidate(
                     name: item.name ?? "",
@@ -106,9 +155,10 @@ final class StationPlaceStore {
             }
             guard let index = StationPlaceLink.best(candidates, for: station) else { continue }
             let item = items[index]
-            return Place(item: item, name: item.name ?? "", url: placeURL(of: item))
+            return Resolution(place: Place(item: item, name: item.name ?? "", url: placeURL(of: item)),
+                definitive: true)
         }
-        return nil
+        return Resolution(place: nil, definitive: definitive)
     }
 
     /// One search, inside a box around the station.
@@ -118,7 +168,8 @@ final class StationPlaceStore {
     /// measures every candidate itself — but it is what makes 中山 mean the one
     /// under the reader's finger rather than the seven others in the country.
     private static func search(
-        _ query: String, near coordinate: Coordinate, transportOnly: Bool
+        _ query: String, near coordinate: Coordinate, transportOnly: Bool,
+        deadline: ContinuousClock.Instant
     ) async throws -> [MKMapItem] {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
@@ -131,7 +182,55 @@ final class StationPlaceStore {
         if transportOnly {
             request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.publicTransport])
         }
-        return try await MKLocalSearch(request: request).start().mapItems
+        let operation = SearchOperation(search: MKLocalSearch(request: request))
+        return try await operation.run(until: deadline)
+    }
+
+    /// Finish the waiter ourselves on timeout/cancellation: MapKit's callback
+    /// may arrive later, but it can neither resume twice nor update a closed card.
+    @MainActor
+    private final class SearchOperation {
+        @MainActor
+        struct Reply {
+            let items: [MKMapItem]
+        }
+        let search: MKLocalSearch
+        var continuation: CheckedContinuation<Reply, Error>?
+        var timeout: Task<Void, Never>?
+        init(search: MKLocalSearch) { self.search = search }
+
+        func run(until deadline: ContinuousClock.Instant) async throws -> [MKMapItem] {
+            try Task.checkCancellation()
+            let reply: Reply = try await withTaskCancellationHandler {
+                try await withCheckedThrowingContinuation { continuation in
+                    self.continuation = continuation
+                    timeout = Task { [self] in
+                        do { try await Task.sleep(until: deadline, clock: .continuous) }
+                        catch { return }
+                        finish(.failure(URLError(.timedOut)))
+                        search.cancel()
+                    }
+                    search.start { [weak self] response, error in
+                        if let error { self?.finish(.failure(error)) }
+                        else { self?.finish(.success(Reply(items: response?.mapItems ?? []))) }
+                    }
+                }
+            } onCancel: {
+                Task { @MainActor [self] in
+                    finish(.failure(CancellationError()))
+                    search.cancel()
+                }
+            }
+            return reply.items
+        }
+
+        func finish(_ result: Result<Reply, Error>) {
+            guard let continuation else { return }
+            self.continuation = nil
+            timeout?.cancel()
+            timeout = nil
+            continuation.resume(with: result)
+        }
     }
 
     /// `/place?place-id=`, from the identity the service gave the place.
