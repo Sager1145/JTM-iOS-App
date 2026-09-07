@@ -6543,7 +6543,7 @@
       "country": "us",
       "lineId": "amtrak-adirondack-us",
       "rank": 1,
-      "groupKm": 532.853668,
+      "groupKm": 535.2610000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6559,7 +6559,7 @@
       "country": "us",
       "lineId": "amtrak-amtrak-hartford-line",
       "rank": 1,
-      "groupKm": 99.361897,
+      "groupKm": 99.83200000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 4
     },
@@ -6575,7 +6575,7 @@
       "country": "us",
       "lineId": "amtrak-borealis",
       "rank": 1,
-      "groupKm": 657.990937,
+      "groupKm": 659.319,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6591,7 +6591,7 @@
       "country": "us",
       "lineId": "amtrak-cardinal",
       "rank": 1,
-      "groupKm": 1833.6000310000002,
+      "groupKm": 1837.1770000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6647,7 +6647,7 @@
       "country": "us",
       "lineId": "amtrak-empire-builder",
       "rank": 1,
-      "groupKm": 4133.368429,
+      "groupKm": 4138.750999999999,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6655,7 +6655,7 @@
       "country": "us",
       "lineId": "amtrak-empire-builder-b1",
       "rank": 1,
-      "groupKm": 4133.368429,
+      "groupKm": 4138.750999999999,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6671,7 +6671,7 @@
       "country": "us",
       "lineId": "amtrak-ethan-allen-express",
       "rank": 1,
-      "groupKm": 496.77823799999993,
+      "groupKm": 498.89000000000004,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6679,7 +6679,7 @@
       "country": "us",
       "lineId": "amtrak-heartland-flyer",
       "rank": 1,
-      "groupKm": 327.286244,
+      "groupKm": 328.888,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6695,7 +6695,7 @@
       "country": "us",
       "lineId": "amtrak-keystone-service",
       "rank": 1,
-      "groupKm": 308.88236700000004,
+      "groupKm": 309.229,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6703,7 +6703,7 @@
       "country": "us",
       "lineId": "amtrak-lake-shore-limited",
       "rank": 1,
-      "groupKm": 1857.4156560000004,
+      "groupKm": 1858.5460000000003,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6711,7 +6711,7 @@
       "country": "us",
       "lineId": "amtrak-lake-shore-limited-b1",
       "rank": 1,
-      "groupKm": 1857.4156560000004,
+      "groupKm": 1858.5460000000003,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6735,7 +6735,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional",
       "rank": 1,
-      "groupKm": 1649.4969800000001,
+      "groupKm": 1652.2659999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6743,7 +6743,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b1",
       "rank": 1,
-      "groupKm": 1649.4969800000001,
+      "groupKm": 1652.2659999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6751,7 +6751,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b2",
       "rank": 1,
-      "groupKm": 1649.4969800000001,
+      "groupKm": 1652.2659999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6759,7 +6759,7 @@
       "country": "us",
       "lineId": "amtrak-northeast-regional-b3",
       "rank": 1,
-      "groupKm": 1649.4969800000001,
+      "groupKm": 1652.2659999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6767,7 +6767,7 @@
       "country": "us",
       "lineId": "amtrak-pacific-surfliner",
       "rank": 1,
-      "groupKm": 561.003937,
+      "groupKm": 562.1600000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6823,7 +6823,7 @@
       "country": "us",
       "lineId": "amtrak-wolverine",
       "rank": 1,
-      "groupKm": 488.5928809999999,
+      "groupKm": 489.05699999999996,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6887,7 +6887,7 @@
       "country": "us",
       "lineId": "brightline-trains-llc-blfm",
       "rank": 0,
-      "groupKm": 375.08476200000007,
+      "groupKm": 376.629,
       "minZoomForRank": 3,
       "minZoomForLength": 3
     },
@@ -6919,7 +6919,7 @@
       "country": "us",
       "lineId": "connecticut-transit-hartford-line",
       "rank": 2,
-      "groupKm": 99.40258299999999,
+      "groupKm": 99.87299999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7215,7 +7215,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington",
       "rank": 2,
-      "groupKm": 227.86163299999998,
+      "groupKm": 228.065,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7223,7 +7223,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b1",
       "rank": 2,
-      "groupKm": 227.86163299999998,
+      "groupKm": 228.065,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7231,7 +7231,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b2",
       "rank": 2,
-      "groupKm": 227.86163299999998,
+      "groupKm": 228.065,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7239,7 +7239,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b3",
       "rank": 2,
-      "groupKm": 227.86163299999998,
+      "groupKm": 228.065,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -7255,7 +7255,7 @@
       "country": "us",
       "lineId": "maryland-transit-administrat-penn-washington",
       "rank": 2,
-      "groupKm": 122.419116,
+      "groupKm": 122.69000000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7719,7 +7719,7 @@
       "country": "us",
       "lineId": "metrolink-oc-line",
       "rank": 2,
-      "groupKm": 139.19686299999998,
+      "groupKm": 139.578,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7735,7 +7735,7 @@
       "country": "us",
       "lineId": "metrolink-vc-line",
       "rank": 2,
-      "groupKm": 113.78388000000001,
+      "groupKm": 113.876,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8119,7 +8119,7 @@
       "country": "us",
       "lineId": "mta-long-island-rail-road-montauk-branch",
       "rank": 2,
-      "groupKm": 189.464259,
+      "groupKm": 189.466,
       "minZoomForRank": 5,
       "minZoomForLength": 3
     },
@@ -8167,7 +8167,7 @@
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-atlc",
       "rank": 2,
-      "groupKm": 108.437108,
+      "groupKm": 108.72300000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8911,7 +8911,7 @@
       "country": "us",
       "lineId": "shore-line-east-shore-line-east-train",
       "rank": 2,
-      "groupKm": 81.59285,
+      "groupKm": 81.624,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8943,7 +8943,7 @@
       "country": "us",
       "lineId": "south-florida-regional-trans-mce",
       "rank": 2,
-      "groupKm": 117.17284999999998,
+      "groupKm": 117.731,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8951,7 +8951,7 @@
       "country": "us",
       "lineId": "south-florida-regional-trans-tr",
       "rank": 2,
-      "groupKm": 113.976105,
+      "groupKm": 114.56099999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8959,7 +8959,7 @@
       "country": "us",
       "lineId": "south-shore-line-lakeshore",
       "rank": 2,
-      "groupKm": 144.085008,
+      "groupKm": 144.184,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -8999,7 +8999,7 @@
       "country": "us",
       "lineId": "utah-transit-authority-uta-750",
       "rank": 2,
-      "groupKm": 130.428155,
+      "groupKm": 130.97899999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },

@@ -9810,13 +9810,13 @@
     {
       "label": "us:amtrak-adirondack-us",
       "lineMinZoom": 3,
-      "totalKm": 532.853668,
+      "totalKm": 535.2610000000001,
       "stationCount": 16,
-      "spacingKm": 35.52357786666666,
-      "densityRaw": 6.886938978128673,
+      "spacingKm": 35.68406666666667,
+      "densityRaw": 6.880435833994632,
       "country": "us",
       "lineId": "amtrak-adirondack-us",
-      "visibilityKm": 532.853668,
+      "visibilityKm": 535.2610000000001,
       "stationMinZoom": 7
     },
     {
@@ -9834,13 +9834,13 @@
     {
       "label": "us:amtrak-amtrak-hartford-line",
       "lineMinZoom": 4,
-      "totalKm": 99.361897,
+      "totalKm": 99.83200000000001,
       "stationCount": 9,
-      "spacingKm": 12.420237125,
-      "densityRaw": 8.403023155110294,
+      "spacingKm": 12.479000000000001,
+      "densityRaw": 8.3962135436093,
       "country": "us",
       "lineId": "amtrak-amtrak-hartford-line",
-      "visibilityKm": 99.361897,
+      "visibilityKm": 99.83200000000001,
       "stationMinZoom": 8
     },
     {
@@ -9858,13 +9858,13 @@
     {
       "label": "us:amtrak-borealis",
       "lineMinZoom": 3,
-      "totalKm": 657.990937,
+      "totalKm": 659.319,
       "stationCount": 13,
-      "spacingKm": 54.83257808333334,
-      "densityRaw": 6.260682565665002,
+      "spacingKm": 54.94325,
+      "densityRaw": 6.257773621460749,
       "country": "us",
       "lineId": "amtrak-borealis",
-      "visibilityKm": 657.990937,
+      "visibilityKm": 659.319,
       "stationMinZoom": 6
     },
     {
@@ -9882,13 +9882,13 @@
     {
       "label": "us:amtrak-cardinal",
       "lineMinZoom": 3,
-      "totalKm": 1833.6000310000002,
+      "totalKm": 1837.1770000000001,
       "stationCount": 32,
-      "spacingKm": 59.1483880967742,
-      "densityRaw": 6.151377019627188,
+      "spacingKm": 59.26377419354839,
+      "densityRaw": 6.148565365839722,
       "country": "us",
       "lineId": "amtrak-cardinal",
-      "visibilityKm": 1833.6000310000002,
+      "visibilityKm": 1837.1770000000001,
       "stationMinZoom": 6
     },
     {
@@ -9966,25 +9966,25 @@
     {
       "label": "us:amtrak-empire-builder",
       "lineMinZoom": 3,
-      "totalKm": 3530.028669,
+      "totalKm": 3534.562999999999,
       "stationCount": 41,
-      "spacingKm": 88.25071672499999,
-      "densityRaw": 5.57410787738668,
+      "spacingKm": 88.36407499999999,
+      "densityRaw": 5.5722559210239515,
       "country": "us",
       "lineId": "amtrak-empire-builder",
-      "visibilityKm": 4133.368429,
+      "visibilityKm": 4138.750999999999,
       "stationMinZoom": 6
     },
     {
       "label": "us:amtrak-empire-builder-b1",
       "lineMinZoom": 3,
-      "totalKm": 603.33976,
+      "totalKm": 604.188,
       "stationCount": 6,
-      "spacingKm": 120.66795199999999,
-      "densityRaw": 5.122745213728839,
+      "spacingKm": 120.8376,
+      "densityRaw": 5.120718342159823,
       "country": "us",
       "lineId": "amtrak-empire-builder-b1",
-      "visibilityKm": 4133.368429,
+      "visibilityKm": 4138.750999999999,
       "stationMinZoom": 5
     },
     {
@@ -10002,25 +10002,25 @@
     {
       "label": "us:amtrak-ethan-allen-express",
       "lineMinZoom": 3,
-      "totalKm": 496.77823799999993,
+      "totalKm": 498.89000000000004,
       "stationCount": 15,
-      "spacingKm": 35.48415985714285,
-      "densityRaw": 6.88854072392501,
+      "spacingKm": 35.635000000000005,
+      "densityRaw": 6.882420948246687,
       "country": "us",
       "lineId": "amtrak-ethan-allen-express",
-      "visibilityKm": 496.77823799999993,
+      "visibilityKm": 498.89000000000004,
       "stationMinZoom": 7
     },
     {
       "label": "us:amtrak-heartland-flyer",
       "lineMinZoom": 3,
-      "totalKm": 327.286244,
+      "totalKm": 328.888,
       "stationCount": 7,
-      "spacingKm": 54.547707333333335,
-      "densityRaw": 6.26819731196463,
+      "spacingKm": 54.81466666666666,
+      "densityRaw": 6.261153908329181,
       "country": "us",
       "lineId": "amtrak-heartland-flyer",
-      "visibilityKm": 327.286244,
+      "visibilityKm": 328.888,
       "stationMinZoom": 6
     },
     {
@@ -10038,13 +10038,13 @@
     {
       "label": "us:amtrak-keystone-service",
       "lineMinZoom": 3,
-      "totalKm": 308.88236700000004,
+      "totalKm": 309.229,
       "stationCount": 21,
-      "spacingKm": 15.444118350000002,
-      "densityRaw": 8.088658357645967,
+      "spacingKm": 15.46145,
+      "densityRaw": 8.087040248712103,
       "country": "us",
       "lineId": "amtrak-keystone-service",
-      "visibilityKm": 308.88236700000004,
+      "visibilityKm": 309.229,
       "stationMinZoom": 8
     },
     {
@@ -10056,19 +10056,19 @@
       "densityRaw": 5.758006415272795,
       "country": "us",
       "lineId": "amtrak-lake-shore-limited",
-      "visibilityKm": 1857.4156560000004,
+      "visibilityKm": 1858.5460000000003,
       "stationMinZoom": 6
     },
     {
       "label": "us:amtrak-lake-shore-limited-b1",
       "lineMinZoom": 3,
-      "totalKm": 225.947656,
+      "totalKm": 227.078,
       "stationCount": 5,
-      "spacingKm": 56.486914,
-      "densityRaw": 6.217799187279473,
+      "spacingKm": 56.7695,
+      "densityRaw": 6.210599837548238,
       "country": "us",
       "lineId": "amtrak-lake-shore-limited-b1",
-      "visibilityKm": 1857.4156560000004,
+      "visibilityKm": 1858.5460000000003,
       "stationMinZoom": 6
     },
     {
@@ -10098,13 +10098,13 @@
     {
       "label": "us:amtrak-northeast-regional",
       "lineMinZoom": 3,
-      "totalKm": 1020.4768840000002,
+      "totalKm": 1022.7759999999997,
       "stationCount": 37,
-      "spacingKm": 28.346580111111116,
-      "densityRaw": 7.212541181691336,
+      "spacingKm": 28.410444444444437,
+      "densityRaw": 7.209294471822494,
       "country": "us",
       "lineId": "amtrak-northeast-regional",
-      "visibilityKm": 1649.4969800000001,
+      "visibilityKm": 1652.2659999999996,
       "stationMinZoom": 7
     },
     {
@@ -10116,19 +10116,19 @@
       "densityRaw": 5.52879543518609,
       "country": "us",
       "lineId": "amtrak-northeast-regional-b1",
-      "visibilityKm": 1649.4969800000001,
+      "visibilityKm": 1652.2659999999996,
       "stationMinZoom": 6
     },
     {
       "label": "us:amtrak-northeast-regional-b2",
       "lineMinZoom": 3,
-      "totalKm": 99.375096,
+      "totalKm": 99.845,
       "stationCount": 9,
-      "spacingKm": 12.421887,
-      "densityRaw": 8.402831523632074,
+      "spacingKm": 12.480625,
+      "densityRaw": 8.39602568986993,
       "country": "us",
       "lineId": "amtrak-northeast-regional-b2",
-      "visibilityKm": 1649.4969800000001,
+      "visibilityKm": 1652.2659999999996,
       "stationMinZoom": 8
     },
     {
@@ -10140,19 +10140,19 @@
       "densityRaw": 6.181687481786567,
       "country": "us",
       "lineId": "amtrak-northeast-regional-b3",
-      "visibilityKm": 1649.4969800000001,
+      "visibilityKm": 1652.2659999999996,
       "stationMinZoom": 6
     },
     {
       "label": "us:amtrak-pacific-surfliner",
       "lineMinZoom": 3,
-      "totalKm": 561.003937,
+      "totalKm": 562.1600000000001,
       "stationCount": 29,
-      "spacingKm": 20.03585489285714,
-      "densityRaw": 7.713131804403531,
+      "spacingKm": 20.07714285714286,
+      "densityRaw": 7.710161896109457,
       "country": "us",
       "lineId": "amtrak-pacific-surfliner",
-      "visibilityKm": 561.003937,
+      "visibilityKm": 562.1600000000001,
       "stationMinZoom": 8
     },
     {
@@ -10230,13 +10230,13 @@
     {
       "label": "us:amtrak-wolverine",
       "lineMinZoom": 3,
-      "totalKm": 488.5928809999999,
+      "totalKm": 489.05699999999996,
       "stationCount": 15,
-      "spacingKm": 34.899491499999996,
-      "densityRaw": 6.912509856687928,
+      "spacingKm": 34.93264285714285,
+      "densityRaw": 6.91114007750011,
       "country": "us",
       "lineId": "amtrak-wolverine",
-      "visibilityKm": 488.5928809999999,
+      "visibilityKm": 489.05699999999996,
       "stationMinZoom": 7
     },
     {
@@ -10326,13 +10326,13 @@
     {
       "label": "us:brightline-trains-llc-blfm",
       "lineMinZoom": 3,
-      "totalKm": 375.08476200000007,
+      "totalKm": 376.629,
       "stationCount": 6,
-      "spacingKm": 75.01695240000001,
-      "densityRaw": 5.808499218608033,
+      "spacingKm": 75.3258,
+      "densityRaw": 5.802571782524983,
       "country": "us",
       "lineId": "brightline-trains-llc-blfm",
-      "visibilityKm": 375.08476200000007,
+      "visibilityKm": 376.629,
       "stationMinZoom": 6
     },
     {
@@ -10374,13 +10374,13 @@
     {
       "label": "us:connecticut-transit-hartford-line",
       "lineMinZoom": 4,
-      "totalKm": 99.40258299999999,
+      "totalKm": 99.87299999999999,
       "stationCount": 9,
-      "spacingKm": 12.425322874999999,
-      "densityRaw": 8.402432531561725,
+      "spacingKm": 12.484124999999999,
+      "densityRaw": 8.395621164875593,
       "country": "us",
       "lineId": "connecticut-transit-hartford-line",
-      "visibilityKm": 99.40258299999999,
+      "visibilityKm": 99.87299999999999,
       "stationMinZoom": 8
     },
     {
@@ -10818,13 +10818,13 @@
     {
       "label": "us:maryland-transit-administrat-brunswick-washington",
       "lineMinZoom": 3,
-      "totalKm": 117.42563299999999,
+      "totalKm": 117.629,
       "stationCount": 17,
-      "spacingKm": 7.339102062499999,
-      "densityRaw": 9.162040407051562,
+      "spacingKm": 7.3518125,
+      "densityRaw": 9.159543994776309,
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington",
-      "visibilityKm": 227.86163299999998,
+      "visibilityKm": 228.065,
       "stationMinZoom": 9
     },
     {
@@ -10836,7 +10836,7 @@
       "densityRaw": 7.975349529458168,
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b1",
-      "visibilityKm": 227.86163299999998,
+      "visibilityKm": 228.065,
       "stationMinZoom": 8
     },
     {
@@ -10848,7 +10848,7 @@
       "densityRaw": 6.5832706386867015,
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b2",
-      "visibilityKm": 227.86163299999998,
+      "visibilityKm": 228.065,
       "stationMinZoom": 7
     },
     {
@@ -10860,7 +10860,7 @@
       "densityRaw": 6.985488950667238,
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington-b3",
-      "visibilityKm": 227.86163299999998,
+      "visibilityKm": 228.065,
       "stationMinZoom": 7
     },
     {
@@ -10878,13 +10878,13 @@
     {
       "label": "us:maryland-transit-administrat-penn-washington",
       "lineMinZoom": 4,
-      "totalKm": 122.419116,
+      "totalKm": 122.69000000000001,
       "stationCount": 13,
-      "spacingKm": 10.201593,
-      "densityRaw": 8.686921422989835,
+      "spacingKm": 10.224166666666667,
+      "densityRaw": 8.683732613296103,
       "country": "us",
       "lineId": "maryland-transit-administrat-penn-washington",
-      "visibilityKm": 122.419116,
+      "visibilityKm": 122.69000000000001,
       "stationMinZoom": 9
     },
     {
@@ -11574,13 +11574,13 @@
     {
       "label": "us:metrolink-oc-line",
       "lineMinZoom": 4,
-      "totalKm": 139.19686299999998,
+      "totalKm": 139.578,
       "stationCount": 15,
-      "spacingKm": 9.94263307142857,
-      "densityRaw": 8.724016001422925,
+      "spacingKm": 9.969857142857142,
+      "densityRaw": 8.720071134970592,
       "country": "us",
       "lineId": "metrolink-oc-line",
-      "visibilityKm": 139.19686299999998,
+      "visibilityKm": 139.578,
       "stationMinZoom": 9
     },
     {
@@ -11598,13 +11598,13 @@
     {
       "label": "us:metrolink-vc-line",
       "lineMinZoom": 4,
-      "totalKm": 113.78388000000001,
+      "totalKm": 113.876,
       "stationCount": 12,
-      "spacingKm": 10.343989090909092,
-      "densityRaw": 8.666923213862823,
+      "spacingKm": 10.352363636363636,
+      "densityRaw": 8.665755673280616,
       "country": "us",
       "lineId": "metrolink-vc-line",
-      "visibilityKm": 113.78388000000001,
+      "visibilityKm": 113.876,
       "stationMinZoom": 9
     },
     {
@@ -12174,13 +12174,13 @@
     {
       "label": "us:mta-long-island-rail-road-montauk-branch",
       "lineMinZoom": 3,
-      "totalKm": 189.464259,
+      "totalKm": 189.466,
       "stationCount": 19,
-      "spacingKm": 10.525792166666667,
-      "densityRaw": 8.641787058617414,
+      "spacingKm": 10.52588888888889,
+      "densityRaw": 8.64177380165518,
       "country": "us",
       "lineId": "mta-long-island-rail-road-montauk-branch",
-      "visibilityKm": 189.464259,
+      "visibilityKm": 189.466,
       "stationMinZoom": 9
     },
     {
@@ -12246,13 +12246,13 @@
     {
       "label": "us:new-jersey-transit-nj-transi-atlc",
       "lineMinZoom": 4,
-      "totalKm": 108.437108,
+      "totalKm": 108.72300000000001,
       "stationCount": 9,
-      "spacingKm": 13.5546385,
-      "densityRaw": 8.276929235366557,
+      "spacingKm": 13.590375000000002,
+      "densityRaw": 8.273130607591732,
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-atlc",
-      "visibilityKm": 108.437108,
+      "visibilityKm": 108.72300000000001,
       "stationMinZoom": 8
     },
     {
@@ -13362,13 +13362,13 @@
     {
       "label": "us:shore-line-east-shore-line-east-train",
       "lineMinZoom": 4,
-      "totalKm": 81.59285,
+      "totalKm": 81.624,
       "stationCount": 9,
-      "spacingKm": 10.19910625,
-      "densityRaw": 8.687273138572397,
+      "spacingKm": 10.203,
+      "densityRaw": 8.686722460734059,
       "country": "us",
       "lineId": "shore-line-east-shore-line-east-train",
-      "visibilityKm": 81.59285,
+      "visibilityKm": 81.624,
       "stationMinZoom": 9
     },
     {
@@ -13410,37 +13410,37 @@
     {
       "label": "us:south-florida-regional-trans-mce",
       "lineMinZoom": 4,
-      "totalKm": 117.17284999999998,
+      "totalKm": 117.731,
       "stationCount": 5,
-      "spacingKm": 29.293212499999996,
-      "densityRaw": 7.165149454620808,
+      "spacingKm": 29.43275,
+      "densityRaw": 7.1582935282281825,
       "country": "us",
       "lineId": "south-florida-regional-trans-mce",
-      "visibilityKm": 117.17284999999998,
+      "visibilityKm": 117.731,
       "stationMinZoom": 7
     },
     {
       "label": "us:south-florida-regional-trans-tr",
       "lineMinZoom": 4,
-      "totalKm": 113.976105,
+      "totalKm": 114.56099999999998,
       "stationCount": 18,
-      "spacingKm": 6.704476764705882,
-      "densityRaw": 9.292519222756644,
+      "spacingKm": 6.738882352941175,
+      "densityRaw": 9.285134627959192,
       "country": "us",
       "lineId": "south-florida-regional-trans-tr",
-      "visibilityKm": 113.976105,
+      "visibilityKm": 114.56099999999998,
       "stationMinZoom": 9
     },
     {
       "label": "us:south-shore-line-lakeshore",
       "lineMinZoom": 4,
-      "totalKm": 144.085008,
+      "totalKm": 144.184,
       "stationCount": 18,
-      "spacingKm": 8.475588705882352,
-      "densityRaw": 8.954330387622518,
+      "spacingKm": 8.481411764705882,
+      "densityRaw": 8.953339540399,
       "country": "us",
       "lineId": "south-shore-line-lakeshore",
-      "visibilityKm": 144.085008,
+      "visibilityKm": 144.184,
       "stationMinZoom": 9
     },
     {
@@ -13494,13 +13494,13 @@
     {
       "label": "us:utah-transit-authority-uta-750",
       "lineMinZoom": 4,
-      "totalKm": 130.428155,
+      "totalKm": 130.97899999999998,
       "stationCount": 16,
-      "spacingKm": 8.695210333333334,
-      "densityRaw": 8.917423041385232,
+      "spacingKm": 8.731933333333332,
+      "densityRaw": 8.911342851835178,
       "country": "us",
       "lineId": "utah-transit-authority-uta-750",
-      "visibilityKm": 130.428155,
+      "visibilityKm": 130.97899999999998,
       "stationMinZoom": 9
     },
     {

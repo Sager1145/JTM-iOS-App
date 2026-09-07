@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T01:29:52.458015+00:00",
+  "generatedAt": "2026-09-07T02:29:30.415628+00:00",
   "summary": {
     "published": 436,
     "blocked": 371,
-    "warnings": 191,
-    "publishedErrors": 6
+    "warnings": 197,
+    "publishedErrors": 0
   },
   "lines": [
     {
@@ -2493,7 +2493,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
-      "lengthKm": 532.854,
+      "lengthKm": 535.26,
       "issues": []
     },
     {
@@ -2533,7 +2533,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.362,
+      "lengthKm": 99.834,
       "issues": []
     },
     {
@@ -2573,7 +2573,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 657.991,
+      "lengthKm": 659.318,
       "issues": [
         {
           "severity": "NOTE",
@@ -2645,7 +2645,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 32,
-      "lengthKm": 1833.6,
+      "lengthKm": 1837.176,
       "issues": []
     },
     {
@@ -2737,7 +2737,7 @@
       "lineId": "amtrak-crescent",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Amtrak",
       "name": "Crescent",
       "sourceFeed": "amtrak",
@@ -2752,36 +2752,6 @@
       "stationCount": 35,
       "lengthKm": 2215.564,
       "issues": [
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
         {
           "severity": "WARN",
           "check": "geometry.spike",
@@ -2853,7 +2823,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 41,
-      "lengthKm": 3530.029,
+      "lengthKm": 3534.564,
       "issues": []
     },
     {
@@ -2873,7 +2843,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 603.34,
+      "lengthKm": 604.19,
       "issues": []
     },
     {
@@ -2913,7 +2883,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 496.778,
+      "lengthKm": 498.889,
       "issues": []
     },
     {
@@ -2933,7 +2903,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 7,
-      "lengthKm": 327.286,
+      "lengthKm": 328.889,
       "issues": []
     },
     {
@@ -2973,7 +2943,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 21,
-      "lengthKm": 308.882,
+      "lengthKm": 309.229,
       "issues": []
     },
     {
@@ -3030,7 +3000,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 225.948,
+      "lengthKm": 227.078,
       "issues": [
         {
           "severity": "NOTE",
@@ -3053,7 +3023,7 @@
       "lineId": "amtrak-lincoln-service",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Amtrak",
       "name": "Lincoln Service",
       "sourceFeed": "amtrak",
@@ -3069,41 +3039,11 @@
       "lengthKm": 452.253,
       "issues": [
         {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
           "severity": "WARN",
           "check": "geometry.unchecked.narnReferenceMissing",
-          "message": "914 of 1126 vertices have no independent visual reference; the build records the primary NARN survey inputs, whose freshness is checked separately",
+          "message": "111 of 1126 vertices have no independent visual reference; the build records the primary NARN survey inputs, whose freshness is checked separately",
           "vertices": 1126,
-          "unmatched": 914,
+          "unmatched": 111,
           "intervals": []
         }
       ]
@@ -3165,7 +3105,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 37,
-      "lengthKm": 1020.477,
+      "lengthKm": 1022.778,
       "issues": []
     },
     {
@@ -3231,7 +3171,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.375,
+      "lengthKm": 99.847,
       "issues": []
     },
     {
@@ -3271,7 +3211,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 29,
-      "lengthKm": 561.004,
+      "lengthKm": 562.159,
       "issues": [
         {
           "severity": "NOTE",
@@ -3513,7 +3453,7 @@
       "lineId": "amtrak-southwest-chief",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Amtrak",
       "name": "Southwest Chief",
       "sourceFeed": "amtrak",
@@ -3528,36 +3468,6 @@
       "stationCount": 32,
       "lengthKm": 3587.349,
       "issues": [
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "amtrak"
-        },
         {
           "severity": "NOTE",
           "check": "geometry.deviation.withheld",
@@ -3663,7 +3573,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 488.593,
+      "lengthKm": 489.056,
       "issues": []
     },
     {
@@ -3877,7 +3787,7 @@
       "colorReference": "#f2e205",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 6,
-      "lengthKm": 375.085,
+      "lengthKm": 376.63,
       "issues": [
         {
           "severity": "WARN",
@@ -3988,7 +3898,7 @@
       "colorReference": "#ea0d2a",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 99.403,
+      "lengthKm": 99.875,
       "issues": []
     },
     {
@@ -4891,7 +4801,7 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 17,
-      "lengthKm": 117.426,
+      "lengthKm": 117.63,
       "issues": [
         {
           "severity": "NOTE",
@@ -5010,7 +4920,7 @@
       "colorReference": "#ff8000",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 13,
-      "lengthKm": 122.419,
+      "lengthKm": 122.69,
       "issues": []
     },
     {
@@ -6536,7 +6446,7 @@
       "colorReference": "#ff8400",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 15,
-      "lengthKm": 139.197,
+      "lengthKm": 139.576,
       "issues": []
     },
     {
@@ -6576,7 +6486,7 @@
       "colorReference": "#ffb81d",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 12,
-      "lengthKm": 113.784,
+      "lengthKm": 113.876,
       "issues": [
         {
           "severity": "WARN",
@@ -8329,7 +8239,7 @@
       "colorReference": "#00b2a9",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 19,
-      "lengthKm": 189.464,
+      "lengthKm": 189.466,
       "issues": []
     },
     {
@@ -8579,7 +8489,7 @@
       "colorReference": "#075aaa",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 108.437,
+      "lengthKm": 108.722,
       "issues": []
     },
     {
@@ -9564,7 +9474,7 @@
       "lineId": "port-authority-trans-hudson-hoboken-33rd-street",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Hoboken - 33rd Street",
       "sourceFeed": "port-authority-trans-hudson",
@@ -9579,36 +9489,6 @@
       "stationCount": 6,
       "lengthKm": 5.737,
       "issues": [
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
         {
           "severity": "WARN",
           "check": "geometry.radius",
@@ -9629,7 +9509,7 @@
       "lineId": "port-authority-trans-hudson-hoboken-world-trade-center",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Hoboken - World Trade Center",
       "sourceFeed": "port-authority-trans-hudson",
@@ -9644,36 +9524,6 @@
       "stationCount": 4,
       "lengthKm": 4.551,
       "issues": [
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
         {
           "severity": "WARN",
           "check": "geometry.deviation.officialRetained",
@@ -9702,7 +9552,7 @@
       "lineId": "port-authority-trans-hudson-journal-square-33rd-street-via-hoboken",
       "country": "US",
       "status": "published",
-      "review": "error",
+      "review": "warning",
       "operator": "Port Authority Trans-Hudson Corporation",
       "name": "Journal Square - 33rd Street (via Hoboken)",
       "sourceFeed": "port-authority-trans-hudson",
@@ -9717,36 +9567,6 @@
       "stationCount": 9,
       "lengthKm": 10.86,
       "issues": [
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/build-north-america-rail-package.py",
-          "recordedSha256": "8a7aab8c4de40f49803d6488cff8da8b79bd641ff6298c30a657878517281c53",
-          "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/lib/na_official.py",
-          "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-          "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
-        {
-          "severity": "ERROR",
-          "check": "package.stale",
-          "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-          "input": "app/scripts/railway/na-feeds.json",
-          "recordedSha256": "b61d228bd7408b6714f6e0c539c9fab8be5183dc13010ee6bd9459262d6a160d",
-          "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-          "generatedAt": null,
-          "feed": "port-authority-trans-hudson"
-        },
         {
           "severity": "WARN",
           "check": "geometry.radius",
@@ -11762,7 +11582,7 @@
       "colorReference": "#ef3e42",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 9,
-      "lengthKm": 81.593,
+      "lengthKm": 81.624,
       "issues": []
     },
     {
@@ -11886,7 +11706,7 @@
       "colorReference": "#9bcd65",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 117.173,
+      "lengthKm": 117.732,
       "issues": [
         {
           "severity": "NOTE",
@@ -11922,7 +11742,7 @@
       "colorReference": "#006c86",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 113.976,
+      "lengthKm": 114.561,
       "issues": []
     },
     {
@@ -11942,7 +11762,7 @@
       "colorReference": "#f6931c",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 18,
-      "lengthKm": 144.085,
+      "lengthKm": 144.185,
       "issues": [
         {
           "severity": "NOTE",
@@ -12235,7 +12055,7 @@
       "colorReference": "#c227b9",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 16,
-      "lengthKm": 130.428,
+      "lengthKm": 130.98,
       "issues": []
     },
     {

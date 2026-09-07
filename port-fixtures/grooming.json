@@ -4929,7 +4929,7 @@
     {
       "country": "us",
       "lineId": "amtrak-adirondack-us",
-      "medianSpacingMeters": 32629.655,
+      "medianSpacingMeters": 32785,
       "limitsIndex": 2
     },
     {
@@ -4941,7 +4941,7 @@
     {
       "country": "us",
       "lineId": "amtrak-amtrak-hartford-line",
-      "medianSpacingMeters": 11453.255000000001,
+      "medianSpacingMeters": 11510,
       "limitsIndex": 2
     },
     {
@@ -4953,7 +4953,7 @@
     {
       "country": "us",
       "lineId": "amtrak-borealis",
-      "medianSpacingMeters": 64023.528,
+      "medianSpacingMeters": 64178,
       "limitsIndex": 2
     },
     {
@@ -4965,7 +4965,7 @@
     {
       "country": "us",
       "lineId": "amtrak-cardinal",
-      "medianSpacingMeters": 55825.807,
+      "medianSpacingMeters": 55893,
       "limitsIndex": 2
     },
     {
@@ -5007,13 +5007,13 @@
     {
       "country": "us",
       "lineId": "amtrak-empire-builder",
-      "medianSpacingMeters": 91882.773,
+      "medianSpacingMeters": 91879,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "amtrak-empire-builder-b1",
-      "medianSpacingMeters": 105360.689,
+      "medianSpacingMeters": 105361,
       "limitsIndex": 2
     },
     {
@@ -5025,13 +5025,13 @@
     {
       "country": "us",
       "lineId": "amtrak-ethan-allen-express",
-      "medianSpacingMeters": 32629.655,
+      "medianSpacingMeters": 32785,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "amtrak-heartland-flyer",
-      "medianSpacingMeters": 63246.813,
+      "medianSpacingMeters": 63585,
       "limitsIndex": 2
     },
     {
@@ -5043,7 +5043,7 @@
     {
       "country": "us",
       "lineId": "amtrak-keystone-service",
-      "medianSpacingMeters": 14680.602,
+      "medianSpacingMeters": 14696,
       "limitsIndex": 2
     },
     {
@@ -5055,7 +5055,7 @@
     {
       "country": "us",
       "lineId": "amtrak-lake-shore-limited-b1",
-      "medianSpacingMeters": 64538.079999999994,
+      "medianSpacingMeters": 64833,
       "limitsIndex": 2
     },
     {
@@ -5073,7 +5073,7 @@
     {
       "country": "us",
       "lineId": "amtrak-northeast-regional",
-      "medianSpacingMeters": 26148.223,
+      "medianSpacingMeters": 26215,
       "limitsIndex": 2
     },
     {
@@ -5085,7 +5085,7 @@
     {
       "country": "us",
       "lineId": "amtrak-northeast-regional-b2",
-      "medianSpacingMeters": 11453.132,
+      "medianSpacingMeters": 11510,
       "limitsIndex": 2
     },
     {
@@ -5097,7 +5097,7 @@
     {
       "country": "us",
       "lineId": "amtrak-pacific-surfliner",
-      "medianSpacingMeters": 16400.597999999998,
+      "medianSpacingMeters": 16427,
       "limitsIndex": 2
     },
     {
@@ -5139,7 +5139,7 @@
     {
       "country": "us",
       "lineId": "amtrak-wolverine",
-      "medianSpacingMeters": 36126.565,
+      "medianSpacingMeters": 36131,
       "limitsIndex": 2
     },
     {
@@ -5187,7 +5187,7 @@
     {
       "country": "us",
       "lineId": "brightline-trains-llc-blfm",
-      "medianSpacingMeters": 26677.402000000002,
+      "medianSpacingMeters": 26819,
       "limitsIndex": 2
     },
     {
@@ -5211,7 +5211,7 @@
     {
       "country": "us",
       "lineId": "connecticut-transit-hartford-line",
-      "medianSpacingMeters": 11590.264,
+      "medianSpacingMeters": 11648,
       "limitsIndex": 2
     },
     {
@@ -5433,7 +5433,7 @@
     {
       "country": "us",
       "lineId": "maryland-transit-administrat-brunswick-washington",
-      "medianSpacingMeters": 6661.46,
+      "medianSpacingMeters": 6664,
       "limitsIndex": 2
     },
     {
@@ -5463,7 +5463,7 @@
     {
       "country": "us",
       "lineId": "maryland-transit-administrat-penn-washington",
-      "medianSpacingMeters": 9642.023,
+      "medianSpacingMeters": 9655,
       "limitsIndex": 2
     },
     {
@@ -5811,7 +5811,7 @@
     {
       "country": "us",
       "lineId": "metrolink-oc-line",
-      "medianSpacingMeters": 8803.409,
+      "medianSpacingMeters": 8819,
       "limitsIndex": 2
     },
     {
@@ -5823,7 +5823,7 @@
     {
       "country": "us",
       "lineId": "metrolink-vc-line",
-      "medianSpacingMeters": 9044.663,
+      "medianSpacingMeters": 9070,
       "limitsIndex": 2
     },
     {
@@ -6111,7 +6111,7 @@
     {
       "country": "us",
       "lineId": "mta-long-island-rail-road-montauk-branch",
-      "medianSpacingMeters": 7404.258,
+      "medianSpacingMeters": 7405,
       "limitsIndex": 2
     },
     {
@@ -6147,7 +6147,7 @@
     {
       "country": "us",
       "lineId": "new-jersey-transit-nj-transi-atlc",
-      "medianSpacingMeters": 16387.729,
+      "medianSpacingMeters": 16407,
       "limitsIndex": 2
     },
     {
@@ -6705,7 +6705,7 @@
     {
       "country": "us",
       "lineId": "shore-line-east-shore-line-east-train",
-      "medianSpacingMeters": 7144.972,
+      "medianSpacingMeters": 7143,
       "limitsIndex": 2
     },
     {
@@ -6729,19 +6729,19 @@
     {
       "country": "us",
       "lineId": "south-florida-regional-trans-mce",
-      "medianSpacingMeters": 36422.678,
+      "medianSpacingMeters": 36626,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "south-florida-regional-trans-tr",
-      "medianSpacingMeters": 6530.35,
+      "medianSpacingMeters": 6568,
       "limitsIndex": 2
     },
     {
       "country": "us",
       "lineId": "south-shore-line-lakeshore",
-      "medianSpacingMeters": 7004.386,
+      "medianSpacingMeters": 7006,
       "limitsIndex": 2
     },
     {
@@ -6771,7 +6771,7 @@
     {
       "country": "us",
       "lineId": "utah-transit-authority-uta-750",
-      "medianSpacingMeters": 9399.836000000001,
+      "medianSpacingMeters": 9427,
       "limitsIndex": 2
     },
     {
