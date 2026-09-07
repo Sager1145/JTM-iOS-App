@@ -9327,7 +9327,7 @@
       "country": "ca",
       "lineId": "amtrak-adirondack-ca",
       "rank": 1,
-      "groupKm": 6.058,
+      "groupKm": 6.12,
       "minZoomForRank": 4,
       "minZoomForLength": 7
     },
@@ -9895,7 +9895,7 @@
       "country": "ca",
       "lineId": "via-ottawa-montr-al",
       "rank": 1,
-      "groupKm": 185.33499999999998,
+      "groupKm": 185.51,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9903,7 +9903,7 @@
       "country": "ca",
       "lineId": "via-toronto-london",
       "rank": 1,
-      "groupKm": 184.566,
+      "groupKm": 184.704,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9911,7 +9911,7 @@
       "country": "ca",
       "lineId": "via-toronto-sarnia",
       "rank": 1,
-      "groupKm": 289.425,
+      "groupKm": 289.509,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -9919,7 +9919,7 @@
       "country": "ca",
       "lineId": "via-toronto-windsor",
       "rank": 1,
-      "groupKm": 358.55100000000004,
+      "groupKm": 358.75200000000007,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     }

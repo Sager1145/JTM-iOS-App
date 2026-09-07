@@ -1,6 +1,6 @@
 # North America line-by-line review
 
-Generated 2026-09-07T02:29:30.415628+00:00. Published: 436; blocked findings: 371; warnings: 197; errors among published lines: 0.
+Generated 2026-09-07T14:53:12.358703+00:00. Published: 436; blocked findings: 370; warnings: 197; errors among published lines: 0.
 
 | Status | Country | Feed / line | Name | Geometry | Instead of | Colour | Findings |
 |---|---|---|---|---|---|---|---|
@@ -742,14 +742,13 @@ Generated 2026-09-07T02:29:30.415628+00:00. Published: 436; blocked findings: 37
 | blocked |  | valley-metro-vm:B |  |  |  |  | fail-closed: MAG/Valley Metro public route layer has no documented independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
 | blocked |  | valley-metro-vm:S |  |  |  |  | fail-closed: MAG/Valley Metro public route layer has no documented independent surveyed production lineage; trunk has no usable alignment; branches suppressed |
 | blocked |  | valley-metro-vm:SKYT |  |  |  |  | fail-closed: Phoenix Sky Train public route layer has no documented independent surveyed production lineage |
-| blocked |  | via:None |  |  |  |  | routed interval is a detour |
 | blocked |  | via:None |  |  |  |  | routed interval contains an internal reversal; routed interval contains an internal reversal |
 | blocked |  | via:119-120 |  |  |  |  | fail-closed: Toronto-New York has no accepted continuous cross-border second track centreline; Ontario ORWN does not cover the US slice, where 351 of 546 sampled vertices lack an independent reference |
 | blocked |  | via:149-435 |  |  |  |  | fail-closed: The Pas-Churchill has verified operator station order but no accepted route-isolated independent track centreline |
 | blocked |  | via:21-458 |  |  |  |  | fail-closed: Jasper-Prince Rupert has no accepted route-isolated provincial or federal centreline; the current NARN build leaves 662 of 1037 sampled vertices without an independent reference |
 | blocked |  | via:226-119 |  |  |  |  | fail-closed: Montréal-Toronto has no accepted route-isolated provincial or federal centreline; the current NARN route retains a near-reversal and 283 of 378 sampled vertices lack an independent reference |
-| blocked |  | via:226-444 |  |  |  |  | official route network contains an implausible interval; no usable alignment |
-| blocked |  | via:226-460 |  |  |  |  | official route network contains an implausible interval; no usable alignment |
+| blocked |  | via:226-444 |  |  |  |  | no usable alignment |
+| blocked |  | via:226-460 |  |  |  |  | no usable alignment |
 | blocked |  | via:226-620 |  |  |  |  | fail-closed: Montréal-Halifax has no accepted route-isolated provincial or federal centreline; NARN misses the Halifax endpoint by 1208.8 m and falls back to the operator shape |
 | blocked |  | via:388-435 |  |  |  |  | fail-closed: Winnipeg-Churchill has verified operator station order but no accepted route-isolated independent track centreline |
 | blocked |  | via:617-119 |  |  |  |  | fail-closed: Ontario ORWN cannot route the Ottawa-Fallowfield interval on one continuous independently surveyed component |

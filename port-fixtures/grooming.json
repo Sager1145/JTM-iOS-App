@@ -7017,7 +7017,7 @@
     {
       "country": "ca",
       "lineId": "amtrak-adirondack-ca",
-      "medianSpacingMeters": 6058,
+      "medianSpacingMeters": 6120,
       "limitsIndex": 2
     },
     {
@@ -7443,25 +7443,25 @@
     {
       "country": "ca",
       "lineId": "via-ottawa-montr-al",
-      "medianSpacingMeters": 46647,
+      "medianSpacingMeters": 46677,
       "limitsIndex": 2
     },
     {
       "country": "ca",
       "lineId": "via-toronto-london",
-      "medianSpacingMeters": 45834,
+      "medianSpacingMeters": 45861,
       "limitsIndex": 2
     },
     {
       "country": "ca",
       "lineId": "via-toronto-sarnia",
-      "medianSpacingMeters": 23699,
+      "medianSpacingMeters": 23709,
       "limitsIndex": 2
     },
     {
       "country": "ca",
       "lineId": "via-toronto-windsor",
-      "medianSpacingMeters": 40577,
+      "medianSpacingMeters": 40656,
       "limitsIndex": 2
     }
   ],

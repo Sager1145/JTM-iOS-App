@@ -66402,11 +66402,11 @@
     {
       "country": "ca",
       "sectionCount": 783,
-      "edgeCount": 11328,
-      "totalKm": 2195.3688508910463,
+      "edgeCount": 11244,
+      "totalKm": 2001.6086198282096,
       "totalsByMask": {
         "1": 0,
-        "2": 980.7391610611654,
+        "2": 855.5484238596938,
         "8": 1134.0114114859962,
         "16": 0,
         "32": 90.15986525413629
@@ -66466,7 +66466,7 @@
           "line": "Adirondack",
           "byCat": {
             "1": 0,
-            "2": 6.051834335391719,
+            "2": 6.113110147287343,
             "8": 0,
             "16": 0,
             "32": 0
@@ -66696,7 +66696,7 @@
           "line": "Ottawa - Montréal",
           "byCat": {
             "1": 0,
-            "2": 185.2998096036125,
+            "2": 185.42577015809877,
             "8": 0,
             "16": 0,
             "32": 0
@@ -66766,7 +66766,7 @@
           "line": "Toronto - London",
           "byCat": {
             "1": 0,
-            "2": 184.13223815196062,
+            "2": 181.48366307756336,
             "8": 0,
             "16": 0,
             "32": 0
@@ -66776,7 +66776,7 @@
           "line": "Toronto - Sarnia",
           "byCat": {
             "1": 0,
-            "2": 280.0472547001448,
+            "2": 212.99426507828508,
             "8": 0,
             "16": 0,
             "32": 0
@@ -66786,7 +66786,7 @@
           "line": "Toronto - Windsor",
           "byCat": {
             "1": 0,
-            "2": 315.66643735980966,
+            "2": 191.42053462684638,
             "8": 0,
             "16": 0,
             "32": 0
@@ -67126,7 +67126,7 @@
         {
           "index": 551,
           "km": 0.1668403385096851,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
@@ -67147,28 +67147,28 @@
         {
           "index": 638,
           "km": 0.3302920016823261,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 667,
           "km": 0.33448614309139824,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 696,
           "km": 0.15145811761434616,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 725,
           "km": 0.1662048560078531,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
@@ -67182,14 +67182,14 @@
         {
           "index": 783,
           "km": 0.16953018905986125,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 812,
           "km": 0.3312338779827123,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
@@ -67203,14 +67203,14 @@
         {
           "index": 870,
           "km": 0.11514448300780535,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 899,
           "km": 0.1669183374503157,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
@@ -67224,14 +67224,14 @@
         {
           "index": 957,
           "km": 0.34058038753975306,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
         {
           "index": 986,
           "km": 0.30514795861806965,
-          "mask": 8,
+          "mask": 10,
           "line": "Kitchener",
           "lineMask": 8
         },
@@ -67343,7 +67343,7 @@
         {
           "index": 1450,
           "km": 0.32852528775760487,
-          "mask": 8,
+          "mask": 10,
           "line": "Lakeshore",
           "lineMask": 8
         },
@@ -67650,2079 +67650,2058 @@
         },
         {
           "index": 2726,
-          "km": 0.05882729159617193,
+          "km": 0.04162731152294163,
           "mask": 2,
           "line": "Adirondack",
           "lineMask": 2
         },
         {
           "index": 2755,
-          "km": 0.1508234598238414,
+          "km": 0.15071288641064648,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2784,
-          "km": 0.14615365626013194,
+          "km": 0.01382279692436267,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2813,
-          "km": 0.09148167563001683,
+          "km": 0.02573600010179427,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2842,
-          "km": 0.01608224548393585,
+          "km": 0.1448142241290761,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2871,
-          "km": 0.056764891254586516,
+          "km": 0.03875490966295642,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2900,
-          "km": 0.04717052517222998,
+          "km": 0.05819110612571387,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2929,
-          "km": 0.13535170390009058,
+          "km": 0.09290630350969148,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2958,
-          "km": 0.14055842823167472,
+          "km": 0.12264914884342715,
           "mask": 8,
           "line": "Capital Line",
           "lineMask": 8
         },
         {
           "index": 2987,
-          "km": 0.026931179636673987,
+          "km": 0.014921312836291424,
           "mask": 8,
           "line": "Metro Line",
           "lineMask": 8
         },
         {
           "index": 3016,
-          "km": 0.10659352055193881,
+          "km": 0.031038919707252557,
           "mask": 8,
           "line": "Metro Line",
           "lineMask": 8
         },
         {
           "index": 3045,
-          "km": 0.15854038707741672,
+          "km": 0.017233548074586436,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3074,
-          "km": 0.1333392362908845,
+          "km": 0.09219102272533272,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3103,
-          "km": 0.031624699408662846,
+          "km": 0.023925726385495574,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3132,
-          "km": 0.10504738432326889,
+          "km": 0.08095316173065967,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3161,
-          "km": 0.015633685718233755,
+          "km": 0.059876850997471164,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3190,
-          "km": 0.020568169398395144,
+          "km": 0.040704689430280355,
           "mask": 8,
           "line": "Valley Line",
           "lineMask": 8
         },
         {
           "index": 3219,
-          "km": 0.20377657121057752,
+          "km": 0.217981071635232,
           "mask": 8,
           "line": "14 - Candiac",
           "lineMask": 8
         },
         {
           "index": 3248,
-          "km": 0.2197259343405567,
+          "km": 0.21986502960081075,
           "mask": 8,
           "line": "14 - Candiac",
           "lineMask": 8
         },
         {
           "index": 3277,
-          "km": 0.20700792293800432,
+          "km": 0.06408692810451697,
           "mask": 8,
           "line": "14 - Candiac",
           "lineMask": 8
         },
         {
           "index": 3306,
-          "km": 0.13131573289114698,
+          "km": 0.052078702097914334,
           "mask": 8,
           "line": "14 - Candiac",
           "lineMask": 8
         },
         {
           "index": 3335,
-          "km": 0.20449389740303692,
+          "km": 0.20813371276604611,
           "mask": 8,
           "line": "14 - Candiac",
           "lineMask": 8
         },
         {
           "index": 3364,
-          "km": 0.2033358406747595,
+          "km": 0.06697890195331116,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3393,
-          "km": 0.20964991656583665,
+          "km": 0.20970337568294095,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3422,
-          "km": 0.0910056555650256,
+          "km": 0.15016176861022673,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3451,
-          "km": 0.20937119772819593,
+          "km": 0.21523827879406968,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3480,
-          "km": 0.14993774182941452,
+          "km": 0.07935878517961267,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3509,
-          "km": 0.21859520718475403,
+          "km": 0.21849872201285478,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3538,
-          "km": 0.19246189674794073,
+          "km": 0.19488715643597443,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3567,
-          "km": 0.20288803832869073,
+          "km": 0.2025475144468123,
           "mask": 8,
           "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3596,
-          "km": 0.10053295333759248,
+          "km": 0.04363606201128521,
           "mask": 8,
-          "line": "13 - Mont-Saint-Hilaire",
+          "line": "15 - Mascouche",
           "lineMask": 8
         },
         {
           "index": 3625,
-          "km": 0.13093123322562575,
+          "km": 0.05346652334312982,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3654,
-          "km": 0.21491250353301988,
+          "km": 0.21489775644519665,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3683,
-          "km": 0.21322495353083992,
+          "km": 0.187396996934238,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3712,
-          "km": 0.2169097939797728,
+          "km": 0.21162934089738317,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3741,
-          "km": 0.19543776520827197,
+          "km": 0.19907378187559083,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3770,
-          "km": 0.025793896118725314,
+          "km": 0.06220402898702788,
           "mask": 8,
           "line": "13 - Mont-Saint-Hilaire",
           "lineMask": 8
         },
         {
           "index": 3799,
-          "km": 0.21492857267140314,
+          "km": 0.21491147374558286,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3828,
-          "km": 0.2073277198192204,
+          "km": 0.20732772040677572,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3857,
-          "km": 0.21424605254491652,
+          "km": 0.21429842028192594,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3886,
-          "km": 0.21589058319807705,
+          "km": 0.06079951574551541,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3915,
-          "km": 0.15496368922621853,
+          "km": 0.19250458910164406,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3944,
-          "km": 0.21223802896387006,
+          "km": 0.1674918026154777,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 3973,
-          "km": 0.08747600639022492,
+          "km": 0.20687007499428403,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4002,
-          "km": 0.21491289821118675,
+          "km": 0.10899294879035762,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4031,
-          "km": 0.043872618908125376,
+          "km": 0.056780501671169194,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4060,
-          "km": 0.20455815482182865,
+          "km": 0.20457198711520203,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4089,
-          "km": 0.21606766051712192,
+          "km": 0.21260673160069918,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4118,
-          "km": 0.21596535740095082,
+          "km": 0.21600833425025978,
           "mask": 8,
           "line": "12 - Saint-Jérôme",
           "lineMask": 8
         },
         {
           "index": 4147,
-          "km": 0.20449815475276736,
+          "km": 0.20898434755066503,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4176,
-          "km": 0.14142718160015583,
+          "km": 0.21814926734153806,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4205,
-          "km": 0.21459284677607549,
+          "km": 0.21464179330947916,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4234,
-          "km": 0.13278541732731633,
+          "km": 0.15683900983494514,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4263,
-          "km": 0.21789935152449047,
+          "km": 0.21791582918044955,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4292,
-          "km": 0.19741969244236857,
+          "km": 0.21895894349043002,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4321,
-          "km": 0.11757172068548852,
+          "km": 0.11546677114653206,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4350,
-          "km": 0.21242386953171463,
+          "km": 0.11342349245227944,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4379,
-          "km": 0.20493453887683094,
+          "km": 0.09974366886391038,
           "mask": 8,
           "line": "11 - Vaudreuil/Hudson",
           "lineMask": 8
         },
         {
           "index": 4408,
-          "km": 0.08776590834292082,
+          "km": 0.015799547057384233,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4437,
-          "km": 0.0050946136369819685,
+          "km": 0.010701453609438057,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4466,
-          "km": 0.00924795277059927,
+          "km": 0.12845031042601782,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4495,
-          "km": 0.006383368425251393,
+          "km": 0.004134465305813754,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4524,
-          "km": 0.1285392925098986,
+          "km": 0.0912562809457016,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4553,
-          "km": 0.03979843969847756,
+          "km": 0.0020792756365013705,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4582,
-          "km": 0.08316749451725758,
+          "km": 0.04083538768581087,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4611,
-          "km": 0.025212941444137927,
+          "km": 0.11697994356683351,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4640,
-          "km": 0.0041737185535669795,
+          "km": 0.011300744606157404,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4669,
-          "km": 0.041467141767300486,
+          "km": 0.015724171813512565,
           "mask": 8,
           "line": "ION light rail",
           "lineMask": 8
         },
         {
           "index": 4698,
-          "km": 0.07028335945979408,
+          "km": 0.012044462858088448,
           "mask": 32,
           "line": "ION light rail",
           "lineMask": 32
         },
         {
           "index": 4727,
-          "km": 0.13244893687065615,
+          "km": 0.12259949422368692,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4756,
-          "km": 0.13419235758414405,
+          "km": 0.022614899321409303,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4785,
-          "km": 0.009820749896682832,
+          "km": 0.03128596935283509,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4814,
-          "km": 0.03597248715932497,
+          "km": 0.029642340844095134,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4843,
-          "km": 0.13214024401844762,
+          "km": 0.027158695864941792,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4872,
-          "km": 0.02479432836115788,
+          "km": 0.10523692482579731,
           "mask": 8,
           "line": "Blair <> Tunney's Pasture",
           "lineMask": 8
         },
         {
           "index": 4901,
-          "km": 0.024619434406732553,
+          "km": 0.023221694021448032,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 4930,
-          "km": 0.04342576427550908,
+          "km": 0.038686838614016276,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 4959,
-          "km": 0.14270194377285658,
+          "km": 0.149983968780402,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 4988,
-          "km": 0.14434289433674258,
+          "km": 0.14749785553591732,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 5017,
-          "km": 0.04634730797331188,
+          "km": 0.14014624211690405,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 5046,
-          "km": 0.05208371717224302,
+          "km": 0.1116811641717306,
           "mask": 8,
           "line": "Bayview <> Limebank",
           "lineMask": 8
         },
         {
           "index": 5075,
-          "km": 0.06952330650239116,
+          "km": 0.19661813178014373,
           "mask": 8,
           "line": "South Keys <> Airport ~ Aéroport",
           "lineMask": 8
         },
         {
           "index": 5104,
-          "km": 0.15060481480550356,
+          "km": 0.11123955537217053,
           "mask": 8,
-          "line": "Canada Line",
+          "line": "South Keys <> Airport ~ Aéroport",
           "lineMask": 8
         },
         {
           "index": 5133,
-          "km": 0.11879348505134005,
+          "km": 0.05727103693423306,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5162,
-          "km": 0.03328643591044049,
+          "km": 0.025542372281240937,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5191,
-          "km": 0.15596251290738855,
+          "km": 0.15596249471917142,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5220,
-          "km": 0.14583177243336795,
+          "km": 0.047851348386112796,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5249,
-          "km": 0.13324168987049193,
+          "km": 0.017553909944359247,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5278,
-          "km": 0.037406472838404856,
+          "km": 0.15936029303194987,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5307,
-          "km": 0.11119388498476818,
+          "km": 0.11758324970091068,
           "mask": 8,
           "line": "Canada Line",
           "lineMask": 8
         },
         {
           "index": 5336,
-          "km": 0.12001884857215823,
+          "km": 0.02959759834554891,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5365,
-          "km": 0.012725769784829815,
+          "km": 0.018185310327107983,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5394,
-          "km": 0.05803841176993194,
+          "km": 0.02369399501699372,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5423,
-          "km": 0.021954777732783422,
+          "km": 0.053942814761860386,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5452,
-          "km": 0.09647622070492903,
+          "km": 0.12400428458077366,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5481,
-          "km": 0.1119031425761235,
+          "km": 0.12232891589206905,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5510,
-          "km": 0.015603562478713287,
+          "km": 0.10390733111219991,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5539,
-          "km": 0.06488285193632523,
+          "km": 0.04822836676353296,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5568,
-          "km": 0.13575813963776215,
+          "km": 0.13039053580499296,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5597,
-          "km": 0.0474484231296267,
+          "km": 0.14362244653643466,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5626,
-          "km": 0.01808543387224359,
+          "km": 0.15883445546557398,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5655,
-          "km": 0.05455445887242758,
+          "km": 0.023470566373967328,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5684,
-          "km": 0.1783614174951437,
+          "km": 0.07826828266852748,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5713,
-          "km": 0.05964990988433266,
+          "km": 0.17063268618302246,
           "mask": 8,
           "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5742,
-          "km": 0.12695441197164464,
+          "km": 0.20908012348071234,
           "mask": 8,
-          "line": "Millennium Line",
+          "line": "Expo Line",
           "lineMask": 8
         },
         {
           "index": 5771,
-          "km": 0.07092497268561915,
+          "km": 0.10783616797604596,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5800,
-          "km": 0.043313583725282566,
+          "km": 0.025686852674436052,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5829,
-          "km": 0.12831099334455293,
+          "km": 0.04707619143907778,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5858,
-          "km": 0.140853561740067,
+          "km": 0.04083313633845857,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5887,
-          "km": 0.07048391364252642,
+          "km": 0.059973645278095775,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5916,
-          "km": 0.03917869713675664,
+          "km": 0.1519422967274778,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5945,
-          "km": 0.1579314003487689,
+          "km": 0.13325695904964235,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 5974,
-          "km": 0.08316898977575263,
+          "km": 0.16009694781665557,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 6003,
-          "km": 0.050720188095433244,
+          "km": 0.1507737873982666,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 6032,
-          "km": 0.1172085299811615,
+          "km": 0.10770006007325049,
           "mask": 8,
           "line": "Millennium Line",
           "lineMask": 8
         },
         {
           "index": 6061,
-          "km": 0.18617527132316736,
+          "km": 0.04292690131792461,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6090,
-          "km": 0.08589508828218621,
+          "km": 0.15869508223331885,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6119,
-          "km": 0.05635814405146869,
+          "km": 0.11212310599666846,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6148,
-          "km": 0.0784497144824727,
+          "km": 0.16427017353262618,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6177,
-          "km": 0.1429271949759392,
+          "km": 0.18235010432411783,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6206,
-          "km": 0.0597645203686251,
+          "km": 0.08321611071831621,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6235,
-          "km": 0.047108869705892696,
+          "km": 0.044629162635958654,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6264,
-          "km": 0.051619259369123406,
+          "km": 0.05121134825470454,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6293,
-          "km": 0.2028874389020586,
+          "km": 0.20299112275190298,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6322,
-          "km": 0.21377045443237985,
+          "km": 0.21369126151658827,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6351,
-          "km": 0.10234603786029275,
+          "km": 0.07048611221383812,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6380,
-          "km": 0.20442727226544058,
+          "km": 0.1769855144405518,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6409,
-          "km": 0.14205210000276977,
+          "km": 0.11841808684362605,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6438,
-          "km": 0.08530802202689494,
+          "km": 0.19145501860282493,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6467,
-          "km": 0.16208176391216475,
+          "km": 0.19278632497717563,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6496,
-          "km": 0.21532616982846361,
+          "km": 0.11218900000994576,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6525,
-          "km": 0.04611821790333365,
+          "km": 0.1467224983065339,
           "mask": 8,
           "line": "West Coast Express",
           "lineMask": 8
         },
         {
           "index": 6554,
-          "km": 0.13429996450189804,
+          "km": 0.14946818667182665,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6583,
-          "km": 0.14156446606647166,
+          "km": 0.1249612613018838,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6612,
-          "km": 0.11938373155822601,
+          "km": 0.14413750402488565,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6641,
-          "km": 0.046006679766951206,
+          "km": 0.05875016722145973,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6670,
-          "km": 0.02201792217220526,
+          "km": 0.14649678370941255,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6699,
-          "km": 0.13995748743196507,
+          "km": 0.10196557107844229,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6728,
-          "km": 0.13654670194671986,
+          "km": 0.016785139676114183,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6757,
-          "km": 0.12900685799712056,
+          "km": 0.01426693538718404,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6786,
-          "km": 0.025666071961992675,
+          "km": 0.14967322692940283,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6815,
-          "km": 0.10975472717022687,
+          "km": 0.1241720082048905,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6844,
-          "km": 0.10319190195270314,
+          "km": 0.15862280084260674,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6873,
-          "km": 0.05419624026220633,
+          "km": 0.09757145506636988,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6902,
-          "km": 0.02589965737061032,
+          "km": 0.14077386908817444,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6931,
-          "km": 0.10481580628414587,
+          "km": 0.03304200396404001,
           "mask": 8,
           "line": "Line 1 (Yonge-University)",
           "lineMask": 8
         },
         {
           "index": 6960,
-          "km": 0.12243111971987022,
+          "km": 0.029823660173147935,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 6989,
-          "km": 0.034859011185531065,
+          "km": 0.032062526191941776,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7018,
-          "km": 0.13395177803086755,
+          "km": 0.1084283755963745,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7047,
-          "km": 0.15342260996528848,
+          "km": 0.08583325630320433,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7076,
-          "km": 0.07143180657060007,
+          "km": 0.02492203932565701,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7105,
-          "km": 0.1550594322978112,
+          "km": 0.11801759389459653,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7134,
-          "km": 0.12545937598216597,
+          "km": 0.1492415504139507,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7163,
-          "km": 0.10545371581224339,
+          "km": 0.14855478201166222,
           "mask": 8,
           "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7192,
-          "km": 0.13981880638345606,
+          "km": 0.08410665591274019,
           "mask": 8,
-          "line": "Line 4 (Sheppard)",
+          "line": "Line 2 (Bloor - Danforth)",
           "lineMask": 8
         },
         {
           "index": 7221,
-          "km": 0.1405621278589191,
+          "km": 0.14681936850138097,
           "mask": 8,
           "line": "Line 4 (Sheppard)",
           "lineMask": 8
         },
         {
           "index": 7250,
-          "km": 0.12679558145374445,
+          "km": 0.1470001107155296,
           "mask": 8,
           "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7279,
-          "km": 0.15373547081715316,
+          "km": 0.09382171637793582,
           "mask": 8,
           "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7308,
-          "km": 0.14076224954055394,
+          "km": 0.06616978604069476,
           "mask": 8,
           "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7337,
-          "km": 0.1405491030183802,
+          "km": 0.1525580956793626,
           "mask": 8,
           "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7366,
-          "km": 0.1427059890687837,
+          "km": 0.12965636499248426,
           "mask": 8,
           "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7395,
-          "km": 0.10317779100126413,
+          "km": 0.1381627874948108,
           "mask": 8,
-          "line": "Line 6 Finch",
+          "line": "Line 5 Eglinton",
           "lineMask": 8
         },
         {
           "index": 7424,
-          "km": 0.07171433537757342,
+          "km": 0.07481108078998609,
           "mask": 8,
           "line": "Line 6 Finch",
           "lineMask": 8
         },
         {
           "index": 7453,
-          "km": 0.1097979537101447,
+          "km": 0.08982191497334137,
           "mask": 8,
           "line": "Line 6 Finch",
           "lineMask": 8
         },
         {
           "index": 7482,
-          "km": 0.03933462054418085,
+          "km": 0.10842237851679842,
           "mask": 8,
           "line": "Line 6 Finch",
           "lineMask": 8
         },
         {
           "index": 7511,
-          "km": 0.1123067828855736,
+          "km": 0.06400396496166194,
           "mask": 8,
           "line": "Line 6 Finch",
           "lineMask": 8
         },
         {
           "index": 7540,
-          "km": 0.007801515059392586,
+          "km": 0.018864353395508866,
           "mask": 8,
           "line": "Line 6 Finch",
           "lineMask": 8
         },
         {
           "index": 7569,
-          "km": 0.11497301930815436,
+          "km": 0.08498335748747404,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7598,
-          "km": 0.08506793271888384,
+          "km": 0.09752222176388133,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7627,
-          "km": 0.06885293639907278,
+          "km": 0.09628770106625087,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7656,
-          "km": 0.003491612345549067,
+          "km": 0.00684496094350487,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7685,
-          "km": 0.11014369503283986,
+          "km": 0.0922078888158188,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7714,
-          "km": 0.0991126605496239,
+          "km": 0.09026394111382172,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7743,
-          "km": 0.04776571006544801,
+          "km": 0.07228621873458022,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7772,
-          "km": 0.09425048083561459,
+          "km": 0.035922404117798526,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7801,
-          "km": 0.004887701571621299,
+          "km": 0.004644806388067773,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7830,
-          "km": 0.1008673210531862,
+          "km": 0.09391718958762782,
           "mask": 32,
           "line": "Queen",
           "lineMask": 32
         },
         {
           "index": 7859,
-          "km": 0.07166425931482445,
+          "km": 0.06117561396170648,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 7888,
-          "km": 0.09070560624481261,
+          "km": 0.08973208765978284,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 7917,
-          "km": 0.09534071118645529,
+          "km": 0.11653247230499408,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 7946,
-          "km": 0.11510376770411483,
+          "km": 0.07727473097739965,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 7975,
-          "km": 0.07844602294541307,
+          "km": 0.07980508888137879,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8004,
-          "km": 0.002946281127226329,
+          "km": 0.10278314731403092,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8033,
-          "km": 0.0027626971916108506,
+          "km": 0.07372383896870419,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8062,
-          "km": 0.0017785283751711495,
+          "km": 0.08106446947094004,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8091,
-          "km": 0.05342947821723266,
+          "km": 0.11266590699357458,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8120,
-          "km": 0.013392377142742077,
+          "km": 0.09503138731107741,
           "mask": 32,
           "line": "King",
           "lineMask": 32
         },
         {
           "index": 8149,
-          "km": 0.025082574243038284,
+          "km": 0.0953282104001857,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8178,
-          "km": 0.018157067813077476,
+          "km": 0.1189844753452973,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8207,
-          "km": 0.11286495708676188,
+          "km": 0.00841175575886337,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8236,
-          "km": 0.0996290098472615,
+          "km": 0.11209672441975051,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8265,
-          "km": 0.01420628645039579,
+          "km": 0.06917676281395276,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8294,
-          "km": 0.009966115348439454,
+          "km": 0.021828965037598246,
           "mask": 32,
           "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8323,
-          "km": 0.048807060703766086,
+          "km": 0.07962866728804757,
           "mask": 32,
-          "line": "Carlton",
+          "line": "Dundas",
           "lineMask": 32
         },
         {
           "index": 8352,
-          "km": 0.0035509755710178862,
+          "km": 0.018815021039767572,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8381,
-          "km": 0.014196277133837042,
+          "km": 0.09104726855701314,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8410,
-          "km": 0.08254719310732964,
+          "km": 0.08053282999158934,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8439,
-          "km": 0.09500981990398935,
+          "km": 0.08398523109510775,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8468,
-          "km": 0.10415052852381639,
+          "km": 0.11772660471585203,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8497,
-          "km": 0.016800036659172547,
+          "km": 0.020112347819307253,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8526,
-          "km": 0.006157815980436965,
+          "km": 0.1162181720701705,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8555,
-          "km": 0.06629290013323672,
+          "km": 0.08164010114791174,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8584,
-          "km": 0.07042234561382522,
+          "km": 0.10200160439422498,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8613,
-          "km": 0.11763463597553811,
+          "km": 0.10091952077406667,
           "mask": 32,
           "line": "Carlton",
           "lineMask": 32
         },
         {
           "index": 8642,
-          "km": 0.09816843128384889,
+          "km": 0.06895622831452417,
           "mask": 32,
           "line": "Harbourfront",
           "lineMask": 32
         },
         {
           "index": 8671,
-          "km": 0.0026699026840404853,
+          "km": 0.10286639771870693,
           "mask": 32,
           "line": "Harbourfront",
           "lineMask": 32
         },
         {
           "index": 8700,
-          "km": 0.04613163041158552,
+          "km": 0.0447804960360898,
           "mask": 32,
           "line": "Harbourfront",
           "lineMask": 32
         },
         {
           "index": 8729,
-          "km": 0.002126053597828027,
+          "km": 0.0037471913583595434,
           "mask": 32,
-          "line": "Spadina",
+          "line": "Harbourfront",
           "lineMask": 32
         },
         {
           "index": 8758,
-          "km": 0.06963860254615221,
+          "km": 0.09289905417741416,
           "mask": 32,
           "line": "Spadina",
           "lineMask": 32
         },
         {
           "index": 8787,
-          "km": 0.010132342604153974,
+          "km": 0.01245931391944711,
           "mask": 32,
           "line": "Spadina",
           "lineMask": 32
         },
         {
           "index": 8816,
-          "km": 0.0051486576238985995,
+          "km": 0.08836085993054162,
           "mask": 32,
           "line": "Spadina",
           "lineMask": 32
         },
         {
           "index": 8845,
-          "km": 0.09725319967750677,
+          "km": 0.10560993785601648,
           "mask": 32,
           "line": "Bathurst",
           "lineMask": 32
         },
         {
           "index": 8874,
-          "km": 0.0342996696536967,
+          "km": 0.01229283042320814,
           "mask": 32,
           "line": "Bathurst",
           "lineMask": 32
         },
         {
           "index": 8903,
-          "km": 0.10200404940271371,
+          "km": 0.06907578414935901,
           "mask": 32,
           "line": "St Clair",
           "lineMask": 32
         },
         {
           "index": 8932,
-          "km": 0.0020052913487650075,
+          "km": 0.014013777191579344,
           "mask": 32,
           "line": "St Clair",
           "lineMask": 32
         },
         {
           "index": 8961,
-          "km": 0.08929694424792292,
+          "km": 0.060648872206726115,
           "mask": 32,
           "line": "St Clair",
           "lineMask": 32
         },
         {
           "index": 8990,
-          "km": 0.3120284400081136,
+          "km": 0.03887228675428383,
           "mask": 8,
           "line": "Union Pearson Express",
           "lineMask": 8
         },
         {
           "index": 9019,
-          "km": 0.326998423686847,
+          "km": 0.32699805405067073,
           "mask": 8,
           "line": "Union Pearson Express",
           "lineMask": 8
         },
         {
           "index": 9048,
-          "km": 0.3480556198775751,
+          "km": 0.20610781754726984,
           "mask": 8,
           "line": "Union Pearson Express",
           "lineMask": 8
         },
         {
           "index": 9077,
-          "km": 0.19168350488250477,
+          "km": 0.22982100806960026,
           "mask": 8,
           "line": "Union Pearson Express",
           "lineMask": 8
         },
         {
           "index": 9106,
-          "km": 0.4902059735153687,
+          "km": 0.25061021463170285,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9135,
-          "km": 0.351338858997064,
+          "km": 0.49025272492145044,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9164,
-          "km": 0.5897623381714799,
+          "km": 0.5759627965411478,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9193,
-          "km": 0.584348782455585,
+          "km": 0.5391363742703701,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9222,
-          "km": 0.575995085777224,
+          "km": 0.26991819529888833,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9251,
-          "km": 0.4759537902197445,
+          "km": 0.5034896123738022,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9280,
-          "km": 0.5973985939896238,
+          "km": 0.18561058889358698,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9309,
-          "km": 0.6005579758636347,
+          "km": 0.5972437724271531,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9338,
-          "km": 0.21926383891195003,
+          "km": 0.11771297679067383,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9367,
-          "km": 0.17091991062064749,
+          "km": 0.5051721980450908,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9396,
-          "km": 0.5623549621188442,
+          "km": 0.4056176832920991,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9425,
-          "km": 0.5892839589627619,
+          "km": 0.08111436384984912,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9454,
-          "km": 0.5864372240376085,
+          "km": 0.49608678488732616,
           "mask": 2,
           "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9483,
-          "km": 0.43809324587504755,
+          "km": 0.5535898184066247,
           "mask": 2,
-          "line": "Toronto - London",
+          "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9512,
-          "km": 0.5683941104749484,
+          "km": 0.5641619953696935,
           "mask": 2,
-          "line": "Toronto - London",
+          "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9541,
-          "km": 0.40921437213257,
+          "km": 0.5808208430824757,
           "mask": 2,
-          "line": "Toronto - London",
+          "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9570,
-          "km": 0.5761378657625547,
+          "km": 0.5698358553450864,
           "mask": 2,
-          "line": "Toronto - London",
+          "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9599,
-          "km": 0.08874877486648629,
+          "km": 0.11560959470135873,
           "mask": 2,
-          "line": "Toronto - London",
+          "line": "Ottawa - Montréal",
           "lineMask": 2
         },
         {
           "index": 9628,
-          "km": 0.5368062097756697,
+          "km": 0.3161468682913236,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9657,
-          "km": 0.5641648093720952,
+          "km": 0.15537772875403824,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9686,
-          "km": 0.46113571003857456,
+          "km": 0.5833331544947931,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9715,
-          "km": 0.20652085928415026,
+          "km": 0.40678305178402635,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9744,
-          "km": 0.5994742155818356,
+          "km": 0.5219783228870097,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9773,
-          "km": 0.5361290270326656,
+          "km": 0.044859990381410725,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9802,
-          "km": 0.5332478540607299,
+          "km": 0.4345530514843963,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9831,
-          "km": 0.2588409654761484,
+          "km": 0.5551713933777763,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9860,
-          "km": 0.24632364355884598,
+          "km": 0.11336928879067733,
           "mask": 2,
           "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9889,
-          "km": 0.3346022912089781,
+          "km": 0.03229503594318974,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9918,
-          "km": 0.3482408678040549,
+          "km": 0.43317174269444153,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9947,
-          "km": 0.32453329698557853,
+          "km": 0.5441751376578589,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 9976,
-          "km": 0.3492080241589871,
+          "km": 0.5790018235592429,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 10005,
-          "km": 0.3494183067385343,
+          "km": 0.34341132624623627,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 10034,
-          "km": 0.2783911618573823,
+          "km": 0.4628674745715734,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 10063,
-          "km": 0.3379760272891928,
+          "km": 0.08458293363629092,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 10092,
-          "km": 0.3117213574322464,
+          "km": 0.5248310049441848,
           "mask": 2,
-          "line": "Toronto - Sarnia",
+          "line": "Toronto - London",
           "lineMask": 2
         },
         {
           "index": 10121,
-          "km": 0.3202526522917127,
+          "km": 0.2125283860223495,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10150,
-          "km": 0.3402390261318473,
+          "km": 0.10838797214482898,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10179,
-          "km": 0.3390650454130018,
+          "km": 0.3419666783332815,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10208,
-          "km": 0.1196197550712242,
+          "km": 0.34465613531538053,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10237,
-          "km": 0.2256010100608051,
+          "km": 0.31190697105871995,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10266,
-          "km": 0.3477019894953563,
+          "km": 0.33661936076589777,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10295,
-          "km": 0.2537721760541479,
+          "km": 0.3458290957904057,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10324,
-          "km": 0.3480971555985225,
+          "km": 0.2604224913052741,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10353,
-          "km": 0.23825936921411586,
+          "km": 0.34170760168223996,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10382,
-          "km": 0.3433443312661276,
+          "km": 0.32760641233984056,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10411,
-          "km": 0.34345696114360064,
+          "km": 0.3247188720106452,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10440,
-          "km": 0.3428472475306774,
+          "km": 0.3342855730495717,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10469,
-          "km": 0.14205390524943073,
+          "km": 0.33690221075831317,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10498,
-          "km": 0.33815574653370845,
+          "km": 0.10790154995706232,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10527,
-          "km": 0.3343490097531766,
+          "km": 0.31951417993993186,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10556,
-          "km": 0.3424299829070315,
+          "km": 0.32102466840946475,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10585,
-          "km": 0.34372635086890774,
+          "km": 0.11539673987330024,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10614,
-          "km": 0.34325936136105484,
+          "km": 0.13386859840086035,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10643,
-          "km": 0.34845930419945437,
+          "km": 0.3346625442343861,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10672,
-          "km": 0.34837259525030656,
+          "km": 0.346956578095947,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10701,
-          "km": 0.34977308366513404,
+          "km": 0.3432620270860679,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10730,
-          "km": 0.34974635962939055,
+          "km": 0.34325636209943267,
           "mask": 2,
           "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10759,
-          "km": 0.43431261628814694,
+          "km": 0.33867917515891816,
           "mask": 2,
-          "line": "Toronto - Windsor",
+          "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10788,
-          "km": 0.5706600552422835,
+          "km": 0.3446994308519018,
           "mask": 2,
-          "line": "Toronto - Windsor",
+          "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10817,
-          "km": 0.5753500078058338,
+          "km": 0.3293475452825498,
           "mask": 2,
-          "line": "Toronto - Windsor",
+          "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10846,
-          "km": 0.26028935456272806,
+          "km": 0.273473073769451,
           "mask": 2,
-          "line": "Toronto - Windsor",
+          "line": "Toronto - Sarnia",
           "lineMask": 2
         },
         {
           "index": 10875,
-          "km": 0.5510220137986117,
+          "km": 0.5379503179474597,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 10904,
-          "km": 0.5984641388866393,
+          "km": 0.442197237368116,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 10933,
-          "km": 0.5823646686627552,
+          "km": 0.5809566357443133,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 10962,
-          "km": 0.5955172296583794,
+          "km": 0.5680889874318971,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 10991,
-          "km": 0.574764051770198,
+          "km": 0.5699331842926251,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11020,
-          "km": 0.5607342118705958,
+          "km": 0.5692522287208924,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11049,
-          "km": 0.599249438276122,
+          "km": 0.2866073299486697,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11078,
-          "km": 0.5887236824765398,
+          "km": 0.5414865799761355,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11107,
-          "km": 0.5892444686759042,
+          "km": 0.2451817383195612,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11136,
-          "km": 0.594890497610307,
+          "km": 0.5796198408903092,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11165,
-          "km": 0.5953388606817328,
+          "km": 0.5535092933226949,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11194,
-          "km": 0.585990069550007,
+          "km": 0.2767608058045896,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
         },
         {
           "index": 11223,
-          "km": 0.5871049112412778,
-          "mask": 2,
-          "line": "Toronto - Windsor",
-          "lineMask": 2
-        },
-        {
-          "index": 11252,
-          "km": 0.5889146037752554,
-          "mask": 2,
-          "line": "Toronto - Windsor",
-          "lineMask": 2
-        },
-        {
-          "index": 11281,
-          "km": 0.5890058591826977,
-          "mask": 2,
-          "line": "Toronto - Windsor",
-          "lineMask": 2
-        },
-        {
-          "index": 11310,
-          "km": 0.5958696457027731,
+          "km": 0.3829312745817667,
           "mask": 2,
           "line": "Toronto - Windsor",
           "lineMask": 2
@@ -70106,1192 +70085,1180 @@
           "index": 2697
         },
         {
-          "key": "-73.55387,45.48522|-73.55313,45.4851",
+          "key": "-73.5565,45.48695|-73.55634,45.4866",
           "index": 2726
         },
         {
-          "key": "-113.51639,53.4769|-113.51639,53.47826",
+          "key": "-113.51636,53.47008|-113.51635,53.46872",
           "index": 2755
         },
         {
-          "key": "-113.52178,53.49785|-113.51957,53.49776",
+          "key": "-113.51798,53.49739|-113.51781,53.49731",
           "index": 2784
         },
         {
-          "key": "-113.52606,53.50972|-113.52576,53.50891",
+          "key": "-113.52623,53.50759|-113.52603,53.50779",
           "index": 2813
         },
         {
-          "key": "-113.51371,53.52831|-113.51355,53.52842",
+          "key": "-113.51965,53.52565|-113.51779,53.52634",
           "index": 2842
         },
         {
-          "key": "-113.49884,53.54094|-113.49798,53.54091",
+          "key": "-113.5072,53.54085|-113.50662,53.54093",
           "index": 2871
         },
         {
-          "key": "-113.4844,53.54903|-113.48379,53.54925",
+          "key": "-113.48894,53.54586|-113.48847,53.5463",
           "index": 2900
         },
         {
-          "key": "-113.45462,53.57396|-113.45347,53.57498",
+          "key": "-113.46009,53.56917|-113.45937,53.5699",
           "index": 2929
         },
         {
-          "key": "-113.4177,53.59792|-113.41623,53.59883",
+          "key": "-113.42592,53.59273|-113.42465,53.59354",
           "index": 2958
         },
         {
-          "key": "-113.501,53.55243|-113.50089,53.55266",
+          "key": "-113.50087,53.5483|-113.50074,53.54819",
           "index": 2987
         },
         {
-          "key": "-113.50318,53.56221|-113.50317,53.56318",
+          "key": "-113.50271,53.55912|-113.50261,53.55885",
           "index": 3016
         },
         {
-          "key": "-113.4359,53.46579|-113.43527,53.4644",
+          "key": "-113.43402,53.45874|-113.43398,53.45858",
           "index": 3045
         },
         {
-          "key": "-113.44241,53.48958|-113.44233,53.48837",
+          "key": "-113.44248,53.48243|-113.44242,53.48326",
           "index": 3074
         },
         {
-          "key": "-113.4545,53.50442|-113.45423,53.50419",
+          "key": "-113.45002,53.50153|-113.4497,53.50143",
           "index": 3103
         },
         {
-          "key": "-113.45742,53.5271|-113.45741,53.52615",
+          "key": "-113.45625,53.52422|-113.45565,53.52358",
           "index": 3132
         },
         {
-          "key": "-113.48021,53.53319|-113.47999,53.53315",
+          "key": "-113.47508,53.53295|-113.47421,53.53279",
           "index": 3161
         },
         {
-          "key": "-113.47899,53.54499|-113.47874,53.54488",
+          "key": "-113.47716,53.54213|-113.47711,53.54176",
           "index": 3190
         },
         {
-          "key": "-73.55065,45.36926|-73.54818,45.36866",
+          "key": "-73.5355,45.36563|-73.53286,45.36499",
           "index": 3219
         },
         {
-          "key": "-73.61734,45.38876|-73.61488,45.3878",
+          "key": "-73.60257,45.38299|-73.60011,45.38203",
           "index": 3248
         },
         {
-          "key": "-73.66149,45.41469|-73.66071,45.41648",
+          "key": "-73.66207,45.40926|-73.66191,45.40869",
           "index": 3277
         },
         {
-          "key": "-73.65026,45.45071|-73.64858,45.45078",
+          "key": "-73.65528,45.44928|-73.65487,45.44965",
           "index": 3306
         },
         {
-          "key": "-73.59494,45.47841|-73.5929,45.47957",
+          "key": "-73.60742,45.47156|-73.60527,45.47267",
           "index": 3335
         },
         {
-          "key": "-73.6022,45.71816|-73.59963,45.71784",
+          "key": "-73.60715,45.71992|-73.60685,45.71935",
           "index": 3364
         },
         {
-          "key": "-73.53374,45.72504|-73.53123,45.72573",
+          "key": "-73.54883,45.72092|-73.54631,45.72161",
           "index": 3393
         },
         {
-          "key": "-73.49896,45.74049|-73.49787,45.74079",
+          "key": "-73.50248,45.73615|-73.5022,45.7375",
           "index": 3422
         },
         {
-          "key": "-73.48706,45.71183|-73.48661,45.70996",
+          "key": "-73.4885,45.71911|-73.48821,45.72104",
           "index": 3451
         },
         {
-          "key": "-73.49876,45.6763|-73.49696,45.67679",
+          "key": "-73.494,45.67915|-73.49375,45.67985",
           "index": 3480
         },
         {
-          "key": "-73.55827,45.64673|-73.55635,45.64818",
+          "key": "-73.54675,45.65539|-73.54483,45.65683",
           "index": 3509
         },
         {
-          "key": "-73.60989,45.60731|-73.60852,45.60876",
+          "key": "-73.6018,45.61402|-73.60009,45.61531",
           "index": 3538
         },
         {
-          "key": "-73.6464,45.56298|-73.64541,45.56468",
+          "key": "-73.63951,45.57195|-73.63819,45.57353",
           "index": 3567
         },
         {
-          "key": "-73.18292,45.57606|-73.18175,45.57643",
+          "key": "-73.66845,45.52491|-73.66832,45.5253",
           "index": 3596
         },
         {
-          "key": "-73.21995,45.54806|-73.21828,45.54811",
+          "key": "-73.20644,45.54817|-73.20579,45.54832",
           "index": 3625
         },
         {
-          "key": "-73.28814,45.5286|-73.28561,45.52935",
+          "key": "-73.27292,45.53315|-73.27038,45.53391",
           "index": 3654
         },
         {
-          "key": "-73.35807,45.51307|-73.35535,45.51325",
+          "key": "-73.34174,45.51413|-73.33935,45.51431",
           "index": 3683
         },
         {
-          "key": "-73.43659,45.50792|-73.43382,45.50811",
+          "key": "-73.42032,45.509|-73.41762,45.50918",
           "index": 3712
         },
         {
-          "key": "-73.50805,45.49882|-73.50579,45.49959",
+          "key": "-73.49532,45.50296|-73.4929,45.50354",
           "index": 3741
         },
         {
-          "key": "-73.55645,45.48702|-73.55635,45.4868",
+          "key": "-73.55387,45.48507|-73.55308,45.485",
           "index": 3770
         },
         {
-          "key": "-73.63415,45.45764|-73.63193,45.45879",
+          "key": "-73.62085,45.46456|-73.61864,45.46571",
           "index": 3799
         },
         {
-          "key": "-73.65606,45.46982|-73.65605,45.46794",
+          "key": "-73.656,45.45857|-73.65599,45.45669",
           "index": 3828
         },
         {
-          "key": "-73.63542,45.50979|-73.63396,45.51143",
+          "key": "-73.64423,45.49996|-73.64276,45.5016",
           "index": 3857
         },
         {
-          "key": "-73.63188,45.5328|-73.62918,45.53236",
+          "key": "-73.61869,45.53051|-73.61805,45.53019",
           "index": 3886
         },
         {
-          "key": "-73.69659,45.54504|-73.69519,45.54404",
+          "key": "-73.68892,45.54221|-73.68652,45.54181",
           "index": 3915
         },
         {
-          "key": "-73.72398,45.58485|-73.72242,45.58328",
+          "key": "-73.71863,45.57756|-73.71791,45.57613",
           "index": 3944
         },
         {
-          "key": "-73.76648,45.62622|-73.7655,45.62583",
+          "key": "-73.75937,45.62064|-73.75785,45.61911",
           "index": 3973
         },
         {
-          "key": "-73.81976,45.63654|-73.817,45.63665",
+          "key": "-73.80431,45.63707|-73.80292,45.63694",
           "index": 4002
         },
         {
-          "key": "-73.84967,45.64501|-73.84927,45.64529",
+          "key": "-73.85186,45.64156|-73.85179,45.64207",
           "index": 4031
         },
         {
-          "key": "-73.86618,45.67242|-73.86438,45.67107",
+          "key": "-73.85539,45.66432|-73.85359,45.66297",
           "index": 4060
         },
         {
-          "key": "-73.92046,45.71313|-73.91856,45.7117",
+          "key": "-73.90921,45.70469|-73.90734,45.70329",
           "index": 4089
         },
         {
-          "key": "-73.97563,45.75445|-73.97373,45.75303",
+          "key": "-73.96422,45.7459|-73.96232,45.74448",
           "index": 4118
         },
         {
-          "key": "-74.11745,45.44537|-74.11526,45.44435",
+          "key": "-74.12816,45.45242|-74.12629,45.45107",
           "index": 4147
         },
         {
-          "key": "-74.0741,45.41286|-74.07263,45.41211",
+          "key": "-74.0836,45.42145|-74.08191,45.41988",
           "index": 4176
         },
         {
-          "key": "-74.02512,45.3875|-74.02281,45.38645",
+          "key": "-74.039,45.39377|-74.03669,45.39273",
           "index": 4205
         },
         {
-          "key": "-73.97021,45.39309|-73.96883,45.3938",
+          "key": "-73.97961,45.38941|-73.97775,45.38994",
           "index": 4234
         },
         {
-          "key": "-73.92051,45.41809|-73.91803,45.41899",
+          "key": "-73.93541,45.41271|-73.93293,45.4136",
           "index": 4263
         },
         {
-          "key": "-73.85212,45.4337|-73.84976,45.43434",
+          "key": "-73.86537,45.43083|-73.86264,45.43126",
           "index": 4292
         },
         {
-          "key": "-73.79086,45.44971|-73.78937,45.44981",
+          "key": "-73.80046,45.44806|-73.79906,45.44838",
           "index": 4321
         },
         {
-          "key": "-73.72329,45.44893|-73.72057,45.44888",
+          "key": "-73.73707,45.4491|-73.73562,45.44912",
           "index": 4350
         },
         {
-          "key": "-73.65897,45.452|-73.65639,45.45166",
+          "key": "-73.6706,45.45307|-73.66933,45.45315",
           "index": 4379
         },
         {
-          "key": "-80.45782,43.42073|-80.45702,43.42019",
+          "key": "-80.45555,43.41945|-80.45536,43.41949",
           "index": 4408
         },
         {
-          "key": "-80.46819,43.42581|-80.46813,43.42581",
+          "key": "-80.46613,43.42622|-80.46607,43.42613",
           "index": 4437
         },
         {
-          "key": "-80.47239,43.44134|-80.47232,43.44127",
+          "key": "-80.4769,43.43693|-80.47588,43.43783",
           "index": 4466
         },
         {
-          "key": "-80.48697,43.45037|-80.48695,43.45031",
+          "key": "-80.48824,43.44837|-80.48822,43.44834",
           "index": 4495
         },
         {
-          "key": "-80.50568,43.45524|-80.50422,43.45479",
+          "key": "-80.49858,43.45305|-80.49754,43.45273",
           "index": 4524
         },
         {
-          "key": "-80.52467,43.46414|-80.52419,43.46408",
+          "key": "-80.52247,43.46424|-80.52246,43.46422",
           "index": 4553
         },
         {
-          "key": "-80.54186,43.47403|-80.54134,43.47338",
+          "key": "-80.54007,43.47224|-80.53971,43.47198",
           "index": 4582
         },
         {
-          "key": "-80.54144,43.49326|-80.54143,43.49303",
+          "key": "-80.5432,43.48876|-80.54263,43.48973",
           "index": 4611
         },
         {
-          "key": "-80.53003,43.49909|-80.52999,43.49906",
+          "key": "-80.53332,43.5016|-80.53321,43.50153",
           "index": 4640
         },
         {
-          "key": "-80.52975,43.46536|-80.5293,43.46518",
+          "key": "-80.52514,43.46415|-80.525,43.46405",
           "index": 4669
         },
         {
-          "key": "-80.49414,43.45034|-80.49334,43.45009",
+          "key": "-80.49012,43.44889|-80.48999,43.44884",
           "index": 4698
         },
         {
-          "key": "-75.72628,45.40741|-75.72483,45.40802",
+          "key": "-75.7339,45.40428|-75.73255,45.40484",
           "index": 4727
         },
         {
-          "key": "-75.70488,45.41878|-75.70342,45.41941",
+          "key": "-75.70974,45.41653|-75.70958,45.41669",
           "index": 4756
         },
         {
-          "key": "-75.6857,45.42242|-75.68569,45.42233",
+          "key": "-75.68843,45.42651|-75.68815,45.4263",
           "index": 4785
         },
         {
-          "key": "-75.66684,45.41225|-75.66639,45.41221",
+          "key": "-75.66797,45.41299|-75.6678,45.41275",
           "index": 4814
         },
         {
-          "key": "-75.64781,45.41899|-75.64613,45.41911",
+          "key": "-75.65159,45.41773|-75.65133,45.41789",
           "index": 4843
         },
         {
-          "key": "-75.62323,45.42484|-75.62292,45.42488",
+          "key": "-75.62585,45.42315|-75.62513,45.42395",
           "index": 4872
         },
         {
-          "key": "-75.65502,45.28371|-75.65475,45.28382",
+          "key": "-75.65765,45.28152|-75.65748,45.28169",
           "index": 4901
         },
         {
-          "key": "-75.6279,45.2964|-75.62785,45.29679",
+          "key": "-75.62926,45.29479|-75.62889,45.29502",
           "index": 4930
         },
         {
-          "key": "-75.64159,45.33004|-75.64088,45.32885",
+          "key": "-75.63756,45.32334|-75.63682,45.32209",
           "index": 4959
         },
         {
-          "key": "-75.66131,45.36338|-75.66062,45.36217",
+          "key": "-75.657,45.35608|-75.65625,45.35485",
           "index": 4988
         },
         {
-          "key": "-75.6938,45.3806|-75.69337,45.38031",
+          "key": "-75.68654,45.37752|-75.68498,45.3769",
           "index": 5017
         },
         {
-          "key": "-75.70737,45.39458|-75.70693,45.39422",
+          "key": "-75.70237,45.39201|-75.7011,45.39155",
           "index": 5046
         },
         {
-          "key": "-75.6494,45.34158|-75.64932,45.34221",
+          "key": "-75.65366,45.35024|-75.65268,45.34861",
           "index": 5075
         },
         {
-          "key": "-123.12265,49.27954|-123.12119,49.28051",
+          "key": "-75.66877,45.32343|-75.66868,45.32443",
           "index": 5104
         },
         {
-          "key": "-123.11535,49.2666|-123.11486,49.26557",
+          "key": "-123.11848,49.27024|-123.11815,49.26977",
           "index": 5133
         },
         {
-          "key": "-123.1181,49.24277|-123.11793,49.24305",
+          "key": "-123.11585,49.24444|-123.11566,49.24464",
           "index": 5162
         },
         {
-          "key": "-123.11687,49.21304|-123.11681,49.21445",
+          "key": "-123.11654,49.2215|-123.11648,49.22291",
           "index": 5191
         },
         {
-          "key": "-123.12607,49.19555|-123.12444,49.19631",
+          "key": "-123.12103,49.19762|-123.1205,49.19788",
           "index": 5220
         },
         {
-          "key": "-123.13647,49.17949|-123.13647,49.18069",
+          "key": "-123.13621,49.18469|-123.13613,49.18484",
           "index": 5249
         },
         {
-          "key": "-123.14538,49.19683|-123.14486,49.19684",
+          "key": "-123.1359,49.19579|-123.13374,49.19553",
           "index": 5278
         },
         {
-          "key": "-123.17525,49.19384|-123.17375,49.19367",
+          "key": "-123.16834,49.19328|-123.16675,49.1931",
           "index": 5307
         },
         {
-          "key": "-123.11574,49.28316|-123.11456,49.2824",
+          "key": "-123.12061,49.28636|-123.1204,49.28613",
           "index": 5336
         },
         {
-          "key": "-123.10218,49.27374|-123.10209,49.27364",
+          "key": "-123.10273,49.27661|-123.10267,49.27645",
           "index": 5365
         },
         {
-          "key": "-123.07889,49.26682|-123.07831,49.26646",
+          "key": "-123.08093,49.26899|-123.08071,49.26883",
           "index": 5394
         },
         {
-          "key": "-123.06454,49.25192|-123.0643,49.25181",
+          "key": "-123.0687,49.2552|-123.06835,49.25477",
           "index": 5423
         },
         {
-          "key": "-123.02177,49.23385|-123.02062,49.23342",
+          "key": "-123.03022,49.23776|-123.02885,49.23709",
           "index": 5452
         },
         {
-          "key": "-122.98051,49.21847|-122.97908,49.21811",
+          "key": "-122.99008,49.22042|-122.98847,49.22008",
           "index": 5481
         },
         {
-          "key": "-122.95663,49.20841|-122.95659,49.20827",
+          "key": "-122.95973,49.21278|-122.95911,49.21193",
           "index": 5510
         },
         {
-          "key": "-122.9525,49.1995|-122.95161,49.19955",
+          "key": "-122.95535,49.19987|-122.95473,49.19971",
           "index": 5539
         },
         {
-          "key": "-122.9269,49.20255|-122.92568,49.20162",
+          "key": "-122.93089,49.20355|-122.92912,49.20336",
           "index": 5568
         },
         {
-          "key": "-122.9012,49.20655|-122.90057,49.20644",
+          "key": "-122.90456,49.20558|-122.90296,49.20634",
           "index": 5597
         },
         {
-          "key": "-122.8596,49.20709|-122.85935,49.20706",
+          "key": "-122.8668,49.20579|-122.86477,49.20631",
           "index": 5626
         },
         {
-          "key": "-122.84865,49.19258|-122.84826,49.19215",
+          "key": "-122.85067,49.19515|-122.85065,49.19494",
           "index": 5655
         },
         {
-          "key": "-122.89743,49.21099|-122.89579,49.21219",
+          "key": "-122.90448,49.20563|-122.90367,49.2061",
           "index": 5684
         },
         {
-          "key": "-122.88511,49.23728|-122.88453,49.23691",
+          "key": "-122.88286,49.23324|-122.8825,49.23171",
           "index": 5713
         },
         {
-          "key": "-123.07572,49.26513|-123.07415,49.26462",
+          "key": "-122.9126,49.25262|-122.90979,49.25221",
           "index": 5742
         },
         {
-          "key": "-123.04207,49.2593|-123.04111,49.25942",
+          "key": "-123.05129,49.25806|-123.04984,49.25828",
           "index": 5771
         },
         {
-          "key": "-123.0148,49.26389|-123.01456,49.26425",
+          "key": "-123.01612,49.26249|-123.01582,49.26262",
           "index": 5800
         },
         {
-          "key": "-122.98393,49.26486|-122.98217,49.26474",
+          "key": "-122.9924,49.26502|-122.99176,49.26493",
           "index": 5829
         },
         {
-          "key": "-122.94583,49.25615|-122.94409,49.25559",
+          "key": "-122.95374,49.25848|-122.95319,49.2584",
           "index": 5858
         },
         {
-          "key": "-122.90319,49.25101|-122.90229,49.25077",
+          "key": "-122.90979,49.25221|-122.90899,49.25207",
           "index": 5887
         },
         {
-          "key": "-122.89294,49.25862|-122.89276,49.25896",
+          "key": "-122.893,49.25522|-122.89297,49.25384",
           "index": 5916
         },
         {
-          "key": "-122.87367,49.27603|-122.87276,49.27733",
+          "key": "-122.87783,49.27121|-122.87665,49.27214",
           "index": 5945
         },
         {
-          "key": "-122.84489,49.27794|-122.84375,49.27793",
+          "key": "-122.85417,49.27789|-122.85197,49.27802",
           "index": 5974
         },
         {
-          "key": "-122.8083,49.27654|-122.8076,49.27652",
+          "key": "-122.81944,49.27671|-122.81736,49.27667",
           "index": 6003
         },
         {
-          "key": "-122.79295,49.28207|-122.79295,49.28313",
+          "key": "-122.79474,49.27961|-122.79398,49.28045",
           "index": 6032
         },
         {
-          "key": "-123.07722,49.28375|-123.0747,49.28405",
+          "key": "-123.0838,49.28311|-123.08323,49.28301",
           "index": 6061
         },
         {
-          "key": "-123.03939,49.28909|-123.0383,49.28879",
+          "key": "-123.04587,49.2921|-123.04386,49.29155",
           "index": 6090
         },
         {
-          "key": "-123.00615,49.29058|-123.00543,49.29037",
+          "key": "-123.01259,49.29265|-123.01106,49.29251",
           "index": 6119
         },
         {
-          "key": "-122.96512,49.28741|-122.96407,49.28725",
+          "key": "-122.97637,49.29006|-122.97444,49.28929",
           "index": 6148
         },
         {
-          "key": "-122.91815,49.28854|-122.91622,49.28879",
+          "key": "-122.92817,49.29076|-122.92584,49.29016",
           "index": 6177
         },
         {
-          "key": "-122.87865,49.29171|-122.87784,49.29177",
+          "key": "-122.8856,49.29077|-122.88445,49.29079",
           "index": 6206
         },
         {
-          "key": "-122.85776,49.2781|-122.85713,49.27801",
+          "key": "-122.86353,49.27972|-122.86301,49.27951",
           "index": 6235
         },
         {
-          "key": "-122.80317,49.27544|-122.80256,49.27521",
+          "key": "-122.8081,49.27634|-122.80739,49.2763",
           "index": 6264
         },
         {
-          "key": "-122.7538,49.2524|-122.75145,49.25141",
+          "key": "-122.76788,49.25838|-122.76553,49.25738",
           "index": 6293
         },
         {
-          "key": "-122.69326,49.22795|-122.69079,49.22691",
+          "key": "-122.70808,49.23425|-122.70561,49.2332",
           "index": 6322
         },
         {
-          "key": "-122.64822,49.20573|-122.64688,49.206",
+          "key": "-122.65279,49.20656|-122.65199,49.20621",
           "index": 6351
         },
         {
-          "key": "-122.5925,49.20753|-122.59013,49.20653",
+          "key": "-122.60526,49.21216|-122.60298,49.21161",
           "index": 6380
         },
         {
-          "key": "-122.56005,49.18303|-122.55847,49.18228",
+          "key": "-122.56696,49.18713|-122.56585,49.18634",
           "index": 6409
         },
         {
-          "key": "-122.5026,49.17138|-122.50148,49.17116",
+          "key": "-122.51437,49.17291|-122.51175,49.17279",
           "index": 6438
         },
         {
-          "key": "-122.43991,49.17349|-122.43769,49.17334",
+          "key": "-122.45367,49.17407|-122.45102,49.17407",
           "index": 6467
         },
         {
-          "key": "-122.39563,49.1539|-122.39316,49.15283",
+          "key": "-122.40545,49.1591|-122.40457,49.15827",
           "index": 6496
         },
         {
-          "key": "-122.33807,49.13027|-122.33744,49.13022",
+          "key": "-122.34663,49.13306|-122.34512,49.13218",
           "index": 6525
         },
         {
-          "key": "-79.41147,43.76378|-79.41119,43.76258",
+          "key": "-79.41311,43.77063|-79.41276,43.76931",
           "index": 6554
         },
         {
-          "key": "-79.40339,43.73001|-79.40306,43.72876",
+          "key": "-79.40512,43.73715|-79.40488,43.73603",
           "index": 6583
         },
         {
-          "key": "-79.39716,43.69776|-79.39661,43.69676",
+          "key": "-79.39825,43.70232|-79.39816,43.70101",
           "index": 6612
         },
         {
-          "key": "-79.38605,43.67254|-79.38594,43.67213",
+          "key": "-79.38806,43.67557|-79.3878,43.67507",
           "index": 6641
         },
         {
-          "key": "-79.37711,43.64695|-79.37708,43.64715",
+          "key": "-79.37965,43.65343|-79.37911,43.65217",
           "index": 6670
         },
         {
-          "key": "-79.38953,43.65764|-79.38902,43.65643",
+          "key": "-79.38662,43.65085|-79.38623,43.64997",
           "index": 6699
         },
         {
-          "key": "-79.4029,43.66752|-79.40127,43.66787",
+          "key": "-79.39582,43.66886|-79.39561,43.66885",
           "index": 6728
         },
         {
-          "key": "-79.4137,43.68321|-79.41218,43.68284",
+          "key": "-79.40995,43.68166|-79.40986,43.68154",
           "index": 6757
         },
         {
-          "key": "-79.42934,43.69158|-79.42907,43.69145",
+          "key": "-79.42391,43.69068|-79.42207,43.69047",
           "index": 6786
         },
         {
-          "key": "-79.44398,43.71527|-79.44362,43.71431",
+          "key": "-79.44124,43.70944|-79.44057,43.70842",
           "index": 6815
         },
         {
-          "key": "-79.46117,43.74675|-79.46057,43.74593",
+          "key": "-79.45489,43.74034|-79.45368,43.73921",
           "index": 6844
         },
         {
-          "key": "-79.4833,43.75276|-79.48263,43.75276",
+          "key": "-79.47876,43.75348|-79.47759,43.75372",
           "index": 6873
         },
         {
-          "key": "-79.49328,43.77161|-79.49315,43.7714",
+          "key": "-79.49206,43.76732|-79.49174,43.76607",
           "index": 6902
         },
         {
-          "key": "-79.52323,43.78343|-79.52271,43.78256",
+          "key": "-79.52052,43.78033|-79.52019,43.78014",
           "index": 6931
         },
         {
-          "key": "-79.52623,43.64496|-79.52478,43.64528",
+          "key": "-79.52802,43.64403|-79.5278,43.64425",
           "index": 6960
         },
         {
-          "key": "-79.49006,43.64834|-79.48964,43.64827",
+          "key": "-79.49616,43.65039|-79.49577,43.65031",
           "index": 6989
         },
         {
-          "key": "-79.45825,43.65582|-79.45666,43.65618",
+          "key": "-79.46737,43.65377|-79.46609,43.65408",
           "index": 7018
         },
         {
-          "key": "-79.41743,43.66431|-79.41563,43.66477",
+          "key": "-79.42656,43.66231|-79.42553,43.66251",
           "index": 7047
         },
         {
-          "key": "-79.37705,43.67219|-79.37616,43.6722",
+          "key": "-79.38377,43.67092|-79.38347,43.67096",
           "index": 7076
         },
         {
-          "key": "-79.34693,43.67935|-79.34508,43.67974",
+          "key": "-79.35673,43.67737|-79.35532,43.67765",
           "index": 7105
         },
         {
-          "key": "-79.29837,43.68991|-79.29709,43.69055",
+          "key": "-79.30544,43.68817|-79.30367,43.68857",
           "index": 7134
         },
         {
-          "key": "-79.27895,43.7112|-79.2788,43.71215",
+          "key": "-79.28001,43.70544|-79.27979,43.70677",
           "index": 7163
         },
         {
-          "key": "-79.35057,43.77432|-79.3489,43.77469",
+          "key": "-79.26693,43.73115|-79.26608,43.7316",
           "index": 7192
         },
         {
-          "key": "-79.39245,43.76558|-79.39078,43.76595",
+          "key": "-79.38334,43.76775|-79.38159,43.76812",
           "index": 7221
         },
         {
-          "key": "-79.29332,43.72658|-79.29182,43.72692",
+          "key": "-79.28462,43.72852|-79.28287,43.72891",
           "index": 7250
         },
         {
-          "key": "-79.32624,43.72415|-79.32445,43.72463",
+          "key": "-79.31763,43.72623|-79.31646,43.72628",
           "index": 7279
         },
         {
-          "key": "-79.36487,43.71355|-79.36319,43.7139",
+          "key": "-79.35495,43.71562|-79.35417,43.71581",
           "index": 7308
         },
         {
-          "key": "-79.41034,43.70421|-79.40866,43.70457",
+          "key": "-79.40028,43.70635|-79.39845,43.70671",
           "index": 7337
         },
         {
-          "key": "-79.45449,43.69476|-79.4528,43.69515",
+          "key": "-79.44733,43.69636|-79.44578,43.69668",
           "index": 7366
         },
         {
-          "key": "-79.60215,43.73171|-79.60175,43.73083",
+          "key": "-79.48104,43.68881|-79.4794,43.68918",
           "index": 7395
         },
         {
-          "key": "-79.58908,43.74142|-79.58881,43.74203",
+          "key": "-79.59003,43.73774|-79.58995,43.73841",
           "index": 7424
         },
         {
-          "key": "-79.57347,43.74507|-79.57217,43.74539",
+          "key": "-79.58068,43.74347|-79.57959,43.74363",
           "index": 7453
         },
         {
-          "key": "-79.54352,43.75186|-79.54304,43.75195",
+          "key": "-79.54945,43.75056|-79.54815,43.75084",
           "index": 7482
         },
         {
-          "key": "-79.51882,43.75714|-79.51743,43.75726",
+          "key": "-79.52326,43.75617|-79.52251,43.75635",
           "index": 7511
         },
         {
-          "key": "-79.49184,43.76331|-79.49174,43.76331",
+          "key": "-79.49404,43.76243|-79.49384,43.76251",
           "index": 7540
         },
         {
-          "key": "-79.31164,43.66746|-79.31027,43.66776",
+          "key": "-79.30497,43.66895|-79.30396,43.66917",
           "index": 7569
         },
         {
-          "key": "-79.3451,43.65997|-79.34409,43.66018",
+          "key": "-79.33811,43.66151|-79.33695,43.66176",
           "index": 7598
         },
         {
-          "key": "-79.37506,43.65335|-79.37424,43.65353",
+          "key": "-79.36845,43.65477|-79.3673,43.65501",
           "index": 7627
         },
         {
-          "key": "-79.38509,43.6512|-79.38505,43.65121",
+          "key": "-79.38466,43.65054|-79.38462,43.65049",
           "index": 7656
         },
         {
-          "key": "-79.41334,43.64531|-79.41202,43.64559",
+          "key": "-79.40643,43.64675|-79.40532,43.64697",
           "index": 7685
         },
         {
-          "key": "-79.44573,43.63877|-79.44453,43.63899",
+          "key": "-79.43857,43.64012|-79.43749,43.64033",
           "index": 7714
         },
         {
-          "key": "-79.46664,43.63762|-79.46608,43.63777",
+          "key": "-79.4615,43.63928|-79.46064,43.63946",
           "index": 7743
         },
         {
-          "key": "-79.30822,43.66822|-79.3071,43.66847",
+          "key": "-79.47794,43.63207|-79.47752,43.63218",
           "index": 7772
         },
         {
-          "key": "-79.3756,43.65246|-79.37557,43.65249",
+          "key": "-79.37568,43.65313|-79.37568,43.65317",
           "index": 7801
         },
         {
-          "key": "-79.42493,43.64287|-79.42372,43.64312",
+          "key": "-79.40893,43.64625|-79.40781,43.64648",
           "index": 7830
         },
         {
-          "key": "-79.35387,43.67043|-79.35338,43.66989",
+          "key": "-79.35538,43.6725|-79.35496,43.67204",
           "index": 7859
         },
         {
-          "key": "-79.35208,43.65837|-79.351,43.65862",
+          "key": "-79.35061,43.66068|-79.35028,43.6599",
           "index": 7888
         },
         {
-          "key": "-79.36812,43.65131|-79.36699,43.65156",
+          "key": "-79.36413,43.65223|-79.36299,43.65288",
           "index": 7917
         },
         {
-          "key": "-79.39717,43.64504|-79.39579,43.64532",
+          "key": "-79.39107,43.64632|-79.39015,43.64652",
           "index": 7946
         },
         {
-          "key": "-79.42886,43.63865|-79.42792,43.63885",
+          "key": "-79.42206,43.64002|-79.42111,43.64022",
           "index": 7975
         },
         {
-          "key": "-79.44621,43.63874|-79.4462,43.63871",
+          "key": "-79.44366,43.63766|-79.44256,43.63719",
           "index": 8004
         },
         {
-          "key": "-79.45267,43.65686|-79.45263,43.65685",
+          "key": "-79.45219,43.65519|-79.45202,43.65454",
           "index": 8033
         },
         {
-          "key": "-79.42734,43.63895|-79.42733,43.63896",
+          "key": "-79.42242,43.63995|-79.42145,43.64015",
           "index": 8062
         },
         {
-          "key": "-79.45178,43.65356|-79.45162,43.65309",
+          "key": "-79.44852,43.64496|-79.44815,43.64398",
           "index": 8091
         },
         {
-          "key": "-79.35893,43.67635|-79.35888,43.67624",
+          "key": "-79.42647,43.63661|-79.42615,43.63578",
           "index": 8120
         },
         {
-          "key": "-79.35342,43.66742|-79.35335,43.6672",
+          "key": "-79.35305,43.66847|-79.35297,43.66933",
           "index": 8149
         },
         {
-          "key": "-79.37205,43.65828|-79.37183,43.65831",
+          "key": "-79.36869,43.65885|-79.36728,43.65917",
           "index": 8178
         },
         {
-          "key": "-79.38616,43.65521|-79.38481,43.6555",
+          "key": "-79.38031,43.65646|-79.38021,43.65646",
           "index": 8207
         },
         {
-          "key": "-79.40869,43.65179|-79.40749,43.65203",
+          "key": "-79.40519,43.65233|-79.40401,43.6518",
           "index": 8236
         },
         {
-          "key": "-79.4415,43.65038|-79.44133,43.65036",
+          "key": "-79.4355,43.64995|-79.43464,43.64989",
           "index": 8265
         },
         {
-          "key": "-79.45333,43.65663|-79.45321,43.65665",
+          "key": "-79.45251,43.65665|-79.45246,43.65646",
           "index": 8294
         },
         {
-          "key": "-79.45813,43.648|-79.45787,43.6484",
+          "key": "-79.45238,43.65609|-79.45219,43.65539",
           "index": 8323
         },
         {
-          "key": "-79.4411,43.65034|-79.44106,43.65034",
+          "key": "-79.44699,43.65172|-79.44678,43.65164",
           "index": 8352
         },
         {
-          "key": "-79.4185,43.65529|-79.41832,43.6553",
+          "key": "-79.42514,43.65386|-79.42406,43.6541",
           "index": 8381
         },
         {
-          "key": "-79.39179,43.65957|-79.39081,43.65978",
+          "key": "-79.39736,43.65844|-79.39639,43.65862",
           "index": 8410
         },
         {
-          "key": "-79.36389,43.66266|-79.36276,43.6629",
+          "key": "-79.36636,43.66026|-79.36607,43.65953",
           "index": 8439
         },
         {
-          "key": "-79.33206,43.67003|-79.33082,43.6703",
+          "key": "-79.33884,43.66852|-79.33744,43.66884",
           "index": 8468
         },
         {
-          "key": "-79.31718,43.67611|-79.31699,43.67619",
+          "key": "-79.31982,43.67563|-79.31962,43.67573",
           "index": 8497
         },
         {
-          "key": "-79.30021,43.68405|-79.3002,43.68411",
+          "key": "-79.30411,43.68316|-79.30273,43.68346",
           "index": 8526
         },
         {
-          "key": "-79.31811,43.67596|-79.3173,43.67608",
+          "key": "-79.32021,43.67508|-79.31965,43.6757",
           "index": 8555
         },
         {
-          "key": "-79.38675,43.66064|-79.38591,43.66082",
+          "key": "-79.39376,43.65915|-79.39254,43.65941",
           "index": 8584
         },
         {
-          "key": "-79.36669,43.66205|-79.36529,43.66235",
+          "key": "-79.367,43.66187|-79.36665,43.66099",
           "index": 8613
         },
         {
-          "key": "-79.37914,43.64036|-79.37804,43.64074",
+          "key": "-79.37726,43.64178|-79.37689,43.64122",
           "index": 8642
         },
         {
-          "key": "-79.39835,43.63569|-79.39832,43.63571",
+          "key": "-79.39623,43.63684|-79.39505,43.63719",
           "index": 8671
         },
         {
-          "key": "-79.40737,43.63641|-79.4068,43.63639",
+          "key": "-79.40494,43.63609|-79.40441,43.63597",
           "index": 8700
         },
         {
-          "key": "-79.379,43.64563|-79.37897,43.64563",
+          "key": "-79.39836,43.63569|-79.39832,43.63571",
           "index": 8729
         },
         {
-          "key": "-79.39739,43.65127|-79.39714,43.65067",
+          "key": "-79.39589,43.64759|-79.39558,43.64678",
           "index": 8758
         },
         {
-          "key": "-79.40156,43.65993|-79.40151,43.66002",
+          "key": "-79.4016,43.65946|-79.40152,43.65937",
           "index": 8787
         },
         {
-          "key": "-79.39121,43.63848|-79.39116,43.63845",
+          "key": "-79.39179,43.63768|-79.39074,43.6379",
           "index": 8816
         },
         {
-          "key": "-79.40576,43.65165|-79.40543,43.6508",
+          "key": "-79.40799,43.65714|-79.40762,43.65622",
           "index": 8845
         },
         {
-          "key": "-79.41284,43.63702|-79.41241,43.63699",
+          "key": "-79.41172,43.6366|-79.41159,43.63654",
           "index": 8874
         },
         {
-          "key": "-79.4079,43.68535|-79.40668,43.68559",
+          "key": "-79.40232,43.68648|-79.40149,43.68664",
           "index": 8903
         },
         {
-          "key": "-79.41516,43.68379|-79.41515,43.68381",
+          "key": "-79.41514,43.68463|-79.41509,43.68451",
           "index": 8932
         },
         {
-          "key": "-79.43996,43.67865|-79.4389,43.67889",
+          "key": "-79.4351,43.67972|-79.43437,43.67987",
           "index": 8961
         },
         {
-          "key": "-79.61315,43.69081|-79.61235,43.69357",
+          "key": "-79.61581,43.68541|-79.61578,43.68506",
           "index": 8990
         },
         {
-          "key": "-79.56997,43.70617|-79.5659,43.70625",
+          "key": "-79.59434,43.70569|-79.59028,43.70577",
           "index": 9019
         },
         {
-          "key": "-79.46201,43.66936|-79.45952,43.66678",
+          "key": "-79.4718,43.67889|-79.47014,43.67747",
           "index": 9048
         },
         {
-          "key": "-79.38678,43.64325|-79.38458,43.6439",
+          "key": "-79.40897,43.64024|-79.40612,43.64016",
           "index": 9077
         },
         {
-          "key": "-73.62192,45.45514|-73.61698,45.45788",
+          "key": "-73.56209,45.47961|-73.55982,45.48121",
           "index": 9106
         },
         {
-          "key": "-73.8017,45.44749|-73.79743,45.44848",
+          "key": "-73.61698,45.45788|-73.61204,45.46061",
           "index": 9135
         },
         {
-          "key": "-73.97097,45.39254|-73.96516,45.39595",
+          "key": "-73.71849,45.44864|-73.71111,45.44849",
           "index": 9164
         },
         {
-          "key": "-74.11584,45.33468|-74.10971,45.33769",
+          "key": "-73.86842,45.43012|-73.86169,45.43118",
           "index": 9193
         },
         {
-          "key": "-74.2516,45.27785|-74.24592,45.27455",
+          "key": "-73.97092,45.3925|-73.96816,45.39396",
           "index": 9222
         },
         {
-          "key": "-74.41641,45.35426|-74.41048,45.35332",
+          "key": "-74.0639,45.36009|-74.05824,45.36227",
           "index": 9251
         },
         {
-          "key": "-74.53587,45.34828|-74.52916,45.35085",
+          "key": "-74.19717,45.29417|-74.1955,45.29536",
           "index": 9280
         },
         {
-          "key": "-74.70061,45.31487|-74.69295,45.31459",
+          "key": "-74.30426,45.30859|-74.29837,45.30516",
           "index": 9309
         },
         {
-          "key": "-74.82523,45.30183|-74.82243,45.30177",
+          "key": "-74.42936,45.35756|-74.42815,45.35693",
           "index": 9338
         },
         {
-          "key": "-74.9544,45.25295|-74.95222,45.2528",
+          "key": "-74.489,45.36681|-74.48363,45.36935",
           "index": 9367
         },
         {
-          "key": "-75.11534,45.31778|-75.10816,45.31763",
+          "key": "-74.62767,45.31698|-74.62253,45.31651",
           "index": 9396
         },
         {
-          "key": "-75.3245,45.34785|-75.31715,45.34668",
+          "key": "-74.71553,45.31376|-74.71464,45.31414",
           "index": 9425
         },
         {
-          "key": "-75.53701,45.38132|-75.52968,45.38017",
+          "key": "-74.8039,45.29983|-74.79764,45.29917",
           "index": 9454
         },
         {
-          "key": "-79.39855,43.64084|-79.3934,43.64212",
+          "key": "-74.91364,45.26113|-74.90692,45.26266",
           "index": 9483
         },
         {
-          "key": "-79.52412,43.60257|-79.51832,43.60549",
+          "key": "-75.05135,45.29554|-75.04533,45.29273",
           "index": 9512
         },
         {
-          "key": "-79.64618,43.49993|-79.64351,43.50308",
+          "key": "-75.19801,45.32772|-75.19077,45.32657",
           "index": 9541
         },
         {
-          "key": "-79.75823,43.38221|-79.75391,43.38635",
+          "key": "-75.40438,45.36052|-75.39727,45.3594",
           "index": 9570
         },
         {
-          "key": "-79.89091,43.2882|-79.88999,43.28864",
+          "key": "-75.59581,45.39177|-75.59467,45.3911",
           "index": 9599
         },
         {
-          "key": "-80.0037,43.26208|-79.99778,43.26425",
+          "key": "-79.38434,43.64391|-79.38059,43.64476",
           "index": 9628
         },
         {
-          "key": "-80.16786,43.23031|-80.16327,43.23414",
+          "key": "-79.45314,43.63913|-79.45123,43.63893",
           "index": 9657
         },
         {
-          "key": "-80.27103,43.14817|-80.2657,43.14673",
+          "key": "-79.5604,43.58042|-79.5559,43.58455",
           "index": 9686
         },
         {
-          "key": "-80.38952,43.19923|-80.38725,43.19838",
+          "key": "-79.67081,43.46853|-79.66825,43.4717",
           "index": 9715
         },
         {
-          "key": "-80.56477,43.16329|-80.55776,43.16498",
+          "key": "-79.78412,43.35733|-79.78022,43.36109",
           "index": 9744
         },
         {
-          "key": "-80.76212,43.12561|-80.75555,43.12606",
+          "key": "-79.89349,43.28763|-79.89293,43.28765",
           "index": 9773
         },
         {
-          "key": "-80.88249,43.04394|-80.87839,43.0477",
+          "key": "-79.95933,43.27404|-79.95408,43.27481",
           "index": 9802
         },
         {
-          "key": "-81.05041,42.99102|-81.04723,42.99112",
+          "key": "-80.08722,43.24267|-80.08041,43.24317",
           "index": 9831
         },
         {
-          "key": "-81.23087,42.9855|-81.22794,42.98603",
+          "key": "-80.20442,43.19988|-80.20358,43.2007",
           "index": 9860
         },
         {
-          "key": "-79.45235,43.65949|-79.44992,43.65704",
+          "key": "-80.25885,43.14704|-80.25847,43.14713",
           "index": 9889
         },
         {
-          "key": "-79.53863,43.70678|-79.5343,43.70686",
+          "key": "-80.33927,43.17896|-80.33425,43.17765",
           "index": 9918
         },
         {
-          "key": "-79.66232,43.70435|-79.65829,43.70444",
+          "key": "-80.41604,43.19695|-80.40966,43.19846",
           "index": 9947
         },
         {
-          "key": "-79.77701,43.68429|-79.77283,43.68514",
+          "key": "-80.58922,43.15737|-80.58245,43.15901",
           "index": 9976
         },
         {
-          "key": "-79.89822,43.65973|-79.89404,43.66057",
+          "key": "-80.76396,43.12547|-80.75976,43.12576",
           "index": 10005
         },
         {
-          "key": "-80.00663,43.62782|-80.00319,43.62806",
+          "key": "-80.85444,43.07191|-80.85141,43.07545",
           "index": 10034
         },
         {
-          "key": "-80.11296,43.62493|-80.10883,43.62547",
+          "key": "-80.96562,43.00455|-80.96464,43.0048",
           "index": 10063
         },
         {
-          "key": "-80.19046,43.57819|-80.18788,43.58028",
+          "key": "-81.11831,42.98574|-81.11201,42.98676",
           "index": 10092
         },
         {
-          "key": "-80.26029,43.53694|-80.25686,43.53841",
+          "key": "-79.40738,43.6401|-79.40474,43.64011",
           "index": 10121
         },
         {
-          "key": "-80.36898,43.49568|-80.36526,43.49712",
+          "key": "-79.47198,43.67897|-79.47108,43.67824",
           "index": 10150
         },
         {
-          "key": "-80.47792,43.46081|-80.4741,43.46208",
+          "key": "-79.57238,43.7062|-79.56813,43.70628",
           "index": 10179
         },
         {
-          "key": "-80.57778,43.42017|-80.57656,43.42078",
+          "key": "-79.68607,43.70253|-79.68195,43.70337",
           "index": 10208
         },
         {
-          "key": "-80.75726,43.36742|-80.75471,43.36825",
+          "key": "-79.90973,43.65738|-79.906,43.65816",
           "index": 10237
         },
         {
-          "key": "-80.87228,43.36611|-80.86799,43.36606",
+          "key": "-80.10174,43.62644|-80.09763,43.62697",
           "index": 10266
         },
         {
-          "key": "-80.98885,43.36208|-80.98587,43.36279",
+          "key": "-80.18126,43.58683|-80.179,43.58949",
           "index": 10295
         },
         {
-          "key": "-81.07959,43.30553|-81.07638,43.30763",
+          "key": "-80.25155,43.54108|-80.2489,43.54242",
           "index": 10324
         },
         {
-          "key": "-81.13938,43.25142|-81.13841,43.25346",
+          "key": "-80.53553,43.44166|-80.53169,43.44294",
           "index": 10353
         },
         {
-          "key": "-81.14055,43.16804|-81.14026,43.17114",
+          "key": "-81.03868,43.33233|-81.03566,43.3343",
           "index": 10382
         },
         {
-          "key": "-81.14884,43.0782|-81.14856,43.0813",
+          "key": "-81.12259,43.27739|-81.11959,43.27934",
           "index": 10411
         },
         {
-          "key": "-81.19573,43.00174|-81.19335,43.0043",
+          "key": "-81.13743,43.23554|-81.1368,43.23256",
           "index": 10440
         },
         {
-          "key": "-81.27043,42.97729|-81.26872,42.97706",
+          "key": "-81.14185,43.15408|-81.14157,43.15712",
           "index": 10469
         },
         {
-          "key": "-81.37385,42.98141|-81.37037,42.98308",
+          "key": "-81.14947,43.07299|-81.14926,43.07396",
           "index": 10498
         },
         {
-          "key": "-81.47828,42.94814|-81.47422,42.94857",
+          "key": "-81.19251,43.00515|-81.1903,43.00754",
           "index": 10527
         },
         {
-          "key": "-81.5935,42.95652|-81.58934,42.95612",
+          "key": "-81.25829,42.97772|-81.25459,42.97872",
           "index": 10556
         },
         {
-          "key": "-81.70671,42.94735|-81.70252,42.94771",
+          "key": "-81.35124,42.99055|-81.34983,42.99066",
           "index": 10585
         },
         {
-          "key": "-81.82869,42.94512|-81.82448,42.94507",
+          "key": "-81.43405,42.95302|-81.43251,42.95344",
           "index": 10614
         },
         {
-          "key": "-81.95123,42.94639|-81.94695,42.94635",
+          "key": "-81.53333,42.95076|-81.52926,42.95037",
           "index": 10643
         },
         {
-          "key": "-82.07522,42.94757|-82.07095,42.94753",
+          "key": "-81.63983,42.9532|-81.6356,42.95357",
           "index": 10672
         },
         {
-          "key": "-82.19744,42.94983|-82.19315,42.94967",
+          "key": "-81.75709,42.94435|-81.75288,42.94431",
           "index": 10701
         },
         {
-          "key": "-82.32176,42.95454|-82.31747,42.95438",
+          "key": "-81.87924,42.94565|-81.87503,42.94561",
           "index": 10730
         },
         {
-          "key": "-79.44485,43.63744|-79.44007,43.63563",
+          "key": "-82.00039,42.94688|-81.99624,42.94684",
           "index": 10759
         },
         {
-          "key": "-79.6262,43.51988|-79.62181,43.52392",
+          "key": "-82.12226,42.94801|-82.11803,42.94797",
           "index": 10788
         },
         {
-          "key": "-79.73863,43.40116|-79.73431,43.40529",
+          "key": "-82.24023,42.95142|-82.2362,42.95127",
           "index": 10817
         },
         {
-          "key": "-79.97407,43.27291|-79.97094,43.27343",
+          "key": "-82.35342,42.9563|-82.35007,42.95617",
           "index": 10846
         },
         {
-          "key": "-80.20438,43.19985|-80.19989,43.2036",
+          "key": "-79.6865,43.45103|-79.68246,43.45489",
           "index": 10875
         },
         {
-          "key": "-80.50163,43.17857|-80.49463,43.18026",
+          "key": "-81.23701,42.98387|-81.23191,42.98524",
           "index": 10904
         },
         {
-          "key": "-80.70298,43.13398|-80.69595,43.13504",
+          "key": "-81.41592,42.96115|-81.40997,42.96404",
           "index": 10933
         },
         {
-          "key": "-80.86231,43.06331|-80.85832,43.06783",
+          "key": "-81.54301,42.87025|-81.53808,42.87388",
           "index": 10962
         },
         {
-          "key": "-81.02227,42.99503|-81.01538,42.99618",
+          "key": "-81.68265,42.76719|-81.67773,42.77084",
           "index": 10991
         },
         {
-          "key": "-81.20381,42.98592|-81.19693,42.9858",
+          "key": "-81.82741,42.65999|-81.82251,42.66364",
           "index": 11020
         },
         {
-          "key": "-81.37263,42.982|-81.36647,42.98497",
+          "key": "-81.94912,42.56946|-81.94668,42.57131",
           "index": 11049
         },
         {
-          "key": "-81.52775,42.88129|-81.52265,42.88505",
+          "key": "-82.08391,42.46901|-82.07927,42.47249",
           "index": 11078
         },
         {
-          "key": "-81.67581,42.77218|-81.67071,42.77594",
+          "key": "-82.20272,42.38092|-82.20029,42.38221",
           "index": 11107
         },
         {
-          "key": "-81.82442,42.66204|-81.81929,42.66585",
+          "key": "-82.37678,42.33043|-82.37021,42.33232",
           "index": 11136
         },
         {
-          "key": "-81.9732,42.55158|-81.96807,42.55539",
+          "key": "-82.54772,42.30358|-82.54101,42.30389",
           "index": 11165
         },
         {
-          "key": "-82.11929,42.44239|-82.11426,42.44615",
+          "key": "-82.72083,42.29553|-82.71747,42.2955",
           "index": 11194
         },
         {
-          "key": "-82.28287,42.35727|-82.27621,42.35918",
+          "key": "-82.90013,42.31388|-82.89552,42.31343",
           "index": 11223
-        },
-        {
-          "key": "-82.47349,42.30704|-82.46635,42.30738",
-          "index": 11252
-        },
-        {
-          "key": "-82.68051,42.29725|-82.67337,42.29759",
-          "index": 11281
-        },
-        {
-          "key": "-82.88524,42.31243|-82.87807,42.3117",
-          "index": 11310
         }
       ]
     }

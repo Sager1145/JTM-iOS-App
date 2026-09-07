@@ -10,78 +10,6 @@
    "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
    "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "septa"
   },
   {
@@ -1980,6 +1908,16 @@
    "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
    "input": "na-feeds.json",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
+   "feed": "houston-metro"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "US",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "king-county-metro"
   },
   {
@@ -2151,6 +2089,16 @@
    "input": "na-feeds.json",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "new-orleans-rta"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "US",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
+   "feed": "north-county-transit-distric"
   },
   {
    "severity": "WARN",

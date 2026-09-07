@@ -3,186 +3,6 @@
   {
    "severity": "ERROR",
    "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "go-transit"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "go-transit"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "go-transit"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "ottawa-carleton-regional-tra"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "ottawa-carleton-regional-tra"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "ottawa-carleton-regional-tra"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "union-pearson-express-up-exp"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "union-pearson-express-up-exp"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "CA",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "union-pearson-express-up-exp"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "houston-metro"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/build-north-america-rail-package.py",
-   "recordedSha256": "55eb2d96a2f8e34af1ec9d1165b615ce50524bf56753b1a9230adb66d17409eb",
-   "actualSha256": "a4af6f96ce257c3c13e52cabc526248d56ceca88cfba2f68998a0598ca7a7e11",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/lib/na_official.py than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/lib/na_official.py",
-   "recordedSha256": "942043b481c7c3d93347eb79f617bdfdd70c7913e73618532e69e014be3ca1b0",
-   "actualSha256": "9adde6875f7b767ae712f941ed236792f014d6a61e81cf02aedc5f58990797f1",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
-   "country": "US",
-   "line": "-",
-   "message": "built from a different app/scripts/railway/na-feeds.json than the one on disk, so this package is not what its own inputs build",
-   "input": "app/scripts/railway/na-feeds.json",
-   "recordedSha256": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c",
-   "actualSha256": "c73f7f2b282850cb4f17716538c79faa15047b5019338c17fed2fd36b1595390",
-   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
-   "feed": "north-county-transit-distric"
-  },
-  {
-   "severity": "ERROR",
-   "check": "package.stale",
    "country": "US",
    "line": "-",
    "message": "built from a different app/scripts/railway/build-north-america-rail-package.py than the one on disk, so this package is not what its own inputs build",
@@ -2235,76 +2055,6 @@
   {
    "severity": "WARN",
    "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "amtrak"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "edmonton-transit-system"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "exo"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "grt-ion-light-rail"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "translink"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "ttc"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
-   "country": "CA",
-   "line": "-",
-   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
-   "input": "na-feeds.json",
-   "generatedAt": "2026-08-30T00:00:00.000Z",
-   "feed": "via"
-  },
-  {
-   "severity": "WARN",
-   "check": "package.freshness",
    "country": "US",
    "line": "-",
    "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
@@ -2451,6 +2201,16 @@
    "input": "na-feeds.json",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "hillsborough-area-regional-t"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "US",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
+   "feed": "houston-metro"
   },
   {
    "severity": "WARN",
@@ -2640,6 +2400,16 @@
    "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
    "input": "na-feeds.json",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
+   "feed": "north-county-transit-distric"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "US",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "patco-speedline"
   },
   {
@@ -2791,6 +2561,106 @@
    "input": "na-feeds.json",
    "generatedAt": "2026-09-06T14:49:53.285802+00:00",
    "feed": "wmata"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "amtrak"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "edmonton-transit-system"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "exo"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "go-transit"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "grt-ion-light-rail"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "ottawa-carleton-regional-tra"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "translink"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "ttc"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "union-pearson-express-up-exp"
+  },
+  {
+   "severity": "WARN",
+   "check": "package.freshness",
+   "country": "CA",
+   "line": "-",
+   "message": "the package records no build-time digest for na-feeds.json, so nothing here can tell whether it was built before the registry last changed",
+   "input": "na-feeds.json",
+   "generatedAt": "2026-08-30T00:00:00.000Z",
+   "feed": "via"
   },
   {
    "severity": "WARN",
@@ -4542,14 +4412,6 @@
   {
    "severity": "NOTE",
    "check": "package.field:logo",
-   "country": "CA",
-   "line": "-",
-   "message": "83 of 83 lines carry no `logo`",
-   "count": 83
-  },
-  {
-   "severity": "NOTE",
-   "check": "package.field:logo",
    "country": "US",
    "line": "-",
    "message": "353 of 353 lines carry no `logo`",
@@ -4557,11 +4419,11 @@
   },
   {
    "severity": "NOTE",
-   "check": "package.field:operatorShort",
+   "check": "package.field:logo",
    "country": "CA",
    "line": "-",
-   "message": "68 of 83 lines carry no `operatorShort`",
-   "count": 68
+   "message": "83 of 83 lines carry no `logo`",
+   "count": 83
   },
   {
    "severity": "NOTE",
@@ -4573,83 +4435,19 @@
   },
   {
    "severity": "NOTE",
+   "check": "package.field:operatorShort",
+   "country": "CA",
+   "line": "-",
+   "message": "68 of 83 lines carry no `operatorShort`",
+   "count": 68
+  },
+  {
+   "severity": "NOTE",
    "check": "station.complex",
    "country": "US",
    "line": "us-official-newark",
    "message": "us-official-newark ships as one station complex of 14 platforms",
    "station": "us-official-newark"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-mount-dennis-go is named 2 ways: Mount Dennis GO / Mount Dennis Station LRT Platform",
-   "station": "ca-official-mount-dennis-go"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-malton is named 2 ways: Malton / Malton GO",
-   "station": "ca-official-malton"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-brampton is named 2 ways: Brampton / Brampton Innovation District GO",
-   "station": "ca-official-brampton"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-georgetown is named 2 ways: Georgetown / Georgetown GO",
-   "station": "ca-official-georgetown"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-kitchener is named 2 ways: Kitchener / Kitchener GO",
-   "station": "ca-official-kitchener"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-stratford is named 2 ways: Stratford / Stratford GO",
-   "station": "ca-official-stratford"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-oakville is named 2 ways: Oakville / Oakville GO",
-   "station": "ca-official-oakville"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-aldershot is named 2 ways: Aldershot / Aldershot GO",
-   "station": "ca-official-aldershot"
-  },
-  {
-   "severity": "NOTE",
-   "check": "station.names",
-   "country": "CA",
-   "line": "-",
-   "message": "station ca-official-finch-west is named 2 ways: Finch West Station / Finch West Station LRT Platform",
-   "station": "ca-official-finch-west"
   },
   {
    "severity": "NOTE",
@@ -5189,6 +4987,78 @@
   },
   {
    "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-mount-dennis-go is named 2 ways: Mount Dennis GO / Mount Dennis Station LRT Platform",
+   "station": "ca-official-mount-dennis-go"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-malton is named 2 ways: Malton / Malton GO",
+   "station": "ca-official-malton"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-brampton is named 2 ways: Brampton / Brampton Innovation District GO",
+   "station": "ca-official-brampton"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-georgetown is named 2 ways: Georgetown / Georgetown GO",
+   "station": "ca-official-georgetown"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-kitchener is named 2 ways: Kitchener / Kitchener GO",
+   "station": "ca-official-kitchener"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-stratford is named 2 ways: Stratford / Stratford GO",
+   "station": "ca-official-stratford"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-oakville is named 2 ways: Oakville / Oakville GO",
+   "station": "ca-official-oakville"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-aldershot is named 2 ways: Aldershot / Aldershot GO",
+   "station": "ca-official-aldershot"
+  },
+  {
+   "severity": "NOTE",
+   "check": "station.names",
+   "country": "CA",
+   "line": "-",
+   "message": "station ca-official-finch-west is named 2 ways: Finch West Station / Finch West Station LRT Platform",
+   "station": "ca-official-finch-west"
+  },
+  {
+   "severity": "NOTE",
    "check": "station.split.reviewed",
    "country": "US",
    "line": "cta-red-line",
@@ -5678,670 +5548,6 @@
   }
  ],
  "lines": [
-  {
-   "id": "go-transit-br",
-   "band": "regional",
-   "lengthKm": 101.2,
-   "stations": 11,
-   "vertices": 499,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-ki",
-   "band": "regional",
-   "lengthKm": 142.2,
-   "stations": 14,
-   "vertices": 518,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-le",
-   "band": "commuter",
-   "lengthKm": 50.7,
-   "stations": 10,
-   "vertices": 301,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-lw",
-   "band": "regional",
-   "lengthKm": 132.2,
-   "stations": 15,
-   "vertices": 496,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-lw-b1",
-   "band": "regional",
-   "lengthKm": 9.1,
-   "stations": 2,
-   "vertices": 55,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-mi",
-   "band": "commuter",
-   "lengthKm": 50.4,
-   "stations": 9,
-   "vertices": 304,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-rh",
-   "band": "regional",
-   "lengthKm": 46.2,
-   "stations": 7,
-   "vertices": 300,
-   "country": "CA"
-  },
-  {
-   "id": "go-transit-st",
-   "band": "commuter",
-   "lengthKm": 48.5,
-   "stations": 10,
-   "vertices": 336,
-   "country": "CA"
-  },
-  {
-   "id": "amtrak-adirondack-ca",
-   "band": "regional",
-   "lengthKm": 6.1,
-   "stations": 2,
-   "vertices": 30,
-   "country": "CA"
-  },
-  {
-   "id": "edmonton-transit-system-capital",
-   "band": "metro",
-   "lengthKm": 20.2,
-   "stations": 15,
-   "vertices": 235,
-   "country": "CA"
-  },
-  {
-   "id": "edmonton-transit-system-metro",
-   "band": "metro",
-   "lengthKm": 15.4,
-   "stations": 14,
-   "vertices": 231,
-   "country": "CA"
-  },
-  {
-   "id": "edmonton-transit-system-valley",
-   "band": "metro",
-   "lengthKm": 13.0,
-   "stations": 12,
-   "vertices": 185,
-   "country": "CA"
-  },
-  {
-   "id": "exo-ca",
-   "band": "commuter",
-   "lengthKm": 25.8,
-   "stations": 9,
-   "vertices": 151,
-   "country": "CA"
-  },
-  {
-   "id": "exo-ma",
-   "band": "commuter",
-   "lengthKm": 41.5,
-   "stations": 11,
-   "vertices": 255,
-   "country": "CA"
-  },
-  {
-   "id": "exo-sh",
-   "band": "commuter",
-   "lengthKm": 34.4,
-   "stations": 7,
-   "vertices": 198,
-   "country": "CA"
-  },
-  {
-   "id": "exo-sj",
-   "band": "commuter",
-   "lengthKm": 62.0,
-   "stations": 14,
-   "vertices": 379,
-   "country": "CA"
-  },
-  {
-   "id": "exo-vh",
-   "band": "commuter",
-   "lengthKm": 51.4,
-   "stations": 18,
-   "vertices": 309,
-   "country": "CA"
-  },
-  {
-   "id": "grt-ion-light-rail-301",
-   "band": "metro",
-   "lengthKm": 16.2,
-   "stations": 16,
-   "vertices": 271,
-   "country": "CA"
-  },
-  {
-   "id": "grt-ion-light-rail-301-b2",
-   "band": "metro",
-   "lengthKm": 1.8,
-   "stations": 3,
-   "vertices": 37,
-   "country": "CA"
-  },
-  {
-   "id": "grt-ion-light-rail-301-b1",
-   "band": "street",
-   "lengthKm": 1.5,
-   "stations": 4,
-   "vertices": 46,
-   "country": "CA"
-  },
-  {
-   "id": "ottawa-carleton-regional-tra-1",
-   "band": "metro",
-   "lengthKm": 12.3,
-   "stations": 13,
-   "vertices": 179,
-   "country": "CA"
-  },
-  {
-   "id": "ottawa-carleton-regional-tra-2",
-   "band": "metro",
-   "lengthKm": 19.0,
-   "stations": 11,
-   "vertices": 190,
-   "country": "CA"
-  },
-  {
-   "id": "ottawa-carleton-regional-tra-4",
-   "band": "commuter",
-   "lengthKm": 4.1,
-   "stations": 3,
-   "vertices": 34,
-   "country": "CA"
-  },
-  {
-   "id": "translink-canada-line",
-   "band": "metro",
-   "lengthKm": 14.3,
-   "stations": 14,
-   "vertices": 174,
-   "country": "CA"
-  },
-  {
-   "id": "translink-canada-line-b1",
-   "band": "metro",
-   "lengthKm": 4.0,
-   "stations": 4,
-   "vertices": 54,
-   "country": "CA"
-  },
-  {
-   "id": "translink-expo-line",
-   "band": "metro",
-   "lengthKm": 28.2,
-   "stations": 20,
-   "vertices": 386,
-   "country": "CA"
-  },
-  {
-   "id": "translink-expo-line-b1",
-   "band": "commuter",
-   "lengthKm": 7.5,
-   "stations": 5,
-   "vertices": 66,
-   "country": "CA"
-  },
-  {
-   "id": "translink-millennium-line",
-   "band": "metro",
-   "lengthKm": 25.1,
-   "stations": 17,
-   "vertices": 314,
-   "country": "CA"
-  },
-  {
-   "id": "translink-wce",
-   "band": "commuter",
-   "lengthKm": 67.3,
-   "stations": 8,
-   "vertices": 511,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-1",
-   "band": "metro",
-   "lengthKm": 38.6,
-   "stations": 38,
-   "vertices": 443,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-2",
-   "band": "metro",
-   "lengthKm": 26.3,
-   "stations": 31,
-   "vertices": 275,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-4",
-   "band": "metro",
-   "lengthKm": 5.3,
-   "stations": 5,
-   "vertices": 46,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-5",
-   "band": "metro",
-   "lengthKm": 18.6,
-   "stations": 25,
-   "vertices": 185,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-6",
-   "band": "street",
-   "lengthKm": 10.4,
-   "stations": 18,
-   "vertices": 165,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501",
-   "band": "street",
-   "lengthKm": 16.9,
-   "stations": 63,
-   "vertices": 291,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b1",
-   "band": "street",
-   "lengthKm": 1.3,
-   "stations": 5,
-   "vertices": 17,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b2",
-   "band": "street",
-   "lengthKm": 0.4,
-   "stations": 3,
-   "vertices": 7,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b3",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 7,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b4",
-   "band": "street",
-   "lengthKm": 1.2,
-   "stations": 5,
-   "vertices": 34,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b5",
-   "band": "street",
-   "lengthKm": 0.4,
-   "stations": 3,
-   "vertices": 6,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b6",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 4,
-   "vertices": 11,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b7",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 7,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-501-b8",
-   "band": "street",
-   "lengthKm": 0.9,
-   "stations": 5,
-   "vertices": 13,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504",
-   "band": "street",
-   "lengthKm": 12.7,
-   "stations": 51,
-   "vertices": 245,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b1",
-   "band": "street",
-   "lengthKm": 1.8,
-   "stations": 7,
-   "vertices": 29,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b2",
-   "band": "street",
-   "lengthKm": 1.4,
-   "stations": 7,
-   "vertices": 29,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b3",
-   "band": "street",
-   "lengthKm": 0.4,
-   "stations": 2,
-   "vertices": 10,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b4",
-   "band": "street",
-   "lengthKm": 0.9,
-   "stations": 4,
-   "vertices": 12,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b5",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 3,
-   "vertices": 18,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b6",
-   "band": "street",
-   "lengthKm": 0.4,
-   "stations": 2,
-   "vertices": 10,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b7",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 16,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-504-b8",
-   "band": "street",
-   "lengthKm": 0.2,
-   "stations": 2,
-   "vertices": 6,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505",
-   "band": "street",
-   "lengthKm": 10.6,
-   "stations": 43,
-   "vertices": 218,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505-b1",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 3,
-   "vertices": 13,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505-b2",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 15,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505-b3",
-   "band": "street",
-   "lengthKm": 0.4,
-   "stations": 3,
-   "vertices": 7,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505-b4",
-   "band": "street",
-   "lengthKm": 0.1,
-   "stations": 3,
-   "vertices": 9,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-505-b5",
-   "band": "street",
-   "lengthKm": 0.3,
-   "stations": 2,
-   "vertices": 8,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506",
-   "band": "street",
-   "lengthKm": 15.4,
-   "stations": 64,
-   "vertices": 317,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b1",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 3,
-   "vertices": 12,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b2",
-   "band": "street",
-   "lengthKm": 0.8,
-   "stations": 4,
-   "vertices": 19,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b3",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 11,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b4",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 15,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b5",
-   "band": "street",
-   "lengthKm": 1.4,
-   "stations": 7,
-   "vertices": 24,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b6",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 4,
-   "vertices": 21,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b7",
-   "band": "street",
-   "lengthKm": 0.7,
-   "stations": 5,
-   "vertices": 20,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-506-b8",
-   "band": "street",
-   "lengthKm": 0.5,
-   "stations": 3,
-   "vertices": 9,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-509",
-   "band": "street",
-   "lengthKm": 3.9,
-   "stations": 13,
-   "vertices": 112,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-509-b1",
-   "band": "street",
-   "lengthKm": 0.3,
-   "stations": 3,
-   "vertices": 19,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-510",
-   "band": "street",
-   "lengthKm": 5.3,
-   "stations": 18,
-   "vertices": 121,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-510-b1",
-   "band": "street",
-   "lengthKm": 0.8,
-   "stations": 3,
-   "vertices": 16,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-510-b2",
-   "band": "street",
-   "lengthKm": 0.1,
-   "stations": 2,
-   "vertices": 11,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-510-b3",
-   "band": "street",
-   "lengthKm": 0.3,
-   "stations": 2,
-   "vertices": 5,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-511",
-   "band": "street",
-   "lengthKm": 4.7,
-   "stations": 17,
-   "vertices": 94,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-511-b1",
-   "band": "street",
-   "lengthKm": 0.6,
-   "stations": 3,
-   "vertices": 8,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-511-b2",
-   "band": "street",
-   "lengthKm": 0.1,
-   "stations": 2,
-   "vertices": 3,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-512",
-   "band": "street",
-   "lengthKm": 5.1,
-   "stations": 21,
-   "vertices": 108,
-   "country": "CA"
-  },
-  {
-   "id": "ttc-512-b1",
-   "band": "street",
-   "lengthKm": 0.3,
-   "stations": 2,
-   "vertices": 8,
-   "country": "CA"
-  },
-  {
-   "id": "union-pearson-express-up-exp-up",
-   "band": "regional",
-   "lengthKm": 24.3,
-   "stations": 5,
-   "vertices": 119,
-   "country": "CA"
-  },
-  {
-   "id": "via-ottawa-montr-al",
-   "band": "longhaul",
-   "lengthKm": 185.3,
-   "stations": 5,
-   "vertices": 406,
-   "country": "CA"
-  },
-  {
-   "id": "via-toronto-london",
-   "band": "longhaul",
-   "lengthKm": 184.6,
-   "stations": 5,
-   "vertices": 388,
-   "country": "CA"
-  },
-  {
-   "id": "via-toronto-sarnia",
-   "band": "regional",
-   "lengthKm": 289.4,
-   "stations": 12,
-   "vertices": 926,
-   "country": "CA"
-  },
-  {
-   "id": "via-toronto-windsor",
-   "band": "longhaul",
-   "lengthKm": 358.6,
-   "stations": 10,
-   "vertices": 682,
-   "country": "CA"
-  },
   {
    "id": "ace-ace",
    "band": "regional",
@@ -9165,6 +8371,670 @@
    "stations": 21,
    "vertices": 332,
    "country": "US"
+  },
+  {
+   "id": "go-transit-br",
+   "band": "regional",
+   "lengthKm": 101.2,
+   "stations": 11,
+   "vertices": 499,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-ki",
+   "band": "regional",
+   "lengthKm": 142.2,
+   "stations": 14,
+   "vertices": 518,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-le",
+   "band": "commuter",
+   "lengthKm": 50.7,
+   "stations": 10,
+   "vertices": 301,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw",
+   "band": "regional",
+   "lengthKm": 132.2,
+   "stations": 15,
+   "vertices": 496,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-lw-b1",
+   "band": "regional",
+   "lengthKm": 9.1,
+   "stations": 2,
+   "vertices": 55,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-mi",
+   "band": "commuter",
+   "lengthKm": 50.4,
+   "stations": 9,
+   "vertices": 304,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-rh",
+   "band": "regional",
+   "lengthKm": 46.2,
+   "stations": 7,
+   "vertices": 300,
+   "country": "CA"
+  },
+  {
+   "id": "go-transit-st",
+   "band": "commuter",
+   "lengthKm": 48.5,
+   "stations": 10,
+   "vertices": 336,
+   "country": "CA"
+  },
+  {
+   "id": "amtrak-adirondack-ca",
+   "band": "regional",
+   "lengthKm": 6.1,
+   "stations": 2,
+   "vertices": 36,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-capital",
+   "band": "metro",
+   "lengthKm": 20.2,
+   "stations": 15,
+   "vertices": 235,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-metro",
+   "band": "metro",
+   "lengthKm": 15.4,
+   "stations": 14,
+   "vertices": 231,
+   "country": "CA"
+  },
+  {
+   "id": "edmonton-transit-system-valley",
+   "band": "metro",
+   "lengthKm": 13.0,
+   "stations": 12,
+   "vertices": 185,
+   "country": "CA"
+  },
+  {
+   "id": "exo-ca",
+   "band": "commuter",
+   "lengthKm": 25.8,
+   "stations": 9,
+   "vertices": 151,
+   "country": "CA"
+  },
+  {
+   "id": "exo-ma",
+   "band": "commuter",
+   "lengthKm": 41.5,
+   "stations": 11,
+   "vertices": 255,
+   "country": "CA"
+  },
+  {
+   "id": "exo-sh",
+   "band": "commuter",
+   "lengthKm": 34.4,
+   "stations": 7,
+   "vertices": 198,
+   "country": "CA"
+  },
+  {
+   "id": "exo-sj",
+   "band": "commuter",
+   "lengthKm": 62.0,
+   "stations": 14,
+   "vertices": 379,
+   "country": "CA"
+  },
+  {
+   "id": "exo-vh",
+   "band": "commuter",
+   "lengthKm": 51.4,
+   "stations": 18,
+   "vertices": 309,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301",
+   "band": "metro",
+   "lengthKm": 16.2,
+   "stations": 16,
+   "vertices": 271,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b2",
+   "band": "metro",
+   "lengthKm": 1.8,
+   "stations": 3,
+   "vertices": 37,
+   "country": "CA"
+  },
+  {
+   "id": "grt-ion-light-rail-301-b1",
+   "band": "street",
+   "lengthKm": 1.5,
+   "stations": 4,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-1",
+   "band": "metro",
+   "lengthKm": 12.3,
+   "stations": 13,
+   "vertices": 179,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-2",
+   "band": "metro",
+   "lengthKm": 19.0,
+   "stations": 11,
+   "vertices": 190,
+   "country": "CA"
+  },
+  {
+   "id": "ottawa-carleton-regional-tra-4",
+   "band": "commuter",
+   "lengthKm": 4.1,
+   "stations": 3,
+   "vertices": 34,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line",
+   "band": "metro",
+   "lengthKm": 14.3,
+   "stations": 14,
+   "vertices": 174,
+   "country": "CA"
+  },
+  {
+   "id": "translink-canada-line-b1",
+   "band": "metro",
+   "lengthKm": 4.0,
+   "stations": 4,
+   "vertices": 54,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line",
+   "band": "metro",
+   "lengthKm": 28.2,
+   "stations": 20,
+   "vertices": 386,
+   "country": "CA"
+  },
+  {
+   "id": "translink-expo-line-b1",
+   "band": "commuter",
+   "lengthKm": 7.5,
+   "stations": 5,
+   "vertices": 66,
+   "country": "CA"
+  },
+  {
+   "id": "translink-millennium-line",
+   "band": "metro",
+   "lengthKm": 25.1,
+   "stations": 17,
+   "vertices": 314,
+   "country": "CA"
+  },
+  {
+   "id": "translink-wce",
+   "band": "commuter",
+   "lengthKm": 67.3,
+   "stations": 8,
+   "vertices": 511,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-1",
+   "band": "metro",
+   "lengthKm": 38.6,
+   "stations": 38,
+   "vertices": 443,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-2",
+   "band": "metro",
+   "lengthKm": 26.3,
+   "stations": 31,
+   "vertices": 275,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-4",
+   "band": "metro",
+   "lengthKm": 5.3,
+   "stations": 5,
+   "vertices": 46,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-5",
+   "band": "metro",
+   "lengthKm": 18.6,
+   "stations": 25,
+   "vertices": 185,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-6",
+   "band": "street",
+   "lengthKm": 10.4,
+   "stations": 18,
+   "vertices": 165,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501",
+   "band": "street",
+   "lengthKm": 16.9,
+   "stations": 63,
+   "vertices": 291,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b1",
+   "band": "street",
+   "lengthKm": 1.3,
+   "stations": 5,
+   "vertices": 17,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b2",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b3",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b4",
+   "band": "street",
+   "lengthKm": 1.2,
+   "stations": 5,
+   "vertices": 34,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b5",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 6,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b6",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 4,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-501-b8",
+   "band": "street",
+   "lengthKm": 0.9,
+   "stations": 5,
+   "vertices": 13,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504",
+   "band": "street",
+   "lengthKm": 12.7,
+   "stations": 51,
+   "vertices": 245,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b1",
+   "band": "street",
+   "lengthKm": 1.8,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b2",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 29,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b3",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 2,
+   "vertices": 10,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b4",
+   "band": "street",
+   "lengthKm": 0.9,
+   "stations": 4,
+   "vertices": 12,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b5",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 18,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b6",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 2,
+   "vertices": 10,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b7",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-504-b8",
+   "band": "street",
+   "lengthKm": 0.2,
+   "stations": 2,
+   "vertices": 6,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505",
+   "band": "street",
+   "lengthKm": 10.6,
+   "stations": 43,
+   "vertices": 218,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 13,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b2",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 15,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b3",
+   "band": "street",
+   "lengthKm": 0.4,
+   "stations": 3,
+   "vertices": 7,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b4",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 3,
+   "vertices": 9,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-505-b5",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506",
+   "band": "street",
+   "lengthKm": 15.4,
+   "stations": 64,
+   "vertices": 317,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b1",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 3,
+   "vertices": 12,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b2",
+   "band": "street",
+   "lengthKm": 0.8,
+   "stations": 4,
+   "vertices": 19,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b3",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b4",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 15,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b5",
+   "band": "street",
+   "lengthKm": 1.4,
+   "stations": 7,
+   "vertices": 24,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b6",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 4,
+   "vertices": 21,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b7",
+   "band": "street",
+   "lengthKm": 0.7,
+   "stations": 5,
+   "vertices": 20,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-506-b8",
+   "band": "street",
+   "lengthKm": 0.5,
+   "stations": 3,
+   "vertices": 9,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509",
+   "band": "street",
+   "lengthKm": 3.9,
+   "stations": 13,
+   "vertices": 112,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-509-b1",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 3,
+   "vertices": 19,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510",
+   "band": "street",
+   "lengthKm": 5.3,
+   "stations": 18,
+   "vertices": 121,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b1",
+   "band": "street",
+   "lengthKm": 0.8,
+   "stations": 3,
+   "vertices": 16,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 11,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-510-b3",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 5,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511",
+   "band": "street",
+   "lengthKm": 4.7,
+   "stations": 17,
+   "vertices": 94,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511-b1",
+   "band": "street",
+   "lengthKm": 0.6,
+   "stations": 3,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-511-b2",
+   "band": "street",
+   "lengthKm": 0.1,
+   "stations": 2,
+   "vertices": 3,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-512",
+   "band": "street",
+   "lengthKm": 5.1,
+   "stations": 21,
+   "vertices": 108,
+   "country": "CA"
+  },
+  {
+   "id": "ttc-512-b1",
+   "band": "street",
+   "lengthKm": 0.3,
+   "stations": 2,
+   "vertices": 8,
+   "country": "CA"
+  },
+  {
+   "id": "union-pearson-express-up-exp-up",
+   "band": "regional",
+   "lengthKm": 24.3,
+   "stations": 5,
+   "vertices": 119,
+   "country": "CA"
+  },
+  {
+   "id": "via-ottawa-montr-al",
+   "band": "longhaul",
+   "lengthKm": 185.5,
+   "stations": 5,
+   "vertices": 548,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-london",
+   "band": "longhaul",
+   "lengthKm": 184.7,
+   "stations": 5,
+   "vertices": 510,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-sarnia",
+   "band": "regional",
+   "lengthKm": 289.5,
+   "stations": 12,
+   "vertices": 1031,
+   "country": "CA"
+  },
+  {
+   "id": "via-toronto-windsor",
+   "band": "longhaul",
+   "lengthKm": 358.8,
+   "stations": 10,
+   "vertices": 865,
+   "country": "CA"
   }
  ]
 }

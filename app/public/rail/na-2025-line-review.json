@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-07T02:29:30.415628+00:00",
+  "generatedAt": "2026-09-07T14:53:12.358703+00:00",
   "summary": {
     "published": 436,
-    "blocked": 371,
+    "blocked": 370,
     "warnings": 197,
     "publishedErrors": 0
   },
@@ -25,7 +25,7 @@
       "colorReference": "#cae4f1",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 2,
-      "lengthKm": 6.058,
+      "lengthKm": 6.12,
       "issues": []
     },
     {
@@ -2106,7 +2106,7 @@
       "colorReference": "#ffcb06",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 185.335,
+      "lengthKm": 185.509,
       "issues": [
         {
           "severity": "NOTE",
@@ -2142,7 +2142,7 @@
       "colorReference": "#ffcb06",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 5,
-      "lengthKm": 184.566,
+      "lengthKm": 184.704,
       "issues": []
     },
     {
@@ -2162,7 +2162,7 @@
       "colorReference": "#ffcb06",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 12,
-      "lengthKm": 289.424,
+      "lengthKm": 289.507,
       "issues": []
     },
     {
@@ -2182,7 +2182,7 @@
       "colorReference": "#ffcb06",
       "colorSource": "operator GTFS routes.txt route_color",
       "stationCount": 10,
-      "lengthKm": 358.552,
+      "lengthKm": 358.751,
       "issues": []
     },
     {
@@ -20855,30 +20855,6 @@
       "lengthKm": null,
       "issues": [
         {
-          "why": "routed interval is a detour",
-          "interval": 0,
-          "routedKm": 25.31,
-          "straightKm": 8.8
-        }
-      ]
-    },
-    {
-      "lineId": null,
-      "country": null,
-      "status": "blocked",
-      "review": "error",
-      "operator": null,
-      "name": null,
-      "sourceFeed": "via",
-      "sourceRouteId": null,
-      "geometrySource": null,
-      "officialSpatialGeometry": false,
-      "colorReference": null,
-      "colorSource": null,
-      "stationCount": null,
-      "lengthKm": null,
-      "issues": [
-        {
           "why": "routed interval contains an internal reversal",
           "interval": 0,
           "turnDegrees": 170.6
@@ -20996,11 +20972,6 @@
       "issues": [
         {
           "suffix": "",
-          "why": "official route network contains an implausible interval",
-          "officialNetwork": "quebec-mtq-via"
-        },
-        {
-          "suffix": "",
           "why": "no usable alignment",
           "schematicShape": true
         }
@@ -21022,11 +20993,6 @@
       "stationCount": null,
       "lengthKm": null,
       "issues": [
-        {
-          "suffix": "",
-          "why": "official route network contains an implausible interval",
-          "officialNetwork": "quebec-mtq-via"
-        },
         {
           "suffix": "",
           "why": "no usable alignment",
