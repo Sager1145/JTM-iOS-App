@@ -225,6 +225,87 @@ class MergeFixture:
 
 
 class BuildPlanTests(unittest.TestCase):
+    def test_candidate_timezone_indices_are_remapped_to_shipped_table(self):
+        fx = MergeFixture()
+        fx.shipped['package']['timeZones'] = ['America/Los_Angeles', 'America/New_York']
+        fx.candidate['package']['timeZones'] = ['America/New_York']
+        for line in fx.candidate['package']['lines']:
+            for station in line['stations']:
+                station[6] = 0
+        before = copy.deepcopy(fx.candidate)
+        plan = merge.build_plan(fx.build_module, fx.shipped, fx.candidate,
+                                'us', 'test-feed')
+        for line in plan.package['lines']:
+            if line['sourceFeed'] == 'test-feed':
+                self.assertTrue(all(s[6] == 1 for s in line['stations']))
+        self.assertEqual(fx.candidate, before)
+
+    def test_rebuilt_cross_feed_group_supersedes_old_split_identity(self):
+        fx = MergeFixture()
+        # The retained operator's anchor is unchanged in the joint build;
+        # the builder now assigns its group to our previously split station.
+        first_props = fx.candidate['stations']['features'][0]['properties']
+        fx.candidate['package']['lines'][0]['stations'][0][0] = first_props['n02_group_code']
+        fx.candidate['package']['lines'][0]['stations'][0][2:4] = [0.0, 0.0]
+        first_props['display_point'] = [0.0, 0.0]
+        old_foreign = fx.shipped['package']['lines'][1]
+        old_foreign['stations'][0] = station_row(
+            'us-official-beta-1', 'Alpha One', 0.0001, 0.0)
+        old_props = fx.shipped['stations']['features'][2]['properties']
+        old_props['display_point'] = [0.0001, 0.0]
+        old_props['station_name'] = 'Alpha One'
+        witness = copy.deepcopy(old_foreign)
+        witness['stations'][0][0] = fx.candidate['package']['lines'][0]['stations'][0][0]
+        fx.candidate['package']['lines'].append(witness)
+        foreign_before = copy.deepcopy(old_foreign)
+        plan = merge.build_plan(fx.build_module, fx.shipped, fx.candidate,
+                                'us', 'test-feed')
+        ours = next(l for l in plan.package['lines'] if l['id'] == 'test-feed-alpha')
+        self.assertEqual(ours['stations'][0][0], 'us-official-beta-1')
+        self.assertEqual(next(l for l in plan.package['lines']
+                              if l['id'] == old_foreign['id']), foreign_before)
+        first = next(f for f in plan.stations['features']
+                     if f['properties']['operator'] == 'Test Rail'
+                     and f['properties']['station_name'] == 'Alpha One')
+        self.assertEqual(first['properties']['n02_group_code'], 'us-official-beta-1')
+        self.assertTrue(first['properties']['n02_station_code'].endswith(
+            'US-OFFICIAL-BETA-1'))
+
+        # Reusing a group-code string in a distant candidate is no evidence
+        # for changing the retained operator's station identity.
+        witness['stations'][0][2] = 5.0
+        mapping = merge.cross_feed_group_identity(
+            fx.build_module, fx.shipped['package']['lines'],
+            fx.candidate['package']['lines'], 'test-feed', {'test-feed-alpha'})
+        self.assertEqual(mapping, {})
+
+    def test_partial_feed_keeps_sibling_line_rows_at_shared_stations(self):
+        fx = MergeFixture()
+        old = fx.shipped
+        sibling = copy.deepcopy(old['package']['lines'][0])
+        sibling.update(id='test-feed-delta', name='Delta')
+        old['package']['lines'].append(sibling)
+        shared = copy.deepcopy(old['stations']['features'][:2])
+        for feature in old['stations']['features'][:2]:
+            feature['properties']['line_name'] = 'Alpha'
+        for feature in shared:
+            feature['properties']['line_name'] = 'Delta'
+        old['stations']['features'].extend(shared)
+        for feature in fx.candidate['stations']['features'][:3]:
+            feature['properties']['line_name'] = 'Alpha v2'
+        # A real compact row uses the same group ID as its solver feature.
+        for row, feature in zip(fx.candidate['package']['lines'][0]['stations'],
+                                fx.candidate['stations']['features'][:3]):
+            row[0] = feature['properties']['n02_group_code']
+        plan = merge.build_plan(fx.build_module, old, fx.candidate, 'us', 'test-feed',
+                                line_ids={'test-feed-alpha'})
+        self.assertEqual(plan.stations_removed, 2)
+        self.assertEqual(plan.stations_added, 3)
+        self.assertEqual([f for f in plan.stations['features']
+                          if f['properties']['line_name'] == 'Delta'], shared)
+        self.assertEqual(next(l for l in plan.package['lines']
+                              if l['id'] == 'test-feed-delta'), sibling)
+
     def setUp(self):
         self.fx = MergeFixture()
         self.plan = merge.build_plan(
@@ -465,9 +546,9 @@ class FeedRemovalKeysTests(unittest.TestCase):
 class ScopeCandidateToLinesTests(unittest.TestCase):
     def setUp(self):
         self.candidate = {
-            'package': {'lines': [
-                {'id': 'feed-x', 'sourceFeed': 'feed', 'operator': 'X Co'},
-                {'id': 'feed-y', 'sourceFeed': 'feed', 'operator': 'Y Co'},
+            'package': {'country': 'US', 'lines': [
+                {'id': 'feed-x', 'name': 'X', 'sourceFeed': 'feed', 'operator': 'X Co'},
+                {'id': 'feed-y', 'name': 'Y', 'sourceFeed': 'feed', 'operator': 'Y Co'},
             ]},
             'stations': {'type': 'FeatureCollection', 'features': [
                 station_feature('X Co', 'feed', 'us-official-x', '1', 'x1',
@@ -578,6 +659,8 @@ class LineIdScopedBuildPlanTests(unittest.TestCase):
             station_feature('Shared Co', 'test-feed', 'us-official-shared',
                             '1', 's1', 'Shared Station', 5.0, 5.0),
         ]
+        for feature in solo_stations:
+            feature['properties']['line_name'] = 'Solo'
         self.candidate = {
             'package': {'lines': [
                 {
@@ -595,7 +678,7 @@ class LineIdScopedBuildPlanTests(unittest.TestCase):
                     'operator': 'Solo Co', 'sourceFeed': 'test-feed',
                     'kind': 'commuter', 'geometrySource': 'gtfs-shape',
                     'lengthKm': 0.5, 'rank': 2, 'color': '#0011ff',
-                    'stations': [station_row('z1', 'Solo Station', 9.0, 9.0)],
+                    'stations': [station_row('us-official-solo', 'Solo Station', 9.0, 9.0)],
                     'segments': [[0.5, 0, [[9.0, 9.0]]]],
                     'colorReference': '#0011ff', 'colorSource': 'gtfs',
                     'colorDark': '#0011ff',
@@ -612,7 +695,7 @@ class LineIdScopedBuildPlanTests(unittest.TestCase):
                         'features': shared_candidate_stations + solo_stations},
             'sections': {'type': 'FeatureCollection', 'features': [
                 section_feature('Shared Co', 'Shared', [[5.0, 5.0], [5.1, 5.1]]),
-                section_feature('Solo Co', 'Solo', [[9.0, 9.0], [9.1, 9.1]]),
+                section_feature('Solo Co', 'Solo', [[9.0, 9.0]]),
             ]},
             'readings': None,
             'build_report': {'feeds': [
@@ -661,6 +744,7 @@ class LineIdScopedBuildPlanTests(unittest.TestCase):
             [json.dumps(f, sort_keys=True) for f in shared_co_stations])
 
     def test_scoped_merge_of_the_solo_line_succeeds(self):
+        self.candidate['package']['buildInputs'] = {'registry.json': 'new'}
         plan = merge.build_plan(
             self.build_module, self.shipped, self.candidate, 'us', 'test-feed',
             line_ids={'test-feed-solo'})
@@ -670,6 +754,9 @@ class LineIdScopedBuildPlanTests(unittest.TestCase):
         self.assertNotIn('test-feed-shared', ids)
         self.assertEqual(plan.added_ids, ['test-feed-solo'])
         self.assertEqual(plan.removed_ids, [])
+        self.assertEqual(plan.package['buildInputsByLine'], {
+            'test-feed-solo': {'registry.json': 'new'}})
+        self.assertNotIn('test-feed', plan.package['buildInputsByFeed'])
 
     def test_scoped_merge_does_not_touch_the_shared_operator_station(self):
         plan = merge.build_plan(
@@ -1271,18 +1358,22 @@ class DisambiguateForeignIdsTests(unittest.TestCase):
         self.assertLess(separation, merge.FOREIGN_ID_INTERCHANGE_TOLERANCE_M)
         self.assertEqual(self.run_guard(shipped, candidate), {})
 
-    def test_a_same_operator_id_is_left_to_the_identity_map(self):
-        """This pass must not second-guess `station_identity_map()`.
+    def test_retained_same_operator_sibling_cannot_share_a_remote_id(self):
+        shipped = [self.ttc('station', 'Same name', -123.1364, 49.1706)]
+        candidate = [self.ttc('station', 'Same name', -79.4426, 43.6598)]
+        self.assertEqual(self.run_guard(shipped, candidate), {'station': 'station-2'})
 
-        A shipped station of THIS feed's own operator, however far away, is
-        that function's business: it matches by coordinate and renames the
-        candidate onto the shipped code. Renaming it here too would race it.
-        """
-        shipped = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
-                            -123.136400, 49.170600)]
-        candidate = [self.ttc('ca-official-lansdowne', 'Lansdowne Station',
-                              -79.442600, 43.659800)]
-        self.assertEqual(self.run_guard(shipped, candidate), {})
+    def test_nearby_member_cannot_hide_a_remote_member(self):
+        shipped = [self.other('GO', 'station', 'Same', -79.4426, 43.6598),
+                   self.other('TransLink', 'station', 'Same', -123.1364, 49.1706)]
+        candidate = [self.ttc('station', 'Same', -79.4426, 43.6598)]
+        self.assertEqual(self.run_guard(shipped, candidate), {'station': 'station-2'})
+
+    def test_identity_map_target_is_also_checked_for_remote_members(self):
+        shipped = [self.other('TransLink', 'target', 'Same', -123.1364, 49.1706)]
+        candidate = [self.ttc('station', 'Same', -79.4426, 43.6598)]
+        self.assertEqual(self.run_guard(shipped, candidate, {'station': 'target'}),
+                         {'station': 'target-2'})
 
     def test_an_id_the_identity_map_already_claimed_is_not_touched(self):
         shipped = [self.other('TransLink', 'ca-official-lansdowne',
@@ -1321,6 +1412,35 @@ class DisambiguateForeignIdsTests(unittest.TestCase):
         self.assertIn('lansdowne', disambiguated[0])
         self.assertNotIn('bayview', disambiguated[0])
         self.assertIn('another operator', disambiguated[0])
+
+
+class ObsoleteFeedStationsTests(unittest.TestCase):
+    def test_multiple_feed_candidate_does_not_append_another_feeds_features(self):
+        fixture = MergeFixture()
+        other_lines = [l for l in fixture.shipped['package']['lines']
+                       if l['sourceFeed'] == 'other-feed']
+        other_stations = [f for f in fixture.shipped['stations']['features']
+                          if f['properties']['operator'] == 'Other Rail']
+        fixture.candidate['package']['lines'].extend(copy.deepcopy(other_lines))
+        fixture.candidate['stations']['features'].extend(copy.deepcopy(other_stations))
+        plan = merge.build_plan(fixture.build_module, fixture.shipped,
+                                fixture.candidate, 'us', 'test-feed')
+        self.assertEqual([f for f in plan.stations['features']
+                          if f['properties']['operator'] == 'Other Rail'], other_stations)
+
+    def test_full_feed_rebuild_removes_obsolete_aliases_and_duplicate_rows(self):
+        fixture = MergeFixture()
+        features = fixture.shipped['stations']['features']
+        features.append(copy.deepcopy(features[0]))
+        stale = copy.deepcopy(features[0])
+        stale['properties']['n02_group_code'] = 'us-official-obsolete-alias'
+        features.insert(0, stale)
+        plan = merge.build_plan(fixture.build_module, fixture.shipped,
+                                fixture.candidate, 'us', 'test-feed')
+        self.assertEqual(plan.stations_removed, 4)
+        self.assertNotIn('us-official-obsolete-alias', plan.preserved_station_ids.values())
+        self.assertFalse(any(f['properties']['n02_group_code'] == 'us-official-obsolete-alias'
+                             for f in plan.stations['features']))
 
 
 if __name__ == '__main__':

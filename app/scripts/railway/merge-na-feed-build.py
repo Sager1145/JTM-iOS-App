@@ -50,6 +50,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+from collections import Counter
 import datetime as dt
 import importlib.util
 import json
@@ -61,6 +62,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP_ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
+sys.path.insert(0, os.path.join(HERE, 'lib'))
+from na_release import release_locks, inherited_lock_fds
+from na_build_inputs import merge_inputs
 
 #: Short spoken names accepted for --feed, mapped to the registry slug used
 #: as `sourceFeed` on every line the builder produces for that feed. Extend
@@ -195,7 +199,49 @@ def merge_lines(shipped_lines, candidate_lines, feed_slug, line_ids=None):
     return merged, removed_ids, added_ids
 
 
-def scope_candidate_to_lines(candidate, feed_slug, line_ids):
+def partial_line_features(features, selected_lines, station_features):
+    """Match each selected membership/interval once, even for named siblings.
+
+    Green E's trunk and branch share both an operator and a line name.
+    Matching those strings removes the trunk too. Coordinates and counts
+    distinguish their rows, including identical shared-platform duplicates.
+    """
+    wanted = Counter()
+    for line in selected_lines:
+        common = (line.get('operator'), line.get('name'))
+        if station_features:
+            for row in line.get('stations') or ():
+                wanted[(*common, row[0], tuple(row[2:4]))] += 1
+        else:
+            previous = None
+            for _, continues, coordinates in line.get('segments') or ():
+                points = ([previous] if continues and previous is not None else []) + coordinates
+                if points:
+                    previous = points[-1]
+                wanted[(*common, tuple(map(tuple, points)))] += 1
+    selected = []
+    for feature in features:
+        props = feature.get('properties') or {}
+        common = (props.get('operator'), props.get('line_name'))
+        if station_features:
+            key = (*common, props.get('n02_group_code'), tuple(props.get('display_point') or ()))
+        else:
+            geometry = feature.get('geometry') or {}
+            if geometry.get('type') != 'LineString':
+                continue
+            key = (*common, tuple(map(tuple, geometry.get('coordinates') or ())))
+        if wanted[key]:
+            selected.append(feature)
+            wanted[key] -= 1
+    missing = sum(wanted.values())
+    if missing:
+        raise ValueError(f'partial merge cannot match {missing} exact '
+                         f'{"station" if station_features else "section"} rows')
+    return selected
+
+
+def scope_candidate_to_lines(candidate, feed_slug, line_ids, region=None,
+                             restrict_station_lines=False):
     """Restrict a candidate build to exactly `line_ids`, features included.
 
     A scoped `--only <feed>` build still produces every line the feed owns
@@ -211,13 +257,11 @@ def scope_candidate_to_lines(candidate, feed_slug, line_ids):
     one of them, so a feed that cannot be merged whole can still have the
     one line out of it that is actually clear to ship.
 
-    Station/section features carry no line id of their own, only
-    ``properties.operator`` (see `merge_features`'s docstring) -- which is
-    why this can only scope down to the *operators* the requested lines
-    use, not to those lines' stations exactly. That is the same
-    approximation `feed_operators`/`merge_features` already make for a
-    whole-feed merge; scoping first just narrows which operators it is
-    made for.
+    With ``restrict_station_lines`` (used by partial publication), match
+    the selected lines' exact station memberships and interval geometries.
+    Counts matter: trunk and branch can share a line name and identical
+    platform rows, of which only the selected membership is replaced.
+    Operator-only filtering remains available to older inspection callers.
     """
     lines = [line for line in candidate['package']['lines']
             if line.get('sourceFeed') == feed_slug and line['id'] in line_ids]
@@ -230,20 +274,41 @@ def scope_candidate_to_lines(candidate, feed_slug, line_ids):
     operators = {line.get('operator') for line in lines}
     operators.discard(None)
 
-    def keep(features):
-        return [f for f in features
-               if f.get('properties', {}).get('operator') in operators]
+    section_keys = feed_section_removal_keys(lines, feed_slug)
+    prefix = station_feed_prefix(region or candidate['package']['country'].lower(), feed_slug)
+    other_prefixes = {station_feed_prefix(region or candidate['package']['country'].lower(),
+                                         line['sourceFeed'])
+                      for line in candidate['package']['lines'] if line.get('sourceFeed')
+                      and line['sourceFeed'] != feed_slug}
+
+    def keep_stations(features):
+        eligible = [f for f in features
+                if f.get('properties', {}).get('operator') in operators
+                and (not restrict_station_lines or
+                     (f['properties'].get('operator'), f['properties'].get('line_name'))
+                     in section_keys)
+                and f.get('properties', {}).get('n02_station_code', '').startswith(prefix)
+                and not any(len(p) > len(prefix) and
+                            f['properties']['n02_station_code'].startswith(p)
+                            for p in other_prefixes)]
+        return partial_line_features(eligible, lines, True) if restrict_station_lines else eligible
+
+    def keep_sections(features):
+        eligible = [f for f in features
+                if (f.get('properties', {}).get('operator'),
+                    f.get('properties', {}).get('line_name')) in section_keys]
+        return partial_line_features(eligible, lines, False) if restrict_station_lines else eligible
 
     scoped = copy.deepcopy(candidate)
     scoped['package'] = dict(candidate['package'])
     scoped['package']['lines'] = lines
     scoped['stations'] = {
         'type': 'FeatureCollection',
-        'features': keep(candidate['stations']['features']),
+        'features': keep_stations(candidate['stations']['features']),
     }
     scoped['sections'] = {
         'type': 'FeatureCollection',
-        'features': keep(candidate['sections']['features']),
+        'features': keep_sections(candidate['sections']['features']),
     }
     return scoped
 
@@ -514,37 +579,19 @@ def disambiguate_foreign_ids(build_module, shipped_features,
                             candidate_features, operators, rename_map,
                             interchange_tolerance_m=(
                                 FOREIGN_ID_INTERCHANGE_TOLERANCE_M)):
-    """candidate id -> a free id, for ids another operator already holds.
+    """Disambiguate IDs against every retained station membership.
 
-    `station_identity_map()` asks whether a candidate station is the same
-    place as one that already shipped FOR THIS FEED, and it answers well.
-    What it never asks is whether the id itself is already spoken for by a
-    DIFFERENT operator -- and a scoped build cannot know. `build_region()`
-    assigns `{region}-official-{slug}[-N]` in first-seen order across the
-    feeds it actually built, so a TTC-only candidate names Toronto's
-    Lansdowne `ca-official-lansdowne` with no idea that TransLink's
-    Lansdowne in Vancouver, 3,357 km away, already holds it in the shipped
-    package. Merging that puts two stations on one id: `stations-ca.json`
-    then carries two features for it and a lookup returns whichever the
-    iteration order reaches first.
-
-    This is invisible to `station_identity_map()`'s own rename pass, which
-    only ever sees this feed's operator on the shipped side, and it appears
-    only when a feed gains a station it did not ship before -- exactly what
-    happens when a previously withheld line is published. TTC Lines 1 and 2
-    landing on 2026-09-05 collided on `lansdowne`, `queen` and
-    `victoria-park` for that reason.
-
-    A shared id is kept whenever the two are plausibly one place
-    (`FOREIGN_ID_INTERCHANGE_TOLERANCE_M`); otherwise the next free `-N` is
-    allocated the way `build_region()` would have, skipping anything either
-    package or an earlier rename already claims.
+    The caller excludes replaced features but retains sibling lines, even of
+    the same operator. Check the final identity-map target and its complete
+    geographic extent: a nearby interchange cannot excuse a remote member.
+    Preserve genuine complexes within the interchange tolerance; allocate a
+    free suffix for conflicting IDs without merging unrelated named places.
     """
-    def by_code(features, want_ours):
+    def by_code(features, want_ours=None):
         out = {}
         for feature in features:
             props = feature.get('properties', {})
-            if (props.get('operator') in operators) is not want_ours:
+            if want_ours is not None and (props.get('operator') in operators) is not want_ours:
                 continue
             code = props.get('n02_group_code')
             if code is None:
@@ -552,7 +599,9 @@ def disambiguate_foreign_ids(build_module, shipped_features,
             out.setdefault(code, []).append(tuple(props['display_point']))
         return out
 
-    foreign = by_code(shipped_features, want_ours=False)
+    # The caller passes only retained features. Sibling lines of the same
+    # operator can collide too; operator equality is not station identity.
+    foreign = by_code(shipped_features)
     ours = by_code(candidate_features, want_ours=True)
 
     taken = {f.get('properties', {}).get('n02_group_code')
@@ -562,12 +611,17 @@ def disambiguate_foreign_ids(build_module, shipped_features,
 
     extra = {}
     for code in sorted(ours):
-        if code in rename_map or code not in foreign:
+        target = rename_map.get(code, code)
+        if target not in foreign:
             continue
-        if _min_distance(build_module, ours[code],
-                         foreign[code]) <= interchange_tolerance_m:
+        # Every retained member must belong to this place. A nearby genuine
+        # interchange must not hide a second member in a different city.
+        distance = max(min(build_module.geo.haversine(a, b) for a in ours[code])
+                       for b in foreign[target])
+        if (distance <= 2000.0 and
+                _min_distance(build_module, ours[code], foreign[target]) <= interchange_tolerance_m):
             continue
-        base = re.sub(r'-\d+$', '', code)
+        base = re.sub(r'-\d+$', '', target)
         index = 2
         while '%s-%d' % (base, index) in taken:
             index += 1
@@ -932,11 +986,50 @@ class MergePlan:
         return '\n'.join(lines)
 
 
+def cross_feed_group_identity(build_module, shipped_lines, candidate_lines,
+                              feed_slug, selected):
+    """Keep a rebuilt interchange joined to its retained operator's identity.
+
+    Use foreign lines present in BOTH builds as witnesses before candidate
+    scoping removes them. Matching requires the same line/feed, station name
+    and an anchor within 15 m; matching group-code text alone is insufficient.
+    This lets a corrected PATH/NJT Hoboken group supersede PATH's old split
+    id without replacing any NJT geometry or adopting unrelated scoped ids.
+    """
+    wanted = {s[0] for line in candidate_lines if line['id'] in selected
+              and line.get('sourceFeed') == feed_slug for s in line['stations']}
+    shipped_by_id = {line['id']: line for line in shipped_lines}
+    matches = {}
+    for line in candidate_lines:
+        old = shipped_by_id.get(line['id'])
+        if (not old or line.get('sourceFeed') == feed_slug
+                or not line.get('sourceFeed')
+                or old.get('sourceFeed') != line['sourceFeed']):
+            continue
+        for station in line['stations']:
+            if station[0] not in wanted:
+                continue
+            for previous in old['stations']:
+                if (build_module.normalise_station_name(station[1])
+                        == build_module.normalise_station_name(previous[1])
+                        and build_module.geo.haversine(station[2:4], previous[2:4])
+                        <= STATION_IDENTITY_COORD_TOLERANCE_M):
+                    matches.setdefault(station[0], set()).add(previous[0])
+    return {code: next(iter(targets)) for code, targets in matches.items()
+            if len(targets) == 1}
+
+
 def build_plan(build_module, shipped, candidate, region, feed_slug,
               line_ids=None):
     plan = MergePlan(region, feed_slug)
-    if line_ids is not None:
-        candidate = scope_candidate_to_lines(candidate, feed_slug, line_ids)
+    selected = (line_ids if line_ids is not None else
+                {line['id'] for line in candidate['package']['lines']
+                 if line.get('sourceFeed') == feed_slug})
+    cross_feed_identity = cross_feed_group_identity(
+        build_module, shipped['package']['lines'], candidate['package']['lines'],
+        feed_slug, selected)
+    candidate = scope_candidate_to_lines(candidate, feed_slug, selected, region,
+                                         restrict_station_lines=line_ids is not None)
 
     shipped_lines = shipped['package']['lines']
     operators = feed_operators(
@@ -978,8 +1071,7 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
     # excludes every shipped station from matching, since a first-ship feed
     # has no "preserved id" case to find. Without a collision, operator
     # filtering alone is already safe (legacy behaviour, unrestricted).
-    shipped_group_codes = (
-        {sid for (_op, sid) in station_keys} if collision else None)
+    shipped_group_codes = {sid for (_op, sid) in station_keys}
     # Always safe to require, whether or not there is an operator
     # collision: a feed's own feature always carries its own prefix, so
     # this can only narrow a match, never miss one, and closes the one gap
@@ -987,6 +1079,33 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
     # `station_feed_prefix()`'s docstring (the Amtrak/Shore Line East case,
     # where two feeds share both the operator string and the group code).
     feed_prefix = station_feed_prefix(region, feed_slug)
+
+    remove_station = station_removal_predicate(
+        station_keys, operators, has_shipped_lines, feed_prefix=feed_prefix)
+    if line_ids is not None:
+        selected_lines = [line for line in shipped_lines
+                          if _owns(line, feed_slug, line_ids)]
+        selected_stations = partial_line_features(
+            [f for f in shipped['stations']['features'] if remove_station(f)],
+            selected_lines, True)
+        selected_station_objects = {id(f) for f in selected_stations}
+        def remove_station(feature):
+            return id(feature) in selected_station_objects
+    if line_ids is None:
+        # A full-feed replacement also removes its obsolete station features.
+        # UP Express retained old GO/UP aliases and duplicate endpoint rows;
+        # counting them against current line rows rejected a safe rebuild.
+        # The feed prefix proves ownership, with longer feed prefixes excluded.
+        other_prefixes = {station_feed_prefix(region, line['sourceFeed'])
+                          for line in shipped_lines if line.get('sourceFeed')
+                          and line['sourceFeed'] != feed_slug}
+
+        def remove_station(feature):
+            props = feature.get('properties') or {}
+            code = props.get('n02_station_code') or ''
+            return (props.get('operator') in operators and code.startswith(feed_prefix)
+                    and not any(len(p) > len(feed_prefix) and code.startswith(p)
+                                for p in other_prefixes))
 
     # Identity continuity: decide, before anything else touches the
     # candidate's ids, which of them are actually a shipped station under a
@@ -997,10 +1116,12 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
         build_module, shipped['stations']['features'],
         candidate['stations']['features'], operators,
         shipped_group_codes=shipped_group_codes, feed_prefix=feed_prefix)
-    plan.preserved_station_ids = identity_map
+    identity_map.update(cross_feed_identity)
     plan.disambiguated_station_ids = disambiguate_foreign_ids(
-        build_module, shipped['stations']['features'],
+        build_module, [f for f in shipped['stations']['features'] if not remove_station(f)],
         candidate['stations']['features'], operators, identity_map)
+    plan.preserved_station_ids = {k: v for k, v in identity_map.items()
+                                  if k not in plan.disambiguated_station_ids}
     rename_map = dict(identity_map)
     rename_map.update(plan.disambiguated_station_ids)
     candidate_lines, candidate_station_features = apply_station_identity(
@@ -1017,13 +1138,18 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
 
     merged_stations, st_removed, st_added = merge_features(
         shipped['stations']['features'], candidate_station_features,
-        station_removal_predicate(station_keys, operators, has_shipped_lines,
-                                  feed_prefix=feed_prefix))
+        remove_station)
     plan.stations_removed, plan.stations_added = st_removed, st_added
 
+    remove_section = section_removal_predicate(section_keys, operators, has_shipped_lines)
+    if line_ids is not None:
+        selected_section_objects = {id(f) for f in partial_line_features(
+            shipped['sections']['features'], selected_lines, False)}
+        def remove_section(feature):
+            return id(feature) in selected_section_objects
     merged_sections, se_removed, se_added = merge_features(
         shipped['sections']['features'], candidate['sections']['features'],
-        section_removal_predicate(section_keys, operators, has_shipped_lines))
+        remove_section)
     plan.sections_removed, plan.sections_added = se_removed, se_added
 
     expected_station_removals = sum(
@@ -1031,7 +1157,8 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
         for line in shipped['package']['lines']
         if line.get('sourceFeed') == feed_slug
         and (line_ids is None or line['id'] in line_ids))
-    if st_removed != expected_station_removals:
+    if st_removed < expected_station_removals or (
+            line_ids is not None and st_removed != expected_station_removals):
         raise ValueError(
             'removed %d station features but the %d replaced lines list '
             '%d station rows; operator-based matching may be unsafe' % (
@@ -1048,6 +1175,40 @@ def build_plan(build_module, shipped, candidate, region, feed_slug,
     package['lines'] = merged_lines
     package['geometrySource'] = merged_geometry
     package['timeZones'] = merge_zones(package['timeZones'], merged_stations)
+    # compact-v1 station column 6 indexes its own package's zone table.
+    # A scoped NYC build uses index 0; the shipped US index 0 is Los Angeles.
+    candidate_zones = candidate['package'].get('timeZones') or []
+    for line_index, line in enumerate(merged_lines):
+        if line['id'] not in added_ids:
+            continue
+        line = dict(line)
+        line['stations'] = [list(station) for station in line['stations']]
+        merged_lines[line_index] = line
+        for station in line['stations']:
+            if len(station) > 6 and isinstance(station[6], int):
+                zone = candidate_zones[station[6]]
+                if zone not in package['timeZones']:
+                    package['timeZones'].append(zone)
+                station[6] = package['timeZones'].index(zone)
+    package['buildInputsByFeed'] = merge_inputs(
+        shipped['package'], candidate['package'], feed_slug, partial=bool(line_ids))
+    # A partial feed replacement needs line-level provenance: certifying the
+    # whole feed would falsely label untouched lines as freshly rebuilt.
+    by_line = dict(shipped['package'].get('buildInputsByLine') or {})
+    for line_id in removed_ids:
+        by_line.pop(line_id, None)
+    if line_ids:
+        inputs = ((candidate['package'].get('buildInputsByFeed') or {}).get(feed_slug)
+                  or candidate['package'].get('buildInputs'))
+        for line_id in added_ids:
+            record = (candidate['package'].get('buildInputsByLine') or {}).get(line_id) or inputs
+            if record:
+                by_line[line_id] = record
+    if by_line:
+        package['buildInputsByLine'] = by_line
+    else:
+        package.pop('buildInputsByLine', None)
+    package.pop('buildInputs', None)
 
     plan.package = package
     plan.stations = {'type': 'FeatureCollection', 'features': merged_stations}
@@ -1268,7 +1429,8 @@ def backup_before_merge(candidate_dir, paths):
 
 
 def run(cmd):
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True,
+                            pass_fds=inherited_lock_fds())
     return result
 
 
@@ -1338,6 +1500,13 @@ def main(argv=None):
     ap.add_argument('--app-root', default=APP_ROOT,
                     help=argparse.SUPPRESS)  # override for tests
     args = ap.parse_args(argv)
+
+    with release_locks([os.path.join(args.app_root, 'public', 'rail'),
+                        os.path.join(args.app_root, 'data')], shared=args.dry_run):
+        return merge_candidate(args)
+
+
+def merge_candidate(args):
 
     feed_slug = resolve_feed_slug(args.feed)
     paths = shipped_paths(args.app_root, args.region)
