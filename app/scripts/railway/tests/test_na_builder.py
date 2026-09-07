@@ -1,5 +1,6 @@
 import importlib.util
 import hashlib
+import itertools
 import json
 import os
 import tempfile
@@ -347,6 +348,60 @@ class RouteGroupingTests(unittest.TestCase):
         ]
 
         self.assertEqual(len(builder.group_stations(entries)), 1)
+
+    def test_hoboken_groups_by_published_stops_before_parent_identity_pins(self):
+        # Cached official NJT/PATH build inputs: PATH's 33rd Street route
+        # anchors Hoboken over 400 m from NJT, but the published stops are 150 m
+        # apart. The other PATH routes share parent 26730.
+        njt = {'feed': 'new-jersey-transit-nj-transi'}
+        path = {'feed': 'port-authority-trans-hudson'}
+        entries = [
+            {'feedStop': '63', 'name': 'Hoboken', 'line': njt,
+             'point': [-74.02804634859288, 40.73485942862666],
+             'published': [-74.028046, 40.734843]},
+            {'feedStop': '63', 'name': 'Hoboken', 'line': njt,
+             'point': [-74.0292559696581, 40.7340413004576],
+             'published': [-74.028046, 40.734843]},
+            {'feedStop': '26730', 'name': 'Hoboken', 'line': path,
+             'point': [-74.02991744471959, 40.7313802127849],
+             'published': [-74.02922, 40.73586]},
+            {'feedStop': '26730', 'name': 'Hoboken', 'line': path,
+             'point': [-74.02920838331663, 40.735450920373474],
+             'published': [-74.02922, 40.73586]},
+            {'feedStop': '26730', 'name': 'Hoboken', 'line': path,
+             'point': [-74.02920838330826, 40.73545092037361],
+             'published': [-74.02922, 40.73586]},
+        ]
+        self.assertGreater(builder.geo.haversine(
+            entries[0]['point'], entries[2]['point']), 400)
+        before = json.dumps(entries, sort_keys=True)
+        # Each possible first PATH sibling and either operator first must
+        # give the same identity, without moving any display anchor.
+        for siblings in itertools.permutations(entries[2:]):
+            for ordered in (entries[:2] + list(siblings),
+                            list(siblings) + entries[:2]):
+                groups = builder.group_stations(ordered)
+                self.assertEqual(len(groups), 1)
+                self.assertEqual(len(groups[0]['members']), 5)
+        self.assertEqual(json.dumps(entries, sort_keys=True), before)
+
+    def test_station_group_grid_uses_published_coordinates(self):
+        entries = [
+            {'feedStop': 'a', 'name': 'Union', 'line': {'feed': 'a'},
+             'point': [-74.03, 40.73], 'published': [-74.0, 40.73]},
+            {'feedStop': 'b', 'name': 'Union', 'line': {'feed': 'b'},
+             'point': [-73.97, 40.73], 'published': [-74.001, 40.73]},
+        ]
+        self.assertEqual(len(builder.group_stations(entries)), 1)
+
+    def test_nearby_anchors_do_not_merge_distant_published_stops(self):
+        entries = [
+            {'feedStop': 'a', 'name': 'Union', 'line': {'feed': 'a'},
+             'point': [-74.0, 40.73], 'published': [-74.03, 40.73]},
+            {'feedStop': 'b', 'name': 'Union', 'line': {'feed': 'b'},
+             'point': [-74.0, 40.73], 'published': [-73.97, 40.73]},
+        ]
+        self.assertEqual(len(builder.group_stations(entries)), 2)
 
     def test_reviewed_cross_feed_distinct_stop_is_not_proximity_merged(self):
         entries = [

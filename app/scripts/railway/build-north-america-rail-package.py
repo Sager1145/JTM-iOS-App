@@ -30,6 +30,8 @@ package records how many there were.
 from __future__ import annotations
 
 import argparse
+import copy
+import datetime as dt
 import gzip
 import hashlib
 import json
@@ -55,6 +57,8 @@ import na_provenance                # noqa: E402
 import na_osm                       # noqa: E402
 import na_osmlines                  # noqa: E402
 import na_profile as profile        # noqa: E402
+from na_release import release_locks  # noqa: E402
+from na_build_inputs import capture_inputs  # noqa: E402
 from na_border import Countries, NetworkCountries, split_runs   # noqa: E402
 
 PACKAGE_VERSION = '2026.2.0'
@@ -430,6 +434,7 @@ ROUTE_KEYED_MAPS = (
     'officialNetworkDefectByRouteId', 'geometryReviewByRouteId',
     'referenceValidatedGeometryByRouteId', 'osmRelationEvidenceByRouteId',
     'osmRelationValidationByRouteId',
+    'officialNetworkMaxSnapMetersByRouteId', 'officialNetworkSnapEvidenceByRouteId',
 )
 ROUTE_KEYED_LISTS = ('includeRouteIds', 'excludeRoutes',
                      'preferOperatorShapeByRouteId',
@@ -973,10 +978,7 @@ class FeedBuild:
         points = line.get('stationPoints')
         if not points or len(points) != len(station_ids):
             return
-        official_snap_m = min(
-            self.options.anchor_m,
-            float(self.entry.get('officialNetworkMaxSnapMeters')
-                  or self.options.anchor_m))
+        official_snap_m = official_snap_limit(self.entry, rid, self.options.anchor_m)
         intervals0, _ = network0.route_stations(points, max_snap_m=official_snap_m)
         intervals1, routing1 = network1.route_stations(
             points, max_snap_m=official_snap_m)
@@ -1478,10 +1480,7 @@ class FeedBuild:
                 'remains an independent '
                 'geometry reference')
         elif official_network is not None:
-            official_snap_m = min(
-                self.options.anchor_m,
-                float(self.entry.get('officialNetworkMaxSnapMeters')
-                      or self.options.anchor_m))
+            official_snap_m = official_snap_limit(self.entry, rid, self.options.anchor_m)
             intervals, routing = official_network.route_stations(
                 points, max_snap_m=official_snap_m)
             if intervals:
@@ -2334,6 +2333,8 @@ class OsmBuild(FeedBuild):
             return None
         stations = list(route['stations'])
         if len(stations) < 2:
+            self.report['dropped'].append({'relation': route['relation'],
+                'why': 'OSM relation has fewer than two named stations'})
             return None
         loop = bool(
             len(stations) > 2
@@ -2348,6 +2349,8 @@ class OsmBuild(FeedBuild):
         parts = na_osmlines.merge_parts(route['parts'])
         shape = parts[0] if parts else None
         if shape is None or len(shape) < 2:
+            self.report['dropped'].append({'relation': route['relation'],
+                'why': 'OSM relation has no usable member alignment'})
             return None
         chords = geo.densify(route_points, 1_000)
         corridors = [c for c in (shape, chords) if c and len(c) > 1]
@@ -3015,13 +3018,19 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
     explicitly enabled official transfer complex) merges. Equal names and
     proximity never override two different parent ids. Unparented directional
     platforms are folded earlier, before their parent identity reaches here.
+
+    Proximity uses the published station coordinates, not the groomed track
+    anchors. A route endpoint can be displaced enough to split an interchange
+    (PATH Hoboken), and that false split would then pin all sibling routes to
+    the wrong group. Display anchors remain untouched member properties.
     """
     cell = 0.006
     grid = defaultdict(list)
     groups = []
     official_identities = {}
     for entry in entries:
-        lon, lat = entry['point']
+        station_point = entry.get('published', entry['point'])
+        lon, lat = station_point
         key = (int(lon / cell), int(lat / cell))
         best = None
         norm = normalise_station_name(entry['name'])
@@ -3041,7 +3050,7 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
                 for dy in (-1, 0, 1):
                     for gi in grid.get((key[0] + dx, key[1] + dy), ()):
                         group = groups[gi]
-                        d = geo.haversine(entry['point'], group['point'])
+                        d = geo.haversine(station_point, group['published'])
                         if d > name_near_m:
                             continue
                         names_agree = bool(norm) and norm in group['norms']
@@ -3077,6 +3086,7 @@ def group_stations(entries, near_m=140.0, name_near_m=400.0):
                             best = (d, gi)
         if best is None:
             groups.append({'point': list(entry['point']), 'norm': norm,
+                           'published': list(station_point),
                            'norms': {norm} if norm else set(),
                            'feeds': {feed},
                            'members': [entry], 'name': entry['name']})
@@ -4129,6 +4139,28 @@ def filter_unresolved_geometry(region_lines, options, reference=None):
     return kept
 
 
+def published_feed_references(per_region, options, reference):
+    """Dedup inputs reconstructed only from lines surviving final encoding."""
+    preview_options = copy.copy(options)
+    preview_options.geometry_blockers = []
+    published = []
+    for region, candidates in per_region.items():
+        result = build_region(region, copy.deepcopy(candidates), preview_options, reference)
+        for line in result['lines']:
+            intervals = []
+            previous = None
+            for _, continues, coordinates in line['segments']:
+                piece = ([previous] if continues and previous is not None else []) + coordinates
+                if piece:
+                    previous = piece[-1]
+                intervals.append(piece)
+            points = [[s[2], s[3]] for s in line['stations']]
+            published.append({'lineId': line['id'], 'operator': line['operator'],
+                              'region': region, 'stationPoints': points,
+                              'anchors': points, 'intervals': intervals})
+    return published
+
+
 def build_region(region, region_lines, options, reference):
     # Border slicing changes station spacing and therefore the grooming band.
     # Do that before the station-chord release gate: grooming can expose that
@@ -4464,6 +4496,18 @@ def readings_for(station_features, region):
 
 # ------------------------------------------------------------------ reference
 
+def official_snap_limit(entry, route_id, anchor_m):
+    """A reviewed route can require closer anchors than its feed default."""
+    by_route = entry.get('officialNetworkMaxSnapMetersByRouteId') or {}
+    limit = by_route.get(route_id, entry.get('officialNetworkMaxSnapMeters'))
+    if limit is None:
+        return anchor_m
+    limit = float(limit)
+    if not math.isfinite(limit) or limit <= 0:
+        raise ValueError('official network snap limit must be positive and finite')
+    return min(anchor_m, limit)
+
+
 class CrossCheck:
     """The two independent opinions a built line is measured against.
 
@@ -4479,10 +4523,17 @@ class CrossCheck:
     both — but it is counted, and the count is in the package.
     """
 
-    def __init__(self, network, osm, official=None):
+    def __init__(self, network, osm, official=None, source_provenance=None):
         self.network = network
         self.osm = osm
         self.official = official
+        # Named extracts can contain OSM too (BART's mixed OSM/GTFS
+        # alignment). Without per-vertex lineage, exclude that reference
+        # for the entire extract rather than let it corroborate itself.
+        self.osm_sources = {'osm'} | {
+            key for key, record in (source_provenance or {}).items()
+            if 'openstreetmap' in str(record.get('publisher', '')).casefold()
+        }
 
     def measure(self, intervals, geometry_source, sample_every=1,
                 unmatched_m=400.0):
@@ -4505,7 +4556,7 @@ class CrossCheck:
                         if d < best:
                             best, source = d, 'narn'
                 if (self.osm is not None and self.osm.way_count
-                        and geometry_source != 'osm'):
+                        and geometry_source not in self.osm_sources):
                     d, _ = self.osm.nearest(point, 1)
                     if d < best:
                         best, source = d, 'osm'
@@ -4572,7 +4623,7 @@ class CrossCheck:
                     if d < best:
                         best, source = d, 'narn'
             if (self.osm is not None and self.osm.way_count
-                    and geometry_source != 'osm'):
+                    and geometry_source not in self.osm_sources):
                 d, _ = self.osm.nearest(point, 1)
                 if d < best:
                     best, source = d, 'osm'
@@ -5034,7 +5085,17 @@ def build_osm_systems(options, countries, network, already, reports):
     if not routes:
         return []
     report = osm_report(reports)
-    covered = {line['operator'].lower() for line in already if line.get('operator')}
+    # These explicit relation-to-GTFS route mappings were reviewed together
+    # with the colour citation. They also identify unnamed STM relations and
+    # REM's opposite-direction A1/A4 relations as the same official route.
+    published_colours = getattr(options, 'osm_line_colours', {}) or {}
+    feed_metadata = getattr(options, 'osm_feed_metadata', {}) or {}
+    for route in routes:
+        record = published_colours.get(str(route['relation'])) or {}
+        feed = feed_metadata.get(record.get('sourceFeed'))
+        if feed and record.get('sourceRouteId'):
+            route['operator'] = feed.get('operatorOverride') or feed['name']
+            route['ref'] = str(record['sourceRouteId'])
     adopt_unattributed(routes)
     routes = refuse_known_invalid(routes, report)
     routes = refuse_attractions(routes, report)
@@ -5042,14 +5103,11 @@ def build_osm_systems(options, countries, network, already, reports):
     systems = defaultdict(list)
     for route in routes:
         operator = (route['operator'] or '').strip()
-        equivalent = OSM_OPERATOR_EQUIVALENTS.get(operator.lower(),
-                                                   operator.lower())
-        route_name = (route.get('name') or '').lower()
-        for (candidate, fragment), owner in OSM_ROUTE_EQUIVALENTS.items():
-            if operator.lower() == candidate and fragment in route_name:
-                equivalent = owner
-                break
-        if not operator or equivalent in covered:
+        # An operator may publish only part of its network. The station and
+        # geometry comparisons decide coverage per railway, never per name.
+        if not operator:
+            report['dropped'].append({'relation': route['relation'],
+                'name': route.get('name'), 'why': 'OSM relation has no attributable operator'})
             continue
         systems[operator].append(route)
 
@@ -5291,7 +5349,9 @@ def sha256(path):
 
 def write_json(path, payload):
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
-    tmp = path + '.tmp'
+    # Different isolated builds may share a feed cache. The destination is
+    # atomic, and each writer also needs its own temporary file.
+    tmp = path + f'.{os.getpid()}.tmp'
     with open(tmp, 'w') as fh:
         json.dump(payload, fh, ensure_ascii=False, separators=(', ', ': '))
     os.replace(tmp, path)
@@ -5374,6 +5434,15 @@ def main():
     options.data_dir = resolve_data_dir(
         options.output_dir, options.data_dir, options.write_shipped_data)
 
+    with release_locks([options.output_dir, options.data_dir]):
+        return build_packages(options, ap)
+
+
+def build_packages(options, ap):
+    generated_at = dt.datetime.now(dt.timezone.utc).isoformat()
+    build_inputs = capture_inputs(options.registry, options.source_dir, HERE,
+                                  options.osm_routes)
+
     registry = load_registry(options.registry)
     feeds = registry['feeds']
     feed_metadata = {entry['slug']: entry for entry in registry['feeds']}
@@ -5384,6 +5453,7 @@ def main():
     # `officialColorByRouteId` is for a feed. OSM's own `colour` tag is not
     # accepted, here or anywhere: it is a contributor's reading of a map.
     options.osm_line_colours = registry.get('osmLineColors') or {}
+    options.osm_feed_metadata = feed_metadata
     # One physical station complex that arrived as several package station
     # ids, named by review with the evidence that it is one place. Applied in
     # `build_region` once the grouping has assigned its codes; see
@@ -5409,6 +5479,9 @@ def main():
     audited_unbranded = set((brand_audit.get('unbranded') or {}).keys())
     if options.only:
         wanted = set(options.only)
+        unknown = wanted - set(feed_metadata)
+        if unknown:
+            ap.error('unknown feed slug(s): ' + ', '.join(sorted(unknown)))
         feeds = [f for f in feeds if f['slug'] in wanted]
 
     started = time.time()
@@ -5491,6 +5564,12 @@ def main():
     for entry in feeds:
         path = cache and os.path.join(cache, f"{entry['slug']}.json")
         fingerprint = feed_cache_fingerprint(entry, options.source_dir)
+        cache_inputs = {'inputs': build_inputs, 'feed': fingerprint,
+                        'options': {key: getattr(options, key) for key in (
+                            'corridor_m', 'snap_m', 'anchor_m', 'snap_prefer_m',
+                            'max_trips_per_route', 'skip_crosscheck', 'release_policy')}}
+        fingerprint = hashlib.sha256(json.dumps(
+            cache_inputs, sort_keys=True).encode()).hexdigest()
         if path and os.path.exists(path):
             with open(path) as fh:
                 payload = json.load(fh)
@@ -5518,10 +5597,6 @@ def main():
               f"({time.time() - t:.1f}s)", file=sys.stderr)
 
     built = drop_cross_feed_duplicates(built, feed_metadata, reports)
-
-    if options.osm_routes:
-        built += build_osm_systems(options, countries, network, built, reports)
-        built = drop_osm_duplicates(built, reports)
 
     # Branding is release metadata rather than geometry. Refresh it after the
     # expensive per-feed cache has been read so a corrected logo association
@@ -5583,14 +5658,35 @@ def main():
         osm = load_osm(options.source_dir)
         official, official_files, official_lines = load_official_geometry(
             options.source_dir)
-        reference = CrossCheck(network, osm, official)
+        reference = CrossCheck(network, osm, official,
+                               options.verified_official_sources)
         print(f'cross-check: {len(network.edges)} FRA edges, '
               f'{osm.way_count} OSM ways from {osm.tiles} tiles, '
               f'{official_lines} official alignments from '
               f'{official_files} supplemental files', file=sys.stderr)
 
+    # The early feed output is only a candidate. In particular, Kenosha's
+    # candidate was rejected by build_region, yet it suppressed the OSM
+    # fallback as "already built". Preview the same complete release gate
+    # on copies, so neither dedup pass can use a line that does not publish.
+    if options.osm_routes:
+        published = published_feed_references(per_region, options, reference)
+        osm_built = build_osm_systems(options, countries, network, published, reports)
+        osm_built = [line for line in drop_osm_duplicates(
+            published + osm_built, reports) if line['lineId'].startswith('osm-')]
+        for line in osm_built:
+            operator_key = (line.get('operator') or '').strip().casefold()
+            line['operatorLogo'] = operator_brand.get(operator_key)
+            line['operatorShort'] = None
+            line['brandStatus'] = ('audited-logo' if line['operatorLogo']
+                                   else operator_brand_status.get(operator_key, 'unverified'))
+        if osm_built:
+            osm_regions = assemble(osm_built, countries, options)
+            for region, additions in osm_regions.items():
+                per_region.setdefault(region, []).extend(additions)
+
     options.geometry_blockers = []
-    summary = {'generatedAt': GENERATED_AT, 'feeds': reports, 'regions': {}}
+    summary = {'generatedAt': generated_at, 'feeds': reports, 'regions': {}}
     for region in ('us', 'ca'):
         region_lines = per_region.get(region) or []
         if not region_lines:
@@ -5601,11 +5697,12 @@ def main():
         package = {
             'format': 'compact-v1',
             'version': PACKAGE_VERSION,
-            'generatedAt': GENERATED_AT,
+            'generatedAt': generated_at,
             'crs': 'WGS84',
             'country': region.upper(),
             'timeZones': result['zones'],
             'lines': result['lines'],
+            'buildInputs': build_inputs,
             'geometrySource': {
                 'officialOnly': 1 if reference is None else 0,
                 'providers': registry['providers'],
@@ -5644,6 +5741,9 @@ def main():
             },
         }
         out = os.path.join(options.output_dir, f'{region}-2025.json')
+        if capture_inputs(options.registry, options.source_dir, HERE,
+                          options.osm_routes) != build_inputs:
+            raise RuntimeError('rail build inputs changed during the build; candidate not published')
         size = write_json(out, package)
         stations = write_json(os.path.join(options.data_dir, f'stations-{region}.json'),
                               {'type': 'FeatureCollection',

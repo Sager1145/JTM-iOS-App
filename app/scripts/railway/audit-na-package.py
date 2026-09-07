@@ -50,6 +50,7 @@ from na_profile import (CROSSCHECK_TOLERANCE_M,                    # noqa: E402
                         median_spacing_m, profile_for)
 from na_provenance import (SOURCES as OFFICIAL_NETWORK_SOURCES,  # noqa: E402
                            file_sha256)
+from na_release import release_locks
 
 EARTH_R = 6_371_008.8
 
@@ -737,6 +738,7 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
                   .get('officialGeometryComparison') or {})
     osm_relation_evidence = {line['id']: line.get('osmRelationEvidence')
                              for line in lines}
+    by_id = {line['id']: line for line in lines}
     for lid, row in (comparison.get('byLine') or {}).items():
         band = band_by_line.get(lid)
         tolerance = DISPLAY_ALIGNMENT_TOLERANCE_M.get(band, 20.0)
@@ -762,6 +764,21 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
         osm_retained = list(row.get('osmReferenceRetainedIntervals') or [])
         relation_evidence = osm_relation_evidence.get(lid)
         source_is_verified = row.get('builtFrom') in verified_official
+        line = by_id.get(lid) or {}
+        inputs = ((package.get('buildInputsByLine') or {}).get(lid) or package.get('buildInputs') or
+                  (package.get('buildInputsByFeed') or {}).get(line.get('sourceFeed')) or {})
+        # NARN is the primary government survey for a NARN-routed line.
+        # Missing OSM coverage is a missing second opinion, not missing track.
+        # Require recorded survey inputs, not merely a source label. Their
+        # actual bytes are checked by audit_freshness; deviations still use
+        # the unchanged display gate below.
+        narn_recorded = (row.get('builtFrom') == line.get('geometrySource') == 'narn'
+                         and isinstance(inputs, dict) and any(
+                             ('/narn/' in path.replace(os.sep, '/') or
+                              path.endswith('/narn-passenger.geojson'))
+                             and isinstance(digest, str)
+                             and re.fullmatch(r'[0-9a-fA-F]{64}', digest)
+                             for path, digest in inputs.items() if isinstance(path, str)))
         if retained and not source_is_verified:
             found.add('ERROR', 'source.provenance', country, lid,
                       'unverified geometry claims the official-source display exception',
@@ -822,6 +839,12 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
                            'geometry is an audited OpenStreetMap relation and no '
                            'published survey covers this alignment'
                            % (unmatched, vertices))
+            elif narn_recorded:
+                severity = 'WARN'
+                check = 'geometry.unchecked.narnReferenceMissing'
+                message = ('%d of %d vertices have no independent visual reference; '
+                           'the build records the primary NARN survey inputs, '
+                           'whose freshness is checked separately' % (unmatched, vertices))
             else:
                 severity = 'ERROR'
                 check = 'geometry.unchecked'
@@ -904,33 +927,39 @@ def audit_package(package, found, band_by_line, station_split_exceptions=None,
     for sid, rows in where.items():
         if len(rows) < 2:
             continue
-        base = rows[0]
-        for row in rows[1:]:
-            drift = haversine((base[2], base[3]), (row[2], row[3]))
-            allowed = max(CROSSCHECK_TOLERANCE_M.get(base[4], 90.0),
-                          CROSSCHECK_TOLERANCE_M.get(row[4], 90.0))
-            if drift > allowed:
-                reviewed = station_split_exceptions.get(sid) or {}
-                reviewed_limit = float(reviewed.get('maxMeters') or 0.0)
-                if reviewed_limit and drift <= reviewed_limit:
-                    found.add(
-                        'NOTE', 'station.split.reviewed', country, row[0],
-                        'station %s spans %.0f m inside a reviewed official '
-                        'complex (exact limit %.0f m)' % (
-                            sid, drift, reviewed_limit),
-                        station=sid, metres=round(drift),
-                        maxMeters=reviewed_limit,
-                        evidence=reviewed.get('evidence'),
-                        evidenceUrl=reviewed.get('evidenceUrl'),
-                        sourceSha256=reviewed.get('sourceSha256'),
-                        stopIds=reviewed.get('stopIds'))
-                else:
-                    found.add('WARN', 'station.split', country, row[0],
-                              'station %s is %.0f m from where %s puts it, '
-                              'past the %.0f m the band allows' % (
-                                  sid, drift, base[0], allowed),
-                              station=sid, metres=round(drift))
-                break
+        # Inspect the complete group, not the first drifting platform. Forest
+        # Hills used to report 166 m while hiding another member 406 km away.
+        pairs = [(haversine((a[2], a[3]), (b[2], b[3])), a, b)
+                 for i, a in enumerate(rows) for b in rows[i + 1:]]
+        drift, base, row = max(pairs, key=lambda p: p[0])
+        reviewed = station_split_exceptions.get(sid) or {}
+        reviewed_limit = float(reviewed.get('maxMeters') or 0.0)
+        if drift > max(2000.0, reviewed_limit):
+            found.add('ERROR', 'station.identityCollision', country, row[0],
+                      'station %s spans %.0f m between %s and %s; separate physical places share one id'
+                      % (sid, drift, base[0], row[0]), station=sid,
+                      metres=round(drift), lines=[base[0], row[0]])
+        allowed = max(CROSSCHECK_TOLERANCE_M.get(base[4], 90.0),
+                      CROSSCHECK_TOLERANCE_M.get(row[4], 90.0))
+        if drift > allowed:
+            if reviewed_limit and drift <= reviewed_limit:
+                found.add(
+                    'NOTE', 'station.split.reviewed', country, row[0],
+                    'station %s spans %.0f m inside a reviewed official '
+                    'complex (exact limit %.0f m)' % (
+                        sid, drift, reviewed_limit),
+                    station=sid, metres=round(drift),
+                    maxMeters=reviewed_limit,
+                    evidence=reviewed.get('evidence'),
+                    evidenceUrl=reviewed.get('evidenceUrl'),
+                    sourceSha256=reviewed.get('sourceSha256'),
+                    stopIds=reviewed.get('stopIds'))
+            elif drift <= max(2000.0, reviewed_limit):
+                found.add('WARN', 'station.split', country, row[0],
+                          'station %s is %.0f m from where %s puts it, '
+                          'past the %.0f m the band allows' % (
+                              sid, drift, base[0], allowed),
+                          station=sid, metres=round(drift))
         names = {r[1] for r in rows}
         if len(names) > 1:
             found.add('NOTE', 'station.names', country, '-',
@@ -1148,7 +1177,7 @@ def audit_station_complexes(package, complexes, found, corridor_path=None):
 
 
 def audit_freshness(package, registry_path, input_root,
-                    official_networks_dir, found):
+                    official_networks_dir, found, digest_cache=None):
     """Was this package built from the inputs that are on disk now?
 
     Every other check in this module reads the package alone, and a package
@@ -1185,10 +1214,10 @@ def audit_freshness(package, registry_path, input_root,
 
     * `buildInputs`, an object mapping a path (relative to `--input-root`,
       which is the directory the build and this audit are run from) to the
-      lowercase hex SHA-256 of that file at build time. The builder does not
-      write this field yet; until it does, this reports a WARN naming the
-      registry it could not vouch for, because an unprovable invariant that
-      says nothing is how the TTC miss stayed quiet.
+      lowercase hex SHA-256 of that file at build time. Full builds write
+      this field; scoped merges retain separate records in buildInputsByFeed
+      so untouched feeds cannot inherit the candidate's provenance. Legacy
+      feeds without a record report a WARN instead of implying freshness.
     * `geometrySource.verifiedOfficialNetworks`, which the package ALREADY
       carries, and whose ``sha256`` is the digest of the normalised
       `<key>.geojson` the build routed that line from — `verify_route_networks`
@@ -1199,7 +1228,64 @@ def audit_freshness(package, registry_path, input_root,
     ERROR for a digest that does not match: the shipped package is provably
     not the package these inputs build.
     """
+    digest_cache = {} if digest_cache is None else digest_cache
+
+    def input_digest(path):
+        path = os.path.realpath(path)
+        if path not in digest_cache:
+            digest_cache[path] = file_sha256(path)
+        return digest_cache[path]
+
     country = package.get('country')
+    if 'stationIdentityRepair' in package:
+        repair = package['stationIdentityRepair']
+        if not isinstance(repair, dict) or not isinstance(repair.get('inputs'), dict):
+            found.add('ERROR', 'package.stationIdentityRepair', country, '-',
+                      'station identity repair must record its transformation inputs')
+        else:
+            audit_freshness({'country': country, 'buildInputs': repair['inputs']},
+                            None, input_root, None, found, digest_cache)
+        package = dict(package)
+        package.pop('stationIdentityRepair')
+    if 'buildInputsByLine' in package:
+        records = package['buildInputsByLine']
+        if not isinstance(records, dict):
+            found.add('ERROR', 'package.buildInputs', country, '-',
+                      'buildInputsByLine must be an object')
+            return
+        for line in package.get('lines', []):
+            if line['id'] not in records:
+                continue
+            scoped = {'country': country, 'buildInputs': records[line['id']]}
+            start = len(found.rows)
+            audit_freshness(scoped, registry_path, input_root, None, found, digest_cache)
+            for row in found.rows[start:]:
+                row['line'] = line['id']
+                row['feed'] = line.get('sourceFeed')
+        package = dict(package)
+        package.pop('buildInputsByLine')
+    if 'buildInputsByFeed' in package:
+        records = package['buildInputsByFeed']
+        if not isinstance(records, dict):
+            found.add('ERROR', 'package.buildInputs', country, '-',
+                      'buildInputsByFeed must be an object')
+            return
+        feeds = {line.get('sourceFeed') for line in package.get('lines', [])}
+        for feed in sorted(f for f in feeds if f):
+            scoped = dict(package)
+            scoped.pop('buildInputsByFeed')
+            scoped['buildInputs'] = records.get(feed) or {}
+            scoped['geometrySource'] = {}
+            start = len(found.rows)
+            audit_freshness(scoped, registry_path, input_root, None, found, digest_cache)
+            for row in found.rows[start:]:
+                row['feed'] = feed
+        # Official network provenance is checked once for the whole package.
+        scoped = dict(package)
+        scoped.pop('buildInputsByFeed')
+        scoped['buildInputs'] = {}
+        audit_freshness(scoped, None, input_root, official_networks_dir, found, digest_cache)
+        return
     recorded = package.get('buildInputs')
     root = input_root or '.'
     if recorded and not isinstance(recorded, dict):
@@ -1215,7 +1301,7 @@ def audit_freshness(package, registry_path, input_root,
             continue
         path = os.path.join(root, relative)
         try:
-            actual = file_sha256(path)
+            actual = input_digest(path)
         except OSError as exc:
             found.add('WARN', 'package.freshness', country, '-',
                       'the package names %s as a build input and it cannot be '
@@ -1256,7 +1342,7 @@ def audit_freshness(package, registry_path, input_root,
             continue        # `verified_official_networks` already reported it
         path = os.path.join(official_networks_dir, '%s.geojson' % key)
         try:
-            actual = file_sha256(path)
+            actual = input_digest(path)
         except OSError as exc:
             found.add('WARN', 'package.freshness', country, '-',
                       'the normalised official network %s cannot be read: %s'
@@ -1352,7 +1438,14 @@ def main():
     ap.add_argument('--max-print', type=int, default=40)
     options = ap.parse_args()
 
+    with release_locks([os.path.dirname(p) for p in options.package], shared=True):
+        return audit_packages(options)
+
+
+def audit_packages(options):
+
     found = Findings()
+    digest_cache = {}
     summaries = []
     station_split_exceptions = read_station_split_exceptions(
         options.registry, found)
@@ -1374,7 +1467,7 @@ def main():
         audit_station_complexes(package, station_complexes, found,
                                 options.shared_corridors)
         audit_freshness(package, options.registry, options.input_root,
-                        options.official_networks, found)
+                        options.official_networks, found, digest_cache)
 
     if options.registry:
         audit_registry(options.registry, summaries, found)

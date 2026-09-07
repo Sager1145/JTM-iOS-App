@@ -168,6 +168,25 @@ class EastStationSplitTests(unittest.TestCase):
         ]
         self.assertEqual(len(builder.group_stations(entries)), 2)
 
+    def test_path_hoboken_centimetre_seam_reaches_the_station_approach(self):
+        with open(os.path.join(HERE, 'fixtures', 'path-hoboken-junction.geojson'),
+                  encoding='utf-8') as source:
+            features = json.load(source)['features']
+        stops = [[-74.02922, 40.73586], [-74.00708, 40.73302]]
+        disconnected = builder.na_official.PassengerNetwork(features)
+        wrong, _ = disconnected.route_stations(stops)
+        self.assertGreater(builder.geo.haversine(stops[0], wrong[0][0]), 400)
+
+        path = self.feeds['port-authority-trans-hudson']
+        self.assertEqual(path['officialNetworkEndpointJoinMeters'], 0.1)
+        repaired = builder.na_official.PassengerNetwork(
+            features, endpoint_join_m=path['officialNetworkEndpointJoinMeters'])
+        intervals, _ = repaired.route_stations(stops)
+        self.assertEqual(len(repaired.joined_endpoints), 1)
+        self.assertLess(repaired.joined_endpoints[0]['meters'], 0.02)
+        self.assertLess(builder.geo.haversine(stops[0], intervals[0][0]), 50)
+        self.assertAlmostEqual(intervals[0][0][1], 40.73545092, places=7)
+
 
 if __name__ == '__main__':
     unittest.main()

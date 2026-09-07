@@ -501,7 +501,21 @@ class PassengerNetwork:
                 key=lambda point: geo.haversine(point, stations[index]))
             left_piece[-1] = list(canonical)
             right_piece[0] = list(canonical)
-        return intervals, {'snapMeters': snap_meters}
+        # Report the anchors we actually used, not the individually nearest
+        # candidates that the common-feature choice may have discarded.
+        # Include both adjacent endpoints at an interior station.
+        actual_snap_meters = []
+        for index, station in enumerate(stations):
+            anchors = []
+            if index:
+                anchors.append(intervals[index - 1][-1])
+            if index < len(intervals):
+                anchors.append(intervals[index][0])
+            actual_snap_meters.append(max(
+                (geo.haversine(station, point) for point in anchors),
+                default=snap_meters[index]))
+        return intervals, {'snapMeters': actual_snap_meters,
+                           'nearestSnapMeters': snap_meters}
 
 
 def load_geojson(path, user_codes, endpoint_join_m=0.0):

@@ -1,4 +1,115 @@
 {
+ "osmLineColors": {
+  "4433102": {
+   "color": "#EF3E42",
+   "source": "operator GTFS routes.txt route_color; Shore Line East, route SLET (Shore Line East Train), http://www.shorelineeast.com/google_transit.zip; cached feed SHA-256 1d1f73295845b1d014a4dc7bc1cb485c6825595e025cf8032c92d74b2d5c611e, verified 2026-09-06",
+   "sourceFeed": "shore-line-east",
+   "sourceRouteId": "SLET",
+   "feedSha256": "1d1f73295845b1d014a4dc7bc1cb485c6825595e025cf8032c92d74b2d5c611e"
+  },
+  "1468867": {
+   "color": "#D93A30",
+   "source": "operator GTFS routes.txt route_color; Port Authority Trans-Hudson (PATH), route 862 (Newark - World Trade Center), http://data.trilliumtransit.com/gtfs/path-nj-us/path-nj-us.zip; cached feed SHA-256 572eaf8ff298767ce6054a02cf7c03a691bab07959032028f8ff5c73e02719bc, verified 2026-09-06",
+   "sourceFeed": "port-authority-trans-hudson",
+   "sourceRouteId": "862",
+   "feedSha256": "572eaf8ff298767ce6054a02cf7c03a691bab07959032028f8ff5c73e02719bc"
+  },
+  "4729047": {
+   "color": "#B4BCC2",
+   "source": "operator GTFS routes.txt route_color; San Diego International Airport, Metropolitan Transit System (MTS), route 550 (Downtown Loop), https://www.sdmts.com/google_transit_files/google_transit.zip; cached feed SHA-256 51e30b298fefb00c9d31c497060069d5e9e3f3be6e37aa214739a420f6f4181c, verified 2026-09-06",
+   "sourceFeed": "san-diego-international-airp",
+   "sourceRouteId": "550",
+   "feedSha256": "51e30b298fefb00c9d31c497060069d5e9e3f3be6e37aa214739a420f6f4181c"
+  },
+  "12330590": {
+   "color": "#EF4D2E",
+   "source": "operator GTFS routes.txt route_color; Qline Detroit, route 13578 (QLINE), http://data.trilliumtransit.com/gtfs/qline-mi-us/qline-mi-us.zip; cached feed SHA-256 8926b6d5769c203c359adac63a230b72032f95d9ad8094e1d26e985aeaf066e8, verified 2026-09-06",
+   "sourceFeed": "qline-detroit",
+   "sourceRouteId": "13578",
+   "feedSha256": "8926b6d5769c203c359adac63a230b72032f95d9ad8094e1d26e985aeaf066e8"
+  },
+  "12330591": {
+   "color": "#EF4D2E",
+   "source": "operator GTFS routes.txt route_color; Qline Detroit, route 13578 (QLINE), http://data.trilliumtransit.com/gtfs/qline-mi-us/qline-mi-us.zip; cached feed SHA-256 8926b6d5769c203c359adac63a230b72032f95d9ad8094e1d26e985aeaf066e8, verified 2026-09-06",
+   "sourceFeed": "qline-detroit",
+   "sourceRouteId": "13578",
+   "feedSha256": "8926b6d5769c203c359adac63a230b72032f95d9ad8094e1d26e985aeaf066e8"
+  },
+  "12331264": {
+   "color": "#3A81DE",
+   "source": "operator GTFS routes.txt route_color; City of Milwaukee (The Hop MKE), route TL-7 (M-Line THE HOP), https://thehopmke.transloc.com/Secure/Admin/Reports/GTFSDownload.aspx; cached feed SHA-256 ada16c01456ad76c4899bd6674a67e0783124046374f8e1e1330f4109591d367, verified 2026-09-06",
+   "sourceFeed": "milwaukee-hop",
+   "sourceRouteId": "TL-7",
+   "feedSha256": "ada16c01456ad76c4899bd6674a67e0783124046374f8e1e1330f4109591d367"
+  },
+  "19668643": {
+   "color": "#73A400",
+   "source": "operator GTFS routes.txt route_color; Réseau express métropolitain, route S1 (A4 - Deux-Montagnes / A1 - Brossard), https://gtfs.gpmmom.ca/gtfs/gtfs.zip; cached feed SHA-256 9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577, verified 2026-09-06",
+   "sourceFeed": "rem",
+   "sourceRouteId": "S1",
+   "feedSha256": "9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577"
+  },
+  "19668926": {
+   "color": "#73A400",
+   "source": "operator GTFS routes.txt route_color; Réseau express métropolitain, route S3 (A3 - Anse-à-l'Orme / A1 - Brossard), https://gtfs.gpmmom.ca/gtfs/gtfs.zip; cached feed SHA-256 9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577, verified 2026-09-06",
+   "sourceFeed": "rem",
+   "sourceRouteId": "S3",
+   "feedSha256": "9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577"
+  },
+  "19669299": {
+   "color": "#73A400",
+   "source": "operator GTFS routes.txt route_color; Réseau express métropolitain, route S1 (A4 - Deux-Montagnes / A1 - Brossard), https://gtfs.gpmmom.ca/gtfs/gtfs.zip; cached feed SHA-256 9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577, verified 2026-09-06",
+   "sourceFeed": "rem",
+   "sourceRouteId": "S1",
+   "feedSha256": "9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577"
+  },
+  "19672327": {
+   "color": "#73A400",
+   "source": "operator GTFS routes.txt route_color; Réseau express métropolitain, route S3 (A3 - Anse-à-l'Orme / A1 - Brossard), https://gtfs.gpmmom.ca/gtfs/gtfs.zip; cached feed SHA-256 9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577, verified 2026-09-06",
+   "sourceFeed": "rem",
+   "sourceRouteId": "S3",
+   "feedSha256": "9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577"
+  },
+  "58433": {
+   "color": "#00B300",
+   "source": "operator GTFS routes.txt route_color; Société de transport de Montréal (STM), route 1 (Ligne 1 - Verte), https://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip; cached feed SHA-256 1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da, verified 2026-09-06",
+   "sourceFeed": "soci-t-de-transport-de-montr",
+   "sourceRouteId": "1",
+   "feedSha256": "1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da"
+  },
+  "270251": {
+   "color": "#D95700",
+   "source": "operator GTFS routes.txt route_color; Société de transport de Montréal (STM), route 2 (Ligne 2 - Orange), https://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip; cached feed SHA-256 1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da, verified 2026-09-06",
+   "sourceFeed": "soci-t-de-transport-de-montr",
+   "sourceRouteId": "2",
+   "feedSha256": "1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da"
+  },
+  "270252": {
+   "color": "#FFD900",
+   "source": "operator GTFS routes.txt route_color; Société de transport de Montréal (STM), route 4 (Ligne 4 - Jaune), https://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip; cached feed SHA-256 1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da, verified 2026-09-06",
+   "sourceFeed": "soci-t-de-transport-de-montr",
+   "sourceRouteId": "4",
+   "feedSha256": "1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da"
+  },
+  "270255": {
+   "color": "#0095E6",
+   "source": "operator GTFS routes.txt route_color; Société de transport de Montréal (STM), route 5 (Ligne 5 - Bleue), https://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip; cached feed SHA-256 1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da, verified 2026-09-06",
+   "sourceFeed": "soci-t-de-transport-de-montr",
+   "sourceRouteId": "5",
+   "feedSha256": "1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da"
+  },
+  "1647145": {
+   "color": "#96FFFC",
+   "source": "operator GTFS routes.txt route_color; City of Kenosha, route 6075 (Streetcar), https://kenoshatransit.com/gtfs; cached feed SHA-256 c7408a810de8165599217004c34c94d80ba6b43f0771f0b7aee1c526c12e5308, verified 2026-09-06",
+   "sourceFeed": "kenosha-streetcar",
+   "sourceRouteId": "6075",
+   "feedSha256": "c7408a810de8165599217004c34c94d80ba6b43f0771f0b7aee1c526c12e5308"
+  },
+  "6504062": {
+   "color": "#002855",
+   "source": "No PRT-specific line colour is published; WVU Strategic Communications and Marketing official Blue (web-optimized hex #002855, print CMYK 100/69/8/54), https://scm.wvu.edu/brand/visual-identity/, retrieved 2026-09-02. Applied as the university's own primary brand colour to its wholly WVU-branded, WVU-operated PRT."
+  }
+ },
  "releasePolicy": "strict",
  "releasePolicyNote": "This public package is fail-closed: a route named by officialNetworkDefectByRouteId or geometryReviewByRouteId is withheld until its complete alignment is resolved. referenceValidatedGeometryByRouteId is the narrow exception for a redistributable candidate that was checked locally against an official reference-only GIS whose coordinates cannot be distributed. blockedRouteIds rejects the service itself. See geometry_for in build-north-america-rail-package.py.",
  "note": "Generated by scripts/railway/make-na-feed-registry.py from the MobilityData source catalogue. Every entry names an operator's own published GTFS feed; see the module docstring for what is left out and on what evidence.",
@@ -246,8 +357,7 @@
    {"from": "Woodbine Station", "to": "Main Street Station", "sagittaBoundMeters": 2.23, "why": "OSM relation 102386 draws Woodbine to Main Street as a single straight way with no interior node on either running track, so the relation states the track is straight here but carries no vertex that measures it; the reviewed worst-case sagitta consistent with the mapped geometry at either end is 2.23 m, above the 1.5 m the public audit treats as straight, so the interval is recorded as a reviewed exception rather than as a measured one. The City of Toronto topographic subway-track survey COTGEO_TOPO_RAILWAY subtype 2005 does not reach this section, which is in tunnel. Reviewed 2026-09-05.", "reviewedOn": "2026-09-05"}
   ]
  },
- "osmLineColorsNote": "The colour an operator publishes for a railway that reaches the package only through OpenStreetMap, keyed by relation id, as {\"color\": \"#RRGGBB\", \"source\": \"<the page it was read from>\"}. OSM's own colour tag is not accepted here or anywhere: it is a contributor's reading of a map. 52 verified entries are waiting in /private/tmp/jtm-na-rail/patches/patch-canada2.json.",
- "osmLineColors": {},
+ "osmLineColorsNote": "Operator-published colours for reviewed OSM route identities. Each GTFS entry records the exact feed SHA-256 and route ID; the WVU entry cites the official university palette. White Loop Trolley is deliberately excluded. Colour evidence does not waive subsequent geometry checks. Verified 2026-09-06.",
  "feeds": [
   {
    "slug": "kenosha-streetcar",
@@ -1495,6 +1605,20 @@
   },
   {
    "slug": "mbta",
+   "officialNetworkMaxSnapMetersByRouteId": {
+    "Green-E": 100,
+    "Green-D": 100
+   },
+   "officialNetworkSnapEvidenceByRouteId": {
+    "Green-E": {
+     "evidence": "MassGIS Green E extract and MBTA GTFS 437: Union Square–Lechmere nearest projections are 3.31/8.85 m, but the 600 m common-feature search truncates both approaches (Lechmere 451.84 m). A 100 m limit on Green E and Green D preserves their surveyed routes and all 25 stops on each trunk, including North Station 51.76 m from the source; it also restores the Green D Union Square terminus previously displaced 320.63 m.",
+     "sources": [
+      "https://cdn.mbta.com/MBTA_GTFS.zip",
+      "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Rapid_Transit/FeatureServer/4/query?where=1%3D1&outFields=*&outSR=4326&returnGeometry=true&f=geojson"
+     ],
+     "reviewedAt": "2026-09-06"
+    }
+   },
    "mdb": "437",
    "region": "us",
    "name": "Massachusetts Bay Transportation Authority (MBTA)",
@@ -2173,6 +2297,8 @@
    "mdb": "517",
    "region": "us",
    "name": "Port Authority Trans-Hudson (PATH)",
+   "officialNetworkEndpointJoinMeters": 0.1,
+   "officialNetworkEndpointJoinEvidence": "NJ Transit PATH GIS Hoboken-33rd St feature 10 has a 0.0166 m endpoint seam at [-74.03408746,40.73249626] between its Hoboken approach and Manhattan trunk; connect only degree-one endpoints in different components within 0.1 m. Source: https://services6.arcgis.com/M0t0HPE53pFK525U/arcgis/rest/services/PATH/FeatureServer/1",
    "url": "http://data.trilliumtransit.com/gtfs/path-nj-us/path-nj-us.zip",
    "mirror": "https://storage.googleapis.com/storage/v1/b/mdb-latest/o/us-new-jersey-port-authority-trans-hudson-path-gtfs-517.zip?alt=media",
    "railRoutes": 7,
