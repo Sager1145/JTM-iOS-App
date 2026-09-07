@@ -1,0 +1,207 @@
+{
+  "source": "https://cdn.mbta.com/MBTA_GTFS.zip",
+  "sha256": "f84b69d2cb1a2e9107571400ba91bc839bcc1ff16579a6d90f4d3ee7c2ba27d4",
+  "reviewedAt": "2026-09-06",
+  "stations": [
+    {
+      "id": "place-mdftf",
+      "name": "Medford/Tufts",
+      "point": [
+        -71.117044,
+        42.407975
+      ]
+    },
+    {
+      "id": "place-balsq",
+      "name": "Ball Square",
+      "point": [
+        -71.111003,
+        42.399889
+      ]
+    },
+    {
+      "id": "place-mgngl",
+      "name": "Magoun Square",
+      "point": [
+        -71.1063879,
+        42.393682
+      ]
+    },
+    {
+      "id": "place-gilmn",
+      "name": "Gilman Square",
+      "point": [
+        -71.096766,
+        42.387928
+      ]
+    },
+    {
+      "id": "place-esomr",
+      "name": "East Somerville",
+      "point": [
+        -71.086625,
+        42.379467
+      ]
+    },
+    {
+      "id": "place-lech",
+      "name": "Lechmere",
+      "point": [
+        -71.076584,
+        42.371572
+      ]
+    },
+    {
+      "id": "place-spmnl",
+      "name": "Science Park/West End",
+      "point": [
+        -71.067666,
+        42.366664
+      ]
+    },
+    {
+      "id": "place-north",
+      "name": "North Station",
+      "point": [
+        -71.06129,
+        42.365577
+      ]
+    },
+    {
+      "id": "place-haecl",
+      "name": "Haymarket",
+      "point": [
+        -71.05829,
+        42.363021
+      ]
+    },
+    {
+      "id": "place-gover",
+      "name": "Government Center",
+      "point": [
+        -71.059215,
+        42.359705
+      ]
+    },
+    {
+      "id": "place-pktrm",
+      "name": "Park Street",
+      "point": [
+        -71.0624242,
+        42.3563946
+      ]
+    },
+    {
+      "id": "place-boyls",
+      "name": "Boylston",
+      "point": [
+        -71.06459,
+        42.35302
+      ]
+    },
+    {
+      "id": "place-armnl",
+      "name": "Arlington",
+      "point": [
+        -71.070893,
+        42.351902
+      ]
+    },
+    {
+      "id": "place-coecl",
+      "name": "Copley",
+      "point": [
+        -71.077447,
+        42.349974
+      ]
+    },
+    {
+      "id": "place-prmnl",
+      "name": "Prudential",
+      "point": [
+        -71.081696,
+        42.34557
+      ]
+    },
+    {
+      "id": "place-symcl",
+      "name": "Symphony",
+      "point": [
+        -71.085056,
+        42.342687
+      ]
+    },
+    {
+      "id": "place-nuniv",
+      "name": "Northeastern University",
+      "point": [
+        -71.088806,
+        42.340401
+      ]
+    },
+    {
+      "id": "place-mfa",
+      "name": "Museum of Fine Arts",
+      "point": [
+        -71.095512,
+        42.337711
+      ]
+    },
+    {
+      "id": "place-lngmd",
+      "name": "Longwood Medical Area",
+      "point": [
+        -71.100052,
+        42.33596
+      ]
+    },
+    {
+      "id": "place-brmnl",
+      "name": "Brigham Circle",
+      "point": [
+        -71.104609,
+        42.334229
+      ]
+    },
+    {
+      "id": "place-fenwd",
+      "name": "Fenwood Road",
+      "point": [
+        -71.105728,
+        42.333706
+      ]
+    },
+    {
+      "id": "place-mispk",
+      "name": "Mission Park",
+      "point": [
+        -71.109756,
+        42.333195
+      ]
+    },
+    {
+      "id": "place-rvrwy",
+      "name": "Riverway",
+      "point": [
+        -71.111931,
+        42.331684
+      ]
+    },
+    {
+      "id": "place-bckhl",
+      "name": "Back of the Hill",
+      "point": [
+        -71.111313,
+        42.330139
+      ]
+    },
+    {
+      "id": "place-hsmnl",
+      "name": "Heath Street",
+      "point": [
+        -71.110252,
+        42.328316
+      ]
+    }
+  ]
+}

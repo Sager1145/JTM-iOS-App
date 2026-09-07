@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-06",
+  "sourcePackage": "app/public/rail/us-2025.json",
+  "sourcePackageSha256": "23be9d3230204cb59d56c2e215a76f5be41b0b1cc89b29880d757819704bbda1",
+  "repairs": [
+    {
+      "country": "us",
+      "oldId": "us-official-olney",
+      "evidence": "Agency maps identify separate subway and regional-rail stations. Preserve each existing WGS84 line anchor and local subway memberships; split the regional-rail identity even though the separation is below 2 km.",
+      "evidenceUrls": [
+        "https://schedules.septa.org/scheduled/2023-9-4/8.pdf"
+      ],
+      "places": [
+        {
+          "id": "us-official-olney",
+          "members": [
+            {
+              "lineId": "septa-b1",
+              "feed": "septa",
+              "name": "Olney Transit Center",
+              "point": [
+                -75.144743,
+                40.038828
+              ],
+              "geometrySource": "septa-b1"
+            },
+            {
+              "lineId": "septa-b2",
+              "feed": "septa",
+              "name": "Olney Transit Center",
+              "point": [
+                -75.14476,
+                40.038821
+              ],
+              "geometrySource": "gtfs-shape"
+            },
+            {
+              "lineId": "septa-b3",
+              "feed": "septa",
+              "name": "Olney Transit Center",
+              "point": [
+                -75.144743,
+                40.038828
+              ],
+              "geometrySource": "septa-b3"
+            }
+          ]
+        },
+        {
+          "id": "us-official-olney--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-fox",
+              "feed": "septa-regional-rail",
+              "name": "Olney",
+              "point": [
+                -75.122716,
+                40.033269
+              ],
+              "geometrySource": "septa-rail-fox"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-woodlawn",
+      "evidence": "Agency maps identify separate subway and regional-rail stations. Preserve each existing WGS84 line anchor and local subway memberships; split the regional-rail identity even though the separation is below 2 km.",
+      "evidenceUrls": [
+        "https://www.mta.info/document/1976",
+        "https://www.mta.info/document/129376"
+      ],
+      "places": [
+        {
+          "id": "us-official-woodlawn",
+          "members": [
+            {
+              "lineId": "metropolitan-transit-authori-4",
+              "feed": "metropolitan-transit-authori",
+              "name": "Woodlawn",
+              "point": [
+                -73.878743,
+                40.886033
+              ],
+              "geometrySource": "mta-subway-service-4"
+            }
+          ]
+        },
+        {
+          "id": "us-official-woodlawn--metro-north-railroad",
+          "members": [
+            {
+              "lineId": "metro-north-railroad-harlem",
+              "feed": "metro-north-railroad",
+              "name": "Woodlawn",
+              "point": [
+                -73.86273,
+                40.89529
+              ],
+              "geometrySource": "mnr-harlem"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

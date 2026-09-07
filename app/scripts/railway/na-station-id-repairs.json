@@ -1,0 +1,2800 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-06",
+  "sourcePackage": "app/public/rail/us-2025.json",
+  "sourcePackageSha256": "1e55169588034f769a3c26debe1290723a5b7f84bbe41debbd9c2c43b334601f",
+  "repairs": [
+    {
+      "country": "us",
+      "oldId": "us-official-22nd-street",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-22nd-street",
+          "members": [
+            {
+              "lineId": "caltrain-local-weekday",
+              "feed": "caltrain",
+              "name": "22nd Street Station",
+              "point": [
+                -122.392341,
+                37.75697
+              ],
+              "geometrySource": "caltrans-caltrain"
+            }
+          ]
+        },
+        {
+          "id": "us-official-22nd-street--new-jersey-transit-nj-transi",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-hblr",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "22nd Street Light RAIL Station",
+              "point": [
+                -74.116472,
+                40.661307
+              ],
+              "geometrySource": "njt-light-4-hblr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-86-st-5",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-86-st-5",
+          "members": [
+            {
+              "lineId": "metropolitan-transit-authori-q",
+              "feed": "metropolitan-transit-authori",
+              "name": "86 St",
+              "point": [
+                -73.951686,
+                40.777848
+              ],
+              "geometrySource": "mta-subway-service-q"
+            }
+          ]
+        },
+        {
+          "id": "us-official-86-st-5--metropolitan-transit-authori",
+          "members": [
+            {
+              "lineId": "metropolitan-transit-authori-r",
+              "feed": "metropolitan-transit-authori",
+              "name": "86 St",
+              "point": [
+                -74.028403,
+                40.622688
+              ],
+              "geometrySource": "mta-subway-service-r"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-9th-street",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-9th-street",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-hblr",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "9th Street Light RAIL Station",
+              "point": [
+                -74.038553,
+                40.748877
+              ],
+              "geometrySource": "njt-light-4-hblr"
+            }
+          ]
+        },
+        {
+          "id": "us-official-9th-street--port-authority-trans-hudson",
+          "members": [
+            {
+              "lineId": "port-authority-trans-hudson-hoboken-33rd-street",
+              "feed": "port-authority-trans-hudson",
+              "name": "9th Street",
+              "point": [
+                -73.999128,
+                40.734266
+              ],
+              "geometrySource": "path-njt-859-hoboken-33"
+            },
+            {
+              "lineId": "port-authority-trans-hudson-journal-square-33rd-street-via-hoboken",
+              "feed": "port-authority-trans-hudson",
+              "name": "9th Street",
+              "point": [
+                -73.999128,
+                40.734266
+              ],
+              "geometrySource": "path-njt-1024-jsq-33-via-hoboken"
+            },
+            {
+              "lineId": "port-authority-trans-hudson-world-trade-center-33rd-street",
+              "feed": "port-authority-trans-hudson",
+              "name": "9th Street",
+              "point": [
+                -73.999143,
+                40.734258
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-airport",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-airport",
+          "members": [
+            {
+              "lineId": "mbta-blue-line",
+              "feed": "mbta",
+              "name": "Airport",
+              "point": [
+                -71.030316,
+                42.374291
+              ],
+              "geometrySource": "mbta-rapid-blue"
+            }
+          ]
+        },
+        {
+          "id": "us-official-airport--metropolitan-atlanta-rapid-t",
+          "members": [
+            {
+              "lineId": "metropolitan-atlanta-rapid-t-gold",
+              "feed": "metropolitan-atlanta-rapid-t",
+              "name": "Airport Station",
+              "point": [
+                -84.446051,
+                33.640831
+              ],
+              "geometrySource": "marta-gold"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-allegheny",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-allegheny",
+          "members": [
+            {
+              "lineId": "port-authority-of-allegheny-blue",
+              "feed": "port-authority-of-allegheny",
+              "name": "Allegheny Station",
+              "point": [
+                -80.017801,
+                40.447941
+              ],
+              "geometrySource": "prt-t-blue"
+            },
+            {
+              "lineId": "port-authority-of-allegheny-red",
+              "feed": "port-authority-of-allegheny",
+              "name": "Allegheny Station",
+              "point": [
+                -80.017801,
+                40.447941
+              ],
+              "geometrySource": "prt-t-red"
+            },
+            {
+              "lineId": "port-authority-of-allegheny-slvr",
+              "feed": "port-authority-of-allegheny",
+              "name": "Allegheny Station",
+              "point": [
+                -80.017801,
+                40.447941
+              ],
+              "geometrySource": "prt-t-silver"
+            }
+          ]
+        },
+        {
+          "id": "us-official-allegheny--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-nor",
+              "feed": "septa-regional-rail",
+              "name": "Allegheny",
+              "point": [
+                -75.164737,
+                40.003589
+              ],
+              "geometrySource": "septa-rail-nor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-antioch",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-antioch",
+          "members": [
+            {
+              "lineId": "bart-yellow",
+              "feed": "bart",
+              "name": "Antioch",
+              "point": [
+                -121.780434,
+                37.995389
+              ],
+              "geometrySource": "bart-sfo-millbrae-wye"
+            }
+          ]
+        },
+        {
+          "id": "us-official-antioch--metra",
+          "members": [
+            {
+              "lineId": "metra-ncs",
+              "feed": "metra",
+              "name": "Antioch",
+              "point": [
+                -88.092173,
+                42.480721
+              ],
+              "geometrySource": "metra-ncs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-aquarium",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-aquarium",
+          "members": [
+            {
+              "lineId": "mbta-blue-line",
+              "feed": "mbta",
+              "name": "Aquarium",
+              "point": [
+                -71.051591,
+                42.359579
+              ],
+              "geometrySource": "mbta-rapid-blue"
+            }
+          ]
+        },
+        {
+          "id": "us-official-aquarium--new-jersey-transit-nj-transi",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-rvln",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Aquarium Light RAIL Station",
+              "point": [
+                -75.128788,
+                39.945678
+              ],
+              "geometrySource": "njt-light-17-river"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-ardmore",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-ardmore",
+          "members": [
+            {
+              "lineId": "amtrak-heartland-flyer",
+              "feed": "amtrak",
+              "name": "Ardmore Amtrak Station",
+              "point": [
+                -97.124803,
+                34.172105
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-ardmore--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-pao",
+              "feed": "septa-regional-rail",
+              "name": "Ardmore",
+              "point": [
+                -75.290274,
+                40.008424
+              ],
+              "geometrySource": "septa-rail-pao"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-arlington",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-arlington",
+          "members": [
+            {
+              "lineId": "mbta-d",
+              "feed": "mbta",
+              "name": "Arlington",
+              "point": [
+                -71.07085,
+                42.351815
+              ],
+              "geometrySource": "mbta-rapid-green-d"
+            },
+            {
+              "lineId": "mbta-b",
+              "feed": "mbta",
+              "name": "Arlington",
+              "point": [
+                -71.07085,
+                42.351815
+              ],
+              "geometrySource": "mbta-rapid-green-b"
+            },
+            {
+              "lineId": "mbta-c",
+              "feed": "mbta",
+              "name": "Arlington",
+              "point": [
+                -71.07085,
+                42.351815
+              ],
+              "geometrySource": "mbta-rapid-green-c"
+            },
+            {
+              "lineId": "mbta-e",
+              "feed": "mbta",
+              "name": "Arlington",
+              "point": [
+                -71.07085,
+                42.351815
+              ],
+              "geometrySource": "mbta-rapid-green-e"
+            }
+          ]
+        },
+        {
+          "id": "us-official-arlington--port-authority-of-allegheny",
+          "members": [
+            {
+              "lineId": "port-authority-of-allegheny-red",
+              "feed": "port-authority-of-allegheny",
+              "name": "Arlington",
+              "point": [
+                -80.033297,
+                40.3699
+              ],
+              "geometrySource": "prt-t-red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-ashland",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-ashland",
+          "members": [
+            {
+              "lineId": "amtrak-cardinal",
+              "feed": "amtrak",
+              "name": "Ashland Amtrak Station",
+              "point": [
+                -82.639355,
+                38.481178
+              ],
+              "geometrySource": "amtrak-ntad-cardinal"
+            }
+          ]
+        },
+        {
+          "id": "us-official-ashland--mbta",
+          "members": [
+            {
+              "lineId": "mbta-framingham-worcester-line",
+              "feed": "mbta",
+              "name": "Ashland",
+              "point": [
+                -71.482155,
+                42.261526
+              ],
+              "geometrySource": "mbta-commuter-cr-worcester"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-ashland-2",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-ashland-2",
+          "members": [
+            {
+              "lineId": "amtrak-northeast-regional",
+              "feed": "amtrak",
+              "name": "Ashland Amtrak",
+              "point": [
+                -77.481076,
+                37.759552
+              ],
+              "geometrySource": "amtrak-ntad-northeast-regional"
+            }
+          ]
+        },
+        {
+          "id": "us-official-ashland-2--metra",
+          "members": [
+            {
+              "lineId": "metra-me-b2",
+              "feed": "metra",
+              "name": "Ashland",
+              "point": [
+                -87.660587,
+                41.669465
+              ],
+              "geometrySource": "metra-me"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-atlantic",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-atlantic",
+          "members": [
+            {
+              "lineId": "los-angeles-county-metropoli-metro-e-line",
+              "feed": "los-angeles-county-metropoli",
+              "name": "Atlantic Station",
+              "point": [
+                -118.154469,
+                34.033401
+              ],
+              "geometrySource": "la-metro-804"
+            }
+          ]
+        },
+        {
+          "id": "us-official-atlantic--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-city-terminal-zone",
+              "feed": "mta-long-island-rail-road",
+              "name": "Atlantic Terminal",
+              "point": [
+                -73.972546,
+                40.683025
+              ],
+              "geometrySource": "lirr-seam-12-city-terminal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-berwyn",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-berwyn",
+          "members": [
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Berwyn",
+              "point": [
+                -87.658668,
+                41.977984
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        },
+        {
+          "id": "us-official-berwyn--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-pao",
+              "feed": "septa-regional-rail",
+              "name": "Berwyn",
+              "point": [
+                -75.44231,
+                40.048161
+              ],
+              "geometrySource": "septa-rail-pao"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-broadway",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-broadway",
+          "members": [
+            {
+              "lineId": "caltrain-local-weekday",
+              "feed": "caltrain",
+              "name": "Broadway Station",
+              "point": [
+                -122.361947,
+                37.587338
+              ],
+              "geometrySource": "caltrans-caltrain"
+            }
+          ]
+        },
+        {
+          "id": "us-official-broadway--mbta",
+          "members": [
+            {
+              "lineId": "mbta-red-line",
+              "feed": "mbta",
+              "name": "Broadway",
+              "point": [
+                -71.057169,
+                42.342626
+              ],
+              "geometrySource": "mbta-rapid-red-columbia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-broadway-2",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-broadway-2",
+          "members": [
+            {
+              "lineId": "detroit-people-mover-dpm",
+              "feed": "detroit-people-mover",
+              "name": "Broadway",
+              "point": [
+                -83.048267,
+                42.335434
+              ],
+              "geometrySource": "detroit-dpm"
+            }
+          ]
+        },
+        {
+          "id": "us-official-broadway-2--metropolitan-transit-authori",
+          "members": [
+            {
+              "lineId": "metropolitan-transit-authori-n",
+              "feed": "metropolitan-transit-authori",
+              "name": "Broadway",
+              "point": [
+                -73.925515,
+                40.761823
+              ],
+              "geometrySource": "mta-subway-service-n"
+            },
+            {
+              "lineId": "metropolitan-transit-authori-w",
+              "feed": "metropolitan-transit-authori",
+              "name": "Broadway",
+              "point": [
+                -73.925515,
+                40.761823
+              ],
+              "geometrySource": "mta-subway-service-w"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-bryn-mawr",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-bryn-mawr",
+          "members": [
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Bryn Mawr",
+              "point": [
+                -87.65884,
+                41.983504
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        },
+        {
+          "id": "us-official-bryn-mawr--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-pao",
+              "feed": "septa-regional-rail",
+              "name": "Bryn Mawr",
+              "point": [
+                -75.31627,
+                40.022108
+              ],
+              "geometrySource": "septa-rail-pao"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-burbank",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-burbank",
+          "members": [
+            {
+              "lineId": "amtrak-pacific-surfliner",
+              "feed": "amtrak",
+              "name": "Burbank",
+              "point": [
+                -118.312192,
+                34.178601
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-burbank--dallas-area-rapid-transit-da",
+          "members": [
+            {
+              "lineId": "dallas-area-rapid-transit-da-green",
+              "feed": "dallas-area-rapid-transit-da",
+              "name": "Burbank Station",
+              "point": [
+                -96.862178,
+                32.842968
+              ],
+              "geometrySource": "dart-green"
+            },
+            {
+              "lineId": "dallas-area-rapid-transit-da-orange",
+              "feed": "dallas-area-rapid-transit-da",
+              "name": "Burbank Station",
+              "point": [
+                -96.862178,
+                32.842968
+              ],
+              "geometrySource": "dart-orange"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-central",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-central",
+          "members": [
+            {
+              "lineId": "mbta-red-line",
+              "feed": "mbta",
+              "name": "Central",
+              "point": [
+                -71.103836,
+                42.365455
+              ],
+              "geometrySource": "mbta-rapid-red-columbia"
+            }
+          ]
+        },
+        {
+          "id": "us-official-central--metro-transit",
+          "members": [
+            {
+              "lineId": "metro-transit-metro-green-line",
+              "feed": "metro-transit",
+              "name": "Central Station",
+              "point": [
+                -93.092297,
+                44.946159
+              ],
+              "geometrySource": "metro-transit-green"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-charleston",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-charleston",
+          "members": [
+            {
+              "lineId": "amtrak-cardinal",
+              "feed": "amtrak",
+              "name": "Charleston",
+              "point": [
+                -81.638573,
+                38.346297
+              ],
+              "geometrySource": "amtrak-ntad-cardinal"
+            }
+          ]
+        },
+        {
+          "id": "us-official-charleston--amtrak",
+          "members": [
+            {
+              "lineId": "amtrak-palmetto",
+              "feed": "amtrak",
+              "name": "Charleston Amtrak Station",
+              "point": [
+                -79.99859,
+                32.875269
+              ],
+              "geometrySource": "gtfs-shape"
+            },
+            {
+              "lineId": "amtrak-silver-meteor",
+              "feed": "amtrak",
+              "name": "Charleston Amtrak Station",
+              "point": [
+                -79.998599,
+                32.875264
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-chestnut-hill",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-chestnut-hill",
+          "members": [
+            {
+              "lineId": "mbta-d",
+              "feed": "mbta",
+              "name": "Chestnut Hill",
+              "point": [
+                -71.164695,
+                42.326739
+              ],
+              "geometrySource": "mbta-rapid-green-d"
+            }
+          ]
+        },
+        {
+          "id": "us-official-chestnut-hill--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-che",
+              "feed": "septa-regional-rail",
+              "name": "Chestnut Hill",
+              "point": [
+                -75.207223,
+                40.08103
+              ],
+              "geometrySource": "septa-rail-che"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-concord",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-concord",
+          "members": [
+            {
+              "lineId": "bart-yellow",
+              "feed": "bart",
+              "name": "Concord",
+              "point": [
+                -122.029026,
+                37.973744
+              ],
+              "geometrySource": "bart-sfo-millbrae-wye"
+            }
+          ]
+        },
+        {
+          "id": "us-official-concord--mbta",
+          "members": [
+            {
+              "lineId": "mbta-fitchburg-line",
+              "feed": "mbta",
+              "name": "Concord",
+              "point": [
+                -71.357682,
+                42.45656
+              ],
+              "geometrySource": "mbta-commuter-cr-fitchburg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-davis",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-davis",
+          "members": [
+            {
+              "lineId": "amtrak-capitol-corridor",
+              "feed": "amtrak",
+              "name": "Davis",
+              "point": [
+                -121.737418,
+                38.54328
+              ],
+              "geometrySource": "amtrak-ntad-capitol-corridor"
+            }
+          ]
+        },
+        {
+          "id": "us-official-davis--cta",
+          "members": [
+            {
+              "lineId": "cta-purple-line",
+              "feed": "cta",
+              "name": "Davis",
+              "point": [
+                -87.683543,
+                42.04771
+              ],
+              "geometrySource": "cta-purple"
+            }
+          ]
+        },
+        {
+          "id": "us-official-davis--mbta",
+          "members": [
+            {
+              "lineId": "mbta-red-line",
+              "feed": "mbta",
+              "name": "Davis",
+              "point": [
+                -71.121863,
+                42.396653
+              ],
+              "geometrySource": "mbta-rapid-red-columbia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-forest-hills",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-forest-hills",
+          "members": [
+            {
+              "lineId": "mbta-needham-line",
+              "feed": "mbta",
+              "name": "Forest Hills",
+              "point": [
+                -71.113809,
+                42.300663
+              ],
+              "geometrySource": "mbta-commuter-cr-needham"
+            },
+            {
+              "lineId": "mbta-orange-line",
+              "feed": "mbta",
+              "name": "Forest Hills",
+              "point": [
+                -71.113228,
+                42.302093
+              ],
+              "geometrySource": "mbta-rapid-orange"
+            },
+            {
+              "lineId": "mbta-providence-stoughton-line",
+              "feed": "mbta",
+              "name": "Forest Hills",
+              "point": [
+                -71.113802,
+                42.300661
+              ],
+              "geometrySource": "mbta-cr-providence"
+            }
+          ]
+        },
+        {
+          "id": "us-official-forest-hills--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-babylon-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-1-babylon"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-city-terminal-zone",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719587
+              ],
+              "geometrySource": "lirr-seam-12-city-terminal"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-7-far-rockaway"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-hempstead-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-2-hempstead"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-long-beach-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-6-long-beach"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-10-port-jefferson"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-ronkonkoma-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-4-ronkonkoma"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-west-hempstead-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Forest Hills",
+              "point": [
+                -73.844806,
+                40.719588
+              ],
+              "geometrySource": "lirr-seam-8-west-hempstead"
+            }
+          ]
+        },
+        {
+          "id": "us-official-forest-hills--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-wtr",
+              "feed": "septa-regional-rail",
+              "name": "Forest Hills",
+              "point": [
+                -75.020623,
+                40.127915
+              ],
+              "geometrySource": "septa-rail-wtr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-fort-lauderdale",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-fort-lauderdale",
+          "members": [
+            {
+              "lineId": "amtrak-silver-meteor",
+              "feed": "amtrak",
+              "name": "Fort Lauderdale Amtrak Station",
+              "point": [
+                -80.16982,
+                26.119259
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-fort-lauderdale--brightline-trains-llc",
+          "members": [
+            {
+              "lineId": "brightline-trains-llc-blfm",
+              "feed": "brightline-trains-llc",
+              "name": "Fort Lauderdale",
+              "point": [
+                -80.145587,
+                26.123618
+              ],
+              "geometrySource": "fdot-brightline"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-fullerton",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-fullerton",
+          "members": [
+            {
+              "lineId": "amtrak-southwest-chief",
+              "feed": "amtrak",
+              "name": "Fullerton Amtrak Station",
+              "point": [
+                -117.922842,
+                33.868638
+              ],
+              "geometrySource": "narn"
+            },
+            {
+              "lineId": "amtrak-pacific-surfliner",
+              "feed": "amtrak",
+              "name": "Fullerton Amtrak Station",
+              "point": [
+                -117.922842,
+                33.868638
+              ],
+              "geometrySource": "narn"
+            },
+            {
+              "lineId": "metrolink-91-pv-line",
+              "feed": "metrolink",
+              "name": "Fullerton",
+              "point": [
+                -117.922294,
+                33.868611
+              ],
+              "geometrySource": "metrolink-scrra-91"
+            },
+            {
+              "lineId": "metrolink-oc-line",
+              "feed": "metrolink",
+              "name": "Fullerton",
+              "point": [
+                -117.922294,
+                33.868611
+              ],
+              "geometrySource": "metrolink-scrra-oc"
+            }
+          ]
+        },
+        {
+          "id": "us-official-fullerton--cta",
+          "members": [
+            {
+              "lineId": "cta-brown-line",
+              "feed": "cta",
+              "name": "Fullerton",
+              "point": [
+                -87.652873,
+                41.9253
+              ],
+              "geometrySource": "cta-brown"
+            },
+            {
+              "lineId": "cta-purple-line",
+              "feed": "cta",
+              "name": "Fullerton",
+              "point": [
+                -87.652873,
+                41.9253
+              ],
+              "geometrySource": "cta-purple"
+            },
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Fullerton",
+              "point": [
+                -87.652873,
+                41.9253
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-gainesville",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-gainesville",
+          "members": [
+            {
+              "lineId": "amtrak-crescent",
+              "feed": "amtrak",
+              "name": "Gainesville Amtrak Station",
+              "point": [
+                -83.819423,
+                34.28867
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-gainesville--amtrak",
+          "members": [
+            {
+              "lineId": "amtrak-heartland-flyer",
+              "feed": "amtrak",
+              "name": "Gainesville Amtrak Station",
+              "point": [
+                -97.140647,
+                33.625199
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-gladstone",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-gladstone",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-mneg",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Gladstone",
+              "point": [
+                -74.66639,
+                40.72027
+              ],
+              "geometrySource": "njt-rail-8-gladstone"
+            }
+          ]
+        },
+        {
+          "id": "us-official-gladstone--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-med",
+              "feed": "septa-regional-rail",
+              "name": "Gladstone",
+              "point": [
+                -75.282155,
+                39.932729
+              ],
+              "geometrySource": "septa-rail-med"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-greenwood",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-greenwood",
+          "members": [
+            {
+              "lineId": "amtrak-city-of-new-orleans",
+              "feed": "amtrak",
+              "name": "Greenwood Amtrak Station",
+              "point": [
+                -90.176212,
+                33.517075
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-greenwood--mbta",
+          "members": [
+            {
+              "lineId": "mbta-haverhill-line",
+              "feed": "mbta",
+              "name": "Greenwood",
+              "point": [
+                -71.067349,
+                42.48298
+              ],
+              "geometrySource": "mbta-commuter-cr-haverhill"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-harvard",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-harvard",
+          "members": [
+            {
+              "lineId": "mbta-red-line",
+              "feed": "mbta",
+              "name": "Harvard",
+              "point": [
+                -71.118755,
+                42.373464
+              ],
+              "geometrySource": "mbta-rapid-red-columbia"
+            }
+          ]
+        },
+        {
+          "id": "us-official-harvard--metra",
+          "members": [
+            {
+              "lineId": "metra-up-nw",
+              "feed": "metra",
+              "name": "Harvard",
+              "point": [
+                -88.61712,
+                42.419351
+              ],
+              "geometrySource": "metra-up-nw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-healy",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-healy",
+          "members": [
+            {
+              "lineId": "metra-milwaukee",
+              "feed": "metra",
+              "name": "Healy",
+              "point": [
+                -87.727829,
+                41.924706
+              ],
+              "geometrySource": "metra-md-n"
+            }
+          ]
+        },
+        {
+          "id": "us-official-healy--alaska-railroad",
+          "members": [
+            {
+              "lineId": "alaska-railroad-aurora-winter",
+              "feed": "alaska-railroad",
+              "name": "Healy",
+              "point": [
+                -148.965455,
+                63.856341
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-highland",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-highland",
+          "members": [
+            {
+              "lineId": "capital-metro-550",
+              "feed": "capital-metro",
+              "name": "Highland Station",
+              "point": [
+                -97.716204,
+                30.328601
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-highland--port-authority-of-allegheny",
+          "members": [
+            {
+              "lineId": "port-authority-of-allegheny-blue",
+              "feed": "port-authority-of-allegheny",
+              "name": "Highland",
+              "point": [
+                -80.039772,
+                40.348337
+              ],
+              "geometrySource": "prt-t-blue"
+            },
+            {
+              "lineId": "port-authority-of-allegheny-red",
+              "feed": "port-authority-of-allegheny",
+              "name": "Highland",
+              "point": [
+                -80.039772,
+                40.348337
+              ],
+              "geometrySource": "prt-t-red"
+            }
+          ]
+        },
+        {
+          "id": "us-official-highland--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-chw",
+              "feed": "septa-regional-rail",
+              "name": "Highland",
+              "point": [
+                -75.211219,
+                40.070529
+              ],
+              "geometrySource": "septa-rail-chw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-highland-park",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-highland-park",
+          "members": [
+            {
+              "lineId": "los-angeles-county-metropoli-metro-a-line",
+              "feed": "los-angeles-county-metropoli",
+              "name": "Highland Park Station",
+              "point": [
+                -118.192609,
+                34.111183
+              ],
+              "geometrySource": "la-metro-801"
+            }
+          ]
+        },
+        {
+          "id": "us-official-highland-park--metra",
+          "members": [
+            {
+              "lineId": "metra-union-pacific",
+              "feed": "metra",
+              "name": "Highland Park",
+              "point": [
+                -87.79758,
+                42.183305
+              ],
+              "geometrySource": "rta-metra-up-n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-hollywood",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-hollywood",
+          "members": [
+            {
+              "lineId": "amtrak-silver-meteor",
+              "feed": "amtrak",
+              "name": "Hollywood Amtrak Station",
+              "point": [
+                -80.16767,
+                26.011644
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-hollywood--metra",
+          "members": [
+            {
+              "lineId": "metra-bnsf",
+              "feed": "metra",
+              "name": "Hollywood",
+              "point": [
+                -87.833802,
+                41.824225
+              ],
+              "geometrySource": "metra-bnsf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-huntington",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-huntington",
+          "members": [
+            {
+              "lineId": "amtrak-cardinal",
+              "feed": "amtrak",
+              "name": "Huntington Amtrak Station",
+              "point": [
+                -82.439807,
+                38.416073
+              ],
+              "geometrySource": "amtrak-ntad-cardinal"
+            }
+          ]
+        },
+        {
+          "id": "us-official-huntington--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Huntington",
+              "point": [
+                -73.409529,
+                40.853016
+              ],
+              "geometrySource": "lirr-seam-10-port-jefferson"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-jackson",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-jackson",
+          "members": [
+            {
+              "lineId": "amtrak-city-of-new-orleans",
+              "feed": "amtrak",
+              "name": "Jackson",
+              "point": [
+                -90.191305,
+                32.300786
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-jackson--amtrak",
+          "members": [
+            {
+              "lineId": "amtrak-wolverine",
+              "feed": "amtrak",
+              "name": "Jackson",
+              "point": [
+                -84.399833,
+                42.247787
+              ],
+              "geometrySource": "amtrak-ntad-wolverine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-kingston",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-kingston",
+          "members": [
+            {
+              "lineId": "amtrak-northeast-regional",
+              "feed": "amtrak",
+              "name": "Kingston Amtrak Station",
+              "point": [
+                -71.560809,
+                41.484151
+              ],
+              "geometrySource": "amtrak-ntad-northeast-regional"
+            }
+          ]
+        },
+        {
+          "id": "us-official-kingston--mbta",
+          "members": [
+            {
+              "lineId": "mbta-kingston-line",
+              "feed": "mbta",
+              "name": "Kingston",
+              "point": [
+                -70.721703,
+                41.977614
+              ],
+              "geometrySource": "mbta-commuter-cr-kingston"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-lafayette",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-lafayette",
+          "members": [
+            {
+              "lineId": "amtrak-cardinal",
+              "feed": "amtrak",
+              "name": "Lafayette Amtrak Station",
+              "point": [
+                -86.896389,
+                40.419479
+              ],
+              "geometrySource": "amtrak-ntad-cardinal"
+            }
+          ]
+        },
+        {
+          "id": "us-official-lafayette--bart",
+          "members": [
+            {
+              "lineId": "bart-yellow",
+              "feed": "bart",
+              "name": "Lafayette",
+              "point": [
+                -122.124604,
+                37.893142
+              ],
+              "geometrySource": "bart-sfo-millbrae-wye"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-lansdowne",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-lansdowne",
+          "members": [
+            {
+              "lineId": "mbta-framingham-worcester-line",
+              "feed": "mbta",
+              "name": "Lansdowne",
+              "point": [
+                -71.099973,
+                42.347626
+              ],
+              "geometrySource": "mbta-commuter-cr-worcester"
+            }
+          ]
+        },
+        {
+          "id": "us-official-lansdowne--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-med",
+              "feed": "septa-regional-rail",
+              "name": "Lansdowne",
+              "point": [
+                -75.270814,
+                39.937399
+              ],
+              "geometrySource": "septa-rail-med"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-lawrence",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-lawrence",
+          "members": [
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Lawrence",
+              "point": [
+                -87.658487,
+                41.968976
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        },
+        {
+          "id": "us-official-lawrence--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Lawrence",
+              "point": [
+                -73.73588,
+                40.615715
+              ],
+              "geometrySource": "lirr-seam-7-far-rockaway"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-linden",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-linden",
+          "members": [
+            {
+              "lineId": "cta-purple-line",
+              "feed": "cta",
+              "name": "Linden",
+              "point": [
+                -87.69073,
+                42.073153
+              ],
+              "geometrySource": "cta-purple"
+            }
+          ]
+        },
+        {
+          "id": "us-official-linden--new-jersey-transit-nj-transi",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-nec",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Linden",
+              "point": [
+                -74.251804,
+                40.629504
+              ],
+              "geometrySource": "njt-rail-10-nec"
+            },
+            {
+              "lineId": "new-jersey-transit-nj-transi-njcl",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Linden",
+              "point": [
+                -74.251804,
+                40.629504
+              ],
+              "geometrySource": "njt-rail-11-njcl"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-main-st",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-main-st",
+          "members": [
+            {
+              "lineId": "metra-union-pacific",
+              "feed": "metra",
+              "name": "Main St.",
+              "point": [
+                -87.680053,
+                42.033327
+              ],
+              "geometrySource": "rta-metra-up-n"
+            }
+          ]
+        },
+        {
+          "id": "us-official-main-st--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-nor",
+              "feed": "septa-regional-rail",
+              "name": "Main St",
+              "point": [
+                -75.348547,
+                40.117181
+              ],
+              "geometrySource": "septa-rail-nor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-meadowbrook",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-meadowbrook",
+          "members": [
+            {
+              "lineId": "utah-transit-authority-uta-701",
+              "feed": "utah-transit-authority-uta",
+              "name": "Meadowbrook Station",
+              "point": [
+                -111.896698,
+                40.68803
+              ],
+              "geometrySource": "uta-701"
+            },
+            {
+              "lineId": "utah-transit-authority-uta-703",
+              "feed": "utah-transit-authority-uta",
+              "name": "Meadowbrook Station",
+              "point": [
+                -111.896698,
+                40.68803
+              ],
+              "geometrySource": "uta-703"
+            }
+          ]
+        },
+        {
+          "id": "us-official-meadowbrook--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-wtr",
+              "feed": "septa-regional-rail",
+              "name": "Meadowbrook",
+              "point": [
+                -75.092474,
+                40.11132
+              ],
+              "geometrySource": "septa-rail-wtr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-melrose-park",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-melrose-park",
+          "members": [
+            {
+              "lineId": "metra-union-pacific-2",
+              "feed": "metra",
+              "name": "Melrose Park",
+              "point": [
+                -87.855562,
+                41.890247
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-melrose-park--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-lan",
+              "feed": "septa-regional-rail",
+              "name": "Melrose Park",
+              "point": [
+                -75.129145,
+                40.059431
+              ],
+              "geometrySource": "gtfs-official"
+            },
+            {
+              "lineId": "septa-regional-rail-war",
+              "feed": "septa-regional-rail",
+              "name": "Melrose Park",
+              "point": [
+                -75.129165,
+                40.059438
+              ],
+              "geometrySource": "septa-rail-war"
+            },
+            {
+              "lineId": "septa-regional-rail-wtr",
+              "feed": "septa-regional-rail",
+              "name": "Melrose Park",
+              "point": [
+                -75.129165,
+                40.059438
+              ],
+              "geometrySource": "septa-rail-wtr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-montgomery",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-montgomery",
+          "members": [
+            {
+              "lineId": "amtrak-cardinal",
+              "feed": "amtrak",
+              "name": "Montgomery Amtrak",
+              "point": [
+                -81.324028,
+                38.180708
+              ],
+              "geometrySource": "amtrak-ntad-cardinal"
+            }
+          ]
+        },
+        {
+          "id": "us-official-montgomery--san-francisco-municipal-tran",
+          "members": [
+            {
+              "lineId": "san-francisco-municipal-tran-n-b4",
+              "feed": "san-francisco-municipal-tran",
+              "name": "Metro Montgomery Station",
+              "point": [
+                -122.402061,
+                37.788739
+              ],
+              "geometrySource": "sfmta-n-i"
+            },
+            {
+              "lineId": "san-francisco-municipal-tran-j",
+              "feed": "san-francisco-municipal-tran",
+              "name": "Metro Montgomery Station",
+              "point": [
+                -122.402061,
+                37.788739
+              ],
+              "geometrySource": "sfmta-j-i"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-oceanside",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-oceanside",
+          "members": [
+            {
+              "lineId": "amtrak-pacific-surfliner",
+              "feed": "amtrak",
+              "name": "Oceanside",
+              "point": [
+                -117.379819,
+                33.192286
+              ],
+              "geometrySource": "narn"
+            },
+            {
+              "lineId": "metrolink-ie-oc-line",
+              "feed": "metrolink",
+              "name": "Oceanside",
+              "point": [
+                -117.379958,
+                33.192505
+              ],
+              "geometrySource": "metrolink-scrra-ie-oc"
+            },
+            {
+              "lineId": "metrolink-oc-line",
+              "feed": "metrolink",
+              "name": "Oceanside",
+              "point": [
+                -117.379958,
+                33.192505
+              ],
+              "geometrySource": "metrolink-scrra-oc"
+            },
+            {
+              "lineId": "north-county-transit-distric-498",
+              "feed": "north-county-transit-distric",
+              "name": "Oceanside Transit Center",
+              "point": [
+                -117.37827,
+                33.190515
+              ],
+              "geometrySource": "gtfs-shape"
+            },
+            {
+              "lineId": "north-county-transit-distric-sprinter",
+              "feed": "north-county-transit-distric",
+              "name": "Oceanside Transit Center",
+              "point": [
+                -117.378349,
+                33.190875
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-oceanside--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-long-beach-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Oceanside",
+              "point": [
+                -73.654644,
+                40.634724
+              ],
+              "geometrySource": "lirr-seam-6-long-beach"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-orlando",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-orlando",
+          "members": [
+            {
+              "lineId": "amtrak-silver-meteor",
+              "feed": "amtrak",
+              "name": "Orlando",
+              "point": [
+                -81.381862,
+                28.525899
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-orlando--brightline-trains-llc",
+          "members": [
+            {
+              "lineId": "brightline-trains-llc-blfm",
+              "feed": "brightline-trains-llc",
+              "name": "Orlando",
+              "point": [
+                -81.309251,
+                28.412701
+              ],
+              "geometrySource": "fdot-brightline"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-penn",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-penn",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-babylon-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-1-babylon"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-7-far-rockaway"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-long-beach-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-6-long-beach"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-montauk-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-5-montauk"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-oyster-bay-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-3-oyster-bay"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-10-port-jefferson"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-ronkonkoma-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Penn Station",
+              "point": [
+                -73.993397,
+                40.750864
+              ],
+              "geometrySource": "lirr-seam-4-ronkonkoma"
+            }
+          ]
+        },
+        {
+          "id": "us-official-penn--new-jersey-transit-nj-transi",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-nlr",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "PENN Station Light RAIL Departure",
+              "point": [
+                -74.163454,
+                40.734965
+              ],
+              "geometrySource": "njt-light-13-newark"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-prospect-park",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-prospect-park",
+          "members": [
+            {
+              "lineId": "metro-transit-metro-green-line",
+              "feed": "metro-transit",
+              "name": "Prospect Park Station",
+              "point": [
+                -93.2153,
+                44.971754
+              ],
+              "geometrySource": "metro-transit-green"
+            }
+          ]
+        },
+        {
+          "id": "us-official-prospect-park--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-wil",
+              "feed": "septa-regional-rail",
+              "name": "Prospect Park",
+              "point": [
+                -75.308923,
+                39.88837
+              ],
+              "geometrySource": "septa-rail-wil"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-quincy",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-quincy",
+          "members": [
+            {
+              "lineId": "amtrak-carl-sandburg",
+              "feed": "amtrak",
+              "name": "Quincy Amtrak Station",
+              "point": [
+                -91.368294,
+                39.956853
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-quincy--cta",
+          "members": [
+            {
+              "lineId": "cta-brown-line",
+              "feed": "cta",
+              "name": "Quincy",
+              "point": [
+                -87.63374,
+                41.878723
+              ],
+              "geometrySource": "cta-brown"
+            },
+            {
+              "lineId": "cta-orange-line",
+              "feed": "cta",
+              "name": "Quincy",
+              "point": [
+                -87.63374,
+                41.878723
+              ],
+              "geometrySource": "cta-orange"
+            },
+            {
+              "lineId": "cta-pink-line",
+              "feed": "cta",
+              "name": "Quincy",
+              "point": [
+                -87.63374,
+                41.878723
+              ],
+              "geometrySource": "cta-pink"
+            },
+            {
+              "lineId": "cta-purple-line",
+              "feed": "cta",
+              "name": "Quincy",
+              "point": [
+                -87.63374,
+                41.878723
+              ],
+              "geometrySource": "cta-purple"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-rosemont",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-rosemont",
+          "members": [
+            {
+              "lineId": "cta-blue-line",
+              "feed": "cta",
+              "name": "Rosemont",
+              "point": [
+                -87.859388,
+                41.983507
+              ],
+              "geometrySource": "cta-blue"
+            }
+          ]
+        },
+        {
+          "id": "us-official-rosemont--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-pao",
+              "feed": "septa-regional-rail",
+              "name": "Rosemont",
+              "point": [
+                -75.326827,
+                40.0277
+              ],
+              "geometrySource": "septa-rail-pao"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-roslyn",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-roslyn",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-oyster-bay-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Roslyn",
+              "point": [
+                -73.643281,
+                40.790478
+              ],
+              "geometrySource": "lirr-seam-3-oyster-bay"
+            }
+          ]
+        },
+        {
+          "id": "us-official-roslyn--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-war",
+              "feed": "septa-regional-rail",
+              "name": "Roslyn",
+              "point": [
+                -75.134179,
+                40.120859
+              ],
+              "geometrySource": "septa-rail-war"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-southport",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-southport",
+          "members": [
+            {
+              "lineId": "cta-brown-line",
+              "feed": "cta",
+              "name": "Southport",
+              "point": [
+                -87.663621,
+                41.943812
+              ],
+              "geometrySource": "cta-brown"
+            }
+          ]
+        },
+        {
+          "id": "us-official-southport--metro-north-railroad",
+          "members": [
+            {
+              "lineId": "metro-north-railroad-new-haven",
+              "feed": "metro-north-railroad",
+              "name": "Southport",
+              "point": [
+                -73.288865,
+                41.134748
+              ],
+              "geometrySource": "mnr-new-haven"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-st-albans",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-st-albans",
+          "members": [
+            {
+              "lineId": "amtrak-vermonter",
+              "feed": "amtrak",
+              "name": "St. Albans Amtrak Station",
+              "point": [
+                -73.08627,
+                44.81209
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-st-albans--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-babylon-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "St. Albans",
+              "point": [
+                -73.765456,
+                40.691199
+              ],
+              "geometrySource": "lirr-seam-1-babylon"
+            },
+            {
+              "lineId": "mta-long-island-rail-road-west-hempstead-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "St. Albans",
+              "point": [
+                -73.765456,
+                40.691199
+              ],
+              "geometrySource": "lirr-seam-8-west-hempstead"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-stony-brook",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-stony-brook",
+          "members": [
+            {
+              "lineId": "mbta-orange-line",
+              "feed": "mbta",
+              "name": "Stony Brook",
+              "point": [
+                -71.104358,
+                42.317255
+              ],
+              "geometrySource": "mbta-rapid-orange"
+            }
+          ]
+        },
+        {
+          "id": "us-official-stony-brook--mta-long-island-rail-road",
+          "members": [
+            {
+              "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+              "feed": "mta-long-island-rail-road",
+              "name": "Stony Brook",
+              "point": [
+                -73.128524,
+                40.920312
+              ],
+              "geometrySource": "lirr-seam-10-port-jefferson"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-thorndale",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-thorndale",
+          "members": [
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Thorndale",
+              "point": [
+                -87.659069,
+                41.990099
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        },
+        {
+          "id": "us-official-thorndale--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-pao",
+              "feed": "septa-regional-rail",
+              "name": "Thorndale",
+              "point": [
+                -75.762704,
+                39.992682
+              ],
+              "geometrySource": "septa-rail-pao"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-ventura",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-ventura",
+          "members": [
+            {
+              "lineId": "amtrak-pacific-surfliner",
+              "feed": "amtrak",
+              "name": "Ventura Amtrak",
+              "point": [
+                -119.299918,
+                34.27699
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-ventura--metrolink",
+          "members": [
+            {
+              "lineId": "metrolink-vc-line",
+              "feed": "metrolink",
+              "name": "Ventura",
+              "point": [
+                -119.204935,
+                34.250392
+              ],
+              "geometrySource": "metrolink-scrra-vc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-wallingford",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-wallingford",
+          "members": [
+            {
+              "lineId": "amtrak-amtrak-hartford-line",
+              "feed": "amtrak",
+              "name": "Wallingford Amtrak",
+              "point": [
+                -72.825139,
+                41.456949
+              ],
+              "geometrySource": "narn"
+            },
+            {
+              "lineId": "amtrak-northeast-regional-b2",
+              "feed": "amtrak",
+              "name": "Wallingford Amtrak",
+              "point": [
+                -72.825139,
+                41.456949
+              ],
+              "geometrySource": "amtrak-ntad-northeast-regional"
+            },
+            {
+              "lineId": "amtrak-valley-flyer",
+              "feed": "amtrak",
+              "name": "Wallingford Amtrak",
+              "point": [
+                -72.825139,
+                41.456949
+              ],
+              "geometrySource": "narn"
+            }
+          ]
+        },
+        {
+          "id": "us-official-wallingford--septa-regional-rail",
+          "members": [
+            {
+              "lineId": "septa-regional-rail-med",
+              "feed": "septa-regional-rail",
+              "name": "Wallingford",
+              "point": [
+                -75.371926,
+                39.903764
+              ],
+              "geometrySource": "septa-rail-med"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-washington",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-washington",
+          "members": [
+            {
+              "lineId": "amtrak-lincoln-service-missouri-river-runner",
+              "feed": "amtrak",
+              "name": "Washington Amtrak Station",
+              "point": [
+                -91.012435,
+                38.561769
+              ],
+              "geometrySource": "gtfs-shape"
+            },
+            {
+              "lineId": "amtrak-missouri-river-runner",
+              "feed": "amtrak",
+              "name": "Washington Amtrak Station",
+              "point": [
+                -91.012435,
+                38.561769
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-washington--cta",
+          "members": [
+            {
+              "lineId": "cta-blue-line",
+              "feed": "cta",
+              "name": "Washington",
+              "point": [
+                -87.62944,
+                41.883164
+              ],
+              "geometrySource": "cta-blue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-westfield",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-westfield",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-rarv",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Westfield",
+              "point": [
+                -74.347635,
+                40.649473
+              ],
+              "geometrySource": "njt-rail-16-raritan"
+            }
+          ]
+        },
+        {
+          "id": "us-official-westfield--port-authority-of-allegheny",
+          "members": [
+            {
+              "lineId": "port-authority-of-allegheny-red",
+              "feed": "port-authority-of-allegheny",
+              "name": "Westfield",
+              "point": [
+                -80.019919,
+                40.410343
+              ],
+              "geometrySource": "prt-t-red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-wilson",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-wilson",
+          "members": [
+            {
+              "lineId": "amtrak-carolinian",
+              "feed": "amtrak",
+              "name": "Wilson",
+              "point": [
+                -77.907663,
+                35.723002
+              ],
+              "geometrySource": "gtfs-shape"
+            },
+            {
+              "lineId": "amtrak-palmetto",
+              "feed": "amtrak",
+              "name": "Wilson",
+              "point": [
+                -77.907663,
+                35.723003
+              ],
+              "geometrySource": "gtfs-shape"
+            }
+          ]
+        },
+        {
+          "id": "us-official-wilson--cta",
+          "members": [
+            {
+              "lineId": "cta-purple-line",
+              "feed": "cta",
+              "name": "Wilson",
+              "point": [
+                -87.6581,
+                41.965452
+              ],
+              "geometrySource": "cta-purple"
+            },
+            {
+              "lineId": "cta-red-line",
+              "feed": "cta",
+              "name": "Wilson",
+              "point": [
+                -87.6581,
+                41.965452
+              ],
+              "geometrySource": "cta-red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "oldId": "us-official-woodbridge",
+      "evidence": "Reviewed distinct line memberships at disjoint geographic locations in the source package; exact WGS84 anchors and per-line source retained below. Same-place memberships remain grouped; no track or coordinates are changed.",
+      "places": [
+        {
+          "id": "us-official-woodbridge",
+          "members": [
+            {
+              "lineId": "amtrak-northeast-regional",
+              "feed": "amtrak",
+              "name": "Woodbridge Amtrak",
+              "point": [
+                -77.248207,
+                38.659032
+              ],
+              "geometrySource": "amtrak-ntad-northeast-regional"
+            }
+          ]
+        },
+        {
+          "id": "us-official-woodbridge--new-jersey-transit-nj-transi",
+          "members": [
+            {
+              "lineId": "new-jersey-transit-nj-transi-njcl",
+              "feed": "new-jersey-transit-nj-transi",
+              "name": "Woodbridge",
+              "point": [
+                -74.277738,
+                40.55661
+              ],
+              "geometrySource": "njt-rail-11-njcl"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
