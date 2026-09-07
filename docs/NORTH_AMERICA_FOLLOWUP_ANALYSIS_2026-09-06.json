@@ -1,0 +1,1935 @@
+{
+  "generatedAt": "2026-09-06T13:49:36.623872+00:00",
+  "mode": "analysis; no production code or package edits",
+  "inputSha256": {
+    "app/public/rail/us-2025.json": "1e55169588034f769a3c26debe1290723a5b7f84bbe41debbd9c2c43b334601f",
+    "app/public/rail/ca-2025.json": "a18a39f40287f01ee3f790455f9b8ae7e24699c9b3099a3cc4beeb9c9d6e86cc",
+    "app/public/rail/na-2025-line-review.json": "a8b928212bd104b7aee21873a92eb277590d9881948badab47cd8bd2de6466fd",
+    "app/public/rail/na-2025.audit.json": "4373977ecfe15f174fc7e5b83578685bad54938e02b49c147bfd8adcfbf48005",
+    "app/scripts/railway/na-feeds.json": "2fd6a05b77846a5bf3e4fa50d6cb3e0786e23d42fcb493abdc8b74c7c41ae14c"
+  },
+  "method": "For every compact-v1 station group ID, measure all pairs with haversine; retain maximum separation over 2 km. This nominates collisions, not automatic station merges.",
+  "stationCollisions": [
+    {
+      "country": "us",
+      "stationGroupId": "us-official-healy",
+      "maxDistanceKm": 4531.411,
+      "members": [
+        {
+          "lineId": "metra-milwaukee",
+          "feed": "metra",
+          "name": "Healy",
+          "lon": -87.727829,
+          "lat": 41.924706
+        },
+        {
+          "lineId": "alaska-railroad-aurora-winter",
+          "feed": "alaska-railroad",
+          "name": "Healy",
+          "lon": -148.965455,
+          "lat": 63.856341
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-broadway",
+      "maxDistanceKm": 4337.851,
+      "members": [
+        {
+          "lineId": "caltrain-local-weekday",
+          "feed": "caltrain",
+          "name": "Broadway Station",
+          "lon": -122.361947,
+          "lat": 37.587338
+        },
+        {
+          "lineId": "mbta-red-line",
+          "feed": "mbta",
+          "name": "Broadway",
+          "lon": -71.057169,
+          "lat": 42.342626
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-concord",
+      "maxDistanceKm": 4267.331,
+      "members": [
+        {
+          "lineId": "bart-yellow",
+          "feed": "bart",
+          "name": "Concord",
+          "lon": -122.029026,
+          "lat": 37.973744
+        },
+        {
+          "lineId": "mbta-fitchburg-line",
+          "feed": "mbta",
+          "name": "Concord",
+          "lon": -71.357682,
+          "lat": 42.45656
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-davis",
+      "maxDistanceKm": 4239.605,
+      "members": [
+        {
+          "lineId": "amtrak-capitol-corridor",
+          "feed": "amtrak",
+          "name": "Davis",
+          "lon": -121.737418,
+          "lat": 38.54328
+        },
+        {
+          "lineId": "cta-purple-line",
+          "feed": "cta",
+          "name": "Davis",
+          "lon": -87.683543,
+          "lat": 42.04771
+        },
+        {
+          "lineId": "mbta-red-line",
+          "feed": "mbta",
+          "name": "Davis",
+          "lon": -71.121863,
+          "lat": 42.396653
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-22nd-street",
+      "maxDistanceKm": 4119.57,
+      "members": [
+        {
+          "lineId": "caltrain-local-weekday",
+          "feed": "caltrain",
+          "name": "22nd Street Station",
+          "lon": -122.392341,
+          "lat": 37.75697
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-hblr",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "22nd Street Light RAIL Station",
+          "lon": -74.116472,
+          "lat": 40.661307
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-oceanside",
+      "maxDistanceKm": 3932.745,
+      "members": [
+        {
+          "lineId": "amtrak-pacific-surfliner",
+          "feed": "amtrak",
+          "name": "Oceanside",
+          "lon": -117.379819,
+          "lat": 33.192286
+        },
+        {
+          "lineId": "metrolink-ie-oc-line",
+          "feed": "metrolink",
+          "name": "Oceanside",
+          "lon": -117.379958,
+          "lat": 33.192505
+        },
+        {
+          "lineId": "metrolink-oc-line",
+          "feed": "metrolink",
+          "name": "Oceanside",
+          "lon": -117.379958,
+          "lat": 33.192505
+        },
+        {
+          "lineId": "mta-long-island-rail-road-long-beach-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Oceanside",
+          "lon": -73.654644,
+          "lat": 40.634724
+        },
+        {
+          "lineId": "north-county-transit-distric-498",
+          "feed": "north-county-transit-distric",
+          "name": "Oceanside Transit Center",
+          "lon": -117.37827,
+          "lat": 33.190515
+        },
+        {
+          "lineId": "north-county-transit-distric-sprinter",
+          "feed": "north-county-transit-distric",
+          "name": "Oceanside Transit Center",
+          "lon": -117.378349,
+          "lat": 33.190875
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-atlantic",
+      "maxDistanceKm": 3932.118,
+      "members": [
+        {
+          "lineId": "los-angeles-county-metropoli-metro-e-line",
+          "feed": "los-angeles-county-metropoli",
+          "name": "Atlantic Station",
+          "lon": -118.154469,
+          "lat": 34.033401
+        },
+        {
+          "lineId": "mta-long-island-rail-road-city-terminal-zone",
+          "feed": "mta-long-island-rail-road",
+          "name": "Atlantic Terminal",
+          "lon": -73.972546,
+          "lat": 40.683025
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-montgomery",
+      "maxDistanceKm": 3570.282,
+      "members": [
+        {
+          "lineId": "amtrak-cardinal",
+          "feed": "amtrak",
+          "name": "Montgomery Amtrak",
+          "lon": -81.324028,
+          "lat": 38.180708
+        },
+        {
+          "lineId": "san-francisco-municipal-tran-n-b4",
+          "feed": "san-francisco-municipal-tran",
+          "name": "Metro Montgomery Station",
+          "lon": -122.402061,
+          "lat": 37.788739
+        },
+        {
+          "lineId": "san-francisco-municipal-tran-j",
+          "feed": "san-francisco-municipal-tran",
+          "name": "Metro Montgomery Station",
+          "lon": -122.402061,
+          "lat": 37.788739
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-meadowbrook",
+      "maxDistanceKm": 3094.186,
+      "members": [
+        {
+          "lineId": "utah-transit-authority-uta-701",
+          "feed": "utah-transit-authority-uta",
+          "name": "Meadowbrook Station",
+          "lon": -111.896698,
+          "lat": 40.68803
+        },
+        {
+          "lineId": "utah-transit-authority-uta-703",
+          "feed": "utah-transit-authority-uta",
+          "name": "Meadowbrook Station",
+          "lon": -111.896698,
+          "lat": 40.68803
+        },
+        {
+          "lineId": "septa-regional-rail-wtr",
+          "feed": "septa-regional-rail",
+          "name": "Meadowbrook",
+          "lon": -75.092474,
+          "lat": 40.11132
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-lafayette",
+      "maxDistanceKm": 3030.326,
+      "members": [
+        {
+          "lineId": "amtrak-cardinal",
+          "feed": "amtrak",
+          "name": "Lafayette Amtrak Station",
+          "lon": -86.896389,
+          "lat": 40.419479
+        },
+        {
+          "lineId": "bart-yellow",
+          "feed": "bart",
+          "name": "Lafayette",
+          "lon": -122.124604,
+          "lat": 37.893142
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-antioch",
+      "maxDistanceKm": 2883.189,
+      "members": [
+        {
+          "lineId": "bart-yellow",
+          "feed": "bart",
+          "name": "Antioch",
+          "lon": -121.780434,
+          "lat": 37.995389
+        },
+        {
+          "lineId": "metra-ncs",
+          "feed": "metra",
+          "name": "Antioch",
+          "lon": -88.092173,
+          "lat": 42.480721
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-highland-park",
+      "maxDistanceKm": 2787.976,
+      "members": [
+        {
+          "lineId": "los-angeles-county-metropoli-metro-a-line",
+          "feed": "los-angeles-county-metropoli",
+          "name": "Highland Park Station",
+          "lon": -118.192609,
+          "lat": 34.111183
+        },
+        {
+          "lineId": "metra-union-pacific",
+          "feed": "metra",
+          "name": "Highland Park",
+          "lon": -87.79758,
+          "lat": 42.183305
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-fullerton",
+      "maxDistanceKm": 2785.967,
+      "members": [
+        {
+          "lineId": "amtrak-southwest-chief",
+          "feed": "amtrak",
+          "name": "Fullerton Amtrak Station",
+          "lon": -117.922842,
+          "lat": 33.868638
+        },
+        {
+          "lineId": "amtrak-pacific-surfliner",
+          "feed": "amtrak",
+          "name": "Fullerton Amtrak Station",
+          "lon": -117.922842,
+          "lat": 33.868638
+        },
+        {
+          "lineId": "cta-brown-line",
+          "feed": "cta",
+          "name": "Fullerton",
+          "lon": -87.652873,
+          "lat": 41.9253
+        },
+        {
+          "lineId": "cta-purple-line",
+          "feed": "cta",
+          "name": "Fullerton",
+          "lon": -87.652873,
+          "lat": 41.9253
+        },
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Fullerton",
+          "lon": -87.652873,
+          "lat": 41.9253
+        },
+        {
+          "lineId": "metrolink-91-pv-line",
+          "feed": "metrolink",
+          "name": "Fullerton",
+          "lon": -117.922294,
+          "lat": 33.868611
+        },
+        {
+          "lineId": "metrolink-oc-line",
+          "feed": "metrolink",
+          "name": "Fullerton",
+          "lon": -117.922294,
+          "lat": 33.868611
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-highland",
+      "maxDistanceKm": 2304.715,
+      "members": [
+        {
+          "lineId": "capital-metro-550",
+          "feed": "capital-metro",
+          "name": "Highland Station",
+          "lon": -97.716204,
+          "lat": 30.328601
+        },
+        {
+          "lineId": "port-authority-of-allegheny-blue",
+          "feed": "port-authority-of-allegheny",
+          "name": "Highland",
+          "lon": -80.039772,
+          "lat": 40.348337
+        },
+        {
+          "lineId": "port-authority-of-allegheny-red",
+          "feed": "port-authority-of-allegheny",
+          "name": "Highland",
+          "lon": -80.039772,
+          "lat": 40.348337
+        },
+        {
+          "lineId": "septa-regional-rail-chw",
+          "feed": "septa-regional-rail",
+          "name": "Highland",
+          "lon": -75.211219,
+          "lat": 40.070529
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-ardmore",
+      "maxDistanceKm": 2036.294,
+      "members": [
+        {
+          "lineId": "amtrak-heartland-flyer",
+          "feed": "amtrak",
+          "name": "Ardmore Amtrak Station",
+          "lon": -97.124803,
+          "lat": 34.172105
+        },
+        {
+          "lineId": "septa-regional-rail-pao",
+          "feed": "septa-regional-rail",
+          "name": "Ardmore",
+          "lon": -75.290274,
+          "lat": 40.008424
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-burbank",
+      "maxDistanceKm": 1990.551,
+      "members": [
+        {
+          "lineId": "amtrak-pacific-surfliner",
+          "feed": "amtrak",
+          "name": "Burbank",
+          "lon": -118.312192,
+          "lat": 34.178601
+        },
+        {
+          "lineId": "dallas-area-rapid-transit-da-green",
+          "feed": "dallas-area-rapid-transit-da",
+          "name": "Burbank Station",
+          "lon": -96.862178,
+          "lat": 32.842968
+        },
+        {
+          "lineId": "dallas-area-rapid-transit-da-orange",
+          "feed": "dallas-area-rapid-transit-da",
+          "name": "Burbank Station",
+          "lon": -96.862178,
+          "lat": 32.842968
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-greenwood",
+      "maxDistanceKm": 1941.989,
+      "members": [
+        {
+          "lineId": "amtrak-city-of-new-orleans",
+          "feed": "amtrak",
+          "name": "Greenwood Amtrak Station",
+          "lon": -90.176212,
+          "lat": 33.517075
+        },
+        {
+          "lineId": "mbta-haverhill-line",
+          "feed": "mbta",
+          "name": "Greenwood",
+          "lon": -71.067349,
+          "lat": 42.48298
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-hollywood",
+      "maxDistanceKm": 1893.194,
+      "members": [
+        {
+          "lineId": "amtrak-silver-meteor",
+          "feed": "amtrak",
+          "name": "Hollywood Amtrak Station",
+          "lon": -80.16767,
+          "lat": 26.011644
+        },
+        {
+          "lineId": "metra-bnsf",
+          "feed": "metra",
+          "name": "Hollywood",
+          "lon": -87.833802,
+          "lat": 41.824225
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-central",
+      "maxDistanceKm": 1786.392,
+      "members": [
+        {
+          "lineId": "mbta-red-line",
+          "feed": "mbta",
+          "name": "Central",
+          "lon": -71.103836,
+          "lat": 42.365455
+        },
+        {
+          "lineId": "metro-transit-metro-green-line",
+          "feed": "metro-transit",
+          "name": "Central Station",
+          "lon": -93.092297,
+          "lat": 44.946159
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-prospect-park",
+      "maxDistanceKm": 1570.453,
+      "members": [
+        {
+          "lineId": "metro-transit-metro-green-line",
+          "feed": "metro-transit",
+          "name": "Prospect Park Station",
+          "lon": -93.2153,
+          "lat": 44.971754
+        },
+        {
+          "lineId": "septa-regional-rail-wil",
+          "feed": "septa-regional-rail",
+          "name": "Prospect Park",
+          "lon": -75.308923,
+          "lat": 39.88837
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-airport",
+      "maxDistanceKm": 1521.398,
+      "members": [
+        {
+          "lineId": "mbta-blue-line",
+          "feed": "mbta",
+          "name": "Airport",
+          "lon": -71.030316,
+          "lat": 42.374291
+        },
+        {
+          "lineId": "metropolitan-atlanta-rapid-t-gold",
+          "feed": "metropolitan-atlanta-rapid-t",
+          "name": "Airport Station",
+          "lon": -84.446051,
+          "lat": 33.640831
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-harvard",
+      "maxDistanceKm": 1434.375,
+      "members": [
+        {
+          "lineId": "mbta-red-line",
+          "feed": "mbta",
+          "name": "Harvard",
+          "lon": -71.118755,
+          "lat": 42.373464
+        },
+        {
+          "lineId": "metra-up-nw",
+          "feed": "metra",
+          "name": "Harvard",
+          "lon": -88.61712,
+          "lat": 42.419351
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-gainesville",
+      "maxDistanceKm": 1229.968,
+      "members": [
+        {
+          "lineId": "amtrak-crescent",
+          "feed": "amtrak",
+          "name": "Gainesville Amtrak Station",
+          "lon": -83.819423,
+          "lat": 34.28867
+        },
+        {
+          "lineId": "amtrak-heartland-flyer",
+          "feed": "amtrak",
+          "name": "Gainesville Amtrak Station",
+          "lon": -97.140647,
+          "lat": 33.625199
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-jackson",
+      "maxDistanceKm": 1218.224,
+      "members": [
+        {
+          "lineId": "amtrak-city-of-new-orleans",
+          "feed": "amtrak",
+          "name": "Jackson",
+          "lon": -90.191305,
+          "lat": 32.300786
+        },
+        {
+          "lineId": "amtrak-wolverine",
+          "feed": "amtrak",
+          "name": "Jackson",
+          "lon": -84.399833,
+          "lat": 42.247787
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-southport",
+      "maxDistanceKm": 1198.368,
+      "members": [
+        {
+          "lineId": "cta-brown-line",
+          "feed": "cta",
+          "name": "Southport",
+          "lon": -87.663621,
+          "lat": 41.943812
+        },
+        {
+          "lineId": "metro-north-railroad-new-haven",
+          "feed": "metro-north-railroad",
+          "name": "Southport",
+          "lon": -73.288865,
+          "lat": 41.134748
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-lawrence",
+      "maxDistanceKm": 1171.55,
+      "members": [
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Lawrence",
+          "lon": -87.658487,
+          "lat": 41.968976
+        },
+        {
+          "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Lawrence",
+          "lon": -73.73588,
+          "lat": 40.615715
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-linden",
+      "maxDistanceKm": 1131.976,
+      "members": [
+        {
+          "lineId": "cta-purple-line",
+          "feed": "cta",
+          "name": "Linden",
+          "lon": -87.69073,
+          "lat": 42.073153
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-nec",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Linden",
+          "lon": -74.251804,
+          "lat": 40.629504
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-njcl",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Linden",
+          "lon": -74.251804,
+          "lat": 40.629504
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-wilson",
+      "maxDistanceKm": 1091.844,
+      "members": [
+        {
+          "lineId": "amtrak-carolinian",
+          "feed": "amtrak",
+          "name": "Wilson",
+          "lon": -77.907663,
+          "lat": 35.723002
+        },
+        {
+          "lineId": "amtrak-palmetto",
+          "feed": "amtrak",
+          "name": "Wilson",
+          "lon": -77.907663,
+          "lat": 35.723003
+        },
+        {
+          "lineId": "cta-purple-line",
+          "feed": "cta",
+          "name": "Wilson",
+          "lon": -87.6581,
+          "lat": 41.965452
+        },
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Wilson",
+          "lon": -87.6581,
+          "lat": 41.965452
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-melrose-park",
+      "maxDistanceKm": 1086.553,
+      "members": [
+        {
+          "lineId": "metra-union-pacific-2",
+          "feed": "metra",
+          "name": "Melrose Park",
+          "lon": -87.855562,
+          "lat": 41.890247
+        },
+        {
+          "lineId": "septa-regional-rail-lan",
+          "feed": "septa-regional-rail",
+          "name": "Melrose Park",
+          "lon": -75.129145,
+          "lat": 40.059431
+        },
+        {
+          "lineId": "septa-regional-rail-war",
+          "feed": "septa-regional-rail",
+          "name": "Melrose Park",
+          "lon": -75.129165,
+          "lat": 40.059438
+        },
+        {
+          "lineId": "septa-regional-rail-wtr",
+          "feed": "septa-regional-rail",
+          "name": "Melrose Park",
+          "lon": -75.129165,
+          "lat": 40.059438
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-rosemont",
+      "maxDistanceKm": 1072.843,
+      "members": [
+        {
+          "lineId": "cta-blue-line",
+          "feed": "cta",
+          "name": "Rosemont",
+          "lon": -87.859388,
+          "lat": 41.983507
+        },
+        {
+          "lineId": "septa-regional-rail-pao",
+          "feed": "septa-regional-rail",
+          "name": "Rosemont",
+          "lon": -75.326827,
+          "lat": 40.0277
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-bryn-mawr",
+      "maxDistanceKm": 1057.449,
+      "members": [
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Bryn Mawr",
+          "lon": -87.65884,
+          "lat": 41.983504
+        },
+        {
+          "lineId": "septa-regional-rail-pao",
+          "feed": "septa-regional-rail",
+          "name": "Bryn Mawr",
+          "lon": -75.31627,
+          "lat": 40.022108
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-main-st",
+      "maxDistanceKm": 1054.406,
+      "members": [
+        {
+          "lineId": "metra-union-pacific",
+          "feed": "metra",
+          "name": "Main St.",
+          "lon": -87.680053,
+          "lat": 42.033327
+        },
+        {
+          "lineId": "septa-regional-rail-nor",
+          "feed": "septa-regional-rail",
+          "name": "Main St",
+          "lon": -75.348547,
+          "lat": 40.117181
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-berwyn",
+      "maxDistanceKm": 1046.238,
+      "members": [
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Berwyn",
+          "lon": -87.658668,
+          "lat": 41.977984
+        },
+        {
+          "lineId": "septa-regional-rail-pao",
+          "feed": "septa-regional-rail",
+          "name": "Berwyn",
+          "lon": -75.44231,
+          "lat": 40.048161
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-ashland",
+      "maxDistanceKm": 1033.373,
+      "members": [
+        {
+          "lineId": "amtrak-cardinal",
+          "feed": "amtrak",
+          "name": "Ashland Amtrak Station",
+          "lon": -82.639355,
+          "lat": 38.481178
+        },
+        {
+          "lineId": "mbta-framingham-worcester-line",
+          "feed": "mbta",
+          "name": "Ashland",
+          "lon": -71.482155,
+          "lat": 42.261526
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-thorndale",
+      "maxDistanceKm": 1021.96,
+      "members": [
+        {
+          "lineId": "cta-red-line",
+          "feed": "cta",
+          "name": "Thorndale",
+          "lon": -87.659069,
+          "lat": 41.990099
+        },
+        {
+          "lineId": "septa-regional-rail-pao",
+          "feed": "septa-regional-rail",
+          "name": "Thorndale",
+          "lon": -75.762704,
+          "lat": 39.992682
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-ashland-2",
+      "maxDistanceKm": 972.333,
+      "members": [
+        {
+          "lineId": "amtrak-northeast-regional",
+          "feed": "amtrak",
+          "name": "Ashland Amtrak",
+          "lon": -77.481076,
+          "lat": 37.759552
+        },
+        {
+          "lineId": "metra-me-b2",
+          "feed": "metra",
+          "name": "Ashland",
+          "lon": -87.660587,
+          "lat": 41.669465
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-huntington",
+      "maxDistanceKm": 818.929,
+      "members": [
+        {
+          "lineId": "amtrak-cardinal",
+          "feed": "amtrak",
+          "name": "Huntington Amtrak Station",
+          "lon": -82.439807,
+          "lat": 38.416073
+        },
+        {
+          "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Huntington",
+          "lon": -73.409529,
+          "lat": 40.853016
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-arlington",
+      "maxDistanceKm": 779.345,
+      "members": [
+        {
+          "lineId": "mbta-d",
+          "feed": "mbta",
+          "name": "Arlington",
+          "lon": -71.07085,
+          "lat": 42.351815
+        },
+        {
+          "lineId": "mbta-b",
+          "feed": "mbta",
+          "name": "Arlington",
+          "lon": -71.07085,
+          "lat": 42.351815
+        },
+        {
+          "lineId": "mbta-c",
+          "feed": "mbta",
+          "name": "Arlington",
+          "lon": -71.07085,
+          "lat": 42.351815
+        },
+        {
+          "lineId": "mbta-e",
+          "feed": "mbta",
+          "name": "Arlington",
+          "lon": -71.07085,
+          "lat": 42.351815
+        },
+        {
+          "lineId": "port-authority-of-allegheny-red",
+          "feed": "port-authority-of-allegheny",
+          "name": "Arlington",
+          "lon": -80.033297,
+          "lat": 40.3699
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-broadway-2",
+      "maxDistanceKm": 778.654,
+      "members": [
+        {
+          "lineId": "detroit-people-mover-dpm",
+          "feed": "detroit-people-mover",
+          "name": "Broadway",
+          "lon": -83.048267,
+          "lat": 42.335434
+        },
+        {
+          "lineId": "metropolitan-transit-authori-n",
+          "feed": "metropolitan-transit-authori",
+          "name": "Broadway",
+          "lon": -73.925515,
+          "lat": 40.761823
+        },
+        {
+          "lineId": "metropolitan-transit-authori-w",
+          "feed": "metropolitan-transit-authori",
+          "name": "Broadway",
+          "lon": -73.925515,
+          "lat": 40.761823
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-charleston",
+      "maxDistanceKm": 626.121,
+      "members": [
+        {
+          "lineId": "amtrak-cardinal",
+          "feed": "amtrak",
+          "name": "Charleston",
+          "lon": -81.638573,
+          "lat": 38.346297
+        },
+        {
+          "lineId": "amtrak-palmetto",
+          "feed": "amtrak",
+          "name": "Charleston Amtrak Station",
+          "lon": -79.99859,
+          "lat": 32.875269
+        },
+        {
+          "lineId": "amtrak-silver-meteor",
+          "feed": "amtrak",
+          "name": "Charleston Amtrak Station",
+          "lon": -79.998599,
+          "lat": 32.875264
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-westfield",
+      "maxDistanceKm": 480.05,
+      "members": [
+        {
+          "lineId": "new-jersey-transit-nj-transi-rarv",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Westfield",
+          "lon": -74.347635,
+          "lat": 40.649473
+        },
+        {
+          "lineId": "port-authority-of-allegheny-red",
+          "feed": "port-authority-of-allegheny",
+          "name": "Westfield",
+          "lon": -80.019919,
+          "lat": 40.410343
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-washington",
+      "maxDistanceKm": 467.775,
+      "members": [
+        {
+          "lineId": "amtrak-lincoln-service-missouri-river-runner",
+          "feed": "amtrak",
+          "name": "Washington Amtrak Station",
+          "lon": -91.012435,
+          "lat": 38.561769
+        },
+        {
+          "lineId": "amtrak-missouri-river-runner",
+          "feed": "amtrak",
+          "name": "Washington Amtrak Station",
+          "lon": -91.012435,
+          "lat": 38.561769
+        },
+        {
+          "lineId": "cta-blue-line",
+          "feed": "cta",
+          "name": "Washington",
+          "lon": -87.62944,
+          "lat": 41.883164
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-st-albans",
+      "maxDistanceKm": 461.561,
+      "members": [
+        {
+          "lineId": "amtrak-vermonter",
+          "feed": "amtrak",
+          "name": "St. Albans Amtrak Station",
+          "lon": -73.08627,
+          "lat": 44.81209
+        },
+        {
+          "lineId": "mta-long-island-rail-road-babylon-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "St. Albans",
+          "lon": -73.765456,
+          "lat": 40.691199
+        },
+        {
+          "lineId": "mta-long-island-rail-road-west-hempstead-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "St. Albans",
+          "lon": -73.765456,
+          "lat": 40.691199
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-lansdowne",
+      "maxDistanceKm": 440.143,
+      "members": [
+        {
+          "lineId": "mbta-framingham-worcester-line",
+          "feed": "mbta",
+          "name": "Lansdowne",
+          "lon": -71.099973,
+          "lat": 42.347626
+        },
+        {
+          "lineId": "septa-regional-rail-med",
+          "feed": "septa-regional-rail",
+          "name": "Lansdowne",
+          "lon": -75.270814,
+          "lat": 39.937399
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-aquarium",
+      "maxDistanceKm": 434.163,
+      "members": [
+        {
+          "lineId": "mbta-blue-line",
+          "feed": "mbta",
+          "name": "Aquarium",
+          "lon": -71.051591,
+          "lat": 42.359579
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-rvln",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Aquarium Light RAIL Station",
+          "lon": -75.128788,
+          "lat": 39.945678
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-chestnut-hill",
+      "maxDistanceKm": 420.314,
+      "members": [
+        {
+          "lineId": "mbta-d",
+          "feed": "mbta",
+          "name": "Chestnut Hill",
+          "lon": -71.164695,
+          "lat": 42.326739
+        },
+        {
+          "lineId": "septa-regional-rail-che",
+          "feed": "septa-regional-rail",
+          "name": "Chestnut Hill",
+          "lon": -75.207223,
+          "lat": 40.08103
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-allegheny",
+      "maxDistanceKm": 414.913,
+      "members": [
+        {
+          "lineId": "port-authority-of-allegheny-blue",
+          "feed": "port-authority-of-allegheny",
+          "name": "Allegheny Station",
+          "lon": -80.017801,
+          "lat": 40.447941
+        },
+        {
+          "lineId": "port-authority-of-allegheny-red",
+          "feed": "port-authority-of-allegheny",
+          "name": "Allegheny Station",
+          "lon": -80.017801,
+          "lat": 40.447941
+        },
+        {
+          "lineId": "port-authority-of-allegheny-slvr",
+          "feed": "port-authority-of-allegheny",
+          "name": "Allegheny Station",
+          "lon": -80.017801,
+          "lat": 40.447941
+        },
+        {
+          "lineId": "septa-regional-rail-nor",
+          "feed": "septa-regional-rail",
+          "name": "Allegheny",
+          "lon": -75.164737,
+          "lat": 40.003589
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-forest-hills",
+      "maxDistanceKm": 406.458,
+      "members": [
+        {
+          "lineId": "mbta-needham-line",
+          "feed": "mbta",
+          "name": "Forest Hills",
+          "lon": -71.113809,
+          "lat": 42.300663
+        },
+        {
+          "lineId": "mbta-orange-line",
+          "feed": "mbta",
+          "name": "Forest Hills",
+          "lon": -71.113228,
+          "lat": 42.302093
+        },
+        {
+          "lineId": "mbta-providence-stoughton-line",
+          "feed": "mbta",
+          "name": "Forest Hills",
+          "lon": -71.113802,
+          "lat": 42.300661
+        },
+        {
+          "lineId": "mta-long-island-rail-road-babylon-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-city-terminal-zone",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719587
+        },
+        {
+          "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-hempstead-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-long-beach-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-ronkonkoma-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "mta-long-island-rail-road-west-hempstead-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Forest Hills",
+          "lon": -73.844806,
+          "lat": 40.719588
+        },
+        {
+          "lineId": "septa-regional-rail-wtr",
+          "feed": "septa-regional-rail",
+          "name": "Forest Hills",
+          "lon": -75.020623,
+          "lat": 40.127915
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-quincy",
+      "maxDistanceKm": 379.592,
+      "members": [
+        {
+          "lineId": "amtrak-carl-sandburg",
+          "feed": "amtrak",
+          "name": "Quincy Amtrak Station",
+          "lon": -91.368294,
+          "lat": 39.956853
+        },
+        {
+          "lineId": "cta-brown-line",
+          "feed": "cta",
+          "name": "Quincy",
+          "lon": -87.63374,
+          "lat": 41.878723
+        },
+        {
+          "lineId": "cta-orange-line",
+          "feed": "cta",
+          "name": "Quincy",
+          "lon": -87.63374,
+          "lat": 41.878723
+        },
+        {
+          "lineId": "cta-pink-line",
+          "feed": "cta",
+          "name": "Quincy",
+          "lon": -87.63374,
+          "lat": 41.878723
+        },
+        {
+          "lineId": "cta-purple-line",
+          "feed": "cta",
+          "name": "Quincy",
+          "lon": -87.63374,
+          "lat": 41.878723
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-woodbridge",
+      "maxDistanceKm": 330.536,
+      "members": [
+        {
+          "lineId": "amtrak-northeast-regional",
+          "feed": "amtrak",
+          "name": "Woodbridge Amtrak",
+          "lon": -77.248207,
+          "lat": 38.659032
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-njcl",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Woodbridge",
+          "lon": -74.277738,
+          "lat": 40.55661
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-wallingford",
+      "maxDistanceKm": 275.566,
+      "members": [
+        {
+          "lineId": "amtrak-amtrak-hartford-line",
+          "feed": "amtrak",
+          "name": "Wallingford Amtrak",
+          "lon": -72.825139,
+          "lat": 41.456949
+        },
+        {
+          "lineId": "amtrak-northeast-regional-b2",
+          "feed": "amtrak",
+          "name": "Wallingford Amtrak",
+          "lon": -72.825139,
+          "lat": 41.456949
+        },
+        {
+          "lineId": "amtrak-valley-flyer",
+          "feed": "amtrak",
+          "name": "Wallingford Amtrak",
+          "lon": -72.825139,
+          "lat": 41.456949
+        },
+        {
+          "lineId": "septa-regional-rail-med",
+          "feed": "septa-regional-rail",
+          "name": "Wallingford",
+          "lon": -75.371926,
+          "lat": 39.903764
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-stony-brook",
+      "maxDistanceKm": 228.986,
+      "members": [
+        {
+          "lineId": "mbta-orange-line",
+          "feed": "mbta",
+          "name": "Stony Brook",
+          "lon": -71.104358,
+          "lat": 42.317255
+        },
+        {
+          "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Stony Brook",
+          "lon": -73.128524,
+          "lat": 40.920312
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-roslyn",
+      "maxDistanceKm": 146.476,
+      "members": [
+        {
+          "lineId": "mta-long-island-rail-road-oyster-bay-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Roslyn",
+          "lon": -73.643281,
+          "lat": 40.790478
+        },
+        {
+          "lineId": "septa-regional-rail-war",
+          "feed": "septa-regional-rail",
+          "name": "Roslyn",
+          "lon": -75.134179,
+          "lat": 40.120859
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-gladstone",
+      "maxDistanceKm": 101.947,
+      "members": [
+        {
+          "lineId": "new-jersey-transit-nj-transi-mneg",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "Gladstone",
+          "lon": -74.66639,
+          "lat": 40.72027
+        },
+        {
+          "lineId": "septa-regional-rail-med",
+          "feed": "septa-regional-rail",
+          "name": "Gladstone",
+          "lon": -75.282155,
+          "lat": 39.932729
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-kingston",
+      "maxDistanceKm": 88.652,
+      "members": [
+        {
+          "lineId": "amtrak-northeast-regional",
+          "feed": "amtrak",
+          "name": "Kingston Amtrak Station",
+          "lon": -71.560809,
+          "lat": 41.484151
+        },
+        {
+          "lineId": "mbta-kingston-line",
+          "feed": "mbta",
+          "name": "Kingston",
+          "lon": -70.721703,
+          "lat": 41.977614
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-86-st-5",
+      "maxDistanceKm": 18.425,
+      "members": [
+        {
+          "lineId": "metropolitan-transit-authori-q",
+          "feed": "metropolitan-transit-authori",
+          "name": "86 St",
+          "lon": -73.951686,
+          "lat": 40.777848
+        },
+        {
+          "lineId": "metropolitan-transit-authori-r",
+          "feed": "metropolitan-transit-authori",
+          "name": "86 St",
+          "lon": -74.028403,
+          "lat": 40.622688
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-orlando",
+      "maxDistanceKm": 14.45,
+      "members": [
+        {
+          "lineId": "amtrak-silver-meteor",
+          "feed": "amtrak",
+          "name": "Orlando",
+          "lon": -81.381862,
+          "lat": 28.525899
+        },
+        {
+          "lineId": "brightline-trains-llc-blfm",
+          "feed": "brightline-trains-llc",
+          "name": "Orlando",
+          "lon": -81.309251,
+          "lat": 28.412701
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-penn",
+      "maxDistanceKm": 14.435,
+      "members": [
+        {
+          "lineId": "mta-long-island-rail-road-babylon-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-far-rockaway-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-long-beach-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-montauk-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-oyster-bay-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-port-jefferson-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "mta-long-island-rail-road-ronkonkoma-branch",
+          "feed": "mta-long-island-rail-road",
+          "name": "Penn Station",
+          "lon": -73.993397,
+          "lat": 40.750864
+        },
+        {
+          "lineId": "new-jersey-transit-nj-transi-nlr",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "PENN Station Light RAIL Departure",
+          "lon": -74.163454,
+          "lat": 40.734965
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-ventura",
+      "maxDistanceKm": 9.216,
+      "members": [
+        {
+          "lineId": "amtrak-pacific-surfliner",
+          "feed": "amtrak",
+          "name": "Ventura Amtrak",
+          "lon": -119.299918,
+          "lat": 34.27699
+        },
+        {
+          "lineId": "metrolink-vc-line",
+          "feed": "metrolink",
+          "name": "Ventura",
+          "lon": -119.204935,
+          "lat": 34.250392
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-9th-street",
+      "maxDistanceKm": 3.698,
+      "members": [
+        {
+          "lineId": "new-jersey-transit-nj-transi-hblr",
+          "feed": "new-jersey-transit-nj-transi",
+          "name": "9th Street Light RAIL Station",
+          "lon": -74.038553,
+          "lat": 40.748877
+        },
+        {
+          "lineId": "port-authority-trans-hudson-hoboken-33rd-street",
+          "feed": "port-authority-trans-hudson",
+          "name": "9th Street",
+          "lon": -73.999128,
+          "lat": 40.734266
+        },
+        {
+          "lineId": "port-authority-trans-hudson-journal-square-33rd-street-via-hoboken",
+          "feed": "port-authority-trans-hudson",
+          "name": "9th Street",
+          "lon": -73.999128,
+          "lat": 40.734266
+        },
+        {
+          "lineId": "port-authority-trans-hudson-world-trade-center-33rd-street",
+          "feed": "port-authority-trans-hudson",
+          "name": "9th Street",
+          "lon": -73.999143,
+          "lat": 40.734258
+        }
+      ]
+    },
+    {
+      "country": "us",
+      "stationGroupId": "us-official-fort-lauderdale",
+      "maxDistanceKm": 2.467,
+      "members": [
+        {
+          "lineId": "amtrak-silver-meteor",
+          "feed": "amtrak",
+          "name": "Fort Lauderdale Amtrak Station",
+          "lon": -80.16982,
+          "lat": 26.119259
+        },
+        {
+          "lineId": "brightline-trains-llc-blfm",
+          "feed": "brightline-trains-llc",
+          "name": "Fort Lauderdale",
+          "lon": -80.145587,
+          "lat": 26.123618
+        }
+      ]
+    }
+  ],
+  "stationSummary": {
+    "us": {
+      "over2Km": 61,
+      "over100Km": 54
+    },
+    "ca": {
+      "over2Km": 0,
+      "over100Km": 0
+    }
+  },
+  "ledger": {
+    "published": 436,
+    "blockedRows": 372,
+    "geometryBucketRows": 36,
+    "geometryBucketPublished": 21,
+    "geometryBucketUnpublished": [
+      "jacksonville-jta-sky",
+      "jacksonville-jta-sky-b1",
+      "kenosha-streetcar-sc",
+      "osm-city-of-kenosha-6075",
+      "osm-city-of-milwaukee-the-hop--tl-7",
+      "osm-port-authority-trans-hudso-862",
+      "osm-qline-detroit-13578",
+      "osm-r-seau-express-m-tropolita-s1",
+      "osm-r-seau-express-m-tropolita-s3",
+      "osm-shore-line-east-slet",
+      "osm-soci-t-de-transport-de-mon-1",
+      "osm-soci-t-de-transport-de-mon-2",
+      "osm-soci-t-de-transport-de-mon-4",
+      "osm-soci-t-de-transport-de-mon-5",
+      "osm-west-virginia-university-p-prt"
+    ],
+    "currentCityLedgerBlocked": 336,
+    "unpublishedRowsAfterMembershipCheck": 351,
+    "note": "Counts are report rows, not distinct passenger railways."
+  },
+  "staleColourRows": [
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "CTrail Shore Line East: Stamford <=> New London",
+      "sourceFeed": "osm-ctrail",
+      "sourceRouteId": 4433102,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "QLine: Grand Boulevard => Congress Street",
+      "sourceFeed": "osm-m-1-rail",
+      "sourceRouteId": 12330590,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "QLine: Congress Street => Grand Boulevard",
+      "sourceFeed": "osm-m-1-rail",
+      "sourceRouteId": 12330591,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "Silver Line",
+      "sourceFeed": "osm-metropolitan-transit-syste",
+      "sourceRouteId": 4729047,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "PATH: Newark → WTC",
+      "sourceFeed": "osm-port-authority-of-new-york",
+      "sourceRouteId": 1468867,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A1 : Deux-Montagnes → Brossard",
+      "sourceFeed": "osm-pulsar",
+      "sourceRouteId": 19668643,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A1 : Anse-à-l'Orme → Brossard",
+      "sourceFeed": "osm-pulsar",
+      "sourceRouteId": 19668926,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A4 : Brossard → Deux-Montagnes",
+      "sourceFeed": "osm-pulsar",
+      "sourceRouteId": 19669299,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "REM A3 : Brossard → Anse-à-l'Orme",
+      "sourceFeed": "osm-pulsar",
+      "sourceRouteId": 19672327,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    },
+    {
+      "lineId": null,
+      "country": null,
+      "status": "blocked",
+      "review": "error",
+      "operator": null,
+      "name": "The Hop M-Line: Burns Commons → Intermodal Station",
+      "sourceFeed": "osm-transdev",
+      "sourceRouteId": 12331264,
+      "geometrySource": null,
+      "officialSpatialGeometry": false,
+      "colorReference": null,
+      "colorSource": null,
+      "stationCount": null,
+      "lengthKm": null,
+      "issues": [
+        {
+          "why": "OSM colour is not an official colour source"
+        }
+      ]
+    }
+  ],
+  "popupExamples": [
+    {
+      "stationId": "cta-red-line:us-official-fullerton",
+      "lineIds": [
+        "cta-brown-line",
+        "metrolink-91-pv-line",
+        "metrolink-oc-line",
+        "amtrak-pacific-surfliner",
+        "cta-purple-line",
+        "cta-red-line",
+        "amtrak-southwest-chief"
+      ]
+    },
+    {
+      "stationId": "alaska-railroad-aurora-winter:us-official-healy",
+      "lineIds": [
+        "alaska-railroad-aurora-winter",
+        "metra-milwaukee"
+      ]
+    },
+    {
+      "stationId": "bart-yellow:us-official-concord",
+      "lineIds": [
+        "bart-yellow",
+        "mbta-fitchburg-line"
+      ]
+    }
+  ]
+}

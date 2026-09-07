@@ -1,0 +1,680 @@
+{
+  "scope": "Unpublished candidates only; not a full North America build",
+  "candidates": [
+    {
+      "line": "osm-port-authority-trans-hudso-862",
+      "feed": "osm-port-authority-trans-hudso",
+      "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "stationCount": 6
+    },
+    {
+      "line": "osm-city-of-kenosha-6075",
+      "feed": "osm-city-of-kenosha",
+      "why": "not promoted: every station interval failed independent track alignment",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "stationCount": 18
+    },
+    {
+      "line": "osm-shore-line-east-slet",
+      "feed": "osm-shore-line-east",
+      "why": "not promoted: OSM includes South Norwalk but the official SLE THRU 1633/1638 timetable does not show a stop there",
+      "geometrySource": "narn",
+      "withheldIntervals": [],
+      "evidence": "https://shorelineeast.com/wp-content/uploads/2026/03/SLE-3_29-MNR-Schedule-Change.pdf",
+      "stationCount": 15
+    },
+    {
+      "line": "osm-west-virginia-university-p-prt",
+      "feed": "osm-west-virginia-university-p",
+      "why": "not promoted: every station interval failed independent track alignment",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stationCount": 5
+    },
+    {
+      "line": "osm-city-of-milwaukee-the-hop--tl-7",
+      "feed": "osm-city-of-milwaukee-the-hop-",
+      "why": "not promoted: every station interval failed independent track alignment",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "stationCount": 10
+    },
+    {
+      "line": "osm-soci-t-de-transport-de-mon-4",
+      "feed": "osm-soci-t-de-transport-de-mon",
+      "why": "not promoted: every station interval failed independent track alignment",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1
+      ],
+      "stationCount": 3
+    },
+    {
+      "line": "osm-r-seau-express-m-tropolita-s1",
+      "feed": "osm-r-seau-express-m-tropolita",
+      "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1,
+        2,
+        3,
+        17
+      ],
+      "stationCount": 19
+    },
+    {
+      "line": "osm-r-seau-express-m-tropolita-s3",
+      "feed": "osm-r-seau-express-m-tropolita",
+      "why": "not promoted: surveyed alignment and service inventory review remains incomplete",
+      "geometrySource": "osm",
+      "withheldIntervals": [
+        0,
+        1,
+        2,
+        3,
+        12,
+        13,
+        14,
+        15
+      ],
+      "stationCount": 17
+    }
+  ],
+  "buildReport": {
+    "generatedAt": "2026-09-06T12:57:36.158435+00:00",
+    "feeds": [
+      {
+        "slug": "kenosha-streetcar",
+        "lines": 1,
+        "dropped": [
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 5,
+            "snapMeters": [
+              594.1224496550363,
+              689.3108541676088
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 6,
+            "snapMeters": [
+              689.3108541676088,
+              787.8308104526129
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 7,
+            "snapMeters": [
+              787.8308104526129,
+              887.4806599012537
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 8,
+            "snapMeters": [
+              887.4806599012537,
+              988.4389335446311
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 9,
+            "snapMeters": [
+              988.4389335446311,
+              1093.0168469972377
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 10,
+            "snapMeters": [
+              1093.0168469972377,
+              1312.7739801912942
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 11,
+            "snapMeters": [
+              1312.7739801912942,
+              999.4067453844057
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 12,
+            "snapMeters": [
+              999.4067453844057,
+              868.7754394617093
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 13,
+            "snapMeters": [
+              868.7754394617093,
+              769.3502922325683
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 14,
+            "snapMeters": [
+              769.3502922325683,
+              671.2289869692232
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "NARN interval endpoint snapped too far from station",
+            "interval": 15,
+            "snapMeters": [
+              671.2289869692232,
+              546.117646299894
+            ],
+            "limitMeters": 600.0
+          },
+          {
+            "route": "6075",
+            "suffix": "",
+            "why": "railway is not in the surveyed network",
+            "medianSnapMeters": 689.3,
+            "usedInstead": "gtfs-shape"
+          }
+        ],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "rem",
+        "lines": 0,
+        "dropped": [
+          {
+            "route": "S1",
+            "suffix": "",
+            "why": "fail-closed: independent surveyed REM centreline unavailable"
+          },
+          {
+            "route": "S2",
+            "suffix": "",
+            "why": "fail-closed: independent surveyed REM centreline unavailable"
+          },
+          {
+            "route": "S3",
+            "suffix": "",
+            "why": "fail-closed: independent surveyed REM centreline unavailable"
+          }
+        ],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "wvu-prt",
+        "lines": 0,
+        "dropped": [
+          {
+            "route": "1",
+            "suffix": "",
+            "why": "no usable alignment",
+            "schematicShape": true
+          },
+          {
+            "route": "1",
+            "suffix": "",
+            "why": "no usable alignment",
+            "schematicShape": true
+          }
+        ],
+        "notes": [
+          "1: stop-order cycle is not a physical loop; end stations are 2779 m apart"
+        ],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-routes",
+        "lines": 0,
+        "dropped": [
+          {
+            "relation": 12330590,
+            "name": "QLine: Grand Boulevard => Congress Street",
+            "operator": "Qline Detroit",
+            "why": "the other direction of relation 12330591 (QLine: Congress Street => Grand Boulevard)"
+          },
+          {
+            "relation": 19668643,
+            "name": "REM A1 : Deux-Montagnes → Brossard",
+            "operator": "Réseau express métropolitain",
+            "why": "the other direction of relation 19669299 (REM A4 : Brossard → Deux-Montagnes)"
+          },
+          {
+            "relation": 19668926,
+            "name": "REM A1 : Anse-à-l'Orme → Brossard",
+            "operator": "Réseau express métropolitain",
+            "why": "the other direction of relation 19672327 (REM A3 : Brossard → Anse-à-l'Orme)"
+          }
+        ],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-soci-t-de-transport-de-mon",
+        "lines": 4,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-r-seau-express-m-tropolita",
+        "lines": 2,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-port-authority-trans-hudso",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-city-of-kenosha",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-shore-line-east",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-san-diego-international-ai",
+        "lines": 0,
+        "dropped": [
+          {
+            "why": "routed interval is a detour",
+            "interval": 3,
+            "routedKm": 4.24,
+            "straightKm": 0.62
+          },
+          {
+            "route": "4729047",
+            "suffix": "",
+            "why": "operator alignment contains an implausible interval"
+          }
+        ],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-west-virginia-university-p",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-qline-detroit",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "osm-city-of-milwaukee-the-hop-",
+        "lines": 1,
+        "dropped": [],
+        "notes": [],
+        "syntheticConnectors": 0
+      },
+      {
+        "slug": "geometry-release-blockers",
+        "lines": 0,
+        "dropped": [
+          {
+            "line": "osm-qline-detroit-13578",
+            "feed": "osm-qline-detroit",
+            "why": "densified station-to-station chord is not an alignment",
+            "intervals": [
+              4,
+              5
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-port-authority-trans-hudso-862",
+            "feed": "osm-port-authority-trans-hudso",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "profile": "metro",
+            "limitMeters": 25.0,
+            "maxDeviationMeters": 285.88,
+            "unmatchedVertices": 36,
+            "checkedVertices": 145,
+            "worstAt": [
+              -74.05085,
+              40.721946
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-city-of-kenosha-6075",
+            "feed": "osm-city-of-kenosha",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17
+            ],
+            "profile": "street",
+            "limitMeters": 20.0,
+            "maxDeviationMeters": 396.15,
+            "unmatchedVertices": 54,
+            "checkedVertices": 79,
+            "worstAt": [
+              -87.821143,
+              42.584687
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-west-virginia-university-p-prt",
+            "feed": "osm-west-virginia-university-p",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "profile": "metro",
+            "limitMeters": 25.0,
+            "maxDeviationMeters": 365.72,
+            "unmatchedVertices": 61,
+            "checkedVertices": 118,
+            "worstAt": [
+              -79.973647,
+              39.64345
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-city-of-milwaukee-the-hop--tl-7",
+            "feed": "osm-city-of-milwaukee-the-hop-",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "profile": "street",
+            "limitMeters": 20.0,
+            "maxDeviationMeters": 355.64,
+            "unmatchedVertices": 55,
+            "checkedVertices": 73,
+            "worstAt": [
+              -87.908473,
+              43.035027
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "kenosha-streetcar-sc",
+            "feed": "kenosha-streetcar",
+            "why": "compact-v1 geometry invariant failed",
+            "faults": [
+              "interval 16 endpoint gap 0.0/11.5 m"
+            ]
+          },
+          {
+            "line": "osm-soci-t-de-transport-de-mon-1",
+            "feed": "osm-soci-t-de-transport-de-mon",
+            "why": "densified station-to-station chord is not an alignment",
+            "intervals": [
+              10,
+              13,
+              18,
+              24
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-soci-t-de-transport-de-mon-2",
+            "feed": "osm-soci-t-de-transport-de-mon",
+            "why": "densified station-to-station chord is not an alignment",
+            "intervals": [
+              0,
+              2,
+              12,
+              13,
+              14,
+              15,
+              17,
+              21,
+              23,
+              24
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-soci-t-de-transport-de-mon-5",
+            "feed": "osm-soci-t-de-transport-de-mon",
+            "why": "densified station-to-station chord is not an alignment",
+            "intervals": [
+              9
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-soci-t-de-transport-de-mon-4",
+            "feed": "osm-soci-t-de-transport-de-mon",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1
+            ],
+            "profile": "commuter",
+            "limitMeters": 30.0,
+            "maxDeviationMeters": 342.08,
+            "unmatchedVertices": 27,
+            "checkedVertices": 33,
+            "worstAt": [
+              -73.546174,
+              45.508689
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-r-seau-express-m-tropolita-s1",
+            "feed": "osm-r-seau-express-m-tropolita",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ],
+            "profile": "commuter",
+            "limitMeters": 30.0,
+            "maxDeviationMeters": 386.15,
+            "unmatchedVertices": 81,
+            "checkedVertices": 309,
+            "worstAt": [
+              -73.442611,
+              45.453461
+            ],
+            "geometrySource": "osm"
+          },
+          {
+            "line": "osm-r-seau-express-m-tropolita-s3",
+            "feed": "osm-r-seau-express-m-tropolita",
+            "why": "station intervals withheld from display because independent track alignment exceeds tolerance",
+            "intervals": [
+              0,
+              1,
+              2,
+              3,
+              12,
+              13,
+              14,
+              15
+            ],
+            "profile": "commuter",
+            "limitMeters": 30.0,
+            "maxDeviationMeters": 386.15,
+            "unmatchedVertices": 165,
+            "checkedVertices": 319,
+            "worstAt": [
+              -73.442611,
+              45.453461
+            ],
+            "geometrySource": "osm"
+          }
+        ],
+        "notes": [],
+        "syntheticConnectors": 0
+      }
+    ],
+    "regions": {
+      "us": {
+        "lines": 5,
+        "stationGroups": 54,
+        "sections": 50,
+        "zones": [
+          "America/New_York"
+        ],
+        "maxDeviationMeters": 396.15,
+        "bytes": {
+          "package": 142035,
+          "stations": 30164,
+          "sections": 41336,
+          "readings": 23513
+        }
+      },
+      "ca": {
+        "lines": 3,
+        "stationGroups": 26,
+        "sections": 36,
+        "zones": [
+          "America/Toronto"
+        ],
+        "maxDeviationMeters": 386.15,
+        "bytes": {
+          "package": 127822,
+          "stations": 22413,
+          "sections": 25314,
+          "readings": 11509
+        }
+      }
+    }
+  }
+}
