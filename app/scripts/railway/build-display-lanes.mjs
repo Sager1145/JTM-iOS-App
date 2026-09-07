@@ -23,9 +23,8 @@
  * intervals with no branch/retrace/reversal cut inside it, exactly which
  * intervals: `[lineId, partIndex, firstIntervalIndex, lastIntervalIndex,
  * vertexCount, totalMetres]`. Python can then decode and concatenate those
- * intervals itself (it already owns that decoder, and needs to keep
- * measuring withheld spans on its own ruler) and knows its chain is the
- * web's part, because the two are built from the same interval range.
+ * intervals itself (it already owns that decoder) and knows its chain is
+ * the web's part, because the two are built from the same interval range.
  *
  * A part that is NOT a plain run — an extraSegments row, a branch's lead-in
  * copied off a neighbouring part's own tail, a loop's wrap seam, anything
@@ -44,6 +43,25 @@
  * does. Either way, a fail-closed guard — not a silent drop — is what
  * catches the two ever disagreeing about how many parts a line has: see
  * `partRowsForLine` below and `app/public/rail/README.md`.
+ *
+ * Every row also carries a 9th element: the part's WITHHELD SPANS — the
+ * alignment-gate-blocked stretches both renderers draw dashed and dimmed —
+ * as `[[fromMetres, toMetres], ...]` on that part's own measure space, or
+ * `[]` when the gate blocked nothing this part draws. A plain row pads
+ * slots 6 and 7 with nulls to reach it.
+ *
+ * These are not re-derived either: they are `coordinates.withheld`, which
+ * rail-network.js's `withheldSpansForPart` measured with `partMeasures` on
+ * the part's FINAL vertices — after grooming and station-approach rebuilding
+ * — and which survives into `network.segments.features` because
+ * `geometryForParts` puts the displayParts arrays themselves into the
+ * feature geometry. Python used to re-derive these too, and for a plain row
+ * it did so by accumulating RAW interval lengths, which are measured before
+ * grooming shortens the geometry: on the shipped packages that left the dash
+ * edges of eight parts off the web's by up to 647 m (us|amtrak-silver-meteor
+ * part 0). Reading the web's own answer closes that by construction, and
+ * closes it for both row kinds at once — the embedded path already agreed
+ * with the web to 0.0 m, because it measures the same final vertices.
  */
 "use strict";
 
@@ -267,6 +285,31 @@ function cumulativeMeasures(points) {
   return out;
 }
 
+// A part's withheld spans, at the 0.1 m build-display-network.py already
+// writes them to disk at. Rounding here rather than shipping raw doubles
+// keeps the row a diffable integer-ish pair, and 0.1 m is four orders of
+// magnitude below the dash period these spans are drawn with.
+function roundedSpans(spans) {
+  return spans.map((span) => [
+    Number(span[0].toFixed(1)),
+    Number(span[1].toFixed(1)),
+  ]);
+}
+
+// The same spans on a part that has just been reversed to the canonical
+// winding. Every measure along a part mirrors when the part is walked from
+// the other end — `[from, to]` becomes `[total - to, total - from]` — and
+// the runs come back in the opposite order, so the list is reversed to stay
+// ascending. This is the one place the row can disagree with
+// rail-network.js on purpose: the web derives its own, unreversed parts and
+// never reads `partsByRegion`, so a reversed part's spans must be stated in
+// the direction the native builder will actually walk it.
+function mirroredSpans(spans, totalMetres) {
+  return spans
+    .map((span) => [totalMetres - span[1], totalMetres - span[0]])
+    .reverse();
+}
+
 // A part's own station measures, nearest-vertex-snapped onto its cumulative
 // ruler. Shared by the lane-run snapping pass below (STATION_SNAP_METRES)
 // and deriveFamilyWindows (FAMILY_WINDOW_STATION_SNAP_METRES) — both are
@@ -363,11 +406,11 @@ const ANCHOR_LENGTH_SLACK_RATIO = 0.03;
 const ANCHOR_LENGTH_OVERAGE_METRES = 1;
 
 // The `partsByRegion` rows for one line: `[lineId, partIndex,
-// firstIntervalIndex, lastIntervalIndex, vertexCount, totalMetres]` for a
-// part that reduces to one plain run of whole raw intervals, or
-// `[lineId, partIndex, -1, -1, vertexCount, totalMetres, kind]` otherwise.
-// See the file header for the rationale and app/public/rail/README.md for
-// the on-disk shape.
+// firstIntervalIndex, lastIntervalIndex, vertexCount, totalMetres, null,
+// null, withheldSpans]` for a part that reduces to one plain run of whole
+// raw intervals, or `[lineId, partIndex, -1, -1, vertexCount, totalMetres,
+// kind, coordinates, withheldSpans]` otherwise. See the file header for the
+// rationale and app/public/rail/README.md for the on-disk shape.
 //
 // `displayPartsForLine`'s outer loop visits raw intervals 0..N-1 strictly in
 // order and, absent a branch/retrace/reversal cut, only ever APPENDS a whole
@@ -427,7 +470,17 @@ function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding
   partsForLine.forEach((coordinates, partIndex) => {
     const vertexCount = coordinates.length;
     const cumulative = cumulativeMeasures(coordinates);
-    const totalMetres = Number((cumulative[cumulative.length - 1] || 0).toFixed(1));
+    const rawTotalMetres = cumulative[cumulative.length - 1] || 0;
+    const totalMetres = Number(rawTotalMetres.toFixed(1));
+    // Slot 8, on every row shape: the alignment-gate-blocked stretches of
+    // THIS part, exactly as rail-network.js measured them on these same
+    // final vertices (`withheldSpansForPart`, reached here because
+    // `geometryForParts` hands the displayParts arrays themselves to the
+    // feature geometry, expando and all). Absent on a part the gate blocked
+    // nothing on, and on every part of every per-lane region — those split
+    // on a block instead of bridging it, so they never tag a vertex. See
+    // the file header for why this is read rather than re-derived.
+    let partWithheld = (coordinates.withheld || []).map((span) => span.slice());
     // A fallback row carries the part's own final vertex coordinates as an
     // 8th element — the one thing that IS guaranteed correct for a part with
     // no faithful interval range, since it is exactly what
@@ -440,7 +493,10 @@ function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding
     // tail, or a retrace that only contributes part of an interval — is not
     // something raw interval geometry can reconstruct regardless.
     const fallback = (kind) => {
-      rows.push([lineId, partIndex, -1, -1, vertexCount, totalMetres, kind, coordinates]);
+      rows.push([
+        lineId, partIndex, -1, -1, vertexCount, totalMetres, kind, coordinates,
+        roundedSpans(partWithheld),
+      ]);
     };
     // extraSegmentParts is always the trailing `extraCount` entries.
     if (partIndex >= trunkCount) {
@@ -478,6 +534,7 @@ function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding
         }
         if (twiceArea < 0) {
           coordinates = coordinates.slice().reverse();
+          partWithheld = mirroredSpans(partWithheld, rawTotalMetres);
           loopWinding.reversed.push(`${lineId}#${partIndex}`);
         }
       }
@@ -530,7 +587,14 @@ function partRowsForLine(compactLine, partsForLine, displayOverride, loopWinding
       fallback("complex");
       return;
     }
-    rows.push([lineId, partIndex, firstIntervalIndex, lastIntervalIndex, vertexCount, totalMetres]);
+    // Slots 6 and 7 (`kind`, `coordinates`) are a fallback row's alone, and
+    // are padded here rather than dropped so slot 8 means the same thing on
+    // every row shape — a reader can ask one question ("is there a slot 8?")
+    // instead of two.
+    rows.push([
+      lineId, partIndex, firstIntervalIndex, lastIntervalIndex, vertexCount, totalMetres,
+      null, null, roundedSpans(partWithheld),
+    ]);
   });
   return rows;
 }
@@ -3070,7 +3134,8 @@ for (const region of REGIONS) {
   const landlordWindowCount = familyWindows.filter((row) => row[4] === 0).length;
   process.stdout.write(
     `${region}: ${derived.rows.length} lane stretches, ${derived.follows.length} follow runs, ` +
-      `${partsRows.length} part rows (${partsRows.filter((row) => row.length === 6).length} plain), ` +
+      `${partsRows.length} part rows (${partsRows.filter((row) => row[2] >= 0).length} plain, ` +
+      `${partsRows.filter((row) => (row[8] || []).length).length} with withheld spans), ` +
       `${familyWindows.length} family windows (${tenantWindowCount} tenant, ${landlordWindowCount} landlord)\n`,
   );
 }

@@ -65,6 +65,10 @@ REGIONS = ("jp", "tw", "hk", "mo", "kr", "us", "ca")
 # cut into per-lane pieces here. Must agree with rail-network.js's
 # CONTINUOUS_STROKE_COUNTRIES.
 CONTINUOUS_STROKE_REGIONS = frozenset({"us", "ca", "jp"})
+# Slot 8 of a `partsByRegion` row (build-display-lanes.mjs): that display
+# part's withheld spans, measured by rail-network.js on the part's own final
+# vertices. Read rather than re-derived — see `web_withheld_spans`.
+WITHHELD_SPANS_SLOT = 8
 EPSILON = 1e-12
 # rail-network.js's lane ramp, to the constant. A lane change is a drift, not a
 # step: the ramp is long enough to be a shallow diagonal, and each step across
@@ -484,6 +488,14 @@ def chain_from_interval_range(
     continuesFromPrevious rule `continuous_chains` uses, just scoped to a
     known range instead of discovered by scanning for empty intervals —
     reproduces the same chain, measured on this module's own ruler.
+
+    The `withheld` spans it accumulates are the FALLBACK measure, kept for a
+    display-lanes.json that predates the row's slot 8, and the record of
+    WHICH intervals this part places (`withheldIntervals`) for the caller's
+    coverage check. They are measured over the raw intervals, which are the
+    geometry before grooming and station-approach rebuilding shorten it, so
+    where slot 8 is present the caller replaces them with the web's own —
+    see `web_withheld_spans`.
     """
     chain: dict = {
         "firstInterval": first, "startMetres": 0.0,
@@ -563,7 +575,12 @@ def withheld_spans_for_embedded(
     VERTICES a blocked interval contributed (`currentWithheldKeys`) and runs
     `withheldSpansForPart` over them — and the two agree to well under the
     0.1 m this rounds to on every shipped line that has both (pinned by the
-    `withheld` case in display-parts.json). Vertex tagging is the more
+    `withheld` case in display-parts.json). That agreement is why this stayed
+    a re-derivation while the plain path's did not: both measure the part's
+    final vertices, so both get the web's answer. Where the row carries slot
+    8 the web's answer is used directly regardless (`web_withheld_spans`) and
+    what this still supplies alone is `placed` — which intervals the part
+    reaches, for the caller's coverage check. Vertex tagging is the more
     general of the two: it also survives a retrace laying an interval down
     twice, an excursion copying it into a branch, and grooming splitting one
     run into two. None of those occur on any shipped package today, and the
@@ -628,6 +645,42 @@ def chain_from_embedded_coordinates(
     }
 
 
+def web_withheld_spans(row: list) -> list[list[float]] | None:
+    """A `partsByRegion` row's withheld spans, as rail-network.js measured them.
+
+    The web is the authority on where a dashed span starts and ends, and it
+    is the only side that can be: `withheldSpansForPart` measures on the
+    part's FINAL vertices, after grooming and station-approach rebuilding
+    have already changed the geometry's length. Both re-derivations in this
+    module measure something else. `chain_from_embedded_coordinates` gets
+    the same answer anyway, because a fallback row hands it those very
+    vertices — the two agree to 0.0 m on every shipped part. But
+    `chain_from_interval_range` accumulates RAW interval lengths, which are
+    the lengths BEFORE grooming, and on the shipped packages that put eight
+    parts' dash edges up to 647 m from the web's (us|amtrak-silver-meteor
+    part 0). Reading the spans closes both paths at once, the same way
+    `strokeExcludedByRegion`, `reversedLoopParts` and
+    `releasedIntervalsByRegion` are read here rather than re-derived.
+
+    Returns None — not `[]` — for a row that predates the slot, so a stale
+    display-lanes.json falls back to re-deriving (loudly) instead of
+    silently releasing every dashed span in the region.
+    """
+    if len(row) <= WITHHELD_SPANS_SLOT:
+        return None
+    spans = row[WITHHELD_SPANS_SLOT]
+    if spans is None:
+        return None
+    # Rounded and merged on arrival, so a span coming from the web is the
+    # same shape on disk as one this module still derives for itself: the
+    # web tags vertices and does not merge, and a survives-grooming vertex
+    # in the middle of a withheld run splits one span into two abutting ones
+    # there (see `merged_withheld_spans`).
+    return merged_withheld_spans(
+        sorted([round(float(low), 1), round(float(high), 1)]
+               for low, high in spans))
+
+
 def chains_from_parts_rows(
     rows: list[list], intervals: list[list[list[float]]], stations: list[list],
     withheld: set[int], line_id: str, region: str,
@@ -659,6 +712,27 @@ def chains_from_parts_rows(
                     f"its {len(intervals)} intervals")
             chain = chain_from_interval_range(intervals, first_interval, last_interval, withheld)
         chain["partIndex"] = part_index
+        # The web's own measure of this part's dashed spans wins where the
+        # row carries it. What is NOT taken from the row is which raw
+        # intervals the part places: that stays this module's own answer,
+        # because it is what the fail-closed coverage check below reads, and
+        # a metre span cannot be turned back into an interval index. The two
+        # must therefore at least agree on WHETHER this part draws blocked
+        # track — if they don't, one of them would draw dashed exactly where
+        # the other draws solid, and neither answer is safe to prefer.
+        spans = web_withheld_spans(row)
+        chain["webWithheldSpans"] = spans is not None
+        if spans is not None:
+            if bool(spans) != bool(chain["withheld"]):
+                raise RuntimeError(
+                    f"{region}|{line_id}: partsByRegion part {part_index} and this "
+                    f"module disagree about whether the alignment gate blocked any "
+                    f"track this part draws (display-lanes.json: {len(spans)} span(s), "
+                    f"rebuilt here: {len(chain['withheld'])}). One of them would draw "
+                    "dashed exactly where the other draws solid, so the disagreement "
+                    "itself is the thing to fix — a display-lanes.json built against "
+                    "a different revision of this region's package is the usual cause")
+            chain["withheld"] = spans
         chains.append(chain)
     # Fail closed on a released withheld interval. A blocked interval the
     # alignment gate held back must reach the renderer as a dashed span on
@@ -1537,6 +1611,23 @@ def build(rail_dir: Path, output: Path) -> dict:
                     "and not recorded in strokeExcludedByRegion to explain "
                     "the absence — a continuous-stroke line must have one "
                     "or the other")
+            # A display-lanes.json older than the withheld-spans slot still
+            # builds — the two chain builders' own measures are the fallback
+            # — but it builds a map whose dash edges are the ones grooming
+            # already moved, so it says so rather than passing silently.
+            stale_parts = sum(
+                1 for line_chains in chains_by_line.values()
+                for chain in line_chains if not chain.get("webWithheldSpans"))
+            if stale_parts:
+                print(
+                    f"NOTE: {region}: {stale_parts} partsByRegion row(s) carry no "
+                    "withheld spans (slot 8); their dashed spans were re-derived "
+                    "here instead, which for a plain interval-range row measures "
+                    "the geometry BEFORE grooming and can put a dash edge a few "
+                    "hundred metres from where the web draws it. Rebuild "
+                    "display-lanes.json (build-display-lanes.mjs) to restore parity",
+                    file=sys.stderr,
+                )
 
         line_keys_by_station: dict[str, list[str]] = defaultdict(list)
         region_fragments: list[dict] = []

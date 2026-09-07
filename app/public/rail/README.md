@@ -221,11 +221,12 @@ for the Swift port's own parity test to match.
 part (`displayPartsForLine` in `rail-network.js`, which cuts a line's stroke
 wherever a branch, a retrace or a reversal makes one drawn part turn into
 two), `[lineId, partIndex, firstIntervalIndex, lastIntervalIndex, vertexCount,
-totalMetres]` when the part reduces to one plain, unbroken run of whole raw
-intervals, or `[lineId, partIndex, -1, -1, vertexCount, totalMetres, kind,
-coordinates]` — the part's own final vertices, copied rather than
-re-derived — when it does not (a branch's lead-in copied off another part's
-tail, an extraSegments row, a loop's wrap seam). `build-display-network.py`
+totalMetres, null, null, withheldSpans]` when the part reduces to one plain,
+unbroken run of whole raw intervals, or `[lineId, partIndex, -1, -1,
+vertexCount, totalMetres, kind, coordinates, withheldSpans]` — the part's own
+final vertices, copied rather than re-derived — when it does not (a branch's
+lead-in copied off another part's tail, an extraSegments row, a loop's wrap
+seam). `build-display-network.py`
 builds each continuous-stroke chain from these rows instead of re-deriving
 its own splitting rules from the raw compact-v1 intervals, which is what let
 a branching US/CA line's native chain count silently disagree with the web's
@@ -234,6 +235,25 @@ sides had numbered differently was dropped without a trace. A lane or follow
 row now naming a part with no matching chain raises instead — see
 `partRowsForLine` in `build-display-lanes.mjs` and `chains_from_parts_rows`
 in `build-display-network.py`.
+
+The last slot, `withheldSpans`, is `[[fromMetres, toMetres], ...]` on that
+part's own measure space — the alignment-gate-blocked stretches both
+renderers draw dashed and dimmed — or `[]` where the gate blocked nothing the
+part draws (which is every part of every per-lane region: those split on a
+block instead of bridging it). It is present on both row shapes, which is
+what the `null, null` padding on a plain row buys: a reader asks one
+question, "is there a slot 8?", rather than two. These spans are
+`rail-network.js`'s own (`withheldSpansForPart`, measured with `partMeasures`
+on the part's FINAL vertices) rather than anything re-derived, because only
+the web can measure them: grooming and station-approach rebuilding change
+the geometry's length after the raw intervals were laid down, so accumulating
+raw interval lengths — what `build-display-network.py` did for a plain row
+before — put eight parts' dash edges up to 647 m from the web's
+(`us|amtrak-silver-meteor` part 0). A fallback row's re-derivation never
+drifted, because it measures those same final vertices; reading the spans
+closes both paths by construction. A `display-lanes.json` without the slot
+still builds, falling back to the old re-derivation with a `NOTE` on stderr
+naming how many parts it affected.
 
 A continuous-stroke line can also have NO `partsByRegion` rows at all,
 because `rail-network.js`'s own web engine (`drawsContinuousStroke &&

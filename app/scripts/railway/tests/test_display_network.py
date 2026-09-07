@@ -1129,6 +1129,191 @@ class DisplayNetworkTests(unittest.TestCase):
                 display_network.build(rail, out)
         self.assertIn("draw solid", str(raised.exception))
 
+    @staticmethod
+    def plain_withheld_case(blocked, spans="omit"):
+        """A three-station line drawn as one PLAIN `partsByRegion` row, with
+        `blocked` withheld by the alignment gate.
+
+        `spans` is the row's slot 8 — the withheld spans rail-network.js
+        measured on the part's own final vertices. `"omit"` leaves the slot
+        off entirely, which is what a display-lanes.json built before the
+        slot existed looks like.
+
+        The two intervals are each 0.1 degrees of longitude at 48N, so the
+        part is about 14.9 km long and the boundary between them sits at
+        about 7.45 km — far enough from any value a test supplies for slot 8
+        that "the row won" and "the rebuild won" can never be confused.
+        """
+        line = {
+            "id": "us-test", "name": "Test", "operator": "Test Rail",
+            "kind": "regional", "rank": 0, "color": "#123456",
+            "stations": [
+                ["a", "A", -122.0, 48.0, "A"],
+                ["b", "B", -121.9, 48.0, "B"],
+                ["c", "C", -121.8, 48.0, "C"],
+            ],
+            "segments": [
+                [8.0, 0, [[-122.0, 48.0], [-121.9, 48.0]]],
+                [8.0, 0, [[-121.9, 48.0], [-121.8, 48.0]]],
+            ],
+        }
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [line],
+            "geometrySource": {"officialGeometryComparison": {"byLine": {
+                "us-test": {"displayBlockedIntervals": list(blocked)},
+            }}},
+        }
+        row = ["us-test", 0, 0, 1, 3, 0.0]
+        if spans != "omit":
+            row += [None, None, spans]
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": {"us": [row]},
+        }
+        return package, lanes
+
+    @staticmethod
+    def build_us(package, lanes, root):
+        """Write the seven region packages plus `lanes` under `root` and
+        build, returning the `us|us-test` fragments."""
+        rail = Path(root) / "rail"
+        out = Path(root) / "network"
+        rail.mkdir()
+        for region, copy in DisplayNetworkTests.region_packages(
+                package, "us").items():
+            if region != "us":
+                copy["geometrySource"] = {}
+            (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+        (rail / "display-lanes.json").write_text(json.dumps(lanes))
+        display_network.build(rail, out)
+        payload = json.loads((out / "us.json").read_text())
+        return [drawn for drawn in payload["lines"]
+                if drawn["lineKey"] == "us|us-test"]
+
+    def test_the_parts_row_owns_the_withheld_span_measure(self):
+        """Slot 8 of a `partsByRegion` row is the authority on where a
+        dashed span starts and ends, over this module's own rebuild.
+
+        It has to be. rail-network.js measures the span on the part's FINAL
+        vertices, after grooming and the station-approach rebuild have
+        changed the geometry's length; a plain row's rebuild here accumulates
+        RAW interval lengths, which are the lengths before either pass ran.
+        On the shipped packages that left eight parts' dash edges up to 647 m
+        from the web's — us|amtrak-silver-meteor part 0 the worst of them —
+        while the fallback rows, which measure those same final vertices,
+        agreed to 0.0 m. The span asserted here is deliberately nowhere near
+        the ~7.45 km interval boundary the rebuild would find.
+        """
+        package, lanes = self.plain_withheld_case([1], spans=[[6000.0, 13000.0]])
+        with tempfile.TemporaryDirectory() as root:
+            fragments = self.build_us(package, lanes, root)
+        self.assertEqual(len(fragments), 1)
+        self.assertEqual(fragments[0]["withheld"], [[6000.0, 13000.0]])
+
+    def test_the_parts_row_withheld_spans_are_merged_on_arrival(self):
+        """Two abutting slot-8 spans are one dashed run here, the same shape
+        `merged_withheld_spans` gives every span this module derives itself.
+
+        rail-network.js does not merge: it reads spans off vertex tags, and a
+        vertex that survives grooming untagged in the middle of a withheld
+        run (a restored station anchor, say) splits one run into two spans
+        sharing an exact boundary. Carrying that split through would draw the
+        same ink but disagree with the artefact's own stated shape.
+        """
+        package, lanes = self.plain_withheld_case(
+            [0, 1], spans=[[0.0, 7000.0], [7000.0, 13000.0]])
+        with tempfile.TemporaryDirectory() as root:
+            fragments = self.build_us(package, lanes, root)
+        self.assertEqual(fragments[0]["withheld"], [[0.0, 13000.0]])
+
+    def test_a_parts_row_without_the_withheld_slot_still_builds(self):
+        """A display-lanes.json older than slot 8 falls back to the rebuild
+        rather than failing or silently releasing the span.
+
+        Someone mid-migration must still get a working map, and the rebuild
+        is only wrong about the dash EDGES — it is right about which stretch
+        is unconfirmed. The span here is the second of two equal intervals,
+        so the rebuild puts it on the back half of the part.
+        """
+        package, lanes = self.plain_withheld_case([1])
+        self.assertEqual(len(lanes["partsByRegion"]["us"][0]), 6)
+        with tempfile.TemporaryDirectory() as root:
+            fragments = self.build_us(package, lanes, root)
+        spans = fragments[0]["withheld"]
+        total = fragments[0]["totalMetres"]
+        self.assertEqual(len(spans), 1)
+        self.assertAlmostEqual(spans[0][0], total / 2.0, delta=1.0)
+        self.assertAlmostEqual(spans[0][1], total, delta=1.0)
+
+    def test_a_withheld_slot_disagreeing_about_presence_fails_the_build(self):
+        """The row and the rebuild must agree on WHETHER this part draws
+        blocked track, even though the row owns the measure.
+
+        A metre span cannot be turned back into an interval index, so the
+        rebuild's interval placement is still what the coverage check reads.
+        If the two disagree about presence, one of them would draw dashed
+        exactly where the other draws solid — and since the failure that
+        matters is a stretch drawn as confidently surveyed when it is not,
+        neither answer is safe to prefer over the other.
+        """
+        # The gate blocked interval 1; the row claims nothing is withheld.
+        package, lanes = self.plain_withheld_case([1], spans=[])
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(RuntimeError) as raised:
+                self.build_us(package, lanes, root)
+        self.assertIn("dashed exactly where the other draws solid",
+                      str(raised.exception))
+
+        # And the reverse: the gate blocked nothing, the row claims a span.
+        package, lanes = self.plain_withheld_case([], spans=[[0.0, 7000.0]])
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(RuntimeError) as raised:
+                self.build_us(package, lanes, root)
+        self.assertIn("dashed exactly where the other draws solid",
+                      str(raised.exception))
+
+    def test_the_shipped_display_lanes_carries_the_withheld_span_slot(self):
+        """A `display-lanes.json` in this tree that predates slot 8 fails here.
+
+        Five tests in this file read `app/public/rail/` directly instead of
+        a fixture, and that is deliberate: whether the shipped packages and
+        the shipped lanes actually agree is not a question a synthetic
+        fixture can answer, which is why the withheld-line lane test above
+        runs the real `build()` over the real tree. The cost is that their
+        result depends on the state of a working directory, and one of
+        those dependencies is invisible: a row without slot 8 sends
+        `chains_from_parts_rows` down
+        its fallback, which still builds and still passes — so a checkout
+        whose artefact predates the builder reports OK while exercising a
+        path the committed tree never takes. `build-display-network.py`
+        prints a NOTE when that happens, but a passing test run is not read
+        for NOTEs, and the suite was green either way.
+
+        The fallback itself stays, and is deliberate — see
+        `test_a_parts_row_without_the_withheld_slot_still_builds`; someone
+        mid-migration must still get a working map. What must not be silent
+        is THIS repo's own artefact needing a rebuild, so that is asserted
+        here rather than left to whoever notices the stderr.
+        """
+        rail = SCRIPT.parents[2] / "public" / "rail"
+        lanes = json.loads((rail / "display-lanes.json").read_text())
+        rows_by_region = lanes.get("partsByRegion") or {}
+        self.assertTrue(rows_by_region, "no partsByRegion rows to check")
+        short = [
+            f"{region}|{row[0]}#{row[1]}"
+            for region, rows in rows_by_region.items()
+            for row in rows
+            if len(row) <= display_network.WITHHELD_SPANS_SLOT
+        ]
+        self.assertEqual(
+            short[:5], [],
+            f"{len(short)} shipped partsByRegion row(s) predate the "
+            "withheld-span slot, so their dashed spans would be re-derived "
+            "from pre-grooming interval lengths instead of read. Rebuild "
+            "app/public/rail/display-lanes.json with build-display-lanes.mjs")
+
     def test_a_released_interval_is_not_expected_on_an_embedded_part(self):
         """A reviewed release opens the interval, so nothing is left to
         place and the fail-closed check must not fire on it. The release
