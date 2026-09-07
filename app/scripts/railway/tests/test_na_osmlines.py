@@ -44,5 +44,17 @@ class DirectionFoldTests(unittest.TestCase):
         self.assertFalse(na_osmlines.same_railway(blue, green))
 
 
+class NearbyStationIdentityTests(unittest.TestCase):
+    def test_different_named_stops_are_not_merged_by_distance(self):
+        relation = {'members': [{'type': 'node', 'ref': i, 'role': 'stop'}
+                                for i in (1, 2)]}
+        nodes = {1: {'id': 1, 'lon': -79.97, 'lat': 39.65, 'tags': {'name': 'Towers'}},
+                 2: {'id': 2, 'lon': -79.969, 'lat': 39.65, 'tags': {'name': 'Engineering'}}}
+        self.assertEqual([s['name'] for s in na_osmlines.stations_of(relation, nodes)],
+                         ['Towers', 'Engineering'])
+        nodes[2]['tags']['name'] = 'Towers'
+        self.assertEqual(len(na_osmlines.stations_of(relation, nodes)), 1)
+
+
 if __name__ == '__main__':
     unittest.main()

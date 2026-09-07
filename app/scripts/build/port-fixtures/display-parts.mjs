@@ -727,6 +727,55 @@ export function build({ RailNetwork, railPackage }) {
     };
   });
 
+  // ── withheld spans (alignment-gate blocked intervals) ─────────────────
+  //
+  // Nothing above this point pins `part.withheld`: the main pass over
+  // `COUNTRIES` calls `displayPartsForLine` with no blocked-interval set and
+  // no bridging, because that is what a plain draw of the line looks like.
+  // The spans only exist when the alignment gate has blocked some of the
+  // line's intervals AND the caller asks to bridge rather than split on
+  // them — the per-country CONTINUOUS_STROKE regions do, the per-lane
+  // regions don't (see the byte-identical requirement on that flag in
+  // rail-network.js) — so this is a second, independent pass that supplies
+  // both, over every line the package itself records a block for.
+  const withheld = [];
+  for (const country of COUNTRIES) {
+    const byLine =
+      railPackage(country).geometrySource?.officialGeometryComparison?.byLine ?? {};
+    for (const line of railPackage(country).lines) {
+      const blockedIntervals = byLine[line.id]?.displayBlockedIntervals;
+      if (!Array.isArray(blockedIntervals) || !blockedIntervals.length) continue;
+      const parts = RailNetwork.displayPartsForLine(
+        line,
+        null,
+        [],
+        new Set(),
+        new Set(blockedIntervals),
+        true,
+      );
+      // The same call with bridging OFF, so the split-vs-bridge decision
+      // itself is pinned and not just the spans a bridged draw produces.
+      const unbridgedParts = RailNetwork.displayPartsForLine(
+        line,
+        null,
+        [],
+        new Set(),
+        new Set(blockedIntervals),
+        false,
+      );
+      withheld.push({
+        label: `${country}:${line.id}`,
+        blocked: [...blockedIntervals].sort((a, b) => a - b),
+        partLengths: parts.map((part) => part.length),
+        withheld: parts.map((part) =>
+          (part.withheld || []).map((span) => [span[0], span[1]]),
+        ),
+        unbridgedPartLengths: unbridgedParts.map((part) => part.length),
+      });
+    }
+  }
+  withheld.sort((a, b) => (a.label < b.label ? -1 : a.label > b.label ? 1 : 0));
+
   const storedVertices = countStored();
   const totalVertices = surveyed.reduce((sum, entry) => sum + entry.vertices, 0);
 
@@ -798,5 +847,25 @@ export function build({ RailNetwork, railPackage }) {
     cases: rows,
     geometries,
     synthetic,
+    withheldContract:
+      "Each span is `[fromMetres, toMetres]` in that PART's own measure " +
+      "space — the one `rows`/`follows` are already measured in — not the " +
+      "survey's blocked-interval index. The spans are read off VERTEX TAGS " +
+      "left by whichever output vertices a blocked interval contributed " +
+      "while bridging, not off the interval indexes themselves, so they " +
+      "survive the three things an interval-index scheme would lose them " +
+      "to: a retrace that re-enters the same track under a different " +
+      "interval, an excursion split that copies a blocked interval's " +
+      "vertices into a brand-new branch part, and grooming that removes an " +
+      "untagged vertex from the middle of a withheld run and splits one " +
+      "span into two adjacent ones. A port that drops `withheld` does not " +
+      "fail loudly — it draws the unconfirmed stretch as an ordinary solid " +
+      "line, indistinguishable from track the alignment gate actually " +
+      "agreed with.",
+    // Every line either package records a `displayBlockedIntervals` block
+    // for, run bridged (the renderer's own call shape) and unbridged (the
+    // per-lane call shape), so both the spans and the split-vs-bridge
+    // decision are pinned. Sorted by label for a stable diff.
+    withheld,
   };
 }

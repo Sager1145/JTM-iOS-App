@@ -442,7 +442,7 @@ def continuous_chains(
             current = {
                 "firstInterval": index, "startMetres": measure,
                 "parts": [], "polyline": [], "anchorIndexByStation": {},
-                "withheld": [],
+                "withheld": [], "withheldIntervals": set(),
             }
             current["anchorIndexByStation"][index] = 0
             current["polyline"].extend(list(point) for point in interval)
@@ -458,6 +458,7 @@ def continuous_chains(
                 round(interval_start - current["startMetres"], 1),
                 round(measure - current["startMetres"], 1),
             ])
+            current["withheldIntervals"].add(index)
     if current is not None:
         chains.append(current)
     # The web's display part index this chain corresponds to: bridging means
@@ -487,7 +488,7 @@ def chain_from_interval_range(
     chain: dict = {
         "firstInterval": first, "startMetres": 0.0,
         "parts": [], "polyline": [], "anchorIndexByStation": {},
-        "withheld": [],
+        "withheld": [], "withheldIntervals": set(),
     }
     measure = 0.0
     for index in range(first, last + 1):
@@ -505,6 +506,7 @@ def chain_from_interval_range(
         chain["endMetres"] = measure
         if index in withheld:
             chain["withheld"].append([round(interval_start, 1), round(measure, 1)])
+            chain["withheldIntervals"].add(index)
     chain["withheld"] = merged_withheld_spans(chain["withheld"])
     return chain
 
@@ -545,20 +547,84 @@ def anchor_indices_for_polyline(
     return out
 
 
-def chain_from_embedded_coordinates(coordinates: list[list[float]], stations: list[list]) -> dict:
+def withheld_spans_for_embedded(
+    polyline: list[list[float]], anchors: dict[int, int], withheld: set[int],
+) -> tuple[list[list[float]], set[int]]:
+    """The blocked intervals this embedded part carries, as metre spans.
+
+    A fallback row has no raw-interval range to accumulate against (that is
+    what made it a fallback), so the spans are read off the part's OWN
+    vertices instead: interval `i` runs station `i` to station `i + 1`, both
+    of which `anchor_indices_for_polyline` has already located in this
+    polyline, so the stretch between those two vertices IS that interval as
+    this part finally draws it.
+
+    rail-network.js reaches the same spans from the other side — it tags the
+    VERTICES a blocked interval contributed (`currentWithheldKeys`) and runs
+    `withheldSpansForPart` over them — and the two agree to well under the
+    0.1 m this rounds to on every shipped line that has both (pinned by the
+    `withheld` case in display-parts.json). Vertex tagging is the more
+    general of the two: it also survives a retrace laying an interval down
+    twice, an excursion copying it into a branch, and grooming splitting one
+    run into two. None of those occur on any shipped package today, and the
+    caller fails the build rather than guessing if one ever does — see the
+    coverage check where chains are built.
+
+    Returns the spans and the interval indices actually placed, so that
+    caller can tell "this part does not reach that interval" (ordinary, for
+    a line the web cut into several parts) from "nothing placed it at all"
+    (a silent release, which is the bug this function exists to close).
+    """
+    if not withheld:
+        return [], set()
+    measures = [0.0]
+    for first, second in zip(polyline, polyline[1:]):
+        measures.append(measures[-1] + lane_measure_metres(first, second))
+    last_vertex = len(polyline) - 1
+    closed = last_vertex > 0 and polyline[0] == polyline[last_vertex]
+    spans: list[list[float]] = []
+    placed: set[int] = set()
+    for index in sorted(withheld):
+        start_vertex, end_vertex = anchors.get(index), anchors.get(index + 1)
+        if start_vertex is None or end_vertex is None:
+            continue
+        # A closed loop's seam station is anchored to the chain's START (see
+        # `anchor_indices_for_polyline`), so the interval that ENDS on the
+        # seam would otherwise read backwards over the whole ring.
+        if closed and end_vertex == 0 and start_vertex > 0:
+            end_vertex = last_vertex
+        low, high = sorted((start_vertex, end_vertex))
+        if low == high:
+            continue
+        spans.append([round(measures[low], 1), round(measures[high], 1)])
+        placed.add(index)
+    return merged_withheld_spans(sorted(spans)), placed
+
+
+def chain_from_embedded_coordinates(
+    coordinates: list[list[float]], stations: list[list], withheld: set[int],
+) -> dict:
     """One chain built directly from a `partsByRegion` fallback row's own
     embedded vertex coordinates — the part's true, final geometry, copied
     out of rail-network.js's displayPartsForLine rather than re-derived from
     raw intervals (which a branch lead-in, a retrace's partial interval, or
     a loop's wrap seam cannot faithfully give). Measured on this module's
     own ruler, same as every other chain.
+
+    Its blocked intervals are located on those same vertices rather than
+    dropped: a fallback row used to hand back an empty `withheld`, which
+    drew a stretch the alignment gate had REFUSED to confirm as a solid
+    line — the map asserting surveyed track it does not have, and the one
+    failure mode a dashed overlay exists to prevent.
     """
     polyline = [list(point) for point in coordinates]
+    anchors = anchor_indices_for_polyline(stations, polyline)
+    spans, placed = withheld_spans_for_embedded(polyline, anchors, withheld)
     return {
         "firstInterval": None, "startMetres": 0.0, "endMetres": lane_measure_length(polyline),
         "parts": [polyline], "polyline": polyline,
-        "anchorIndexByStation": anchor_indices_for_polyline(stations, polyline),
-        "withheld": [],
+        "anchorIndexByStation": anchors,
+        "withheld": spans, "withheldIntervals": placed,
     }
 
 
@@ -584,7 +650,7 @@ def chains_from_parts_rows(
                     f"{region}|{line_id}: partsByRegion part {part_index} "
                     f"(kind={row[6] if len(row) > 6 else '?'!r}) carries no "
                     "embedded geometry to build its chain from")
-            chain = chain_from_embedded_coordinates(row[7], stations)
+            chain = chain_from_embedded_coordinates(row[7], stations, withheld)
         else:
             if last_interval < first_interval or last_interval >= len(intervals):
                 raise RuntimeError(
@@ -594,6 +660,27 @@ def chains_from_parts_rows(
             chain = chain_from_interval_range(intervals, first_interval, last_interval, withheld)
         chain["partIndex"] = part_index
         chains.append(chain)
+    # Fail closed on a released withheld interval. A blocked interval the
+    # alignment gate held back must reach the renderer as a dashed span on
+    # SOME part of this line; a part that does not carry it is ordinary (the
+    # web cut this line in several places and the interval lives on one of
+    # them), but no part carrying it at all means the flag was silently
+    # dropped and that stretch would draw as a solid, confident line over
+    # track nobody confirmed. Drawing it dashed is honest; drawing it solid
+    # is a false claim, so this raises rather than shipping the picture.
+    placed: set[int] = set()
+    for chain in chains:
+        placed |= chain.get("withheldIntervals") or set()
+    unplaced = sorted(index for index in withheld if index < len(intervals))
+    unplaced = [index for index in unplaced if index not in placed]
+    if unplaced:
+        raise RuntimeError(
+            f"{region}|{line_id}: display-blocked interval(s) {unplaced!r} are "
+            f"carried by none of this line's {len(chains)} display part(s), so "
+            "the alignment gate's verdict would be lost and the stretch would "
+            "draw solid. A part built from embedded geometry places them by "
+            "station anchor (see `withheld_spans_for_embedded`); one that "
+            "cannot means this line's parts and its station list disagree")
     return chains
 
 
@@ -982,6 +1069,18 @@ def apply_shared_corridors(
                     replacement = [list(point) for point in (
                         canonical_path if forward else reversed(canonical_path))]
                     intervals_by_line[line_id][interval_index] = replacement
+                    # Releasing the alignment gate's verdict here is
+                    # DELIBERATE, and is the only place other than the
+                    # reviewed release table where that may happen. The line
+                    # just had this interval's geometry REPLACED by the
+                    # canonical arm's, and the canonical arm cannot itself be
+                    # blocked (raised on, above), so what will be drawn over
+                    # these metres is geometry that passed the gate. The
+                    # verdict belonged to geometry that is no longer on
+                    # screen. Nothing else may drop the flag: a withheld
+                    # interval that draws dashed is honest, one that draws
+                    # solid claims surveyed track nobody confirmed — see the
+                    # fail-closed check in `chains_from_parts_rows`.
                     if (interval_index in blocked_by_line[line_id] and
                             (line_id, interval_index) not in released_intervals):
                         released_intervals.add((line_id, interval_index))

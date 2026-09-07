@@ -138,7 +138,12 @@ def stations_of(relation, nodes):
             continue
         point = [node['lon'], node['lat']]
         name = ((node.get('tags') or {}).get('name') or '').strip()
-        if out and geo.haversine(out[-1]['point'], point) <= SAME_STATION_M:
+        # Nearby named stops can be different stations: WVU's Towers and
+        # Engineering are within the old 400 m radius. Proximity alone used
+        # to erase Engineering from its five-station guideway.
+        same_name = (out and (not name or not out[-1]['name'] or
+                             name.casefold() == out[-1]['name'].casefold()))
+        if same_name and geo.haversine(out[-1]['point'], point) <= SAME_STATION_M:
             if not out[-1]['name'] and name:
                 out[-1]['name'] = name
             continue

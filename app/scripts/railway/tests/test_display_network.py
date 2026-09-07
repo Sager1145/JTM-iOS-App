@@ -986,6 +986,177 @@ class DisplayNetworkTests(unittest.TestCase):
                 fragments[0]["withheld"][0][1], fragments[0]["totalMetres"],
                 places=1)
 
+    @staticmethod
+    def embedded_withheld_case(blocked):
+        """A four-station line whose single display part is a fallback
+        (embedded-geometry) `partsByRegion` row, with `blocked` withheld.
+
+        The row shape is the one build-display-lanes.mjs emits when a part
+        cannot be described as a plain run of whole raw intervals: -1/-1 for
+        the interval range, then the part's own final vertices in slot 7.
+        """
+        line = {
+            "id": "us-test", "name": "Test", "operator": "Test Rail",
+            "kind": "regional", "rank": 0, "color": "#123456",
+            "stations": [
+                ["a", "A", -122.0, 48.0, "A"],
+                ["b", "B", -121.9, 48.0, "B"],
+                ["c", "C", -121.8, 48.0, "C"],
+                ["d", "D", -121.7, 48.0, "D"],
+            ],
+            "segments": [
+                [8.0, 0, [[-122.0, 48.0], [-121.9, 48.0]]],
+                [8.0, 0, [[-121.9, 48.0], [-121.8, 48.0]]],
+                [8.0, 0, [[-121.8, 48.0], [-121.7, 48.0]]],
+            ],
+        }
+        coordinates = [
+            [-122.0, 48.0], [-121.9, 48.0], [-121.8, 48.0], [-121.7, 48.0],
+        ]
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [line],
+            "geometrySource": {"officialGeometryComparison": {"byLine": {
+                "us-test": {"displayBlockedIntervals": list(blocked)},
+            }}},
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": {"us": [[
+                "us-test", 0, -1, -1, len(coordinates), 0.0,
+                "complex", coordinates,
+            ]]},
+        }
+        return package, lanes
+
+    def test_embedded_part_keeps_its_withheld_spans(self):
+        """A blocked interval on an embedded-geometry part must still reach
+        the renderer as a dashed span.
+
+        This is the regression. A fallback `partsByRegion` row has no raw
+        interval range to accumulate withheld spans against, and
+        `chain_from_embedded_coordinates` used to answer that by handing
+        back an empty `withheld` — so the alignment gate's verdict was
+        dropped and the stretch drew as a confident SOLID line over track
+        the gate had refused to confirm. On the shipped packages that
+        silently released 1,808 km across ten lines, amtrak-acela among
+        them, whose every display part is a fallback row.
+
+        The spans are located on the part's own vertices instead, through
+        the station anchors `anchor_indices_for_polyline` already finds
+        there, which is the same answer rail-network.js reaches from the
+        other side by tagging the vertices a blocked interval contributed.
+        """
+        package, lanes = self.embedded_withheld_case([1])
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                if region != "us":
+                    copy["geometrySource"] = {}
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            display_network.build(rail, out)
+
+            payload = json.loads((out / "us.json").read_text())
+            fragments = [drawn for drawn in payload["lines"]
+                         if drawn["lineKey"] == "us|us-test"]
+            self.assertEqual(len(fragments), 1)
+            spans = fragments[0]["withheld"]
+            self.assertEqual(len(spans), 1)
+            # Station B to station C: the middle third of a part whose three
+            # intervals are the same length, so the span runs from a third
+            # of the way along to two thirds.
+            total = fragments[0]["totalMetres"]
+            self.assertAlmostEqual(spans[0][0], total / 3.0, delta=1.0)
+            self.assertAlmostEqual(spans[0][1], 2.0 * total / 3.0, delta=1.0)
+
+    def test_embedded_part_merges_touching_withheld_spans(self):
+        """Two adjacent blocked intervals on an embedded part are one dashed
+        run, not two abutting ones — the same shape `merged_withheld_spans`
+        gives the other two chain builders, and the same shape
+        rail-network.js's own vertex tagging produces for the web."""
+        package, lanes = self.embedded_withheld_case([0, 1])
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                if region != "us":
+                    copy["geometrySource"] = {}
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            display_network.build(rail, out)
+
+            payload = json.loads((out / "us.json").read_text())
+            fragments = [drawn for drawn in payload["lines"]
+                         if drawn["lineKey"] == "us|us-test"]
+            spans = fragments[0]["withheld"]
+            self.assertEqual(len(spans), 1)
+            self.assertAlmostEqual(spans[0][0], 0.0, places=1)
+            self.assertAlmostEqual(
+                spans[0][1], 2.0 * fragments[0]["totalMetres"] / 3.0, delta=1.0)
+
+    def test_an_unplaceable_withheld_interval_fails_the_build(self):
+        """A blocked interval no display part can carry fails the build.
+
+        Drawing a withheld stretch dashed is honest; drawing it solid is a
+        false claim about surveyed track, so a verdict that cannot be
+        placed must stop the build rather than quietly vanish — the failure
+        this whole path exists to make impossible. Here the part's embedded
+        geometry does not pass through station D at all, so the last
+        interval has no anchor to hang its span on.
+        """
+        package, lanes = self.embedded_withheld_case([2])
+        lanes["partsByRegion"]["us"][0][7] = [
+            [-122.0, 48.0], [-121.9, 48.0], [-121.8, 48.0],
+        ]
+        lanes["partsByRegion"]["us"][0][4] = 3
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                if region != "us":
+                    copy["geometrySource"] = {}
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            with self.assertRaises(RuntimeError) as raised:
+                display_network.build(rail, out)
+        self.assertIn("draw solid", str(raised.exception))
+
+    def test_a_released_interval_is_not_expected_on_an_embedded_part(self):
+        """A reviewed release opens the interval, so nothing is left to
+        place and the fail-closed check must not fire on it. The release
+        table is the one legitimate way a blocked interval stops being
+        drawn dashed (a reviewed shared corridor replacing the geometry is
+        the other); the bug this file guards against is the flag going away
+        without one."""
+        package, lanes = self.embedded_withheld_case([1])
+        lanes["releasedIntervalsByRegion"] = {"us": [["us-test", 1]]}
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                if region != "us":
+                    copy["geometrySource"] = {}
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            manifest = display_network.build(rail, out)
+
+            self.assertNotIn(
+                "withheldDisplayIntervals", manifest["lines"]["us|us-test"])
+            payload = json.loads((out / "us.json").read_text())
+            fragments = [drawn for drawn in payload["lines"]
+                         if drawn["lineKey"] == "us|us-test"]
+            self.assertEqual(fragments[0]["withheld"], [])
+
     def test_display_derivative_preserves_shared_station_anchors_and_geometry(self):
         a = self.line("a", "commuter", ("shared", -71.0, 42.0), [
             [-71.0, 42.0], [-70.995, 42.0], [-70.990, 42.0], [-70.985, 42.0],
