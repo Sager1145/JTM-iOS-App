@@ -254,7 +254,10 @@ public enum Grooming {
         _ point: Coordinate, latitude: Double
     ) -> (x: Double, y: Double) {
         let radians = (latitude * .pi) / 180
-        return (point.lon * metresPerDegree * cos(radians), point.lat * metresPerDegree)
+        return (
+            point.lon * metresPerDegree * JSMath.cos(radians),
+            point.lat * metresPerDegree
+        )
     }
 
     /// **Not** ``Geometry/distanceMeters(_:_:)``, despite the name.

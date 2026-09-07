@@ -96,6 +96,44 @@ def finite_coordinate(value: Any) -> bool:
     )
 
 
+def orient_path_to_anchors(
+    path: list[list[float]], start: list[float] | None, end: list[float] | None
+) -> list[list[float]]:
+    """Return an interval in station order without changing its geometry.
+
+    `compact-v1` permits a self-contained interval to be digitised in either
+    direction.  Whole-line checks must orient each interval before assigning
+    along-line distance; otherwise two adjacent, oppositely digitised intervals
+    manufacture an artificial out-and-back between them.
+    """
+    if not start or not end or len(path) < 2:
+        return path
+    forward = max(haversine(path[0], start), haversine(path[-1], end))
+    reverse = max(haversine(path[-1], start), haversine(path[0], end))
+    return list(reversed(path)) if reverse < forward else path
+
+
+def point_to_segment_distance_m(point: list[float], a: list[float], b: list[float]) -> float:
+    """Local equirectangular point-to-segment distance in metres."""
+    latitude = math.radians(point[1])
+    x_scale = 111_320.0 * max(0.2, math.cos(latitude))
+    y_scale = 110_540.0
+    ax, ay = (a[0] - point[0]) * x_scale, (a[1] - point[1]) * y_scale
+    bx, by = (b[0] - point[0]) * x_scale, (b[1] - point[1]) * y_scale
+    dx, dy = bx - ax, by - ay
+    denominator = dx * dx + dy * dy
+    if denominator <= 0:
+        return math.hypot(ax, ay)
+    ratio = max(0.0, min(1.0, -(ax * dx + ay * dy) / denominator))
+    return math.hypot(ax + ratio * dx, ay + ratio * dy)
+
+
+def point_to_polyline_distance_m(point: list[float], path: list[list[float]]) -> float:
+    if len(path) < 2:
+        return math.inf
+    return min(point_to_segment_distance_m(point, a, b) for a, b in zip(path, path[1:]))
+
+
 def find_repo(start: Path) -> Path:
     """The packages are the one thing every JTM checkout has.
 
@@ -186,6 +224,10 @@ class Audit:
             "detours": tally["detours"],
             "selfOverlap": tally["selfOverlap"],
             "lengthMismatches": tally["lengthMismatch"],
+            "geometrySources": dict(sorted(Counter(
+                str(line.get("geometrySource", "<unspecified>"))
+                for line in lines if isinstance(line, dict)
+            ).items())),
         }
 
         self.require_file(rail_dir / f"{country}-2025.sources.md", country, "MISSING_SOURCE_NOTES")
@@ -246,16 +288,16 @@ class Audit:
                     f"station id {station_id} occurs {count} times", country=country, line=line_id,
                 )
 
-        chain = self.audit_geometry(country, line_id, anchors, segments, tally)
-        self.check_self_overlap(country, line_id, chain, tally)
+        paths = self.audit_geometry(country, line_id, anchors, segments, tally)
+        self.check_self_overlap(country, line_id, paths, tally)
         self.audit_extra_segments(country, line_id, line, len(stations), tally)
 
     def audit_geometry(
         self, country: str, line_id: str, anchors: list[list[float] | None], segments: list[Any], tally: Counter
-    ) -> list[list[float]]:
+    ) -> list[list[list[float]]]:
         previous_end: list[float] | None = None
         centroids: list[tuple[list[float], int, str]] = []
-        chain: list[list[float]] = []
+        paths: list[list[list[float]]] = []
         line_total = sum(
             row[0] for row in segments
             if isinstance(row, list) and row and isinstance(row[0], (int, float))
@@ -310,7 +352,10 @@ class Audit:
             walked = sum(haversine(a, b) for a, b in zip(path, path[1:]))
             direct = haversine(path[0], path[-1])
             centroids.append((path[len(path) // 2], ordinal, line_id))
-            chain.extend(path[1:] if chain and chain[-1] == path[0] else path)
+            start = anchors[ordinal] if ordinal < len(anchors) else None
+            end = anchors[(ordinal + 1) % len(anchors)] if anchors else None
+            path = orient_path_to_anchors(path, start, end)
+            paths.append(path)
             self.check_retrace(country, line_id, ordinal, path, walked, line_total, anchors)
 
             self.check_anchor(country, line_id, ordinal, path, anchors)
@@ -321,7 +366,7 @@ class Audit:
             self.check_reversal(country, line_id, ordinal, path, tally)
 
         self.check_outliers(country, line_id, centroids)
-        return chain
+        return paths
 
     def check_anchor(
         self, country: str, line_id: str, ordinal: int, path: list[list[float]], anchors: list[list[float] | None]
@@ -431,11 +476,14 @@ class Audit:
         interval does not pass by nearly every station on its own line.
         """
         stations = [point for point in anchors if point]
-        if len(stations) < 5 or len(path) < 20 or line_total <= 0:
+        if len(stations) < 5 or len(path) < 2 or line_total <= 0:
             return
         if walked < line_total * RETRACE_LINE_SHARE:
             return
-        near = sum(1 for station in stations if min(haversine(v, station) for v in path) < RETRACE_NEAR_M)
+        near = sum(
+            1 for station in stations
+            if point_to_polyline_distance_m(station, path) < RETRACE_NEAR_M
+        )
         if near >= len(stations) * RETRACE_STATION_SHARE:
             self.issue(
                 "ERROR", "INTERVAL_RETRACES_LINE",
@@ -444,7 +492,9 @@ class Audit:
                 country=country, line=line_id,
             )
 
-    def check_self_overlap(self, country: str, line_id: str, chain: list[list[float]], tally: Counter) -> None:
+    def check_self_overlap(
+        self, country: str, line_id: str, paths: list[list[list[float]]], tally: Counter
+    ) -> None:
         """How much of a line is drawn on top of itself.
 
         Alaska's Aurora Winter lay on itself for 72.8% of its length after the
@@ -455,35 +505,44 @@ class Audit:
         antiparallel, and they must be far apart ALONG the line. A horseshoe
         curve fails both; a line drawn twice fails neither.
         """
-        if len(chain) < 3:
+        if sum(len(path) for path in paths) < 3:
             return
-        samples: list[tuple[list[float], float, float]] = []
+        samples: list[tuple[list[float], float, float, float]] = []
         along = 0.0
-        for a, b in zip(chain, chain[1:]):
-            span = haversine(a, b)
-            if span <= 0:
-                continue
-            bearing = math.degrees(
-                math.atan2((b[0] - a[0]) * math.cos(math.radians((a[1] + b[1]) / 2)), b[1] - a[1])
-            ) % 180
-            steps = max(1, int(span // OVERLAP_STEP_M))
-            for step in range(steps):
-                ratio = step / steps
-                samples.append(
-                    ([a[0] + (b[0] - a[0]) * ratio, a[1] + (b[1] - a[1]) * ratio], along + span * ratio, bearing)
-                )
-            along += span
+        for path in paths:
+            for a, b in zip(path, path[1:]):
+                span = haversine(a, b)
+                if span <= 0:
+                    continue
+                bearing = math.degrees(
+                    math.atan2(
+                        (b[0] - a[0]) * math.cos(math.radians((a[1] + b[1]) / 2)),
+                        b[1] - a[1],
+                    )
+                ) % 180
+                steps = max(1, math.ceil(span / OVERLAP_STEP_M))
+                weight = span / steps
+                for step in range(steps):
+                    ratio = step / steps
+                    samples.append((
+                        [a[0] + (b[0] - a[0]) * ratio, a[1] + (b[1] - a[1]) * ratio],
+                        along + span * ratio,
+                        bearing,
+                        weight,
+                    ))
+                along += span
         if len(samples) < 20:
             return
 
-        cell_lon = OVERLAP_CELL_M / (111_320 * max(0.2, math.cos(math.radians(samples[0][0][1]))))
+        minimum_cosine = min(max(0.2, math.cos(math.radians(sample[0][1]))) for sample in samples)
+        cell_lon = OVERLAP_CELL_M / (111_320 * minimum_cosine)
         cell_lat = OVERLAP_CELL_M / 110_540
         grid: dict[tuple[int, int], list[int]] = {}
-        for index, (point, _, _) in enumerate(samples):
+        for index, (point, _, _, _) in enumerate(samples):
             grid.setdefault((int(point[0] / cell_lon), int(point[1] / cell_lat)), []).append(index)
 
-        overlapping = 0
-        for index, (point, distance, bearing) in enumerate(samples):
+        overlapped_m = 0.0
+        for index, (point, distance, bearing, weight) in enumerate(samples):
             cx, cy = int(point[0] / cell_lon), int(point[1] / cell_lat)
             if any(
                 other != index
@@ -496,10 +555,9 @@ class Audit:
                 for dy in (-1, 0, 1)
                 for other in grid.get((cx + dx, cy + dy), ())
             ):
-                overlapping += 1
+                overlapped_m += weight
 
-        share = overlapping / len(samples)
-        overlapped_m = overlapping * OVERLAP_STEP_M
+        share = overlapped_m / along if along else 0.0
         # Share alone dilutes a local defect on a long line: a 4 km out-and-back
         # on the 宜蘭線 is 4% and would pass. Absolute length catches that half.
         if share >= OVERLAP_WARN or overlapped_m >= OVERLAP_WARN_M:

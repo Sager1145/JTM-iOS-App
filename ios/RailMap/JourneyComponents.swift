@@ -424,7 +424,25 @@ struct JourneySummaryRow: View {
             if dynamicTypeSize.isAccessibilitySize {
                 accessibilityLayout
             } else {
-                standardLayout
+                // A journey row is used in the full-width phone list, the
+                // narrow side panel, the overlap chooser and Passport cards.
+                // Size class cannot distinguish those containers: an iPad
+                // side panel inherits the window's regular size class even
+                // when the row itself has barely 300 points.
+                //
+                // Keep the denser mark-plus-copy layout where it has the
+                // measured room it was designed for. In a narrower host, use
+                // the same honest reflow as Dynamic Type: the mark shares only
+                // the metadata header, while endpoints, times, route and state
+                // receive the card's full width. Before this fallback existed,
+                // every row in an iPad portrait All Journeys panel clipped its
+                // service name because the fixed date and logo left only a
+                // few characters for it.
+                ViewThatFits(in: .horizontal) {
+                    standardLayout
+                        .frame(minWidth: 320)
+                    accessibilityLayout
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

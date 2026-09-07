@@ -22,13 +22,16 @@ JTM keeps your railway journeys on a live map and turns the same records into a 
 
 You need an iPhone or iPad running iOS 17 or later. Apple Maps needs network access to load its basemap, but your saved journeys, bundled railway data, JSON import and export, route calculation, and statistics are local to the device.
 
-On first launch, the app begins loading all five bundled railway networks:
+On first launch, the app indexes all seven bundled railway networks. Detailed
+map geometry is then loaded on demand for the regions you view:
 
 - Japan
 - Taiwan
 - Hong Kong
 - Macao
 - Korea
+- Canada
+- United States
 
 You can browse existing journey records while a network loads. Route drawing and station matching for a region become available after that region's package is ready.
 

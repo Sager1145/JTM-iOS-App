@@ -279,6 +279,17 @@ final class RailMapController {
         return true
     }
 
+#if DEBUG
+    /// Deterministic camera ownership for screenshot/UI-test harnesses.
+    /// Marking the opening move consumed prevents the normal launch framing
+    /// task from overwriting the requested audit location a moment later.
+    func frameForUITest(_ region: MKCoordinateRegion) {
+        guard let mapView else { return }
+        hasOpened = true
+        mapView.setRegion(region, animated: false)
+    }
+#endif
+
     /// Whether the map has already opened on its country.
     @ObservationIgnored private(set) var hasOpened = false
 

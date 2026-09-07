@@ -1,0 +1,166 @@
+{
+  "format": "jtm-na-render-groups-v1",
+  "reviewedAt": "2026-09-01",
+  "scope": [
+    "us",
+    "ca"
+  ],
+  "policy": {
+    "profile": "route-preserving",
+    "renderGroupId": "operator + operator-published route colour",
+    "renderKey": "region + renderGroupId",
+    "why": [
+      "A render group is the unit two clients merge onto one lane. Lines that share one keep the centreline; lines that do not are held apart in parallel screen lanes.",
+      "The grouping was previously operator + kind + colour. `kind` is a mode attribute, not an identity: the same railway carries `lightrail` on its reserved track and `streetcar` where it runs in the street, so seven railways were split from their own branch parts and drawn as two parallel strokes of one colour.",
+      "The operator's own published route colour is the branding grouping every audited North American network uses, so it stays the default. It is not a licence to merge by colour: where two different railways happen to publish the same hex, `byLineId` below separates them by identity."
+    ],
+    "divergenceFromAppleMaps": [
+      "Apple Maps collapses LIRR, Metro-North, Metrolink and PATH to one operator-level stroke. This project keeps each officially coloured route visible, which is the route-preserving profile the same rule set sanctions for DART, BART, CTA, WMATA and PRT. The divergence is deliberate and recorded here rather than in renderer code."
+    ]
+  },
+  "evidence": [
+    {
+      "type": "cartographic-audit",
+      "name": "Apple Maps transit rendering audit — 36 captures, 132 lines, 2026-09-01",
+      "detail": "Per-line merged / parallel / split / independent findings for MTA, LIRR, Metro-North, PATH, NJ Transit, SEPTA, WMATA, DART, CTA, Metra, LA Metro, Metrolink, BART, Muni, PRT and MBTA, cross-checked against official network topology.",
+      "documents": [
+        "all_visible_transit_lines_line_by_line_audit.md",
+        "all_visible_transit_lines_line_by_line_audit.csv",
+        "rail_transit_shared_corridor_parallel_rendering_rules.md"
+      ]
+    },
+    {
+      "type": "operator",
+      "name": "MBTA Green Line B/C/D/E share the Kenmore–Copley–Government Center central subway",
+      "url": "https://www.mbta.com/schedules/Green/line"
+    },
+    {
+      "type": "operator",
+      "name": "METRORAIL Red/Green/Purple run on street track downtown and on reserved track outside it",
+      "url": "https://www.ridemetro.org/rider-tools/system-maps"
+    }
+  ],
+  "byLineId": {
+    "king-county-metro-first-hill-streetcar": "seattle-first-hill-streetcar",
+    "king-county-metro-south-lake-union-streetcar": "seattle-south-lake-union-streetcar",
+    "king-county-metro-south-lake-union-streetcar-b1": "seattle-south-lake-union-streetcar",
+    "maryland-transit-administrat-brunswick-washington": "marc-brunswick",
+    "maryland-transit-administrat-brunswick-washington-b1": "marc-brunswick",
+    "maryland-transit-administrat-brunswick-washington-b2": "marc-brunswick",
+    "maryland-transit-administrat-brunswick-washington-b3": "marc-brunswick",
+    "maryland-transit-administrat-camden-washington": "marc-camden",
+    "maryland-transit-administrat-penn-washington": "marc-penn",
+    "mbta-b": "mbta-green",
+    "mbta-c": "mbta-green",
+    "mbta-d": "mbta-green",
+    "mbta-e": "mbta-green",
+    "mbta-e-b1": "mbta-green",
+    "metro-transit-intercity-tran-s-line": "sounder-s-line",
+    "metropolitan-transit-authori-42-st-shuttle": "nyct-shuttles",
+    "metropolitan-transit-authori-franklin-avenue-shuttle": "nyct-shuttles",
+    "metropolitan-transit-authori-l": "nyct-l",
+    "metropolitan-transit-authori-rockaway-park-shuttle": "nyct-shuttles",
+    "new-jersey-transit-nj-transi-nec": "njt-northeast-corridor",
+    "new-jersey-transit-nj-transi-prin": "njt-princeton-shuttle",
+    "san-francisco-municipal-tran-ca": "sfmta-california-cable-car",
+    "san-francisco-municipal-tran-f": "sfmta-f-market-wharves",
+    "san-francisco-municipal-tran-f-b1": "sfmta-f-market-wharves",
+    "san-francisco-municipal-tran-f-b2": "sfmta-f-market-wharves",
+    "sound-transit-n-line": "sounder-n-line"
+  },
+  "byLineIdReasons": [
+    {
+      "renderGroupIds": [
+        "mbta-green"
+      ],
+      "lineIds": [
+        "mbta-b",
+        "mbta-c",
+        "mbta-d",
+        "mbta-e",
+        "mbta-e-b1"
+      ],
+      "why": "The Green Line's four branches are one stroke from Kenmore through Copley to Government Center; the audit reads B/C/D/E as a single render key there and station badges, not parallel lanes, as what tells the branches apart. Named here rather than left to the shared hex so the merge is a reviewed decision.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "nyct-l",
+        "nyct-shuttles"
+      ],
+      "lineIds": [
+        "metropolitan-transit-authori-l",
+        "metropolitan-transit-authori-42-st-shuttle",
+        "metropolitan-transit-authori-franklin-avenue-shuttle",
+        "metropolitan-transit-authori-rockaway-park-shuttle"
+      ],
+      "why": "The audit reads the 14 St–Canarsie Local and the three shuttles as two different render keys. MTA publishes #447ba7 for both, so the colour default would have merged four unrelated railways into one lane.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "seattle-first-hill-streetcar",
+        "seattle-south-lake-union-streetcar"
+      ],
+      "lineIds": [
+        "king-county-metro-first-hill-streetcar",
+        "king-county-metro-south-lake-union-streetcar",
+        "king-county-metro-south-lake-union-streetcar-b1"
+      ],
+      "why": "Two physically separate Seattle streetcar lines that share one published hex. They meet nowhere, and a shared render key would silently merge them if the connector between them is ever built.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "njt-northeast-corridor",
+        "njt-princeton-shuttle"
+      ],
+      "lineIds": [
+        "new-jersey-transit-nj-transi-nec",
+        "new-jersey-transit-nj-transi-prin"
+      ],
+      "why": "The Princeton Shuttle is a separate branch off the Northeast Corridor at Princeton Junction, not part of the NEC stroke. NJ Transit publishes the corridor's red for both.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "marc-brunswick",
+        "marc-camden",
+        "marc-penn"
+      ],
+      "lineIds": [
+        "maryland-transit-administrat-brunswick-washington",
+        "maryland-transit-administrat-camden-washington",
+        "maryland-transit-administrat-penn-washington"
+      ],
+      "why": "Three separately named MARC lines on three different alignments that all publish MDOT MTA's #eb7600. They converge on the Washington Union Station approach, which is exactly where a false merge hides two of them under the third.",
+      "confidence": "A"
+    },
+    {
+      "renderGroupIds": [
+        "sounder-n-line",
+        "sounder-s-line"
+      ],
+      "lineIds": [
+        "sound-transit-n-line",
+        "metro-transit-intercity-tran-s-line"
+      ],
+      "why": "Sounder North and Sounder South are two corridors that share only the King Street Station throat. One published Sounder hex is branding, not one railway.",
+      "confidence": "B"
+    },
+    {
+      "renderGroupIds": [
+        "sfmta-california-cable-car",
+        "sfmta-f-market-wharves"
+      ],
+      "lineIds": [
+        "san-francisco-municipal-tran-ca",
+        "san-francisco-municipal-tran-f",
+        "san-francisco-municipal-tran-f-b1",
+        "san-francisco-municipal-tran-f-b2"
+      ],
+      "why": "SFMTA publishes one heritage hex for the California Street cable car and the F Market & Wharves streetcar. They are two railways that meet at the foot of Market Street, which is exactly where one lane would hide one of them.",
+      "confidence": "A"
+    }
+  ]
+}

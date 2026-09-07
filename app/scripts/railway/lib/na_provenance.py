@@ -39,10 +39,13 @@ SOURCES = {
                 '7d68bb52-3285-45d7-a248-7748cb47f6ce/download/'
                 'ttc-subway-shapefile-wgs84.zip'),
     },
-    'sound-transit': {
-        'publisher': 'Sound Transit',
-        'url': ('https://www.soundtransit.org/sites/default/files/2024-10/'
-                'STPublicData.zip'),
+    'ottawa-trillium': {
+        'publisher': 'City of Ottawa / Rail Implementation Office',
+        'url': ('https://maps.ottawa.ca/arcgis/rest/services/'
+                'Rail_Implementation_Office/MapServer/33/query?'
+                "where=REFNAME%3D%27Trillium%27%20AND%20LAYER%20LIKE%20"
+                "%27T-ALIGN%25%27&outFields=OBJECTID%2CLAYER%2CREFNAME&"
+                'returnGeometry=true&outSR=4326&f=geojson'),
     },
     'vta': {
         'publisher': 'Santa Clara Valley Transportation Authority',
@@ -147,6 +150,20 @@ SOURCES = {
                 'query?where=1%3D1&outFields=*&outSR=4326&'
                 'returnGeometry=true&f=geojson'),
     },
+    'sunmetro-streetcar': {
+        'publisher': 'City of El Paso / Sun Metro',
+        'url': ('https://gis.elpasotexas.gov/arcgis/rest/services/SunMetro/'
+                'StreetcarRoute/FeatureServer/0/query?where=1%3D1&'
+                'outFields=*&outSR=4326&returnGeometry=true&f=geojson'),
+    },
+    'nctcog-existing-rail-lines': {
+        'publisher': ('North Central Texas Council of Governments (NCTCOG), '
+                      'Transportation Department'),
+        'url': ('https://geospatial.nctcog.org/map/rest/services/'
+                'Transportation/DFWMaps_Transit/MapServer/2/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
     'chicago-metra-kml': {
         'publisher': 'City of Chicago',
         'url': ('https://data.cityofchicago.org/download/'
@@ -231,6 +248,19 @@ SOURCES = {
         'url': ('https://ws.gisetl.lrc.gov.on.ca/fmedatadownload/Packages/'
                 'ORWNTRK.zip'),
     },
+    'virginia-drpt-vre': {
+        'publisher': ('Virginia Department of Rail and Public '
+                      'Transportation'),
+        'url': ('https://services9.arcgis.com/9oDT7ErWemWCzvY7/arcgis/rest/'
+                'services/VRE_Lines/FeatureServer/7/query?where=1%3D1&'
+                'outFields=*&returnGeometry=true&outSR=4326&f=geojson'),
+    },
+    'caltrans-crn': {
+        'publisher': 'California Department of Transportation (Caltrans)',
+        'url': ('https://hub.arcgis.com/api/v3/datasets/'
+                '2ac93358aca84aa7b547b29a42d5ff52_0/downloads/data?'
+                'format=geojson&spatialRefId=4326&where=1%3D1'),
+    },
     'cats-blue-line': {
         'publisher': 'Charlotte Area Transit System / City of Charlotte',
         'url': ('https://services.arcgis.com/9Nl857LBlQVyzq54/arcgis/rest/'
@@ -244,6 +274,109 @@ SOURCES = {
         'url': ('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/'
                 'Transportation_Rail_Bus_WebMercator/MapServer/113/query?'
                 'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'dcgis-metro-lines-regional': {
+        'publisher': ('District of Columbia Office of the Chief Technology '
+                      'Officer (DC GIS) / DCGIS-DC GIS; source credit '
+                      'Washington Metropolitan Area Transit Authority'),
+        'url': ('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/'
+                'Transportation_Rail_Bus_WebMercator/MapServer/58/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'massgis-mbta-commuter-rail-lines': {
+        'publisher': ('MassGIS (Bureau of Geographic Information), '
+                      'Commonwealth of Massachusetts EOTSS; layer credit '
+                      "'MassGIS, CTPS, MBTA'"),
+        'url': ('https://arcgisserver.digital.mass.gov/arcgisserver/rest/'
+                'services/AGOL/MBTA_Commuter_Rail/FeatureServer/3/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'prt-fixed-guideway-corridors': {
+        'publisher': 'Pittsburgh Regional Transit',
+        'url': ('https://services3.arcgis.com/544gNI3xxlFIWuTc/arcgis/rest/'
+                'services/PRT_Fixed_Guideway_Corridors/FeatureServer/0/'
+                'query?where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'quebec-mtq-reseau-ferroviaire': {
+        'publisher': ('Ministère des Transports et de la Mobilité durable '
+                      'du Québec'),
+        'url': ('https://ws.mapserver.transports.gouv.qc.ca/swtq?'
+                'service=wfs&version=2.0.0&request=getfeature&'
+                'typename=ms:reseau_chfer_qc&outfile=ReseauFerroviaire&'
+                'srsname=EPSG:4326&outputformat=geojson'),
+    },
+    'nrcan-nrwn-on': {
+        'publisher': ('Natural Resources Canada - GeoBase National Railway '
+                      'Network'),
+        'url': ('https://ftp.maps.canada.ca/pub/nrcan_rncan/vector/'
+                'geobase_nrwn_rfn/on/nrwn_rfn_on_shp_en.zip'),
+    },
+    'toronto-ttc-track': {
+        'publisher': 'City of Toronto - Geospatial Competency Centre',
+        'url': ('https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/'
+                'services/COTGEO_TTC_TRACK/FeatureServer/0/query?'
+                'where=1%3D1&outFields=*&outSR=4326&returnGeometry=true&'
+                'f=geojson&resultRecordCount=10000'),
+    },
+    'toronto-ttc-route-view': {
+        'publisher': 'City of Toronto - Geospatial Competency Centre',
+        'url': ('https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/'
+                'services/COT_Geospatial_TTC_Streetcar_Route_view/'
+                'FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson&resultRecordCount=2000'),
+    },
+    'detroit-people-mover-route': {
+        'publisher': 'City of Detroit, Open Data Portal',
+        'url': ('https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/'
+                'services/Detroit_People_Mover_Route/FeatureServer/0/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'detroit-qline-route': {
+        'publisher': 'City of Detroit, Open Data Portal',
+        'url': ('https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/'
+                'services/QLine_Route/FeatureServer/0/query?where=1%3D1&'
+                'outFields=*&outSR=4326&returnGeometry=true&f=geojson'),
+    },
+    'cagis-cincinnati-streetcar': {
+        'publisher': ('CAGIS - Cincinnati Area Geographic Information System '
+                      '(City of Cincinnati / Hamilton County)'),
+        'url': ('https://services.arcgis.com/JyZag7oO4NteHGiq/arcgis/rest/'
+                'services/Open_Data_Feature_Collection/FeatureServer/13/'
+                'query?where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'milwaukee-dpw-streetcar': {
+        'publisher': 'City of Milwaukee, Department of Public Works',
+        'url': ('https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/'
+                'DPW/DPW_streetcar/MapServer/1/query?where=1%3D1&'
+                'outFields=*&outSR=4326&returnGeometry=true&f=geojson'),
+    },
+    'cats-gold-line': {
+        'publisher': 'Charlotte Area Transit System / City of Charlotte',
+        'url': ('https://services.arcgis.com/9Nl857LBlQVyzq54/arcgis/rest/'
+                'services/LYNX_Gold_Line_Route/FeatureServer/0/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'rta-metra-rail-lines': {
+        'publisher': ('Regional Transportation Authority of Northeastern '
+                      'Illinois, Mapping and GIS Portal'),
+        'url': ('https://services5.arcgis.com/NIHJ1cAxHq972sDH/ArcGIS/rest/'
+                'services/Transit_Services_FS/FeatureServer/5/query?'
+                'where=1%3D1&outFields=*&outSR=4326&'
+                'returnGeometry=true&f=geojson'),
+    },
+    'houston-metrorail-lines': {
+        'publisher': ('Metropolitan Transit Authority of Harris County '
+                      '(METRO)'),
+        'url': ('https://services5.arcgis.com/p8QKnlioaN3sruqA/arcgis/rest/'
+                'services/METRORail_LRT_Lines___Stations_WFL1/FeatureServer/'
+                '5/query?where=1%3D1&outFields=*&outSR=4326&'
                 'returnGeometry=true&f=geojson'),
     },
     'fdot-brightline': {
@@ -262,6 +395,14 @@ SOURCES = {
                 'where=1%3D1&outFields=*&outSR=4326&'
                 'returnGeometry=true&f=geojson'),
     },
+    'oregonmetro-rlis-rail-transit': {
+        'publisher': 'Oregon Metro Data Resource Center (RLIS)',
+        'url': ('https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/'
+                'services/Light_rail/FeatureServer/0/query?where=1%3D1&'
+                'outFields=*&returnGeometry=true&outSR=4326&f=geojson'),
+        'licenseUrl': ('https://rlisdiscovery.oregonmetro.gov/pages/'
+                       'open-database-license'),
+    },
 }
 
 KEY_SOURCE_PREFIXES = {
@@ -269,8 +410,6 @@ KEY_SOURCE_PREFIXES = {
     'cta-': 'cta',
     'norta-': 'norta',
     'ttc-subway-': 'ttc',
-    'sound-link-': 'sound-transit',
-    'sounder-': 'sound-transit',
     'vta-': 'vta',
     'amtrak-ntad-': 'amtrak-ntad',
     'mnr-': 'mta-rail-branches',
@@ -279,6 +418,8 @@ KEY_SOURCE_PREFIXES = {
     'njt-rail-': 'njt-rail',
     'njt-light-': 'njt-light',
     'path-njt-': 'njt-path',
+    'prt-t-': 'prt-fixed-guideway-corridors',
+    'prt-incline-': 'prt-fixed-guideway-corridors',
 }
 
 KEY_SOURCE_EXACT = {
@@ -294,6 +435,15 @@ KEY_SOURCE_EXACT = {
     **{f'orwn-go-{route}': 'ontario-orwn'
        for route in ('br', 'ki', 'le', 'lw', 'mi', 'rh', 'st')},
     'orwn-up-up': 'ontario-orwn',
+    **{f'orwn-via-{route}': 'ontario-orwn'
+       for route in ('119-93', '119-341', '119-618')},
+    'ottawa-trillium-2': 'ottawa-trillium',
+    'ottawa-trillium-4': 'ottawa-trillium',
+    'vre-fredericksburg': 'virginia-drpt-vre',
+    'vre-manassas': 'virginia-drpt-vre',
+    'caltrans-caltrain': 'caltrans-crn',
+    'caltrans-sd-blue': 'caltrans-crn',
+    'caltrans-sd-orange': 'caltrans-crn',
     **{f'mbta-rapid-{suffix}': 'massgis-mbta-rapid'
        for suffix in ('blue', 'orange', 'red', 'mattapan',
                       'green-b', 'green-c', 'green-d', 'green-e')},
@@ -327,6 +477,8 @@ KEY_SOURCE_EXACT = {
     'maryland-metro': 'maryland-mta-metro',
     'modot-kc-streetcar': 'modot-kc-streetcar',
     'modot-stl-metrolink': 'modot-stl-metrolink',
+    'sunmetro-streetcar': 'sunmetro-streetcar',
+    'nctcog-texrail': 'nctcog-existing-rail-lines',
     **{f'metra-{route}': 'chicago-metra-kml'
        for route in ('bnsf', 'hc', 'md-n', 'md-w', 'me', 'ncs', 'ri',
                      'sws', 'up-n', 'up-nw', 'up-w')},
@@ -334,8 +486,33 @@ KEY_SOURCE_EXACT = {
     'metro-transit-green': 'metc-transitways',
     'cats-blue': 'cats-blue-line',
     'dc-streetcar': 'dcgis-streetcar',
+    'dc-streetcar-benning': 'dcgis-streetcar',
+    **{f'wmata-metrorail-{route}': 'dcgis-metro-lines-regional'
+       for route in ('red', 'blue', 'green', 'yellow', 'orange', 'silver')},
+    'mbta-rapid-red-columbia': 'massgis-mbta-rapid',
+    **{f'mbta-{suffix}': 'massgis-mbta-commuter-rail-lines'
+       for suffix in ('cr-newbedford', 'cr-providence', 'cr-foxboro')},
+    **{f'mtq-exo-{route}': 'quebec-mtq-reseau-ferroviaire'
+       for route in ('1', '3', '4', '5', '6')},
+    'nrwn-on-up-up': 'nrcan-nrwn-on',
+    'nrwn-on-go-ki': 'nrcan-nrwn-on',
+    'ttc-streetcar-306': 'toronto-ttc-track',
+    'ttc-streetcar-506': 'toronto-ttc-track',
+    **{key: 'nctcog-existing-rail-lines' for key in (
+        'dart-blue', 'dart-green', 'dart-orange', 'dart-red', 'dart-silver',
+        'dart-tre', 'dart-m-line', 'dallas-streetcar', 'texrail',
+        'dcta-a-train')},
+    'detroit-dpm': 'detroit-people-mover-route',
+    'cincinnati-connector': 'cagis-cincinnati-streetcar',
+    'milwaukee-hop': 'milwaukee-dpw-streetcar',
+    'cats-gold': 'cats-gold-line',
+    'rta-metra-ri': 'rta-metra-rail-lines',
+    'rta-metra-up-w': 'rta-metra-rail-lines',
+    'houston-metrorail-900': 'houston-metrorail-lines',
     'fdot-brightline': 'fdot-brightline',
     'fdot-sunrail': 'fdot-sunrail',
+    'oregonmetro-rlis-portland-streetcar-a':
+        'oregonmetro-rlis-rail-transit',
 }
 
 SHA256 = re.compile(r'^[0-9a-f]{64}$')

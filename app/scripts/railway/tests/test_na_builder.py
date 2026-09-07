@@ -14,7 +14,112 @@ builder = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(builder)
 
 
+class OutputDirectoryTests(unittest.TestCase):
+    def test_write_json_creates_a_missing_output_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = os.path.join(directory, 'new', 'nested', 'package.json')
+
+            size = builder.write_json(path, {'format': 'compact-v1'})
+
+            self.assertGreater(size, 0)
+            with open(path, encoding='utf-8') as source:
+                self.assertEqual(json.load(source), {'format': 'compact-v1'})
+
+
+class CacheFingerprintTests(unittest.TestCase):
+    def test_official_manifest_change_invalidates_feed_cache(self):
+        with tempfile.TemporaryDirectory() as directory:
+            gtfs_dir = os.path.join(directory, 'gtfs')
+            official_dir = os.path.join(directory, 'official-networks')
+            os.makedirs(gtfs_dir)
+            os.makedirs(official_dir)
+            with open(os.path.join(gtfs_dir, 'example.zip'), 'wb') as output:
+                output.write(b'feed')
+            with open(os.path.join(official_dir, 'route.geojson'), 'wb') as output:
+                output.write(b'geometry')
+            manifest = os.path.join(official_dir, 'manifest.json')
+            with open(manifest, 'w', encoding='utf-8') as output:
+                json.dump({'revision': 1}, output)
+            entry = {
+                'mdb': 'example',
+                'officialNetworkByRouteId': {'R': 'route'},
+            }
+
+            before = builder.feed_cache_fingerprint(entry, directory)
+            with open(manifest, 'w', encoding='utf-8') as output:
+                json.dump({'revision': 2}, output)
+            after = builder.feed_cache_fingerprint(entry, directory)
+
+        self.assertNotEqual(before, after)
+
+
+class ReviewedSharedTrackTests(unittest.TestCase):
+    @staticmethod
+    def line(line_id, station_ids, station_points, intervals):
+        return {
+            'lineId': line_id,
+            'stationIds': station_ids,
+            'stationPoints': station_points,
+            'anchors': [list(intervals[0][0])]
+                       + [list(piece[-1]) for piece in intervals],
+            'intervals': intervals,
+            'isLoop': False,
+            'lengthKm': 0.0,
+        }
+
+    def test_members_share_canonical_spine_and_keep_real_branches(self):
+        canonical = self.line(
+            'trunk', ['CITY', 'MID', 'SOUTH'],
+            [[0.0, 0.0], [0.0, 0.01], [0.0, 0.03]],
+            [[[0.0, 0.0], [0.0, 0.01]],
+             [[0.0, 0.01], [0.0, 0.02], [0.0, 0.03]]])
+        forward = self.line(
+            'forward', ['f-city', 'f-mid', 'f-east'],
+            [[0.0001, 0.0], [0.0001, 0.01], [0.02, 0.02]],
+            [[[0.0001, 0.0], [0.0001, 0.01]],
+             [[0.0001, 0.01], [0.0001, 0.02], [0.02, 0.02]]])
+        reverse = self.line(
+            'reverse', ['r-east', 'r-mid', 'r-city'],
+            [[-0.02, 0.02], [-0.0001, 0.01], [-0.0001, 0.0]],
+            [[[-0.02, 0.02], [-0.0001, 0.02], [-0.0001, 0.01]],
+             [[-0.0001, 0.01], [-0.0001, 0.0]]])
+        policy = [{
+            'slug': 'test',
+            'reviewedSharedTrack': {
+                'canonicalLineId': 'trunk',
+                'canonicalTerminalStationId': 'CITY',
+                'junction': [0.0, 0.02],
+                'maxJunctionOffsetMeters': 30,
+                'maxStationOffsetMeters': 30,
+                'members': [
+                    {'lineId': 'forward', 'terminalSide': 'start'},
+                    {'lineId': 'reverse', 'terminalSide': 'end'},
+                ],
+                'evidence': ['https://example.test/official'],
+            },
+        }]
+
+        applied = builder.apply_reviewed_shared_track_alignments(
+            [canonical, forward, reverse], policy)
+
+        self.assertEqual(len(applied), 2)
+        self.assertEqual(forward['intervals'][0], canonical['intervals'][0])
+        self.assertEqual(reverse['intervals'][-1],
+                         list(reversed(canonical['intervals'][0])))
+        self.assertEqual(forward['intervals'][-1][-1], [0.02, 0.02])
+        self.assertEqual(reverse['intervals'][0][0], [-0.02, 0.02])
+        self.assertEqual(builder.validate_line_chain(forward), [])
+        self.assertEqual(builder.validate_line_chain(reverse), [])
+
+
 class RouteGroupingTests(unittest.TestCase):
+    def test_missing_release_policy_defaults_to_strict(self):
+        self.assertEqual(builder.registry_release_policy({}), 'strict')
+
+    def test_release_policy_rejects_unknown_values(self):
+        with self.assertRaisesRegex(ValueError, 'releasePolicy'):
+            builder.registry_release_policy({'releasePolicy': 'complete'})
+
     def test_missing_official_colour_has_no_silent_grey_fallback(self):
         with self.assertRaisesRegex(ValueError, 'operator-published'):
             builder.display_colours(None)
@@ -209,6 +314,19 @@ class RouteGroupingTests(unittest.TestCase):
 
         self.assertEqual(len(builder.group_stations(entries)), 1)
 
+    def test_reviewed_cross_feed_distinct_stop_is_not_proximity_merged(self):
+        entries = [
+            {'feedStop': 'LSS', 'identity': 'LSS',
+             'name': 'LaSalle Street', 'point': [-87.6322, 41.8764],
+             'line': {'feed': 'metra',
+                      'crossFeedDistinctStopIds': ['LSS']}},
+            {'feedStop': '41340', 'identity': '41340',
+             'name': 'LaSalle', 'point': [-87.6317, 41.8756],
+             'line': {'feed': 'cta'}},
+        ]
+
+        self.assertEqual(len(builder.group_stations(entries)), 2)
+
     def test_mta_six_official_transfer_complexes_share_identity_not_anchors(self):
         # Each row is one connected component in MTA's official transfers.txt.
         cases = [
@@ -376,6 +494,57 @@ class RouteGroupingTests(unittest.TestCase):
         self.assertEqual(len(safe), 2)
         self.assertEqual(len(explicitly_directional), 1)
 
+    def test_metro_reroute_pattern_is_not_absorbed_into_public_stop_list(self):
+        def line(line_id, kind, station_ids, anchors, branch_of=None):
+            return {
+                'lineId': line_id, 'branchOf': branch_of, 'kind': kind,
+                'rank': 1, 'stationIds': list(station_ids),
+                'stationNames': list(station_ids),
+                'stationZones': [''] * len(station_ids),
+                'stationPoints': [list(point) for point in anchors],
+                'anchors': [list(point) for point in anchors],
+                'intervals': [[list(a), list(b)]
+                              for a, b in zip(anchors, anchors[1:])],
+                'lengthKm': 2.0,
+            }
+
+        trunk = line('subway-2', 'metro', ['A', 'C'],
+                     [[0.0, 0.0], [0.02, 0.0]])
+        reroute = line('subway-2-b1', 'metro', ['A', 'B', 'C'],
+                       [[0.0, 0.0], [0.01, 0.0], [0.02, 0.0]],
+                       'subway-2')
+
+        kept = builder.absorb_duplicate_branches([trunk, reroute])
+
+        self.assertEqual([row['lineId'] for row in kept],
+                         ['subway-2', 'subway-2-b1'])
+        self.assertEqual(trunk['stationIds'], ['A', 'C'])
+
+    def test_commuter_flag_stop_pattern_is_still_absorbed(self):
+        def line(line_id, station_ids, anchors, branch_of=None):
+            return {
+                'lineId': line_id, 'branchOf': branch_of, 'kind': 'commuter',
+                'rank': 3, 'stationIds': list(station_ids),
+                'stationNames': list(station_ids),
+                'stationZones': [''] * len(station_ids),
+                'stationPoints': [list(point) for point in anchors],
+                'anchors': [list(point) for point in anchors],
+                'intervals': [[list(a), list(b)]
+                              for a, b in zip(anchors, anchors[1:])],
+                'lengthKm': 2.0,
+            }
+
+        trunk = line('rail-main', ['A', 'C'],
+                     [[0.0, 0.0], [0.02, 0.0]])
+        flag_stops = line('rail-main-b1', ['A', 'B', 'C'],
+                          [[0.0, 0.0], [0.01, 0.0], [0.02, 0.0]],
+                          'rail-main')
+
+        kept = builder.absorb_duplicate_branches([trunk, flag_stops])
+
+        self.assertEqual([row['lineId'] for row in kept], ['rail-main'])
+        self.assertEqual(trunk['stationIds'], ['A', 'B', 'C'])
+
     def test_same_generic_name_does_not_merge_different_agencies(self):
         routes = [
             {'route_id': 'sle', 'agency_id': 'shore',
@@ -521,6 +690,36 @@ class CrossFeedDuplicateTests(unittest.TestCase):
 
         self.assertEqual(kept, [a, b])
 
+    def test_lower_priority_short_extract_is_removed_as_spatial_subset(self):
+        preferred = self.line('amtrak-cascades', 'amtrak', [
+            ('Vancouver', [0.0, 0.0]), ('Seattle', [0.5, 0.0]),
+            ('Tacoma', [0.7, 0.0]), ('Portland', [1.0, 0.0])])
+        aggregate = self.line('puget-cascades', 'regional', [
+            ('Seattle', [0.50001, 0.0]), ('Tacoma', [0.70001, 0.0])])
+        reports = []
+
+        kept = builder.drop_cross_feed_duplicates(
+            [aggregate, preferred],
+            {'amtrak': {'duplicatePriority': 100},
+             'regional': {'duplicatePriority': 0}},
+            reports)
+
+        self.assertEqual(kept, [preferred])
+        self.assertEqual(reports[0]['dropped'][0]['line'], 'puget-cascades')
+
+    def test_lower_priority_non_subset_service_is_retained(self):
+        preferred = self.line('preferred', 'operator', [
+            ('Alpha', [0.0, 0.0]), ('Beta', [0.01, 0.0])])
+        distinct = self.line('distinct', 'regional', [
+            ('Alpha', [0.0, 0.0]), ('Gamma', [0.02, 0.0])])
+
+        kept = builder.drop_cross_feed_duplicates(
+            [preferred, distinct],
+            {'operator': {'duplicatePriority': 100},
+             'regional': {'duplicatePriority': 0}}, [])
+
+        self.assertEqual(kept, [preferred, distinct])
+
 
 class NetworkIntervalSafetyTests(unittest.TestCase):
     def setUp(self):
@@ -619,7 +818,80 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
                 'official route network contains an implausible interval'
             for row in self.feed.report['dropped']))
 
-    def test_required_official_failure_forbids_gtfs_shape_fallback(self):
+    def test_reviewed_route_can_prefer_complete_operator_shape(self):
+        class Official:
+            called = False
+
+            @classmethod
+            def route_stations(cls, _points, max_snap_m):
+                cls.called = True
+                return ([[[0.0, 0.0], [0.0, 0.03], [0.01, 0.0]]],
+                        {'snapMeters': [0.0, 0.0]})
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'city-streetcar'},
+            'preferOperatorShapeByRouteId': ['R'],
+            'requireVerifiedOfficialNetwork': True,
+        }
+        self.feed.options.official_networks = {'city-streetcar': Official()}
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.005, 0.001], [0.01, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.01, 0.0]], shape, [shape], 'streetcar', False,
+            'R')
+
+        self.assertFalse(Official.called)
+        self.assertEqual(source, 'gtfs-shape')
+        self.assertEqual(intervals, [shape])
+        self.assertTrue(any('selected ahead of city-streetcar' in note
+                            for note in self.feed.report['notes']))
+
+    def test_operator_shape_preference_names_narn_when_no_gis_is_mapped(self):
+        self.feed.entry = {'preferOperatorShapeByRouteId': ['R']}
+        self.feed.network = None
+        self.feed.options.official_networks = {}
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.005, 0.001], [0.01, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.01, 0.0]], shape, [shape], 'commuter', False,
+            'R')
+
+        self.assertEqual(source, 'gtfs-shape')
+        self.assertEqual(intervals, [shape])
+        self.assertTrue(any('selected ahead of NARN fallback' in note
+                            for note in self.feed.report['notes']))
+
+    def test_preferred_operator_shape_fails_closed_when_schematic(self):
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'city-streetcar'},
+            'preferOperatorShapeByRouteId': ['R'],
+        }
+        self.feed.options.official_networks = {}
+        self.feed.report = {'dropped': [], 'notes': []}
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.01, 0.0]], None, [], 'streetcar', True, 'R')
+
+        self.assertIsNone(intervals)
+        self.assertIsNone(source)
+        self.assertEqual(
+            self.feed.report['dropped'][0]['why'],
+            'preferred operator alignment is unavailable or schematic')
+
+    def test_required_official_failure_falls_back_and_says_so(self):
+        """A reviewed centreline that cannot reach every station is short,
+        not authoritative about the railway's absence.
+
+        SEPTA's trolleys, SFMTA's K/L/M, Sound Transit's two Link lines and
+        half of the New York City subway all failed exactly this way: the
+        official layer predates an extension or omits the subway half of a
+        street route, and the old rule deleted the railway rather than the
+        preference. The operator's own published alignment takes over for the
+        whole line, the package records which centreline it wanted, and the
+        independent `geometry.deviation` check measures what shipped.
+        """
         class Official:
             @staticmethod
             def route_stations(_points, max_snap_m):
@@ -629,6 +901,7 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
             'officialNetworkByRouteId': {'R': 'septa-t2'},
             'requireVerifiedOfficialNetwork': True,
         }
+        self.feed.options.release_policy = 'completeness'
         self.feed.options.official_networks = {'septa-t2': Official()}
         self.feed.report = {'dropped': [], 'notes': []}
         shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
@@ -637,17 +910,27 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
             [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
             'R')
 
-        self.assertIsNone(intervals)
-        self.assertIsNone(source)
-        self.assertTrue(any('fallback forbidden' in row.get('why', '')
-                            for row in self.feed.report['dropped']))
+        self.assertIsNotNone(intervals)
+        self.assertEqual(source, self.feed.SHAPE_SOURCE)
+        self.assertEqual(self.feed.fallback_for('R', ''), 'septa-t2')
+        self.assertTrue(any('septa-t2 could not route every station'
+                            in note for note in self.feed.report['notes']))
+        self.assertFalse(any('fallback forbidden' in row.get('why', '')
+                             for row in self.feed.report['dropped']))
 
-    def test_required_unverified_official_file_forbids_all_fallbacks(self):
+    def test_strict_official_failure_forbids_operator_shape_fallback(self):
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                return None, {'snapMeters': [0.0, None]}
+
         self.feed.entry = {
-            'officialNetworkByRouteId': {'R': 'septa-t2'},
+            'officialNetworkByRouteId': {'R': 'caltrans-sd-blue'},
             'requireVerifiedOfficialNetwork': True,
         }
-        self.feed.options.official_networks = {}
+        self.feed.options.release_policy = 'strict'
+        self.feed.options.official_networks = {
+            'caltrans-sd-blue': Official()}
         self.feed.report = {'dropped': [], 'notes': []}
         shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
 
@@ -657,9 +940,308 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
 
         self.assertIsNone(intervals)
         self.assertIsNone(source)
+        # The flag withholds the operator's own alignment; it does not cut the
+        # ladder short. With no surveyed network available to this stub the
+        # line still ends unpublished, but the refusal is the exhausted-ladder
+        # one, and the note says which alignment was withheld and why.
+        self.assertTrue(any('the operator alignment is forbidden' in note
+                            for note in self.feed.report['notes']))
+        self.assertTrue(any(row.get('why') == 'no usable alignment'
+                            for row in self.feed.report['dropped']))
+
+    def test_declared_official_defect_is_fail_closed_under_strict(self):
+        """Under `strict`, a known bad route layer withholds the railway.
+
+        The companion is
+        `test_declared_official_defect_opens_the_ladder_under_completeness`:
+        the same declaration, the other release policy. Which one a package
+        wants is written once, in the registry's `releasePolicy`, and both
+        are honest as long as the package says which it used.
+        """
+        self.feed.options.release_policy = 'strict'
+
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                raise AssertionError('a defective layer must not be consulted')
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'amtrak-ntad-zephyr'},
+            'requireVerifiedOfficialNetwork': True,
+            'requireOfficialMappingForAllRoutes': True,
+            'forbidOfficialNetworkFallback': True,
+            'officialNetworkDefectByRouteId': {
+                'R': 'split into 31 disconnected official components'},
+        }
+        self.feed.options.official_networks = {
+            'amtrak-ntad-zephyr': Official()}
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False, 'R')
+
+        self.assertIsNone(intervals)
+        self.assertIsNone(source)
+        self.assertEqual(self.feed.report['dropped'][0]['route'], 'R')
+        self.assertIn('split into 31 disconnected official components',
+                      self.feed.report['dropped'][0]['why'])
+
+    def test_declared_official_defect_opens_the_ladder_under_completeness(self):
+        """Under `completeness`, the defect disqualifies the LAYER only.
+
+        The two statements were being made with one key: "this service must
+        not ship" and "this extract is split / routes through a crossover no
+        passenger train takes". Read as the first, the FRA NTAD component
+        splits deleted most of Amtrak's long-distance network. Read as the
+        second, the layer is skipped, the reason is recorded per line, and the
+        next source draws the railway.
+        """
+        self.feed.options.release_policy = 'completeness'
+
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                raise AssertionError('a defective layer must not be consulted')
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'amtrak-ntad-zephyr'},
+            'requireVerifiedOfficialNetwork': True,
+            'requireOfficialMappingForAllRoutes': True,
+            'forbidOfficialNetworkFallback': True,
+            'officialNetworkDefectByRouteId': {
+                'R': 'split into 31 disconnected official components'},
+        }
+        self.feed.options.official_networks = {
+            'amtrak-ntad-zephyr': Official()}
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False, 'R')
+
+        self.assertIsNotNone(intervals)
+        self.assertEqual(source, self.feed.SHAPE_SOURCE)
+        self.assertTrue(any('is not used for this route' in note
+                            for note in self.feed.report['notes']))
+
+    def test_unresolved_geometry_review_is_fail_closed_under_strict(self):
+        self.feed.options.release_policy = 'strict'
+        self.feed.entry = {
+            'geometryReviewByRouteId': {
+                'R': 'no independent surveyed alignment is available'},
+        }
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'R')
+
+        self.assertIsNone(intervals)
+        self.assertIsNone(source)
+        self.assertEqual(self.feed.report['dropped'][0]['route'], 'R')
+        self.assertIn('fail-closed',
+                      self.feed.report['dropped'][0]['why'])
+
+    def test_unresolved_review_ships_with_its_reason_under_completeness(self):
+        """The explicit comparison policy publishes the review metadata.
+
+        "No independent survey covers this corridor" is a statement about our
+        evidence. A reader of the map cannot tell a railway that does not
+        exist from one we could not double-check, so the railway ships and the
+        sentence travels with it — into `geometryReview` on the line, and into
+        the ledger row a reviewer works from.
+        """
+        self.feed.options.release_policy = 'completeness'
+        self.feed.entry = {
+            'geometryReviewByRouteId': {
+                'R': 'no independent surveyed alignment is available'},
+        }
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False, 'R')
+
+        self.assertIsNotNone(intervals)
+        self.assertEqual(source, self.feed.SHAPE_SOURCE)
         self.assertEqual(
-            self.feed.report['dropped'][0]['why'],
-            'required verified official route network is unavailable')
+            self.feed.geometry_reviews[('R', '')],
+            'no independent surveyed alignment is available')
+
+    def test_forbidden_fallback_still_lets_the_surveyed_network_draw(self):
+        """The flag withholds the operator's shape, not the government survey.
+
+        Amtrak's and VIA's long-distance networks are routed over the FRA and
+        provincial surveys, and were drawn that way long before any per-route
+        NTAD extract existed. When the extract is split or short, refusing the
+        whole line deletes forty intercity railways to express a preference
+        between two official sources; withholding only the operator's own
+        shape expresses the preference and keeps the railway.
+        """
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                return None, {'snapMeters': [0.0, None]}
+
+        surveyed = [[[0.0, 0.0], [0.01, 0.0005], [0.02, 0.0]]]
+        original = builder.narn.route_stations
+        builder.narn.route_stations = (
+            lambda *args, **kwargs: (list(surveyed), {'snapMeters': [1.0, 1.0],
+                                                      'surveyed': [True]}))
+        self.addCleanup(setattr, builder.narn, 'route_stations', original)
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'amtrak-ntad-cardinal'},
+            'requireVerifiedOfficialNetwork': True,
+            'forbidOfficialNetworkFallback': True,
+        }
+        self.feed.options.official_networks = {
+            'amtrak-ntad-cardinal': Official()}
+        self.feed.options.corridor_m = 1_500.0
+        self.feed.options.snap_m = 3_000.0
+        self.feed.network = object()
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'intercity', False,
+            'R')
+
+        self.assertEqual(source, 'narn')
+        self.assertEqual(intervals, surveyed)
+        self.assertTrue(any('the operator alignment is forbidden' in note
+                            for note in self.feed.report['notes']))
+
+    def test_route_specific_official_failure_gate_has_no_collateral_routes(self):
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                return None, {'snapMeters': [0.0, None]}
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {
+                'Blue': 'mbta-rapid-blue', 'Orange': 'mbta-rapid-orange'},
+            'requireVerifiedOfficialNetwork': True,
+            'forbidOfficialNetworkFallbackByRouteId': ['Blue'],
+        }
+        self.feed.options.release_policy = 'completeness'
+        self.feed.options.official_networks = {
+            'mbta-rapid-blue': Official(),
+            'mbta-rapid-orange': Official(),
+        }
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        self.feed.report = {'dropped': [], 'notes': []}
+        blue, blue_source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'Blue')
+        self.feed.report = {'dropped': [], 'notes': []}
+        orange, orange_source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'Orange')
+
+        self.assertIsNone(blue)
+        self.assertIsNone(blue_source)
+        self.assertIsNotNone(orange)
+        self.assertEqual(orange_source, self.feed.SHAPE_SOURCE)
+
+    def test_branch_only_official_gate_blocks_reroute_but_keeps_trunk_fallback(self):
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                return None, {'snapMeters': [0.0, None]}
+
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'mta-subway-r'},
+            'requireVerifiedOfficialNetwork': True,
+            'forbidOfficialNetworkFallbackForBranches': True,
+        }
+        self.feed.options.release_policy = 'completeness'
+        self.feed.options.official_networks = {'mta-subway-r': Official()}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        self.feed.report = {'dropped': [], 'notes': []}
+        trunk, trunk_source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'R', '')
+        self.feed.report = {'dropped': [], 'notes': []}
+        branch, branch_source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'R', '-b1')
+
+        self.assertIsNotNone(trunk)
+        self.assertEqual(trunk_source, self.feed.SHAPE_SOURCE)
+        self.assertIsNone(branch)
+        self.assertIsNone(branch_source)
+        self.assertTrue(any(row.get('why') ==
+                            'required official branch alignment could not '
+                            'route every station'
+                            for row in self.feed.report['dropped']))
+
+    def test_branch_gate_does_not_replace_failed_official_route_with_narn(self):
+        class Official:
+            @staticmethod
+            def route_stations(_points, max_snap_m):
+                return None, {'snapMeters': [0.0, None]}
+
+        original = builder.narn.route_stations
+        builder.narn.route_stations = lambda *args, **kwargs: (
+            [[[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]],
+            {'snapMeters': [1.0, 1.0], 'surveyed': [True]})
+        self.addCleanup(setattr, builder.narn, 'route_stations', original)
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'mnr-harlem'},
+            'requireVerifiedOfficialNetwork': True,
+            'forbidOfficialNetworkFallbackForBranches': True,
+        }
+        self.feed.options.release_policy = 'completeness'
+        self.feed.options.official_networks = {'mnr-harlem': Official()}
+        self.feed.options.corridor_m = 1_500.0
+        self.feed.options.snap_m = 3_000.0
+        self.feed.network = object()
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'commuter', False,
+            'R', '-b2')
+
+        self.assertIsNone(intervals)
+        self.assertIsNone(source)
+        self.assertTrue(any(
+            row.get('why') == 'required official branch alignment could not '
+                              'route every station'
+            for row in self.feed.report['dropped']))
+
+    def test_unverified_official_file_falls_back_and_names_the_key(self):
+        """A missing or unverifiable route extract is our plumbing failing.
+
+        An endpoint that moved or a layer that was republished changes a hash,
+        not a railway. The build says on stderr which keys failed provenance;
+        the line ships from the operator's own alignment and carries the name
+        of the centreline it wanted, so the gap is visible per line instead of
+        as a service that silently disappeared.
+        """
+        self.feed.entry = {
+            'officialNetworkByRouteId': {'R': 'septa-t2'},
+            'requireVerifiedOfficialNetwork': True,
+        }
+        self.feed.options.release_policy = 'completeness'
+        self.feed.options.official_networks = {}
+        self.feed.report = {'dropped': [], 'notes': []}
+        shape = [[0.0, 0.0], [0.01, 0.001], [0.02, 0.0]]
+
+        intervals, source = self.feed.geometry_for(
+            [[0.0, 0.0], [0.02, 0.0]], shape, [shape], 'metro', False,
+            'R')
+
+        self.assertIsNotNone(intervals)
+        self.assertEqual(source, self.feed.SHAPE_SOURCE)
+        self.assertEqual(self.feed.fallback_for('R', ''), 'septa-t2')
+        self.assertTrue(any('failed provenance review' in note
+                            for note in self.feed.report['notes']))
 
     def test_all_routes_official_feed_forbids_unmapped_route_fallback(self):
         self.feed.entry = {
@@ -722,6 +1304,48 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
         self.assertEqual(count, 1)
         self.assertEqual(cleaned, [[0.0, 0.0], [0.002, 0.001], [0.003, 0.0]])
 
+    def test_reviewed_shape_selection_cannot_borrow_unapproved_shape(self):
+        approved = builder.lines.Pattern(['A', 'B'], None, 'approved-trip')
+        approved.shape_ids['approved'] = 1
+        defective = builder.lines.Pattern(['A', 'B'], None, 'defective-trip')
+        defective.shape_ids['defective'] = 100
+        shapes = {
+            'approved': [[0.0, 0.0], [0.005, 0.001], [0.01, 0.0]],
+            'defective': [[0.0, 0.0], [0.0, 0.03], [0.01, 0.0]],
+        }
+
+        shape_id, shape = builder.trusted_shape_fallback(
+            [[0.0, 0.0], [0.01, 0.0]], [approved, defective], shapes,
+            600.0, allowed_shape_ids={'approved'})
+
+        self.assertEqual(shape_id, 'approved')
+        self.assertEqual(shape, shapes['approved'])
+
+    def test_reviewed_shape_selection_fails_when_id_is_not_on_route(self):
+        pattern = builder.lines.Pattern(['A', 'B'], None, 'trip')
+        pattern.shape_ids['current'] = 1
+
+        shape_id, shape = builder.trusted_shape_fallback(
+            [[0.0, 0.0], [0.01, 0.0]], [pattern],
+            {'retired': [[0.0, 0.0], [0.01, 0.0]]}, 600.0,
+            allowed_shape_ids={'retired'})
+
+        self.assertIsNone(shape_id)
+        self.assertIsNone(shape)
+
+    def test_final_groom_pass_removes_endpoint_barb_without_moving_station(self):
+        band = builder.profile.BANDS[0]
+        piece = [[0.0, 0.0], [0.00002, 0.0], [0.00001, 0.0],
+                 [0.001, 0.0]]
+
+        groomed = builder.build.groom([piece], band)[0]
+
+        self.assertEqual(groomed[0], piece[0])
+        self.assertEqual(groomed[-1], piece[-1])
+        self.assertFalse(any(
+            builder.geo.turn_degrees(a, b, c) >= 150.0
+            for a, b, c in zip(groomed, groomed[1:], groomed[2:])))
+
     def test_direction_variant_cycle_needs_a_nearby_physical_closure(self):
         patterns = []
         for stations in (['A', 'B', 'C'], ['C', 'A', 'B']):
@@ -761,6 +1385,32 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
         self.assertEqual(
             [(row[0], row[1], row[3]) for row in forward],
             [(row[0], row[1], row[3]) for row in reverse])
+
+    def test_preferred_trunk_keeps_other_published_alignment_as_branch(self):
+        patterns = []
+        for stations, weight in (
+                (['A', 'B', 'C', 'D'], 10.0),
+                (['A', 'B', 'X', 'Y', 'Z', 'D'], 1.0)):
+            pattern = builder.lines.Pattern(stations, None, 'trip')
+            pattern.weight = weight
+            pattern.trips = 1
+            patterns.append(pattern)
+
+        selected = builder.lines.select_lines(
+            patterns, preferred_trunk=['A', 'B', 'C', 'D'])
+
+        self.assertEqual(selected[0][1], ['A', 'B', 'C', 'D'])
+        self.assertTrue(any('X' in row[1] for row in selected[1:]))
+
+    def test_preferred_trunk_rejects_unpublished_station_step(self):
+        pattern = builder.lines.Pattern(['A', 'B', 'C'], None, 'trip')
+        pattern.weight = 1.0
+        pattern.trips = 1
+
+        selected = builder.lines.select_lines(
+            [pattern], preferred_trunk=['A', 'C'])
+
+        self.assertEqual(selected, [])
 
     def test_compact_chain_refuses_anchor_gap(self):
         line = {
@@ -827,6 +1477,73 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
         self.assertTrue(builder.piece_is_station_chord(
             root['intervals'][0], root['anchors'][0], root['anchors'][1]))
 
+    def test_straight_interval_ships_when_the_survey_agrees_it_is_straight(self):
+        """Market Street is straight, so the tunnel under it is straight.
+
+        Shape alone cannot separate a guessed connector from a railway that
+        really does run in a straight line, and refusing both deleted BART,
+        WMATA, DART, Cleveland and the REM. The separation is an independent
+        opinion: track that the source which did NOT draw this line puts along
+        the whole interval, inside the band's own tolerance.
+        """
+        straight = builder.geo.densify([[0.0, 0.0], [0.02, 0.0]], 100)
+
+        class Survey:
+            @staticmethod
+            def straight_is_surveyed(piece, geometry_source, tolerance_m,
+                                     minimum_matched=0.8):
+                return {'agrees': True, 'vertices': len(piece),
+                        'matched': len(piece), 'maxDeviationMeters': 3.2,
+                        'worstAt': [0.01, 0.0], 'toleranceMeters': tolerance_m,
+                        'agreedWith': {'osm': len(piece)}}
+
+            @staticmethod
+            def measure(piece, geometry_source, sample_every=1):
+                return {'vertices': len(piece[0]), 'unmatched': 0,
+                        'maxDeviationMeters': 3.2,
+                        'worstAt': [0.01, 0.0],
+                        'agreedWith': {'osm': len(piece[0])}}
+
+        line = {
+            'lineId': 'feed-route', 'feed': 'feed', 'sourceRouteId': 'R',
+            'branchOf': None, 'profile': 'metro', 'geometrySource': 'gtfs-shape',
+            'anchors': [[0.0, 0.0], [0.02, 0.0]],
+            'intervals': [straight],
+        }
+        options = SimpleNamespace(geometry_blockers=[])
+
+        kept = builder.filter_unresolved_geometry([line], options, Survey())
+
+        self.assertEqual(kept, [line])
+        self.assertEqual(line['straightSurvey']['intervals'], [0])
+        self.assertEqual(line['straightSurvey']['toleranceMeters'], 40.0)
+        self.assertEqual(options.geometry_blockers, [])
+
+    def test_straight_interval_is_still_refused_when_nothing_corroborates(self):
+        straight = builder.geo.densify([[0.0, 0.0], [0.02, 0.0]], 100)
+
+        class Survey:
+            @staticmethod
+            def straight_is_surveyed(piece, geometry_source, tolerance_m,
+                                     minimum_matched=0.8):
+                return {'agrees': False, 'vertices': len(piece), 'matched': 1,
+                        'maxDeviationMeters': 260.0, 'worstAt': [0.01, 0.0],
+                        'toleranceMeters': tolerance_m, 'agreedWith': {}}
+
+        line = {
+            'lineId': 'feed-route', 'feed': 'feed', 'sourceRouteId': 'R',
+            'branchOf': None, 'profile': 'metro', 'geometrySource': 'gtfs-shape',
+            'anchors': [[0.0, 0.0], [0.02, 0.0]],
+            'intervals': [straight],
+        }
+        options = SimpleNamespace(geometry_blockers=[])
+
+        kept = builder.filter_unresolved_geometry([line], options, Survey())
+
+        self.assertEqual(kept, [])
+        self.assertNotIn('straightSurvey', line)
+        self.assertEqual(len(options.geometry_blockers), 1)
+
     def test_near_500_metre_chord_is_blocked_before_rounding_crosses_gate(self):
         end = [0.00449, 0.0]
         line = {
@@ -845,6 +1562,163 @@ class NetworkIntervalSafetyTests(unittest.TestCase):
 
         self.assertGreater(builder.max_endpoint_chord_deviation(piece), 1.5)
         self.assertTrue(builder.piece_is_station_chord(piece, start, end))
+
+
+class DisplayAlignmentReleaseTests(unittest.TestCase):
+    @staticmethod
+    def line(profile='metro'):
+        return {
+            'lineId': 'feed-route', 'feed': 'feed', 'sourceRouteId': 'R',
+            'branchOf': None, 'profile': profile,
+            'geometrySource': 'gtfs-shape',
+            'anchors': [[0.0, 0.0], [0.01, 0.0]],
+            'intervals': [[[0.0, 0.0], [0.005, 0.001], [0.01, 0.0]]],
+        }
+
+    def test_visible_parallel_alignment_is_release_blocked(self):
+        class Survey:
+            @staticmethod
+            def measure(_intervals, _source, sample_every):
+                self.assertEqual(sample_every, 1)
+                return {'vertices': 3, 'unmatched': 0,
+                        'maxDeviationMeters': 29.0,
+                        'worstAt': [0.005, 0.001]}
+
+        options = SimpleNamespace(geometry_blockers=[])
+        kept = builder.filter_unresolved_geometry(
+            [self.line()], options, Survey())
+
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(kept[0]['_alignmentCheck']['displayBlockedIntervals'],
+                         [0])
+        self.assertEqual(options.geometry_blockers[-1]['limitMeters'], 25.0)
+        self.assertIn('withheld from display',
+                      options.geometry_blockers[-1]['why'])
+
+    def test_alignment_inside_display_limit_is_retained(self):
+        class Survey:
+            @staticmethod
+            def measure(_intervals, _source, sample_every):
+                return {'vertices': 3, 'unmatched': 0,
+                        'maxDeviationMeters': 24.9, 'worstAt': None}
+
+        line = self.line()
+        options = SimpleNamespace(geometry_blockers=[])
+        kept = builder.filter_unresolved_geometry([line], options, Survey())
+
+        self.assertEqual(kept, [line])
+        self.assertEqual(options.geometry_blockers, [])
+        self.assertEqual(line['_alignmentCheck']['vertices'], 3)
+
+    def test_verified_official_alignment_outvotes_visual_crosscheck(self):
+        class VisualReference:
+            @staticmethod
+            def measure(_intervals, _source, sample_every):
+                self.assertEqual(sample_every, 1)
+                return {'vertices': 3, 'unmatched': 0,
+                        'maxDeviationMeters': 29.0,
+                        'worstAt': [0.005, 0.001]}
+
+        line = self.line()
+        line['geometrySource'] = 'authority-blue'
+        options = SimpleNamespace(
+            geometry_blockers=[],
+            verified_official_sources={'authority-blue': {'sha256': 'a' * 64}},
+        )
+        kept = builder.filter_unresolved_geometry(
+            [line], options, VisualReference())
+
+        self.assertEqual(kept, [line])
+        self.assertNotIn('displayBlockedIntervals', line['_alignmentCheck'])
+        self.assertEqual(
+            line['_alignmentCheck']['officialSourceRetainedIntervals'], [0])
+        self.assertEqual(options.geometry_blockers, [])
+
+    def test_unchecked_vertex_is_not_published_as_precise(self):
+        class Survey:
+            @staticmethod
+            def measure(_intervals, _source, sample_every):
+                return {'vertices': 3, 'unmatched': 1,
+                        'maxDeviationMeters': 0.0, 'worstAt': None}
+
+        options = SimpleNamespace(geometry_blockers=[])
+        kept = builder.filter_unresolved_geometry(
+            [self.line()], options, Survey())
+
+        self.assertEqual(len(kept), 1)
+        self.assertEqual(kept[0]['_alignmentCheck']['displayBlockedIntervals'],
+                         [0])
+        self.assertEqual(options.geometry_blockers[-1]['unmatchedVertices'], 1)
+
+
+class RouteKeyAliasTests(unittest.TestCase):
+    """A registry key may name a route the way its passengers do.
+
+    MARTA renumbered its five rail routes between the review that mapped their
+    official alignments and the feed published since. Nothing about Atlanta's
+    subway changed, but every reviewed mapping stopped matching, and with
+    `requireOfficialMappingForAllRoutes` set the whole system left the package
+    without one line in the ledger to say why.
+    """
+
+    ROUTES = [
+        {'route_id': '26984', 'route_short_name': 'BLUE',
+         'route_long_name': 'BLUE'},
+        {'route_id': '26982', 'route_short_name': 'ATLSC',
+         'route_long_name': 'Atlanta Streetcar'},
+    ]
+
+    def test_short_name_key_is_resolved_to_the_current_route_id(self):
+        entry = {'officialNetworkByRouteId': {'BLUE': 'marta-blue'},
+                 'preferOperatorShapeByRouteId': ['ATLSC'],
+                 'officialNetworkDefectByRouteId': {
+                     'ATLSC': 'reviewed streetcar alignment is defective'},
+                 'geometryReviewByRouteId': {
+                     'BLUE': 'local reference review remains open'},
+                 'referenceValidatedGeometryByRouteId': {
+                     'BLUE': 'redistributable shape checked locally'},
+                 'forbidOfficialNetworkFallbackByRouteId': ['BLUE']}
+
+        resolved = builder.resolve_route_keys(entry, self.ROUTES)
+
+        self.assertEqual(resolved['officialNetworkByRouteId'],
+                         {'26984': 'marta-blue'})
+        self.assertEqual(resolved['preferOperatorShapeByRouteId'], ['26982'])
+        self.assertEqual(resolved['officialNetworkDefectByRouteId'],
+                         {'26982': 'reviewed streetcar alignment is defective'})
+        self.assertEqual(resolved['geometryReviewByRouteId'],
+                         {'26984': 'local reference review remains open'})
+        self.assertEqual(resolved['referenceValidatedGeometryByRouteId'],
+                         {'26984': 'redistributable shape checked locally'})
+        self.assertEqual(resolved['forbidOfficialNetworkFallbackByRouteId'],
+                         ['26984'])
+        self.assertIn('officialNetworkByRouteId[BLUE] -> 26984',
+                      resolved['_routeKeyAliases'])
+
+    def test_an_exact_route_id_still_wins_over_a_name(self):
+        entry = {'officialNetworkByRouteId': {'26984': 'marta-blue'}}
+
+        resolved = builder.resolve_route_keys(entry, self.ROUTES)
+
+        self.assertEqual(resolved['officialNetworkByRouteId'],
+                         {'26984': 'marta-blue'})
+        self.assertEqual(resolved['_routeKeyAliases'], [])
+
+    def test_an_unmatched_key_is_left_alone_rather_than_guessed_at(self):
+        entry = {'officialNetworkByRouteId': {'29226': 'marta-blue'}}
+
+        resolved = builder.resolve_route_keys(entry, self.ROUTES)
+
+        self.assertEqual(resolved['officialNetworkByRouteId'],
+                         {'29226': 'marta-blue'})
+
+    def test_the_registry_entry_itself_is_not_mutated(self):
+        entry = {'officialNetworkByRouteId': {'BLUE': 'marta-blue'}}
+
+        builder.resolve_route_keys(entry, self.ROUTES)
+
+        self.assertEqual(entry['officialNetworkByRouteId'],
+                         {'BLUE': 'marta-blue'})
 
 
 class StationCoordinateOverrideTests(unittest.TestCase):
@@ -916,6 +1790,22 @@ class BorderSplitTests(unittest.TestCase):
 
 
 class SupplementalOfficialNetworkTests(unittest.TestCase):
+    def test_sparse_official_edge_snaps_to_segment_not_distant_vertex(self):
+        features = [
+            {'properties': {}, 'geometry': {'type': 'LineString',
+             'coordinates': [[0.0, 0.0], [0.02, 0.0]]}},
+        ]
+        network = builder.na_official.PassengerNetwork(features)
+
+        intervals, report = network.route_stations(
+            [[0.005, 0.0004], [0.015, 0.0004]], max_snap_m=100)
+
+        self.assertIsNotNone(intervals)
+        self.assertTrue(all(distance < 50 for distance in report['snapMeters']))
+        self.assertAlmostEqual(intervals[0][0][0], 0.005, places=6)
+        self.assertAlmostEqual(intervals[0][-1][0], 0.015, places=6)
+        self.assertLess(builder.geo.line_length(intervals[0]), 1_200)
+
     def test_routes_only_operator_tagged_official_segments(self):
         features = [
             {'properties': {'etat': 'Opérationnel', 'siguti1vo': 'VIA'},
@@ -1039,6 +1929,24 @@ class OfficialNetworkProvenanceTests(unittest.TestCase):
 
 
 class PostBranchGroomingTests(unittest.TestCase):
+    def test_short_endpoint_projection_overshoots_are_clipped_only_at_ends(self):
+        # The first and final adjacent vertices overshoot their station
+        # anchors; the similar internal turn must remain untouched.
+        points = [
+            [0.0, 0.0], [0.00005, 0.0], [-0.001, 0.0],
+            [-0.00105, 0.0], [0.0, 0.0], [-0.001, 0.0],
+            [0.00005, 0.0], [0.0, 0.0],
+        ]
+
+        clipped = builder.clip_short_endpoint_overshoots(points)
+
+        self.assertEqual(clipped[0], points[0])
+        self.assertEqual(clipped[-1], points[-1])
+        self.assertNotIn(points[1], clipped)
+        self.assertNotIn(points[-2], clipped)
+        self.assertIn(points[3], clipped)
+        self.assertIn(points[4], clipped)
+
     def test_station_topology_change_recomputes_profile_and_chord_cap(self):
         # Ten 1.5 km intervals make the final display line metro-scale, while
         # the deliberately stale profile says commuter.

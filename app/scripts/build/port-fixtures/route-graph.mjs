@@ -54,7 +54,8 @@ import path from "node:path";
 
 export const name = "route-graph.json";
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const CACHE_KEY_COUNTRIES = new Set(["mo", "hk", "tw", "kr", "jp"]);
 
 // app-config.js countrySuffixed(): Japan is the unsuffixed original.
 const dataFile = (base, country) =>
@@ -650,7 +651,7 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
     regions.push(regionCases(js, country, stationPoints, false));
 
     const storePath = path.join(APP_DIR, "data", dataFile("train-store", country));
-    if (fs.existsSync(storePath))
+    if (CACHE_KEY_COUNTRIES.has(country) && fs.existsSync(storePath))
       cacheKeys.push(
         ...cacheKeyCases(js, country, JSON.parse(fs.readFileSync(storePath, "utf8"))),
       );

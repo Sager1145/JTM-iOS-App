@@ -44,7 +44,6 @@ import SwiftUI
 /// with tests over 288 state combinations. What is left here is the wiring:
 /// which store call each resolved action makes.
 struct RailWorkspaceView: View {
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     /// Read for one reason: the share image is rendered off screen, and an
     /// `ImageRenderer` starts from the light appearance unless it is told
     /// otherwise — so a reader in Dark Mode would get a white poster of their
@@ -153,6 +152,11 @@ struct RailWorkspaceView: View {
     }
     /// The sheet's height right now, reported every frame while it is dragged.
     @State private var sheetHeight: CGFloat = 0
+
+    /// Native iPad split-view visibility. It survives a temporary resize into
+    /// the two-column or compact composition, so returning to a wide window
+    /// restores the reader's sidebar choice instead of forcing it open again.
+    @State private var workspaceColumnVisibility: NavigationSplitViewVisibility = .all
 
     /// How tall the map's control rail actually draws, so the fade that keeps
     /// it out from under the status bar knows where its top edge is. See
@@ -286,17 +290,20 @@ struct RailWorkspaceView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            // Wider than tall, or a regular-width window: sidebar. Read from
-            // the geometry so a rotation or an iPad window resize switches
-            // layouts as it happens.
-            Group {
-                if geometry.size.width > geometry.size.height
-                    || horizontalSizeClass == .regular
-                {
-                    sidebarLayout
-                } else {
-                    mapLayout(in: geometry)
-                }
+            let layout = WorkspaceLayoutMetrics(
+                containerSize: geometry.size,
+                isAccessibilitySize: dynamicTypeSize.isAccessibilitySize)
+
+            // One state graph, three compositions. Selection, search, filters,
+            // playback, map camera, and presentation state all remain owned by
+            // this view while the window crosses a breakpoint.
+            switch layout.mode {
+            case .compactOverlay:
+                mapLayout(in: geometry)
+            case .sideBySide:
+                sideBySideLayout(panelWidth: layout.sidePanelWidth)
+            case .threeColumn:
+                threeColumnLayout
             }
             // §4.3's bottom clearance is NOT published from here any more, and
             // there is nothing left to publish: the system already gives it to
@@ -442,11 +449,12 @@ struct RailWorkspaceView: View {
             if let camera = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_CAMERA"] {
                 let values = camera.split(separator: ",").compactMap { Double($0) }
                 if values.count == 3 {
-                    try? await Task.sleep(for: .milliseconds(700))
-                    controller.mapView?.setRegion(MKCoordinateRegion(
+                    do { try await Task.sleep(for: .milliseconds(700)) }
+                    catch { return }
+                    controller.frameForUITest(MKCoordinateRegion(
                         center: CLLocationCoordinate2D(latitude: values[0], longitude: values[1]),
-                        span: MKCoordinateSpan(latitudeDelta: values[2], longitudeDelta: values[2])),
-                        animated: false)
+                        span: MKCoordinateSpan(latitudeDelta: values[2], longitudeDelta: values[2])
+                    ))
                     return
                 }
             }
@@ -497,7 +505,7 @@ struct RailWorkspaceView: View {
                 // map would have handed one up: whichever the network store
                 // lists first, named and read exactly as the annotation names
                 // and reads it.
-                if let station = store.stations.first {
+                if let station = store.mapStations.first ?? store.stations.first {
                     sheet = .station(
                         StationCard(
                             station: station,
@@ -2109,14 +2117,15 @@ struct RailWorkspaceView: View {
         }
     }
 
-    // MARK: - wide windows: a sidebar, on iPad and on a phone in landscape
+    // MARK: - adaptive wide-window workspaces
 
-    private var sidebarLayout: some View {
+    /// Two useful columns for landscape phones, split-view iPads, and medium
+    /// windows. The destination selector stays with its content because there
+    /// is not yet enough room to spend a third column on navigation alone.
+    private func sideBySideLayout(panelWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
             withPresentations(workspaceTabs(stage: .expanded, headerExpansion: 1))
-            // Narrower on a phone, where the map has little enough width as it
-            // is; a fixed 320 would eat half of a landscape iPhone.
-            .frame(width: horizontalSizeClass == .regular ? 360 : 300)
+                .frame(width: panelWidth)
             // The same opaque reading surface the resident sheet uses, not a
             // material. `RailSheetBackground`'s own note is the argument: the
             // panel is where the reader READS, and a surface that takes its
@@ -2128,17 +2137,109 @@ struct RailWorkspaceView: View {
 
             Divider()
 
-            ZStack(alignment: .bottomTrailing) {
-                map
-                controlStack().padding(12)
-                playbackBar
-                    .padding(12)
-                    .railAnimation(
-                        RailMotion.spring, value: showsPlaybackBar,
-                        reduceMotion: reduceMotion)
-            }
+            wideMapSurface
         }
         .ignoresSafeArea(edges: .bottom)
+    }
+
+    /// Full-width iPad workspace: native, hideable navigation; a persistent
+    /// destination column; and the shared map. The four destination pages stay
+    /// mounted as resident layers, preserving their scroll and focus state
+    /// without drawing a redundant tab bar below the native sidebar.
+    private var threeColumnLayout: some View {
+        NavigationSplitView(columnVisibility: $workspaceColumnVisibility) {
+            workspaceSidebar
+                .navigationSplitViewColumnWidth(min: 200, ideal: 236, max: 280)
+        } content: {
+            withPresentations(wideWorkspacePages)
+                .navigationSplitViewColumnWidth(min: 340, ideal: 400, max: 480)
+        } detail: {
+            wideMapSurface
+        }
+        .navigationSplitViewStyle(.balanced)
+    }
+
+    private var wideWorkspacePages: some View {
+        ZStack {
+            ForEach(PrimaryTab.allCases) { tab in
+                wideWorkspacePage(tab)
+                    .residentLayer(isTop: selection == tab)
+            }
+        }
+        .modifier(SystemSheetTabSurface())
+        .environment(\.locale, localization.locale)
+    }
+
+    /// Keep the erased `WorkspacePage` boundary used by the phone TabView.
+    /// Besides making all four branches one concrete type, this avoids the
+    /// device-stack recursion documented on `page(_:stage:...)` during an
+    /// iPad rotation or live window resize.
+    private func wideWorkspacePage(_ tab: PrimaryTab) -> WorkspacePage {
+        switch tab {
+        case .upcoming:
+            page(.upcoming, stage: .expanded, headerExpansion: 1) {
+                upcomingPanel
+            }
+        case .stats:
+            page(.stats, stage: .expanded, headerExpansion: 1) {
+                statisticsPanel
+            }
+        case .all:
+            page(.all, stage: .expanded, headerExpansion: 1) {
+                allJourneysPanel(stage: .expanded, expansion: 1)
+            }
+        case .search:
+            page(.search, stage: .expanded, headerExpansion: 1) {
+                searchPanel
+            }
+        }
+    }
+
+    private var workspaceSidebar: some View {
+        List(selection: workspaceSidebarSelection) {
+            Section {
+                ForEach(PrimaryTab.allCases) { tab in
+                    Label(tabTitle(tab), systemImage: tab.systemImage)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .tag(tab)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("workspaceTab-\(tab.rawValue)")
+                }
+            } header: {
+                Text(localization.text("ios.workspace", fallback: "Japan Train Map"))
+                    .accessibilityIdentifier("workspaceSidebar")
+            }
+        }
+        .listStyle(.sidebar)
+        .navigationTitle(localization.text("ios.workspace", fallback: "Japan Train Map"))
+    }
+
+    /// `List(selection:)` models no selection as optional. The app always has
+    /// one primary destination, so ignore a transient nil emitted while the
+    /// split view is rearranging its columns.
+    private var workspaceSidebarSelection: Binding<PrimaryTab?> {
+        Binding(
+            get: { selection },
+            set: { selected in
+                guard let selected else { return }
+                selection = selected
+            })
+    }
+
+    /// One map composition for every wide layout. Keeping this identical in
+    /// the two- and three-column shells prevents a window resize from changing
+    /// the control hierarchy or playback placement.
+    private var wideMapSurface: some View {
+        ZStack(alignment: .bottomTrailing) {
+            map
+            controlStack().padding(12)
+            playbackBar
+                .padding(12)
+                .railAnimation(
+                    RailMotion.spring, value: showsPlaybackBar,
+                    reduceMotion: reduceMotion)
+        }
     }
 
     /// Which layer is on top. §4.4: closing a journey is returning to the list,
@@ -2910,7 +3011,7 @@ struct RailWorkspaceView: View {
     private var map: some View {
         RailMapView(
             lines: lines,
-            stations: store.stations,
+            stations: store.mapStations,
             rides: mapRides,
             selectedTrainID: itineraries.selectedTrainID,
             selectedDate: selectedDate,
@@ -2929,9 +3030,9 @@ struct RailWorkspaceView: View {
             // the map rebuilt for. Only while the network is on: with it off
             // there are no rails and no station dots to draw, so a pan across
             // Japan costs nothing at all.
-            onBuildRect: { rect in
+            onBuildRect: { rect, zoom in
                 guard controller.showsNetwork else { return }
-                store.ensure(regionsIntersecting: rect)
+                store.ensure(regionsIntersecting: rect, cameraZoom: zoom)
             }
         ) { render = $0 }
         .ignoresSafeArea()
@@ -3212,7 +3313,7 @@ struct RailWorkspaceView: View {
     /// The store no longer holds them inside its `.loaded` case, because they
     /// arrive one region at a time and the map draws each as it lands rather
     /// than waiting for Japan.
-    private var lines: [RailNetworkStore.DrawnLine] { store.lines }
+    private var lines: [RailNetworkStore.DrawnLine] { store.mapLines }
 }
 
 /// A workspace destination's page, mounted rather than composed.

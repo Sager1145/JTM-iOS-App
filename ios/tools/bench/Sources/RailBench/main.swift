@@ -23,6 +23,8 @@ if runs("predicates") { benchmarkStationPredicates(root: root) }
 if runs("tap") { benchmarkTap(root: root) }
 if runs("rebuild") { benchmarkMapRebuild(root: root) }
 if runs("statistics") { benchmarkStatistics(root: root) }
+if runs("edgeindex") { benchmarkEdgeIndexPhases(root: root) }
 if runs("routes") { benchmarkRouteLoad(root: root); benchmarkRouteCacheIO(root: root) }
 if runs("editor") { benchmarkEditorValidation(root: root) }
 if runs("launch") { benchmarkLaunchLoad(root: root) }
+if runs("decode") { benchmarkDecodeBreakdown(root: root); benchmarkSectionsReaderCandidates(root: root) }

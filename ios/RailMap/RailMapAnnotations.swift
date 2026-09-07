@@ -139,13 +139,14 @@ final class StationAnnotation: NSObject, MKAnnotation {
     }
     init(
         station: RailNetworkStore.DrawnStation,
-        displayName: String, showsName: Bool, readings: [String]?
+        displayName: String, showsName: Bool, readings: [String]?,
+        displayCoordinate: CLLocationCoordinate2D? = nil
     ) {
         self.station = station
         self.displayName = displayName
         self.showsName = showsName
         self.readings = readings
-        coordinate = station.coordinate.clLocation
+        coordinate = displayCoordinate ?? station.coordinate.clLocation
     }
 }
 

@@ -293,6 +293,18 @@ public enum StationDisplay {
         public let color: String
         public let logo: String?
         public let logoNeedsDarkMatte: Bool
+
+        public init(
+            lineID: String, company: String, label: String, color: String,
+            logo: String?, logoNeedsDarkMatte: Bool
+        ) {
+            self.lineID = lineID
+            self.company = company
+            self.label = label
+            self.color = color
+            self.logo = logo
+            self.logoNeedsDarkMatte = logoNeedsDarkMatte
+        }
     }
 
     public struct PopupModel: Sendable, Equatable {
@@ -304,6 +316,15 @@ public enum StationDisplay {
         /// two are different answers and the shell draws them differently.
         public let readings: [String]?
         public let lines: [PopupRow]
+
+        public init(
+            name: String, nameRoma: String, readings: [String]?, lines: [PopupRow]
+        ) {
+            self.name = name
+            self.nameRoma = nameRoma
+            self.readings = readings
+            self.lines = lines
+        }
     }
 
     /// Every line through the hovered platform's station complex, deduped.

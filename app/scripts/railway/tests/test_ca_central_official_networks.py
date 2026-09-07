@@ -50,7 +50,7 @@ class CanadaCentralOfficialNetworkTests(unittest.TestCase):
         self.assertIn('mta', manifest['sources'])
         self.assertIn('mta-subway-a', manifest['files'])
 
-    def test_go_and_up_exact_mappings_require_verified_orwn(self):
+    def test_go_and_up_exact_mappings_use_repaired_nrwn_corridors(self):
         with open(REGISTRY, encoding='utf-8') as source:
             feeds = json.load(source)['feeds']
         go = next(row for row in feeds if row['slug'] == 'go-transit')
@@ -61,27 +61,35 @@ class CanadaCentralOfficialNetworkTests(unittest.TestCase):
         self.assertTrue(go['preserveRouteIds'])
         self.assertEqual(len(go['mergeRouteIdGroups']), 7)
         self.assertEqual(go['officialNetworkByRouteId']['06260926-GT'],
-                         'orwn-go-ki')
+                         'nrwn-on-go-ki')
         self.assertEqual(go['officialNetworkByRouteId']['09261126-LW'],
                          'orwn-go-lw')
         self.assertTrue(up['requireVerifiedOfficialNetwork'])
         self.assertEqual(up['officialNetworkByRouteId'],
-                         {'UP': 'orwn-up-up'})
-        self.assertIn('UP', up['blockedRouteIds'])
-        self.assertIn('near-reversals', up['blockedRouteIds']['UP'])
+                         {'UP': 'nrwn-on-up-up'})
+        self.assertNotIn('officialNetworkDefectByRouteId', up)
 
-    def test_quebec_routes_remain_blocked_without_independent_geometry(self):
+    def test_quebec_routes_only_open_with_independent_geometry(self):
         with open(REGISTRY, encoding='utf-8') as source:
             feeds = json.load(source)['feeds']
         expected = {
-            'exo': {'1', '3', '4', '5', '6'},
             'rem': {'S1', 'S2', 'S3'},
             'soci-t-de-transport-de-montr': {'1', '2', '4', '5'},
         }
+        # These three publish no independent alignment at all, and the STM
+        # shapefile is its own GTFS. They are not withheld for it: the review
+        # note travels with each route so the gap is a work item in the
+        # package rather than a railway missing from the map.
         for slug, route_ids in expected.items():
             feed = next(row for row in feeds if row['slug'] == slug)
-            self.assertTrue(feed['requireOfficialMappingForAllRoutes'])
-            self.assertEqual(set(feed['blockedRouteIds']), route_ids)
+            self.assertEqual(set(feed['geometryReviewByRouteId']), route_ids)
+            for route_id in route_ids:
+                self.assertTrue(feed['geometryReviewByRouteId'][route_id].strip())
+        exo = next(row for row in feeds if row['slug'] == 'exo')
+        self.assertNotIn('geometryReviewByRouteId', exo)
+        self.assertEqual(set(exo['officialNetworkByRouteId']),
+                         {'1', '3', '4', '5', '6'})
+        self.assertTrue(exo['requireVerifiedOfficialNetwork'])
 
     def test_orwn_provenance_is_exact_not_prefix_based(self):
         self.assertEqual(central.SOURCE['url'], (

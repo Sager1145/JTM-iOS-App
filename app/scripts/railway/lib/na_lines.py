@@ -285,7 +285,7 @@ def longest_path(succ, order):
 
 
 def select_lines(patterns, max_branches=8, min_branch_stations=2,
-                 branch_weight_floor=0.0):
+                 branch_weight_floor=0.0, preferred_trunk=None):
     """The trunk, then the branches, in the order they are drawn.
 
     Returns ``[(suffix, stations, pattern, is_loop), …]`` with ``suffix`` empty
@@ -306,9 +306,21 @@ def select_lines(patterns, max_branches=8, min_branch_stations=2,
         # order the operator never publishes.
         trunk = patterns[0]
         return [('', trunk.stations, trunk, is_loop(trunk.stations))]
-    trunk = longest_path(succ, order)
-    if len(trunk) < 2:
-        trunk = patterns[0].stations
+    if preferred_trunk:
+        trunk = list(preferred_trunk)
+        published_edges = {
+            (a, b) for a, outs in succ.items() for b in outs
+        }
+        missing = [
+            (trunk[i], trunk[i + 1]) for i in range(len(trunk) - 1)
+            if (trunk[i], trunk[i + 1]) not in published_edges
+        ]
+        if missing:
+            return []
+    else:
+        trunk = longest_path(succ, order)
+        if len(trunk) < 2:
+            trunk = patterns[0].stations
 
     position = {s: i for i, s in enumerate(trunk)}
     covered = set()

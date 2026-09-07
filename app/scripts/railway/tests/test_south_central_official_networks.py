@@ -96,13 +96,14 @@ class SouthCentralOfficialNetworkTests(unittest.TestCase):
         feeds = self.feeds()
         cats = feeds['charlotte-area-transit-syste']
         self.assertEqual(cats['officialNetworkByRouteId'],
-                         {'501': 'cats-blue'})
+                         {'501': 'cats-blue', '510': 'cats-gold'})
+        self.assertEqual(set(cats['officialNetworkDefectByRouteId']), {'501'})
         self.assertEqual(set(cats['blockedRouteIds']), {'510'})
         self.assertEqual(cats['officialColorByRouteId'], {'501': '004DA8'})
         self.assertTrue(cats['requireVerifiedOfficialNetwork'])
         self.assertTrue(cats['requireOfficialMappingForAllRoutes'])
         self.assertEqual(feeds['dc-streetcar']['officialNetworkByRouteId'],
-                         {'12420': 'dc-streetcar'})
+                         {'12420': 'dc-streetcar-benning'})
         self.assertEqual(feeds['brightline-trains-llc']
                          ['officialNetworkByRouteId'],
                          {'1': 'fdot-brightline'})
@@ -110,15 +111,15 @@ class SouthCentralOfficialNetworkTests(unittest.TestCase):
                          ['officialNetworkByRouteId'],
                          {'1': 'fdot-sunrail'})
         self.assertEqual(set(feeds['dallas-area-rapid-transit-da']
-                             ['blockedRouteIds']), {
+                             ['officialNetworkByRouteId']), {
             '27224', '27243', '27251', '27252', '27253', '27254', '27255',
             '27257'})
-        self.assertEqual(set(feeds['fort-worth-transit-authority']
-                             ['blockedRouteIds']), {'8305'})
+        self.assertEqual(feeds['fort-worth-transit-authority']
+                         ['officialNetworkByRouteId'], {'8305': 'texrail'})
         self.assertEqual(set(feeds['hampton-roads-transit-hrt']
-                             ['blockedRouteIds']), {'800'})
+                             ['geometryReviewByRouteId']), {'800'})
         self.assertEqual(set(feeds['puerto-rico-ati']
-                             ['blockedRouteIds']), {'TU'})
+                             ['geometryReviewByRouteId']), {'TU'})
 
     def test_provenance_keys_are_exact_not_prefix_based(self):
         self.assertEqual(na_provenance.KEY_SOURCE_EXACT['cats-blue'],

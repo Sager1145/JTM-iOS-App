@@ -149,7 +149,6 @@ class WesternOfficialNormalizationTests(unittest.TestCase):
 
     def test_normalized_routes_pass_shared_provenance_verifier(self):
         with tempfile.TemporaryDirectory() as directory:
-            sound = self.make_sound_archive(directory)
             vta = os.path.join(directory, 'vta.geojson')
             with open(vta, 'w') as output:
                 json.dump({'type': 'FeatureCollection', 'features': [
@@ -157,12 +156,17 @@ class WesternOfficialNormalizationTests(unittest.TestCase):
                     geojson_feature('Orange'), geojson_feature('EBRC'),
                 ]}, output)
             output_dir = os.path.join(directory, 'official-networks')
-            west.normalize(output_dir, sound, vta)
-            keys = set(west.SOUND_KEYS + west.VTA_KEYS)
+            west.normalize(output_dir, vta)
+            keys = set(west.VTA_KEYS)
             verified, diagnostics = na_provenance.verify_route_networks(
                 output_dir, keys)
         self.assertEqual(diagnostics, [])
         self.assertEqual(set(verified), keys)
+
+    def test_sound_transit_parser_is_reference_only(self):
+        self.assertNotIn('sound-transit', west.SOURCES)
+        self.assertFalse(any(key.startswith(('sound-link-', 'sounder-'))
+                             for key in na_provenance.KEY_SOURCE_PREFIXES))
 
 
 if __name__ == '__main__':

@@ -767,7 +767,11 @@
   // Every interval runs platform to platform, so every station is an approach
   // from one or both sides. Reach and window are capped at a share of each
   // interval, so one station's rebuild can never run into its neighbour's.
-  function anchorIntervalsToStations(intervals, compactLine) {
+  function anchorIntervalsToStations(
+    intervals,
+    compactLine,
+    skippedStationCodes = new Set(),
+  ) {
     const stationCount = compactLine.stations.length;
     if (!intervals.length) return intervals;
     const shares = intervals.map(
@@ -786,6 +790,7 @@
       if ((incoming && incoming.length < 2) || (outgoing && outgoing.length < 2))
         continue;
       const row = compactLine.stations[station];
+      if (skippedStationCodes.has(row[0])) continue;
       const rebuilt = anchorStationApproach(
         incoming,
         outgoing,
@@ -873,6 +878,412 @@
     return intervals;
   }
 
+  function reviewedSharedCorridorOverrides(pkg, reviewed) {
+    const overrides = new Map();
+    if (
+      !reviewed ||
+      reviewed.format !== "jtm-shared-corridors-v1" ||
+      !Array.isArray(reviewed.corridors)
+    )
+      return overrides;
+
+    const lines = new Map(pkg.lines.map((line) => [line.id, line]));
+    const comparisonByLine =
+      pkg.geometrySource?.officialGeometryComparison?.byLine || {};
+    const blockedForLine = (lineId) =>
+      new Set(comparisonByLine[lineId]?.displayBlockedIntervals || []);
+    const stateFor = (line) => {
+      if (!overrides.has(line.id))
+        overrides.set(line.id, {
+          stations: line.stations.map((row) => row.slice()),
+          intervals: decodeIntervals(line).map((interval) =>
+            interval.map((point) => [point[0], point[1]]),
+          ),
+          protectedPoints: [],
+          sharedStationCodes: new Set(),
+          releasedIntervals: new Set(),
+        });
+      return overrides.get(line.id);
+    };
+    const stationRow = (line, state, stationCode, corridorId) => {
+      const rows = state.stations.filter((row) => row[0] === stationCode);
+      if (rows.length !== 1)
+        throw new Error(
+          `${corridorId}: ${line.id} expected one station ${stationCode}`,
+        );
+      return rows[0];
+    };
+    const closestVertex = (points, wanted, maximum, corridorId) => {
+      let bestIndex = -1;
+      let bestDistance = Infinity;
+      points.forEach((point, index) => {
+        const distance = distanceMeters(point, wanted);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      });
+      if (bestDistance > maximum)
+        throw new Error(
+          `${corridorId}: reviewed cut moved ${bestDistance.toFixed(1)} m`,
+        );
+      return bestIndex;
+    };
+    const terminalPath = (points, side, cut, corridorId) => {
+      if (side === "start") return points.slice(0, cut + 1).map((p) => p.slice());
+      if (side === "end")
+        return points
+          .slice(cut)
+          .reverse()
+          .map((p) => p.slice());
+      throw new Error(`${corridorId}: invalid shared-corridor side ${side}`);
+    };
+    const appendDistinct = (target, additions) => {
+      for (const point of additions) {
+        const last = target[target.length - 1];
+        if (!last || !sameCoordinate(last, point)) target.push(point.slice());
+      }
+    };
+    const intervalForStationPair = (
+      line,
+      state,
+      stationCodes,
+      corridorId,
+      required = true,
+    ) => {
+      const matches = [];
+      for (let index = 0; index < state.intervals.length; index += 1) {
+        const pair = [
+          line.stations[index][0],
+          line.stations[(index + 1) % line.stations.length][0],
+        ];
+        if (pair[0] === stationCodes[0] && pair[1] === stationCodes[1])
+          matches.push([index, true]);
+        else if (pair[0] === stationCodes[1] && pair[1] === stationCodes[0])
+          matches.push([index, false]);
+      }
+      if (!matches.length && !required) return null;
+      if (matches.length !== 1)
+        throw new Error(
+          `${corridorId}: ${line.id} matched ${matches.length} reviewed intervals`,
+        );
+      return matches[0];
+    };
+    const setStationPoint = (line, state, stationCode, point, corridorId) => {
+      const row = stationRow(line, state, stationCode, corridorId);
+      row[2] = point[0];
+      row[3] = point[1];
+      const stationIndex = line.stations.findIndex((item) => item[0] === stationCode);
+      if (stationIndex < state.intervals.length && state.intervals[stationIndex].length)
+        state.intervals[stationIndex][0] = point.slice();
+      let incoming = stationIndex - 1;
+      if (stationIndex === 0 && state.intervals.length === line.stations.length)
+        incoming = state.intervals.length - 1;
+      if (incoming >= 0 && state.intervals[incoming].length)
+        state.intervals[incoming][state.intervals[incoming].length - 1] = point.slice();
+    };
+
+    for (const corridor of reviewed.corridors) {
+      const corridorId = corridor.id || "unnamed-shared-corridor";
+      const reviewedIntervals = Array.isArray(corridor.intervals)
+        ? [...corridor.intervals]
+        : [];
+      for (const stationCodes of corridor.stationPairs || []) {
+        const serving = (corridor.lineIds || []).filter((lineId) => {
+          const line = lines.get(lineId);
+          return (
+            line &&
+            intervalForStationPair(
+              line,
+              stateFor(line),
+              stationCodes,
+              corridorId,
+              false,
+            ) !== null
+          );
+        });
+        const priority = corridor.canonicalLinePriority || corridor.lineIds || [];
+        const canonicalLineId = priority.find((lineId) => {
+          if (!serving.includes(lineId)) return false;
+          const line = lines.get(lineId);
+          const match = intervalForStationPair(
+            line,
+            stateFor(line),
+            stationCodes,
+            corridorId,
+          );
+          return !blockedForLine(lineId).has(match[0]);
+        });
+        // When every surveyed candidate failed the alignment gate, keep the
+        // interval withheld. Co-line display geometry must never turn two bad
+        // traces into one authoritative-looking trace.
+        if (canonicalLineId)
+          reviewedIntervals.push({
+            stationCodes,
+            lineIds: serving,
+            canonicalLineId,
+          });
+      }
+      if (reviewedIntervals.length) {
+        const allLineIds = new Set(
+          reviewedIntervals.flatMap((interval) => interval.lineIds || []),
+        );
+        const presentLineIds = [...allLineIds].filter((lineId) => lines.has(lineId));
+        if (!presentLineIds.length) continue;
+        if (presentLineIds.length !== allLineIds.size)
+          throw new Error(`${corridorId}: only part of the reviewed corridor is loaded`);
+        const sourceTypes = new Set(
+          (corridor.evidence || []).map((row) => row.type).filter(Boolean),
+        );
+        if (sourceTypes.size < 2)
+          throw new Error(`${corridorId}: two distinct evidence types are required`);
+        const maximumStation = Number(
+          corridor.maxStationSeparationMeters || 120,
+        );
+        const stationAnchors = new Map();
+        for (const reviewedInterval of reviewedIntervals) {
+          const stationCodes = reviewedInterval.stationCodes || [];
+          const lineIds = reviewedInterval.lineIds || [];
+          if (
+            stationCodes.length !== 2 ||
+            stationCodes[0] === stationCodes[1]
+          )
+            throw new Error(`${corridorId}: interval needs two station codes`);
+          if (lineIds.length < 2 || new Set(lineIds).size !== lineIds.length)
+            throw new Error(`${corridorId}: interval needs distinct member lines`);
+          if (!lineIds.includes(reviewedInterval.canonicalLineId))
+            throw new Error(`${corridorId}: interval canonical line is not a member`);
+          for (const lineId of lineIds) {
+            const line = lines.get(lineId);
+            if (!line) throw new Error(`${corridorId}: missing line ${lineId}`);
+            if ("kind" in corridor && line.kind !== corridor.kind)
+              throw new Error(
+                `${corridorId}: ${line.id} is ${line.kind}, not ${corridor.kind}`,
+              );
+          }
+
+          const canonicalLine = lines.get(reviewedInterval.canonicalLineId);
+          const canonicalState = stateFor(canonicalLine);
+          const [canonicalIndex, canonicalForward] = intervalForStationPair(
+            canonicalLine,
+            canonicalState,
+            stationCodes,
+            corridorId,
+          );
+          if (blockedForLine(canonicalLine.id).has(canonicalIndex))
+            throw new Error(`${corridorId}: canonical shared interval is display-blocked`);
+          const storedCanonical = canonicalState.intervals[canonicalIndex];
+          const canonicalPath = (canonicalForward
+            ? storedCanonical
+            : storedCanonical.slice().reverse()
+          ).map((point) => point.slice());
+          if (canonicalPath.length < 2)
+            throw new Error(`${corridorId}: canonical shared interval is empty`);
+          [canonicalPath[0], canonicalPath[canonicalPath.length - 1]].forEach(
+            (point, index) => {
+              const stationCode = stationCodes[index];
+              const anchor = stationAnchors.get(stationCode);
+              if (!anchor) stationAnchors.set(stationCode, point.slice());
+              else if (distanceMeters(anchor, point) > maximumStation)
+                throw new Error(
+                  `${corridorId}: canonical station ${stationCode} is inconsistent`,
+                );
+            },
+          );
+
+          for (const lineId of lineIds) {
+            const line = lines.get(lineId);
+            const state = stateFor(line);
+            const [intervalIndex, forward] = intervalForStationPair(
+              line,
+              state,
+              stationCodes,
+              corridorId,
+            );
+            const oldInterval = state.intervals[intervalIndex];
+            const oldOriented = forward
+              ? oldInterval
+              : oldInterval.slice().reverse();
+            const anchors = stationCodes.map((code) => stationAnchors.get(code));
+            if (
+              distanceMeters(oldOriented[0], anchors[0]) > maximumStation ||
+              distanceMeters(oldOriented[oldOriented.length - 1], anchors[1]) >
+                maximumStation
+            )
+              throw new Error(`${corridorId}: ${lineId} is too far from the corridor`);
+            state.intervals[intervalIndex] = (forward
+              ? canonicalPath
+              : canonicalPath.slice().reverse()
+            ).map((point) => point.slice());
+            if (blockedForLine(lineId).has(intervalIndex))
+              state.releasedIntervals.add(intervalIndex);
+            appendDistinct(state.protectedPoints, canonicalPath);
+            for (const stationCode of stationCodes) {
+              state.sharedStationCodes.add(stationCode);
+              if (corridor.mergeStation !== false)
+                setStationPoint(
+                  line,
+                  state,
+                  stationCode,
+                  stationAnchors.get(stationCode),
+                  corridorId,
+                );
+            }
+          }
+        }
+        continue;
+      }
+      if ((corridor.stationPairs || []).length) continue;
+      const members = Array.isArray(corridor.members) ? corridor.members : [];
+      const present = members.filter((member) => lines.has(member.lineId));
+      if (!present.length) continue;
+      if (present.length !== members.length)
+        throw new Error(`${corridorId}: only part of the reviewed corridor is loaded`);
+      const sourceTypes = new Set(
+        (corridor.evidence || []).map((row) => row.type).filter(Boolean),
+      );
+      if (sourceTypes.size < 2)
+        throw new Error(`${corridorId}: two distinct evidence types are required`);
+      if (members.length < 2)
+        throw new Error(`${corridorId}: at least two member lines are required`);
+      if (new Set(members.map((member) => member.lineId)).size !== members.length)
+        throw new Error(`${corridorId}: a member line is duplicated`);
+      const canonicalMember = members.find(
+        (member) => member.lineId === corridor.canonicalLineId,
+      );
+      if (!canonicalMember)
+        throw new Error(`${corridorId}: canonical line is not a member`);
+
+      for (const member of members) {
+        const line = lines.get(member.lineId);
+        if ("kind" in corridor && line.kind !== corridor.kind)
+          throw new Error(
+            `${corridorId}: ${line.id} is ${line.kind}, not ${corridor.kind}`,
+          );
+      }
+
+      const canonicalLine = lines.get(canonicalMember.lineId);
+      const canonicalState = stateFor(canonicalLine);
+      const canonicalInterval =
+        canonicalState.intervals[Number(canonicalMember.intervalIndex)];
+      if (blockedForLine(canonicalLine.id).has(Number(canonicalMember.intervalIndex)))
+        throw new Error(`${corridorId}: canonical shared interval is display-blocked`);
+      if (!canonicalInterval)
+        throw new Error(`${corridorId}: canonical interval is missing`);
+      const canonicalCut = closestVertex(
+        canonicalInterval,
+        canonicalMember.cut,
+        Number(canonicalMember.maxCutSearchMeters || 5),
+        corridorId,
+      );
+      const canonicalPath = terminalPath(
+        canonicalInterval,
+        canonicalMember.side,
+        canonicalCut,
+        corridorId,
+      );
+      if (canonicalPath.length < 2)
+        throw new Error(`${corridorId}: canonical shared arm is empty`);
+      const canonicalStation = stationRow(
+        canonicalLine,
+        canonicalState,
+        canonicalMember.stationCode,
+        corridorId,
+      );
+      const canonicalPoint = [canonicalStation[2], canonicalStation[3]];
+      if (!sameCoordinate(canonicalPath[0], canonicalPoint))
+        throw new Error(`${corridorId}: canonical arm does not begin at its station`);
+
+      const maximumStation = Number(corridor.maxStationSeparationMeters || 120);
+      const maximumCut = Number(corridor.maxCutSeparationMeters || 120);
+      for (const member of members) {
+        const line = lines.get(member.lineId);
+        const state = stateFor(line);
+        const intervalIndex = Number(member.intervalIndex);
+        const interval = state.intervals[intervalIndex];
+        if (!interval) throw new Error(`${corridorId}: ${line.id} interval is missing`);
+        const cut = closestVertex(
+          interval,
+          member.cut,
+          Number(member.maxCutSearchMeters || 5),
+          corridorId,
+        );
+        const oldTerminal = terminalPath(interval, member.side, cut, corridorId);
+        if (
+          distanceMeters(
+            oldTerminal[oldTerminal.length - 1],
+            canonicalPath[canonicalPath.length - 1],
+          ) > maximumCut
+        )
+          throw new Error(`${corridorId}: ${line.id} no longer meets the junction`);
+        const row = stationRow(line, state, member.stationCode, corridorId);
+        const memberPoint = [row[2], row[3]];
+        const expectedEndpoint =
+          member.side === "start" ? interval[0] : interval[interval.length - 1];
+        if (!sameCoordinate(memberPoint, expectedEndpoint))
+          throw new Error(`${corridorId}: ${line.id} interval does not end at its station`);
+        if (distanceMeters(memberPoint, canonicalPoint) > maximumStation)
+          throw new Error(`${corridorId}: ${line.id} station is too far from the corridor`);
+
+        // A local service may split this shared arm at a station the express
+        // service skips. Without moving that display-only cut anchor, joining
+        // the two surveyed cuts creates a tiny out-and-back spike at the
+        // station. The ledger may name that endpoint explicitly; no proximity
+        // inference is allowed here.
+        const cutStationCode = member.cutStationCode || null;
+        if (cutStationCode) {
+          if (cutStationCode === member.stationCode)
+            throw new Error(`${corridorId}: cut station must differ from the arm station`);
+          if (cut !== 0 && cut !== interval.length - 1)
+            throw new Error(`${corridorId}: ${line.id} cut station is not an interval endpoint`);
+          const cutRow = stationRow(line, state, cutStationCode, corridorId);
+          if (!sameCoordinate([cutRow[2], cutRow[3]], interval[cut]))
+            throw new Error(`${corridorId}: ${line.id} cut does not end at station ${cutStationCode}`);
+        }
+
+        const replacement = [];
+        if (member.side === "start") {
+          appendDistinct(replacement, canonicalPath);
+          appendDistinct(
+            replacement,
+            interval.slice(cutStationCode ? cut + 1 : cut),
+          );
+        } else {
+          appendDistinct(
+            replacement,
+            interval.slice(0, cutStationCode ? cut : cut + 1),
+          );
+          appendDistinct(replacement, canonicalPath.slice().reverse());
+        }
+        state.intervals[intervalIndex] = replacement;
+        if (blockedForLine(line.id).has(intervalIndex))
+          state.releasedIntervals.add(intervalIndex);
+        appendDistinct(state.protectedPoints, canonicalPath);
+        state.sharedStationCodes.add(member.stationCode);
+        if (corridor.mergeStation !== false) {
+          setStationPoint(
+            line,
+            state,
+            member.stationCode,
+            canonicalPoint,
+            corridorId,
+          );
+          if (cutStationCode) {
+            state.sharedStationCodes.add(cutStationCode);
+            setStationPoint(
+              line,
+              state,
+              cutStationCode,
+              canonicalPath[canonicalPath.length - 1],
+              corridorId,
+            );
+          }
+        }
+      }
+    }
+    return overrides;
+  }
+
   // The compact package stores station intervals for routing and attribution,
   // but MapLibre should receive complete display geometry per line, not one
   // feature per station interval. Decode every interval, bring both ends onto
@@ -905,7 +1316,13 @@
   // station: the rail between platform and switch is shared and must be drawn
   // twice rather than turned into one connected line. The map reads continuous;
   // the topology stays separate, so nothing can slice through a junction.
-  function displayPartsForLine(compactLine) {
+  function displayPartsForLine(
+    compactLine,
+    decodedOverride = null,
+    protectedPoints = [],
+    skippedStationCodes = new Set(),
+    blockedIntervalIndexes = new Set(),
+  ) {
     const stationPoints = compactLine.stations.map((station) => [
       station[2],
       station[3],
@@ -925,11 +1342,18 @@
     // copies the finished geometry and the two strokes stay coincident to the
     // vertex over the metres they share.
     const intervals = anchorIntervalsToStations(
-      decodeIntervals(compactLine),
+      (decodedOverride || decodeIntervals(compactLine)).map((interval) =>
+        interval.map((point) => [point[0], point[1]]),
+      ),
       compactLine,
+      skippedStationCodes,
     );
 
-    intervals.forEach((decoded) => {
+    intervals.forEach((decoded, intervalIndex) => {
+      if (blockedIntervalIndexes.has(intervalIndex)) {
+        flush();
+        return;
+      }
       if (current.length) dropStationRepeat(current, decoded);
 
       let coordinates = decoded;
@@ -1035,6 +1459,8 @@
     );
     const protectedKeys = sharedVertexKeys(trimmed);
     for (const key of anchorKeys) protectedKeys.add(key);
+    for (const point of protectedPoints)
+      protectedKeys.add(coordinateKey(point));
     const groomed = trimmed
       .map((coordinates) =>
         trimFoldedEnds(
@@ -1832,6 +2258,304 @@
     };
   }
 
+  // ───────────────────── parallel shared corridors ─────────────────────
+  // Rows are `[lineId, partIndex, fromMeters, toMeters, lane]`. The signed
+  // lane is relative to that part's own digitised direction, so the renderer
+  // can use MapLibre's `line-offset` without changing canonical geometry.
+  // The separate display-lanes artefact extends the older package-local table
+  // to North America and is authoritative when present.
+  // A lane change is drawn as a drift, not as a step. Two things make it one:
+  // the ramp is long enough that the sideways travel is a shallow diagonal,
+  // and every step across it is a QUARTER of a lane — under a pixel at the
+  // scales lanes are drawn at, and well inside the width of the stroke, so the
+  // two pieces either side of a step land on the same ink and the joint
+  // disappears under it. Four fixed steps could not promise that: a line
+  // moving three lanes stepped almost four pixels at a time, and the reader
+  // saw a railway cut into pieces rather than a railway changing lanes.
+  const LANE_RAMP_METERS_PER_LANE = 300;
+  const LANE_RAMP_MAX_METERS = 900;
+  const LANE_RAMP_QUANTUM = 1 / 4;
+  // Reviewed rows are measured to a tenth of a metre against a part length
+  // recomputed here, so a row that runs the whole part still ends a metre or
+  // two short of it. Left alone, that metre is a plateau, and a plateau is a
+  // lane change: the line ramped all the way back to the centre for the last
+  // step of its geometry. A stretch shorter than the sample spacing the rows
+  // were measured at is not evidence of a lane, so it never becomes one.
+  const LANE_PLATEAU_MIN_METERS = 60;
+
+  // Regions whose railways are drawn as ONE continuous stroke per part, with
+  // the screen-space lane offset and corner rounding baked into the geometry
+  // by rail-stroke.js at the current zoom, instead of as per-lane pieces that
+  // the renderer offsets with `line-offset`. The pieces came apart at every
+  // lane change; a single polyline cannot. North America is drawn this way;
+  // the other packages keep the per-lane path until their lane tables are
+  // re-reviewed under the same rule.
+  const CONTINUOUS_STROKE_COUNTRIES = new Set(["us", "ca"]);
+
+  function drawsContinuousStroke(compactLine, pkg) {
+    const country = String(compactLine.country || pkg.country || "")
+      .split("+")[0]
+      .trim()
+      .toLowerCase();
+    return CONTINUOUS_STROKE_COUNTRIES.has(country);
+  }
+
+  function partLengthMeters(coordinates) {
+    let total = 0;
+    for (let index = 1; index < coordinates.length; index += 1)
+      total += distanceMeters(coordinates[index - 1], coordinates[index]);
+    return total;
+  }
+
+  // Cumulative metres at every vertex, on the ruler the lane rows were
+  // measured with (distanceMeters: 111320 m per degree on both axes).
+  function partMeasures(coordinates) {
+    const out = new Array(coordinates.length);
+    out[0] = 0;
+    for (let index = 1; index < coordinates.length; index += 1)
+      out[index] = out[index - 1] + distanceMeters(coordinates[index - 1], coordinates[index]);
+    return out;
+  }
+
+  // `[lineId, partIndex, from, to, canonLineId, canonPartIndex, canonFrom,
+  // canonTo]` rows of the display-lanes artefact, by follower part.
+  function followRowsByPart(displayLanes) {
+    const byPart = new Map();
+    if (displayLanes?.format !== "jtm-display-lanes-v1") return byPart;
+    for (const row of Object.values(displayLanes.followsByRegion || {}).flat()) {
+      const key = `${row[0]}#${row[1]}`;
+      let held = byPart.get(key);
+      if (!held) byPart.set(key, (held = []));
+      held.push({
+        from: Number(row[2]),
+        to: Number(row[3]),
+        canonLineId: String(row[4]),
+        canonPartIndex: Number(row[5]),
+        canonFrom: Number(row[6]),
+        canonTo: Number(row[7]),
+      });
+    }
+    return byPart;
+  }
+
+  // Intervals the package's alignment gate withheld that the reviewed
+  // release table (display-releases.json, via display-lanes.json) lets the
+  // map draw again — each measured against OpenStreetMap and found
+  // consistent. Display only: routing and mileage never read this.
+  function releasedIntervalsByLine(displayLanes) {
+    const byLine = new Map();
+    if (displayLanes?.format !== "jtm-display-lanes-v1") return byLine;
+    for (const rows of Object.values(displayLanes.releasedIntervalsByRegion || {}))
+      for (const [lineId, interval] of rows) {
+        let held = byLine.get(lineId);
+        if (!held) byLine.set(lineId, (held = new Set()));
+        held.add(Number(interval));
+      }
+    return byLine;
+  }
+
+  function laneRowsByPart(pkg, displayLanes) {
+    const byPart = new Map();
+    const lines = new Map(pkg.lines.map((line) => [line.id, line]));
+    let rows = Array.isArray(pkg.lanes) ? pkg.lanes : [];
+    if (displayLanes?.format === "jtm-display-lanes-v1") {
+      rows = Object.values(displayLanes.byRegion || {}).flat();
+    }
+    for (const row of rows) {
+      const line = lines.get(row[0]);
+      if (!line) continue;
+      const key = `${row[0]}#${row[1]}`;
+      let held = byPart.get(key);
+      if (!held) byPart.set(key, (held = []));
+      held.push({ from: Number(row[2]), to: Number(row[3]), lane: Number(row[4]) });
+    }
+    for (const held of byPart.values()) held.sort((a, b) => a.from - b.from);
+    return byPart;
+  }
+
+  // The stretches a part holds one lane over, in order and touching: the
+  // reviewed rows, with the centreline filling everything between them.
+  function lanePlateaus(rows, total) {
+    const plateaus = [];
+    let cursor = 0;
+    for (const row of rows) {
+      const from = Math.max(cursor, Math.min(row.from, total));
+      const to = Math.max(from, Math.min(row.to, total));
+      if (from > cursor) plateaus.push({ from: cursor, to: from, lane: 0 });
+      if (to > from) plateaus.push({ from, to, lane: row.lane });
+      cursor = to;
+    }
+    if (cursor < total) plateaus.push({ from: cursor, to: total, lane: 0 });
+    return coalesceLanePlateaus(plateaus);
+  }
+
+  // Absorb every stretch too short to be evidence into its longer neighbour,
+  // then join whatever now agrees. Shortest first, so absorbing one cannot
+  // strand the next: the run it joins is the one that survives to judge it.
+  function coalesceLanePlateaus(plateaus) {
+    const held = plateaus.slice();
+    for (;;) {
+      if (held.length < 2) break;
+      let at = -1;
+      for (let index = 0; index < held.length; index += 1) {
+        const span = held[index].to - held[index].from;
+        if (span >= LANE_PLATEAU_MIN_METERS) continue;
+        if (at < 0 || span < held[at].to - held[at].from) at = index;
+      }
+      if (at < 0) break;
+      const previous = held[at - 1];
+      const next = held[at + 1];
+      const intoPrevious =
+        previous &&
+        (!next || previous.to - previous.from >= next.to - next.from);
+      if (intoPrevious) previous.to = held[at].to;
+      else next.from = held[at].from;
+      held.splice(at, 1);
+    }
+    const out = [];
+    for (const plateau of held) {
+      const previous = out[out.length - 1];
+      if (previous && previous.lane === plateau.lane) previous.to = plateau.to;
+      else out.push({ ...plateau });
+    }
+    return out;
+  }
+
+  // How much length a change between two plateaus may borrow — half from each
+  // side, so neither is left shorter than a third of itself.
+  function laneRampRoom(before, after) {
+    const delta = Math.abs(after.lane - before.lane);
+    if (!delta) return 0;
+    return Math.min(
+      LANE_RAMP_MAX_METERS,
+      LANE_RAMP_METERS_PER_LANE * delta,
+      (before.to - before.from) / 1.5,
+      (after.to - after.from) / 1.5,
+    );
+  }
+
+  function laneRampSteps(before, after, room) {
+    const delta = after.lane - before.lane;
+    if (!delta || !(room > 1)) return [];
+    const steps = Math.max(1, Math.round(Math.abs(delta) / LANE_RAMP_QUANTUM));
+    const start = before.to - room / 2;
+    const out = [];
+    for (let step = 0; step < steps; step += 1)
+      out.push({
+        from: start + (step * room) / steps,
+        to: start + ((step + 1) * room) / steps,
+        lane: before.lane + (delta * (step + 1)) / steps,
+      });
+    return out;
+  }
+
+  // The whole part's lane profile: plateaus trimmed back to make room for the
+  // ramps, and the ramps between them. Contiguous by construction, so the
+  // pieces cut from it cover the part end to end with nothing left over.
+  function rampedLaneRows(rows, total) {
+    const plateaus = lanePlateaus(rows, total);
+    if (plateaus.length < 2) return plateaus;
+    const out = [];
+    plateaus.forEach((plateau, index) => {
+      const previous = plateaus[index - 1];
+      const next = plateaus[index + 1];
+      const head = previous ? laneRampRoom(previous, plateau) : 0;
+      const tail = next ? laneRampRoom(plateau, next) : 0;
+      const from = plateau.from + head / 2;
+      const to = plateau.to - tail / 2;
+      if (to > from) out.push({ from, to, lane: plateau.lane });
+      if (next) out.push(...laneRampSteps(plateau, next, tail));
+    });
+    // A ramp ends ON the lane it was heading for, so its last step and the
+    // plateau it runs into are one stretch. Joining them here keeps the piece
+    // count down to the number of lanes the part actually holds.
+    const joined = [];
+    for (const entry of out) {
+      const previous = joined[joined.length - 1];
+      if (previous && previous.lane === entry.lane) previous.to = entry.to;
+      else joined.push({ ...entry });
+    }
+    return joined;
+  }
+
+  function splitPartByLanes(coordinates, rows) {
+    const cumulative = [0];
+    for (let index = 1; index < coordinates.length; index += 1)
+      cumulative.push(
+        cumulative[index - 1] + distanceMeters(coordinates[index - 1], coordinates[index]),
+      );
+    const total = cumulative[cumulative.length - 1];
+    if (!rows?.length || !(total > 0)) return [{ lane: 0, coordinates }];
+    const slice = (from, to, lane) => {
+      const start = interpolateAt(coordinates, cumulative, from);
+      const end = interpolateAt(coordinates, cumulative, to);
+      const piece = [start.point];
+      for (let index = start.index; index < end.index; index += 1)
+        if (!sameCoordinate(piece[piece.length - 1], coordinates[index]))
+          piece.push(coordinates[index]);
+      if (!sameCoordinate(piece[piece.length - 1], end.point)) piece.push(end.point);
+      return piece.length >= 2 ? { lane, coordinates: piece } : null;
+    };
+    const pieces = [];
+    let cursor = 0;
+    for (const row of rampedLaneRows(rows, total)) {
+      const from = Math.max(cursor, Math.min(row.from, total));
+      const to = Math.max(from, Math.min(row.to, total));
+      if (from > cursor) {
+        const gap = slice(cursor, from, 0);
+        if (gap) pieces.push(gap);
+      }
+      const lane = slice(from, to, row.lane);
+      if (lane) pieces.push(lane);
+      cursor = to;
+    }
+    if (cursor < total) {
+      const tail = slice(cursor, total, 0);
+      if (tail) pieces.push(tail);
+    }
+    return pieces.length ? pieces : [{ lane: 0, coordinates }];
+  }
+
+  function laneAtPoint(coordinates, rows, point) {
+    if (!rows?.length) return null;
+    let measure = 0;
+    let best = Infinity;
+    let at = 0;
+    let direction = null;
+    for (let index = 1; index < coordinates.length; index += 1) {
+      const a = coordinates[index - 1];
+      const b = coordinates[index];
+      const distance = pointSegmentDistanceMeters(point, a, b);
+      if (distance < best) {
+        best = distance;
+        const latitude = point[1];
+        const p = localMetric(point, latitude);
+        const start = localMetric(a, latitude);
+        const end = localMetric(b, latitude);
+        const dx = end[0] - start[0];
+        const dy = end[1] - start[1];
+        const squared = dx * dx + dy * dy;
+        const ratio = squared
+          ? Math.max(0, Math.min(1,
+            ((p[0] - start[0]) * dx + (p[1] - start[1]) * dy) / squared))
+          : 0;
+        at = measure + distanceMeters(a, b) * ratio;
+        direction = [b[0] - a[0], b[1] - a[1]];
+      }
+      measure += distanceMeters(a, b);
+    }
+    if (best > STATION_TOUCH_METERS || !direction) return null;
+    const row = rows.find((item) => at >= item.from && at <= item.to);
+    return row?.lane ? { lane: row.lane, direction } : null;
+  }
+
+  function stationLaneBearing(direction, latitude) {
+    const east = direction[0] * (Math.cos((latitude * Math.PI) / 180) || 1);
+    const north = direction[1];
+    if (!east && !north) return null;
+    return ((Math.atan2(east, north) * 180) / Math.PI + 360) % 360;
+  }
+
   // ───────────────────────── railway identity ──────────────────────────────
   //
   // WHICH RAILWAY a drawn line is, as distinct from WHICH SERVICE runs on it.
@@ -1919,7 +2643,10 @@
         if (ids.has(line.id))
           throw new Error(`Duplicate rail line id across packages: ${line.id}`);
         ids.add(line.id);
-        lines.push(line);
+        // Which package a line came out of decides how it is drawn (see
+        // CONTINUOUS_STROKE_COUNTRIES); a merged cross-border package would
+        // otherwise lose that.
+        lines.push(line.country ? line : { ...line, country: pkg.country });
       }
     }
     return {
@@ -1930,10 +2657,20 @@
     };
   }
 
-  function buildNetworkFromCompactPackage(pkg) {
+  function buildNetworkFromCompactPackage(
+    pkg,
+    reviewedSharedCorridors = null,
+    displayLanes = null,
+  ) {
     if (!pkg || pkg.format !== "compact-v1" || !Array.isArray(pkg.lines))
       return null;
 
+    const displayOverrides = reviewedSharedCorridorOverrides(
+      pkg,
+      reviewedSharedCorridors,
+    );
+    const comparisonByLine =
+      pkg.geometrySource?.officialGeometryComparison?.byLine || {};
     const lineById = new Map();
     const stationById = new Map();
     const groupMembers = new Map();
@@ -1941,6 +2678,15 @@
     const linesByOperator = new Map();
     const lineFeatures = [];
     const stationFeatures = [];
+    const stationLaneFeatures = [];
+    const laneRows = laneRowsByPart(pkg, displayLanes);
+    const followRows = followRowsByPart(displayLanes);
+    const releasedByLine = releasedIntervalsByLine(displayLanes);
+    // The continuous-stroke model rail-stroke.js draws from: every part's
+    // canonical vertices, its lane rows in metres, and which vertices are
+    // platforms. Features of these lines are placeholders until the renderer
+    // builds them at a zoom; `lineById.geometry` stays canonical throughout.
+    const strokeModel = { lines: [], stations: [] };
 
     // The threshold uses the sum of every piece in the same physical display
     // line. All pieces therefore receive one identical minz and disappear as
@@ -2018,6 +2764,25 @@
       const lineGeometry = geometryForParts(lineParts);
       lineById.get(lineId).geometry = lineGeometry;
       lineById.get(lineId).parts = lineParts;
+      const displayOverride = displayOverrides.get(lineId);
+      const blockedDisplayIntervals = new Set(
+        comparisonByLine[lineId]?.displayBlockedIntervals || [],
+      );
+      for (const released of displayOverride?.releasedIntervals || [])
+        blockedDisplayIntervals.delete(released);
+      for (const released of releasedByLine.get(lineId) || [])
+        blockedDisplayIntervals.delete(released);
+      const displayCompactLine = displayOverride
+        ? { ...compactLine, stations: displayOverride.stations }
+        : compactLine;
+      const displayParts = displayPartsForLine(
+        displayCompactLine,
+        displayOverride?.intervals || null,
+        displayOverride?.protectedPoints || [],
+        displayOverride?.sharedStationCodes || new Set(),
+        blockedDisplayIntervals,
+      );
+      const displayGeometry = geometryForParts(displayParts);
       // `parts` stays WHOLE whatever the service status says. Ride slicing,
       // hit-testing and the route solver all read it, and a ride recorded
       // before the suspension is still a ride: what closed is the timetable,
@@ -2026,6 +2791,10 @@
         lineById.get(lineId),
         compactLine,
       );
+      if (serviceSplit && displayOverride)
+        throw new Error(
+          `${lineId}: reviewed shared display corridor cannot cross a service-status split`,
+        );
       // One feature per line, on the line's own surveyed geometry — split in
       // two ONLY where the ledger says passenger trains have stopped running
       // over part of it, because a dash rhythm cannot be expressed per-vertex
@@ -2043,16 +2812,82 @@
         isHSR: compactLine.isHSR ? 1 : 0,
         isLoop: compactLine.isLoop ? 1 : 0,
         intervalCount: compactLine.segments.length,
-        partCount: lineParts.length,
-        strokeCount: lineParts.length,
+        partCount: displayParts.length,
+        strokeCount: displayParts.length,
         visibilityKm,
       };
-      if (!serviceSplit) {
+      const continuous = !serviceSplit && drawsContinuousStroke(compactLine, pkg);
+      let strokeLine = null;
+      if (continuous) {
+        strokeLine = {
+          lineId,
+          featureIndex: lineFeatures.length,
+          parts: displayParts.map((coordinates, partIndex) => {
+            const rows = laneRows.get(`${lineId}#${partIndex}`) || [];
+            let minLon = Infinity;
+            let minLat = Infinity;
+            let maxLon = -Infinity;
+            let maxLat = -Infinity;
+            const vertexByKey = new Map();
+            coordinates.forEach((point, index) => {
+              if (point[0] < minLon) minLon = point[0];
+              if (point[0] > maxLon) maxLon = point[0];
+              if (point[1] < minLat) minLat = point[1];
+              if (point[1] > maxLat) maxLat = point[1];
+              const key = coordinateKey(point);
+              if (!vertexByKey.has(key)) vertexByKey.set(key, index);
+            });
+            const measures = partMeasures(coordinates);
+            return {
+              coordinates,
+              measures,
+              totalMetres: measures[measures.length - 1],
+              rows: rows.map((row) => ({ from: row.from, to: row.to, lane: row.lane })),
+              follows: (followRows.get(`${lineId}#${partIndex}`) || []).map((row) => ({ ...row })),
+              bbox: [minLon, minLat, maxLon, maxLat],
+              anchors: [],
+              vertexByKey,
+            };
+          }),
+        };
+        strokeModel.lines.push(strokeLine);
         lineFeatures.push({
           type: "Feature",
-          geometry: lineGeometry,
-          properties: baseProperties,
+          geometry: displayGeometry,
+          properties: { ...baseProperties, lane: 0, continuous: 1 },
         });
+      } else if (!serviceSplit) {
+        const byLane = new Map();
+        displayParts.forEach((coordinates, partIndex) => {
+          const rows = laneRows.get(`${lineId}#${partIndex}`);
+          for (const piece of splitPartByLanes(coordinates, rows)) {
+            if (!byLane.has(piece.lane)) byLane.set(piece.lane, []);
+            byLane.get(piece.lane).push(piece.coordinates);
+          }
+        });
+        const untouched = byLane.size === 1 && byLane.has(0);
+        const laneEntries = [...byLane.entries()].sort((a, b) => a[0] - b[0]);
+        const labelLane = laneEntries.reduce((best, entry) => {
+          const length = entry[1].reduce(
+            (sum, part) => sum + part.slice(1).reduce(
+              (held, point, index) => held + distanceMeters(part[index], point),
+              0,
+            ),
+            0,
+          );
+          return !best || length > best.length ? { lane: entry[0], length } : best;
+        }, null)?.lane;
+        for (const [lane, parts] of laneEntries)
+          lineFeatures.push({
+            type: "Feature",
+            geometry: untouched ? displayGeometry : geometryForParts(parts),
+            properties: {
+              ...baseProperties,
+              partCount: untouched ? displayParts.length : parts.length,
+              lane,
+              ...(lane === labelLane ? {} : { labelSuppressed: 1 }),
+            },
+          });
       } else {
         // Both features carry the SAME minz and visibilityKm: they are one
         // railway at one level of detail, and a line whose closed half faded
@@ -2099,6 +2934,9 @@
       );
 
       compactLine.stations.forEach((row, index) => {
+        const displayRow = displayOverride
+          ? displayOverride.stations[index]
+          : row;
         const isTerminal =
           !compactLine.isLoop &&
           (index === 0 || index === stationCount - 1);
@@ -2126,11 +2964,24 @@
         }
         members.push(station);
 
+        let stationLane = null;
+        for (let partIndex = 0; !continuous && partIndex < displayParts.length; partIndex += 1) {
+          const rows = laneRows.get(`${lineId}#${partIndex}`);
+          if (!rows) continue;
+          stationLane = laneAtPoint(
+            displayParts[partIndex],
+            rows,
+            [displayRow[2], displayRow[3]],
+          );
+          if (stationLane) break;
+        }
+        const lane = stationLane?.lane || 0;
+
         stationFeatures.push({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [station.lon, station.lat],
+            coordinates: [displayRow[2], displayRow[3]],
           },
           properties: {
             stationId: station.stationId,
@@ -2144,6 +2995,7 @@
             // Set by the interchange pass below, which needs every line read
             // before it can answer how many railways call here.
             interchange: 0,
+            lane,
             lineMinz: lineMinZoom,
             // A non-loop line's two endpoints are structural and follow the
             // complete line exactly. Intermediate stations retain the denser
@@ -2152,6 +3004,67 @@
             minz: isTerminal ? lineMinZoom : stationMinZoom,
           },
         });
+        if (strokeLine) {
+          // The platform's own vertex, so its bead is the offset of that
+          // vertex at every zoom. Anchors coincide with vertices in every
+          // shipped package; the nearest-vertex fallback is for a platform
+          // the branch machinery re-served from a copied lead-in.
+          const point = [displayRow[2], displayRow[3]];
+          const key = coordinateKey(point);
+          let found = null;
+          strokeLine.parts.forEach((part, partIndex) => {
+            if (found) return;
+            const index = part.vertexByKey.get(key);
+            if (index != null) found = { partIndex, index };
+          });
+          if (!found) {
+            let best = Infinity;
+            strokeLine.parts.forEach((part, partIndex) => {
+              part.coordinates.forEach((vertex, index) => {
+                const gap = distanceMeters(vertex, point);
+                if (gap < best) {
+                  best = gap;
+                  found = { partIndex, index };
+                }
+              });
+            });
+          }
+          if (found) {
+            const part = strokeLine.parts[found.partIndex];
+            strokeModel.stations.push({
+              featureIndex: stationFeatures.length - 1,
+              lineIndex: strokeModel.lines.length - 1,
+              partIndex: found.partIndex,
+              anchorSlot: part.anchors.length,
+            });
+            part.anchors.push(found.index);
+          }
+        }
+        if (stationLane) {
+          const bearing = stationLaneBearing(
+            stationLane.direction,
+            displayRow[3],
+          );
+          if (bearing != null)
+            stationLaneFeatures.push({
+              type: "Feature",
+              geometry: { type: "Point", coordinates: [displayRow[2], displayRow[3]] },
+              properties: {
+                stationId: station.stationId,
+                lineId,
+                stationGroupId: station.stationGroupId || "",
+                color: featureColor,
+                colorDark: featureColorDark,
+                colorKey: featureColor.slice(1).toLowerCase(),
+                interchange: 0,
+                lane,
+                bearing,
+                lineMinz: lineMinZoom,
+                isTerminal: isTerminal ? 1 : 0,
+                minz: isTerminal ? lineMinZoom : stationMinZoom,
+              },
+            });
+        }
       });
     }
 
@@ -2175,7 +3088,7 @@
       }
       railwaysAtGroup.set(groupKey, railways.size);
     }
-    for (const feature of stationFeatures) {
+    for (const feature of [...stationFeatures, ...stationLaneFeatures]) {
       const groupKey =
         feature.properties.stationGroupId ||
         `solo:${feature.properties.stationId}`;
@@ -2267,6 +3180,9 @@
       acceptedByCell.get(key).push(feature);
     }
 
+    for (const line of strokeModel.lines)
+      for (const part of line.parts) delete part.vertexByKey;
+
     return {
       version: pkg.version,
       segments: {
@@ -2275,9 +3191,17 @@
         // display lines, not station-to-station fragments.
         features: lineFeatures,
       },
+      // Present only when some line draws as a continuous stroke; the
+      // renderer (railmap.js + rail-stroke.js) rebuilds those features'
+      // geometry from it whenever the zoom moves.
+      strokeModel: strokeModel.lines.length ? strokeModel : null,
       stations: {
         type: "FeatureCollection",
         features: stationFeatures,
+      },
+      stationLanes: {
+        type: "FeatureCollection",
+        features: stationLaneFeatures,
       },
       // The names: one elected platform per station complex, holding the SAME
       // feature objects `stations` holds. Nothing here is a copy and nothing
@@ -2300,6 +3224,7 @@
     DEFAULT_LINE_COLOR,
     mergeCompactPackages,
     buildNetworkFromCompactPackage,
+    reviewedSharedCorridorOverrides,
     // Exported for the Swift port's golden fixtures: the fixture generator
     // must call THIS decoder, never a copy of it, or the fixture only proves
     // that the copy and the port agree. Also the first seam of the decode /

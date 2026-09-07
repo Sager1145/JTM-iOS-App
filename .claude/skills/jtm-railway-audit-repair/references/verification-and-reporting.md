@@ -4,11 +4,11 @@
 
 ```bash
 git status --short
-python3 .claude/skills/jtm-railway-audit-repair/scripts/audit_jtm_packages.py \
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/jtm-railway-audit-repair/scripts/audit_jtm_packages.py" \
   --json /tmp/jtm-baseline.json --limit 40
 ```
 
-It exits 1 while any ERROR stands (two do today), so a non-zero baseline is the expected reading, not a broken command. Record the affected package versions, line counts, station memberships, interval counts, warning codes and current test results. The tree is routinely dirty from parallel sessions — do not attribute pre-existing failures or unrelated edits to your repair.
+It exits 1 while any ERROR stands, so a non-zero baseline can be an expected reading rather than a broken command. Record the affected package versions, line counts, station memberships, interval counts, warning codes and current test results; never pin the current count in this guide. The tree is routinely dirty from parallel sessions — do not attribute pre-existing failures or unrelated edits to your repair.
 
 ## Gates that exist in this repository
 
@@ -18,7 +18,7 @@ SCRATCH=/tmp/jtm-rail-js   ./ios/verify.sh --js     # port-fixtures --check only
 SCRATCH=/tmp/jtm-rail-full ./ios/verify.sh          # + Swift textual contracts + app build
 ```
 
-None of these is quick. `--js` alone regenerates every fixture in `port-fixtures/` — 1.75 million lines of JSON — and took 3m23s and 1.4 GB resident on a laptop; it completes, so do not read a long silence as a hang. Budget for it rather than treating it as a fast inner-loop check; the preflight above is the ten-second one. `ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
+None of these is quick. `--js` alone regenerates every fixture in `port-fixtures/` — 1.75 million lines of JSON — and took 3m23s and 1.4 GB resident on a laptop; it completes, so do not read a long silence as a hang. Budget for it rather than treating it as a fast inner-loop check; the package preflight above normally takes tens of seconds. `ios/verify.sh` is the main gate. Beyond building and testing, it enforces the textual contracts listed in [repository-contracts.md](repository-contracts.md) — the simplify tolerance, the datum boundary and scope, the annotation layer, the pure-target import ban. A railway change that renames or relocates any of those symbols fails the gate even when behaviour is unchanged.
 
 North America has real Python tests, and they run in under a second. Do not quote a count: a parallel session added 59 of them in one afternoon.
 
@@ -49,7 +49,7 @@ Scope, stated plainly: of the 31 defect classes in [history-and-failure-patterns
 | `DETOUR_RATIO` | per-station projection onto a round-trip shape picking opposite passes (CTA Brown Line: 410 m drawn as 32.6 km) | a real switchback or street loop — Alishan, 木次線 出雲坂根, 영동선 all land here legitimately |
 | `VERTEX_JUMP` | missing survey detail inside an interval | a long tunnel or bridge that the official centreline really does describe with two points |
 | `REVERSAL_CANDIDATE` | an artificial double-back created by merged directions or bad ordering | a real switchback (Alishan, Hisatsu, mountain lines) |
-| `SELF_OVERLAP` | a line drawn twice, or an out-and-back produced by wrong station coordinates (Alaska's Aurora Winter, 72.8%) | very little — the parallel-and-far-apart-along-the-line test already excludes spirals, horseshoes and street running |
+| `SELF_OVERLAP` | a line drawn twice, or an out-and-back produced by wrong station coordinates (Alaska's Aurora Winter, 72.8%) | legitimate shared approaches, paired directional tracks, loops/couplets and long lines where a small candidate exceeds only the absolute-length gate |
 | `GEOGRAPHIC_OUTLIER` | a rotated or concatenated station order, or a stray coordinate | none common — investigate every one |
 
 `INTERVAL_RETRACES_LINE` is an ERROR, not a review class: an interval that passes within 40 m of most of its own line's stations is carrying an extra lap, and nothing legitimate has that shape.
@@ -77,7 +77,13 @@ Measured sensitivity, from injecting each defect into a clean package and rewrit
 | one interval teleported 300 km | `GEOGRAPHIC_OUTLIER` |
 | whole package shifted to GCJ-02 | **nothing** — see above |
 
-`DETOUR_RATIO`'s floor is deliberate: below about 3x, honestly winding track is indistinguishable from a fake excursion by ratio alone. `SELF_OVERLAP` covers that half instead, and fires on share **or** absolute length (≥10% or ≥1.5 km), because share alone dilutes a local defect on a long line — a 4 km excursion on the 宜蘭線 is 4%.
+These mutations are preserved as executable regression tests:
+
+```bash
+python3 -m unittest discover "${CODEX_HOME:-$HOME/.codex}/skills/jtm-railway-audit-repair/tests" -v
+```
+
+`DETOUR_RATIO`'s floor is deliberate: below about 3x, honestly winding track is indistinguishable from a fake excursion by ratio alone. `SELF_OVERLAP` covers that half instead, and fires on share **or** absolute length (≥10% or ≥1.5 km), because share alone dilutes a local defect on a long line — a 4 km excursion on the 宜蘭線 is 4%. It assigns along-line distance to separately oriented intervals and never inserts a connector between interval rows.
 - **What either client actually draws.** Everything after the package — grooming, lanes, simplification, LOD, the datum boundary, endpoint snapping, graph-edge geometry — is invisible here.
 
 ## Regeneration review
@@ -85,8 +91,9 @@ Measured sensitivity, from injecting each defect into a clean package and rewrit
 1. Regenerate only the affected region and its dependent artefacts.
 2. Review the semantic diff across package, stations, rail sections, readings, sample stores, precomputed parts, fixtures, source notes, logos and audit ledgers.
 3. Confirm version/provenance changes are intentional.
-4. Re-run the preflight and compare against the baseline JSON — the interesting number is which codes appeared or disappeared, not the total.
-5. Confirm both clients still consume the same package through `ios/copy-rail-packages.sh`.
+4. Compare the JSON `geometrySources` inventory with `*.sources.md`, builder inputs and licence notes. The script exposes values but cannot decide whether prose is complete.
+5. Re-run the preflight and compare against the baseline JSON — the interesting number is which codes appeared or disappeared, not the total.
+6. Confirm both clients still consume the same package through `ios/copy-rail-packages.sh`.
 
 ## Visual checks, when rendering is in scope
 

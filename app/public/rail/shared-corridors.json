@@ -1,0 +1,749 @@
+{
+  "format": "jtm-shared-corridors-v1",
+  "reviewedAt": "2026-08-31",
+  "displayLanePolicy": {
+    "excludedLineIds": [
+      "metra-me",
+      "south-shore-line-lakeshore",
+      "south-shore-line-monon"
+    ],
+    "reason": "Keep the reviewed Metra Electric/South Shore physical corridor co-linear through Kensington. Synthetic screen offsets ended at the interlocking and rendered false stubs and branch jumps.",
+    "evidence": [
+      {
+        "type": "operator",
+        "name": "South Shore Line — Kensington entry to Metra tracks",
+        "url": "https://mysouthshoreline.com/final-letter-from-south-shore-line-president-michael-noland/"
+      },
+      {
+        "type": "operator",
+        "name": "Metra Electric main line and Blue Island Branch",
+        "url": "https://metra.com/metra-electric"
+      }
+    ]
+  },
+  "corridors": [
+    {
+      "id": "us-mbta-north-station-fitchburg-haverhill",
+      "region": "us",
+      "kind": "commuter",
+      "canonicalLineId": "mbta-fitchburg-line",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 60,
+      "maxCutSeparationMeters": 90,
+      "evidence": [
+        {
+          "type": "government-gis",
+          "name": "MassGIS Trains — MBTA commuter rail",
+          "url": "https://services9.arcgis.com/zkB26wYVlNoTUmsC/ArcGIS/rest/services/MassGIS_trains/FeatureServer/2"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap physical railway ways at Boston North Station",
+          "url": "https://www.openstreetmap.org/#map=16/42.371/-71.066"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=42.371&lon=-71.066&zoom=16"
+        }
+      ],
+      "members": [
+        {
+          "lineId": "mbta-fitchburg-line",
+          "stationCode": "us-official-north",
+          "intervalIndex": 0,
+          "side": "start",
+          "cut": [-71.0693, 42.371671]
+        },
+        {
+          "lineId": "mbta-haverhill-line",
+          "stationCode": "us-official-north",
+          "intervalIndex": 13,
+          "side": "end",
+          "cut": [-71.069789, 42.37223]
+        }
+      ]
+    },
+    {
+      "id": "us-amtrak-reviewed-shared-station-intervals",
+      "region": "us",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 120,
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap physical railway ways",
+          "url": "https://www.openstreetmap.org/"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/"
+        }
+      ],
+      "lineIds": [
+        "amtrak-valley-flyer",
+        "amtrak-hiawatha-service",
+        "amtrak-piedmont",
+        "amtrak-missouri-river-runner",
+        "amtrak-ethan-allen-express",
+        "amtrak-carl-sandburg",
+        "amtrak-empire-builder-b1",
+        "amtrak-empire-service",
+        "amtrak-lincoln-service-missouri-river-runner",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-adirondack-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-vermonter",
+        "amtrak-lake-shore-limited",
+        "amtrak-southwest-chief",
+        "amtrak-lake-shore-limited-b1",
+        "amtrak-empire-builder",
+        "amtrak-pennsylvanian"
+      ],
+      "canonicalLinePriority": [
+        "amtrak-valley-flyer",
+        "amtrak-hiawatha-service",
+        "amtrak-piedmont",
+        "amtrak-missouri-river-runner",
+        "amtrak-ethan-allen-express",
+        "amtrak-carl-sandburg",
+        "amtrak-empire-builder-b1",
+        "amtrak-empire-service",
+        "amtrak-lincoln-service-missouri-river-runner",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-adirondack-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-vermonter",
+        "amtrak-lake-shore-limited",
+        "amtrak-southwest-chief",
+        "amtrak-lake-shore-limited-b1",
+        "amtrak-empire-builder",
+        "amtrak-pennsylvanian"
+      ],
+      "stationPairs": [
+        ["us-official-albany-rensselaer", "us-official-hudson"],
+        ["us-official-albany-rensselaer", "us-official-schenectady"],
+        ["us-official-alexandria", "us-official-washington-union"],
+        ["us-official-buffalo-depew", "us-official-rochester"],
+        ["us-official-burlington", "us-official-durham"],
+        ["us-official-burlington", "us-official-greensboro"],
+        ["us-official-bwi-thurgood-marshall-airport", "us-official-new-carrollton"],
+        ["us-official-cary", "us-official-durham"],
+        ["us-official-cary", "us-official-raleigh-union"],
+        ["us-official-charlotte", "us-official-kannapolis"],
+        ["us-official-chicago-union", "us-official-glenview"],
+        ["us-official-columbus", "us-official-milwaukee"],
+        ["us-official-columbus", "us-official-portage"],
+        ["us-official-croton-harmon", "us-official-poughkeepsie"],
+        ["us-official-croton-harmon", "us-official-yonkers"],
+        ["us-official-edmonds", "us-official-everett"],
+        ["us-official-general-mitchell-intl-airport", "us-official-milwaukee"],
+        ["us-official-general-mitchell-intl-airport", "us-official-sturtevant"],
+        ["us-official-glenview", "us-official-sturtevant"],
+        ["us-official-greenfield", "us-official-northampton"],
+        ["us-official-greensboro", "us-official-high-point"],
+        ["us-official-hermann", "us-official-jefferson-city"],
+        ["us-official-hermann", "us-official-washington"],
+        ["us-official-high-point", "us-official-salisbury"],
+        ["us-official-holyoke", "us-official-northampton"],
+        ["us-official-hudson", "us-official-rhinecliff"],
+        ["us-official-independence", "us-official-kansas-city"],
+        ["us-official-independence", "us-official-lee-s-summit"],
+        ["us-official-jefferson-city", "us-official-sedalia"],
+        ["us-official-kannapolis", "us-official-salisbury"],
+        ["us-official-kirkwood", "us-official-st-louis"],
+        ["us-official-kirkwood", "us-official-washington"],
+        ["us-official-lee-s-summit", "us-official-warrensburg"],
+        ["us-official-mendota", "us-official-princeton"],
+        ["us-official-metropark", "us-official-newark"],
+        ["us-official-metropark", "us-official-trenton"],
+        ["us-official-new-carrollton", "us-official-washington-union"],
+        ["us-official-newark", "us-official-ny-moynihan-train-hall-at-penn"],
+        ["us-official-ny-moynihan-train-hall-at-penn", "us-official-yonkers"],
+        ["us-official-philadelphia", "us-official-trenton"],
+        ["us-official-portland", "us-official-vancouver"],
+        ["us-official-poughkeepsie", "us-official-rhinecliff"],
+        ["us-official-red-wing", "us-official-st-paul-minneapolis"],
+        ["us-official-rocky-mount", "us-official-wilson"],
+        ["us-official-sedalia", "us-official-warrensburg"],
+        ["us-official-selma", "us-official-wilson"],
+        ["us-official-tomah", "us-official-wisconsin-dells"]
+      ]
+    },
+    {
+      "id": "us-amtrak-empire-builder-spokane",
+      "region": "us",
+      "kind": "intercity",
+      "canonicalLineId": "amtrak-empire-builder-b1",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 15,
+      "maxCutSeparationMeters": 50,
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap BNSF Spokane Subdivision ways",
+          "url": "https://www.openstreetmap.org/#map=15/47.652/-117.434"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=47.652&lon=-117.434&zoom=15"
+        }
+      ],
+      "members": [
+        {
+          "lineId": "amtrak-empire-builder",
+          "stationCode": "us-official-spokane",
+          "intervalIndex": 34,
+          "side": "start",
+          "cut": [-117.449963, 47.648105]
+        },
+        {
+          "lineId": "amtrak-empire-builder-b1",
+          "stationCode": "us-official-spokane",
+          "intervalIndex": 0,
+          "side": "start",
+          "cut": [-117.450265, 47.647897]
+        }
+      ]
+    },
+    {
+      "id": "us-marta-blue-green-west-trunk",
+      "region": "us",
+      "kind": "metro",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 60,
+      "canonicalLinePriority": [
+        "metropolitan-atlanta-rapid-t-green",
+        "metropolitan-atlanta-rapid-t-blue"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MARTA static GTFS",
+          "url": "https://www.itsmarta.com/google_transit_feed/google_transit.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap MARTA east-west physical railway",
+          "url": "https://www.openstreetmap.org/#map=14/33.755/-84.405"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap Atlanta infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=33.755&lon=-84.405&zoom=14"
+        }
+      ],
+      "lineIds": [
+        "metropolitan-atlanta-rapid-t-green",
+        "metropolitan-atlanta-rapid-t-blue"
+      ],
+      "stationPairs": [
+        ["us-official-ashby-2", "us-official-vine-city"],
+        ["us-official-vine-city", "us-official-sec-district"],
+        ["us-official-sec-district", "us-official-five-points"],
+        ["us-official-five-points", "us-official-georgia-state"],
+        ["us-official-georgia-state", "us-official-king-memorial"],
+        ["us-official-king-memorial", "us-official-inman-park-reynoldstown"],
+        ["us-official-inman-park-reynoldstown", "us-official-edgewood-candler-park"]
+      ]
+    },
+    {
+      "id": "us-dart-reviewed-shared-trunks",
+      "region": "us",
+      "kind": "lightrail",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 35,
+      "canonicalLinePriority": [
+        "dallas-area-rapid-transit-da-blue",
+        "dallas-area-rapid-transit-da-green",
+        "dallas-area-rapid-transit-da-orange",
+        "dallas-area-rapid-transit-da-red"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "DART static GTFS",
+          "url": "http://www.dart.org/transitdata/latest/google_transit.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap DART physical light-rail ways",
+          "url": "https://www.openstreetmap.org/#map=13/32.795/-96.800"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap Dallas infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=32.795&lon=-96.800&zoom=13"
+        }
+      ],
+      "lineIds": [
+        "dallas-area-rapid-transit-da-blue",
+        "dallas-area-rapid-transit-da-green",
+        "dallas-area-rapid-transit-da-orange",
+        "dallas-area-rapid-transit-da-red"
+      ],
+      "stationPairs": [
+        ["us-official-8th-corinth", "us-official-cedars"],
+        ["us-official-cedars", "us-official-ebj-union"],
+        ["us-official-ebj-union", "us-official-west-end"],
+        ["us-official-west-end", "us-official-akard"],
+        ["us-official-akard", "us-official-st-paul"],
+        ["us-official-st-paul", "us-official-pearl-arts-district"],
+        ["us-official-pearl-arts-district", "us-official-cityplace-uptown"],
+        ["us-official-cityplace-uptown", "us-official-smu-mockingbird"],
+        ["us-official-smu-mockingbird", "us-official-lovers-lane"],
+        ["us-official-lovers-lane", "us-official-park-lane"],
+        ["us-official-park-lane", "us-official-walnut-hill"],
+        ["us-official-walnut-hill", "us-official-forest-ln"],
+        ["us-official-forest-ln", "us-official-lbj-central"],
+        ["us-official-lbj-central", "us-official-spring-valley"],
+        ["us-official-spring-valley", "us-official-arapaho-center"],
+        ["us-official-arapaho-center", "us-official-galatyn-park"],
+        ["us-official-galatyn-park", "us-official-cityline-bush"],
+        ["us-official-cityline-bush", "us-official-12th-street"],
+        ["us-official-12th-street", "us-official-downtown-plano"],
+        ["us-official-downtown-plano", "us-official-parker-road"],
+        ["us-official-west-end", "us-official-victory"],
+        ["us-official-victory", "us-official-market-center"],
+        ["us-official-market-center", "us-official-southwest-medical-district-parkland"],
+        ["us-official-southwest-medical-district-parkland", "us-official-inwood-love-field"],
+        ["us-official-inwood-love-field", "us-official-burbank"],
+        ["us-official-burbank", "us-official-bachman"]
+      ]
+    },
+    {
+      "id": "us-path-world-trade-center-trunk",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 45,
+      "canonicalLinePriority": [
+        "port-authority-trans-hudson-world-trade-center-33rd-street",
+        "port-authority-trans-hudson-hoboken-world-trade-center"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "PATH static GTFS",
+          "url": "http://data.trilliumtransit.com/gtfs/path-nj-us/path-nj-us.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap PATH Hudson tubes",
+          "url": "https://www.openstreetmap.org/#map=14/40.716/-74.026"
+        },
+        {
+          "type": "openrailwaymap",
+          "name": "OpenRailwayMap PATH infrastructure view",
+          "url": "https://www.openrailwaymap.org/?style=standard&lat=40.716&lon=-74.026&zoom=14"
+        }
+      ],
+      "lineIds": [
+        "port-authority-trans-hudson-hoboken-world-trade-center",
+        "port-authority-trans-hudson-world-trade-center-33rd-street"
+      ],
+      "stationPairs": [
+        ["us-official-newport", "us-official-exchange-place"]
+      ]
+    },
+    {
+      "id": "us-south-shore-shared-chicago-trunk",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 45,
+      "canonicalLinePriority": [
+        "south-shore-line-monon",
+        "south-shore-line-lakeshore"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "South Shore Line static GTFS",
+          "url": "http://www.mysouthshoreline.com/google/google_transit.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap South Shore physical railway",
+          "url": "https://www.openstreetmap.org/#map=12/41.730/-87.605"
+        }
+      ],
+      "lineIds": [
+        "south-shore-line-lakeshore",
+        "south-shore-line-monon"
+      ],
+      "stationPairs": [
+        ["us-official-57th-st-hyde-park", "us-official-museum-campus-11th-st"],
+        ["us-official-museum-campus-11th-st", "us-official-van-buren-st"],
+        ["us-official-van-buren-st", "us-official-millennium"]
+      ]
+    },
+    {
+      "id": "us-amtrak-shore-line-east-nec",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "amtrak-shore-line-east",
+        "amtrak-vermonter"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak-hosted intercity and Shore Line East GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Northeast Corridor railway",
+          "url": "https://www.openstreetmap.org/#map=11/41.235/-72.985"
+        }
+      ],
+      "lineIds": ["amtrak-shore-line-east", "amtrak-vermonter"],
+      "stationPairs": [
+        ["us-official-new-haven-2", "us-official-bridgeport"]
+      ]
+    },
+    {
+      "id": "us-amtrak-metrolink-riverside-san-bernardino",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "metrolink-ie-oc-line",
+        "amtrak-southwest-chief"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Metrolink static GTFS",
+          "url": "https://metrolinktrains.com/globalassets/about/gtfs/gtfs.zip"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": ["metrolink-ie-oc-line", "amtrak-southwest-chief"],
+      "stationPairs": [
+        ["us-official-riverside-downtown", "us-official-san-bernardino"]
+      ]
+    },
+    {
+      "id": "us-mbta-providence-fairmount-diversion",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "mbta-fairmount-line",
+        "mbta-providence-stoughton-line-b5"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "MassGIS MBTA Commuter Rail Lines",
+          "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Commuter_Rail/FeatureServer/3"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Fairmount Line physical railway",
+          "url": "https://www.openstreetmap.org/#map=13/42.298/-71.083"
+        }
+      ],
+      "lineIds": [
+        "mbta-fairmount-line",
+        "mbta-providence-stoughton-line-b5"
+      ],
+      "stationPairs": [
+        ["us-official-fairmount", "us-official-blue-hill-avenue"],
+        ["us-official-blue-hill-avenue", "us-official-morton-street"],
+        ["us-official-morton-street", "us-official-talbot-avenue"],
+        ["us-official-talbot-avenue", "us-official-four-corners-geneva"],
+        ["us-official-four-corners-geneva", "us-official-uphams-corner"],
+        ["us-official-uphams-corner", "us-official-newmarket"],
+        ["us-official-newmarket", "us-official-south"]
+      ]
+    },
+    {
+      "id": "us-boston-back-bay-south-station",
+      "region": "us",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 80,
+      "canonicalLinePriority": [
+        "mbta-providence-stoughton-line",
+        "mbta-foxboro-event-service",
+        "mbta-needham-line",
+        "mbta-framingham-worcester-line",
+        "amtrak-lake-shore-limited"
+      ],
+      "evidence": [
+        {
+          "type": "government-gis",
+          "name": "MassGIS MBTA Commuter Rail Lines",
+          "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Commuter_Rail/FeatureServer/3"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "MBTA static GTFS",
+          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
+        },
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "osm-track",
+          "name": "OpenStreetMap Back Bay-South Station physical railway",
+          "url": "https://www.openstreetmap.org/#map=15/42.349/-71.066"
+        }
+      ],
+      "lineIds": [
+        "amtrak-lake-shore-limited",
+        "mbta-foxboro-event-service",
+        "mbta-framingham-worcester-line",
+        "mbta-needham-line",
+        "mbta-providence-stoughton-line"
+      ],
+      "stationPairs": [
+        ["us-official-back-bay", "us-official-south"]
+      ]
+    },
+    {
+      "id": "us-amtrak-interior-crossing-intervals",
+      "region": "us",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 120,
+      "canonicalLinePriority": [
+        "amtrak-empire-builder",
+        "amtrak-carolinian",
+        "amtrak-palmetto",
+        "amtrak-amtrak-cascades-us",
+        "amtrak-borealis",
+        "amtrak-vermonter"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Amtrak static GTFS",
+          "url": "https://content.amtrak.com/content/gtfs/GTFS.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Amtrak current route timetables",
+          "url": "https://www.amtrak.com/train-schedules-timetables"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": [
+        "amtrak-amtrak-cascades-us",
+        "amtrak-borealis",
+        "amtrak-carolinian",
+        "amtrak-empire-builder",
+        "amtrak-palmetto",
+        "amtrak-vermonter"
+      ],
+      "stationPairs": [
+        ["us-official-red-wing", "us-official-winona"],
+        ["us-official-edmonds", "us-official-seattle"]
+      ]
+    },
+    {
+      "id": "ca-via-southwestern-ontario-shared-track",
+      "region": "ca",
+      "kind": "intercity",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "via-toronto-windsor",
+        "via-toronto-london"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "VIA Rail static GTFS",
+          "url": "https://www.viarail.ca/sites/all/files/gtfs/viarail.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "VIA Rail Windsor-London-Toronto schedule",
+          "url": "https://www.viarail.ca/en/plan/train-schedules/windsor-london-toronto"
+        },
+        {
+          "type": "government-gis",
+          "name": "Ontario Railway Network tracks",
+          "url": "https://ws.gisetl.lrc.gov.on.ca/fmedatadownload/Packages/ORWNTRK.zip"
+        }
+      ],
+      "lineIds": [
+        "via-toronto-london",
+        "via-toronto-windsor"
+      ],
+      "stationPairs": [
+        ["ca-official-aldershot", "ca-official-brantford"],
+        ["ca-official-brantford", "ca-official-woodstock"]
+      ]
+    },
+    {
+      "id": "us-tri-rail-downtown-miami-link",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "south-florida-regional-trans-mce",
+        "south-florida-regional-trans-dml"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Tri-Rail static GTFS",
+          "url": "http://www.tri-rail.com/GTDF/Current/google_transit.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Tri-Rail Downtown Miami Link schedule",
+          "url": "https://www1.tri-rail.com/ScheduleTable/1"
+        },
+        {
+          "type": "government-gis",
+          "name": "FRA/BTS North American Rail Network",
+          "url": "https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines/FeatureServer/0"
+        }
+      ],
+      "lineIds": [
+        "south-florida-regional-trans-dml",
+        "south-florida-regional-trans-mce"
+      ],
+      "stationPairs": [
+        ["us-official-metrorail-transfer", "us-official-miamicentral"]
+      ]
+    },
+    {
+      "id": "us-lirr-jamaica-kew-gardens-shared-track",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-west-hempstead-branch",
+        "mta-long-island-rail-road-city-terminal-zone"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "MTA Long Island Rail Road static GTFS",
+          "url": "http://web.mta.info/developers/data/lirr/google_transit.zip"
+        },
+        {
+          "type": "government-gis",
+          "name": "MTA Rail Branches GIS",
+          "url": "https://data.ny.gov/resource/2vcb-zrh4.geojson?$limit=50000"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "MTA LIRR branch timetables",
+          "url": "https://new.mta.info/schedules/long-island-rail-road"
+        }
+      ],
+      "lineIds": [
+        "mta-long-island-rail-road-city-terminal-zone",
+        "mta-long-island-rail-road-hempstead-branch",
+        "mta-long-island-rail-road-west-hempstead-branch"
+      ],
+      "stationPairs": [
+        ["us-official-jamaica", "us-official-kew-gardens"]
+      ]
+    },
+    {
+      "id": "us-metrolink-san-bernardino-terminal-link",
+      "region": "us",
+      "kind": "commuter",
+      "mergeStation": true,
+      "maxStationSeparationMeters": 40,
+      "canonicalLinePriority": [
+        "metrolink-ie-oc-line",
+        "metrolink-sb-line"
+      ],
+      "evidence": [
+        {
+          "type": "operator-gtfs",
+          "name": "Metrolink static GTFS",
+          "url": "https://metrolinktrains.com/globalassets/about/gtfs/gtfs.zip"
+        },
+        {
+          "type": "operator-timetable",
+          "name": "Metrolink current system timetable",
+          "url": "https://metrolinktrains.com/globalassets/schedules/timetables/2026/ml-timetable-current.pdf"
+        },
+        {
+          "type": "government-gis",
+          "name": "SCRRA/SCAG Metrolink line centreline",
+          "url": "https://maps.scag.ca.gov/scaggis/rest/services/OpenData/Metrolinklinescag/MapServer/0/query?where=1%3D1&outFields=*&returnGeometry=true&outSR=4326&f=geojson"
+        }
+      ],
+      "lineIds": [
+        "metrolink-ie-oc-line",
+        "metrolink-sb-line"
+      ],
+      "stationPairs": [
+        ["us-official-san-bernardino", "us-official-san-bernardino-downtown"]
+      ]
+    }
+  ]
+}

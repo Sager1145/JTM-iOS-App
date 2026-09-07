@@ -4,7 +4,7 @@
 | --- | --- |
 | Status | Active |
 | Owner | Project maintainers |
-| Last reviewed | 2026-08-28 |
+| Last reviewed | 2026-08-31 |
 | Review cadence | Quarterly and before each public release |
 
 ## Purpose
@@ -58,6 +58,7 @@ ADRs under `docs/decisions/` will own durable architecture decisions and their t
 | `docs/USER_GUIDE.md` | Tutorial/how-to | App users, support | Shipping UI and behavior | Review every visible workflow change |
 | `docs/API_REFERENCE.md` | Reference | Swift maintainers | Swift symbol graphs and tests | Review every public API change |
 | `docs/RUNBOOK.md` | How-to | Release engineers | `ios/verify.sh`, schemes, CI | Execute before release |
+| `docs/NORTH_AMERICA_RAIL_OPTIMIZATION.md` | Internal runbook/reference | Railway data agents | NA feed registry, build reports, audits, line ledger | Review every US/CA data release |
 | `docs/DOCUMENTATION_STRATEGY.md` | Explanation/governance | Maintainers | Documentation owners | Review quarterly |
 | `ios/FEATURES.md` | Reference | Product and engineering | Shipping feature set | Keep as feature source of truth |
 | `ios/README.md` | Explanation/history | Native-port maintainers | Code plus recorded history | Label stale history; avoid feature duplication |
@@ -130,17 +131,17 @@ Which credible options were rejected, and why?
 Which tests, metrics, or review date will show whether the decision still works?
 ```
 
-### ADR backlog
+### Accepted decisions
 
-Create ADRs when the responsible maintainers are ready to confirm the decisions. Suggested first records are:
+The initial architecture backlog is now recorded under `docs/decisions/`:
 
-1. Keep `RailCore` Foundation-only for fixture parity and portability.
-2. Use native SwiftUI and MapKit instead of embedding the web UI.
-3. Load the five regional railway networks into one native map workspace.
-4. Preserve WGS84 in shared data and apply selected GCJ-02 conversion only at the MapKit boundary.
-5. Persist the journey library as atomic local JSON with one recovery backup before destructive operations.
-6. Render network geometry with batched polylines, level-of-detail selection, viewport culling, and budgets.
-7. Surface route-solving failure instead of inventing a straight-line fallback.
+1. [Keep `RailCore` Foundation-only](decisions/0001-foundation-only-railcore.md).
+2. [Use native SwiftUI and MapKit](decisions/0002-native-swiftui-mapkit.md).
+3. [Use one seven-region map workspace](decisions/0003-unified-seven-region-workspace.md).
+4. [Keep shared coordinates in WGS84](decisions/0004-wgs84-mapkit-datum-boundary.md).
+5. [Persist journeys as atomic local JSON](decisions/0005-atomic-local-json-persistence.md).
+6. [Render railway geometry with bounded MapKit work](decisions/0006-batched-lod-map-rendering.md).
+7. [Fail closed when route solving cannot prove a path](decisions/0007-fail-closed-route-solving.md).
 
 ## Writing standards
 
@@ -186,7 +187,7 @@ The author of a change owns the initial documentation update. The code owner val
 
 - Keep the five primary documents linked from the root README.
 - Treat `ios/FEATURES.md` as the current feature ledger.
-- Create the first ADRs from the backlog as decisions are confirmed.
+- Add or supersede ADRs when durable architecture decisions change.
 
 ### Next
 

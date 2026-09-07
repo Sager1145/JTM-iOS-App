@@ -98,18 +98,26 @@ nonisolated public enum RailStyle {
     /// The clear map a reader needs between two DISTINCT railways sharing one
     /// corridor, edge to edge.
     ///
-    /// Carried for the corner-radius and topology relationships that quote it.
-    /// It is **not** a lane offset: commit `38cf0a8` (2026-08-19) removed
-    /// screen-space lanes end to end and rule R14 is withdrawn — every line
-    /// draws on its own surveyed geometry, and this app must not reintroduce
-    /// what the web app deliberately dropped.
     static let parallelGap: CGFloat = 1.2
+    /// Centre-to-centre spacing for distinct display lanes. It follows the
+    /// same scale ramp as the stroke, keeping the clear gap constant relative
+    /// to the railway rather than widening geographically during a zoom.
+    static let parallelLaneCentreDistance: CGFloat = railWidth + parallelGap
 
     /// The smallest radius a corner may PRESENT on screen: one stroke width,
     /// because the pen decides the floor. `line-join: round` already rounds the
     /// outer edge to half the width about the vertex, so under W/2 there is
     /// nothing a radius could add that the ink has not already drawn.
     static let minCornerRadius: CGFloat = railWidth
+
+    /// The radius a continuous stroke (`RailCore.ContinuousStroke`, the port of
+    /// rail-stroke.js) rounds its corners to where the surveyed polyline turns
+    /// on a vertex. The web app's `RAILWAY_STYLE.strokeCornerRadiusPx`: a
+    /// little over half a station dot, on the same scale ramp as the stroke.
+    static let strokeCornerRadius: CGFloat = stationDiameter * 0.6
+    /// A lane change drifts over at least this many points, whatever the zoom
+    /// makes of the 300 m ramp — railmap.js's STROKE_MIN_RAMP_PX.
+    static let strokeMinRamp: Double = 24
 
     // MARK: - §6.4's radius tokens
 

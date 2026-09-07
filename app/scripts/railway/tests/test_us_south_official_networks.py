@@ -67,7 +67,7 @@ class SouthOfficialNetworkTests(unittest.TestCase):
         self.assertEqual(feed['officialNetworkByRouteId'], {
             '700': 'houston-metro-700',
             '800': 'houston-metro-800',
-            '900': 'houston-metro-900',
+            '900': 'houston-metrorail-900',
         })
 
     def test_houston_provenance_is_exact(self):
@@ -76,6 +76,9 @@ class SouthOfficialNetworkTests(unittest.TestCase):
             'houston-metro')
         self.assertNotIn('houston-metro-',
                          na_provenance.KEY_SOURCE_PREFIXES)
+        self.assertEqual(
+            na_provenance.KEY_SOURCE_EXACT['houston-metrorail-900'],
+            'houston-metrorail-lines')
 
 
 if __name__ == '__main__':

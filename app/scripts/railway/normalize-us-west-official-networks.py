@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Normalize operator-published Sound Transit and VTA rail geometry.
+"""Normalize redistributable VTA rail geometry.
 
 The output is deliberately route-specific.  A city-wide rail graph is unsafe:
-at flat junctions it can silently send a service down another line.  Sound
-Transit also publishes future construction in the same archive, so this
-normalizer accepts only COMPLETE Link and OPERATIONAL Sounder records.
+at flat junctions it can silently send a service down another line.
 
-The Sound Transit shapefiles use NAD83 StatePlane Washington North (US feet).
-The small inverse Lambert implementation below avoids making the reproducible
-data build depend on a system GDAL or PROJ installation.
+The Sound Transit parsing helpers remain for local, in-memory comparison of a
+redistributable candidate against the authority's restricted engineering GIS.
+They must not be used by ``normalize`` and must never write into the published
+official-network manifest.  The ignored local-data contract is documented in
+``docs/NORTH_AMERICA_RAIL_OPTIMIZATION.md``.
 """
 from __future__ import annotations
 
@@ -29,11 +29,6 @@ from lib import na_official
 
 
 SOURCES = {
-    'sound-transit': {
-        'publisher': 'Sound Transit',
-        'url': ('https://www.soundtransit.org/sites/default/files/2024-10/'
-                'STPublicData.zip'),
-    },
     'vta': {
         'publisher': 'Santa Clara Valley Transportation Authority',
         'url': ('https://gis.vta.org/gis/rest/services/LRT_BART/MapServer/6/'
@@ -307,19 +302,9 @@ def _write_group(output_dir, key, features, source_id, raw_sha):
             'sha256': digest(encoded)}
 
 
-def normalize(output_dir, sound_input, vta_input):
+def normalize(output_dir, vta_input):
     os.makedirs(output_dir, exist_ok=True)
     manifest = _load_manifest(output_dir)
-
-    with open(sound_input, 'rb') as source:
-        sound_raw = source.read()
-    sound_sha = digest(sound_raw)
-    manifest['sources']['sound-transit'] = {
-        **SOURCES['sound-transit'], 'rawSha256': sound_sha,
-    }
-    for key, features in sorted(sound_groups(sound_input).items()):
-        manifest['files'][key] = _write_group(
-            output_dir, key, features, 'sound-transit', sound_sha)
 
     with open(vta_input, 'rb') as source:
         vta_raw = source.read()
@@ -343,11 +328,10 @@ def normalize(output_dir, sound_input, vta_input):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output-dir', required=True)
-    parser.add_argument('--sound-input', required=True)
     parser.add_argument('--vta-input', required=True)
     args = parser.parse_args()
-    manifest = normalize(args.output_dir, args.sound_input, args.vta_input)
-    print(f'wrote {len(SOUND_KEYS) + len(VTA_KEYS)} western route networks; '
+    manifest = normalize(args.output_dir, args.vta_input)
+    print(f'wrote {len(VTA_KEYS)} western route networks; '
           f'manifest now contains {len(manifest["files"])} files')
 
 

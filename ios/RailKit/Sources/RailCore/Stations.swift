@@ -188,8 +188,103 @@ public enum Stations {
 
         public init(features: [Feature]) { self.features = features }
 
+        /// Reads a `stations*.json` collection.
+        ///
+        /// Through `JSONSerialization` rather than `JSONDecoder`, because
+        /// ``Value`` is a JSON value rather than a typed field and `Decodable`
+        /// has no way to ask what a value IS — only to try a type and catch the
+        /// failure. Even in the best case order (see ``Value/init(from:)``)
+        /// that is 160,842 built-and-discarded `DecodingError`s for the
+        /// Japanese file. An output-equivalent release benchmark measures the
+        /// complete paths at 134.3 ms here against 194.6 ms through the
+        /// `Decodable` conformance (1.45×); parser-only timings are deliberately
+        /// not presented as though they included model construction.
+        ///
+        /// `JSONSerialization` answers with a tree that has already been
+        /// discriminated, so ``Value/init(json:)`` reads the type instead of
+        /// guessing it, and nothing throws on the happy path.
+        ///
+        /// The `Decodable` conformance stays and is unchanged — it is what the
+        /// fixtures and the value-case test decode through, and it remains the
+        /// definition this path is checked against by
+        /// `loadMatchesTheDecodableConformance`.
         public static func load(contentsOf url: URL) throws -> FeatureCollection {
-            try JSONDecoder().decode(FeatureCollection.self, from: Data(contentsOf: url))
+            try decode(json: Data(contentsOf: url, options: .mappedIfSafe))
+        }
+
+        /// ``load(contentsOf:)``'s reader, over bytes already in hand.
+        public static func decode(json data: Data) throws -> FeatureCollection {
+            let root = try JSONSerialization.jsonObject(with: data, options: [])
+            guard let object = root as? [String: Any],
+                let rawFeatures = object["features"] as? [Any]
+            else {
+                // `Decodable` answers a missing or mistyped `features` with a
+                // thrown error, so this does too rather than an empty
+                // collection, which would read as a network with no stations.
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(
+                        codingPath: [],
+                        debugDescription: "stations JSON has no `features` array"))
+            }
+            var features: [Feature] = []
+            features.reserveCapacity(rawFeatures.count)
+            for raw in rawFeatures {
+                guard let feature = raw as? [String: Any] else {
+                    throw DecodingError.dataCorrupted(
+                        DecodingError.Context(
+                            codingPath: [],
+                            debugDescription: "a station feature is not an object"))
+                }
+                // `decodeIfPresent` treats absent and null alike, and falls
+                // back to an empty table. A present value of any other type is
+                // still an error, just as it is on the `Decodable` path.
+                var properties: [String: Value] = [:]
+                if let value = feature["properties"], !(value is NSNull) {
+                    guard let raw = value as? [String: Any] else {
+                        throw DecodingError.typeMismatch(
+                            [String: Value].self,
+                            DecodingError.Context(
+                                codingPath: [],
+                                debugDescription: "a station feature's `properties` is not an object"))
+                    }
+                    properties.reserveCapacity(raw.count)
+                    for (key, value) in raw {
+                        properties[key] = try Value(json: value)
+                    }
+                }
+                var geometry: Geometry?
+                if let value = feature["geometry"], !(value is NSNull) {
+                    guard let raw = value as? [String: Any] else {
+                        throw DecodingError.typeMismatch(
+                            Geometry.self,
+                            DecodingError.Context(
+                                codingPath: [],
+                                debugDescription: "a station feature's `geometry` is not an object"))
+                    }
+                    // `Geometry` is synthesised `Decodable` over two OPTIONAL
+                    // properties, so both absent and null answer nil there —
+                    // `decodeIfPresent` never reaches ``Value/init(from:)`` for
+                    // a null, and so never produces `.null`. Matched here.
+                    var coordinates: Value?
+                    if let value = raw["coordinates"], !(value is NSNull) {
+                        coordinates = try Value(json: value)
+                    }
+                    var type: String?
+                    if let value = raw["type"], !(value is NSNull) {
+                        guard let text = value as? String else {
+                            throw DecodingError.typeMismatch(
+                                String.self,
+                                DecodingError.Context(
+                                    codingPath: [],
+                                    debugDescription: "a station geometry's `type` is not a string"))
+                        }
+                        type = text
+                    }
+                    geometry = Geometry(type: type, coordinates: coordinates)
+                }
+                features.append(Feature(properties: properties, geometry: geometry))
+            }
+            return FeatureCollection(features: features)
         }
     }
 
@@ -887,19 +982,73 @@ public enum Stations {
 
 // MARK: - JavaScript string semantics, written out
 
+extension Stations.Value {
+
+    /// One `JSONSerialization` value as a ``Stations/Value``.
+    ///
+    /// The same five cases ``init(from:)`` discriminates, but read rather than
+    /// guessed: `JSONSerialization` has already decided what each node is, so
+    /// no branch here can fail and be retried. That is the whole reason
+    /// ``Stations/FeatureCollection/decode(json:)`` exists.
+    ///
+    /// `NSNumber` is the one case needing care: `JSONSerialization` returns one
+    /// for booleans as well as for numbers, and only the CoreFoundation type
+    /// id separates them. Getting that wrong would file `true` as the number 1,
+    /// whose `isTruthy` agrees but whose `jsString` is "1" rather than "true".
+    init(json value: Any) throws {
+        switch value {
+        case is NSNull:
+            self = .null
+        case let text as String:
+            self = .string(text)
+        case let number as NSNumber:
+            self = CFGetTypeID(number) == CFBooleanGetTypeID()
+                ? .bool(number.boolValue)
+                : .number(number.doubleValue)
+        case let items as [Any]:
+            self = .array(try items.map { try Stations.Value(json: $0) })
+        default:
+            // The object case, refused here for the reason it is refused in
+            // `init(from:)` — see the type's own documentation.
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: [],
+                    debugDescription:
+                        "Stations.Value has no object case on purpose: JSON.stringify of an "
+                        + "object depends on key insertion order, which JSONDecoder does not "
+                        + "preserve, and nothing in the station data puts one where that "
+                        + "would matter."))
+        }
+    }
+}
+
 extension Stations.Value: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
+        // Ordered by how often each case actually occurs, because every
+        // rejected attempt is a THROW: `JSONDecoder` builds a `DecodingError`,
+        // and with it a coding path and a description string, for each one.
+        //
+        // `stations.json` for Japan holds 71,631 strings, 70,188 numbers,
+        // 45,327 arrays and no booleans at all. Trying `Bool` and `Double`
+        // before `String` cost 349,431 discarded errors per load; string,
+        // number, array, bool costs 160,842.
+        //
+        // The order cannot change an answer. A JSON value is exactly one of
+        // these five, and `JSONDecoder` rejects every cross-type read — it
+        // will not read `true` as a number or `1` as a string — so at most one
+        // arm can succeed whatever order they are tried in. `decodeNil` stays
+        // first because it is the one test that does not throw.
         if container.decodeNil() {
             self = .null
-        } else if let value = try? container.decode(Bool.self) {
-            self = .bool(value)
-        } else if let value = try? container.decode(Double.self) {
-            self = .number(value)
         } else if let value = try? container.decode(String.self) {
             self = .string(value)
+        } else if let value = try? container.decode(Double.self) {
+            self = .number(value)
         } else if let value = try? container.decode([Stations.Value].self) {
             self = .array(value)
+        } else if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,

@@ -38,8 +38,9 @@ import sys
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
-from na_profile import (CROSSCHECK_TOLERANCE_M, median_spacing_m,   # noqa: E402
-                        profile_for)
+from na_profile import (CROSSCHECK_TOLERANCE_M,                    # noqa: E402
+                        DISPLAY_ALIGNMENT_TOLERANCE_M,
+                        median_spacing_m, profile_for)
 from na_provenance import SOURCES as OFFICIAL_NETWORK_SOURCES       # noqa: E402
 
 EARTH_R = 6_371_008.8
@@ -276,7 +277,15 @@ def audit_line(line, country, found, verified_official=()):
         # also names genuinely straight railway; provenance, not visual shape,
         # is what lets a reviewer clear that warning.
         chord_deviation = max_chord_deviation(points)
+        # …and provenance is exactly what `straightIntervals` carries: the
+        # build measured this interval against the source that did not draw
+        # it and recorded that surveyed track lies along the whole of it. A
+        # straight railway that can show that is cleared here; one that cannot
+        # is still an error.
+        surveyed_straight = set(
+            (line.get('straightIntervals') or {}).get('intervals') or ())
         if (line.get('geometrySource') not in verified_official
+                and index not in surveyed_straight
                 and drawn > max(500.0, profile.max_edge_m * 2.0)
                 and direct > 0 and drawn <= direct * 1.005
                 and chord_deviation <= 1.5):
@@ -372,9 +381,11 @@ def audit_line(line, country, found, verified_official=()):
 CAPS = re.compile(r'^[^a-z]*[A-Z]{4,}[^a-z]*$')
 
 
-def audit_package(package, found, band_by_line):
+def audit_package(package, found, band_by_line, station_split_exceptions=None,
+                  verified_official=()):
     country = package.get('country')
     lines = package['lines']
+    station_split_exceptions = station_split_exceptions or {}
 
     ids = Counter(l.get('id') for l in lines)
     for lid, count in ids.items():
@@ -393,6 +404,80 @@ def audit_package(package, found, band_by_line):
             found.add('ERROR', 'line.orphanBranch', country, line['id'],
                       'branch is present but its trunk is absent',
                       trunk=branch_of)
+
+    # How far the shipped line is from the survey that did not draw it. The
+    # build already measures this and writes it into the package; auditing it
+    # here turns it from a number a reader would have to go looking for into a
+    # finding with a name — "this railway is drawn beside the real one" is the
+    # defect a station-chord check cannot see, because a wrong corridor can be
+    # as detailed as a right one.
+    #
+    # Corridor identity is not display accuracy.  The release-quality table is
+    # deliberately tighter than the older 25--400 m corridor bands so a line
+    # cannot pass while visibly running beside the basemap track.
+    comparison = ((package.get('geometrySource') or {})
+                  .get('officialGeometryComparison') or {})
+    for lid, row in (comparison.get('byLine') or {}).items():
+        band = band_by_line.get(lid)
+        tolerance = DISPLAY_ALIGNMENT_TOLERANCE_M.get(band, 20.0)
+        deviation = float(row.get('maxDeviationMeters') or 0.0)
+        vertices = int(row.get('vertices') or 0)
+        unmatched = int(row.get('unmatched') or 0)
+        withheld = list(row.get('displayBlockedIntervals') or [])
+        retained = list(row.get('officialSourceRetainedIntervals') or [])
+        source_is_verified = row.get('builtFrom') in verified_official
+        if retained and not source_is_verified:
+            found.add('ERROR', 'source.provenance', country, lid,
+                      'unverified geometry claims the official-source display exception',
+                      builtFrom=row.get('builtFrom'), intervals=retained)
+        if deviation > tolerance:
+            if withheld:
+                severity = 'NOTE'
+                check = 'geometry.deviation.withheld'
+                message = ('%d station interval(s) are withheld from display; '
+                           'the source geometry reaches %.0f m from the '
+                           'independent survey, past the %.0f m %s limit'
+                           % (len(withheld), deviation, tolerance,
+                              band or 'default'))
+            elif retained and source_is_verified:
+                severity = 'WARN'
+                check = 'geometry.deviation.officialRetained'
+                message = ('%d station interval(s) retain the verified official '
+                           'centreline although the independent visual reference '
+                           'differs by up to %.0f m, past the %.0f m %s review limit'
+                           % (len(retained), deviation, tolerance,
+                              band or 'default'))
+            else:
+                severity = 'ERROR'
+                check = 'geometry.deviation'
+                message = ('drawn up to %.0f m from the independent survey, past '
+                           'the %.0f m the %s band allows'
+                           % (deviation, tolerance, band or 'default'))
+            found.add(severity, check, country, lid, message,
+                      metres=round(deviation, 1), toleranceMetres=tolerance,
+                      intervals=withheld or retained, at=row.get('worstAt'),
+                      builtFrom=row.get('builtFrom'))
+        if unmatched:
+            if withheld:
+                severity = 'NOTE'
+                check = 'geometry.unchecked.withheld'
+                message = ('%d of %d vertices had no independent reference; '
+                           'affected station intervals are withheld from display'
+                           % (unmatched, vertices))
+            elif retained and source_is_verified:
+                severity = 'WARN'
+                check = 'geometry.unchecked.officialRetained'
+                message = ('%d of %d vertices had no independent visual reference; '
+                           'the provenance-verified official centreline remains visible'
+                           % (unmatched, vertices))
+            else:
+                severity = 'ERROR'
+                check = 'geometry.unchecked'
+                message = ('%d of %d vertices had no independent reference'
+                           % (unmatched, vertices))
+            found.add(severity, check, country, lid, message,
+                      vertices=vertices, unmatched=unmatched,
+                      intervals=withheld or retained)
 
     # Operator identity. The packages this family is modelled on name one
     # company one way; a GTFS feed names it however its author typed it, and
@@ -473,17 +558,87 @@ def audit_package(package, found, band_by_line):
             allowed = max(CROSSCHECK_TOLERANCE_M.get(base[4], 90.0),
                           CROSSCHECK_TOLERANCE_M.get(row[4], 90.0))
             if drift > allowed:
-                found.add('WARN', 'station.split', country, row[0],
-                          'station %s is %.0f m from where %s puts it, past '
-                          'the %.0f m the band allows' % (sid, drift, base[0],
-                                                          allowed),
-                          station=sid, metres=round(drift))
+                reviewed = station_split_exceptions.get(sid) or {}
+                reviewed_limit = float(reviewed.get('maxMeters') or 0.0)
+                if reviewed_limit and drift <= reviewed_limit:
+                    found.add(
+                        'NOTE', 'station.split.reviewed', country, row[0],
+                        'station %s spans %.0f m inside a reviewed official '
+                        'complex (exact limit %.0f m)' % (
+                            sid, drift, reviewed_limit),
+                        station=sid, metres=round(drift),
+                        maxMeters=reviewed_limit,
+                        evidence=reviewed.get('evidence'),
+                        evidenceUrl=reviewed.get('evidenceUrl'),
+                        sourceSha256=reviewed.get('sourceSha256'),
+                        stopIds=reviewed.get('stopIds'))
+                else:
+                    found.add('WARN', 'station.split', country, row[0],
+                              'station %s is %.0f m from where %s puts it, '
+                              'past the %.0f m the band allows' % (
+                                  sid, drift, base[0], allowed),
+                              station=sid, metres=round(drift))
                 break
         names = {r[1] for r in rows}
         if len(names) > 1:
             found.add('NOTE', 'station.names', country, '-',
                       'station %s is named %d ways: %s'
                       % (sid, len(names), ' / '.join(sorted(names))), station=sid)
+
+
+def read_station_split_exceptions(registry_path, found):
+    """Load only exact, evidenced station-complex span exceptions.
+
+    These do not widen a service-band tolerance.  One final package station
+    id gets one finite ceiling and retains an audit NOTE on every run; a new
+    or enlarged split still warns normally.
+    """
+    if not registry_path:
+        return {}
+    try:
+        with open(registry_path, encoding='utf-8') as source:
+            records = json.load(source).get('stationSplitExceptions') or {}
+    except (OSError, AttributeError, ValueError) as exc:
+        found.add('ERROR', 'registry.stationSplitException', '-', '-',
+                  'could not read station split exceptions: %s' % exc)
+        return {}
+    if not isinstance(records, dict):
+        found.add('ERROR', 'registry.stationSplitException', '-', '-',
+                  'stationSplitExceptions must be an object')
+        return {}
+    accepted = {}
+    for station_id, record in records.items():
+        source_hashes = (record.get('sourceSha256')
+                         if isinstance(record, dict) else None)
+        source_hashes = (source_hashes if isinstance(source_hashes, list)
+                         else [source_hashes])
+        valid_hashes = (bool(source_hashes)
+                        and all(isinstance(value, str)
+                                and re.fullmatch(r'[0-9a-f]{64}', value)
+                                for value in source_hashes))
+        valid = (isinstance(station_id, str)
+                 and station_id.startswith(('us-', 'ca-'))
+                 and isinstance(record, dict)
+                 and isinstance(record.get('maxMeters'), (int, float))
+                 and 0 < record['maxMeters'] <= 1000
+                 and isinstance(record.get('evidence'), str)
+                 and bool(record['evidence'].strip())
+                 and isinstance(record.get('evidenceUrl'), str)
+                 and record['evidenceUrl'].startswith(('http://', 'https://'))
+                 and valid_hashes
+                 and isinstance(record.get('stopIds'), list)
+                 # A complex assembled from distinct operator stop ids needs
+                 # every member listed. A single exact GTFS station id reused
+                 # by multiple route patterns is already an unambiguous
+                 # identity assertion and must not be duplicated artificially.
+                 and len(record['stopIds']) >= 1)
+        if not valid:
+            found.add('ERROR', 'registry.stationSplitException', '-',
+                      str(station_id),
+                      'station split exception is incomplete or invalid')
+            continue
+        accepted[station_id] = record
+    return accepted
 
 
 def audit_registry(registry_path, summaries, found):
@@ -555,6 +710,8 @@ def main():
 
     found = Findings()
     summaries = []
+    station_split_exceptions = read_station_split_exceptions(
+        options.registry, found)
     for path in options.package:
         with open(path) as fh:
             package = json.load(fh)
@@ -566,8 +723,9 @@ def main():
             if row:
                 row['country'] = country
                 summaries.append(row)
-        audit_package(package, found,
-                      {r['id']: r['band'] for r in summaries})
+        audit_package(
+            package, found, {r['id']: r['band'] for r in summaries},
+            station_split_exceptions, verified_official)
 
     if options.registry:
         audit_registry(options.registry, summaries, found)

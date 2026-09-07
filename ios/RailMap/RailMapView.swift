@@ -39,6 +39,155 @@ private struct LineBuild: LODBuild {
     var drawnVertexCount: Int { polylines.reduce(0) { $0 + $1.pointCount } }
 }
 
+/// One continuous stroke, built for this frame: the runs of it that meet the
+/// build rect, and the platform positions that ride on it.
+private struct ContinuousStrokeBuild {
+    let runs: [[Coordinate]]
+    let anchors: [Int: CLLocationCoordinate2D]
+}
+
+/// Draw a continuous-stroke line (North America) as ONE polyline: the chain
+/// of intervals is joined at its shared station anchors, projected to the
+/// pixel space this frame is drawn in, handed to `RailCore.ContinuousStroke`
+/// — the port of rail-stroke.js — which bakes the screen-space lane offset in
+/// through its smoothed lane profile and rounds the corners, and only then
+/// clipped to the build rect. Clipping after offsetting is what keeps the
+/// stroke whole across the viewport: an edge is kept when its own box meets
+/// the rect, so nothing on screen is ever the end of a piece.
+/// The joined chain of a continuous line, in the pixel space of this frame,
+/// with the cumulative metres along it on the ruler the lane rows were
+/// measured with (rail-network.js `distanceMeters`: 111320 m per degree on
+/// both axes, longitude scaled by the cosine of the mean latitude).
+private func continuousChainPixels(
+    of line: RailNetworkStore.DrawnLine, mapPointsPerScreenPoint: Double
+) -> (points: [ContinuousStroke.Point], measures: [Double]) {
+    var chain: [Coordinate] = []
+    for (index, interval) in line.intervals.enumerated() {
+        chain.append(contentsOf: index == 0 ? interval[...] : interval.dropFirst())
+    }
+    var measures = [Double](repeating: 0, count: chain.count)
+    if chain.count > 1 {
+        for index in 1..<chain.count {
+            let a = chain[index - 1]
+            let b = chain[index]
+            let lat = ((a.lat + b.lat) / 2) * Double.pi / 180
+            measures[index] = measures[index - 1]
+                + hypot((b.lon - a.lon) * 111_320 * cos(lat), (b.lat - a.lat) * 111_320)
+        }
+    }
+    let points = chain.map { coordinate -> ContinuousStroke.Point in
+        let point = MKMapPoint(coordinate.clLocation)
+        return ContinuousStroke.Point(
+            x: point.x / mapPointsPerScreenPoint, y: point.y / mapPointsPerScreenPoint)
+    }
+    return (points, measures)
+}
+
+private func continuousStrokeBuild(
+    for line: RailNetworkStore.DrawnLine, anchors: [Int],
+    canonical: (String) -> RailNetworkStore.DrawnLine?,
+    buildRect: MKMapRect, mapPointsPerScreenPoint: Double, scale: CGFloat
+) -> ContinuousStrokeBuild {
+    guard mapPointsPerScreenPoint > 0 else {
+        return ContinuousStrokeBuild(runs: [], anchors: [:])
+    }
+    let chain = continuousChainPixels(of: line, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+    let pixels = chain.points
+    guard pixels.count >= 2 else {
+        return ContinuousStrokeBuild(runs: [], anchors: [:])
+    }
+    // The canonical alignments this chain is drawn from, projected into the
+    // same pixel space; a follow whose canonical chain is not loaded is
+    // simply not applied.
+    let follows = line.follows.compactMap { follow -> ContinuousStroke.Follow? in
+        guard let canon = canonical(follow.canonicalID) else { return nil }
+        let canonChain = continuousChainPixels(of: canon, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+        guard canonChain.points.count >= 2 else { return nil }
+        return ContinuousStroke.Follow(
+            from: follow.from, to: follow.to,
+            canonFrom: follow.canonicalFrom, canonTo: follow.canonicalTo,
+            points: canonChain.points, measures: canonChain.measures)
+    }
+    let stroke = ContinuousStroke.buildStroke(
+        pixels,
+        options: .init(
+            measures: chain.measures,
+            rows: line.laneRows, totalMetres: line.totalMetres,
+            laneGapPx: Double(RailStyle.parallelLaneCentreDistance * scale),
+            minRampPx: RailStyle.strokeMinRamp,
+            cornerRadiusPx: Double(RailStyle.strokeCornerRadius * scale),
+            anchors: anchors, follows: follows))
+    func mapPoint(_ point: ContinuousStroke.Point) -> MKMapPoint {
+        MKMapPoint(x: point.x * mapPointsPerScreenPoint, y: point.y * mapPointsPerScreenPoint)
+    }
+    var anchorPoints: [Int: CLLocationCoordinate2D] = [:]
+    for (slot, index) in anchors.enumerated() where slot < stroke.anchors.count {
+        anchorPoints[index] = mapPoint(stroke.anchors[slot]).coordinate
+    }
+    let points = stroke.points.map(mapPoint)
+    var runs: [[Coordinate]] = []
+    var current: [Coordinate] = []
+    func coordinate(_ point: MKMapPoint) -> Coordinate {
+        let held = point.coordinate
+        return Coordinate(lon: held.longitude, lat: held.latitude)
+    }
+    for index in 1..<points.count {
+        let a = points[index - 1]
+        let b = points[index]
+        let box = MKMapRect(
+            x: min(a.x, b.x), y: min(a.y, b.y),
+            width: abs(a.x - b.x), height: abs(a.y - b.y))
+        if box.intersects(buildRect) {
+            if current.isEmpty { current.append(coordinate(a)) }
+            current.append(coordinate(b))
+        } else if !current.isEmpty {
+            runs.append(current)
+            current = []
+        }
+    }
+    if !current.isEmpty { runs.append(current) }
+    return ContinuousStrokeBuild(runs: runs, anchors: anchorPoints)
+}
+
+/// Offset one display fragment in projected map space. The canonical package
+/// geometry stays untouched; only the MKPolyline submitted for this frame is
+/// shifted, by the same point token the Web renderer applies with line-offset.
+private func parallelLaneCoordinates(
+    _ coordinates: [CLLocationCoordinate2D], lane: Double,
+    mapPointsPerScreenPoint: Double, scale: CGFloat
+) -> [CLLocationCoordinate2D] {
+    guard lane != 0, coordinates.count >= 2 else { return coordinates }
+    let points = coordinates.map { MKMapPoint($0) }
+    let offset = lane * Double(RailStyle.parallelLaneCentreDistance * scale)
+        * mapPointsPerScreenPoint
+    return points.indices.map { index in
+        let first = points[index == 0 ? index : index - 1]
+        let second = points[index + 1 < points.count ? index + 1 : index]
+        let dx = second.x - first.x
+        let dy = second.y - first.y
+        let length = hypot(dx, dy)
+        guard length > 0 else { return points[index].coordinate }
+        // MKMapPoint y grows south, so (-dy, dx) is the right-hand normal,
+        // matching positive MapLibre line-offset for the digitised direction.
+        return MKMapPoint(
+            x: points[index].x - dy / length * offset,
+            y: points[index].y + dx / length * offset).coordinate
+    }
+}
+
+@MainActor private func parallelStationCoordinate(
+    _ coordinate: CLLocationCoordinate2D, lane: Double, bearing: Double?,
+    scale: CGFloat, on mapView: MKMapView
+) -> CLLocationCoordinate2D {
+    guard lane != 0, let bearing else { return coordinate }
+    var point = mapView.convert(coordinate, toPointTo: mapView)
+    let radians = bearing * .pi / 180
+    let offset = lane * Double(RailStyle.parallelLaneCentreDistance * scale)
+    point.x += CGFloat(cos(radians) * offset)
+    point.y += CGFloat(sin(radians) * offset)
+    return mapView.convert(point, toCoordinateFrom: mapView)
+}
+
 /// A tiny screen-space collision index for labels the app owns.
 ///
 /// MapKit's annotation collision pass also competes with the basemap's labels.
@@ -140,7 +289,7 @@ struct RailMapView: View {
     /// camera callback because the rebuild is already throttled to a zoom tier
     /// and a padded rect, and a pan inside that rect cannot bring a new
     /// country into view.
-    var onBuildRect: (MKMapRect) -> Void = { _ in }
+    var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
     /// Reports back what the renderer actually did, so the numbers on screen
     /// are measurements rather than estimates.
     var onRender: (RenderStats) -> Void
@@ -284,11 +433,26 @@ struct RailMapView: View {
         var localization: AppLocalization?
         var onSelectRide: ([String]) -> Void
         var onSelectStation: (StationCard) -> Void
-        var onBuildRect: (MKMapRect) -> Void = { _ in }
+        var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
         var onRender: (RenderStats) -> Void
 
         func makeUIView(context: Context) -> MKMapView {
             let mapView = MKMapView()
+#if DEBUG
+            // UI tests used to prove only that the “全部線路” switch stayed
+            // responsive, while a screenshot that nobody asserted on was the
+            // sole evidence that the railway layer actually drew. A one-point,
+            // visually empty label gives XCTest a machine-readable render state;
+            // it is compiled out of release builds and cannot intercept input.
+            let renderStatus = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            renderStatus.text = " "
+            renderStatus.textColor = .clear
+            renderStatus.isUserInteractionEnabled = false
+            renderStatus.isAccessibilityElement = true
+            renderStatus.accessibilityIdentifier = "railMapRenderStatus"
+            mapView.addSubview(renderStatus)
+            context.coordinator.renderStatus = renderStatus
+#endif
             mapView.delegate = context.coordinator
             mapView.showsCompass = true
             mapView.showsScale = true
@@ -427,7 +591,7 @@ struct RailMapView: View {
             var onRender: (RenderStats) -> Void = { _ in }
             var onSelectRide: ([String]) -> Void = { _ in }
             var onSelectStation: (StationCard) -> Void = { _ in }
-            var onBuildRect: (MKMapRect) -> Void = { _ in }
+            var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
             /// The localisation engine's owner. A `@MainActor` class, and
             /// therefore `Sendable`, so a nonisolated coordinator may hold it;
             /// see ``localized(_:code:)`` for how it is read.
@@ -465,6 +629,9 @@ struct RailMapView: View {
             /// pan gesture; rebuilding when the integer zoom changes puts it at
             /// the handful of moments where what is drawn actually changes.
             private var builtForZoom: Int?
+            /// Screen-space lanes need their projected coordinates refreshed
+            /// after a pinch settles even when it stayed inside one LOD bucket.
+            private var builtLaneZoom: Double?
             /// The rect the current overlays were built for — the visible one plus
             /// its padding. Panning inside it does no work; leaving it rebuilds.
             private var builtRect: MKMapRect = .null
@@ -486,6 +653,9 @@ struct RailMapView: View {
             /// essential: using `styledScale` as the only throttle froze every
             /// station name at the zoom on which it was first configured.
             private var styledMarkZoom = Double.nan
+#if DEBUG
+            weak var renderStatus: UILabel?
+#endif
             /// When a tap was last answered with a ride of this map's own —
             /// read by ``mapView(_:didSelect:)`` half a second later, and
             /// cleared as the next touch arrives, so it only ever describes
@@ -585,7 +755,8 @@ struct RailMapView: View {
                 if linesChanged {
                     self.lines = lines
                     self.minZoomByLineId = Dictionary(
-                        uniqueKeysWithValues: lines.map { ($0.id, $0.minZoom) })
+                        lines.map { ($0.lineID, $0.minZoom) },
+                        uniquingKeysWith: { first, _ in first })
 
                     // A new country's extent, handed to the controller so the 定位
                     // button frames what is actually loaded rather than a
@@ -667,6 +838,7 @@ struct RailMapView: View {
                     || displayChanged || dateChanged || namingChanged
                 if drawingChanged {
                     builtForZoom = nil
+                    builtLaneZoom = nil
                     // Not during a run, for the reason `regionDidChangeAnimated`
                     // gives — and this is the path that actually hurt. The
                     // transport moves the selection from journey to journey as
@@ -972,13 +1144,18 @@ struct RailMapView: View {
                     }
                     rideStationAnnotations = []
                     builtForZoom = nil
+                    builtLaneZoom = nil
                     return
                 }
 
                 // Before the first layout pass the view has no width, and the
                 // zoom derived from it is nonsense — it was reading z = -8 and
-                // culling every line. Wait for a real size.
-                guard mapView.bounds.width > 1, !lines.isEmpty || !rides.isEmpty else { return }
+                // culling every line. Wait for a real size. An empty geometry
+                // array is NOT a reason to return: the build rect computed
+                // below is the request that loads the first display network.
+                // Returning before `onBuildRect` made the complete network
+                // permanently blank for a reader with no recorded journeys.
+                guard mapView.bounds.width > 1 else { return }
 
                 let zoom = MapProjection.zoomLevel(of: mapView)
                 // Every LOD and label floor is an integer zoom. `rounded()`
@@ -991,14 +1168,24 @@ struct RailMapView: View {
                 // Rebuild when the zoom tier changes, or when the map has been
                 // panned past what was built for. Panning within the padded rect
                 // is free, which is what keeps the gesture smooth.
-                guard bucket != builtForZoom || !builtRect.contains(visibleRect) else { return }
+                let laneScaleMoved = lines.contains(where: { $0.lane != 0 })
+                    && abs(zoom - (builtLaneZoom ?? -Double.infinity)) >= 0.125
+                guard bucket != builtForZoom || laneScaleMoved
+                        || !builtRect.contains(visibleRect) else { return }
                 builtForZoom = bucket
+                builtLaneZoom = zoom
                 let buildRect = NetworkLOD.buildRect(for: visibleRect)
                 builtRect = buildRect
                 // Before the build, not after: a country that has not been
                 // decoded contributes nothing to what follows, and saying so
                 // now is what gets it decoded in time for the next rebuild.
-                onBuildRect(buildRect)
+                onBuildRect(buildRect, zoom)
+
+                // A cold display-network request has no geometry to build
+                // yet. Its result changes `lines`, clears `builtForZoom` in
+                // `update`, and returns through this method with the region's
+                // continuous geometry.
+                guard !lines.isEmpty || !rides.isEmpty else { return }
 
                 let started = ContinuousClock.now
                 let rebuildInterval = RailSignpost.map.begin("map.rebuild")
@@ -1033,17 +1220,75 @@ struct RailMapView: View {
                 let epsilon = MapProjection.metresPerPixel(
                     zoom: zoom, latitude: mapView.region.center.latitude)
                     * RailStyle.simplifyTolerance
+                let buildScale = MapProjection.quantised(
+                    RailStyle.scale(atZoom: zoom), on: mapView)
+                let mapPointsPerScreenPoint = mapView.visibleMapRect.width
+                    / Double(max(1, mapView.bounds.width))
 
+                // The per-interval cull, and it is what lets the map hold a
+                // railway whole. `NetworkLOD.select` has already dropped the
+                // lines whose whole extent is off screen; a transcontinental
+                // corridor passes that test from one coast while the camera
+                // sits on the other, and without this every interval of it
+                // would be decimated, laned and handed to MapKit to draw the
+                // handful that are visible. The rects are precomputed beside
+                // the geometry (`DrawnLine.intervalRects`), so the test is one
+                // rectangle intersection per stroke rather than a walk over
+                // its vertices. Cheapest first: reject before decimating.
+                // The platforms of every continuous stroke, by the stroke's
+                // id, so the stroke can carry them along and the dots below
+                // can be placed on the offset stroke rather than beside it.
+                var anchorsByStroke: [String: [Int]] = [:]
+                for station in stations {
+                    guard let slot = station.slot else { continue }
+                    anchorsByStroke[
+                        "\(station.region.rawValue)|\(station.lineID)#\(slot.chain)",
+                        default: []
+                    ].append(slot.anchor)
+                }
+                var strokeAnchors: [String: [Int: CLLocationCoordinate2D]] = [:]
+                // Every resident line by stroke id, for the canonical chains
+                // a follow names — resident, not merely selected, because a
+                // canonical stroke may be culled while its tenant is drawn.
+                let linesByStrokeID = Dictionary(
+                    lines.filter(\.continuous).map { ($0.id, $0) },
+                    uniquingKeysWith: { first, _ in first })
                 let builds: [LineBuild] = (selection?.lines ?? []).map { line in
                     var polylines: [MKPolyline] = []
-                    for interval in line.intervals where interval.count >= 2 {
+                    let runs: [[Coordinate]]
+                    if line.continuous {
+                        // A continuous stroke is drawn whole — one polyline
+                        // through every lane it holds — then clipped. The
+                        // per-interval rect test still decides whether the
+                        // line is near enough to be built at all.
+                        guard line.intervalRects.contains(where: { $0.intersects(buildRect) })
+                        else { return LineBuild(line: line, polylines: []) }
+                        let stroke = continuousStrokeBuild(
+                            for: line, anchors: anchorsByStroke[line.id] ?? [],
+                            canonical: { linesByStrokeID[$0] },
+                            buildRect: buildRect,
+                            mapPointsPerScreenPoint: mapPointsPerScreenPoint,
+                            scale: buildScale)
+                        strokeAnchors[line.id] = stroke.anchors
+                        runs = stroke.runs
+                    } else {
+                        runs = line.intervals.enumerated().compactMap { index, interval in
+                            line.intervalRects[index].intersects(buildRect) ? interval : nil
+                        }
+                    }
+                    for interval in runs {
+                        guard interval.count >= 2 else { continue }
                         let kept = Geometry.douglasPeuckerIndices(interval, epsilonMeters: epsilon)
-                        let points = kept.map { interval[$0].clLocation }
+                        let canonical = kept.map { interval[$0].clLocation }
+                        let points = parallelLaneCoordinates(
+                            canonical, lane: line.lane,
+                            mapPointsPerScreenPoint: mapPointsPerScreenPoint,
+                            scale: buildScale)
                         guard points.count >= 2 else { continue }
                         polylines.append(MKPolyline(coordinates: points, count: points.count))
                     }
                     return LineBuild(line: line, polylines: polylines)
-                }
+                }.filter { !$0.polylines.isEmpty }
 
                 // The budget is applied to what decimation actually produced, not
                 // to the stored vertex count. Budgeting on the raw count cut a
@@ -1072,7 +1317,7 @@ struct RailMapView: View {
                 // by the same rule `restyle` rounds by, so a mark built here
                 // and a mark rescaled there are never a fraction of a pixel
                 // apart.
-                let scale = MapProjection.quantised(RailStyle.scale(atZoom: zoom), on: mapView)
+                let scale = buildScale
                 styledScale = scale
                 styledMarkZoom = (zoom * 16).rounded() / 16
 
@@ -1556,7 +1801,7 @@ struct RailMapView: View {
                     // built. The two part company when the vertex budget binds
                     // and `fitToBudget` sheds branches — which is precisely
                     // when a stranded dot would be least explicable.
-                    let drawnLineIDs = Set(visible.map(\.id))
+                    let drawnLineIDs = Set(visible.map(\.lineID))
                     let visibleStations = stations.compactMap { station -> (
                         key: String, station: RailNetworkStore.DrawnStation,
                         displayName: String, readings: [String]?
@@ -1642,7 +1887,17 @@ struct RailMapView: View {
                             // `nil` is the standalone case — no localisation
                             // engine at all — which is what keeps the single
                             // `nameRoma` subline. See `StationCardView`.
-                            readings: candidate.readings)
+                            readings: candidate.readings,
+                            displayCoordinate: station.slot.flatMap { slot in
+                                strokeAnchors[
+                                    "\(station.region.rawValue)|\(station.lineID)#\(slot.chain)"
+                                ]?[slot.anchor]
+                            } ?? parallelStationCoordinate(
+                                station.coordinate.clLocation,
+                                lane: station.lane,
+                                bearing: station.laneBearing,
+                                scale: scale,
+                                on: mapView))
                     }
                     networkAnnotations = stationAnnotations
                     mapView.addAnnotations(stationAnnotations)
@@ -1714,6 +1969,13 @@ struct RailMapView: View {
                     culledOffScreen: selection?.culledOffScreen ?? 0,
                     threshold: fitted.threshold
                 )
+#if DEBUG
+                let networkState = !showsNetwork
+                    ? "off"
+                    : (visible.isEmpty || overlays.isEmpty ? "empty" : "rendered")
+                renderStatus?.text =
+                    "network:\(networkState);lines:\(visible.count);overlays:\(overlays.count)"
+#endif
                 DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
 

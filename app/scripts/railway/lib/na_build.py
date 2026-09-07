@@ -230,6 +230,15 @@ def groom(intervals, profile):
         work = geo.simplify(work, profile.tolerance_m * 0.5)
         work = geo.densify(work, profile.max_edge_m)
         work[0], work[-1] = ends
+        # Corner rounding and radius enforcement can create a tiny barb next
+        # to a fixed station endpoint when the first movable vertex is nudged
+        # past it.  A final sawtooth pass is safe here: ``relax_spikes`` keeps
+        # both endpoints, and only removes the same bounded kink/reversal
+        # shapes already rejected before simplification.
+        work = geo.relax_spikes(work, profile.spike_edge_m,
+                                profile.spike_turn_deg,
+                                profile.spike_deviation_m)
+        work[0], work[-1] = ends
         out.append(geo.dedupe(work, 0.05))
     return out
 

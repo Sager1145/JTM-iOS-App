@@ -326,6 +326,10 @@ public enum Statistics {
         if code == "1" { return maskHSR }
         if cls == "21" { return maskTRAM }
         if cls == "31" { return maskPRIV }
+        // Guided systems — airport people movers, monorails and personal
+        // rapid transit — belong to the remainder, not the public urban-rail
+        // bucket selected by institution code 3.
+        if cls == "22" { return maskPRIV }
         if code == "4" { return maskPRIV }
         if code == "3" { return maskMETRO }
         return maskCONV
@@ -442,6 +446,72 @@ public enum Statistics {
             + "|" + JSNumber.string(qx) + "," + JSNumber.string(qy)
     }
 
+    /// ``edgeKey(_:_:)``'s answer as a value rather than as digits.
+    ///
+    /// The index this keys is the largest arithmetic object the app builds —
+    /// 382,713 edges for Japan alone — and the string spelling made building it
+    /// cost more than reading the 11.8 MB file it is built from: four
+    /// `JSNumber.string` calls (a full ECMAScript shortest-round-trip
+    /// formatter) and three concatenations, per edge, then a hash of the
+    /// ~35 bytes that came out.
+    ///
+    /// ## Why the two keys agree, exactly
+    ///
+    /// This runs ``edgeKey(_:_:)``'s own ordering comparison, on the same
+    /// `Grid/quant5(_:)` doubles, and then stores those doubles' **bit
+    /// patterns** instead of printing them. So the question is only whether
+    /// bit-pattern equality decides what string equality decided, and it does,
+    /// in all four cases a `Double` has:
+    ///
+    /// - **Finite and non-zero.** `JSNumber.string` is shortest-round-trip, so
+    ///   it is injective: two doubles print alike exactly when they are the
+    ///   same double, which is exactly when their bits agree.
+    /// - **Zero.** `-0.0` prints as `"0"`, the same as `+0.0`, and their bits
+    ///   do *not* agree — so ``gridBits(_:)`` folds both to `+0.0` first.
+    /// - **Infinite.** `"Infinity"` and `"-Infinity"` are distinct strings and
+    ///   distinct bit patterns.
+    /// - **NaN.** Every NaN prints as `"NaN"`, so every NaN folds to one bit
+    ///   pattern — which is also what keeps this a total function, and keeps
+    ///   `Double`'s own `==` (under which NaN is not equal to itself) out of
+    ///   the comparison entirely.
+    ///
+    /// The string spelling stays: it is the key ``Span`` is filed under, and
+    /// `edgeKeySpelling` in the parity tests pins its bytes.
+    public static func packedEdgeKey(_ a: Coordinate, _ b: Coordinate) -> EdgeKey {
+        let ax = Grid.quant5(a.lon)
+        let ay = Grid.quant5(a.lat)
+        let bx = Grid.quant5(b.lon)
+        let by = Grid.quant5(b.lat)
+        let aFirst = ax < bx || (ax == bx && ay < by)
+        let (px, py, qx, qy) = aFirst ? (ax, ay, bx, by) : (bx, by, ax, ay)
+        return EdgeKey(
+            px: gridBits(px), py: gridBits(py), qx: gridBits(qx), qy: gridBits(qy))
+    }
+
+    /// One quantised coordinate component, folded so that bit equality is the
+    /// equality ``edgeKey(_:_:)``'s digits expressed. See ``packedEdgeKey(_:_:)``.
+    @inline(__always)
+    static func gridBits(_ value: Double) -> UInt64 {
+        if value.isNaN { return 0x7ff8_0000_0000_0000 }  // every NaN prints "NaN"
+        if value == 0 { return 0 }                       // -0.0 prints "0"
+        return value.bitPattern
+    }
+
+    /// ``packedEdgeKey(_:_:)``'s result: the two ordered node positions.
+    public struct EdgeKey: Hashable, Sendable {
+        public let px: UInt64
+        public let py: UInt64
+        public let qx: UInt64
+        public let qy: UInt64
+
+        public init(px: UInt64, py: UInt64, qx: UInt64, qy: UInt64) {
+            self.px = px
+            self.py = py
+            self.qx = qx
+            self.qy = qy
+        }
+    }
+
     // MARK: - insertion-ordered collections
 
     /// A dictionary that remembers the order its keys were first written in.
@@ -541,8 +611,8 @@ public enum Statistics {
     /// edge key → index into parallel km/mask arrays.
     public struct EdgeIndex: Sendable {
         /// Edge key → index. This is what a ridden route's vertices are looked
-        /// up by, so its spelling is as load-bearing as its values.
-        public let map: [String: Int]
+        /// up by, so its quantisation and endpoint ordering are load-bearing.
+        public let map: [EdgeKey: Int]
         public let km: [Double]
         public let mask: [Int]
         /// Line name (`N02_003`) of the FIRST feature to claim each edge, `""`
@@ -573,7 +643,7 @@ public enum Statistics {
         /// country loaded at a time and therefore never needed it, which is
         /// why this is exposed rather than ported.
         public init(
-            map: [String: Int],
+            map: [EdgeKey: Int],
             km: [Double],
             mask: [Int],
             lineName: [String],
@@ -647,7 +717,7 @@ public enum Statistics {
     /// moment the 統計 panel opens. Nothing about the result depends on where
     /// it parks, so the port is synchronous and the caller decides where it runs.
     public static func buildEdgeIndex(sections: [Section], country: String) -> EdgeIndex {
-        var map: [String: Int] = [:]
+        var map: [EdgeKey: Int] = [:]
         var kmArr: [Double] = []
         var maskArr: [Int] = []
         var lineArr: [String] = []
@@ -680,7 +750,7 @@ public enum Statistics {
             for i in 1..<coords.count {
                 let a = coords[i - 1]
                 let b = coords[i]
-                let key = edgeKey(a, b)
+                let key = packedEdgeKey(a, b)
                 let ei: Int
                 if let existing = map[key] {
                     ei = existing
@@ -1011,14 +1081,14 @@ public enum Statistics {
                 let prev = coords[i - 1]
                 let v = coords[i]
                 if anchor.lon == v.lon && anchor.lat == v.lat { continue }
-                if let e = index.map[edgeKey(anchor, v)] {
+                if let e = index.map[packedEdgeKey(anchor, v)] {
                     edges.append(e)
                     anchor = v
                     anchorMask = index.mask[e]
                     pendingKm = 0  // pending hops were interior to this matched edge
                     continue
                 }
-                if let e2 = index.map[edgeKey(prev, v)] {
+                if let e2 = index.map[packedEdgeKey(prev, v)] {
                     recordSpan(anchor, prev, pendingKm, index.mask[e2])
                     edges.append(e2)
                     anchor = v
@@ -1646,7 +1716,7 @@ public enum Statistics {
         for line in feature.lines {
             guard line.count >= 2 else { continue }
             for i in 1..<line.count {
-                guard let e = index.map[edgeKey(line[i - 1], line[i])] else { continue }
+                guard let e = index.map[packedEdgeKey(line[i - 1], line[i])] else { continue }
                 km[filterCategoryForMask(index.mask[e], country: country)]! += index.km[e]
             }
         }

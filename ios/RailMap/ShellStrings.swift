@@ -258,6 +258,16 @@ enum ShellStrings {
             .zhHant: "{code} · {count} 條線路",
         ],
         "ios.decodeTime": [.en: "Decode time", .ja: "解析時間", .zhHans: "解析耗时", .zhHant: "解析耗時"],
+        "ios.displayNetwork": [
+            .en: "Display network", .ja: "表示ネットワーク",
+            .zhHans: "显示路网", .zhHant: "顯示路網",
+        ],
+        "ios.displayNetworkValue": [
+            .en: "{loaded}/{requested} · {kb} KB",
+            .ja: "{loaded}/{requested}・{kb} KB",
+            .zhHans: "{loaded}/{requested} · {kb} KB",
+            .zhHant: "{loaded}/{requested} · {kb} KB",
+        ],
         "ios.renderer": [.en: "Renderer", .ja: "描画エンジン", .zhHans: "绘制引擎", .zhHant: "繪製引擎"],
 
         // -- Settings: the opening view --------------------------------------

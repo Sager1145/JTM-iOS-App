@@ -62,6 +62,7 @@
     riddenHoverLineWidth,
     riddenFocusLineWidth,
     railwayScreenPaintEntries,
+    railwayScaleAt,
     markerRadiusExpr,
     selectedStopRadiusExpr,
     EMPTY_FC,
@@ -75,12 +76,18 @@
     SELECT_DIM,
     SEGMENTS_SOURCE,
     STATIONS_SOURCE,
+    STATION_LANES_SOURCE,
     STATION_LABELS_SOURCE,
     SEGMENTS_LAYER,
     SEGMENTS_CASING_LAYER,
     SEGMENTS_SUSPENDED_LAYER,
     SEGMENTS_SUSPENDED_CASING_LAYER,
     STATIONS_LAYER,
+    STATION_LANES_LAYER,
+    STATION_ICON_BASE_PX,
+    RAILWAY_STYLE,
+    stationIconId,
+    stationIconImage,
     STATIONS_LABEL_LAYER,
     SEGMENTS_LABEL_LAYER,
     networkLabelTextColor,
@@ -161,27 +168,100 @@
   //   station row: [stationGroupId, name, lon, lat, (nameRoma, romaSourceCode)]
   //   segment row: [km, sharedFirstPoint, coordinates, (arcDirection)]
   //   segment i joins station i to station (i+1) % n (loop lines close the ring)
+  async function loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl) {
+    const responses = await Promise.all(
+      packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
+    );
+    if (responses.some((response) => !response.ok)) return null;
+    const packages = await Promise.all(responses.map((response) => response.json()));
+    const merged = global.RailNetwork.mergeCompactPackages(packages);
+    let reviewedSharedCorridors = null;
+    try {
+      const reviewedResponse = await fetch(reviewedUrl, { cache: "no-cache" });
+      if (reviewedResponse.ok) reviewedSharedCorridors = await reviewedResponse.json();
+    } catch (e) {
+      console.warn("[railmap] shared-corridor review unavailable:", e);
+    }
+    let displayLanes = null;
+    try {
+      const laneResponse = await fetch(lanesUrl, { cache: "no-cache" });
+      if (laneResponse.ok) displayLanes = await laneResponse.json();
+    } catch (e) {
+      console.warn("[railmap] display lanes unavailable:", e);
+    }
+    return global.RailNetwork.buildNetworkFromCompactPackage(
+      merged,
+      reviewedSharedCorridors,
+      displayLanes,
+    );
+  }
+
+  function loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl) {
+    return new Promise((resolve, reject) => {
+      const workerUrl = new URL(
+        "./rail-network-worker.js?v=20260901-stroke1",
+        global.location.href,
+      );
+      const worker = new Worker(workerUrl);
+      const finish = (callback, value) => {
+        worker.terminate();
+        callback(value);
+      };
+      worker.onmessage = (event) => {
+        const message = event.data || {};
+        if (message.ok) finish(resolve, message.network);
+        else finish(reject, new Error(message.error || "rail network worker failed"));
+      };
+      worker.onerror = (event) => {
+        finish(reject, new Error(event.message || "rail network worker failed"));
+      };
+      worker.postMessage({ packageUrls, reviewedUrl, lanesUrl });
+    });
+  }
+
   async function loadNetwork(packageUrl) {
     try {
       if (!packageUrl) throw new Error("A rail package URL is required.");
-      const packageUrls = Array.isArray(packageUrl) ? packageUrl : [packageUrl];
-      // Rail packages are replaced in place. Revalidate the URL so a newly
-      // rebuilt official package cannot be shadowed by the 24-hour static
-      // JSON browser cache.
-      const responses = await Promise.all(
-        packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
+      // Resolve URLs before crossing the worker boundary. This keeps the same
+      // resource names on a root deploy and on a sub-path static deploy.
+      const packageUrls = (Array.isArray(packageUrl) ? packageUrl : [packageUrl]).map(
+        (url) => new URL(url, global.location.href).href,
       );
-      if (responses.some((response) => !response.ok)) return null;
-      const packages = await Promise.all(
-        responses.map((response) => response.json()),
-      );
-      const merged = global.RailNetwork.mergeCompactPackages(packages);
-      return global.RailNetwork.buildNetworkFromCompactPackage(merged);
+      const reviewedUrl = new URL("shared-corridors.json", packageUrls[0]).href;
+      const lanesUrl = new URL("display-lanes.json", packageUrls[0]).href;
+
+      // JSON.parse plus compact-v1 display derivation takes about one second
+      // for Japan on the shipped package. Doing both on the window event loop
+      // made the whole client unresponsive exactly when 全部鐵路線 was enabled.
+      // A classic worker loads the same authoritative decoder and returns the
+      // completed immutable network; MapLibre upload remains on its own worker
+      // path after this hand-off.
+      if (typeof Worker === "function") {
+        try {
+          return await loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl);
+        } catch (workerError) {
+          console.warn("[railmap] background network load unavailable:", workerError);
+        }
+      }
+      return await loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl);
     } catch (e) {
       console.warn("[railmap] rail package unavailable:", e);
       return null;
     }
   }
+
+  // How far the zoom may move before a continuous stroke's baked pixel lane
+  // gap is rebuilt: a quarter of a level is under a fifth of drift, which is
+  // within the width of the stroke itself.
+  const STROKE_REBUILD_ZOOM_STEP = 0.25;
+  // Rebuild cadence while a zoom gesture is in flight; `zoomend` settles it.
+  const STROKE_REBUILD_DELAY_MS = 120;
+  // A lane change drifts over at least this many pixels per lane whatever the
+  // zoom: at a regional zoom the metre ramp is under a pixel.
+  const STROKE_MIN_RAMP_PX = 24;
+  // How far beyond the viewport, as a fraction of it, a part still counts as
+  // near enough to be rebuilt with the camera.
+  const STROKE_REBUILD_PAD = 1;
 
   // ───────────────────────────── the overlay manager ─────────────────────────────
   const RailMap = {
@@ -200,6 +280,10 @@
     _expandRecords: [],
     _groupInfo: null, // groupKey → { sx, sy, mults } (rigid lane shifts)
     _laneSpacingPx: 0,
+    // Continuous strokes (rail-stroke.js): the zoom the network's stroke
+    // geometry was last built for, and the pending rebuild during a zoom.
+    _strokeZoom: null,
+    _strokeRebuildTimer: null,
     _fanLanePool: [],
     _fanPickEnabled: false,
     _markers: [],
@@ -311,12 +395,15 @@
       // frames. Pin every animated opacity prop to zero so the rAF loop is
       // the single source of animation truth.
       this._ensureXDayIcon();
+      this._ensureStationIcons();
       // A basemap/theme swap installs a fresh style, which drops runtime
       // images; MapLibre asks for the missing one instead of silently drawing
       // nothing, so re-rasterize on demand.
       map.on("styleimagemissing", (e) => {
         if (!e) return;
         if (e.id === XDAY_ICON_ID) this._ensureXDayIcon();
+        else if (String(e.id).startsWith("rn-station-"))
+          this._ensureStationIcons(String(e.id));
       });
       const ZERO_T = { duration: 0, delay: 0 };
       [
@@ -362,7 +449,13 @@
         // An open fan needs nothing here: its lane offsets are pixel constants
         // along a direction that does not depend on zoom either, so a zoom
         // leaves every line-translate exactly where it was.
+        // A continuous stroke's lane gap is a pixel constant baked into
+        // geometry, so it IS zoom-dependent: rebuild once the zoom has moved
+        // far enough for the gap to drift.
+        this._scheduleStrokeRebuild();
       });
+      map.on("zoomend", () => this._scheduleStrokeRebuild(true));
+      map.on("moveend", () => this._scheduleStrokeRebuild(true));
       return this;
     },
 
@@ -781,6 +874,68 @@
         // A concurrent styleimagemissing can add it first; that is fine.
       }
     },
+    // Laned platforms use symbols because MapLibre cannot data-drive a
+    // circle's screen-space translation per feature. These bitmaps are made
+    // from the same size, ring and surface colours as the ordinary station
+    // circles, so shifting a platform never changes its visual vocabulary.
+    _ensureStationIcons(requestedId) {
+      const m = this._map;
+      if (!m || typeof m.addImage !== "function") return;
+      const base = STATION_ICON_BASE_PX;
+      const ring =
+        (base * RAILWAY_STYLE.stationRingPx) / RAILWAY_STYLE.stationDiameterPx;
+      const ratio = 2;
+      const span = base + 2 * ring;
+      const size = Math.round(span * ratio);
+      const requested = String(requestedId || "").match(
+        /^rn-station-(light|dark)-([0-9a-f]{6})(-interchange)?$/i,
+      );
+      const colorKeys = new Set();
+      if (requested) colorKeys.add(requested[2].toLowerCase());
+      else if (this._network && this._network.stations)
+        for (const feature of this._network.stations.features || []) {
+          const key = feature.properties && feature.properties.colorKey;
+          if (/^[0-9a-f]{6}$/i.test(String(key || "")))
+            colorKeys.add(String(key).toLowerCase());
+        }
+      if (!colorKeys.size) colorKeys.add("7c8a82");
+      const themes = requested ? [requested[1].toLowerCase()] : ["light", "dark"];
+      const interchangeStates = requested ? [Boolean(requested[3])] : [false, true];
+      for (const theme of themes)
+        for (const colorKey of colorKeys)
+          for (const interchange of interchangeStates) {
+            const id = stationIconId(theme, interchange, colorKey);
+            if (m.hasImage && m.hasImage(id)) continue;
+            const canvas =
+              typeof document !== "undefined" ? document.createElement("canvas") : null;
+            if (!canvas) return;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
+            const colors = MAP_SURFACE_COLORS[theme === "dark" ? "dark" : "light"];
+            const lineColor = `#${colorKey}`;
+            const fill = interchange ? colors.stationRing : lineColor;
+            const stroke = interchange ? lineColor : networkCasingColor(theme);
+            const centre = size / 2;
+            const ringPx = ring * ratio;
+            const radius = (base * ratio) / 2;
+            ctx.beginPath();
+            ctx.arc(centre, centre, radius + ringPx / 2, 0, Math.PI * 2);
+            ctx.lineWidth = ringPx;
+            ctx.strokeStyle = stroke;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(centre, centre, radius, 0, Math.PI * 2);
+            ctx.fillStyle = fill;
+            ctx.fill();
+            try {
+              m.addImage(id, ctx.getImageData(0, 0, size, size), { pixelRatio: ratio });
+            } catch {
+              // A concurrent styleimagemissing can add it first.
+            }
+          }
+    },
     // Re-assert every railway weight and lane offset from the ONE table in
     // railmap-style.js. There is nothing to re-anchor: the scale ramp those
     // values ride is a pure function of zoom (see the screen-space weight
@@ -991,13 +1146,151 @@
         SEGMENTS_LABEL_LAYER,
       ])
         this._setVisibility(layer, visibility);
+      if (this._networkVisibleWanted) this._scheduleStrokeRebuild(true);
+    },
+    // ── continuous strokes ──────────────────────────────────────────────────
+    // North American railways arrive as a stroke MODEL (rail-network.js
+    // `strokeModel`) rather than as finished geometry: one canonical polyline
+    // per part plus its lane rows in metres. The drawn polyline — lane offset
+    // and corner rounding baked into the vertices, in world pixels at the
+    // current zoom — is built here, so that a railway is ONE feature the
+    // renderer can never break, and rebuilt when the zoom moves far enough
+    // that the pixel lane gap has drifted. See rail-stroke.js.
+    _applyContinuousStrokes(force) {
+      const m = this._map;
+      const network = this._network;
+      const model = network && network.strokeModel;
+      if (!m || !model || typeof RailStroke === "undefined") return false;
+      const zoom = m.getZoom();
+      const scale = railwayScaleAt(zoom);
+      const laneGapPx =
+        scale * (RAILWAY_STYLE.railWidthPx + RAILWAY_STYLE.parallelGapPx);
+      const cornerRadiusPx = scale * RAILWAY_STYLE.strokeCornerRadiusPx;
+      const lineFeatures = network.segments.features;
+      // Only what is near the camera is rebuilt for a zoom change; a part
+      // off screen keeps the geometry of the zoom it was last built at,
+      // and is caught up the next time it comes into view (`moveend`).
+      // The first build, and any forced one, covers everything so no
+      // feature is ever without geometry.
+      const bounds = m.getBounds();
+      const west = bounds.getWest();
+      const east = bounds.getEast();
+      const south = bounds.getSouth();
+      const north = bounds.getNorth();
+      const padLon = (east - west) * STROKE_REBUILD_PAD;
+      const padLat = (north - south) * STROKE_REBUILD_PAD;
+      const near = (bbox) =>
+        bbox[2] >= west - padLon &&
+        bbox[0] <= east + padLon &&
+        bbox[3] >= south - padLat &&
+        bbox[1] <= north + padLat;
+      // Canonical parts a follow names, resolved once per rebuild and
+      // projected on demand at this zoom.
+      const partsByLine = new Map(model.lines.map((line) => [line.lineId, line.parts]));
+      const projectedCanon = new Map();
+      const canonPixels = (lineId, partIndex) => {
+        const key = `${lineId}#${partIndex}`;
+        let held = projectedCanon.get(key);
+        if (held) return held;
+        const part = partsByLine.get(lineId)?.[partIndex];
+        if (!part) return null;
+        held = {
+          points: part.coordinates.map((point) => RailStroke.project(point, zoom)),
+          measures: part.measures,
+        };
+        projectedCanon.set(key, held);
+        return held;
+      };
+      let rebuilt = 0;
+      for (const line of model.lines) {
+        const feature = lineFeatures[line.featureIndex];
+        if (!feature) continue;
+        const stale = line.parts.some(
+          (part) =>
+            part.builtZoom == null ||
+            (near(part.bbox) &&
+              Math.abs(part.builtZoom - zoom) >= STROKE_REBUILD_ZOOM_STEP),
+        );
+        if (!force && !stale) continue;
+        const built = line.parts.map((part) => {
+          part.builtZoom = zoom;
+          const px = part.coordinates.map((point) => RailStroke.project(point, zoom));
+          const follows = (part.follows || [])
+            .map((follow) => {
+              const canon = canonPixels(follow.canonLineId, follow.canonPartIndex);
+              return canon
+                ? {
+                    from: follow.from,
+                    to: follow.to,
+                    canonFrom: follow.canonFrom,
+                    canonTo: follow.canonTo,
+                    points: canon.points,
+                    measures: canon.measures,
+                  }
+                : null;
+            })
+            .filter(Boolean);
+          const stroke = RailStroke.buildStroke(px, {
+            measures: part.measures,
+            rows: part.rows,
+            totalMetres: part.totalMetres,
+            laneGapPx,
+            minRampPx: STROKE_MIN_RAMP_PX,
+            cornerRadiusPx,
+            anchors: part.anchors,
+            follows,
+          });
+          part.anchorPoints = stroke.anchors.map((point) =>
+            RailStroke.unproject(point, zoom),
+          );
+          return stroke.points.map((point) => RailStroke.unproject(point, zoom));
+        });
+        feature.geometry =
+          built.length === 1
+            ? { type: "LineString", coordinates: built[0] }
+            : { type: "MultiLineString", coordinates: built };
+        rebuilt += 1;
+      }
+      if (!rebuilt) return false;
+      const stationFeatures = network.stations.features;
+      for (const slot of model.stations) {
+        const part = model.lines[slot.lineIndex]?.parts[slot.partIndex];
+        const point = part?.anchorPoints?.[slot.anchorSlot];
+        const feature = stationFeatures[slot.featureIndex];
+        if (point && feature)
+          feature.geometry = { type: "Point", coordinates: [point[0], point[1]] };
+      }
+      this._strokeZoom = zoom;
+      return true;
+    },
+    _scheduleStrokeRebuild(now) {
+      const network = this._network;
+      if (!network || !network.strokeModel || !this._map) return;
+      if (!this._networkVisibleWanted && !this._networkStationsVisibleWanted) return;
+      const run = () => {
+        this._strokeRebuildTimer = null;
+        if (!this._applyContinuousStrokes(false)) return;
+        const seg = this._src(SEGMENTS_SOURCE);
+        const sta = this._src(STATIONS_SOURCE);
+        const labels = this._src(STATION_LABELS_SOURCE);
+        if (seg) seg.setData(network.segments);
+        if (sta) sta.setData(network.stations);
+        if (labels) labels.setData(network.stationLabels || EMPTY_FC);
+      };
+      if (now) {
+        if (this._strokeRebuildTimer) clearTimeout(this._strokeRebuildTimer);
+        run();
+        return;
+      }
+      if (this._strokeRebuildTimer) return;
+      this._strokeRebuildTimer = setTimeout(run, STROKE_REBUILD_DELAY_MS);
     },
     setNetworkStationsVisible(v) {
       this._networkStationsVisibleWanted = Boolean(v);
       const visibility = this._networkStationsVisibleWanted ? "visible" : "none";
       // The station names ride with the station dots. A name without its
       // bead would be a place, not a station.
-      for (const layer of [STATIONS_LAYER, STATIONS_LABEL_LAYER])
+      for (const layer of [STATIONS_LAYER, STATION_LANES_LAYER, STATIONS_LABEL_LAYER])
         this._setVisibility(layer, visibility);
       // …and when they go, the rides' own names take over naming the map.
       this._applyRiddenLabelVisibility();
@@ -1028,10 +1321,14 @@
               if (generation !== this._networkGeneration) return false;
               const seg = m.getSource(SEGMENTS_SOURCE);
               const sta = m.getSource(STATIONS_SOURCE);
+              const lanes = m.getSource(STATION_LANES_SOURCE);
               const labels = m.getSource(STATION_LABELS_SOURCE);
+              this._applyContinuousStrokes(true);
               if (seg) seg.setData(network.segments);
               if (sta) sta.setData(network.stations);
+              if (lanes) lanes.setData(network.stationLanes || EMPTY_FC);
               if (labels) labels.setData(network.stationLabels || EMPTY_FC);
+              this._ensureStationIcons();
               // Re-assert the recorded visibility intent: a toggle made while
               // the style was still loading hit _setVisibility before the
               // layers existed and was silently dropped, leaving a checked
@@ -1078,16 +1375,19 @@
       this._networkGeneration += 1;
       this._network = null;
       this._networkPromise = null;
+      this._strokeZoom = null;
       this._stationPopupKey = null;
       if (this._stationPopup) this._stationPopup.remove();
       const seg = this._src(SEGMENTS_SOURCE);
       const sta = this._src(STATIONS_SOURCE);
+      const staLanes = this._src(STATION_LANES_SOURCE);
       const staLabels = this._src(STATION_LABELS_SOURCE);
       if (seg) {
         seg.setData(EMPTY_FC);
         if (country) seg.attribution = railAttributionForCountry(country);
       }
       if (sta) sta.setData(EMPTY_FC);
+      if (staLanes) staLanes.setData(EMPTY_FC);
       if (staLabels) staLabels.setData(EMPTY_FC);
       if (!shouldReload) return Promise.resolve(null);
       return this.ensureNetwork(packageUrl).then((network) => {
@@ -1242,6 +1542,13 @@
           stationStroke(theme),
         );
       }
+      this._ensureStationIcons();
+      if (m.getLayer(STATION_LANES_LAYER))
+        m.setLayoutProperty(
+          STATION_LANES_LAYER,
+          "icon-image",
+          stationIconImage(theme),
+        );
       // Names: ink and halo are both surface-derived, so both flip with the
       // theme. The line name keeps its hue and only re-anchors the contrast
       // half of its blend (networkLineLabelColor).

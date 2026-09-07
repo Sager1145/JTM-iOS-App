@@ -446,6 +446,22 @@ struct SettingsView: View {
 
     private var diagnosticsSection: some View {
         Section(localization.text("ios.diagnostics", fallback: "Diagnostics")) {
+            LabeledContent(
+                localization.text("ios.displayNetwork", fallback: "Display network"),
+                value: localization.text(
+                    "ios.displayNetworkValue",
+                    params: [
+                        "loaded": .number(Double(network.activeRegionCount)),
+                        "requested": .number(Double(network.requestedRegionCount)),
+                        "kb": .number(Double(network.activeNetworkBytes) / 1024),
+                    ],
+                    fallback:
+                        "\(network.activeRegionCount)/\(network.requestedRegionCount) · "
+                        + "\(network.activeNetworkBytes / 1024) KB"))
+            if let failure = network.networkFailure {
+                Label(failure, systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.red)
+            }
             networkStatus
         }
     }

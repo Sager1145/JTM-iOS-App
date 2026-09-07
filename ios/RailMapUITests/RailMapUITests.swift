@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 
 @MainActor
 final class RailMapUITests: XCTestCase {
@@ -13,7 +14,11 @@ final class RailMapUITests: XCTestCase {
             "The semantic Search destination must never open without a text field.")
     }
 
-    func testCompactSelectedJourneyKeepsHeaderAndMapControlsReachable() {
+    func testCompactSelectedJourneyKeepsHeaderAndMapControlsReachable() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .phone,
+            "The compact overlay is a phone-window assertion.")
+
         let app = launch(tab: "all", stage: "compact", selectedJourney: "0")
         XCTAssertTrue(element("panelHeader", in: app).waitForExistence(timeout: 8))
         XCTAssertTrue(
@@ -26,7 +31,11 @@ final class RailMapUITests: XCTestCase {
                 """)
     }
 
-    func testCompactHeaderDragRevealsTheDestinationContent() {
+    func testCompactHeaderDragRevealsTheDestinationContent() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .phone,
+            "The compact sheet gesture is a phone-window assertion.")
+
         let app = launch(tab: "search", stage: "compact")
         let header = element("panelHeader", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
@@ -87,10 +96,67 @@ final class RailMapUITests: XCTestCase {
                 """)
     }
 
+    /// Exercises the path the previous smoke tests skipped entirely: real
+    /// rows from the bundled store, row selection, the matching resident
+    /// detail card, and returning to the still-mounted list.
+    func testAllJourneyRowsOpenTheirMatchingJourney() {
+        let app = launch(
+            tab: "all", stage: "expanded", sample: "train-store")
+
+        for id in [
+            "20260703_01_haruka",
+            "20260703_02_tokaido_shinkansen_hikari_kodama",
+        ] {
+            let row = element("journeyRow-\(id)", in: app)
+            XCTAssertTrue(
+                row.waitForExistence(timeout: 20),
+                "The bundled journey \(id) never appeared in All Journeys.")
+            row.tap()
+
+            XCTAssertTrue(
+                element("selectedJourney-\(id)", in: app).waitForExistence(timeout: 8),
+                "Selecting \(id) must show that journey rather than another record.")
+
+            let back = element("journeyBackToList", in: app)
+            XCTAssertTrue(back.waitForExistence(timeout: 8))
+            back.tap()
+            XCTAssertTrue(row.waitForExistence(timeout: 8))
+        }
+    }
+
+    /// Runs only when this target is explicitly sent to an iPad simulator.
+    /// The default phone destination skips it; the iPad matrix verifies that a
+    /// full-width landscape window earns native navigation instead of a
+    /// stretched phone tab bar.
+    func testWideIPadUsesNativeWorkspaceSidebar() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .pad,
+            "The native workspace sidebar is an iPad wide-window assertion.")
+
+        XCUIDevice.shared.orientation = .landscapeLeft
+        defer { XCUIDevice.shared.orientation = .portrait }
+
+        let app = launch(tab: "all", stage: "expanded")
+        XCTAssertTrue(
+            element("workspaceSidebar", in: app).waitForExistence(timeout: 8),
+            "A wide iPad window must expose native workspace navigation.")
+        XCTAssertTrue(element("workspaceTab-all", in: app).exists)
+        XCTAssertTrue(element("panelHeader", in: app).exists)
+        XCTAssertTrue(element("mapNetworkToggle", in: app).exists)
+
+        let search = element("workspaceTab-search", in: app)
+        XCTAssertTrue(search.exists)
+        search.tap()
+        XCTAssertTrue(
+            element("journeySearchField", in: app).waitForExistence(timeout: 8),
+            "Selecting an iPad sidebar destination must update the shared content column.")
+    }
+
     private func launch(
         tab: String,
         stage: String,
         selectedJourney: String? = nil,
+        sample: String? = nil,
         reportsReduceMotion: Bool = false,
         launchArguments: [String] = []
     ) -> XCUIApplication {
@@ -99,6 +165,9 @@ final class RailMapUITests: XCTestCase {
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
         if let selectedJourney {
             app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selectedJourney
+        }
+        if let sample {
+            app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = sample
         }
         if reportsReduceMotion {
             app.launchEnvironment["RAILMAP_UI_TEST_REPORT_REDUCE_MOTION"] = "1"

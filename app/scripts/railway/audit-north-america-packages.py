@@ -140,6 +140,25 @@ def approved_colour_sources(registry, errors):
     would let a generated/default colour masquerade as official metadata.
     """
     approved = {GTFS_COLOUR_SOURCE}
+    # A railway that reaches the package only through OpenStreetMap has no
+    # feed to authenticate a colour against, so the registry carries the
+    # operator's published colour per OSM relation, with the page it was read
+    # from. Same validation as a feed override: a hex and a source that does
+    # not describe itself as generated, default or random.
+    for relation, record in (registry.get('osmLineColors') or {}).items():
+        colour = (record or {}).get('color')
+        source = (record or {}).get('source')
+        add(errors, isinstance(colour, str) and bool(re.fullmatch(
+            r'#?[0-9a-fA-F]{6}', colour)),
+            f'osmLineColors {relation}: invalid official colour')
+        add(errors, isinstance(source, str) and bool(source.strip()),
+            f'osmLineColors {relation}: missing official colour source')
+        add(errors, not isinstance(source, str)
+            or not UNOFFICIAL_COLOUR_SOURCE.search(source),
+            f'osmLineColors {relation}: colour source describes a '
+            'non-official colour')
+        if isinstance(source, str) and source.strip():
+            approved.add(source)
     for entry in registry.get('feeds') or []:
         slug = entry.get('slug', '<unknown>')
         colours = entry.get('officialColorByRouteId') or {}
@@ -156,6 +175,21 @@ def approved_colour_sources(registry, errors):
             add(errors, not isinstance(source, str)
                 or not UNOFFICIAL_COLOUR_SOURCE.search(source),
                 f'feed {slug} route {route_id}: colour source describes a non-official colour')
+            if isinstance(source, str) and source.strip():
+                approved.add(source)
+        for relation, record in (entry.get('officialColorByRelation')
+                                 or {}).items():
+            colour = (record or {}).get('color')
+            source = (record or {}).get('source')
+            add(errors, isinstance(colour, str) and bool(re.fullmatch(
+                r'#?[0-9a-fA-F]{6}', colour)),
+                f'feed {slug} relation {relation}: invalid official colour')
+            add(errors, isinstance(source, str) and bool(source.strip()),
+                f'feed {slug} relation {relation}: missing official colour source')
+            add(errors, not isinstance(source, str)
+                or not UNOFFICIAL_COLOUR_SOURCE.search(source),
+                f'feed {slug} relation {relation}: colour source describes a '
+                'non-official colour')
             if isinstance(source, str) and source.strip():
                 approved.add(source)
         fallback = entry.get('color')

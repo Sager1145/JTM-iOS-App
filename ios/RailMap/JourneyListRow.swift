@@ -71,6 +71,7 @@ struct JourneyListRow: View {
         // came round and the row's border changed — which is after the finger
         // has already lifted.
         .buttonStyle(RailRowPressStyle())
+        .accessibilityIdentifier("journeyRow-\(train.id)")
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))

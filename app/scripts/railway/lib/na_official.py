@@ -37,7 +37,10 @@ class PassengerNetwork:
         self.points = {}
         self.adj = defaultdict(list)
         self.grid = defaultdict(list)
+        self.segment_grid = defaultdict(list)
+        self.segments = []
         self.cell = 0.025
+        seen_segments = set()
 
         for feature in features:
             props = feature.get('properties') or {}
@@ -63,6 +66,10 @@ class PassengerNetwork:
                     weight = geo.haversine(self.points[ka], self.points[kb])
                     self.adj[ka].append((kb, weight))
                     self.adj[kb].append((ka, weight))
+                    key = tuple(sorted((ka, kb)))
+                    if key not in seen_segments:
+                        seen_segments.add(key)
+                        self.segments.append((ka, kb))
 
         self.joined_endpoints = []
         self._index_components()
@@ -71,6 +78,12 @@ class PassengerNetwork:
             self._index_components()
         for node, point in self.points.items():
             self.grid[self._cell(point)].append(node)
+        for index, (first, second) in enumerate(self.segments):
+            ax, ay = self._cell(self.points[first])
+            bx, by = self._cell(self.points[second])
+            for cx in range(min(ax, bx), max(ax, bx) + 1):
+                for cy in range(min(ay, by), max(ay, by) + 1):
+                    self.segment_grid[(cx, cy)].append(index)
 
     def _index_components(self):
         self.components = {}
@@ -144,17 +157,32 @@ class PassengerNetwork:
 
     def snap_candidates(self, point, max_m=600.0):
         cx, cy = self._cell(point)
-        radius = max(1, int(math.ceil(max_m / 2_000.0)))
+        latitude_scale = max(0.2, math.cos(math.radians(float(point[1]))))
+        radius_x = max(1, int(math.ceil(
+            max_m / (111_000.0 * latitude_scale * self.cell))))
+        radius_y = max(1, int(math.ceil(
+            max_m / (111_000.0 * self.cell))))
         best_by_component = {}
-        for dx in range(-radius, radius + 1):
-            for dy in range(-radius, radius + 1):
-                for node in self.grid.get((cx + dx, cy + dy), ()):
-                    distance = geo.haversine(point, self.points[node])
-                    component = self.components[node]
-                    previous = best_by_component.get(component)
-                    if (distance <= max_m
-                            and (previous is None or distance < previous[0])):
-                        best_by_component[component] = (distance, node)
+        nearby_segments = set()
+        for dx in range(-radius_x, radius_x + 1):
+            for dy in range(-radius_y, radius_y + 1):
+                nearby_segments.update(
+                    self.segment_grid.get((cx + dx, cy + dy), ()))
+        for index in nearby_segments:
+            first, second = self.segments[index]
+            a, b = self.points[first], self.points[second]
+            distance, fraction = geo.point_segment_distance(point, a, b)
+            if distance > max_m:
+                continue
+            projected = [
+                a[0] + (b[0] - a[0]) * fraction,
+                a[1] + (b[1] - a[1]) * fraction,
+            ]
+            component = self.components[first]
+            previous = best_by_component.get(component)
+            if previous is None or distance < previous[0]:
+                best_by_component[component] = (
+                    distance, (first, second, fraction, projected))
         return best_by_component
 
     def snap(self, point, max_m=600.0):
@@ -185,6 +213,70 @@ class PassengerNetwork:
         nodes.reverse()
         return [list(self.points[node]) for node in nodes]
 
+    def shortest_projections(self, start, end):
+        """Shortest graph path between two points projected onto its edges.
+
+        The base graph keeps the authority's original vertices.  Two virtual
+        nodes attach each projected station point to both ends of its surveyed
+        edge for this search only, so sparse source sampling cannot move a
+        station hundreds of metres to the nearest stored vertex.  When both
+        points lie on one edge, their direct subsegment is also available.
+        """
+        start_node = ('projection', 0)
+        end_node = ('projection', 1)
+        extra = defaultdict(list)
+        virtual_points = {
+            start_node: list(start[3]),
+            end_node: list(end[3]),
+        }
+
+        def attach(node, snap):
+            first, second, fraction, _ = snap
+            length = geo.haversine(self.points[first], self.points[second])
+            for endpoint, distance in (
+                    (first, length * fraction),
+                    (second, length * (1.0 - fraction))):
+                extra[node].append((endpoint, distance))
+                extra[endpoint].append((node, distance))
+
+        attach(start_node, start)
+        attach(end_node, end)
+        if start[:2] == end[:2]:
+            edge_length = geo.haversine(
+                self.points[start[0]], self.points[start[1]])
+            direct = edge_length * abs(start[2] - end[2])
+            extra[start_node].append((end_node, direct))
+            extra[end_node].append((start_node, direct))
+
+        queue = [(0.0, 0, start_node)]
+        sequence = 1
+        distance = {start_node: 0.0}
+        previous = {}
+        while queue:
+            cost, _, node = heapq.heappop(queue)
+            if cost != distance.get(node):
+                continue
+            if node == end_node:
+                break
+            for other, weight in tuple(self.adj.get(node, ())) + tuple(extra.get(node, ())):
+                candidate = cost + weight
+                if candidate < distance.get(other, float('inf')):
+                    distance[other] = candidate
+                    previous[other] = node
+                    heapq.heappush(queue, (candidate, sequence, other))
+                    sequence += 1
+        if end_node not in distance:
+            return None
+        nodes = [end_node]
+        while nodes[-1] != start_node:
+            nodes.append(previous[nodes[-1]])
+        nodes.reverse()
+        return geo.dedupe([
+            list(virtual_points[node]) if node in virtual_points
+            else list(self.points[node])
+            for node in nodes
+        ])
+
     def route_stations(self, stations, max_snap_m=600.0, ratio_cap=None):
         # Directional track centrelines are often separate parallel features.
         # Picking each station's individually nearest rail can alternate
@@ -208,7 +300,8 @@ class PassengerNetwork:
             return None, {'snapMeters': snap_meters}
         intervals = []
         for index in range(len(stations) - 1):
-            piece = self.shortest(snaps[index][1], snaps[index + 1][1])
+            piece = self.shortest_projections(
+                snaps[index][1], snaps[index + 1][1])
             if not piece:
                 return None, {'snapMeters': snap_meters, 'failed': index}
             straight = geo.haversine(stations[index], stations[index + 1])

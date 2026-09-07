@@ -36,6 +36,22 @@ SOURCES = {
 }
 
 CALGARY_KEYS = {'RED LINE': 'calgary-red', 'BLUE LINE': 'calgary-blue'}
+# The City layer contains four-piece diamond crossovers west of Sunalta and
+# Shaganappi Point which join the eastbound and westbound running tracks. They
+# are valid infrastructure, but are not part of the passenger alignment:
+# allowing them into the route graph made route 202 switch tracks and turn back
+# 111.5 and 110.8 degrees. The source has no feature id, so identify the eight
+# records by exact endpoints within the pinned snapshot (see manifest rawSha256).
+CALGARY_NON_PASSENGER_ENDPOINTS = {
+    ((-114.0979228, 51.0447458), (-114.0976738, 51.0447583)),
+    ((-114.0979228, 51.0447458), (-114.0981677, 51.0447722)),
+    ((-114.0981704, 51.0447332), (-114.0979228, 51.0447458)),
+    ((-114.0976766, 51.0447192), (-114.0979228, 51.0447458)),
+    ((-114.1279654, 51.0416538), (-114.1277184, 51.0416779)),
+    ((-114.1277166, 51.0416388), (-114.1279654, 51.0416538)),
+    ((-114.1282106, 51.0416295), (-114.1279654, 51.0416538)),
+    ((-114.1279654, 51.0416538), (-114.1282125, 51.0416686)),
+}
 EDMONTON_KEYS = {
     '021R': 'edmonton-capital', '022R': 'edmonton-metro',
     '023R': 'edmonton-valley',
@@ -119,12 +135,21 @@ def densify_feature(feature, max_segment_m=100.0):
 def calgary_groups(features):
     groups = {key: [] for key in CALGARY_KEYS.values()}
     for feature in features:
-        name = str((feature.get('properties') or {}).get('full_name') or '')
+        properties = feature.get('properties') or {}
+        name = str(properties.get('full_name') or '')
         if name in ('FREE FARE ZONE', 'BLUE LINE - RED LINE'):
             for selected in groups.values():
                 selected.append(feature)
         elif name in CALGARY_KEYS:
-            groups[CALGARY_KEYS[name]].append(feature)
+            geometry = feature.get('geometry') or {}
+            lines = geometry.get('coordinates') or []
+            if geometry.get('type') == 'LineString':
+                lines = [lines]
+            endpoints = None
+            if lines and lines[0]:
+                endpoints = (tuple(lines[0][0][:2]), tuple(lines[-1][-1][:2]))
+            if endpoints not in CALGARY_NON_PASSENGER_ENDPOINTS:
+                groups[CALGARY_KEYS[name]].append(feature)
         else:
             raise SystemExit(f'Calgary has unknown full_name {name!r}')
     return groups

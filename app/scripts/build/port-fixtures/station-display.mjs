@@ -27,8 +27,8 @@
 //      The shipped jp package spells 笹塚 with U+FA10 CJK COMPATIBILITY
 //      IDEOGRAPH-585A, whose canonical decomposition is U+585A, so the two
 //      languages disagree about whether that name equals the one a human
-//      types. It is the only non-NFC name in all five packages (measured:
-//      1 of 10,361 distinct names), which is exactly why volume alone would
+//      types. It is the only non-NFC name in all seven packages (measured:
+//      1 of 13,483 distinct names), which is exactly why volume alone would
 //      never catch it — hence the synthetic packages below that put both
 //      spellings 100 m apart.
 //    * Array.prototype.sort is STABLE (ES2019). Swift's sort is not
@@ -40,12 +40,12 @@
 //  …and one that is not a language difference at all: the popup sorts with
 //  `String.prototype.localeCompare`, whose answer depends on the HOST's
 //  collation and locale. Node resolves it to en-US here. The `comparator`
-//  section records every ordered pair the five packages actually compare
-//  (3,511 of them) plus a block chosen to separate the plausible Swift
+//  section records every ordered pair the seven packages actually compare
+//  (4,845 of them) plus a block chosen to separate the plausible Swift
 //  spellings, so the port can state what it matches rather than assume.
 //
-//  Inputs are the five shipped rail packages (12,685 stations, 804 lines) and
-//  the five committed train stores (232 trains). Nothing reads
+//  Inputs are the seven shipped rail packages (17,132 station rows, 1,128
+//  lines) and the five established train stores (232 trains). Nothing reads
 //  app/data/sample-data*/, which is gitignored: a fixture that cannot be
 //  regenerated from a clean checkout cannot be checked by `--check`.
 // =========================================================================
@@ -63,7 +63,8 @@ const require = createRequire(import.meta.url);
 const AppCore = require(path.join(APP_DIR, "shared", "app-core.js"));
 const RailNetwork = require(path.join(APP_DIR, "public", "rail-network.js"));
 
-const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
+const COUNTRIES = ["mo", "hk", "tw", "kr", "jp", "us", "ca"];
+const STORE_COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 
 const readPublic = (file) =>
   fs.readFileSync(path.join(APP_DIR, "public", file), "utf8");
@@ -366,7 +367,7 @@ const SYNTHETIC_PACKAGES = [
       "35°N is 0.00658° of longitude — wider than a cell — so a qualifying " +
       "pair CAN land two cells apart and the ±1 scan then misses it. " +
       "(Latitude is safe: 600 m is 0.00539°, under one cell.) Measured " +
-      "against all five shipped packages, no real pair reaches it — 0 of the " +
+      "against all seven shipped packages, no real pair reaches it — 0 of the " +
       "10,881 elected labels has a same-named neighbour inside 600 m — so " +
       "this is a latent defect, and the port reproduces it rather than " +
       "quietly widening the scan. Note the contrast with the ride election, " +
@@ -659,7 +660,7 @@ const COMPARATOR_PROBES = [
   [
     `山陽線 (San${RIGHT_QUOTE}yo Main Line)`,
     "山陽線 (Sanyo Line)",
-    "THE case: the only ordered pair among 3,511 real ones where collation " +
+    "THE case: the only ordered pair among 4,845 real ones where collation " +
       "and code-unit order disagree",
   ],
   ["中央線", "中央本線", "CJK, where both orders agree"],
@@ -1044,14 +1045,14 @@ const deck = loadDeckScope();
 // either way — the train-id index inside getStopFeature is keyed by the
 // features array it was built from and rebuilds when that array is swapped.)
 // The committed set names two trains, both Taiwanese; every other train in the
-// five stores takes getStopFeature's resolver path, which is also what the
+// five established stores takes getStopFeature's resolver path, which is also what the
 // four countries without a precomputed set do in the app.
 const rides = [];
 deck.AppDatasets.installMatchedData({
   matchedRoutes: readData("matched-routes.json"),
   matchedStops: readData("matched-stops.json"),
 });
-for (const country of COUNTRIES) {
+for (const country of STORE_COUNTRIES) {
   const suffix = STORE_SUFFIX[country];
   const stations = readData(`stations${suffix}.json`);
   deck.AppDatasets.installStations(stations);
@@ -1135,9 +1136,9 @@ const comparator = [];
       ...(why ? { why } : {}),
     });
   };
-  // Every ORDERED pair the five packages actually compare while sorting a
+  // Every ORDERED pair the seven packages actually compare while sorting a
   // popup's rows. Not a sample: the sort's answer depends on the comparator's
-  // answer for exactly these, and the one disagreement is one pair in 3,511.
+  // answer for exactly these, and the one disagreement is one pair in 4,845.
   for (const entry of packages) {
     const labels = entry.lines.map((line) => line.label);
     for (const row of cases) {
@@ -1166,7 +1167,7 @@ const FIXTURE = {
     "What a port gets wrong here is never arithmetic:\n" +
     "  1. JavaScript compares strings by UTF-16 code unit; Swift's String " +
     "compares by canonical equivalence. The jp package spells 笹塚 with " +
-    "U+FA10 — the only non-NFC name among 10,361 — so the hazard is real and " +
+    "U+FA10 — the only non-NFC name among 13,483 — so the hazard is real and " +
     "invisible at volume. Every name test here is a code-unit test: the " +
     "popup's operator+name dedupe key, the label election's " +
     "`other.name !== name`, and the group / line / station maps.\n" +
@@ -1174,7 +1175,7 @@ const FIXTURE = {
     "popups list two rows with the SAME label, and the group's member order " +
     "is what decides which of them is drawn first.\n" +
     "  3. The row order comes from localeCompare, whose collation is the " +
-    "HOST's. Of the 3,511 ordered label pairs the five packages compare, " +
+    "HOST's. Of the 4,845 ordered label pairs the seven packages compare, " +
     "exactly one disagrees with code-unit order — 下関's " +
     "山陽線 (San’yo Main Line) against 山陽線 (Sanyo Line), where U+2019 " +
     "sorts before a letter under ICU and after it by code unit.\n" +

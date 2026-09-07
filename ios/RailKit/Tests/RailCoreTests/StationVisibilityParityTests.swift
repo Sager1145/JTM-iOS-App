@@ -9,14 +9,14 @@ import Testing
 /// visibility is: if the two apps thin their beads at different zooms they are
 /// drawing different maps of the same country, and the reader who compares
 /// them sees stations that exist on one and not the other. So every line of
-/// all five shipped packages is checked, plus the synthetic cases that reach
+/// all seven shipped packages is checked, plus the synthetic cases that reach
 /// the arithmetic real data never does.
 struct StationVisibilityParityTests {
 
     struct Fixture: Decodable {
         struct Case: Decodable {
             let label: String
-            /// Present on the 804 package-derived cases, absent on the
+            /// Present on the 1,128 package-derived cases, absent on the
             /// synthetic ones.
             let country: String?
             let lineId: String?

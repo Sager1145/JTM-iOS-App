@@ -100,11 +100,13 @@ class WesternMetroOfficialTests(unittest.TestCase):
         self.assertTrue(all(key.endswith('-i')
                             for key in feed['officialNetworkByRouteId'].values()))
 
-    def test_bart_is_fail_closed_while_operator_kmz_is_unavailable(self):
+    def test_bart_direction_pairs_merge_instead_of_being_excluded(self):
+        # See `test_bart_publishes_its_six_lines_rather_than_none`: the
+        # exclusion ran before the merge, so excluding the directions removed
+        # the railway rather than the duplication.
         feed = self.feed('bart')
-        self.assertEqual(set(feed['excludeRoutes']),
-                         {'1', '2', '3', '4', '5', '6', '7', '8',
-                          '11', '12', '19', '20'})
+        self.assertNotIn('excludeRoutes', feed)
+        self.assertEqual(len(feed['mergeRouteIdGroups']), 6)
 
     def test_route_keys_have_exact_provenance_mappings(self):
         self.assertEqual(na_provenance.KEY_SOURCE_EXACT['la-metro-801'],

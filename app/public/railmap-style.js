@@ -106,14 +106,15 @@
     // corners against this number, the way validate-railway-topology.mjs
     // measures real corridors against parallelGapPx.
     minCornerRadiusPx: STATION_DIAMETER_PX * RAIL_WIDTH_TO_STATION_DIAMETER,
-    // The clear map a reader sees between two DISTINCT railways that share one
-    // corridor, edge to edge. Since 38cf0a8 dropped screen-space lanes, nothing
-    // OFFSETS a railway by this: every line is drawn on its own surveyed
-    // geometry, so the gap is whatever the survey already put there. What the
-    // token still does is state how much clear map that survey owes the eye —
-    // it is the threshold scripts/validation/validate-railway-topology.mjs
-    // measures the real corridors against, and the zoom at which a corridor
-    // separates is the zoom where the real gap first clears this number.
+    // The radius a continuous stroke (rail-stroke.js) rounds its corners to,
+    // where the surveyed polyline turns on a vertex. Screen-space, on the
+    // same ramp as the stroke. A little over half a station dot: wide enough
+    // that a street-grid subway turns on a visible curve the way Apple's
+    // Transit view draws one, narrow enough that it never borrows more than
+    // a station's approach from either edge.
+    strokeCornerRadiusPx: STATION_DIAMETER_PX * 0.6,
+    // The clear map between neighbouring display lanes, edge to edge. The
+    // measured geometry remains canonical; only the final paint is offset.
     // Screen-space like everything else here: this many pixels at z6
     // and the same many at z18. Deliberately NOT halved with the stroke in the
     // 2026-08-20 retune: this is the clear map the eye needs to read two
@@ -446,14 +447,64 @@
     ];
   }
 
+  function parallelLaneCentreDistancePx() {
+    return RAILWAY_STYLE.railWidthPx + RAILWAY_STYLE.parallelGapPx;
+  }
+
+  function parallelLaneOffset() {
+    return railwayScale([
+      "*",
+      ["coalesce", ["get", "lane"], 0],
+      parallelLaneCentreDistancePx(),
+    ]);
+  }
+
+  const STATION_ICON_BASE_PX = 24;
+  const LANE_OFFSET_STEPS = 24;
+
+  function stationIconSize() {
+    return RAILWAY_STYLE.stationDiameterPx / STATION_ICON_BASE_PX;
+  }
+
+  function stationIconId(theme, interchange, colorKey) {
+    const key = /^[0-9a-f]{6}$/i.test(String(colorKey || ""))
+      ? String(colorKey).toLowerCase()
+      : DEFAULT_LINE_COLOR.slice(1).toLowerCase();
+    return `rn-station-${theme === "dark" ? "dark" : "light"}-${key}${
+      interchange ? "-interchange" : ""
+    }`;
+  }
+
+  function stationIconImage(theme) {
+    return [
+      "concat",
+      `rn-station-${theme === "dark" ? "dark" : "light"}-`,
+      ["coalesce", ["get", "colorKey"], DEFAULT_LINE_COLOR.slice(1).toLowerCase()],
+      ["case", ["==", ["get", "interchange"], 1], "-interchange", ""],
+    ];
+  }
+
+  function parallelLaneIconOffset() {
+    const size = stationIconSize();
+    const step = parallelLaneCentreDistancePx();
+    const expression = ["case"];
+    for (let index = -LANE_OFFSET_STEPS; index <= LANE_OFFSET_STEPS; index += 1) {
+      const lane = index / 8;
+      if (!lane) continue;
+      expression.push(["==", ["coalesce", ["get", "lane"], 0], lane]);
+      expression.push(["literal", [(lane * step) / size, 0]]);
+    }
+    expression.push(["literal", [0, 0]]);
+    return expression;
+  }
+
   // A platform where ONE railway calls is a solid dot; a platform where two
   // meet is drawn open, its middle taking the ring colour so the circle reads
   // as a hole rather than a mark. Interchange-ness is counted in RAILWAYS, so
   // several services of one railway calling at a stop leave it solid.
   //
-  // One layer draws platforms since 38cf0a8 retired the parallel-lane marker,
-  // so these two are the single place the flag is read — keep them that way if
-  // a second platform layer ever comes back.
+  // Both the ordinary circle layer and the offset symbol layer follow these
+  // rules; the latter rasterizes the same answers into its runtime icons.
   function stationFill(theme) {
     const colors = MAP_SURFACE_COLORS[theme === "dark" ? "dark" : "light"];
     return [
@@ -703,6 +754,7 @@
   // ───────────────────────────── source / layer ids ─────────────────────────────
   const SEGMENTS_SOURCE = "rn-segments";
   const STATIONS_SOURCE = "rn-stations";
+  const STATION_LANES_SOURCE = "rn-station-lanes";
   // The elected station names — the same platform features `rn-stations`
   // carries, minus the ones whose complex is already named. A source of its
   // own rather than a filter, so the render model that feeds the DOTS is
@@ -729,10 +781,8 @@
   // One name per railway. rail-network.js marks the closed stroke of a line
   // that still has an open one; a wholly closed railway carries its own name.
   const SEGMENT_LABEL_FILTER = ["!=", ["get", "labelSuppressed"], 1];
-  // One circle layer for every station: with lanes gone (38cf0a8) no platform
-  // is displaced from its line, so none needs the rotated, icon-offset marker
-  // that used to stand in for a circle MapLibre cannot offset per feature.
   const STATIONS_LAYER = "rn-stations-dot";
+  const STATION_LANES_LAYER = "rn-station-lanes-dot";
   // Names. Both are text-only symbol layers with no icon of any kind: a
   // station is named beside its bead, never replaced by one (see the station
   // glyph contract — no logo, no badge, at any zoom).
@@ -799,12 +849,7 @@
   const HOVER_REGIONS_FILL_LAYER = "train-hover-regions-fill";
   const HOVER_REGIONS_LINE_LAYER = "train-hover-regions-line";
 
-  // Every railway weight, in one table: buildBaseStyle paints them from it and
-  // RailMap re-asserts them from it on attach. The two invisible pick layers
-  // are deliberately absent — a hit target is not a mark, and must not thin
-  // with the map. There are no offsets in here: 38cf0a8 dropped screen-space
-  // lanes, so nothing steps a railway sideways and a hit target can sit on the
-  // line's own geometry.
+  // Every railway weight and shared-corridor offset in one table.
   //
   // Every value here goes through railwayScale(), and the ONE table is what
   // makes that checkable from the built style. It keeps every layer that draws
@@ -813,15 +858,19 @@
   const RAILWAY_SCREEN_PAINT = [
     // the "all railway lines" field
     [SEGMENTS_CASING_LAYER, "line-width", networkCasingWidth],
+    [SEGMENTS_CASING_LAYER, "line-offset", parallelLaneOffset],
     [SEGMENTS_LAYER, "line-width", () => railwayScale(RAILWAY_STYLE.railWidthPx)],
+    [SEGMENTS_LAYER, "line-offset", parallelLaneOffset],
     // …and the same field where it is no longer in service. Identical widths
     // on purpose: the dash is the whole difference.
     [SEGMENTS_SUSPENDED_CASING_LAYER, "line-width", networkCasingWidth],
+    [SEGMENTS_SUSPENDED_CASING_LAYER, "line-offset", parallelLaneOffset],
     [
       SEGMENTS_SUSPENDED_LAYER,
       "line-width",
       () => railwayScale(RAILWAY_STYLE.railWidthPx),
     ],
+    [SEGMENTS_SUSPENDED_LAYER, "line-offset", parallelLaneOffset],
     [
       STATIONS_LAYER,
       "circle-radius",
@@ -832,6 +881,13 @@
       "circle-stroke-width",
       () => railwayScale(RAILWAY_STYLE.stationRingPx),
     ],
+    [
+      STATION_LANES_LAYER,
+      "icon-size",
+      () => railwayScale(stationIconSize()),
+      "layout",
+    ],
+    [STATION_LANES_LAYER, "icon-offset", parallelLaneIconOffset, "layout"],
     // the ridden routes
     [TRAIN_ROUTES_LAYER, "line-width", riddenLineWidth],
     [TRAIN_XDAY_LAYER, "line-width", riddenLineWidth],
@@ -1029,6 +1085,10 @@
       type: "geojson",
       data: network ? network.stations : EMPTY_FC,
     };
+    sources[STATION_LANES_SOURCE] = {
+      type: "geojson",
+      data: network ? network.stationLanes || EMPTY_FC : EMPTY_FC,
+    };
     sources[STATION_LABELS_SOURCE] = {
       type: "geojson",
       data: network ? network.stationLabels || EMPTY_FC : EMPTY_FC,
@@ -1129,6 +1189,7 @@
         "line-color": networkCasingColor(theme),
         "line-opacity": lineLengthVisibilityOpacity(0.88),
         "line-width": networkCasingWidth(),
+        "line-offset": parallelLaneOffset(),
       },
     });
     layers.push({
@@ -1149,6 +1210,7 @@
         // Screen-space: half a station circle, at every zoom — the scale ramp
         // moves the two of them together, never one without the other.
         "line-width": railwayScale(RAILWAY_STYLE.railWidthPx),
+        "line-offset": parallelLaneOffset(),
       },
     });
     // The same railway, over the stretches where the trains have stopped. Same
@@ -1171,6 +1233,7 @@
         "line-opacity": lineLengthVisibilityOpacity(0.88),
         "line-width": networkCasingWidth(),
         "line-dasharray": networkSuspendedCasingDash(),
+        "line-offset": parallelLaneOffset(),
       },
     });
     layers.push({
@@ -1184,6 +1247,7 @@
         "line-opacity": lineLengthVisibilityOpacity(UNRIDDEN_OPACITY),
         "line-width": railwayScale(RAILWAY_STYLE.railWidthPx),
         "line-dasharray": networkSuspendedDash(),
+        "line-offset": parallelLaneOffset(),
       },
     });
     // ── §4 network dots — unridden station circles ──
@@ -1191,6 +1255,7 @@
       id: STATIONS_LAYER,
       type: "circle",
       source: STATIONS_SOURCE,
+      filter: ["==", ["coalesce", ["get", "lane"], 0], 0],
       layout: { visibility: "none" },
       paint: {
         // Theme-dependent: _applyThemePaint rewrites both colors on switch,
@@ -1209,6 +1274,23 @@
         "circle-stroke-opacity": lineLengthVisibilityOpacity(1),
         "circle-stroke-width": railwayScale(RAILWAY_STYLE.stationRingPx),
       },
+    });
+    layers.push({
+      id: STATION_LANES_LAYER,
+      type: "symbol",
+      source: STATION_LANES_SOURCE,
+      layout: {
+        visibility: "none",
+        "icon-image": stationIconImage(theme),
+        "icon-size": railwayScale(stationIconSize()),
+        "icon-offset": parallelLaneIconOffset(),
+        "icon-rotate": ["coalesce", ["get", "bearing"], 0],
+        "icon-rotation-alignment": "map",
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true,
+        "icon-padding": 0,
+      },
+      paint: { "icon-opacity": lineLengthVisibilityOpacity(1) },
     });
 
     // ── §5 names — line labels, then station labels ──
@@ -2074,6 +2156,7 @@
     SELECT_DIM,
     SEGMENTS_SOURCE,
     STATIONS_SOURCE,
+    STATION_LANES_SOURCE,
     SEGMENTS_LAYER,
     SEGMENTS_CASING_LAYER,
     SEGMENTS_SUSPENDED_LAYER,
@@ -2081,6 +2164,10 @@
     networkSuspendedDash,
     networkSuspendedCasingDash,
     STATIONS_LAYER,
+    STATION_LANES_LAYER,
+    STATION_ICON_BASE_PX,
+    stationIconId,
+    stationIconImage,
     STATION_LABELS_SOURCE,
     STATIONS_LABEL_LAYER,
     SEGMENTS_LABEL_LAYER,

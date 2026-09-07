@@ -115,7 +115,13 @@ class NortheastOfficialNetworkTests(unittest.TestCase):
                 source_file, object_pairs_hook=reject_duplicates)
         by_slug = {entry['slug']: entry for entry in registry['feeds']}
         expected = {
-            'mta-long-island-rail-road': set(normalizer.LIRR),
+            'mta-long-island-rail-road': {
+                'lirr-1-babylon', 'lirr-seam-2-hempstead',
+                'lirr-3-oyster-bay', 'lirr-4-ronkonkoma',
+                'lirr-5-montauk', 'lirr-6-long-beach',
+                'lirr-7-far-rockaway', 'lirr-seam-8-west-hempstead',
+                'lirr-seam-9-port-washington', 'lirr-10-port-jefferson',
+                'lirr-seam-12-city-terminal', 'lirr-13-greenport'},
             'new-jersey-transit-nj-transi': (
                 set(normalizer.NJT_RAIL) | set(normalizer.NJT_LIGHT)),
             'port-authority-trans-hudson': set(normalizer.PATH),

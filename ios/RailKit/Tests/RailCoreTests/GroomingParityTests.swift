@@ -13,7 +13,7 @@ import Testing
 /// fixture records the limits object each case ran under. That makes the
 /// contract "given exactly these limits and these coordinates, the answer is
 /// this", and the derivation from a line's median station spacing is checked
-/// separately, against every line of all five packages.
+/// separately, against every line of all seven packages.
 struct GroomingParityTests {
 
     // MARK: - the fixture
@@ -109,7 +109,7 @@ struct GroomingParityTests {
         #expect(Grooming.defaultMicroKink == Grooming.microKinkScales.last)
     }
 
-    /// Every line of all five packages, because this is the part of the
+    /// Every line of all seven packages, because this is the part of the
     /// machinery whose real inputs span the whole ladder: the shipped packages
     /// run from a 169 m tram spacing to a 46 km high-speed hop, and a line that
     /// lands one rung off is groomed with thresholds meant for a different kind
@@ -118,6 +118,7 @@ struct GroomingParityTests {
     func spacingSelectsTheSameRung() throws {
         let fixture = try Self.load()
         #expect(fixture.spacings.count > 700)
+        #expect(Set(fixture.spacings.map(\.country)) == Set(PortFixtures.countries))
 
         var byCountry: [String: [String: CompactPackage.Line]] = [:]
         for country in PortFixtures.countries {
@@ -153,7 +154,7 @@ struct GroomingParityTests {
     /// The two rules of the ladder that real data cannot reach.
     ///
     /// Both are measured facts about the shipped packages, not guesses: no line
-    /// in five countries carries a zero-length segment, and none has a median
+    /// in seven countries carries a zero-length segment, and none has a median
     /// spacing of exactly 700 or 1600 m — the nearest are 698 and 701. So the
     /// `> 0` filter and the ceiling's inclusive `<=` are invisible to every
     /// real line, and a port that got either wrong passed the test above.
@@ -337,5 +338,9 @@ struct GroomingParityTests {
         // wrote `<` for `<=` passes everything.
         let probes = fixture.inputs.filter { $0.country == nil }
         #expect(probes.count >= 10, "\(probes.count) synthetic probes")
+        #expect(
+            Set(fixture.inputs.compactMap(\.country)) == Set(PortFixtures.countries),
+            "every shipped region must contribute real grooming geometry"
+        )
     }
 }

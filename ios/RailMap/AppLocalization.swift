@@ -88,7 +88,7 @@ final class AppLocalization {
             naming.setCountry(region.code)
             namingEngines[region] = naming
         }
-        setVariantRegion(
+        applyVariantRegion(
             Region(rawValue: UserDefaults.standard.string(forKey: Self.variantKey) ?? "") ?? .jp)
         loadStationReadings()
     }
@@ -110,9 +110,18 @@ final class AppLocalization {
     /// `I18N.setCountry` for the UI catalog only — the readings tables are all
     /// installed at once and are chosen per station, not per app state.
     func setVariantRegion(_ region: Region) {
+        applyVariantRegion(region)
+        guard UserDefaults.standard.string(forKey: Self.variantKey) != region.rawValue else {
+            return
+        }
+        UserDefaults.standard.set(region.rawValue, forKey: Self.variantKey)
+    }
+
+    /// Apply the variant without publishing a preferences change during
+    /// initialization. The shell persists only an actual reader-visible change.
+    private func applyVariantRegion(_ region: Region) {
         variantRegion = region
         engine?.setCountry(region.code)
-        UserDefaults.standard.set(region.rawValue, forKey: Self.variantKey)
     }
 
     // MARK: - Station name readings

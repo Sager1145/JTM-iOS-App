@@ -1,0 +1,45 @@
+name: iOS layout smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ios/RailMap/**
+      - ios/RailMapUITests/**
+      - ios/RailKit/Sources/RailPresentation/**
+      - ios/RailKit/Tests/RailPresentationTests/**
+      - ios/tools/verify-layout-ui-smoke.sh
+      - .github/workflows/ios-layout-smoke.yml
+  pull_request:
+    paths:
+      - ios/RailMap/**
+      - ios/RailMapUITests/**
+      - ios/RailKit/Sources/RailPresentation/**
+      - ios/RailKit/Tests/RailPresentationTests/**
+      - ios/tools/verify-layout-ui-smoke.sh
+      - .github/workflows/ios-layout-smoke.yml
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-layout-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  workspace-sidebar:
+    name: Wide iPad workspace sidebar
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Show toolchain
+        run: swift --version && xcodebuild -version
+
+      - name: Run focused layout smoke test
+        working-directory: ios
+        env:
+          SCRATCH: ${{ runner.temp }}/layout-ui-smoke
+        run: tools/verify-layout-ui-smoke.sh
