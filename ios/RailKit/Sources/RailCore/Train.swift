@@ -1833,6 +1833,9 @@ extension TrainValidation.JSON {
                     }
                     continue
                 }
+                guard byte > 0x1F else {
+                    throw error("Bad control character in string literal in JSON")
+                }
                 literal.append(byte)
                 index += 1
             }
@@ -1842,21 +1845,49 @@ extension TrainValidation.JSON {
         mutating func parseNumber() throws -> Double {
             let start = index
             if index < bytes.count, bytes[index] == UInt8(ascii: "-") { index += 1 }
-            while index < bytes.count {
-                switch bytes[index] {
-                case 0x30...0x39, UInt8(ascii: "."), UInt8(ascii: "e"), UInt8(ascii: "E"),
-                    UInt8(ascii: "+"), UInt8(ascii: "-"):
-                    index += 1
-                default:
-                    guard start < index,
-                        let value = Double(String(decoding: bytes[start..<index], as: UTF8.self))
-                    else { throw error("Unexpected token") }
-                    return value
+
+            guard index < bytes.count else { throw error("Unexpected end of JSON input") }
+            switch bytes[index] {
+            case UInt8(ascii: "0"):
+                index += 1
+                guard index >= bytes.count || !(0x30...0x39).contains(bytes[index]) else {
+                    throw error("Leading zero in JSON number")
                 }
+            case 0x31...0x39:
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            default:
+                throw error("Unexpected token")
             }
-            guard start < index,
-                let value = Double(String(decoding: bytes[start..<index], as: UTF8.self))
-            else { throw error("Unexpected end of JSON input") }
+
+            if index < bytes.count, bytes[index] == UInt8(ascii: ".") {
+                index += 1
+                guard index < bytes.count, (0x30...0x39).contains(bytes[index]) else {
+                    throw error("Expected digit after decimal point in JSON number")
+                }
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            }
+
+            if index < bytes.count,
+                bytes[index] == UInt8(ascii: "e") || bytes[index] == UInt8(ascii: "E")
+            {
+                index += 1
+                if index < bytes.count,
+                    bytes[index] == UInt8(ascii: "+") || bytes[index] == UInt8(ascii: "-")
+                {
+                    index += 1
+                }
+                guard index < bytes.count, (0x30...0x39).contains(bytes[index]) else {
+                    throw error("Expected digit in exponent in JSON number")
+                }
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            }
+
+            guard let value = Double(String(decoding: bytes[start..<index], as: UTF8.self)) else {
+                throw error("Unexpected token")
+            }
             return value
         }
     }

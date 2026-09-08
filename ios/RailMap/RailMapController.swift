@@ -306,6 +306,12 @@ final class RailMapController {
         hasOpened = true
         mapView.setRegion(region, animated: false)
     }
+
+    /// Package-bounds audit framing, after the normal opening move. Unlike the
+    /// explicit region override, it does not change launch ownership flags.
+    func frameForUITest(_ rect: MKMapRect) {
+        mapView?.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
+    }
 #endif
 
     /// Whether the map has already opened on its country.

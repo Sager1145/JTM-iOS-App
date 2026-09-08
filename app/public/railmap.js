@@ -127,6 +127,7 @@
     PLAYBACK_SOURCE,
     PLAYBACK_DONE_LAYER,
     PLAYBACK_HEAD_LAYER,
+    PLAYBACK_CASING_DONE_LAYER,
     PLAYBACK_CASING_HEAD_LAYER,
     PLAYBACK_STATIONS_SOURCE,
     PLAYBACK_STATION_LAYER,
@@ -383,6 +384,7 @@
     _playbackRuns: [],
     _playbackDone: [],
     _playbackRunIndex: -1,
+    _playbackProgress: 0,
     _playbackStationIndex: -1,
     _playbackStationPulse: 0,
     _playbackColor: "#1f6feb",
@@ -677,6 +679,7 @@
       this._playbackRuns = Array.isArray(runs) ? runs : [];
       this._playbackColor = color || "#1f6feb";
       this._playbackRunIndex = -1;
+      this._playbackProgress = 0;
       this.setPlaybackProgress(0, 0);
       return this;
     },
@@ -684,6 +687,7 @@
     setPlaybackProgress(runIndex, t) {
       const m = this._map;
       if (!m) return this;
+      this._playbackProgress = Math.max(0, Math.min(1, Number(t) || 0));
       const idx = Math.max(0, Math.min(this._playbackRuns.length - 1, runIndex | 0));
       if (idx !== this._playbackRunIndex) {
         this._playbackRunIndex = idx;
@@ -715,14 +719,17 @@
         m.setPaintProperty(
           PLAYBACK_HEAD_LAYER,
           "line-gradient",
-          playbackTrailGradient(this._playbackColor, t),
+          playbackTrailGradient(this._playbackColor, this._playbackProgress),
         );
       // The casing ends where the colour ends, so it takes the same ramp.
       if (m.getLayer(PLAYBACK_CASING_HEAD_LAYER))
         m.setPaintProperty(
           PLAYBACK_CASING_HEAD_LAYER,
           "line-gradient",
-          playbackTrailGradient(MAP_SURFACE_COLORS[this._theme].casing, t),
+          playbackTrailGradient(
+            MAP_SURFACE_COLORS[this._theme].casing,
+            this._playbackProgress,
+          ),
         );
       return this;
     },
@@ -731,12 +738,9 @@
     // with is what every later "reached up to here" update filters on.
     setPlaybackStations(stations) {
       const list = Array.isArray(stations) ? stations : [];
-      // The bead + halo colours were baked at style-build time, and the theme
-      // switch pass does not know about these layers (it has nothing to
-      // repaint while playback is idle and the source is empty). Restamping
-      // them here is what stops a playback started AFTER a theme switch from
-      // drawing the previous theme's beads.
-      this._restampPlaybackStationTheme();
+      // Playback colours are baked at style-build time. Restamping before a
+      // new source upload also covers playback that starts after a switch.
+      this._restampPlaybackTheme();
       const src = this._src(PLAYBACK_STATIONS_SOURCE);
       if (src)
         src.setData({
@@ -785,10 +789,22 @@
         );
       return this;
     },
-    _restampPlaybackStationTheme() {
+    _restampPlaybackTheme() {
       const m = this._map;
       if (!m) return;
       const colors = MAP_SURFACE_COLORS[this._theme === "dark" ? "dark" : "light"];
+      if (m.getLayer(PLAYBACK_CASING_DONE_LAYER))
+        m.setPaintProperty(
+          PLAYBACK_CASING_DONE_LAYER,
+          "line-color",
+          colors.casing,
+        );
+      if (m.getLayer(PLAYBACK_CASING_HEAD_LAYER))
+        m.setPaintProperty(
+          PLAYBACK_CASING_HEAD_LAYER,
+          "line-gradient",
+          playbackTrailGradient(colors.casing, this._playbackProgress),
+        );
       if (m.getLayer(PLAYBACK_STATION_LAYER))
         m.setPaintProperty(
           PLAYBACK_STATION_LAYER,
@@ -807,12 +823,18 @@
           "circle-stroke-color",
           colors.stationRing,
         );
-      if (m.getLayer(PLAYBACK_STATION_LABEL_LAYER))
+      if (m.getLayer(PLAYBACK_STATION_LABEL_LAYER)) {
+        m.setPaintProperty(
+          PLAYBACK_STATION_LABEL_LAYER,
+          "text-color",
+          playbackStationTextColor(this._playbackStationIndex, this._theme),
+        );
         m.setPaintProperty(
           PLAYBACK_STATION_LABEL_LAYER,
           "text-halo-color",
           networkLabelHaloColor(this._theme),
         );
+      }
     },
     // The train's own position, pushed every frame. One point through the
     // GeoJSON worker is sub-millisecond, and keeping the playhead ON the
@@ -848,6 +870,7 @@
       this._playbackRuns = [];
       this._playbackDone = [];
       this._playbackRunIndex = -1;
+      this._playbackProgress = 0;
       this._playbackStationIndex = -1;
       this._playbackStationPulse = 0;
       const src = this._src(PLAYBACK_SOURCE);
@@ -2387,6 +2410,10 @@
         m.setPaintProperty(id, "text-halo-color-transition", transition);
         m.setPaintProperty(id, "text-halo-color", networkLabelHaloColor(theme));
       }
+      // Playback layers are long-lived style layers. Repaint them in place so
+      // a theme switch during an active run keeps its casing, beads and labels
+      // on the same surface palette without rebuilding playback sources.
+      this._restampPlaybackTheme();
     },
     _applyEffectiveFade(duration) {
       const m = this._map;

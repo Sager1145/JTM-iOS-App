@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailPresentation
 
 /// The rides — what this app is actually for.
 ///
@@ -41,11 +42,7 @@ final class ItineraryStore {
         var days: [Day]
         var elapsed: Duration
 
-        struct Day: Identifiable, Sendable {
-            var date: String
-            var trains: [Train]
-            var id: String { date }
-        }
+        typealias Day = JourneyDay
     }
 
     private(set) var state: LoadState = .idle

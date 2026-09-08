@@ -908,3 +908,54 @@ html[data-ui-mode="mobile"] .playback-export-summary {
 html[data-ui-mode="mobile"] .playback-field select {
   min-height: 40px;
 }
+
+/* These preference overrides deliberately close the stylesheet cascade. The
+   device-specific rules above restate the floating surfaces with stronger
+   selectors, so placing accessibility policy last keeps those rules from
+   restoring translucency or a hairline after the reader opted out. */
+@media (prefers-reduced-transparency: reduce) {
+  #sidebar,
+  #app[data-panel="docked"] #sidebar,
+  .workspace-nav,
+  .sidebar-edge-tab,
+  .map-layers-control,
+  .map-info-summary,
+  .map-info-panel,
+  html[data-ui-mode]
+    :is(
+      #sidebar,
+      .workspace-nav,
+      .sidebar-edge-tab,
+      .map-layers-control,
+      .map-info-summary,
+      .map-info-panel
+    ) {
+    background: var(--ios-material-strong);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  #sidebar,
+  #app[data-panel="docked"] #sidebar,
+  .workspace-nav,
+  .sidebar-edge-tab,
+  .map-layers-control,
+  .map-info-summary,
+  .map-info-panel,
+  html[data-ui-mode]
+    :is(
+      #sidebar,
+      .workspace-nav,
+      .sidebar-edge-tab,
+      .map-layers-control,
+      .map-info-summary,
+      .map-info-panel
+    ) {
+    border: 2px solid var(--ios-label);
+    background: var(--ios-system-background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

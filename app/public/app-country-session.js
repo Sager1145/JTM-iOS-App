@@ -63,6 +63,11 @@ async function switchCountrySession(next) {
     }
 
     persistUiDateState();
+    // Invalidate every outstanding solver/warm generation before changing
+    // the country-dependent DB name or dataset targets. A delayed callback
+    // from the outgoing session can then observe that it no longer owns the
+    // runtime cache, even if IndexedDB delivers it after the switch.
+    RouteService.resetForCountry();
     activeCountry = next;
     if (window.I18N && typeof I18N.setCountry === "function") {
       I18N.setCountry(next);
@@ -93,7 +98,6 @@ async function switchCountrySession(next) {
     // Runtime route artifacts do not encode country. Purge them before the new
     // country's same-named stations or reused train ids can read old geometry.
     // Persisted caches remain isolated by countryDbName and are not deleted.
-    RouteService.resetForCountry();
     if (matchedRoutesGeoJson && Array.isArray(matchedRoutesGeoJson.features)) {
       matchedRoutesGeoJson.features = matchedRoutesGeoJson.features.filter(
         (feature) =>

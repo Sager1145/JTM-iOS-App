@@ -162,12 +162,25 @@ final class ImportFlow {
         var neutral: Bool = false
     }
 
-    var text = ""
+    var text = "" {
+        didSet {
+            guard text != oldValue, phaseKind != .importing else { return }
+            reset()
+        }
+    }
+    // Region belongs to the import attempt, just like its text and report.
+    // Dismissing and recreating a sheet must not change the reviewed input.
+    var region: Region = .jp
+    private(set) var detectedRegion: Region?
+    private var hasPreparedRegion = false
+
     var origin: Origin = .pasted
     var mode: ImportPreflight.Mode = .replaceAll
     private(set) var phase: Phase = .editing
     private(set) var visibility: ProgressVisibility = .quiet
 
+    private var reviewRevision: UInt64 = 0
+    private var checkedInput: (text: String, mode: ImportPreflight.Mode, region: Region)?
     private var work: Task<Void, Never>?
     private var preflight: Task<ImportPreflight.Report, Error>?
     private var visibilityClock: Task<Void, Never>?
@@ -198,9 +211,11 @@ final class ImportFlow {
     }
 
     func reset() {
+        reviewRevision &+= 1
+        checkedInput = nil
         work?.cancel()
         preflight?.cancel()
-        visibilityClock?.cancel()
+        stopVisibilityClock()
         phase = .editing
     }
 
@@ -212,22 +227,44 @@ final class ImportFlow {
     /// changeable before anything happens, rather than implied by which
     /// button was pressed.
     func load(_ text: String, origin: Origin) {
+        reset()
         self.text = text
         self.origin = origin
+        region = .jp
+        detectedRegion = nil
+        hasPreparedRegion = false
         mode = origin == .pasted ? .append : .replaceAll
         phase = .editing
+    }
+
+    /// Infer once per loaded document; reopening preserves a manual choice.
+    func prepareForPresentation() {
+        guard !hasPreparedRegion else { return }
+        hasPreparedRegion = true
+        for candidate in Region.ordered where candidate != .jp {
+            if text.contains("\"\(candidate.rawValue)-official-") {
+                region = candidate
+                detectedRegion = candidate
+                return
+            }
+        }
+        if text.contains("n02_station_code") {
+            region = .jp
+            detectedRegion = .jp
+        }
     }
 
     // MARK: - check
 
     /// The dry run. Nothing it does can change the store, which is why it is
     /// safe to run automatically the moment a file is chosen.
-    func check(itineraries: ItineraryStore, region: Region) {
-        work?.cancel()
-        preflight?.cancel()
+    func check(itineraries: ItineraryStore) {
+        reset()
+        let revision = reviewRevision
         let source = text
         let current = itineraries.store?.trains ?? []
         let checkedMode = mode
+        let region = region
         startVisibilityClock()
         phase = .checking(
             ProgressSummary(
@@ -248,7 +285,7 @@ final class ImportFlow {
 
         work = Task { [weak self] in
             for await tick in stream {
-                guard let self else { return }
+                guard let self, reviewRevision == revision, !Task.isCancelled else { return }
                 phase = .checking(
                     ProgressSummary(
                         stage: .validating, completed: tick.completed, total: tick.total,
@@ -257,12 +294,16 @@ final class ImportFlow {
             guard let self else { return }
             do {
                 let report = try await job.value
+                guard reviewRevision == revision, !Task.isCancelled else { return }
+                checkedInput = (source, checkedMode, region)
                 stopVisibilityClock()
                 phase = .checked(report)
             } catch is CancellationError {
+                guard reviewRevision == revision, !Task.isCancelled else { return }
                 stopVisibilityClock()
                 phase = .editing
             } catch {
+                guard reviewRevision == revision, !Task.isCancelled else { return }
                 stopVisibilityClock()
                 phase = .failed(
                     Failure(
@@ -280,12 +321,15 @@ final class ImportFlow {
     /// the mode names, then saves.
     func commit(
         itineraries: ItineraryStore,
-        library: RideLibrary,
-        region: Region
+        library: RideLibrary
     ) {
-        guard let report, report.isCommittable else { return }
+        guard let report, report.isCommittable, let checkedInput,
+            checkedInput.text == text, checkedInput.mode == mode,
+            checkedInput.region == region else { return }
         work?.cancel()
-        let source = text
+        let source = checkedInput.text
+        let region = checkedInput.region
+        let revision = reviewRevision
         let label = origin.label
         let mode = report.mode
         let renamed = report.renames.count
@@ -308,33 +352,41 @@ final class ImportFlow {
                     text: source, region: region, mode: mode,
                     sourceLabel: label.isEmpty ? "JSON" : label
                 ) { progress in
+                    guard self.reviewRevision == revision, !Task.isCancelled else { return }
                     self.phase = .importing(
                         ProgressSummary(
                             stage: .importing, completed: progress.completed,
                             total: progress.total, canInteract: true, canCancel: true))
                 }
-                phase = .importing(
-                    ProgressSummary(
-                        stage: .saving, completed: nil, total: nil, canInteract: false,
-                        canCancel: false))
+                if reviewRevision == revision {
+                    phase = .importing(
+                        ProgressSummary(
+                            stage: .saving, completed: nil, total: nil, canInteract: false,
+                            canCancel: false))
+                }
                 if let store = itineraries.store {
                     // Awaited, because the line below reports whether it
                     // landed. The save is queued behind whatever else is
                     // writing, and `lastSaveError` says nothing about this one
                     // until it has run.
+                    // A completed store mutation still needs its save even if
+                    // another review has superseded this run's presentation.
                     await library.save(store).value
                 }
+                guard reviewRevision == revision else { return }
                 stopVisibilityClock()
                 phase = .finished(
                     Outcome(
                         imported: summary.imported, renamed: renamed, mode: mode,
                         storeCount: summary.storeCount, saveError: library.lastSaveError))
             } catch is CancellationError {
+                guard reviewRevision == revision else { return }
                 stopVisibilityClock()
                 phase = .failed(
                     Failure(
                         title: "", issues: [], keptCount: keptCount, neutral: true))
             } catch {
+                guard reviewRevision == revision else { return }
                 stopVisibilityClock()
                 phase = .failed(
                     Failure(
@@ -345,6 +397,10 @@ final class ImportFlow {
     }
 
     func cancel() {
+        if phaseKind == .checking {
+            reset()
+            return
+        }
         preflight?.cancel()
         work?.cancel()
         stopVisibilityClock()

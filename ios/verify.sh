@@ -78,15 +78,16 @@ if [ "$run_swift" = 1 ]; then
         grep -E '^✘|error:' "$scratch.log" | head -30
         fail "swift test (full log: $scratch.log)"
     fi
-    # Read Swift Testing's final summary rather than counting individual
+    # Sum Swift Testing's final summaries rather than counting individual
     # completion lines. Parallel tests write those lines concurrently, so two
     # identical successful runs used to report different totals when output
     # was interleaved (465, then 370, for a 277-test run).
     #
-    # Counted rather than described as "parity tests": most of them are, but
+    # Each test target emits its own summary; taking the last one drops the
+    # other target. Counted rather than described as "parity tests": most are, but
     # RailPresentationTests checks invariants no fixture can express.
     passed=$(sed -nE 's/^.*Test run with ([0-9]+) tests? in [0-9]+ suites?.*/\1/p' \
-        "$scratch.log" | tail -1)
+        "$scratch.log" | awk '{ total += $1; summaries++ } END { if (summaries) print total }')
     [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
     echo "  $passed tests pass"
 
@@ -540,11 +541,13 @@ PY
     # them — and all four have to draw it identically or the screen
     # contradicts itself: a log listing a trip the total above it did not
     # count, or a map drawing a line the percentage beside it excludes. One
-    # rule (`RideLedger.hasBeenRidden`), named in all four.
+    # rule (`RideLedger.hasBeenRidden`), including the extracted workspace rule.
     for file in AppShell.swift ContentView.swift StatisticsView.swift; do
         grep -q 'RideLedger\.hasBeenRidden(' "RailMap/$file" \
             || fail "RailMap/$file scopes the passport without excluding what is not confirmed"
     done
+    grep -q 'RideLedger\.hasBeenRidden(' RailKit/Sources/RailPresentation/WorkspaceJourneyRules.swift \
+        || fail "WorkspaceJourneyRules scopes statistics without excluding what is not confirmed"
     # Passport receives the already-filtered scope; filtering it again here
     # would undo the memoization and pay a full journey scan on every frame.
     grep -q 'scopedTrains: statisticsScope.trains,' RailMap/ContentView.swift \

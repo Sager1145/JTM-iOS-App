@@ -82,7 +82,7 @@ def tile_name(tile):
 def fetch_tile(client, tile, output_dir, depth=0, max_depth=3):
     """One tile, or its quarters when the instance will not answer it whole.
 
-    Returns the number of tiles that ended up with a file. A tile that comes
+    Returns 1 only if the tile, or every covering quarter, has a file. A tile that comes
     back empty still counts: most of this box is ocean and tundra, and "there
     is no passenger railway here" is a real answer that must not be retried
     forever.
@@ -102,10 +102,11 @@ def fetch_tile(client, tile, output_dir, depth=0, max_depth=3):
     if depth >= max_depth:
         sys.stderr.write('  GAVE UP %s\n' % tile_name(tile))
         return 0
-    got = 0
+    complete = True
     for quarter in quarters(tile):
-        got += fetch_tile(client, quarter, output_dir, depth + 1, max_depth)
-    return 1 if got else 0
+        if not fetch_tile(client, quarter, output_dir, depth + 1, max_depth):
+            complete = False
+    return 1 if complete else 0
 
 
 def merge(output_dir):

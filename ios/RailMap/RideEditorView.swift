@@ -154,6 +154,7 @@ struct RideEditorView: View {
                         Button(localization.editorText("ios.editor.saveJourney")) {
                             onSave(draft)
                         }
+                        .accessibilityIdentifier("rideEditorSave")
                         // §7.6: the primary action takes the one filled
                         // emphasis on the screen. Cancel and Save were the
                         // same glass capsule with the same white label at the
@@ -262,6 +263,7 @@ struct RideEditorView: View {
                 focus: $focused,
                 field: .number
             )
+            .accessibilityIdentifier("rideEditorNumber")
             .id(RideDraftIssue.Field.number)
             fieldIssues(.number)
 

@@ -114,6 +114,45 @@ is worth being explicit about it.
 
 ## The interface
 
+### Workspace and map responsibilities
+
+`AppShell.ContentView` owns the shared stores and the single `PlaybackController`.
+`RailWorkspaceView` connects those owners to the resident list/detail layers and
+the shared map, and retains selection, search and presentation coordination.
+`WorkspaceTabs` hosts the four system destinations through the existing non-generic
+`WorkspacePage` boundary. `WorkspacePanelPage` owns header/content layout, and
+`WorkspacePanelActions` renders resolved actions and supplied scope menus without
+owning stores. `WorkspacePresentations` hosts the dialog and sheet bindings and
+waits for confirmation teardown before invoking the workspace's delete callback.
+`WorkspaceSheetContent` renders sheet payloads; its detail sheet resolves a record
+by ID from `ItineraryStore`, including after a nested editor changes that ID.
+`JourneyEditing` pairs ordinary in-memory mutations with the existing queued
+snapshot save. Import still uses `ImportFlow` and its awaited persistence path;
+changing reviewed text invalidates its report before another commit is allowed.
+The import flow also owns its region: cancelling and reopening retains the manual
+choice together with the report; loading a new document resets region inference.
+
+`WorkspaceJourneyRules` in RailPresentation owns filtering, date choices and
+default-region rules. Callers evaluate these inside the existing `WorkspaceDerived`
+cache closures, preserving the cache keys and input generations. Date buckets and
+journey spans keep their existing, distinct meanings.
+
+`RailMapController` owns camera commands. `Surface.Coordinator` connects the MapKit
+lifecycle to `MapNetworkBuildState`, which adapts build coverage and LOD inputs to
+`MapRebuildPolicy`. `MapNetworkGeometryCache` owns reusable network/ride geometry;
+`MapOverlayInstaller` prepares, reuses and installs overlays in their drawing order.
+Network overlay preparation and overlay installation remain separate steps;
+style-only updates retain their independent path. Playback, ride markers and layer
+styles remain in `MapPlaybackLayer`, `MapRideMarkers` and `MapLayers`.
+
+Run `ios/verify.sh` for fixture parity, Swift tests, app compilation and source
+contracts. This does not execute UI tests. Run
+`ios/tools/verify-layout-ui-smoke.sh` for the wide-iPad path, or pass `iphone`
+for editing/import, search/list return, panel gestures, layer toggles and playback
+regressions. Both commands retain the xcodebuild log and xcresult under `SCRATCH`.
+
+### Layout
+
 Two layouts, chosen by the window's shape rather than the device. A phone in
 landscape has almost no height for a bottom sheet but plenty of width for a
 side panel, and it reports a *compact* horizontal size class on every model but

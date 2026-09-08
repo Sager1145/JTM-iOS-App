@@ -125,7 +125,12 @@ def merge_boxes(boxes, max_span_deg=1.2):
 
 
 def tile_name(tile):
-    return 'tile-%+08.3f%+09.3f.json.gz' % (tile[0], tile[1])
+    # Every bound is part of the cache identity. A parent tile and its
+    # southwest quarter share their south/west corner, so naming either from
+    # that pair makes one response masquerade as the other's complete cover.
+    # The five decimals match the bounds sent to Overpass; legacy two-coordinate
+    # files intentionally do not match this name and cannot prove completeness.
+    return 'tile-%+010.5f_%+011.5f_%+010.5f_%+011.5f.json.gz' % tile
 
 
 def quarters(tile):
@@ -154,10 +159,11 @@ def fetch_tile(client, tile, output_dir, depth=0, max_depth=2):
     if depth >= max_depth:
         sys.stderr.write(f'  GAVE UP {tile_name(tile)}\n')
         return 0
-    got = 0
+    complete = True
     for quarter in quarters(tile):
-        got += fetch_tile(client, quarter, output_dir, depth + 1, max_depth)
-    return 1 if got else 0
+        if not fetch_tile(client, quarter, output_dir, depth + 1, max_depth):
+            complete = False
+    return 1 if complete else 0
 
 
 def fetch(client, tile, path, tries=3):

@@ -6,16 +6,20 @@ on:
     paths:
       - ios/RailMap/**
       - ios/RailMapUITests/**
-      - ios/RailKit/Sources/RailPresentation/**
-      - ios/RailKit/Tests/RailPresentationTests/**
+      - ios/RailKit/**
+      - ios/RailMap.xcodeproj/**
+      - ios/copy-rail-packages.sh
+      - app/public/rail/**
       - ios/tools/verify-layout-ui-smoke.sh
       - .github/workflows/ios-layout-smoke.yml
   pull_request:
     paths:
       - ios/RailMap/**
       - ios/RailMapUITests/**
-      - ios/RailKit/Sources/RailPresentation/**
-      - ios/RailKit/Tests/RailPresentationTests/**
+      - ios/RailKit/**
+      - ios/RailMap.xcodeproj/**
+      - ios/copy-rail-packages.sh
+      - app/public/rail/**
       - ios/tools/verify-layout-ui-smoke.sh
       - .github/workflows/ios-layout-smoke.yml
   workflow_dispatch: {}
@@ -43,3 +47,39 @@ jobs:
         env:
           SCRATCH: ${{ runner.temp }}/layout-ui-smoke
         run: tools/verify-layout-ui-smoke.sh
+
+      - name: Preserve failed iPad UI result
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipad-layout-ui-result
+          path: |
+            ${{ runner.temp }}/layout-ui-smoke/*.xcresult
+            ${{ runner.temp }}/layout-ui-smoke/*.log
+          if-no-files-found: ignore
+
+  iphone-workspace:
+    name: iPhone workspace regression
+    runs-on: xcode-27
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Show toolchain
+        run: swift --version && xcodebuild -version
+
+      - name: Run workspace UI regression
+        working-directory: ios
+        env:
+          SCRATCH: ${{ runner.temp }}/workspace-ui-regression
+        run: tools/verify-layout-ui-smoke.sh iphone
+
+      - name: Preserve failed iPhone UI result
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iphone-workspace-ui-result
+          path: |
+            ${{ runner.temp }}/workspace-ui-regression/*.xcresult
+            ${{ runner.temp }}/workspace-ui-regression/*.log
+          if-no-files-found: ignore

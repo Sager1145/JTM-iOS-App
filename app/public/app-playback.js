@@ -908,6 +908,10 @@ const Playback = (function () {
 
   function pause() {
     if (phase !== "playing" && phase !== "transitioning") return;
+    // MapLibre's once(moveend) listener for the intro cannot be cancelled by
+    // clearing our fallback timer. Invalidate its hand-off token as well, or
+    // a moveend delivered after pause/resume starts the playback clock again.
+    if (phase === "transitioning") transitionToken += 1;
     phase = "paused";
     cancelClock();
     // A paused map belongs to the reader again — this is when they want to

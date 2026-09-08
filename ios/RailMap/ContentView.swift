@@ -77,7 +77,7 @@ struct RailWorkspaceView: View {
     /// owns it because it survives every panel here.
     @Binding var selection: PrimaryTab
     /// §6.2's appearance preference. Read here because the Settings
-    /// destination is presented from this view now (see `RidesSheet.utility`)
+    /// destination is presented from this view now (see `WorkspaceSheet.utility`)
     /// rather than from the shell — a controller that is already presenting
     /// the resident sheet cannot present a second one.
     @AppStorage("appearance") private var appearance = "system"
@@ -87,15 +87,16 @@ struct RailWorkspaceView: View {
     /// Alerts and confirmations share one presentation slot. Independent
     /// booleans here can all become true during the same map/menu callback,
     /// which asks one hosting controller to present twice.
-    @State private var dialog: RidesDialog?
+    @State private var dialog: WorkspaceDialog?
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
-    @State private var sheet: RidesSheet?
+    @State private var sheet: WorkspaceSheet?
     @State private var importFlow = ImportFlow()
     /// Filming a run — see ``VideoExportFlow``, which owns the recorder, the
     /// reader's choices and the length the options sheet quotes.
     @State private var videoExport = VideoExportFlow()
     @State private var didRunDebugPlayback = false
+    @State private var didRunDebugSheet = false
     /// The 已乘路線顯示 filter's edge indexes and their build — see
     /// ``CategoryIndexes``. What stays here is only WHEN to ask, which is
     /// `categoryIndexKey`.
@@ -237,60 +238,6 @@ struct RailWorkspaceView: View {
         return compactTitleRow + controls + subtitle
     }
 
-    private enum RidesDialog {
-        case addDate
-        case delete(Train)
-    }
-
-    /// Everything this workspace can present over itself.
-    ///
-    /// One enum rather than four `isPresented` bindings on one view: SwiftUI
-    /// presents a single sheet per anchor, and four bindings racing for it is
-    /// how a "Delete" dialog swallows the editor that was opening behind it.
-    private enum RidesSheet: Identifiable {
-        case newJourney(Train)
-        case edit(Train)
-        case detail(Train)
-        case importData
-        /// §5.6: exporting is a SECONDARY flow — the shape, quality and
-        /// bitrate appear once it is opened, not beside the transport.
-        case videoOptions
-        /// 圖例與資料來源 — the map's own information button.
-        case mapInfo
-        /// 地圖圖層 — what of the reader's rides is drawn, and which
-        /// categories of ridden line. A sheet rather than a menu because the
-        /// reader sets several of these in one visit and a `Menu` closes on
-        /// the first one, which is the same reason the web app's popover
-        /// stays open ("Multiple layer selections intentionally keep the menu
-        /// open").
-        case mapLayers
-        /// A station's own card — what used to be the map's callout.
-        case station(StationCard)
-        /// The rides under one ambiguous tap — what used to be a
-        /// `confirmationDialog`. It is here, beside the station card, because
-        /// the two are the same event: a finger that landed on more than the
-        /// map can answer by itself. See `RideChooserView`.
-        case chooseRide([Train])
-        /// §4.1's Data Library and Settings. They are presented from HERE
-        /// rather than from the shell because the shell is already presenting
-        /// the resident bottom sheet, and one controller cannot present two.
-        case utility(UtilityDestination)
-
-        var id: String {
-            switch self {
-            case .newJourney(let train): "new:\(train.id)"
-            case .edit(let train): "edit:\(train.id)"
-            case .detail(let train): "detail:\(train.id)"
-            case .importData: "import"
-            case .videoOptions: "video"
-            case .mapInfo: "info"
-            case .mapLayers: "layers"
-            case .station(let card): "station:\(card.id)"
-            case .chooseRide(let trains): "choose:\(trains.map(\.id).joined(separator: ","))"
-            case .utility(let destination): "utility:\(destination.rawValue)"
-            }
-        }
-    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -476,19 +423,22 @@ struct RailWorkspaceView: View {
             // window wide enough for the docked card this harness's own shot
             // would otherwise land half hidden behind it, the same way any
             // other "frame this" would without the controller's padding.
-            controller.mapView?.setVisibleMapRect(
-                rect, edgePadding: controller.framingInsets,
-                animated: false)
+            controller.frameForUITest(rect)
         }
         // A sheet, for the same reason `RAILMAP_UI_TEST_SELECT` exists: the
         // legend, the importer and the export options are all reached by a tap
         // that a `simctl` harness cannot perform, so their layout would only
         // ever be reviewed by hand.
         .task(id: controller.isMapReady) {
-            guard controller.isMapReady,
+            guard controller.isMapReady, !didRunDebugSheet,
                   let wanted = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_SHEET"]
             else { return }
-            try? await Task.sleep(for: .milliseconds(900))
+            do { try await Task.sleep(for: .milliseconds(900)) }
+            catch { return }
+            // A cancelled readiness task must not reload an already presented
+            // import and silently replace the input being reviewed.
+            guard controller.isMapReady, !didRunDebugSheet else { return }
+            didRunDebugSheet = true
             switch wanted {
             case "info": sheet = .mapInfo
             case "import": sheet = .importData
@@ -496,6 +446,19 @@ struct RailWorkspaceView: View {
                 if let train = itineraries.selectedTrain ?? itineraries.loaded?.trains.first {
                     sheet = .edit(train)
                 }
+            case "detail":
+                var train = StoreOperations.createBlankTrain(country: "jp")
+                train.number = "Review"
+                if let id = itineraries.add(train) { sheet = .detail(id) }
+            case "import-review", "import-reopen":
+                // Only the test's in-memory workspace is cleared; saved rides
+                // remain untouched so reopening can use the real empty-state door.
+                if wanted == "import-reopen" { itineraries.deleteAll() }
+                var train = StoreOperations.createBlankTrain(country: "jp")
+                train.number = "Import review"
+                let document = TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: [train])
+                importFlow.load(StoreOperations.stringify(StoreOperations.json(document)), origin: .pasted)
+                sheet = .importData
             case "layers": sheet = .mapLayers
             // §4.1's two Utility destinations and the export options. All
             // three are reached by a tap on a control the harness cannot
@@ -624,47 +587,20 @@ struct RailWorkspaceView: View {
     /// top of the bottom chrome, which is also where the reader asked for it.
     private func withPresentations(_ content: some View) -> some View {
         content
-        .addDateAlert(isPresented: addDateIsPresented) { typed in
-            guard let added = manualDates.add(typed) else { return }
-            selectedDate = added
-        }
-        .confirmationDialog(
-            confirmationTitle,
-            isPresented: confirmationIsPresented,
-            titleVisibility: .visible
-        ) {
-            switch dialog {
-            case .some(.delete(let train)):
-                Button(
-                    localization.countryText("btn.delete", fallback: "Delete"),
-                    role: .destructive
-                ) {
-                    dialog = nil
-                    PresentationHost.afterTeardown {
-                        let id = train.id
-                        if itineraries.selectedTrainID == id {
-                            itineraries.selectedTrainID = nil
-                        }
-                        itineraries.delete(id)
-                        persistMine()
-                        signal(.deleted)
-                    }
+        .modifier(WorkspacePresentations(
+            dialog: $dialog, sheet: $sheet,
+            onAddDate: { typed in
+                guard let added = manualDates.add(typed) else { return }
+                selectedDate = added
+            },
+            onDelete: { train in
+                if itineraries.selectedTrainID == train.id {
+                    itineraries.selectedTrainID = nil
                 }
-            case .some(.addDate), .none:
-                EmptyView()
-            }
-        } message: {
-            if case .some(.delete) = dialog {
-                // §13.3: say what the action affects before it is taken.
-                Text(
-                    localization.journeyText(
-                        "ios.journey.deleteDetail",
-                        fallback: "The journey is removed from the data on this device."))
-            }
-        }
-        .sheet(item: $sheet) { presented in
-            presentedSheet(presented)
-        }
+                editing.delete(train.id)
+                signal(.deleted)
+            },
+            sheetContent: presentedSheet))
         // Was attached to `statisticsPanel` directly, i.e. inside
         // `workspaceTabs` — which under the docked card is a
         // `.horizontalSizeClass` forced to `.compact` (see `dockedMenu`), so
@@ -706,167 +642,31 @@ struct RailWorkspaceView: View {
         }
     }
 
-    private var addDateIsPresented: Binding<Bool> {
-        Binding(
-            get: {
-                if case .some(.addDate) = dialog { return true }
-                return false
+    private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
+        WorkspaceSheetContent(
+            sheet: presented, itineraries: itineraries, library: library,
+            controller: controller, network: store, importFlow: importFlow,
+            videoSettings: videoExport.settings, videoSourceRect: playbackFilmedRect,
+            videoSeconds: videoExport.plannedSeconds,
+            videoDisplayScale: controller.mapView?.window?.screen.scale ?? 3,
+            appearance: $appearance, categoryIndexesAreBuilding: categoryIndexes.isBuilding,
+            selectedDateIsAllDates: selectedDate == Dates.allDates,
+            presentation: { presentation(for: $0) },
+            onSaveNew: { added in
+                editing.add(added)
+                signal(.saved)
+                sheet = nil
             },
-            set: { presented in
-                if !presented, case .some(.addDate) = dialog { dialog = nil }
-            })
-    }
-
-    private var confirmationIsPresented: Binding<Bool> {
-        Binding(
-            get: {
-                switch dialog {
-                case .some(.delete): true
-                case .some(.addDate), .none: false
-                }
+            onSaveEdit: { edited, originalID in
+                editing.replace(edited, replacing: originalID)
+                sheet = nil
             },
-            set: { presented in
-                guard !presented else { return }
-                switch dialog {
-                case .some(.delete): dialog = nil
-                case .some(.addDate), .none: break
-                }
-            })
-    }
-
-    private var confirmationTitle: String {
-        switch dialog {
-        case .some(.delete(let train)):
-            localization.journeyText(
-                "ios.journey.deleteConfirm",
-                ["train": .string(train.number)],
-                fallback: "Delete {train}?")
-        case .some(.addDate), .none:
-            ""
-        }
-    }
-
-    /// Everything the workspace can present, by case.
-    @ViewBuilder
-    private func presentedSheet(_ presented: RidesSheet) -> some View {
-        Group {
-            switch presented {
-            case .newJourney(let draft):
-                RideEditorView(
-                    train: draft,
-                    title: localization.text("ios.editorTitleNew", fallback: "New"),
-                    // The one place `isNew` is true, and the only place the
-                    // ride switch is ever pre-filled from a date.
-                    isNew: true
-                ) { added in
-                    // §8.2: saving selects the new journey, so the route state
-                    // that follows is reported in its own Hero.
-                    if let id = itineraries.add(added) {
-                        itineraries.selectedTrainID = id
-                    }
-                    persistMine()
-                    signal(.saved)
-                    sheet = nil
-                }
-            case .edit(let train):
-                RideEditorView(
-                    train: train,
-                    title: localization.text("ios.edit", fallback: "Edit")
-                ) { edited in
-                    itineraries.replace(edited, replacing: train.id)
-                    persistMine()
-                    sheet = nil
-                }
-            case .videoOptions:
-                VideoExportOptionsView(
-                    settings: videoExport.settings,
-                    sourceRect: playbackFilmedRect,
-                    displayScale: controller.mapView?.window?.screen.scale ?? 3,
-                    seconds: videoExport.plannedSeconds
-                ) {
-                    sheet = nil
-                    startVideoExport()
-                }
-            case .detail(let train):
-                // §3.1: L4 metadata lives on a second surface, not in the Hero.
-                NavigationStack {
-                    RideDetailView(
-                        train: train,
-                        onSave: { edited in
-                            itineraries.replace(edited, replacing: train.id)
-                            persistMine()
-                        },
-                        onRebuild: { rebuildRoute(train) })
-                    .toolbar {
-                        // §14.4: a modal must be closable without a swipe, or
-                        // Switch Control and keyboard readers cannot leave it.
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button(localization.text("ios.cancel", fallback: "Cancel")) {
-                                sheet = nil
-                            }
-                        }
-                    }
-                }
-            case .importData:
-                DataImportView(
-                    flow: importFlow, itineraries: itineraries,
-                    library: library)
-            // §4.2: the map is the spatial context every destination shares,
-            // and these three are the sheets ABOUT the map — so they are the
-            // three that must not cover all of it. A legend that hides the
-            // legend's subject, a layer switch whose effect is off screen, and
-            // above all a station card that covers the station the reader just
-            // tapped, are each a surface arguing with the thing it explains.
-            //
-            // Their detents are declared by the VIEWS, not here, which is the
-            // pattern `VideoExportOptionsView` already set: a sheet knows what
-            // shape it needs, and stating it at the presenter as well is a
-            // second copy to keep in step. See each view's own
-            // `presentationDetents`.
-            case .mapInfo:
-                MapInfoView()
-            case .mapLayers:
-                MapLayersView(controller: controller, classifying: categoryIndexes.isBuilding)
-            case .station(let card):
-                StationCardView(card: card)
-            case .chooseRide(let trains):
-                RideChooserView(
-                    trains: trains,
-                    // The date leads only when the list is not already scoped
-                    // to one day: scoped, every candidate carries the same
-                    // date and it says nothing about which is which.
-                    showsDate: selectedDate == Dates.allDates,
-                    presentation: { presentation(for: $0) }
-                ) { train in
-                    sheet = nil
-                    PresentationHost.afterTeardown { pick(train) }
-                }
-            case .utility(let destination):
-                UtilityDestinationView(
-                    destination: destination,
-                    itineraries: itineraries,
-                    library: library,
-                    appearance: $appearance,
-                    network: store,
-                    controller: controller)
-            }
-        }
-        // One surface for every sheet this workspace presents (§14.2, §6.5).
-        //
-        // Four of them did not set this and therefore took the system default,
-        // which on iOS 26 is Liquid Glass — and then drew a `List` whose rows
-        // add their own translucent grouped background on top. The legend, the
-        // layer switches and the station card were light glass over light
-        // glass over a moving map, which is the one stacking §6.5 rules out
-        // ("内容层不得另叠一块相同强度的大玻璃") and the reason their body copy
-        // sat on whatever terrain the reader had panned under it.
-        //
-        // The argument for the resident panel being opaque is in
-        // `RailSheetBackground`, and it is the same argument: these are places
-        // the reader READS. Applied here rather than in each view because the
-        // four that were wrong were wrong by omission, and an omission is not
-        // fixed by asking four more views to remember.
-        .presentationBackground(Color.railMenuPresentationStyle)
+            onSaveDetail: { edited, originalID in
+                editing.replace(edited, replacing: originalID)
+            },
+            onRebuild: rebuildRoute, onStartExport: startVideoExport,
+            onDismiss: { sheet = nil },
+            onPick: { train in PresentationHost.afterTeardown { pick(train) } })
     }
 
     // MARK: - the map, and the resident sheet over it (§9.5.6)
@@ -1127,138 +927,24 @@ struct RailWorkspaceView: View {
     /// capsule, each of them an icon over its own label, in whichever language
     /// the reader picked. Search is the fourth destination rather than the
     /// semantic role's separated circle — see the `Tab` below for why.
-    @ViewBuilder
     private func workspaceTabs(
         stage: SheetStage,
         headerExpansion: CGFloat
     ) -> some View {
-        if #available(iOS 18.0, *) {
-            modernWorkspaceTabs(stage: stage, headerExpansion: headerExpansion)
-        } else {
-            legacyWorkspaceTabs(stage: stage, headerExpansion: headerExpansion)
-        }
-    }
-
-    @available(iOS 18.0, *)
-    private func modernWorkspaceTabs(
-        stage: SheetStage,
-        headerExpansion: CGFloat
-    ) -> some View {
-        TabView(selection: $selection) {
-            Tab(
-                tabTitle(.upcoming), systemImage: PrimaryTab.upcoming.systemImage,
-                value: PrimaryTab.upcoming
-            ) {
-                page(.upcoming, stage: stage, headerExpansion: headerExpansion) {
-                    upcomingPanel
-                }
-            }
-
-            Tab(
-                tabTitle(.stats), systemImage: PrimaryTab.stats.systemImage,
-                value: PrimaryTab.stats
-            ) {
-                page(.stats, stage: stage, headerExpansion: headerExpansion) {
-                    statisticsPanel
-                }
-            }
-
-            Tab(
-                tabTitle(.all), systemImage: PrimaryTab.all.systemImage,
-                value: PrimaryTab.all
-            ) {
-                page(.all, stage: stage, headerExpansion: headerExpansion) {
+        WorkspaceTabs(selection: $selection) { tab in
+            switch tab {
+            case .upcoming:
+                page(tab, stage: stage, headerExpansion: headerExpansion) { upcomingPanel }
+            case .stats:
+                page(tab, stage: stage, headerExpansion: headerExpansion) { statisticsPanel }
+            case .all:
+                page(tab, stage: stage, headerExpansion: headerExpansion) {
                     allJourneysPanel(stage: stage, expansion: headerExpansion)
                 }
-            }
-
-            // A titled destination like the other three, and deliberately
-            // NOT `role: .search`.
-            //
-            // The role does not draw a destination, it draws a button: on
-            // iOS 26 it leaves the capsule for a trailing glass circle with
-            // its GLYPH ONLY, so the bottom row read as three named
-            // destinations plus one unnamed control — and the name it dropped
-            // is the only one of the four that a reader who does not already
-            // read the magnifier as "search" has to be told. It is also not
-            // stable across systems: the same build puts search back inside
-            // the capsule, labelled, on iOS 27. One row, two shapes, neither
-            // of them the one the other three tabs are in.
-            //
-            // Nothing functional goes with it. The role presents its field by
-            // morphing the tab bar, and this app forbids that morph —
-            // `railPersistentTabBar()` sets `tabBarMinimizeBehavior(.never)`
-            // so the bar stays continuous across the three stops (§14.3) — so
-            // `searchPanel` already draws the field itself, on every version
-            // this app deploys to. See its own note.
-            //
-            // The title stays spelled out, for the reason it always was: a
-            // `Tab` that leaves its label to the system is named by SwiftUI in
-            // the BUNDLE's language, so the bar used to read 今後の行程 /
-            // 統計 / すべての行程 / "Search" — the one word on it that ignored
-            // the in-app language switch.
-            Tab(
-                tabTitle(.search), systemImage: PrimaryTab.search.systemImage,
-                value: PrimaryTab.search
-            ) {
-                page(.search, stage: stage, headerExpansion: headerExpansion) {
-                    searchPanel
-                }
+            case .search:
+                page(tab, stage: stage, headerExpansion: headerExpansion) { searchPanel }
             }
         }
-        // No `.searchable` here any more. It presented nothing: the semantic
-        // Search role shows its field by morphing the tab bar, and
-        // `railPersistentTabBar()` on the next line switches that morph off so
-        // the bar stays continuous across the three stops (§14.3). The field
-        // is drawn by `searchPanel` instead, on every OS version this app
-        // deploys to. `railSearchFocused` went with it — ⌘F now moves focus to
-        // that field directly, through the same `searchFocused` binding.
-        .tabViewStyle(.tabBarOnly)
-        .railPersistentTabBar()
-        .modifier(SystemSheetTabSurface())
-        // The visible titles are already resolved through AppLocalization,
-        // but the system tab bar also owns selection/accessibility wording.
-        // Keep that system-owned part in the same in-app language too.
-        .environment(\.locale, localization.locale)
-    }
-
-    /// The app still deploys to iOS 17. It receives the same four semantic
-    /// destinations through the old system TabView spelling; iOS 26+ is the
-    /// path that gets the separately rendered Search role.
-    private func legacyWorkspaceTabs(
-        stage: SheetStage,
-        headerExpansion: CGFloat
-    ) -> some View {
-        TabView(selection: $selection) {
-            page(.upcoming, stage: stage, headerExpansion: headerExpansion) {
-                upcomingPanel
-            }
-                .tabItem { Label(tabTitle(.upcoming), systemImage: PrimaryTab.upcoming.systemImage) }
-                .tag(PrimaryTab.upcoming)
-
-            page(.stats, stage: stage, headerExpansion: headerExpansion) {
-                statisticsPanel
-            }
-                .tabItem { Label(tabTitle(.stats), systemImage: PrimaryTab.stats.systemImage) }
-                .tag(PrimaryTab.stats)
-
-            page(.all, stage: stage, headerExpansion: headerExpansion) {
-                allJourneysPanel(stage: stage, expansion: headerExpansion)
-            }
-                .tabItem { Label(tabTitle(.all), systemImage: PrimaryTab.all.systemImage) }
-                .tag(PrimaryTab.all)
-
-            page(.search, stage: stage, headerExpansion: headerExpansion) {
-                searchPanel
-            }
-                // Same as the iOS 18+ path above: the field belongs to
-                // `searchPanel`. This `.searchable` had even less to give —
-                // there is no search role before iOS 26 to hand it to.
-                .tabItem { Label(tabTitle(.search), systemImage: PrimaryTab.search.systemImage) }
-                .tag(PrimaryTab.search)
-        }
-        .modifier(SystemSheetTabSurface())
-        .environment(\.locale, localization.locale)
     }
 
     /// One destination's page, as a view of its own.
@@ -1312,7 +998,7 @@ struct RailWorkspaceView: View {
         headerExpansion: CGFloat,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-        VStack(spacing: 0) {
+        WorkspacePanelPage(stage: stage) {
             PanelHeader(
                 title: panelTitle(for: tab, stage: .expanded),
                 compactTitle: panelTitle(for: tab, stage: .compact),
@@ -1324,53 +1010,9 @@ struct RailWorkspaceView: View {
             ) {
                 panelActions(for: tab, stage: stage)
             }
-            .layoutPriority(1)
-
-            if stage != .compact {
-                // Runs UNDER the tab bar, not up to it.
-                //
-                // iOS 26's bottom bar is a floating glass capsule, and the
-                // rule that comes with it is that scrolling content passes
-                // beneath it and is dimmed by the scroll edge effect — the bar
-                // is a layer over the content, not the end of it.
-                //
-                // A scroll view does all of that by itself when it is the
-                // thing holding the safe area: it draws through the inset and
-                // adds the same inset to its CONTENT, so rows pass under the
-                // glass and the last one still scrolls clear of it. What broke
-                // it was the wrapper that used to be here — a `GeometryReader`
-                // plus `.clipped()`, which took the safe area for itself, left
-                // the list a region ending at the top of the bar, and then cut
-                // every row along that line.
-                //
-                // Handing the region straight to `content()` is the fix, and
-                // the reason there is no `ignoresSafeArea` here: that would
-                // extend the drawing but take the content inset away with it,
-                // trading a clipped last row for one parked under the glass
-                // that cannot be scrolled out.
-                content()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            }
+        } content: {
+            content()
         }
-        // The header is anchored to the top of the page, not floated in the
-        // middle of it.
-        //
-        // Below the Half stop the branch above contributes nothing, so this
-        // stack held a single view — and a lone child of a stack that is
-        // handed the whole page is centred in it. That put the panel header
-        // half of the leftover space below the card's top edge, which is a
-        // distance that GROWS with the sheet: the title drifted downwards
-        // through the first half of the drag and then jumped 76 points back up
-        // at the stop where `content()` appeared and claimed the slack. See
-        // `PanelHeader.collapsedTopInset` for the measurements. The header's
-        // own padding states its distance from the top now, which is a
-        // function of the morph rather than of what happens to be mounted
-        // under it.
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    }
-
-    private func tabTitle(_ tab: PrimaryTab) -> String {
-        localization.text(tab.tabLocalizationKey, fallback: tab.tabFallbackName)
     }
 
     /// §5.1's list, and §5.2's journey card, as one surface with two layers.
@@ -1408,12 +1050,9 @@ struct RailWorkspaceView: View {
         let date = statistics.selectedDate
         let region = regionScope
         return derived.statisticsScope(trains: trains, region: region, date: date) {
-            trains.filter { train in
-                if let region, Region.resolved(train) != region { return false }
-                guard RideLedger.hasBeenRidden(train) else { return false }
-                guard date != Dates.allDates else { return true }
-                return Dates.trainSpans(train.forDates, date: date)
-            }
+            WorkspaceJourneyRules.statisticsScope(
+                trains: trains, regionCode: region?.code, selectedDate: date,
+                rule: Region.scopeRule)
         }
     }
 
@@ -1430,9 +1069,9 @@ struct RailWorkspaceView: View {
     /// destinations, which is what stopped this screen from being a second
     /// `MKMapView` over the first one.
     /// The statistics destination's own presentation anchor — the first sheet
-    /// in this app that is not raised through `RidesSheet`.
+    /// in this app that is not raised through `WorkspaceSheet`.
     ///
-    /// `RidesSheet`'s note says why there is normally one anchor: four
+    /// `WorkspaceSheet`'s note says why there is normally one anchor: four
     /// `isPresented` bindings racing for it is how a "Delete" dialog swallows
     /// the editor opening behind it. That is about four bindings on ONE view.
     /// `.utility`'s note states the other half — the shell cannot present these
@@ -1460,7 +1099,7 @@ struct RailWorkspaceView: View {
             scopedTrains: statisticsScope.trains,
             derived: derived,
             journeyPresentation: { presentation(for: $0) },
-            openJourney: { sheet = .detail($0) },
+            openJourney: { sheet = .detail($0.id) },
             openData: openData,
             openSettings: openSettings)
     }
@@ -1643,94 +1282,22 @@ struct RailWorkspaceView: View {
     ///
     /// Search keeps its date filter in the gear. It is the one destination
     /// whose question is the query, and its header already carries the `+`.
-    @ViewBuilder
     private func panelActions(for tab: PrimaryTab, stage: SheetStage) -> some View {
-        // Docked, over a selected journey, this row IS the journey's controls.
-        //
-        // §5.1.2 holds the Hero back until Half, so at this stop the card's
-        // own action group is not on screen — and a panel collapsed over a
-        // route the reader is looking at needs the one action the resolver
-        // picked for that state, and a way back to the list. Both come from
-        // the same `JourneyPresentation` the Hero would have used, so the
-        // action here and the action there can never disagree.
-        if tab == .all, stage == .compact, let train = selectedTrain {
-            let presentation = presentation(for: train)
-            if let primary = presentation.primaryAction {
-                let appearance = primary.appearance(localization)
-                SheetIconButton(
-                    systemImage: appearance.systemImage,
-                    accessibilityLabel: Text(appearance.label),
-                    action: { perform(primary, on: train) }
-                )
-            }
-            SheetIconButton(
-                systemImage: "xmark",
-                accessibilityLabel: Text(
-                    localization.journeyText(
-                        "ios.journey.backToList", fallback: "Back to the list"))
-            ) {
-                itineraries.selectedTrainID = nil
-            }
-        }
-        // The list's transport, and ONLY while the list is what is on screen.
-        //
-        // With a journey selected there were two play buttons a thumb's width
-        // apart — this one and the card's own — and both played the same
-        // journey. §16's mapping rule: a control belongs beside what it
-        // affects, and one action must not have two entries in one state. So
-        // the scope is split by state rather than duplicated: selected, the
-        // CARD owns playing that journey; back at the list, this one returns
-        // and plays the queue the list defines.
-        if tab == .all, panelRoute.isHome {
-            playbackButton
-        }
-        // §5.1's two scopes, on the three destinations that have them. Not
-        // over a selected journey: there the row is that journey's controls
-        // (see the branch above), and four more glyphs would push them off it.
-        if tab == .upcoming || (tab == .all && panelRoute.isHome) {
-            journeyDateMenu(for: tab)
-            regionMenu
-        }
-        if tab == .stats {
-            statisticsDateMenu
-            regionMenu
-            statisticsShareButton
-        }
-        if tab == .search {
-            SheetIconButton(
-                systemImage: "plus",
-                accessibilityLabel: Text(
-                    localization.text("ios.newJourney", fallback: "New journey"))
-            ) {
-                sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
-            }
-        }
-        Menu {
-            destinationMenu(for: tab)
-        } label: {
-            // A gear, not a second ellipsis.
-            //
-            // This is the GLOBAL entry — Data Library, Settings, the sample
-            // and working-set actions — and the journey card below carries its
-            // own ellipsis for that journey's secondary actions. (The date
-            // filter used to be in here too. It is a filter, not a setting,
-            // and it is a round button of its own now on every destination but
-            // Search.) Two identical glyphs on one
-            // screen with two different scopes is precisely the ambiguity §16
-            // calls a weak mapping: the reader cannot tell which "more" they
-            // are about to open, and the label that would explain it is not
-            // drawn. A gear says "this app's settings" without being read.
-            SheetIconLabel(systemImage: "gearshape")
-        }
-        .accessibilityLabel(
-            Text(localization.text("nav.utilities", fallback: "Data and settings")))
-        // The label is the READER's language, so it is not an address. A UI
-        // test that looked this control up by "Data and settings" found
-        // nothing on a Japanese simulator and reported the utility menu
-        // unreachable — which is the same trap `MapControlBar`'s controls were
-        // pulled out of. Identifiers are language-independent; labels are for
-        // people.
-        .accessibilityIdentifier("utilityMenuButton")
+        let compactTrain = tab == .all && stage == .compact ? selectedTrain : nil
+        return WorkspacePanelActions(
+            tab: tab, showsList: panelRoute.isHome,
+            compactJourney: compactTrain.map { presentation(for: $0) },
+            performPrimary: { action in
+                if let compactTrain { perform(action, on: compactTrain) }
+            },
+            backToList: { itineraries.selectedTrainID = nil },
+            newJourney: { sheet = .newJourney(newJourneyScaffold(in: defaultRegion)) },
+            playback: { playbackButton },
+            journeyDate: { journeyDateMenu(for: tab) },
+            region: { regionMenu },
+            statisticsDate: { statisticsDateMenu },
+            statisticsShare: { statisticsShareButton },
+            destinationMenu: { destinationMenu(for: tab) })
     }
 
     @ViewBuilder
@@ -1745,28 +1312,9 @@ struct RailWorkspaceView: View {
             rideSourceSection
             Divider()
         }
-        // Identified for the same reason the gear itself is, and it is the
-        // same lesson a third time: `ConsoleSweepTests` looked these two up by
-        // the English "Data" and "Settings", found neither on a Chinese
-        // simulator, and walked past the Data Library and Settings without
-        // failing loudly enough to be noticed — which is precisely the "clean
-        // console that is a lie" that suite's own comments warn about.
-        Button(action: openData) {
-            Label(
-                localization.text(
-                    UtilityDestination.data.localizationKey,
-                    fallback: UtilityDestination.data.fallbackName),
-                systemImage: UtilityDestination.data.systemImage)
-        }
-        .accessibilityIdentifier("utilityDataButton")
-        Button(action: openSettings) {
-            Label(
-                localization.text(
-                    UtilityDestination.settings.localizationKey,
-                    fallback: UtilityDestination.settings.fallbackName),
-                systemImage: UtilityDestination.settings.systemImage)
-        }
-        .accessibilityIdentifier("utilitySettingsButton")
+        WorkspaceUtilityMenuItems(
+            onOpenData: openData,
+            onOpenSettings: openSettings)
     }
 
     /// Move the map to the network the reader has scoped to — or, for 全部,
@@ -2025,25 +1573,10 @@ struct RailWorkspaceView: View {
         return derived.upcoming(
             trains: trains, today: today, region: region, date: scopedDate
         ) {
-            trains
-                .filter { train in
-                    // The header's two scopes first — they are the reader's,
-                    // and they are the reason the two round buttons above this
-                    // list are not decoration. The date is the SAME value the
-                    // log filters on (`selectedDate`): one filter, one owner,
-                    // whichever of the two destinations it was set from.
-                    if let region, Region.resolved(train) != region { return false }
-                    if scopedDate != Dates.allDates,
-                        !Dates.trainSpans(train.forDates, date: scopedDate) { return false }
-                    guard let date = train.date, !date.isEmpty,
-                        let regionToday = today[Region.resolved(train)]
-                    else { return false }
-                    return date >= regionToday
-                }
-                .sorted { lhs, rhs in
-                    let a = lhs.date ?? "", b = rhs.date ?? ""
-                    return a == b ? lhs.id < rhs.id : a < b
-                }
+            WorkspaceJourneyRules.upcomingScope(
+                trains: trains, regionCode: region?.code, selectedDate: scopedDate,
+                todayByRegion: Dictionary(uniqueKeysWithValues: today.map { ($0.key.code, $0.value) }),
+                rule: Region.scopeRule)
         }
     }
 
@@ -2738,10 +2271,9 @@ struct RailWorkspaceView: View {
             train: train,
             presentation: presentation(for: train),
             showsDate: showsDate ?? (selectedDate == Dates.allDates),
-            itineraries: itineraries,
-            persist: persistMine,
+            editing: editing,
             play: { startPlayback([train]) },
-            showDetail: { sheet = .detail(train) },
+            showDetail: { sheet = .detail(train.id) },
             setRidden: { setRidden(train, $0) },
             confirmDelete: { dialog = .delete(train) })
     }
@@ -2754,8 +2286,7 @@ struct RailWorkspaceView: View {
     /// See ``RailPresentation/RideLedger``.
     private func setRidden(_ train: Train, _ ridden: Bool) {
         guard RideLedger.hasBeenRidden(train) != ridden else { return }
-        itineraries.replace(RideLedger.setRidden(train, ridden), replacing: train.id)
-        persistMine()
+        editing.replace(RideLedger.setRidden(train, ridden), replacing: train.id)
         signal(.saved)
     }
 
@@ -2796,8 +2327,7 @@ struct RailWorkspaceView: View {
             controller.fitToSelection()
         case .showOnMap:
             guard let train else { return }
-            itineraries.toggleVisibility(train.id)
-            persistMine()
+            editing.toggleVisibility(train.id)
         case .rebuildRoute:
             guard let train else { return }
             _ = rebuildRoute(train)
@@ -2824,18 +2354,16 @@ struct RailWorkspaceView: View {
             if let train { sheet = .edit(train) }
         case .duplicate:
             guard let train else { return }
-            itineraries.duplicate(train.id)
-            persistMine()
+            editing.duplicate(train.id)
         case .hide, .show:
             guard let train else { return }
-            itineraries.toggleVisibility(train.id)
-            persistMine()
+            editing.toggleVisibility(train.id)
         case .delete:
             if let train {
                 PresentationHost.afterTeardown { dialog = .delete(train) }
             }
         case .inspectDetails:
-            if let train { sheet = .detail(train) }
+            if let train { sheet = .detail(train.id) }
         case .rebuildRoute:
             guard let train else { return }
             _ = rebuildRoute(train)
@@ -2853,9 +2381,7 @@ struct RailWorkspaceView: View {
     /// undrawn rather than being straightened.
     @discardableResult
     private func rebuildRoute(_ train: Train) -> Int? {
-        let count = itineraries.rebuildRouteSections(train.id)
-        persistMine()
-        return count
+        editing.rebuildRouteSections(train.id)
     }
 
     /// The journeys the list shows, after every filter the header applies.
@@ -2900,20 +2426,9 @@ struct RailWorkspaceView: View {
         _ loaded: ItineraryStore.Loaded,
         region: Region?
     ) -> [ItineraryStore.Loaded.Day] {
-        var source = selectedDate == Dates.allDates
-            ? loaded.days
-            : loaded.days.filter { $0.date == selectedDate }
-        // The region scope, before the query rather than after it: a day left
-        // with no journey in this region is not an empty day, it is a day this
-        // scope does not have — and a section header over nothing is the one
-        // thing a filtered list must not draw.
-        if let region {
-            source = source.compactMap { day in
-                let trains = day.trains.filter { Region.resolved($0) == region }
-                return trains.isEmpty ? nil : .init(date: day.date, trains: trains)
-            }
-        }
-        return source
+        WorkspaceJourneyRules.filteredDays(
+            loaded.days, selectedDate: selectedDate, regionCode: region?.code,
+            rule: Region.scopeRule)
     }
 
     private var journeySearchRequest: JourneySearch.Request {
@@ -2978,19 +2493,11 @@ struct RailWorkspaceView: View {
     private func journeyDates(
         for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
     ) -> [String] {
-        guard tab == .upcoming else { return availableDates(loaded, region: regionScope) }
-        // Deliberately built from the region filter and the calendar ALONE:
-        // `upcomingScope` also applies `selectedDate`, and a menu built from
-        // that would collapse to the one day it had already been set to.
-        let today = todayByRegion()
-        let trains = loaded.trains.filter { train in
-            if let region = regionScope, Region.resolved(train) != region { return false }
-            guard let date = train.date, !date.isEmpty,
-                let regionToday = today[Region.resolved(train)]
-            else { return false }
-            return date >= regionToday
-        }
-        return Dates.availableDates(trains.map(\.forDates))
+        WorkspaceJourneyRules.journeyDates(
+            trains: loaded.trains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
+            todayByRegion: tab == .upcoming
+                ? Dictionary(uniqueKeysWithValues: todayByRegion().map { ($0.key.code, $0.value) }) : [:],
+            manualDates: manualDates.dates, rule: Region.scopeRule)
     }
 
     /// The entries both spellings of the date filter show.
@@ -3152,22 +2659,14 @@ struct RailWorkspaceView: View {
     /// the one they are looking at, then the one they have most rides in,
     /// then Japan.
     private var defaultRegion: Region {
-        if let train = itineraries.selectedTrain { return Region.resolved(train) }
-        let trains = itineraries.loaded?.trains ?? []
-        let counts = Dictionary(grouping: trains, by: Region.resolved).mapValues(\.count)
-        return counts.max {
-            $0.value != $1.value
-                ? $0.value < $1.value
-                : (Region.ordered.firstIndex(of: $0.key) ?? 0)
-                    > (Region.ordered.firstIndex(of: $1.key) ?? 0)
-        }?.key ?? .jp
+        let code = WorkspaceJourneyRules.defaultRegion(
+            selectedTrain: itineraries.selectedTrain, trains: itineraries.loaded?.trains ?? [],
+            orderedRegionCodes: Region.ordered.map(\.code), rule: Region.scopeRule)
+        return Region(rawValue: code) ?? .jp
     }
 
-    private func persistMine() {
-        // Any edit forks a bundled sample into the reader's own store. A
-        // sample remains immutable on disk and the user's change is durable.
-        guard let store = itineraries.store else { return }
-        library.save(store)
+    private var editing: JourneyEditing {
+        JourneyEditing(itineraries: itineraries, library: library)
     }
 
     /// The one basemap all three destinations share (§9.5.6, and the reader's
@@ -3485,19 +2984,6 @@ struct RailWorkspaceView: View {
     /// arrive one region at a time and the map draws each as it lands rather
     /// than waiting for Japan.
     private var lines: [RailNetworkStore.DrawnLine] { store.mapLines }
-}
-
-/// A workspace destination's page, mounted rather than composed.
-///
-/// Deliberately NOT generic, and that is the whole of it: a generic wrapper
-/// would still name the page in its own type, and it is the type that costs.
-/// The closure is what defers the page, and `AnyView` is what stops the tab
-/// bar's type from naming it. See `RailWorkspaceView.page(_:stage:headerExpansion:content:)`
-/// for the crash both halves answer.
-private struct WorkspacePage: View {
-    let build: () -> AnyView
-
-    var body: some View { build() }
 }
 
 /// Lets an inflexible block scroll rather than overflow.

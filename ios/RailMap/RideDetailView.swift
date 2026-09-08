@@ -2,6 +2,44 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
+/// Resolves the sheet's record from its owner on every update. The presentation
+/// identity stays stable even when the editor changes the record's identifier.
+struct WorkspaceRideDetailView: View {
+    @Bindable var itineraries: ItineraryStore
+    @State private var recordID: String
+    @Environment(\.dismiss) private var dismiss
+    let onSave: (Train, String) -> ItineraryStore.SaveOutcome
+    let onRebuild: (Train) -> Int?
+
+    init(trainID: String, itineraries: ItineraryStore,
+         onSave: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
+         onRebuild: @escaping (Train) -> Int?) {
+        self.itineraries = itineraries
+        _recordID = State(initialValue: trainID)
+        self.onSave = onSave
+        self.onRebuild = onRebuild
+    }
+
+    private var train: Train? {
+        itineraries.store?.trains.first { $0.id == recordID }
+    }
+
+    var body: some View {
+        Group {
+            if let train {
+                RideDetailView(train: train, onSave: { edited in
+                    if onSave(edited, recordID) == .saved {
+                        recordID = edited.id
+                    }
+                }, onRebuild: { onRebuild(train) })
+            }
+        }
+        .onChange(of: train == nil, initial: true) { _, missing in
+            if missing { dismiss() }
+        }
+    }
+}
+
 /// A recorded journey expressed with Flighty's information hierarchy while
 /// remaining a railway screen: service identity first, station pair second,
 /// then the chronological stop timeline and lower-priority metadata.
@@ -43,6 +81,7 @@ struct RideDetailView: View {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
                             showsEditor = true
                         }
+                        .accessibilityIdentifier("rideDetailEdit")
                     }
                 }
             }
@@ -632,6 +671,7 @@ struct RideDetailContent: View {
                 Button(localization.editorText("ios.detail.hideFromMap"), systemImage: "eye.slash") {
                     onSetVisible(false)
                 }
+                .accessibilityIdentifier("rideDetailHide")
                 .frame(minHeight: 44)
             }
         }

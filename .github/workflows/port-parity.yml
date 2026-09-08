@@ -77,6 +77,9 @@ jobs:
         working-directory: app
         run: npm test
 
+      - name: OSM subdivision requires complete coverage
+        run: python3 -m unittest discover -s app/scripts/railway/tests -p test_na_osm_tile_completion.py
+
   swift:
     name: RailCore matches the fixtures
     # This repository is developed and verified with Xcode 27 / Swift 6.4.

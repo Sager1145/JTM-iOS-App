@@ -160,6 +160,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .disabled(playback.phase == .ended)
+            .accessibilityIdentifier("playbackPauseResume")
             .accessibilityLabel(
                 Text(localization.journeyText(
                     playback.isPlaying ? "play.pause" : "play.resume",
