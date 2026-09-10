@@ -237,12 +237,12 @@
       "label": "MBTA Green Line central subway — C branch tenant (pure tenant)",
       "lineId": "mbta-c",
       "partIndex": 0,
-      "totalMetres": 15936.3,
+      "totalMetres": 8243.9,
       "familyWindows": [],
       "tenantWindows": [
         {
           "from": 4075,
-          "to": 15936.3,
+          "to": 8243.9,
           "groupId": "mbta:green"
         }
       ],
@@ -254,12 +254,6 @@
           "feature": "base",
           "from": 0,
           "to": 4075,
-          "colorKey": "#00843d"
-        },
-        {
-          "feature": "base",
-          "from": 15936.3,
-          "to": 15936.3,
           "colorKey": "#00843d"
         }
       ]
@@ -281,7 +275,7 @@
           "groupId": "mbta-commuter-rail:trunk"
         },
         {
-          "from": 82246.4,
+          "from": 85475,
           "to": 101016.9,
           "groupId": "mbta-commuter-rail:trunk"
         }
@@ -320,12 +314,12 @@
         {
           "feature": "base",
           "from": 76884.6,
-          "to": 82246.4,
+          "to": 85475,
           "colorKey": "#80276c"
         },
         {
           "feature": "family",
-          "from": 82246.4,
+          "from": 85475,
           "to": 101016.9,
           "colorKey": "#80276c",
           "groupId": "mbta-commuter-rail:trunk"
@@ -336,15 +330,9 @@
       "label": "MBTA Southwest Corridor throat — Fairmount Line tenant (pure tenant)",
       "lineId": "mbta-fairmount-line",
       "partIndex": 0,
-      "totalMetres": 14689.7,
+      "totalMetres": 14689.8,
       "familyWindows": [],
-      "tenantWindows": [
-        {
-          "from": 2052.3,
-          "to": 14689.7,
-          "groupId": "mbta-commuter-rail:trunk"
-        }
-      ],
+      "tenantWindows": [],
       "hasFamilyFeature": false,
       "baseColor": "#80276c",
       "familyColor": null,
@@ -352,7 +340,7 @@
         {
           "feature": "base",
           "from": 0,
-          "to": 2052.3,
+          "to": 14689.8,
           "colorKey": "#80276c"
         }
       ]

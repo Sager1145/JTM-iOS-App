@@ -6792,11 +6792,6 @@
     },
     {
       "operator": "MBTA",
-      "lineName": "Providence/Stoughton Line",
-      "company": "MBTA"
-    },
-    {
-      "operator": "MBTA",
       "lineName": "Red Line",
       "company": "MBTA"
     },
@@ -7098,11 +7093,6 @@
     {
       "operator": "MTA New York City Transit",
       "lineName": "8 Avenue Local",
-      "company": "MTA New York City Transit"
-    },
-    {
-      "operator": "MTA New York City Transit",
-      "lineName": "Queens Blvd Express/6 Av Local",
       "company": "MTA New York City Transit"
     },
     {
@@ -7802,22 +7792,7 @@
     },
     {
       "operator": "Utah Transit Authority",
-      "lineName": "Red Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
       "lineName": "Green Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
-      "lineName": "Green Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
-      "lineName": "Blue Line",
       "company": "Utah Transit Authority"
     },
     {
@@ -19543,18 +19518,6 @@
     {
       "country": "us",
       "input": {
-        "lineId": "mbta-providence-stoughton-line-b5",
-        "id": null,
-        "operator": "MBTA",
-        "logo": "/rail/operator-logos/na/mbta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/mbta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/mbta.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "mbta-red-line",
         "id": null,
         "operator": "MBTA",
@@ -20300,18 +20263,6 @@
       "country": "us",
       "input": {
         "lineId": "metropolitan-transit-authori-f-b1",
-        "id": null,
-        "operator": "MTA New York City Transit",
-        "logo": "/rail/operator-logos/na/metropolitan-transit-authori.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/metropolitan-transit-authori.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/metropolitan-transit-authori.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "metropolitan-transit-authori-f-b2",
         "id": null,
         "operator": "MTA New York City Transit",
         "logo": "/rail/operator-logos/na/metropolitan-transit-authori.png"
@@ -21967,43 +21918,7 @@
     {
       "country": "us",
       "input": {
-        "lineId": "utah-transit-authority-uta-703-b2",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "utah-transit-authority-uta-704",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "utah-transit-authority-uta-704-b1",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "utah-transit-authority-uta-701-b1",
         "id": null,
         "operator": "Utah Transit Authority",
         "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"

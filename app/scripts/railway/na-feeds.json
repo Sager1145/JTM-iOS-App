@@ -1655,9 +1655,8 @@
    },
    "preferredTrunkStationOrderByRouteId": {
     "CR-Providence": [
-     "place-NEC-1659", "place-NEC-1768", "place-NEC-1851",
-     "place-NEC-1891", "place-NEC-1919", "place-NEC-1969",
-     "place-NEC-2040", "place-NEC-2108", "place-NEC-2139",
+     "place-NEC-1659", "place-NEC-1768", "place-NEC-1851", "place-NEC-1891",
+     "place-NEC-1969", "place-NEC-2040", "place-NEC-2108", "place-NEC-2139",
      "place-NEC-2173", "place-rugg", "place-bbsta", "place-sstat"
     ]
    },
@@ -1674,7 +1673,41 @@
    "operatorLogos": {
     "MBTA": "/rail/operator-logos/na/mbta.png"
    },
-   "operatorLogo": "/rail/operator-logos/na/mbta.png"
+   "operatorLogo": "/rail/operator-logos/na/mbta.png",
+   "excludeTripsByRouteId": {
+    "Green-B": {
+     "routePatternTypicalityAtLeast": 3
+    },
+    "Green-C": {
+     "routePatternTypicalityAtLeast": 3
+    },
+    "CR-Providence": {
+     "routePatternNamePattern": "via Fairmount"
+    }
+   },
+   "excludeTripsEvidenceByRouteId": {
+    "Green-B": [
+     "MBTA V3 API route_patterns?filter[route]=Green-B queried 2026-09-09: typicality 1 patterns Green-B-812-0/1 Government Center - Boston College (23 stops); typicality 3 patterns Green-B-816-0/1 Medford/Tufts - Boston College are atypical and not the branch's regular terminus",
+     "mbta.com Green Line B: regular service Boston College - Government Center; Medford/Tufts is served by the E branch"
+    ],
+    "Green-C": [
+     "MBTA V3 API route_patterns?filter[route]=Green-C queried 2026-09-09: typicality 1 patterns Green-C-832-0/1 Government Center - Cleveland Circle (20 stops); typicality 3 patterns Green-C-836-0/1 Medford/Tufts - Cleveland Circle are atypical",
+     "mbta.com Green Line C: regular service Cleveland Circle - Government Center"
+    ],
+    "CR-Providence": [
+     "MBTA V3 API route_patterns?filter[route]=CR-Providence queried 2026-09-09: pattern CR-Providence-8344b9b3-0 has route_pattern_name 'South Station - Stoughton via Fairmount' and typicality 3 (diversion), with trip_headsign 'Stoughton' on its trips — the headsign does not say Fairmount, so the route_pattern_name is what identifies the diversion; every typicality 1-2 pattern runs via Back Bay",
+     "mbta.com/schedules/CR-Providence (checked 2026-09-09): the published Providence/Stoughton timetable lists no Fairmount Line stations; Fairmount stations are served by the Fairmount Line (CR-Fairmount) only"
+    ]
+   },
+   "excludeStopIdsByRouteId": {
+    "CR-Providence": ["place-forhl", "place-NEC-1919"]
+   },
+   "excludeStopEvidenceByRouteId": {
+    "CR-Providence": [
+     "MBTA V3 API route_patterns for CR-Providence queried 2026-09-09: Forest Hills (place-forhl) and South Attleboro (place-NEC-1919) appear only in typicality-5 canonical patterns C1/C2 and two typicality-3 patterns; no typicality 1-2 pattern calls there. place-SB-0189 is Stoughton, the real terminus of the via-Fairmount diversion, not an excluded stop.",
+     "mbta.com/schedules/CR-Providence current timetable stop list: South Station, Back Bay, Ruggles, Hyde Park, Readville, Route 128 ... - no Forest Hills, no South Attleboro"
+    ]
+   }
   },
   {
    "slug": "metra",
@@ -1943,25 +1976,21 @@
    },
    "preferredTrunkStationOrderByRouteId": {
     "Q": [
-     "D43", "D42", "D41", "D40", "D39", "D38", "D37", "D35", "D34", "D33",
-     "D32", "D31", "D30", "D29", "D28", "D27", "D26", "D25", "D24", "R30",
-     "Q01", "R22", "R21", "R20", "R19", "R18", "R17", "R16", "R15", "R14",
-     "B08", "Q03", "Q04", "Q05"
+     "D43", "D42", "D41", "D40", "D39", "D38", "D37", "D35", "D34", "D33", "D32",
+     "D31", "D30", "D29", "D28", "D27", "D26", "D25", "D24", "R30", "Q01", "R20",
+     "R17", "R16", "R14", "B08", "Q03", "Q04", "Q05"
     ],
     "2": [
-     "247", "246", "245", "244", "243", "242", "241", "239", "238", "237",
-     "236", "235", "234", "233", "232", "231", "230", "229", "228", "137",
-     "136", "135", "134", "133", "132", "131", "130", "129", "128", "127",
-     "126", "125", "124", "123", "122", "121", "120", "227", "226", "225",
-     "224", "222", "221", "220", "219", "218", "217", "216", "215", "214",
-     "213", "212", "211", "210", "209", "208", "207", "206", "205", "204",
-     "201"
+     "247", "246", "245", "244", "243", "242", "241", "239", "238", "237", "236",
+     "235", "234", "233", "232", "231", "230", "229", "228", "137", "132", "128",
+     "127", "123", "120", "227", "226", "225", "224", "222", "221", "220", "219",
+     "218", "217", "216", "215", "214", "213", "212", "211", "210", "209", "208",
+     "207", "206", "205", "204", "201"
     ],
     "4": [
-     "250", "249", "248", "239", "238", "237", "236", "235", "234", "423",
-     "420", "419", "418", "640", "635", "631", "629", "626", "621", "416",
-     "415", "414", "413", "412", "411", "410", "409", "408", "407", "406",
-     "405", "402", "401"
+     "250", "239", "235", "234", "423", "420", "419", "418", "640", "635", "631",
+     "629", "626", "621", "416", "415", "414", "413", "412", "411", "410", "409",
+     "408", "407", "406", "405", "402", "401"
     ],
     "5": [
      "247", "246", "245", "244", "243", "242", "241", "239", "235", "234",
@@ -1978,8 +2007,7 @@
      "D43", "D42", "F39", "F38", "F36", "F35", "F34", "F33", "F32", "F31",
      "F30", "F29", "F27", "F26", "F25", "F24", "F23", "F22", "F21", "F20",
      "A41", "F18", "F16", "F15", "F14", "D21", "D20", "D19", "D18", "D17",
-     "D16", "D15", "B10", "B08", "B06", "B04", "G20", "G19", "G18", "G16",
-     "G15", "G14", "G13", "G12", "G11", "G10", "G09", "G08", "F07", "F06",
+     "D16", "D15", "B10", "B08", "B06", "B04", "G14", "G08", "F07", "F06",
      "F05", "F04", "F03", "F02", "F01"
     ],
     "N": [
@@ -2029,7 +2057,54 @@
      "A rejected 44-stop candidate (2 trips) fails snap-check entirely, pulling in both the N train's own Brooklyn stations and the R train's Manhattan/Brooklyn local stations via shared trackage"
     ]
    },
-   "operatorLogo": "/rail/operator-logos/na/metropolitan-transit-authori.png"
+   "operatorLogo": "/rail/operator-logos/na/metropolitan-transit-authori.png",
+   "excludeStopIdsByRouteId": {
+    "2": ["121", "122", "124", "125", "126", "129", "130", "131", "133", "134", "135", "136"],
+    "3": ["124", "125", "126"],
+    "4": ["236", "237", "238", "248", "249"],
+    "7X": ["711", "713", "714", "715", "716"],
+    "A": ["A10", "A11", "A14", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A25", "A30", "A33", "A43", "A44", "A45", "A47", "A49", "A50", "A52", "A53", "A54"],
+    "D": ["R30", "R32", "R33", "R34", "R35", "A16", "A17", "A18", "A19", "A20", "A21", "A22"],
+    "F": ["G20", "G19", "G18", "G16", "G15", "G13", "G12", "G11", "G10", "G09"],
+    "Q": ["R15", "R18", "R19", "R21", "R22"]
+   },
+   "excludeStopEvidenceByRouteId": {
+    "2": [
+     "MTA subway line map 2 (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ],
+    "3": [
+     "MTA subway line map 3 (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ],
+    "4": [
+     "MTA subway line map 4 (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ],
+    "7X": [
+     "MTA subway line map 7X (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ],
+    "A": [
+     "MTA subway line map A (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ],
+    "D": [
+     "MTA subway line map D (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)",
+     "MTA GTFS 2026-09-09 weekday-daytime call share: DeKalb Av, Union St, 4 Av-9 St, Prospect Av, 25 St each 4% (late-night local only); 155 St 82% and therefore kept",
+     "MTA GTFS 2026-09-09: no weekday daytime D trip calls at the Central Park West local stations 116 St (A16), Cathedral Pkwy (110 St) (A17), 103 St (A18), 96 St (A19), 86 St (A20), 81 St-Museum of Natural History (A21), 72 St (A22); the D runs local there late nights only (MTA D line map: express 145 St - 59 St)"
+    ],
+    "F": [
+     "MTA GTFS google_transit_supplemented.zip (read 2026-09-09, weekday-daytime call share of F trips): 36 St (G20), Steinway St (G19), 46 St (G18), Northern Blvd (G16), 65 St (G15), Elmhurst Av (G13), Grand Av-Newtown (G12), Woodhaven Blvd (G11), 63 Dr-Rego Park (G10), 67 Av (G09) are each called by 3% of weekday daytime F trips",
+     "MTA F line map (new.mta.info/maps/subway-line-maps/f-line): F express on Queens Blvd; local there late nights only"
+    ],
+    "Q": [
+     "MTA subway line map Q (new.mta.info/maps/subway-line-maps): regular weekday daytime service runs express and passes these local stations; only late-night service calls there",
+     "Rail transit display-rule dataset rail_transit_map_analysis_18_cities (2026-09-09), NYC: express skip-stop patterns list only actual express stops (edge kind service_next_call_express_not_physical_adjacency)"
+    ]
+   },
+   "excludeStopIdsNote": "Parent-station ids verified by stop_name against the 2026-09-09 MTA static feed stops.txt (location_type=1 rows): 2 → 121 86 St, 122 79 St, 124 66 St-Lincoln Center, 125 59 St-Columbus Circle, 126 50 St, 129 28 St, 130 23 St, 131 18 St, 133 Christopher St-Stonewall, 134 Houston St, 135 Canal St, 136 Franklin St; 3 → 124 66 St-Lincoln Center, 125 59 St-Columbus Circle, 126 50 St; 4 → 236 Bergen St, 237 Grand Army Plaza, 238 Eastern Pkwy-Brooklyn Museum, 248 Nostrand Av, 249 Kingston Av; 7X → 705 111 St, 706 103 St-Corona Plaza, 708 90 St-Elmhurst Av, 709 82 St-Jackson Hts, 711 69 St, 713 52 St, 714 46 St-Bliss St, 715 40 St-Lowery St, 716 33 St-Rawson St (the <7> express stops only at Flushing-Main St, Mets-Willets Point, Junction Blvd, 74 St-Broadway/Jackson Hts, 61 St-Woodside, Queensboro Plaza in Queens); A → A10 163 St-Amsterdam Av, A11 A14 135 St, A16 116 St, A17 Cathedral Pkwy (110 St), A18 103 St, A19 96 St, A20 86 St, A21 81 St-Museum of Natural History, A22 72 St, A25 50 St, A30 23 St, A33 Spring St, A43 Lafayette Av, A44 Clinton-Washington Avs, A45 Franklin Av, A47 Kingston-Throop Avs, A49 Ralph Av, A50 Rockaway Av, A52 Liberty Av, A53 Van Siclen Av, A54 Shepherd Av; D → D12 R30 DeKalb Av, R32 Union St, R33 4 Av-9 St, R34 Prospect Av, R35 25 St; Q → R15 49 St, R18 28 St, R19 23 St, R21 8 St-NYU, R22 Prince St. The builder refuses an id that is not in the feed or not on the route, so a wrong id fails the next rebuild instead of passing silently. D no longer excludes 155 St (D12): 82% of weekday daytime D trips call there (2026-09-09 feed); only peak-direction rush express skips it."
   },
   {
    "slug": "miami-dade-transit",
@@ -2058,7 +2133,9 @@
    "agencies": [
     "Miami-Dade Transit"
    ],
-   "operatorLogo": "/rail/operator-logos/na/miami-dade-transit.png"
+   "operatorLogo": "/rail/operator-logos/na/miami-dade-transit.png",
+   "stationIdentityNearMeters": 1,
+   "stationIdentityNearMetersNote": "Metromover Inner Loop trips begin at stop 'Biscayne Bd@E Flagler St' and end at 'Bayfront Park Metromover Station', two stop_ids at the identical coordinate; folding same-coordinate stops into one station lets na_lines.select_lines recognise the closing edge and ship the loop as isLoop instead of a 9-station open line with a duplicate seam station"
   },
   {
    "slug": "mta-long-island-rail-road",
@@ -2875,7 +2952,14 @@
    "requireVerifiedOfficialNetwork": true,
    "forbidOfficialNetworkFallback": true,
    "officialNetworkEndpointJoinMeters": 30,
-   "officialNetworkMaxSnapMeters": 200
+   "officialNetworkMaxSnapMeters": 200,
+   "loopLeadInRouteIds": ["194"],
+   "loopLeadInEvidenceByRouteId": {
+    "194": [
+     "TriMet GTFS developer.trimet.org/schedule/gtfs.zip read 2026-09-09: every route 194 (A Loop) trip starts and ends at stop 13606 NW 9th & Lovejoy; the 2026-09-06 build carried one pattern starting at NS-Line stop NW 13th & Lovejoy which turned the loop into a 29-station open line",
+     "Portland Streetcar A Loop is a continuous clockwise circuit (portlandstreetcar.org / Wikipedia 'A and B Loop'); rail_transit_map_analysis_18_cities (2026-09-09) pdx:pattern:A closed_loop=true"
+    ]
+   }
   },
   {
    "slug": "trinity-metro",

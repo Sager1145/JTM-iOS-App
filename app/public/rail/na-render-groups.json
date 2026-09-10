@@ -72,7 +72,6 @@
     "mbta-newburyport-rockport-line-b1": "mbta-commuter-rail:trunk",
     "mbta-providence-stoughton-line": "mbta-commuter-rail:trunk",
     "mbta-providence-stoughton-line-b2": "mbta-commuter-rail:trunk",
-    "mbta-providence-stoughton-line-b5": "mbta-commuter-rail:trunk",
     "metro-north-railroad-danbury": "metro-north:trunk",
     "metro-north-railroad-harlem": "metro-north:trunk",
     "metro-north-railroad-hudson": "metro-north:trunk",
@@ -124,7 +123,6 @@
     "metropolitan-transit-authori-d": "nyct:orange",
     "metropolitan-transit-authori-f": "nyct:orange",
     "metropolitan-transit-authori-f-b1": "nyct:orange",
-    "metropolitan-transit-authori-f-b2": "nyct:orange",
     "metropolitan-transit-authori-fx": "nyct:orange",
     "metropolitan-transit-authori-m": "nyct:orange",
     "metropolitan-transit-authori-n": "nyct:yellow",
@@ -320,8 +318,7 @@
         "mbta-newburyport-rockport-line",
         "mbta-newburyport-rockport-line-b1",
         "mbta-providence-stoughton-line",
-        "mbta-providence-stoughton-line-b2",
-        "mbta-providence-stoughton-line-b5"
+        "mbta-providence-stoughton-line-b2"
       ],
       "why": "all_visible_transit_lines_line_by_line_audit.csv reads every MBTA commuter rail line (excluding the seasonal CapeFLYER) as one render key (`mbta_commuter_magenta`). The lines already share one GTFS hex, so this reason records the collapse as reviewed rather than incidental.",
       "confidence": "A"
@@ -355,7 +352,6 @@
         "metropolitan-transit-authori-d",
         "metropolitan-transit-authori-f",
         "metropolitan-transit-authori-f-b1",
-        "metropolitan-transit-authori-f-b2",
         "metropolitan-transit-authori-fx",
         "metropolitan-transit-authori-m",
         "metropolitan-transit-authori-n",

@@ -126,10 +126,23 @@ def fold_out_and_back(stations):
     return out
 
 
-def build_patterns(route_id, trips, sequences, stops, parent, weights):
-    """Every distinct stopping pattern a route runs, with how much it runs."""
+def build_patterns(route_id, trips, sequences, stops, parent, weights,
+                   dropped=None):
+    """Every distinct stopping pattern a route runs, with how much it runs.
+
+    ``dropped``, when given a dict, receives
+    ``dropped['never_operating_trips']`` — the count of trips whose service
+    never operates on any date (``weight`` 0, see ``Feed.service_weights``)
+    and were therefore not used for pattern selection at all. Those trips
+    exist in several MBTA-style feeds to describe a route's full published
+    shape, not a stopping pattern any passenger boards.
+    """
     found = {}
+    never_operating = 0
     for trip in trips:
+        if weights.get(trip.get('service_id'), 1) == 0:
+            never_operating += 1
+            continue
         seq = sequences.get(trip['trip_id'])
         if not seq or len(seq) < 2:
             continue
@@ -154,6 +167,8 @@ def build_patterns(route_id, trips, sequences, stops, parent, weights):
         shape = (trip.get('shape_id') or '').strip()
         if shape:
             pattern.shape_ids[shape] += weights.get(trip.get('service_id'), 1)
+    if dropped is not None:
+        dropped['never_operating_trips'] = never_operating
     return list(found.values())
 
 
@@ -285,12 +300,39 @@ def longest_path(succ, order):
 
 
 def select_lines(patterns, max_branches=8, min_branch_stations=2,
-                 branch_weight_floor=0.0, preferred_trunk=None):
+                 branch_weight_floor=0.0, preferred_trunk=None,
+                 lead_in_loop=False, report=None):
     """The trunk, then the branches, in the order they are drawn.
 
     Returns ``[(suffix, stations, pattern, is_loop), …]`` with ``suffix`` empty
     for the trunk. ``pattern`` is the pattern that best matches the emitted
     station list, and is what the alignment is taken from.
+
+    A loop's closing edge does not always land on the trunk's own first
+    station. The Portland Streetcar A Loop is one rare trip pattern that
+    starts a stop earlier, at an NS Line stop the loop does not otherwise
+    serve, before running the loop itself; ``longest_path`` prefers that
+    pattern for its extra station, so the trunk becomes a lead-in spur
+    followed by the loop rather than the loop on its own, and the closing
+    edge lands on an interior trunk station instead of ``trunk[0]``. Such a
+    trunk is split back into the loop (from where the closing edge lands)
+    and, when it is long enough to be real service rather than a rare
+    pull-out move, a branch carrying the lead-in. "Long enough" is at least
+    three stations regardless of ``min_branch_stations``: the A Loop's own
+    lead-in has 24 daily trips that begin at the NS Line stop NW 13th &
+    Lovejoy and run exactly one stop, to NW 9th & Lovejoy, before joining the
+    loop — a pull-out move to place the next car in service, not a display
+    lane a rider boards to go somewhere. A two-station spur is therefore
+    dropped, though it stays covered so it cannot regrow as an ordinary
+    branch below.
+
+    This split only fires when ``lead_in_loop`` is true — it changes which
+    edge closes the loop and can turn an unrelated cut edge into a spurious
+    branch when a spur station happens to also be an interior trunk station,
+    so a caller must opt a route in with evidence (see
+    ``loopLeadInRouteIds`` in the feed registry) rather than have every
+    route on the continent silently subject to it. ``report``, when given a
+    dict, receives ``report['lead_in']`` describing whether the split fired.
     """
     patterns = merge_directions(patterns)
     if not patterns:
@@ -349,11 +391,55 @@ def select_lines(patterns, max_branches=8, min_branch_stations=2,
 
     cover(trunk)
     loop = bool(cut) and any(a == trunk[-1] and b == trunk[0] for a, b, _ in cut)
+    lead_in = None
+    if lead_in_loop and not loop and cut:
+        # Smallest k (largest loop): several cut edges can each land on an
+        # interior trunk station, and the one closest to the front of the
+        # trunk is the one that keeps the most stations in the loop rather
+        # than shrinking it to fit a shorter, unrelated cut.
+        candidates = []
+        for a, b, _ in cut:
+            if a != trunk[-1]:
+                continue
+            k = position.get(b)
+            if k is not None and 0 < k < len(trunk) - 2:
+                candidates.append(k)
+        if candidates:
+            lead_in = min(candidates)
+    spur = None
+    if lead_in is not None:
+        spur = trunk[:lead_in + 1]
+        # The full trunk's coverage (and every station's position) is kept
+        # rather than rebuilt from the shortened trunk alone: an edge from a
+        # spur station to a non-adjacent loop station was already covered by
+        # the original trunk, and discarding that coverage let it reappear
+        # in ``remaining`` and grow into a spurious branch.
+        trunk = trunk[lead_in:]
+        loop = True
     out = [('', trunk, match_pattern(patterns, trunk), loop)]
+    if report is not None:
+        report['lead_in'] = None
+
+    branches = 0
+    if spur is not None:
+        # Covered either way: a spur too short to be real branch service is a
+        # rare pull-out move, not a station list to draw, and must not fall
+        # through to the ordinary branch-growing loop below.
+        cover(spur)
+        kept = len(spur) >= max(3, min_branch_stations)
+        if kept:
+            for s in spur:
+                position.setdefault(s, len(position))
+            branches += 1
+            out.append((f'-b{branches}', spur, match_pattern(patterns, spur), False))
+        if report is not None:
+            report['lead_in'] = {
+                'spur': list(spur), 'stations': len(spur),
+                'kept': kept,
+            }
 
     remaining = {(a, b): w for a, outs in succ.items() for b, w in outs.items()
                  if (a, b) not in covered}
-    branches = 0
     while remaining and branches < max_branches:
         (a, b), weight = max(remaining.items(), key=lambda kv: kv[1])
         if weight <= branch_weight_floor:

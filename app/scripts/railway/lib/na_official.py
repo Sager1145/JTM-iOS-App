@@ -501,6 +501,28 @@ class PassengerNetwork:
                 key=lambda point: geo.haversine(point, stations[index]))
             left_piece[-1] = list(canonical)
             right_piece[0] = list(canonical)
+        # A loop is routed as ``stations + [stations[0]]`` by the caller, so
+        # station 0 and the last station are the same physical stop, but the
+        # interior reconciliation above only walks interior indices and never
+        # looks at this wraparound pair. Each end is snapped by a different
+        # interval (interval 0's start, the closing interval's end) that
+        # picked its own candidate independently, exactly like any interior
+        # station — and with nothing to reconcile them, the two can differ
+        # by tens of metres, which validate_line_chain then reports as an
+        # endpoint gap on the closing interval and drops the whole line
+        # (Portland Streetcar A Loop, route 194: 71.7 m). Cincinnati's and
+        # Detroit's loops only happened to close because their two seam
+        # candidates coincided. Apply the identical canonicalisation across
+        # the seam.
+        if len(stations) >= 3 and stations[0] == stations[-1] and intervals:
+            first_piece, last_piece = intervals[0], intervals[-1]
+            if first_piece and last_piece and \
+                    geo.haversine(first_piece[0], last_piece[-1]) > 1.0:
+                canonical = min(
+                    (first_piece[0], last_piece[-1]),
+                    key=lambda point: geo.haversine(point, stations[0]))
+                first_piece[0] = list(canonical)
+                last_piece[-1] = list(canonical)
         # Report the anchors we actually used, not the individually nearest
         # candidates that the common-feature choice may have discarded.
         # Include both adjacent endpoints at an interior station.
