@@ -36,23 +36,120 @@ import SwiftUI
 /// (or no mark) on the screen it opens. One lookup, three surfaces.
 enum JourneyBranding {
 
-    /// Passenger-facing route hints, in the order they were recorded, without
-    /// the repeats a multi-section journey produces.
-    static func lineNames(of train: Train) -> [String] {
+    /// Whether a train's own recorded line names should be trusted over what
+    /// its drawn route crosses.
+    ///
+    /// An ordinary service (山手線 普通) is identified by the number the
+    /// reader IMPORTED, not by the geometry it happens to share with other
+    /// lines — and N02 files the 田端–上野 stretch of the Yamanote loop under
+    /// 東北線, so a Yamanote local detected against that index would read
+    /// 「山手線 / 東北線」 for a ride that never left its own line. Detection
+    /// exists for through-running services (特急・新幹線・快速 and the rest)
+    /// whose recorded name is one line among several actually crossed, so
+    /// those keep detection as the answer.
+    ///
+    /// The express check runs FIRST: a type can carry both words at once
+    /// (「地下鉄直通急行」, 「特急（地下鉄線内各停）」 — a through-running
+    /// express that happens to stop at every station on a subway leg), and
+    /// that train is a through-running service, not an ordinary one — its
+    /// recorded name is one line among several actually crossed, exactly the
+    /// case detection exists for. Checking ordinary first would misfile it.
+    ///
+    /// Falling through to `false` — rather than defaulting an unrecognised
+    /// type to detection — is the conservative answer: a `nil`/empty/unknown
+    /// `trainType` keeps the reader's recorded names, because a record with
+    /// no recognisable type is exactly the case there is no "this is a
+    /// through-running service" signal to override the import with — and
+    /// ``detectedApplies(_:detected:)`` already fills in detection whenever
+    /// the record names nothing at all, so a truly empty record still gets
+    /// an answer. What this prevents is a 山手線 loop imported with no
+    /// `trainType` reading as 「山手線 / 東北線」 the moment its geometry
+    /// touches the shared 田端–上野 stretch.
+    ///
+    /// The two marker lists between them cover jp/tw/hk/mo/kr/us/ca types.
+    static func usesDetectedLines(_ train: Train) -> Bool {
+        let expressMarkers = [
+            "特急", "急行", "快速", "新幹線", "ライナー", "寝台",
+            "自強", "普悠瑪", "太魯閣", "莒光", "高鐵",
+            "ktx", "srt", "itx", "새마을", "무궁화",
+            "express", "limited", "rapid", "intercity", "acela", "corridor",
+        ]
+        let ordinaryMarkers = [
+            "普通", "各駅停車", "各停", "地下鉄", "路面電車", "モノレール", "新交通", "ケーブル",
+            "區間", "各站", "普快", "捷運", "地鐵", "輕鐵", "港鐵",
+            "지하철", "일반", "전철", "경전철",
+            "local", "metro", "subway", "commuter", "tram", "streetcar", "light rail", "lrt",
+            "monorail", "cable",
+        ]
+        guard let raw = train.trainType else { return false }
+        let type = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !type.isEmpty else { return false }
+        let normalized = type.lowercased()
+        if expressMarkers.contains(where: { normalized.contains($0) }) { return true }
+        if ordinaryMarkers.contains(where: { normalized.contains($0) }) { return false }
+        return false
+    }
+
+    /// The recorded `route_sections[].line_names` / `route_policy.preferred_line_names`
+    /// — what a reader TYPED IN, factored out because both ``lineNames(of:detected:badges:)``
+    /// and ``detectedApplies(_:detected:)`` need it.
+    private static func recordedLineNames(of train: Train) -> [String] {
         uniqueNonEmpty(
             (train.routeSections ?? []).flatMap { $0.lineNames ?? [] }
                 + (train.routePolicy?.preferredLineNames ?? []))
     }
 
-    /// The operators a journey names, spelled the way the RECORD spells them.
+    /// Whether detection should be preferred over the recorded names at all
+    /// — non-empty detection, and either the train is not an ordinary
+    /// service (see ``usesDetectedLines(_:)``) or the record names nothing
+    /// for detection to be overridden by.
+    private static func detectedApplies(_ train: Train, detected: [Statistics.TraversedLine]) -> Bool {
+        !detected.isEmpty && (usesDetectedLines(train) || recordedLineNames(of: train).isEmpty)
+    }
+
+    /// Passenger-facing route hints — the railways this journey ran over.
     ///
-    /// Two spellings reach this list and both have to stay: a route section
-    /// carries the operator's full legal name (`東日本旅客鉄道`) because that
-    /// is what the rail package's line ids are built from, and the itinerary's
-    /// own `company` field carries the short one (`JR東日本`). Nothing here
-    /// shortens either, because ``logoPath(of:)`` looks a mark up by this
-    /// exact string — `lineLogos` is keyed `jp-東日本旅客鉄道-東北新幹線`, so a
-    /// list that had already been through `companyLabel` would find nothing.
+    /// `detected` is what the drawn route actually crossed, walked off the
+    /// N02 edge index by ``TraversedLineDetector`` and already unique and in
+    /// first-seen order along the path; when ``detectedApplies(_:detected:)``
+    /// it is the answer, because a through-running record (サンライズ出雲:
+    /// 東海道線→山陽線→伯備線→山陰線) must show every railway it crossed
+    /// whether or not the import listed it. An ORDINARY service with a
+    /// recorded name is the one case detection does not win — see
+    /// ``usesDetectedLines(_:)``. `badges` translates a detected name to the
+    /// passenger spelling where N02 files a subway under its administrative
+    /// name (``RouteBadgeIndex/passengerName(region:operatorName:lineName:)``);
+    /// the extra unique pass is because the map can collapse two N02 lines
+    /// (2号線/4号線名城線) into the one 名城線 a rider knows.
+    static func lineNames(
+        of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
+    ) -> [String] {
+        let region = Region.resolved(train).code
+        guard detectedApplies(train, detected: detected) else {
+            // The recorded names go through the same spelling table: a
+            // reader who imported 「4号線丸ノ内線」 from the package's own
+            // ids should still read 「丸ノ内線」, and the source stays theirs.
+            return uniqueNonEmpty(recordedLineNames(of: train).map {
+                badges?.passengerName(region: region, operatorName: nil, lineName: $0) ?? $0
+            })
+        }
+        return uniqueNonEmpty(detected.map {
+            badges?.passengerName(region: region, operatorName: $0.operatorName, lineName: $0.name)
+                ?? $0.name
+        })
+    }
+
+    /// The operators this journey ran under, spelled the way the source
+    /// spells them.
+    ///
+    /// Two spellings reach the recorded list and both have to stay: a route
+    /// section carries the operator's full legal name (`東日本旅客鉄道`)
+    /// because that is what the rail package's line ids are built from, and
+    /// the itinerary's own `company` field carries the short one
+    /// (`JR東日本`). Nothing here shortens either, because ``logoPath(of:in:detected:)``
+    /// looks a mark up by this exact string — `lineLogos` is keyed
+    /// `jp-東日本旅客鉄道-東北新幹線`, so a list that had already been through
+    /// `companyLabel` would find nothing.
     ///
     /// What a reader SEES is ``operatorLabels(of:)``.
     static func operatorNames(of train: Train) -> [String] {
@@ -87,8 +184,10 @@ enum JourneyBranding {
     }
 
     /// 「東海道本線 · JR東海」 — the line, then who runs it.
-    static func routeText(of train: Train) -> String {
-        [lineNames(of: train).joined(separator: " / "),
+    static func routeText(
+        of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
+    ) -> String {
+        [lineNames(of: train, detected: detected, badges: badges).joined(separator: " / "),
          operatorLabels(of: train).joined(separator: " / ")]
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
@@ -102,8 +201,9 @@ enum JourneyBranding {
     /// match for the ones that matter most here. A subway's id is built from
     /// the administrative name (`jp-東京地下鉄-3号線銀座線`) while its `operator`
     /// field and its passenger-facing name are the brand ones (東京メトロ,
-    /// 銀座線) — the two disagree on 19 of Japan's 652 railways and all 19 are
-    /// subways. So the constructed id missed exactly the lines whose route
+    /// 銀座線) — 33 of jp-2025.json's 655 lines carry a passenger `nameNorm`
+    /// that differs from the administrative `name`, most of them subways. So
+    /// the constructed id missed exactly the lines whose route
     /// symbol is the most recognisable thing about them, and every Tokyo Metro
     /// journey fell through to the one 東京メトロ company badge.
     ///
@@ -112,16 +212,50 @@ enum JourneyBranding {
     /// what makes this surface agree with the station card, which has always
     /// resolved through the network (`StationDisplay.buildPopupModel`): one
     /// railway, one mark, whichever screen a reader is looking at.
-    static func logoPath(of train: Train, in badges: RouteBadgeIndex?) -> String? {
+    static func logoPath(
+        of train: Train, in badges: RouteBadgeIndex?,
+        detected: [Statistics.TraversedLine] = []
+    ) -> String? {
         let region = Region.resolved(train).code
-        let lines = lineNames(of: train)
-        let operators = operatorNames(of: train)
+        // Raw N02 spelling on purpose — `RouteBadgeIndex` is keyed by both
+        // spellings of a line's name, so the badge lookup below does not
+        // need the passenger translation ``lineNames(of:detected:badges:)``
+        // applies for on-screen text.
+        let lines = lineNames(of: train, detected: detected)
+        let usesDetected = detectedApplies(train, detected: detected)
+        // Recorded operators come first: the OPERATOR label a reader sees
+        // must stay the record's own answer, not detection's "owns most of
+        // the line" — a JR東日本 ride on 東海道線 must pair with JR East's
+        // own route mark, not fall through to JR東海. The detected
+        // operator is appended only so a record with no usable operator of
+        // its own can still find a mark, and only when detection applies to
+        // this train at all — see ``usesDetectedLines(_:)``.
+        let operators = uniqueNonEmpty(
+            operatorNames(of: train) + (usesDetected ? detected.compactMap(\.operatorName) : []))
+        // Km-major, not line-major: the primary railway is the one the
+        // journey ran FARTHEST on when detection applies, so an up run and
+        // a down run of the same through service wear the same mark
+        // regardless of which end of the line they started from. The
+        // recorded list's first entry is primary otherwise — an ordinary
+        // service with a recorded name, or nothing detected to rank by.
+        // Sorted by km descending, stably — ties keep first-seen order —
+        // because `sorted` alone is not guaranteed stable and travel order
+        // must not leak into the badge choice through an unstable tie-break.
+        let badgeLines: [String]
+        if usesDetected {
+            let kmMajorDetected = detected.enumerated()
+                .sorted { ($0.element.km, -$0.offset) > ($1.element.km, -$1.offset) }
+                .map(\.element.name)
+            // The recorded names come last, not first: a detected line with
+            // its own published art must win, but a recorded line with art
+            // must still beat falling through to the plain operator mark
+            // when nothing detected has art of its own.
+            badgeLines = uniqueNonEmpty(kmMajorDetected + lines)
+        } else {
+            badgeLines = lines
+        }
         if let badges {
-            // Line-major: the first recorded line is the journey's primary
-            // route, and a through-running record must not be identified by
-            // its second section merely because that section's operator was
-            // listed first.
-            for lineName in lines {
+            for lineName in badgeLines {
                 for operatorName in operators {
                     if let hit = badges.logo(
                         region: region, operatorName: operatorName, lineName: lineName) {
@@ -130,7 +264,7 @@ enum JourneyBranding {
                 }
             }
         }
-        let lineName = lines.first
+        let lineName = badgeLines.first
         let operatorName = operators.first
         let lineID: String?
         if let lineName, let operatorName {
@@ -172,6 +306,13 @@ enum JourneyBranding {
 /// entire class of "the mark is right on one screen and wrong on the next".
 struct RouteBadgeIndex: Sendable {
     private var pathByKey: [String: String] = [:]
+    /// The passenger name for a railway whose N02 name is administrative
+    /// rather than the one riders know it by — 33 of jp-2025.json's 655
+    /// lines, most of them subways, where `nameNorm` (銀座線) and `name`
+    /// (3号線銀座線) disagree. `TraversedLineDetector`
+    /// walks the N02 edge index and can only ever report `name`; this is
+    /// what lets a detected line be SHOWN as the passenger spelling instead.
+    private var passengerNameByKey: [String: String] = [:]
 
     init() {}
 
@@ -213,6 +354,12 @@ struct RouteBadgeIndex: Sendable {
                     claim(Self.key(region: region.code, operatorName, name), logo)
                 }
             }
+            if let norm = line.nameNorm, !norm.isEmpty, norm != line.name {
+                for operatorName in operators where !operatorName.isEmpty {
+                    claimPassengerName(Self.key(region: region.code, operatorName, line.name), norm)
+                }
+                claimPassengerName(Self.key(region: region.code, "", line.name), norm)
+            }
         }
     }
 
@@ -223,8 +370,17 @@ struct RouteBadgeIndex: Sendable {
         if pathByKey[key] == nil { pathByKey[key] = logo }
     }
 
+    /// Same first-writer rule as ``claim(_:_:)``, kept as its own table
+    /// because a name-only key here must not collide with the logo table's
+    /// name-only entries — there are none, but the two answers are asked for
+    /// independently and merging them would make one dictionary do two jobs.
+    private mutating func claimPassengerName(_ key: String, _ name: String) {
+        if passengerNameByKey[key] == nil { passengerNameByKey[key] = name }
+    }
+
     mutating func merge(_ other: RouteBadgeIndex) {
         pathByKey.merge(other.pathByKey) { existing, _ in existing }
+        passengerNameByKey.merge(other.passengerNameByKey) { existing, _ in existing }
     }
 
     func logo(region: String, operatorName: String, lineName: String) -> String? {
@@ -232,6 +388,18 @@ struct RouteBadgeIndex: Sendable {
     }
 
     func logo(lineID: String) -> String? { pathByKey[lineID] }
+
+    /// The passenger name for a detected line, where the N02 name is
+    /// administrative — `nil` when the line's own name is already the one a
+    /// rider would recognise, which is true for all but 33 of jp-2025.json's
+    /// 655 lines, most of them subways.
+    func passengerName(region: String, operatorName: String?, lineName: String) -> String? {
+        if let operatorName, !operatorName.isEmpty,
+           let hit = passengerNameByKey[Self.key(region: region, operatorName, lineName)] {
+            return hit
+        }
+        return passengerNameByKey[Self.key(region: region, "", lineName)]
+    }
 
     /// NUL, for the reason `StationDisplay` gives where it builds its own
     /// composite key: it cannot occur in either half, so no name can forge a
@@ -306,7 +474,9 @@ struct RouteLogoSquare: View {
 
     private var path: String? {
         guard let train else { return explicitPath }
-        return JourneyBranding.logoPath(of: train, in: network?.badges)
+        return JourneyBranding.logoPath(
+            of: train, in: network?.badges,
+            detected: RideStatusCenter.shared.traversedLines(forTrainID: train.id))
     }
 
     /// The proportion the old 52-point tile used (36 of 52), kept as a ratio

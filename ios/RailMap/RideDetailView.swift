@@ -163,6 +163,9 @@ struct RideDetailContent: View {
     /// It matters that this is the same shape as ``JourneySummaryRow``'s
     /// header rather than merely the same facts. A reader arrives here by
     /// tapping a row, and the row they tapped led with an operator's mark and
+    /// The loaded packages, for the passenger spelling of a detected line —
+    /// see ``RouteLogoSquare``, which declares this the same way.
+    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
     /// a bold service name; a screen that opens with a generic tram symbol
     /// beside the same name reads as a different journey for the moment it
     /// takes to check.
@@ -205,9 +208,10 @@ struct RideDetailContent: View {
     /// 「特急 · 東海道本線 · JR東海」 — the type, then the line and its
     /// operator, resolved by the same lookup that chose the mark beside them.
     private var identityDetailText: String {
-        [train.trainType.flatMap { $0.isEmpty ? nil : $0 },
-         JourneyBranding.routeText(of: train).isEmpty
-             ? nil : JourneyBranding.routeText(of: train)]
+        let detected = RideStatusCenter.shared.traversedLines(forTrainID: train.id)
+        let route = JourneyBranding.routeText(of: train, detected: detected, badges: network?.badges)
+        return [train.trainType.flatMap { $0.isEmpty ? nil : $0 },
+                route.isEmpty ? nil : route]
             .compactMap { $0 }
             .joined(separator: " · ")
     }
@@ -243,6 +247,8 @@ struct RideDetailContent: View {
             // §7.3 / §10.4: the 24+ hour spelling stays exactly as recorded —
             // `25:10` is business data, not a formatting accident — and the
             // detail is where it gets explained instead of rewritten.
+    /// Reads the detected route ahead of the recorded names, so this redraws
+    /// once ``TraversedLineDetector`` lands.
             if crossesMidnight {
                 Text(localization.editorText("ios.detail.crossDay"))
                     .font(.footnote)

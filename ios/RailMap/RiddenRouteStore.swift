@@ -175,6 +175,7 @@ final class RiddenRouteStore {
             state = .loaded(rides: rides)
             RideStatusCenter.shared.publish(
                 entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
+            detectTraversedLines()
             return
         }
         state = .loading
@@ -210,6 +211,7 @@ final class RiddenRouteStore {
                 state = .loaded(rides: rides)
                 RideStatusCenter.shared.publish(
                     entries: Self.statusEntries(for: rides, wanted: wantedIDs), phase: .loaded)
+                detectTraversedLines()
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
                 return
@@ -241,6 +243,19 @@ final class RiddenRouteStore {
         visibleRides = []
         state = .idle
         RideStatusCenter.shared.clear()
+        TraversedLineDetector.shared.reset()
+    }
+
+    /// The railways every current ride actually ran over — a detection kept
+    /// alongside the route entries this store already publishes, off the
+    /// recorded `line_names` entirely. See ``TraversedLineDetector``.
+    ///
+    /// Called only where `state` settles to `.loaded(rides:)` and at the end
+    /// of ``resolve(_:)``, not on every intermediate publish: detection waits
+    /// for the full ride set so a launch does not re-walk every ride once per
+    /// partial batch, and the recorded names cover the rows until then.
+    private func detectTraversedLines() {
+        TraversedLineDetector.shared.update(rides: rides)
     }
 
     /// Solve one journey's route again, in place (§8.4).
@@ -286,6 +301,7 @@ final class RiddenRouteStore {
                 entry: solved.map {
                     RideStatusCenter.Entry(outcome: $0.route, drawnSegments: $0.segments.count)
                 } ?? RideStatusCenter.Entry(outcome: .unavailable(expected: 0), drawnSegments: 0))
+            detectTraversedLines()
         }
     }
 

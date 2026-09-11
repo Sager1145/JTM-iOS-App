@@ -1044,6 +1044,90 @@ public enum Statistics {
         }
     }
 
+    /// One railway a drawn ride actually ran over, as the edge index names it.
+    public struct TraversedLine: Sendable, Equatable {
+        public var name: String
+        /// `EdgeIndex.lineOperator[name]` — the operator owning most of the line.
+        public var operatorName: String?
+        /// Matched edge km attributed to this line over the whole ride.
+        public var km: Double
+        public init(name: String, operatorName: String?, km: Double) {
+            self.name = name
+            self.operatorName = operatorName
+            self.km = km
+        }
+    }
+
+    /// Below this, a line is a station throat the walk clipped, not a railway the ride ran over.
+    static let traversedLineMinimumKm = 1.0
+
+    /// The floor also scales with the ride: an absolute 1 km floor is right
+    /// for a 30 km ride but a 500 km Shinkansen ride can clip more than 1 km
+    /// of another feature's track in the 東京 throat, so the floor is 2% of
+    /// the ride's matched km, never below `traversedLineMinimumKm`.
+    static let traversedLineMinimumShare = 0.02
+
+    /// The railways a ride ran over, listed in the order they are MET along
+    /// the path, each placed at the km-weighted MIDDLE of where it was
+    /// ridden — a line ridden at both ends of a journey sits at its middle,
+    /// not at its first touch.
+    ///
+    /// `edges` are matched edge ids in walk order (`TrainEntry.edges`). N02
+    /// files a shared station edge under whichever feature claimed it FIRST
+    /// (`EdgeIndex.lineName`), so a 東海道線 ride that merely passes through
+    /// 京都 can clip one 山陰線 edge there without ever running on 山陰線 track
+    /// until hundreds of km later. Ordering by first-seen would pin 山陰線's
+    /// position at that clip; ordering by the km-weighted centroid of every
+    /// matched edge instead puts each line where it was actually ridden. A
+    /// line only counts as traversed once its summed matched km clears the
+    /// relative floor (``traversedLineMinimumShare`` of the ride's total
+    /// matched km, never below ``traversedLineMinimumKm``); if nothing clears
+    /// it but something matched (a very short ride), the single line with the
+    /// most km is returned so the ride is never left nameless. Unnamed edges
+    /// (`""`) are ignored — their km is not attributed to any line, but they
+    /// still advance the walk's position along the path, so a named line
+    /// ridden after an unnamed stretch is centred past it rather than on top
+    /// of it. The floor's `totalKm` is the summed km of NAMED matched edges
+    /// only.
+    public static func traversedLines(edges: [Int], index: EdgeIndex) -> [TraversedLine] {
+        var kmByName = OrderedDictionary<String, Double>()
+        var weightedPositionByName: [String: Double] = [:]
+        var firstIndexByName: [String: Int] = [:]
+        var position = 0.0
+        var ordinal = 0
+        for e in edges {
+            guard index.lineName.indices.contains(e), index.km.indices.contains(e) else { continue }
+            let km = index.km[e]
+            let name = index.lineName[e]
+            if !name.isEmpty {
+                kmByName[name] = (kmByName[name] ?? 0) + km
+                weightedPositionByName[name, default: 0] += km * (position + km / 2)
+                if firstIndexByName[name] == nil { firstIndexByName[name] = ordinal }
+            }
+            position += km
+            ordinal += 1
+        }
+        let totalKm = kmByName.values.reduce(0, +)
+        let floor = max(traversedLineMinimumKm, traversedLineMinimumShare * totalKm)
+        let qualifying = kmByName.pairs.filter { $0.value >= floor }
+        let chosen: [(key: String, value: Double)]
+        if qualifying.isEmpty, !kmByName.isEmpty {
+            let best = kmByName.pairs.max { $0.value < $1.value }!
+            chosen = [best]
+        } else {
+            chosen = qualifying
+        }
+        let ordered = chosen.sorted { a, b in
+            let ca = weightedPositionByName[a.key]! / a.value
+            let cb = weightedPositionByName[b.key]! / b.value
+            if ca != cb { return ca < cb }
+            return firstIndexByName[a.key]! < firstIndexByName[b.key]!
+        }
+        return ordered.map { name, km in
+            TraversedLine(name: name, operatorName: index.lineOperator[name], km: km)
+        }
+    }
+
     static let maxBridgeKm = 4.0
 
     /// Walk ONE train's ridden geometry onto the edge index.

@@ -44,6 +44,11 @@ final class RideStatusCenter {
 
     private(set) var phase: Phase = .idle
     private(set) var entries: [String: Entry] = [:]
+    /// The railways a ride actually ran over, keyed by train id — a projection
+    /// written by ``TraversedLineDetector``, off the recorded route entirely.
+    /// Absent (or empty) means no detection has landed yet, and a reader of
+    /// this falls back to the recorded `route_sections` names.
+    private(set) var traversedLines: [String: [Statistics.TraversedLine]] = [:]
     /// Journeys with a solve in flight right now — a single-journey rebuild
     /// (§8.4), which the store-wide `phase` cannot express.
     private(set) var resolvingIDs: Set<String> = []
@@ -83,6 +88,16 @@ final class RideStatusCenter {
         self.trainIDs = trainIDs
     }
 
+    func publish(traversedLines: [String: [Statistics.TraversedLine]]) {
+        self.traversedLines = traversedLines
+    }
+
+    /// The detected railways for one journey, or empty when none have
+    /// landed — the caller's cue to fall back to the recorded names.
+    func traversedLines(forTrainID id: String) -> [Statistics.TraversedLine] {
+        traversedLines[id] ?? []
+    }
+
     func beginResolving(_ id: String) { resolvingIDs.insert(id) }
 
     func finishResolving(_ id: String, entry: Entry?) {
@@ -98,6 +113,7 @@ final class RideStatusCenter {
         phase = .idle
         entries.removeAll()
         resolvingIDs.removeAll()
+        traversedLines.removeAll()
     }
 
     /// §8.4: solve one journey again and let the map update.

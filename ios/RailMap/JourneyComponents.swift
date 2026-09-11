@@ -418,6 +418,9 @@ struct JourneySummaryRow: View {
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    /// The loaded packages, for the passenger spelling of a detected line —
+    /// see ``RouteLogoSquare``, which declares this the same way.
+    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
 
     var body: some View {
         Group {
@@ -663,8 +666,13 @@ struct JourneySummaryRow: View {
     }
 
     /// The line and the operator, resolved the same way the mark beside them
-    /// is — see ``JourneyBranding``.
-    private var routeDetailText: String { JourneyBranding.routeText(of: train) }
+    /// is — see ``JourneyBranding``. Reads the detected route ahead of the
+    /// recorded names, so this redraws once ``TraversedLineDetector`` lands.
+    private var routeDetailText: String {
+        JourneyBranding.routeText(
+            of: train, detected: RideStatusCenter.shared.traversedLines(forTrainID: train.id),
+            badges: network?.badges)
+    }
 
     private var timingText: String {
         var parts: [String] = []
