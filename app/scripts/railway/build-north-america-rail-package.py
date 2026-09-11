@@ -435,11 +435,14 @@ ROUTE_KEYED_MAPS = (
     'referenceValidatedGeometryByRouteId', 'osmRelationEvidenceByRouteId',
     'osmRelationValidationByRouteId',
     'officialNetworkMaxSnapMetersByRouteId', 'officialNetworkSnapEvidenceByRouteId',
+    'excludeStopIdsByRouteId', 'excludeStopEvidenceByRouteId',
+    'excludeTripsByRouteId', 'excludeTripsEvidenceByRouteId',
+    'loopLeadInEvidenceByRouteId',
 )
 ROUTE_KEYED_LISTS = ('includeRouteIds', 'excludeRoutes',
                      'preferOperatorShapeByRouteId',
                      'forbidOfficialNetworkFallbackByRouteId',
-                     'primaryRouteIds')
+                     'primaryRouteIds', 'loopLeadInRouteIds')
 
 
 def resolve_route_keys(entry, routes):
@@ -592,6 +595,8 @@ class FeedBuild:
         stops = self.apply_station_coordinate_overrides(stops)
         agencies = feed.agencies()
         weights = feed.service_weights()
+        route_pattern_typicality = feed.route_pattern_typicality()
+        route_pattern_names = feed.route_pattern_names()
         all_routes = list(feed.rows('routes.txt'))
         self.entry = resolve_route_keys(self.entry, all_routes)
         for renamed in self.entry.get('_routeKeyAliases') or ():
@@ -653,7 +658,9 @@ class FeedBuild:
                 merge_route_id_groups=self.entry.get('mergeRouteIdGroups') or (),
                 primary_route_ids=self.entry.get('primaryRouteIds') or ()):
             built.extend(self.build_route(group, trips, sequences, stops, shapes,
-                                          weights, agencies, parent))
+                                          weights, agencies, parent,
+                                          route_pattern_typicality=route_pattern_typicality,
+                                          route_pattern_names=route_pattern_names))
         built = drop_subsets(
             built,
             preserve_route_ids=bool(self.entry.get('preserveRouteIds')))
@@ -751,10 +758,200 @@ class FeedBuild:
                 f'coordinate error after {len(evidence)}-source validation')
         return out
 
+    def apply_excluded_trips(self, rid, route_ids, route_trips, typicality,
+                             pattern_names=None):
+        """Drop trips ``excludeTripsByRouteId`` names, evidence required.
+
+        Unlike ``excludeTripHeadsignPattern`` (one regex per feed) this is a
+        per-route rule set: a headsign diversion filter, a route pattern id
+        list, an MBTA-style route pattern typicality floor, or a route
+        pattern name regex, any of which may apply to only one route id in a
+        merged group. Each rule is applied only to the trips whose own
+        ``route_id`` is the rule's key — never to another route's trips that
+        happen to ride along in the same merged group — and a rule that
+        matches zero of those trips raises rather than doing nothing: a
+        stale rule needs the same review as a stale stop id, not silent
+        acceptance.
+        """
+        rules = self.entry.get('excludeTripsByRouteId') or {}
+        evidence_map = self.entry.get('excludeTripsEvidenceByRouteId') or {}
+        kept = list(route_trips)
+        for route_id in route_ids:
+            rule = rules.get(route_id)
+            if not rule:
+                continue
+            evidence = evidence_map.get(route_id) or ()
+            if len(evidence) < 2:
+                raise ValueError(
+                    f'{self.slug} {rid}: excludeTripsByRouteId requires at '
+                    'least two independent evidence records')
+            own = [t for t in kept if t.get('route_id') == route_id]
+            other = [t for t in kept if t.get('route_id') != route_id]
+            before = own
+            reasons = []
+            headsign_pattern = rule.get('headsignPattern')
+            if headsign_pattern:
+                matcher = re.compile(headsign_pattern, re.IGNORECASE)
+                trimmed = [t for t in own
+                          if not matcher.search(t.get('trip_headsign') or '')]
+                if len(trimmed) == len(own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeTripsByRouteId '
+                        f'headsignPattern /{headsign_pattern}/ for '
+                        f'{route_id} matched no trips')
+                reasons.append(f'headsign matches /{headsign_pattern}/')
+                own = trimmed
+            pattern_ids = rule.get('routePatternIds')
+            if pattern_ids:
+                wanted = {str(p) for p in pattern_ids}
+                trimmed = [t for t in own
+                          if str(t.get('route_pattern_id') or '') not in wanted]
+                if len(trimmed) == len(own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeTripsByRouteId '
+                        f'routePatternIds for {route_id} matched no trips')
+                reasons.append('route_pattern_id in routePatternIds')
+                own = trimmed
+            threshold = rule.get('routePatternTypicalityAtLeast')
+            if threshold is not None:
+                if not typicality:
+                    raise ValueError(
+                        f'{self.slug} {rid}: routePatternTypicalityAtLeast '
+                        'requires route_patterns.txt')
+                if not any(t.get('route_pattern_id') for t in own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: routePatternTypicalityAtLeast '
+                        f'for {route_id} but no trip of the route carries a '
+                        'route_pattern_id')
+                trimmed = [t for t in own
+                          if typicality.get(t.get('route_pattern_id'), 0)
+                          < int(threshold)]
+                if len(trimmed) == len(own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeTripsByRouteId '
+                        f'routePatternTypicalityAtLeast for {route_id} '
+                        'matched no trips')
+                reasons.append(f'typicality >= {threshold}')
+                own = trimmed
+            pattern_name_regex = rule.get('routePatternNamePattern')
+            if pattern_name_regex:
+                names = pattern_names or {}
+                if not names:
+                    raise ValueError(
+                        f'{self.slug} {rid}: routePatternNamePattern '
+                        'requires route_patterns.txt')
+                if not any(t.get('route_pattern_id') for t in own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: routePatternNamePattern for '
+                        f'{route_id} but no trip of the route carries a '
+                        'route_pattern_id')
+                matcher = re.compile(pattern_name_regex, re.IGNORECASE)
+                trimmed = [t for t in own
+                          if not matcher.search(
+                              names.get(t.get('route_pattern_id')) or '')]
+                if len(trimmed) == len(own):
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeTripsByRouteId '
+                        f'routePatternNamePattern /{pattern_name_regex}/ for '
+                        f'{route_id} matched no trips')
+                reasons.append(
+                    f'route_pattern_name matches /{pattern_name_regex}/')
+                own = trimmed
+            n = len(before) - len(own)
+            if n:
+                self.report['notes'].append(
+                    f'{rid}: {n} trips excluded by excludeTripsByRouteId '
+                    f"({'; '.join(reasons)}) after {len(evidence)}-source "
+                    'validation')
+            kept = own + other
+        return kept
+
+    def apply_excluded_stops(self, rid, route_ids, route_trips, sequences,
+                             stops, parent, weights=None):
+        """A per-route copy of ``sequences`` with pass-through stops removed.
+
+        ``excludeStopIdsByRouteId`` names a stop this route's regular service
+        does not call at even though a diversion or a never-operating
+        "canonical" pattern passes it — MBTA's CR-Providence lists Forest
+        Hills and South Attleboro only in patterns like that. Removing the
+        id from the SHARED ``sequences`` dict would delete the same station
+        from every route that genuinely calls there, so a filtered copy is
+        built and returned for this route's own trip ids only; every other
+        route keeps reading the original.
+
+        Every excluded id must both exist in the feed and be visited by one
+        of this route's own trips — scoped to the trip's own ``route_id``,
+        never a sibling route riding along in the same merged group, and
+        only over trips whose service actually operates (``weight`` > 0), so
+        a stop id only a never-operating "canonical" pattern visits is
+        refused as stale rather than accepted. Excluding one platform id
+        excludes the whole station — every stop_id sharing its parent
+        station is removed too — so a registry entry naming the parent id
+        directly also works.
+        """
+        exclude_map = self.entry.get('excludeStopIdsByRouteId') or {}
+        evidence_map = self.entry.get('excludeStopEvidenceByRouteId') or {}
+        weights = weights or {}
+        route_trip_ids = {t['trip_id'] for t in route_trips}
+        if not any(exclude_map.get(route_id) for route_id in route_ids):
+            return {trip_id: sequences.get(trip_id) or ()
+                   for trip_id in route_trip_ids}
+        excluded_ids = []
+        evidence = []
+        excluded_stations = set()
+        for route_id in route_ids:
+            ids = exclude_map.get(route_id) or ()
+            if not ids:
+                continue
+            route_evidence = evidence_map.get(route_id) or ()
+            if len(route_evidence) < 2:
+                raise ValueError(
+                    f'{self.slug} {rid}: excludeStopIdsByRouteId requires at '
+                    'least two independent evidence records')
+            own_trip_ids = {t['trip_id'] for t in route_trips
+                            if t.get('route_id') == route_id
+                            and weights.get(t.get('service_id'), 1) > 0}
+            visited_stations = set()
+            for trip_id in own_trip_ids:
+                for stop_id in (sequences.get(trip_id) or ()):
+                    row = stops.get(stop_id)
+                    if row is not None:
+                        visited_stations.add(parent(row))
+            for stop_id in [str(s) for s in dict.fromkeys(ids)]:
+                row = stops.get(stop_id)
+                if row is None:
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeStopIdsByRouteId names '
+                        f'unknown stop {stop_id!r}')
+                station = parent(row)
+                if station not in visited_stations:
+                    raise ValueError(
+                        f'{self.slug} {rid}: excludeStopIdsByRouteId names '
+                        f'stop {stop_id!r} that no operating trip of this '
+                        'route calls at')
+                excluded_stations.add(station)
+                excluded_ids.append(stop_id)
+            evidence.extend(route_evidence)
+        excluded_ids = list(dict.fromkeys(excluded_ids))
+        to_remove = {stop_id for stop_id, row in stops.items()
+                    if parent(row) in excluded_stations}
+        to_remove |= set(excluded_ids)
+        names = ', '.join(
+            f"{stops[s].get('stop_name')} ({s})" for s in excluded_ids)
+        filtered = {trip_id: [s for s in (sequences.get(trip_id) or ())
+                              if s not in to_remove]
+                   for trip_id in route_trip_ids}
+        self.report['notes'].append(
+            f'{rid}: {len(excluded_ids)} stop(s) this service passes without '
+            f'calling ({names}) left out of pattern selection after '
+            f'{len(evidence)}-source validation')
+        return filtered
+
     # ............................................................... one route
 
     def build_route(self, group, trips, sequences, stops, shapes, weights,
-                    agencies, parent):
+                    agencies, parent, route_pattern_typicality=None,
+                    route_pattern_names=None):
         routes = group['routes']
         route = routes[0]
         rid = route['route_id']
@@ -768,8 +965,20 @@ class FeedBuild:
                     f'{rid}: {excluded} trips whose headsign matches '
                     f'/{headsign_pattern}/ are not railway service and were '
                     'left out of pattern selection')
-        patterns = lines.build_patterns(rid, route_trips, sequences, stops,
-                                        parent, weights)
+        route_ids = [r['route_id'] for r in routes]
+        route_trips = self.apply_excluded_trips(
+            rid, route_ids, route_trips, route_pattern_typicality or {},
+            route_pattern_names or {})
+        sequences_for_route = self.apply_excluded_stops(
+            rid, route_ids, route_trips, sequences, stops, parent, weights)
+        dropped = {}
+        patterns = lines.build_patterns(rid, route_trips, sequences_for_route,
+                                        stops, parent, weights, dropped=dropped)
+        never_operating = dropped.get('never_operating_trips') or 0
+        if never_operating:
+            self.report['notes'].append(
+                f'{rid}: {never_operating} trips of services that never '
+                'operate were not used for pattern selection')
         preferred_trunk = ((self.entry.get('preferredTrunkStationOrderByRouteId')
                             or {}).get(rid))
         if preferred_trunk:
@@ -809,12 +1018,33 @@ class FeedBuild:
                 f'after {len(evidence)}-source validation; published variants '
                 'remain branches')
         else:
-            selection = lines.select_lines(patterns)
+            lead_in_route_ids = set(self.entry.get('loopLeadInRouteIds') or ())
+            lead_in_evidence_map = self.entry.get('loopLeadInEvidenceByRouteId') or {}
+            lead_in_matched = next(
+                (route_id for route_id in route_ids
+                 if route_id in lead_in_route_ids), None)
+            if lead_in_matched is not None:
+                lead_in_evidence = lead_in_evidence_map.get(lead_in_matched) or ()
+                if len(lead_in_evidence) < 2:
+                    raise ValueError(
+                        f'{self.slug} {rid}: loopLeadInRouteIds requires at '
+                        'least two independent evidence records for '
+                        f'{lead_in_matched}')
+            lead_in_report = {} if lead_in_matched is not None else None
+            selection = lines.select_lines(
+                patterns, lead_in_loop=lead_in_matched is not None,
+                report=lead_in_report)
+            if lead_in_report and lead_in_report.get('lead_in'):
+                info = lead_in_report['lead_in']
+                outcome = 'kept as branch' if info['kept'] else 'dropped'
+                self.report['notes'].append(
+                    f'{rid}: loop closes onto an interior trunk station; '
+                    f"{info['stations']}-station lead-in {outcome}")
         preferred_trip = (self.entry.get('preferredTripByRouteId') or {}).get(rid)
         if preferred_trip:
             trip = next((row for row in route_trips
                          if row.get('trip_id') == preferred_trip), None)
-            raw_sequence = sequences.get(preferred_trip) or ()
+            raw_sequence = sequences_for_route.get(preferred_trip) or ()
             selected_stations = []
             for stop_id in raw_sequence:
                 stop = stops.get(stop_id)
@@ -2791,6 +3021,18 @@ DIRECTIONAL_TAIL = re.compile(
     r'[\s,\-–(/]+(?:%s)\b[\s\-–]*(?:bound\s*)?(?:platform|side|track|'
     r'stop|pl)?\s*\)?\s*$' % DIRECTION_WORDS, re.I)
 
+#: Bare street-type words that are sometimes the entire remainder after
+#: stripping what looks like a trailing direction letter — but the letter
+#: was the rest of the name, not a direction: MTA's Culver-line station
+#: "Avenue N" (GTFS parent F33) is not "Avenue" plus a northbound qualifier,
+#: it is the station at Avenue N. Guarded against, case-insensitively, only
+#: when the remainder has no other word; a real directional suffix on a
+#: multi-word name ("Main St N") still strips normally.
+STREET_TYPE_WORDS = frozenset((
+    'avenue', 'av', 'ave', 'street', 'st', 'road', 'rd',
+    'boulevard', 'blvd', 'beach', 'place', 'pl',
+))
+
 
 def strip_directional(name):
     """A platform's name without the side of the track it names.
@@ -2799,11 +3041,17 @@ def strip_directional(name):
     Northbound Platform" carries two — and only from the END, because a
     direction that leads is part of the name a passenger uses: North Station,
     West Bank, Southbound is a platform but South Station is a station.
+
+    Stops short of a strip that would leave a bare street-type word: "Avenue
+    N" and "Avenue U" are the whole station name, not "Avenue" with a
+    direction tacked on, so no round strips them.
     """
     text = (name or '').strip()
     for _ in range(3):
         stripped = DIRECTIONAL_TAIL.sub('', text).strip(' -–,(/')
         if stripped == text or not stripped:
+            break
+        if stripped.lower() in STREET_TYPE_WORDS:
             break
         text = stripped
     return text or (name or '').strip()
@@ -3528,6 +3776,88 @@ def collapse_repeats(line, station_codes, station_names):
     return folded
 
 
+def resolve_colliding_station_labels(region_lines, group_meta, codes, names):
+    """One station, one label — undo a group-name collision, platform by platform.
+
+    ``names`` carries each group's canonical name at every (line, index) it
+    calls at, and two DIFFERENT stations occasionally land on the same one:
+    the MTA L calls at GTFS parent L01 "8 Av" (group-named "14 St") and
+    parent L02 "6 Av" (also group-named "14 St") 0.56 km apart. A rider
+    cannot tell those two calls apart from the label alone.
+
+    Two calls sharing a label are only a collision when they are the SAME
+    line calling at two DIFFERENT station codes — a repeated call at one
+    station (a loop's wrap, or a doubled call ``collapse_repeats`` has not
+    yet folded) carries one code and is not a collision at all.
+
+    The fix is discovered on the line that exposed the collision, but
+    applied to the exact platform — every (line, index) whose OWN raw GTFS
+    stop id matches the exposing line's raw stop id for that code — not to
+    the whole group. A group's code can span several genuinely different
+    platforms once a reviewed interchange complex has merged them (MTA's
+    "59 St" complex code holds the IRT's own stop 629 for 4/5/6/6X, the
+    IND's own stop B08 for F/M/Q, and the BMT's own stop R11 for N/R/W, all
+    three walking-distance interchanges): a collision the N exposes at R11
+    must correct R11's OTHER callers (the R, the W) too, since that is
+    genuinely the one platform the label was ambiguous about, but must
+    leave 629's and B08's own callers alone — they are different platforms
+    that only share the merged complex's code, and were never part of the
+    collision. Each corrected row takes its own published name — the
+    per-line GTFS ``stop_name`` the exposing line's own feed called that
+    row by (``line['stationNames']``, already title-cased by
+    ``title_case_station``, before grouping gave it the place's shared
+    name); a platform whose own line never surfaced a collision, and whose
+    raw stop id was not swept in from the exposing line's own platform,
+    keeps the group's original canonical name untouched. If the two
+    published names are ALSO identical the two stations are simply two
+    places that really share a name (NYC N/R "59 St" in Manhattan and in
+    Brooklyn) and nothing is rewritten.
+
+    Runs once, before any line's rows are built. Returns a list of report
+    notes, one per relabelled label per line — only for the line whose own
+    rows exposed the collision, even when the fix reaches a platform's
+    other callers too.
+    """
+    by_code = {row['code']: row for row in group_meta}
+    notes = []
+    for line in region_lines:
+        n = len(line['stationIds'])
+        line_codes = [codes.get((id(line), i)) for i in range(n)]
+        line_names = [names.get((id(line), i)) for i in range(n)]
+        by_label = defaultdict(list)
+        for i, name in enumerate(line_names):
+            if line_codes[i] is not None:
+                by_label[name].append(i)
+        for label, idxs in by_label.items():
+            by_group = defaultdict(list)
+            for i in idxs:
+                by_group[line_codes[i]].append(i)
+            if len(by_group) < 2:
+                continue  # same station calling twice — a wrap or repeat, not a collision
+            own_names = {code: line['stationNames'][members[0]]
+                         for code, members in by_group.items()}
+            if len(set(own_names.values())) < 2:
+                continue  # genuinely same-named distinct stations — leave them alone
+            relabelled = []
+            for code, own_name in own_names.items():
+                raw_ids = {line['stationIds'][i] for i in by_group[code]}
+                for i in by_group[code]:
+                    names[(id(line), i)] = own_name
+                group = by_code.get(code)
+                if group is not None:
+                    for member in group['members']:
+                        member_line = member['line']
+                        if member_line is line:
+                            continue
+                        if (member_line['stationIds'][member['index']]
+                                in raw_ids):
+                            names[(id(member_line), member['index'])] = own_name
+                relabelled.append((code, own_name))
+            notes.append({'line': line['lineId'], 'label': label,
+                         'stations': relabelled})
+    return notes
+
+
 def groom_with_final_profile(intervals, max_passes=3):
     """Groom from the source geometry using the band the output itself needs.
 
@@ -4209,6 +4539,17 @@ def build_region(region, region_lines, options, reference):
                            % (absorbed, n, '' if n == 1 else 's')
                            for absorbed, n in record['absorbed']),
                  record['platforms']), file=sys.stderr)
+
+    # A group name collision has to be caught and fixed before any line's
+    # rows are built: the fix renames a station everywhere it is called,
+    # and a line already turned into rows would keep the stale label.
+    for record in resolve_colliding_station_labels(
+            region_lines, group_meta, codes, names):
+        print('  %s: relabelled a %r collision to %s'
+              % (record['line'], record['label'],
+                 ', '.join('%s -> %s' % (code, name)
+                           for code, name in record['stations'])),
+              file=sys.stderr)
 
     zones = []
     zone_index = {}

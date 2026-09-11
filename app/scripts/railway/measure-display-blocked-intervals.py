@@ -141,6 +141,9 @@ import math
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
+from na_osm import load_osm_way_elements  # noqa: E402
+
 APP_DIR = Path(__file__).resolve().parents[2]
 RAIL_DIR = APP_DIR / "public" / "rail"
 
@@ -161,31 +164,26 @@ MIN_WAYS_FOR_D = 3
 
 def load_osm_ways(osm_dir: Path):
     ways = []
-    tiles = sorted(glob.glob(str(osm_dir / "*.json.gz")))
-    for f in tiles:
-        with gzip.open(f) as fh:
-            d = json.load(fh)
-        for el in d.get("elements", []):
-            if el.get("type") != "way":
-                continue
-            tags = el.get("tags", {})
-            if tags.get("railway") not in RAIL_TAGS:
-                continue
-            if tags.get("service") in EXCLUDE_SERVICE:
-                continue
-            geom = el.get("geometry")
-            if not geom or len(geom) < 2:
-                continue
-            coords = [(g["lon"], g["lat"]) for g in geom]
-            b = el.get("bounds", {})
-            ways.append({
-                "id": el["id"], "tags": tags, "coords": coords,
-                "bbox": (b.get("minlon", min(c[0] for c in coords)),
-                         b.get("minlat", min(c[1] for c in coords)),
-                         b.get("maxlon", max(c[0] for c in coords)),
-                         b.get("maxlat", max(c[1] for c in coords))),
-            })
-    return ways, len(tiles)
+    elements, tile_count = load_osm_way_elements(osm_dir)
+    for el in elements:
+        tags = el.get("tags", {})
+        if tags.get("railway") not in RAIL_TAGS:
+            continue
+        if tags.get("service") in EXCLUDE_SERVICE:
+            continue
+        geom = el.get("geometry")
+        if not geom or len(geom) < 2:
+            continue
+        coords = [(g["lon"], g["lat"]) for g in geom]
+        b = el.get("bounds", {})
+        ways.append({
+            "id": el.get("id"), "tags": tags, "coords": coords,
+            "bbox": (b.get("minlon", min(c[0] for c in coords)),
+                     b.get("minlat", min(c[1] for c in coords)),
+                     b.get("maxlon", max(c[0] for c in coords)),
+                     b.get("maxlat", max(c[1] for c in coords))),
+        })
+    return ways, tile_count
 
 
 def _narn_line_to_ways(record_id, coords):

@@ -17,8 +17,113 @@ import gzip
 import json
 import math
 import os
+import re
 
 import na_geo as geo
+
+
+_CURRENT_TILE_RE = re.compile(
+    r'^tile-([+-]\d+\.\d{5})_([+-]\d+\.\d{5})_'
+    r'([+-]\d+\.\d{5})_([+-]\d+\.\d{5})\.json(?:\.gz)?$')
+_LEGACY_TILE_RE = re.compile(
+    r'^tile-([+-]\d+\.\d{3})([+-]\d+\.\d{3})\.json(?:\.gz)?$')
+
+
+def _newest(paths):
+    """The newest path, with the name as a deterministic tie breaker."""
+    return max(paths, key=lambda p: (os.stat(p).st_mtime_ns, os.path.basename(p)))
+
+
+def osm_tile_paths(path):
+    """Return one internally consistent set of cached Overpass responses.
+
+    The original cache name contained only the south/west corner. A failed
+    parent request and its southwest quarter therefore had the same name, so
+    a quarter could overwrite the parent and later masquerade as complete.
+    Current names contain all four bounds.
+
+    A directory containing any current name is a current-generation cache:
+    legacy names are left on disk for the owner but are not mixed into the
+    result. A legacy-only directory remains readable. If a completed current
+    parent and old split children coexist, the parent alone represents that
+    area; when the parent is absent, all completed children remain effective.
+    Unrecognised JSON response names retain the historical loader behaviour
+    and are included alongside the selected generation.
+    """
+    if not os.path.isdir(path):
+        return []
+
+    current = {}
+    legacy = {}
+    other = []
+    for name in os.listdir(path):
+        if not name.endswith(('.json', '.json.gz')):
+            continue
+        full = os.path.join(path, name)
+        match = _CURRENT_TILE_RE.fullmatch(name)
+        if match:
+            bounds = tuple(float(value) for value in match.groups())
+            current.setdefault(bounds, []).append(full)
+            continue
+        match = _LEGACY_TILE_RE.fullmatch(name)
+        if match:
+            corner = tuple(float(value) for value in match.groups())
+            legacy.setdefault(corner, []).append(full)
+            continue
+        other.append(full)
+
+    selected = []
+    if current:
+        candidates = [(bounds, _newest(paths))
+                      for bounds, paths in current.items()]
+        for inner, inner_path in candidates:
+            contained = any(
+                outer != inner
+                and outer[0] <= inner[0] and outer[1] <= inner[1]
+                and outer[2] >= inner[2] and outer[3] >= inner[3]
+                for outer, _ in candidates)
+            if not contained:
+                selected.append(inner_path)
+    else:
+        selected.extend(_newest(paths) for paths in legacy.values())
+    selected.extend(other)
+    return sorted(selected, key=lambda p: (
+        os.stat(p).st_mtime_ns, os.path.basename(p)))
+
+
+def load_osm_way_elements(path, ignore_errors=False):
+    """Load effective tiles and keep only the newest copy of each OSM way.
+
+    Overlapping tiles commonly repeat a way. If OSM changes during a resumed
+    download, file modification time is the only local freshness signal, so
+    files are read oldest-to-newest and the newest occurrence of a way id
+    wins. Anonymous ways cannot be matched and are retained independently.
+    Returns ``(way_elements, successfully_read_tile_count)``.
+    """
+    ways = {}
+    anonymous = []
+    tiles = 0
+    for full in osm_tile_paths(path):
+        try:
+            with open(full, 'rb') as fh:
+                raw = fh.read()
+            if full.endswith('.gz'):
+                raw = gzip.decompress(raw)
+            data = json.loads(raw)
+        except Exception:                       # noqa: BLE001
+            if ignore_errors:
+                continue
+            raise
+        tiles += 1
+        for element in data.get('elements', ()):
+            if element.get('type') != 'way':
+                continue
+            way_id = element.get('id')
+            if way_id is None:
+                anonymous.append(element)
+            else:
+                ways[way_id] = element
+    return list(ways.values()) + anonymous, tiles
 
 
 class Track:
@@ -49,25 +154,12 @@ class Track:
                     self.buckets.setdefault((kx, ky), []).append((index, i))
 
     def load_dir(self, path):
-        if not os.path.isdir(path):
-            return self
-        for name in sorted(os.listdir(path)):
-            full = os.path.join(path, name)
-            if not name.endswith(('.json', '.json.gz')):
-                continue
-            try:
-                raw = (gzip.decompress(open(full, 'rb').read())
-                       if name.endswith('.gz') else open(full, 'rb').read())
-                data = json.loads(raw)
-            except Exception:                       # noqa: BLE001
-                continue
-            self.tiles += 1
-            for element in data.get('elements', ()):
-                if element.get('type') != 'way':
-                    continue
-                geometry = element.get('geometry') or ()
-                points = [[p['lon'], p['lat']] for p in geometry]
-                self.add_way(points, (element.get('tags') or {}).get('railway', ''))
+        elements, loaded_tiles = load_osm_way_elements(path, ignore_errors=True)
+        self.tiles += loaded_tiles
+        for element in elements:
+            geometry = element.get('geometry') or ()
+            points = [[p['lon'], p['lat']] for p in geometry]
+            self.add_way(points, (element.get('tags') or {}).get('railway', ''))
         return self
 
     def nearest(self, point, search_cells=1):

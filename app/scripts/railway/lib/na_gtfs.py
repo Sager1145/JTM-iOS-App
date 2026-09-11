@@ -175,20 +175,79 @@ class Feed:
         trip should not out-vote the weekday service just because the feed
         happens to list it first. A feed with no ``calendar.txt`` weights every
         service equally, which is the same ranking as counting trips.
+
+        A ``calendar.txt`` row with all seven day flags at ``0`` and no
+        ``calendar_dates.txt`` addition (``exception_type`` ``1``) is a
+        service that never operates on any date. MBTA publishes "canonical"
+        trips exactly this way: a service id defined to run zero days, whose
+        trips exist to describe a route's full published shape, not a
+        stopping pattern anyone boards. Such a service is weighted ``0``
+        rather than the usual floor of 1, so its trips carry no vote in
+        pattern selection.
         """
         weights = {}
+        zero_day_services = set()
         for row in self.rows('calendar.txt'):
             days = sum(1 for d in ('monday', 'tuesday', 'wednesday', 'thursday',
                                    'friday', 'saturday', 'sunday')
                        if (row.get(d) or '0').strip() == '1')
-            weights[row.get('service_id')] = max(1, days)
+            service = row.get('service_id')
+            if days == 0:
+                zero_day_services.add(service)
+                weights[service] = 0
+            else:
+                weights[service] = max(1, days)
         extra = Counter()
         for row in self.rows('calendar_dates.txt'):
             if (row.get('exception_type') or '').strip() == '1':
                 extra[row.get('service_id')] += 1
         for service, n in extra.items():
-            weights.setdefault(service, max(1, min(7, n)))
+            if service in zero_day_services:
+                # calendar.txt names this service as never operating, but a
+                # calendar_dates.txt addition is the operator adding it back
+                # for specific dates — the service genuinely runs on those
+                # dates, so it is not the "canonical trip" case and earns a
+                # real weight.
+                weights[service] = max(1, min(7, n))
+            else:
+                weights.setdefault(service, max(1, min(7, n)))
         return weights
+
+    def route_pattern_typicality(self):
+        """``route_pattern_id -> route_pattern_typicality`` (MBTA-style feeds).
+
+        ``route_patterns.txt`` is not core GTFS; most North American feeds do
+        not publish it. ``rows`` already yields nothing for an absent table,
+        so a feed without it returns an empty dict rather than raising, and a
+        registry knob that depends on this table is the caller's job to
+        refuse when the dict comes back empty.
+        """
+        out = {}
+        for row in self.rows('route_patterns.txt'):
+            pattern_id = row.get('route_pattern_id')
+            if not pattern_id:
+                continue
+            try:
+                out[pattern_id] = int(row.get('route_pattern_typicality') or 0)
+            except (TypeError, ValueError):
+                continue
+        return out
+
+    def route_pattern_names(self):
+        """``route_pattern_id -> route_pattern_name`` (MBTA-style feeds).
+
+        Same absent-table contract as ``route_pattern_typicality``:
+        ``route_patterns.txt`` is not core GTFS, so a feed without it returns
+        an empty dict rather than raising, and a registry knob that depends
+        on this table is the caller's job to refuse when the dict is empty.
+        """
+        out = {}
+        for row in self.rows('route_patterns.txt'):
+            pattern_id = row.get('route_pattern_id')
+            if not pattern_id:
+                continue
+            out[pattern_id] = row.get('route_pattern_name') or ''
+        return out
 
 
 def parent_of(stop_row, stops):
