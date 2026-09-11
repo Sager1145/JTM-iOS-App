@@ -343,6 +343,7 @@ struct PanelHeader<Actions: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(PanelMorph.self) private var morph: PanelMorph?
     @ScaledMetric(relativeTo: .title3) private var compactTitleSize: CGFloat = 20
     @ScaledMetric(relativeTo: .largeTitle) private var expandedTitleSize: CGFloat = 34
     /// One subtitle line, at the reader's text size — asked of the font rather
@@ -426,8 +427,8 @@ struct PanelHeader<Actions: View>: View {
     /// workspace measures that, so this flag and `chromeMetrics` have to be
     /// decided from the same condition.
     var pinsSubtitle = false
-    var stage: SheetStage
-    var expansionProgress: CGFloat
+    private var stage: SheetStage { morph?.stage ?? .expanded }
+    private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
     @ViewBuilder var actions: Actions
 
     private var progress: CGFloat {
@@ -837,8 +838,13 @@ extension View {
 /// Boxed rather than passed as a bare closure: an `EnvironmentKey`'s
 /// `defaultValue` is a static, so under strict concurrency the value it holds
 /// has to be `Sendable`, and a bare `(SheetStage) -> Void` is not.
-struct RailSheetStageAction: Sendable {
-    var move: @MainActor @Sendable (SheetStage) -> Void
+struct RailSheetStageAction: Sendable, Equatable {
+    /// Compared by identity. A struct of closures cannot be compared by
+    /// value, and an environment value SwiftUI cannot compare is one it
+    /// treats as CHANGED every time it is re-applied — which pushed a new
+    /// environment into the hosted tab pages on every frame of a drag.
+    private let id = UUID()
+    let move: @MainActor @Sendable (SheetStage) -> Void
     /// Which stops this window actually offers. At an accessibility text size
     /// there is no half stop (see ``BottomChromeMetrics/detents``), and an
     /// accessibility action named "Half-height panel" that lands somewhere
@@ -847,6 +853,8 @@ struct RailSheetStageAction: Sendable {
 
     @MainActor
     func callAsFunction(_ stage: SheetStage) { move(stage) }
+
+    static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
 }
 
 struct RailSheetStageActionKey: EnvironmentKey {
@@ -873,10 +881,16 @@ extension EnvironmentValues {
 /// actually headed rather than where it happened to be at the last frame.
 /// Boxed for the same reason ``RailSheetStageAction`` is: a bare closure pair
 /// is not `Sendable`, and an `EnvironmentKey`'s `defaultValue` has to be.
-struct RailPanelHeaderDrag: Sendable {
-    var changed: @MainActor @Sendable (_ translation: CGSize) -> Void
-    var ended: @MainActor @Sendable (_ translation: CGSize, _ predictedEnd: CGSize) -> Void
-    var cancelled: @MainActor @Sendable () -> Void
+struct RailPanelHeaderDrag: Sendable, Equatable {
+    /// Identity, for the same reason as ``RailSheetStageAction``: the docked
+    /// card re-applies this value on every drag frame, and only an equal
+    /// value leaves the pages' environment alone.
+    private let id = UUID()
+    let changed: @MainActor @Sendable (_ translation: CGSize) -> Void
+    let ended: @MainActor @Sendable (_ translation: CGSize, _ predictedEnd: CGSize) -> Void
+    let cancelled: @MainActor @Sendable () -> Void
+
+    static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
 }
 
 struct RailPanelHeaderDragKey: EnvironmentKey {

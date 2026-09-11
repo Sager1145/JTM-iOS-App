@@ -81,6 +81,16 @@ extension OSSignposter {
         endInterval(name, state)
     }
 
+    /// An interval the tools treat as an animation: Instruments' Animation
+    /// Hitches and XCTest's `XCTOSSignpostMetric` count the frames dropped
+    /// inside it. For gestures the reader watches frame by frame, such as
+    /// the docked card's header drag. Ended with ``end(_:_:)`` like any other.
+    @inline(__always)
+    func beginAnimation(_ name: StaticString) -> OSSignpostIntervalState? {
+        guard isEnabled, !RailSignpost.isSuppressed else { return nil }
+        return beginAnimationInterval(name, id: makeSignpostID())
+    }
+
     /// A count rather than a duration — how many overlays a rebuild produced,
     /// how many vertices a tap had to project.
     @inline(__always)

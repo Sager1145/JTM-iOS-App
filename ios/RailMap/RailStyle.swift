@@ -118,6 +118,14 @@ nonisolated public enum RailStyle {
     /// `RAILWAY_STYLE.minCornerRadiusPx` (app/public/railmap-style.js).
     static let minCornerRadius: CGFloat = railWidth * 2
 
+    /// Absolute screen-space floor, including the widest zoom's weight ramp.
+    static let minimumScreenCornerRadius: CGFloat = 1
+
+    static func minimumCornerRadius(atScale scale: CGFloat) -> CGFloat {
+        max(minimumScreenCornerRadius, minCornerRadius * scale)
+    }
+
+
     /// The radius a continuous stroke (`RailCore.ContinuousStroke`, the port of
     /// rail-stroke.js) rounds its corners to where the surveyed polyline turns
     /// on a vertex. The web app's `RAILWAY_STYLE.strokeCornerRadiusPx`: a

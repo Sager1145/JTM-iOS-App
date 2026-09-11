@@ -111,7 +111,7 @@ struct VideoExportOptionsView: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
+        .railHalfSheetDetents()
     }
 
     // MARK: - labels

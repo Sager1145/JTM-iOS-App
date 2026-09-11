@@ -1,0 +1,315 @@
+{
+  "updated": "2026-09-08",
+  "sources": [
+    "https://trimet.org/schedules/",
+    "https://developer.trimet.org/gis/meta_tm_rail_lines.shtml",
+    "https://www.calgarytransit.com/rider-information/lrt-and-bus-station-maps.html",
+    "https://www.stm.info/en/info/networks/metro",
+    "https://rem.info/en/travelling/stations",
+    "https://exo.quebec/en/planifier-trajet/train",
+    "https://www.rtd-denver.com/system-map",
+    "https://www.valleymetro.org/rail",
+    "https://www.valleymetro.org/streetcar",
+    "https://www.valleymetro.org/maps-schedules",
+    "https://www.riderta.com/maps",
+    "https://www.riderta.com/routes/rail",
+    "https://www.metrostlouis.org/metrolink-system-schedule/",
+    "https://www.sacrt.com/system-maps/",
+    "https://www.sacrt.com/GreenLine/",
+    "https://www.metrotransit.org/schedules-maps",
+    "https://www.metrotransit.org/metro",
+    "https://www.metrotransit.org/northstar",
+    "https://www.riometro.org/DocumentCenter/View/265/Rail-Runner-System-Map-PDF",
+    "https://www.riometro.org/101/Stations-Connections",
+    "https://www.charlottenc.gov/files/sharedassets/cats/v/1/cats-docs/501-lynx.pdf",
+    "https://www.charlottenc.gov/CATS/Rail",
+    "https://www.dart.org/guide/transit-and-use/rail-services",
+    "https://www.dart.org/guide/transit-and-use/rail/rail-line-details/silver-line",
+    "https://trinityrailwayexpress.org/",
+    "https://ridetrinitymetro.org/texrail/",
+    "https://www.dcta.net/getting-around/rail/a-train",
+    "https://www.mata.org/",
+    "https://www.gotransit.com/en/system-map",
+    "https://www.ttc.ca/routes-and-schedules",
+    "https://www.upexpress.com/"
+  ],
+  "cities": {
+    "portland": {
+      "bounds": [
+        [45.45, -123.03, 45.63, -122.38],
+        [45.40, -122.73, 45.63, -122.52],
+        [45.27, -122.83, 45.55, -122.72]
+      ],
+      "systems": [
+        "MAX Blue Line",
+        "MAX Green Line",
+        "MAX Orange Line",
+        "MAX Red Line",
+        "MAX Yellow Line",
+        "Portland Streetcar A Loop",
+        "Portland Streetcar B Loop",
+        "Portland Streetcar North/South Line",
+        "WES Commuter Rail"
+      ],
+      "source_urls": [
+        "https://trimet.org/schedules/",
+        "https://developer.trimet.org/gis/meta_tm_rail_lines.shtml"
+      ],
+      "basis": "Official TriMet rail map and current rail-line GIS metadata verify the five MAX lines, three Portland Streetcar services, and WES. The three padded boxes separately follow the Hillsboro-Gresham/airport east-west network, the north-south MAX and Streetcar corridors, and the Beaverton-Wilsonville WES tail. The package currently contains only Portland Streetcar A Loop. Coordinates are approximate capture envelopes inferred from named termini, not surveyed route geometry.",
+      "verified": false
+    },
+    "calgary": {
+      "bounds": [
+        [50.87, -114.26, 51.15, -114.02],
+        [51.00, -114.22, 51.15, -113.91]
+      ],
+      "systems": [
+        "CTrain Red Line",
+        "CTrain Blue Line"
+      ],
+      "source_urls": [
+        "https://www.calgarytransit.com/rider-information/lrt-and-bus-station-maps.html"
+      ],
+      "basis": "The official station and system-map page identifies Red Line service from Tuscany to Somerset-Bridlewood and Blue Line service from 69 Street SW to Saddletowne. The two boxes follow those diagonal corridors and include their four outer termini. CTrain is absent from ca-2025.json. Bounds are manually padded around the official terminal locations and are not exact track geometry.",
+      "verified": false
+    },
+    "montreal": {
+      "bounds": [
+        [45.41, -73.76, 45.66, -73.41],
+        [45.39, -74.02, 45.63, -73.39],
+        [45.38, -74.18, 45.59, -73.48],
+        [45.44, -74.06, 45.82, -73.53],
+        [45.34, -73.66, 45.80, -73.12]
+      ],
+      "systems": [
+        "STM Green Line",
+        "STM Orange Line",
+        "STM Yellow Line",
+        "STM Blue Line",
+        "REM",
+        "exo Vaudreuil-Hudson line",
+        "exo Saint-Jerome line",
+        "exo Mont-Saint-Hilaire line",
+        "exo Candiac line",
+        "exo Mascouche line"
+      ],
+      "source_urls": [
+        "https://www.stm.info/en/info/networks/metro",
+        "https://rem.info/en/travelling/stations",
+        "https://exo.quebec/en/planifier-trajet/train"
+      ],
+      "basis": "STM, REM, and exo official network pages verify four Metro lines, the in-service REM branches to Brossard, Deux-Montagnes, and Anse-a-l'Orme, and five exo commuter lines. Boxes separately cover the Metro core, REM trunk and western/northern branches, and exo's Hudson, Saint-Jerome, Mont-Saint-Hilaire, Candiac, and Mascouche tails. ca-2025.json contains exo lines but no STM Metro or REM. Geographic limits are conservative approximations around official named endpoints; REM construction-only stations are not used as extent anchors.",
+      "verified": false
+    },
+    "denver": {
+      "bounds": [
+        [39.47, -105.03, 39.89, -104.63],
+        [39.67, -105.23, 39.80, -104.94],
+        [39.70, -105.05, 39.97, -104.87],
+        [39.54, -105.07, 39.83, -104.92]
+      ],
+      "systems": [
+        "RTD A Line",
+        "RTD B Line",
+        "RTD D Line",
+        "RTD E Line",
+        "RTD G Line",
+        "RTD H Line",
+        "RTD L Line",
+        "RTD N Line",
+        "RTD R Line",
+        "RTD W Line"
+      ],
+      "source_urls": [
+        "https://www.rtd-denver.com/system-map"
+      ],
+      "basis": "The official RTD rail map effective June 7, 2026 lists ten current lines and their termini, including Denver Airport, Eastlake-124th, RidgeGate Parkway, Wheat Ridge-Ward Road, JeffCo Government Center-Golden, and Littleton-Mineral. The boxes follow the airport/southeast, west, north, and southwest/downtown rail arms. No RTD operator lines are present in us-2025.json. Bounds are approximate padded terminal envelopes; future Boulder/Longmont rail is excluded.",
+      "verified": false
+    },
+    "phoenix": {
+      "bounds": [
+        [33.37, -112.16, 33.61, -111.75],
+        [33.34, -112.11, 33.48, -112.03],
+        [33.40, -111.98, 33.46, -111.89]
+      ],
+      "systems": [
+        "Valley Metro Rail",
+        "Tempe Streetcar"
+      ],
+      "source_urls": [
+        "https://www.valleymetro.org/rail",
+        "https://www.valleymetro.org/streetcar",
+        "https://www.valleymetro.org/maps-schedules"
+      ],
+      "basis": "Valley Metro's official rail, streetcar, and system-map pages define the regional light-rail network and Tempe Streetcar. Boxes follow the Metro Parkway-Gilbert Road spine, the south-central branch to Baseline Road, and the Tempe streetcar loop. Valley Metro rail is absent from us-2025.json. Bounds are approximate capture corridors around official station endpoints, not a claim of exact alignment.",
+      "verified": false
+    },
+    "cleveland": {
+      "bounds": [
+        [41.38, -81.89, 41.55, -81.56],
+        [41.43, -81.72, 41.51, -81.48],
+        [41.48, -81.72, 41.55, -81.65]
+      ],
+      "systems": [
+        "GCRTA Red Line",
+        "GCRTA Blue Line",
+        "GCRTA Green Line",
+        "GCRTA Waterfront Line"
+      ],
+      "source_urls": [
+        "https://www.riderta.com/maps",
+        "https://www.riderta.com/routes/rail"
+      ],
+      "basis": "GCRTA's official rapid-transit map and rail service page verify the Airport-Windermere Red Line, Warrensville-Van Aken Blue Line, Green Road Green Line, and event-service Waterfront Line to South Harbor. The boxes isolate the east-west Red Line, Shaker branches, and lakefront spur. GCRTA is absent from us-2025.json. Extents are approximate padded corridors based on named termini; the event-only Waterfront Line is retained because its physical passenger track is part of the network.",
+      "verified": false
+    },
+    "st_louis": {
+      "bounds": [
+        [38.50, -90.40, 38.78, -89.84],
+        [38.55, -90.36, 38.67, -89.95]
+      ],
+      "systems": [
+        "MetroLink Red Line",
+        "MetroLink Blue Line"
+      ],
+      "source_urls": [
+        "https://www.metrostlouis.org/metrolink-system-schedule/"
+      ],
+      "basis": "Metro Transit's official 2026 system schedule verifies Red Line service from Lambert Airport to Shiloh-Scott and Blue Line service from Shrewsbury-Lansdowne I-44 to Fairview Heights. Separate boxes follow the long airport-to-Illinois Red corridor and the southwest Blue branch. MetroLink is absent from us-2025.json. Limits are approximate padded terminal envelopes; unconfirmed future extensions are excluded.",
+      "verified": false
+    },
+    "sacramento": {
+      "bounds": [
+        [38.53, -121.57, 38.72, -121.13],
+        [38.41, -121.47, 38.68, -121.34],
+        [38.56, -121.54, 38.63, -121.46]
+      ],
+      "systems": [
+        "SacRT Gold Line",
+        "SacRT Blue Line",
+        "SacRT Green Line"
+      ],
+      "source_urls": [
+        "https://www.sacrt.com/system-maps/",
+        "https://www.sacrt.com/GreenLine/"
+      ],
+      "basis": "SacRT's official light-rail map identifies the Gold Line to Historic Folsom, Blue Line between Watt-I-80 and Cosumnes River College, and the short Green Line to the River District. The boxes follow the Folsom, north-south, and downtown/River District corridors. SacRT is absent from us-2025.json. The Green Line source reports a temporary construction suspension; its physical extent remains included. Coordinates are approximate capture envelopes.",
+      "verified": false
+    },
+    "minneapolis_st_paul": {
+      "bounds": [
+        [44.82, -93.36, 45.03, -92.95],
+        [44.93, -93.80, 45.38, -93.23]
+      ],
+      "systems": [
+        "METRO Blue Line",
+        "METRO Green Line",
+        "Northstar Commuter Rail"
+      ],
+      "source_urls": [
+        "https://www.metrotransit.org/schedules-maps",
+        "https://www.metrotransit.org/metro",
+        "https://www.metrotransit.org/northstar"
+      ],
+      "basis": "Metro Transit's official maps verify Blue Line service from Target Field to Mall of America, Green Line service between downtown Minneapolis and downtown Saint Paul, and Northstar from Target Field toward Big Lake. The first box covers both light-rail axes and the second follows the northwest commuter corridor to its outer terminus. us-2025.json currently has the Green Line only. Bounds are approximate padded endpoint corridors.",
+      "verified": false
+    },
+    "albuquerque_santa_fe": {
+      "bounds": [
+        [34.61, -106.84, 35.23, -106.43],
+        [35.17, -106.67, 35.73, -105.89]
+      ],
+      "systems": [
+        "New Mexico Rail Runner Express"
+      ],
+      "source_urls": [
+        "https://www.riometro.org/DocumentCenter/View/265/Rail-Runner-System-Map-PDF",
+        "https://www.riometro.org/101/Stations-Connections"
+      ],
+      "basis": "Rio Metro's official system map and station page verify a 15-station, roughly 100-mile Rail Runner corridor from Belen to Santa Fe. Two overlapping boxes follow the Belen-Albuquerque and Bernalillo-Santa Fe portions so the full commuter tail is captured without one statewide rectangle. Rail Runner is absent from us-2025.json. Bounds are approximate padded endpoint corridors.",
+      "verified": false
+    },
+    "charlotte": {
+      "bounds": [
+        [35.07, -80.92, 35.34, -80.69],
+        [35.19, -80.89, 35.27, -80.76]
+      ],
+      "systems": [
+        "LYNX Blue Line",
+        "CityLYNX Gold Line"
+      ],
+      "source_urls": [
+        "https://www.charlottenc.gov/files/sharedassets/cats/v/1/cats-docs/501-lynx.pdf",
+        "https://www.charlottenc.gov/CATS/Rail"
+      ],
+      "basis": "The official CATS Blue Line map verifies the operating corridor from I-485-South Boulevard to UNC Charlotte Main, and the CATS rail page includes the operating CityLYNX Gold Line streetcar. The boxes separately follow the long Blue Line and the east-west Gold Line through Uptown. CATS is absent from us-2025.json. Proposed Red, Silver, Gold Phase 3, and Blue extensions are excluded. Bounds are approximate padded terminal corridors.",
+      "verified": false
+    },
+    "toronto": {
+      "bounds": [
+        [43.54, -79.68, 43.88, -79.05],
+        [43.05, -79.98, 43.78, -79.00],
+        [43.55, -79.52, 43.96, -78.80],
+        [43.38, -80.56, 43.91, -79.18],
+        [43.59, -79.82, 44.43, -79.28],
+        [43.58, -79.98, 44.16, -79.12],
+        [43.62, -79.66, 43.73, -79.34]
+      ],
+      "systems": [
+        "TTC Line 1 Yonge-University",
+        "TTC Line 2 Bloor-Danforth",
+        "TTC Line 4 Sheppard",
+        "TTC Line 5 Eglinton",
+        "TTC Line 6 Finch West",
+        "TTC streetcar network",
+        "GO Barrie line",
+        "GO Kitchener line",
+        "GO Lakeshore East line",
+        "GO Lakeshore West line",
+        "GO Milton line",
+        "GO Richmond Hill line",
+        "GO Stouffville line",
+        "UP Express"
+      ],
+      "source_urls": [
+        "https://www.gotransit.com/en/system-map",
+        "https://www.ttc.ca/routes-and-schedules",
+        "https://www.upexpress.com/"
+      ],
+      "basis": "The current official TTC map verifies five subway/light-rail lines plus the streetcar network, while the GO train map verifies the seven Greater Golden Horseshoe rail corridors and their outer branches; UP Express links Union and Pearson. The boxes separately cover TTC, the Niagara-Hamilton-Toronto and Toronto-Oshawa Lakeshore arms, the Kitchener corridor, Barrie corridor, Milton/Richmond Hill/Stouffville arms, and UP Express. They correct the seed bounds that excluded Niagara Falls to the south, Kitchener to the west, and Allandale Waterfront in Barrie to the north. Bounds are approximate padded corridor envelopes based on official named termini, not surveyed route geometry.",
+      "verified": false
+    },
+    "dallas_fort_worth": {
+      "bounds": [
+        [32.61, -97.12, 33.12, -96.51],
+        [32.87, -97.12, 33.07, -96.61],
+        [32.69, -97.41, 32.85, -96.75],
+        [32.73, -97.41, 32.97, -96.95],
+        [32.88, -97.22, 33.28, -96.85],
+        [32.73, -96.85, 32.83, -96.76]
+      ],
+      "systems": [
+        "DART Blue Line",
+        "DART Green Line",
+        "DART Orange Line",
+        "DART Red Line",
+        "DART Silver Line",
+        "Trinity Railway Express",
+        "TEXRail",
+        "DCTA A-train",
+        "Dallas Streetcar",
+        "M-Line Trolley"
+      ],
+      "source_urls": [
+        "https://www.dart.org/guide/transit-and-use/rail-services",
+        "https://www.dart.org/guide/transit-and-use/rail/rail-line-details/silver-line",
+        "https://trinityrailwayexpress.org/",
+        "https://ridetrinitymetro.org/texrail/",
+        "https://www.dcta.net/getting-around/rail/a-train",
+        "https://www.mata.org/"
+      ],
+      "basis": "Official operator pages verify DART's four light-rail lines and Silver Line, TRE, TEXRail, the Denton A-train, Dallas Streetcar, and M-Line. The six boxes separately follow the DART radial network, Silver Line from DFW Terminal B to Shiloh Road, TRE, TEXRail, the A-train to Denton, and the two central Dallas streetcar systems. The currently modified us-2025.json includes DART Silver and the other principal DART/TRE routes, so this entry supplies a complete capture envelope rather than asserting Silver is still absent. Bounds are approximate padded terminal corridors.",
+      "verified": false
+    }
+  }
+}

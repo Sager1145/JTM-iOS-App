@@ -163,6 +163,7 @@ struct StationCardView: View {
                             localization.text("ios.openInMaps", fallback: "Open in Maps"),
                             systemImage: "map")
                     }
+                    .accessibilityIdentifier("stationOpenInMaps")
                 }
 
                 if !card.lines.isEmpty {
@@ -205,6 +206,7 @@ struct StationCardView: View {
                         accessibilityLabel: Text(
                             localization.text("ios.close", fallback: "Close")),
                         action: { dismiss() })
+                    .accessibilityIdentifier("stationCardClose")
                 }
             }
         }
@@ -223,7 +225,7 @@ struct StationCardView: View {
                 aliases: localization.stationNameAliases(
                     card.rawName, code: card.id, region: card.region))
         }
-        .presentationDetents([.medium, .large])
+        .railHalfSheetDetents()
         // §9.5.6's no-Pull-Bar rule is the app's, not the resident sheet's —
         // this card was the one bottom surface still drawing a grabber. As
         // with the resident sheet, hiding it is only affordable next to

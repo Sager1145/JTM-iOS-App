@@ -236,6 +236,8 @@ final class MapPlaybackLayer {
     /// and it was measured on a simulator, which software-renders, so how much
     /// of it survives on a device is the next thing to find out.
     private func applyCamera(_ camera: Playback.CameraFrame, on mapView: MKMapView) {
+        guard mapView.bounds.width > 1, mapView.bounds.height > 1 else { return }
+        controller?.playbackWillMoveCamera()
         let insets = controller?.playbackFramingInsets ?? .zero
         let width = Double(max(mapView.bounds.width - insets.left - insets.right, 1))
         let height = Double(max(mapView.bounds.height - insets.top - insets.bottom, 1))

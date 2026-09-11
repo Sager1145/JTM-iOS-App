@@ -78,15 +78,16 @@ if [ "$run_swift" = 1 ]; then
         grep -E '^✘|error:' "$scratch.log" | head -30
         fail "swift test (full log: $scratch.log)"
     fi
-    # Read Swift Testing's final summary rather than counting individual
+    # Sum Swift Testing's final summaries rather than counting individual
     # completion lines. Parallel tests write those lines concurrently, so two
     # identical successful runs used to report different totals when output
     # was interleaved (465, then 370, for a 277-test run).
     #
-    # Counted rather than described as "parity tests": most of them are, but
+    # Each test target emits its own summary; taking the last one drops the
+    # other target. Counted rather than described as "parity tests": most are, but
     # RailPresentationTests checks invariants no fixture can express.
     passed=$(sed -nE 's/^.*Test run with ([0-9]+) tests? in [0-9]+ suites?.*/\1/p' \
-        "$scratch.log" | tail -1)
+        "$scratch.log" | awk '{ total += $1; summaries++ } END { if (summaries) print total }')
     [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
     echo "  $passed tests pass"
 
@@ -156,6 +157,26 @@ if [ "$run_swift" = 1 ]; then
     [ "$js_tolerance" = "$swift_tolerance" ] || fail \
         "simplify tolerance disagrees: railmap-style.js $js_tolerance, RailStyle.swift ${swift_tolerance:-none}"
 
+    # The viewport-normalised detail ladder is a second cross-platform
+    # constant contract: both renderers must shift the phone-tuned zoom
+    # ladder by the same formula against the same reference viewport, or a
+    # tablet/desktop will show more (or fewer) lines than its content fit
+    # warrants and no fixture will say so.
+    grep -q 'VIEWPORT_REFERENCE_SHORT_EDGE = 390' "$repo/app/public/rail-network.js" || fail \
+        "VIEWPORT_REFERENCE_SHORT_EDGE = 390 not found in rail-network.js"
+    grep -q 'VIEWPORT_ZOOM_ADJUST_MIN = -1.5' "$repo/app/public/rail-network.js" || fail \
+        "VIEWPORT_ZOOM_ADJUST_MIN = -1.5 not found in rail-network.js"
+    grep -q 'VIEWPORT_ZOOM_ADJUST_MAX = 0.5' "$repo/app/public/rail-network.js" || fail \
+        "VIEWPORT_ZOOM_ADJUST_MAX = 0.5 not found in rail-network.js"
+    grep -q 'viewportReferenceShortEdge = 390.0' \
+        "$here/RailKit/Sources/RailPresentation/NetworkVisibilityPolicy.swift" || fail \
+        "viewportReferenceShortEdge = 390.0 not found in NetworkVisibilityPolicy.swift"
+    grep -q 'viewportZoomAdjustmentRange = -1.5...0.5' \
+        "$here/RailKit/Sources/RailPresentation/NetworkVisibilityPolicy.swift" || fail \
+        "viewportZoomAdjustmentRange = -1.5...0.5 not found in NetworkVisibilityPolicy.swift"
+    echo "  viewport-normalised detail ladder constants agree: 390 pt reference," \
+        "-1.5...0.5 clamp"
+
     # There is a THIRD copy of that number, and it is the one the continuous
     # regions actually spend. A continuous stroke is decimated inside the
     # stroke builder, on the straight polyline, BEFORE its corners are
@@ -183,9 +204,8 @@ if [ "$run_swift" = 1 ]; then
     grep -q '\* RailStyle\.simplifyTolerance' \
         "$here/RailMap/RailMapView.swift" \
         || fail "RailMapView no longer derives epsilon from RailStyle.simplifyTolerance"
-    renderer_simplifiers=$(grep -c \
-        'Geometry\.douglasPeuckerIndices(.*epsilonMeters: epsilon)' \
-        "$here/RailMap/RailMapView.swift" || true)
+    renderer_simplifiers=$(cat "$here/RailMap/RailMapView.swift" "$here/RailMap/MapLineGeometry.swift" | grep -c \
+        'Geometry\.douglasPeuckerIndices(.*epsilonMeters: epsilon)' || true)
     [ "$renderer_simplifiers" = 2 ] || fail \
         "expected network and ridden-route simplifiers to share epsilon; found $renderer_simplifiers"
     echo "  survey regions decimate at $js_tolerance pt in both renderers;" \
@@ -540,11 +560,13 @@ PY
     # them — and all four have to draw it identically or the screen
     # contradicts itself: a log listing a trip the total above it did not
     # count, or a map drawing a line the percentage beside it excludes. One
-    # rule (`RideLedger.hasBeenRidden`), named in all four.
+    # rule (`RideLedger.hasBeenRidden`), including the extracted workspace rule.
     for file in AppShell.swift ContentView.swift StatisticsView.swift; do
         grep -q 'RideLedger\.hasBeenRidden(' "RailMap/$file" \
             || fail "RailMap/$file scopes the passport without excluding what is not confirmed"
     done
+    grep -q 'RideLedger\.hasBeenRidden(' RailKit/Sources/RailPresentation/WorkspaceJourneyRules.swift \
+        || fail "WorkspaceJourneyRules scopes statistics without excluding what is not confirmed"
     # Passport receives the already-filtered scope; filtering it again here
     # would undo the memoization and pay a full journey scan on every frame.
     grep -q 'scopedTrains: statisticsScope.trains,' RailMap/ContentView.swift \
@@ -731,21 +753,15 @@ PY
         || fail "the statistics load no longer guards on the destination"
     echo "  the statistics load waits for Passport to be opened"
 
-    # …and opening Passport does not decode seven packages to place a camera.
-    #
-    # `Region.networkExtent` is a written-down constant precisely so a camera
-    # need not wait for lines. The statistics framing reduced `store.lines`
-    # instead and called `ensureAll()` to fill it, which made arriving at
-    # Passport the most expensive geometry decode in the app — for a bounding
-    # box the catalog already holds to the metre.
+    # Region focus uses catalog bounds and never loads every package merely
+    # to move the camera. Tab navigation itself preserves the viewport.
     if grep -rn 'ensureAll' --include='*.swift' RailMap \
         | grep -qv 'there is deliberately no\|// '; then
         fail "an all-regions geometry decode is back"
     fi
-    grep -q 'controller.fit(region?.networkExtent ?? Region.everyNetworkExtent)' \
-        RailMap/ContentView.swift \
-        || fail "the statistics camera no longer frames from the catalog's extent"
-    echo "  the statistics camera frames from constants, not from decoded lines"
+    grep -q 'controller.fitIfNeeded(region.networkExtent)' RailMap/ContentView.swift \
+        || fail "region focus no longer uses the catalog extent"
+    echo "  region focus uses catalog bounds without eager network loading"
 
     # A cached journey is not held off the map by an uncached one.
     #

@@ -95,9 +95,10 @@ bead diameter in `railmap-style.js` are measured against macOS 「地圖」→
 大眾運輸 at 東京駅. Putting the railway back over the reference it was designed
 against is the shorter distance.
 
-The basemap asks for `.muted` emphasis — MapKit's own term for "something is
-being drawn over me" — and excludes points of interest, so Apple's transit
-lines do not compete with ours for the same ink.
+The basemap keeps MapKit's default emphasis, so the detail Apple shows at each
+zoom — roads, labels, terrain — is Apple's own; only the railway is tiered by
+zoom (see `NetworkLOD`). Points of interest are excluded so Apple's station pins
+do not compete with our own station marks.
 
 Every railway mounts at `MKOverlayLevel.aboveLabels` for the same reason. The
 base map's own labelling — road names, expressway shields — is drawn between
@@ -113,6 +114,50 @@ tokens have to become renderer parameters instead. That is a real loss and it
 is worth being explicit about it.
 
 ## The interface
+
+### Workspace and map responsibilities
+
+`AppShell.ContentView` owns the shared stores and the single `PlaybackController`.
+`RailWorkspaceView` connects those owners to the resident list/detail layers and
+the shared map, and retains selection, search and presentation coordination.
+`WorkspaceTabs` hosts the four system destinations through the existing non-generic
+`WorkspacePage` boundary. `WorkspacePanelPage` owns header/content layout, and
+`WorkspacePanelActions` renders resolved actions and supplied scope menus without
+owning stores. `WorkspacePresentations` hosts the dialog and sheet bindings and
+waits for confirmation teardown before invoking the workspace's delete callback.
+`WorkspaceSheetContent` renders sheet payloads; its detail sheet resolves a record
+by ID from `ItineraryStore`, including after a nested editor changes that ID.
+`JourneyEditing` pairs ordinary in-memory mutations with the existing queued
+snapshot save. Import still uses `ImportFlow` and its awaited persistence path;
+changing reviewed text invalidates its report before another commit is allowed.
+The import flow also owns its region: cancelling and reopening retains the manual
+choice together with the report; loading a new document resets region inference.
+
+`WorkspaceJourneyRules` in RailPresentation owns filtering, date choices and
+default-region rules. Callers evaluate these inside the existing `WorkspaceDerived`
+cache closures, preserving the cache keys and input generations. Date buckets and
+journey spans keep their existing, distinct meanings.
+
+`RailMapController` owns camera commands. `Surface.Coordinator` connects the MapKit
+lifecycle to `MapNetworkBuildState`, which adapts build coverage and LOD inputs to
+`MapRebuildPolicy`. `MapNetworkGeometryCache` owns reusable network/ride geometry;
+`MapOverlayInstaller` prepares, reuses and installs overlays in their drawing order.
+`MapLineGeometry.prepare` projects, offsets, rounds and chunks line geometry on a
+cancellable worker. Camera motion and resizing cancel its request; publication
+checks both request identity and scale key before installing the result. Mounted
+overlays remain available during preparation. Pinches retain renderer styles and
+annotation layouts until settling; playback defers installation.
+Network overlay preparation and overlay installation remain separate steps;
+style-only updates retain their independent path. Playback, ride markers and layer
+styles remain in `MapPlaybackLayer`, `MapRideMarkers` and `MapLayers`.
+
+Run `ios/verify.sh` for fixture parity, Swift tests, app compilation and source
+contracts. This does not execute UI tests. Run
+`ios/tools/verify-layout-ui-smoke.sh` for the wide-iPad path, or pass `iphone`
+for editing/import, search/list return, panel gestures, layer toggles and playback
+regressions. Both commands retain the xcodebuild log and xcresult under `SCRATCH`.
+
+### Layout
 
 Two layouts, chosen by the window's shape rather than the device. A phone in
 landscape has almost no height for a bottom sheet but plenty of width for a
@@ -246,6 +291,104 @@ Both were found by measurement rather than by reading.
 
 ## Performance: what the simulator said, and what fixed it
 
+Parallel lines share the `ContinuousStroke` offset/fillet pipeline. The native app
+enables strict corner validation: emitted arcs must meet
+`RailStyle.minimumCornerRadius(atScale:)` (a 1 pt absolute construction floor,
+3 pt at full weight). If short edges cannot accommodate that radius, the corner
+stays unrounded. Station anchors remain exact vertices, avoiding the reflex arcs
+previously drawn through an apex. Existing geometry scales with MapKit during a
+pinch; screen-space radii and lane spacing are rebuilt after the camera settles.
+Detached preparation returns only Sendable coordinate chunks. After checking the
+request generation, the main actor creates the native MapKit polylines and
+publishes them to the geometry cache; native overlay objects do not cross the
+worker boundary.
+Follower substitution locates cumulative-distance samples with a lower-bound
+binary search. This preserves endpoint and duplicate-point behavior while
+avoiding a full source-path scan for every output vertex on long parallel lines.
+The web-parity mode remains available in RailCore for its existing fixtures.
+
+Sparse surveyed edges now sample lane-ramp boundaries before offsets, so a
+complete parallel-lane excursion between two source vertices cannot disappear.
+Sampling retains original station measures and bounds interpolation error;
+16-lane regressions check order, spacing and feasible corner radii across scales.
+Native offsets also derive tangents from significant alignment vertices and
+interpolate their miter vectors along each segment. This retains every station
+and lane-ramp sample without letting a near-collinear follow sample reverse the
+offset edge beside a bend. Previously, fold cleanup could delete both points
+and turn the Highland Avenue–Orange curve into a 760 m chord at app zoom 13.
+Cleanup protects the surveyed alignment's significant vertices at the existing
+0.0625 pt tolerance, including moderate bends made sharper by lane offsets. It
+removes redundant folded samples one at a time and rechecks their neighbours.
+Where a bend is too tight for the requested lane offset, the offset is constrained
+by adjacent surveyed edges and tapers along the approaches. Recovery is at most
+one offset pixel per twenty source pixels, and slower beside near-reversals.
+A monotonic soft limit preserves lane order; it avoids
+the tiny self-crossing that retaining an over-offset apex alone would leave.
+
+Run the production geometry sweep with:
+
+```sh
+python3 ios/tools/audit-zoom-chords.py \
+  --json /tmp/jtm-zoom-chords.json --check-orange --fail-on-candidates
+```
+
+The tool loads all seven shipped display models, compiles the actual Swift
+stroke/LOD/simplifier code, and checks the follow, offset, fillet and final
+simplification stages at app zooms 10–16. The Orange regression additionally
+uses 33 zooms from 12–16 in 0.125 increments. Each is a cold build; camera-history
+hysteresis is exercised by the simulator tests instead. Findings are geometric
+review candidates, not evidence that a surveyed alignment is wrong.
+Self-intersection diagnostics are reported separately: source loops, repeated
+vertices and grade-separated crossings require review. `--fail-on-candidates`
+gates visible skipped bends; `--fail-on-crossings` additionally gates those raw
+intersection warnings.
+
+`MapZoomPerformanceTests` exercises five zooms each over Japan, Tokyo,
+Hoboken/Newport, the Hudson/Penn Station corridor and two Orange bend cameras. It checks
+camera progress, covered nonempty overlays, no gesture-time rebuild and gross
+display-link delivery stalls; these main-run-loop measurements do not measure GPU presentation.
+The two dense US cameras also require visible green, blue and orange railway pixels
+after every zoom and zero lines dropped by the vertex budget. Initial and settled
+screenshots are retained for branch/curve inspection; overlay submission alone
+does not establish that MapKit has finished drawing. Orange screenshots similarly
+wait for visible green railway ink.
+The suite also covers landscape launch, portrait-to-landscape resizing and
+two-finger map rotation followed by zoom. Rotation uses the same rebuild
+deferral as pan and pinch. When SwiftUI replaces a map, dismantling cancels its
+camera, resize, matching and geometry tasks and releases only the controller
+hooks that still belong to that map.
+The map controller copies the outgoing camera and restores it before publishing
+the replacement map as ready. A phone switching between tall and docked layouts
+therefore keeps its center, distance, heading and pitch. Camera callbacks defer
+style changes until the same 120 ms quiet period as geometry, including mouse
+wheel and inertial motion that may not activate touch recognizers; playback
+continues to apply its own frame's style directly.
+Small landscape windows dock from 632 pt wide with a 300 pt minimum map
+allowance. This keeps the map exposed on a 667 × 375 pt iPhone SE; a resident
+system sheet at that height otherwise covers the whole map. Other windows
+retain the existing 692 pt breakpoint and 360 pt map allowance.
+
+Run the representative cases serially across explicitly chosen simulators:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
+python3 ios/tools/verify-zoom-platforms.py \
+  --device <small-iphone-udid> --device <ipad-udid> \
+  --output /tmp/jtm-platform-zoom-results
+```
+
+Select devices across installed runtimes and screen sizes; `--full` runs all
+zoom cases on each device. The runner builds once, reuses that test build on
+the remaining devices, and writes logs, screenshot-bearing `.xcresult` bundles
+and `summary.json`. Use idle simulators and avoid other builds or app launches
+during performance measurements. Generic iOS and Mac Catalyst builds check the
+iOS 17 deployment baseline and both Catalyst architectures; they do not replace
+runtime testing on older OS versions or frame-presentation profiling on hardware.
+Instruments can distinguish background `map.geometry.prepare` from main-thread
+`map.rebuild` and its overlay/annotation phases.
+Recorded platform results, including unresolved intermittent timing failures,
+are in [the September 8 validation report](../docs/PARALLEL_RAIL_ZOOM_VALIDATION_2026-09-08.md).
+
 The first version drew one SwiftUI `MapPolyline` per station interval. On
 Japan that is 9,568 overlays, and the simulator was explicit about the result:
 
@@ -296,14 +439,16 @@ adds three rules — and lives outside `RailCore` on purpose, because there is n
 JavaScript to check it against and mixing a policy of our own into the ported
 tier would make the parity fixtures meaningless.
 
-1. **A line waits for its complete-group length and its rank.** The web app's
-   coarse length tier remains the base rule; a finer native ladder keeps only
-   groups over 300/120/50/20 km at app zoom 4/5/6/7. Long trunk corridors
-   therefore survive wide views while regional branches wait. Zoom 8 still
-   restores every line. **A station waits with its line** — its own threshold
-   raised to its line's, so a branch's terminals stop hanging in the sea three
-   zoom levels before the branch is drawn (jp app zoom 4: 132 beads over 24
-   lines, now 48).
+1. **High-speed backbones remain at the widest MapKit view.** Japan's nine
+   Shinkansen entries (including short branches), Taiwan HSR, Korea's three
+   high-speed lines and the US rank-0 lines stay eligible at globe scale.
+   Ordinary lines retain complete-group length/rank floors: 300/120/50/20 km
+   at app zoom 4/5/6/7, all lines eligible at zoom 8. Stations still wait for
+   their own density floor and their line. `NetworkVisibilityPolicy` owns the
+   native thresholds; both lazy region loading and network drawing resolve
+   them at runtime, rather than using historical floors in generated geometry.
+   The same camera scale yields the same eligibility on phones, tablets and
+   resized windows, in both zoom directions; there is no device detail delay.
 2. **Nothing far off screen is built.** The build covers the visible rect plus
    half a screen each way and is remembered, so panning inside it does no work.
 3. **A vertex budget is the backstop**, shedding least-important first, so the

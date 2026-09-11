@@ -20,22 +20,20 @@ import SwiftUI
 /// View` members; the row is the control this app is tapped through more than
 /// any other, and finding it meant scrolling past the statistics panel.
 ///
-/// The store arrives whole rather than as six closures because the row really
-/// does edit it — duplicate, reorder, hide — and six one-line closures naming
-/// six store methods is the same coupling with more to read. What IS a closure
-/// is everything that belongs to the workspace rather than to the record:
-/// starting a run, opening a sheet, raising a confirmation, the save feedback.
+/// The editing boundary arrives whole rather than as one closure per command:
+/// the row really does edit the store — duplicate, reorder, hide — and every
+/// one of those transitions must persist the generation it produced. What IS
+/// a closure is everything that belongs to the workspace rather than to the
+/// record: starting a run, opening a sheet, and raising a confirmation.
 struct JourneyListRow: View {
     let train: Train
     let presentation: JourneyPresentation
     let showsDate: Bool
 
-    /// The record store, edited in place by the menu and the swipes.
-    let itineraries: ItineraryStore
+    /// The record store and the persistence edge for commands made here.
+    let editing: JourneyEditing
 
-    /// Write the reader's own store back after an edit made here.
-    let persist: () -> Void
-
+    let select: () -> Void
     let play: () -> Void
     let showDetail: () -> Void
 
@@ -57,12 +55,12 @@ struct JourneyListRow: View {
         // which resident layer is on top, and §8.1 wants that reflected in the
         // list AND on the map at once rather than pushing a screen over both.
         Button {
-            itineraries.selectedTrainID = train.id
+            select()
         } label: {
             JourneySummaryRow(
                 train: train,
                 presentation: presentation,
-                isSelected: itineraries.selectedTrainID == train.id,
+                isSelected: editing.itineraries.selectedTrainID == train.id,
                 showsDate: showsDate)
         }
         // §14.3's first line, on the control this app is tapped through more
@@ -84,8 +82,7 @@ struct JourneyListRow: View {
                     systemImage: "trash")
             }
             Button {
-                itineraries.toggleVisibility(train.id)
-                persist()
+                editing.toggleVisibility(train.id)
             } label: {
                 Label(visibilityTitle, systemImage: visibilitySymbol)
             }
@@ -129,30 +126,26 @@ struct JourneyListRow: View {
                 systemImage: "info.circle")
         }
         Button {
-            itineraries.duplicate(train.id)
-            persist()
+            editing.duplicate(train.id)
         } label: {
             Label(
                 localization.countryText("btn.duplicate", fallback: "Duplicate"),
                 systemImage: "plus.square.on.square")
         }
         Button {
-            itineraries.toggleVisibility(train.id)
-            persist()
+            editing.toggleVisibility(train.id)
         } label: {
             Label(visibilityTitle, systemImage: visibilitySymbol)
         }
         Button {
-            itineraries.move(train.id, by: -1)
-            persist()
+            editing.move(train.id, by: -1)
         } label: {
             Label(
                 localization.countryText("btn.moveUp", fallback: "Move earlier"),
                 systemImage: "arrow.up")
         }
         Button {
-            itineraries.move(train.id, by: 1)
-            persist()
+            editing.move(train.id, by: 1)
         } label: {
             Label(
                 localization.countryText("btn.moveDown", fallback: "Move later"),

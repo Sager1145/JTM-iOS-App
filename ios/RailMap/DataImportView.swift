@@ -15,19 +15,6 @@ struct DataImportView: View {
     @Bindable var itineraries: ItineraryStore
     @Bindable var library: RideLibrary
 
-    /// Which region these journeys belong to.
-    ///
-    /// The web app never asks: it has an active country, and an import is
-    /// normalised against it — `normalizeImportedTrain` applies that region's
-    /// company rules, and the rides land in that region's store. There is no
-    /// active region here, so the question is asked instead of assumed, and it
-    /// is answered in advance from the document itself: every package outside
-    /// Japan spells its station codes `"<region>-official-…"`, so a file that
-    /// carries codes says where it belongs. A file that carries none — a
-    /// hand-written one — is where the picker earns its place.
-    @State private var region: Region = .jp
-    @State private var detectedRegion: Region?
-
     var body: some View {
         NavigationStack {
             Form {
@@ -43,6 +30,7 @@ struct DataImportView: View {
                         flow.cancel()
                         dismiss()
                     }
+                    .accessibilityIdentifier("importCancel")
                 }
             }
             .safeAreaInset(edge: .bottom) { actionBar }
@@ -62,13 +50,13 @@ struct DataImportView: View {
                 }
             }
             .task {
-                detectRegion()
+                flow.prepareForPresentation()
                 // A file the reader has just chosen needs no typing, so the
                 // check starts by itself. Pasted text does not: checking on
                 // every keystroke would report errors about a half-typed
                 // document.
                 if case .editing = flow.phase, flow.origin != .pasted, !flow.text.isEmpty {
-                    flow.check(itineraries: itineraries, region: region)
+                    flow.check(itineraries: itineraries)
                 }
             }
         }
@@ -96,6 +84,7 @@ struct DataImportView: View {
                 }
             case .pasted:
                 TextEditor(text: $flow.text)
+                    .accessibilityIdentifier("importText")
                     .font(.system(.footnote, design: .monospaced))
                     .frame(minHeight: 140)
                     .disabled(flow.isRunning)
@@ -120,17 +109,18 @@ struct DataImportView: View {
     private var modeSection: some View {
         Section {
             Picker(
-                localization.text("country.label", fallback: "Region"), selection: $region
+                localization.text("country.label", fallback: "Region"), selection: $flow.region
             ) {
                 ForEach(Region.ordered) { entry in
                     Text(localization.text(entry.localizationKey, fallback: entry.fallbackName))
                         .tag(entry)
                 }
             }
-            .onChange(of: region) {
-                if flow.report != nil { flow.check(itineraries: itineraries, region: region) }
+            .accessibilityIdentifier("importRegion")
+            .onChange(of: flow.region) {
+                if flow.report != nil { flow.check(itineraries: itineraries) }
             }
-            if let detectedRegion, detectedRegion == region {
+            if let detectedRegion = flow.detectedRegion, detectedRegion == flow.region {
                 Text(
                     localization.dataText(
                         "data.regionDetected", ["region": .string(regionName)])
@@ -149,7 +139,7 @@ struct DataImportView: View {
                 // A report is an answer about one mode. Changing the mode
                 // makes it an answer to a question nobody asked any more.
                 if flow.report != nil {
-                    flow.check(itineraries: itineraries, region: region)
+                    flow.check(itineraries: itineraries)
                 }
             }
 
@@ -347,7 +337,7 @@ struct DataImportView: View {
             switch flow.phase {
             case .editing:
                 Button {
-                    flow.check(itineraries: itineraries, region: region)
+                    flow.check(itineraries: itineraries)
                 } label: {
                     Text(localization.text("btn.validate", fallback: "Validate JSON"))
                         .frame(maxWidth: .infinity)
@@ -355,6 +345,7 @@ struct DataImportView: View {
                 .buttonStyle(.borderedProminent)
                 .railMinimumTouchTarget()
                 .disabled(flow.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .accessibilityIdentifier("importValidate")
             case .checking, .importing:
                 Button(role: .cancel) { flow.cancel() } label: {
                     Text(localization.text("ios.cancel", fallback: "Cancel"))
@@ -366,7 +357,7 @@ struct DataImportView: View {
                 if report.isCommittable {
                     Button {
                         flow.commit(
-                            itineraries: itineraries, library: library, region: region)
+                            itineraries: itineraries, library: library)
                     } label: {
                         Text(
                             localization.dataText(
@@ -376,11 +367,12 @@ struct DataImportView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .railMinimumTouchTarget()
+                    .accessibilityIdentifier("importCommit")
                 } else {
                     // §3.3: an import that failed its preflight gets no
                     // prominent button. Fixing the input is the action.
                     Button {
-                        flow.check(itineraries: itineraries, region: region)
+                        flow.check(itineraries: itineraries)
                     } label: {
                         Text(localization.dataText("data.recheck")).frame(maxWidth: .infinity)
                     }
@@ -413,7 +405,7 @@ struct DataImportView: View {
     private var currentCount: Int { itineraries.store?.trains.count ?? 0 }
 
     private var regionName: String {
-        localization.text(region.localizationKey, fallback: region.fallbackName)
+        localization.text(flow.region.localizationKey, fallback: flow.region.fallbackName)
     }
 
     /// What a renamed id looks like, taken from the rule rather than invented:
@@ -430,31 +422,6 @@ struct DataImportView: View {
         var announcement = AttributedString(message)
         announcement.accessibilitySpeechAnnouncementPriority = assertive ? .high : .default
         AccessibilityNotification.Announcement(announcement).post()
-    }
-
-    /// Read the region off the document's own station codes.
-    ///
-    /// Deliberately a scan of the raw text rather than a parse: the file may
-    /// not be valid JSON at all — that is what the preflight is for — and a
-    /// picker that refuses to pre-fill until the document parses would be
-    /// unhelpful in exactly the case the reader needs help. The first
-    /// `"<region>-official-` that appears settles it; a file with none is
-    /// Japanese, whose codes are six digits and name no region.
-    private func detectRegion() {
-        for candidate in Region.ordered where candidate != .jp {
-            if flow.text.contains("\"\(candidate.rawValue)-official-") {
-                region = candidate
-                detectedRegion = candidate
-                return
-            }
-        }
-        // A Japanese six-digit code is only evidence when there is a code at
-        // all, so an empty or code-free document leaves the picker at its
-        // default without claiming to have detected anything.
-        if flow.text.contains("n02_station_code") {
-            region = .jp
-            detectedRegion = .jp
-        }
     }
 }
 

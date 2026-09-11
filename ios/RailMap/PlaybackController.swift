@@ -226,8 +226,18 @@ final class PlaybackController {
 
     var isActive: Bool { phase != .idle && phase != .ended }
     var isPlaying: Bool { phase == .playing }
-    var canGoPrevious: Bool { queueIndex > 0 }
-    var canGoNext: Bool { queueIndex + 1 < queueCount }
+    /// Only a run that is still under way has a journey before or after the
+    /// current one: an ended run's transport is holding the closing panorama
+    /// (and the finish its exporter is waiting for), and at idle there is no
+    /// queue at all.
+    private var isNavigable: Bool {
+        switch phase {
+        case .armed, .playing, .paused, .transitioning: return true
+        case .idle, .ended: return false
+        }
+    }
+    var canGoPrevious: Bool { isNavigable && queueIndex > 0 }
+    var canGoNext: Bool { isNavigable && queueIndex + 1 < queueCount }
 
     /// What a run over these journeys would cost, WITHOUT arming one.
     ///
@@ -316,8 +326,15 @@ final class PlaybackController {
         restoreSelectedTrainID = restoringSelection
         doneTrails = []
         let result = prepare(trains: trains, rides: rides, reducedMotion: reducedMotion)
+        // Nothing in the selection has ridden geometry: back to idle rather
+        // than `.ended`, which would leave a blank transport on screen with
+        // no exit but the ✕.
         guard result.trains > 0 else {
-            phase = .ended
+            phase = .idle
+            // No transport means no ✕ to consume it; left set, a later
+            // stop would yank the selection back to a train the reader
+            // moved on from.
+            restoreSelectedTrainID = nil
             return false
         }
         queueIndex = 0
@@ -402,7 +419,8 @@ final class PlaybackController {
     }
 
     func next() {
-        guard canGoNext else {
+        guard isNavigable else { return }
+        guard queueIndex + 1 < queueCount else {
             finishQueue()
             return
         }

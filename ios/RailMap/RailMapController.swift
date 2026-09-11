@@ -2,6 +2,7 @@ import CoreLocation
 import MapKit
 import Observation
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The commands the control bar can give the map, and the state it reads back.
@@ -18,6 +19,39 @@ import SwiftUI
 @MainActor
 @Observable
 final class RailMapController {
+
+    @ObservationIgnored private var cameraPolicy = MapCameraPolicy()
+    private(set) var autoFocusRequest: MapCameraPolicy.FocusRequest?
+
+    func requestAutoFocus(
+        _ target: MapCameraPolicy.FocusTarget, enabled: Bool, playbackIsActive: Bool
+    ) {
+        autoFocusRequest = cameraPolicy.requestFocus(
+            target, enabled: enabled, playbackIsActive: playbackIsActive)
+        if autoFocusRequest != nil {
+            pendingFollow = false
+        }
+    }
+
+    func takeAutoFocusRequest(
+        matching request: MapCameraPolicy.FocusRequest?
+    ) -> MapCameraPolicy.FocusRequest? {
+        guard request == autoFocusRequest else { return nil }
+        return cameraPolicy.takeFocusRequest()
+    }
+
+    func pendingAutoFocusRequest(
+        matching request: MapCameraPolicy.FocusRequest?
+    ) -> MapCameraPolicy.FocusRequest? {
+        guard request == autoFocusRequest else { return nil }
+        return cameraPolicy.pendingFocusRequest
+    }
+
+    func cancelAutoFocus() { cameraPolicy.cancelFocus() }
+
+    func isCurrentAutoFocus(_ request: MapCameraPolicy.FocusRequest) -> Bool {
+        cameraPolicy.isCurrent(request)
+    }
 
     // MARK: - state the bar renders from
 
@@ -109,6 +143,12 @@ final class RailMapController {
 
     // MARK: - the map registers itself here
 
+    /// Camera handed from an outgoing map to its replacement. SwiftUI may make
+    /// the replacement before dismantling the old representable, or dismantle
+    /// first; capturing in `willSet` covers both orders.
+    @ObservationIgnored private var replacementCamera: MKMapCamera?
+    @ObservationIgnored private var replacementTrackingMode: MKUserTrackingMode = .none
+
     /// Set by ``RailMapView.Coordinator`` once its `MKMapView` exists.
     ///
     /// Deliberately paired with an observable flag: the control stack contains
@@ -116,18 +156,52 @@ final class RailMapController {
     /// the interface has to *know* when one arrives rather than reading a
     /// non-observable reference and never being told.
     @ObservationIgnored weak var mapView: MKMapView? {
+        willSet {
+            guard let current = mapView, current !== newValue else { return }
+            replacementCamera = current.camera.copy() as? MKMapCamera
+            replacementTrackingMode = current.userTrackingMode
+        }
         didSet {
-            isMapReady = mapView != nil
-            // A composition swap (phone ↔ docked) tears down the old
-            // `MKMapView` and `RailMapView.makeUIView` hands back a fresh
-            // one, which starts with zero margins. `leadingObstruction`'s
-            // own `didSet` already fired on the map that just died, so the
-            // new map never got the number unless it is re-applied here.
             applyLeadingMargin()
+            // makeUIView has no viewport yet. Setting its camera here lets
+            // MapKit clamp it against zero bounds, losing center and scale.
+            isMapReady = false
+            if let mapView { restoreCameraAfterLayout(on: mapView) }
         }
     }
 
     private(set) var isMapReady = false
+
+    func restoreCameraAfterLayout(on view: MKMapView) {
+        guard mapView === view, view.bounds.width > 1, view.bounds.height > 1 else { return }
+        if let camera = replacementCamera {
+            let trackingMode = replacementTrackingMode
+            discardReplacementCamera()
+            applyLeadingMargin()
+            view.setCamera(camera, animated: false)
+            if trackingMode != .none { view.setUserTrackingMode(trackingMode, animated: false) }
+        }
+        if !isMapReady { isMapReady = true }
+        if pendingFollow,
+            locationAuthorization == .authorizedAlways || locationAuthorization == .authorizedWhenInUse {
+            if beginFollowing() { pendingFollow = false }
+        }
+    }
+
+    private func discardReplacementCamera() {
+        replacementCamera = nil
+        replacementTrackingMode = .none
+    }
+
+    private func claimCamera() {
+        discardReplacementCamera()
+        pendingFollow = false
+        cameraPolicy.claimCamera()
+    }
+
+    func playbackWillMoveCamera() {
+        if replacementCamera != nil { claimCamera() }
+    }
 
     // MARK: - commands
 
@@ -160,6 +234,7 @@ final class RailMapController {
     /// half of that.
     private func scaleSpan(by factor: Double) {
         guard let mapView else { return }
+        claimCamera()
         let camera = mapView.camera.copy() as! MKMapCamera
         // Clamped for the same reason the span was: past MapKit's own limits it
         // stops accepting the value and jumps somewhere unrelated. About 150 m
@@ -173,6 +248,7 @@ final class RailMapController {
     /// Turn the map back to north, keeping the centre and zoom.
     func resetNorth() {
         guard let mapView else { return }
+        claimCamera()
         let camera = mapView.camera.copy() as! MKMapCamera
         camera.heading = 0
         mapView.setCamera(camera, animated: RailMotion.cameraAnimated(reduceMotion: reduceMotion))
@@ -209,7 +285,7 @@ final class RailMapController {
     /// padding to give.
     func fit(_ rect: MKMapRect, animated: Bool? = nil) {
         guard let mapView, !rect.isNull else { return }
-        hasFramedForReader = true
+        claimCamera()
         stopFollowingUser()
         mapView.setVisibleMapRect(
             rect,
@@ -220,6 +296,25 @@ final class RailMapController {
             // parameter so a caller that has already decided does not have to
             // decide twice.
             animated: animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+    }
+
+    /// Automatic focus leaves an already visible subject and the user's zoom
+    /// alone. Explicit locate commands continue to frame its complete extent.
+    func fitIfNeeded(_ region: MKCoordinateRegion) {
+        guard let mapView else { return }
+        let rect = Self.mapRect(of: region)
+        let available = mapView.bounds.inset(by: framingInsets)
+        let corners = [
+            MKMapPoint(x: rect.minX, y: rect.minY),
+            MKMapPoint(x: rect.maxX, y: rect.minY),
+            MKMapPoint(x: rect.minX, y: rect.maxY),
+            MKMapPoint(x: rect.maxX, y: rect.maxY),
+        ]
+        if available.width > 0, available.height > 0,
+            corners.allSatisfy({ available.contains(mapView.convert($0.coordinate, toPointTo: mapView)) }) {
+            return
+        }
+        fit(rect)
     }
 
     /// The room a framed subject is given: the resident sheet's own height at
@@ -250,49 +345,15 @@ final class RailMapController {
     /// whole run.
     var playbackFramingInsets: UIEdgeInsets { framingInsets }
 
-    // MARK: - the one move the app makes for itself
+    // MARK: - opening camera
 
-    /// Open the map on a country, once, before anything else has claimed the
-    /// camera. Answers whether it did.
-    ///
-    /// **What this replaced.** The map used to frame ITSELF: each time a
-    /// regional package finished decoding, the camera was set to the extent of
-    /// every line loaded so far. Five packages land at five different moments
-    /// over the first seconds of a launch, so the camera jumped five times and
-    /// finished on all five networks at once — a view of four countries the
-    /// reader is not going to, arriving after they had already started
-    /// pinching, and taking their zoom with it. A camera that moves seconds
-    /// after launch is not an opening view, it is an interruption of one.
-    ///
-    /// So the opening view is now chosen from the RIDES — the country of the
-    /// reader's first journey (`RailWorkspaceView.launchExtent`), or East Asia
-    /// when there is none — and it happens at most once. Every guard below is
-    /// a way of saying the same thing: the app gets the camera only while
-    /// nobody else wants it.
-    ///
-    ///   - ``hasOpened`` — an opening move is a move you make once. A second
-    ///     one is exactly the behaviour this replaced.
-    ///   - ``hasFramedForReader`` — a journey chosen, a 定位, a statistics
-    ///     scope switched. A deliberate move outranks a housekeeping one, and
-    ///     the rides can finish loading after any of them.
-    ///   - ``readerMovedCamera`` — a finger already on the map. Nothing the
-    ///     app decided at launch is worth taking that away for.
-    ///
-    /// **A country, and nothing closer.** A second, "precise" frame used to
-    /// follow this one, zooming onto the routes of the soonest upcoming day as
-    /// soon as their geometry had been read off disk. It is gone for the
-    /// reason the five-package framing is: it moved the camera at the moment a
-    /// FILE finished, which is not a moment the reader did anything at. What
-    /// this leaves is a single set-and-stay — which is why it is never
-    /// animated. There is nowhere to travel from; this is where the map
-    /// starts.
+    /// Open once, before a gesture, explicit camera command or focus request
+    /// has claimed the map. Rail package completion never requests this move.
     @discardableResult
     func frameAtLaunch(_ region: MKCoordinateRegion) -> Bool {
-        guard !hasOpened, !hasFramedForReader, !readerMovedCamera else { return false }
         guard let mapView else { return false }
         let rect = Self.mapRect(of: region)
-        guard !rect.isNull else { return false }
-        hasOpened = true
+        guard !rect.isNull, cameraPolicy.openAtLaunch() else { return false }
         mapView.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
         return true
     }
@@ -303,24 +364,19 @@ final class RailMapController {
     /// task from overwriting the requested audit location a moment later.
     func frameForUITest(_ region: MKCoordinateRegion) {
         guard let mapView else { return }
-        hasOpened = true
+        claimCamera()
         mapView.setRegion(region, animated: false)
+    }
+
+    /// Package-bounds audit framing, after the normal opening move. Unlike the
+    /// explicit region override, it does not change launch ownership flags.
+    func frameForUITest(_ rect: MKMapRect) {
+        mapView?.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
     }
 #endif
 
-    /// Whether the map has already opened on its country.
-    @ObservationIgnored private(set) var hasOpened = false
-
-    /// Whether the reader's own hands have been on the map.
-    ///
-    /// Reported by the map's pinch and pan sensors rather than inferred from a
-    /// region change, because MapKit's own callbacks cannot tell a gesture
-    /// from a `setVisibleMapRect` this object just made — see
-    /// ``RailMapView/Coordinator/handleManipulation(_:)``.
-    @ObservationIgnored private(set) var readerMovedCamera = false
-
     /// Told by the map when a finger starts moving it.
-    func readerBeganManipulating() { readerMovedCamera = true }
+    func readerBeganManipulating() { claimCamera() }
 
     /// How much of the map's bottom edge the resident sheet is covering right
     /// now. Written by the workspace as the sheet moves.
@@ -352,6 +408,7 @@ final class RailMapController {
     private func applyLeadingMargin() {
         guard let mapView else { return }
         var margins = mapView.directionalLayoutMargins
+        guard margins.leading != leadingObstruction else { return }
         margins.leading = leadingObstruction
         mapView.directionalLayoutMargins = margins
     }
@@ -408,15 +465,6 @@ final class RailMapController {
         )
     }
 
-    /// Whether a move the READER asked for has happened.
-    ///
-    /// A journey chosen, a 定位, a statistics scope switched. It exists
-    /// because the app has one camera move of its own — ``frameAtLaunch(_:)``
-    /// — and it waits on rides being read from disk, which can finish after
-    /// any of those. A deliberate move outranks a housekeeping one, so the
-    /// opening move is simply not owed any more once one has happened.
-    @ObservationIgnored private(set) var hasFramedForReader = false
-
     /// Supplied by the map each time it rebuilds, so the button frames what is
     /// actually drawn rather than a remembered extent.
     @ObservationIgnored var fitRegion: MKCoordinateRegion?
@@ -433,6 +481,7 @@ final class RailMapController {
     }
 
     func startFollowingUser() {
+        claimCamera()
         locationRefusal = nil
         switch locationAuthorization {
         case .notDetermined:
@@ -444,23 +493,25 @@ final class RailMapController {
         case .restricted, .denied:
             locationRefusal = .unavailable
         default:
-            beginFollowing()
+            pendingFollow = !beginFollowing()
         }
     }
 
     func stopFollowingUser() {
+        pendingFollow = false
         guard let mapView else { return }
         mapView.setUserTrackingMode(
             .none, animated: RailMotion.cameraAnimated(reduceMotion: reduceMotion))
         isFollowingUser = false
     }
 
-    private func beginFollowing() {
-        guard let mapView else { return }
+    private func beginFollowing() -> Bool {
+        guard isMapReady, let mapView else { return false }
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(
             .follow, animated: RailMotion.cameraAnimated(reduceMotion: reduceMotion))
         isFollowingUser = true
+        return true
     }
 
     // MARK: - feedback from the map
@@ -497,11 +548,11 @@ final class RailMapController {
     fileprivate func authorizationChanged(_ status: CLAuthorizationStatus) {
         locationAuthorization = status
         guard pendingFollow else { return }
-        pendingFollow = false
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
-            beginFollowing()
+            pendingFollow = !beginFollowing()
         case .denied, .restricted:
+            pendingFollow = false
             locationRefusal = .declined
         default:
             break

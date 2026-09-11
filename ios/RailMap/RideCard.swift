@@ -35,17 +35,6 @@ struct RideCard: View {
     let train: Train
     /// The resolved surface — see `JourneyPresentationResolver.selected`.
     var presentation: JourneyPresentation
-    var stage: SheetStage
-    /// Where the sheet is between its compact and half stops, 0…1.
-    ///
-    /// The same number `PanelHeader` interpolates against, and it is here for
-    /// the same reason: §9.5.5 point 6 — the bound `PresentationDetent` only
-    /// changes once the sheet has SETTLED, so a header keyed off `stage` alone
-    /// changes a beat after the finger and does it in one step. This card used
-    /// to do exactly that, which meant one drag moved two headers on two
-    /// different clocks: the panel's title tracked the finger while the
-    /// journey's did not.
-    var expansionProgress: CGFloat = 1
     var dateChipTitle: String?
     var onClose: () -> Void
     var onPrimary: (JourneyPresentation.PrimaryAction) -> Void
@@ -65,6 +54,19 @@ struct RideCard: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(PanelMorph.self) private var morph: PanelMorph?
+
+    private var stage: SheetStage { morph?.stage ?? .expanded }
+    /// Where the sheet is between its compact and half stops, 0…1.
+    ///
+    /// The same number `PanelHeader` interpolates against, and it is here for
+    /// the same reason: §9.5.5 point 6 — the bound `PresentationDetent` only
+    /// changes once the sheet has SETTLED, so a header keyed off `stage` alone
+    /// changes a beat after the finger and does it in one step. This card used
+    /// to do exactly that, which meant one drag moved two headers on two
+    /// different clocks: the panel's title tracked the finger while the
+    /// journey's did not.
+    private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
     /// The train number's two sizes, as `.subheadline` and `.title2` measure
     /// at the reader's text size. Named metrics rather than the two text
     /// styles, because a size that is INTERPOLATED cannot be a style.

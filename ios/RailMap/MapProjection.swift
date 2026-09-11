@@ -41,9 +41,29 @@ enum MapProjection {
     /// without one of them is a bug of the same shape.
     @MainActor
     static func zoomLevel(of mapView: MKMapView) -> Double {
-        let width = max(mapView.bounds.width, 1)
-        let longitudeDelta = max(mapView.region.span.longitudeDelta, 1e-9)
-        return log2(360 * (width / 256) / longitudeDelta)
+        log2(MKMapSize.world.width / (256 * mapPointsPerScreenPoint(of: mapView)))
+    }
+
+    /// Local projected scale at the screen center. An axis-aligned region or
+    /// visibleMapRect grows when the viewport rotates, even though the camera
+    /// does not zoom. A short screen chord measures the actual scale instead.
+    /// Use a short chord to stay on the globe at overview and take the wrapped
+    /// x distance so crossing the date line cannot turn it into a world span.
+    @MainActor
+    static func mapPointsPerScreenPoint(of mapView: MKMapView) -> Double {
+        let center = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
+        let halfSpan: CGFloat = 4
+        let left = MKMapPoint(mapView.convert(
+            CGPoint(x: center.x - halfSpan, y: center.y), toCoordinateFrom: mapView))
+        let right = MKMapPoint(mapView.convert(
+            CGPoint(x: center.x + halfSpan, y: center.y), toCoordinateFrom: mapView))
+        let world = MKMapSize.world.width
+        let dx = (right.x - left.x).remainder(dividingBy: world)
+        let scale = hypot(dx, right.y - left.y) / Double(2 * halfSpan)
+        guard scale.isFinite, scale > 0 else {
+            return max(mapView.visibleMapRect.width / Double(max(mapView.bounds.width, 1)), 1e-9)
+        }
+        return scale
     }
 
     /// The widest mark ``RailStyle/scale(atZoom:)`` is ever multiplied into, in

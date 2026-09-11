@@ -175,6 +175,6 @@ struct MapLayersView: View {
         // §4.2: this sheet is ABOUT the map, so it must not cover all of it —
         // half by default, full when the reader pulls it up. Declared here
         // rather than at the presenter, the way `VideoExportOptionsView` does.
-        .presentationDetents([.medium, .large])
+        .railHalfSheetDetents()
     }
 }

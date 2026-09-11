@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailPresentation
 
 /// The rides — what this app is actually for.
 ///
@@ -41,11 +42,7 @@ final class ItineraryStore {
         var days: [Day]
         var elapsed: Duration
 
-        struct Day: Identifiable, Sendable {
-            var date: String
-            var trains: [Train]
-            var id: String { date }
-        }
+        typealias Day = JourneyDay
     }
 
     private(set) var state: LoadState = .idle
@@ -130,7 +127,9 @@ final class ItineraryStore {
         }
         next.trains[index] = candidate.taggingRegion()
         publishWorkingSet(next)
-        selectedTrainID = candidate.id
+        // Editing a different row is not a navigation command. Follow an ID
+        // rename only when the edited journey was already selected.
+        if selectedTrainID == originalID { selectedTrainID = candidate.id }
         publishRecordIndex()
 
         regroup(next)
@@ -479,9 +478,15 @@ final class ItineraryStore {
                 // before it left on disk.
                 await library.migrateLegacyStores()
                 await library.refreshSavedState()
-                let saved = library.hasSavedStore
+                let loaded = library.hasSavedStore
                     ? try await library.savedStore()
                     : TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: [])
+                // A store saved before `number_en` existed carries the Latin
+                // name inside the caption. Split once, here; written back
+                // below, only if this load is still the one being published.
+                var saved = loaded
+                let migratedCaptions = ServiceCaption.migrateLegacyCaptions(loaded.trains)
+                if let migratedCaptions { saved.trains = migratedCaptions }
                 let store = await MergedStore.regionTagged(saved)
                 // Somebody published while this was reading the file — a
                 // sample folded in, an import committed, a journey edited.
@@ -490,6 +495,11 @@ final class ItineraryStore {
                 // it is abandoned rather than written over the top. The door
                 // that published has already republished `state`.
                 guard generation == storeGeneration else { return }
+                // The split above is written back so the next launch reads a
+                // store that already has the field. After the guard, not
+                // before: a save of the file as it was BEFORE somebody else
+                // published would put their edit under this one.
+                if migratedCaptions != nil { _ = library.save(saved) }
                 publishWorkingSet(store)
                 publishRecordIndex()
                 // Taken, not bumped.

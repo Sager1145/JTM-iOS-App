@@ -1,46 +1,13 @@
 import MapKit
 import RailCore
+import RailPresentation
 
-/// How much of the network is drawn at a given zoom, and where.
+/// Native railway selection at the current MapKit scale.
 ///
-/// **This is not a port.** `RailCore.Visibility` is the web app's own rule and
-/// is verified against it; this is an iOS-side policy layered on top, and it
-/// deliberately draws *less* than the web app does at low zoom. It is kept out
-/// of `RailCore` for exactly that reason — there is no JavaScript to check it
-/// against, and mixing a policy of our own into the ported tier would make the
-/// parity fixtures meaningless.
-///
-/// Three rules, in the order they matter:
-///
-/// 1. **A line waits for both its length and its rank.** The web app hides a
-///    line only by the length of its group. At the widest native-map views an
-///    additional, finer length ladder keeps only genuinely long corridors.
-///    That is enough for a vector basemap that can draw a hairline, but Apple
-///    Maps at z4 is a country-outline map with a few motorways, and a national
-///    network drawn
-///    over it reads as a coloured smear. So a line now appears only when the
-///    zoom clears *all three* thresholds: the ported length tier, the finer
-///    wide-view length tier, and how important its operator says it is. Trunks
-///    survive the wide views; branches wait.
-///
-///    **A station waits with its line.** The dots are the same decision, not a
-///    parallel one: a station's own threshold decides whether there is room
-///    for it, and the line's decides whether there is anything for it to stand
-///    on. Taking the larger is what keeps a branch's terminals from hanging in
-///    the sea three zoom levels before the branch is drawn — the same rule
-///    `MapLayers.routes` applies to a journey's beads, for the same reason.
-///
-/// 2. **Nothing far off screen is built.** Overlays outside the visible rect
-///    cost geometry, Metal buffers and decimation time to produce something
-///    nobody can see. Building is done for a padded rect rather than the exact
-///    one so that panning does not rebuild constantly.
-///
-/// 3. **A vertex budget is the backstop.** The first two rules are tuned
-///    against the five packages that ship today. A denser country, or a zoom
-///    where an unusual number of long lines coincide, would slip past them —
-///    so if a build would exceed the budget, the threshold is raised until it
-///    fits. That makes the worst case a function of the budget rather than of
-///    the data.
+/// High-speed backbones remain visible at overview. Other lines wait for
+/// their complete-group length/rank tier; station density is gated separately.
+/// Viewport culling and a post-simplification vertex budget bound rendering.
+/// RailCore.Visibility retains the independent, fixture-tested Web contract.
 enum NetworkLOD {
 
     /// Roughly what the renderer can submit without the frame budget showing.
@@ -74,129 +41,39 @@ enum NetworkLOD {
     /// pan gesture free of work.
     static let padding = 0.5
 
-    /// The zoom at which a line may first be drawn.
-    ///
-    /// The rank ladder, recalibrated 2026-08-22. **Not**
-    /// `Visibility.minZoomForRank`, which is the web app's own 3,4,5,6,7 and is
-    /// fixture-protected; this is the iOS-side policy and it has to be free to
-    /// move, because the two bugs fixed alongside it changed what it was
-    /// compensating for.
-    ///
-    /// Those bugs, both measured over all 652 jp lines:
-    ///
-    /// 1. the threshold was compared against this app's zoom, which is one
-    ///    level above MapLibre's (see `RailMapView.zoomLevel(of:)`), so every
-    ///    ported number fired one step wider than the web app fires it;
-    /// 2. it was handed each line's OWN length, where
-    ///    `Visibility.minZoomByLineId` deliberately uses the length of the
-    ///    line's visibility GROUP — so a railway the package stores as several
-    ///    administrative entries appeared in fragments, which is the exact
-    ///    thing that grouping exists to prevent.
-    ///
-    /// Lines drawn at the same ground scale, before and after, against the web
-    /// app as the reference:
-    ///
-    ///     app zoom     4     5     6     7     8
-    ///     web         66   140   262   431   652
-    ///     before      33    67   386   652   652
-    ///     after       41    62   262   431   652
-    ///
-    /// That rank-only recalibration agreed with the web app from app z6
-    /// upward. The finer length ladder below deliberately tightens z4–z7
-    /// further; z8 remains the unchanged all-lines stop. The old rank ladder
-    /// had it backwards: it over-drew by half at z6/z7 and under-drew at
-    /// z4/z5.
-    ///
-    /// The ladder was chosen by measurement, not taste: 3,3,4,4,5 and 3,3,3,4,5
-    /// also land on 262/431 but give the web app's own z5 count back, and
-    /// 0,0,0,0,0 is simply the web app with no policy of ours at all.
-    private static let rankMinZoom = [3, 3, 4, 5, 6]
-
-    /// A finer length ladder for the widest Apple Maps views, in MapLibre's
-    /// zoom convention.
-    ///
-    /// The ported ladder groups every line over 150 km together. That makes a
-    /// 160 km regional line and a 1,000 km national trunk equally eligible at
-    /// the largest scale. These extra stops retain the same complete-group
-    /// length input while spreading those long lines over the low zooms:
-    ///
-    ///     app zoom       4       5       6       7       8
-    ///     minimum km   300     120      50      20       0
-    ///     jp before     41      62     262     431     652
-    ///     jp after      24      51     195     337     652
-    ///
-    /// Near detail is unchanged: every line is still present by app zoom 8.
-    /// These are iOS rendering thresholds, not changes to RailCore's
-    /// fixture-protected web parity rule.
-    private static func wideViewMinZoom(visibilityLengthKm: Double) -> Int {
-        if visibilityLengthKm >= 300 { return 3 }
-        if visibilityLengthKm >= 120 { return 4 }
-        if visibilityLengthKm >= 50 { return 5 }
-        if visibilityLengthKm >= 20 { return 6 }
-        return 7
-    }
-
-    /// The zoom at which a line may first be drawn, in **MapLibre's** zoom.
-    ///
-    /// `portedMinZoom` is `Visibility.minZoomByLineId`'s answer for this line —
-    /// a MapLibre zoom, computed from the line's visibility group. The rank
-    /// terms are the native additions: taking the largest means a line has to
-    /// be long enough at both levels and important enough, where the web app
-    /// asks only the first.
-    ///
-    /// Kept separate from ``minZoom(portedMinZoom:rank:visibilityLengthKm:)``
-    /// because a station's threshold is a MapLibre number too, and
-    /// ``stationMinZoomMapLibre(portedMinZoom:lineMinZoomMapLibre:)`` can only
-    /// take the larger of the two if both are still in the same convention.
+    /// One native policy supplies both lazy region loading and line rendering.
+    /// High-speed backbones remain at overview; ordinary railways use the
+    /// complete-group length/rank ladder. RailCore's web parity is unchanged.
     static func minZoomMapLibre(
         portedMinZoom: Int,
         rank: Int?,
-        visibilityLengthKm: Double
+        visibilityLengthKm: Double,
+        region: String? = nil,
+        operator: String? = nil,
+        name: String? = nil
     ) -> Int {
-        let byRank = rank.flatMap {
-            $0 >= 0 && $0 < rankMinZoom.count ? rankMinZoom[$0] : nil
-        } ?? 0
-        let byWideViewLength = wideViewMinZoom(visibilityLengthKm: visibilityLengthKm)
-        return max(max(portedMinZoom, byRank), byWideViewLength)
+        NetworkVisibilityPolicy.lineMinZoomMapLibre(
+            portedMinZoom: portedMinZoom, rank: rank,
+            visibilityLengthKm: visibilityLengthKm, region: region,
+            operator: `operator`, name: name)
     }
 
-    /// The same threshold in **this app's** zoom — converted once, here, so no
-    /// caller has to remember which convention it is holding.
     static func minZoom(
         portedMinZoom: Int,
         rank: Int?,
-        visibilityLengthKm: Double
+        visibilityLengthKm: Double,
+        region: String? = nil,
+        operator: String? = nil,
+        name: String? = nil
     ) -> Double {
-        RailStyle.zoom(
-            fromMapLibre: Double(
-                minZoomMapLibre(
-                    portedMinZoom: portedMinZoom, rank: rank,
-                    visibilityLengthKm: visibilityLengthKm)))
+        RailStyle.zoom(fromMapLibre: Double(minZoomMapLibre(
+            portedMinZoom: portedMinZoom, rank: rank,
+            visibilityLengthKm: visibilityLengthKm, region: region,
+            operator: `operator`, name: name)))
     }
 
-    /// The zoom at which a STATION may first be drawn, in MapLibre's zoom:
-    /// never before the line it stands on.
-    ///
-    /// `portedMinZoom` is the station's own — `Visibility.stationMinZoom`,
-    /// which is the line's threshold for a terminal and the denser
-    /// spacing-based one for an intermediate stop. That number answers "is
-    /// there room for this dot", and on the web app it is the whole question,
-    /// because there the line under the dot is drawn by the very same ladder.
-    /// Here it is not: rule 1 above adds rank and a finer length ladder to the
-    /// LINE and nothing to the station, so the wide views drew the terminals of
-    /// every line the ported ladder allowed over the far smaller set this app
-    /// had actually drawn — beads on a railway that was not there.
-    ///
-    ///     app zoom            4     5     6     7     8
-    ///     jp lines drawn     24    51   195   337   652
-    ///     jp dots before    132   280   524   864  1393
-    ///     jp dots after      48   102   390   676  1393
-    ///
-    /// Whole-country counts, before the visible rect is applied. At app zoom 4
-    /// that was 132 beads over 24 drawn lines, 84 of them belonging to a
-    /// railway nowhere on the map. Near detail is untouched: by app zoom 8
-    /// every line is drawn, so every dot the web app's own ladder allows is
-    /// drawn with it, and this rule stops having an opinion.
+    /// Stations wait for both their own density floor and their line. Keeping
+    /// the station floor prevents globe-level backbone lines acquiring dots.
     static func stationMinZoomMapLibre(portedMinZoom: Int, lineMinZoomMapLibre: Int) -> Int {
         max(portedMinZoom, lineMinZoomMapLibre)
     }

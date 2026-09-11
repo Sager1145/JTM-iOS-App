@@ -2,6 +2,18 @@ import Foundation
 import MapKit
 import RailCore
 import SwiftUI
+import os
+
+/// Which variant of a line's geometry is resident or wanted: the full
+/// document, or the Douglas–Peucker-simplified overview a `"lines"`-
+/// strategy region's qualifying lines carry (manifest A2/A3). Overview
+/// draws identically to full at app zoom ≤ 7 — the renderer's own
+/// decimation there is coarser than the overview's 50 m tolerance — so it
+/// is only ever wanted at that zoom or lower, and only for a line that has
+/// one. File-scope rather than nested in `RailNetworkStore` so
+/// `RailDisplayNetwork.chunk(_:blob:detail:catalog:families:)` can take it
+/// without importing anything new.
+enum DisplayDetail: Sendable { case overview, full }
 
 /// Loads a country's rail package out of the app bundle and turns it into
 /// something the map can draw.
@@ -71,6 +83,10 @@ final class RailNetworkStore {
         /// rounding baked in on device from `laneRows` (metres along the
         /// chain) — see `RailCore.ContinuousStroke`.
         let continuous: Bool
+        /// Whether a continuous chain may share terminal tangents with the
+        /// preceding chain of the same line. False marks a reviewed branch
+        /// boundary whose coincident station anchor is not a continuation.
+        let joinPrevious: Bool
         let laneRows: [ContinuousStroke.LaneRow]
         let totalMetres: Double
         /// Corridor follows: over `from…to` this chain is drawn from the
@@ -114,6 +130,7 @@ final class RailNetworkStore {
             rank: Int, minZoom: Int, visibilityLengthKm: Double,
             lodMinZoom: Double, lane: Double, intervals: [[Coordinate]],
             continuous: Bool = false,
+            joinPrevious: Bool = true,
             laneRows: [ContinuousStroke.LaneRow] = [],
             totalMetres: Double = 0,
             follows: [StrokeFollow] = [],
@@ -136,6 +153,7 @@ final class RailNetworkStore {
             self.lodMinZoom = lodMinZoom
             self.lane = lane
             self.continuous = continuous
+            self.joinPrevious = joinPrevious
             self.laneRows = laneRows
             self.totalMetres = totalMetres
             self.follows = follows
@@ -242,7 +260,7 @@ final class RailNetworkStore {
     /// `isLandlord` true: this chain draws the shared family stroke over the
     /// window, in `colorHex`/`colorDarkHex` (the group's own colour, resolved
     /// at load time from `RailDisplayNetworkFile.families` — see
-    /// `prepareDisplayRegion`). `isLandlord` false (tenant): this chain's own
+    /// `prepareDisplayLine`). `isLandlord` false (tenant): this chain's own
     /// stroke is withheld over the window; the chain is still built whole
     /// underneath, so a ride or playback can still slice it there.
     struct FamilyWindow: Sendable, Hashable {
@@ -264,6 +282,10 @@ final class RailNetworkStore {
         var id: String { region.rawValue }
     }
 
+    /// The app zoom below which an overview chunk is preferred over a
+    /// full one, when the line has an overview at all. See `DisplayDetail`.
+    static let overviewDetailMaxZoom = 7.0
+
     enum LoadState {
         case idle
         /// Regions still being decoded. The map draws what has already
@@ -283,22 +305,45 @@ final class RailNetworkStore {
     private(set) var state: LoadState = .idle
     private(set) var lines: [DrawnLine] = []
     private(set) var stations: [DrawnStation] = []
-    /// Geometry currently resident for the map: the display network of every
-    /// region the padded visible rect has reached, whole. Full-region `lines`
-    /// and `stations` above remain available to explicit workflows such as the
-    /// station editor, but are never fed to the complete-network layer.
+    /// Geometry currently resident for the map: every railway line the
+    /// padded visible rect has reached (loaded a chunk at a time — see
+    /// ``activateDisplayLines(intersecting:cameraZoom:)``). Full-region
+    /// `lines` and `stations` above remain available to explicit workflows
+    /// such as the station editor, but are never fed to the complete-network
+    /// layer.
     ///
     /// Resident is not the same as drawn. What bounds the frame is the
     /// renderer's cull — `NetworkLOD` by zoom and by rect, then the
     /// per-interval rect test in `RailMapView.rebuild` — and it is applied to
     /// continuous geometry, so a railway crossing the screen is one stroke
     /// rather than the run of abutting fragments the storage tiles produced.
+    ///
+    /// Resident is also not permanent any more: a line the byte budget
+    /// evicts leaves both arrays on the next publish; ``networkExtent`` is
+    /// derived from the countries under the camera, not from residency, so
+    /// eviction cannot shrink the frame either.
     private(set) var mapLines: [DrawnLine] = []
     private(set) var mapStations: [DrawnStation] = []
     private(set) var activeRegionCount = 0
     private(set) var requestedRegionCount = 0
     private(set) var activeNetworkBytes = 0
     private(set) var networkFailure: String?
+    /// The frame a 定位 (frame the network) tap re-centres on: the union of
+    /// the manifest extents of every country the most recent camera request
+    /// touched. Countries, not resident lines, so a budget eviction cannot
+    /// shrink it and a chunk that has not arrived yet cannot leave it out; the
+    /// camera's own countries, not every country ever visited, so a reader who
+    /// has looked at both Japan and North America is not framed on the
+    /// Atlantic — the long way round between them in map space. A request
+    /// over open sea keeps the previous frame. See ``updateNetworkExtent(for:)``.
+    private(set) var networkExtent: MKCoordinateRegion?
+    /// How many lines are resident right now, how many have ever been
+    /// dropped by the budget, and how many were brought in by the idle
+    /// prefetch ring rather than a camera request — diagnostics only, no UI
+    /// reads these today.
+    private(set) var residentLineCount = 0
+    private(set) var evictedLineTotal = 0
+    private(set) var prefetchedLineTotal = 0
     /// Which mark each railway wears, for the surfaces that hold a recorded
     /// journey rather than a network line — see ``RouteBadgeIndex``.
     ///
@@ -383,11 +428,22 @@ final class RailNetworkStore {
         state = .idle
         displayLoadTask?.cancel()
         displayLoadTask = nil
-        loadedDisplayRegions = [:]
+        displayIndex = nil
+        displayBlobs = [:]
+        loadedDisplayLines = [:]
+        loadingDisplayLines = []
         displayAttempts = [:]
         displayFailures = [:]
         displayManifest = nil
         lastDisplayRequest = nil
+        lastRequestedDisplayLine = [:]
+        requestSerial = 0
+        currentBatchWave = nil
+        currentBatchIDs = []
+        networkExtent = nil
+        residentLineCount = 0
+        evictedLineTotal = 0
+        prefetchedLineTotal = 0
         // Stored, rather than fire-and-forget, so `decodeGeometry` below can
         // await this exact attempt before deciding whether the manifest's
         // colour/render-group catalog is there to read — otherwise a canonical
@@ -396,9 +452,15 @@ final class RailNetworkStore {
         // `stations` once built. See ``decodeGeometry(_:)``.
         manifestLoadTask = Task(priority: .utility) {
             do {
-                displayManifest = try await Self.loadDisplayManifest()
+                let manifest = try await Self.loadDisplayManifest()
+                displayManifest = manifest
+                let index = RailDisplayNetworkIndex.lineIndex(for: manifest)
+                displayIndex = index
+                #if DEBUG
+                await Self.debugCheckFirstChunkOfEachRegion(index: index, catalog: manifest.lines)
+                #endif
                 if let lastDisplayRequest {
-                    activateDisplayRegions(
+                    activateDisplayLines(
                         intersecting: lastDisplayRequest.rect,
                         cameraZoom: lastDisplayRequest.cameraZoom)
                 }
@@ -464,15 +526,25 @@ final class RailNetworkStore {
     /// stays on the derivative, so panning across a border can never pull a
     /// national package's topology in behind it.
     ///
-    /// A region already read stays read. There are seven of them and 18 MB in
-    /// total, so the working set is bounded by the data rather than by a
-    /// policy — and dropping Japan the moment its edge left the padded rect
-    /// would mean re-reading 12 MB to pan back, which is the thrash the tile
-    /// pyramid used to have at a smaller granularity.
+    /// The unit of loading is a railway LINE, not a region: v2 chunks a
+    /// region's blob per line, and each chunk decoded here stays resident
+    /// until the byte budget evicts it. A request is served in up to two
+    /// waves — an urgent one for the visible rect, a padded one for the rest
+    /// of the build rect this renderer asked for — and, once both are
+    /// satisfied, the store idles into a third: prefetching one more
+    /// build-rect-half ring outward at `.utility` priority, capped by
+    /// ``residentByteBudget`` so it can never grow the working set past what
+    /// eviction then has to undo. A camera move always preempts a prefetch
+    /// batch in flight; it waits behind an urgent or padded one. Eviction is
+    /// least-recently-requested by line, never a line the current request
+    /// needs or a surviving line's `dependsOn` still names. See
+    /// ``activateDisplayLines(intersecting:cameraZoom:)`` and
+    /// ``evictIfNeeded(index:)``.
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
         guard displayManifest != nil else { return }
-        activateDisplayRegions(intersecting: rect, cameraZoom: cameraZoom)
+        requestSerial += 1
+        activateDisplayLines(intersecting: rect, cameraZoom: cameraZoom)
     }
 
     // There is deliberately no `ensureAll()`.
@@ -548,11 +620,28 @@ final class RailNetworkStore {
     /// and a canonical package decode is the faster of the two for every
     /// shipped region.
     @ObservationIgnored private var manifestLoadTask: Task<Void, Never>?
-    @ObservationIgnored private var loadedDisplayRegions: [String: PreparedDisplayRegion] = [:]
-    /// How many times each region's file has been asked for. A bundle read is
+    /// The one-time index over the manifest — which railway lives at what
+    /// offset inside its region's blob, in draw order. Built by
+    /// ``loadAll()`` as soon as the manifest arrives; every camera move after
+    /// that reuses it rather than walking the manifest's line dictionary.
+    @ObservationIgnored private var displayIndex: RailDisplayNetworkIndex?
+    /// A region's blob (`{region}.display.bin`), `mmap`ped once the first
+    /// time any of its lines is asked for and kept for the life of the app —
+    /// slicing a later chunk out of an already-resident blob costs nothing
+    /// this store has to account for.
+    @ObservationIgnored private var displayBlobs: [String: Data] = [:]
+    /// One entry per railway line whose chunk has been decoded and turned
+    /// into drawable geometry. The unit of residency is the LINE, not the
+    /// region — see ``ensure(regionsIntersecting:cameraZoom:)``.
+    @ObservationIgnored private var loadedDisplayLines: [String: PreparedDisplayLine] = [:]
+    /// Lines whose chunk is in flight in the current batch, so a second
+    /// camera callback while a batch is still running does not ask for the
+    /// same line twice.
+    @ObservationIgnored private var loadingDisplayLines: Set<String> = []
+    /// How many times each LINE's chunk has been asked for. A bundle read is
     /// not a network request and does not usually fail twice, but it CAN fail
     /// once under memory pressure — and a rebuild happens on every zoom tier
-    /// and every pan out of the built rect, so a region that simply retried
+    /// and every pan out of the built rect, so a line that simply retried
     /// would retry for the life of the app. Three attempts, then the failure
     /// stands and the diagnostics panel names it.
     @ObservationIgnored private var displayAttempts: [String: Int] = [:]
@@ -562,88 +651,316 @@ final class RailNetworkStore {
     @ObservationIgnored private var displayFailures: [String: String] = [:]
     @ObservationIgnored private var displayLoadTask: Task<Void, Never>?
     @ObservationIgnored private var lastDisplayRequest: (rect: MKMapRect, cameraZoom: Double)?
+    /// Which wave a batch belongs to — an urgent one covers the visible
+    /// rect, a padded one the rest of the build rect, a prefetch one the
+    /// idle ring one build-rect-half further out. Only the wave decides the
+    /// task priority and whether the batch counts against
+    /// ``displayAttempts``: see ``activateDisplayLines(intersecting:cameraZoom:)``.
+    private enum DisplayLoadWave { case urgent, padded, prefetch }
+    @ObservationIgnored private var currentBatchWave: DisplayLoadWave?
+    @ObservationIgnored private var currentBatchIDs: Set<String> = []
+    /// The most recent request serial that named each line — bumped once per
+    /// ``ensure(regionsIntersecting:cameraZoom:)`` call and used as the LRU
+    /// key by eviction. A prefetched line's serial is the request that
+    /// prefetched it, same as a padded or urgent one.
+    @ObservationIgnored private var lastRequestedDisplayLine: [String: Int] = [:]
+    @ObservationIgnored private var requestSerial = 0
 
     private static let displayAttemptLimit = 3
+    /// Resident chunk bytes the store keeps before eviction starts trimming
+    /// the least-recently-requested lines. Same unit as ``activeNetworkBytes``.
+    private static let residentByteBudget = 16 * 1024 * 1024
+    /// How many chunks a batch decodes at once. Bounded by the device's own
+    /// core count rather than a flat constant — a chunk is kilobytes, so the
+    /// limiting resource is CPU for JSON decode and geometry, not memory.
+    private static var maximumConcurrent: Int {
+        max(2, min(8, ProcessInfo.processInfo.activeProcessorCount))
+    }
 
-    private func activateDisplayRegions(intersecting rect: MKMapRect, cameraZoom: Double) {
-        guard let manifest = displayManifest else { return }
-        let records = RailDisplayNetwork.records(
-            intersecting: rect, cameraZoom: cameraZoom, in: manifest)
+    /// The detail a request wants for one entry: the overview when the
+    /// camera is at or below `overviewDetailMaxZoom` AND the line has one,
+    /// full otherwise. See `DisplayDetail`.
+    private func wantedDetail(
+        for entry: RailDisplayNetworkIndex.Entry, cameraZoom: Double
+    ) -> DisplayDetail {
+        cameraZoom <= Self.overviewDetailMaxZoom && entry.overview != nil ? .overview : .full
+    }
+
+    private func activateDisplayLines(intersecting rect: MKMapRect, cameraZoom: Double) {
+        guard let manifest = displayManifest, let index = displayIndex else { return }
+        var needed = RailDisplayNetwork.lines(
+            intersecting: rect, cameraZoom: cameraZoom, in: index)
+        // Whole-region strategy (builder A1): once any of a small region's
+        // entries is needed, its whole blob becomes one batch rather than a
+        // line at a time — see `RailDisplayNetworkIndex.wholeRegions`.
+        let neededRegions = Set(needed.map(\.region))
+        var wholeRegionAdditions: [RailDisplayNetworkIndex.Entry] = []
+        for region in index.wholeRegions where neededRegions.contains(region) {
+            wholeRegionAdditions.append(contentsOf: index.entriesByRegion[region] ?? [])
+        }
+        if !wholeRegionAdditions.isEmpty {
+            let existingIDs = Set(needed.map(\.id))
+            for entry in wholeRegionAdditions where !existingIDs.contains(entry.id) {
+                needed.append(entry)
+            }
+        }
         // What the reader is looking at, plus whatever has already been read:
         // a region does not stop being resident because the camera moved off
         // it, so the denominator is the whole working set rather than only
         // this camera's share of it.
-        requestedRegionCount = Set(
-            records.map(\.region) + Array(loadedDisplayRegions.keys)).count
-        // One batch at a time. These are national files — 12 MB for Japan —
-        // and a second batch started from the next camera callback would be
-        // decoding the same country twice.
-        guard displayLoadTask == nil else { return }
-        let missing = records.filter {
-            loadedDisplayRegions[$0.region] == nil
-                && (displayAttempts[$0.region] ?? 0) < Self.displayAttemptLimit
-        }
-        guard !missing.isEmpty else { return }
-        for record in missing {
-            displayAttempts[record.region, default: 0] += 1
+        let loadedRegions = Set(loadedDisplayLines.values.map(\.region))
+        requestedRegionCount = Set(needed.map(\.region) + Array(loadedRegions)).count
+        for entry in needed { lastRequestedDisplayLine[entry.id] = requestSerial }
+        updateNetworkExtent(for: rect, index: index)
+
+        // One batch at a time — except a prefetch batch, which a real camera
+        // request always preempts: idle-ring work must never make a pan wait.
+        if displayLoadTask != nil {
+            if currentBatchWave == .prefetch {
+                displayLoadTask?.cancel()
+                loadingDisplayLines.subtract(currentBatchIDs)
+                displayLoadTask = nil
+                currentBatchWave = nil
+                currentBatchIDs = []
+            } else {
+                return
+            }
         }
 
-        // Two at a time rather than four. The tile batch was reading pieces of
-        // a few hundred kilobytes; these are whole countries, and the peak
-        // cost of preparing one is its decoded JSON plus the geometry built
-        // from it held at once.
+        func missing(_ entries: [RailDisplayNetworkIndex.Entry]) -> [RailDisplayNetworkIndex.Entry] {
+            entries.filter { entry in
+                guard !loadingDisplayLines.contains(entry.id),
+                      (displayAttempts[entry.id] ?? 0) < Self.displayAttemptLimit
+                else { return false }
+                // A line counts as missing when it is not resident at all, or
+                // resident at `.overview` while `.full` is wanted. A resident
+                // `.full` line is never downgraded back to missing.
+                guard let resident = loadedDisplayLines[entry.id] else { return true }
+                return resident.detail == .overview
+                    && wantedDetail(for: entry, cameraZoom: cameraZoom) == .full
+            }
+        }
+
+        let p = NetworkLOD.padding / (1 + 2 * NetworkLOD.padding)
+        let visibleRect = rect.insetBy(
+            dx: rect.size.width * p, dy: rect.size.height * p)
+        var urgentBase = needed.filter { entry in
+            entry.minimumCameraZoom <= cameraZoom && entry.mapRect.intersects(visibleRect)
+        }
+        if !wholeRegionAdditions.isEmpty {
+            let existingIDs = Set(urgentBase.map(\.id))
+            for entry in wholeRegionAdditions where !existingIDs.contains(entry.id) {
+                urgentBase.append(entry)
+            }
+        }
+        let urgent = RailDisplayNetwork.closure(of: urgentBase, in: index)
+
+        let wave: DisplayLoadWave
+        let batch: [RailDisplayNetworkIndex.Entry]
+        if !missing(urgent).isEmpty {
+            wave = .urgent
+            batch = missing(urgent)
+        } else if !missing(needed).isEmpty {
+            wave = .padded
+            batch = missing(needed)
+        } else {
+            let prefetchRect = rect.insetBy(
+                dx: -rect.size.width * 0.5, dy: -rect.size.height * 0.5)
+            let prefetchNeeded = RailDisplayNetwork.lines(
+                intersecting: prefetchRect, cameraZoom: cameraZoom, in: index)
+            var candidates = missing(prefetchNeeded)
+            let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
+            while !candidates.isEmpty {
+                let estimate = candidates.reduce(0) { sum, entry in
+                    let wanted = wantedDetail(for: entry, cameraZoom: cameraZoom)
+                    let length = wanted == .overview
+                        ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length
+                    return sum + length
+                }
+                if residentBytes + estimate <= Self.residentByteBudget { break }
+                candidates.removeLast()
+            }
+            guard !candidates.isEmpty else { return }
+            wave = .prefetch
+            batch = candidates
+        }
+        guard !batch.isEmpty else { return }
+
+        for entry in batch { loadingDisplayLines.insert(entry.id) }
+        if wave != .prefetch {
+            for entry in batch { displayAttempts[entry.id, default: 0] += 1 }
+        }
+        currentBatchWave = wave
+        currentBatchIDs = Set(batch.map(\.id))
+        let detailByID = Dictionary(uniqueKeysWithValues: batch.map {
+            ($0.id, wantedDetail(for: $0, cameraZoom: cameraZoom))
+        })
+
+        // The device's own core count rather than a flat constant: a chunk is
+        // kilobytes, one railway line out of a region's blob, not a whole
+        // country's decoded JSON — the peak cost of preparing a batch of them
+        // at once is nowhere near what the old whole-region loader held.
         //
-        // Interactive priority: this follows a reader action or a camera move
-        // and gates visible content, unlike the launch badge index.
-        displayLoadTask = Task(priority: .userInitiated) {
-            let result = await Self.loadDisplayRegions(
-                missing, catalog: manifest.lines, maximumConcurrent: 2)
+        // Interactive priority for the urgent/padded waves: they follow a
+        // reader action or a camera move and gate visible content, unlike
+        // the launch badge index. The idle prefetch ring runs at `.utility`
+        // so it never competes with either.
+        let priority: TaskPriority = wave == .prefetch ? .utility : .userInitiated
+        displayLoadTask = Task(priority: priority) {
+            let started = ContinuousClock.now
+            let result = await Self.loadDisplayChunks(
+                batch, blobs: displayBlobs, catalog: manifest.lines, index: index,
+                maximumConcurrent: Self.maximumConcurrent, detailByID: detailByID)
+            #if DEBUG
+            let elapsed = ContinuousClock.now - started
+            let milliseconds = elapsed.components.seconds * 1000
+                + elapsed.components.attoseconds / 1_000_000_000_000_000
+            let detailBreakdown = [DisplayDetail.full, .overview].compactMap { detail -> String? in
+                let entries = batch.filter { (detailByID[$0.id] ?? .full) == detail }
+                guard !entries.isEmpty else { return nil }
+                let bytes = entries.reduce(0) { sum, entry in
+                    sum + (detail == .overview
+                        ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length)
+                }
+                let label = detail == .overview ? "overview" : "full"
+                return "\(entries.count) \(label)/\(bytes / 1024) KB"
+            }.joined(separator: ", ")
+            Logger(subsystem: "com.JRM.RailMap", category: "display").info(
+                "display batch \(String(describing: wave), privacy: .public) \(batch.count) lines [\(detailBreakdown, privacy: .public)] in \(milliseconds) ms (\(result.items.count) ok, \(result.failures.count) failed)")
+            #endif
             // Cancellation first: a cancelled batch belongs to a store that
             // has already been reset, and clearing the handle here would clear
             // the replacement's.
             guard !Task.isCancelled else { return }
+            let completedWave = currentBatchWave
             displayLoadTask = nil
-            for record in missing { displayFailures[record.region] = nil }
+            currentBatchWave = nil
+            currentBatchIDs = []
+            for entry in batch { loadingDisplayLines.remove(entry.id) }
+            displayBlobs.merge(result.blobs, uniquingKeysWith: { _, new in new })
+            for entry in batch { displayFailures[entry.region] = nil }
             displayFailures.merge(result.failures, uniquingKeysWith: { _, new in new })
             networkFailure = displayFailures
                 .sorted { $0.key < $1.key }.first?.value
-            guard !result.regions.isEmpty else { return }
-            loadedDisplayRegions.merge(result.regions, uniquingKeysWith: { _, new in new })
+            guard !result.items.isEmpty else { return }
+            loadedDisplayLines.merge(result.items, uniquingKeysWith: { _, new in new })
+            if completedWave == .prefetch { prefetchedLineTotal += result.items.count }
+            evictIfNeeded(index: index)
             publishDisplayNetwork()
-            // A region that arrived while the camera kept moving may have
+            // A line that arrived while the camera kept moving may have
             // brought a neighbour into range. Ask again from where the map is
             // now rather than from the rect this batch started for.
             if let lastDisplayRequest {
-                activateDisplayRegions(
+                activateDisplayLines(
                     intersecting: lastDisplayRequest.rect,
                     cameraZoom: lastDisplayRequest.cameraZoom)
             }
         }
     }
 
+    /// Drops the least-recently-requested resident lines until
+    /// ``residentByteBudget`` is met, run once per completed batch right
+    /// before ``publishDisplayNetwork()``. Never touches a line the most
+    /// recent request needs (directly or through `dependsOn`), and never
+    /// evicts a line that a surviving line still depends on — evicting X
+    /// only to have Y (kept resident) draw without its alignment would be a
+    /// worse failure than staying over budget.
+    private func evictIfNeeded(index: RailDisplayNetworkIndex) {
+        let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
+        guard residentBytes > Self.residentByteBudget else { return }
+        let protectedEntries = lastDisplayRequest.map {
+            RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
+        } ?? []
+        let protected = Set(protectedEntries.map(\.id))
+        let candidates = loadedDisplayLines.keys.filter { !protected.contains($0) }
+            .sorted { a, b in
+                let la = lastRequestedDisplayLine[a] ?? 0
+                let lb = lastRequestedDisplayLine[b] ?? 0
+                return la != lb ? la < lb : a < b
+            }
+        var bytes = residentBytes
+        for id in candidates {
+            guard bytes > Self.residentByteBudget else { break }
+            let hasSurvivingDependent = loadedDisplayLines.keys.contains { survivorID in
+                survivorID != id && index.entryByID[survivorID]?.dependsOn.contains(id) == true
+            }
+            guard !hasSurvivingDependent, let prepared = loadedDisplayLines[id] else { continue }
+            loadedDisplayLines.removeValue(forKey: id)
+            displayAttempts.removeValue(forKey: id)
+            bytes -= prepared.bytes
+            evictedLineTotal += 1
+        }
+    }
+
     private func publishDisplayNetwork() {
-        guard let manifest = displayManifest else {
+        guard let index = displayIndex else {
             mapLines = []
             mapStations = []
             activeRegionCount = 0
             activeNetworkBytes = 0
+            residentLineCount = 0
+            networkExtent = nil
             return
         }
-        // The manifest's own order, so what the map holds does not depend on
-        // which country the reader happened to pan into first.
-        let ordered = manifest.regions.compactMap { record in
-            loadedDisplayRegions[record.region]
-        }
+        // The index's own order — manifest region order, each region in blob
+        // order — so what the map holds does not depend on which country or
+        // which line inside it happened to finish loading first.
         var nextLines: [DrawnLine] = []
         var nextStations: [DrawnStation] = []
-        for region in ordered {
-            nextLines.append(contentsOf: region.lines)
-            nextStations.append(contentsOf: region.stations)
+        var residentRegions: Set<String> = []
+        var bytes = 0
+        for region in index.orderedRegions {
+            for entry in index.entriesByRegion[region] ?? [] {
+                guard let prepared = loadedDisplayLines[entry.id] else { continue }
+                nextLines.append(contentsOf: prepared.lines)
+                nextStations.append(contentsOf: prepared.stations)
+                residentRegions.insert(region)
+                bytes += prepared.bytes
+            }
         }
         mapLines = nextLines
         mapStations = nextStations
-        activeRegionCount = ordered.count
-        activeNetworkBytes = ordered.reduce(0) { $0 + $1.bytes }
+        activeRegionCount = residentRegions.count
+        activeNetworkBytes = bytes
+        residentLineCount = loadedDisplayLines.count
+    }
+
+    /// The countries whose manifest extent the request rect touches (with
+    /// the same three world shifts the loader uses), framed as one region.
+    /// Two countries on opposite sides of the Pacific would union the long
+    /// way round in map space — wider than half the world — so in that case
+    /// the country nearest the request's centre is framed alone. No touched
+    /// country (open sea) leaves the previous frame in place.
+    private func updateNetworkExtent(for rect: MKMapRect, index: RailDisplayNetworkIndex) {
+        let world = MKMapRect.world.size.width
+        let touched = index.orderedRegions.compactMap { region -> MKMapRect? in
+            guard let record = index.recordsByRegion[region] else { return nil }
+            let extent = record.mapRect
+            guard !extent.isNull,
+                  [-world, 0, world].contains(where: { shift in
+                      extent.offsetBy(dx: shift, dy: 0).intersects(rect)
+                  })
+            else { return nil }
+            return extent
+        }
+        guard !touched.isEmpty else { return }
+        var union = touched[0]
+        for extent in touched.dropFirst() { union = union.union(extent) }
+        if union.size.width > world / 2 {
+            let centre = MKMapPoint(x: rect.midX, y: rect.midY)
+            union = touched.min { a, b in
+                hypot(a.midX - centre.x, a.midY - centre.y) < hypot(b.midX - centre.x, b.midY - centre.y)
+            } ?? union
+        }
+        let next = MKCoordinateRegion(union)
+        if let current = networkExtent,
+           current.center.latitude == next.center.latitude,
+           current.center.longitude == next.center.longitude,
+           current.span.latitudeDelta == next.span.latitudeDelta,
+           current.span.longitudeDelta == next.span.longitudeDelta {
+            return
+        }
+        networkExtent = next
     }
 
     private nonisolated static func loadDisplayManifest() async throws
@@ -651,82 +968,159 @@ final class RailNetworkStore {
         try RailDisplayNetwork.manifest()
     }
 
-    private struct PreparedDisplayRegion: Sendable {
+    #if DEBUG
+    /// Decodes the first chunk of every region once, right after the index is
+    /// built, as a guard against a stale or hand-edited bundle during
+    /// development. A failure is logged, never allowed to crash — this is a
+    /// diagnostic, not a gate on the map opening — and the whole function
+    /// only exists in `#if DEBUG` builds.
+    private nonisolated static func debugCheckFirstChunkOfEachRegion(
+        index: RailDisplayNetworkIndex,
+        catalog: [String: RailDisplayNetworkManifest.Line]
+    ) async {
+        for region in index.orderedRegions {
+            guard let entry = index.entriesByRegion[region]?.first,
+                  let record = index.recordsByRegion[region] else { continue }
+            do {
+                let blob = try RailDisplayNetwork.blob(record)
+                let file = try RailDisplayNetwork.chunk(
+                    entry, blob: blob, catalog: catalog, families: record.families ?? [:])
+                assert(file.lineId == entry.id, "chunk for \(entry.id) decoded as \(file.lineId ?? "nil")")
+            } catch {
+                assertionFailure("RailNetworkStore: debug chunk check failed for \(region): \(error)")
+            }
+        }
+    }
+    #endif
+
+    private struct PreparedDisplayLine: Sendable {
+        var region: String
         var lines: [DrawnLine]
         var stations: [DrawnStation]
         var bytes: Int
+        var detail: DisplayDetail
     }
 
-    private struct DisplayRegionLoadItem: Sendable {
+    private struct DisplayChunkLoadItem: Sendable {
+        var lineId: String
         var region: String
-        var prepared: PreparedDisplayRegion?
+        var prepared: PreparedDisplayLine?
         var failure: String?
     }
 
-    private struct DisplayRegionLoadResult: Sendable {
-        var regions: [String: PreparedDisplayRegion]
+    private struct DisplayChunkLoadResult: Sendable {
+        var items: [String: PreparedDisplayLine]
         var failures: [String: String]
+        var blobs: [String: Data]
     }
 
-    private nonisolated static func loadDisplayRegions(
-        _ records: [RailDisplayNetworkManifest.RegionRecord],
+    private nonisolated static func loadDisplayChunks(
+        _ entries: [RailDisplayNetworkIndex.Entry],
+        blobs: [String: Data],
         catalog: [String: RailDisplayNetworkManifest.Line],
-        maximumConcurrent: Int
-    ) async -> DisplayRegionLoadResult {
-        await withTaskGroup(of: DisplayRegionLoadItem.self) { group in
+        index: RailDisplayNetworkIndex,
+        maximumConcurrent: Int,
+        detailByID: [String: DisplayDetail]
+    ) async -> DisplayChunkLoadResult {
+        var blobs = blobs
+        var newBlobs: [String: Data] = [:]
+        func blob(for region: String) -> Data? {
+            if let existing = blobs[region] { return existing }
+            guard let record = index.recordsByRegion[region],
+                  let data = try? RailDisplayNetwork.blob(record) else { return nil }
+            blobs[region] = data
+            newBlobs[region] = data
+            return data
+        }
+        return await withTaskGroup(of: DisplayChunkLoadItem.self) { group in
             var next = 0
-            let limit = min(max(1, maximumConcurrent), records.count)
+            let limit = min(max(1, maximumConcurrent), entries.count)
             for _ in 0..<limit {
-                let record = records[next]
+                let entry = entries[next]
                 next += 1
-                group.addTask { loadDisplayRegion(record, catalog: catalog) }
+                let regionBlob = blob(for: entry.region)
+                let families = index.recordsByRegion[entry.region]?.families ?? [:]
+                let detail = detailByID[entry.id] ?? .full
+                group.addTask {
+                    loadDisplayChunk(
+                        entry, blob: regionBlob, detail: detail, catalog: catalog,
+                        families: families)
+                }
             }
 
-            var regions: [String: PreparedDisplayRegion] = [:]
+            var items: [String: PreparedDisplayLine] = [:]
             var failures: [String: String] = [:]
             while let item = await group.next() {
-                if let prepared = item.prepared { regions[item.region] = prepared }
+                if let prepared = item.prepared { items[item.lineId] = prepared }
                 if let failure = item.failure { failures[item.region] = failure }
                 if Task.isCancelled {
                     group.cancelAll()
                     break
                 }
-                if next < records.count {
-                    let record = records[next]
+                if next < entries.count {
+                    let entry = entries[next]
                     next += 1
-                    group.addTask { loadDisplayRegion(record, catalog: catalog) }
+                    let regionBlob = blob(for: entry.region)
+                    let families = index.recordsByRegion[entry.region]?.families ?? [:]
+                    let detail = detailByID[entry.id] ?? .full
+                    group.addTask {
+                        loadDisplayChunk(
+                            entry, blob: regionBlob, detail: detail, catalog: catalog,
+                            families: families)
+                    }
                 }
             }
-            return DisplayRegionLoadResult(regions: regions, failures: failures)
+            return DisplayChunkLoadResult(items: items, failures: failures, blobs: newBlobs)
         }
     }
 
-    private nonisolated static func loadDisplayRegion(
-        _ record: RailDisplayNetworkManifest.RegionRecord,
-        catalog: [String: RailDisplayNetworkManifest.Line]
-    ) -> DisplayRegionLoadItem {
+    private nonisolated static func loadDisplayChunk(
+        _ entry: RailDisplayNetworkIndex.Entry,
+        blob: Data?,
+        detail: DisplayDetail,
+        catalog: [String: RailDisplayNetworkManifest.Line],
+        families: [String: RailDisplayNetworkFile.FamilyColor]
+    ) -> DisplayChunkLoadItem {
         do {
             try Task.checkCancellation()
-            let file = try RailDisplayNetwork.region(record, catalog: catalog)
+            guard let blob else {
+                throw RailDisplayNetworkError.missingRegion(entry.region)
+            }
+            let file = try RailDisplayNetwork.chunk(
+                entry, blob: blob, detail: detail, catalog: catalog, families: families)
             try Task.checkCancellation()
-            return DisplayRegionLoadItem(
-                region: record.region,
-                prepared: prepareDisplayRegion(file, bytes: record.bytes, catalog: catalog),
+            // The detail actually sliced, not necessarily the one requested
+            // — `chunk(...)` falls back to full when an overview was asked
+            // for but the line has none — so bytes and the resident detail
+            // stay in step with what was really loaded.
+            let usedDetail: DisplayDetail = detail == .overview && entry.overview != nil
+                ? .overview : .full
+            let usedBytes = usedDetail == .overview
+                ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length
+            return DisplayChunkLoadItem(
+                lineId: entry.id, region: entry.region,
+                prepared: prepareDisplayLine(
+                    file: file, entry: entry, catalog: catalog, families: families,
+                    bytes: usedBytes, detail: usedDetail),
                 failure: nil)
         } catch is CancellationError {
-            return DisplayRegionLoadItem(region: record.region, prepared: nil, failure: nil)
+            return DisplayChunkLoadItem(
+                lineId: entry.id, region: entry.region, prepared: nil, failure: nil)
         } catch {
-            return DisplayRegionLoadItem(
-                region: record.region, prepared: nil,
-                failure: "\(record.region): \(error.localizedDescription)")
+            return DisplayChunkLoadItem(
+                lineId: entry.id, region: entry.region, prepared: nil,
+                failure: "\(entry.region): \(error.localizedDescription)")
         }
     }
 
-    private nonisolated static func prepareDisplayRegion(
-        _ file: RailDisplayNetworkFile,
+    private nonisolated static func prepareDisplayLine(
+        file: RailDisplayNetworkFile,
+        entry: RailDisplayNetworkIndex.Entry,
+        catalog: [String: RailDisplayNetworkManifest.Line],
+        families: [String: RailDisplayNetworkFile.FamilyColor],
         bytes: Int,
-        catalog: [String: RailDisplayNetworkManifest.Line]
-    ) -> PreparedDisplayRegion {
+        detail: DisplayDetail
+    ) -> PreparedDisplayLine {
         let lines = file.lines.compactMap { fragment -> DrawnLine? in
             guard let metadata = catalog[fragment.lineKey],
                   let region = Region(rawValue: metadata.region) else { return nil }
@@ -752,10 +1146,11 @@ final class RailNetworkStore {
                 rank: metadata.rank, minZoom: metadata.minZoomMapLibre,
                 visibilityLengthKm: metadata.visibilityLengthKm,
                 lodMinZoom: RailStyle.zoom(
-                    fromMapLibre: Double(metadata.lodMinZoomMapLibre)),
+                    fromMapLibre: Double(metadata.nativeMinZoomMapLibre)),
                 lane: fragment.lane ?? 0,
                 intervals: intervals,
                 continuous: fragment.continuous == true,
+                joinPrevious: fragment.joinPrevious ?? true,
                 laneRows: (fragment.laneRows ?? []).map {
                     ContinuousStroke.LaneRow(from: $0[0], to: $0[1], lane: $0[2])
                 },
@@ -773,7 +1168,7 @@ final class RailNetworkStore {
                     // The file already passed `validated()`, which requires
                     // every window's groupID to resolve — this guard is
                     // belt-and-braces against a caller that skipped it.
-                    guard let group = file.families[window.groupID] else { return nil }
+                    guard let group = families[window.groupID] else { return nil }
                     return FamilyWindow(
                         from: window.from, to: window.to,
                         isLandlord: window.isLandlord, groupID: window.groupID,
@@ -791,14 +1186,16 @@ final class RailNetworkStore {
                 stationCode: station.stationCode, name: station.name,
                 nameRoma: station.nameRoma ?? "", coordinate: coordinate,
                 colorHex: metadata.color, minZoom: station.minZoomMapLibre,
-                lodMinZoom: RailStyle.zoom(
-                    fromMapLibre: Double(station.lodMinZoomMapLibre)),
+                lodMinZoom: NetworkLOD.stationMinZoom(
+                    portedMinZoom: station.minZoomMapLibre,
+                    lineMinZoomMapLibre: metadata.nativeMinZoomMapLibre),
                 isTerminal: station.isTerminal, showsLabel: station.showsLabel,
                 popup: RailDisplayNetwork.popup(for: station, catalog: catalog),
                 lane: station.lane ?? 0, laneBearing: station.bearing,
                 slot: station.slot.map { StrokeSlot(chain: $0[0], anchor: $0[1]) })
         }
-        return PreparedDisplayRegion(lines: lines, stations: stations, bytes: bytes)
+        return PreparedDisplayLine(
+            region: entry.region, lines: lines, stations: stations, bytes: bytes, detail: detail)
     }
 
     /// The stations of one region only — the ride editor's picker, which is
@@ -908,7 +1305,8 @@ final class RailNetworkStore {
                     NetworkLOD.minZoomMapLibre(
                         portedMinZoom: minZoomByLineId[line.id] ?? 0,
                         rank: line.rank,
-                        visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0)
+                        visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0,
+                        region: region.code, operator: line.operator, name: line.name)
                 )
             }, uniquingKeysWith: { _, last in last })
         // The manifest's own key shape (`build-display-network.py`'s
@@ -958,7 +1356,8 @@ final class RailNetworkStore {
                 lodMinZoom: NetworkLOD.minZoom(
                     portedMinZoom: portedMinZoom,
                     rank: line.rank,
-                    visibilityLengthKm: visibilityLengthKm),
+                    visibilityLengthKm: visibilityLengthKm, region: region.code,
+                    operator: line.operator, name: line.name),
                 lane: 0,
                 intervals: intervals
             )

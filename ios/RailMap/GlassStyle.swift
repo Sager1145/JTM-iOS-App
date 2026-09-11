@@ -179,3 +179,32 @@ struct RailGlassGroup<Content: View>: View {
         }
     }
 }
+
+// MARK: - The half-height sheets
+
+extension View {
+    /// The stops of a sheet that is ABOUT the map or the transport — half by
+    /// default, full when the reader pulls it up (§4.2) — declared once so the
+    /// layers, legend, station card, ride chooser and export options agree.
+    ///
+    /// Not on Mac Catalyst. A form sheet there is a centred window that
+    /// ignores detents, yet declaring them still changed the opening: a small
+    /// light bar, about a grabber's width, rose from the window's bottom edge
+    /// for a third of a second while the sheet itself faded in place, and ran
+    /// back down when it closed. Recorded at 60 fps on the layers sheet; the
+    /// import sheet, which declares no detents, fades in with no bar. Which
+    /// UIKit view the bar is was not confirmed — the ride chooser already
+    /// hides its drag indicator, so do not expect `presentationDragIndicator`
+    /// alone to cure a new case; leave the detents off instead.
+    ///
+    /// This is a gate on a capability the platform lacks, not a layout
+    /// branch: which composition a window gets is still decided by its size
+    /// alone (README, "no idiom check, no Catalyst check").
+    func railHalfSheetDetents() -> some View {
+        #if targetEnvironment(macCatalyst)
+        self
+        #else
+        presentationDetents([.medium, .large])
+        #endif
+    }
+}

@@ -2,6 +2,44 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
+/// Resolves the sheet's record from its owner on every update. The presentation
+/// identity stays stable even when the editor changes the record's identifier.
+struct WorkspaceRideDetailView: View {
+    @Bindable var itineraries: ItineraryStore
+    @State private var recordID: String
+    @Environment(\.dismiss) private var dismiss
+    let onSave: (Train, String) -> ItineraryStore.SaveOutcome
+    let onRebuild: (Train) -> Int?
+
+    init(trainID: String, itineraries: ItineraryStore,
+         onSave: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
+         onRebuild: @escaping (Train) -> Int?) {
+        self.itineraries = itineraries
+        _recordID = State(initialValue: trainID)
+        self.onSave = onSave
+        self.onRebuild = onRebuild
+    }
+
+    private var train: Train? {
+        itineraries.store?.trains.first { $0.id == recordID }
+    }
+
+    var body: some View {
+        Group {
+            if let train {
+                RideDetailView(train: train, onSave: { edited in
+                    if onSave(edited, recordID) == .saved {
+                        recordID = edited.id
+                    }
+                }, onRebuild: { onRebuild(train) })
+            }
+        }
+        .onChange(of: train == nil, initial: true) { _, missing in
+            if missing { dismiss() }
+        }
+    }
+}
+
 /// A recorded journey expressed with Flighty's information hierarchy while
 /// remaining a railway screen: service identity first, station pair second,
 /// then the chronological stop timeline and lower-priority metadata.
@@ -43,6 +81,7 @@ struct RideDetailView: View {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
                             showsEditor = true
                         }
+                        .accessibilityIdentifier("rideDetailEdit")
                     }
                 }
             }
@@ -124,6 +163,9 @@ struct RideDetailContent: View {
     var onSetRidden: ((Bool) -> Void)?
 
     @Environment(AppLocalization.self) private var localization
+    /// The loaded packages, for the passenger spelling of a detected line —
+    /// see ``RouteLogoSquare``, which declares this the same way.
+    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
     @State private var rebuild: RebuildPhase = .idle
 
     private enum RebuildPhase: Equatable {
@@ -163,9 +205,6 @@ struct RideDetailContent: View {
     /// It matters that this is the same shape as ``JourneySummaryRow``'s
     /// header rather than merely the same facts. A reader arrives here by
     /// tapping a row, and the row they tapped led with an operator's mark and
-    /// The loaded packages, for the passenger spelling of a detected line —
-    /// see ``RouteLogoSquare``, which declares this the same way.
-    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
     /// a bold service name; a screen that opens with a generic tram symbol
     /// beside the same name reads as a different journey for the moment it
     /// takes to check.
@@ -207,6 +246,8 @@ struct RideDetailContent: View {
 
     /// 「特急 · 東海道本線 · JR東海」 — the type, then the line and its
     /// operator, resolved by the same lookup that chose the mark beside them.
+    /// Reads the detected route ahead of the recorded names, so this redraws
+    /// once ``TraversedLineDetector`` lands.
     private var identityDetailText: String {
         let detected = RideStatusCenter.shared.traversedLines(forTrainID: train.id)
         let route = JourneyBranding.routeText(of: train, detected: detected, badges: network?.badges)
@@ -247,8 +288,6 @@ struct RideDetailContent: View {
             // §7.3 / §10.4: the 24+ hour spelling stays exactly as recorded —
             // `25:10` is business data, not a formatting accident — and the
             // detail is where it gets explained instead of rewritten.
-    /// Reads the detected route ahead of the recorded names, so this redraws
-    /// once ``TraversedLineDetector`` lands.
             if crossesMidnight {
                 Text(localization.editorText("ios.detail.crossDay"))
                     .font(.footnote)
@@ -638,6 +677,7 @@ struct RideDetailContent: View {
                 Button(localization.editorText("ios.detail.hideFromMap"), systemImage: "eye.slash") {
                     onSetVisible(false)
                 }
+                .accessibilityIdentifier("rideDetailHide")
                 .frame(minHeight: 44)
             }
         }

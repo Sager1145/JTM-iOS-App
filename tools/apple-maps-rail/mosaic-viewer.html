@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apple Maps Rail Mosaic</title>
+  <style>
+    :root { color-scheme: dark; --bg:#111318; --panel:#1b1e26; --line:#323744; --text:#f4f6fa; --muted:#aab2c1; --accent:#75bfff; }
+    * { box-sizing:border-box } body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    header { display:flex; align-items:center; gap:18px; padding:12px 16px; min-height:62px; border-bottom:1px solid var(--line); background:var(--panel); }
+    h1 { font-size:16px; margin:0; white-space:nowrap; letter-spacing:.01em } .controls { display:flex; align-items:center; gap:8px; min-width:0; flex:1; }
+    select, button, a.button { border:1px solid var(--line); background:#252a35; color:var(--text); border-radius:7px; padding:7px 10px; font:inherit; text-decoration:none; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    select { min-width:180px; max-width:420px; flex:1; } button { cursor:pointer; } button:hover, a.button:hover { border-color:var(--accent); } button:focus-visible, select:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+    #status { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } #coverage-note { margin:0; color:var(--muted); font-size:12px; white-space:nowrap; } main { position:relative; height:calc(100vh - 62px); min-height:360px; overflow:hidden; }
+    canvas { display:block; width:100%; height:100%; touch-action:none; cursor:grab; } canvas.dragging { cursor:grabbing; } #message { position:absolute; inset:0; display:grid; place-items:center; padding:24px; text-align:center; color:var(--muted); background:var(--bg); }
+    #message[hidden] { display:none; } .hint { position:absolute; left:14px; bottom:14px; padding:7px 10px; border-radius:7px; color:var(--muted); background:#111318cc; pointer-events:none; }
+    @media (max-width:760px) { header { gap:9px; padding:10px; flex-wrap:wrap; } h1 { width:100%; } main { height:calc(100vh - 130px) } #status { margin-left:auto; } #coverage-note { width:100%; white-space:normal; } .hint { display:none; } }
+    body { height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
+    header { flex:0 0 auto; flex-wrap:wrap; }
+    main { flex:1; height:auto; min-height:0; }
+    button,a.button { white-space:nowrap; }
+    @media(max-width:760px) { .controls { flex-wrap:wrap; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Apple Maps Rail Mosaic</h1>
+    <div class="controls">
+      <label class="sr-only" for="metro">Metro area</label>
+      <select id="metro" aria-label="Metro area"><option>Loading metros…</option></select>
+      <button id="fit" type="button" title="Fit mosaic to viewport">Fit</button>
+      <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+      <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+      <a id="download" class="button" download>Overview PNG</a>
+      <a id="full-download" class="button" download>Full-resolution TIFF</a>
+    </div>
+    <span id="status" aria-live="polite">Loading manifest…</span>
+    <p id="coverage-note">Blank areas have no saved rail screenshot.</p>
+  </header>
+  <main>
+    <canvas id="map" aria-label="Interactive rail screenshot mosaic. Drag to pan and use the mouse wheel to zoom."></canvas>
+    <div id="message">Loading manifest…</div>
+    <div class="hint">Drag to pan · Scroll to zoom · Fit to reset</div>
+  </main>
+  <script>
+  (() => {
+    const canvas = document.querySelector('#map'), ctx = canvas.getContext('2d');
+    const metro = document.querySelector('#metro'), status = document.querySelector('#status');
+    const message = document.querySelector('#message'), download = document.querySelector('#download'), fullDownload = document.querySelector('#full-download');
+    let manifest, city, overview, view = { scale: 1, x: 0, y: 0 }, dragging = null, raf = 0;
+    const cache = new Map(), failed = new Set(), CACHE_LIMIT = 16;
+
+    function setMessage(text) { message.textContent = text; message.hidden = !text; }
+    function resize() { const dpr = devicePixelRatio || 1, rect = canvas.getBoundingClientRect(); const w = Math.round(rect.width*dpr), h = Math.round(rect.height*dpr); if (canvas.width !== w || canvas.height !== h) { canvas.width=w; canvas.height=h; } draw(); }
+    function fit() { if (!city) return; const pad = 30, w=canvas.clientWidth, h=canvas.clientHeight; view.scale = Math.min((w-pad*2)/city.width,(h-pad*2)/city.height); view.x=(w-city.width*view.scale)/2; view.y=(h-city.height*view.scale)/2; draw(); }
+    function zoom(factor,mx=canvas.clientWidth/2,my=canvas.clientHeight/2) { if(!city)return; const before=view.scale, minimum=Math.min(canvas.clientWidth/city.width,canvas.clientHeight/city.height)/4; view.scale=Math.max(minimum,Math.min(12,before*factor)); view.x=mx-(mx-view.x)*(view.scale/before); view.y=my-(my-view.y)*(view.scale/before); draw(); }
+    function visible(node) { const l=view.x+node.x*view.scale, t=view.y+node.y*view.scale, r=l+node.width*view.scale, b=t+node.height*view.scale; return r>=0 && b>=0 && l<=canvas.clientWidth && t<=canvas.clientHeight; }
+    function detailZoom() { return Math.max(.25, overview?.naturalWidth ? overview.naturalWidth / city.width : 1.15); }
+    function clearCache() { for (const entry of cache.values()) entry.image.src=''; cache.clear(); failed.clear(); }
+    function load(node) {
+      if (failed.has(node.src)) return null;
+      let entry=cache.get(node.src); if (entry) { entry.used=performance.now(); return entry.image; }
+      const image = new Image(); entry={image, used:performance.now()}; cache.set(node.src,entry);
+      image.onload=() => { entry.used=performance.now(); draw(); }; image.onerror=() => { failed.add(node.src); cache.delete(node.src); draw(); }; image.src=node.src;
+      if (cache.size > CACHE_LIMIT) { const old=[...cache.entries()].filter(([key])=>key!==node.src).sort((a,b)=>a[1].used-b[1].used)[0]; if(old) { old[1].image.src=''; cache.delete(old[0]); } }
+      return image;
+    }
+    function draw() {
+      cancelAnimationFrame(raf); raf=requestAnimationFrame(() => {
+        const dpr=devicePixelRatio||1, w=canvas.clientWidth, h=canvas.clientHeight; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h); ctx.fillStyle='#111318'; ctx.fillRect(0,0,w,h); if(!city) return;
+        ctx.save(); ctx.translate(view.x,view.y); ctx.scale(view.scale,view.scale);
+        // The overview stays visible as a complete geographic context at every zoom.
+        if (overview?.complete) ctx.drawImage(overview,0,0,city.width,city.height);
+        else { ctx.fillStyle='#202530'; ctx.fillRect(0,0,city.width,city.height); }
+        if (view.scale > detailZoom()) {
+          const cx=canvas.clientWidth/2, cy=canvas.clientHeight/2;
+          const selected=city.images.map((node,index)=>({node,index,dx:view.x+(node.x+node.width/2)*view.scale-cx,dy:view.y+(node.y+node.height/2)*view.scale-cy}))
+            .filter(item=>visible(item.node)).sort((a,b)=>a.dx*a.dx+a.dy*a.dy-b.dx*b.dx-b.dy*b.dy).slice(0,CACHE_LIMIT).sort((a,b)=>a.index-b.index);
+          for (const {node} of selected) { const image=load(node); if(image?.complete && image.naturalWidth) { const c=node.crop; ctx.drawImage(image,c.left,c.top,c.width,c.height,node.x,node.y,node.width,node.height); } }
+        }
+        ctx.restore();
+        status.textContent = `${city.name} · ${city.image_count} screenshots${view.scale > detailZoom() ? ` · ${cache.size}/${CACHE_LIMIT} loaded` : ' · overview'}`;
+      });
+    }
+    function choose(id) { clearCache(); city=manifest.cities.find(c=>c.id===id); if(!city) return; overview=new Image(); overview.onload=draw; overview.onerror=()=>{ overview=null; draw(); }; overview.src=city.overview; download.href=city.overview; download.download=`${city.id}-overview.png`; fullDownload.href=city.full_resolution || ''; fullDownload.download=`${city.id}-full-resolution.tif`; fullDownload.hidden=!city.full_resolution; fit(); }
+    metro.addEventListener('change',()=>choose(metro.value)); document.querySelector('#fit').addEventListener('click',fit);
+    document.querySelector('#zoom-in').addEventListener('click',()=>zoom(2));
+    document.querySelector('#zoom-out').addEventListener('click',()=>zoom(.5));
+    canvas.addEventListener('pointerdown', e=>{ dragging={x:e.clientX,y:e.clientY,px:view.x,py:view.y}; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); });
+    canvas.addEventListener('pointermove',e=>{ if(!dragging)return; view.x=dragging.px+e.clientX-dragging.x; view.y=dragging.py+e.clientY-dragging.y; draw(); });
+    function stop(e) { if(dragging) { dragging=null; canvas.classList.remove('dragging'); try{canvas.releasePointerCapture(e.pointerId)}catch(_){} } }
+    canvas.addEventListener('pointerup',stop); canvas.addEventListener('pointercancel',stop);
+    canvas.addEventListener('wheel',e=>{ e.preventDefault(); const rect=canvas.getBoundingClientRect(); zoom(Math.exp(-e.deltaY*.0015),e.clientX-rect.left,e.clientY-rect.top); },{passive:false});
+    window.addEventListener('resize',resize); resize();
+    fetch('manifest.json').then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{
+      if(!Array.isArray(data.cities)||!data.cities.length) throw new Error('No metro mosaics are listed.'); manifest=data;
+      metro.innerHTML=''; for(const c of manifest.cities) { const option=document.createElement('option'); option.value=c.id; option.textContent=`${c.name} (${c.image_count})`; metro.append(option); }
+      setMessage(''); choose(manifest.cities[0].id);
+    }).catch(error=>{ status.textContent='Manifest unavailable'; setMessage(`Could not load manifest.json (${error.message}). Open this viewer through an HTTP server, not directly as a file.`); });
+  })();
+  </script>
+</body>
+</html>

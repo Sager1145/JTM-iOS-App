@@ -382,9 +382,9 @@ struct RouteTimingView: View {
 ///
 /// Flighty's passport row is the model, and it suits a record that is being
 /// recollected rather than acted on: a bounded brand mark gives every row the
-/// same visual start, one quiet line carries the service and the date, the
-/// pair of stations is the TITLE, and everything else sits under it at
-/// footnote weight. The record ID never appears — §3.1 puts it in L4, which is
+/// same visual start, a quiet header beside it carries the service and the
+/// date, the pair of stations is the TITLE, and everything else sits under it
+/// at footnote weight. The record ID never appears — §3.1 puts it in L4, which is
 /// the detail screen.
 ///
 /// What is deliberately not borrowed is the two-line ceiling. A flight is
@@ -423,31 +423,7 @@ struct JourneySummaryRow: View {
     @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
 
     var body: some View {
-        Group {
-            if dynamicTypeSize.isAccessibilitySize {
-                accessibilityLayout
-            } else {
-                // A journey row is used in the full-width phone list, the
-                // narrow side panel, the overlap chooser and Passport cards.
-                // Size class cannot distinguish those containers: an iPad
-                // side panel inherits the window's regular size class even
-                // when the row itself has barely 300 points.
-                //
-                // Keep the denser mark-plus-copy layout where it has the
-                // measured room it was designed for. In a narrower host, use
-                // the same honest reflow as Dynamic Type: the mark shares only
-                // the metadata header, while endpoints, times, route and state
-                // receive the card's full width. Before this fallback existed,
-                // every row in an iPad portrait All Journeys panel clipped its
-                // service name because the fixed date and logo left only a
-                // few characters for it.
-                ViewThatFits(in: .horizontal) {
-                    standardLayout
-                        .frame(minWidth: 320)
-                    accessibilityLayout
-                }
-            }
-        }
+        rowLayout
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(surface == .card ? 12 : 0)
         .background {
@@ -466,38 +442,29 @@ struct JourneySummaryRow: View {
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 
-    /// The ordinary row keeps the mark as a stable square column. Nothing in
-    /// the text column is positioned from the artwork's aspect ratio, so a
-    /// wide wordmark and a round metro badge align exactly the same way.
+    /// One layout, in every host.
     ///
-    /// The mark is centred against the whole text column rather than pinned to
-    /// its first line: a row is three or four lines tall and its height varies
-    /// with how much of the route there is to name, so a top-aligned badge
-    /// drifts up the card as the row grows. Centred, every row in the list has
-    /// its mark on the same optical line.
-    private var standardLayout: some View {
-        HStack(alignment: .center, spacing: 12) {
-            RouteLogoSquare(train: train)
-
-            VStack(alignment: .leading, spacing: 5) {
-                headerLine
-                stationTitle
-                timingLine
-                routeLine
-                stateBadge
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-    }
-
-    /// At an accessibility size the logo remains a bounded identifier rather
-    /// than taking a text-scaled share of the row. The reading content below
-    /// it receives the card's full width and every critical label can wrap.
-    private var accessibilityLayout: some View {
+    /// The mark shares a line with the metadata header only — the service on
+    /// one line, the date under it — and the endpoints, the times, the route
+    /// and any state receive the card's full width beneath. A journey row is
+    /// used in the full-width phone list, the narrow side panel, the overlap
+    /// chooser and Passport cards, and this is the one arrangement that reads
+    /// the same in all of them.
+    ///
+    /// There used to be a second, denser layout — the mark centred against
+    /// the whole text column, the date on the service's own line — chosen per
+    /// row by a `ViewThatFits` on the header's unwrapped width. Choosing per
+    /// row is what was wrong with it: in one list, a ride with a long service
+    /// name reflowed to this layout while the ride under it, with a short
+    /// name, kept the dense one, so the same sheet showed its date on the
+    /// right in one card and under the title in the next, with the mark
+    /// sitting on a different line in each. A list is read as a column, and
+    /// a column has to put the same fact in the same place on every row.
+    private var rowLayout: some View {
         VStack(alignment: .leading, spacing: 9) {
             HStack(alignment: .center, spacing: 12) {
                 RouteLogoSquare(train: train)
-                accessibilityHeader
+                headerLine
             }
 
             stationTitle
@@ -507,16 +474,35 @@ struct JourneySummaryRow: View {
         }
     }
 
-    /// The ordinary first line mirrors Flighty's number/date baseline. At an
-    /// accessibility size those two strings no longer fit honestly beside one
-    /// another, so ``accessibilityHeader`` stacks them instead of letting the
-    /// fixed-width date crush a long service name into a one-character column.
-    private var accessibilityHeader: some View {
+    /// The service on one line and the date on the next, both at the same
+    /// quiet weight. Stacked rather than baseline-paired, so a long service
+    /// name — 「根室本線 普通 (Nemuro Main Line Local) (5625D)・普通」 — wraps
+    /// on its own terms instead of being crushed by a fixed-width date.
+    ///
+    /// The Latin name — 「Nemuro Main Line Local」 — goes under the native
+    /// one at caption size rather than inside its parentheses, read straight
+    /// from `Train.numberEn` (jsonspec §3.1's `number_en`, split out of the
+    /// caption once on import — see `ServiceCaption`). It is the longest
+    /// part of the caption and the one read last, and inline it was what
+    /// pushed the running number to a second line. The number and the type
+    /// keep their place and their size: 「根室本線 普通 (5625D) · 普通」 is
+    /// still one line, read the same way it was.
+    private var headerLine: some View {
         VStack(alignment: .leading, spacing: 5) {
+            // No line limit on either: the caption is the record's identity
+            // and wraps rather than truncates, as it did in every narrow host
+            // before the layouts were unified.
             Text(serviceText)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+
+            if let latinName = nonEmpty(train.numberEn) {
+                Text(latinName)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             if showsDate {
                 Text(dateText)
@@ -524,27 +510,6 @@ struct JourneySummaryRow: View {
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private var headerLine: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text(serviceText)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
-                .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Spacer(minLength: 4)
-
-            if showsDate {
-                Text(dateText)
-                    .font(.subheadline.weight(.semibold))
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: true, vertical: false)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

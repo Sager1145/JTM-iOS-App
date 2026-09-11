@@ -24,6 +24,54 @@
         "/private/tmp/claude-501/-Users-sager-Documents-GitHub-JTM-iOS-App/aa048c65-2c80-43e6-84a0-f444eeef9873/scratchpad/site"
       ],
       "port": 4174
+    },
+    {
+      "name": "jtm-static-80b1",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "app/scripts/build/serve-static.mjs",
+        "--port",
+        "4175",
+        "--dir",
+        "/private/tmp/claude-501/-Users-sager-Documents-GitHub-JTM-iOS-App/80b1c50e-9f75-46c1-baea-8b0f8fc4285c/scratchpad/site"
+      ],
+      "port": 4175
+    },
+    {
+      "name": "jtm-static-3751",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "app/scripts/build/serve-static.mjs",
+        "--port",
+        "4176",
+        "--dir",
+        "/private/tmp/claude-501/-Users-sager-Documents-GitHub-JTM-iOS-App/375108ef-ee04-41e0-989f-989b0ccc25a4/scratchpad/site"
+      ],
+      "port": 4176
+    },
+    {
+      "name": "jtm-static-9146",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "app/scripts/build/serve-static.mjs",
+        "--port",
+        "4177",
+        "--dir",
+        "/private/tmp/claude-501/-Users-sager-Documents-GitHub-JTM-iOS-App/914661f7-12fa-412c-87ba-f40958990272/scratchpad/site"
+      ],
+      "port": 4177
+    },
+    {
+      "name": "jtm-static-74a6",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "app/scripts/build/serve-static.mjs",
+        "--port",
+        "4178",
+        "--dir",
+        "/private/tmp/claude-501/-Users-sager-Documents-GitHub-JTM-iOS-App/74a6715f-42f9-4df2-86ae-4503c9ef63b3/scratchpad/site"
+      ],
+      "port": 4178
     }
   ]
 }
