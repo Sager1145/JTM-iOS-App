@@ -16,6 +16,7 @@ function renderEditor() {
   [
     els.id,
     els.number,
+    els.numberEn,
     els.trainType,
     els.company,
     els.direction,
@@ -34,6 +35,7 @@ function renderEditor() {
   if (!train) {
     els.id.value =
       els.number.value =
+      els.numberEn.value =
       els.trainType.value =
       els.company.value =
       els.direction.value =
@@ -46,6 +48,7 @@ function renderEditor() {
   }
   els.id.value = train.id || "";
   els.number.value = train.number || "";
+  els.numberEn.value = train.number_en || "";
   els.trainType.value = train.train_type || "";
   els.company.value = train.company || "";
   els.direction.value = train.direction || "";
@@ -332,6 +335,7 @@ function saveSelectedFields() {
     ...train,
     id: els.id.value.trim(),
     number: els.number.value.trim(),
+    number_en: els.numberEn.value.trim(),
     train_type: els.trainType.value.trim(),
     company:
       activeCountry === "tw"
@@ -344,6 +348,7 @@ function saveSelectedFields() {
       color: els.color.value,
     },
   };
+  if (!next.number_en) delete next.number_en;
   try {
     const temp = clone(trainStore);
     temp.trains = temp.trains.map((t) => (t.id === oldId ? next : t));

@@ -122,8 +122,9 @@ function validateTrain(train, index, ids) {
     if (!train[key] || typeof train[key] !== "string")
       throw new Error(`${prefix}: ${key} is required.`);
   });
-  // Optional metadata: 車輛類型 / 營運公司 ("/"-separated = 直通).
-  ["train_type", "company"].forEach((key) => {
+  // Optional metadata: 車輛類型 / 營運公司 ("/"-separated = 直通) / the
+  // service's Latin name.
+  ["train_type", "company", "number_en"].forEach((key) => {
     if (train[key] !== undefined && typeof train[key] !== "string")
       throw new Error(`${prefix}: ${key} must be a string when present.`);
   });

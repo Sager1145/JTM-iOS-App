@@ -142,6 +142,11 @@ const Playback = (function () {
   let armTimer = null;
   const finishListeners = new Set();
   let transitionTimer = null;
+  // Set when pause() lands during the terminus hold finishTrain() armed:
+  // cancelClock() drops that hold's timeout, so resume() has to pick up
+  // exactly where it would have gone rather than restarting the clock (which
+  // would replay the same arrival finishTrain() already recorded).
+  let pausedAtTerminus = false;
   // Distinguishes one camera hand-off from the next: a moveend queued for the
   // journey the user just skipped past must not start the clock for the one
   // that replaced it.
@@ -639,6 +644,18 @@ const Playback = (function () {
           path.runs.map((r) => r.coords),
           path.color,
         );
+        // The stations layer is keyed on the array it was last uploaded
+        // with (see setPlaybackStations), which the new compile just
+        // replaced — re-upload it and the reached-so-far index or the beads
+        // stay pinned to the OLD ink's coordinates.
+        RailMap.setPlaybackStations(path.stations);
+        RailMap.setPlaybackStationIndex(stationIndex, stationPulse);
+      } else {
+        // Nothing to recompile against (train gone from the queue, or the
+        // route no longer resolves) — stamp the generation we just checked
+        // so this branch does not re-run invalidatePaths() and fail the
+        // same recompile on every subsequent frame.
+        path.strokeGen = rideStrokeGeneration();
       }
     }
     const dt = Math.min(
@@ -715,6 +732,10 @@ const Playback = (function () {
 
   function finishTrain() {
     phase = "transitioning";
+    // Reached from a null sample as well as from the clock running out, so
+    // the clock is pinned to the terminus here: pause() tells the terminus
+    // hold apart from the intro ease by `elapsed >= path.duration`.
+    if (path) elapsed = Math.max(elapsed, path.duration);
     renderProgress(1);
     // The whole journey is covered now, so it joins the lit backlog and the
     // next train's trail starts on top of it rather than replacing it.
@@ -722,15 +743,20 @@ const Playback = (function () {
       path.runs.forEach((r) =>
         trailDone.push({ coords: r.coords, color: path.color }),
       );
-    transitionTimer = setTimeout(() => {
-      transitionTimer = null;
-      queueIndex += 1;
-      if (queueIndex >= queue.length) {
-        finish();
-        return;
-      }
-      beginTrain();
-    }, TUNE.TERMINUS_HOLD_MS);
+    transitionTimer = setTimeout(advanceAfterTerminus, TUNE.TERMINUS_HOLD_MS);
+  }
+
+  // What the terminus hold's timeout runs once it elapses — pulled out so
+  // resume() can call it directly when pause() caught the run mid-hold (see
+  // pausedAtTerminus): the hold itself does not need to happen twice.
+  function advanceAfterTerminus() {
+    transitionTimer = null;
+    queueIndex += 1;
+    if (queueIndex >= queue.length) {
+      finish();
+      return;
+    }
+    beginTrain();
   }
 
   // Camera hand-off into a journey.
@@ -752,6 +778,9 @@ const Playback = (function () {
       return;
     }
     elapsed = 0;
+    // Whatever pause caught mid-hold belonged to the journey that just
+    // ended; a fresh beginTrain has nothing to resume into.
+    pausedAtTerminus = false;
     withoutExternalStop(() => RailMap.setSelected(path.trainId));
     RailMap.setPlaybackTrail(
       trailDone,
@@ -767,8 +796,18 @@ const Playback = (function () {
 
     transitionToken += 1;
     const token = transitionToken;
+    // Two callers race to hand the clock over — MapLibre's moveend and the
+    // safety net below — and whichever loses must not run it a second time:
+    // the loser used to fire ~1.2 s in, into a train that a 4× run had
+    // already finished, and start it again from "ended".
+    let handed = false;
     const runClock = () => {
-      if (token !== transitionToken) return;
+      if (handed || token !== transitionToken) return;
+      handed = true;
+      if (transitionTimer != null) {
+        clearTimeout(transitionTimer);
+        transitionTimer = null;
+      }
       phase = "playing";
       setGesturesEnabled(false);
       lastFrameMs = performance.now();
@@ -850,6 +889,10 @@ const Playback = (function () {
       return true;
     }
     if (phase === "playing" || phase === "transitioning") return false;
+    // A finished run is still holding its finale fit, trail, beads and
+    // selection; settle all of that (and let stop() announce the
+    // completion — see change note in stop()) before re-arming over it.
+    if (phase === "ended") stop({ keepBar: true });
     if (!map || typeof RailMap === "undefined") return false;
     if (importBusy()) {
       setStatus(els.fieldStatus, I18N.t("play.busy"), "warn");
@@ -869,6 +912,7 @@ const Playback = (function () {
     path = null;
     stationIndex = -1;
     stationPulse = 0;
+    pausedAtTerminus = false;
     phase = "armed";
     showBar(true);
     renderBar();
@@ -891,6 +935,7 @@ const Playback = (function () {
     fitTrainsBounds(queue, {
       maxZoom: TUNE.OVERVIEW_MAX_ZOOM,
       duration,
+      alwaysFit: true,
     });
     return duration;
   }
@@ -908,6 +953,21 @@ const Playback = (function () {
 
   function pause() {
     if (phase !== "playing" && phase !== "transitioning") return;
+    // MapLibre's once(moveend) listener for the intro cannot be cancelled by
+    // clearing our fallback timer. Invalidate its hand-off token as well, or
+    // a moveend delivered after pause/resume starts the playback clock again.
+    if (phase === "transitioning") transitionToken += 1;
+    // The intro ease also passes through "transitioning", but with elapsed
+    // pinned at 0 (see beginTrain) — duration is never 0, so this only
+    // matches the terminus hold finishTrain() actually armed transitionTimer
+    // for, not the intro's moveend safety net.
+    if (
+      phase === "transitioning" &&
+      transitionTimer != null &&
+      path &&
+      elapsed >= path.duration
+    )
+      pausedAtTerminus = true;
     phase = "paused";
     cancelClock();
     // A paused map belongs to the reader again — this is when they want to
@@ -918,6 +978,17 @@ const Playback = (function () {
 
   function resume() {
     if (phase !== "paused" || !path) return;
+    if (pausedAtTerminus) {
+      // The clock already reached the end of this journey before the pause;
+      // resuming it here would just replay that same arrival through
+      // finishTrain() again. Move on to the next journey (or finish) with no
+      // extra hold instead.
+      pausedAtTerminus = false;
+      phase = "transitioning";
+      renderBar();
+      advanceAfterTerminus();
+      return;
+    }
     // Wherever the reader left the camera IS the new offset; the chase closes
     // it from there rather than snapping.
     const from = map.getCenter();
@@ -944,9 +1015,14 @@ const Playback = (function () {
 
   function skip(delta) {
     if (phase === "idle" || phase === "ended") return;
-    transitionToken += 1;
     const next = queueIndex + delta;
     if (next < 0 || next >= queue.length) return;
+    // A manual skip picks the next train itself; whatever hold pause() may
+    // have caught (see pausedAtTerminus) no longer applies to it. Decided
+    // only once the skip is known to move: an out-of-range skip changes
+    // nothing, so it must not forget a hold either.
+    pausedAtTerminus = false;
+    transitionToken += 1;
     cancelClock();
     queueIndex = next;
     beginTrain();
@@ -959,16 +1035,18 @@ const Playback = (function () {
     transitionTimer = null;
   }
 
-  // The closing move: frame the day the last played train belongs to, so the
-  // run ends on the itinerary it just drew instead of on a national overview.
+  // The closing move frames exactly what reached a terminus in this run. This
+  // is the same source as the lit playback backlog, and matches iOS's finale
+  // over doneTrails; a different train on the last train's date has no claim
+  // on the closing camera.
   function finaleFit() {
-    const last = queue[Math.min(queueIndex, queue.length - 1)];
-    if (!last) return;
-    const date = getTrainDate(last);
-    const sameDay = getTrainsForDate(trainStore.trains, date);
-    const trains = sameDay.length ? sameDay : [last];
-    fitTrainsBounds(trains, {
-      onlyVisible: true,
+    const points = [];
+    trailDone.forEach((run) =>
+      (run.coords || []).forEach((coord) => points.push(coord)),
+    );
+    const bounds = pointPairsBounds(points, 0, 1);
+    if (!bounds) return;
+    smoothFitBounds(bounds, {
       maxZoom: TUNE.FINALE_MAX_ZOOM,
       duration: reducedMotion() ? 0 : TUNE.FINALE_MS,
     });
@@ -1006,7 +1084,15 @@ const Playback = (function () {
   // fight whatever the user just picked.
   function stop({ keepBar = false, restoreSelection = true } = {}) {
     if (phase === "idle") return;
+    // An "ended" run already reached its terminus; stop() here is only
+    // cutting its closing panorama short, not aborting the run itself. If
+    // the hold already elapsed, finish()'s own timer already announced that
+    // completion and there is nothing left to say. Decided up front, before
+    // phase and finishTimer are cleared below.
+    const endedDuringHold = phase === "ended" && finishTimer != null;
+    const endedAfterHold = phase === "ended" && finishTimer == null;
     phase = "idle";
+    pausedAtTerminus = false;
     transitionToken += 1;
     cancelClock();
     removeHead();
@@ -1035,7 +1121,8 @@ const Playback = (function () {
     }
     if (!keepBar) showBar(false);
     renderBar();
-    announceFinished(true);
+    if (endedDuringHold) announceFinished(false);
+    else if (!endedAfterHold) announceFinished(true);
   }
 
   // Anything that redraws the train layers has changed the date scope, the
@@ -1201,9 +1288,14 @@ const Playback = (function () {
               to: train.destination || "?",
             });
     }
-    if (els.playbackPrev) els.playbackPrev.disabled = queueIndex <= 0;
+    // "ended"/"idle" have no run to move within — prev/next skip WITHIN
+    // the current run, which neither phase has.
+    if (els.playbackPrev)
+      els.playbackPrev.disabled =
+        queueIndex <= 0 || phase === "ended" || phase === "idle";
     if (els.playbackNext)
-      els.playbackNext.disabled = queueIndex >= queue.length - 1;
+      els.playbackNext.disabled =
+        queueIndex >= queue.length - 1 || phase === "ended" || phase === "idle";
   }
 
   function bindUi() {
@@ -1215,9 +1307,10 @@ const Playback = (function () {
     if (els.playbackToggle)
       els.playbackToggle.addEventListener("click", () => {
         if (phase === "ended") {
-          // Replay means replay: re-arm and run, opening on the same
-          // whole-scope overview the first run opened on.
-          stop({ keepBar: true });
+          // Replay means replay: start() itself settles the finished run
+          // (see the "ended" branch there) before re-arming, so this only
+          // has to ask for the next one — opening on the same whole-scope
+          // overview the first run opened on.
           start({ autoBegin: true });
         } else toggle();
       });

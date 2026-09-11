@@ -255,6 +255,9 @@ function normalizeExportTrain(train) {
     id: train.id || "",
     date: normalizeTrainDate(train),
     number: train.number || "",
+    ...(typeof train.number_en === "string" && train.number_en
+      ? { number_en: train.number_en }
+      : {}),
     train_type: train.train_type || "",
     company: normalizeTrainCompany(train.company),
     origin: train.origin || "",
@@ -442,6 +445,75 @@ function normalizeImportedRouteSection(section) {
   return normalized;
 }
 
+// Splits a legacy `number` caption of the shape `native (latin) (number)`
+// into its primary caption and Latin name, so a store that still carries the
+// concatenated caption is imported into `number` / `number_en` once. Mirrors
+// Swift `ServiceCaption.split` in ios/RailKit/Sources/RailCore/ServiceCaption.swift
+// exactly; both are checked by the same table of captions.
+function splitLegacyServiceCaption(caption) {
+  const whole = { primary: caption, latinName: null };
+  const text = String(caption).trim();
+
+  const isNativeScript = (ch) => {
+    const cp = ch.codePointAt(0);
+    return (
+      (cp >= 0x1100 && cp <= 0x11ff) ||
+      (cp >= 0x3040 && cp <= 0x309f) ||
+      (cp >= 0x30a0 && cp <= 0x30ff) ||
+      (cp >= 0x3130 && cp <= 0x318f) ||
+      (cp >= 0x3400 && cp <= 0x4dbf) ||
+      (cp >= 0x4e00 && cp <= 0x9fff) ||
+      (cp >= 0xac00 && cp <= 0xd7af)
+    );
+  };
+
+  // "head (group)" -> { head, group }, with the head trimmed of the
+  // whitespace that separated them. Null unless the text ends in a group
+  // with no nested ASCII parentheses.
+  const trailingGroup = (text) => {
+    if (!text.endsWith(")")) return null;
+    const open = text.lastIndexOf("(");
+    if (open === -1) return null;
+    const group = text.slice(open + 1, -1);
+    const head = text.slice(0, open).replace(/\s+$/, "");
+    return { head, group };
+  };
+
+  const outer = trailingGroup(text);
+  if (
+    !outer ||
+    outer.group === "" ||
+    outer.group.includes("(") ||
+    outer.group.includes(")")
+  ) {
+    return whole;
+  }
+  const number = outer.group;
+
+  const inner = trailingGroup(outer.head);
+  if (
+    !inner ||
+    inner.group === "" ||
+    inner.group.includes("(") ||
+    inner.group.includes(")")
+  ) {
+    return whole;
+  }
+  const latin = inner.group;
+  const native = inner.head;
+
+  if (
+    !/\p{L}/u.test(latin) ||
+    [...latin].some(isNativeScript) ||
+    native === "" ||
+    ![...native].some(isNativeScript)
+  ) {
+    return whole;
+  }
+
+  return { primary: `${native} (${number})`, latinName: latin };
+}
+
 function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
   if (!train || typeof train !== "object" || Array.isArray(train)) {
     throw new Error("Each train must be an object.");
@@ -453,6 +525,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       "id",
       "date",
       "number",
+      "number_en",
       "train_type",
       "company",
       "origin",
@@ -476,10 +549,17 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
     throw new Error(`Train ${train.id} must contain at least 2 stops.`);
   }
 
+  const caption = train.number;
+  const explicitLatin =
+    typeof train.number_en === "string" ? train.number_en.trim() : "";
+  const service = explicitLatin
+    ? { primary: caption, latinName: explicitLatin }
+    : splitLegacyServiceCaption(caption);
+
   const normalized = {
     id: train.id,
     date: normalizeTrainDate(train, fallbackDate),
-    number: train.number,
+    number: service.primary,
     train_type:
       typeof train.train_type === "string" ? train.train_type.trim() : "",
     company: normalizeTrainCompany(train.company),
@@ -494,6 +574,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       : [],
     stops: train.stops.map(normalizeImportedStop),
   };
+  if (service.latinName) normalized.number_en = service.latinName;
   return normalized;
 }
 

@@ -36,6 +36,7 @@ const els = {
   stopsBody: document.getElementById("stops-body"),
   id: document.getElementById("field-id"),
   number: document.getElementById("field-number"),
+  numberEn: document.getElementById("field-number-en"),
   trainType: document.getElementById("field-train-type"),
   company: document.getElementById("field-company"),
   direction: document.getElementById("field-direction"),

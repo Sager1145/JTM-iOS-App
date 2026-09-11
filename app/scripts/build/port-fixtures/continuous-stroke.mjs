@@ -35,6 +35,9 @@ const require = createRequire(import.meta.url);
 // half-lane, a streetcar with station-spaced corners, and a line with no
 // lane rows at all (the fillet-only path).
 const REAL_CASES = [
+  // Follow-inserted samples must not erase surveyed station approaches.
+  { country: "us", lineId: "metrolink-vc-line", zooms: [13, 16] },
+  { country: "us", lineId: "amtrak-amtrak-hartford-line", zooms: [13, 16] },
   { country: "us", lineId: "new-jersey-transit-nj-transi-nec", zooms: [9, 13, 16] },
   { country: "us", lineId: "metropolitan-transit-authori-m", zooms: [12, 15] },
   { country: "us", lineId: "trimet-portland-streetcar-a", zooms: [14, 17] },
@@ -953,6 +956,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
           // the map promises to present. The real parts carry it so the run
           // merge is exercised on real geometry rather than only on probes.
           minCornerRadiusPx: 3 * scale,
+          enforceMinimumCornerRadius: true,
           anchors: part.anchors,
           follows,
         };

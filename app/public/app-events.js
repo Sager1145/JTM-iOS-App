@@ -312,7 +312,7 @@ function updateSidebarToggleLabel() {
 
 function setSidebarVisible(visible, { persist = true, animate = true } = {}) {
   const app = document.getElementById("app");
-  if (!app) return;
+  if (!app) return 0;
   // §4.3: on a narrow screen docked IS the floor, so there is no hidden state
   // to enter — and, just as importantly, none to be restored INTO. This flag
   // is the desktop drawer's, and it is shared storage: a reader who closed the
@@ -377,11 +377,13 @@ function setSidebarVisible(visible, { persist = true, animate = true } = {}) {
       map.once("moveend", () => applyJapanMapConstraints());
     else applyJapanMapConstraints();
   }
+  return easedMs;
 }
 
 // Switch the mobile panel to a detent (docked / half / full). From hidden it
 // re-opens straight onto the requested detent. On desktop only the stored
-// preference changes — the drawer there stays binary.
+// preference changes — the drawer there stays binary. Returns the effective
+// map-padding settle duration so dependent camera work can wait for it.
 function setSidebarPanelState(
   state,
   { persist = true, animate = true, release = null } = {},
@@ -395,13 +397,12 @@ function setSidebarPanelState(
       localStorage.setItem(SIDEBAR_PANEL_STATE_KEY, state);
     } catch {}
   }
-  if (!sidebarUsesVerticalDrag()) return;
+  if (!sidebarUsesVerticalDrag()) return 0;
   if (!sidebarVisible) {
-    setSidebarVisible(true, { animate });
-    return;
+    return setSidebarVisible(true, { animate }) || 0;
   }
   const app = document.getElementById("app");
-  if (!app) return;
+  if (!app) return 0;
   // Before the transform changes, or the transition it is meant to govern has
   // already been computed with the stylesheet's curve.
   const settleMs = animate
@@ -420,6 +421,7 @@ function setSidebarPanelState(
       map.once("moveend", () => applyJapanMapConstraints());
     else applyJapanMapConstraints();
   }
+  return easedMs;
 }
 
 function setupSidebarToggle() {
@@ -1026,15 +1028,90 @@ function closeUtilityWorkspace() {
 // and Journeys are two views of one set of records, not two record stores — so
 // this goes to the view that owns the detail rather than growing a second copy
 // of the detail here.
+let journeyDetailFocusRequest = 0;
+let cancelPendingJourneyDetailFocus = null;
+const JOURNEY_DETAIL_CAMERA_INTERRUPT_EVENTS = [
+  "mousedown",
+  "touchstart",
+  "wheel",
+  "dblclick",
+  "movestart",
+];
+
+function scheduleJourneyDetailFocus(train, id, focusRequest, panelSettleMs) {
+  const autoFit = () => {
+    if (
+      focusRequest === journeyDetailFocusRequest &&
+      focusZoomEnabled &&
+      activePrimaryWorkspace === "journeys" &&
+      !activeUtilityWorkspace &&
+      focusedTrainId === id &&
+      getTrain(id) &&
+      !(typeof Playback !== "undefined" && Playback.isActive())
+    )
+      fitTrainsBounds([train]);
+  };
+  if (
+    !(panelSettleMs > 0) ||
+    !map ||
+    typeof map.on !== "function" ||
+    typeof map.once !== "function" ||
+    typeof map.off !== "function"
+  ) {
+    autoFit();
+    return;
+  }
+
+  // setSidebarPanelState() synchronously starts the padding ease before these
+  // listeners are installed. Raw MapLibre pointer/wheel events cancel before
+  // their handlers can interrupt the ease and emit its moveend; movestart also
+  // catches keyboard controls and later programmatic camera owners (Playback).
+  let active = true;
+  const cleanup = () => {
+    if (!active) return;
+    active = false;
+    JOURNEY_DETAIL_CAMERA_INTERRUPT_EVENTS.forEach((event) =>
+      map.off(event, cancel),
+    );
+    map.off("moveend", settled);
+    if (cancelPendingJourneyDetailFocus === cleanup)
+      cancelPendingJourneyDetailFocus = null;
+  };
+  const cancel = () => cleanup();
+  const settled = () => {
+    // Evented dispatches from a listener-array snapshot. `off` removes future
+    // delivery, but a callback already copied into that snapshot can still run
+    // after an earlier listener cancelled it.
+    if (!active) return;
+    cleanup();
+    autoFit();
+  };
+  JOURNEY_DETAIL_CAMERA_INTERRUPT_EVENTS.forEach((event) =>
+    map.on(event, cancel),
+  );
+  map.once("moveend", settled);
+  cancelPendingJourneyDetailFocus = cleanup;
+}
+
 function openJourneyDetail(id) {
-  if (!id) return;
-  selectTrain(id, { fit: focusZoomEnabled });
+  const train = id ? getTrain(id) : null;
+  if (!train) return;
+  if (cancelPendingJourneyDetailFocus) cancelPendingJourneyDetailFocus();
+  const focusRequest = ++journeyDetailFocusRequest;
   // Not restoreScroll: the reader asked for one specific record, so the
   // remembered offset of the journeys list is not where they want to be.
   setActivePrimaryWorkspace("journeys", { restoreScroll: false });
   // A detail read through the docked strip is not a detail.
+  let panelSettleMs = 0;
   if (sidebarUsesVerticalDrag() && sidebarPanelState === "docked")
-    setSidebarPanelState("half");
+    panelSettleMs = setSidebarPanelState("half") || 0;
+  // Select after the destination and panel detent are installed. If raising
+  // the panel animated its resting map padding, wait for that camera move to
+  // land before auto-focus starts a second one. The token prevents a stale
+  // moveend from focusing a detail that has since been replaced.
+  selectTrain(id, { fit: false });
+  if (focusZoomEnabled)
+    scheduleJourneyDetailFocus(train, id, focusRequest, panelSettleMs);
   const editor = document.getElementById("train-editor");
   if (editor && typeof editor.scrollIntoView === "function")
     editor.scrollIntoView({
@@ -1309,11 +1386,12 @@ function bindEvents() {
     .addEventListener("click", async () => {
       if (importBusy()) return;
       try {
-        fitActiveCountryOverview();
         setImportProgress(0, 1, I18N.t("prog.openingLocal"));
-        await ImportController.openLocalJson();
+        const opened = await ImportController.openLocalJson();
+        if (!opened) return;
         // Opening a local file replaces the store; persist it to the server now.
         await flushServerStoreSave();
+        fitActiveCountryOverview();
       } catch (error) {
         setStatus(els.importStatus, error.message, "err");
       }
@@ -1370,6 +1448,7 @@ function bindEvents() {
         await file.text(),
         I18N.t("src.localJson", { name: file.name }),
       );
+      fitActiveCountryOverview();
     } catch (error) {
       setStatus(els.importStatus, error.message, "err");
     }
@@ -1403,7 +1482,6 @@ function bindEvents() {
             updateDataSourceUi();
           }
         }
-        fitActiveCountryOverview();
         resetImportProgress();
         els.search.value = "";
         const result = await importCanonicalStoreAppendProgressive(
@@ -1433,6 +1511,7 @@ function bindEvents() {
         // Clear the paste only on success — after a failure the user needs
         // the original text back to fix the reported problem.
         els.importJson.value = "";
+        fitActiveCountryOverview();
       } catch (error) {
         setStatus(els.importStatus, error.message, "err");
       } finally {
@@ -1474,8 +1553,8 @@ function bindEvents() {
       if (!(await uiConfirm(I18N.t(confirmKey)))) return;
       btn.disabled = true;
       try {
-        fitActiveCountryOverview();
         await load();
+        fitActiveCountryOverview();
       } catch (error) {
         setStatus(els.importStatus, error.message, "err");
       } finally {
@@ -1489,8 +1568,7 @@ function bindEvents() {
       if (importBusy()) return;
       if (!(await uiConfirm(I18N.t("confirm.restoreMine")))) return;
       try {
-        fitActiveCountryOverview();
-        await restoreUserStore();
+        if (await restoreUserStore()) fitActiveCountryOverview();
       } catch (error) {
         setStatus(els.importStatus, error.message, "err");
       }

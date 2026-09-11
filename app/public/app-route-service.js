@@ -9,6 +9,7 @@
 const _pendingRouteSolves = new Set();
 let _routeSolveDraining = false;
 let solverReadyPromise = null;
+let routeServiceGeneration = 0;
 let solverRenderKickPending = false;
 
 configureStationRouteResolver({
@@ -52,12 +53,22 @@ setRouteCacheStore({
 // Memoisation is cleared after failure so a later solve can retry.
 function ensureSolverReady() {
   if (!solverReadyPromise) {
-    solverReadyPromise = (async () => {
+    const generation = routeServiceGeneration;
+    const ready = (async () => {
       await ensureRailSectionsLoaded();
-      await warmRouteCacheFromIndexedDb();
+      // A country switch can finish while the outgoing country's IndexedDB
+      // request is still queued. Old callers must join the replacement gate,
+      // rather than continue after an obsolete warm pass happens to settle.
+      if (generation !== routeServiceGeneration) return ensureSolverReady();
+      await warmRouteCacheFromIndexedDb({
+        isCurrent: () => generation === routeServiceGeneration,
+      });
+      if (generation !== routeServiceGeneration) return ensureSolverReady();
     })();
-    solverReadyPromise.catch(() => {
-      solverReadyPromise = null;
+    solverReadyPromise = ready;
+    ready.catch(() => {
+      if (solverReadyPromise === ready)
+        solverReadyPromise = null;
     });
   }
   return solverReadyPromise;
@@ -140,6 +151,7 @@ function requestTrainRouteSolve(train) {
 }
 
 function resetRouteServiceForCountry() {
+  routeServiceGeneration += 1;
   invalidateRouteGraphIndexes();
   runtimeRouteCache.clear();
   runtimeRouteNegativeCache.clear();

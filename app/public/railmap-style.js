@@ -804,10 +804,11 @@
   // top-level step/interpolate expression. Each step then applies the line's
   // data-driven minz property at paint time, avoiding tile-parse filters while
   // keeping the entire line/station group on one integer zoom threshold.
-  function lineLengthVisibilityOpacity(visibleOpacity) {
+  function lineLengthVisibilityOpacity(visibleOpacity, adjustment = 0) {
+    const adjust = Number(adjustment) || 0;
     const gate = (zoom) => [
       "case",
-      ["<=", ["coalesce", ["get", "minz"], 0], zoom],
+      ["<=", ["coalesce", ["get", "minz"], 0], zoom + adjust],
       visibleOpacity,
       0,
     ];
@@ -826,11 +827,12 @@
   // it. Below `floorZoom` the text is off outright; above it the feature's own
   // minz decides, exactly as it does for the dot the label belongs to — so a
   // name can never appear for a station that is itself still hidden.
-  function labelVisibilityOpacity(floorZoom, visibleOpacity) {
+  function labelVisibilityOpacity(floorZoom, visibleOpacity, adjustment = 0) {
     const floor = Math.max(0, Math.floor(Number(floorZoom) || 0));
+    const adjust = Number(adjustment) || 0;
     const gate = (zoom) => [
       "case",
-      ["<=", ["coalesce", ["get", "minz"], 0], zoom],
+      ["<=", ["coalesce", ["get", "minz"], 0], zoom + adjust],
       visibleOpacity,
       0,
     ];
@@ -838,6 +840,65 @@
     for (let zoom = floor; zoom <= 14; zoom += 1)
       expression.push(zoom, gate(zoom));
     return expression;
+  }
+
+  // Every layer whose minz gate must be re-normalised for the viewport (see
+  // rail-network.js viewportZoomAdjustment): the complete network's lines and
+  // station dots/labels. Ride/journey markers (stopMarkerZoomGate) are
+  // deliberately excluded — a ride's own stop list is unaffected by how much
+  // geography the viewport shows. buildBaseStyle installs each of these at
+  // adjustment 0 (the whole-style build path has no live map to measure);
+  // railmap.js re-applies the same builders with the real viewport
+  // adjustment via map.setPaintProperty once the map exists and on resize.
+  // Built lazily: the layer ids below are `const`s declared later in this
+  // file, and a module-level table would read them before initialisation.
+  function viewportAdjustmentPaintTargets() { return [
+    { layer: SEGMENTS_CASING_LAYER, prop: "line-opacity", opacity: 0.88 },
+    { layer: SEGMENTS_LAYER, prop: "line-opacity", opacity: UNRIDDEN_OPACITY },
+    {
+      layer: SEGMENTS_WITHHELD_LAYER,
+      prop: "line-opacity",
+      opacity: WITHHELD_LINE_OPACITY,
+    },
+    { layer: SEGMENTS_WITHHELD_CASING_LAYER, prop: "line-opacity", opacity: 1 },
+    {
+      layer: SEGMENTS_SUSPENDED_CASING_LAYER,
+      prop: "line-opacity",
+      opacity: 0.88,
+    },
+    {
+      layer: SEGMENTS_SUSPENDED_LAYER,
+      prop: "line-opacity",
+      opacity: UNRIDDEN_OPACITY,
+    },
+    { layer: STATIONS_LAYER, prop: "circle-opacity", opacity: 1 },
+    { layer: STATIONS_LAYER, prop: "circle-stroke-opacity", opacity: 1 },
+    { layer: STATION_LANES_LAYER, prop: "icon-opacity", opacity: 1 },
+  ]; }
+  function viewportAdjustmentLabelTargets() { return [
+    { layer: SEGMENTS_LABEL_LAYER, prop: "text-opacity", floorZoom: LINE_LABEL_MIN_ZOOM },
+    {
+      layer: STATIONS_LABEL_LAYER,
+      prop: "text-opacity",
+      floorZoom: STATION_LABEL_MIN_ZOOM,
+    },
+  ]; }
+
+  // The paint updates railmap.js applies at style install and on resize, for
+  // one viewport-normalised zoom adjustment: `[{layer, prop, expr}, ...]`.
+  function viewportAdjustmentPaintUpdates(adjustment) {
+    const adjust = Number(adjustment) || 0;
+    const lineUpdates = viewportAdjustmentPaintTargets().map((target) => ({
+      layer: target.layer,
+      prop: target.prop,
+      expr: lineLengthVisibilityOpacity(target.opacity, adjust),
+    }));
+    const labelUpdates = viewportAdjustmentLabelTargets().map((target) => ({
+      layer: target.layer,
+      prop: target.prop,
+      expr: labelVisibilityOpacity(target.floorZoom, 1, adjust),
+    }));
+    return lineUpdates.concat(labelUpdates);
   }
 
   // ───────────────────────────── source / layer ids ─────────────────────────────
@@ -2382,6 +2443,9 @@
     networkLabelTextColor,
     networkLabelHaloColor,
     networkLineLabelColor,
+    labelVisibilityOpacity,
+    viewportAdjustmentPaintUpdates,
+    lineLengthVisibilityOpacity,
     labelVisibilityOpacity,
     FADE_LAYER,
     TRAIN_ROUTES_SOURCE,

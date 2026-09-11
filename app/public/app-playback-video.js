@@ -714,8 +714,19 @@ const PlaybackVideo = (function () {
       if (done) done.resolve(null);
       return;
     }
-    if (Playback.isActive()) Playback.stop();
+    // isActive() is false once the run reaches "ended", so cancelling during
+    // its closing hold used to stop the recorder while leaving that run's
+    // trail, head, beads and pending finish timer on the map. phase() still
+    // reports "ended" (not "idle") through the hold, so it — not isActive()
+    // — is what tells a genuinely-idle cancel apart from one that still has
+    // a run to tear down.
+    if (Playback.phase() !== "idle") Playback.stop();
     else stopRecorder();
+    // stop() on an ended run announces a completion (the run did reach its
+    // terminus), and the finish listener copies that flag over. The reader
+    // still pressed ✕, and the file still lacks the closing panorama, so it
+    // is offered as the partial it is.
+    if (session) session.aborted = true;
   }
 
   // ── recording banner ───────────────────────────────────────────────────

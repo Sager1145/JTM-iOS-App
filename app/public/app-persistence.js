@@ -1185,12 +1185,19 @@ function openRouteCacheDb() {
 // in-memory runtimeRouteCache, so the synchronous solve path hits memory and
 // never triggers the route-graph build. Best-effort: any failure just falls
 // back to solving on demand.
-async function warmRouteCacheFromIndexedDb() {
+async function warmRouteCacheFromIndexedDb({ isCurrent = () => true } = {}) {
   if (!window.indexedDB) return;
   const prefix = `${getRailContentHash()}::`;
   const solverPrefix = `solver:${ROUTE_SOLVER_CACHE_VERSION}|`;
   try {
     const db = await openRouteCacheDb();
+    // openRouteCacheDb captures the country in its DB name before awaiting
+    // IndexedDB. If that country was replaced while the open was pending,
+    // close its handle without exposing any of its entries to runtime memory.
+    if (!isCurrent()) {
+      db.close();
+      return;
+    }
     await new Promise((resolve) => {
       // readwrite: the same cursor pass evicts entries from superseded
       // namespaces (old rail hash or old solver version). Nothing can ever
@@ -1204,6 +1211,13 @@ async function warmRouteCacheFromIndexedDb() {
       req.onsuccess = () => {
         const cursor = req.result;
         if (!cursor) return;
+        // Cursor callbacks are separate tasks. A country reset can clear the
+        // in-memory cache between two callbacks, so every row must re-check
+        // ownership before it seeds or evicts anything in the captured DB.
+        if (!isCurrent()) {
+          cursor.continue();
+          return;
+        }
         const key = String(cursor.key);
         if (key.startsWith(prefix)) {
           const rest = key.slice(prefix.length);

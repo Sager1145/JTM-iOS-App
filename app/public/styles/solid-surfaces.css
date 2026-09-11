@@ -95,37 +95,6 @@
   }
 }
 
-/* §10.5 / §14.4: the reader has asked for less translucency. Honour it by
-   removing the material, not by dimming it. */
-@media (prefers-reduced-transparency: reduce) {
-  #sidebar,
-  .workspace-nav,
-  .sidebar-edge-tab,
-  .map-layers-control,
-  .map-info-summary,
-  .map-info-panel {
-    background: var(--ios-material-strong);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
-/* §10.5: More Contrast wants an edge that survives over any map, so the
-   surface goes fully opaque and the hairline becomes a real border. */
-@media (prefers-contrast: more) {
-  #sidebar,
-  .workspace-nav,
-  .sidebar-edge-tab,
-  .map-layers-control,
-  .map-info-summary,
-  .map-info-panel {
-    border: 2px solid var(--ios-label);
-    background: var(--ios-system-background);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
 html,
 body {
   color: var(--ios-label);
@@ -766,4 +735,3 @@ th {
     font-size: 10px;
   }
 }
-

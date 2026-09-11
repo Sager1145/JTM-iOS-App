@@ -4147,6 +4147,11 @@
     },
     {
       "operator": "富山地方鉄道",
+      "lineName": "富山駅南北接続線",
+      "company": "富山地方鉄道"
+    },
+    {
+      "operator": "富山地方鉄道",
       "lineName": "支線",
       "company": "富山地方鉄道"
     },
@@ -4273,6 +4278,11 @@
     {
       "operator": "広島電鉄",
       "lineName": "宮島線",
+      "company": "広島電鉄"
+    },
+    {
+      "operator": "広島電鉄",
+      "lineName": "循環線",
       "company": "広島電鉄"
     },
     {
@@ -4418,6 +4428,11 @@
     {
       "operator": "東京都",
       "lineName": "10号線新宿線",
+      "company": "都営"
+    },
+    {
+      "operator": "東京都",
+      "lineName": "12号線大江戸線",
       "company": "都営"
     },
     {
@@ -4968,6 +4983,11 @@
     {
       "operator": "東武鉄道",
       "lineName": "亀戸線",
+      "company": "東武"
+    },
+    {
+      "operator": "東武鉄道",
+      "lineName": "伊勢崎線",
       "company": "東武"
     },
     {
@@ -5887,11 +5907,6 @@
     },
     {
       "operator": "近畿日本鉄道",
-      "lineName": "橿原線",
-      "company": "近鉄"
-    },
-    {
-      "operator": "近畿日本鉄道",
       "lineName": "湯の山線",
       "company": "近鉄"
     },
@@ -6792,11 +6807,6 @@
     },
     {
       "operator": "MBTA",
-      "lineName": "Providence/Stoughton Line",
-      "company": "MBTA"
-    },
-    {
-      "operator": "MBTA",
       "lineName": "Red Line",
       "company": "MBTA"
     },
@@ -7098,11 +7108,6 @@
     {
       "operator": "MTA New York City Transit",
       "lineName": "8 Avenue Local",
-      "company": "MTA New York City Transit"
-    },
-    {
-      "operator": "MTA New York City Transit",
-      "lineName": "Queens Blvd Express/6 Av Local",
       "company": "MTA New York City Transit"
     },
     {
@@ -7802,22 +7807,7 @@
     },
     {
       "operator": "Utah Transit Authority",
-      "lineName": "Red Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
       "lineName": "Green Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
-      "lineName": "Green Line",
-      "company": "Utah Transit Authority"
-    },
-    {
-      "operator": "Utah Transit Authority",
-      "lineName": "Blue Line",
       "company": "Utah Transit Authority"
     },
     {
@@ -13195,6 +13185,18 @@
     {
       "country": "jp",
       "input": {
+        "lineId": "jp-富山地方鉄道-富山駅南北接続線",
+        "id": null,
+        "operator": "富山地方鉄道",
+        "logo": null
+      },
+      "verifiedPackageLineLogo": null,
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/jp/q1131125.svg"
+    },
+    {
+      "country": "jp",
+      "input": {
         "lineId": "jp-富山地方鉄道-支線",
         "id": null,
         "operator": "富山地方鉄道",
@@ -13496,6 +13498,18 @@
       "country": "jp",
       "input": {
         "lineId": "jp-広島電鉄-宮島線",
+        "id": null,
+        "operator": "広島電鉄",
+        "logo": null
+      },
+      "verifiedPackageLineLogo": null,
+      "lineLogo": null,
+      "logoForLine": "/rail/operator-logos/jp/q1196530.svg"
+    },
+    {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-広島電鉄-循環線",
         "id": null,
         "operator": "広島電鉄",
         "logo": null
@@ -13856,6 +13870,18 @@
       "country": "jp",
       "input": {
         "lineId": "jp-東京都-12号線大江戸線",
+        "id": null,
+        "operator": "東京都",
+        "logo": "/rail/logos/jp-東京都-12号線大江戸線.png"
+      },
+      "verifiedPackageLineLogo": "/rail/logos/jp-東京都-12号線大江戸線.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/logos/jp-東京都-12号線大江戸線.png"
+    },
+    {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-東京都-12号線大江戸線-2",
         "id": null,
         "operator": "東京都",
         "logo": "/rail/logos/jp-東京都-12号線大江戸線.png"
@@ -15176,6 +15202,18 @@
       "country": "jp",
       "input": {
         "lineId": "jp-東武鉄道-伊勢崎線",
+        "id": null,
+        "operator": "東武鉄道",
+        "logo": "/rail/logos/jp-東武鉄道-伊勢崎線.png"
+      },
+      "verifiedPackageLineLogo": "/rail/logos/jp-東武鉄道-伊勢崎線.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/logos/jp-東武鉄道-伊勢崎線.png"
+    },
+    {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-東武鉄道-伊勢崎線-2",
         "id": null,
         "operator": "東武鉄道",
         "logo": "/rail/logos/jp-東武鉄道-伊勢崎線.png"
@@ -17371,18 +17409,6 @@
     {
       "country": "jp",
       "input": {
-        "lineId": "jp-近畿日本鉄道-橿原線-2",
-        "id": null,
-        "operator": "近畿日本鉄道",
-        "logo": "/rail/logos/jp-近畿日本鉄道-橿原線.png"
-      },
-      "verifiedPackageLineLogo": "/rail/logos/jp-近畿日本鉄道-橿原線.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/logos/jp-近畿日本鉄道-橿原線.png"
-    },
-    {
-      "country": "jp",
-      "input": {
         "lineId": "jp-近畿日本鉄道-湯の山線",
         "id": null,
         "operator": "近畿日本鉄道",
@@ -19543,18 +19569,6 @@
     {
       "country": "us",
       "input": {
-        "lineId": "mbta-providence-stoughton-line-b5",
-        "id": null,
-        "operator": "MBTA",
-        "logo": "/rail/operator-logos/na/mbta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/mbta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/mbta.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "mbta-red-line",
         "id": null,
         "operator": "MBTA",
@@ -20300,18 +20314,6 @@
       "country": "us",
       "input": {
         "lineId": "metropolitan-transit-authori-f-b1",
-        "id": null,
-        "operator": "MTA New York City Transit",
-        "logo": "/rail/operator-logos/na/metropolitan-transit-authori.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/metropolitan-transit-authori.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/metropolitan-transit-authori.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "metropolitan-transit-authori-f-b2",
         "id": null,
         "operator": "MTA New York City Transit",
         "logo": "/rail/operator-logos/na/metropolitan-transit-authori.png"
@@ -21967,43 +21969,7 @@
     {
       "country": "us",
       "input": {
-        "lineId": "utah-transit-authority-uta-703-b2",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
         "lineId": "utah-transit-authority-uta-704",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "utah-transit-authority-uta-704-b1",
-        "id": null,
-        "operator": "Utah Transit Authority",
-        "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-      },
-      "verifiedPackageLineLogo": "/rail/operator-logos/na/utah-transit-authority-uta.png",
-      "lineLogo": null,
-      "logoForLine": "/rail/operator-logos/na/utah-transit-authority-uta.png"
-    },
-    {
-      "country": "us",
-      "input": {
-        "lineId": "utah-transit-authority-uta-701-b1",
         "id": null,
         "operator": "Utah Transit Authority",
         "logo": "/rail/operator-logos/na/utah-transit-authority-uta.png"

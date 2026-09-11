@@ -342,6 +342,82 @@
     return profile.every((plateau) => !plateau.lane);
   }
 
+  // Survey vertices describe the alignment, not its lane profile. A long
+  // straight edge may contain an entire lane excursion with neither end in
+  // that lane. Sample the triangular-kernel ramps before offsetting, retaining
+  // every original vertex and its anchor mapping. For each half of a ramp,
+  // linear interpolation of the quadratic kernel has error
+  // |lane delta * gap| / (8 * subdivisions²). Overlapping ramps share an
+  // error budget so their combined displacement remains sub-pixel.
+  function sampleLaneRamps(points, measures, profile, width, gap) {
+    const identity = points.map((_, index) => index);
+    if (
+      points.length < 2 ||
+      profile.length < 2 ||
+      !Number.isFinite(width) ||
+      !(width > 0) ||
+      !Number.isFinite(gap)
+    )
+      return { points, measures, map: identity };
+    const first = measures[0];
+    const last = measures[measures.length - 1];
+    const boundaries = [];
+    for (let index = 1; index < profile.length; index += 1) {
+      if (profile[index].from + width > first && profile[index].from - width < last)
+        boundaries.push(index);
+    }
+    let start = 0;
+    let overlap = 1;
+    for (let end = 0; end < boundaries.length; end += 1) {
+      while (
+        profile[boundaries[end]].from - profile[boundaries[start]].from > 2 * width
+      )
+        start += 1;
+      overlap = Math.max(overlap, end - start + 1);
+    }
+    const tolerance = STROKE_SIMPLIFY_TOLERANCE_PX / overlap;
+    const samples = [];
+    for (const index of boundaries) {
+      const delta = Math.abs((profile[index].lane - profile[index - 1].lane) * gap);
+      if (!(delta > 0) || !Number.isFinite(delta)) continue;
+      const subdivisions = Math.max(2, Math.ceil(Math.sqrt(delta / (8 * tolerance))));
+      for (let step = -subdivisions; step <= subdivisions; step += 1) {
+        const measure = profile[index].from + (width * step) / subdivisions;
+        if (measure > first && measure < last) samples.push(measure);
+      }
+    }
+    if (!samples.length) return { points, measures, map: identity };
+    samples.sort((a, b) => a - b);
+    const out = [];
+    const outMeasures = [];
+    const map = [];
+    let cursor = 0;
+    for (let index = 0; index < points.length; index += 1) {
+      if (index > 0) {
+        const lo = measures[index - 1];
+        const hi = measures[index];
+        while (cursor < samples.length && samples[cursor] < hi) {
+          const measure = samples[cursor];
+          cursor += 1;
+          if (!(measure > lo) || !(measure > (outMeasures[outMeasures.length - 1] ?? -Infinity)))
+            continue;
+          const fraction = (measure - lo) / (hi - lo);
+          const a = points[index - 1];
+          const b = points[index];
+          out.push([
+            a[0] + (b[0] - a[0]) * fraction,
+            a[1] + (b[1] - a[1]) * fraction,
+          ]);
+          outMeasures.push(measure);
+        }
+      }
+      map.push(out.length);
+      out.push(points[index]);
+      outMeasures.push(measures[index]);
+    }
+    return { points: out, measures: outMeasures, map };
+  }
+
   // The lane a part holds at its own two ends, which is what a neighbouring
   // part needs for its `Join`. Read off the part's own rows so both sides of
   // a joint compute it the same way from the same package.
@@ -731,7 +807,9 @@
   // is mitred like an interior one instead of taking the one-sided normal, and
   // the neighbour — which sees the identical pair — lands on the identical
   // point. Without it (no neighbour) the one-sided normal is used, as before.
-  function offsetPolyline(points, distanceAt, joinStart, joinEnd) {
+  function offsetPolyline(points, distanceAt, joinStart, joinEnd, stableSegments) {
+    if (stableSegments && points.length > 2)
+      return offsetAlongStableSegments(points, distanceAt, joinStart, joinEnd);
     const count = points.length;
     const out = new Array(count);
     for (let index = 0; index < count; index += 1) {
@@ -769,6 +847,17 @@
         }
       }
       if (t0 && t1) {
+        const tangentDot = Math.max(-1, Math.min(1, t0[0] * t1[0] + t0[1] * t1[1]));
+        // At a shared join near a reversal the bisector mitre points far down
+        // the joint and its clamp still creates an artificial terminal tip.
+        // Both parts carry the same incoming tangent, so its one-sided normal
+        // is also the one stable answer they can share.
+        if (join && tangentDot <= Math.cos((150 * Math.PI) / 180)) {
+          nx = -t0[1];
+          ny = t0[0];
+          out[index] = [point[0] + nx * d, point[1] + ny * d];
+          continue;
+        }
         // Bisector of the two right-hand normals, scaled so the offset edge
         // stays parallel to both edges (a mitre), clamped at the limit.
         const bx = -t0[1] - t1[1];
@@ -795,6 +884,133 @@
     return out;
   }
 
+  // Follow substitution and lane-ramp sampling can place a straight-edge
+  // sample immediately beside a genuine bend. Giving that sample its own
+  // perpendicular normal makes the bend's mitre overshoot it; fold cleanup
+  // then deletes both vertices and can erase an entire surveyed curve.
+  // Derive offset directions from significant alignment vertices and
+  // interpolate their mitre vectors along each edge. Every input coordinate,
+  // measure, anchor and ramp sample is still emitted; only tangent support is
+  // simplified, within the existing sub-pixel budget.
+  function offsetAlongStableSegments(points, distanceAt, joinStart, joinEnd) {
+    const keep = new Array(points.length).fill(false);
+    keep[0] = true;
+    keep[points.length - 1] = true;
+    simplifySpan(
+      points,
+      0,
+      points.length - 1,
+      STROKE_SIMPLIFY_TOLERANCE_PX * STROKE_SIMPLIFY_TOLERANCE_PX,
+      keep,
+    );
+    const support = points.map((_, index) => index).filter((index) => keep[index]);
+    const skeleton = support.map((index) => points[index]);
+    const lengths = cumulativeLengths(points);
+    const distances = constrainedInnerBendDistances(
+      points,
+      support,
+      lengths,
+      points.map((_, index) => distanceAt(index)),
+      !!joinStart,
+      !!joinEnd,
+    );
+    const displaced = offsetPolyline(skeleton, () => 1, joinStart, joinEnd, false);
+    const vertices = offsetPolyline(
+      skeleton,
+      (index) => distances[support[index]],
+      joinStart,
+      joinEnd,
+      false,
+    );
+    const vectors = displaced.map((point, index) => [
+      point[0] - skeleton[index][0],
+      point[1] - skeleton[index][1],
+    ]);
+    let edge = 0;
+    return points.map((point, index) => {
+      while (edge + 1 < support.length - 1 && index > support[edge + 1]) edge += 1;
+      const spanStart = support[edge];
+      const spanEnd = support[edge + 1];
+      // Preserve shared terminal joins bit-for-bit; rebuilding them from a
+      // unit vector would add a rounding step.
+      if (index === spanStart) return vertices[edge];
+      if (index === spanEnd) return vertices[edge + 1];
+      const length = lengths[spanEnd] - lengths[spanStart];
+      const t = length > 0 ? (lengths[index] - lengths[spanStart]) / length : 0;
+      const a = vectors[edge];
+      const b = vectors[edge + 1];
+      const distance = distances[index];
+      return [
+        point[0] + (a[0] + (b[0] - a[0]) * t) * distance,
+        point[1] + (a[1] + (b[1] - a[1]) * t) * distance,
+      ];
+    });
+  }
+
+  // Inside tightly sampled bends, a full-width offset can pass through the
+  // opposite leg. Bound its mitre's tangent trim by the available surveyed
+  // edges, then taper the constraint along both approaches. The soft bound
+  // remains monotonic in lane distance, so inner lanes retain their order.
+  function constrainedInnerBendDistances(points, support, lengths, distances, preserveStart, preserveEnd) {
+    if (support.length <= 2) return distances;
+    const skeleton = support.map((index) => points[index]);
+    const positive = new Array(points.length).fill(Infinity);
+    const negative = new Array(points.length).fill(Infinity);
+    // Match the native compound-bend constraint: recover one offset pixel
+    // per twenty source pixels so the taper cannot cross a return approach.
+    const maximumRecovery = 0.05;
+    const recovery = new Array(points.length).fill(maximumRecovery);
+    let constrained = false;
+    for (let index = 1; index + 1 < support.length; index += 1) {
+      const turn = turnAt(skeleton, index);
+      // Several moderate turns can form a tight reversal together; checking
+      // only individual hairpin apices misses that overlap.
+      if (!(Math.abs(turn) > 1e-6)) continue;
+      const a = skeleton[index - 1];
+      const b = skeleton[index];
+      const c = skeleton[index + 1];
+      const available = Math.min(
+        Math.hypot(b[0] - a[0], b[1] - a[1]),
+        Math.hypot(c[0] - b[0], c[1] - b[1]),
+      );
+      const cap = Math.max(0, (0.45 * available) / Math.tan(Math.abs(turn) / 2));
+      (turn > 0 ? positive : negative)[support[index]] = cap;
+      // A near-reversal's legs open slowly. Restoring the full offset faster
+      // than that opening crosses the opposite leg even with a bounded apex.
+      const rate = Math.min(maximumRecovery, 0.5 / Math.tan(Math.abs(turn) / 2));
+      if (rate < maximumRecovery) {
+        for (let edge = support[index - 1] + 1; edge <= support[index + 1]; edge += 1)
+          recovery[edge] = Math.min(recovery[edge], rate);
+      }
+      constrained = true;
+    }
+    if (!constrained) return distances;
+    const spread = (caps) => {
+      for (let index = 1; index < caps.length; index += 1)
+        caps[index] = Math.min(
+          caps[index],
+          caps[index - 1] + (lengths[index] - lengths[index - 1]) * recovery[index],
+        );
+      for (let index = caps.length - 2; index >= 0; index -= 1)
+        caps[index] = Math.min(
+          caps[index],
+          caps[index + 1] +
+            (lengths[index + 1] - lengths[index]) * recovery[index + 1],
+        );
+    };
+    spread(positive);
+    spread(negative);
+    return distances.map((distance, index) => {
+      if ((index === 0 && preserveStart) || (index + 1 === distances.length && preserveEnd)) return distance;
+      const magnitude = Math.abs(distance);
+      const cap = distance > 0 ? positive[index] : negative[index];
+      if (!(magnitude > cap * 0.95)) return distance;
+      const margin = cap * 0.05;
+      const limited = cap - (margin * margin) / (magnitude - cap * 0.9);
+      return distance < 0 ? -limited : limited;
+    });
+  }
+
   // An offset polyline folds back on itself wherever the offset is larger
   // than the local radius of the bend — at a regional zoom, where the
   // surveyed vertices sit a fraction of a pixel apart, a two-pixel lane
@@ -808,13 +1024,77 @@
   // old index's new index.
   const FOLD_TURN_DEGREES = 150;
 
-  function removeOffsetFolds(offset, original) {
+  function removeOffsetFolds(offset, original, preserveBends, anchors) {
     const count = offset.length;
-    const foldTurn = (FOLD_TURN_DEGREES * Math.PI) / 180;
+    // A surveyed hairpin can distribute its reversal across several vertices
+    // (Hakone's apex is 133 degrees). Protect such acute source bends before
+    // neighbouring offset folds can consume the apex.
+    const foldTurn = ((preserveBends ? 120 : FOLD_TURN_DEGREES) * Math.PI) / 180;
     const reversal = new Array(count).fill(false);
     for (let index = 1; index + 1 < count; index += 1)
       reversal[index] = Math.abs(turnAt(original, index)) > foldTurn;
+    if (preserveBends) {
+      for (const index of anchors || []) if (index >= 0 && index < count) reversal[index] = true;
+      return removeOffsetFoldsSequentially(offset, original, reversal);
+    }
     return removeFolds(offset, reversal);
+  }
+
+  // Nearby real bends can overlap on the inside of a lane even with stable
+  // tangents. Remove the weaker surveyed turn first, then re-evaluate its
+  // neighbours so the dominant bend survives. Linked indices make deletion
+  // and neighbour updates constant-time. Anchors and reversals are protected.
+  function removeOffsetFoldsSequentially(points, original, protectedVertices) {
+    const count = points.length;
+    if (count < 3) return { points, map: points.map((_, index) => index) };
+    const threshold = (FOLD_TURN_DEGREES * Math.PI) / 180;
+    const previous = points.map((_, index) => index - 1);
+    const next = points.map((_, index) => (index + 1 < count ? index + 1 : -1));
+    const alive = new Array(count).fill(true);
+    const importance = points.map((_, index) =>
+      index > 0 && index + 1 < count ? Math.abs(turnAt(original, index)) : 0,
+    );
+    const folded = (index) => {
+      if (
+        !(index > 0 && index + 1 < count) ||
+        !alive[index] ||
+        protectedVertices[index]
+      )
+        return false;
+      const a = points[previous[index]];
+      const b = points[index];
+      const c = points[next[index]];
+      const ax = b[0] - a[0];
+      const ay = b[1] - a[1];
+      const bx = c[0] - b[0];
+      const by = c[1] - b[1];
+      return Math.abs(Math.atan2(ax * by - ay * bx, ax * bx + ay * by)) > threshold;
+    };
+    const pending = Array.from({ length: count - 2 }, (_, index) => index + 1);
+    let cursor = 0;
+    while (cursor < pending.length) {
+      const index = pending[cursor];
+      cursor += 1;
+      if (!folded(index)) continue;
+      let victim = index;
+      for (const neighbour of [previous[index], next[index]]) {
+        if (folded(neighbour) && importance[neighbour] < importance[victim]) victim = neighbour;
+      }
+      const before = previous[victim];
+      const after = next[victim];
+      alive[victim] = false;
+      next[before] = after;
+      previous[after] = before;
+      pending.push(before, after);
+    }
+    const kept = [];
+    const map = new Array(count).fill(-1);
+    for (let index = 0; index < count; index += 1) {
+      if (!alive[index]) continue;
+      map[index] = kept.length;
+      kept.push(points[index]);
+    }
+    return { points: kept, map };
   }
 
   // The same pass over a polyline whose surveyed reversals are already
@@ -889,7 +1169,8 @@
   //     the corner is being given.
   // With `floor` 0 no run is ever formed and every corner is exactly the
   // single-vertex fillet this function has always drawn.
-  function filletPolyline(points, radius, floorRadius, anchorSet, measures) {
+  function filletPolyline(points, radius, floorRadius, anchorSet, measures, enforceMinimumRadius) {
+    if (enforceMinimumRadius) radius = Math.max(radius, floorRadius);
     const count = points.length;
     if (!(radius > 0) || count < 3) return { points, measures };
     const minTurn = (FILLET_MIN_TURN_DEGREES * Math.PI) / 180;
@@ -993,6 +1274,14 @@
       if (guardEdge === first - 1 && back - tangent < guardOffset)
         tangent = back - guardOffset;
       if (!(tangent > DEGENERATE_EDGE_PX)) return null;
+      // A merged run's intersection can lie beyond either original outer
+      // edge. Reject extrapolated starts or ends in strict geometry mode.
+      if (enforceMinimumRadius) {
+        const startOffset = apexBack - tangent;
+        const endOffset = apexForward + tangent;
+        if (startOffset < -la || startOffset > 0 || endOffset < 0 || endOffset > lb)
+          return null;
+      }
       const start = [apex[0] - t0x * tangent, apex[1] - t0y * tangent];
       const end = [apex[0] + t1x * tangent, apex[1] + t1y * tangent];
       // A TRUE circular arc, sampled at uniform ANGLE steps — the same
@@ -1178,7 +1467,7 @@
     };
     let index = 1;
     while (index + 1 < count) {
-      if (anchorSet.has(index)) {
+      if (!enforceMinimumRadius && anchorSet.has(index)) {
         const arc = anchorCornerOf(index);
         if (arc) {
           for (let sample = 0; sample < arc.curve.length; sample += 1) {
@@ -1230,7 +1519,7 @@
         if (cumulative[last + 1] - cumulative[index] > radius) break;
         last += 1;
       }
-      if (!best) {
+      if (!best || (enforceMinimumRadius && best.achieved < floor - DEGENERATE_EDGE_PX)) {
         emit(points[index], measures[index]);
         index += 1;
         continue;
@@ -1396,10 +1685,14 @@
    *   minRampPx    the smoothing half-width is at least this many pixels,
    *                whatever the zoom makes of the metre ramp
    *   cornerRadiusPx  fillet radius in pixels (0 disables rounding)
-   *   minCornerRadiusPx  the radius a corner is rounded to AT WORST, in
-   *                pixels; where no single vertex's edges can carry it the
-   *                run of vertices is rounded as one corner. 0 (the default)
-   *                keeps the older per-vertex-only behaviour.
+   *   minCornerRadiusPx  minimum requested screen-space radius. Adjacent
+   *                vertices may be merged to fit it. With
+   *                enforceMinimumCornerRadius, arcs that cannot meet it are
+   *                omitted; otherwise it remains a best-effort target.
+   *   enforceMinimumCornerRadius  use stable offset tangents, sample lane
+   *                ramps, preserve surveyed bends and anchors during fold
+   *                cleanup, and enforce minCornerRadiusPx on emitted arcs.
+   *                false preserves the historical fixture geometry.
    *   anchors      indices of station-platform vertices
    *   follows      corridor follows, see substituteFollows()
    *   joinStart / joinEnd  the joint with the neighbouring part of the same
@@ -1459,6 +1752,7 @@
       };
     }
     const gap = Number(opts.laneGapPx) || 0;
+    const enforceMinimumCornerRadius = !!opts.enforceMinimumCornerRadius;
     const rows = opts.rows || [];
     const cleanCumulative = cumulativeLengths(clean);
     const cleanTotalPx = cleanCumulative[cleanCumulative.length - 1];
@@ -1502,18 +1796,37 @@
     for (const index of anchorSet) if (followed.map[index] >= 0) followedAnchors.add(followed.map[index]);
     const taperedStep = taperJogs(followed.points, followed.measures, followedAnchors, metresPerPx);
     // Compose the two index maps so an original vertex resolves through both.
-    const tapered = {
+    let tapered = {
       points: taperedStep.points,
       measures: taperedStep.measures,
       map: followed.map.map((at) => (at < 0 ? -1 : taperedStep.map[at])),
     };
-    const base = tapered.points;
-    const taperedAnchors = new Set();
-    for (const index of anchorSet) if (tapered.map[index] >= 0) taperedAnchors.add(tapered.map[index]);
     const joinStart = opts.joinStart || null;
     const joinEnd = opts.joinEnd || null;
     const joinLaneStart = joinStart ? joinStart.lane : null;
     const joinLaneEnd = joinEnd ? joinEnd.lane : null;
+    const profile = laneProfile(rows, totalMetres, joinLaneStart, joinLaneEnd);
+    const width = Math.max(
+      LANE_RAMP_HALF_WIDTH_METRES,
+      (Number(opts.minRampPx) || 0) * metresPerPx,
+    );
+    if (enforceMinimumCornerRadius && gap && totalMetres > 0) {
+      const sampled = sampleLaneRamps(
+        tapered.points,
+        tapered.measures,
+        profile,
+        width,
+        gap,
+      );
+      tapered = {
+        points: sampled.points,
+        measures: sampled.measures,
+        map: tapered.map.map((at) => (at < 0 ? -1 : sampled.map[at])),
+      };
+    }
+    const base = tapered.points;
+    const taperedAnchors = new Set();
+    for (const index of anchorSet) if (tapered.map[index] >= 0) taperedAnchors.add(tapered.map[index]);
     let offset = base;
     // A neighbour's lane at the joint is as much a reason to leave the
     // centreline as a row of this part's own is: without it the two parts
@@ -1521,23 +1834,24 @@
     const laned =
       rows.some((row) => row.lane) || !!joinLaneStart || !!joinLaneEnd;
     if (gap && laned && totalMetres > 0) {
-      const profile = laneProfile(rows, totalMetres, joinLaneStart, joinLaneEnd);
-      const width = Math.max(
-        LANE_RAMP_HALF_WIDTH_METRES,
-        (Number(opts.minRampPx) || 0) * metresPerPx,
-      );
       if (!profileIsFlat(profile))
         offset = offsetPolyline(
           base,
           (index) => laneAt(profile, tapered.measures[index], width) * gap,
           joinStart,
           joinEnd,
+          enforceMinimumCornerRadius,
         );
     }
     const cleaned =
       offset === base
         ? { points: base, map: base.map((_, index) => index) }
-        : removeOffsetFolds(offset, base);
+        : removeOffsetFolds(
+            offset,
+            base,
+            enforceMinimumCornerRadius,
+            taperedAnchors,
+          );
     // Measures follow the kept vertices, in order — the same map-driven
     // carry used above for the corridor fold pass.
     const cleanedMeasures = cleaned.map
@@ -1569,6 +1883,7 @@
       Number(opts.minCornerRadiusPx) || 0,
       drawn.anchors,
       drawn.measures,
+      enforceMinimumCornerRadius,
     );
     const anchors = (opts.anchors || []).map((index) => {
       const at = anchorMap[index];

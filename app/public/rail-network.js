@@ -1633,10 +1633,9 @@
   // thorn at (nearly) every station, it makes a ridden-route slice measure the
   // station twice, and it looks like a branch to any topology test.
   //
-  // Only one of the two A's belongs. Keep whichever ordering is shorter —
-  // that is by definition the one that does not double back. Detected
-  // structurally (the identical vertex either side of the station), never by
-  // distance, so a genuine stub track is left alone.
+  // A lone repeated neighbour is removed from the longer ordering. When
+  // the next neighbour also repeats, both intervals survey the same return
+  // track; that is a genuine retrace and both approach tangents must survive.
   function dropStationRepeat(current, next) {
     if (current.length < 3 || next.length < 3) return;
     const before = current[current.length - 3];
@@ -1644,6 +1643,10 @@
     const station = current[current.length - 1];
     const after = next[2];
     if (!sameCoordinate(repeated, next[1])) return;
+    // A second shared vertex is a surveyed return along the same track,
+    // rather than a single duplicated station neighbour. Preserve both
+    // directions (e.g. Pacific Surfliner at LA Union Station).
+    if (sameCoordinate(before, after)) return;
     const keepFirst =
       distanceMeters(before, repeated) +
       distanceMeters(repeated, station) +
@@ -2531,6 +2534,25 @@
         : 0;
   }
 
+  // Detail ladders were tuned on a phone. Normalise the camera zoom every
+  // ladder sees to a reference phone short edge, so a larger viewport shows
+  // the same geography-relative detail rather than more lines than the
+  // phone-tuned thresholds intended.
+  const VIEWPORT_REFERENCE_SHORT_EDGE = 390;
+  const VIEWPORT_ZOOM_ADJUST_MIN = -1.5;
+  const VIEWPORT_ZOOM_ADJUST_MAX = 0.5;
+
+  function viewportZoomAdjustment(width, height) {
+    const shortEdge = Math.min(width, height);
+    if (!Number.isFinite(shortEdge) || shortEdge <= 0) return 0;
+    const raw = Math.log2(VIEWPORT_REFERENCE_SHORT_EDGE / shortEdge);
+    if (!Number.isFinite(raw)) return 0;
+    return Math.min(
+      VIEWPORT_ZOOM_ADJUST_MAX,
+      Math.max(VIEWPORT_ZOOM_ADJUST_MIN, raw),
+    );
+  }
+
   // Zoom-out visibility is decided by the COMPLETE LINE length: long trunks
   // survive the widest views and short lines drop out first.
   function minZoomForLength(totalKm) {
@@ -2660,6 +2682,19 @@
       });
     }
     return byPart;
+  }
+
+  // Reviewed adjacent display chains that meet at one station anchor but
+  // represent distinct branches. The chain after the boundary carries the
+  // opt-out because both renderers ask it whether joining from its previous
+  // sibling is semantically valid.
+  function nonJoiningPreviousParts(pkg, displayLanes) {
+    const parts = new Set();
+    if (displayLanes?.format !== "jtm-display-lanes-v1") return parts;
+    const lineIds = new Set((pkg.lines || []).map((line) => line.id));
+    for (const row of Object.values(displayLanes.chainBoundariesByRegion || {}).flat())
+      if (lineIds.has(row[0])) parts.add(`${row[0]}#${Number(row[2])}`);
+    return parts;
   }
 
   // `familyWindowsByRegion` rows (`[lineId, partIndex, from, to, role,
@@ -3228,6 +3263,7 @@
     const stationLaneFeatures = [];
     const laneRows = laneRowsByPart(pkg, displayLanes);
     const followRows = followRowsByPart(displayLanes);
+    const nonJoiningPrevious = nonJoiningPreviousParts(pkg, displayLanes);
     const familyWindows = familyWindowRowsByPart(displayLanes);
     const releasedByLine = releasedIntervalsByLine(displayLanes);
     const colorOverrides = colorOverrideByLine(displayLanes);
@@ -3433,6 +3469,7 @@
             const measures = partMeasures(coordinates);
             return {
               coordinates,
+              joinPrevious: !nonJoiningPrevious.has(`${lineId}#${partIndex}`),
               measures,
               totalMetres: measures[measures.length - 1],
               rows: rows.map((row) => ({ from: row.from, to: row.to, lane: row.lane })),
@@ -4010,6 +4047,7 @@
     decodeIntervals,
     minZoomForRank,
     minZoomForLength,
+    viewportZoomAdjustment,
     continuousCoordinatesForLine,
     displayPartsForLine,
     canonicalizeRouteFeature,

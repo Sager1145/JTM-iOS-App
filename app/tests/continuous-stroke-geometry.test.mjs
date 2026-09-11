@@ -47,7 +47,11 @@ function buildStroke(probe, radiusPx) {
     laneGapPx: probe.laneGapPx,
     minRampPx: probe.minRampPx,
     cornerRadiusPx: radiusPx === undefined ? probe.cornerRadiusPx : radiusPx,
-    minCornerRadiusPx: probe.minCornerRadiusPx || 0,
+    // A strict build promotes cornerRadiusPx to this floor, so the explicit
+    // radius-0 probe used below must clear both values to expose the actual
+    // pre-fillet polyline.
+    minCornerRadiusPx: radiusPx === 0 ? 0 : probe.minCornerRadiusPx || 0,
+    enforceMinimumCornerRadius: probe.enforceMinimumCornerRadius === true,
     anchors: probe.anchors,
     follows: probe.follows || [],
     joinStart: probe.joinStart || null,
@@ -123,6 +127,11 @@ test("rounded corners honour the sampling step", () => {
     let worstAt = -1;
     for (let at = 1; at + 1 < stroke.points.length; at += 1) {
       const vertex = stroke.points[at];
+      // The production radius floor deliberately keeps a surveyed corner
+      // when no bounded arc fits. It is not a sampled fillet; only exact
+      // retained vertices are exempt, never their surrounding geometry.
+      if (probe.enforceMinimumCornerRadius &&
+          pre.some((point) => point[0] === vertex[0] && point[1] === vertex[1])) continue;
       if (
         exempt.some(
           (point) => Math.hypot(point[0] - vertex[0], point[1] - vertex[1]) <= reach,

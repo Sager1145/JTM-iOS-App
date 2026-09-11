@@ -97,6 +97,7 @@
     networkLabelTextColor,
     networkLabelHaloColor,
     networkLineLabelColor,
+    viewportAdjustmentPaintUpdates,
     FADE_LAYER,
     TRAIN_ROUTES_SOURCE,
     TRAIN_PICK_SOURCE,
@@ -127,6 +128,7 @@
     PLAYBACK_SOURCE,
     PLAYBACK_DONE_LAYER,
     PLAYBACK_HEAD_LAYER,
+    PLAYBACK_CASING_DONE_LAYER,
     PLAYBACK_CASING_HEAD_LAYER,
     PLAYBACK_STATIONS_SOURCE,
     PLAYBACK_STATION_LAYER,
@@ -383,6 +385,7 @@
     _playbackRuns: [],
     _playbackDone: [],
     _playbackRunIndex: -1,
+    _playbackProgress: 0,
     _playbackStationIndex: -1,
     _playbackStationPulse: 0,
     _playbackColor: "#1f6feb",
@@ -420,6 +423,11 @@
     _basemapGeneration: 0,
     _basemapTransitionDuration: BASEMAP_CROSSFADE_MS,
     _fadeOpacity: 0,
+    // Viewport-normalised detail (see rail-network.js viewportZoomAdjustment):
+    // the last adjustment actually painted, so a resize only re-applies the
+    // gates when the change is large enough to matter.
+    _viewportAdjustment: 0,
+    _viewportResizeTimer: null,
 
     // Every ridden route is rendered from an exact slice of the same complete
     // line geometry used by the hidden-by-default national-network overlay.
@@ -540,7 +548,40 @@
       });
       map.on("zoomend", () => this._scheduleStrokeRebuild(true));
       map.on("moveend", () => this._scheduleStrokeRebuild(true));
+      // Viewport-normalised detail: apply the reference-viewport adjustment
+      // the container has right now, then keep it current across resizes
+      // (window resize, split-view, device rotation). Debounced so a drag
+      // resize does not re-touch every gated layer on every frame.
+      this._applyViewportAdjustment();
+      map.on("resize", () => {
+        if (this._viewportResizeTimer) clearTimeout(this._viewportResizeTimer);
+        this._viewportResizeTimer = setTimeout(() => {
+          this._viewportResizeTimer = null;
+          this._applyViewportAdjustment();
+        }, 150);
+      });
       return this;
+    },
+
+    // Recomputes the viewport-normalised zoom adjustment from the map
+    // container's current CSS pixel size and, if it moved by at least 0.05
+    // from what is currently painted, re-applies the minz gates for the
+    // complete network's lines and station dots/labels (never the ride
+    // markers gated by stopMarkerZoomGate).
+    _applyViewportAdjustment() {
+      const m = this._map;
+      if (!m || typeof m.getContainer !== "function") return;
+      const container = m.getContainer();
+      const width = container ? container.clientWidth : 0;
+      const height = container ? container.clientHeight : 0;
+      const adjustment = global.RailNetwork
+        ? global.RailNetwork.viewportZoomAdjustment(width, height)
+        : 0;
+      if (Math.abs(adjustment - this._viewportAdjustment) < 0.05) return;
+      this._viewportAdjustment = adjustment;
+      viewportAdjustmentPaintUpdates(adjustment).forEach(({ layer, prop, expr }) => {
+        if (m.getLayer(layer)) m.setPaintProperty(layer, prop, expr);
+      });
     },
 
     // ── data feeds (same contract as the old deck.gl overlay, plus the
@@ -677,6 +718,7 @@
       this._playbackRuns = Array.isArray(runs) ? runs : [];
       this._playbackColor = color || "#1f6feb";
       this._playbackRunIndex = -1;
+      this._playbackProgress = 0;
       this.setPlaybackProgress(0, 0);
       return this;
     },
@@ -684,6 +726,7 @@
     setPlaybackProgress(runIndex, t) {
       const m = this._map;
       if (!m) return this;
+      this._playbackProgress = Math.max(0, Math.min(1, Number(t) || 0));
       const idx = Math.max(0, Math.min(this._playbackRuns.length - 1, runIndex | 0));
       if (idx !== this._playbackRunIndex) {
         this._playbackRunIndex = idx;
@@ -715,14 +758,17 @@
         m.setPaintProperty(
           PLAYBACK_HEAD_LAYER,
           "line-gradient",
-          playbackTrailGradient(this._playbackColor, t),
+          playbackTrailGradient(this._playbackColor, this._playbackProgress),
         );
       // The casing ends where the colour ends, so it takes the same ramp.
       if (m.getLayer(PLAYBACK_CASING_HEAD_LAYER))
         m.setPaintProperty(
           PLAYBACK_CASING_HEAD_LAYER,
           "line-gradient",
-          playbackTrailGradient(MAP_SURFACE_COLORS[this._theme].casing, t),
+          playbackTrailGradient(
+            MAP_SURFACE_COLORS[this._theme].casing,
+            this._playbackProgress,
+          ),
         );
       return this;
     },
@@ -731,12 +777,9 @@
     // with is what every later "reached up to here" update filters on.
     setPlaybackStations(stations) {
       const list = Array.isArray(stations) ? stations : [];
-      // The bead + halo colours were baked at style-build time, and the theme
-      // switch pass does not know about these layers (it has nothing to
-      // repaint while playback is idle and the source is empty). Restamping
-      // them here is what stops a playback started AFTER a theme switch from
-      // drawing the previous theme's beads.
-      this._restampPlaybackStationTheme();
+      // Playback colours are baked at style-build time. Restamping before a
+      // new source upload also covers playback that starts after a switch.
+      this._restampPlaybackTheme();
       const src = this._src(PLAYBACK_STATIONS_SOURCE);
       if (src)
         src.setData({
@@ -785,10 +828,22 @@
         );
       return this;
     },
-    _restampPlaybackStationTheme() {
+    _restampPlaybackTheme() {
       const m = this._map;
       if (!m) return;
       const colors = MAP_SURFACE_COLORS[this._theme === "dark" ? "dark" : "light"];
+      if (m.getLayer(PLAYBACK_CASING_DONE_LAYER))
+        m.setPaintProperty(
+          PLAYBACK_CASING_DONE_LAYER,
+          "line-color",
+          colors.casing,
+        );
+      if (m.getLayer(PLAYBACK_CASING_HEAD_LAYER))
+        m.setPaintProperty(
+          PLAYBACK_CASING_HEAD_LAYER,
+          "line-gradient",
+          playbackTrailGradient(colors.casing, this._playbackProgress),
+        );
       if (m.getLayer(PLAYBACK_STATION_LAYER))
         m.setPaintProperty(
           PLAYBACK_STATION_LAYER,
@@ -807,12 +862,18 @@
           "circle-stroke-color",
           colors.stationRing,
         );
-      if (m.getLayer(PLAYBACK_STATION_LABEL_LAYER))
+      if (m.getLayer(PLAYBACK_STATION_LABEL_LAYER)) {
+        m.setPaintProperty(
+          PLAYBACK_STATION_LABEL_LAYER,
+          "text-color",
+          playbackStationTextColor(this._playbackStationIndex, this._theme),
+        );
         m.setPaintProperty(
           PLAYBACK_STATION_LABEL_LAYER,
           "text-halo-color",
           networkLabelHaloColor(this._theme),
         );
+      }
     },
     // The train's own position, pushed every frame. One point through the
     // GeoJSON worker is sub-millisecond, and keeping the playhead ON the
@@ -848,6 +909,7 @@
       this._playbackRuns = [];
       this._playbackDone = [];
       this._playbackRunIndex = -1;
+      this._playbackProgress = 0;
       this._playbackStationIndex = -1;
       this._playbackStationPulse = 0;
       const src = this._src(PLAYBACK_SOURCE);
@@ -1488,7 +1550,10 @@
         const jointAt = (index) => {
           const before = parts[index - 1];
           const after = parts[index];
-          if (!before || !after || !touches(before, after)) return null;
+          if (
+            !before || !after || after.joinPrevious === false ||
+            !touches(before, after)
+          ) return null;
           const beforePx = projectPart(index - 1);
           const afterPx = projectPart(index);
           if (beforePx.length < 2 || afterPx.length < 2) return null;
@@ -1537,6 +1602,7 @@
               minRampPx: STROKE_MIN_RAMP_PX,
               cornerRadiusPx,
               minCornerRadiusPx,
+              enforceMinimumCornerRadius: true,
               anchors: part.anchors,
               follows,
               joinStart: startJoint
@@ -2387,6 +2453,10 @@
         m.setPaintProperty(id, "text-halo-color-transition", transition);
         m.setPaintProperty(id, "text-halo-color", networkLabelHaloColor(theme));
       }
+      // Playback layers are long-lived style layers. Repaint them in place so
+      // a theme switch during an active run keeps its casing, beads and labels
+      // on the same surface palette without rebuilding playback sources.
+      this._restampPlaybackTheme();
     },
     _applyEffectiveFade(duration) {
       const m = this._map;

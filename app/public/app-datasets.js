@@ -62,6 +62,7 @@ const AppDatasets = {
   // share station names (松山, 板橋, 岡山 …), so a stop resolved against the
   // wrong network would not look like an error, it would look like a route.
   clearRailSections() {
+    railSectionsLoadGeneration += 1;
     railSectionsGeoJson = null;
     railSectionsReady = null;
     railSectionsTextReady = null;
@@ -94,6 +95,10 @@ let railSectionsReady = null;
 // railSectionsReady (the parse pipeline) so the ~1.1 s parse can be deferred
 // off the first-paint path and run in yielding chunks later.
 let railSectionsTextReady = null;
+// Every country switch invalidates asynchronous work started for the outgoing
+// country. Both the parse promise and its callbacks retain this generation, so
+// an old response cannot install or invalidate the new country's data.
+let railSectionsLoadGeneration = 0;
 
 async function parseFeatureCollectionChunked(text) {
   return parseFeatureCollectionTextChunked(text, {
@@ -105,31 +110,41 @@ async function parseFeatureCollectionChunked(text) {
 async function ensureRailSectionsLoaded() {
   if (railSectionsGeoJson) return railSectionsGeoJson;
   if (!railSectionsReady) {
-    railSectionsReady = (async () => {
+    const generation = railSectionsLoadGeneration;
+    const ready = (async () => {
       // Reuse the in-flight/finished boot download; re-fetch once on failure.
+      let textReady = railSectionsTextReady || AppDatasets.startRailSectionsDownload();
       let texts;
       try {
-        texts = await (railSectionsTextReady ||
-          AppDatasets.startRailSectionsDownload());
+        texts = await textReady;
       } catch {
-        texts = await AppDatasets.startRailSectionsDownload();
+        if (generation !== railSectionsLoadGeneration)
+          return ensureRailSectionsLoaded();
+        textReady = AppDatasets.startRailSectionsDownload();
+        texts = await textReady;
       }
       if (!Array.isArray(texts)) texts = [texts];
       const collections = [];
       for (const text of texts)
         collections.push(await parseFeatureCollectionChunked(text));
+      if (generation !== railSectionsLoadGeneration)
+        return ensureRailSectionsLoaded();
       const data = AppDatasets.installRailSections(
         mergeFeatureCollections(collections),
       );
       // Release the raw ~12 MB JSON string (≈24 MB as a JS string): the memoised
       // download promise would otherwise keep it resident for the whole session,
       // which matters on memory-tight iPhones.
-      railSectionsTextReady = null;
+      if (generation === railSectionsLoadGeneration &&
+          railSectionsTextReady === textReady)
+        railSectionsTextReady = null;
       return data;
     })();
+    railSectionsReady = ready;
     // On any failure clear the memo so a later call retries cleanly.
-    railSectionsReady.catch(() => {
-      railSectionsReady = null;
+    ready.catch(() => {
+      if (railSectionsReady === ready)
+        railSectionsReady = null;
     });
   }
   return railSectionsReady;

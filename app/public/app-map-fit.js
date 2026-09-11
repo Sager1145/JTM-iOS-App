@@ -84,19 +84,61 @@ function smoothFitBounds(bounds, opts) {
   map.fitBounds(bounds, { padding, maxZoom, duration, essential: true });
 }
 
+// Auto-focus is allowed to stay still when the whole target already sits in
+// the uncovered viewport. Use projected pixels rather than map.getBounds():
+// getBounds includes the part of the canvas hidden under the resting sidebar
+// padding, so it can call an obscured route "visible". Callers that represent
+// an explicit camera command (the locate buttons and playback) pass
+// `alwaysFit` and keep their existing semantics.
+function boundsFullyVisible(bounds, margin = FOCUS_FIT_MARGIN_PX) {
+  if (
+    !map ||
+    !bounds ||
+    typeof map.project !== "function" ||
+    typeof map.getContainer !== "function"
+  )
+    return false;
+  const container = map.getContainer();
+  const width = container ? Number(container.clientWidth) || 0 : 0;
+  const height = container ? Number(container.clientHeight) || 0 : 0;
+  if (!width || !height) return false;
+  const padding =
+    typeof map.getPadding === "function" ? map.getPadding() || {} : {};
+  const left = (Number(padding.left) || 0) + margin;
+  const right = width - (Number(padding.right) || 0) - margin;
+  const top = (Number(padding.top) || 0) + margin;
+  const bottom = height - (Number(padding.bottom) || 0) - margin;
+  if (left > right || top > bottom) return false;
+  const [[west, south], [east, north]] = bounds;
+  return [
+    [west, south],
+    [west, north],
+    [east, south],
+    [east, north],
+  ].every((coord) => {
+    const point = map.project(coord);
+    return (
+      point &&
+      Number.isFinite(point.x) &&
+      Number.isFinite(point.y) &&
+      point.x >= left &&
+      point.x <= right &&
+      point.y >= top &&
+      point.y <= bottom
+    );
+  });
+}
+
 // Two-stage focus fit shared by the single-train and whole-day paths:
 // matched route geometry wins; only when NO train in the set has any route
 // features do the raw stop coordinates take over. `onlyVisible` restricts
 // the set to trains not hidden by their card toggle — the whole-day fit
-// honours it, while an explicit single-train fit (selection, 定位 button)
-// frames the train regardless.
-// `maxZoom` defaults to the long-standing 11 so every existing caller is
-// unchanged; playback's closing fit passes a higher cap, because a day spent
-// inside one city frames far tighter than 11 and would otherwise end the run
-// on a view of half the region.
+// honours it. Automatic selection/date focus stays still when the target is
+// already fully visible; explicit locate and playback callers pass alwaysFit.
+// `maxZoom` defaults to the long-standing 11; playback passes its own caps.
 function fitTrainsBounds(
   trains,
-  { onlyVisible = false, maxZoom = 11, duration } = {},
+  { onlyVisible = false, maxZoom = 11, duration, alwaysFit = false } = {},
 ) {
   if (!map) return;
   const list = (trains || []).filter(
@@ -110,6 +152,7 @@ function fitTrainsBounds(
     duration === undefined ? { maxZoom } : { maxZoom, duration };
   const bounds = featureCollectionBounds(features);
   if (bounds) {
+    if (!alwaysFit && boundsFullyVisible(bounds)) return;
     smoothFitBounds(bounds, fitOpts);
     return;
   }
@@ -121,12 +164,14 @@ function fitTrainsBounds(
     }),
   );
   const ptBounds = latLngPointsBounds(points);
-  if (ptBounds) smoothFitBounds(ptBounds, fitOpts);
+  if (ptBounds && (alwaysFit || !boundsFullyVisible(ptBounds)))
+    smoothFitBounds(ptBounds, fitOpts);
 }
 
-// Single-train entry point — still called by the 定位 button (app-events.js).
+// Explicit single-train entry point used by the 定位 buttons. Unlike automatic
+// selection focus, pressing locate always performs the requested camera move.
 function fitTrainBounds(train) {
-  fitTrainsBounds([train]);
+  fitTrainsBounds([train], { alwaysFit: true });
 }
 
 function setImportProgress(count, total, label = "") {
@@ -213,4 +258,3 @@ function applyJapanMapConstraints() {
     [cLng + halfLng, Math.min(85, cLat + halfLat)],
   ]);
 }
-
