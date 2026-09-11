@@ -69,6 +69,18 @@ struct JourneySearchMatcherTests {
         #expect(!JourneySearchMatcher.matches(Self.train(), query: "のぞみ"))
     }
 
+    @Test("the Latin name is searched, and listed right after the caption")
+    func latinNameIsSearched() {
+        // A needle the id ("t-odoriko-1") cannot answer, so the hit is the
+        // Latin name's alone.
+        var train = Self.train()
+        #expect(!JourneySearchMatcher.matches(train, query: "dancing"))
+        train.numberEn = "Dancing Girl 1"
+        #expect(JourneySearchMatcher.matches(train, query: "dancing"))
+        let fields = JourneySearchMatcher.fields(of: train)
+        #expect(Array(fields.prefix(2)) == ["踊り子1号", "Dancing Girl 1"])
+    }
+
     // MARK: - how it matches
 
     @Test

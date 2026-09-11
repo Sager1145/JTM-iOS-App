@@ -47,6 +47,7 @@ struct ContinuousStrokeParityTests {
             let minRampPx: Double
             let cornerRadiusPx: Double
             let minCornerRadiusPx: Double?
+            let enforceMinimumCornerRadius: Bool?
             let anchors: [Int]
             let joinStart: JoinCase?
             let joinEnd: JoinCase?
@@ -181,7 +182,8 @@ struct ContinuousStrokeParityTests {
                     points: points(follow.points), measures: follow.measures)
             },
             joinStart: joined ? join(probe.joinStart) : nil,
-            joinEnd: joined ? join(probe.joinEnd) : nil)
+            joinEnd: joined ? join(probe.joinEnd) : nil,
+            enforceMinimumCornerRadius: probe.enforceMinimumCornerRadius ?? false)
     }
 
     static func stroke(
@@ -270,7 +272,7 @@ struct ContinuousStrokeParityTests {
             // The polyline the fillet pass actually saw: the identical build
             // with the rounding switched off, which is exactly what
             // `fillet` receives (it returns its input unchanged at radius 0).
-            let pre = Self.stroke(probe, radiusPx: 0).points
+            let pre = Self.stroke(probe, floored: false, radiusPx: 0).points
             var exempt = stroke.anchors
             if pre.count >= 3 {
                 for at in 1..<(pre.count - 1)
@@ -283,6 +285,9 @@ struct ContinuousStrokeParityTests {
             var worstAt = -1
             for at in 1..<(stroke.points.count - 1) {
                 let vertex = stroke.points[at]
+                // Strict radius floors retain surveyed corners when no
+                // bounded arc fits. Those exact vertices are not fillet facets.
+                if probe.enforceMinimumCornerRadius == true && pre.contains(vertex) { continue }
                 if exempt.contains(where: { hypot($0.x - vertex.x, $0.y - vertex.y) <= reach }) {
                     continue
                 }

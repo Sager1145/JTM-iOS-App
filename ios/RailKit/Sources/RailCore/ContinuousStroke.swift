@@ -198,10 +198,16 @@ public enum ContinuousStroke {
         public var laneGapPx: Double
         public var minRampPx: Double
         public var cornerRadiusPx: Double
-        /// The radius a corner is rounded to AT WORST, in pixels. Where no
-        /// single vertex's edges can carry it, the run of vertices is rounded
-        /// as one corner. 0 keeps the older per-vertex-only behaviour.
+        /// Minimum requested screen-space radius. Adjacent vertices may be
+        /// merged to fit it. With `enforceMinimumCornerRadius`, arcs that
+        /// cannot meet it are omitted; otherwise it is a best-effort target.
+        /// Zero keeps the older per-vertex-only behaviour.
         public var minCornerRadiusPx: Double
+        /// Enforce the radius floor on emitted arcs and reject extrapolated
+        /// run corners. Infeasible corners and station anchors stay as hard
+        /// vertices; a tangent circular fillet cannot pass through its apex.
+        /// False preserves the historical web fixture geometry.
+        public var enforceMinimumCornerRadius: Bool
         public var anchors: [Int]
         public var follows: [Follow]
         /// The joint with the neighbouring part of the same line at this
@@ -215,7 +221,8 @@ public enum ContinuousStroke {
             measures: [Double] = [], rows: [LaneRow], totalMetres: Double, laneGapPx: Double,
             minRampPx: Double, cornerRadiusPx: Double, minCornerRadiusPx: Double = 0,
             anchors: [Int], follows: [Follow] = [],
-            joinStart: Join? = nil, joinEnd: Join? = nil
+            joinStart: Join? = nil, joinEnd: Join? = nil,
+            enforceMinimumCornerRadius: Bool = false
         ) {
             self.measures = measures
             self.rows = rows
@@ -224,6 +231,7 @@ public enum ContinuousStroke {
             self.minRampPx = minRampPx
             self.cornerRadiusPx = cornerRadiusPx
             self.minCornerRadiusPx = minCornerRadiusPx
+            self.enforceMinimumCornerRadius = enforceMinimumCornerRadius
             self.anchors = anchors
             self.follows = follows
             self.joinStart = joinStart
@@ -370,8 +378,22 @@ public enum ContinuousStroke {
         }
         var lane = 0.0
         let last = profile.count - 1
-        for index in 0...last {
+        // Only plateaus intersecting the kernel can contribute. Binary
+        // search the first overlap, then walk the small active window;
+        // long multi-lane parts used to scan every row for every vertex.
+        var low = 0
+        var high = last
+        while low < high {
+            let middle = (low + high) / 2
+            if profile[middle].to < measure - width {
+                low = middle + 1
+            } else {
+                high = middle
+            }
+        }
+        for index in low...last {
             let plateau = profile[index]
+            if index > 0, plateau.from > measure + width { break }
             if plateau.lane == 0 { continue }
             let start = index == 0 ? 1 : kernelCumulative(measure - plateau.from, width: width)
             let end = index == last ? 0 : kernelCumulative(measure - plateau.to, width: width)
@@ -382,6 +404,68 @@ public enum ContinuousStroke {
 
     static func profileIsFlat(_ profile: [Plateau]) -> Bool {
         profile.allSatisfy { $0.lane == 0 }
+    }
+
+    /// Survey vertices describe the alignment, not its lane profile. A long
+    /// straight edge may contain an entire lane excursion with neither end
+    /// in that lane. Sample the triangular-kernel ramps before offsetting,
+    /// retaining every original vertex and its anchor mapping. For each half
+    /// of a ramp, linear interpolation of the quadratic kernel has error
+    /// |lane delta * gap| / (8 * subdivisions²). Overlapping ramps share an
+    /// error budget so their combined displacement remains sub-pixel.
+    static func sampleLaneRamps(
+        _ points: [Point], measures: [Double], profile: [Plateau], width: Double, gap: Double
+    ) -> (points: [Point], measures: [Double], map: [Int]) {
+        let identity = Array(points.indices)
+        guard points.count >= 2, profile.count >= 2, width.isFinite, width > 0,
+              gap.isFinite else { return (points, measures, identity) }
+        var samples: [Double] = []
+        let first = measures[0], last = measures[measures.count - 1]
+        // Only transitions whose kernel reaches this part need samples.
+        let boundaries = (1..<profile.count).filter {
+            profile[$0].from + width > first && profile[$0].from - width < last
+        }
+        // Count the largest number of simultaneous ramps in a sliding window.
+        var start = 0, overlap = 1
+        for end in boundaries.indices {
+            while profile[boundaries[end]].from - profile[boundaries[start]].from > 2 * width {
+                start += 1
+            }
+            overlap = max(overlap, end - start + 1)
+        }
+        let tolerance = strokeSimplifyTolerancePx / Double(overlap)
+        for index in boundaries {
+            let delta = abs((profile[index].lane - profile[index - 1].lane) * gap)
+            guard delta > 0, delta.isFinite else { continue }
+            let subdivisions = max(2, Int(ceil(sqrt(delta / (8 * tolerance)))))
+            for step in -subdivisions...subdivisions {
+                let measure = profile[index].from + width * Double(step) / Double(subdivisions)
+                if measure > first, measure < last { samples.append(measure) }
+            }
+        }
+        guard !samples.isEmpty else { return (points, measures, identity) }
+        samples.sort()
+        var out: [Point] = [], outMeasures: [Double] = [], map: [Int] = []
+        var cursor = 0
+        for index in points.indices {
+            if index > 0 {
+                let lo = measures[index - 1], hi = measures[index]
+                while cursor < samples.count, samples[cursor] < hi {
+                    let measure = samples[cursor]
+                    cursor += 1
+                    guard measure > lo, measure > (outMeasures.last ?? -.infinity) else { continue }
+                    let fraction = (measure - lo) / (hi - lo)
+                    let a = points[index - 1], b = points[index]
+                    out.append(Point(x: a.x + (b.x - a.x) * fraction,
+                                     y: a.y + (b.y - a.y) * fraction))
+                    outMeasures.append(measure)
+                }
+            }
+            map.append(out.count)
+            out.append(points[index])
+            outMeasures.append(measures[index])
+        }
+        return (out, outMeasures, map)
     }
 
     // MARK: - the stroke
@@ -443,8 +527,8 @@ public enum ContinuousStroke {
             let unfolded = removeFolds(substituted.points, reversal: reversal)
             // Measures follow the kept vertices, in order.
             let measures = unfolded.map.enumerated().compactMap { index, at in
-                at >= 0 ? (at, substituted.measures[index]) : nil
-            }.sorted { $0.0 < $1.0 }.map { $0.1 }
+                at >= 0 ? substituted.measures[index] : nil
+            }
             followed = (
                 points: unfolded.points,
                 measures: measures,
@@ -457,10 +541,23 @@ public enum ContinuousStroke {
         let taperedStep = taperJogs(
             followed.points, measures: followed.measures, anchors: followedAnchors,
             metresPerPx: metresPerPx)
-        let tapered = (
+        var tapered = (
             points: taperedStep.points,
             measures: taperedStep.measures,
             map: followed.map.map { $0 < 0 ? -1 : taperedStep.map[$0] })
+        let joinLaneStart = options.joinStart?.lane
+        let joinLaneEnd = options.joinEnd?.lane
+        let profile = laneProfile(
+            rows: options.rows, total: totalMetres,
+            joinStart: joinLaneStart, joinEnd: joinLaneEnd)
+        let width = max(laneRampHalfWidthMetres, options.minRampPx * metresPerPx)
+        if options.enforceMinimumCornerRadius, gap != 0, totalMetres > 0 {
+            let sampled = sampleLaneRamps(
+                tapered.points, measures: tapered.measures, profile: profile,
+                width: width, gap: gap)
+            tapered = (sampled.points, sampled.measures,
+                       tapered.map.map { $0 < 0 ? -1 : sampled.map[$0] })
+        }
         let base = tapered.points
         var taperedAnchors = Set<Int>()
         for index in anchorSet where tapered.map[index] >= 0 {
@@ -468,21 +565,16 @@ public enum ContinuousStroke {
         }
         var offset = base
         var offsetApplied = false
-        let joinLaneStart = options.joinStart?.lane
-        let joinLaneEnd = options.joinEnd?.lane
         // A neighbour's lane at the joint is as much a reason to leave the
         // centreline as a row of this part's own is: without it the two parts
         // meet at a step.
         let laned = options.rows.contains(where: { $0.lane != 0 })
             || (joinLaneStart ?? 0) != 0 || (joinLaneEnd ?? 0) != 0
         if gap != 0, laned, totalMetres > 0 {
-            let profile = laneProfile(
-                rows: options.rows, total: totalMetres,
-                joinStart: joinLaneStart, joinEnd: joinLaneEnd)
-            let width = max(laneRampHalfWidthMetres, options.minRampPx * metresPerPx)
             if !profileIsFlat(profile) {
                 offset = offsetPolyline(
-                    base, joinStart: options.joinStart, joinEnd: options.joinEnd
+                    base, joinStart: options.joinStart, joinEnd: options.joinEnd,
+                    stableSegments: options.enforceMinimumCornerRadius
                 ) { index in
                     laneAt(profile: profile, measure: tapered.measures[index], width: width) * gap
                 }
@@ -490,13 +582,15 @@ public enum ContinuousStroke {
             }
         }
         let cleaned = offsetApplied
-            ? removeOffsetFolds(offset, original: base)
+            ? removeOffsetFolds(offset, original: base,
+                                preserveBends: options.enforceMinimumCornerRadius,
+                                anchors: taperedAnchors)
             : (points: base, map: Array(0..<base.count))
         // Measures follow the kept vertices, in order — the same map-driven
         // carry used above for the corridor fold pass.
         let cleanedMeasures = cleaned.map.enumerated().compactMap { index, at in
-            at >= 0 ? (at, tapered.measures[index]) : nil
-        }.sorted { $0.0 < $1.0 }.map { $0.1 }
+            at >= 0 ? tapered.measures[index] : nil
+        }
         var finalAnchors = Set<Int>()
         for index in taperedAnchors where cleaned.map[index] >= 0 {
             finalAnchors.insert(cleaned.map[index])
@@ -517,7 +611,7 @@ public enum ContinuousStroke {
         let filleted = fillet(
             drawn.points, radius: options.cornerRadiusPx,
             floorRadius: options.minCornerRadiusPx, anchors: drawn.anchors,
-            measures: drawn.measures)
+            measures: drawn.measures, enforceMinimumRadius: options.enforceMinimumCornerRadius)
         let anchors = options.anchors.map { index -> Point in
             guard index >= 0, index < anchorMap.count else { return offset[offset.count - 1] }
             let moved = tapered.map[anchorMap[index]]
@@ -830,8 +924,21 @@ public enum ContinuousStroke {
             let t = (s - cumulative[high]) / length
             return Point(x: b.x + (b.x - a.x) * t, y: b.y + (b.y - a.y) * t)
         }
-        var index = low + 1
-        while index < high && cumulative[index] < s { index += 1 }
+        // `cumulative` is nondecreasing. Find the first vertex whose measure
+        // is at least `s`, which is exactly where the former linear scan
+        // stopped. Using a lower bound matters when zero-length edges produce
+        // duplicate measures: an exact hit must choose the first duplicate.
+        var lower = low + 1
+        var upper = high
+        while lower < upper {
+            let middle = lower + (upper - lower) / 2
+            if cumulative[middle] < s {
+                lower = middle + 1
+            } else {
+                upper = middle
+            }
+        }
+        let index = lower
         let a = points[index - 1]
         let b = points[index]
         var length = cumulative[index] - cumulative[index - 1]
@@ -1124,16 +1231,79 @@ public enum ContinuousStroke {
         return (points: out, measures: outMeasures, map: map)
     }
 
-    /// Drop every vertex the offset turned into a reversal the survey did
-    /// not have, in passes, until none remain.
-    static func removeOffsetFolds(_ offset: [Point], original: [Point]) -> (points: [Point], map: [Int]) {
+    /// Remove offset-induced reversals while preserving surveyed bends.
+    static func removeOffsetFolds(
+        _ offset: [Point], original: [Point], preserveBends: Bool = false, anchors: Set<Int> = []
+    ) -> (points: [Point], map: [Int]) {
         let count = offset.count
         let foldTurn = foldTurnDegrees * Double.pi / 180
         var reversal = [Bool](repeating: false, count: count)
         if count >= 3 {
             for index in 1..<(count - 1) { reversal[index] = abs(turnAt(original, index)) > foldTurn }
         }
+        if preserveBends {
+            // Protect the alignment's significant support, not just turns
+            // above an arbitrary angle. A valid 97-degree bend can become
+            // sharper after an inner offset without crossing itself (Ansan).
+            // Removing it merely because it exceeds 150 degrees cuts across
+            // the survey. Only redundant samples may be cleaned away.
+            if count > 2 {
+                simplifySpan(original, 0, count - 1,
+                             strokeSimplifyTolerancePx * strokeSimplifyTolerancePx, &reversal)
+            }
+            for index in anchors where reversal.indices.contains(index) { reversal[index] = true }
+            return removeOffsetFoldsSequentially(offset, original: original, protected: reversal)
+        }
         return removeFolds(offset, reversal: reversal)
+    }
+
+    /// Two nearby real bends can still overlap on the inside of a lane even
+    /// with stable tangents. Removing both reversed vertices in the same pass
+    /// cuts across the whole bend. Remove the weaker surveyed turn first and
+    /// re-evaluate its neighbours: normally the dominant bend is then valid.
+    /// Linked indices make each deletion and neighbour update constant-time;
+    /// no full-polyline rescans occur. Stations and genuine reversals survive.
+    static func removeOffsetFoldsSequentially(
+        _ points: [Point], original: [Point], protected: [Bool]
+    ) -> (points: [Point], map: [Int]) {
+        let count = points.count
+        guard count >= 3 else { return (points, Array(points.indices)) }
+        let threshold = foldTurnDegrees * Double.pi / 180
+        var previous = points.indices.map { $0 - 1 }
+        var next = points.indices.map { $0 + 1 < count ? $0 + 1 : -1 }
+        var alive = [Bool](repeating: true, count: count)
+        var importance = [Double](repeating: 0, count: count)
+        for index in 1..<(count - 1) { importance[index] = abs(turnAt(original, index)) }
+        func folded(_ index: Int) -> Bool {
+            guard index > 0, index < count - 1, alive[index], !protected[index] else { return false }
+            let a = points[previous[index]], b = points[index], c = points[next[index]]
+            let ax = b.x - a.x, ay = b.y - a.y, bx = c.x - b.x, by = c.y - b.y
+            return abs(atan2(ax * by - ay * bx, ax * bx + ay * by)) > threshold
+        }
+        var pending = Array(1..<(count - 1))
+        var cursor = 0
+        while cursor < pending.count {
+            let index = pending[cursor]
+            cursor += 1
+            guard folded(index) else { continue }
+            var victim = index
+            for neighbour in [previous[index], next[index]] {
+                if folded(neighbour), importance[neighbour] < importance[victim] { victim = neighbour }
+            }
+            let before = previous[victim], after = next[victim]
+            alive[victim] = false
+            next[before] = after
+            previous[after] = before
+            pending.append(before)
+            pending.append(after)
+        }
+        var kept: [Point] = []
+        var map = [Int](repeating: -1, count: count)
+        for index in points.indices where alive[index] {
+            map[index] = kept.count
+            kept.append(points[index])
+        }
+        return (kept, map)
     }
 
     /// The same pass over a polyline whose surveyed reversals are already
@@ -1179,8 +1349,13 @@ public enum ContinuousStroke {
     /// point.
     static func offsetPolyline(
         _ points: [Point], joinStart: Join? = nil, joinEnd: Join? = nil,
+        stableSegments: Bool = false,
         distanceAt: (Int) -> Double
     ) -> [Point] {
+        if stableSegments, points.count > 2 {
+            return offsetAlongStableSegments(
+                points, joinStart: joinStart, joinEnd: joinEnd, distanceAt: distanceAt)
+        }
         let count = points.count
         var out = [Point](repeating: Point(x: 0, y: 0), count: count)
         for index in 0..<count {
@@ -1224,7 +1399,13 @@ public enum ContinuousStroke {
                 let bx = -t0.1 - t1.1
                 let by = t0.0 + t1.0
                 let length = hypot(bx, by)
-                if length > 1e-9 {
+                if join != nil && t0.0 * t1.0 + t0.1 * t1.1 <= cos(150 * .pi / 180) {
+                    // Shared reversal endpoints use the same arriving normal
+                    // on both chains. A near-zero bisector otherwise extends
+                    // a false tip past the station by the full miter limit.
+                    nx = -t0.1
+                    ny = t0.0
+                } else if length > 1e-9 {
                     nx = bx / length
                     ny = by / length
                     let cosHalf = max(1e-6, length / 2)
@@ -1241,6 +1422,125 @@ public enum ContinuousStroke {
             out[index] = Point(x: point.x + nx * d * scale, y: point.y + ny * d * scale)
         }
         return out
+    }
+
+    /// Follow substitution and lane-ramp sampling can place a straight-edge
+    /// sample immediately beside a genuine bend. Giving that sample its own
+    /// perpendicular normal makes the bend's miter overshoot it; fold cleanup
+    /// then deletes BOTH vertices and can erase an entire surveyed curve.
+    ///
+    /// Derive offset directions from the alignment's significant vertices and
+    /// interpolate their miter vectors along each edge. All input coordinates,
+    /// measures, station anchors and lane-ramp samples are still emitted. Only
+    /// the tangent support is simplified, within the existing subpixel budget.
+    /// A constant lane thus traces the same offset edge regardless of how many
+    /// collinear samples a follow inserted beside its bends.
+    static func offsetAlongStableSegments(
+        _ points: [Point], joinStart: Join?, joinEnd: Join?,
+        distanceAt: (Int) -> Double
+    ) -> [Point] {
+        var keep = [Bool](repeating: false, count: points.count)
+        keep[0] = true
+        keep[points.count - 1] = true
+        simplifySpan(points, 0, points.count - 1,
+                     strokeSimplifyTolerancePx * strokeSimplifyTolerancePx, &keep)
+        let support = points.indices.filter { keep[$0] }
+        let skeleton = support.map { points[$0] }
+        let lengths = cumulativeLengths(points)
+        let distances = constrainedInnerBendDistances(
+            points, support: support, lengths: lengths, distances: points.indices.map(distanceAt),
+            preserveStart: joinStart != nil, preserveEnd: joinEnd != nil)
+        let displaced = offsetPolyline(skeleton, joinStart: joinStart, joinEnd: joinEnd) { _ in 1 }
+        let vertices = offsetPolyline(skeleton, joinStart: joinStart, joinEnd: joinEnd) {
+            distances[support[$0]]
+        }
+        let vectors = zip(displaced, skeleton).map { Point(x: $0.x - $1.x, y: $0.y - $1.y) }
+        var edge = 0
+        return points.indices.map { index in
+            while edge + 1 < support.count - 1, index > support[edge + 1] { edge += 1 }
+            let start = support[edge], end = support[edge + 1]
+            // In particular, preserve shared terminal joins bit-for-bit;
+            // reconstructing them from a unit vector adds a rounding step.
+            if index == start { return vertices[edge] }
+            if index == end { return vertices[edge + 1] }
+            let length = lengths[end] - lengths[start]
+            let t = length > 0 ? (lengths[index] - lengths[start]) / length : 0
+            let a = vectors[edge], b = vectors[edge + 1]
+            let distance = distances[index]
+            return Point(x: points[index].x + (a.x + (b.x - a.x) * t) * distance,
+                         y: points[index].y + (a.y + (b.y - a.y) * t) * distance)
+        }
+    }
+
+    /// Inside tightly sampled bends, a full-width offset can pass through the
+    /// opposite leg. Bound its miter's tangent trim by the available surveyed
+    /// edges, and taper the constraint along both approaches in linear time.
+    /// The soft bound stays monotonic in lane distance, so dense inner lanes
+    /// compress in their original order instead of clamping onto one track.
+    /// Outside lanes and shared terminal joins retain their exact offsets.
+    static func constrainedInnerBendDistances(
+        _ points: [Point], support: [Int], lengths: [Double], distances: [Double],
+        preserveStart: Bool = false, preserveEnd: Bool = false
+    ) -> [Double] {
+        guard support.count > 2 else { return distances }
+        let skeleton = support.map { points[$0] }
+        var positive = [Double](repeating: .infinity, count: points.count)
+        var negative = positive
+        // Restore at most one pixel of offset per twenty source pixels.
+        // A sequence of moderate turns can close the corridor just as much
+        // as one hairpin; a steeper taper can cross its return approach.
+        let maximumRecovery = 0.05
+        var recovery = [Double](repeating: maximumRecovery, count: points.count)
+        var constrained = false
+        for index in 1..<(support.count - 1) {
+            let turn = turnAt(skeleton, index)
+            // Several moderate turns can form a tight reversal together;
+            // checking only individual hairpin apices misses that overlap.
+            guard abs(turn) > 1e-6 else { continue }
+            let a = skeleton[index - 1], b = skeleton[index], c = skeleton[index + 1]
+            let available = min(hypot(b.x - a.x, b.y - a.y), hypot(c.x - b.x, c.y - b.y))
+            let cap = max(0, 0.45 * available / tan(abs(turn) / 2))
+            if turn > 0 { positive[support[index]] = cap }
+            else { negative[support[index]] = cap }
+            // A near-reversal's legs open very slowly. Restoring the full
+            // offset faster than that opening crosses the opposite leg,
+            // even if the apex itself is bounded. Each support edge belongs
+            // to at most two corners, so applying this rate remains linear.
+            let rate = min(maximumRecovery, 0.5 / tan(abs(turn) / 2))
+            if rate < maximumRecovery {
+                for edge in (support[index - 1] + 1)...support[index + 1] {
+                    recovery[edge] = min(recovery[edge], rate)
+                }
+            }
+            constrained = true
+        }
+        guard constrained else { return distances }
+        func spread(_ caps: inout [Double]) {
+            for index in 1..<caps.count {
+                caps[index] = min(caps[index], caps[index - 1] + (lengths[index] - lengths[index - 1]) * recovery[index])
+            }
+            for index in stride(from: caps.count - 2, through: 0, by: -1) {
+                caps[index] = min(caps[index], caps[index + 1] + (lengths[index + 1] - lengths[index]) * recovery[index + 1])
+            }
+        }
+        spread(&positive)
+        spread(&negative)
+        return distances.indices.map { index in
+            // Only an actual shared join requires a bit-identical terminal
+            // offset. A free endpoint must follow the same constraint as its
+            // neighbours, or its first short edge can cut across the curve.
+            if index == 0 && preserveStart || index == distances.count - 1 && preserveEnd {
+                return distances[index]
+            }
+            let distance = distances[index], magnitude = abs(distance)
+            let cap = distance > 0 ? positive[index] : negative[index]
+            // Leave feasible offsets untouched. The last 5% approaches
+            // the cap continuously, with matching first derivative.
+            guard magnitude > cap * 0.95 else { return distance }
+            let margin = cap * 0.05
+            let limited = cap - margin * margin / (magnitude - cap * 0.9)
+            return distance < 0 ? -limited : limited
+        }
     }
 
     /// `measures` (aligned with `points`) is carried along: the tangent
@@ -1272,10 +1572,11 @@ public enum ContinuousStroke {
     /// the single-vertex fillet this function has always drawn.
     static func fillet(
         _ points: [Point], radius: Double, floorRadius: Double, anchors: Set<Int>,
-        measures: [Double]
+        measures: [Double], enforceMinimumRadius: Bool = false
     ) -> (points: [Point], measures: [Double]) {
+        let radius = enforceMinimumRadius ? max(radius, floorRadius) : radius
         let count = points.count
-        guard radius > 0, count >= 3 else { return (points, measures) }
+        guard radius.isFinite, radius > 0, count >= 3 else { return (points, measures) }
         let minTurn = filletMinTurnDegrees * Double.pi / 180
         let maxTurn = filletMaxTurnDegrees * Double.pi / 180
         let step = filletStepDegrees * Double.pi / 180
@@ -1384,6 +1685,16 @@ public enum ContinuousStroke {
                 tangent = back - guardOffset
             }
             if !(tangent > degenerateEdge) { return nil }
+            // A merged run's intersection can lie beyond either original
+            // outer edge. Merely clamping against distance to that apex
+            // allows the new arc to start/end inside the swallowed run,
+            // extrapolating its measure and reversing a connecting edge.
+            if enforceMinimumRadius {
+                let startOffset = apexBack - tangent
+                let endOffset = apexForward + tangent
+                guard startOffset >= -la, startOffset <= 0,
+                      endOffset >= 0, endOffset <= lb else { return nil }
+            }
             let start = Point(x: apex.x - t0x * tangent, y: apex.y - t0y * tangent)
             let end = Point(x: apex.x + t1x * tangent, y: apex.y + t1y * tangent)
             // A TRUE circular arc, sampled at uniform ANGLE steps — the same
@@ -1565,7 +1876,7 @@ public enum ContinuousStroke {
 
         var index = 1
         while index + 1 < count {
-            if anchors.contains(index), let arc = anchorCornerOf(index) {
+            if !enforceMinimumRadius, anchors.contains(index), let arc = anchorCornerOf(index) {
                 for sample in 0..<arc.curve.count {
                     let u = Double(sample) / Double(arc.curve.count - 1)
                     emit(arc.curve[sample], arc.mStart + (arc.mEnd - arc.mStart) * u)
@@ -1618,7 +1929,8 @@ public enum ContinuousStroke {
                 if cumulative[last + 1] - cumulative[index] > radius { break }
                 last += 1
             }
-            guard let corner = best else {
+            guard let corner = best,
+                  !enforceMinimumRadius || corner.achieved >= floor - degenerateEdge else {
                 emit(points[index], measures[index])
                 index += 1
                 continue

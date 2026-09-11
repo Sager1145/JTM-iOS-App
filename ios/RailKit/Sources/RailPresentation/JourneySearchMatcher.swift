@@ -90,7 +90,7 @@ public enum JourneySearchMatcher {
             guard let field, !field.isEmpty else { return false }
             return field.localizedCaseInsensitiveContains(needle)
         }
-        if hit(train.number) || hit(train.origin) || hit(train.destination) {
+        if hit(train.number) || hit(train.numberEn) || hit(train.origin) || hit(train.destination) {
             return true
         }
         for stop in train.stops where hit(stop.name) { return true }
@@ -113,11 +113,14 @@ public enum JourneySearchMatcher {
     public static func fields(
         of train: Train, alsoNamed: (Train) -> [String] = { _ in [] }
     ) -> [String] {
-        var fields: [String] = [
-            train.number,
+        var fields: [String] = [train.number]
+        if let numberEn = train.numberEn, !numberEn.isEmpty {
+            fields.append(numberEn)
+        }
+        fields.append(contentsOf: [
             train.origin,
             train.destination,
-        ]
+        ])
         // Intermediate stops. `origin` and `destination` are the record's own
         // two names for the ends of the ride and are NOT guaranteed to be
         // spelled the same as the first and last stop, so both are searched.

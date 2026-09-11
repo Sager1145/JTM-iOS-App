@@ -744,6 +744,10 @@ extension StoreOperations {
         // absent date while rejecting an explicit null one.
         if let date = train.date { pairs.append(("date", .string(date))) }
         pairs.append(("number", .string(train.number)))
+        // Only when there is one — the same rule as `normalizeExportTrain`.
+        if let numberEn = train.numberEn, !numberEn.isEmpty {
+            pairs.append(("number_en", .string(numberEn)))
+        }
         if let trainType = train.trainType { pairs.append(("train_type", .string(trainType))) }
         if let company = train.company { pairs.append(("company", .string(company))) }
         pairs.append(("origin", .string(train.origin)))

@@ -33,9 +33,10 @@ struct CompactPackageLoopTests {
 
     /// `1`, which is what every shipped package writes — checked against the
     /// real file rather than a copy of it. 大阪環状線 is the loop everyone
-    /// knows; ユーカリが丘線 and ディズニーリゾートライン are the other two in
-    /// Japan's package, and the Tōkaidō main line is there to prove the flag
-    /// is not simply true for everything.
+    /// knows; ユーカリが丘線 and ディズニーリゾートライン are two more, and the
+    /// 都営大江戸線 環状部 (`-2`, the 都庁前→…→新宿→都庁前 row split off on
+    /// 2026-09-10) is the fourth in Japan's package; the Tōkaidō main line is
+    /// there to prove the flag is not simply true for everything.
     @Test("a package's isLoop: 1 decodes as a loop")
     func numericSpelling() throws {
         let japan = try PortFixtures.package(country: "jp")
@@ -46,19 +47,26 @@ struct CompactPackageLoopTests {
         #expect(osakaLoop.isLoop, "大阪環状線 is a loop and the package says so")
 
         let loops = japan.lines.filter(\.isLoop).map(\.id)
-        #expect(loops.count == 3, "Japan ships three loop lines: \(loops)")
+        #expect(loops.count == 4, "Japan ships four loop lines: \(loops)")
         #expect(loops.contains("jp-山万-ユーカリが丘線"))
         #expect(loops.contains("jp-舞浜リゾートライン-ディズニーリゾートライン"))
+        #expect(loops.contains("jp-東京都-12号線大江戸線-2"))
+        let oedoRadial = try #require(byID["jp-東京都-12号線大江戸線"])
+        #expect(oedoRadial.isLoop == false, "the radial 光が丘→都庁前 row is open")
 
         let tokaido = try #require(byID["jp-東海旅客鉄道-東海道線"])
         #expect(tokaido.isLoop == false)
     }
 
-    /// The strict North American release includes only the two loops whose
+    /// The strict North American release includes only the loops whose
     /// complete alignments have independent official geometry: Cincinnati's
-    /// Connector and Detroit People Mover. Atlanta Streetcar remains blocked
-    /// for a station/shape disagreement, and Galveston Rail remains blocked
-    /// because its OB/IB half-loop provenance is lost during cycle building.
+    /// Connector, Detroit People Mover, and — since the 2026-09-09
+    /// service-pattern repair (`na-service-pattern-repairs.json`) — the
+    /// Metromover Inner Loop and Portland Streetcar A Loop, which had shipped
+    /// as open lines with a duplicated seam station and an NS-Line lead-in
+    /// stop respectively. Atlanta Streetcar remains blocked for a
+    /// station/shape disagreement, and Galveston Rail remains blocked because
+    /// its OB/IB half-loop provenance is lost during cycle building.
     @Test("the strict North American packages include only verified loops")
     func northAmericanStrictRelease() throws {
         let unitedStates = try PortFixtures.package(country: "us")
@@ -66,6 +74,8 @@ struct CompactPackageLoopTests {
         #expect(loopIDs == Set([
             "cincinnati-metro-100",
             "detroit-people-mover-dpm",
+            "miami-dade-transit-mmi",
+            "trimet-portland-streetcar-a",
         ]))
         #expect(!unitedStates.lines.contains {
             $0.id == "metropolitan-atlanta-rapid-t-atlsc"

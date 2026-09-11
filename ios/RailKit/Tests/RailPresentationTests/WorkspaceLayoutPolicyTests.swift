@@ -15,6 +15,18 @@ struct WorkspaceLayoutPolicyTests {
                 width: 390, height: 844,
                 expected: .compactOverlay),
             ModeCase(
+                width: 568, height: 320,
+                expected: .compactOverlay),
+            ModeCase(
+                width: 631, height: 375,
+                expected: .compactOverlay),
+            ModeCase(
+                width: 632, height: 375,
+                expected: .sideBySide),
+            ModeCase(
+                width: 667, height: 375,
+                expected: .sideBySide),
+            ModeCase(
                 width: 691, height: 844,
                 expected: .compactOverlay),
             ModeCase(
@@ -44,6 +56,7 @@ struct WorkspaceLayoutPolicyTests {
             (width: 692.0, height: 900.0, expected: 300.0),
             (width: 720.0, height: 900.0, expected: 328.0),
             (width: 768.0, height: 1_024.0, expected: 360.0),
+            (width: 667.0, height: 375.0, expected: 300.0),
             (width: 700.0, height: 390.0, expected: 300.0),
             (width: 1_000.0, height: 700.0, expected: 340.0),
             (width: 1_500.0, height: 900.0, expected: 440.0),
@@ -65,6 +78,16 @@ struct WorkspaceLayoutPolicyTests {
                 #expect(policy.sidePanelWidth <= 440)
                 #expect(width - policy.sidePanelWidth - WorkspaceLayoutPolicy.dockInset * 2 >= 360)
             }
+        }
+    }
+
+    @Test("Narrow landscape dock preserves a 300 point map")
+    func narrowLandscapeMapClearance() {
+        for width in stride(from: 632.0, to: 692.0, by: 1) {
+            let policy = WorkspaceLayoutPolicy(width: width, height: 375)
+            #expect(policy.mode == .sideBySide)
+            #expect(policy.sidePanelWidth == 300)
+            #expect(width - policy.sidePanelWidth - WorkspaceLayoutPolicy.dockInset * 2 >= 300)
         }
     }
 }

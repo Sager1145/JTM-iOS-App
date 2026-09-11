@@ -67,6 +67,48 @@ struct StoreRoundTripTests {
         #expect(reimported.region == nil)
     }
 
+    private static let legacyCaptionJSON = """
+        {"id":"x","number":"はるか38号 (Haruka 38) (1038M)","origin":"A","destination":"B",
+         "stops":[{"name":"A","departure":"06:00","stop_type":"origin","ride_segment":true},
+                  {"name":"B","arrival":"07:00","stop_type":"destination","ride_segment":true}]}
+        """
+
+    @Test("a caption that carries the Latin name is split into number and number_en on import")
+    func legacyCaptionIsSplitOnImport() throws {
+        let train = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(Self.legacyCaptionJSON))
+        #expect(train.number == "はるか38号 (1038M)")
+        #expect(train.numberEn == "Haruka 38")
+    }
+
+    @Test("an explicit number_en keeps the caption exactly as written")
+    func explicitNumberEnLeavesTheCaptionAlone() throws {
+        let json = Self.legacyCaptionJSON.replacingOccurrences(
+            of: "{\"id\":\"x\",", with: "{\"id\":\"x\",\"number_en\":\"X\",")
+        let train = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(json))
+        #expect(train.number == "はるか38号 (Haruka 38) (1038M)")
+        #expect(train.numberEn == "X")
+    }
+
+    @Test("number_en is written right after number, and only when set")
+    func numberEnIsWrittenAfterNumberOnlyWhenSet() throws {
+        var train = Self.sample(region: nil)
+        let without = StoreOperations.stringify(StoreOperations.json(train))
+        #expect(!without.contains("number_en"))
+
+        train.numberEn = "Nozomi 1"
+        let exported = TrainValidation.normalizeExportTrain(
+            train, country: "jp", stations: TrainValidation.StationTable.empty)
+        let text = StoreOperations.stringify(StoreOperations.json(exported))
+        #expect(text.contains("\"number\":\"のぞみ1号\",\"number_en\":\"Nozomi 1\""))
+
+        let reimported = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(text))
+        #expect(reimported.number == "のぞみ1号")
+        #expect(reimported.numberEn == "Nozomi 1")
+    }
+
     /// The whitelist still rejects what it is for. Widening it by one key must
     /// not turn it into a door.
     @Test("a key the schema does not define is still refused")

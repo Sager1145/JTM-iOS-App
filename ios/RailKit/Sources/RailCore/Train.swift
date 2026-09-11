@@ -85,6 +85,13 @@ public struct Train: Codable, Equatable, Sendable {
     public var id: String
     public var date: String?
     public var number: String
+    /// The service's Latin name — 「Nemuro Main Line Local」 under 「根室本線
+    /// 普通 (5625D)」 — jsonspec §3.1's `number_en`. Optional and written
+    /// only when set: the committed stores never had one, and a file that
+    /// never had one round-trips unchanged. Stores that carried the name
+    /// inside the caption — 「根室本線 普通 (Nemuro Main Line Local) (5625D)」
+    /// — are split into the two fields on import; see ``ServiceCaption``.
+    public var numberEn: String?
     public var trainType: String?
     public var company: String?
     public var origin: String
@@ -120,6 +127,7 @@ public struct Train: Codable, Equatable, Sendable {
         id: String,
         date: String? = nil,
         number: String,
+        numberEn: String? = nil,
         trainType: String? = nil,
         company: String? = nil,
         origin: String,
@@ -135,6 +143,7 @@ public struct Train: Codable, Equatable, Sendable {
         self.id = id
         self.date = date
         self.number = number
+        self.numberEn = numberEn
         self.trainType = trainType
         self.company = company
         self.origin = origin
@@ -150,6 +159,7 @@ public struct Train: Codable, Equatable, Sendable {
 
     private enum CodingKeys: String, CodingKey {
         case id, date, number, origin, destination, direction, visible, style, stops
+        case numberEn = "number_en"
         case trainType = "train_type"
         case company
         case routePolicy = "route_policy"
@@ -166,6 +176,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encode(id, forKey: .id)
         try container.encodeIfPresent(date, forKey: .date)
         try container.encode(number, forKey: .number)
+        try container.encodeIfPresent(numberEn, forKey: .numberEn)
         try container.encodeIfPresent(trainType, forKey: .trainType)
         try container.encodeIfPresent(company, forKey: .company)
         try container.encode(origin, forKey: .origin)
@@ -739,8 +750,9 @@ public enum TrainValidation {
                 throw fail("\(prefix): \(key) is required.")
             }
         }
-        // Optional metadata: 車輛類型 / 營運公司 ("/"-separated = 直通).
-        for key in ["train_type", "company"] {
+        // Optional metadata: 車輛類型 / 營運公司 ("/"-separated = 直通) / the
+        // service's Latin name.
+        for key in ["train_type", "company", "number_en"] {
             // `undefined` is the only value that skips this. An explicit null
             // IS a value, and `typeof null !== "string"`, so null is rejected —
             // unlike `arrival`/`departure` below, which test for null first.
@@ -1056,7 +1068,7 @@ public enum TrainValidation {
         guard train.isTruthy, case .object = train else {
             throw fail("Each train must be an object.")
         }
-        // The JavaScript's thirteen keys, plus `region`.
+        // The JavaScript's fourteen keys, plus `region`.
         //
         // `region` is this port's own field and has no JavaScript counterpart,
         // so it is absent from every fixture and cannot change a parity
@@ -1068,9 +1080,9 @@ public enum TrainValidation {
         try assertOnlyKeys(
             train,
             [
-                "id", "date", "number", "train_type", "company", "origin", "destination",
-                "direction", "visible", "style", "route_policy", "route_sections", "stops",
-                "region",
+                "id", "date", "number", "number_en", "train_type", "company", "origin",
+                "destination", "direction", "visible", "style", "route_policy",
+                "route_sections", "stops", "region",
             ],
             "Train")
 
@@ -1087,12 +1099,25 @@ public enum TrainValidation {
             throw fail("Train \(id) must contain at least 2 stops.")
         }
 
+        // The Latin name is its own field. A store written before it had one
+        // carried it inside the caption — 「はるか38号 (Haruka 38) (1038M)」 —
+        // and is split here, once, on the way in; a store that already says
+        // `number_en` keeps its caption exactly as written, whatever its
+        // shape. An explicit blank means "none", the same as absent.
+        let caption = jsToString(train["number"] ?? .null)
+        let explicitLatin = (train["number_en"] ?? .null).stringOrNilIfNotString
+            .map(jsTrim).flatMap { $0.isEmpty ? nil : $0 }
+        let service =
+            explicitLatin.map { ServiceCaption(primary: caption, latinName: $0) }
+            ?? ServiceCaption.split(caption)
+
         return Train(
             id: id,
             date: Dates.normalizeTrainDate(
                 Dates.Train(id: id, date: (train["date"] ?? .null).stringOrNilIfNotString),
                 fallback: fallbackDate),
-            number: jsToString(train["number"] ?? .null),
+            number: service.primary,
+            numberEn: service.latinName,
             // A non-string is dropped rather than coerced — which is exactly
             // where this path and validateTrain part company.
             trainType: (train["train_type"] ?? .null).stringOrNilIfNotString.map(jsTrim) ?? "",
@@ -1286,6 +1311,8 @@ public enum TrainValidation {
             date: Dates.normalizeTrainDate(
                 Dates.Train(id: train.id, date: train.date)),
             number: train.number,
+            // Written only when there is one — see `Train.numberEn`.
+            numberEn: train.numberEn.flatMap { $0.isEmpty ? nil : $0 },
             trainType: train.trainType ?? "",
             company: normalizeTrainCompany(train.company.map(JSON.string), country: country),
             origin: train.origin,
@@ -1833,6 +1860,9 @@ extension TrainValidation.JSON {
                     }
                     continue
                 }
+                guard byte > 0x1F else {
+                    throw error("Bad control character in string literal in JSON")
+                }
                 literal.append(byte)
                 index += 1
             }
@@ -1842,21 +1872,49 @@ extension TrainValidation.JSON {
         mutating func parseNumber() throws -> Double {
             let start = index
             if index < bytes.count, bytes[index] == UInt8(ascii: "-") { index += 1 }
-            while index < bytes.count {
-                switch bytes[index] {
-                case 0x30...0x39, UInt8(ascii: "."), UInt8(ascii: "e"), UInt8(ascii: "E"),
-                    UInt8(ascii: "+"), UInt8(ascii: "-"):
-                    index += 1
-                default:
-                    guard start < index,
-                        let value = Double(String(decoding: bytes[start..<index], as: UTF8.self))
-                    else { throw error("Unexpected token") }
-                    return value
+
+            guard index < bytes.count else { throw error("Unexpected end of JSON input") }
+            switch bytes[index] {
+            case UInt8(ascii: "0"):
+                index += 1
+                guard index >= bytes.count || !(0x30...0x39).contains(bytes[index]) else {
+                    throw error("Leading zero in JSON number")
                 }
+            case 0x31...0x39:
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            default:
+                throw error("Unexpected token")
             }
-            guard start < index,
-                let value = Double(String(decoding: bytes[start..<index], as: UTF8.self))
-            else { throw error("Unexpected end of JSON input") }
+
+            if index < bytes.count, bytes[index] == UInt8(ascii: ".") {
+                index += 1
+                guard index < bytes.count, (0x30...0x39).contains(bytes[index]) else {
+                    throw error("Expected digit after decimal point in JSON number")
+                }
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            }
+
+            if index < bytes.count,
+                bytes[index] == UInt8(ascii: "e") || bytes[index] == UInt8(ascii: "E")
+            {
+                index += 1
+                if index < bytes.count,
+                    bytes[index] == UInt8(ascii: "+") || bytes[index] == UInt8(ascii: "-")
+                {
+                    index += 1
+                }
+                guard index < bytes.count, (0x30...0x39).contains(bytes[index]) else {
+                    throw error("Expected digit in exponent in JSON number")
+                }
+                repeat { index += 1 } while index < bytes.count
+                    && (0x30...0x39).contains(bytes[index])
+            }
+
+            guard let value = Double(String(decoding: bytes[start..<index], as: UTF8.self)) else {
+                throw error("Unexpected token")
+            }
             return value
         }
     }

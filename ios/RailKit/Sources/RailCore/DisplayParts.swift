@@ -1103,10 +1103,9 @@ public enum DisplayParts {
     /// slice measure the station twice, and it looks like a branch to any
     /// topology test.
     ///
-    /// Only one of the two A's belongs. Keep whichever ordering is shorter —
-    /// that is by definition the one that does not double back. Detected
-    /// structurally (the identical vertex either side of the station), never
-    /// by distance, so a genuine stub track is left alone.
+    /// Remove a lone repeated neighbour from the longer ordering. A second
+    /// shared neighbour identifies a surveyed retrace, whose two approach
+    /// tangents must survive unchanged.
     static func dropStationRepeat(_ current: inout [Coordinate], _ next: inout [Coordinate]) {
         if current.count < 3 || next.count < 3 { return }
         let before = current[current.count - 3]
@@ -1114,6 +1113,9 @@ public enum DisplayParts {
         let station = current[current.count - 1]
         let after = next[2]
         if !Grooming.sameCoordinate(repeated, next[1]) { return }
+        // Two shared neighbours identify a surveyed retrace, such as LA's
+        // stub-end station. Deleting either one changes its real tangent.
+        if Grooming.sameCoordinate(before, after) { return }
         let keepFirst =
             distanceMeters(before, repeated) + distanceMeters(repeated, station)
             + distanceMeters(station, after)
