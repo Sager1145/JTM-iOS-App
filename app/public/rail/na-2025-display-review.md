@@ -1,8 +1,8 @@
 # North America display review — line by line
 
-Generated 2026-09-09 by `app/scripts/railway/review-na-display.mjs` from the continuous-stroke model both clients draw (rail-network.js + rail-stroke.js). One row per published line; the flags are where a reviewer looks, not verdicts.
+Generated 2026-09-11 by `app/scripts/railway/review-na-display.mjs` from the continuous-stroke model both clients draw (rail-network.js + rail-stroke.js). One row per published line; the flags are where a reviewer looks, not verdicts.
 
-Lines: 435. One continuous stroke feature each: 435. Flagged: 165.
+Lines: 431. One continuous stroke feature each: 431. Flagged: 171.
 
 Flag key: `withheld` — intervals still absent after the reviewed OSM releases; `osm-confirms-defect` — an interval measured against OSM and found wrong (kept withheld); `seam-jogs` — survey seams the engine redraws as tapers (raw count → residual at z16, which should be 0); `stroke-spikes` — reversals the drawn stroke has that the survey does not (should be 0/0); `reference-warning` — the package kept a provenance-verified centreline over a disagreeing lower-authority reference; `branch-parts` — a line drawn as several real branch strokes.
 
@@ -10,17 +10,17 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | --- | ---: |
 | beads-off-stroke | 64 |
 | reference-warning | 49 |
-| no-reference-comparison | 24 |
+| no-reference-comparison | 31 |
 | withheld | 22 |
 | seam-jogs | 18 |
-| branch-parts | 15 |
+| branch-parts | 14 |
 | osm-confirms-defect | 4 |
 | stroke-spikes | 3 |
 
 | region | line | kind | km | parts | ref max m / limit | withheld → released | lanes | follows / followed by | jogs (raw → z16) | spikes z13/z16 | beads | flags |
 | --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
 | us | `ace-ace` Altamont Commuter Express | commuter | 136.843 | 1 | 7.34 / 30 | – | -1 -0.5 | 2 / 1 | 0 → 0 | 0/0 | 10/10 | OK |
-| us | `mckinney-avenue-trolley-m-line-ob` M-Line ( ) | streetcar | 3.366 | 1 | 7.07 / 20 | – | 0 | 0 / 3 | 0 → 0 | 0/0 | 25/25 | OK |
+| us | `mckinney-avenue-trolley-m-line-ob` M-Line ( ) | streetcar | 3.365 | 1 | 7.07 / 20 | – | 0 | 0 / 3 | 0 → 0 | 0/0 | 23/23 | OK |
 | us | `mckinney-avenue-trolley-m-line-ob-b1` M-Line ( ) | streetcar | 1.439 | 1 | 6.35 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 7/7 | OK |
 | us | `mckinney-avenue-trolley-m-line-ob-b2` M-Line ( ) | streetcar | 1.291 | 1 | 5.99 / 20 | – | 0 | 2 / 0 | 0 → 0 | 0/0 | 9/9 | OK |
 | us | `new-orleans-rta-12` St. Charles Streetcar | streetcar | 10.596 | 1 | 10.18 / 20 | – | 0 | 0 / 3 | 0 → 0 | 0/0 | 56/56 | OK |
@@ -198,19 +198,18 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | us | `metropolitan-transit-authori-a` 8 Avenue Express | metro | 51.758 | 1 | 25.56 / 25 | – | -0.5 3 | 0 / 6 | 0 → 0 | 0/0 | 37/37 | reference-warning:25.56m>25m |
 | us | `metropolitan-transit-authori-a-b1` 8 Avenue Express | metro | 1.664 | 1 | 4.48 / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/4 | beads-off-stroke:1 |
 | us | `metropolitan-transit-authori-a-b2` 8 Avenue Express | metro | 4.531 | 1 | 5.01 / 25 | – | -0.5 | 1 / 0 | 0 → 0 | 0/0 | 5/5 | OK |
-| us | `metropolitan-transit-authori-b` 6 Avenue Express | metro | 38.801 | 1 | 26.04 / 25 | – | -1.5 -1 -0.5 | 2 / 1 | 0 → 0 | 0/0 | 18/37 | beads-off-stroke:19 reference-warning:26.04m>25m |
+| us | `metropolitan-transit-authori-b` 6 Avenue Express | metro | 38.801 | 1 | 26.04 / 25 | – | -1.5 -1 -0.5 | 2 / 1 | 0 → 0 | 0/0 | 17/37 | beads-off-stroke:20 reference-warning:26.04m>25m |
 | us | `metropolitan-transit-authori-c` 8 Avenue Local | metro | 29.862 | 1 | 25.56 / 25 | – | -0.5 3 | 1 / 0 | 0 → 0 | 0/0 | 22/40 | beads-off-stroke:18 reference-warning:25.56m>25m |
-| us | `metropolitan-transit-authori-d` 6 Avenue Express | metro | 41.214 | 1 | 26.04 / 25 | – | 0.5 1 | 2 / 4 | 0 → 0 | 0/0 | 30/35 | beads-off-stroke:5 reference-warning:26.04m>25m |
+| us | `metropolitan-transit-authori-d` 6 Avenue Express | metro | 41.214 | 1 | 26.04 / 25 | – | 0.5 1 | 2 / 4 | 0 → 0 | 0/0 | 31/36 | beads-off-stroke:5 reference-warning:26.04m>25m |
 | us | `metropolitan-transit-authori-e` 8 Avenue Local | metro | 24.875 | 1 | 23.56 / 25 | – | -1 -0.5 3 | 2 / 2 | 0 → 0 | 0/0 | 13/22 | beads-off-stroke:9 |
-| us | `metropolitan-transit-authori-f` Queens Blvd Express/6 Av Local | metro | 44.202 | 1 | 39.27 / 25 | – | -0.5 0.5 | 0 / 8 | 0 → 0 | 0/0 | 55/55 | reference-warning:39.27m>25m |
+| us | `metropolitan-transit-authori-f` Queens Blvd Express/6 Av Local | metro | 44.2 | 1 | 39.27 / 25 | – | -0.5 0.5 | 0 / 8 | 2 → 0 | 0/0 | 45/45 | seam-jogs:2 reference-warning:39.27m>25m |
 | us | `metropolitan-transit-authori-f-b1` Queens Blvd Express/6 Av Local | metro | 8.565 | 1 | 16.56 / 25 | – | 0.5 | 2 / 0 | 0 → 0 | 0/0 | 1/6 | beads-off-stroke:5 |
-| us | `metropolitan-transit-authori-f-b2` Queens Blvd Express/6 Av Local | metro | 0.836 | 1 | 1.89 / 25 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 2/2 | OK |
 | us | `metropolitan-transit-authori-franklin-avenue-shuttle` Franklin Avenue Shuttle | metro | 2.116 | 1 | 4.73 / 25 | – | 0.5 | 0 / 0 | 0 → 0 | 0/0 | 4/4 | OK |
 | us | `metropolitan-transit-authori-fx` Brooklyn F Express | metro | 43.343 | 1 | 40.68 / 25 | – | 0.5 | 3 / 3 | 0 → 0 | 0/0 | 4/39 | beads-off-stroke:35 reference-warning:40.68m>25m |
 | us | `metropolitan-transit-authori-g` Brooklyn-Queens Crosstown | metro | 16.853 | 1 | 32.78 / 25 | – | -0.5 | 2 / 0 | 0 → 0 | 0/0 | 21/21 | reference-warning:32.78m>25m |
 | us | `metropolitan-transit-authori-j` Nassau St Local | metro | 21.399 | 1 | 12.1 / 25 | – | -0.5 | 2 / 1 | 0 → 0 | 0/0 | 30/30 | OK |
 | us | `metropolitan-transit-authori-l` 14 St-Canarsie Local | metro | 16.295 | 1 | 7.63 / 25 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 24/24 | OK |
-| us | `metropolitan-transit-authori-m` Queens Blvd Local/6 Av Local | metro | 29.571 | 1 | 30.25 / 25 | – | -1 0.5 | 2 / 1 | 0 → 0 | 0/0 | 14/36 | beads-off-stroke:22 reference-warning:30.25m>25m |
+| us | `metropolitan-transit-authori-m` Queens Blvd Local/6 Av Local | metro | 29.571 | 1 | 30.25 / 25 | – | -1 0.5 | 2 / 1 | 0 → 0 | 0/0 | 23/36 | beads-off-stroke:13 reference-warning:30.25m>25m |
 | us | `metropolitan-transit-authori-n` Broadway Local | metro | 32.596 | 1 | 12.93 / 25 | – | -0.5 0.5 | 3 / 3 | 0 → 0 | 0/0 | 25/35 | beads-off-stroke:10 |
 | us | `metropolitan-transit-authori-n-b1` Broadway Local | metro | 3.776 | 1 | 1.89 / 25 | – | -0.5 0.5 | 2 / 0 | 0 → 0 | 0/0 | 1/7 | beads-off-stroke:6 |
 | us | `metropolitan-transit-authori-q` Broadway Express | metro | 28.837 | 1 | 20.51 / 25 | – | -0.5 0.5 | 2 / 0 | 0 → 0 | 0/0 | 29/29 | OK |
@@ -283,10 +282,10 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | us | `san-francisco-municipal-tran-n` JUDAH | streetcar | 13.935 | 2 | – / 20 | – | -1 1 | 3 / 5 | 0 → 0 | 0/0 | 32/32 | branch-parts:2 no-reference-comparison |
 | us | `san-francisco-municipal-tran-n-b1` JUDAH | streetcar | 1.142 | 1 | – / 20 | – | 1 | 1 / 0 | 0 → 0 | 0/0 | 5/5 | no-reference-comparison |
 | us | `san-francisco-municipal-tran-n-b2` JUDAH | streetcar | 1.14 | 1 | – / 20 | – | 1 | 1 / 0 | 0 → 0 | 1/0 | 5/5 | stroke-spikes:1/0 no-reference-comparison |
-| us | `san-francisco-municipal-tran-ph` POWELL-HYDE CABLE CAR | funicular | 3.315 | 2 | – / 25 | – | -4 | 2 / 4 | 0 → 0 | 0/0 | 29/29 | branch-parts:2 no-reference-comparison |
+| us | `san-francisco-municipal-tran-ph` POWELL-HYDE CABLE CAR | funicular | 3.315 | 2 | – / 25 | – | -4 | 2 / 4 | 0 → 0 | 0/0 | 28/28 | branch-parts:2 no-reference-comparison |
 | us | `san-francisco-municipal-tran-ph-b1` POWELL-HYDE CABLE CAR | funicular | 1.03 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 8/8 | no-reference-comparison |
-| us | `san-francisco-municipal-tran-pm` POWELL-MASON CABLE CAR | funicular | 2.553 | 2 | – / 25 | – | -4 | 1 / 4 | 0 → 0 | 0/0 | 24/24 | branch-parts:2 no-reference-comparison |
-| us | `san-francisco-municipal-tran-pm-b1` POWELL-MASON CABLE CAR | funicular | 0.17 | 2 | – / 25 | – | 0 | 2 / 0 | 0 → 0 | 0/0 | 3/3 | branch-parts:2 no-reference-comparison |
+| us | `san-francisco-municipal-tran-pm` POWELL-MASON CABLE CAR | funicular | 2.553 | 2 | – / 25 | – | -4 | 1 / 3 | 0 → 0 | 0/0 | 24/24 | branch-parts:2 no-reference-comparison |
+| us | `san-francisco-municipal-tran-pm-b1` POWELL-MASON CABLE CAR | funicular | 0.17 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | no-reference-comparison |
 | us | `san-francisco-municipal-tran-pm-b2` POWELL-MASON CABLE CAR | funicular | 0.364 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/3 | no-reference-comparison |
 | us | `san-francisco-municipal-tran-pm-b3` POWELL-MASON CABLE CAR | funicular | 0.247 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | no-reference-comparison |
 | us | `san-francisco-municipal-tran-t` THIRD | streetcar | 10.67 | 1 | – / 20 | – | -3 | 1 / 2 | 0 → 0 | 0/0 | 22/22 | no-reference-comparison |
@@ -300,12 +299,12 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | us | `septa-m1` Norristown High Speed Line Local | metro | 21.48 | 1 | 4.44 / 25 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 22/22 | OK |
 | us | `septa-d1` Route 101 | streetcar | 13.841 | 1 | 8.49 / 20 | – | 0 | 0 / 1 | 0 → 0 | 0/0 | 35/35 | OK |
 | us | `septa-d2` Route 102 | streetcar | 8.461 | 1 | 9.26 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 26/26 | OK |
-| us | `septa-g1` 63rd-Girard to Richmond-Westmorelnd | streetcar | 14.44 | 3 | 39.93 / 20 | 3,4,7,8 → none | 0 | 2 / 10 | 0 → 0 | 0/0 | 61/61 | withheld:3,4,7,8 |
+| us | `septa-g1` 63rd-Girard to Richmond-Westmorelnd | streetcar | 14.445 | 1 | 39.93 / 20 | 3,4,7,8 → none | 0 | 0 / 7 | 0 → 0 | 0/0 | 59/59 | withheld:3,4,7,8 |
 | us | `septa-g1-b1` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.869 | 1 | 3.78 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 4/4 | OK |
 | us | `septa-g1-b2` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.396 | 1 | 5.36 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/3 | OK |
 | us | `septa-g1-b3` 63rd-Girard to Richmond-Westmorelnd | streetcar | 1.286 | 1 | 2.54 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 5/5 | OK |
 | us | `septa-g1-b4` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.483 | 1 | 1.51 / 20 | – | 0 | 2 / 0 | 0 → 0 | 0/0 | 4/4 | OK |
-| us | `septa-g1-b5` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.817 | 1 | 4.46 / 20 | – | 0 | 2 / 0 | 0 → 0 | 0/0 | 4/4 | OK |
+| us | `septa-g1-b5` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.817 | 1 | 4.46 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 4/4 | OK |
 | us | `septa-g1-b6` 63rd-Girard to Richmond-Westmorelnd | streetcar | 0.161 | 1 | 1.21 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | OK |
 | us | `septa-t1` 13th St to 63rd-Malvern/Overbrook | streetcar | 9.411 | 1 | 39.19 / 20 | – | 0 | 1 / 5 | 0 → 0 | 0/0 | 33/39 | beads-off-stroke:6 reference-warning:39.19m>20m |
 | us | `septa-t1-b1` 13th St to 63rd-Malvern/Overbrook | streetcar | 1.197 | 1 | 2.94 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/5 | beads-off-stroke:2 |
@@ -336,17 +335,14 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | us | `south-shore-line-lakeshore` Lakeshore Corridor | commuter | 144.185 | 1 | 54.31 / 30 | 5,9 → 5 | 0.5 1.5 | 1 / 4 | 0 → 0 | 0/0 | 18/18 | withheld:9 |
 | us | `south-shore-line-monon` Monon Corridor | commuter | 45.57 | 1 | 11.26 / 30 | – | -1.5 -0.5 1.5 | 1 / 1 | 0 → 0 | 0/0 | 9/9 | OK |
 | us | `thebus-skyline` SKYLINE | metro | 25.1 | 1 | 4.97 / 25 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 13/13 | OK |
-| us | `trimet-portland-streetcar-a` Portland Streetcar - A Loop | streetcar | 9.931 | 1 | 7.43 / 20 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 28/28 | OK |
+| us | `trimet-portland-streetcar-a` Portland Streetcar - A Loop | streetcar | 9.745 | 1 | – / 20 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 28/28 | no-reference-comparison |
 | us | `trinity-metro-texrail` TEXRail | lightrail | 42.034 | 1 | 5.39 / 25 | – | 0.5 | 0 / 0 | 0 → 0 | 0/0 | 9/9 | OK |
-| us | `utah-transit-authority-uta-750` FrontRunner | commuter | 130.98 | 1 | 3.87 / 30 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 16/16 | OK |
-| us | `utah-transit-authority-uta-701` Blue Line | lightrail | 19.086 | 1 | 1.67 / 25 | – | -0.5 | 1 / 0 | 0 → 0 | 0/0 | 12/12 | OK |
-| us | `utah-transit-authority-uta-703` Red Line | lightrail | 23.086 | 1 | 1.79 / 25 | – | 0.5 | 0 / 1 | 0 → 0 | 0/0 | 14/14 | OK |
-| us | `utah-transit-authority-uta-703-b1` Red Line | lightrail | 8.563 | 1 | 3.1 / 25 | – | 0.5 | 1 / 1 | 0 → 0 | 0/0 | 11/11 | OK |
-| us | `utah-transit-authority-uta-703-b2` Red Line | lightrail | 1.307 | 1 | 1.24 / 25 | – | 0.5 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | OK |
-| us | `utah-transit-authority-uta-704` Green Line | lightrail | 13.85 | 1 | 3.44 / 25 | – | 0 | 0 / 2 | 0 → 0 | 0/0 | 14/14 | OK |
-| us | `utah-transit-authority-uta-704-b1` Green Line | lightrail | 5.161 | 1 | 6.71 / 25 | – | 0 | 0 / 0 | 1 → 0 | 0/0 | 4/4 | seam-jogs:1 |
-| us | `utah-transit-authority-uta-701-b1` Blue Line | streetcar | 5.585 | 1 | 1.5 / 20 | – | -0.5 | 1 / 0 | 0 → 0 | 0/0 | 11/11 | OK |
-| us | `utah-transit-authority-uta-720` S-Line | streetcar | 3.081 | 1 | 0.72 / 20 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 7/7 | OK |
+| us | `utah-transit-authority-uta-750` FrontRunner | commuter | 130.98 | 1 | – / 30 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 16/16 | no-reference-comparison |
+| us | `utah-transit-authority-uta-701` Blue Line | lightrail | 30.735 | 1 | – / 25 | – | -0.5 | 1 / 1 | 0 → 0 | 0/0 | 25/25 | no-reference-comparison |
+| us | `utah-transit-authority-uta-703` Red Line | lightrail | 37.718 | 1 | – / 25 | – | -1 -0.5 | 0 / 2 | 0 → 0 | 0/0 | 27/27 | no-reference-comparison |
+| us | `utah-transit-authority-uta-703-b1` Red Line | lightrail | 2.763 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/3 | no-reference-comparison |
+| us | `utah-transit-authority-uta-704` Green Line | lightrail | 23.905 | 1 | – / 25 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 19/19 | no-reference-comparison |
+| us | `utah-transit-authority-uta-720` S-Line | streetcar | 3.117 | 1 | – / 20 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 7/7 | no-reference-comparison |
 | us | `wmata-blue` Metrorail Blue Line | metro | 47.817 | 1 | 22.45 / 25 | – | -1 -0.5 0 | 1 / 1 | 0 → 0 | 0/0 | 28/28 | OK |
 | us | `wmata-green` Metrorail Green Line | metro | 36.732 | 1 | 26.18 / 25 | – | 0.5 | 0 / 1 | 0 → 0 | 0/0 | 21/21 | reference-warning:26.18m>25m |
 | us | `wmata-orange` Metrorail Orange Line | metro | 41.991 | 1 | 6.41 / 25 | – | 1 | 2 / 0 | 0 → 0 | 0/0 | 26/26 | OK |
@@ -423,7 +419,7 @@ Flag key: `withheld` — intervals still absent after the reviewed OSM releases;
 | ca | `ttc-504-b6` King | streetcar | 0.406 | 1 | 1.34 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | OK |
 | ca | `ttc-504-b7` King | streetcar | 0.516 | 1 | 2.54 / 20 | – | 0 | 2 / 0 | 0 → 0 | 0/0 | 3/3 | OK |
 | ca | `ttc-504-b8` King | streetcar | 0.247 | 1 | 1.37 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 2/2 | OK |
-| ca | `ttc-505` Dundas | streetcar | 10.627 | 1 | 8.66 / 20 | – | 4 | 2 / 2 | 0 → 0 | 1/0 | 43/43 | stroke-spikes:1/0 |
+| ca | `ttc-505` Dundas | streetcar | 10.634 | 1 | 8.66 / 20 | – | 4 | 2 / 2 | 0 → 0 | 1/0 | 42/42 | stroke-spikes:1/0 |
 | ca | `ttc-505-b1` Dundas | streetcar | 0.684 | 1 | 19.51 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/3 | OK |
 | ca | `ttc-505-b2` Dundas | streetcar | 0.543 | 1 | 1.96 / 20 | – | 0 | 0 / 0 | 0 → 0 | 0/0 | 3/3 | OK |
 | ca | `ttc-505-b3` Dundas | streetcar | 0.382 | 1 | 5.73 / 20 | – | 0 | 1 / 0 | 0 → 0 | 0/0 | 3/3 | OK |

@@ -492,7 +492,10 @@ other half:
     the import announcement are in the code and read correctly as structure;
     nobody has listened to them.
 
-`./verify.sh --swift` passes: 267 tests, no warnings, the app builds. The
-JavaScript half currently fails `npm run lint` for reasons in another session's
-in-flight web work — `app-events.js` calls `renderNetworkWorkspace` and
-`renderPassportJourneyLog`, neither of which exists yet.
+Run `./verify.sh` for the current fixture parity, Swift test and app-build
+result. Its test count sums the RailCore and RailPresentation target summaries.
+The JavaScript gate checks the retained reference implementation's fixtures.
+Actual interaction tests run separately through
+`tools/verify-layout-ui-smoke.sh iphone` and the default iPad invocation; the
+current refactor's results and baseline exceptions are recorded in
+`REFACTOR_EXECUTION_PLAN.md`.

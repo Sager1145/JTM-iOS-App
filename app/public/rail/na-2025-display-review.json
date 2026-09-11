@@ -1,6 +1,6 @@
 {
  "format": "jtm-na-display-review-v1",
- "generatedAt": "2026-09-09T14:09:36.066Z",
+ "generatedAt": "2026-09-11T13:08:33.200Z",
  "rows": [
   {
    "region": "us",
@@ -54,9 +54,9 @@
    "operator": "McKinney Avenue Transit Authority (M-Line)",
    "kind": "streetcar",
    "geometrySource": "gtfs-shape",
-   "lengthKm": 3.366,
-   "stations": 25,
-   "intervals": 24,
+   "lengthKm": 3.365,
+   "stations": 23,
+   "intervals": 22,
    "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": 7.07,
@@ -72,17 +72,17 @@
    "lanes": [],
    "follows": 0,
    "followedBy": 3,
-   "stationBeadsOnStroke": 25,
+   "stationBeadsOnStroke": 23,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 157,
+     "vertices": 150,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 211,
+     "vertices": 199,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -119,12 +119,12 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 59,
+     "vertices": 58,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 85,
+     "vertices": 79,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -8381,23 +8381,23 @@
    ],
    "follows": 2,
    "followedBy": 1,
-   "stationBeadsOnStroke": 18,
+   "stationBeadsOnStroke": 17,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 443,
+     "vertices": 446,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 550,
+     "vertices": 558,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
    "flags": [
-    "beads-off-stroke:19",
+    "beads-off-stroke:20",
     "reference-warning:26.04m>25m"
    ]
   },
@@ -8457,8 +8457,8 @@
    "kind": "metro",
    "geometrySource": "mta-subway-service-d",
    "lengthKm": 41.214,
-   "stations": 35,
-   "intervals": 34,
+   "stations": 36,
+   "intervals": 35,
    "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": 26.04,
@@ -8478,17 +8478,17 @@
    ],
    "follows": 2,
    "followedBy": 4,
-   "stationBeadsOnStroke": 30,
+   "stationBeadsOnStroke": 31,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 535,
+     "vertices": 542,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 648,
+     "vertices": 656,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -8553,9 +8553,9 @@
    "operator": "MTA New York City Transit",
    "kind": "metro",
    "geometrySource": "mta-subway-service-f",
-   "lengthKm": 44.202,
-   "stations": 55,
-   "intervals": 54,
+   "lengthKm": 44.2,
+   "stations": 45,
+   "intervals": 44,
    "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": 39.27,
@@ -8567,29 +8567,30 @@
    "releasedByReview": [],
    "stillWithheld": [],
    "osmVerdicts": [],
-   "laneRows": 3,
+   "laneRows": 2,
    "lanes": [
     -0.5,
     0.5
    ],
    "follows": 0,
    "followedBy": 8,
-   "stationBeadsOnStroke": 55,
-   "seamJogs": 0,
+   "stationBeadsOnStroke": 45,
+   "seamJogs": 2,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 666,
+     "vertices": 668,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 802,
+     "vertices": 759,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
    "flags": [
+    "seam-jogs:2",
     "reference-warning:39.27m>25m"
    ]
   },
@@ -8638,48 +8639,6 @@
    "flags": [
     "beads-off-stroke:5"
    ]
-  },
-  {
-   "region": "us",
-   "lineId": "metropolitan-transit-authori-f-b2",
-   "name": "Queens Blvd Express/6 Av Local",
-   "operator": "MTA New York City Transit",
-   "kind": "metro",
-   "geometrySource": "mta-subway-service-f",
-   "lengthKm": 0.836,
-   "stations": 2,
-   "intervals": 1,
-   "displayParts": 1,
-   "strokeFeatures": 1,
-   "referenceMaxDeviationM": 1.89,
-   "referenceAgreedWith": {
-    "osm": 13
-   },
-   "limitM": 25,
-   "withheldByGate": [],
-   "releasedByReview": [],
-   "stillWithheld": [],
-   "osmVerdicts": [],
-   "laneRows": 0,
-   "lanes": [],
-   "follows": 0,
-   "followedBy": 0,
-   "stationBeadsOnStroke": 2,
-   "seamJogs": 0,
-   "surveyedReversals": 0,
-   "strokes": {
-    "z13": {
-     "vertices": 22,
-     "extraReversals": 0,
-     "residualJogs": 0
-    },
-    "z16": {
-     "vertices": 22,
-     "extraReversals": 0,
-     "residualJogs": 0
-    }
-   },
-   "flags": []
   },
   {
    "region": "us",
@@ -8757,12 +8716,12 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 635,
+     "vertices": 658,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 802,
+     "vertices": 778,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -8933,23 +8892,23 @@
    ],
    "follows": 2,
    "followedBy": 1,
-   "stationBeadsOnStroke": 14,
+   "stationBeadsOnStroke": 23,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 429,
+     "vertices": 458,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 520,
+     "vertices": 500,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
    "flags": [
-    "beads-off-stroke:22",
+    "beads-off-stroke:13",
     "reference-warning:30.25m>25m"
    ]
   },
@@ -9128,12 +9087,12 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 504,
+     "vertices": 533,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 592,
+     "vertices": 566,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -12222,8 +12181,8 @@
    "kind": "funicular",
    "geometrySource": "sfmta-ph-i",
    "lengthKm": 3.315,
-   "stations": 29,
-   "intervals": 28,
+   "stations": 28,
+   "intervals": 27,
    "displayParts": 2,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": null,
@@ -12239,17 +12198,17 @@
    ],
    "follows": 2,
    "followedBy": 4,
-   "stationBeadsOnStroke": 29,
+   "stationBeadsOnStroke": 28,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 94,
+     "vertices": 89,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 112,
+     "vertices": 114,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -12325,7 +12284,7 @@
     -4
    ],
    "follows": 1,
-   "followedBy": 4,
+   "followedBy": 3,
    "stationBeadsOnStroke": 24,
    "seamJogs": 0,
    "surveyedReversals": 0,
@@ -12354,9 +12313,9 @@
    "kind": "funicular",
    "geometrySource": "sfmta-pm-i",
    "lengthKm": 0.17,
-   "stations": 3,
-   "intervals": 2,
-   "displayParts": 2,
+   "stations": 2,
+   "intervals": 1,
+   "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": null,
    "referenceAgreedWith": null,
@@ -12367,25 +12326,24 @@
    "osmVerdicts": [],
    "laneRows": 0,
    "lanes": [],
-   "follows": 2,
+   "follows": 1,
    "followedBy": 0,
-   "stationBeadsOnStroke": 3,
+   "stationBeadsOnStroke": 2,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 4,
+     "vertices": 2,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 5,
+     "vertices": 3,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
    "flags": [
-    "branch-parts:2",
     "no-reference-comparison"
    ]
   },
@@ -12959,10 +12917,10 @@
    "operator": "SEPTA",
    "kind": "streetcar",
    "geometrySource": "gtfs-official",
-   "lengthKm": 14.44,
-   "stations": 61,
-   "intervals": 60,
-   "displayParts": 3,
+   "lengthKm": 14.445,
+   "stations": 59,
+   "intervals": 58,
+   "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": 39.93,
    "referenceAgreedWith": {
@@ -12985,19 +12943,19 @@
    "osmVerdicts": [],
    "laneRows": 0,
    "lanes": [],
-   "follows": 2,
-   "followedBy": 10,
-   "stationBeadsOnStroke": 61,
+   "follows": 0,
+   "followedBy": 7,
+   "stationBeadsOnStroke": 59,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 538,
+     "vertices": 395,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 661,
+     "vertices": 450,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -13036,12 +12994,12 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 48,
+     "vertices": 50,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 55,
+     "vertices": 62,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -13083,7 +13041,7 @@
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 13,
+     "vertices": 15,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -13120,7 +13078,7 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 36,
+     "vertices": 31,
      "extraReversals": 0,
      "residualJogs": 0
     },
@@ -13197,19 +13155,19 @@
    "osmVerdicts": [],
    "laneRows": 0,
    "lanes": [],
-   "follows": 2,
+   "follows": 1,
    "followedBy": 0,
    "stationBeadsOnStroke": 4,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 30,
+     "vertices": 59,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 41,
+     "vertices": 75,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -13251,7 +13209,7 @@
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 112,
+     "vertices": 107,
      "extraReversals": 0,
      "residualJogs": 0
     }
@@ -14572,15 +14530,13 @@
    "operator": "Portland Streetcar",
    "kind": "streetcar",
    "geometrySource": "oregonmetro-rlis-portland-streetcar-a",
-   "lengthKm": 9.931,
+   "lengthKm": 9.745,
    "stations": 28,
    "intervals": 28,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 7.43,
-   "referenceAgreedWith": {
-    "osm": 248
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 20,
    "withheldByGate": [],
    "releasedByReview": [],
@@ -14595,17 +14551,19 @@
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 400,
+     "vertices": 380,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 421,
+     "vertices": 436,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -14664,11 +14622,8 @@
    "intervals": 15,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 3.87,
-   "referenceAgreedWith": {
-    "osm": 486,
-    "narn": 90
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 30,
    "withheldByGate": [],
    "releasedByReview": [],
@@ -14693,7 +14648,9 @@
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -14702,16 +14659,13 @@
    "operator": "Utah Transit Authority",
    "kind": "lightrail",
    "geometrySource": "uta-701",
-   "lengthKm": 19.086,
-   "stations": 12,
-   "intervals": 11,
+   "lengthKm": 30.735,
+   "stations": 25,
+   "intervals": 24,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 1.67,
-   "referenceAgreedWith": {
-    "osm": 150,
-    "narn": 22
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 25,
    "withheldByGate": [],
    "releasedByReview": [],
@@ -14722,23 +14676,25 @@
     -0.5
    ],
    "follows": 1,
-   "followedBy": 0,
-   "stationBeadsOnStroke": 12,
+   "followedBy": 1,
+   "stationBeadsOnStroke": 25,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 106,
+     "vertices": 268,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 124,
+     "vertices": 340,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -14747,43 +14703,43 @@
    "operator": "Utah Transit Authority",
    "kind": "lightrail",
    "geometrySource": "uta-703",
-   "lengthKm": 23.086,
-   "stations": 14,
-   "intervals": 13,
+   "lengthKm": 37.718,
+   "stations": 27,
+   "intervals": 26,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 1.79,
-   "referenceAgreedWith": {
-    "osm": 207,
-    "narn": 22
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 25,
    "withheldByGate": [],
    "releasedByReview": [],
    "stillWithheld": [],
    "osmVerdicts": [],
-   "laneRows": 1,
+   "laneRows": 2,
    "lanes": [
-    0.5
+    -1,
+    -0.5
    ],
    "follows": 0,
-   "followedBy": 1,
-   "stationBeadsOnStroke": 14,
+   "followedBy": 2,
+   "stationBeadsOnStroke": 27,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 219,
+     "vertices": 504,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 251,
+     "vertices": 578,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -14792,86 +14748,40 @@
    "operator": "Utah Transit Authority",
    "kind": "lightrail",
    "geometrySource": "uta-703",
-   "lengthKm": 8.563,
-   "stations": 11,
-   "intervals": 10,
+   "lengthKm": 2.763,
+   "stations": 3,
+   "intervals": 2,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 3.1,
-   "referenceAgreedWith": {
-    "osm": 146
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 25,
    "withheldByGate": [],
    "releasedByReview": [],
    "stillWithheld": [],
    "osmVerdicts": [],
-   "laneRows": 1,
-   "lanes": [
-    0.5
-   ],
-   "follows": 1,
-   "followedBy": 1,
-   "stationBeadsOnStroke": 11,
-   "seamJogs": 0,
-   "surveyedReversals": 0,
-   "strokes": {
-    "z13": {
-     "vertices": 275,
-     "extraReversals": 0,
-     "residualJogs": 0
-    },
-    "z16": {
-     "vertices": 311,
-     "extraReversals": 0,
-     "residualJogs": 0
-    }
-   },
-   "flags": []
-  },
-  {
-   "region": "us",
-   "lineId": "utah-transit-authority-uta-703-b2",
-   "name": "Red Line",
-   "operator": "Utah Transit Authority",
-   "kind": "lightrail",
-   "geometrySource": "uta-703",
-   "lengthKm": 1.307,
-   "stations": 2,
-   "intervals": 1,
-   "displayParts": 1,
-   "strokeFeatures": 1,
-   "referenceMaxDeviationM": 1.24,
-   "referenceAgreedWith": {
-    "osm": 30
-   },
-   "limitM": 25,
-   "withheldByGate": [],
-   "releasedByReview": [],
-   "stillWithheld": [],
-   "osmVerdicts": [],
-   "laneRows": 1,
-   "lanes": [
-    0.5
-   ],
+   "laneRows": 0,
+   "lanes": [],
    "follows": 1,
    "followedBy": 0,
-   "stationBeadsOnStroke": 2,
+   "stationBeadsOnStroke": 3,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 80,
+     "vertices": 133,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 87,
+     "vertices": 143,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -14880,16 +14790,13 @@
    "operator": "Utah Transit Authority",
    "kind": "lightrail",
    "geometrySource": "uta-704",
-   "lengthKm": 13.85,
-   "stations": 14,
-   "intervals": 13,
+   "lengthKm": 23.905,
+   "stations": 19,
+   "intervals": 18,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 3.44,
-   "referenceAgreedWith": {
-    "osm": 178,
-    "narn": 1
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 25,
    "withheldByGate": [],
    "releasedByReview": [],
@@ -14897,113 +14804,26 @@
    "osmVerdicts": [],
    "laneRows": 0,
    "lanes": [],
-   "follows": 0,
-   "followedBy": 2,
-   "stationBeadsOnStroke": 14,
+   "follows": 1,
+   "followedBy": 0,
+   "stationBeadsOnStroke": 19,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 218,
+     "vertices": 472,
      "extraReversals": 0,
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 266,
-     "extraReversals": 0,
-     "residualJogs": 0
-    }
-   },
-   "flags": []
-  },
-  {
-   "region": "us",
-   "lineId": "utah-transit-authority-uta-704-b1",
-   "name": "Green Line",
-   "operator": "Utah Transit Authority",
-   "kind": "lightrail",
-   "geometrySource": "uta-704",
-   "lengthKm": 5.161,
-   "stations": 4,
-   "intervals": 3,
-   "displayParts": 1,
-   "strokeFeatures": 1,
-   "referenceMaxDeviationM": 6.71,
-   "referenceAgreedWith": {
-    "osm": 55
-   },
-   "limitM": 25,
-   "withheldByGate": [],
-   "releasedByReview": [],
-   "stillWithheld": [],
-   "osmVerdicts": [],
-   "laneRows": 0,
-   "lanes": [],
-   "follows": 0,
-   "followedBy": 0,
-   "stationBeadsOnStroke": 4,
-   "seamJogs": 1,
-   "surveyedReversals": 0,
-   "strokes": {
-    "z13": {
-     "vertices": 121,
-     "extraReversals": 0,
-     "residualJogs": 0
-    },
-    "z16": {
-     "vertices": 133,
+     "vertices": 537,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
    "flags": [
-    "seam-jogs:1"
+    "no-reference-comparison"
    ]
-  },
-  {
-   "region": "us",
-   "lineId": "utah-transit-authority-uta-701-b1",
-   "name": "Blue Line",
-   "operator": "Utah Transit Authority",
-   "kind": "streetcar",
-   "geometrySource": "uta-701",
-   "lengthKm": 5.585,
-   "stations": 11,
-   "intervals": 10,
-   "displayParts": 1,
-   "strokeFeatures": 1,
-   "referenceMaxDeviationM": 1.5,
-   "referenceAgreedWith": {
-    "osm": 120,
-    "narn": 1
-   },
-   "limitM": 20,
-   "withheldByGate": [],
-   "releasedByReview": [],
-   "stillWithheld": [],
-   "osmVerdicts": [],
-   "laneRows": 1,
-   "lanes": [
-    -0.5
-   ],
-   "follows": 1,
-   "followedBy": 0,
-   "stationBeadsOnStroke": 11,
-   "seamJogs": 0,
-   "surveyedReversals": 0,
-   "strokes": {
-    "z13": {
-     "vertices": 150,
-     "extraReversals": 0,
-     "residualJogs": 0
-    },
-    "z16": {
-     "vertices": 205,
-     "extraReversals": 0,
-     "residualJogs": 0
-    }
-   },
-   "flags": []
   },
   {
    "region": "us",
@@ -15012,15 +14832,13 @@
    "operator": "Utah Transit Authority",
    "kind": "streetcar",
    "geometrySource": "uta-720",
-   "lengthKm": 3.081,
+   "lengthKm": 3.117,
    "stations": 7,
    "intervals": 6,
    "displayParts": 1,
    "strokeFeatures": 1,
-   "referenceMaxDeviationM": 0.72,
-   "referenceAgreedWith": {
-    "osm": 47
-   },
+   "referenceMaxDeviationM": null,
+   "referenceAgreedWith": null,
    "limitM": 20,
    "withheldByGate": [],
    "releasedByReview": [],
@@ -15040,12 +14858,14 @@
      "residualJogs": 0
     },
     "z16": {
-     "vertices": 39,
+     "vertices": 40,
      "extraReversals": 0,
      "residualJogs": 0
     }
    },
-   "flags": []
+   "flags": [
+    "no-reference-comparison"
+   ]
   },
   {
    "region": "us",
@@ -18481,9 +18301,9 @@
    "operator": "TTC",
    "kind": "streetcar",
    "geometrySource": "ttc-streetcar-505",
-   "lengthKm": 10.627,
-   "stations": 43,
-   "intervals": 42,
+   "lengthKm": 10.634,
+   "stations": 42,
+   "intervals": 41,
    "displayParts": 1,
    "strokeFeatures": 1,
    "referenceMaxDeviationM": 8.66,
@@ -18502,12 +18322,12 @@
    ],
    "follows": 2,
    "followedBy": 2,
-   "stationBeadsOnStroke": 43,
+   "stationBeadsOnStroke": 42,
    "seamJogs": 0,
    "surveyedReversals": 0,
    "strokes": {
     "z13": {
-     "vertices": 323,
+     "vertices": 322,
      "extraReversals": 1,
      "residualJogs": 0
     },

@@ -976,7 +976,8 @@ struct RailWorkspaceView: View {
                 compactTitle: panelTitle(for: tab, stage: .compact),
                 subtitle: panelSubtitle(for: tab),
                 subtitleDetail: panelSubtitleDetail(for: tab),
-                pinsSubtitle: pinsSubtitle(for: tab)
+                pinsSubtitle: pinsSubtitle(for: tab),
+                journeySelected: !panelRoute.isHome
             ) {
                 PanelStageReader { stage in
                     panelActions(for: tab, stage: stage)
@@ -1913,6 +1914,23 @@ struct RailWorkspaceView: View {
             // The card settles into place as it opens — see
             // ``ArrivingJourneyCard``, which is where the movement of the
             // whole list-to-journey handover lives.
+            //
+            // Keyed to the journey, so that choosing ANOTHER journey while
+            // this card is up — a tap on a second line on the map, `.locate`
+            // on a search result — is an arrival too. Without the key the
+            // `if let` keeps one card alive across the change: its `settled`
+            // state stays true, so the second journey is a cut, and it
+            // inherits the first journey's scroll offset besides. A new card
+            // per journey is a card that starts at the top and comes in the
+            // way the first one did.
+            //
+            // Except under the transport. A run hands the selection from
+            // journey to journey every few seconds, and none of those is the
+            // reader choosing; the card arrives once when the run takes it
+            // over and once more when stopping gives the selection back, and
+            // in between it keeps one identity and only its content moves —
+            // the same rule `PanelHeader`'s action strip keeps for the same
+            // hand-offs.
             ArrivingJourneyCard(reduceMotion: reduceMotion) {
             RideCard(
                 train: train,
@@ -1925,7 +1943,18 @@ struct RailWorkspaceView: View {
             )
             .padding(.top, 4)
             }
+            .id(heroIdentity(for: train))
         }
+    }
+
+    /// What one journey card is a card OF — see ``rideHero()``.
+    private enum HeroIdentity: Hashable {
+        case journey(String)
+        case run
+    }
+
+    private func heroIdentity(for train: Train) -> HeroIdentity {
+        showsPlaybackBar ? .run : .journey(train.id)
     }
 
     /// §11.2's answer for one journey. The only caller of the resolver in the

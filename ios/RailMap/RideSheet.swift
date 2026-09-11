@@ -152,6 +152,16 @@ extension View {
 /// card the list is read through for the length of the animation — the one
 /// thing this arrangement cannot afford. Going in is a movement; coming back
 /// is a cut.
+///
+/// Changing journey is going in again. The caller keys this view to the
+/// journey's id, so a second selection takes the first card down in the same
+/// frame and mounts a fresh one that arrives the same way — over a panel
+/// with nothing else drawn on it, since the list is under the card, not
+/// beside it. Nothing here can tell a first selection from a switch, and
+/// nothing needs to. The one exception is the caller's as well: while the
+/// transport is on screen it keeps a single identity through the run's
+/// hand-offs, so the card arrives when the run begins and when it is
+/// stopped, not at every journey in between.
 struct ArrivingJourneyCard<Content: View>: View {
     /// §9.4: less motion means the card fades into place from where it
     /// belongs, rather than travelling or growing there.

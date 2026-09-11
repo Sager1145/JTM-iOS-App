@@ -10,13 +10,13 @@
   },
   "regions": {
     "us": {
-      "lines": 352,
-      "candidatePairs": 873,
-      "alreadyCoincidentPairs": 666,
+      "lines": 348,
+      "candidatePairs": 854,
+      "alreadyCoincidentPairs": 680,
       "rejectedDifferentIdentity": 17,
       "rejectedDifferentCorridor": 63,
       "reviewedCandidatePairs": 108,
-      "openCandidatePairs": 765,
+      "openCandidatePairs": 746,
       "reviewedCorridors": 14
     },
     "ca": {
@@ -4623,7 +4623,7 @@
         "us-official-wallingford"
       ],
       "stationNames": [
-        "New Haven",
+        "New Haven State Street",
         "Wallingford Amtrak"
       ],
       "lineIds": [
@@ -4652,7 +4652,7 @@
         "us-official-wallingford"
       ],
       "stationNames": [
-        "New Haven",
+        "New Haven State Street",
         "Wallingford Amtrak"
       ],
       "lineIds": [
@@ -4681,7 +4681,7 @@
         "us-official-wallingford"
       ],
       "stationNames": [
-        "New Haven",
+        "New Haven State Street",
         "Wallingford Amtrak"
       ],
       "lineIds": [
@@ -8586,6 +8586,35 @@
       ],
       "lineIds": [
         "metropolitan-transit-authori-e",
+        "metropolitan-transit-authori-f"
+      ],
+      "canonicalLineId": "metropolitan-transit-authori-f",
+      "otherLineId": "metropolitan-transit-authori-e",
+      "sourceFeed": "metropolitan-transit-authori",
+      "operator": "MTA New York City Transit",
+      "leftInterval": 14,
+      "rightInterval": 36,
+      "lengthMeters": 4946.9,
+      "endpointGapMeters": 7.3,
+      "medianSeparationMeters": 7.3,
+      "p95SeparationMeters": 21.1,
+      "maxSeparationMeters": 21.5,
+      "properCrossings": 0
+    },
+    {
+      "region": "us",
+      "status": "candidate",
+      "type": "metro",
+      "stationIds": [
+        "us-official-forest-hills-71-av",
+        "us-official-jackson-hts-roosevelt-av"
+      ],
+      "stationNames": [
+        "Forest Hills-71 Av",
+        "Jackson Hts-Roosevelt Av"
+      ],
+      "lineIds": [
+        "metropolitan-transit-authori-e",
         "metropolitan-transit-authori-fx"
       ],
       "canonicalLineId": "metropolitan-transit-authori-fx",
@@ -8599,6 +8628,35 @@
       "medianSeparationMeters": 6.7,
       "p95SeparationMeters": 9.6,
       "maxSeparationMeters": 9.6,
+      "properCrossings": 0
+    },
+    {
+      "region": "us",
+      "status": "candidate",
+      "type": "metro",
+      "stationIds": [
+        "us-official-forest-hills-71-av",
+        "us-official-jackson-hts-roosevelt-av"
+      ],
+      "stationNames": [
+        "Forest Hills-71 Av",
+        "Jackson Hts-Roosevelt Av"
+      ],
+      "lineIds": [
+        "metropolitan-transit-authori-f",
+        "metropolitan-transit-authori-fx"
+      ],
+      "canonicalLineId": "metropolitan-transit-authori-f",
+      "otherLineId": "metropolitan-transit-authori-fx",
+      "sourceFeed": "metropolitan-transit-authori",
+      "operator": "MTA New York City Transit",
+      "leftInterval": 36,
+      "rightInterval": 30,
+      "lengthMeters": 4946.8,
+      "endpointGapMeters": 0.0,
+      "medianSeparationMeters": 2.6,
+      "p95SeparationMeters": 11.5,
+      "maxSeparationMeters": 11.9,
       "properCrossings": 0
     },
     {
@@ -11112,7 +11170,7 @@
         "us-official-queensboro-plaza"
       ],
       "stationNames": [
-        "59 St",
+        "Lexington Av/59 St",
         "Queensboro Plaza"
       ],
       "lineIds": [
@@ -12567,7 +12625,8 @@
         "us-official-south"
       ],
       "stationNames": [
-        "Boston"
+        "Back Bay",
+        "South Station"
       ],
       "lineIds": [
         "amtrak-lake-shore-limited",
@@ -15927,7 +15986,7 @@
       "sourceFeed": "metropolitan-transit-authori",
       "operator": "MTA New York City Transit",
       "leftInterval": 17,
-      "rightInterval": 49,
+      "rightInterval": 39,
       "lengthMeters": 1070.7,
       "endpointGapMeters": 9.5,
       "medianSeparationMeters": 8.5,
@@ -16238,35 +16297,6 @@
         "Steinway St"
       ],
       "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 36,
-      "rightInterval": 33,
-      "lengthMeters": 947.5,
-      "endpointGapMeters": 6.7,
-      "medianSeparationMeters": 6.8,
-      "p95SeparationMeters": 7.6,
-      "maxSeparationMeters": 7.6,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-36-st-2",
-        "us-official-steinway-st"
-      ],
-      "stationNames": [
-        "36 St",
-        "Steinway St"
-      ],
-      "lineIds": [
         "metropolitan-transit-authori-m",
         "metropolitan-transit-authori-r"
       ],
@@ -16292,7 +16322,8 @@
         "us-official-new-haven-2"
       ],
       "stationNames": [
-        "New Haven"
+        "New Haven",
+        "New Haven State Street"
       ],
       "lineIds": [
         "amtrak-amtrak-hartford-line",
@@ -16407,7 +16438,8 @@
         "us-official-new-haven-2"
       ],
       "stationNames": [
-        "New Haven"
+        "New Haven",
+        "New Haven State Street"
       ],
       "lineIds": [
         "amtrak-amtrak-hartford-line",
@@ -16435,7 +16467,8 @@
         "us-official-new-haven-2"
       ],
       "stationNames": [
-        "New Haven"
+        "New Haven",
+        "New Haven State Street"
       ],
       "lineIds": [
         "amtrak-northeast-regional-b2",
@@ -16691,64 +16724,6 @@
       "status": "candidate",
       "type": "metro",
       "stationIds": [
-        "us-official-elmhurst-av",
-        "us-official-jackson-hts-roosevelt-av"
-      ],
-      "stationNames": [
-        "Elmhurst Av",
-        "Jackson Hts-Roosevelt Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 41,
-      "rightInterval": 29,
-      "lengthMeters": 913.6,
-      "endpointGapMeters": 9.2,
-      "medianSeparationMeters": 9.2,
-      "p95SeparationMeters": 9.3,
-      "maxSeparationMeters": 9.3,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-elmhurst-av",
-        "us-official-jackson-hts-roosevelt-av"
-      ],
-      "stationNames": [
-        "Elmhurst Av",
-        "Jackson Hts-Roosevelt Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 41,
-      "rightInterval": 38,
-      "lengthMeters": 913.6,
-      "endpointGapMeters": 2.5,
-      "medianSeparationMeters": 2.4,
-      "p95SeparationMeters": 2.6,
-      "maxSeparationMeters": 2.6,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
         "us-official-7-av-2",
         "us-official-atlantic-av-barclays-ctr"
       ],
@@ -16923,35 +16898,6 @@
       "status": "candidate",
       "type": "metro",
       "stationIds": [
-        "us-official-67-av",
-        "us-official-forest-hills-71-av"
-      ],
-      "stationNames": [
-        "67 Av",
-        "Forest Hills-71 Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 46,
-      "rightInterval": 43,
-      "lengthMeters": 881.2,
-      "endpointGapMeters": 2.5,
-      "medianSeparationMeters": 2.5,
-      "p95SeparationMeters": 2.6,
-      "maxSeparationMeters": 2.6,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
         "us-official-174-st",
         "us-official-freeman-st"
       ],
@@ -16974,35 +16920,6 @@
       "medianSeparationMeters": 13.4,
       "p95SeparationMeters": 15.3,
       "maxSeparationMeters": 15.3,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-67-av",
-        "us-official-forest-hills-71-av"
-      ],
-      "stationNames": [
-        "67 Av",
-        "Forest Hills-71 Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 46,
-      "rightInterval": 34,
-      "lengthMeters": 880.7,
-      "endpointGapMeters": 9.2,
-      "medianSeparationMeters": 9.2,
-      "p95SeparationMeters": 9.5,
-      "maxSeparationMeters": 9.5,
       "properCrossings": 0
     },
     {
@@ -18345,64 +18262,6 @@
       "status": "candidate",
       "type": "metro",
       "stationIds": [
-        "us-official-grand-av-newtown",
-        "us-official-woodhaven-blvd-2"
-      ],
-      "stationNames": [
-        "Grand Av-Newtown",
-        "Woodhaven Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 43,
-      "rightInterval": 40,
-      "lengthMeters": 837.5,
-      "endpointGapMeters": 6.7,
-      "medianSeparationMeters": 8.9,
-      "p95SeparationMeters": 10.5,
-      "maxSeparationMeters": 10.5,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-36-st-2",
-        "us-official-queens-plaza"
-      ],
-      "stationNames": [
-        "36 St",
-        "Queens Plaza"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f-b2",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-r",
-      "otherLineId": "metropolitan-transit-authori-f-b2",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 0,
-      "rightInterval": 32,
-      "lengthMeters": 836.2,
-      "endpointGapMeters": 7.1,
-      "medianSeparationMeters": 6.9,
-      "p95SeparationMeters": 8.6,
-      "maxSeparationMeters": 8.6,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
         "us-official-63-dr-rego-park",
         "us-official-67-av"
       ],
@@ -18425,93 +18284,6 @@
       "medianSeparationMeters": 6.8,
       "p95SeparationMeters": 6.8,
       "maxSeparationMeters": 6.8,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-63-dr-rego-park",
-        "us-official-67-av"
-      ],
-      "stationNames": [
-        "63 Dr-Rego Park",
-        "67 Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 45,
-      "rightInterval": 33,
-      "lengthMeters": 835.7,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 9.3,
-      "p95SeparationMeters": 9.4,
-      "maxSeparationMeters": 9.4,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-63-dr-rego-park",
-        "us-official-67-av"
-      ],
-      "stationNames": [
-        "63 Dr-Rego Park",
-        "67 Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 45,
-      "rightInterval": 42,
-      "lengthMeters": 835.7,
-      "endpointGapMeters": 2.4,
-      "medianSeparationMeters": 2.4,
-      "p95SeparationMeters": 2.6,
-      "maxSeparationMeters": 2.6,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-grand-av-newtown",
-        "us-official-woodhaven-blvd-2"
-      ],
-      "stationNames": [
-        "Grand Av-Newtown",
-        "Woodhaven Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 43,
-      "rightInterval": 31,
-      "lengthMeters": 833.0,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 3.3,
-      "p95SeparationMeters": 9.1,
-      "maxSeparationMeters": 9.1,
       "properCrossings": 0
     },
     {
@@ -19484,35 +19256,6 @@
         "Steinway St"
       ],
       "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 37,
-      "rightInterval": 34,
-      "lengthMeters": 780.5,
-      "endpointGapMeters": 6.7,
-      "medianSeparationMeters": 6.9,
-      "p95SeparationMeters": 8.4,
-      "maxSeparationMeters": 8.4,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-46-st",
-        "us-official-steinway-st"
-      ],
-      "stationNames": [
-        "46 St",
-        "Steinway St"
-      ],
-      "lineIds": [
         "metropolitan-transit-authori-m",
         "metropolitan-transit-authori-r"
       ],
@@ -19621,35 +19364,6 @@
       "status": "candidate",
       "type": "metro",
       "stationIds": [
-        "us-official-elmhurst-av",
-        "us-official-grand-av-newtown"
-      ],
-      "stationNames": [
-        "Elmhurst Av",
-        "Grand Av-Newtown"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 42,
-      "rightInterval": 30,
-      "lengthMeters": 742.6,
-      "endpointGapMeters": 9.2,
-      "medianSeparationMeters": 2.2,
-      "p95SeparationMeters": 9.2,
-      "maxSeparationMeters": 9.2,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
         "us-official-72-st-2",
         "us-official-81-st-museum-of-natural-history"
       ],
@@ -19716,35 +19430,6 @@
         "Grand Av-Newtown"
       ],
       "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 42,
-      "rightInterval": 39,
-      "lengthMeters": 739.3,
-      "endpointGapMeters": 6.7,
-      "medianSeparationMeters": 7.0,
-      "p95SeparationMeters": 7.8,
-      "maxSeparationMeters": 7.8,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-elmhurst-av",
-        "us-official-grand-av-newtown"
-      ],
-      "stationNames": [
-        "Elmhurst Av",
-        "Grand Av-Newtown"
-      ],
-      "lineIds": [
         "metropolitan-transit-authori-m",
         "metropolitan-transit-authori-r"
       ],
@@ -19759,64 +19444,6 @@
       "medianSeparationMeters": 6.7,
       "p95SeparationMeters": 6.8,
       "maxSeparationMeters": 6.8,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-63-dr-rego-park",
-        "us-official-woodhaven-blvd-2"
-      ],
-      "stationNames": [
-        "63 Dr-Rego Park",
-        "Woodhaven Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 44,
-      "rightInterval": 41,
-      "lengthMeters": 739.0,
-      "endpointGapMeters": 2.5,
-      "medianSeparationMeters": 2.4,
-      "p95SeparationMeters": 2.5,
-      "maxSeparationMeters": 2.5,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-63-dr-rego-park",
-        "us-official-woodhaven-blvd-2"
-      ],
-      "stationNames": [
-        "63 Dr-Rego Park",
-        "Woodhaven Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 44,
-      "rightInterval": 32,
-      "lengthMeters": 738.6,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 9.1,
-      "p95SeparationMeters": 9.2,
-      "maxSeparationMeters": 9.2,
       "properCrossings": 0
     },
     {
@@ -19977,64 +19604,6 @@
         "Northern Blvd"
       ],
       "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 39,
-      "rightInterval": 27,
-      "lengthMeters": 729.8,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 9.1,
-      "p95SeparationMeters": 9.2,
-      "maxSeparationMeters": 9.2,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-65-st",
-        "us-official-northern-blvd"
-      ],
-      "stationNames": [
-        "65 St",
-        "Northern Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 39,
-      "rightInterval": 36,
-      "lengthMeters": 729.8,
-      "endpointGapMeters": 2.4,
-      "medianSeparationMeters": 2.4,
-      "p95SeparationMeters": 2.5,
-      "maxSeparationMeters": 2.5,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-65-st",
-        "us-official-northern-blvd"
-      ],
-      "stationNames": [
-        "65 St",
-        "Northern Blvd"
-      ],
-      "lineIds": [
         "metropolitan-transit-authori-m",
         "metropolitan-transit-authori-r"
       ],
@@ -20078,64 +19647,6 @@
       "medianSeparationMeters": 13.7,
       "p95SeparationMeters": 13.9,
       "maxSeparationMeters": 13.9,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-46-st",
-        "us-official-northern-blvd"
-      ],
-      "stationNames": [
-        "46 St",
-        "Northern Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 38,
-      "rightInterval": 35,
-      "lengthMeters": 725.5,
-      "endpointGapMeters": 6.7,
-      "medianSeparationMeters": 7.0,
-      "p95SeparationMeters": 8.3,
-      "maxSeparationMeters": 8.3,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-46-st",
-        "us-official-northern-blvd"
-      ],
-      "stationNames": [
-        "46 St",
-        "Northern Blvd"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 38,
-      "rightInterval": 26,
-      "lengthMeters": 725.2,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 2.8,
-      "p95SeparationMeters": 9.1,
-      "maxSeparationMeters": 9.1,
       "properCrossings": 0
     },
     {
@@ -20421,7 +19932,7 @@
       "sourceFeed": "metropolitan-transit-authori",
       "operator": "MTA New York City Transit",
       "leftInterval": 15,
-      "rightInterval": 47,
+      "rightInterval": 37,
       "lengthMeters": 712.2,
       "endpointGapMeters": 7.7,
       "medianSeparationMeters": 7.6,
@@ -20753,64 +20264,6 @@
       "status": "candidate",
       "type": "metro",
       "stationIds": [
-        "us-official-65-st",
-        "us-official-jackson-hts-roosevelt-av"
-      ],
-      "stationNames": [
-        "65 St",
-        "Jackson Hts-Roosevelt Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-m"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-m",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 40,
-      "rightInterval": 28,
-      "lengthMeters": 687.3,
-      "endpointGapMeters": 9.1,
-      "medianSeparationMeters": 9.2,
-      "p95SeparationMeters": 9.2,
-      "maxSeparationMeters": 9.2,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
-        "us-official-65-st",
-        "us-official-jackson-hts-roosevelt-av"
-      ],
-      "stationNames": [
-        "65 St",
-        "Jackson Hts-Roosevelt Av"
-      ],
-      "lineIds": [
-        "metropolitan-transit-authori-f",
-        "metropolitan-transit-authori-r"
-      ],
-      "canonicalLineId": "metropolitan-transit-authori-f",
-      "otherLineId": "metropolitan-transit-authori-r",
-      "sourceFeed": "metropolitan-transit-authori",
-      "operator": "MTA New York City Transit",
-      "leftInterval": 40,
-      "rightInterval": 37,
-      "lengthMeters": 687.3,
-      "endpointGapMeters": 2.5,
-      "medianSeparationMeters": 2.4,
-      "p95SeparationMeters": 2.5,
-      "maxSeparationMeters": 2.5,
-      "properCrossings": 0
-    },
-    {
-      "region": "us",
-      "status": "candidate",
-      "type": "metro",
-      "stationIds": [
         "us-official-75-av",
         "us-official-kew-gardens-union-tpke"
       ],
@@ -20827,7 +20280,7 @@
       "sourceFeed": "metropolitan-transit-authori",
       "operator": "MTA New York City Transit",
       "leftInterval": 16,
-      "rightInterval": 48,
+      "rightInterval": 38,
       "lengthMeters": 687.0,
       "endpointGapMeters": 8.1,
       "medianSeparationMeters": 8.2,
@@ -22672,7 +22125,7 @@
       ],
       "stationNames": [
         "5 Av/59 St",
-        "59 St"
+        "Lexington Av/59 St"
       ],
       "lineIds": [
         "metropolitan-transit-authori-n",
@@ -22701,7 +22154,7 @@
       ],
       "stationNames": [
         "5 Av/59 St",
-        "59 St"
+        "Lexington Av/59 St"
       ],
       "lineIds": [
         "metropolitan-transit-authori-r",

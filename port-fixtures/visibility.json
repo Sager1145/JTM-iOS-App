@@ -1511,7 +1511,7 @@
       "country": "jp",
       "lineId": "jp-三岐鉄道-三岐線",
       "rank": 3,
-      "groupKm": 23.944999999999997,
+      "groupKm": 26.645999999999997,
       "minZoomForRank": 6,
       "minZoomForLength": 6
     },
@@ -2415,7 +2415,7 @@
       "country": "jp",
       "lineId": "jp-北海道旅客鉄道-石北線",
       "rank": 3,
-      "groupKm": 233.53699999999998,
+      "groupKm": 233.11499999999998,
       "minZoomForRank": 6,
       "minZoomForLength": 3
     },
@@ -3181,6 +3181,14 @@
     },
     {
       "country": "jp",
+      "lineId": "jp-富山地方鉄道-富山駅南北接続線",
+      "rank": 4,
+      "groupKm": 0.305,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
+    },
+    {
+      "country": "jp",
       "lineId": "jp-富山地方鉄道-支線",
       "rank": 4,
       "groupKm": 1.1,
@@ -3386,6 +3394,14 @@
       "groupKm": 16.025999999999996,
       "minZoomForRank": 7,
       "minZoomForLength": 6
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-広島電鉄-循環線",
+      "rank": 4,
+      "groupKm": 1.312,
+      "minZoomForRank": 7,
+      "minZoomForLength": 7
     },
     {
       "country": "jp",
@@ -3623,7 +3639,15 @@
       "country": "jp",
       "lineId": "jp-東京都-12号線大江戸線",
       "rank": 2,
-      "groupKm": 39.70299999999999,
+      "groupKm": 40.58899999999999,
+      "minZoomForRank": 5,
+      "minZoomForLength": 5
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東京都-12号線大江戸線-2",
+      "rank": 2,
+      "groupKm": 40.58899999999999,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -4503,7 +4527,15 @@
       "country": "jp",
       "lineId": "jp-東武鉄道-伊勢崎線",
       "rank": 1,
-      "groupKm": 114.66200000000002,
+      "groupKm": 115.84600000000002,
+      "minZoomForRank": 4,
+      "minZoomForLength": 4
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東武鉄道-伊勢崎線-2",
+      "rank": 1,
+      "groupKm": 115.84600000000002,
       "minZoomForRank": 4,
       "minZoomForLength": 4
     },
@@ -5007,7 +5039,7 @@
       "country": "jp",
       "lineId": "jp-神戸新交通-ポートアイランド線",
       "rank": 2,
-      "groupKm": 10.155,
+      "groupKm": 10.657,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -5015,7 +5047,7 @@
       "country": "jp",
       "lineId": "jp-神戸新交通-ポートアイランド線-2",
       "rank": 2,
-      "groupKm": 10.155,
+      "groupKm": 10.657,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -5959,15 +5991,7 @@
       "country": "jp",
       "lineId": "jp-近畿日本鉄道-橿原線",
       "rank": 2,
-      "groupKm": 24.153000000000002,
-      "minZoomForRank": 5,
-      "minZoomForLength": 6
-    },
-    {
-      "country": "jp",
-      "lineId": "jp-近畿日本鉄道-橿原線-2",
-      "rank": 2,
-      "groupKm": 24.153000000000002,
+      "groupKm": 23.761000000000003,
       "minZoomForRank": 5,
       "minZoomForLength": 6
     },
@@ -6535,7 +6559,7 @@
       "country": "us",
       "lineId": "amtrak-acela",
       "rank": 0,
-      "groupKm": 732.21,
+      "groupKm": 731.877,
       "minZoomForRank": 3,
       "minZoomForLength": 3
     },
@@ -6623,7 +6647,7 @@
       "country": "us",
       "lineId": "amtrak-crescent",
       "rank": 1,
-      "groupKm": 2215.5630000000006,
+      "groupKm": 2214.1620000000003,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6783,7 +6807,7 @@
       "country": "us",
       "lineId": "amtrak-pennsylvanian",
       "rank": 1,
-      "groupKm": 699.465,
+      "groupKm": 699.8240000000001,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -6799,7 +6823,7 @@
       "country": "us",
       "lineId": "amtrak-silver-meteor",
       "rank": 1,
-      "groupKm": 2229.0750000000003,
+      "groupKm": 2227.4770000000003,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -7399,7 +7423,7 @@
       "country": "us",
       "lineId": "mbta-providence-stoughton-line",
       "rank": 2,
-      "groupKm": 125.58700000000002,
+      "groupKm": 107.167,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7407,15 +7431,7 @@
       "country": "us",
       "lineId": "mbta-providence-stoughton-line-b2",
       "rank": 2,
-      "groupKm": 125.58700000000002,
-      "minZoomForRank": 5,
-      "minZoomForLength": 4
-    },
-    {
-      "country": "us",
-      "lineId": "mbta-providence-stoughton-line-b5",
-      "rank": 2,
-      "groupKm": 125.58700000000002,
+      "groupKm": 107.167,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7455,17 +7471,17 @@
       "country": "us",
       "lineId": "mbta-b",
       "rank": 4,
-      "groupKm": 18.014000000000003,
+      "groupKm": 10.331000000000001,
       "minZoomForRank": 7,
-      "minZoomForLength": 6
+      "minZoomForLength": 7
     },
     {
       "country": "us",
       "lineId": "mbta-c",
       "rank": 4,
-      "groupKm": 15.916999999999998,
+      "groupKm": 8.234,
       "minZoomForRank": 7,
-      "minZoomForLength": 6
+      "minZoomForLength": 7
     },
     {
       "country": "us",
@@ -7775,7 +7791,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-2",
       "rank": 2,
-      "groupKm": 70.02999999999999,
+      "groupKm": 70.02899999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7783,7 +7799,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-3",
       "rank": 2,
-      "groupKm": 70.02999999999999,
+      "groupKm": 70.02899999999998,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7791,7 +7807,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-4",
       "rank": 2,
-      "groupKm": 77.572,
+      "groupKm": 77.573,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7807,7 +7823,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-5",
       "rank": 2,
-      "groupKm": 77.572,
+      "groupKm": 77.573,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7815,7 +7831,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-5-b2",
       "rank": 2,
-      "groupKm": 77.572,
+      "groupKm": 77.573,
       "minZoomForRank": 5,
       "minZoomForLength": 4
     },
@@ -7847,7 +7863,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-7x",
       "rank": 2,
-      "groupKm": 16.535999999999998,
+      "groupKm": 16.536,
       "minZoomForRank": 5,
       "minZoomForLength": 6
     },
@@ -7855,7 +7871,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-a",
       "rank": 2,
-      "groupKm": 57.95200000000001,
+      "groupKm": 57.95400000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7863,7 +7879,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-a-b1",
       "rank": 2,
-      "groupKm": 57.95200000000001,
+      "groupKm": 57.95400000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7871,7 +7887,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-a-b2",
       "rank": 2,
-      "groupKm": 57.95200000000001,
+      "groupKm": 57.95400000000001,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7911,7 +7927,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-f",
       "rank": 2,
-      "groupKm": 53.602000000000004,
+      "groupKm": 52.766000000000005,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7919,15 +7935,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-f-b1",
       "rank": 2,
-      "groupKm": 53.602000000000004,
-      "minZoomForRank": 5,
-      "minZoomForLength": 5
-    },
-    {
-      "country": "us",
-      "lineId": "metropolitan-transit-authori-f-b2",
-      "rank": 2,
-      "groupKm": 53.602000000000004,
+      "groupKm": 52.766000000000005,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -7999,7 +8007,7 @@
       "country": "us",
       "lineId": "metropolitan-transit-authori-q",
       "rank": 2,
-      "groupKm": 28.83700000000001,
+      "groupKm": 28.837000000000003,
       "minZoomForRank": 5,
       "minZoomForLength": 6
     },
@@ -8559,7 +8567,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph",
       "rank": 4,
-      "groupKm": 4.346000000000001,
+      "groupKm": 4.345000000000001,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8567,7 +8575,7 @@
       "country": "us",
       "lineId": "san-francisco-municipal-tran-ph-b1",
       "rank": 4,
-      "groupKm": 4.346000000000001,
+      "groupKm": 4.345000000000001,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -8983,7 +8991,7 @@
       "country": "us",
       "lineId": "trimet-portland-streetcar-a",
       "rank": 4,
-      "groupKm": 9.872000000000003,
+      "groupKm": 9.742,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },
@@ -9007,15 +9015,15 @@
       "country": "us",
       "lineId": "utah-transit-authority-uta-701",
       "rank": 3,
-      "groupKm": 24.67,
+      "groupKm": 30.733,
       "minZoomForRank": 6,
-      "minZoomForLength": 6
+      "minZoomForLength": 5
     },
     {
       "country": "us",
       "lineId": "utah-transit-authority-uta-703",
       "rank": 3,
-      "groupKm": 32.955000000000005,
+      "groupKm": 40.47900000000001,
       "minZoomForRank": 6,
       "minZoomForLength": 5
     },
@@ -9023,15 +9031,7 @@
       "country": "us",
       "lineId": "utah-transit-authority-uta-703-b1",
       "rank": 3,
-      "groupKm": 32.955000000000005,
-      "minZoomForRank": 6,
-      "minZoomForLength": 5
-    },
-    {
-      "country": "us",
-      "lineId": "utah-transit-authority-uta-703-b2",
-      "rank": 3,
-      "groupKm": 32.955000000000005,
+      "groupKm": 40.47900000000001,
       "minZoomForRank": 6,
       "minZoomForLength": 5
     },
@@ -9039,31 +9039,15 @@
       "country": "us",
       "lineId": "utah-transit-authority-uta-704",
       "rank": 3,
-      "groupKm": 19.012,
+      "groupKm": 23.904,
       "minZoomForRank": 6,
-      "minZoomForLength": 6
-    },
-    {
-      "country": "us",
-      "lineId": "utah-transit-authority-uta-704-b1",
-      "rank": 3,
-      "groupKm": 19.012,
-      "minZoomForRank": 6,
-      "minZoomForLength": 6
-    },
-    {
-      "country": "us",
-      "lineId": "utah-transit-authority-uta-701-b1",
-      "rank": 4,
-      "groupKm": 24.67,
-      "minZoomForRank": 7,
       "minZoomForLength": 6
     },
     {
       "country": "us",
       "lineId": "utah-transit-authority-uta-720",
       "rank": 4,
-      "groupKm": 3.0820000000000003,
+      "groupKm": 3.118,
       "minZoomForRank": 7,
       "minZoomForLength": 7
     },

@@ -427,6 +427,14 @@ struct PanelHeader<Actions: View>: View {
     /// workspace measures that, so this flag and `chromeMetrics` have to be
     /// decided from the same condition.
     var pinsSubtitle = false
+    /// Whether the header is over a selected journey rather than the list.
+    ///
+    /// Read only by the action strip's animation. The controls in that strip
+    /// are chosen by the workspace from two facts — the stage, and whether a
+    /// journey is selected — and the strip animates the membership change on
+    /// both, or the set replaces itself in one frame on the axis it was not
+    /// told about. See `actionStrip`.
+    var journeySelected = false
     private var stage: SheetStage { morph?.stage ?? .expanded }
     private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
     @ViewBuilder var actions: Actions
@@ -761,9 +769,26 @@ struct PanelHeader<Actions: View>: View {
             // §9.4's short replacement; without it two glass capsules appeared
             // and vanished between two frames beside a title that was still
             // growing.
+            //
+            // The set changes on selection too: the list's transport and
+            // filters leave when a journey is chosen and return when it is
+            // closed. Keyed on the stage alone, those two changes were the
+            // same two-frame appearance this comment describes, one axis
+            // over. Not keyed on WHICH journey — a run hands the selection
+            // from journey to journey and the strip must not replace itself
+            // at every hand-off.
             .animation(
                 RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
-                value: stage)
+                value: ActionMembership(stage: stage, journeySelected: journeySelected))
+    }
+
+    /// The facts the action strip animates its membership on. A journey's own
+    /// primary action can also come and go with the journey's phase at the
+    /// collapsed stop; that axis is the journey's, not the header's, and is
+    /// not covered here.
+    private struct ActionMembership: Equatable {
+        var stage: SheetStage
+        var journeySelected: Bool
     }
 
 }
