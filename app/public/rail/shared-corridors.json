@@ -754,68 +754,6 @@
       ]
     },
     {
-      "id": "us-mbta-providence-fairmount-diversion",
-      "region": "us",
-      "kind": "commuter",
-      "mergeStation": true,
-      "maxStationSeparationMeters": 80,
-      "canonicalLinePriority": [
-        "mbta-fairmount-line",
-        "mbta-providence-stoughton-line-b5"
-      ],
-      "evidence": [
-        {
-          "type": "operator-gtfs",
-          "name": "MBTA static GTFS",
-          "url": "https://cdn.mbta.com/MBTA_GTFS.zip"
-        },
-        {
-          "type": "government-gis",
-          "name": "MassGIS MBTA Commuter Rail Lines",
-          "url": "https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/MBTA_Commuter_Rail/FeatureServer/3"
-        },
-        {
-          "type": "osm-track",
-          "name": "OpenStreetMap Fairmount Line physical railway",
-          "url": "https://www.openstreetmap.org/#map=13/42.298/-71.083"
-        }
-      ],
-      "lineIds": [
-        "mbta-fairmount-line",
-        "mbta-providence-stoughton-line-b5"
-      ],
-      "stationPairs": [
-        [
-          "us-official-fairmount",
-          "us-official-blue-hill-avenue"
-        ],
-        [
-          "us-official-blue-hill-avenue",
-          "us-official-morton-street"
-        ],
-        [
-          "us-official-morton-street",
-          "us-official-talbot-avenue"
-        ],
-        [
-          "us-official-talbot-avenue",
-          "us-official-four-corners-geneva"
-        ],
-        [
-          "us-official-four-corners-geneva",
-          "us-official-uphams-corner"
-        ],
-        [
-          "us-official-uphams-corner",
-          "us-official-newmarket"
-        ],
-        [
-          "us-official-newmarket",
-          "us-official-south"
-        ]
-      ]
-    },
-    {
       "id": "us-boston-back-bay-south-station",
       "region": "us",
       "mergeStation": true,

@@ -3,6 +3,17 @@
   "reviewedAt": "2026-08-31",
   "hotspots": [
     {
+      "id": "us-orange-highland-avenue-parallel-bend",
+      "region": "us",
+      "camera": [40.762, -74.234, 0.075],
+      "reason": "Near-collinear follow samples beside the Orange curve caused offset-fold cleanup to replace 760 metres of the Gladstone display stroke with a straight chord around app zoom 13. Check the native tangent-support fix across zoom, preserving the surveyed Morristown/Gladstone curve and station anchors.",
+      "lineIds": [
+        "new-jersey-transit-nj-transi-mne",
+        "new-jersey-transit-nj-transi-mneg",
+        "new-jersey-transit-nj-transi-mneg-b2"
+      ]
+    },
+    {
       "id": "us-bronx-melrose-yankee-stadium",
       "region": "us",
       "camera": [40.824, -73.925, 0.075],

@@ -31,7 +31,29 @@ import SwiftUI
 /// question about what is on screen rather than about which square of Web
 /// Mercator something fell in.
 struct RailDisplayNetworkManifest: Decodable, Sendable {
-    static let format = "jtm-display-network-v1"
+    static let format = "jtm-display-network-v2"
+
+    /// A line's extent in the manifest, `nil` when the line has no
+    /// drawable geometry at all — see `RegionRecord`'s bounds fields for the
+    /// same convention.
+    struct Bounds: Decodable, Sendable {
+        var minLon: Double
+        var minLat: Double
+        var maxLon: Double
+        var maxLat: Double
+    }
+
+    /// Where this line's fragment lives inside its region's blob
+    /// (`{region}.display.bin`).
+    struct Chunk: Decodable, Sendable {
+        var offset: Int
+        var length: Int
+        var sha256: String
+        /// Vertex count of this specific chunk's document — present on an
+        /// overview chunk, absent (as before) on a full one and on any
+        /// manifest built before this field existed.
+        var vertexCount: Int?
+    }
 
     struct Line: Decodable, Sendable {
         var id: String
@@ -44,6 +66,21 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var rank: Int
         var color: String
         var colorDark: String
+        var bounds: Bounds?
+        var chunk: Chunk?
+        /// A Douglas–Peucker-simplified variant of `chunk`, appended after
+        /// every full chunk in the same region blob — present only for a
+        /// `"lines"`-strategy region's qualifying lines (builder A2), absent
+        /// for a whole-region line and for any manifest built before this
+        /// field existed.
+        var overview: Chunk?
+        var displayLabel: String?
+        var nameKey: String?
+        var operatorShort: String?
+        var stationCount: Int?
+        var vertexCount: Int?
+        var chainCount: Int?
+        var dependsOn: [String]?
         /// `build-display-network.py`'s `renderGroup` — North America's
         /// operator-level identity collapse (`na-render-groups.json`,
         /// `renderGroupByRegion`), carried into the catalog next to the
@@ -56,7 +93,37 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var minZoomMapLibre: Int
         var lodMinZoomMapLibre: Int
         var visibilityLengthKm: Double
+
+        /// Generated thresholds are retained for format compatibility. Native
+        /// policy is resolved at runtime so loading and drawing cannot disagree
+        /// when the app's detail ladder changes without regenerating geometry.
+        var nativeMinZoomMapLibre: Int {
+            NetworkLOD.minZoomMapLibre(
+                portedMinZoom: minZoomMapLibre, rank: rank,
+                visibilityLengthKm: visibilityLengthKm, region: region,
+                operator: `operator`, name: name)
+        }
         var logo: String?
+
+        /// This line's extent in projected map space — `.null` when
+        /// `bounds` is absent. Same corner math as `RegionRecord.mapRect`.
+        var mapRect: MKMapRect {
+            guard let bounds else { return .null }
+            let topLeft = MKMapPoint(
+                CLLocationCoordinate2D(latitude: bounds.maxLat, longitude: bounds.minLon))
+            let bottomRight = MKMapPoint(
+                CLLocationCoordinate2D(latitude: bounds.minLat, longitude: bounds.maxLon))
+            return MKMapRect(
+                x: min(topLeft.x, bottomRight.x), y: min(topLeft.y, bottomRight.y),
+                width: abs(bottomRight.x - topLeft.x),
+                height: abs(bottomRight.y - topLeft.y))
+        }
+
+        /// The same threshold in **this app's** zoom, which is what the
+        /// camera callback carries.
+        var minimumCameraZoom: Double {
+            RailStyle.zoom(fromMapLibre: Double(nativeMinZoomMapLibre))
+        }
     }
 
     struct RegionRecord: Decodable, Sendable {
@@ -64,11 +131,8 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var file: String
         var bytes: Int
         var sha256: String
-        /// The earliest MapLibre zoom at which any railway in this region can
-        /// pass the native LOD. The widest launch camera sits below the first
-        /// one; reading a 12 MB national network for a renderer guaranteed to
-        /// draw zero lines out of it is the one thing the old pyramid's
-        /// `minimumCameraZoom` existed to prevent, and it is kept.
+        /// Historical builder threshold, retained for bundle compatibility.
+        /// `records` derives current native eligibility from the line catalog.
         var minZoomMapLibre: Int
         /// Absent for a region with no drawable geometry at all. That is not
         /// the same as a zero-sized extent: a rect at 0°N 0°E would match a
@@ -77,6 +141,24 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var minLat: Double?
         var maxLon: Double?
         var maxLat: Double?
+        var stationsFile: String?
+        var stationsBytes: Int?
+        var stationsSHA256: String?
+        var families: [String: RailDisplayNetworkFile.FamilyColor]?
+        var lineCount: Int?
+        var stationCount: Int?
+        var vertexCount: Int?
+        /// `"whole"` or `"lines"` (builder A1) — absent from a manifest
+        /// built before this field existed, in which case
+        /// `RailDisplayNetworkIndex.wholeRegions` falls back to `bytes`.
+        var loadStrategy: String?
+        /// Bytes of this region's full chunks, i.e. `[0, fullBytes)` of the
+        /// blob. Absent when `loadStrategy` is absent.
+        var fullBytes: Int?
+        /// Bytes of this region's overview chunks, appended after
+        /// `fullBytes` in the same blob. Absent when `loadStrategy` is
+        /// absent, or zero for a `"lines"` region with no overview lines.
+        var overviewBytes: Int?
 
         /// The same threshold in **this app's** zoom, which is what the camera
         /// callback carries.
@@ -131,12 +213,19 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
             throw RailDisplayNetworkError.invalidRegionIndex
         }
         guard regions.allSatisfy({ record in
-            record.file == "\(record.region).json"
+            record.file == "\(record.region).display.bin"
+                && record.stationsFile == "\(record.region).stations.json"
                 && record.bytes > 0
                 && record.sha256.count == 64
                 && record.sha256.allSatisfy(\.isHexDigit)
                 && (0...30).contains(record.minZoomMapLibre)
                 && record.hasValidBounds
+        }) else { throw RailDisplayNetworkError.invalidRegionIndex }
+        guard lines.values.allSatisfy({ line in
+            line.bounds != nil
+                && (line.chunk.map {
+                    $0.offset >= 0 && $0.length > 0 && $0.sha256.count == 64
+                } ?? false)
         }) else { throw RailDisplayNetworkError.invalidRegionIndex }
         guard Set(packageSHA256.keys) == Self.shippedRegions,
               packageSHA256.values.allSatisfy({
@@ -162,6 +251,9 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
         var continuous: Bool?
         /// Which chain of the line this is; a withheld interval breaks one.
         var chain: Int?
+        /// False when this chain shares a station anchor with the preceding
+        /// chain but represents a different branch, not its continuation.
+        var joinPrevious: Bool?
         /// `[fromMetres, toMetres, lane]` rows along the chain.
         var laneRows: [[Double]]?
         var totalMetres: Double?
@@ -274,9 +366,16 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
     var families: [String: FamilyColor]
     var lines: [LineFragment]
     var stations: [Station]
+    /// The single railway this chunk holds — present in the v2 chunk
+    /// document, absent from an older whole-region payload.
+    var lineId: String?
+    /// `"overview"` or `"full"` (builder A3) — absent from a document built
+    /// before this field existed, in which case `validated(...)` accepts
+    /// either detail.
+    var detail: String?
 
     private enum CodingKeys: String, CodingKey {
-        case format, region, families, lines, stations
+        case format, region, families, lines, stations, lineId, detail
     }
 
     /// A hand-written decode rather than the synthesized one: `families` is
@@ -295,16 +394,39 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
         families = try container.decodeIfPresent([String: FamilyColor].self, forKey: .families) ?? [:]
         lines = try container.decode([LineFragment].self, forKey: .lines)
         stations = try container.decode([Station].self, forKey: .stations)
+        lineId = try container.decodeIfPresent(String.self, forKey: .lineId)
+        detail = try container.decodeIfPresent(String.self, forKey: .detail)
     }
 
     func validated(
-        region expected: String, catalog: [String: RailDisplayNetworkManifest.Line]
+        region expected: String, lineId expectedLineId: String?,
+        catalog: [String: RailDisplayNetworkManifest.Line],
+        families: [String: FamilyColor],
+        detail expectedDetail: DisplayDetail? = nil
     ) throws -> Self {
         guard format == RailDisplayNetworkManifest.format else {
             throw RailDisplayNetworkError.unsupportedFormat(format)
         }
         guard region == expected else {
             throw RailDisplayNetworkError.wrongRegion(expected: expected, actual: region)
+        }
+        if let expectedDetail {
+            let expectedDetailString = expectedDetail == .overview ? "overview" : "full"
+            guard detail == nil || detail == expectedDetailString else {
+                throw RailDisplayNetworkError.wrongDetail(
+                    expected: expectedDetailString, actual: detail ?? "nil")
+            }
+        }
+        if let expectedLineId {
+            // Rows carry the region-qualified catalog key ("jp|jp-…"); the
+            // chunk header and the manifest line carry the bare id.
+            let expectedRowKey = "\(expected)|\(expectedLineId)"
+            guard lineId == expectedLineId,
+                  lines.allSatisfy({ $0.lineKey == expectedRowKey }),
+                  stations.allSatisfy({ $0.lineKey == expectedRowKey }) else {
+                throw RailDisplayNetworkError.wrongLine(
+                    expected: expectedLineId, actual: lineId ?? "nil")
+            }
         }
         guard lines.allSatisfy({ catalog[$0.lineKey] != nil })
                 && stations.allSatisfy({ catalog[$0.lineKey] != nil }) else {
@@ -363,6 +485,10 @@ enum RailDisplayNetworkError: LocalizedError {
     case corruptRegion(String)
     case unknownLine(String)
     case invalidRegionPayload(String)
+    case corruptChunk(String)
+    case wrongLine(expected: String, actual: String)
+    case chunkOutOfRange(String)
+    case wrongDetail(expected: String, actual: String)
 
     var errorDescription: String? {
         switch self {
@@ -381,8 +507,147 @@ enum RailDisplayNetworkError: LocalizedError {
             "Rail display network for \(region) refers to an unknown railway"
         case .invalidRegionPayload(let region):
             "Rail display network for \(region) contains invalid geometry"
+        case .corruptChunk(let lineID):
+            "Rail display network chunk for \(lineID) failed its SHA-256 check"
+        case .wrongLine(let expected, let actual):
+            "Rail display network chunk for \(expected) was stored as \(actual)"
+        case .chunkOutOfRange(let lineID):
+            "Rail display network chunk for \(lineID) is out of range of its region's blob"
+        case .wrongDetail(let expected, let actual):
+            "Rail display network chunk expected detail \(expected) but decoded \(actual)"
         }
     }
+}
+
+/// A one-time index over a validated manifest: which railway lives at what
+/// offset inside its region's blob, in draw order, plus the extent and
+/// zoom floor `lines(intersecting:cameraZoom:in:)` needs to decide what is
+/// close enough to load. Built once per manifest arrival
+/// (`RailDisplayNetwork.lineIndex(for:)`) and reused for every camera move.
+struct RailDisplayNetworkIndex: Sendable {
+    struct Entry: Sendable {
+        var id: String
+        var region: String
+        var mapRect: MKMapRect
+        var minimumCameraZoom: Double
+        var chunk: RailDisplayNetworkManifest.Chunk
+        /// A Douglas–Peucker-simplified variant of `chunk`, when the
+        /// builder produced one (manifest A2) — `nil` for a whole-region
+        /// line, a line the overview policy does not name, or a manifest
+        /// built before this field existed.
+        var overview: RailDisplayNetworkManifest.Chunk?
+        var dependsOn: [String]
+    }
+
+    /// Each region's entries in blob order — ascending `chunk.offset`,
+    /// which is the package's line order and so the publish/draw order
+    /// (D2).
+    var entriesByRegion: [String: [Entry]]
+    var recordsByRegion: [String: RailDisplayNetworkManifest.RegionRecord]
+    /// The lowest native minimum zoom of any line in a region, computed
+    /// once rather than on every camera move.
+    var regionFloors: [String: Int]
+    /// `manifest.regions`' own order — the order `publishDisplayNetwork`
+    /// draws regions in.
+    var orderedRegions: [String]
+    /// Every entry by bare line id, for resolving `dependsOn` without
+    /// rebuilding a dictionary on each camera callback.
+    var entryByID: [String: Entry]
+    /// Regions the builder loads whole rather than a line at a time
+    /// (manifest A1) — `activateDisplayLines` folds every entry of one of
+    /// these into a single batch once any of it is needed. A manifest
+    /// built before `loadStrategy` existed falls back to the region's
+    /// total byte count.
+    var wholeRegions: Set<String>
+
+    static func lineIndex(for manifest: RailDisplayNetworkManifest) -> RailDisplayNetworkIndex {
+        var entriesByRegion: [String: [Entry]] = [:]
+        for line in manifest.lines.values {
+            guard let chunk = line.chunk else { continue }
+            entriesByRegion[line.region, default: []].append(
+                Entry(
+                    id: line.id, region: line.region, mapRect: line.mapRect,
+                    minimumCameraZoom: line.minimumCameraZoom, chunk: chunk,
+                    overview: line.overview,
+                    dependsOn: line.dependsOn ?? []))
+        }
+        for region in entriesByRegion.keys {
+            entriesByRegion[region]?.sort { $0.chunk.offset < $1.chunk.offset }
+        }
+        let recordsByRegion = Dictionary(
+            uniqueKeysWithValues: manifest.regions.map { ($0.region, $0) })
+        let regionFloors = manifest.lines.values.reduce(into: [String: Int]()) { floors, line in
+            floors[line.region] = min(floors[line.region] ?? Int.max, line.nativeMinZoomMapLibre)
+        }
+        var entryByID: [String: Entry] = [:]
+        for entries in entriesByRegion.values {
+            for entry in entries { entryByID[entry.id] = entry }
+        }
+        let wholeRegions = Set(manifest.regions.compactMap { record -> String? in
+            if let strategy = record.loadStrategy {
+                return strategy == "whole" ? record.region : nil
+            }
+            return record.bytes <= 1_500_000 ? record.region : nil
+        })
+        return RailDisplayNetworkIndex(
+            entriesByRegion: entriesByRegion, recordsByRegion: recordsByRegion,
+            regionFloors: regionFloors, orderedRegions: manifest.regions.map(\.region),
+            entryByID: entryByID, wholeRegions: wholeRegions)
+    }
+}
+
+/// The station identity table for one region (`{region}.stations.json`,
+/// docs §4): every line's station rows merged by package station id, with
+/// homonym groups, id collisions and similar-name clusters resolved once at
+/// build time. Read on demand only — nothing in the app wires this up yet.
+struct RailDisplayStationTable: Decodable, Sendable {
+    struct Station: Decodable, Sendable {
+        var key: String
+        var id: String
+        var name: String
+        var nameKey: String
+        var nameRoma: String?
+        var lon: Double
+        var lat: Double
+        var spreadMetres: Double
+        var lines: [String]
+        var operators: [String]
+        var hubId: String?
+        var displayLabel: String
+        var homonymGroup: String?
+        var idCollision: Bool
+    }
+
+    struct HomonymGroup: Decodable, Sendable {
+        var keys: [String]
+        var maxSeparationKm: Double
+    }
+
+    struct IDCollision: Decodable, Sendable {
+        struct Member: Decodable, Sendable {
+            var lineId: String
+            var lon: Double
+            var lat: Double
+        }
+        var key: String
+        var spreadMetres: Double
+        var members: [Member]
+    }
+
+    struct SimilarNameGroup: Decodable, Sendable {
+        var core: String
+        var keys: [String]
+        var names: [String]
+    }
+
+    static let format = "jtm-display-stations-v2"
+
+    var format: String
+    var region: String
+    var stations: [Station]
+    var homonymGroups: [String: HomonymGroup]
+    var idCollisions: [IDCollision]
+    var similarNameGroups: [SimilarNameGroup]
 }
 
 enum RailDisplayNetwork {
@@ -396,21 +661,84 @@ enum RailDisplayNetwork {
             RailDisplayNetworkManifest.self, from: Data(contentsOf: url)).validated()
     }
 
-    static func region(
-        _ record: RailDisplayNetworkManifest.RegionRecord,
-        catalog: [String: RailDisplayNetworkManifest.Line],
-        bundle: Bundle = .main
-    ) throws -> RailDisplayNetworkFile {
+    /// Reads a region's blob whole via `mmap` (`Data(contentsOf:options:.alwaysMapped)`);
+    /// callers slice one railway's chunk out of it with `chunk(_:blob:catalog:families:)`.
+    /// The blob is never itself re-hashed — see that function's doc comment
+    /// for why the whole-file SHA has been dropped at runtime.
+    static func blob(
+        _ record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
+    ) throws -> Data {
         guard let url = bundle.url(
             forResource: record.file, withExtension: nil, subdirectory: subdirectory)
         else { throw RailDisplayNetworkError.missingRegion(record.region) }
-        let data = try Data(contentsOf: url)
-        guard data.count == record.bytes,
-              SHA256.hash(data: data).hex == record.sha256 else {
+        let data = try Data(contentsOf: url, options: .alwaysMapped)
+        guard data.count == record.bytes else {
             throw RailDisplayNetworkError.corruptRegion(record.region)
         }
+        return data
+    }
+
+    /// Slices one railway's chunk out of its region's `blob`, then decodes
+    /// and validates it.
+    ///
+    /// Runtime integrity now stops at the chunk: the whole-blob SHA-256 that
+    /// v1 checked on every region load is dropped here, because the blob is
+    /// `mmap`ped rather than copied and hashing it would mean paging in
+    /// megabytes just to load one railway. The per-chunk SHA-256 is instead
+    /// verified only in `#if DEBUG` builds, as a guard against a stale or
+    /// hand-edited bundle during development; a release build trusts the
+    /// bundle's own code signature.
+    static func chunk(
+        _ entry: RailDisplayNetworkIndex.Entry, blob: Data,
+        detail: DisplayDetail = .full,
+        catalog: [String: RailDisplayNetworkManifest.Line],
+        families: [String: RailDisplayNetworkFile.FamilyColor]
+    ) throws -> RailDisplayNetworkFile {
+        // The overview chunk when one was requested AND the manifest has
+        // one; otherwise (including a whole-region or overview-less line)
+        // the full chunk, exactly as before this field existed. The
+        // detail validated below is the one actually sliced, not the one
+        // asked for, so a request for an absent overview quietly loads
+        // full rather than failing its own detail check.
+        let usesOverview = detail == .overview && entry.overview != nil
+        let sliced = usesOverview ? entry.overview! : entry.chunk
+        let effectiveDetail: DisplayDetail = usesOverview ? .overview : .full
+        let data: Data
+        do {
+            data = try DisplayChunkReader.slice(
+                blob, offset: sliced.offset, length: sliced.length)
+        } catch {
+            throw RailDisplayNetworkError.chunkOutOfRange(entry.id)
+        }
+        #if DEBUG
+        guard SHA256.hash(data: data).hex == sliced.sha256 else {
+            throw RailDisplayNetworkError.corruptChunk(entry.id)
+        }
+        #endif
         return try JSONDecoder().decode(RailDisplayNetworkFile.self, from: data)
-            .validated(region: record.region, catalog: catalog)
+            .validated(
+                region: entry.region, lineId: entry.id, catalog: catalog, families: families,
+                detail: effectiveDetail)
+    }
+
+    /// Reads and format-checks a region's station identity table
+    /// (`{region}.stations.json`, docs §4). Nothing in the app currently
+    /// loads this — it exists for a future station-identity feature — so
+    /// this is a plain read rather than an `mmap`, and there is no chunk to
+    /// slice.
+    static func stationIdentity(
+        region record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
+    ) throws -> RailDisplayStationTable {
+        guard let stationsFile = record.stationsFile,
+              let url = bundle.url(
+                  forResource: stationsFile, withExtension: nil, subdirectory: subdirectory)
+        else { throw RailDisplayNetworkError.missingRegion(record.region) }
+        let data = try Data(contentsOf: url)
+        let table = try JSONDecoder().decode(RailDisplayStationTable.self, from: data)
+        guard table.format == RailDisplayStationTable.format else {
+            throw RailDisplayNetworkError.unsupportedFormat(table.format)
+        }
+        return table
     }
 
     /// Region records the padded map rect touches, and whose railways this
@@ -425,13 +753,106 @@ enum RailDisplayNetwork {
         in manifest: RailDisplayNetworkManifest
     ) -> [RailDisplayNetworkManifest.RegionRecord] {
         let world = MKMapRect.world.size.width
+        let regionFloors = manifest.lines.values.reduce(into: [String: Int]()) { floors, line in
+            floors[line.region] = min(floors[line.region] ?? Int.max, line.nativeMinZoomMapLibre)
+        }
         return manifest.regions.filter { record in
-            guard record.minimumCameraZoom <= cameraZoom else { return false }
+            guard let floor = regionFloors[record.region],
+                  RailStyle.zoom(fromMapLibre: Double(floor)) <= cameraZoom else { return false }
             let extent = record.mapRect
             guard !extent.isNull else { return false }
             return [-world, 0, world].contains { shift in
                 extent.offsetBy(dx: shift, dy: 0).intersects(rect)
             }
+        }
+    }
+
+    /// Same test, against a precomputed `RailDisplayNetworkIndex` instead of
+    /// walking the manifest's line dictionary on every call.
+    static func records(
+        intersecting rect: MKMapRect,
+        cameraZoom: Double,
+        in index: RailDisplayNetworkIndex
+    ) -> [RailDisplayNetworkManifest.RegionRecord] {
+        let world = MKMapRect.world.size.width
+        return index.orderedRegions.compactMap { region in
+            guard let record = index.recordsByRegion[region],
+                  let floor = index.regionFloors[region],
+                  RailStyle.zoom(fromMapLibre: Double(floor)) <= cameraZoom else { return nil }
+            let extent = record.mapRect
+            guard !extent.isNull else { return nil }
+            guard [-world, 0, world].contains(where: { shift in
+                extent.offsetBy(dx: shift, dy: 0).intersects(rect)
+            }) else { return nil }
+            return record
+        }
+    }
+
+    /// How far past a line's own minimum camera zoom the loader still
+    /// prefetches it — in this app's zoom units, same ruler as
+    /// `minimumCameraZoom`.
+    static let zoomPrefetchMargin = 1.0
+
+    /// Railway lines the padded map rect touches, this camera is close
+    /// enough in to draw, or that one of those lines names in `dependsOn`
+    /// (a continuous-stroke line drawn partly from another line's alignment
+    /// — see `RailCore.ContinuousStroke.Follow`). A dependency is pulled in
+    /// regardless of its own rect or zoom eligibility, because the line that
+    /// depends on it needs its geometry to draw at all.
+    ///
+    /// Output is grouped by `index.orderedRegions`, each region's lines in
+    /// blob order (D2) — the same order `publishDisplayNetwork` draws in.
+    static func lines(
+        intersecting rect: MKMapRect,
+        cameraZoom: Double,
+        in index: RailDisplayNetworkIndex
+    ) -> [RailDisplayNetworkIndex.Entry] {
+        let world = MKMapRect.world.size.width
+        let regions = records(intersecting: rect, cameraZoom: cameraZoom, in: index)
+
+        var base: [RailDisplayNetworkIndex.Entry] = []
+        for record in regions {
+            for entry in index.entriesByRegion[record.region] ?? [] {
+                guard entry.minimumCameraZoom <= cameraZoom + zoomPrefetchMargin,
+                      !entry.mapRect.isNull,
+                      [-world, 0, world].contains(where: { shift in
+                          entry.mapRect.offsetBy(dx: shift, dy: 0).intersects(rect)
+                      })
+                else { continue }
+                base.append(entry)
+            }
+        }
+
+        return closure(of: base, in: index)
+    }
+
+    /// The transitive closure of `entries` over `dependsOn`: every entry
+    /// named, directly or indirectly, by one already in the list, added
+    /// regardless of its own rect or zoom eligibility — a line that depends
+    /// on another needs that line's geometry to draw at all. Output is
+    /// grouped by `index.orderedRegions`, each region's lines in blob order
+    /// (D2), same as ``lines(intersecting:cameraZoom:in:)``.
+    static func closure(
+        of entries: [RailDisplayNetworkIndex.Entry],
+        in index: RailDisplayNetworkIndex
+    ) -> [RailDisplayNetworkIndex.Entry] {
+        let allEntries = index.entryByID
+        var selected = Set(entries.map(\.id))
+        var frontier = Array(selected)
+        while !frontier.isEmpty {
+            var next: [String] = []
+            for id in frontier {
+                guard let entry = allEntries[id] else { continue }
+                for dependencyID in entry.dependsOn where !selected.contains(dependencyID) {
+                    guard allEntries[dependencyID] != nil else { continue }
+                    selected.insert(dependencyID)
+                    next.append(dependencyID)
+                }
+            }
+            frontier = next
+        }
+        return index.orderedRegions.flatMap { region in
+            (index.entriesByRegion[region] ?? []).filter { selected.contains($0.id) }
         }
     }
 

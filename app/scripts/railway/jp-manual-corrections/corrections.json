@@ -1,0 +1,568 @@
+[
+  {
+    "id": "A1",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-東日本旅客鉄道-陸羽東線",
+    "serviceStatus": "partial_substitute_bus",
+    "serviceSpans": [
+      [
+        14,
+        26,
+        2
+      ]
+    ],
+    "expectStations": [
+      "鳴子温泉",
+      "新庄"
+    ],
+    "why": "Rail suspended 鳴子温泉—新庄 with substitute bus since the July 2024 heavy rain, restoration date undecided.",
+    "source": "https://www.jreast.co.jp/ (陸羽東線 代行バス ダイヤ改正 2026-03-12)"
+  },
+  {
+    "id": "A2",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-大井川鐵道-大井川本線",
+    "serviceStatus": "partial_service_suspended",
+    "serviceSpans": [
+      [
+        11,
+        19,
+        1
+      ]
+    ],
+    "expectStations": [
+      "川根温泉笹間渡",
+      "千頭"
+    ],
+    "why": "Suspended since Typhoon 15 of Sept 2022, no operator-run substitute bus (Kawanehon town bus only), no reopening date.",
+    "source": "https://daitetsu.jp/"
+  },
+  {
+    "id": "A3",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-いすみ鉄道-いすみ線",
+    "serviceStatus": "substitute_bus",
+    "serviceSpans": [
+      [
+        0,
+        13,
+        2
+      ]
+    ],
+    "expectStations": [
+      "大原",
+      "上総中野"
+    ],
+    "why": "Whole line suspended since the 2024-10-04 derailment with operator substitute bus; 大原—大多喜 targeted autumn 2027.",
+    "source": "https://isumirail.co.jp/"
+  },
+  {
+    "id": "A4",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-小湊鐵道-小湊鐵道線",
+    "serviceStatus": "partial_substitute_bus",
+    "serviceSpans": [
+      [
+        14,
+        17,
+        2
+      ]
+    ],
+    "expectStations": [
+      "月崎",
+      "上総中野"
+    ],
+    "why": "月崎—上総中野 suspended with substitute bus after the summer-2026 rain damage, service restored to 月崎 on 2026-09-10, full line planned October 2026 — remove this op when it reopens.",
+    "source": "https://x.com/kominatorailway"
+  },
+  {
+    "id": "A5-1",
+    "type": "set-kind",
+    "date": "2026-09-10",
+    "lineId": "jp-伊予鉄道-城北線",
+    "from": "private",
+    "to": "tram",
+    "why": "Mode consistency with the rest of the network: 軌道線 tram stops 0.27-0.7 km apart.",
+    "source": "https://www.iyotetsu.co.jp/"
+  },
+  {
+    "id": "A5-2",
+    "type": "set-kind",
+    "date": "2026-09-10",
+    "lineId": "jp-富山地方鉄道-本線-2",
+    "from": "private",
+    "to": "tram",
+    "why": "Mode consistency with the rest of the network: 軌道線 tram stops 0.27-0.7 km apart.",
+    "source": "https://www.chitetsu.co.jp/"
+  },
+  {
+    "id": "A5-3",
+    "type": "set-kind",
+    "date": "2026-09-10",
+    "lineId": "jp-富山地方鉄道-富山港線",
+    "from": "private",
+    "to": "tram",
+    "why": "Mode consistency with the rest of the network: 軌道線 tram stops 0.27-0.7 km apart.",
+    "source": "https://www.chitetsu.co.jp/"
+  },
+  {
+    "id": "A5-4",
+    "type": "set-kind",
+    "date": "2026-09-10",
+    "lineId": "jp-万葉線-新湊港線",
+    "from": "third_sector",
+    "to": "tram",
+    "why": "Mode consistency with the rest of the network: 軌道線 tram stops 0.27-0.7 km apart.",
+    "source": "https://www.manyosen.co.jp/"
+  },
+  {
+    "id": "A5-5",
+    "type": "set-kind",
+    "date": "2026-09-10",
+    "lineId": "jp-名古屋鉄道-豊川線",
+    "from": "tram",
+    "to": "private",
+    "why": "Mode consistency with the rest of the network: 豊川線 is a 鉄道線 with 1.8 km spacing.",
+    "source": "https://www.meitetsu.co.jp/"
+  },
+  {
+    "id": "A6-1",
+    "type": "rename-station",
+    "date": "2026-09-10",
+    "stationId": "007953",
+    "lineId": "jp-西日本旅客鉄道-可部線",
+    "from": "下祗園",
+    "to": "下祇園",
+    "why": "Official operator spelling; the N02-25 source carries the variant glyph.",
+    "source": "https://www.westjr.co.jp/"
+  },
+  {
+    "id": "A6-2",
+    "type": "rename-station",
+    "date": "2026-09-10",
+    "stationId": "006445",
+    "lineId": "jp-能勢電鉄-妙見線",
+    "from": "鴬の森",
+    "to": "鶯の森",
+    "why": "Official operator spelling; the N02-25 source carries the variant glyph.",
+    "source": "https://www.noseden.co.jp/"
+  },
+  {
+    "id": "A6-3",
+    "type": "rename-station",
+    "date": "2026-09-10",
+    "stationId": "002155",
+    "lineId": "jp-東武鉄道-宇都宮線",
+    "from": "江曾島",
+    "to": "江曽島",
+    "why": "Official operator spelling; the N02-25 source carries the variant glyph.",
+    "source": "https://www.tobu.co.jp/"
+  },
+  {
+    "id": "B1",
+    "type": "split-interval-at-station",
+    "date": "2026-09-10",
+    "lineId": "jp-近畿日本鉄道-橿原線",
+    "betweenIds": [
+      "007787",
+      "007822"
+    ],
+    "newStation": {
+      "sid": "007811",
+      "name": "大和八木"
+    },
+    "anchorSource": {
+      "lineId": "jp-近畿日本鉄道-橿原線-2",
+      "sid": "007811"
+    },
+    "maxM": 40,
+    "why": "大和八木 sits between 新ノ口 and 八木西口 on the 橿原線 main track; the duplicate -2 stub for it is folded back into the main row.",
+    "source": "https://ja.wikipedia.org/wiki/近鉄橿原線"
+  },
+  {
+    "id": "B1-2",
+    "type": "remove-line",
+    "date": "2026-09-10",
+    "lineId": "jp-近畿日本鉄道-橿原線-2",
+    "why": "大和八木 is now inserted directly into the 橿原線 main row; the standalone stub line is redundant.",
+    "source": "https://ja.wikipedia.org/wiki/近鉄橿原線"
+  },
+  {
+    "id": "B2",
+    "type": "portliner-restructure",
+    "date": "2026-09-10",
+    "mainLineId": "jp-神戸新交通-ポートアイランド線",
+    "loopLineId": "jp-神戸新交通-ポートアイランド線-2",
+    "keepPrefixIds": [
+      "007108",
+      "007153",
+      "007203",
+      "007276"
+    ],
+    "keepSuffixIds": [
+      "007340",
+      "007381",
+      "007403",
+      "007482"
+    ],
+    "newIntervalFrom": "007276",
+    "newIntervalTo": "007289",
+    "newIntervalKeys": [
+      "神戸新交通|ポートアイランド線"
+    ],
+    "maxM": 60,
+    "snapM": 15,
+    "reuseIntervalFromMain": [
+      6,
+      5,
+      4,
+      3
+    ],
+    "loopStations": [
+      "007340",
+      "007343",
+      "007288",
+      "007271",
+      "007276"
+    ],
+    "why": "Restore the actual Port Liner topology: the main line runs 三宮...中公園 then across to みなとじま and onward to 神戸空港, while 市民広場-南公園-中埠頭-北埠頭-中公園 is the one-way loop back.",
+    "source": "https://www.knt-liner.co.jp/station/"
+  },
+  {
+    "id": "B3",
+    "type": "prepend-interval",
+    "date": "2026-09-10",
+    "lineId": "jp-三岐鉄道-三岐線",
+    "toStationId": "005906",
+    "newStation": {
+      "sid": "005982",
+      "name": "近鉄富田"
+    },
+    "fromAnchorSource": {
+      "lineId": "jp-近畿日本鉄道-名古屋線",
+      "sid": "005982"
+    },
+    "keys": [
+      "三岐鉄道|近鉄連絡線",
+      "三岐鉄道|三岐線"
+    ],
+    "tightM": 40,
+    "looseM": 200,
+    "snapM": 20,
+    "why": "三岐線 physically starts at 近鉄富田 (interchange with 近鉄名古屋線) via the 近鉄連絡線, not at 大矢知.",
+    "source": "https://sangirail.co.jp/kouhou/benri/route/"
+  },
+  {
+    "id": "B4",
+    "type": "add-line",
+    "date": "2026-09-10",
+    "lineId": "jp-東武鉄道-伊勢崎線-2",
+    "cloneMetaFrom": "jp-東武鉄道-伊勢崎線",
+    "metaOverrides": {
+      "railwayIdentity": "jp-東武鉄道-伊勢崎線"
+    },
+    "stations": [
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-東武鉄道-伊勢崎線",
+        "sid": "003479"
+      },
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-東京地下鉄-11号線半蔵門線",
+        "sid": "003526"
+      }
+    ],
+    "intervals": [
+      {
+        "keys": [
+          "東武鉄道|伊勢崎線"
+        ],
+        "tightM": 40,
+        "looseM": 200,
+        "snapM": 20
+      }
+    ],
+    "why": "The 曳舟-押上 spur onto the Hanzomon/Skytree line through-service track is a distinct interval from the 伊勢崎線 main row and needs its own line entry.",
+    "source": "https://www.tobu.co.jp/railway/guide/line/isesaki_line.html"
+  },
+  {
+    "id": "B5",
+    "type": "add-line",
+    "date": "2026-09-10",
+    "lineId": "jp-富山地方鉄道-富山駅南北接続線",
+    "cloneMetaFrom": "jp-富山地方鉄道-支線",
+    "metaOverrides": {
+      "name": "富山駅南北接続線",
+      "nameNorm": "富山駅南北接続線",
+      "nameRoma": "Toyama Station North-South Connecting Line",
+      "kind": "tram",
+      "railwayIdentity": "jp-富山地方鉄道-富山駅南北接続線"
+    },
+    "stations": [
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-富山地方鉄道-支線",
+        "sid": "001929"
+      },
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-富山地方鉄道-富山港線",
+        "sid": "001923"
+      }
+    ],
+    "intervals": [
+      {
+        "keys": [
+          "富山地方鉄道|富山駅南北接続線",
+          "富山地方鉄道|支線",
+          "富山地方鉄道|本線",
+          "富山地方鉄道|富山港線"
+        ],
+        "tightM": 40,
+        "looseM": 200,
+        "snapM": 20
+      }
+    ],
+    "why": "The new north-south connecting track links the tram network's south-side terminus (電鉄富山駅・エスタ前) directly to the north-side 富山港線 富山駅 stop.",
+    "source": "N02-25 + https://ja.wikipedia.org/wiki/富山軌道線"
+  },
+  {
+    "id": "B6",
+    "type": "add-line",
+    "date": "2026-09-10",
+    "lineId": "jp-広島電鉄-循環線",
+    "cloneMetaFrom": "jp-広島電鉄-皆実線",
+    "metaOverrides": {
+      "name": "循環線",
+      "nameNorm": "循環線",
+      "nameRoma": "Hiroden Loop Line",
+      "railwayIdentity": "jp-広島電鉄-循環線"
+    },
+    "stations": [
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-広島電鉄-本線",
+        "sid": "008066"
+      },
+      {
+        "kind": "new",
+        "sid": "008063",
+        "name": "的場町",
+        "roma": "Matoba-cho",
+        "romaSource": 1,
+        "n02Point": [
+          132.475275,
+          34.393025
+        ]
+      },
+      {
+        "kind": "new",
+        "sid": "008076",
+        "name": "段原一丁目",
+        "roma": "Danbara 1-chome",
+        "romaSource": 1,
+        "n02Point": [
+          132.4736067,
+          34.3899633
+        ]
+      },
+      {
+        "kind": "existing",
+        "sourceLineId": "jp-広島電鉄-皆実線",
+        "sid": "008085"
+      }
+    ],
+    "intervals": [
+      {
+        "keys": [
+          "広島電鉄|本線",
+          "広島電鉄|皆実線"
+        ],
+        "newStationMaxM": 60,
+        "tightM": 40,
+        "looseM": 200,
+        "snapM": 20
+      },
+      {
+        "keys": [
+          "広島電鉄|本線",
+          "広島電鉄|皆実線"
+        ],
+        "newStationMaxM": 60,
+        "tightM": 40,
+        "looseM": 200,
+        "snapM": 20
+      },
+      {
+        "keys": [
+          "広島電鉄|本線",
+          "広島電鉄|皆実線"
+        ],
+        "newStationMaxM": 60,
+        "tightM": 40,
+        "looseM": 200,
+        "snapM": 20
+      }
+    ],
+    "why": "The 2026-03 Hiroden loop line reopens the 稲荷町-的場町-段原一丁目-比治山下 connector between 本線 and 皆実線, closing a downtown streetcar loop. 稲荷町 takes its row and anchor from the 本線 platform (not 皆実線): the 循環線 trams run 的場町→稲荷町 and continue 内回り west along 本線 toward 紙屋町東, so they use the 本線 platform; anchoring on the 皆実線 branch platform bent the first interval back ~100m (0.499km for a 0.314km straight).",
+    "source": "https://www.hiroden.co.jp/topics/2026/pdf/0328-loopline/0303_release.pdf"
+  },
+  {
+    "id": "B7",
+    "type": "split-loop",
+    "date": "2026-09-10",
+    "lineId": "jp-東京都-12号線大江戸線",
+    "newLineId": "jp-東京都-12号線大江戸線-2",
+    "splitStationIndex": 10,
+    "expectStation": "都庁前",
+    "closingKeys": [
+      "東京都|12号線大江戸線"
+    ],
+    "tightM": 40,
+    "looseM": 200,
+    "snapM": 20,
+    "why": "The Oedo line is a radial 光が丘-都庁前 branch plus a one-way loop 都庁前...新宿...都庁前; splitting it lets the loop close correctly instead of dead-ending at 新宿. The assembled ring is stored in the canonical anticlockwise winding (positive shoelace signed area), which Toei calls the 都庁前→六本木・大門方面 direction (via 新宿).",
+    "source": "https://www.kotsu.metro.tokyo.jp/subway/timetable/oedo/E28BD.html"
+  },
+  {
+    "id": "D1",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-東日本旅客鉄道-磐越西線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        7,
+        7,
+        4
+      ]
+    ],
+    "expectStations": [
+      "猪苗代湖畔",
+      "猪苗代湖畔"
+    ],
+    "why": "猪苗代湖畔 is an event-only 臨時駅; no scheduled trains have stopped there since 2007.",
+    "source": "https://ja.wikipedia.org/wiki/猪苗代湖畔駅"
+  },
+  {
+    "id": "D2",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-東日本旅客鉄道-鹿島線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        0,
+        0,
+        4
+      ]
+    ],
+    "expectStations": [
+      "鹿島サッカースタジアム",
+      "鹿島サッカースタジアム"
+    ],
+    "why": "鹿島サッカースタジアム is served only on Kashima Antlers match/event days; ordinary trains pass without stopping.",
+    "source": "https://ja.wikipedia.org/wiki/鹿島サッカースタジアム駅"
+  },
+  {
+    "id": "D3",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-鹿島臨海鉄道-大洗鹿島線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        14,
+        14,
+        4
+      ]
+    ],
+    "expectStations": [
+      "鹿島サッカースタジアム",
+      "鹿島サッカースタジアム"
+    ],
+    "why": "鹿島サッカースタジアム is served only on Kashima Antlers match/event days; ordinary trains pass without stopping.",
+    "source": "https://ja.wikipedia.org/wiki/鹿島サッカースタジアム駅"
+  },
+  {
+    "id": "D4",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-東日本旅客鉄道-常磐線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        47,
+        47,
+        4
+      ]
+    ],
+    "expectStations": [
+      "偕楽園",
+      "偕楽園"
+    ],
+    "why": "偕楽園 is a 臨時駅 open only during the 梅まつり (plum blossom festival) season, and only for down (下り) trains.",
+    "source": "https://ja.wikipedia.org/wiki/偕楽園駅"
+  },
+  {
+    "id": "D5",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-四国旅客鉄道-予讃線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        14,
+        14,
+        4
+      ]
+    ],
+    "expectStations": [
+      "津島ノ宮",
+      "津島ノ宮"
+    ],
+    "why": "津島ノ宮 is a 臨時駅 open only two days a year, for the 津島神社 festival.",
+    "source": "https://ja.wikipedia.org/wiki/津島ノ宮駅"
+  },
+  {
+    "id": "D6",
+    "type": "set-service-status",
+    "date": "2026-09-10",
+    "lineId": "jp-四国旅客鉄道-牟岐線",
+    "serviceStatus": "partial_all_trains_pass",
+    "serviceSpans": [
+      [
+        19,
+        19,
+        4
+      ]
+    ],
+    "expectStations": [
+      "田井ノ浜",
+      "田井ノ浜"
+    ],
+    "why": "田井ノ浜 is a 臨時駅 open only during the summer bathing season.",
+    "source": "https://ja.wikipedia.org/wiki/田井ノ浜駅"
+  },
+  {
+    "id": "G1",
+    "type": "drop-vertex-range",
+    "date": "2026-09-10",
+    "lineId": "jp-北海道旅客鉄道-石北線",
+    "segmentIndex": 14,
+    "fromVertex": 190,
+    "toVertex": 196,
+    "expectNear": [
+      143.54798,
+      43.83744
+    ],
+    "why": "Interval 西留辺蘂→生田原 still walked the 常紋信号場 switchback spur (two reversals at 43.836–43.838 N 143.548 E, 613 m of path for a 193 m straight run). The switchback's points were removed in October 2016 and the signal station abolished on 2017-03-04; OpenStreetMap's current 石北本線 ways run through the site as one continuous alignment with no reversal. Vertices 190–196 (the spur) are dropped; 189 and 197 both lie on the straight main line.",
+    "source": "https://ja.wikipedia.org/wiki/常紋信号場 ; Overpass 2026-09-10 ways 24372192/480479011/1219724798/1077551249/536729839",
+    "expectVertexCount": 428
+  }
+]

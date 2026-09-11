@@ -7,12 +7,23 @@ corridors and screen-space lanes already applied — the two rules the Web
 renderer applies at runtime in `rail-network.js` and which the native app has
 no second implementation of.
 
-Geometry is NOT cut up.  One file per region holds every line's display parts
-whole, so a railway crossing the viewport is one continuous stroke rather than
-a run of pieces that happen to abut.  What keeps a national network off the GPU
-is the renderer's own viewport cull (`NetworkLOD` plus the per-interval rect
-test in `RailMapView`), which is a question about what is on screen rather than
-about which square of Web Mercator it fell in.
+The native-only St Clair West schematic below is an explicit presentation
+exception: the user requested a straight 512 and a separate on-line platform,
+while keeping the Line 1 platform and the canonical survey unchanged.
+
+Geometry is NOT cut up.  One blob per region holds every line's display parts
+whole as an independently decodable JSON chunk per line (manifest.json records
+each line's byte range), so a railway crossing the viewport is one continuous
+stroke rather than a run of pieces that happen to abut.  What keeps a national
+network off the GPU is the renderer's own viewport cull (`NetworkLOD` plus the
+per-interval rect test in `RailMapView`), which is a question about what is on
+screen rather than about which square of Web Mercator it fell in, or which
+chunk of the region blob it happened to be written into.
+
+Each manifest line also carries `dependsOn`, the sorted list of other line
+ids in the same region whose chunks its own display parts `follows` (so a
+client that wants to draw one line correctly knows which other chunks to
+fetch alongside it).
 
 Usage:
     python3 app/scripts/railway/build-display-network.py \
@@ -23,17 +34,93 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import math
+import os
 import shutil
 import sys
+import time
 import warnings
 from collections import defaultdict
 from pathlib import Path
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "lib"))
 
-FORMAT = "jtm-display-network-v1"
+import display_identity  # noqa: E402
+import na_geo  # noqa: E402
+
+
+FORMAT = "jtm-display-network-v2"
+
+# Overview chunks (spec: size-aware loading) trade precision for bytes at app
+# zoom <= 7, where the renderer's own decimation already exceeds this
+# tolerance. A region whose full-chunk blob is at or under this many bytes
+# loads as one batch ("whole"); a bigger one gets overview chunks appended
+# so a national/continental camera can decode a fraction of the geometry.
+DEFAULT_SMALL_REGION_MAX_BYTES = 1_500_000
+OVERVIEW_SIMPLIFY_TOLERANCE_M = 50.0
+OVERVIEW_STATION_MAX_ZOOM = 6
+
+OVERVIEW_QUALIFYING_OPERATORS = {"Amtrak", "Via Rail Canada"}
+
+
+def line_qualifies_for_overview(entry: dict) -> bool:
+    return (
+        entry.get("rank", 0) == 0
+        or entry.get("minZoomMapLibre", 0) <= 6
+        or entry.get("operator") in OVERVIEW_QUALIFYING_OPERATORS
+    )
+
+
+def build_overview_fragment(fragment: dict) -> tuple[dict, int]:
+    """The overview variant of one full-chunk fragment (spec A3): parts are
+    Douglas-Peucker simplified at ``OVERVIEW_SIMPLIFY_TOLERANCE_M``,
+    lane/follow geometry is dropped (sub-pixel at the app zooms overview
+    chunks are drawn at), and metre-keyed rows are rescaled by the ratio
+    between this fragment's simplified and original total length.
+    """
+    overview = dict(fragment)
+    new_parts = []
+    vertex_count = 0
+    for part in fragment["parts"]:
+        if len(part) < 3:
+            simplified = [list(p) for p in part]
+        else:
+            simplified = na_geo.simplify(part, OVERVIEW_SIMPLIFY_TOLERANCE_M)
+        new_parts.append(simplified)
+        vertex_count += len(simplified)
+    overview["parts"] = new_parts
+    overview.pop("laneRows", None)
+    overview.pop("follows", None)
+    overview.pop("lane", None)
+    if "totalMetres" in fragment:
+        old_total = fragment["totalMetres"]
+        new_total = round(sum(na_geo.line_length(part) for part in new_parts), 1)
+        overview["totalMetres"] = new_total
+        rescale = (new_total / old_total) if old_total > 0 else 0.0
+        if "withheld" in fragment:
+            overview["withheld"] = [
+                [
+                    min(max(0.0, round(span[0] * rescale, 1)), new_total),
+                    min(max(0.0, round(span[1] * rescale, 1)), new_total),
+                ]
+                for span in fragment["withheld"]
+            ]
+        if "familyWindows" in fragment:
+            overview["familyWindows"] = [
+                [
+                    min(max(0.0, round(window[0] * rescale, 1)), new_total),
+                    min(max(0.0, round(window[1] * rescale, 1)), new_total),
+                    window[2], window[3],
+                ]
+                for window in fragment["familyWindows"]
+            ]
+    return overview, vertex_count
+STATIONS_FORMAT = "jtm-display-stations-v2"
+REPORT_FORMAT = "jtm-display-network-report-v2"
 SHARED_CORRIDOR_FORMAT = "jtm-shared-corridors-v1"
 DISPLAY_LANES_FORMAT = "jtm-display-lanes-v1"
 NA_RENDER_GROUPS_FORMAT = "jtm-na-render-groups-v2"
@@ -1004,6 +1091,68 @@ def terminal_path(
     raise RuntimeError(f"shared corridor side must be 'start' or 'end', got {side!r}")
 
 
+def straighten_st_clair_west_display(
+    region: str, package: dict, intervals_by_line: dict,
+    follow_rows: list[list],
+) -> None:
+    """User-requested native schematic: 512 goes straight through St Clair West.
+
+    This is a display choice, not a correction to surveyed track. Keep the
+    canonical package (including the streetcar station loop) and Line 1 intact.
+    The streetcar platform alone moves onto the Tweedsmuir–Bathurst chord.
+    Followers of 512 need the shortened display ruler, including its western
+    branch; otherwise a remote branch would follow the wrong stretch of track.
+    """
+    if region != "ca":
+        return
+    line_id = "ttc-512"
+    line = next((line for line in package["lines"] if line["id"] == line_id), None)
+    if line is None:
+        return
+    codes = [row[0] for row in line["stations"]]
+    station_code = "ca-official-st-clair-west"
+    index = codes.index(station_code)
+    if codes[index - 1:index + 2] != [
+        "ca-official-st-clair-ave-west-at-tweedsmuir-ave", station_code,
+        "ca-official-st-clair-ave-west-at-bathurst-st",
+    ]:
+        raise RuntimeError("ttc-512: St Clair West display neighbours changed")
+    intervals = intervals_by_line[line_id]
+    a, b = intervals[index - 1][0], intervals[index][-1]
+    station = line["stations"][index][2:4]
+    # Local metric projection; longitude degrees are shorter at this latitude.
+    longitude_scale = math.cos(math.radians((a[1] + b[1]) / 2))
+    dx, dy = (b[0] - a[0]) * longitude_scale, b[1] - a[1]
+    fraction = (((station[0] - a[0]) * longitude_scale * dx
+                 + (station[1] - a[1]) * dy) / (dx * dx + dy * dy))
+    if not 0 < fraction < 1:
+        raise RuntimeError("ttc-512: St Clair West no longer projects inside its display span")
+    projected = [a[0] + fraction * (b[0] - a[0]), a[1] + fraction * (b[1] - a[1])]
+    before = sum(line_length_metres(part) for part in intervals[:index - 1])
+    old_station = before + line_length_metres(intervals[index - 1])
+    old_end = old_station + line_length_metres(intervals[index])
+    intervals[index - 1] = [list(a), projected]
+    intervals[index] = [projected, list(b)]
+    set_station_point(line, intervals, station_code, projected)
+    new_station = before + line_length_metres(intervals[index - 1])
+    new_end = new_station + line_length_metres(intervals[index])
+
+    def remap(measure: float) -> float:
+        if measure <= before:
+            return measure
+        if measure < old_station:
+            return before + (measure - before) * (new_station - before) / (old_station - before)
+        if measure < old_end:
+            return new_station + (measure - old_station) * (new_end - new_station) / (old_end - old_station)
+        return measure + new_end - old_end
+
+    for row in follow_rows:
+        if row[0] == line_id and row[1] == 0:
+            row[2], row[3] = remap(float(row[2])), remap(float(row[3]))
+        if row[4] == line_id and row[5] == 0:
+            row[6], row[7] = remap(float(row[6])), remap(float(row[7]))
+
+
 def apply_shared_corridors(
     region: str, package: dict, intervals_by_line: dict, corridors: list[dict],
     released_intervals: set[tuple[str, int]] | None = None,
@@ -1345,12 +1494,16 @@ def bounds_of(fragments: list[dict], stations: list[dict]) -> dict:
     }
 
 
-def build(rail_dir: Path, output: Path) -> dict:
+def build(
+    rail_dir: Path, output: Path,
+    small_region_max_bytes: int = DEFAULT_SMALL_REGION_MAX_BYTES,
+) -> dict:
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
 
     metadata: dict[str, dict] = {}
+    package_order: dict[str, int] = {}
     region_records: list[dict] = []
     package_digests: dict[str, str] = {}
     source_lines = source_intervals = source_segments = source_vertices = 0
@@ -1377,6 +1530,7 @@ def build(rail_dir: Path, output: Path) -> dict:
     parts_by_region: dict[str, list[list]] = {}
     color_by_region: dict[str, dict[str, dict]] = {}
     render_group_by_region: dict[str, dict[str, str]] = {}
+    non_joining_previous_by_region: dict[str, set[tuple[str, int]]] = {}
     # `strokeExcludedByRegion[region] = [[lineId, reason], ...]`
     # (build-display-lanes.mjs's `computePartsByRegionRows`): the single
     # source of truth for which continuous-region lines the web engine
@@ -1411,6 +1565,11 @@ def build(rail_dir: Path, output: Path) -> dict:
         # are one railway for interchange purposes even when they are not
         # also one colour override.
         render_group_by_region = lanes.get("renderGroupByRegion") or {}
+        non_joining_previous_by_region = {
+            region: {(str(row[0]), int(row[2])) for row in rows}
+            for region, rows in (
+                lanes.get("chainBoundariesByRegion") or {}).items()
+        }
 
     # `[lineId#partIndex]` of every `loop` part build-display-lanes.mjs
     # reversed to the canonical (positive-area) winding on the way into
@@ -1461,11 +1620,25 @@ def build(rail_dir: Path, output: Path) -> dict:
     # still be silently superseded the way this reader's old single-file
     # behaviour always allowed.
     scoped_by_region: dict[str, str] = {}
+    input_sha256: dict[str, str] = {}
+    if corridor_path.exists():
+        input_sha256["shared-corridors.json"] = hashlib.sha256(
+            corridor_path.read_bytes()).hexdigest()
+    if lane_path.exists():
+        input_sha256["display-lanes.json"] = hashlib.sha256(
+            lane_path.read_bytes()).hexdigest()
+    # `byLineId` keys from every reviewed render-group policy file, paired
+    # with the regions that file's own `scope` claims — read here so the
+    # build report can flag a policy entry that names no line any loaded
+    # package actually has (`danglingRenderGroupIds`, spec section 6).
+    render_group_policy_by_line_id: list[tuple[list[str], dict]] = []
     for filename in RENDER_GROUP_POLICY_FILENAMES:
         render_groups_path = rail_dir / filename
         if not render_groups_path.exists():
             continue
-        render_groups_doc = json.loads(render_groups_path.read_bytes())
+        render_groups_raw = render_groups_path.read_bytes()
+        input_sha256[filename] = hashlib.sha256(render_groups_raw).hexdigest()
+        render_groups_doc = json.loads(render_groups_raw)
         render_groups_format = render_groups_doc.get("format")
         if render_groups_format == NA_RENDER_GROUPS_FORMAT_DEPRECATED:
             warnings.warn(
@@ -1493,12 +1666,29 @@ def build(rail_dir: Path, output: Path) -> dict:
             if explicit_scope:
                 scoped_by_region[region] = filename
             render_group_colors_by_region[region] = families
+        render_group_policy_by_line_id.append(
+            (list(scope), render_groups_doc.get("byLineId") or {}))
+
+    display_hubs_doc: dict = {}
+    display_hubs_path = rail_dir / "display-hubs.json"
+    if display_hubs_path.exists():
+        display_hubs_raw = display_hubs_path.read_bytes()
+        input_sha256["display-hubs.json"] = hashlib.sha256(display_hubs_raw).hexdigest()
+        display_hubs_doc = json.loads(display_hubs_raw)
+
+    region_line_ids: dict[str, set[str]] = {}
+    identity_summaries: dict[str, dict] = {}
+    timings_seconds: dict[str, float] = {}
+    fragment_counts: dict[str, int] = {}
+    report_regions: dict[str, dict] = {}
 
     for region in REGIONS:
+        region_start_time = time.monotonic()
         path = rail_dir / f"{region}-2025.json"
         raw = path.read_bytes()
         package_digests[region] = hashlib.sha256(raw).hexdigest()
         package = json.loads(raw)
+        region_line_ids[region] = {line["id"] for line in package["lines"]}
         comparison = (((package.get("geometrySource") or {})
                        .get("officialGeometryComparison") or {})
                       .get("byLine") or {})
@@ -1513,6 +1703,8 @@ def build(rail_dir: Path, output: Path) -> dict:
         released_intervals: set[tuple[str, int]] = set()
         corridor_counts = apply_shared_corridors(
             region, package, intervals_by_line, corridors, released_intervals)
+        straighten_st_clair_west_display(
+            region, package, intervals_by_line, follow_rows_by_region.get(region, []))
         # The reviewed alignment releases (display-releases.json, copied into
         # the lane artefact) open exactly the intervals they name, the same
         # way a reviewed corridor replacement does.
@@ -1661,6 +1853,7 @@ def build(rail_dir: Path, output: Path) -> dict:
             # the group also carries a colour override — see
             # `render_group_by_region` above.
             render_group = (render_group_by_region.get(region) or {}).get(line["id"])
+            package_order[key] = order
             metadata[key] = {
                 "id": line["id"], "region": region, "name": line["name"],
                 "nameRoma": line.get("nameRoma"), "operator": line.get("operator"),
@@ -1774,7 +1967,7 @@ def build(rail_dir: Path, output: Path) -> dict:
                                     group_color.get("colorDark")
                                     or group_color["color"]),
                             }
-                    region_fragments.append({
+                    fragment = {
                         "lineKey": key, "lane": 0.0,
                         "parts": [rounded(part) for part in chain["parts"]],
                         "continuous": True, "chain": chain_index,
@@ -1787,7 +1980,11 @@ def build(rail_dir: Path, output: Path) -> dict:
                             - chain["startMetres"], 1),
                         "withheld": chain.get("withheld") or [],
                         "familyWindows": family_windows,
-                    })
+                    }
+                    if (line["id"], chain_index) in (
+                            non_joining_previous_by_region.get(region) or set()):
+                        fragment["joinPrevious"] = False
+                    region_fragments.append(fragment)
                     built_fragments += 1
                     built_parts += len(chain["parts"])
                     built_vertices += sum(len(part) for part in chain["parts"])
@@ -1896,23 +2093,182 @@ def build(rail_dir: Path, output: Path) -> dict:
             station.pop("order", None)
         built_stations += len(region_stations)
 
-        payload = {
-            "format": FORMAT, "region": region,
-            # Only the family colours this region's fragments actually name —
-            # a groupId a family window resolved against, keyed to the
-            # `color`/`colorDark` `chain_family_windows` already fail-closed
-            # checked exist in `na-render-groups.json`. A region with no
-            # family windows carries an empty block rather than the whole
-            # (JP/TW/HK/MO/KR-irrelevant) North America palette.
-            "families": region_families,
-            "lines": region_fragments, "stations": region_stations,
-        }
-        data = compact_json(payload)
-        name = f"{region}.json"
-        (output / name).write_bytes(data)
+        # Group this region's fragments and station rows by lineKey (already
+        # `f"{region}|{line['id']}"`, the same key `metadata` is keyed by) and
+        # emit one independently decodable JSON chunk per line, in the
+        # region's own package line order (the order `package["lines"]`
+        # lists them, i.e. the order v1's region file emitted fragments in)
+        # so a line's neighbours in the package sit next to it in the blob
+        # (spec section 2-3). A fragment or station naming a lineKey with no
+        # manifest line entry is a build error, not a silent drop.
+        fragments_by_key: dict[str, list[dict]] = defaultdict(list)
+        for fragment in region_fragments:
+            fragments_by_key[fragment["lineKey"]].append(fragment)
+        stations_by_key: dict[str, list[dict]] = defaultdict(list)
+        for station in region_stations:
+            stations_by_key[station["lineKey"]].append(station)
+        for key in fragments_by_key:
+            if key not in metadata:
+                raise RuntimeError(
+                    f"{key}: display fragment lineKey has no manifest line entry")
+        for key in stations_by_key:
+            if key not in metadata:
+                raise RuntimeError(
+                    f"{key}: display station lineKey has no manifest line entry")
+
+        ordered_keys = sorted(
+            set(fragments_by_key) | set(stations_by_key),
+            key=lambda key: package_order[key])
+
+        line_labels = display_identity.line_display_labels(region, package["lines"])
+
+        blob = bytearray()
+        largest_chunk_bytes = 0
+        largest_chunk_line_id = None
+        for key in ordered_keys:
+            line_id = metadata[key]["id"]
+            line_fragments = fragments_by_key.get(key, [])
+            line_stations = stations_by_key.get(key, [])
+            chunk_doc = {
+                "format": FORMAT, "region": region, "lineId": line_id,
+                "detail": "full",
+                "families": {}, "lines": line_fragments, "stations": line_stations,
+            }
+            chunk_bytes = compact_json(chunk_doc)
+            offset = len(blob)
+            blob.extend(chunk_bytes)
+            length = len(chunk_bytes)
+            min_lon = min_lat = math.inf
+            max_lon = max_lat = -math.inf
+            vertex_count = 0
+            chain_values: set = set()
+            depends_on_ids: set[str] = set()
+            for fragment in line_fragments:
+                for part in fragment["parts"]:
+                    vertex_count += len(part)
+                    for lon, lat in part:
+                        min_lon, max_lon = min(min_lon, lon), max(max_lon, lon)
+                        min_lat, max_lat = min(min_lat, lat), max(max_lat, lat)
+                if "chain" in fragment:
+                    chain_values.add(fragment["chain"])
+                for follow_row in fragment.get("follows") or []:
+                    canonical_key = follow_row[2]
+                    canonical_id = canonical_key.split("|", 1)[1]
+                    if canonical_id != line_id:
+                        depends_on_ids.add(canonical_id)
+                    if canonical_key not in metadata:
+                        raise RuntimeError(
+                            f"{key}: follow row names canonical line "
+                            f"{canonical_key!r}, which has no manifest line "
+                            "entry in this region")
+            if chain_values:
+                chain_count = len(chain_values)
+            elif line_fragments:
+                chain_count = 1
+            else:
+                chain_count = 0
+            entry = metadata[key]
+            entry["chunk"] = {
+                "offset": offset, "length": length,
+                "sha256": hashlib.sha256(chunk_bytes).hexdigest(),
+            }
+            # Station rows count towards the load rect too: a line whose every
+            # display interval is withheld still ships its platforms, and the
+            # manifest validator on the client requires bounds on every line.
+            for station_row in line_stations:
+                lon, lat = station_row["lon"], station_row["lat"]
+                min_lon, max_lon = min(min_lon, lon), max(max_lon, lon)
+                min_lat, max_lat = min(min_lat, lat), max(max_lat, lat)
+            if line_fragments or line_stations:
+                entry["bounds"] = {
+                    "minLon": round(min_lon, 7), "minLat": round(min_lat, 7),
+                    "maxLon": round(max_lon, 7), "maxLat": round(max_lat, 7),
+                }
+            entry["stationCount"] = len(line_stations)
+            entry["vertexCount"] = vertex_count
+            entry["chainCount"] = chain_count
+            entry["dependsOn"] = sorted(depends_on_ids)
+            fragment_counts[key] = len(line_fragments)
+            label = line_labels.get(line_id) or {}
+            entry["displayLabel"] = label.get("displayLabel")
+            entry["nameKey"] = label.get("nameKey")
+            entry["operatorShort"] = label.get("operatorShort")
+            if length > largest_chunk_bytes:
+                largest_chunk_bytes = length
+                largest_chunk_line_id = line_id
+
+        full_bytes = len(blob)
+        load_strategy = "whole" if full_bytes <= small_region_max_bytes else "lines"
+        overview_lines = 0
+        dp_seconds_start = time.monotonic()
+        if load_strategy == "lines":
+            for key in ordered_keys:
+                entry = metadata[key]
+                if not line_qualifies_for_overview(entry):
+                    continue
+                line_id = entry["id"]
+                line_fragments = fragments_by_key.get(key, [])
+                line_stations = stations_by_key.get(key, [])
+                overview_fragments = []
+                overview_vertex_count = 0
+                for fragment in line_fragments:
+                    overview_fragment, vertex_count = build_overview_fragment(fragment)
+                    overview_fragments.append(overview_fragment)
+                    overview_vertex_count += vertex_count
+                overview_stations = [
+                    station for station in line_stations
+                    if station.get("minZoomMapLibre", 0) <= OVERVIEW_STATION_MAX_ZOOM
+                ]
+                overview_doc = {
+                    "format": FORMAT, "region": region, "lineId": line_id,
+                    "detail": "overview",
+                    "families": {}, "lines": overview_fragments,
+                    "stations": overview_stations,
+                }
+                overview_bytes_doc = compact_json(overview_doc)
+                overview_offset = len(blob)
+                blob.extend(overview_bytes_doc)
+                entry["overview"] = {
+                    "offset": overview_offset, "length": len(overview_bytes_doc),
+                    "sha256": hashlib.sha256(overview_bytes_doc).hexdigest(),
+                    "vertexCount": overview_vertex_count,
+                }
+                overview_lines += 1
+        dp_seconds = round(time.monotonic() - dp_seconds_start, 3)
+
+        blob_bytes = bytes(blob)
+        overview_bytes_total = len(blob_bytes) - full_bytes
+        name = f"{region}.display.bin"
+        (output / name).write_bytes(blob_bytes)
+
+        hub_by_station_id = display_identity.hub_index(display_hubs_doc, region)
+        station_doc = display_identity.build_station_identity(
+            region, package["lines"], hub_by_station_id)
+        stations_data = json.dumps(
+            station_doc, ensure_ascii=False, indent=None).encode("utf-8")
+        stations_name = f"{region}.stations.json"
+        (output / stations_name).write_bytes(stations_data)
+        identity_summaries[region] = display_identity.identity_summary(
+            station_doc, line_labels, package["lines"])
+
+        region_vertex_count = sum(
+            len(part) for fragment in region_fragments for part in fragment["parts"])
         record = {
-            "region": region, "file": name, "bytes": len(data),
-            "sha256": hashlib.sha256(data).hexdigest(),
+            "region": region, "file": name, "bytes": len(blob_bytes),
+            "sha256": hashlib.sha256(blob_bytes).hexdigest(),
+            "stationsFile": stations_name, "stationsBytes": len(stations_data),
+            "stationsSHA256": hashlib.sha256(stations_data).hexdigest(),
+            # Family colours this region's fragments actually name — a
+            # groupId a family window resolved against, keyed to the
+            # `color`/`colorDark` `chain_family_windows` already fail-closed
+            # checked exist in `na-render-groups.json`. Moved here (v1 held
+            # it in the whole-region file) since v2's per-line chunks always
+            # carry an empty `families` block.
+            "families": region_families,
+            "lineCount": len(ordered_keys), "stationCount": len(region_stations),
+            "vertexCount": region_vertex_count,
+            "loadStrategy": load_strategy,
+            "fullBytes": full_bytes, "overviewBytes": overview_bytes_total,
             # The earliest MapLibre zoom at which anything in this region can
             # be drawn. A camera wider than that has nothing to show, so the
             # client can skip the read entirely rather than decode a national
@@ -1927,9 +2283,40 @@ def build(rail_dir: Path, output: Path) -> dict:
             record.update(bounds_of(region_fragments, region_stations))
         region_records.append(record)
 
+        timings_seconds[region] = round(time.monotonic() - region_start_time, 3)
+        report_regions[region] = {
+            "lines": len(ordered_keys), "stations": len(region_stations),
+            "vertices": region_vertex_count, "blobBytes": len(blob_bytes),
+            "manifestBytes": None,
+            "largestChunkBytes": largest_chunk_bytes,
+            "largestChunkLineId": largest_chunk_line_id,
+            "danglingRenderGroupIds": [],
+            "loadStrategy": load_strategy,
+            "overviewLines": overview_lines, "overviewBytes": overview_bytes_total,
+            "fullBytes": full_bytes, "dpSeconds": dp_seconds,
+            **identity_summaries[region],
+        }
+
+    # `byLineId` keys from every reviewed render-group policy file that name
+    # no line in any package loaded within that file's own `scope` (spec
+    # section 6, `danglingRenderGroupIds`).
+    dangling_ids: set[str] = set()
+    for scope, by_line_id in render_group_policy_by_line_id:
+        governed_ids: set[str] = set()
+        for scope_region in scope:
+            governed_ids |= region_line_ids.get(scope_region, set())
+        for line_id in by_line_id:
+            if line_id not in governed_ids:
+                dangling_ids.add(line_id)
+    for region in report_regions:
+        report_regions[region]["danglingRenderGroupIds"] = sorted(dangling_ids)
+
+    generated_at = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     manifest = {
         "format": FORMAT,
+        "generatedAt": generated_at,
         "packageSHA256": package_digests,
+        "inputSHA256": input_sha256,
         "source": {
             "lines": source_lines, "intervals": source_intervals,
             "segments": source_segments, "vertices": source_vertices,
@@ -1945,7 +2332,128 @@ def build(rail_dir: Path, output: Path) -> dict:
         "lines": metadata,
         "regions": region_records,
     }
-    (output / "manifest.json").write_bytes(compact_json(manifest))
+    manifest_bytes = compact_json(manifest)
+    (output / "manifest.json").write_bytes(manifest_bytes)
+    for region in report_regions:
+        report_regions[region]["manifestBytes"] = len(manifest_bytes)
+
+    # Self-check (spec section 8): every manifest line's chunk must decode
+    # standalone at its byte range, name the right lineId, carry the right
+    # fragment/station counts and sha256, a region's chunks must tile its
+    # blob exactly (contiguous, no gap, no overlap), every `dependsOn` id
+    # must resolve to a manifest line in the same region, and a region
+    # record's lineCount/stationCount/vertexCount must equal the sums over
+    # its own lines.
+    for record in region_records:
+        region = record["region"]
+        region_blob = (output / record["file"]).read_bytes()
+        region_keys = sorted(
+            (key for key, entry in metadata.items() if entry["region"] == region),
+            key=lambda key: metadata[key]["chunk"]["offset"])
+        region_ids = {metadata[key]["id"] for key in region_keys}
+        sum_stations = sum_vertices = 0
+        cursor = 0
+        for key in region_keys:
+            entry = metadata[key]
+            chunk = entry["chunk"]
+            if "bounds" not in entry:
+                raise RuntimeError(
+                    f"{region}: manifest line {entry['id']!r} has no bounds; the "
+                    "client rejects the whole manifest without them")
+            if chunk["offset"] != cursor:
+                raise RuntimeError(
+                    f"{region}: chunk for {entry['id']!r} starts at "
+                    f"{chunk['offset']}, expected {cursor} (chunks must tile "
+                    "the blob exactly)")
+            chunk_bytes = region_blob[chunk["offset"]:chunk["offset"] + chunk["length"]]
+            if hashlib.sha256(chunk_bytes).hexdigest() != chunk["sha256"]:
+                raise RuntimeError(
+                    f"{region}: chunk for {entry['id']!r} sha256 mismatch")
+            decoded = json.loads(chunk_bytes)
+            if decoded.get("lineId") != entry["id"]:
+                raise RuntimeError(
+                    f"{region}: chunk for {entry['id']!r} decodes lineId "
+                    f"{decoded.get('lineId')!r}")
+            if len(decoded.get("lines") or []) != fragment_counts.get(key, 0):
+                raise RuntimeError(
+                    f"{region}: chunk for {entry['id']!r} fragment count mismatch")
+            if len(decoded.get("stations") or []) != entry.get("stationCount", 0):
+                raise RuntimeError(
+                    f"{region}: chunk for {entry['id']!r} station count mismatch")
+            for depends_on_id in entry.get("dependsOn") or []:
+                if depends_on_id not in region_ids:
+                    raise RuntimeError(
+                        f"{region}: chunk for {entry['id']!r} dependsOn "
+                        f"{depends_on_id!r}, which has no manifest line "
+                        "entry in this region")
+            sum_stations += entry.get("stationCount", 0)
+            sum_vertices += entry.get("vertexCount", 0)
+            cursor += chunk["length"]
+        if cursor != record["fullBytes"]:
+            raise RuntimeError(
+                f"{region}: full chunks cover {cursor} bytes, expected "
+                f"fullBytes {record['fullBytes']}")
+        # Overview chunks (spec A4): tile [fullBytes, blobBytes) exactly,
+        # every one decodes standalone, is tagged detail == "overview", names
+        # the right lineId, and never carries more vertices than its full
+        # chunk.
+        overview_keys = sorted(
+            (key for key in region_keys if "overview" in metadata[key]),
+            key=lambda key: metadata[key]["overview"]["offset"])
+        overview_cursor = record["fullBytes"]
+        for key in overview_keys:
+            entry = metadata[key]
+            overview = entry["overview"]
+            if overview["offset"] != overview_cursor:
+                raise RuntimeError(
+                    f"{region}: overview chunk for {entry['id']!r} starts at "
+                    f"{overview['offset']}, expected {overview_cursor} "
+                    "(overview chunks must tile the blob exactly)")
+            overview_bytes = region_blob[
+                overview["offset"]:overview["offset"] + overview["length"]]
+            if hashlib.sha256(overview_bytes).hexdigest() != overview["sha256"]:
+                raise RuntimeError(
+                    f"{region}: overview chunk for {entry['id']!r} sha256 mismatch")
+            decoded_overview = json.loads(overview_bytes)
+            if decoded_overview.get("detail") != "overview":
+                raise RuntimeError(
+                    f"{region}: overview chunk for {entry['id']!r} decodes "
+                    f"detail {decoded_overview.get('detail')!r}, expected "
+                    "'overview'")
+            if decoded_overview.get("lineId") != entry["id"]:
+                raise RuntimeError(
+                    f"{region}: overview chunk for {entry['id']!r} decodes "
+                    f"lineId {decoded_overview.get('lineId')!r}")
+            if overview["vertexCount"] > entry.get("vertexCount", 0):
+                raise RuntimeError(
+                    f"{region}: overview chunk for {entry['id']!r} has "
+                    f"{overview['vertexCount']} vertices, more than its full "
+                    f"chunk's {entry.get('vertexCount', 0)}")
+            overview_cursor += overview["length"]
+        if overview_cursor != len(region_blob):
+            raise RuntimeError(
+                f"{region}: overview chunks cover up to {overview_cursor} "
+                f"bytes, blob is {len(region_blob)} bytes")
+        if record["lineCount"] != len(region_keys):
+            raise RuntimeError(
+                f"{region}: record lineCount {record['lineCount']} != "
+                f"{len(region_keys)} manifest lines")
+        if record["stationCount"] != sum_stations:
+            raise RuntimeError(
+                f"{region}: record stationCount {record['stationCount']} != "
+                f"sum over lines {sum_stations}")
+        if record["vertexCount"] != sum_vertices:
+            raise RuntimeError(
+                f"{region}: record vertexCount {record['vertexCount']} != "
+                f"sum over lines {sum_vertices}")
+
+    report = {
+        "format": REPORT_FORMAT, "generatedAt": generated_at,
+        "regions": report_regions,
+        "timingsSeconds": timings_seconds,
+    }
+    (output / "display-network-report.json").write_bytes(compact_json(report))
+
     return manifest
 
 
@@ -1953,8 +2461,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--rail-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--small-region-max-bytes", type=int,
+        default=DEFAULT_SMALL_REGION_MAX_BYTES)
     args = parser.parse_args()
-    manifest = build(args.rail_dir, args.output)
+    manifest = build(args.rail_dir, args.output, args.small_region_max_bytes)
     print(json.dumps({
         "format": manifest["format"], **manifest["source"], **manifest["built"],
         "bytes": {

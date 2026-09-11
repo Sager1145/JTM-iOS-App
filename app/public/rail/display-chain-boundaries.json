@@ -1,0 +1,17 @@
+{
+  "format": "jtm-display-chain-boundaries-v1",
+  "reviewedAt": "2026-09-08",
+  "description": "Reviewed boundaries between adjacent display chains that meet at one station but are not one continuous railway path. Renderers must not infer a tangent join across these boundaries from chain numbering alone.",
+  "boundaries": [
+    {
+      "region": "us",
+      "lineId": "mta-long-island-rail-road-city-terminal-zone",
+      "chainBefore": 0,
+      "chainAfter": 1,
+      "stationCode": "us-official-jamaica",
+      "coordinate": [-73.80856, 40.699669],
+      "reason": "City Terminal Zone branches from Jamaica to distinct western terminals; Grand Central-Jamaica and Jamaica-Atlantic Terminal are not consecutive legs of one route.",
+      "source": "https://www.mta.info/document/188996"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "format": "jtm-display-loops-v1",
-  "reviewedAt": "2026-09-04",
+  "reviewedAt": "2026-09-10",
   "why": [
     "rules.md §7.8 and japan_parallel_rail_rendering_rules.md §6.5 both require a closed corridor to have ONE fixed seam and ONE fixed orientation, held globally, so that a lane index stays continuous across the wrap-around instead of being recomputed from the current viewport. A lane index is only meaningful relative to a direction of travel: the same ring digitised the other way puts the outer track on the other side of the stroke.",
     "The winding half of that contract is enforced in code — build-display-lanes.mjs's partRowsForLine reverses any `loop` part whose shoelace area is negative, so every ring in a continuous-stroke region is emitted anticlockwise in lon/lat (\"positive signed area\"). This file carries the half that cannot be measured: WHICH station the seam is at, what the canonical direction is called in the operator's own language, and — for the rings this package does not store as one closed line — which rows actually make up the ring.",
@@ -12,7 +12,9 @@
       "region": "jp",
       "name": "大阪環状線",
       "kind": "closed-line",
-      "lineIds": ["jp-西日本旅客鉄道-大阪環状線"],
+      "lineIds": [
+        "jp-西日本旅客鉄道-大阪環状線"
+      ],
       "seamStationCode": "007050",
       "seamStationName": "桜ノ宮",
       "canonicalWinding": "positive-signed-area",
@@ -34,9 +36,18 @@
       "region": "jp",
       "name": "名古屋市営地下鉄 名城線",
       "kind": "composite-ring",
-      "lineIds": ["jp-名古屋市-2号線名城線", "jp-名古屋市-4号線名城線"],
-      "seamStationCodes": ["005551", "005387"],
-      "seamStationNames": ["金山", "大曽根"],
+      "lineIds": [
+        "jp-名古屋市-2号線名城線",
+        "jp-名古屋市-4号線名城線"
+      ],
+      "seamStationCodes": [
+        "005551",
+        "005387"
+      ],
+      "seamStationNames": [
+        "金山",
+        "大曽根"
+      ],
       "canonicalWinding": "positive-signed-area",
       "orientation": {
         "canonicalDirectionIs": "右回り / 左回り are the operator's own names for the two directions; this package cannot assign them, because neither member row is a ring on its own.",
@@ -54,7 +65,9 @@
       "region": "jp",
       "name": "山手線",
       "kind": "not-a-ring",
-      "lineIds": ["jp-東日本旅客鉄道-山手線"],
+      "lineIds": [
+        "jp-東日本旅客鉄道-山手線"
+      ],
       "canonicalWinding": null,
       "packageRepresentation": "An OPEN arc, not a loop: 17 stations from 品川 through 渋谷 / 新宿 / 池袋 to 田端, isLoop unset, 16 intervals. The east side of the circle (田端 → 上野 → 東京 → 新橋 → 品川) has no 山手線 geometry in N02 at all — that stretch is the 東北線's and 東海道線's own surveyed track, which the 山手線 service rides. No seam and no orientation are recorded here because there is no ring to seam: treating this row as a loop would invent about 9 km of railway.",
       "evidence": [
@@ -66,13 +79,39 @@
     {
       "id": "jp-oedo",
       "region": "jp",
-      "name": "都営大江戸線",
-      "kind": "lasso",
-      "lineIds": ["jp-東京都-12号線大江戸線"],
+      "name": "都営大江戸線 放射部",
+      "kind": "not-a-ring",
+      "lineIds": [
+        "jp-東京都-12号線大江戸線"
+      ],
       "canonicalWinding": null,
-      "packageRepresentation": "A lasso, not a ring: one open row of 38 stations from 光が丘 to 新宿, whose tail closes onto its own loop at 都庁前 rather than onto its own start. isLoop unset, so it never takes the `loop` part branch; displayPartsForLine cuts it where it retraces itself and the pieces are ordinary parts. Recorded here so that a later reviewer does not mistake the self-approach for a ring and give it a seam.",
+      "packageRepresentation": "Since 2026-09-10 (manual-corrections op B7) this row is only the radial half: one open row of 11 stations from 光が丘 to 都庁前, isLoop unset, sharing the 都庁前 station id (003690) with the closed-line ring jp-oedo-loop (jp-東京都-12号線大江戸線-2). It never takes the `loop` part branch and no longer approaches itself. Before that date the package stored the whole line as one 38-station lasso 光が丘→…→都庁前→…→新宿 whose tail closed onto its own loop at 都庁前 without an edge back to it; that shape is gone.",
       "evidence": [
-        "jp-2025.json: jp-東京都-12号線大江戸線 isLoop unset, stations 38, stations[0] = 光が丘 (003225), stations[-1] = 新宿 (003700)"
+        "jp-2025.json (2026-09-10): jp-東京都-12号線大江戸線 isLoop unset, stations 11, stations[0] = 光が丘 (003225), stations[-1] = 都庁前 (003690)",
+        "jp-2025.json (before 2026-09-10): the same id had 38 stations ending at 新宿 (003700) with no 新宿→都庁前 interval"
+      ],
+      "confidence": "A"
+    },
+    {
+      "id": "jp-oedo-loop",
+      "region": "jp",
+      "name": "都営大江戸線 環状部",
+      "kind": "closed-line",
+      "lineIds": [
+        "jp-東京都-12号線大江戸線-2"
+      ],
+      "seamStationCode": "003690",
+      "seamStationName": "都庁前",
+      "canonicalWinding": "positive-signed-area",
+      "orientation": {
+        "canonicalDirectionIs": "都庁前→新宿→六本木→大門→両国→飯田橋→新宿西口→都庁前 (Toei's 六本木・大門方面 departure from 都庁前, anticlockwise on a north-up map)",
+        "reverseDirectionIs": "都庁前→新宿西口→飯田橋→両国→大門→六本木→新宿→都庁前 (the 飯田橋・両国方面 departure, clockwise)",
+        "note": "The radial 光が丘—都庁前 row jp-東京都-12号線大江戸線 is a separate open row (see jp-oedo) that shares only the 都庁前 station id with this ring; it carries no isLoop and is not part of this entry."
+      },
+      "packageRepresentation": "isLoop = 1, 28 stations, 28 intervals — the 28th interval wraps 新宿西口 back to 都庁前, so the ring is closed in the package (stations[0] = 都庁前, stations[-1] = 新宿西口). Added 2026-09-10 by the manual-corrections manifest (op B7, split-loop) from jp-東京都-12号線大江戸線; the assembled ring was digitised clockwise and reversed to the canonical winding at apply time.",
+      "evidence": [
+        "jp-2025.json: jp-東京都-12号線大江戸線-2 isLoop = 1, stations = 28, segments = 28, stations[0] = 都庁前 (003690), stations[1] = 新宿 (003700), stations[-1] = 新宿西口 (003669)",
+        "measured 2026-09-10: the line's closed display part has signed area +3.65e-3 deg^2, i.e. the canonical winding, after apply.mjs's applySplitLoop reversal"
       ],
       "confidence": "A"
     },
@@ -81,7 +120,9 @@
       "region": "jp",
       "name": "山万 ユーカリが丘線",
       "kind": "closed-line",
-      "lineIds": ["jp-山万-ユーカリが丘線"],
+      "lineIds": [
+        "jp-山万-ユーカリが丘線"
+      ],
       "seamStationCode": "003316",
       "seamStationName": "中学校",
       "canonicalWinding": "positive-signed-area",
@@ -100,7 +141,9 @@
       "region": "jp",
       "name": "ディズニーリゾートライン",
       "kind": "closed-line",
-      "lineIds": ["jp-舞浜リゾートライン-ディズニーリゾートライン"],
+      "lineIds": [
+        "jp-舞浜リゾートライン-ディズニーリゾートライン"
+      ],
       "seamStationCode": "004058",
       "seamStationName": "東京ディズニーランド･ステーション",
       "canonicalWinding": "positive-signed-area",

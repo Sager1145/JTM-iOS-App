@@ -58,6 +58,30 @@ class DisplayNetworkTests(unittest.TestCase):
             ])
         return {region: rows}
 
+
+    @staticmethod
+    def load_region_payload(out, region):
+        """Decode every chunk of a v2 region blob and merge them back into
+        the same shape the v1 single-file region document had, so existing
+        assertions written against that shape keep working unchanged."""
+        manifest = json.loads((out / "manifest.json").read_bytes())
+        record = next(r for r in manifest["regions"] if r["region"] == region)
+        blob = (out / record["file"]).read_bytes()
+        lines_out = []
+        stations_out = []
+        for key, entry in manifest["lines"].items():
+            if entry["region"] != region or "chunk" not in entry:
+                continue
+            chunk = entry["chunk"]
+            doc = json.loads(blob[chunk["offset"]:chunk["offset"] + chunk["length"]])
+            lines_out.extend(doc["lines"])
+            stations_out.extend(doc["stations"])
+        return {
+            "format": display_network.FORMAT, "region": region,
+            "families": record.get("families", {}),
+            "lines": lines_out, "stations": stations_out,
+        }
+
     def test_a_long_interval_crosses_a_tile_boundary_in_one_piece(self):
         """The whole point of the derivative: geometry is never cut up.
 
@@ -93,12 +117,55 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "jp.json").read_text())
+            payload = self.load_region_payload(out, "jp")
             parts = [
                 part for line in payload["lines"]
                 if line["lineKey"] == "jp|jp-long" for part in line["parts"]
             ]
             self.assertEqual(parts, [[[139.7, 35.65], [139.9, 35.75]]])
+
+    def test_reviewed_chain_boundary_disables_previous_join(self):
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [{
+                "id": "branched", "name": "Branched", "operator": "Test Rail",
+                "rank": 0, "color": "#123456",
+                "stations": [
+                    ["west", "West", -74.0, 40.7, "West"],
+                    ["junction", "Junction", -73.9, 40.7, "Junction"],
+                    ["south", "South", -74.0, 40.6, "South"],
+                ],
+                "segments": [
+                    [10.0, 0, [[-74.0, 40.7], [-73.9, 40.7]]],
+                    [10.0, 1, [[-74.0, 40.6]]],
+                ],
+            }],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": {"us": [
+                ["branched", 0, 0, 0, 2, 10000.0, None, None, []],
+                ["branched", 1, 1, 1, 2, 10000.0, None, None, []],
+            ]},
+            "chainBoundariesByRegion": {
+                "us": [["branched", 0, 1, "junction"]],
+            },
+        }
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            display_network.build(rail, out)
+
+            fragments = self.load_region_payload(out, "us")["lines"]
+            self.assertEqual([row["chain"] for row in fragments], [0, 1])
+            self.assertNotIn("joinPrevious", fragments[0])
+            self.assertIs(fragments[1]["joinPrevious"], False)
 
     def test_every_shipped_region_gets_one_file_and_one_index_entry(self):
         package = {
@@ -135,14 +202,16 @@ class DisplayNetworkTests(unittest.TestCase):
                 list(display_network.REGIONS))
             self.assertEqual(
                 sorted(path.name for path in out.iterdir()),
-                sorted(["manifest.json"]
-                       + [f"{region}.json" for region in display_network.REGIONS]))
+                sorted(["manifest.json", "display-network-report.json"]
+                       + [f"{region}.display.bin" for region in display_network.REGIONS]
+                       + [f"{region}.stations.json" for region in display_network.REGIONS]))
             for record in manifest["regions"]:
                 raw = (out / record["file"]).read_bytes()
                 self.assertEqual(len(raw), record["bytes"])
                 self.assertEqual(
                     display_network.hashlib.sha256(raw).hexdigest(), record["sha256"])
-                self.assertEqual(json.loads(raw)["region"], record["region"])
+                if raw:
+                    self.assertEqual(json.loads(raw)["region"], record["region"])
             # Only Japan has geometry here, so only Japan has an extent — the
             # six empty regions must not advertise one, or the client would
             # read six national files for a camera off West Africa.
@@ -200,7 +269,7 @@ class DisplayNetworkTests(unittest.TestCase):
                 (rail / f"{region}-2025.json").write_text(json.dumps(copy))
             (rail / "display-lanes.json").write_text(json.dumps(lanes))
             manifest = display_network.build(rail, out)
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = [f for f in payload["lines"] if f["lineKey"] == "us|us-gate"]
             # Interval 2 was released, so nothing splits the chain any more:
             # all three intervals (A-B-C-D) bridge into one fragment. Interval
@@ -386,7 +455,7 @@ class DisplayNetworkTests(unittest.TestCase):
                 withheld_lines = {
                     line_id for line_id, entry in comparison.items()
                     if entry.get("displayBlockedIntervals")}
-                payload = json.loads((out / f"{region}.json").read_text())
+                payload = DisplayNetworkTests.load_region_payload(out, region)
                 fragments_by_line: dict[str, list[dict]] = {}
                 for fragment in payload["lines"]:
                     line_id = fragment["lineKey"].split("|", 1)[1]
@@ -715,7 +784,7 @@ class DisplayNetworkTests(unittest.TestCase):
             for record in manifest["regions"]:
                 raw = (out / record["file"]).read_bytes()
                 self.assertEqual(display_network.hashlib.sha256(raw).hexdigest(), record["sha256"])
-                payload = json.loads(raw)
+                payload = self.load_region_payload(out, record["region"])
                 for line in payload["lines"]:
                     self.assertTrue(all(len(part) >= 2 for part in line["parts"]))
 
@@ -751,7 +820,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             manifest = display_network.build(rail, out)
             payloads = [
-                json.loads((out / record["file"]).read_text())
+                self.load_region_payload(out, record["region"])
                 for record in manifest["regions"]
             ]
             fragments = [
@@ -835,7 +904,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             manifest = display_network.build(rail, out)
             self.assertIsNotNone(manifest)
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = sorted(
                 (f for f in payload["lines"] if f["lineKey"] == "us|branch-line"),
                 key=lambda f: f["chain"])
@@ -964,7 +1033,7 @@ class DisplayNetworkTests(unittest.TestCase):
                 [1])
             points = set()
             fragments = []
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             for drawn in payload["lines"]:
                 if drawn["lineKey"] == "us|us-test":
                     fragments.append(drawn)
@@ -1061,7 +1130,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = [drawn for drawn in payload["lines"]
                          if drawn["lineKey"] == "us|us-test"]
             self.assertEqual(len(fragments), 1)
@@ -1092,7 +1161,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = [drawn for drawn in payload["lines"]
                          if drawn["lineKey"] == "us|us-test"]
             spans = fragments[0]["withheld"]
@@ -1188,7 +1257,7 @@ class DisplayNetworkTests(unittest.TestCase):
             (rail / f"{region}-2025.json").write_text(json.dumps(copy))
         (rail / "display-lanes.json").write_text(json.dumps(lanes))
         display_network.build(rail, out)
-        payload = json.loads((out / "us.json").read_text())
+        payload = DisplayNetworkTests.load_region_payload(out, "us")
         return [drawn for drawn in payload["lines"]
                 if drawn["lineKey"] == "us|us-test"]
 
@@ -1337,7 +1406,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             self.assertNotIn(
                 "withheldDisplayIntervals", manifest["lines"]["us|us-test"])
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = [drawn for drawn in payload["lines"]
                          if drawn["lineKey"] == "us|us-test"]
             self.assertEqual(fragments[0]["withheld"], [])
@@ -1374,7 +1443,7 @@ class DisplayNetworkTests(unittest.TestCase):
             })
             stations = {}
             points = {"us|a": set(), "us|b": set()}
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             for station in payload["stations"]:
                 stations[station["id"]] = (station["lon"], station["lat"])
             for line in payload["lines"]:
@@ -1453,7 +1522,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             stations = {}
             points = {"us|a": set(), "us|b": set()}
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             for station in payload["stations"]:
                 stations[station["id"]] = (station["lon"], station["lat"])
             for line in payload["lines"]:
@@ -1863,7 +1932,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragments = {f["lineKey"]: f for f in payload["lines"]}
             b_follows = fragments["us|B"]["follows"]
             self.assertEqual(len(b_follows), 1)
@@ -1872,6 +1941,245 @@ class DisplayNetworkTests(unittest.TestCase):
             self.assertEqual(b_follows[0][3], 0)
             self.assertEqual(b_follows[0][4:6], [0.0, 1000.0])
             self.assertEqual(fragments["us|A"]["follows"], [])
+
+    def test_a_chunk_slice_decodes_standalone_and_chunks_tile_the_blob(self):
+        """Each manifest chunk range, sliced out of the region blob on its
+        own, decodes to a document naming only its own line's fragments and
+        stations; and the chunks for a region tile the whole blob exactly
+        (offsets contiguous from 0 to the blob's length, no gap or overlap)."""
+        line_a = self.line("A", "commuter", ("s1", -87.64, 41.88),
+                            [[-87.64, 41.88], [-87.60, 41.88]])
+        line_b = self.line("B", "commuter", ("s1", -87.64, 41.881),
+                            [[-87.64, 41.881], [-87.60, 41.881]])
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [line_a, line_b],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": self.whole_line_parts_by_region(
+                "us", line_a, line_b),
+            "followsByRegion": {"us": []},
+        }
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            display_network.build(rail, out)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            record = next(r for r in manifest["regions"] if r["region"] == "us")
+            blob = (out / record["file"]).read_bytes()
+            us_entries = [
+                (key, entry) for key, entry in manifest["lines"].items()
+                if entry["region"] == "us"
+            ]
+            self.assertEqual(len(us_entries), 2)
+
+            cursor = 0
+            for key, entry in sorted(
+                    us_entries, key=lambda item: item[1]["chunk"]["offset"]):
+                chunk = entry["chunk"]
+                self.assertEqual(chunk["offset"], cursor)
+                sliced = blob[chunk["offset"]:chunk["offset"] + chunk["length"]]
+                doc = json.loads(sliced)
+                self.assertEqual(doc["lineId"], entry["id"])
+                line_keys = {row["lineKey"] for row in doc["lines"]}
+                line_keys |= {row["lineKey"] for row in doc["stations"]}
+                self.assertEqual(line_keys, {key})
+                cursor += chunk["length"]
+            self.assertEqual(cursor, len(blob))
+
+    @staticmethod
+    def overview_fixture():
+        """Two lines in `us`: `line-a` qualifies for an overview chunk
+        (rank 0), and carries a withheld interval to check rescaling;
+        `line-b` does not (rank 2, minZoomMapLibre 7, non-Amtrak operator)."""
+        line_a = {
+            "id": "line-a", "name": "A", "operator": "Test Rail",
+            "kind": "regional", "rank": 0, "color": "#123456",
+            "stations": [
+                ["a1", "A1", -122.0, 48.0, "A1"],
+                ["a2", "A2", -121.9, 48.0, "A2"],
+                ["a3", "A3", -121.8, 48.1, "A3"],
+            ],
+            "segments": [
+                [8.0, 0, [[-122.0, 48.0], [-121.9, 48.0]]],
+                [12.0, 1, [[-121.8, 48.1]]],
+            ],
+        }
+        line_b = {
+            "id": "line-b", "name": "B", "operator": "Test Rail",
+            "kind": "regional", "rank": 2, "color": "#654321",
+            "stations": [
+                ["b1", "B1", -122.0, 48.05, "B1"],
+                ["b2", "B2", -121.999, 48.05, "B2"],
+            ],
+            "segments": [[0.1, 0, [[-122.0, 48.05], [-121.999, 48.05]]]],
+        }
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [line_a, line_b],
+            "geometrySource": {"officialGeometryComparison": {"byLine": {
+                "line-a": {"displayBlockedIntervals": [1]},
+            }}},
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": DisplayNetworkTests.whole_line_parts_by_region(
+                "us", line_a, line_b),
+        }
+        return package, lanes
+
+    def write_overview_fixture(self, root):
+        package, lanes = self.overview_fixture()
+        rail = Path(root) / "rail"
+        out = Path(root) / "network"
+        rail.mkdir()
+        for region in display_network.REGIONS:
+            copy = dict(package)
+            copy["country"] = region.upper()
+            copy["lines"] = package["lines"] if region == "us" else []
+            if region != "us":
+                copy["geometrySource"] = {}
+            (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+        (rail / "display-lanes.json").write_text(json.dumps(lanes))
+        return rail, out
+
+    def test_a_large_region_gets_overview_chunks_for_qualifying_lines_only(self):
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = self.write_overview_fixture(root)
+            display_network.build(rail, out, small_region_max_bytes=0)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            record = next(r for r in manifest["regions"] if r["region"] == "us")
+            self.assertEqual(record["loadStrategy"], "lines")
+
+            entry_a = manifest["lines"]["us|line-a"]
+            entry_b = manifest["lines"]["us|line-b"]
+            self.assertIn("overview", entry_a)
+            self.assertNotIn("overview", entry_b)
+
+    def test_the_overview_chunk_decodes_standalone_with_rescaled_withheld(self):
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = self.write_overview_fixture(root)
+            display_network.build(rail, out, small_region_max_bytes=0)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            record = next(r for r in manifest["regions"] if r["region"] == "us")
+            blob = (out / record["file"]).read_bytes()
+            entry_a = manifest["lines"]["us|line-a"]
+
+            overview = entry_a["overview"]
+            sliced = blob[overview["offset"]:overview["offset"] + overview["length"]]
+            doc = json.loads(sliced)
+            self.assertEqual(doc["detail"], "overview")
+            self.assertEqual(doc["lineId"], "line-a")
+            self.assertLessEqual(overview["vertexCount"], entry_a["vertexCount"])
+            for fragment in doc["lines"]:
+                self.assertNotIn("laneRows", fragment)
+                self.assertNotIn("follows", fragment)
+                self.assertNotIn("lane", fragment)
+                if "withheld" in fragment:
+                    total = fragment["totalMetres"]
+                    for span in fragment["withheld"]:
+                        self.assertLessEqual(span[0], total)
+                        self.assertLessEqual(span[1], total)
+
+    def test_full_and_overview_chunks_tile_the_blob_in_two_contiguous_bands(self):
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = self.write_overview_fixture(root)
+            display_network.build(rail, out, small_region_max_bytes=0)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            record = next(r for r in manifest["regions"] if r["region"] == "us")
+            blob = (out / record["file"]).read_bytes()
+            us_entries = [
+                entry for entry in manifest["lines"].values()
+                if entry["region"] == "us"
+            ]
+
+            full_cursor = 0
+            for entry in sorted(us_entries, key=lambda e: e["chunk"]["offset"]):
+                chunk = entry["chunk"]
+                self.assertEqual(chunk["offset"], full_cursor)
+                full_cursor += chunk["length"]
+            self.assertEqual(full_cursor, record["fullBytes"])
+
+            overview_entries = [e for e in us_entries if "overview" in e]
+            self.assertTrue(overview_entries)
+            overview_cursor = record["fullBytes"]
+            for entry in sorted(
+                    overview_entries, key=lambda e: e["overview"]["offset"]):
+                overview = entry["overview"]
+                self.assertEqual(overview["offset"], overview_cursor)
+                overview_cursor += overview["length"]
+            self.assertEqual(overview_cursor, len(blob))
+
+    def test_a_small_region_loads_whole_with_no_overview_chunks(self):
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = self.write_overview_fixture(root)
+            display_network.build(rail, out)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            record = next(r for r in manifest["regions"] if r["region"] == "us")
+            self.assertEqual(record["loadStrategy"], "whole")
+
+            for entry in manifest["lines"].values():
+                if entry["region"] == "us":
+                    self.assertNotIn("overview", entry)
+
+    def test_depends_on_lists_the_followed_canonical_line_and_nothing_else(self):
+        """B follows A, so B's manifest entry carries `dependsOn: ["A"]`; A,
+        which nothing follows, carries `dependsOn: []`."""
+        line_a = {
+            "id": "A", "name": "A", "operator": "Test Rail", "kind": "commuter",
+            "rank": 0, "color": "#123456",
+            "stations": [
+                ["a1", "A1", -87.64, 41.88, "A1"],
+                ["a2", "A2", -87.60, 41.88, "A2"],
+            ],
+            "segments": [[4.0, 0, [[-87.64, 41.88], [-87.60, 41.88]]]],
+        }
+        line_b = {
+            "id": "B", "name": "B", "operator": "Test Rail", "kind": "commuter",
+            "rank": 0, "color": "#654321",
+            "stations": [
+                ["b1", "B1", -87.64, 41.881, "B1"],
+                ["b2", "B2", -87.60, 41.881, "B2"],
+            ],
+            "segments": [[4.0, 0, [[-87.64, 41.881], [-87.60, 41.881]]]],
+        }
+        package = {
+            "format": "compact-v1", "version": "test", "country": "US",
+            "lines": [line_a, line_b],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"us": []},
+            "partsByRegion": self.whole_line_parts_by_region(
+                "us", line_a, line_b),
+            "followsByRegion": {"us": [["B", 0, 0.0, 1000.0, "A", 0, 0.0, 1000.0]]},
+        }
+        with tempfile.TemporaryDirectory() as root:
+            rail = Path(root) / "rail"
+            out = Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "us").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+
+            display_network.build(rail, out)
+
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            self.assertEqual(manifest["lines"]["us|B"]["dependsOn"], ["A"])
+            self.assertEqual(manifest["lines"]["us|A"]["dependsOn"], [])
 
     def test_family_windows_are_carried_and_their_colour_resolved(self):
         """`familyWindowsByRegion` (the web agent's `display-lanes.json`,
@@ -1920,7 +2228,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "us.json").read_text())
+            payload = self.load_region_payload(out, "us")
             fragment = next(
                 f for f in payload["lines"] if f["lineKey"] == "us|tenant-line")
             self.assertEqual(len(fragment["familyWindows"]), 1)
@@ -1932,7 +2240,7 @@ class DisplayNetworkTests(unittest.TestCase):
                 payload["families"]["test-family"],
                 {"color": "#0039a6", "colorDark": "#004ad6"})
             # An untouched region carries no family palette at all.
-            japan = json.loads((out / "jp.json").read_text())
+            japan = self.load_region_payload(out, "jp")
             self.assertEqual(japan["families"], {})
 
     def test_an_orphan_family_window_raises_instead_of_being_dropped(self):
@@ -2048,7 +2356,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "jp.json").read_text())
+            payload = self.load_region_payload(out, "jp")
             self.assertEqual(
                 payload["families"]["shared-family"],
                 {"color": "#0039a6", "colorDark": "#004ad6"})
@@ -2195,7 +2503,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "jp.json").read_text())
+            payload = self.load_region_payload(out, "jp")
             stations = {s["id"]: s for s in payload["stations"]}
             self.assertEqual(stations["jp-loop-line:a"]["slot"], [0, 0])
             # The interior stations are unaffected — plain exact matches.
@@ -2296,7 +2604,7 @@ class DisplayNetworkTests(unittest.TestCase):
 
             display_network.build(rail, out)
 
-            payload = json.loads((out / "jp.json").read_text())
+            payload = self.load_region_payload(out, "jp")
             fragments = [
                 f for f in payload["lines"] if f["lineKey"] == "jp|jp-split-line"]
             self.assertTrue(fragments)

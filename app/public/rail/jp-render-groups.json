@@ -1,6 +1,6 @@
 {
   "format": "jtm-jp-render-groups-v2",
-  "reviewedAt": "2026-09-04",
+  "reviewedAt": "2026-09-10",
   "scope": [
     "jp"
   ],
@@ -222,10 +222,12 @@
     "jp-西日本旅客鉄道-阪和線-2": "西日本旅客鉄道:阪和線",
     "jp-豊橋鉄道-東田本線": "豊橋鉄道:東田本線",
     "jp-豊橋鉄道-東田本線-2": "豊橋鉄道:東田本線",
-    "jp-近畿日本鉄道-橿原線": "近畿日本鉄道:橿原線",
-    "jp-近畿日本鉄道-橿原線-2": "近畿日本鉄道:橿原線",
     "jp-阪急電鉄-今津線": "阪急電鉄:今津線",
-    "jp-阪急電鉄-今津線-2": "阪急電鉄:今津線"
+    "jp-阪急電鉄-今津線-2": "阪急電鉄:今津線",
+    "jp-東京都-12号線大江戸線": "東京都:12号線大江戸線",
+    "jp-東京都-12号線大江戸線-2": "東京都:12号線大江戸線",
+    "jp-東武鉄道-伊勢崎線": "東武鉄道:伊勢崎線",
+    "jp-東武鉄道-伊勢崎線-2": "東武鉄道:伊勢崎線"
   },
   "byLineIdReasons": [
     {
@@ -243,6 +245,7 @@
         "四国旅客鉄道:予讃線",
         "富山地方鉄道:本線",
         "山万:ユーカリが丘線",
+        "東京都:12号線大江戸線",
         "東日本旅客鉄道:上越線",
         "東日本旅客鉄道:中央線",
         "東日本旅客鉄道:京葉線",
@@ -256,6 +259,7 @@
         "東日本旅客鉄道:総武線",
         "東日本旅客鉄道:羽越線",
         "東日本旅客鉄道:鶴見線",
+        "東武鉄道:伊勢崎線",
         "東武鉄道:小泉線",
         "東海旅客鉄道:東海道線",
         "神戸新交通:ポートアイランド線",
@@ -268,7 +272,6 @@
         "西日本旅客鉄道:東海道線",
         "西日本旅客鉄道:阪和線",
         "豊橋鉄道:東田本線",
-        "近畿日本鉄道:橿原線",
         "阪急電鉄:今津線"
       ],
       "lineIds": [
@@ -302,6 +305,8 @@
         "jp-富山地方鉄道-本線-2",
         "jp-山万-ユーカリが丘線",
         "jp-山万-ユーカリが丘線-2",
+        "jp-東京都-12号線大江戸線",
+        "jp-東京都-12号線大江戸線-2",
         "jp-東日本旅客鉄道-上越線",
         "jp-東日本旅客鉄道-上越線-2",
         "jp-東日本旅客鉄道-上越線-p1",
@@ -341,6 +346,8 @@
         "jp-東日本旅客鉄道-鶴見線",
         "jp-東日本旅客鉄道-鶴見線-2",
         "jp-東日本旅客鉄道-鶴見線-3",
+        "jp-東武鉄道-伊勢崎線",
+        "jp-東武鉄道-伊勢崎線-2",
         "jp-東武鉄道-小泉線",
         "jp-東武鉄道-小泉線-2",
         "jp-東海旅客鉄道-東海道線",
@@ -367,8 +374,6 @@
         "jp-西日本旅客鉄道-阪和線-2",
         "jp-豊橋鉄道-東田本線",
         "jp-豊橋鉄道-東田本線-2",
-        "jp-近畿日本鉄道-橿原線",
-        "jp-近畿日本鉄道-橿原線-2",
         "jp-阪急電鉄-今津線",
         "jp-阪急電鉄-今津線-2"
       ],
@@ -833,18 +838,6 @@
       "name": "豊橋鉄道 東田本線",
       "why": "2 rows in jp-2025.json carry the same operator and the same official N02 line name 東田本線; the extra rows are this one railway's own geometry parts (the -2/-3/... branch-service splits and the -p1/-p2 disjoint-geometry pieces the package build emits), not separate published lines. They already share one railwayIdentity (jp-豊橋鉄道-東田本線) and one published colour. Naming them as one family de-duplicates the trunk they share instead of drawing this railway twice in two parallel lanes — japan_parallel_rail_rendering_rules.md merge table, 'duplicated branch shapes on the trunk'. It does NOT merge it with anything else: under the route-preserving profile the render key is operator + official line name, so a different published line of the same operator in the same colour stays a separate stroke."
     },
-    "近畿日本鉄道:橿原線": {
-      "color": "#b78201",
-      "colorDark": "#fab202",
-      "colorSource": {
-        "url": "https://ja.wikipedia.org/wiki/日本の鉄道ラインカラー一覧",
-        "name": "近畿日本鉄道 own published line colour for 橿原線, as recorded on every member row of this family in jp-2025.json"
-      },
-      "networkId": "近畿日本鉄道",
-      "mode": "commuter",
-      "name": "近畿日本鉄道 橿原線",
-      "why": "2 rows in jp-2025.json carry the same operator and the same official N02 line name 橿原線; the extra rows are this one railway's own geometry parts (the -2/-3/... branch-service splits and the -p1/-p2 disjoint-geometry pieces the package build emits), not separate published lines. They already share one railwayIdentity (jp-近畿日本鉄道-橿原線) and one published colour. Naming them as one family de-duplicates the trunk they share instead of drawing this railway twice in two parallel lanes — japan_parallel_rail_rendering_rules.md merge table, 'duplicated branch shapes on the trunk'. It does NOT merge it with anything else: under the route-preserving profile the render key is operator + official line name, so a different published line of the same operator in the same colour stays a separate stroke."
-    },
     "阪急電鉄:今津線": {
       "color": "#007ac4",
       "colorDark": "#007ac4",
@@ -856,6 +849,30 @@
       "mode": "commuter",
       "name": "阪急電鉄 今津線",
       "why": "2 rows in jp-2025.json carry the same operator and the same official N02 line name 今津線; the extra rows are this one railway's own geometry parts (the -2/-3/... branch-service splits and the -p1/-p2 disjoint-geometry pieces the package build emits), not separate published lines. They already share one railwayIdentity (jp-阪急電鉄-今津線) and one published colour. Naming them as one family de-duplicates the trunk they share instead of drawing this railway twice in two parallel lanes — japan_parallel_rail_rendering_rules.md merge table, 'duplicated branch shapes on the trunk'. It does NOT merge it with anything else: under the route-preserving profile the render key is operator + official line name, so a different published line of the same operator in the same colour stays a separate stroke."
+    },
+    "東京都:12号線大江戸線": {
+      "color": "#ce045b",
+      "colorDark": "#ce045b",
+      "colorSource": {
+        "url": "https://ja.wikipedia.org/wiki/日本の鉄道ラインカラー一覧",
+        "name": "東京都 own published line colour for 12号線大江戸線, as recorded on every member row of this family in jp-2025.json"
+      },
+      "networkId": "東京都",
+      "mode": "metro",
+      "name": "東京都 12号線大江戸線",
+      "why": "2 rows in jp-2025.json carry the same operator and the same official N02 line name 12号線大江戸線; the extra rows are this one railway's own geometry parts (the -2/-3/... branch-service splits and the -p1/-p2 disjoint-geometry pieces the package build emits), not separate published lines. They already share one railwayIdentity (jp-東京都-12号線大江戸線) and one published colour. Naming them as one family de-duplicates the trunk they share instead of drawing this railway twice in two parallel lanes — japan_parallel_rail_rendering_rules.md merge table, 'duplicated branch shapes on the trunk'. It does NOT merge it with anything else: under the route-preserving profile the render key is operator + official line name, so a different published line of the same operator in the same colour stays a separate stroke."
+    },
+    "東武鉄道:伊勢崎線": {
+      "color": "#0067c0",
+      "colorDark": "#0067c0",
+      "colorSource": {
+        "url": "https://ja.wikipedia.org/wiki/日本の鉄道ラインカラー一覧",
+        "name": "東武鉄道 own published line colour for 伊勢崎線, as recorded on every member row of this family in jp-2025.json"
+      },
+      "networkId": "東武鉄道",
+      "mode": "commuter",
+      "name": "東武鉄道 伊勢崎線",
+      "why": "2 rows in jp-2025.json carry the same operator and the same official N02 line name 伊勢崎線; the extra rows are this one railway's own geometry parts (the -2/-3/... branch-service splits and the -p1/-p2 disjoint-geometry pieces the package build emits), not separate published lines. They already share one railwayIdentity (jp-東武鉄道-伊勢崎線) and one published colour. Naming them as one family de-duplicates the trunk they share instead of drawing this railway twice in two parallel lanes — japan_parallel_rail_rendering_rules.md merge table, 'duplicated branch shapes on the trunk'. It does NOT merge it with anything else: under the route-preserving profile the render key is operator + official line name, so a different published line of the same operator in the same colour stays a separate stroke."
     }
   }
 }
