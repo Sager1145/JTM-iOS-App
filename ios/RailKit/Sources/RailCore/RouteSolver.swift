@@ -19,9 +19,13 @@ public enum RouteSolver {
 
     public struct TrainPolicy: Sendable, Equatable {
         public var institutionFilterMode: String
+        /// ADR 0011: the ride's date, `YYYY-MM-DD`, or `nil` for an undated
+        /// ride. Governs which rail-history edges `dijkstra` may use.
+        public var rideDate: String?
 
-        public init(institutionFilterMode: String = "soft") {
+        public init(institutionFilterMode: String = "soft", rideDate: String? = nil) {
             self.institutionFilterMode = institutionFilterMode
+            self.rideDate = rideDate
         }
     }
 
@@ -36,13 +40,17 @@ public enum RouteSolver {
         public var preferredOperatorNames: [String]
         public var allowedInstitutionTypeCodes: [String]?
         public var institutionFilterMode: String
+        /// ADR 0011: the ride's ISO day, used to keep retired railway out of
+        /// the graph for rides after its abolition. `nil` = undated ride.
+        public var rideDate: String?
 
         public init(
             id: String = "", number: String = "", trainType: String = "",
             company: String = "", origin: String = "", destination: String = "",
             preferredLineNames: [String] = [], preferredOperatorNames: [String] = [],
             allowedInstitutionTypeCodes: [String]? = nil,
-            institutionFilterMode: String = "soft"
+            institutionFilterMode: String = "soft",
+            rideDate: String? = nil
         ) {
             self.id = id
             self.number = number
@@ -54,9 +62,12 @@ public enum RouteSolver {
             self.preferredOperatorNames = preferredOperatorNames
             self.allowedInstitutionTypeCodes = allowedInstitutionTypeCodes
             self.institutionFilterMode = institutionFilterMode
+            self.rideDate = rideDate
         }
 
-        public var policy: TrainPolicy { .init(institutionFilterMode: institutionFilterMode) }
+        public var policy: TrainPolicy {
+            .init(institutionFilterMode: institutionFilterMode, rideDate: rideDate)
+        }
     }
 
     public struct SegmentHints: Sendable, Equatable {
@@ -399,8 +410,16 @@ public enum RouteSolver {
             var groupCode: String
             var institutionTypeCode: String
             var order: Int
+            /// ADR 0011: the station's own `valid_from`/`valid_to`.
+            var validFrom: String? = nil
+            var validTo: String? = nil
         }
         struct GroupKey: Hashable { var units: [UInt16] }
+
+        func validityBound(_ feature: Stations.Feature, _ name: String) -> String? {
+            if case .string(let text)? = feature.properties[name], !text.isEmpty { return text }
+            return nil
+        }
         var groups: [GroupKey: [String: Info]] = [:]
         var groupOrder: [GroupKey] = []
 
@@ -434,7 +453,9 @@ public enum RouteSolver {
                         stationName: Stations.stationName(feature) ?? "",
                         groupCode: Stations.stationGroupCode(feature) ?? "",
                         institutionTypeCode: Stations.stationInstitutionTypeCode(feature),
-                        order: nextOrder)
+                        order: nextOrder,
+                        validFrom: validityBound(feature, "valid_from"),
+                        validTo: validityBound(feature, "valid_to"))
                     if let existing = groups[groupKey]![nearest.key] {
                         if nearest.distance < existing.distance {
                             var replacement = info
@@ -475,10 +496,15 @@ public enum RouteSolver {
                         institutionTypeCodes: codes,
                         stationName: a.stationName,
                         groupCode: a.groupCode)
+                    // ADR 0011: a transfer is valid only while both ends'
+                    // stations are, so the edge carries the intersection.
+                    let validFrom = [a.validFrom, b.validFrom].compactMap { $0 }.max()
+                    let validTo = [a.validTo, b.validTo].compactMap { $0 }.min()
                     let edge = RouteGraph.Edge(
                         to: b.key, length: max(gap + 180, 0.01),
                         institutionTypeCode: "", railwayClassCode: "",
-                        lineName: "", operator: "", connector: connector)
+                        lineName: "", operator: "", connector: connector,
+                        validFrom: validFrom, validTo: validTo)
                     graph.adjacency[a.key, default: []].append(edge)
                     var reverse = edge
                     reverse.to = a.key
@@ -1181,6 +1207,8 @@ public enum RouteSolver {
         var remaining = targetKeys
         var settled: [(targetKey: String, settledCost: Double)] = []
 
+        // ADR 0011: shape-check the ride date once, not per edge.
+        let rideDate: String? = train.rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil }
         while !heap.isEmpty && !remaining.isEmpty {
             guard let current = heap.pop() else { break }
             guard visited.insert(current.key).inserted else { continue }
@@ -1190,7 +1218,9 @@ public enum RouteSolver {
             for (edgeIndex, edge) in (graph.adjacency[current.key] ?? []).enumerated() {
                 guard edgeMatchesAllowedCodes(
                     edge, allowedCodes: allowedCodes, train: train, hints: hints),
-                    edgeMatchesRequiredHints(edge, hints: hints)
+                    edgeMatchesRequiredHints(edge, hints: hints),
+                    RouteGraph.RailValidity.isValid(
+                        validFrom: edge.validFrom, validTo: edge.validTo, onPlainDay: rideDate)
                 else { continue }
 
                 var weight = edge.length

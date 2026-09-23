@@ -108,6 +108,8 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
         line_name: stationLineName(feature),
         operator: stationOperator(feature),
         institution_type_code: stationInstitutionTypeCode(feature),
+        valid_from: feature.properties?.valid_from ?? null,
+        valid_to: feature.properties?.valid_to ?? null,
       });
     }
   }
@@ -148,6 +150,16 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
           .filter(Boolean),
       ),
     ];
+    // ADR 0011: a transfer exists only while BOTH platforms do — the later
+    // valid_from and the earlier valid_to (mirrors Swift's connector overlap).
+    const laterFrom = [infoA?.valid_from, infoB?.valid_from]
+      .filter((v) => typeof v === "string" && v !== "")
+      .sort()
+      .pop() ?? null;
+    const earlierTo = [infoA?.valid_to, infoB?.valid_to]
+      .filter((v) => typeof v === "string" && v !== "")
+      .sort()
+      .shift() ?? null;
     const baseEdge = {
       to: b,
       length: Math.max(gap + STATION_TRANSFER_EDGE_PENALTY, 0.01),
@@ -156,6 +168,8 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
       railway_class_code: "",
       line_name: "",
       operator: "",
+      valid_from: laterFrom,
+      valid_to: earlierTo,
       is_station_connector: true,
       station_name: infoA?.station_name || "",
       n02_group_code: infoA?.n02_group_code || "",
@@ -1203,6 +1217,7 @@ function dijkstraFromCandidateSources(
     }
     const edges = graph.adjacency.get(current.key) || [];
     edges.forEach((edge) => {
+      if (!isRailValid(edge.valid_from, edge.valid_to, train?.date)) return;
       if (!edgeMatchesAllowedCodes(edge, allowedCodes, train, segmentHints))
         return;
       if (!edgeMatchesRequiredHints(edge, segmentHints)) return;

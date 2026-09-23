@@ -140,6 +140,7 @@ struct RouteGraphParityTests {
         struct TrainProjection: Decodable {
             let id: String
             let number: String?
+            let date: String?
             let origin: String?
             let destination: String?
             let train_type: String?
@@ -543,7 +544,8 @@ struct RouteGraphParityTests {
 
             let context = try #require(
                 RouteGraph.solveContext(
-                    train: train, routeSections: sections, country: item.country))
+                    train: train, routeSections: sections, country: item.country,
+                    rideDate: item.train.date))
             #expect(context.templateKey == item.templateKey, "template key — \(where_)")
             #expect(context.allowedCodes == item.allowedCodes, "allowed codes — \(where_)")
             // The one that is a persisted format: a route cache written by

@@ -1,6 +1,7 @@
 import Foundation
 import MapKit
 import Observation
+import os
 import RailCore
 import RailPresentation
 
@@ -689,10 +690,16 @@ final class RiddenRouteStore {
                     forResource: Region.countrySuffixed("stations", country: region.code),
                     withExtension: "json")
             else { throw LoadError.missingSolverResources(region.code) }
-            sections += try RouteGraph.SectionFeatureCollection
+            var regionSections = try RouteGraph.SectionFeatureCollection
                 .load(contentsOf: sectionsURL).features
-            stationFeatures += try Stations.FeatureCollection
+            var regionStations = try Stations.FeatureCollection
                 .load(contentsOf: stationsURL).features
+            // ADR 0011: fold the region's dated history overlay in before the
+            // graph and the station-transfer connectors see the features.
+            applyRailHistory(
+                region: region.code, sections: &regionSections, stations: &regionStations)
+            sections += regionSections
+            stationFeatures += regionStations
         }
         let stationCollection = Stations.FeatureCollection(features: stationFeatures)
         let stationIndex = Stations.Index(stationCollection)
@@ -805,7 +812,56 @@ final class RiddenRouteStore {
             preferredLineNames: train.routePolicy?.preferredLineNames ?? [],
             preferredOperatorNames: train.routePolicy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: train.routePolicy?.allowedInstitutionTypeCodes,
-            institutionFilterMode: train.routePolicy?.institutionFilterMode ?? "soft")
+            institutionFilterMode: train.routePolicy?.institutionFilterMode ?? "soft",
+            rideDate: Dates.normalizeDateString(train.date))
+    }
+
+    private nonisolated static let routesLog = Logger(subsystem: "com.JRM.RailMap", category: "routes")
+
+    private nonisolated static func railHistoryURL(region: String) -> URL? {
+        Bundle.main.url(
+            forResource: Region.countrySuffixed("rail-history", country: region),
+            withExtension: "json")
+    }
+
+    /// ADR 0011: stamps the region's `rail-history<suffix>.json` overlay onto
+    /// its decoded sections/stations. A missing overlay is a no-op; a broken
+    /// one is logged and the region solves without it.
+    private nonisolated static func applyRailHistory(
+        region: String,
+        sections: inout [RouteGraph.SectionFeature],
+        stations: inout [Stations.Feature]
+    ) {
+        guard let url = railHistoryURL(region: region) else { return }
+        let overlay: RailHistoryOverlay
+        do {
+            overlay = try RailHistoryOverlay.load(from: url)
+        } catch {
+            routesLog.error(
+                "rail-history \(region, privacy: .public) failed to load: \(String(describing: error), privacy: .public)")
+            return
+        }
+        let report = RailHistory.apply(overlay, sections: &sections, stations: &stations)
+        routesLog.info(
+            "rail-history \(region, privacy: .public) rev \(overlay.revision, privacy: .public): +\(report.sectionsAdded) sections, +\(report.stationsAdded) stations, \(report.retirementsApplied.count) retirements applied")
+        if !report.unmatchedRetirements.isEmpty {
+            routesLog.error(
+                "rail-history \(region, privacy: .public) unmatched retirements: \(report.unmatchedRetirements.joined(separator: ", "), privacy: .public)")
+        }
+    }
+
+    /// Memoised per region: the overlay's `revision`, folded into the route
+    /// cache key so a changed overlay invalidates cached solves. `nil` when
+    /// the region ships no overlay (or it fails to decode).
+    private nonisolated static let historyRevisionCache = OSAllocatedUnfairLock(
+        initialState: [String: String?]())
+
+    private nonisolated static func railHistoryRevision(region: String) -> String? {
+        if let cached = historyRevisionCache.withLock({ $0[region] }) { return cached }
+        let revision = railHistoryURL(region: region)
+            .flatMap { try? RailHistoryOverlay.load(from: $0) }?.revision
+        historyRevisionCache.withLock { $0[region] = .some(revision) }
+        return revision
     }
 
     private nonisolated static func routeTemplateDigest(
@@ -851,7 +907,9 @@ final class RiddenRouteStore {
             allowedInstitutionTypeCodes: policy?.allowedInstitutionTypeCodes,
             institutionFilterMode: policy?.institutionFilterMode)
         guard let context = RouteGraph.solveContext(
-            train: cacheTrain, routeSections: sections, country: country) else { return nil }
+            train: cacheTrain, routeSections: sections, country: country,
+            rideDate: Dates.normalizeDateString(raw.date),
+            historyRevision: railHistoryRevision(region: country)) else { return nil }
         return RouteGraph.keyDigest(context.cacheKey)
     }
 

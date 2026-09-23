@@ -222,7 +222,7 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // by up to 227 m, and matching no N02 edge at all. The geometry was redrawn
 // off the complete display line, so every cache still holding a chord is
 // stale.
-const ROUTE_SOLVER_CACHE_VERSION = "19";
+const ROUTE_SOLVER_CACHE_VERSION = "20";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],

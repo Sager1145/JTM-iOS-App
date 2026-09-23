@@ -155,6 +155,24 @@ const ROUTE_SECTION_CONTINUITY_STATION_METERS = 60;
 const ROUTE_SECTION_STITCH_MAX_METERS =
   STATION_TRANSFER_MAX_NODE_GAP_METERS;
 
+// Half-open validity interval [valid_from, valid_to) on ISO YYYY-MM-DD
+// strings, per docs/rail-history.md and ADR 0011. An undated ride (rideDate
+// null/empty/not an ISO date) may only use edges with no valid_to — exactly
+// today's behaviour. A dated ride may use an edge iff
+// valid_from <= rideDate < valid_to, with a missing bound unbounded on that
+// side. Plain string comparison is correct for zero-padded ISO dates.
+function isRailValid(validFrom, validTo, rideDate) {
+  const d =
+    typeof rideDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(rideDate)
+      ? rideDate
+      : null;
+  // "" bounds count as missing, like Swift's validityBound.
+  const from = validFrom == null || validFrom === "" ? null : validFrom;
+  const to = validTo == null || validTo === "" ? null : validTo;
+  if (d === null) return to === null;
+  return (from === null || from <= d) && (to === null || d < to);
+}
+
 // Build every input that identifies one deterministic route solve. The
 // precompute exporter calls this same helper inside its VM sandbox, so cache-key
 // construction cannot drift between the browser and the static build.
@@ -181,7 +199,15 @@ function buildTrainRouteSolveContext(train) {
   ]
     .sort()
     .join("|");
-  let cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}`;
+  const rideDate =
+    typeof train.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(train.date)
+      ? train.date
+      : null;
+  const historyRevision =
+    typeof getRailHistoryRevision === "function"
+      ? getRailHistoryRevision()
+      : null;
+  let cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}|date:${rideDate || "none"}|history:${historyRevision || "none"}`;
   // inferSectionRouteConstraints derives per-section line/operator hints from
   // id/number/train_type/company/origin/destination (Sonic, Haruka, ...). Two
   // trains with identical sections/type/company but different id/number/
@@ -1051,6 +1077,8 @@ function buildRouteGraphFromFeatures(features) {
       ),
       line_name: properties?.N02_003 || properties?.line_name || "",
       operator: properties?.N02_004 || properties?.operator || "",
+      valid_from: properties?.valid_from ?? null,
+      valid_to: properties?.valid_to ?? null,
     };
     adjacency.get(a).push(edge);
     adjacency.get(b).push({ ...edge, to: a });

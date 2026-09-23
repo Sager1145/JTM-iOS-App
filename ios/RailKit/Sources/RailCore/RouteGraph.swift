@@ -174,8 +174,9 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns.
-    public static let routeSolverCacheVersion = "19"
+    /// parameter here rather than a constant this file owns. Bumped to "20"
+    /// for ADR 0011 (dated rail-history validity joins the cache key).
+    public static let routeSolverCacheVersion = "20"
 
     /// The operators a `company` field names, split on `/`.
     ///
@@ -350,7 +351,9 @@ public enum RouteGraph {
         train: CacheKeyTrain,
         routeSections: [RouteSection],
         country: String,
-        cacheVersion: String = routeSolverCacheVersion
+        cacheVersion: String = routeSolverCacheVersion,
+        rideDate: String? = nil,
+        historyRevision: String? = nil
     ) -> SolveContext? {
         guard !routeSections.isEmpty else { return nil }
         let templateKey = templateKey(sections: routeSections)
@@ -365,8 +368,13 @@ public enum RouteGraph {
         // shipped Taiwanese store.
         policyParts.append("institution_filter:\(train.institutionFilterMode ?? "soft")")
         let policyKey = jsSorted(policyParts).joined(separator: "|")
+        // Mirrors the JavaScript literally: `/^\d{4}-\d{2}-\d{2}$/` on the raw
+        // string, NOT `normalizeDateString` — a slash-dated or unbalanced
+        // value is "none" on both sides, so the persisted key agrees.
+        let normalizedRideDate = rideDate.flatMap { Self.isPlainISODay($0) ? $0 : nil }
         var cacheKey =
             "solver:\(cacheVersion)|\(allowedCodes.joined(separator: ","))|\(policyKey)|\(templateKey)"
+            + "|date:\(normalizedRideDate ?? "none")|history:\(historyRevision ?? "none")"
         let inferContext = RouteSolver.TrainContext(
             id: train.id, number: train.number, trainType: train.trainType,
             company: train.company, origin: train.origin, destination: train.destination)
@@ -389,6 +397,16 @@ public enum RouteGraph {
             policyKey: policyKey, cacheKey: cacheKey)
     }
 
+    /// `/^\d{4}-\d{2}-\d{2}$/` — shape only, no calendar validation.
+    static func isPlainISODay(_ value: String) -> Bool {
+        let scalars = Array(value.unicodeScalars)
+        guard scalars.count == 10, scalars[4] == "-", scalars[7] == "-" else { return false }
+        for index in [0, 1, 2, 3, 5, 6, 8, 9] where !(scalars[index].value >= 48 && scalars[index].value <= 57) {
+            return false
+        }
+        return true
+    }
+
     // =====================================================================
     //  §27 — graph construction
     // =====================================================================
@@ -405,15 +423,22 @@ public enum RouteGraph {
         public var `operator`: String
         public var institutionTypeCode: String
         public var railwayClassCode: String
+        /// ADR 0011 validity bounds (`valid_from`/`valid_to`), half-open
+        /// `[validFrom, validTo)`. `nil` means unbounded on that side.
+        public var validFrom: String?
+        public var validTo: String?
 
         public init(
             lineName: String = "", operator: String = "",
-            institutionTypeCode: String = "", railwayClassCode: String = ""
+            institutionTypeCode: String = "", railwayClassCode: String = "",
+            validFrom: String? = nil, validTo: String? = nil
         ) {
             self.lineName = lineName
             self.operator = `operator`
             self.institutionTypeCode = institutionTypeCode
             self.railwayClassCode = railwayClassCode
+            self.validFrom = validFrom
+            self.validTo = validTo
         }
     }
 
@@ -466,6 +491,40 @@ public enum RouteGraph {
         }
     }
 
+    /// ADR 0011: whether an edge's `[validFrom, validTo)` interval covers a
+    /// ride's date.
+    public enum RailValidity {
+        /// - `rideDate == nil`: undated ride, valid iff there is no `validTo`
+        ///   (today's behaviour, unchanged).
+        /// - `rideDate` a valid ISO `YYYY-MM-DD` day: valid iff
+        ///   `validFrom == nil || validFrom <= rideDate` and
+        ///   `validTo == nil || rideDate < validTo`, compared as strings.
+        /// - `rideDate` present but not plain `YYYY-MM-DD` shape
+        ///   (``RouteGraph/isPlainISODay(_:)``, the JS regex mirror): treated
+        ///   as `nil`. Shape only — "2019-13-45" counts as dated and compares
+        ///   as a string, exactly like `isRailValid` in app-route-graph.js.
+        /// - An empty-string bound is treated as `nil`.
+        public static func isValid(validFrom: String?, validTo: String?, on rideDate: String?) -> Bool {
+            if (validFrom?.isEmpty ?? true) && (validTo?.isEmpty ?? true) { return true }
+            return isValid(
+                validFrom: validFrom, validTo: validTo,
+                onPlainDay: rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil })
+        }
+
+        /// ``isValid(validFrom:validTo:on:)`` for a caller that has already
+        /// shape-checked the ride date once (Dijkstra's hot loop): `plainDay`
+        /// must be `nil` or pass ``RouteGraph/isPlainISODay(_:)``.
+        static func isValid(validFrom: String?, validTo: String?, onPlainDay plainDay: String?) -> Bool {
+            let from = validFrom.flatMap { $0.isEmpty ? nil : $0 }
+            let to = validTo.flatMap { $0.isEmpty ? nil : $0 }
+            if from == nil && to == nil { return true }
+            guard let date = plainDay else { return to == nil }
+            if let from, from > date { return false }
+            if let to, date >= to { return false }
+            return true
+        }
+    }
+
     public struct Edge: Sendable, Equatable {
         public var to: String
         /// Metres, floored at 0.01 so a zero-length edge cannot make a
@@ -477,6 +536,10 @@ public enum RouteGraph {
         public var `operator`: String
         /// Non-nil only on the solver's station-transfer edges.
         public var connector: StationConnector?
+        /// ADR 0011 validity bounds, carried from the section (or, for a
+        /// station-transfer connector, from the station) this edge came from.
+        public var validFrom: String? = nil
+        public var validTo: String? = nil
     }
 
     /// What is known about the railways meeting at one node. Used only for
@@ -586,7 +649,9 @@ public enum RouteGraph {
                 railwayClassCode: properties.railwayClassCode,
                 lineName: properties.lineName,
                 operator: properties.operator,
-                connector: nil)
+                connector: nil,
+                validFrom: properties.validFrom,
+                validTo: properties.validTo)
             graph.adjacency[keyA]!.append(edge)
             var reverse = edge
             reverse.to = keyA
@@ -1101,6 +1166,8 @@ extension RouteGraph.SectionFeature: Decodable {
         let `operator`: String?
         let institutionTypeCode: String?
         let railwayClassCode: String?
+        let validFrom: String?
+        let validTo: String?
 
         private enum CodingKeys: String, CodingKey {
             case n02_001 = "N02_001"
@@ -1108,6 +1175,7 @@ extension RouteGraph.SectionFeature: Decodable {
             case n02_003 = "N02_003"
             case n02_004 = "N02_004"
             case line_name, `operator`, institution_type_code, railway_class_code
+            case valid_from, valid_to
         }
 
         init(from decoder: Decoder) throws {
@@ -1123,6 +1191,8 @@ extension RouteGraph.SectionFeature: Decodable {
             institutionTypeCode = try orFallback(.n02_002, .institution_type_code)
             lineName = try orFallback(.n02_003, .line_name)
             `operator` = try orFallback(.n02_004, .operator)
+            validFrom = try c.decodeIfPresent(String.self, forKey: .valid_from)
+            validTo = try c.decodeIfPresent(String.self, forKey: .valid_to)
         }
     }
 
@@ -1166,7 +1236,9 @@ extension RouteGraph.SectionFeature: Decodable {
                 lineName: nonEmpty(properties?.lineName),
                 operator: nonEmpty(properties?.operator),
                 institutionTypeCode: nonEmpty(properties?.institutionTypeCode),
-                railwayClassCode: nonEmpty(properties?.railwayClassCode)),
+                railwayClassCode: nonEmpty(properties?.railwayClassCode),
+                validFrom: properties?.validFrom,
+                validTo: properties?.validTo),
             lines: geometry?.lines ?? [], geometryType: geometry?.type ?? "")
     }
 }

@@ -84,6 +84,15 @@ for country in jp tw hk mo kr us ca; do
         fi
         cp -p "$resource" "$target_dir/$family$suffix.json"
     done
+
+    # Optional per-region history overlay (ADR 0011): retired sections and
+    # stations with validity dates. A region without one solves as before.
+    history="$here/../app/data/rail-history$suffix.json"
+    if [ -f "$history" ]; then
+        cp -p "$history" "$target_dir/rail-history$suffix.json"
+    else
+        rm -f "$target_dir/rail-history$suffix.json"
+    fi
 done
 
 # The operator and line badges the C5 station popup draws.

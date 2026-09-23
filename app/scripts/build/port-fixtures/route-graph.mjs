@@ -545,6 +545,8 @@ function trainProjection(train) {
   return {
     id: train.id,
     number: train.number ?? null,
+    // ADR 0011: the ride date is part of the cache key.
+    date: train.date ?? null,
     origin: train.origin ?? null,
     destination: train.destination ?? null,
     train_type: train.train_type ?? null,

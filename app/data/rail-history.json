@@ -1,0 +1,23 @@
+{
+  "schema_version": "1",
+  "revision": "2026-09-23.1",
+  "sections": [],
+  "stations": [],
+  "retirements": [
+    {
+      "history_id": "jp.rumoi.fukagawa-ishikarinumata",
+      "match": {
+        "line_name": "留萌線",
+        "operator": "北海道旅客鉄道",
+        "bbox": [
+          141.93,
+          43.715,
+          142.05,
+          43.815
+        ]
+      },
+      "valid_to": "2026-04-01",
+      "source": "国土交通省 鉄軌道の廃止実績（2026-04-01 深川—石狩沼田）; JR北海道 2026-03-31 最終運行日告知。N02-25 still carries the section; 石狩沼田—留萌 (2023-04-01) and 留萌—増毛 (2016-12-05) geometry is not yet in this overlay."
+    }
+  ]
+}
