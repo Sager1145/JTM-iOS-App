@@ -33,6 +33,8 @@ final class WorkspaceEditingTests: XCTestCase {
     func testPlaybackCanPauseResumeAndStop() {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        // Sample journeys remain playable after their calendar dates pass.
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
         app.launch()
