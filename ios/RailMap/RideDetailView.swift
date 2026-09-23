@@ -31,7 +31,7 @@ struct WorkspaceRideDetailView: View {
                     if onSave(edited, recordID) == .saved {
                         recordID = edited.id
                     }
-                }, onRebuild: { onRebuild(train) })
+                }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [])
             }
         }
         .onChange(of: train == nil, initial: true) { _, missing in
@@ -47,6 +47,7 @@ struct RideDetailView: View {
     let train: Train
     var onSave: ((Train) -> Void)?
     var onRebuild: (() -> Int?)?
+    var suggestionTrains: [Train] = []
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
@@ -72,7 +73,6 @@ struct RideDetailView: View {
             onSetRidden: onSave.map { save in
                 { ridden in save(RideLedger.setRidden(train, ridden)) }
             })
-            .background(Color(.systemGroupedBackground))
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -88,7 +88,8 @@ struct RideDetailView: View {
             .sheet(isPresented: $showsEditor) {
                 RideEditorView(
                     train: train,
-                    title: localization.text("ios.editJourney", fallback: "Edit journey")
+                    title: localization.text("ios.editJourney", fallback: "Edit journey"),
+                    suggestionTrains: suggestionTrains
                 ) { edited in
                     onSave?(edited)
                     showsEditor = false
@@ -636,6 +637,9 @@ struct RideDetailContent: View {
             if let type = train.trainType, !type.isEmpty {
                 LabeledContent(
                     localization.countryText("field.trainType", fallback: "Train type"), value: type)
+            }
+            if let vehicleType = train.vehicleType, !vehicleType.isEmpty {
+                LabeledContent(localization.editorText("ios.editor.vehicleType"), value: vehicleType)
             }
             if let direction = train.direction, !direction.isEmpty {
                 LabeledContent(

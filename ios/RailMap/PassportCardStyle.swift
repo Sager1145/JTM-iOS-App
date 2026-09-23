@@ -194,9 +194,26 @@ extension EnvironmentValues {
 
 // MARK: - the paper
 
+/// Liquid Glass for a menu card on screen; the printed fill for the passport
+/// ticket and for share images, which cannot render glass.
+private struct CardSurface<Fill: View>: ViewModifier {
+    var glass: Bool
+    var shape: RoundedRectangle
+    var fill: Fill
+
+    func body(content: Content) -> some View {
+        if glass {
+            content.clipShape(shape).railGlass(in: shape)
+        } else {
+            content.background { fill }.clipShape(shape)
+        }
+    }
+}
+
 private struct PassportCardSurface: ViewModifier {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var contrast
+    @Environment(\.passportPoster) private var poster
     var tone: PassportTone
 
     /// §6.4's `radius-card`, except on the ticket.
@@ -220,8 +237,7 @@ private struct PassportCardSurface: ViewModifier {
             // inset would cut short.
             .padding(tone == .feature ? 0 : 18)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background { fill }
-            .clipShape(shape)
+            .modifier(CardSurface(glass: tone != .feature && !poster, shape: shape, fill: fill))
             .overlay { edge }
             .environment(
                 \.passportInk,

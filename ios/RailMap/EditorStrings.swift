@@ -20,6 +20,283 @@ import RailCore
 enum EditorStrings {
 
     static let table: [String: [Localization.Language: String]] = [
+        "ios.editor.vehicleSearchNote": [
+            .zhHans: "输入以查找建议，也可以填写自定义内容。车辆类型建议来自已保存的行程。",
+            .zhHant: "輸入以查找建議，也可以填寫自訂內容。車輛類型建議來自已儲存的行程。",
+            .ja: "入力して候補を検索するか、自由に記入できます。車両形式の候補は保存済みの旅程から表示されます。",
+            .en: "Type to find suggestions or enter your own value. Vehicle suggestions come from saved journeys.",
+        ],
+        "ios.editor.step.region": [
+            .zhHans: "选择地区",
+            .zhHant: "選擇地區",
+            .ja: "地域を選択",
+            .en: "Choose a region",
+        ],
+        "ios.editor.step.route": [
+            .zhHans: "车站与线路",
+            .zhHant: "車站與路線",
+            .ja: "駅と路線",
+            .en: "Stations and lines",
+        ],
+        "ios.editor.step.service": [
+            .zhHans: "列车与车辆",
+            .zhHant: "列車與車輛",
+            .ja: "列車と車両",
+            .en: "Train and vehicle",
+        ],
+        "ios.editor.step.date": [
+            .zhHans: "日期与乘坐状态",
+            .zhHant: "日期與乘坐狀態",
+            .ja: "日付と乗車状況",
+            .en: "Date and ride status",
+        ],
+        "ios.editor.step.confirm": [
+            .zhHans: "确认行程",
+            .zhHant: "確認行程",
+            .ja: "旅程を確認",
+            .en: "Review journey",
+        ],
+        "ios.editor.step.regionNote": [
+            .zhHans: "先选择行程所在地区，以显示对应的车站和线路。",
+            .zhHant: "先選擇行程所在地區，以顯示對應的車站和路線。",
+            .ja: "地域を選ぶと、その地域の駅と路線を検索できます。",
+            .en: "Choose the region to search its stations and lines.",
+        ],
+        "ios.editor.step.routeNote": [
+            .zhHans: "依次选择出发站、到达站和途经站，可输入搜索线路。",
+            .zhHant: "依序選擇出發站、到達站和途經站，可輸入搜尋路線。",
+            .ja: "出発駅・到着駅・経由駅を指定し、路線を検索できます。",
+            .en: "Choose departure, arrival and intermediate stops. Search for a line if needed.",
+        ],
+        "ios.editor.step.serviceNote": [
+            .zhHans: "填写列车名称或车次，车型和车辆类型可选。",
+            .zhHant: "填寫列車名稱或車次，車種和車輛類型可選。",
+            .ja: "列車名や番号を入力します。種別と車両形式は任意です。",
+            .en: "Enter a train name or number. Service and vehicle types are optional.",
+        ],
+        "ios.editor.step.dateNote": [
+            .zhHans: "输入日期或从日历选择，也可以暂不填写日期。",
+            .zhHant: "輸入日期或從日曆選擇，也可以暫不填寫日期。",
+            .ja: "日付を入力するか、カレンダーで選択します。日付なしでも保存できます。",
+            .en: "Type a date or use the calendar. You can also leave the journey undated.",
+        ],
+        "ios.editor.step.confirmNote": [
+            .zhHans: "检查以下信息。可以返回修改，确认保存后才会加入行程。",
+            .zhHant: "檢查以下資訊。可以返回修改，確認儲存後才會加入行程。",
+            .ja: "内容を確認してください。戻って修正できます。保存すると旅程が追加されます。",
+            .en: "Check your details. Go back to make changes, or save to add this journey.",
+        ],
+        "ios.editor.previous": [
+            .zhHans: "上一步",
+            .zhHant: "上一步",
+            .ja: "戻る",
+            .en: "Previous",
+        ],
+        "ios.editor.next": [
+            .zhHans: "下一步",
+            .zhHant: "下一步",
+            .ja: "次へ",
+            .en: "Next",
+        ],
+        "ios.editor.stepCount": [
+            .zhHans: "第 {current} 步，共 {total} 步",
+            .zhHant: "第 {current} 步，共 {total} 步",
+            .ja: "{total} ステップ中 {current}",
+            .en: "Step {current} of {total}",
+        ],
+        "ios.editor.changeRegion": [
+            .zhHans: "更改地区？",
+            .zhHant: "更改地區？",
+            .ja: "地域を変更しますか？",
+            .en: "Change region?",
+        ],
+        "ios.editor.resetRoute": [
+            .zhHans: "更改地区并重选车站",
+            .zhHant: "更改地區並重選車站",
+            .ja: "変更して駅を選び直す",
+            .en: "Change region and reset route",
+        ],
+        "ios.editor.changeRegionNote": [
+            .zhHans: "已选择的车站和线路将被清除，其他信息会保留。",
+            .zhHant: "已選擇的車站和路線將被清除，其他資訊會保留。",
+            .ja: "選択した駅と路線は消去されます。他の入力内容は保持されます。",
+            .en: "Selected stations and lines will be cleared. Other details will be kept.",
+        ],
+        "ios.editor.noDate": [
+            .zhHans: "未指定日期",
+            .zhHant: "未指定日期",
+            .ja: "日付なし",
+            .en: "Undated",
+        ],
+        "ios.editor.yes": [
+            .zhHans: "是",
+            .zhHant: "是",
+            .ja: "はい",
+            .en: "Yes",
+        ],
+        "ios.editor.no": [
+            .zhHans: "否",
+            .zhHant: "否",
+            .ja: "いいえ",
+            .en: "No",
+        ],
+        "ios.editor.partly": [
+            .zhHans: "部分已乘坐",
+            .zhHant: "部分已乘坐",
+            .ja: "一部乗車済み",
+            .en: "Partly ridden",
+        ],
+
+
+        "ios.editor.serviceType.local": [
+            .zhHant: "普通",
+            .zhHans: "普通",
+            .ja: "普通",
+            .en: "Local",
+        ],
+        "ios.editor.serviceType.rapid": [
+            .zhHant: "快速",
+            .zhHans: "快速",
+            .ja: "快速",
+            .en: "Rapid",
+        ],
+        "ios.editor.serviceType.express": [
+            .zhHant: "急行",
+            .zhHans: "急行",
+            .ja: "急行",
+            .en: "Express",
+        ],
+        "ios.editor.serviceType.limitedExpress": [
+            .zhHant: "特急",
+            .zhHans: "特急",
+            .ja: "特急",
+            .en: "Limited express",
+        ],
+        "ios.editor.serviceType.highSpeed": [
+            .zhHant: "高速鐵路",
+            .zhHans: "高速铁路",
+            .ja: "高速鉄道",
+            .en: "High-speed rail",
+        ],
+        "ios.editor.reorderStops": [
+            .zhHant: "調整順序", .zhHans: "调整顺序", .ja: "並べ替え", .en: "Reorder",
+        ],
+        "ios.editor.finishReordering": [
+            .zhHant: "完成排序", .zhHans: "完成排序", .ja: "並べ替えを完了", .en: "Done reordering",
+        ],
+        "ios.editor.vehicleType": [
+            .zhHant: "車輛型號／類型",
+            .zhHans: "车辆型号／类型",
+            .ja: "車両形式・種類",
+            .en: "Vehicle model / type",
+        ],
+        "ios.editor.chooseDate": [
+            .zhHant: "選擇日期",
+            .zhHans: "选择日期",
+            .ja: "日付を選択",
+            .en: "Choose date",
+        ],
+        "ios.editor.searchLines": [
+            .zhHant: "搜尋線路",
+            .zhHans: "搜索线路",
+            .ja: "路線を検索",
+            .en: "Search lines",
+        ],
+        "ios.editor.serviceDetails": [
+            .zhHant: "列車與線路（選填）",
+            .zhHans: "列车与线路（选填）",
+            .ja: "列車と路線（任意）",
+            .en: "Train & lines (optional)",
+        ],
+        "ios.editor.searchDetailsNote": [
+            .zhHant: "輸入以搜尋建議，也可以直接填寫。線路會作為路徑偏好。車輛型號的建議來自已儲存的行程。",
+            .zhHans: "输入以搜索建议，也可以直接填写。线路会作为路径偏好。车辆型号的建议来自已保存的行程。",
+            .ja: "入力すると候補を検索できます。自由入力も可能です。路線は経路の優先条件になり、車両形式の候補は保存済みの記録から表示されます。",
+            .en: "Type to find suggestions or enter your own value. Lines are routing preferences. Vehicle suggestions come from saved journeys.",
+        ],
+        "ios.editor.selectedLines": [
+            .zhHant: "已選線路",
+            .zhHans: "已选线路",
+            .ja: "選択した路線",
+            .en: "Selected lines",
+        ],
+        "ios.editor.removeLine": [
+            .zhHant: "點一下以移除此線路",
+            .zhHans: "点按以移除此线路",
+            .ja: "タップして路線を解除",
+            .en: "Tap to remove this line",
+        ],
+        "ios.editor.lineSelected": [
+            .zhHant: "已選擇",
+            .zhHans: "已选择",
+            .ja: "選択済み",
+            .en: "Selected",
+        ],
+        "ios.editor.useEntered": [
+            .zhHant: "使用「{value}」",
+            .zhHans: "使用“{value}”",
+            .ja: "「{value}」を使用",
+            .en: "Use “{value}”",
+        ],
+        "ios.editor.noLineMatches": [
+            .zhHant: "沒有符合的線路。可輸入線路名稱並加入。",
+            .zhHans: "没有匹配的线路。可输入线路名称并添加。",
+            .ja: "一致する路線がありません。路線名を入力して追加できます。",
+            .en: "No matching lines. You can enter and add a line name.",
+        ],
+        "ios.editor.lineSearchPrompt": [
+            .zhHant: "線路、羅馬字或營運商",
+            .zhHans: "线路、罗马字或运营商",
+            .ja: "路線名・ローマ字・事業者",
+            .en: "Line, romanized name, or operator",
+        ],
+        "ios.editor.reviewRequired": [
+            .zhHant: "檢查必填資訊", .zhHans: "检查必填信息",
+            .ja: "必須項目を確認", .en: "Review required details",
+        ],
+        "ios.editor.stationGuide": [
+            .zhHant: "選擇車站，或輸入車站名稱。", .zhHans: "选择车站，或输入车站名称。",
+            .ja: "駅を選ぶか、駅名を入力してください。", .en: "Choose a station or enter its name.",
+        ],
+        "ios.editor.includeDate": [
+            .zhHant: "加入日期", .zhHans: "添加日期", .ja: "日付を追加", .en: "Include a date",
+        ],
+        "ios.editor.newGuide": [
+            .zhHant: "填寫列車與車站。其他細節可以稍後補上。",
+            .zhHans: "填写列车与车站。其他细节可以稍后补上。",
+            .ja: "駅と列車の情報を入力しましょう。その他の詳細は後から追加できます。",
+            .en: "Add your train and stops. You can fill in other details later.",
+        ],
+        "ios.editor.optionalDetails": [
+            .zhHant: "選填資訊與進階設定",
+            .zhHans: "选填信息与高级设置",
+            .ja: "任意の詳細と詳細設定",
+            .en: "Optional details & settings",
+        ],
+        "ios.editor.requiredGuide": [
+            .zhHant: "填寫列車名稱並選擇至少兩個車站，即可儲存旅程。",
+            .zhHans: "填写列车名称并选择至少两个车站，即可保存旅程。",
+            .ja: "列車名と2つ以上の駅を入力して保存します。",
+            .en: "Enter a train name and at least two stations to save your journey.",
+        ],
+        "ios.editor.beforeSaving": [
+            .zhHant: "儲存前",
+            .zhHans: "保存前",
+            .ja: "保存する前に",
+            .en: "Before saving",
+        ],
+        "ios.editor.chooseOrigin": [
+            .zhHant: "選擇出發站",
+            .zhHans: "选择出发站",
+            .ja: "出発駅を選択",
+            .en: "Choose departure station",
+        ],
+        "ios.editor.chooseDestination": [
+            .zhHant: "選擇抵達站",
+            .zhHans: "选择到达站",
+            .ja: "到着駅を選択",
+            .en: "Choose arrival station",
+        ],
 
         // MARK: - §5.5 route resolution — the five user-visible states
 
@@ -410,10 +687,10 @@ enum EditorStrings {
             .en: "Enter a destination station.",
         ],
         "ios.editor.dateRule": [
-            .zhHant: "日期需寫成 YYYY-MM-DD，或留空表示未定日期。",
-            .zhHans: "日期需写成 YYYY-MM-DD，或留空表示未定日期。",
-            .ja: "日付は YYYY-MM-DD 形式で入力するか、空欄にしてください。",
-            .en: "Use YYYY-MM-DD, or leave it empty for an undated journey.",
+            .zhHant: "請輸入有效日期，格式為 YYYY-MM-DD。",
+            .zhHans: "请输入有效日期，格式为 YYYY-MM-DD。",
+            .ja: "有効な日付を YYYY-MM-DD 形式で入力してください。",
+            .en: "Enter a valid date in YYYY-MM-DD format.",
         ],
         "ios.editor.colorRule": [
             .zhHant: "路線顏色需為 #RRGGBB。留空則使用預設色。",

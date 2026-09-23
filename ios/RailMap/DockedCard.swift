@@ -55,31 +55,12 @@ struct DockedCard<Content: View>: View {
         return content
             .environment(\.railPanelHeaderDrag, headerDrag)
             .frame(width: width, height: live)
-            // The same opaque reading surface the resident sheet uses, not a
-            // material. `RailSheetBackground`'s own note is the argument: the
-            // panel is where the reader READS, and a surface that takes its
-            // colour from whatever the map happens to be showing gives that text
-            // a different background in every part of the country.
-            .background { RailSheetBackground() }
+            // Liquid Glass, as Apple Maps' own floating panel: the system
+            // surface through `railGlass`, which also owns the Reduce
+            // Transparency and Increase Contrast fallbacks. Glass casts its
+            // own shadow, so there is no separate shadow shape behind it.
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-            // The shadow is cast by a plain shape BEHIND the card, not by the
-            // card. A `.shadow` on the card itself has to be computed from the
-            // card's rendered silhouette, and the card is a UIKit tab controller
-            // full of scrolling lists: Core Animation re-rendered that whole
-            // subtree offscreen and re-blurred it at 18 points every time the
-            // card changed size (each header-drag frame) or its contents moved
-            // (each scroll frame) — on Mac Catalyst, that offscreen pass was
-            // the card stuttering while its list scrolled. The shape is fully
-            // covered by the opaque clipped card, so only its blur shows, and it
-            // re-renders only when the card's frame does. Filled with the same
-            // colour `RailSheetBackground` paints, and it has to stay that way:
-            // were the card's surface ever to become translucent again, this
-            // shape would show through it as a slab.
-            .background {
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Color.railMenuBackground)
-                    .shadow(color: .black.opacity(0.14), radius: 18, y: 6)
-            }
+            .railGlass(in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .onAppear {
                 if headerDrag == nil { headerDrag = makeHeaderDrag() }
                 syncMorph(to: live)

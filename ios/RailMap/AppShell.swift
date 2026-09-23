@@ -40,8 +40,8 @@ struct ContentView: View {
     /// it says so plainly and offers the log one tap away (§13.1).
     @State private var selection = PrimaryTab.upcoming
     @State private var network = RailNetworkStore()
-    @State private var itineraries = ItineraryStore()
-    @State private var library = RideLibrary()
+    @State private var itineraries: ItineraryStore
+    @State private var library: RideLibrary
     @State private var mapController = RailMapController()
     @State private var riddenRoutes = RiddenRouteStore()
     @State private var mileageStatistics = MileageStatisticsStore()
@@ -81,6 +81,19 @@ struct ContentView: View {
     /// The stored value that means every region at once.
     private static let allRegionsCode = "all"
 
+    init(localization: AppLocalization) {
+        self.localization = localization
+        // Wired at creation rather than in `body`: an import or sample load
+        // reachable from the tree below must never see `itineraries.library`
+        // still `nil` (see `ItineraryStore.attach`), and a write during a view
+        // update is one SwiftUI may answer with another update.
+        let itineraries = ItineraryStore()
+        let library = RideLibrary()
+        itineraries.attach(library)
+        _itineraries = State(initialValue: itineraries)
+        _library = State(initialValue: library)
+    }
+
     var body: some View {
         // One map, and one resident sheet over it. The system TabView is inside
         // that sheet, so its bar moves with the panel rather than becoming a
@@ -102,6 +115,22 @@ struct ContentView: View {
         .task {
             // Every region, once, at launch. Nothing waits for a region to be
             // chosen because there is nothing to choose.
+            //
+            // Apple's basemap datum in Taiwan, Hong Kong, Macao and Korea is
+            // the device's MapKit service's, not the region's (see
+            // `AppleMapDatum`). The very first launch asks before drawing, for
+            // a few seconds at most. Every later launch draws the saved
+            // verdict at once and re-asks in the background; a changed answer
+            // is drawn from the next launch, because rebuilding every line,
+            // station and ride mid-session is far riskier than one launch of
+            // offset for a reader who has just changed their device's region.
+            if !AppleMapDatum.hasProbed {
+                await AppleMapDatumProbe.run(within: .seconds(4))
+                AppleMapDatum.applySavedVerdict()
+            } else {
+                AppleMapDatum.applySavedVerdict()
+                Task { await AppleMapDatumProbe.run(within: .seconds(30)) }
+            }
             network.loadAll()
             itineraries.load(from: library)
             // Playback bakes its station names when it compiles a path, so it
@@ -148,7 +177,7 @@ struct ContentView: View {
             // 全部 counts every region's network, ridden or not: a coverage
             // figure of 0 % for a country you have never been to is an answer,
             // and it is the same answer the per-region scope gives.
-            let countries = region.map { [$0.code] } ?? Region.ordered.map(\.code)
+            let countries = region.map { [$0.code] } ?? Region.enabledOrdered.map(\.code)
             // Two filters. The region is the reader's scope; the second is not
             // a scope at all but the rule that only a journey the record SAYS
             // was ridden has kilometres to contribute (see
@@ -212,7 +241,10 @@ struct ContentView: View {
                 // An unrecognised code is Japan rather than 全部: a value this
                 // build does not know is a stale preference, not a request for
                 // every network at once.
-                return Region(rawValue: regionScopeCode) ?? .jp
+                let region = Region(rawValue: regionScopeCode) ?? .jp
+                // A scope the North America switch now hides is 全部, not an
+                // empty log that looks like the rides were deleted.
+                return region.isEnabled ? region : nil
             },
             set: { regionScopeCode = $0?.rawValue ?? Self.allRegionsCode })
     }

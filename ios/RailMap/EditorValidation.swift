@@ -122,7 +122,7 @@ enum RideDraftValidation {
         }
 
         // -- date ----------------------------------------------------------
-        if let date = draft.date, !date.isEmpty, date != TrainValidation.undated,
+        if let date = draft.date, date != TrainValidation.undated,
             !Dates.isValidDateString(date)
         {
             issues.append(RideDraftIssue(field: .date, key: "ios.editor.dateRule"))

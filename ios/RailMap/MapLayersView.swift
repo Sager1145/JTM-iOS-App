@@ -27,6 +27,34 @@ struct MapLayersView: View {
     var body: some View {
         NavigationStack {
             List {
+                // 底圖: the one control here that is not about railways. Live
+                // while dragging — the veil is one overlay, cheap to repaint —
+                // so the reader sees the map fade behind this half sheet.
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text(localization.countryText(
+                                "disp.mapOpacity", fallback: "Basemap opacity"))
+                            Spacer()
+                            Text(controller.basemapOpacity, format: .percent.precision(.fractionLength(0)))
+                                .monospacedDigit()
+                                .foregroundStyle(.secondary)
+                        }
+                        Slider(value: $controller.basemapOpacity, in: 0...1, step: 0.05) {
+                            Text(localization.countryText(
+                                "disp.mapOpacity", fallback: "Basemap opacity"))
+                        } minimumValueLabel: {
+                            Image(systemName: "moon.fill")
+                        } maximumValueLabel: {
+                            Image(systemName: "map.fill")
+                        }
+                        .accessibilityIdentifier("layerBasemapOpacity")
+                    }
+                } footer: {
+                    Text(localization.text(
+                        "ios.note.basemapOpacity", fallback: "Affects the basemap only."))
+                }
+
                 // 全部線路: the shipped network. Its lines are the rail's own
                 // train button and are deliberately not repeated here (see the
                 // type note); what had no switch at all until now is what it

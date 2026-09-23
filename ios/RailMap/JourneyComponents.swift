@@ -426,9 +426,7 @@ struct JourneySummaryRow: View {
         rowLayout
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(surface == .card ? 12 : 0)
-        .background {
-            if surface == .card { rowBackground }
-        }
+        .modifier(JourneyRowCardSurface(isCard: surface == .card, isSelected: isSelected))
         .overlay {
             if surface == .card {
                 RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
@@ -608,15 +606,6 @@ struct JourneySummaryRow: View {
             JourneyStatusBadge(status: status, compact: true)
                 .padding(.top, 1)
         }
-    }
-
-    private var rowBackground: some View {
-        RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
-            .fill(isSelected ? Color.accentColor.opacity(0.14) : Color(.secondarySystemBackground))
-            .overlay {
-                RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
-                    .strokeBorder(Color(.separator), lineWidth: 1)
-            }
     }
 
     private var serviceText: String {
@@ -1044,5 +1033,24 @@ extension JourneyPresentation {
         guard let hero = heroStatus else { return nil }
         guard hero.tone != .neutral || primaryAction != nil else { return nil }
         return hero
+    }
+}
+
+/// A journey row's card: Liquid Glass, with the selection tint laid over it.
+private struct JourneyRowCardSurface: ViewModifier {
+    var isCard: Bool
+    var isSelected: Bool
+
+    func body(content: Content) -> some View {
+        if isCard {
+            let shape = RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
+            content
+                .background {
+                    if isSelected { shape.fill(Color.accentColor.opacity(0.14)) }
+                }
+                .railGlass(in: shape)
+        } else {
+            content
+        }
     }
 }

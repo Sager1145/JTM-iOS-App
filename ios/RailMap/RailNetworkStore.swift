@@ -424,10 +424,14 @@ final class RailNetworkStore {
         decoding = []
         loads = []
         failures = []
+        decodeFailedAt = [:]
         pending = []
         state = .idle
         displayLoadTask?.cancel()
         displayLoadTask = nil
+        manifestLoadTask?.cancel()
+        manifestLoadTask = nil
+        loadEpoch += 1
         displayIndex = nil
         displayBlobs = [:]
         loadedDisplayLines = [:]
@@ -450,14 +454,18 @@ final class RailNetworkStore {
         // decode racing the manifest read would see `displayManifest == nil`
         // and permanently miss the override, since nothing revisits `lines`/
         // `stations` once built. See ``decodeGeometry(_:)``.
+        let startedEpoch = loadEpoch
         manifestLoadTask = Task(priority: .utility) {
             do {
                 let manifest = try await Self.loadDisplayManifest()
+                guard startedEpoch == loadEpoch else { return }
                 displayManifest = manifest
                 let index = RailDisplayNetworkIndex.lineIndex(for: manifest)
+                guard startedEpoch == loadEpoch else { return }
                 displayIndex = index
                 #if DEBUG
                 await Self.debugCheckFirstChunkOfEachRegion(index: index, catalog: manifest.lines)
+                guard startedEpoch == loadEpoch else { return }
                 #endif
                 if let lastDisplayRequest {
                     activateDisplayLines(
@@ -465,6 +473,7 @@ final class RailNetworkStore {
                         cameraZoom: lastDisplayRequest.cameraZoom)
                 }
             } catch {
+                guard startedEpoch == loadEpoch else { return }
                 networkFailure = error.localizedDescription
             }
         }
@@ -510,6 +519,15 @@ final class RailNetworkStore {
     /// or stations is the one that knows it needs them, so the ask lives at
     /// the point of need rather than in a launch sequence that has to guess.
     func ensure(_ region: Region) {
+        guard region.isEnabled else { return }
+        // A region that just failed to decode is not retried on every
+        // render-path call — `stations(in:)` calls this on every keystroke
+        // in the ride editor, and a corrupt or missing package would
+        // otherwise re-decode (and re-append to `failures`) on each one.
+        // Declining a retry here is a pure read: no set membership changes.
+        if let failedAt = decodeFailedAt[region], Date().timeIntervalSince(failedAt) < 30 {
+            return
+        }
         guard requested.insert(region).inserted else { return }
         // While the indexes are being built the ask is only recorded; the
         // indexing task drains `requested` when it finishes.
@@ -545,6 +563,40 @@ final class RailNetworkStore {
         guard displayManifest != nil else { return }
         requestSerial += 1
         activateDisplayLines(intersecting: rect, cameraZoom: cameraZoom)
+    }
+
+    /// Called when the reader flips the North America setting.
+    ///
+    /// Off: drops every resident US/CA line immediately and republishes, so
+    /// the map redraws with nothing there even though the camera has not
+    /// moved. On: re-indexes the two regions (skipped by ``loadAll()`` while
+    /// the setting was off) and re-asks for whatever the current camera
+    /// rect wants, exactly as a pan into them would.
+    func northAmericaEnabledChanged() {
+        if Region.northAmericaEnabled {
+            Task(priority: .utility) {
+                await indexRegions(Region.ordered(.compact).filter(\.isNorthAmerica))
+                await indexRegions(Region.ordered(.large).filter(\.isNorthAmerica))
+                if let lastDisplayRequest {
+                    activateDisplayLines(
+                        intersecting: lastDisplayRequest.rect,
+                        cameraZoom: lastDisplayRequest.cameraZoom)
+                }
+            }
+        } else {
+            // A batch already in flight for these two regions would otherwise
+            // land after the filter below has run and draw them right back
+            // in — `publishDisplayNetwork()`'s own region guard catches that
+            // case too, but there is no reason to let the decode finish at
+            // all once nothing here wants its result.
+            displayLoadTask?.cancel()
+            displayLoadTask = nil
+            loadedDisplayLines = loadedDisplayLines.filter {
+                Region(rawValue: $0.value.region)?.isNorthAmerica != true
+            }
+            if let index = displayIndex { evictIfNeeded(index: index) }
+            publishDisplayNetwork()
+        }
     }
 
     // There is deliberately no `ensureAll()`.
@@ -592,8 +644,20 @@ final class RailNetworkStore {
                 // and the data screen names the one that did not. A
                 // region-switching app could treat this as fatal; an
                 // all-regions one cannot.
+                failures.removeAll { $0.region == region }
                 failures.append(
                     RegionFailure(region: region, message: error.localizedDescription))
+                // A failed decode must not permanently block a retry: `ensure(_:)`
+                // only calls back in here when `requested.insert` reports a new
+                // member, and this call's own guard at the top only re-enters when
+                // `decoding.insert` does the same. Leaving either set holding this
+                // region after failure would make the miss permanent. But
+                // `ensure(_:)` is called from view bodies on every render, so
+                // the retry itself is throttled by `decodeFailedAt` rather than
+                // happening the instant `requested` is clear again.
+                requested.remove(region)
+                decoding.remove(region)
+                decodeFailedAt[region] = Date()
             }
             pending.removeAll { $0 == region }
             state = pending.isEmpty
@@ -611,6 +675,11 @@ final class RailNetworkStore {
     @ObservationIgnored private var pending: [Region] = []
     @ObservationIgnored private var loads: [RegionLoad] = []
     @ObservationIgnored private var failures: [RegionFailure] = []
+    /// When each region last failed to decode, so ``ensure(_:)`` — called
+    /// from view bodies on every render — can decline to retry a corrupt or
+    /// missing package for 30 seconds instead of hammering it once per
+    /// keystroke.
+    @ObservationIgnored private var decodeFailedAt: [Region: Date] = [:]
     @ObservationIgnored private var displayManifest: RailDisplayNetworkManifest?
     /// The in-flight (or already finished) attempt to read the manifest,
     /// started by ``loadAll()``. `decodeGeometry(_:)` awaits its `.value`
@@ -620,6 +689,12 @@ final class RailNetworkStore {
     /// and a canonical package decode is the faster of the two for every
     /// shipped region.
     @ObservationIgnored private var manifestLoadTask: Task<Void, Never>?
+    /// Bumped by every ``loadAll()`` reset and captured by that call's own
+    /// `manifestLoadTask`, so a manifest read started by an earlier `loadAll()`
+    /// — cancellation is cooperative, not immediate — cannot publish
+    /// `displayManifest`/`displayIndex` after a newer reset has already
+    /// cleared them.
+    @ObservationIgnored private var loadEpoch: UInt = 0
     /// The one-time index over the manifest — which railway lives at what
     /// offset inside its region's blob, in draw order. Built by
     /// ``loadAll()`` as soon as the manifest arrives; every camera move after
@@ -690,6 +765,9 @@ final class RailNetworkStore {
         guard let manifest = displayManifest, let index = displayIndex else { return }
         var needed = RailDisplayNetwork.lines(
             intersecting: rect, cameraZoom: cameraZoom, in: index)
+        // A reader with North America off never draws it, no matter what the
+        // camera intersects — see `Region.isEnabled`.
+        needed.removeAll { Region(rawValue: $0.region)?.isEnabled == false }
         // Whole-region strategy (builder A1): once any of a small region's
         // entries is needed, its whole blob becomes one batch rather than a
         // line at a time — see `RailDisplayNetworkIndex.wholeRegions`.
@@ -768,21 +846,48 @@ final class RailNetworkStore {
                 dx: -rect.size.width * 0.5, dy: -rect.size.height * 0.5)
             let prefetchNeeded = RailDisplayNetwork.lines(
                 intersecting: prefetchRect, cameraZoom: cameraZoom, in: index)
-            var candidates = missing(prefetchNeeded)
+            let candidates = missing(prefetchNeeded)
+            let candidatesByID = Dictionary(uniqueKeysWithValues: candidates.map { ($0.id, $0) })
             let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
-            while !candidates.isEmpty {
-                let estimate = candidates.reduce(0) { sum, entry in
+            // Trim to budget by whole dependency groups, not by blob position:
+            // `candidates` is already `dependsOn`-closed (see
+            // `RailDisplayNetwork.lines`), so simply dropping entries off the
+            // end could keep a dependent while cutting the dependency it needs
+            // to draw. Walk `candidates` in its own (blob) order, and for each
+            // not-yet-selected entry pull in it and every not-yet-selected
+            // entry it depends on (restricted to what is actually still
+            // missing) as one unit; a unit that does not fit stops the walk,
+            // exactly as the old trim-from-the-end stopped at the first fit.
+            var selected: Set<String> = []
+            var bytes = residentBytes
+            for root in candidates {
+                guard !selected.contains(root.id) else { continue }
+                var groupIDs: Set<String> = []
+                var frontier = [root.id]
+                while !frontier.isEmpty {
+                    var next: [String] = []
+                    for id in frontier where !selected.contains(id) && !groupIDs.contains(id) {
+                        guard let entry = candidatesByID[id] else { continue }
+                        groupIDs.insert(id)
+                        next.append(contentsOf: entry.dependsOn)
+                    }
+                    frontier = next
+                }
+                let groupBytes = groupIDs.reduce(0) { sum, id in
+                    guard let entry = candidatesByID[id] else { return sum }
                     let wanted = wantedDetail(for: entry, cameraZoom: cameraZoom)
                     let length = wanted == .overview
                         ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length
                     return sum + length
                 }
-                if residentBytes + estimate <= Self.residentByteBudget { break }
-                candidates.removeLast()
+                guard bytes + groupBytes <= Self.residentByteBudget else { break }
+                bytes += groupBytes
+                selected.formUnion(groupIDs)
             }
-            guard !candidates.isEmpty else { return }
+            let trimmed = candidates.filter { selected.contains($0.id) }
+            guard !trimmed.isEmpty else { return }
             wave = .prefetch
-            batch = candidates
+            batch = trimmed
         }
         guard !batch.isEmpty else { return }
 
@@ -842,7 +947,21 @@ final class RailNetworkStore {
             displayFailures.merge(result.failures, uniquingKeysWith: { _, new in new })
             networkFailure = displayFailures
                 .sorted { $0.key < $1.key }.first?.value
-            guard !result.items.isEmpty else { return }
+            guard !result.items.isEmpty else {
+                // Every line in this batch failed. A camera that has since
+                // moved on still deserves its own attempt — but replaying the
+                // same rect/zoom this batch just failed for would spin a hot
+                // retry loop against the same missing/broken chunks, since
+                // nothing about `displayAttempts` or the blobs changed. Only
+                // replay when the latest request is actually a different ask.
+                if let lastDisplayRequest,
+                    !MKMapRectEqualToRect(lastDisplayRequest.rect, rect) || lastDisplayRequest.cameraZoom != cameraZoom {
+                    activateDisplayLines(
+                        intersecting: lastDisplayRequest.rect,
+                        cameraZoom: lastDisplayRequest.cameraZoom)
+                }
+                return
+            }
             loadedDisplayLines.merge(result.items, uniquingKeysWith: { _, new in new })
             if completedWave == .prefetch { prefetchedLineTotal += result.items.count }
             evictIfNeeded(index: index)
@@ -910,6 +1029,11 @@ final class RailNetworkStore {
         var residentRegions: Set<String> = []
         var bytes = 0
         for region in index.orderedRegions {
+            // A disabled region's lines are filtered here too, not only on
+            // eviction: an NA chunk batch that finishes loading after the
+            // switch has gone off (see `northAmericaEnabledChanged()`) must
+            // not be drawn just because it is still resident.
+            guard Region(rawValue: region)?.isEnabled != false else { continue }
             for entry in index.entriesByRegion[region] ?? [] {
                 guard let prepared = loadedDisplayLines[entry.id] else { continue }
                 nextLines.append(contentsOf: prepared.lines)

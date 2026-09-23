@@ -7,7 +7,9 @@ final class StationPresentationTests: XCTestCase {
 
     func testStationCardOpensAndDismisses() {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        // Hoboken is a us station; North America is off by default.
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-feature-north-america-enabled", "YES"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.735,-74.027,0.016"

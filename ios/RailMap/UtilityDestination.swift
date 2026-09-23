@@ -79,7 +79,9 @@ struct UtilityDestinationView: View {
                     SettingsView(
                         appearance: $appearance,
                         network: network,
-                        controller: controller)
+                        controller: controller,
+                        itineraries: itineraries,
+                        library: library)
                 }
             }
             .toolbar {

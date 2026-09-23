@@ -14,6 +14,7 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
     @Binding var sheet: WorkspaceSheet?
     let onAddDate: (String) -> Void
     let onDelete: (Train) -> Void
+    let onSheetDismiss: () -> Void
     @ViewBuilder var sheetContent: (WorkspaceSheet) -> SheetContent
     @Environment(AppLocalization.self) private var localization
 
@@ -38,7 +39,7 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
                         fallback: "The journey is removed from the data on this device."))
                 }
             }
-            .sheet(item: $sheet) { presented in
+            .sheet(item: $sheet, onDismiss: onSheetDismiss) { presented in
                 // Catalyst may host this presentation outside the resident
                 // tab tree. Supply the same required object at the sheet root
                 // so WorkspaceSheetContent and StationCardView never read an

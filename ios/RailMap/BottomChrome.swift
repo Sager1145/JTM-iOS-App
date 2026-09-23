@@ -435,6 +435,14 @@ struct PanelHeader<Actions: View>: View {
     /// both, or the set replaces itself in one frame on the axis it was not
     /// told about. See `actionStrip`.
     var journeySelected = false
+    /// Whether the selected journey has a primary action at the moment.
+    ///
+    /// The third fact the strip's membership turns on, and the only one that
+    /// moves while the reader holds still: at the collapsed stop the strip
+    /// carries the journey's primary action, and a run gives the journey one
+    /// (pause, resume) that a route still solving does not have. Read only by
+    /// the action strip's animation, like `journeySelected`.
+    var journeyHasPrimaryAction = false
     private var stage: SheetStage { morph?.stage ?? .expanded }
     private var expansionProgress: CGFloat { morph?.expansion ?? 1 }
     @ViewBuilder var actions: Actions
@@ -772,23 +780,30 @@ struct PanelHeader<Actions: View>: View {
             //
             // The set changes on selection too: the list's transport and
             // filters leave when a journey is chosen and return when it is
-            // closed. Keyed on the stage alone, those two changes were the
-            // same two-frame appearance this comment describes, one axis
-            // over. Not keyed on WHICH journey — a run hands the selection
-            // from journey to journey and the strip must not replace itself
-            // at every hand-off.
+            // closed. And it changes with the journey: at the collapsed stop
+            // the journey's primary action is one of these controls, and it
+            // comes and goes with the journey's phase. Keyed on the stage
+            // alone, each of those was the same two-frame appearance this
+            // comment describes, one axis over. Not keyed on WHICH journey —
+            // a run hands the selection from journey to journey and the
+            // strip must not replace itself at every hand-off.
             .animation(
                 RailMotion.animation(RailMotion.replace, reduceMotion: reduceMotion),
-                value: ActionMembership(stage: stage, journeySelected: journeySelected))
+                value: ActionMembership(
+                    stage: stage, journeySelected: journeySelected,
+                    // Only where the strip carries the action: at other
+                    // stops the card below owns it, and a route finishing
+                    // its solve must not open a transaction over a strip
+                    // whose membership did not move.
+                    journeyHasPrimaryAction: stage == .compact && journeyHasPrimaryAction))
     }
 
-    /// The facts the action strip animates its membership on. A journey's own
-    /// primary action can also come and go with the journey's phase at the
-    /// collapsed stop; that axis is the journey's, not the header's, and is
-    /// not covered here.
+    /// The facts the action strip's membership is decided from, and so the
+    /// ones it animates on.
     private struct ActionMembership: Equatable {
         var stage: SheetStage
         var journeySelected: Bool
+        var journeyHasPrimaryAction: Bool
     }
 
 }
@@ -818,14 +833,6 @@ private struct ReduceMotionUITestProbe: ViewModifier {
 struct SystemSheetTabSurface: ViewModifier {
     func body(content: Content) -> some View {
         content
-            // Paint the actual TabView surface as well as the presentation
-            // container. On iOS 26 the TabView installs its own container
-            // surface above `.presentationBackground`; leaving that layer
-            // unpainted is what turned the requested #1C1C1E menu into the
-            // much lighter system presentation gray. This is an opaque color,
-            // not a material. The native tab bar remains a separate glass
-            // layer drawn by SwiftUI over it.
-            .background { RailSheetBackground() }
             .background {
                 GeometryReader { proxy in
                     Color.clear.preference(
@@ -1060,16 +1067,12 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
             .sheet(isPresented: $isPresented, onDismiss: restoreIfNeeded) {
                 sheetContent()
                 .presentationDetents(metrics.detents, selection: $detent)
-                // The menu is a stable reading surface rather than a second
-                // glass layer over the map. `RailSheetBackground` resolves to
-                // base system white in light appearance and base
-                // `secondarySystemBackground` in dark appearance. It is the
-                // same opaque colour at every detent. The system TabView above
-                // it remains Liquid Glass.
-                // Use the ShapeStyle overload. On iOS 26 the custom-View
-                // overload participates in the partial sheet's default glass
-                // composition; a solid ShapeStyle replaces that surface.
-                .presentationBackground(Color.railMenuPresentationStyle)
+                // Keep one surface across detents. The default sheet backdrop
+                // switches to opaque at full height, flashing as the panel
+                // crosses between its floating and full-screen appearances.
+                .presentationBackground {
+                    Color.clear.railGlass(in: Rectangle())
+                }
                 // §9.5.6: no Pull Bar.
                 //
                 // `.scrolls` rather than `.resizes`, which is what decides who

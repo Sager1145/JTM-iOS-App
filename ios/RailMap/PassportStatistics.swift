@@ -212,15 +212,24 @@ struct PassportStatistics: Sendable {
             // Boarded here, alighted there: two visits, and the same station
             // reached twice in one journey is still two — a there-and-back on
             // one record is two calls at the same platform.
-            stations.add(key: from, name: from, count: 1, km: km)
-            stations.add(key: to, name: to, count: 1, km: km)
+            //
+            // Keyed on the resolved region first, because station names are
+            // not unique across the five networks this passport can hold at
+            // once (Japan and Taiwan both have a 富貴). The display name is
+            // untouched — only the accumulator's internal key carries the
+            // region, so what the row is named after is exactly what it was
+            // before.
+            stations.add(key: "\(region.code)\u{001F}\(from)", name: from, count: 1, km: km)
+            stations.add(key: "\(region.code)\u{001F}\(to)", name: to, count: 1, km: km)
 
             // A route is undirected. 東京→新大阪 and 新大阪→東京 are the same
             // pair of places, and a passport that listed them apart would
             // report a return trip as two different routes ridden once each.
+            // Region-prefixed for the same reason the station key is.
             let ends = from <= to ? (from, to) : (to, from)
             routes.add(
-                key: "\(ends.0)\u{001F}\(ends.1)", name: ends.0, pair: ends.1, count: 1, km: km)
+                key: "\(region.code)\u{001F}\(ends.0)\u{001F}\(ends.1)",
+                name: ends.0, pair: ends.1, count: 1, km: km)
         }
 
         return PassportStatistics(
@@ -239,7 +248,7 @@ struct PassportStatistics: Sendable {
             stations: stations.ranked(),
             operators: operators.ranked(),
             routes: routes.ranked(),
-            regions: Region.ordered.compactMap { region in
+            regions: Region.enabledOrdered.compactMap { region in
                 guard let share = regions[region], share.count > 0 else { return nil }
                 return RegionTally(region: region, count: share.count, km: share.km)
             }

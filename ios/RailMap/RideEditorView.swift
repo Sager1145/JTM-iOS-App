@@ -2,35 +2,31 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
-/// Native form editing for one canonical train record. The editor owns a
-/// draft and commits once; cancelling never leaves a half-edited store.
-///
-/// ## What changed in this slice
-///
-/// §5.4's information grouping, and its two hard interaction rules.
-///
-/// **The technical id is no longer the first question.** It used to be the
-/// first field of the first section, which §8.2 forbids outright ("技术 ID 不
-/// 应成为新建流程的第一个问题") — it now sits in a Record details section at
-/// the bottom, where §5.4 puts it.
-///
-/// **Validation stands next to the field.** There was one sentence under the
-/// whole form, showing the first problem only, and it disagreed with the rules
-/// it was standing in for: it accepted a one-stop journey the exporter and the
-/// web importer both reject. Every rule is now reported against the field that
-/// causes it, the save button says why it is off, and "查看错误" moves focus
-/// into the first offending field.
+/// A local draft is committed once; cancelling never changes the saved journey.
+/// New journeys put the route first and disclose optional settings on demand.
 struct RideEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
+    @Environment(RailNetworkStore.self) private var network
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var draft: Train
     /// Editor-session identity for stops. `Stop` is a canonical value without
     /// an id, but these rows can be inserted, deleted and moved; tying SwiftUI
     /// identity to their array offsets moves navigation/focus state to a
     /// different stop whenever the order changes.
     @State private var stopIDs: [UUID]
+    private enum WizardStep: Int, CaseIterable {
+        case region, route, service, date, confirm
+        var key: String { "ios.editor.step.\(self)" }
+    }
+    @State private var step: WizardStep = .region
+    @State private var pendingRegion: Region?
     @State private var showsDiscardConfirmation = false
+    @State private var showsOptionalDetails = false
+    @State private var showsValidation = false
+    @State private var addedStopID: UUID?
+    @State private var stopEditMode: EditMode = .inactive
     /// The stops removed by the last delete, with the rows they came from.
     ///
     /// §8.6 asks for an undo before a confirmation, and here undo is exactly
@@ -53,14 +49,10 @@ struct RideEditorView: View {
 
     let original: Train
     let title: String
-    /// Whether this form is creating a journey rather than editing one.
-    ///
-    /// The only thing it changes is the ride toggle's PRE-FILL — see
-    /// ``riddenBinding``. An existing record's ride state is never seeded,
-    /// re-seeded or corrected by this form, whatever the reader does to its
-    /// date.
+    /// New journeys use a compact form and derive endpoints from their stops.
     let isNew: Bool
     let onSave: (Train) -> Void
+    let suggestionTrains: [Train]
     /// Ids already in the store, so an id collision is visible while it is
     /// being typed rather than after the save quietly keeps the old one.
     /// Defaults to whatever the workspace has published (see
@@ -78,12 +70,14 @@ struct RideEditorView: View {
         title: String = "Edit journey",
         isNew: Bool = false,
         existingIDs: Set<String>? = nil,
+        suggestionTrains: [Train] = [],
         onSave: @escaping (Train) -> Void
     ) {
         original = train
         self.title = title
         self.isNew = isNew
         self.existingIDs = existingIDs
+        self.suggestionTrains = suggestionTrains
         _draft = State(initialValue: train)
         _stopIDs = State(initialValue: train.stops.map { _ in UUID() })
         self.onSave = onSave
@@ -92,17 +86,41 @@ struct RideEditorView: View {
     var body: some View {
         NavigationStack {
             ScrollViewReader { proxy in
+                VStack(spacing: 0) {
                 Form {
-                    // Always on screen while the draft cannot be saved: a
-                    // disabled toolbar button cannot answer a tap (§5.4).
-                    if !blocking.isEmpty { problemSummary(proxy) }
-
-                    basicsSection
-                    stationsSection
-                    stopsSection
-                    routingSection
-                    styleSection
-                    recordSection
+                    if isNew {
+                        wizardHeader
+                        switch step {
+                        case .region:
+                            Section { regionPicker }
+                        case .route:
+                            stopsSection
+                            Section { lineSelectionRow }
+                        case .service:
+                            Section { numberFields }
+                            searchableDetailsSection
+                            Section {
+                                DisclosureGroup(localization.editorText("ios.editor.optionalDetails"),
+                                                isExpanded: $showsOptionalDetails) { serviceDetails }
+                            }
+                        case .date:
+                            Section { dateFields }
+                            journeyStatusSection
+                        case .confirm:
+                            confirmationSections
+                        }
+                        if (showsValidation || step == .confirm) && !presentedBlocking.isEmpty { problemSummary(proxy) }
+                    } else {
+                        if !blocking.isEmpty { problemSummary(proxy) }
+                        basicsSection
+                        stationsSection
+                        stopsSection
+                        searchableDetailsSection
+                        journeyStatusSection
+                        routingSection
+                        styleSection
+                        recordSection
+                    }
                 }
                 // Inline, and short. §14.5 forbids a fixed English-width
                 // assumption, and the large title fought both toolbar buttons
@@ -110,10 +128,32 @@ struct RideEditorView: View {
                 // 「乗車記録…」, a heading truncated to a stub. The specific
                 // verb the spec asks for is on the SAVE button, which is where
                 // it does work; this row only has to say which surface this is.
+                    if isNew { wizardNavigation(proxy) }
+                }
+                .onChange(of: step) { _, _ in
+                    focused = nil
+                    stopEditMode = .inactive
+                    showsValidation = false
+                    proxy.scrollTo("wizardTop", anchor: .top)
+                }
                 .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarTitleDisplayMode(.inline)
-                .environment(\.editMode, .constant(.active))
+                .scrollDismissesKeyboard(.interactively)
+                .task(id: Region.resolved(draft)) { network.ensure(Region.resolved(draft)) }
+                .navigationDestination(item: $addedStopID) { stopID in
+                    if let index = stopIDs.firstIndex(of: stopID) {
+                        StopEditorView(stop: $draft.stops[index], index: index,
+                                       region: Region.resolved(draft), allowsEndpointRoles: !isNew,
+                                       onRiddenChange: { riddenIsTheReaders = true })
+                    }
+                }
+                .onChange(of: draft.stops) { _, stops in
+                    guard isNew else { return }
+                    draft.origin = stops.first?.name ?? ""
+                    draft.destination = stops.last?.name ?? ""
+                    normalizeEndpointRoles()
+                }
+                .environment(\.editMode, $stopEditMode)
                 .onChange(of: draft, initial: true) { _, _ in revalidate() }
                 // Keyed on the date alone, so that editing any other field —
                 // including the ride switch itself — cannot re-run it.
@@ -148,10 +188,13 @@ struct RideEditorView: View {
                                 showsDiscardConfirmation = true
                             }
                         }
+                        .accessibilityIdentifier("rideEditorCancel")
                     }
+                    if !isNew {
                     ToolbarItem(placement: .confirmationAction) {
                         // §5.4 uses the specific verb: 保存旅程, not 完成.
                         Button(localization.editorText("ios.editor.saveJourney")) {
+                            guard blocking.isEmpty else { return }
                             onSave(draft)
                         }
                         .accessibilityIdentifier("rideEditorSave")
@@ -168,6 +211,7 @@ struct RideEditorView: View {
                         // a shortcut that commits a draft the button refuses
                         // would be a second, looser save path.
                         .keyboardShortcut("s", modifiers: .command)
+                    }
                     }
                 }
             }
@@ -186,7 +230,145 @@ struct RideEditorView: View {
                 Text(localization.editorText("ios.editor.discardDetail"))
             }
         }
+        .confirmationDialog(localization.editorText("ios.editor.changeRegion"),
+            isPresented: Binding(get: { pendingRegion != nil }, set: { if !$0 { pendingRegion = nil } }),
+            titleVisibility: .visible, presenting: pendingRegion) { region in
+                Button(localization.editorText("ios.editor.resetRoute"), role: .destructive) {
+                    let ridden = RideLedger.hasBeenRidden(draft)
+                    draft.region = region.code
+                    draft.stops = [Stop(name: "", stopType: "origin", rideSegment: ridden),
+                                   Stop(name: "", stopType: "destination", rideSegment: ridden)]
+                    stopIDs = draft.stops.map { _ in UUID() }
+                    draft.origin = ""
+                    draft.destination = ""
+                    draft.routePolicy = nil
+                    draft.routeSections = nil
+                    undoableDeletion = []
+                    pendingRegion = nil
+                    prefillRidden(forDate: draft.date)
+                }
+                Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) { pendingRegion = nil }
+            } message: { _ in Text(localization.editorText("ios.editor.changeRegionNote")) }
         .interactiveDismissDisabled(draft != original)
+    }
+
+    private var wizardHeader: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(localization.editorText("ios.editor.stepCount", [
+                    "current": .number(Double(step.rawValue + 1)), "total": .number(5)]))
+                    .font(.caption).foregroundStyle(.secondary)
+                Text(localization.editorText(step.key)).font(.title2.bold())
+                if !dynamicTypeSize.isAccessibilitySize {
+                    Text(localization.editorText(step.key + "Note"))
+                        .font(.subheadline).foregroundStyle(.secondary)
+                }
+                ProgressView(value: Double(step.rawValue + 1), total: 5)
+                    .accessibilityLabel(localization.editorText(step.key))
+            }
+            .padding(.vertical, 4)
+        }
+        .id("wizardTop")
+        .accessibilityIdentifier("rideEditorStep")
+    }
+
+    private func wizardNavigation(_ proxy: ScrollViewProxy) -> some View {
+        HStack(spacing: 16) {
+            if step != .region {
+                Button {
+                    step = WizardStep(rawValue: step.rawValue - 1) ?? .region
+                } label: {
+                    if dynamicTypeSize.isAccessibilitySize {
+                        Image(systemName: "chevron.backward").frame(minWidth: 24, minHeight: 24)
+                    } else {
+                        Text(localization.editorText("ios.editor.previous")).fixedSize()
+                    }
+                }
+                .accessibilityLabel(localization.editorText("ios.editor.previous"))
+                .buttonStyle(.bordered)
+                .accessibilityIdentifier("rideEditorPrevious")
+            }
+            if step != .confirm {
+                Button {
+                    revalidate()
+                    guard presentedBlocking.isEmpty else {
+                        showsValidation = true
+                        focused = nil
+                        if let issue = presentedBlocking.first {
+                            proxy.scrollTo(scrollTarget(for: issue.field), anchor: .top)
+                        }
+                        return
+                    }
+                    step = WizardStep(rawValue: step.rawValue + 1) ?? .confirm
+                } label: {
+                    Text(localization.editorText("ios.editor.next"))
+                        .fixedSize(horizontal: true, vertical: false)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .accessibilityIdentifier("rideEditorNext")
+            } else {
+                Button {
+                    guard blocking.isEmpty else { return }
+                    onSave(draft)
+                } label: {
+                    Text(dynamicTypeSize.isAccessibilitySize
+                        ? localization.text("ios.save", fallback: "Save")
+                        : localization.editorText("ios.editor.saveJourney"))
+                        .fixedSize(horizontal: true, vertical: false)
+                        .frame(maxWidth: .infinity)
+                }
+                .accessibilityLabel(localization.editorText("ios.editor.saveJourney"))
+                .buttonStyle(.borderedProminent)
+                .disabled(!blocking.isEmpty)
+                .accessibilityIdentifier("rideEditorSave")
+                .keyboardShortcut("s", modifiers: .command)
+            }
+        }
+        .controlSize(.large)
+        .padding(.horizontal).padding(.vertical, 10)
+        .background(.bar)
+    }
+
+    @ViewBuilder private var confirmationSections: some View {
+        Section(localization.editorText("ios.editor.step.route")) {
+            LabeledContent(localization.countryText("country.label", fallback: "Region"),
+                value: localization.text(Region.resolved(draft).localizationKey,
+                                         fallback: Region.resolved(draft).fallbackName))
+            ForEach(Array(draft.stops.enumerated()), id: \.offset) { index, stop in
+                LabeledContent("\(index + 1)", value: stop.name)
+            }
+            if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
+                LabeledContent(localization.editorText("ios.editor.searchLines"), value: names.joined(separator: " · "))
+            }
+        }
+        Section(localization.editorText("ios.editor.step.service")) {
+            LabeledContent(localization.countryText("field.number", fallback: "Train number"), value: draft.number)
+            if let value = draft.trainType, !value.isEmpty {
+                LabeledContent(localization.countryText("field.trainType", fallback: "Train type"), value: value)
+            }
+            if let value = draft.vehicleType, !value.isEmpty {
+                LabeledContent(localization.editorText("ios.editor.vehicleType"), value: value)
+            }
+            if let value = draft.company, !value.isEmpty {
+                LabeledContent(localization.countryText("field.company", fallback: "Operator"), value: value)
+            }
+            if let value = draft.numberEn, !value.isEmpty {
+                LabeledContent(localization.countryText("field.numberEn", fallback: "English name"), value: value)
+            }
+            if let value = draft.direction, !value.isEmpty {
+                LabeledContent(localization.countryText("field.direction", fallback: "Direction"), value: value)
+            }
+        }
+        Section(localization.editorText("ios.editor.step.date")) {
+            LabeledContent(localization.editorText("ios.editor.date"),
+                value: draft.date ?? localization.editorText("ios.editor.noDate"))
+            LabeledContent(localization.editorText("ios.detail.riddenState"),
+                value: localization.editorText(RideLedger.confirmation(of: draft) == .partly
+                    ? "ios.editor.partly" : RideLedger.hasBeenRidden(draft) ? "ios.editor.yes" : "ios.editor.no"))
+            LabeledContent(localization.text("ios.showOnMap", fallback: "Show on map"),
+                value: localization.editorText(draft.visible != false ? "ios.editor.yes" : "ios.editor.no"))
+        }
     }
 
     // MARK: - Why the save is off (§5.4)
@@ -197,29 +379,48 @@ struct RideEditorView: View {
     @ViewBuilder
     private func problemSummary(_ proxy: ScrollViewProxy) -> some View {
         Section {
-            ForEach(blocking) { issue in
+            if isNew && step != .confirm && !showsValidation {
+                Text(localization.editorText("ios.editor.requiredGuide"))
+                    .foregroundStyle(.secondary)
+            }
+            ForEach(isNew && step != .confirm && !showsValidation ? [] : presentedBlocking) { issue in
                 Label(message(issue), systemImage: "exclamationmark.circle")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Button(localization.editorText("ios.editor.showErrors")) {
+            Button(localization.editorText(isNew && step != .confirm && !showsValidation
+                ? "ios.editor.reviewRequired" : "ios.editor.showErrors")) {
+                showsValidation = true
                 focusFirstProblem(proxy)
             }
             .frame(minHeight: 44)
         } header: {
-            Text(localization.editorText("ios.editor.cannotSaveYet"))
+            Text(localization.editorText(isNew && step != .confirm && !showsValidation
+                ? "ios.editor.beforeSaving" : "ios.editor.cannotSaveYet"))
         } footer: {
-            Text(
-                localization.editorText(
-                    "ios.editor.blockedCount",
-                    ["count": .number(Double(blocking.count))]))
+            if !isNew || showsValidation {
+                Text(localization.editorText("ios.editor.blockedCount",
+                    ["count": .number(Double(presentedBlocking.count))]))
+            }
         }
     }
 
     /// §5.4: "第一个错误字段应可被『查看错误』动作聚焦."
     private func focusFirstProblem(_ proxy: ScrollViewProxy) {
-        guard let issue = blocking.first else { return }
+        guard let issue = presentedBlocking.first else { return }
+        if isNew && step == .confirm {
+            switch issue.field {
+            case .date: step = .date
+            case .number: step = .service
+            default: step = .route
+            }
+            return
+        }
+        if isNew, case .stop(let index) = issue.field, stopIDs.indices.contains(index) {
+            addedStopID = stopIDs[index]
+            return
+        }
         let target = scrollTarget(for: issue.field)
         if reduceMotion {
             proxy.scrollTo(target, anchor: .center)
@@ -228,12 +429,17 @@ struct RideEditorView: View {
                 proxy.scrollTo(target, anchor: .center)
             }
         }
-        if issue.field.isTextField { focused = issue.field }
+        if issue.field.isTextField && !(isNew && (issue.field == .origin || issue.field == .destination)) {
+            focused = issue.field
+        }
     }
 
     /// Validation identifies stop problems by their current ordinal; scrolling
     /// identifies the mutable row by its stable editor-session id.
     private func scrollTarget(for field: RideDraftIssue.Field) -> AnyHashable {
+        if isNew, field == .origin || field == .destination {
+            return AnyHashable(RideDraftIssue.Field.stops)
+        }
         if case .stop(let index) = field, stopIDs.indices.contains(index) {
             return AnyHashable(stopIDs[index])
         }
@@ -244,46 +450,71 @@ struct RideEditorView: View {
 
     private var basicsSection: some View {
         Section {
-            EditorTextField(
-                title: localization.editorText("ios.editor.date"),
-                text: optionalText(\.date),
-                prompt: "YYYY-MM-DD",
-                focus: $focused,
-                field: .date
-            )
-            .keyboardType(.numbersAndPunctuation)
-            .textInputAutocapitalization(.never)
-            .autocorrectionDisabled()
-            .id(RideDraftIssue.Field.date)
-            fieldIssues(.date)
+            dateFields
+            numberFields
 
-            EditorTextField(
+            if !isNew { serviceDetails }
+
+        } header: {
+            Text(localization.editorText("ios.editor.basics"))
+        }
+    }
+
+    @ViewBuilder private var dateFields: some View {
+            if isNew {
+                Toggle(localization.editorText("ios.editor.includeDate"), isOn: Binding(
+                    get: { draft.date != nil },
+                    set: { draft.date = $0 ? RecordDate.today(in: Region.resolved(draft).clock) : nil }
+                ))
+                if draft.date != nil {
+                    EditorSearchField(
+                        title: localization.editorText("ios.editor.date"),
+                        text: Binding(get: { draft.date ?? "" }, set: { draft.date = $0 }),
+                        suggestions: regionalHistory.compactMap(\.date).filter(Dates.isValidDateString),
+                        prompt: "YYYY-MM-DD", focus: $focused, field: .date)
+                        .keyboardType(.numbersAndPunctuation)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .accessibilityIdentifier("rideEditorDateInput")
+                        .id(RideDraftIssue.Field.date)
+                    fieldIssues(.date)
+                    DatePicker(localization.editorText("ios.editor.chooseDate"), selection: Binding(
+                        get: { draft.date.flatMap { Dates.isValidDateString($0) ? RecordDate.date(from: $0) : nil }
+                            ?? RecordDate.date(from: RecordDate.todayParts(in: Region.resolved(draft).clock)) },
+                        set: { draft.date = RecordDate.text(from: $0) }
+                    ), displayedComponents: .date)
+                }
+            } else {
+                EditorTextField(
+                    title: localization.editorText("ios.editor.date"),
+                    text: optionalText(\.date),
+                    prompt: "YYYY-MM-DD",
+                    focus: $focused,
+                    field: .date
+                )
+                .keyboardType(.numbersAndPunctuation)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .id(RideDraftIssue.Field.date)
+            }
+            if !isNew { fieldIssues(.date) }
+
+    }
+
+    @ViewBuilder private var numberFields: some View {
+            EditorSearchField(
                 title: localization.countryText("field.number", fallback: "Train number"),
                 text: $draft.number,
-                focus: $focused,
-                field: .number
+                suggestions: serviceSuggestions,
+                focus: $focused, field: .number
             )
             .accessibilityIdentifier("rideEditorNumber")
             .id(RideDraftIssue.Field.number)
             fieldIssues(.number)
+    }
 
-            // Optional, so it has no issue anchor and shares no focus identity
-            // with the required caption above it.
-            EditorTextField(
-                title: localization.countryText("field.numberEn", fallback: "English name"),
-                text: optionalText(\.numberEn))
-            .accessibilityIdentifier("rideEditorNumberEn")
-
-            EditorTextField(
-                title: localization.countryText("field.trainType", fallback: "Train type"),
-                text: optionalText(\.trainType))
-            EditorTextField(
-                title: localization.countryText("field.company", fallback: "Operator"),
-                text: optionalText(\.company))
-            EditorTextField(
-                title: localization.countryText("field.direction", fallback: "Direction"),
-                text: optionalText(\.direction))
-
+    private var journeyStatusSection: some View {
+        Section {
             Toggle(
                 localization.editorText("ios.detail.riddenState"), isOn: riddenBinding)
             if RideLedger.confirmation(of: draft) == .partly {
@@ -301,16 +532,103 @@ struct RideEditorView: View {
             }
 
             Toggle(localization.text("ios.showOnMap", fallback: "Show on map"), isOn: visibleBinding)
-        } header: {
-            Text(localization.editorText("ios.editor.basics"))
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
-                // §5.3: only the reader decides this, and the date never will.
                 Text(localization.editorText("ios.editor.riddenNote"))
-                // §8.5: hiding changes the map, not the record or the export.
                 Text(localization.editorText("ios.editor.visibilityNote"))
             }
         }
+    }
+
+    private var serviceDetails: some View {
+        Group {
+            // Optional, so it has no issue anchor and shares no focus identity
+            // with the required caption above it.
+            EditorTextField(
+                title: localization.countryText("field.numberEn", fallback: "English name"),
+                text: optionalText(\.numberEn))
+            .accessibilityIdentifier("rideEditorNumberEn")
+
+            EditorTextField(
+                title: localization.countryText("field.direction", fallback: "Direction"),
+                text: optionalText(\.direction))
+
+        }
+    }
+
+    private var regionalHistory: [Train] {
+        suggestionTrains.filter { Region.resolved($0) == Region.resolved(draft) }
+    }
+
+    private var serviceSuggestions: [String] {
+        regionalHistory.map(\.number) + TrainServiceBranding.services
+            .filter { $0.region == Region.resolved(draft).code }.flatMap(\.names)
+    }
+
+    private var defaultServiceTypes: [String] {
+        ["local", "rapid", "express", "limitedExpress", "highSpeed"]
+            .map { localization.editorText("ios.editor.serviceType.\($0)") }
+    }
+
+    private var regionalLines: [RailNetworkStore.DrawnLine] {
+        network.lines.filter { $0.region == Region.resolved(draft) }
+    }
+
+    private var searchableDetailsSection: some View {
+        Section {
+            EditorSearchField(
+                title: localization.countryText("field.trainType", fallback: "Train type"),
+                text: optionalText(\.trainType),
+                suggestions: regionalHistory.compactMap(\.trainType) + defaultServiceTypes)
+                .accessibilityIdentifier("rideEditorTrainType")
+            EditorSearchField(
+                title: localization.editorText("ios.editor.vehicleType"),
+                text: optionalText(\.vehicleType),
+                suggestions: regionalHistory.compactMap(\.vehicleType))
+                .accessibilityIdentifier("rideEditorVehicleType")
+            if !isNew { lineSelectionRow }
+            EditorSearchField(
+                title: localization.countryText("field.company", fallback: "Operator"),
+                text: optionalText(\.company),
+                suggestions: regionalHistory.compactMap(\.company) + regionalLines.compactMap(\.operatorName))
+        } header: {
+            Text(localization.editorText(isNew ? "ios.editor.step.service" : "ios.editor.serviceDetails"))
+        } footer: {
+            Text(localization.editorText(isNew ? "ios.editor.vehicleSearchNote" : "ios.editor.searchDetailsNote"))
+        }
+    }
+
+    private var lineSelectionRow: some View {
+            NavigationLink {
+                EditorLineSearchView(
+                    selection: Binding(
+                        get: { draft.routePolicy?.preferredLineNames ?? [] },
+                        set: { names in
+                            var policy = routePolicy.wrappedValue
+                            policy.preferredLineNames = names.isEmpty ? nil : names
+                            draft.routePolicy = policy
+                        }),
+                    lines: regionalLines)
+            } label: {
+                VStack(alignment: .leading, spacing: 4) {
+                    Label(localization.editorText("ios.editor.searchLines"), systemImage: "magnifyingglass")
+                    if let names = draft.routePolicy?.preferredLineNames, !names.isEmpty {
+                        Text(names.joined(separator: " · "))
+                            .font(.subheadline).foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+            .accessibilityIdentifier("rideEditorLines")
+    }
+
+    private var regionPicker: some View {
+        Picker(localization.countryText("country.label", fallback: "Region"), selection: regionSelection) {
+            ForEach(Region.enabledOrdered) { region in
+                Text(localization.text(region.localizationKey, fallback: region.fallbackName)).tag(region)
+            }
+        }
+        .accessibilityIdentifier("rideEditorRegion")
     }
 
     // MARK: - 2. Origin and destination
@@ -351,10 +669,16 @@ struct RideEditorView: View {
                         NavigationLink {
                             StopEditorView(
                                 stop: $draft.stops[index], index: index,
-                                region: Region.resolved(draft))
+                                region: Region.resolved(draft), allowsEndpointRoles: !isNew,
+                                       onRiddenChange: { riddenIsTheReaders = true })
                         } label: {
-                            StopEditorLabel(stop: draft.stops[index], index: index + 1)
+                            StopEditorLabel(
+                                stop: draft.stops[index], index: index + 1,
+                                emptyTitle: isNew ? localization.editorText(index == 0
+                                    ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
+                                    ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
                         }
+                        .accessibilityIdentifier("rideEditorStop-\(index)")
                         fieldIssues(.stop(index))
                     }
                     .id(stopID)
@@ -367,18 +691,34 @@ struct RideEditorView: View {
 
             Button {
                 undoableDeletion = []
-                draft.stops.append(
-                    Stop(name: "", stopType: "passenger_stop", rideSegment: true))
-                stopIDs.append(UUID())
+                let id = UUID()
+                let ridden = RideLedger.hasBeenRidden(draft)
+                let index = isNew ? max(0, draft.stops.count - 1) : draft.stops.count
+                draft.stops.insert(
+                    Stop(name: "", stopType: "passenger_stop", rideSegment: ridden), at: index)
+                stopIDs.insert(id, at: index)
+                stopEditMode = .inactive
+                addedStopID = id
             } label: {
                 Label(
                     localization.countryText("btn.addStop", fallback: "Add stop"),
                     systemImage: "plus")
             }
+            .accessibilityIdentifier("rideEditorAddStop")
             fieldIssues(.stops)
         } header: {
-            Text(localization.countryText("sec.stops", fallback: "Stops"))
-                .id(RideDraftIssue.Field.stops)
+            HStack {
+                Text(localization.countryText("sec.stops", fallback: "Stops"))
+                Spacer()
+                Button(localization.editorText(stopEditMode.isEditing
+                    ? "ios.editor.finishReordering" : "ios.editor.reorderStops")) {
+                    stopEditMode = stopEditMode.isEditing ? .inactive : .active
+                }
+                .buttonStyle(.borderless)
+                .accessibilityIdentifier("rideEditorReorderStops")
+                .frame(minHeight: 44)
+            }
+            .id(RideDraftIssue.Field.stops)
         } footer: {
             Text(localization.editorText("ios.editor.stopsNote"))
         }
@@ -404,6 +744,7 @@ struct RideEditorView: View {
                 }
                 undoableDeletion = []
             }
+            .accessibilityIdentifier("rideEditorUndoStops")
         }
         .frame(minHeight: 44)
     }
@@ -414,6 +755,21 @@ struct RideEditorView: View {
         }
         draft.stops.remove(atOffsets: offsets)
         stopIDs.remove(atOffsets: offsets)
+    }
+
+    /// New journeys define their endpoints by route order, including after undo.
+    /// Existing records retain their explicitly authored stop roles.
+    private func normalizeEndpointRoles() {
+        guard isNew else { return }
+        for index in draft.stops.indices {
+            let role: String
+            if index == 0 { role = "origin" }
+            else if index == draft.stops.count - 1 { role = "destination" }
+            else if ["origin", "destination"].contains(draft.stops[index].stopType) {
+                role = "passenger_stop"
+            } else { continue }
+            if draft.stops[index].stopType != role { draft.stops[index].stopType = role }
+        }
     }
 
     private func moveStops(from offsets: IndexSet, to destination: Int) {
@@ -523,18 +879,12 @@ struct RideEditorView: View {
             // statistics, its station picker. Offered rather than derived
             // because a hand-written ride may carry no station codes at all,
             // and then nothing else in the record can say.
-            Picker(
-                localization.countryText("country.label", fallback: "Region"),
-                selection: regionSelection
-            ) {
-                ForEach(Region.ordered) { region in
-                    Text(localization.text(region.localizationKey, fallback: region.fallbackName))
-                        .tag(region)
-                }
+            if !isNew {
+                regionPicker
+                Text(localization.editorText("ios.editor.regionNote"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
-            Text(localization.editorText("ios.editor.regionNote"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
 
             EditorTextField(
                 title: localization.countryText("field.id", fallback: "Identifier"),
@@ -560,7 +910,7 @@ struct RideEditorView: View {
     /// Every message for one field, in the field's own row.
     @ViewBuilder
     private func fieldIssues(_ field: RideDraftIssue.Field) -> some View {
-        ForEach(issues.all(for: field)) { issue in
+        ForEach(isNew && step != .confirm && !showsValidation ? [] : issues.all(for: field)) { issue in
             Label(message(issue), systemImage: symbol(issue))
                 .font(.footnote)
                 .foregroundStyle(issue.severity == .error ? Color.red : Color.orange)
@@ -592,6 +942,31 @@ struct RideEditorView: View {
     }
 
     private var blocking: [RideDraftIssue] { issues.blocking }
+
+    /// Endpoints mirror the stop list during creation; report each missing station once.
+    private var presentedBlocking: [RideDraftIssue] {
+        blocking.filter { issue in
+            guard isNew else { return true }
+            guard issue.field != .origin && issue.field != .destination else { return false }
+            switch step {
+            case .region: return false
+            case .route:
+                switch issue.field { case .stops, .stop, .routePolicy, .routeSection: return true; default: return false }
+            case .service: return issue.field == .number
+            case .date: return issue.field == .date
+            case .confirm: return true
+            }
+        }
+    }
+
+    private var hasAdvancedIssues: Bool {
+        blocking.contains {
+            switch $0.field {
+            case .id, .color, .routePolicy, .routeSection, .record: true
+            default: false
+            }
+        }
+    }
 
     // MARK: - Bindings
 
@@ -658,7 +1033,17 @@ struct RideEditorView: View {
     private var regionSelection: Binding<Region> {
         Binding(
             get: { Region.resolved(draft) },
-            set: { draft.region = $0.code }
+            set: { region in
+                guard region != Region.resolved(draft) else { return }
+                if isNew && (draft.stops.contains { !$0.name.isEmpty || $0.n02StationCode != nil }
+                    || !(draft.routePolicy?.preferredLineNames ?? []).isEmpty) {
+                    pendingRegion = region
+                } else {
+                    undoableDeletion = []
+                    draft.region = region.code
+                    prefillRidden(forDate: draft.date)
+                }
+            }
         )
     }
 
@@ -946,6 +1331,7 @@ private struct StopEditorLabel: View {
     @Environment(AppLocalization.self) private var localization
     let stop: Stop
     let index: Int
+    var emptyTitle: String? = nil
 
     var body: some View {
         HStack(spacing: 10) {
@@ -954,7 +1340,7 @@ private struct StopEditorLabel: View {
                 .foregroundStyle(.secondary)
                 .frame(width: 24)
             VStack(alignment: .leading, spacing: 2) {
-                Text(stop.name.isEmpty ? localization.editorText("ios.editor.untitledStop") : stop.name)
+                Text(stop.name.isEmpty ? (emptyTitle ?? localization.editorText("ios.editor.untitledStop")) : stop.name)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: 6) {
                     if let arrival = stop.arrival, !arrival.isEmpty { Text(arrival) }
@@ -997,24 +1383,54 @@ private struct StopEditorView: View {
     /// sit next to each other and picking the wrong one is a route that will
     /// never solve.
     let region: Region
+    var allowsEndpointRoles = true
+    var onRiddenChange: () -> Void = {}
 
     /// `TrainValidation.stopTypes`, not a copy of it: the order is the web
     /// editor's `<select>` order and is quoted into the rejection message, so
     /// a second list here would be a second answer.
     private var types: [String] { TrainValidation.stopTypes }
+    @FocusState private var stationNameFocused: Bool
+    @State private var stationMatches: [RailNetworkStore.DrawnStation] = []
+
+    private var stationName: Binding<String> {
+        Binding(get: { stop.name }, set: { name in
+            if name != stop.name { stop.n02StationCode = nil }
+            stop.name = name
+        })
+    }
 
     var body: some View {
         Form {
             Section(localization.editorText("ios.editor.station")) {
-                EditorTextField(
-                    title: localization.editorText("ios.editor.stationName"), text: $stop.name)
+                EditorField(title: localization.editorText("ios.editor.stationName")) {
+                    TextField(localization.editorText("ios.editor.stationSearch"), text: stationName)
+                        .focused($stationNameFocused)
+                        .autocorrectionDisabled()
+                }
+                .accessibilityIdentifier("rideEditorStopName")
+                if stationNameFocused {
+                    ForEach(stationMatches, id: \.stationCode) { station in
+                        Button {
+                            stop.name = station.name
+                            stop.n02StationCode = station.stationCode
+                            stationNameFocused = false
+                        } label: {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(station.name)
+                                Text([station.nameRoma, station.stationCode].filter { !$0.isEmpty }.joined(separator: " · "))
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityIdentifier("rideEditorStationSuggestion-\(station.stationCode)")
+                    }
+                }
                 if stop.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Label(
-                        localization.editorText("ios.editor.stopNameRequired"),
-                        systemImage: "exclamationmark.circle.fill"
-                    )
-                    .font(.footnote)
-                    .foregroundStyle(.red)
+                    Text(localization.editorText("ios.editor.stationGuide"))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
                 NavigationLink {
                     StationPickerView(stop: $stop, stations: network.stations(in: region))
@@ -1028,6 +1444,7 @@ private struct StopEditorView: View {
                     title: localization.editorText("ios.editor.stationCode"),
                     text: optionalText(\.n02StationCode)
                 )
+                .accessibilityIdentifier("rideEditorStationCode")
                 .textInputAutocapitalization(.characters)
                 .autocorrectionDisabled()
                 if let code = stop.n02StationCode, !code.isEmpty,
@@ -1065,13 +1482,20 @@ private struct StopEditorView: View {
                     localization.countryText("popup.stopType", fallback: "Stop type"),
                     selection: $stop.stopType
                 ) {
-                    ForEach(types, id: \.self) {
+                    ForEach(allowsEndpointRoles ? types : types.filter {
+                        !["origin", "destination"].contains($0) || $0 == stop.stopType
+                    }, id: \.self) {
                         Text(localization.countryText("stoptype.\($0)", fallback: $0)).tag($0)
                     }
                 }
+                .disabled(!allowsEndpointRoles && ["origin", "destination"].contains(stop.stopType))
                 Toggle(
                     localization.countryText("popup.rideSegment", fallback: "Ridden segment"),
-                    isOn: $stop.rideSegment)
+                    isOn: Binding(get: { stop.rideSegment }, set: { value in
+                        onRiddenChange()
+                        stop.rideSegment = value
+                    }))
+                    .accessibilityIdentifier("rideEditorStopRidden")
             } footer: {
                 Text(localization.editorText("ios.editor.rideSegmentNote"))
             }
@@ -1100,6 +1524,37 @@ private struct StopEditorView: View {
                 // kept that way. Nothing here reformats it into a date.
                 Text(localization.editorText("ios.editor.crossDayHint"))
             }
+        }
+        .task(id: "\(region.code)|\(stop.name)|\(network.stations.count)") {
+            let stations = network.stations(in: region)
+            let query = stop.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            stationMatches = []
+            guard !query.isEmpty else { return }
+            do { try await Task.sleep(for: .milliseconds(120)) } catch { return }
+            let found = await Task.detached(priority: .userInitiated) {
+                var codes: Set<String> = []
+                var result: [(station: RailNetworkStore.DrawnStation, rank: Int)] = []
+                let options: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive, .widthInsensitive]
+                let needle = query.folding(options: options, locale: .current)
+                for station in stations {
+                    guard station.name.localizedStandardContains(query)
+                        || station.nameRoma.localizedStandardContains(query)
+                        || station.stationCode.localizedStandardContains(query) else { continue }
+                    guard codes.insert(station.stationCode).inserted else { continue }
+                    let names = [station.name, station.nameRoma, station.stationCode]
+                        .map { $0.folding(options: options, locale: .current) }
+                    let rank = names.contains(needle) ? 0 : names.contains(where: { $0.hasPrefix(needle) }) ? 1 : 2
+                    result.append((station, rank))
+                }
+                return result.sorted {
+                    if $0.rank != $1.rank { return $0.rank < $1.rank }
+                    let order = $0.station.name.localizedStandardCompare($1.station.name)
+                    if order != .orderedSame { return order == .orderedAscending }
+                    return $0.station.stationCode < $1.station.stationCode
+                }.prefix(8).map(\.station)
+            }.value
+            guard !Task.isCancelled else { return }
+            stationMatches = found
         }
         .navigationTitle(
             stop.name.isEmpty
@@ -1207,7 +1662,8 @@ private struct StationPickerView: View {
         .navigationTitle(localization.editorText("ios.editor.chooseStation"))
         .navigationBarTitleDisplayMode(.inline)
         .searchable(
-            text: $query, prompt: Text(localization.editorText("ios.editor.stationSearch")))
+            text: $query, placement: .navigationBarDrawer(displayMode: .always),
+            prompt: Text(localization.editorText("ios.editor.stationSearch")))
         // Keyed on the list's identity rather than run once: the picker is
         // presented inside a sheet that can outlive one region's package
         // arriving.
@@ -1329,5 +1785,143 @@ private struct EditorTextField: View {
     private var textField: some View {
         TextField(title, text: $text, prompt: Text(prompt ?? title))
             .labelsHidden()
+    }
+}
+
+/// Text remains editable even when a catalog or previous record has no match.
+private struct EditorSearchField: View {
+    let title: String
+    @Binding var text: String
+    let suggestions: [String]
+    var prompt: String? = nil
+    var focus: FocusState<RideDraftIssue.Field?>.Binding?
+    var field: RideDraftIssue.Field?
+    @FocusState private var hasFocus: Bool
+
+    private var matches: [String] {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return Array(Set(suggestions.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }))
+            .filter { query.isEmpty || $0.localizedStandardContains(query) }
+            .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+            .prefix(6).map { $0 }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            EditorField(title: title) {
+                TextField(title, text: $text, prompt: Text(prompt ?? title))
+                    .focused($hasFocus)
+                    .submitLabel(.done)
+                    .onSubmit { hasFocus = false }
+                    .autocorrectionDisabled()
+            }
+            if hasFocus {
+                ForEach(matches, id: \.self) { value in
+                    Button {
+                        text = value
+                        hasFocus = false
+                    } label: {
+                        Label(value, systemImage: "arrow.up.left")
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    }
+                    .buttonStyle(.borderless)
+                    .accessibilityIdentifier("editorSuggestion-\(value)")
+                }
+            }
+        }
+        .onChange(of: hasFocus) { _, active in
+            guard let focus, let field else { return }
+            if active { focus.wrappedValue = field }
+            else if focus.wrappedValue == field { focus.wrappedValue = nil }
+        }
+        .onChange(of: focus?.wrappedValue) { _, value in
+            if let field { hasFocus = value == field }
+        }
+    }
+}
+
+private struct EditorLineSearchView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(AppLocalization.self) private var localization
+    @Binding var selection: [String]
+    let lines: [RailNetworkStore.DrawnLine]
+    @State private var query = ""
+    @State private var isSearching = false
+
+    private var matches: [RailNetworkStore.DrawnLine] {
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        var names: Set<String> = []
+        return lines.filter {
+            (needle.isEmpty || $0.name.localizedStandardContains(needle)
+             || ($0.nameRoma ?? "").localizedStandardContains(needle)
+             || ($0.operatorName ?? "").localizedStandardContains(needle))
+            && names.insert($0.name).inserted
+        }.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
+    var body: some View {
+        List {
+            if !selection.isEmpty {
+                Section(localization.editorText("ios.editor.selectedLines")) {
+                    ForEach(Array(Set(selection)).sorted(), id: \.self) { name in
+                        Button {
+                            selection.removeAll { $0 == name }
+                        } label: {
+                            Label(name, systemImage: "checkmark.circle.fill")
+                                .frame(minHeight: 44)
+                        }
+                        .accessibilityHint(localization.editorText("ios.editor.removeLine"))
+                    }
+                }
+            }
+            Section {
+                ForEach(matches, id: \.name) { line in
+                    Button {
+                        if selection.contains(line.name) { selection.removeAll { $0 == line.name } }
+                        else { selection.append(line.name) }
+                        isSearching = false
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(line.name)
+                                Text([line.nameRoma, line.operatorName].compactMap { $0 }.joined(separator: " · "))
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if selection.contains(line.name) { Image(systemName: "checkmark") }
+                        }
+                        .frame(minHeight: 44)
+                    }
+                    .accessibilityIdentifier("rideEditorLine-\(line.lineID)")
+                    .accessibilityValue(selection.contains(line.name)
+                        ? localization.editorText("ios.editor.lineSelected") : "")
+                }
+                let custom = query.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !custom.isEmpty, !lines.contains(where: { $0.name == custom }), !selection.contains(custom) {
+                    Button {
+                        selection.append(custom)
+                        query = ""
+                        isSearching = false
+                    } label: {
+                        Label(localization.editorText("ios.editor.useEntered", ["value": .string(custom)]), systemImage: "plus")
+                    }
+                    .frame(minHeight: 44)
+                }
+                if matches.isEmpty {
+                    Text(localization.editorText("ios.editor.noLineMatches"))
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .navigationTitle(localization.editorText("ios.editor.searchLines"))
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $query, isPresented: $isSearching, placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: Text(localization.editorText("ios.editor.lineSearchPrompt")))
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(localization.text("ios.done", fallback: "Done")) { dismiss() }
+                    .accessibilityIdentifier("rideEditorLinesDone")
+            }
+        }
     }
 }

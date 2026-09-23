@@ -19,6 +19,7 @@ final class ConsoleSweepTests: XCTestCase {
         // The opposite of the sibling suite: one missed surface must not stop
         // the walk, or the first flake hides every screen after it.
         continueAfterFailure = true
+        XCUIDevice.shared.orientation = .portrait
     }
 
     func testWalkEverySurface() throws {
@@ -145,6 +146,21 @@ final class ConsoleSweepTests: XCTestCase {
     // MARK: - the sheets that are ABOUT the map
 
     private func walkMapSheets(_ app: XCUIApplication) {
+        // Map controls belong to the uncovered map. The preceding sheet and
+        // statistics steps can leave the resident panel expanded.
+        let layers = element("mapLayersButton", in: app)
+        let header = element("panelHeader", in: app)
+        for _ in 0..<3 {
+            if layers.exists && layers.isHittable { break }
+            guard header.waitForExistence(timeout: 8) else { break }
+            let start = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: 320)))
+            settle()
+        }
+        guard layers.exists && layers.isHittable else {
+            XCTFail("the map layers button is not reachable after collapsing the panel")
+            return
+        }
         guard element("mapNetworkToggle", in: app).waitForExistence(timeout: 8) else {
             XCTFail("the map control rail never appeared")
             return
@@ -321,8 +337,13 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func launch(tab: String, stage: String) -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
+        // A fresh installation deliberately starts empty. Sharing statistics
+        // requires actual ridden journeys, so load a known bundled sample.
+        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store-tw"
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "tw"
         app.launch()
         return app
     }

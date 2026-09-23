@@ -78,7 +78,16 @@ final class RailMapController {
     /// The rest of the layers menu: which of the reader's own route lines,
     /// station dots and ridden-line categories are drawn. See ``MapLayers``.
     var layers = MapLayers()
-    var basemapOpacity = 1.0
+
+    /// 底圖不透明度: how much of Apple's basemap shows through the veil under
+    /// the railways. Below 1 by default so the rail lines read first; the
+    /// reader's choice survives relaunch.
+    static let defaultBasemapOpacity = 0.75
+    static let basemapOpacityKey = "map.basemapOpacity"
+    var basemapOpacity: Double = UserDefaults.standard.object(forKey: RailMapController.basemapOpacityKey)
+        as? Double ?? RailMapController.defaultBasemapOpacity {
+        didSet { UserDefaults.standard.set(basemapOpacity, forKey: Self.basemapOpacityKey) }
+    }
 
     /// Whether the reader has asked for less motion.
     ///
@@ -398,6 +407,15 @@ final class RailMapController {
         didSet { applyLeadingMargin() }
     }
 
+    /// The map's bottom layout margin in the docked-card composition, so
+    /// MapKit's Apple Maps logo and Legal label sit on the same line as the
+    /// bottom of the card's tab bar. `nil` leaves MapKit's own margin alone,
+    /// which is what the phone's resident sheet wants.
+    @ObservationIgnored var dockedBottomMargin: CGFloat? {
+        didSet { applyLeadingMargin() }
+    }
+    @ObservationIgnored private var defaultBottomMargin: CGFloat?
+
     /// Pushes `leadingObstruction` into whatever `MKMapView` is current.
     ///
     /// Split out of `leadingObstruction`'s `didSet` (and no longer guarded on
@@ -408,8 +426,11 @@ final class RailMapController {
     private func applyLeadingMargin() {
         guard let mapView else { return }
         var margins = mapView.directionalLayoutMargins
-        guard margins.leading != leadingObstruction else { return }
+        if defaultBottomMargin == nil { defaultBottomMargin = margins.bottom }
+        let bottom = dockedBottomMargin ?? defaultBottomMargin ?? margins.bottom
+        guard margins.leading != leadingObstruction || margins.bottom != bottom else { return }
         margins.leading = leadingObstruction
+        margins.bottom = bottom
         mapView.directionalLayoutMargins = margins
     }
 

@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 // =========================================================================
@@ -36,75 +37,13 @@ import SwiftUI
 /// (or no mark) on the screen it opens. One lookup, three surfaces.
 enum JourneyBranding {
 
-    /// Whether a train's own recorded line names should be trusted over what
-    /// its drawn route crosses.
-    ///
-    /// An ordinary service (山手線 普通) is identified by the number the
-    /// reader IMPORTED, not by the geometry it happens to share with other
-    /// lines — and N02 files the 田端–上野 stretch of the Yamanote loop under
-    /// 東北線, so a Yamanote local detected against that index would read
-    /// 「山手線 / 東北線」 for a ride that never left its own line. Detection
-    /// exists for through-running services (特急・新幹線・快速 and the rest)
-    /// whose recorded name is one line among several actually crossed, so
-    /// those keep detection as the answer.
-    ///
-    /// The express check runs FIRST: a type can carry both words at once
-    /// (「地下鉄直通急行」, 「特急（地下鉄線内各停）」 — a through-running
-    /// express that happens to stop at every station on a subway leg), and
-    /// that train is a through-running service, not an ordinary one — its
-    /// recorded name is one line among several actually crossed, exactly the
-    /// case detection exists for. Checking ordinary first would misfile it.
-    ///
-    /// Falling through to `false` — rather than defaulting an unrecognised
-    /// type to detection — is the conservative answer: a `nil`/empty/unknown
-    /// `trainType` keeps the reader's recorded names, because a record with
-    /// no recognisable type is exactly the case there is no "this is a
-    /// through-running service" signal to override the import with — and
-    /// ``detectedApplies(_:detected:)`` already fills in detection whenever
-    /// the record names nothing at all, so a truly empty record still gets
-    /// an answer. What this prevents is a 山手線 loop imported with no
-    /// `trainType` reading as 「山手線 / 東北線」 the moment its geometry
-    /// touches the shared 田端–上野 stretch.
-    ///
-    /// The two marker lists between them cover jp/tw/hk/mo/kr/us/ca types.
+    /// Express and explicitly through-running services can span several lines.
     static func usesDetectedLines(_ train: Train) -> Bool {
-        let expressMarkers = [
-            "特急", "急行", "快速", "新幹線", "ライナー", "寝台",
-            "自強", "普悠瑪", "太魯閣", "莒光", "高鐵",
-            "ktx", "srt", "itx", "새마을", "무궁화",
-            "express", "limited", "rapid", "intercity", "acela", "corridor",
-        ]
-        let ordinaryMarkers = [
-            "普通", "各駅停車", "各停", "地下鉄", "路面電車", "モノレール", "新交通", "ケーブル",
-            "區間", "各站", "普快", "捷運", "地鐵", "輕鐵", "港鐵",
-            "지하철", "일반", "전철", "경전철",
-            "local", "metro", "subway", "commuter", "tram", "streetcar", "light rail", "lrt",
-            "monorail", "cable",
-        ]
-        guard let raw = train.trainType else { return false }
-        let type = raw.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !type.isEmpty else { return false }
-        let normalized = type.lowercased()
-        if expressMarkers.contains(where: { normalized.contains($0) }) { return true }
-        if ordinaryMarkers.contains(where: { normalized.contains($0) }) { return false }
-        return false
+        TrainServiceBranding.usesDetectedLines(train)
     }
 
-    /// The recorded `route_sections[].line_names` / `route_policy.preferred_line_names`
-    /// — what a reader TYPED IN, factored out because both ``lineNames(of:detected:badges:)``
-    /// and ``detectedApplies(_:detected:)`` need it.
-    private static func recordedLineNames(of train: Train) -> [String] {
-        uniqueNonEmpty(
-            (train.routeSections ?? []).flatMap { $0.lineNames ?? [] }
-                + (train.routePolicy?.preferredLineNames ?? []))
-    }
-
-    /// Whether detection should be preferred over the recorded names at all
-    /// — non-empty detection, and either the train is not an ordinary
-    /// service (see ``usesDetectedLines(_:)``) or the record names nothing
-    /// for detection to be overridden by.
     private static func detectedApplies(_ train: Train, detected: [Statistics.TraversedLine]) -> Bool {
-        !detected.isEmpty && (usesDetectedLines(train) || recordedLineNames(of: train).isEmpty)
+        JourneyRouteIdentity.detectedApplies(train, detected: detected)
     }
 
     /// Passenger-facing route hints — the railways this journey ran over.
@@ -112,7 +51,8 @@ enum JourneyBranding {
     /// `detected` is what the drawn route actually crossed, walked off the
     /// N02 edge index by ``TraversedLineDetector`` and already unique and in
     /// first-seen order along the path; when ``detectedApplies(_:detected:)``
-    /// it is the answer, because a through-running record (サンライズ出雲:
+    /// it supplies the observed legs, while recorded legs remain available
+    /// during partial route loading. A through-running record (サンライズ出雲:
     /// 東海道線→山陽線→伯備線→山陰線) must show every railway it crossed
     /// whether or not the import listed it. An ORDINARY service with a
     /// recorded name is the one case detection does not win — see
@@ -125,17 +65,9 @@ enum JourneyBranding {
         of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
     ) -> [String] {
         let region = Region.resolved(train).code
-        guard detectedApplies(train, detected: detected) else {
-            // The recorded names go through the same spelling table: a
-            // reader who imported 「4号線丸ノ内線」 from the package's own
-            // ids should still read 「丸ノ内線」, and the source stays theirs.
-            return uniqueNonEmpty(recordedLineNames(of: train).map {
-                badges?.passengerName(region: region, operatorName: nil, lineName: $0) ?? $0
-            })
-        }
-        return uniqueNonEmpty(detected.map {
-            badges?.passengerName(region: region, operatorName: $0.operatorName, lineName: $0.name)
-                ?? $0.name
+        return uniqueNonEmpty(JourneyRouteIdentity.lineNames(of: train, detected: detected).map { name in
+            let operatorName = detected.first { $0.name == name }?.operatorName
+            return badges?.passengerName(region: region, operatorName: operatorName, lineName: name) ?? name
         })
     }
 
@@ -152,11 +84,10 @@ enum JourneyBranding {
     /// `companyLabel` would find nothing.
     ///
     /// What a reader SEES is ``operatorLabels(of:)``.
-    static func operatorNames(of train: Train) -> [String] {
-        uniqueNonEmpty(
-            (train.routeSections ?? []).flatMap { $0.operatorNames ?? [] }
-                + (train.routePolicy?.preferredOperatorNames ?? [])
-                + [train.company].compactMap { $0 })
+    static func operatorNames(
+        of train: Train, detected: [Statistics.TraversedLine] = []
+    ) -> [String] {
+        JourneyRouteIdentity.operatorNames(of: train, detected: detected)
     }
 
     /// The same operators, as a passenger names them: 「JR東日本」, not
@@ -169,8 +100,10 @@ enum JourneyBranding {
     /// strings for one company, and they collapse to one only AFTER both have
     /// been through the table, which is why the unique pass runs here rather
     /// than on the raw list above.
-    static func operatorLabels(of train: Train) -> [String] {
-        let labelled = uniqueNonEmpty(operatorNames(of: train).map(OperatorBranding.companyLabel))
+    static func operatorLabels(
+        of train: Train, detected: [Statistics.TraversedLine] = []
+    ) -> [String] {
+        let labelled = uniqueNonEmpty(operatorNames(of: train, detected: detected).map(OperatorBranding.companyLabel))
         // One more collapse, and it is not the table's job. The table maps a
         // LEGAL name to a short one (京浜急行電鉄 → 京急); a record whose own
         // `company` field is already half-short (京急電鉄, 都営地下鉄) is left
@@ -188,12 +121,15 @@ enum JourneyBranding {
         of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
     ) -> String {
         [lineNames(of: train, detected: detected, badges: badges).joined(separator: " / "),
-         operatorLabels(of: train).joined(separator: " / ")]
+         operatorLabels(of: train, detected: detected).joined(separator: " / ")]
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
     }
 
-    /// The mark this journey wears — the loaded network's answer first.
+    /// A limited express wears its dedicated service mark; failing that, its
+    /// operator's logo; failing that, the default train glyph. It never falls
+    /// back to a line mark. Other trains resolve their railway mark from the
+    /// loaded network.
     ///
     /// Route sections carry passenger names rather than internal line ids, so
     /// this used to CONSTRUCT one: `<region>-<operator>-<line>`, which is the
@@ -216,6 +152,36 @@ enum JourneyBranding {
         of train: Train, in badges: RouteBadgeIndex?,
         detected: [Statistics.TraversedLine] = []
     ) -> String? {
+        JourneyRouteIdentity.logoPath(
+            for: train,
+            lineLogo: lineLogoPath(of: train, in: badges, detected: detected),
+            operatorLogo: operatorLogoPath(of: train, detected: detected))
+    }
+
+    /// The operators a limited express's service mark falls back to when it
+    /// has no dedicated logo of its own — never a line mark.
+    private static func operatorLogoPath(
+        of train: Train, detected: [Statistics.TraversedLine]
+    ) -> String? {
+        for operatorName in badgeOperators(of: train, detected: detected) {
+            if let logo = OperatorBranding.operatorLogoForAnySpelling(operatorName) {
+                return logo
+            }
+        }
+        return nil
+    }
+
+    private static func badgeOperators(
+        of train: Train, detected: [Statistics.TraversedLine]
+    ) -> [String] {
+        uniqueNonEmpty(
+            operatorNames(of: train) + (detectedApplies(train, detected: detected)
+                ? detected.compactMap(\.operatorName) : []))
+    }
+
+    private static func lineLogoPath(
+        of train: Train, in badges: RouteBadgeIndex?, detected: [Statistics.TraversedLine]
+    ) -> String? {
         let region = Region.resolved(train).code
         // Raw N02 spelling on purpose — `RouteBadgeIndex` is keyed by both
         // spellings of a line's name, so the badge lookup below does not
@@ -230,8 +196,7 @@ enum JourneyBranding {
         // operator is appended only so a record with no usable operator of
         // its own can still find a mark, and only when detection applies to
         // this train at all — see ``usesDetectedLines(_:)``.
-        let operators = uniqueNonEmpty(
-            operatorNames(of: train) + (usesDetected ? detected.compactMap(\.operatorName) : []))
+        let operators = badgeOperators(of: train, detected: detected)
         // Km-major, not line-major: the primary railway is the one the
         // journey ran FARTHEST on when detection applies, so an up run and
         // a down run of the same through service wear the same mark
@@ -457,6 +422,7 @@ struct RouteLogoSquare: View {
     /// preview installs no store, and a badge that cannot be looked up falls
     /// back to the operator rule rather than to nothing.
     @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
+    @Environment(\.colorScheme) private var colorScheme
 
     init(path: String?, color: Color, systemImage: String? = "tram.fill", side: CGFloat = 52) {
         self.explicitPath = path
@@ -559,9 +525,9 @@ struct RouteLogoSquare: View {
     /// appearance the system fill is already right — white artwork is the case
     /// `OperatorBadge.matte` handles, and it handles it in both.
     private var tileFill: Color {
-        Color(UIColor { traits in
-            traits.userInterfaceStyle == .dark ? .systemGray3 : .tertiarySystemBackground
-        })
+        // SwiftUI can resolve colours on its asynchronous renderer. Read the
+        // appearance here instead of handing UIKit a MainActor-isolated closure.
+        Color(uiColor: colorScheme == .dark ? .systemGray3 : .tertiarySystemBackground)
     }
 
     var body: some View {

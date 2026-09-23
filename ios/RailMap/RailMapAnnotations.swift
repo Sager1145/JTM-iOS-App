@@ -182,6 +182,10 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
     /// GROUP, which is the identity `DrawnStation.stationCode`
     /// carries on the network's side of the same station.
     let stationCode: String?
+    /// The region whose network a tap on this dot should resolve against —
+    /// the ride's own region, so a stop cannot resolve to another country's
+    /// platform. See ``Coordinator/rideStationCard(name:code:region:at:)``.
+    let region: Region?
     let role: String
     let radius: CGFloat
     let lineWidth: CGFloat
@@ -239,7 +243,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
 
     init(
         coordinate: CLLocationCoordinate2D, name: String,
-        rawName: String, stationCode: String?, role: String,
+        rawName: String, stationCode: String?, region: Region?, role: String,
         radius: CGFloat, lineWidth: CGFloat,
         ordinaryRadius: CGFloat, ordinaryLineWidth: CGFloat,
         focusScale: CGFloat,
@@ -250,6 +254,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         self.name = name
         self.rawName = rawName
         self.stationCode = stationCode
+        self.region = region
         self.role = role
         self.radius = radius
         self.lineWidth = lineWidth
@@ -286,6 +291,8 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
     /// as a tap on the mark, without going back to the dot for it.
     let rawName: String
     let stationCode: String?
+    /// See ``RideStationAnnotation/region``.
+    let region: Region?
     let tier: StationDisplay.RideLabelTier
     /// Where the dot ends, so the text can sit beside it rather than
     /// on it. A token, like every other size here.
@@ -294,7 +301,7 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
     var title: String? { text }
     init(
         coordinate: CLLocationCoordinate2D, text: String,
-        rawName: String, stationCode: String?,
+        rawName: String, stationCode: String?, region: Region?,
         tier: StationDisplay.RideLabelTier, dotRadiusToken: CGFloat,
         selected: Bool
     ) {
@@ -302,6 +309,7 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
         self.text = text
         self.rawName = rawName
         self.stationCode = stationCode
+        self.region = region
         self.tier = tier
         self.dotRadiusToken = dotRadiusToken
         self.selected = selected

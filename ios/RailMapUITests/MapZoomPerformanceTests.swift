@@ -171,7 +171,9 @@ final class MapZoomPerformanceTests: XCTestCase {
     private func launch(camera: Camera) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-AppleInterfaceStyle", "Light", "-appearance", "light"]
+                               "-AppleInterfaceStyle", "Light", "-appearance", "light",
+                               // The Hoboken/Hudson/Orange cases are us stations; North America is off by default.
+                               "-feature-north-america-enabled", "YES"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"

@@ -20,7 +20,7 @@ final class MapDetailLevelTests: XCTestCase {
         }
         try waitFor(status) { self.number("camera", $0) < 4 && self.number("backbones", $0) >= 9 }
         let widest = status.label
-        XCTAssertEqual(number("camera", widest), number("lod", widest), accuracy: 0.01)
+        assertViewportAdjustedDetail(widest)
         XCTAssertEqual(number("networkStations", widest), 0)
         XCTAssertEqual(number("budgetDrops", widest), 0)
         target.pinch(withScale: 0.25, velocity: -1)
@@ -56,8 +56,21 @@ final class MapDetailLevelTests: XCTestCase {
         app.buttons["mapNetworkToggle"].tap()
         try waitFor(status) { abs(sin(self.number("heading", $0) * .pi / 180)) > 0.2 }
         XCTAssertEqual(number("camera", status.label), number("camera", before), accuracy: 0.08)
-        XCTAssertEqual(number("camera", status.label), number("lod", status.label), accuracy: 0.01)
+        assertViewportAdjustedDetail(status.label)
         attach(app, status: status.label, name: "rotation-detail-scale")
+    }
+
+    private func assertViewportAdjustedDetail(
+        _ status: String, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let shortEdge = min(number("viewportWidth", status), number("viewportHeight", status))
+        XCTAssertGreaterThan(shortEdge, 0, file: file, line: line)
+        guard shortEdge > 0 else { return }
+        // Detail is calibrated to a 390-point viewport, not raw camera zoom.
+        // Compute the expected offset independently from the reported bounds.
+        let adjustment = min(0.5, max(-1.5, log2(390 / shortEdge)))
+        XCTAssertEqual(number("lod", status), number("camera", status) + adjustment,
+                       accuracy: 0.01, file: file, line: line)
     }
 
     private func launch(camera: String) -> XCUIApplication {

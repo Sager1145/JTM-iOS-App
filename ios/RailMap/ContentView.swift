@@ -91,6 +91,16 @@ struct RailWorkspaceView: View {
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
     @State private var sheet: WorkspaceSheet?
+    /// The composition that owns an active workspace sheet.
+    ///
+    /// Compact and docked layouts deliberately attach presentations to
+    /// different descendants: on a phone the only controller free to present
+    /// is inside the resident bottom sheet, while a docked card can present
+    /// from its own tree. Replacing those descendants during a rotation also
+    /// replaces the presented `RideEditorView`, including its local draft.
+    /// Keep its presenter mounted until dismissal, then let the workspace
+    /// adopt the window's current layout.
+    @State private var presentationLayoutMode: WorkspaceLayoutMode?
     @State private var importFlow = ImportFlow()
     /// Filming a run — see ``VideoExportFlow``, which owns the recorder, the
     /// reader's choices and the length the options sheet quotes.
@@ -247,15 +257,28 @@ struct RailWorkspaceView: View {
     var body: some View {
         GeometryReader { geometry in
             let layout = WorkspaceLayoutMetrics(containerSize: geometry.size)
+            let renderedMode = presentationLayoutMode ?? layout.mode
 
             // One state graph, two compositions. Selection, search, filters,
             // playback, map camera, and presentation state all remain owned by
             // this view while the window crosses the breakpoint.
-            switch layout.mode {
-            case .compactOverlay:
-                mapLayout(in: geometry)
-            case .sideBySide:
-                sideBySideLayout(in: geometry, panelWidth: layout.sidePanelWidth)
+            Group {
+                switch renderedMode {
+                case .compactOverlay:
+                    mapLayout(in: geometry)
+                case .sideBySide:
+                    sideBySideLayout(in: geometry, panelWidth: layout.sidePanelWidth)
+                }
+            }
+            // Capture the presenter as its sheet becomes active. The pin is
+            // released by WorkspacePresentations' onDismiss callback, after
+            // the system has actually torn the sheet down; clearing it as
+            // soon as `sheet` becomes nil would remove the presenter during
+            // the dismissal animation.
+            .onChange(of: sheet != nil) { wasPresented, isPresented in
+                guard !wasPresented, isPresented,
+                      presentationLayoutMode == nil else { return }
+                presentationLayoutMode = layout.mode
             }
             // §4.3's bottom clearance is NOT published from here any more, and
             // there is nothing left to publish: the system already gives it to
@@ -408,6 +431,7 @@ struct RailWorkspaceView: View {
             switch wanted {
             case "info": sheet = .mapInfo
             case "import": sheet = .importData
+            case "new": sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
             case "edit":
                 if let train = itineraries.selectedTrain ?? itineraries.loaded?.trains.first {
                     sheet = .edit(train)
@@ -566,6 +590,7 @@ struct RailWorkspaceView: View {
                 editing.delete(train.id)
                 signal(.deleted)
             },
+            onSheetDismiss: { presentationLayoutMode = nil },
             sheetContent: presentedSheet))
         // Was attached to `statisticsPanel` directly, i.e. inside
         // `workspaceTabs` — which under the docked card is a
@@ -619,7 +644,7 @@ struct RailWorkspaceView: View {
             selectedDateIsAllDates: selectedDate == Dates.allDates,
             presentation: { presentation(for: $0) },
             onSaveNew: { added in
-                editing.add(added)
+                guard editing.add(added) != nil else { return }
                 signal(.saved)
                 sheet = nil
             },
@@ -977,7 +1002,10 @@ struct RailWorkspaceView: View {
                 subtitle: panelSubtitle(for: tab),
                 subtitleDetail: panelSubtitleDetail(for: tab),
                 pinsSubtitle: pinsSubtitle(for: tab),
-                journeySelected: !panelRoute.isHome
+                journeySelected: !panelRoute.isHome,
+                journeyHasPrimaryAction: selectedTrain.map {
+                    presentation(for: $0).primaryAction != nil
+                } ?? false
             ) {
                 PanelStageReader { stage in
                     panelActions(for: tab, stage: stage)
@@ -1566,7 +1594,8 @@ struct RailWorkspaceView: View {
         case .world:
             return Region.everyNetworkExtent
         case .region:
-            return (Region(rawValue: launchScopeRegion) ?? .jp).networkExtent
+            let region = Region(rawValue: launchScopeRegion) ?? .jp
+            return region.isEnabled ? region.networkExtent : Region.eastAsiaNetworkExtent
         case .auto:
             switch itineraries.state {
             case .idle, .loading:
@@ -1689,7 +1718,11 @@ struct RailWorkspaceView: View {
         // camera does not get reframed every time the card breathes between
         // its stops — only when the window itself, or the card's width in
         // it, actually changes.
-        let room = geometry.size.height - Self.dockInset * 2
+        // The card's bottom margin is measured from the window's edge, not
+        // from the home indicator's safe area (see the padding below).
+        let safeAreaBottom = geometry.safeAreaInsets.bottom
+        let dockBottomGap = max(Self.dockInset, safeAreaBottom)
+        let room = geometry.size.height + safeAreaBottom - Self.dockInset - dockBottomGap
         let metrics = BottomChromeMetrics(
             screenHeight: room,
             compactRow: BottomChromeMetrics.compactTabBand + compactHeaderRows,
@@ -1721,9 +1754,24 @@ struct RailWorkspaceView: View {
                 // it, and a card floating over a full-window map needs the
                 // same margin for the same reason — the window's own chrome,
                 // not this view's.
-                .padding(Self.dockInset)
+                .padding([.top, .horizontal], Self.dockInset)
+                // …except the bottom, which is measured from the window's
+                // edge: `dockInset`, or the home-indicator inset where that is
+                // larger. Padding inside the safe area put the iPad card
+                // 16 + 20 pt off the bottom against 16 pt on the leading side.
+                // It cannot go below the indicator's inset either: once the
+                // card overlaps that zone SwiftUI hands its tab controller the
+                // whole 20 pt inset, and UIKit's floating bar then drops flush
+                // onto the card's bottom edge.
+                .padding(.bottom, dockBottomGap - safeAreaBottom)
         }
-        .onAppear { applyDockObstruction(panelWidth, safeAreaLeading: safeAreaLeading) }
+        .onAppear {
+            applyDockObstruction(panelWidth, safeAreaLeading: safeAreaLeading)
+            applyDockLogoMargin(bottomGap: dockBottomGap, safeAreaBottom: safeAreaBottom)
+        }
+        .onChange(of: dockBottomGap) { _, gap in
+            applyDockLogoMargin(bottomGap: gap, safeAreaBottom: safeAreaBottom)
+        }
         .onChange(of: panelWidth) { _, width in
             applyDockObstruction(width, safeAreaLeading: safeAreaLeading)
         }
@@ -1737,6 +1785,7 @@ struct RailWorkspaceView: View {
         // this handoff.
         .onDisappear {
             controller.leadingObstruction = 0
+            controller.dockedBottomMargin = nil
         }
     }
 
@@ -1768,6 +1817,11 @@ struct RailWorkspaceView: View {
         withPresentations(
             workspaceTabs()
                 .environment(\.horizontalSizeClass, .compact)
+                .environment(\.railOnDockSurface, true)
+                // The system bar sits 2 pt closer to the card's bottom than to
+                // its sides; lifting it by that much makes all three gaps
+                // 11.5 pt.
+                .padding(.bottom, 2)
                 // §10.2's own reason, for a card that has no Pull Bar and no
                 // system sheet to drag: without this, VoiceOver and Switch
                 // Control readers — and anyone who cannot perform the header
@@ -1846,6 +1900,18 @@ struct RailWorkspaceView: View {
     /// the map's own left edge than `panelWidth + 2 × dockInset` alone would
     /// say — the card's trailing edge sits over map content this number
     /// leaves unaccounted for otherwise.
+    /// Puts the bottom of MapKit's Apple Maps logo on the bottom of the
+    /// card's tab bar. That bar sits 12 pt inside the card on every side (the
+    /// system bar with `dockedMenuContent`'s lift, and the Mac's own bar), so
+    /// its bottom is `bottomGap + 12` above the window's edge. MapKit measures
+    /// its layout margin from the safe area, and the logo's glyphs sit 11 pt
+    /// above that margin.
+    private func applyDockLogoMargin(bottomGap: CGFloat, safeAreaBottom: CGFloat) {
+        let barBottom = bottomGap + 12
+        let logoGlyphPadding: CGFloat = 11
+        controller.dockedBottomMargin = max(0, barBottom - safeAreaBottom - logoGlyphPadding)
+    }
+
     private func applyDockObstruction(_ panelWidth: CGFloat, safeAreaLeading: CGFloat) {
         controller.leadingObstruction = panelWidth + Self.dockInset * 2 + safeAreaLeading
         controller.bottomObstruction = 0
@@ -1924,12 +1990,9 @@ struct RailWorkspaceView: View {
             // per journey is a card that starts at the top and comes in the
             // way the first one did.
             //
-            // Except under the transport. A run hands the selection from
-            // journey to journey every few seconds, and none of those is the
-            // reader choosing; the card arrives once when the run takes it
-            // over and once more when stopping gives the selection back, and
-            // in between it keeps one identity and only its content moves —
-            // the same rule `PanelHeader`'s action strip keeps for the same
+            // Except under the transport — see ``JourneyHeroIdentity``, the
+            // tested rule: a run is one card through all its hand-offs, the
+            // same rule `PanelHeader`'s action strip keeps for the same
             // hand-offs.
             ArrivingJourneyCard(reduceMotion: reduceMotion) {
             RideCard(
@@ -1943,18 +2006,9 @@ struct RailWorkspaceView: View {
             )
             .padding(.top, 4)
             }
-            .id(heroIdentity(for: train))
+            .id(JourneyHeroIdentity.resolve(
+                selectedTrainID: train.id, transportOnScreen: showsPlaybackBar))
         }
-    }
-
-    /// What one journey card is a card OF — see ``rideHero()``.
-    private enum HeroIdentity: Hashable {
-        case journey(String)
-        case run
-    }
-
-    private func heroIdentity(for train: Train) -> HeroIdentity {
-        showsPlaybackBar ? .run : .journey(train.id)
     }
 
     /// §11.2's answer for one journey. The only caller of the resolver in the
@@ -2270,6 +2324,7 @@ struct RailWorkspaceView: View {
         case .importData:
             sheet = .importData
         case .locate:
+            guard yieldRun() else { return }
             if let train { itineraries.selectedTrainID = train.id }
             if let id = train?.id ?? itineraries.selectedTrainID,
                 let ride = mapRides.first(where: { $0.id == id }),
@@ -2597,15 +2652,16 @@ struct RailWorkspaceView: View {
     /// New journey — and, because there is no active region any more, which
     /// region it starts in.
     ///
-    /// `StoreOperations.createBlankTrain` is regional DATA, not a template
-    /// with a parameter: Japan starts 東京→熱海 with N02 codes the solver can
-    /// route immediately, Taiwan on the airport-MRT corridor with TDX
-    /// StationUIDs, and so on. So the choice cannot be deferred to the editor
-    /// without handing the reader a scaffold from the wrong country. A plain
-    /// tap takes the region the reader is already working in; the menu offers
-    /// the other four.
+    /// Start with the chosen network, without carrying sample stations or routes.
     private func newJourneyScaffold(in region: Region) -> Train {
-        StoreOperations.createBlankTrain(country: region.code).taggingRegion()
+        Train(
+            id: "journey_" + UUID().uuidString.replacingOccurrences(of: "-", with: ""),
+            number: "", origin: "", destination: "", visible: true,
+            stops: [
+                Stop(name: "", stopType: "origin", rideSegment: true),
+                Stop(name: "", stopType: "destination", rideSegment: true),
+            ],
+            region: region.code)
     }
 
     /// Which region a new journey starts in when the reader just taps `+`:
@@ -2614,7 +2670,7 @@ struct RailWorkspaceView: View {
     private var defaultRegion: Region {
         let code = WorkspaceJourneyRules.defaultRegion(
             selectedTrain: itineraries.selectedTrain, trains: itineraries.loaded?.trains ?? [],
-            orderedRegionCodes: Region.ordered.map(\.code), rule: Region.scopeRule)
+            orderedRegionCodes: Region.enabledOrdered.map(\.code), rule: Region.scopeRule)
         return Region(rawValue: code) ?? .jp
     }
 
@@ -2730,10 +2786,42 @@ struct RailWorkspaceView: View {
     /// the selection wrap after the date wrap for.
     ///
     /// A user pick requests focus separately from the selected-record state.
+    ///
+    /// A pick made during a run ends the run first — see ``yieldRun()``. So by
+    /// the time focus is requested the transport is idle, and the picked
+    /// journey is framed the way any pick is.
     private func pick(_ train: Train) {
+        guard yieldRun() else { return }
         itineraries.selectedTrainID = train.id
         controller.requestAutoFocus(
             .journey(train.id), enabled: autoFocusZoom, playbackIsActive: playback.isActive)
+    }
+
+    /// A run gives way to the reader choosing a journey — or, while it is
+    /// being filmed, does not. ``PickDuringRunRule`` is the tested decision;
+    /// this is its hands. Returns whether the pick goes ahead.
+    ///
+    /// Before this, a pick during a run was taken and then taken away twice:
+    /// the next hand-off overwrote it, and stopping restored the pre-run
+    /// selection over it.
+    ///
+    /// Only the selection half of the web app's hook is ported. There, ANY
+    /// repaint of the train layers ends a run — a date change, an edit, a
+    /// deletion — because the queue the run froze is stale. Here those still
+    /// leave a run playing, as they did.
+    private func yieldRun() -> Bool {
+        switch PickDuringRunRule.resolve(
+            runOnScreen: playback.phase != .idle, filming: videoExport.isRecording)
+        {
+        case .proceed:
+            return true
+        case .stopRunThenProceed:
+            playback.stop()
+            playback.restoreSelectedTrainID = nil
+            return true
+        case .decline:
+            return false
+        }
     }
 
     private func selectDate(_ date: String) {

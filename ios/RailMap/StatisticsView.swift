@@ -1654,7 +1654,7 @@ struct StatisticsDashboardContent: View {
         }
         return Scope(
             loaded: ItineraryStore.Loaded(
-                regions: region.map { [$0] } ?? Region.ordered,
+                regions: region.map { [$0] } ?? Region.enabledOrdered,
                 trains: slice.trains,
                 days: slice.days,
                 elapsed: loaded.elapsed),

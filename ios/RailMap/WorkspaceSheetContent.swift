@@ -112,11 +112,13 @@ struct WorkspaceSheetContent: View {
                     train: draft,
                     title: localization.text("ios.editorTitleNew", fallback: "New"),
                     isNew: true,
+                    suggestionTrains: itineraries.loaded?.trains ?? [],
                     onSave: onSaveNew)
             case .edit(let train):
                 RideEditorView(
                     train: train,
-                    title: localization.text("ios.edit", fallback: "Edit")
+                    title: localization.text("ios.edit", fallback: "Edit"),
+                    suggestionTrains: itineraries.loaded?.trains ?? []
                 ) { edited in
                     onSaveEdit(edited, train.id)
                 }
@@ -177,6 +179,12 @@ struct WorkspaceSheetContent: View {
                     controller: controller)
             }
         }
-        .presentationBackground(Color.railMenuPresentationStyle)
+        // Every sub-menu is Liquid Glass at every height. Left to itself the
+        // system turns a full-height sheet opaque, so the glass is set here
+        // explicitly; lists and forms inside drop their grouped backdrop.
+        .scrollContentBackground(.hidden)
+        .presentationBackground {
+            Color.clear.railGlass(in: Rectangle())
+        }
     }
 }

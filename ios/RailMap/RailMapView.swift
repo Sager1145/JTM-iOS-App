@@ -382,6 +382,11 @@ struct RailMapView: View {
             mapView.delegate = context.coordinator
             mapView.showsCompass = true
             mapView.showsScale = true
+#if targetEnvironment(macCatalyst)
+            // Catalyst's MKMapView adds a ± pair by default. Pinch, scroll and
+            // the ⌘+/⌘− shortcuts already zoom, and the pair crowded the rail.
+            mapView.showsZoomControls = false
+#endif
 
             // The basemap keeps MapKit's default emphasis, so Apple's own
             // zoom-by-zoom detail (roads, labels, terrain) is whatever Apple
@@ -583,7 +588,7 @@ struct RailMapView: View {
             /// free.
             private var segmentCategories: [String: String] = [:]
             private var basemapOpacity = 1.0
-            private var basemapVeil: MKPolygon?
+            private var basemapVeil: BasemapVeilOverlay?
             /// Owns the camera snapshot that gates expensive geometry rebuilds.
             private var networkBuildState = MapNetworkBuildState()
             private var viewportResizeTask: Task<Void, Never>?
@@ -597,6 +602,21 @@ struct RailMapView: View {
             /// what else changes on a given rebuild.
             private var linesGeneration = 0
             private var annotationsNeedRefresh = false
+            /// The geometry phase's outputs the marker phase reads. Kept from the last
+            /// completed `rebuild` so the markers can be rebuilt on their own — a
+            /// selection changes which dots and captions exist, not where the lines are.
+            private struct MarkerBuildContext {
+                var zoom: Double
+                var visibilityZoom: Double
+                var scale: CGFloat
+                var buildRect: MKMapRect
+                var strokeAnchors: [String: [Int: CLLocationCoordinate2D]]
+                var visible: [RailNetworkStore.DrawnLine]
+            }
+            /// Nil until a rebuild completes, and nil again whenever the next full
+            /// rebuild is owed, so a stale context can never place markers against
+            /// geometry that is about to change.
+            private var markerBuildContext: MarkerBuildContext?
             private struct LineInputs: Equatable, Sendable {
                 let contentID: UUID
                 let anchors: [Int]
@@ -613,7 +633,7 @@ struct RailMapView: View {
             /// own `(ride.id, ride.geometryDigest)` and `linesGeneration` both
             /// still match its entry is not walked again.
             private typealias StrokeMatches =
-                [String: (geometryKey: String, linesGeneration: Int, refs: [Int: StrokeRef])]
+                [String: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])]
             private var strokeRefCache: StrokeMatches = [:]
             private var pendingStrokeRefs:
                 (revision: Int, refs: StrokeMatches, inputs: [String: LineInputs])?
@@ -704,10 +724,32 @@ struct RailMapView: View {
                 // so a scope change is a rebuild like the others.
                 let dateChanged = selectedDate != self.selectedDate
                 let namingChanged = naming != self.naming
+                // `networkExtent` follows the camera's countries, not residency
+                // (see `RailNetworkStore.networkExtent`), so a batch that merely
+                // adds to it without changing `lines` still has to widen the
+                // 定位 frame, and a batch that only evicts must not shrink it.
+                // Computed here, ahead of the guard, so an extent-only update
+                // (no line/station/ride/etc. change) still reaches the
+                // `fitRegion` dispatch below instead of being dropped before
+                // it is ever read. It is deliberately not part of
+                // `MapDrawChanges`: an extent-only pass must hand the
+                // controller its new frame without tripping a geometry
+                // rebuild, and `changes.plan` never sees this flag.
+                let extentChanged: Bool = {
+                    switch (networkExtent, self.networkExtent) {
+                    case (nil, nil): return false
+                    case let (a?, b?):
+                        return a.center.latitude != b.center.latitude
+                            || a.center.longitude != b.center.longitude
+                            || a.span.latitudeDelta != b.span.latitudeDelta
+                            || a.span.longitudeDelta != b.span.longitudeDelta
+                    default: return true
+                    }
+                }()
                 guard linesChanged || stationsChanged || ridesChanged
                         || selectionChanged || visibilityChanged || indexesChanged
                         || basemapChanged || displayChanged || dateChanged
-                        || namingChanged || focusRequest != nil else { return }
+                        || namingChanged || focusRequest != nil || extentChanged else { return }
 
                 if ridesChanged || indexesChanged {
                     segmentCategories.removeAll(keepingCapacity: true)
@@ -754,22 +796,6 @@ struct RailMapView: View {
                     // reason to rebuild them too, not only a line move.
                     linesGeneration += 1
                 }
-
-                // `networkExtent` follows the camera's countries, not residency
-                // (see `RailNetworkStore.networkExtent`), so a batch that merely
-                // adds to it without changing `lines` still has to widen the
-                // 定位 frame, and a batch that only evicts must not shrink it.
-                let extentChanged: Bool = {
-                    switch (networkExtent, self.networkExtent) {
-                    case (nil, nil): return false
-                    case let (a?, b?):
-                        return a.center.latitude != b.center.latitude
-                            || a.center.longitude != b.center.longitude
-                            || a.span.latitudeDelta != b.span.latitudeDelta
-                            || a.span.longitudeDelta != b.span.longitudeDelta
-                    default: return true
-                    }
-                }()
 
                 if linesChanged {
                     self.lines = lines
@@ -856,57 +882,88 @@ struct RailMapView: View {
                 // regions arrive independently at launch; before this gate,
                 // each arrival rebuilt every ride overlay on the main thread
                 // even though none of the arriving geometry was visible.
-                let visibleNetworkChanged = showsNetwork && (linesChanged || stationsChanged)
-                // A ride can slice its own stroke out of `lines` even while
-                // the network layer stays hidden — a ride's bead and its
-                // drawn geometry need the chain either way. Without this, a
-                // continuous-stroke region's lines arriving after its rides
-                // already had (or the two changing in different `update`
-                // passes) left every ride on its plain, un-offset
-                // coordinates until something UNRELATED next triggered a
-                // rebuild.
-                let strokeableNetworkChanged = (linesChanged || stationsChanged)
-                    && !rides.isEmpty && lines.contains(where: \.continuous)
-                let drawingChanged = visibleNetworkChanged || strokeableNetworkChanged
-                    || ridesChanged
-                    || selectionChanged || visibilityChanged || indexesChanged
-                    || (displayChanged && !routePaintOnly) || dateChanged || namingChanged
-                if routePaintOnly && !drawingChanged {
+                // `MapDrawChanges.plan` (RailPresentation) is the tested
+                // dispatch rule. `showsNetwork`/`hasRides`/`hasContinuousLines`
+                // feed its own `visibleNetworkChanged`/`strokeableNetworkChanged`
+                // — see that type for why those two exist: the network layer
+                // being visible does not stop a ride from slicing its own
+                // stroke out of `lines`, so a continuous-stroke region's lines
+                // arriving still has to move a ride's offset geometry even
+                // while the network stays hidden.
+                let changes = MapDrawChanges(
+                    linesChanged: linesChanged,
+                    stationsChanged: stationsChanged,
+                    ridesChanged: ridesChanged,
+                    selectionChanged: selectionChanged,
+                    visibilityChanged: visibilityChanged,
+                    indexesChanged: indexesChanged,
+                    displayChanged: displayChanged,
+                    routePaintOnly: routePaintOnly,
+                    dateChanged: dateChanged,
+                    namingChanged: namingChanged,
+                    showsNetwork: showsNetwork,
+                    hasRides: !rides.isEmpty,
+                    hasContinuousLines: lines.contains(where: \.continuous)
+                )
+                switch changes.plan {
+                case .none:
+                    break
+                case .paintOnly:
                     updateRidePaint(on: mapView)
-                }
-                if drawingChanged {
-                    cancelGeometryPreparation()
-                    networkBuildState.invalidateGeometry()
-                    // Not during a run, for the reason `regionDidChangeAnimated`
-                    // gives — and this is the path that actually hurt. The
-                    // transport moves the selection from journey to journey as
-                    // it plays (`ContentView`'s `onChange(of:playback.currentTrainID)`),
-                    // so `selectionChanged` was true at every hand-off and every
-                    // hand-off ran the whole rebuild: 150–460 ms of main-thread
-                    // work over Japan, in the middle of a 60 Hz chase, which
-                    // tore the mounted playback trail and its beads off the map
-                    // and remounted them a fifth of a second later. The dot
-                    // vanishing and reappearing at each new train is that.
-                    //
-                    // The build state's zoom bucket is cleared above whether or not the
-                    // rebuild is deferred, so the one `renderPlayback(nil)`
-                    // pays afterwards is not skipped by its own zoom-bucket
-                    // guard when a run ends at the zoom it started from.
-                    // `isActive` as well as a mounted snapshot: an ENDED run
-                    // keeps its last frame on the map until the reader presses
-                    // stop, and deferring through that would leave an edit made
-                    // from the list undrawn with nothing on screen to explain
-                    // it. A rebuild that does happen settles any debt owed from
-                    // earlier in the run, so the flag cannot outlive the reason
-                    // for it.
+                case .selectionOnly:
+                    // Nothing rebuilds, paints or re-marks inside a run — see
+                    // the long comment in `rebuildOwed(on:)` for why. So a
+                    // hand-off during a run owes the same deferred rebuild it
+                    // always did, invalidation included: the rebuild that pays
+                    // the debt when the run ends must not be skipped by its
+                    // own zoom-bucket guard.
                     if playback?.isActive == true, playbackLayer.lastSnapshot != nil {
-                        rebuildDeferredByPlayback = true
-                    } else {
-                        rebuildDeferredByPlayback = false
-                        rebuild(on: mapView)
+                        rebuildOwed(on: mapView)
+                    } else if !updateSelection(on: mapView) {
+                        rebuildOwed(on: mapView)
                     }
+                case .rebuild:
+                    rebuildOwed(on: mapView)
                 }
                 if basemapChanged { updateBasemapVeil(on: mapView) }
+            }
+
+            /// The old full-rebuild branch, unchanged, extracted so the
+            /// `.rebuild` dispatch and both of `.selectionOnly`'s slow cases —
+            /// a hand-off during a run, and a fast path that cannot answer
+            /// from cached state — share it.
+            private func rebuildOwed(on mapView: MKMapView) {
+                cancelGeometryPreparation()
+                networkBuildState.invalidateGeometry()
+                markerBuildContext = nil
+                // Not during a run, for the reason `regionDidChangeAnimated`
+                // gives — and this is the path that actually hurt. The
+                // transport moves the selection from journey to journey as
+                // it plays (`ContentView`'s `onChange(of:playback.currentTrainID)`),
+                // so `selectionChanged` was true at every hand-off and every
+                // hand-off ran the whole rebuild: 150–460 ms of main-thread
+                // work over Japan, in the middle of a 60 Hz chase, which
+                // tore the mounted playback trail and its beads off the map
+                // and remounted them a fifth of a second later. The dot
+                // vanishing and reappearing at each new train is that.
+                //
+                // The build state's zoom bucket is cleared above whether or not the
+                // rebuild is deferred, so the one `renderPlayback(nil)`
+                // pays afterwards is not skipped by its own zoom-bucket
+                // guard when a run ends at the zoom it started from.
+                // `isActive` as well as a mounted snapshot: an ENDED run
+                // keeps its last frame on the map until the reader presses
+                // stop, and deferring through that would leave an edit made
+                // from the list undrawn with nothing on screen to explain
+                // it. A rebuild that does happen settles any debt owed from
+                // earlier in the run, so the flag cannot outlive the reason
+                // for it.
+                if playback?.isActive == true, playbackLayer.lastSnapshot != nil {
+                    rebuildDeferredByPlayback = true
+                } else {
+                    rebuildDeferredByPlayback = false
+                    rebuild(on: mapView)
+                }
             }
 
             /// Everything about one ride that changes what is DRAWN for it.
@@ -977,6 +1034,9 @@ struct RailMapView: View {
                     hasher.combine(stop.name)
                     hasher.combine(stop.stopType)
                     hasher.combine(stop.rideSegment)
+                    hasher.combine(stop.arrival)
+                    hasher.combine(stop.departure)
+                    hasher.combine(stop.n02StationCode)
                 }
                 return hasher.finalize()
             }
@@ -1061,6 +1121,7 @@ struct RailMapView: View {
                 matchingRevision += 1
                 pendingStrokeRefs = nil
                 cancelGeometryPreparation()
+                markerBuildContext = nil
 #if DEBUG
                 gestureFrameProbe.stop()
                 renderStatus = nil
@@ -1234,28 +1295,29 @@ struct RailMapView: View {
                     basemapVeil = nil
                     return
                 }
-                if let basemapVeil {
-                    if let renderer = mapView.renderer(for: basemapVeil) as? MKPolygonRenderer {
-                        renderer.fillColor = UIColor.systemBackground.withAlphaComponent(
-                            1 - min(max(basemapOpacity, 0), 1))
+                let alpha = 1 - min(max(basemapOpacity, 0), 1)
+                if let basemapVeil, mapView.overlays.contains(where: { $0 === basemapVeil }) {
+                    if let renderer = mapView.renderer(for: basemapVeil) as? BasemapVeilRenderer {
+                        renderer.veilColor = Self.veilColor(alpha: alpha, on: mapView)
                         renderer.setNeedsDisplay()
                     }
                     return
                 }
-                let builtRect = networkBuildState.builtRect
-                guard !builtRect.isNull else { return }
-                let corners = [
-                    MKMapPoint(x: builtRect.minX, y: builtRect.minY),
-                    MKMapPoint(x: builtRect.maxX, y: builtRect.minY),
-                    MKMapPoint(x: builtRect.maxX, y: builtRect.maxY),
-                    MKMapPoint(x: builtRect.minX, y: builtRect.maxY),
-                ].map(\.coordinate)
-                let veil = MKPolygon(coordinates: corners, count: corners.count)
-                veil.title = "basemap-veil"
+                // The whole world, not the loaded network's bounds: the veil
+                // used to follow `builtRect`, so with the network switched off
+                // (the default) it covered nothing, and panning past the
+                // network showed an undimmed edge.
+                let veil = BasemapVeilOverlay()
                 basemapVeil = veil
-                // Under the railways, which are a level up. See the mount in
-                // `rebuild`.
+                // Under the railways, which mount at `.aboveLabels`.
                 mapView.addOverlay(veil, level: .aboveRoads)
+            }
+
+            /// Black in both appearances: lowering the basemap's opacity DIMS it
+            /// in light mode too, rather than washing it out toward white, so
+            /// the rail colours keep their contrast either way.
+            private static func veilColor(alpha: Double, on mapView: MKMapView) -> CGColor {
+                UIColor.black.withAlphaComponent(alpha).cgColor
             }
 
             private var geometryPreparation: Task<Void, Never>?
@@ -1361,6 +1423,8 @@ struct RailMapView: View {
                         matchedLineInputs = pending.inputs
                         networkGeometry.clearRidePolylines()
                         cachedTapIndex = nil
+                        markerCache = nil
+                        selectedNameCache = nil
                         networkBuildState.invalidateZoomBucket()
                     }
                 }
@@ -1375,8 +1439,11 @@ struct RailMapView: View {
                         mapView.removeAnnotations(rideStationAnnotations)
                     }
                     rideStationAnnotations = []
+                    if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
+                    endpointAnnotations = []
                     networkBuildState.invalidateGeometry()
                     networkGeometry.resetFrameStrokes()
+                    markerBuildContext = nil
                     cachedTapIndex = nil
 #if DEBUG
                     renderStatus?.text = "network:off;lines:0;overlays:0;backbones:0;networkStations:0"
@@ -1490,9 +1557,6 @@ struct RailMapView: View {
                 // Replaced whole, not merged: only chains prepared for this
                 // frame may back route drawing and hit testing.
                 networkGeometry.resetFrameStrokes()
-                let stationsByPlace = Dictionary(grouping: stations) {
-                    "\($0.region.rawValue)|\($0.stationCode)"
-                }
                 // Every resident line by stroke id, for the canonical chains
                 // a follow names — resident, not merely selected, because a
                 // canonical stroke may be culled while its tenant is drawn.
@@ -1639,9 +1703,6 @@ struct RailMapView: View {
                 var desiredOverlays: [MKOverlay] = []
                 if let basemapVeil { mapView.removeOverlay(basemapVeil) }
                 basemapVeil = nil
-                // Retain unchanged station/ride annotations and their mounted
-                // views. Reconcile only after label placement is resolved below.
-                var desiredNetworkAnnotations: [MKAnnotation] = []
                 if annotationsNeedRefresh {
                     mapView.removeAnnotations(networkAnnotations + rideStationAnnotations)
                     networkAnnotations = []
@@ -1651,26 +1712,15 @@ struct RailMapView: View {
                 if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
                 endpointAnnotations = []
                 RailSignpost.map.end("map.rebuild.teardown", teardown)
-                if basemapOpacity < 0.999 {
-                    let corners = [
-                        MKMapPoint(x: buildRect.minX, y: buildRect.minY),
-                        MKMapPoint(x: buildRect.maxX, y: buildRect.minY),
-                        MKMapPoint(x: buildRect.maxX, y: buildRect.maxY),
-                        MKMapPoint(x: buildRect.minX, y: buildRect.maxY),
-                    ].map(\.coordinate)
-                    let veil = MKPolygon(coordinates: corners, count: corners.count)
-                    veil.title = "basemap-veil"
-                    basemapVeil = veil
-                    // `.aboveRoads` is what keeps the veil UNDER every rail
-                    // layer, which all mount at `.aboveLabels`: a level is
-                    // ordered before insertion order is, so the slider can add
-                    // this after a rebuild has already drawn the railways and
-                    // still not dim them. It is also why the base map's labels
-                    // stay full-strength while its roads fade — they are drawn
-                    // above this level, and 底圖不透明度 is a control over the
-                    // map behind the railways, not over their labelling.
-                    mapView.addOverlay(veil, level: .aboveRoads)
-                }
+                // `.aboveRoads` is what keeps the veil UNDER every rail
+                // layer, which all mount at `.aboveLabels`: a level is
+                // ordered before insertion order is, so the slider can add
+                // this after a rebuild has already drawn the railways and
+                // still not dim them. It is also why the base map's labels
+                // stay full-strength while its roads fade — they are drawn
+                // above this level, and 底圖不透明度 is a control over the
+                // map behind the railways, not over their labelling.
+                updateBasemapVeil(on: mapView)
                 let networkOverlays = RailSignpost.map.begin("map.rebuild.networkOverlays")
                 let overlays = overlayInstaller.networkOverlays(
                     byColor: byColor, withheldByColor: withheldByColor,
@@ -1747,7 +1797,8 @@ struct RailMapView: View {
                         let usesStroke = strokeRef(for: segment, of: ride).map {
                             networkGeometry.containsStroke(for: $0.chainID)
                         } ?? false
-                        let key = "\(ride.id)|\(ride.geometryDigest)|\(segment.segmentIndex)|\(usesStroke)"
+                        let key = "\(ride.id)|\(ride.geometryDigest)|\(segment.segmentIndex)."
+                            + "\(segment.partIndex)|\(usesStroke)"
                         let polyline: MKPolyline
                         if let cached = networkGeometry.ridePolyline(for: key) {
                             polyline = cached
@@ -1820,7 +1871,119 @@ struct RailMapView: View {
                     desiredOverlays, replacing: overlayReconciliation,
                     scale: scale, on: mapView)
                 RailSignpost.map.end("map.rebuild.rideOverlays", rideOverlayInterval)
+                let context = MarkerBuildContext(
+                    zoom: zoom, visibilityZoom: visibilityZoom, scale: scale,
+                    buildRect: buildRect, strokeAnchors: strokeAnchors, visible: visible)
+                markerBuildContext = context
+                buildMarkers(context, on: mapView)
+                playbackLayer.repaint(on: mapView)
+
+                let elapsed = ContinuousClock.now - started
+#if DEBUG
+                // Debug builds only, and that is not tidiness.
+                //
+                // This sits on the map REBUILD path — every pan that crosses a
+                // LOD threshold, every zoom step, every ride edit — and `NSLog`
+                // is synchronous: it formats, takes a lock, writes to the
+                // unified log AND to stderr, on the main thread, before the
+                // frame it belongs to can be presented. Seven of these fire in
+                // the first second of launch alone.
+                //
+                // Nothing is lost by gating it. The same numbers are handed
+                // back as `RenderStats` immediately below, which is what the
+                // diagnostics panel in Settings reads — so the data has a
+                // supported in-app home on every build, and this line is only
+                // the console mirror of it.
+                // "off", not "0", when the complete network is switched off.
+                //
+                // The count and the reason for it are different facts, and this
+                // line reported only the count: a map with the network layer
+                // off — which is how the app STARTS, `showsNetwork` defaults to
+                // false — printed `lines=0/804` on every pan, which reads as
+                // eight hundred lines being dropped by the LOD rule. The
+                // difference between "nothing qualified" and "nobody asked" is
+                // the whole diagnostic value of the field.
+                let drawnLines = showsNetwork ? "\(visible.count)" : "off"
+                NSLog(
+                    "railmap: z=%.2f lod=%.2f thr=%.1f lines=%@/%d (culled %d) overlays=%d vertices=%d "
+                        + "stations=%d ridedots=%d ridelabels=%d %dms",
+                    zoom, visibilityZoom, fitted.threshold, drawnLines, lines.count,
+                    selection?.culledOffScreen ?? 0,
+                    overlays.count + rideOverlays.count + rideCasings.count,
+                    vertices,
+                    networkAnnotations.count,
+                    rideStationAnnotations.filter { $0 is RideStationAnnotation }.count,
+                    rideStationAnnotations.filter { $0 is RideLabelAnnotation }.count,
+                    elapsed.milliseconds)
+#endif
+                // Deferred: a rebuild can be triggered from inside updateUIView,
+                // and writing SwiftUI state during a view update is undefined
+                // behaviour — in practice the panel simply never showed the
+                // numbers. Hand them back on the next turn of the loop instead.
+                let stats = RenderStats(
+                    zoom: zoom,
+                    visibilityZoom: visibilityZoom,
+                    visibleLines: visible.count,
+                    overlays: overlays.count + rideOverlays.count + rideCasings.count,
+                    vertices: vertices,
+                    buildMilliseconds: elapsed.milliseconds,
+                    culledOffScreen: selection?.culledOffScreen ?? 0,
+                    threshold: fitted.threshold
+                )
+#if DEBUG
+                let networkState = !showsNetwork
+                    ? "off"
+                    : (visible.isEmpty || overlays.isEmpty ? "empty" : "rendered")
+                // Measure inside the app: XCTest's map accessibility snapshot
+                // can take longer than the render itself. Include region
+                // loading, but freeze at the first submitted network frame.
+                if networkState == "rendered", firstNetworkRenderMilliseconds == nil,
+                   let networkEnabledAt {
+                    firstNetworkRenderMilliseconds = Double((ContinuousClock.now - networkEnabledAt).milliseconds)
+                }
+                renderStatus?.text =
+                    "network:\(networkState);lines:\(visible.count);overlays:\(overlays.count)"
+                    + ";rides:\(rides.count)"
+                    + ";budgetDrops:\(builds.count - fitted.kept.count);vertices:\(vertices)"
+                    + String(format: ";camera:%.2f;lod:%.2f", zoom, visibilityZoom)
+                    + ";backbones:\(Set(visible.filter { $0.lodMinZoom < 0 }.map(\.lineID)).count)"
+                    + ";networkStations:\(networkAnnotations.count)"
+                    + String(format: ";distance:%.1f", mapView.camera.centerCoordinateDistance)
+                    + String(format: ";heading:%.1f", mapView.camera.heading)
+                    + String(format: ";centerLat:%.4f;centerLon:%.4f", mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude)
+                    + String(format: ";viewportWidth:%.1f;viewportHeight:%.1f", mapView.bounds.width, mapView.bounds.height)
+                    + String(format: ";firstNetworkMs:%.1f", firstNetworkRenderMilliseconds ?? -1)
+                    + ";rebuilds:\(rebuildCount);gestureBuilds:\(rebuildsDuringGesture)"
+                    + ";cacheHits:\(lineCacheHits);annotationReuses:\(annotationReuses)"
+                    + ";panCallbacks:\(panCallbacks);panMaxGapMs:\(maxPanCallbackGapMilliseconds)"
+                    + ";gestureFrames:\(gestureFrameProbe.frames);gestureMaxFrameGapMs:\(Int(gestureFrameProbe.maximumGapMilliseconds))"
+                    + ";buildMs:\(elapsed.milliseconds);covered:\(networkBuildState.builtRect.contains(mapView.visibleMapRect) ? 1 : 0)"
+#endif
+                DispatchQueue.main.async { [onRender] in onRender(stats) }
+            }
+
+            private func buildMarkers(_ context: MarkerBuildContext, on mapView: MKMapView) {
+                let zoom = context.zoom
+                let visibilityZoom = context.visibilityZoom
+                let scale = context.scale
+                let buildRect = context.buildRect
+                let strokeAnchors = context.strokeAnchors
+                let visible = context.visible
                 let markerInterval = RailSignpost.map.begin("map.rebuild.markers")
+                // Recomputed rather than cached: derived only from coordinator
+                // state (`rides`, `selectedTrainID`, `dateScope`, `stations`,
+                // `lines`), not from geometry the last rebuild produced.
+                let hasSelection = rides.contains { $0.id == selectedTrainID }
+                let scope = dateScope
+                let stationsByPlace = Dictionary(grouping: stations) {
+                    "\($0.region.rawValue)|\($0.stationCode)"
+                }
+                let linesByStrokeID = Dictionary(
+                    lines.filter(\.continuous).map { ($0.id, $0) },
+                    uniquingKeysWith: { first, _ in first })
+                // Retain unchanged station/ride annotations and their mounted
+                // views. Reconcile only after label placement is resolved below.
+                var desiredNetworkAnnotations: [MKAnnotation] = []
 
                 // One place, one name.
                 //
@@ -2008,6 +2171,7 @@ struct RailMapView: View {
                         } else if let ride = ridesByID[feature.tid],
                             let segment = ride.segments.first(where: {
                                 $0.segmentIndex == anchor.segmentIndex
+                                    && $0.partIndex == anchor.partIndex
                             }) {
                             let sliced = drawnCoordinates(of: segment, ride: ride)
                             displayCoordinate =
@@ -2028,6 +2192,7 @@ struct RailMapView: View {
                         name: feature.name,
                         rawName: record.name,
                         stationCode: item.stationCode,
+                        region: item.region,
                         role: feature.role,
                         radius: CGFloat(feature.radius),
                         lineWidth: CGFloat(feature.lineWidth),
@@ -2080,6 +2245,7 @@ struct RailMapView: View {
                         text: localized(
                             labelName, code: item.stationCode, region: item.region).display,
                         rawName: record.name, stationCode: item.stationCode,
+                        region: item.region,
                         tier: tier,
                         dotRadiusToken: annotation.drawnRadiusToken(atZoom: zoom),
                         selected: annotation.selected)
@@ -2238,6 +2404,7 @@ struct RailMapView: View {
                                 sibling.stationCode == station.stationCode
                                     && sibling.region == station.region
                                     && tenantGroupID(sibling) == group
+                                    && isDrawn(sibling)
                             }
                             .map(\.lineID)
                             .min()
@@ -2373,91 +2540,6 @@ struct RailMapView: View {
                     mapView.addAnnotations(endpointAnnotations)
                     layoutEndpointLabels(on: mapView)
                 }
-
-                playbackLayer.repaint(on: mapView)
-
-                let elapsed = ContinuousClock.now - started
-#if DEBUG
-                // Debug builds only, and that is not tidiness.
-                //
-                // This sits on the map REBUILD path — every pan that crosses a
-                // LOD threshold, every zoom step, every ride edit — and `NSLog`
-                // is synchronous: it formats, takes a lock, writes to the
-                // unified log AND to stderr, on the main thread, before the
-                // frame it belongs to can be presented. Seven of these fire in
-                // the first second of launch alone.
-                //
-                // Nothing is lost by gating it. The same numbers are handed
-                // back as `RenderStats` immediately below, which is what the
-                // diagnostics panel in Settings reads — so the data has a
-                // supported in-app home on every build, and this line is only
-                // the console mirror of it.
-                // "off", not "0", when the complete network is switched off.
-                //
-                // The count and the reason for it are different facts, and this
-                // line reported only the count: a map with the network layer
-                // off — which is how the app STARTS, `showsNetwork` defaults to
-                // false — printed `lines=0/804` on every pan, which reads as
-                // eight hundred lines being dropped by the LOD rule. The
-                // difference between "nothing qualified" and "nobody asked" is
-                // the whole diagnostic value of the field.
-                let drawnLines = showsNetwork ? "\(visible.count)" : "off"
-                NSLog(
-                    "railmap: z=%.2f lod=%.2f thr=%.1f lines=%@/%d (culled %d) overlays=%d vertices=%d "
-                        + "stations=%d ridedots=%d ridelabels=%d %dms",
-                    zoom, visibilityZoom, fitted.threshold, drawnLines, lines.count,
-                    selection?.culledOffScreen ?? 0,
-                    overlays.count + rideOverlays.count + rideCasings.count,
-                    vertices,
-                    networkAnnotations.count,
-                    rideStationAnnotations.filter { $0 is RideStationAnnotation }.count,
-                    rideStationAnnotations.filter { $0 is RideLabelAnnotation }.count,
-                    elapsed.milliseconds)
-#endif
-                // Deferred: a rebuild can be triggered from inside updateUIView,
-                // and writing SwiftUI state during a view update is undefined
-                // behaviour — in practice the panel simply never showed the
-                // numbers. Hand them back on the next turn of the loop instead.
-                let stats = RenderStats(
-                    zoom: zoom,
-                    visibilityZoom: visibilityZoom,
-                    visibleLines: visible.count,
-                    overlays: overlays.count + rideOverlays.count + rideCasings.count,
-                    vertices: vertices,
-                    buildMilliseconds: elapsed.milliseconds,
-                    culledOffScreen: selection?.culledOffScreen ?? 0,
-                    threshold: fitted.threshold
-                )
-#if DEBUG
-                let networkState = !showsNetwork
-                    ? "off"
-                    : (visible.isEmpty || overlays.isEmpty ? "empty" : "rendered")
-                // Measure inside the app: XCTest's map accessibility snapshot
-                // can take longer than the render itself. Include region
-                // loading, but freeze at the first submitted network frame.
-                if networkState == "rendered", firstNetworkRenderMilliseconds == nil,
-                   let networkEnabledAt {
-                    firstNetworkRenderMilliseconds = Double((ContinuousClock.now - networkEnabledAt).milliseconds)
-                }
-                renderStatus?.text =
-                    "network:\(networkState);lines:\(visible.count);overlays:\(overlays.count)"
-                    + ";rides:\(rides.count)"
-                    + ";budgetDrops:\(builds.count - fitted.kept.count);vertices:\(vertices)"
-                    + String(format: ";camera:%.2f;lod:%.2f", zoom, visibilityZoom)
-                    + ";backbones:\(Set(visible.filter { $0.lodMinZoom < 0 }.map(\.lineID)).count)"
-                    + ";networkStations:\(networkAnnotations.count)"
-                    + String(format: ";distance:%.1f", mapView.camera.centerCoordinateDistance)
-                    + String(format: ";heading:%.1f", mapView.camera.heading)
-                    + String(format: ";centerLat:%.4f;centerLon:%.4f", mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude)
-                    + String(format: ";viewportWidth:%.1f;viewportHeight:%.1f", mapView.bounds.width, mapView.bounds.height)
-                    + String(format: ";firstNetworkMs:%.1f", firstNetworkRenderMilliseconds ?? -1)
-                    + ";rebuilds:\(rebuildCount);gestureBuilds:\(rebuildsDuringGesture)"
-                    + ";cacheHits:\(lineCacheHits);annotationReuses:\(annotationReuses)"
-                    + ";panCallbacks:\(panCallbacks);panMaxGapMs:\(maxPanCallbackGapMilliseconds)"
-                    + ";gestureFrames:\(gestureFrameProbe.frames);gestureMaxFrameGapMs:\(Int(gestureFrameProbe.maximumGapMilliseconds))"
-                    + ";buildMs:\(elapsed.milliseconds);covered:\(networkBuildState.builtRect.contains(mapView.visibleMapRect) ? 1 : 0)"
-#endif
-                DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
 
             /// The marker records, built once per ride set rather than per pan.
@@ -2607,7 +2689,7 @@ struct RailMapView: View {
                         }
                         index = StrokeRide.Index(chains: chains)
                     }
-                    var results: [String: (geometryKey: String, linesGeneration: Int, refs: [Int: StrokeRef])] = [:]
+                    var results: [String: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])] = [:]
                     for ride in rides {
                         try Task.checkCancellation()
                         let key = "\(ride.id):\(ride.geometryDigest)"
@@ -2616,10 +2698,11 @@ struct RailMapView: View {
                             results[ride.id] = entry
                             continue
                         }
-                        var refs: [Int: StrokeRef] = [:]
+                        var refs: [String: StrokeRef] = [:]
                         for segment in ride.segments {
                             try Task.checkCancellation()
-                            refs[segment.segmentIndex] = index.resolve(segment: segment.coordinates)
+                            refs["\(segment.segmentIndex).\(segment.partIndex)"] =
+                                index.resolve(segment: segment.coordinates)
                         }
                         results[ride.id] = (key, generation, refs)
                     }
@@ -2652,7 +2735,7 @@ struct RailMapView: View {
             ) -> StrokeRef? {
                 guard let cached = strokeRefCache[ride.id],
                     cached.geometryKey == "\(ride.id):\(ride.geometryDigest)",
-                    let ref = cached.refs[segment.segmentIndex] else { return nil }
+                    let ref = cached.refs["\(segment.segmentIndex).\(segment.partIndex)"] else { return nil }
                 // While a new region is being matched, a reference into an
                 // unchanged chain still uses the exact same measure space.
                 // Missing/replaced chains and changed anchors must fall back.
@@ -2747,7 +2830,7 @@ struct RailMapView: View {
                         riddenStops, segmentIndex: segment.segmentIndex)
                 else { return true }
 
-                let key = "\(ride.id)#\(segment.segmentIndex)"
+                let key = "\(ride.id)#\(segment.segmentIndex).\(segment.partIndex)"
                 if let cached = segmentCategories[key] {
                     return cached.isEmpty || layers.categories[cached]
                 }
@@ -2966,7 +3049,8 @@ struct RailMapView: View {
 
             @objc func handleMapTap(_ recognizer: UITapGestureRecognizer) {
                 guard recognizer.state == .ended, let mapView,
-                      playbackLayer.lastSnapshot == nil else { return }
+                      !(playback?.isActive == true && playbackLayer.lastSnapshot != nil)
+                else { return }
                 // 列車経路 off takes the rides' HIT AREA with their ink.
                 //
                 // `RailMap.setVisible` moves `TRAIN_PICK_LAYER` and
@@ -3226,6 +3310,123 @@ struct RailMapView: View {
             /// mark pass is skipped unless the railway factor or the labels'
             /// own zoom step moved. Above the anchor zoom railway weights are
             /// pinned at 1, while station type still follows its shallow ramp.
+            /// Answers a selection change alone: repaints every ride (width,
+            /// alpha, surviving casing width), adds or drops the one casing
+            /// overlay under the newly/previously selected ride, repairs
+            /// overlay stacking so the selected core and its casing sit on
+            /// top, and re-runs the marker phase from the cached
+            /// ``MarkerBuildContext`` — never geometry. Folding a selection
+            /// into the full rebuild cost 150–460 ms on device over Japan
+            /// (see the long comment in ``rebuildOwed(on:)``); this answers
+            /// from state the last rebuild already cached.
+            ///
+            /// Answers `false` — doing nothing — when that state is missing
+            /// or stale, so the caller falls back to a full rebuild.
+            private func updateSelection(on mapView: MKMapView) -> Bool {
+                // A cached context is only as good as the build it came from:
+                // while a full rebuild is owed — to a run, or to a gesture —
+                // the geometry on screen may be older than the viewport, and
+                // the debt is paid by `rebuild`, not by trusting the cache.
+                guard let context = markerBuildContext, !annotationsNeedRefresh,
+                    !rebuildDeferredByPlayback, !rebuildDeferredByGesture,
+                    pendingStrokeRefs == nil, mapView.bounds.width > 1 else { return false }
+                // Mirror rebuild's own gesture guard: a finger on the map
+                // defers the same way, and reports itself handled so the
+                // caller does not also fall back to a full rebuild.
+                if isManipulating
+                    || lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) == true {
+                    rebuildDeferredByGesture = true
+                    scheduleCameraRebuild(on: mapView)
+                    return true
+                }
+                let interval = RailSignpost.map.begin("map.selection")
+                defer { RailSignpost.map.end("map.selection", interval) }
+
+                updateRidePaint(on: mapView)
+
+                let overlaysInterval = RailSignpost.map.begin("map.selection.overlays")
+                let dark = mapView.traitCollection.userInterfaceStyle == .dark
+                let installed = mapView.overlays(in: .aboveLabels)
+                let reconciliation = MapOverlayReconciliation(overlays: installed)
+                var others: [MKOverlay] = []
+                var casings: [MKMultiPolyline] = []
+                var unselectedCores: [MKMultiPolyline] = []
+                var selectedCores: [MKMultiPolyline] = []
+                var playback: [MKOverlay] = []
+                for overlay in installed {
+                    guard let key = overlay.title ?? nil else { others.append(overlay); continue }
+                    if key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|") {
+                        // Kept only for the ride selected NOW — the old
+                        // selection's casing is simply left out of `desired`
+                        // below, and `install` tears it down.
+                        if let separator = key.firstIndex(of: "|"),
+                            String(key[key.index(after: separator)...]) == selectedTrainID,
+                            let multi = overlay as? MKMultiPolyline {
+                            casings.append(multi)
+                        }
+                    } else if key.hasPrefix("ride|") || key.hasPrefix("ride-xday|"),
+                        let multi = overlay as? MKMultiPolyline {
+                        if let separator = key.firstIndex(of: "|"),
+                            String(key[key.index(after: separator)...]) == selectedTrainID {
+                            selectedCores.append(multi)
+                        } else {
+                            unselectedCores.append(multi)
+                        }
+                    } else if key.hasPrefix("playback") {
+                        playback.append(overlay)
+                    } else {
+                        others.append(overlay)
+                    }
+                }
+
+                // The selected ride's casing, one per surviving core suffix
+                // (`ride` / `ride-xday`) — same style rule `rebuild` uses for
+                // a newly selected ride's halo (§10.5): colour by theme,
+                // width from the CORE's own current token plus the casing
+                // edge on both sides, 0.9 alpha, the core's own dash.
+                if let selectedID = selectedTrainID {
+                    for core in selectedCores {
+                        guard let coreKey = core.title, let separator = coreKey.firstIndex(of: "|")
+                        else { continue }
+                        let suffix = String(coreKey[coreKey.startIndex..<separator])
+                        let casingKey = "\(suffix)-casing|\(selectedID)"
+                        guard !casings.contains(where: { $0.title == casingKey }),
+                            let style = overlayStyles[coreKey] else { continue }
+                        let casing = reconciliation.multiPolyline(core.polylines, key: casingKey)
+                        overlayStyles[casingKey] = .init(
+                            color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
+                            widthToken: style.widthToken + RailStyle.selectionCasingEdge * 2,
+                            alpha: 0.9,
+                            dashed: style.dashed
+                        )
+                        casings.append(casing)
+                    }
+                }
+
+                // Casings first, then cores with the selected ride's last —
+                // same order `rebuild` installs in, which is what keeps the
+                // selected line and its halo on top.
+                let desired: [MKOverlay] = others + casings + unselectedCores + selectedCores + playback
+                // The build's own scale, as `rebuild` hands `install`: the
+                // marks below are styled from the same context, and the two
+                // halves must agree on the frame they are drawn.
+                overlayInstaller.install(
+                    desired, replacing: reconciliation, scale: context.scale, on: mapView)
+                RailSignpost.map.end("map.selection.overlays", overlaysInterval)
+
+                // `buildMarkers` re-adds `endpointAnnotations` unconditionally
+                // without first removing the old ones — `rebuild` owes it
+                // that teardown ahead of the marker phase (its own teardown
+                // section, before calling `buildMarkers`), so this does too.
+                if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
+                endpointAnnotations = []
+
+                let markersInterval = RailSignpost.map.begin("map.selection.markers")
+                buildMarkers(context, on: mapView)
+                RailSignpost.map.end("map.selection.markers", markersInterval)
+                return true
+            }
+
             private func updateRidePaint(on mapView: MKMapView) {
                 let byID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
                 let hasSelection = selectedTrainID.flatMap { byID[$0] } != nil
@@ -3419,12 +3620,12 @@ struct RailMapView: View {
                 }
                 if let dot = annotation as? RideStationAnnotation {
                     return rideStationCard(
-                        name: dot.rawName, code: dot.stationCode,
+                        name: dot.rawName, code: dot.stationCode, region: dot.region,
                         at: Self.coordinate(dot.coordinate))
                 }
                 if let caption = annotation as? RideLabelAnnotation {
                     return rideStationCard(
-                        name: caption.rawName, code: caption.stationCode,
+                        name: caption.rawName, code: caption.stationCode, region: caption.region,
                         at: Self.coordinate(caption.coordinate))
                 }
                 return nil
@@ -3445,9 +3646,10 @@ struct RailMapView: View {
             /// station is what they get; the alternative is a mark that answers
             /// a tap with silence, which is the fault this replaced.
             private func rideStationCard(
-                name: String, code: String?, at position: Coordinate
+                name: String, code: String?, region: Region?, at position: Coordinate
             ) -> StationCard {
-                if let station = networkStation(code: code, name: name, near: position) {
+                if let station = networkStation(
+                    code: code, name: name, region: region, near: position) {
                     // Named and read exactly as `StationAnnotation` names and
                     // reads the same platform — the readings table is keyed on
                     // the platform's own id first and its name second.
@@ -3468,7 +3670,7 @@ struct RailMapView: View {
                     // station code says which package it came from, and a
                     // hand-typed ride with no code at all is Japanese for the
                     // same reason `naming` reads it as Japanese.
-                    region: Region.fromStationCode(code) ?? .jp,
+                    region: region ?? Region.fromStationCode(code) ?? .jp,
                     readings: localization == nil ? nil : named.readings.map(\.text),
                     nameRoma: "",
                     lines: [])
@@ -3490,15 +3692,27 @@ struct RailMapView: View {
             /// common enough (中山, 大手町) that an uncapped one would hand the
             /// reader another prefecture's railways.
             private func networkStation(
-                code: String?, name: String, near position: Coordinate
+                code: String?, name: String, region: Region?, near position: Coordinate
             ) -> RailNetworkStore.DrawnStation? {
+                // Same-region candidates are preferred whenever the ride
+                // knows its region — a station code or name shared with
+                // another country's package must not steal the match. Only
+                // when nothing in the ride's own region resolves does the
+                // search fall back across every region, which keeps a ride
+                // with no known region (`region == nil`) behaving exactly
+                // as it always has.
                 func nearest(_ indexes: [Int], within metres: Double) -> RailNetworkStore.DrawnStation? {
-                    indexes
+                    let candidates = indexes
                         .map { (station: stations[$0], distance:
                             Geometry.distanceMeters(stations[$0].coordinate, position)) }
                         .filter { $0.distance <= metres }
-                        .min { $0.distance < $1.distance }?
-                        .station
+                    if let region {
+                        let sameRegion = candidates.filter { $0.station.region == region }
+                        if let hit = sameRegion.min(by: { $0.distance < $1.distance }) {
+                            return hit.station
+                        }
+                    }
+                    return candidates.min { $0.distance < $1.distance }?.station
                 }
                 if let code, !code.isEmpty, let group = stationsByCode[code],
                     let hit = nearest(group, within: .infinity) {
@@ -3548,10 +3762,10 @@ struct RailMapView: View {
             // MARK: - rendering
 
             func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
-                if let polygon = overlay as? MKPolygon, polygon.title == "basemap-veil" {
-                    let renderer = MKPolygonRenderer(polygon: polygon)
-                    renderer.fillColor = UIColor.systemBackground.withAlphaComponent(
-                        1 - min(max(basemapOpacity, 0), 1))
+                if let veil = overlay as? BasemapVeilOverlay {
+                    let renderer = BasemapVeilRenderer(overlay: veil)
+                    renderer.veilColor = Self.veilColor(
+                        alpha: 1 - min(max(basemapOpacity, 0), 1), on: mapView)
                     return renderer
                 }
                 // The weight ramp, applied at the one place a token becomes points.
@@ -3669,5 +3883,23 @@ struct RailMapView: View {
                     blue: CGFloat(channels[2] / 255), alpha: 1)
             }
         }
+    }
+}
+
+/// 底圖不透明度's veil: one world-sized black overlay, so the basemap dims in
+/// both light and dark mode. It sits at `.aboveRoads`, under every rail layer
+/// and under MapKit's own labels.
+final class BasemapVeilOverlay: NSObject, MKOverlay {
+    let boundingMapRect = MKMapRect.world
+    var coordinate: CLLocationCoordinate2D { MKMapPoint(x: MKMapRect.world.midX, y: MKMapRect.world.midY).coordinate }
+    func canReplaceMapContent() -> Bool { false }
+}
+
+final class BasemapVeilRenderer: MKOverlayRenderer {
+    var veilColor = UIColor.clear.cgColor
+
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        context.setFillColor(veilColor)
+        context.fill(rect(for: mapRect))
     }
 }

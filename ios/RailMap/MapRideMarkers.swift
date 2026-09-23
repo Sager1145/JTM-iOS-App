@@ -274,6 +274,11 @@ enum MapRideMarkers {
         /// platform.
         var vertexIndex: Int?
         var segmentIndex: Int
+        /// Which part of `segmentIndex`'s `MultiLineString` this anchor's own
+        /// `strokeRef` resolved against — `segmentIndex` alone aliases every
+        /// part of a feature, so the sliced-stroke fallback must match this
+        /// too, not just pick the first part it finds.
+        var partIndex: Int
         /// `true` when this stop is the segment's `from` end, `false` for
         /// `to` — which of the sliced stroke's two ends the fallback reads.
         var isSegmentStart: Bool
@@ -299,12 +304,12 @@ enum MapRideMarkers {
             if agrees(segment.from, stops[index].name), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.fromAnchor,
-                    segmentIndex: index, isSegmentStart: true)
+                    segmentIndex: index, partIndex: segment.partIndex, isSegmentStart: true)
             }
             if agrees(segment.to, stops[index + 1].name), result[index + 1] == nil {
                 result[index + 1] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.toAnchor,
-                    segmentIndex: index, isSegmentStart: false)
+                    segmentIndex: index, partIndex: segment.partIndex, isSegmentStart: false)
             }
         }
         return result

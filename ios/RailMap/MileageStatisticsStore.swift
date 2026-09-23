@@ -34,7 +34,13 @@ import RailCore
 ///   and puts a progress stage in their place while it does. So ``load`` now
 ///   opens by fingerprinting exactly what the figures are a function of, and
 ///   returns having touched nothing when that has not moved. See
-///   ``Fingerprint``.
+///   ``Fingerprint``. A rename, a company correction or any other edit to a
+///   passport-only field still has to move `self.passport`, but it changes
+///   nothing the mileage half reads — so when a fingerprint's difference is
+///   confined to `Journey.passport`, ``load`` skips straight to regrouping
+///   the passport from the entries the last full load already matched,
+///   rather than re-reading the network and re-matching every ride to answer
+///   a question mileage never asked. See ``reloadPassportOnly(fingerprint:trains:entries:)``.
 @MainActor
 @Observable
 final class MileageStatisticsStore {
@@ -105,6 +111,7 @@ final class MileageStatisticsStore {
     private(set) var availableDates: [String] = []
 
     private var task: Task<Void, Never>?
+    private var passportTask: Task<Void, Never>?
     private var scopeTask: Task<Void, Never>?
     private var context: Context?
 
@@ -119,6 +126,19 @@ final class MileageStatisticsStore {
     /// be calculated" until an unrelated edit moves the key would be the cache
     /// remembering the wrong thing.
     private var servedFingerprint: Fingerprint?
+
+    /// The fingerprint `context` was actually built for — set only where
+    /// `self.context` is set, on a load that RAN TO COMPLETION, and cleared
+    /// wherever `context` is cleared.
+    ///
+    /// Distinct from `servedFingerprint`, which is written when a load
+    /// STARTS: a passport-only reload has to pair the new `trains` against
+    /// `context.entries`, and it may only do that when `context` itself was
+    /// built for inputs that are still current — not merely started for them.
+    /// Without this, a passport edit that arrives while a full load is still
+    /// matching rides would regroup stale entries instead of joining, or
+    /// waiting for, the load already in flight.
+    private var contextFingerprint: Fingerprint?
 
     var failureMessage: String? {
         if case .failed(let message) = state { return message }
@@ -151,8 +171,25 @@ final class MileageStatisticsStore {
             clearForEmpty(fingerprint: fingerprint)
             return
         }
+        // The entries this load would produce, journey for journey, are
+        // exactly the ones the last completed load already matched — nothing
+        // `collectTrainStatsEntry` reads moved. Regroup those against the new
+        // `trains` (so the edited fields land in the passport) instead of
+        // reopening the network and rewalking every ride's geometry. `context`
+        // is only ever the last COMPLETED load's context (see the `catch`
+        // below, which clears it on failure), so its entries are never a
+        // half-finished answer.
+        if let previous = servedFingerprint, let context, let built = contextFingerprint,
+            case .loaded = state,
+            Self.sameMileageInputs(built, previous),
+            Self.differsOnlyInPassport(previous, fingerprint)
+        {
+            reloadPassportOnly(fingerprint: fingerprint, trains: trains, entries: context.entries)
+            return
+        }
         servedFingerprint = fingerprint
         task?.cancel()
+        passportTask?.cancel()
         scopeTask?.cancel()
         state = .loading
         let total = trains.count
@@ -234,6 +271,7 @@ final class MileageStatisticsStore {
 #endif
 
                 self.context = context
+                self.contextFingerprint = fingerprint
                 self.entryCache = prepared.cache
                 self.availableDates = dates
                 self.view = result
@@ -259,6 +297,7 @@ final class MileageStatisticsStore {
                 guard self.servedFingerprint == fingerprint else { return }
                 self.servedFingerprint = nil
                 self.context = nil
+                self.contextFingerprint = nil
                 self.view = nil
                 self.passport = nil
                 self.availableDates = []
@@ -270,6 +309,78 @@ final class MileageStatisticsStore {
         }
     }
 
+    /// Whether `a` and `b` name the same country scope and the same journeys,
+    /// in the same order, with none of `id`, `trainType`, `date` or `entry`
+    /// moved — everything a mileage figure reads. `Journey.passport` may
+    /// differ or not; this says nothing about it.
+    ///
+    /// A positional comparison is enough to also confirm the two fingerprints
+    /// name the same journeys in the same order: `Journey.id` is one of the
+    /// fields compared at each position, so two fingerprints that pass this
+    /// check were built from `trains` arrays holding the same journeys,
+    /// identically ordered — which is exactly what lets
+    /// ``reloadPassportOnly(fingerprint:trains:entries:)`` pair the new
+    /// `trains` against the old `entries` positionally.
+    private nonisolated static func sameMileageInputs(_ a: Fingerprint, _ b: Fingerprint) -> Bool {
+        guard a.countries == b.countries, a.journeys.count == b.journeys.count else { return false }
+        for (x, y) in zip(a.journeys, b.journeys) {
+            guard x.id == y.id, x.trainType == y.trainType, x.date == y.date, x.entry == y.entry
+            else { return false }
+        }
+        return true
+    }
+
+    /// Whether `a` and `b` differ ONLY in `Journey.passport`: ``sameMileageInputs``
+    /// holds, and at least one journey's passport actually moved.
+    private nonisolated static func differsOnlyInPassport(_ a: Fingerprint, _ b: Fingerprint) -> Bool {
+        guard sameMileageInputs(a, b) else { return false }
+        return zip(a.journeys, b.journeys).contains { $0.passport != $1.passport }
+    }
+
+    /// The cheap half of ``load``, for an edit that only moved a passport-only
+    /// field.
+    ///
+    /// `PassportStatistics.build` is a pure function of `trains` and
+    /// `entries`; `entries` is untouched by this kind of edit, so this reruns
+    /// only that grouping pass, against the new `trains` so the edit actually
+    /// lands, and publishes nothing else — `context`, `view`, the totals and
+    /// `availableDates` all still answer for the same mileage inputs they
+    /// always did.
+    ///
+    /// Follows ``load``'s own discipline: `servedFingerprint` is written
+    /// before the work starts, so a second identical call joins this one
+    /// instead of restarting it; the previous passport-only task is
+    /// cancelled; and the eventual publish is guarded so a load that
+    /// supersedes this one — full or passport-only — is never overwritten by
+    /// a slower straggler.
+    ///
+    /// Deliberately touches nothing but `passport`: `state`, `progress`,
+    /// `context` and `view` are left exactly as the last full load set them,
+    /// because the figures they answer for are already correct for everything
+    /// but the passport, so there is nothing to blank, no phase to announce,
+    /// and no ownership of `context` to hand off.
+    ///
+    /// Runs on its own `passportTask` rather than the shared `task` so that
+    /// this can never cancel a FULL load — the gate in ``load`` that calls
+    /// this already guarantees no full load is in flight, but a later full
+    /// load must still be able to tell the two apart and cancel only this
+    /// one. `scopeTask` is left running: `context` is unchanged by this path,
+    /// so a rescope already under way is still computing the right answer.
+    private func reloadPassportOnly(
+        fingerprint: Fingerprint, trains: [Train], entries: [Statistics.TrainEntry]
+    ) {
+        servedFingerprint = fingerprint
+        passportTask?.cancel()
+        passportTask = Task { [weak self] in
+            guard let self else { return }
+            let interval = RailSignpost.jobs.begin("stats.passportOnly")
+            defer { RailSignpost.jobs.end("stats.passportOnly", interval) }
+            let grouped = await Self.group(trains: trains, entries: entries)
+            guard !Task.isCancelled, self.servedFingerprint == fingerprint else { return }
+            self.passport = grouped
+        }
+    }
+
     /// Publish the absence of statistics without touching ``EdgeIndexCache``.
     ///
     /// Every value from the previous answer is cleared together. In
@@ -278,11 +389,14 @@ final class MileageStatisticsStore {
     /// leave the empty card claiming that a calculation was still underway.
     private func clearForEmpty(fingerprint: Fingerprint) {
         task?.cancel()
+        passportTask?.cancel()
         scopeTask?.cancel()
         task = nil
+        passportTask = nil
         scopeTask = nil
         servedFingerprint = fingerprint
         context = nil
+        contextFingerprint = nil
         view = nil
         totalsByMask = [:]
         totalKm = 0
@@ -314,6 +428,18 @@ final class MileageStatisticsStore {
 
     private func rescope() {
         guard let context else { return }
+        // The fingerprint `context` was built for — `contextFingerprint`,
+        // not `servedFingerprint`. A load that replaces `context` also
+        // replaces `contextFingerprint` (see ``load``, which writes both
+        // under one `self.context = context` / no intervening suspension), so
+        // comparing against the fingerprint captured here — rather than
+        // reusing the `context` local, which stays the OLD value for the life
+        // of this task — is what stops a rescope that started before a
+        // replacement load from publishing its stale answer after that load
+        // finishes. `servedFingerprint` would be wrong here: a passport-only
+        // reload moves it without touching `context`, and this rescope must
+        // still recognise itself as owning the same, unchanged context.
+        let owningFingerprint = contextFingerprint
         scopeTask?.cancel()
         let scope = selectedDate
         scopeTask = Task { [weak self] in
@@ -322,6 +448,7 @@ final class MileageStatisticsStore {
                 self.progress = Progress(stage: .scopingDay)
                 let result = try await Self.aggregate(context: context, selectedDate: scope)
                 try Task.checkCancellation()
+                guard self.contextFingerprint == owningFingerprint else { return }
                 self.view = result
                 self.progress = nil
                 self.state = .loaded
@@ -329,8 +456,14 @@ final class MileageStatisticsStore {
                 return
             } catch {
                 // The day slice failed, so what is on screen is no longer the
-                // answer to anything. Forgetting the fingerprint is what lets
-                // the next identical load actually run and recover.
+                // answer to anything. Forgetting `servedFingerprint` is what
+                // lets the next identical load actually run and recover — but
+                // only if this rescope still owns the figures on screen,
+                // checked against `contextFingerprint`; a rescope superseded
+                // by a new load, or by a passport-only reload that replaced
+                // `servedFingerprint` without touching `context`, must not
+                // clear a fingerprint out from under it.
+                guard self.contextFingerprint == owningFingerprint else { return }
                 self.servedFingerprint = nil
                 self.progress = nil
                 self.state = .failed(error.localizedDescription)
@@ -486,8 +619,14 @@ final class MileageStatisticsStore {
     ///     measured against and the vocabulary the category rows are named in;
     ///   - per journey, in order: the id, the service description that groups
     ///     the 種別 rows, the normalised date bucket the day slice compares
-    ///     against, and ``entryDigest(train:ride:)`` — which is itself the
-    ///     four things `collectTrainStatsEntry` reads.
+    ///     against, ``entryDigest(train:ride:)`` — which is itself the four
+    ///     things `collectTrainStatsEntry` reads — and ``passportDigest(train:)``,
+    ///     which covers everything ``PassportStatistics/build(trains:entries:)``
+    ///     reads off the record directly that is not already one of the first
+    ///     three. ``passport`` is grouped from the same matched entries this
+    ///     load produces, so a load is still the one place both screens'
+    ///     numbers come from — see ``Fingerprint``'s own note on why the
+    ///     operator is in scope here even though no *mileage* figure reads it.
     ///
     /// **In order**, and that is not incidental: the deduped union walks the
     /// ridden set in insertion order, so two stores with the same journeys
@@ -495,9 +634,16 @@ final class MileageStatisticsStore {
     /// `StatisticsParityTests.orderOfTheRiddenSet` is the test that says so.
     ///
     /// Everything a journey carries that is NOT here — colour, visibility,
-    /// operator, notes, the ride's own region tag, the route policy — changes
-    /// no figure on this screen, which is exactly why the fingerprint is a
-    /// listing rather than a hash of the record.
+    /// notes, the ride's own region tag, the route policy — changes no figure
+    /// on this screen, which is exactly why the fingerprint is a listing
+    /// rather than a hash of the record.
+    ///
+    /// The operator is the one exception noted above: it moves nothing this
+    /// struct computes itself, but it moves ``PassportStatistics/operators``,
+    /// which is grouped from the same journeys this load matches. So is every
+    /// field ``passportDigest(train:)`` reads — see there for the list — and
+    /// each is covered by `Journey.passport` below, not by pretending the
+    /// passport screen reads a strict subset of what this one does.
     struct Fingerprint: Equatable, Sendable {
         let countries: [String]
         let journeys: [Journey]
@@ -509,6 +655,14 @@ final class MileageStatisticsStore {
             let date: String
             /// ``entryDigest(train:ride:)``.
             let entry: Int
+            /// ``passportDigest(train:)``. Split out from the other four
+            /// fields rather than folded into one of them, so that an edit
+            /// which moves ONLY this one — a rename, a company correction, a
+            /// stop name or code — can be told apart from an edit that also
+            /// moves mileage. ``differsOnlyInPassport(_:_:)`` is what looks
+            /// for exactly that difference, and ``reloadPassportOnly`` is
+            /// what a positive answer skips straight to.
+            let passport: Int
         }
     }
 
@@ -532,8 +686,45 @@ final class MileageStatisticsStore {
                     // whole fingerprint exists to avoid paying.
                     date: Dates.trainDate(
                         Dates.Train(id: train.id, date: train.date, stops: [])),
-                    entry: entryDigest(train: train, ride: ridesByID[train.id]))
+                    entry: entryDigest(train: train, ride: ridesByID[train.id]),
+                    passport: passportDigest(train: train))
             })
+    }
+
+    /// Everything ``PassportStatistics/build(trains:entries:)`` reads off one
+    /// `Train` directly that is not already covered by `Journey.trainType`,
+    /// `Journey.date` (the bucket) or ``entryDigest(train:ride:)`` (the stop
+    /// fields `effectivelyRiddenStopIndexes` and `trainRideMinutes` read).
+    ///
+    /// That leaves: the raw `date` string — `journeyClock.rideMinutes(on:)`
+    /// reads the record's own field, not the normalised bucket, so two
+    /// journeys sharing a bucket but not a timestamp can still owe different
+    /// minutes; `number`, which `JourneyTitle.compact` reads together with
+    /// `trainType`; `company`, which groups ``PassportStatistics/operators``;
+    /// `region`, plus each stop's `n02StationCode` and each route section's
+    /// endpoint codes, which is everything `RegionScopeRule.matched` (via
+    /// `Region.resolved`) reads to decide a journey's region — and each stop's
+    /// `name`, which is what a station or route row is keyed and named on.
+    ///
+    /// This is deliberately a flat listing rather than a hash of the whole
+    /// `Train`, for the same reason ``entryDigest(train:ride:)`` is: a hash of
+    /// everything would also change on a colour, a note or a visibility flag,
+    /// which is exactly the re-walk this fingerprint exists to skip.
+    private nonisolated static func passportDigest(train: Train) -> Int {
+        var hasher = Hasher()
+        hasher.combine(train.date)
+        hasher.combine(train.number)
+        hasher.combine(train.company)
+        hasher.combine(train.region)
+        for stop in train.stops {
+            hasher.combine(stop.name)
+            hasher.combine(stop.n02StationCode)
+        }
+        for section in train.routeSections ?? [] {
+            hasher.combine(section.fromN02StationCode)
+            hasher.combine(section.toN02StationCode)
+        }
+        return hasher.finalize()
     }
 
     /// Everything ``Statistics/collectTrainStatsEntry(features:index:)`` reads

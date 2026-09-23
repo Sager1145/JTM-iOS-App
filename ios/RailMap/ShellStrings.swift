@@ -317,6 +317,18 @@ enum ShellStrings {
             .zhHans: "行程底下的完整铁路网。关闭后只留下你自己的行程。",
             .zhHant: "行程底下的完整鐵路網。關閉後只留下你自己的行程。",
         ],
+        "ios.settings.northAmerica.title": [
+            .en: "North America", .ja: "北米機能",
+            .zhHans: "北美功能", .zhHant: "北美功能",
+        ],
+        "ios.settings.northAmerica.note": [
+            .en: "Show United States and Canada lines, stations and journeys. When off they "
+                + "are completely hidden; saved North American journeys are hidden, not deleted.",
+            .ja: "アメリカとカナダの路線・駅・行程を表示します。オフのときは完全に非表示になり、"
+                + "保存済みの北米の行程は削除されず非表示になります。",
+            .zhHans: "显示美国与加拿大的线路、车站与行程。关闭时完全隐藏；已保存的北美行程只会隐藏，不会删除。",
+            .zhHant: "顯示美國與加拿大的路線、車站與行程。關閉時完全隱藏；已儲存的北美行程只會隱藏，不會刪除。",
+        ],
         "ios.note.riddenCategories": [
             .en: "Each ridden section is classified by the network that covers most of it. Sections the network cannot identify stay visible.",
             .ja: "乗車済み区間は、その大半を占める路線網で分類します。判別できない区間は表示したままにします。",

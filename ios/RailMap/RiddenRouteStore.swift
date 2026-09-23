@@ -13,6 +13,13 @@ import RailPresentation
 final class RiddenRouteStore {
     struct DrawnSegment: Sendable {
         let segmentIndex: Int
+        /// Which part of a MultiLineString this stroke came from — 0 for a
+        /// plain LineString or a single-part feature. `segmentIndex` alone
+        /// aliases every part of one feature when the dataset's own indices
+        /// are authoritative (they are then equal across every part), so a
+        /// cache or lookup keyed on identity rather than section semantics
+        /// must include this too.
+        let partIndex: Int
         let from: String?
         let to: String?
         /// Canonical WGS84 geometry used by the solver, cache and statistics.
@@ -45,11 +52,12 @@ final class RiddenRouteStore {
         ///   the whole edge and its two halves, and a deduped union over edge
         ///   ids cannot see that they are the same rail.
         init(
-            segmentIndex: Int, from: String?, to: String?,
+            segmentIndex: Int, partIndex: Int = 0, from: String?, to: String?,
             coordinates: [Coordinate], sourceCoordinates: [Coordinate]? = nil,
             country: String
         ) {
             self.segmentIndex = segmentIndex
+            self.partIndex = partIndex
             self.from = from
             self.to = to
             self.sourceCoordinates = sourceCoordinates ?? coordinates
@@ -499,9 +507,9 @@ final class RiddenRouteStore {
             let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
             guard let train = wanted[part.train.id] else { continue }
             let trainCanonical = canonical(for: train)
-            let trainDigest = routeCacheDigest(trainCanonical, country: country)
+            let trainDigest = routeCacheDigest(trainCanonical, raw: train, country: country)
             guard trainDigest == routeCacheDigest(
-                normalizedTrain(part.train, country: country), country: country
+                normalizedTrain(part.train, country: country), raw: part.train, country: country
             ) else { continue }
             let expectedTemplate = routeTemplateDigest(trainCanonical, country: country)
             let matchingFeatures = part.route.features.filter { feature in
@@ -520,18 +528,35 @@ final class RiddenRouteStore {
             // canonical slice interpolates its own endpoints), and the swap
             // took the unmatched remainder from 3.3 km to 95.3 km. Drawn
             // geometry belongs in `coordinates`; this is the other field.
-            let segments = matchingFeatures.flatMap { feature in
-                feature.geometry.strokes.enumerated().compactMap { pair -> DrawnSegment? in
-                    let (partIndex, coordinates) = pair
+            // `partIndex` is assigned AFTER resolving each stroke's
+            // `segmentIndex` and dropping the too-short ones, using the same
+            // per-`segmentIndex` output-order counter `readCached` uses — see
+            // ``assigningPartIndex(to:segmentIndex:)``. Assigning it from the
+            // stroke's own position within its feature (as before) collided
+            // whenever a short part was dropped, a feature carried no
+            // authoritative `segment_index` (so the count restarted per
+            // feature), or two features shared a `segmentIndex`.
+            let usableStrokes = matchingFeatures.flatMap { feature in
+                feature.geometry.strokes.enumerated().compactMap { offset, coordinates
+                    -> (segmentIndex: Int, from: String?, to: String?, coordinates: [Coordinate])? in
                     guard coordinates.count >= 2 else { return nil }
-                    return DrawnSegment(
-                        segmentIndex: feature.properties?.segmentIndex ?? partIndex,
+                    return (
+                        segmentIndex: feature.properties?.segmentIndex ?? offset,
                         from: feature.properties?.from,
                         to: feature.properties?.to,
-                        coordinates: coordinates,
-                        country: country)
+                        coordinates: coordinates)
                 }
             }
+            let segments = assigningPartIndex(to: usableStrokes, segmentIndex: { $0.segmentIndex })
+                .map { entry, partIndex -> DrawnSegment in
+                    DrawnSegment(
+                        segmentIndex: entry.segmentIndex,
+                        partIndex: partIndex,
+                        from: entry.from,
+                        to: entry.to,
+                        coordinates: entry.coordinates,
+                        country: country)
+                }
             guard !segments.isEmpty else { continue }
             let ride = drawnRide(
                 train,
@@ -589,6 +614,7 @@ final class RiddenRouteStore {
         geometryHasher.combine(segments.count)
         for segment in segments {
             geometryHasher.combine(segment.segmentIndex)
+            geometryHasher.combine(segment.partIndex)
             geometryHasher.combine(segment.sourceCoordinates)
         }
         return DrawnRide(
@@ -763,7 +789,8 @@ final class RiddenRouteStore {
             let ride = drawnRide(
                 train, country: country, segments: segments, expectedSections: sections)
             rides.append(ride)
-            if !segments.isEmpty, let digest = routeCacheDigest(canonical, country: country) {
+            if !segments.isEmpty,
+               let digest = routeCacheDigest(canonical, raw: train, country: country) {
                 try? saveCache(ride, digest: digest, country: country)
             }
         }
@@ -798,7 +825,7 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func routeCacheDigest(
-        _ canonical: Train, country: String
+        _ canonical: Train, raw: Train, country: String
     ) -> String? {
         let canonicalSections = canonical.routeSections ?? []
         let sections = canonicalSections.map { section in
@@ -811,7 +838,14 @@ final class RiddenRouteStore {
         }
         let policy = canonical.routePolicy
         let cacheTrain = RouteGraph.CacheKeyTrain(
-            trainType: canonical.trainType ?? "", company: canonical.company ?? "",
+            // id/number/origin/destination/trainType come from the raw train,
+            // matching the inputs `routeContext(train)` uses to solve — the
+            // fields normalization only re-shapes (`trainType ?? ""`) rather
+            // than actually changes. `company` stays on the normalized train
+            // because `normalizeTrainCompany` can genuinely alter its value.
+            id: raw.id, number: raw.number,
+            trainType: raw.trainType ?? "", company: canonical.company ?? "",
+            origin: raw.origin, destination: raw.destination,
             preferredLineNames: policy?.preferredLineNames ?? [],
             preferredOperatorNames: policy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: policy?.allowedInstitutionTypeCodes,
@@ -896,6 +930,29 @@ final class RiddenRouteStore {
     /// How many cache files are read at once. See ``loadCachedConcurrently``.
     private nonisolated static let cacheReadWidth = 4
 
+    /// Assigns each item a `partIndex`: its occurrence count, so far, among
+    /// items sharing its `segmentIndex` — counted in the order `items`
+    /// already comes in.
+    ///
+    /// Both the live dataset path and ``readCached`` need the SAME rule here
+    /// (a per-`segmentIndex` counter over parts actually emitted, in output
+    /// order), or the two can disagree on which cached entry is which part:
+    /// a short part dropped upstream, a feature with no authoritative
+    /// `segment_index` restarting its own count, or two features sharing a
+    /// `segmentIndex` would each desynchronise the two paths if they counted
+    /// differently.
+    private nonisolated static func assigningPartIndex<Item>(
+        to items: [Item], segmentIndex: (Item) -> Int
+    ) -> [(item: Item, partIndex: Int)] {
+        var nextPartIndex: [Int: Int] = [:]
+        return items.map { item in
+            let index = segmentIndex(item)
+            let partIndex = nextPartIndex[index, default: 0]
+            nextPartIndex[index] = partIndex + 1
+            return (item, partIndex)
+        }
+    }
+
     /// One journey's cached route, or `nil` if there is not a usable one.
     private nonisolated static func readCached(
         _ train: Train, country: String
@@ -904,23 +961,33 @@ final class RiddenRouteStore {
         // sections below, instead of each calling `normalizeExportTrain`
         // again for the same train.
         let canonical = normalizedTrain(train, country: country)
-        guard let digest = routeCacheDigest(canonical, country: country),
+        guard let digest = routeCacheDigest(canonical, raw: train, country: country),
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
               cache.version == RouteGraph.routeSolverCacheVersion,
               cache.digest == digest
         else { return nil }
-        let segments = cache.segments.compactMap { cached -> DrawnSegment? in
+        // A given `segmentIndex` can carry more than one cached entry — one
+        // per `MultiLineString` part, written in part order by `saveCache`.
+        // Counting occurrences here, the same way the live dataset path
+        // enumerates a feature's strokes, recovers each part's identity
+        // without a cache format change. See ``assigningPartIndex(to:segmentIndex:)``.
+        let usable = cache.segments.compactMap { cached -> (CachedSegment, [Coordinate], [Coordinate])? in
             // Both halves come back as they went in: the map redraws the slice
             // it drew before, and the statistics keep matching N02.
             let source = cached.coordinates.compactMap(Coordinate.init(pair:))
             let drawn = cached.drawnCoordinates.compactMap(Coordinate.init(pair:))
             guard source.count >= 2, drawn.count >= 2 else { return nil }
-            return DrawnSegment(
-                segmentIndex: cached.segmentIndex, from: cached.from,
-                to: cached.to, coordinates: drawn, sourceCoordinates: source,
-                country: country)
+            return (cached, source, drawn)
         }
+        let segments = assigningPartIndex(to: usable, segmentIndex: { $0.0.segmentIndex })
+            .map { entry, partIndex -> DrawnSegment in
+                let (cached, source, drawn) = entry
+                return DrawnSegment(
+                    segmentIndex: cached.segmentIndex, partIndex: partIndex, from: cached.from,
+                    to: cached.to, coordinates: drawn, sourceCoordinates: source,
+                    country: country)
+            }
         guard !segments.isEmpty else { return nil }
         return drawnRide(
             train,
