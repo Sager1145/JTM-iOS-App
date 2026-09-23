@@ -52,6 +52,7 @@ public enum TrainServiceBranding {
         let captions = [train.number, train.numberEn]
             .compactMap { $0 }
             .map(normalizedText)
+            .map(stripDirectionalBrackets)
 
         return normalizedCatalog.first { candidate in
             normalizedRegion(candidate.service.region) == region
@@ -145,16 +146,22 @@ public enum TrainServiceBranding {
 
             if startsWithLatinWord {
                 let beforeIsWordOrHyphen = beforeIsWord || beforeCharacter == "-"
-                if beforeIsWordOrHyphen == false && hasTrainNumberContext(after: range.upperBound, in: caption) {
+                if beforeIsWordOrHyphen == false
+                    && hasTrainNumberContext(before: range.lowerBound, after: range.upperBound, in: caption) {
                     return true
                 }
             } else {
                 // CJK-leading names keep the original rule: the preceding
-                // character is not checked, only what follows the match.
+                // character is not checked, only what follows the match —
+                // except that a name found straddling an arrow (station-list
+                // brackets such as `宇都宮→日光` that survived because they
+                // did not end in 行/方面) is a route segment, not the service.
                 let endsWithWord = name.last?.isLetter == true
                 let nextCharacter = range.upperBound < caption.endIndex ? caption[range.upperBound] : nil
                 let afterExtendsName = nextCharacter?.isLetter == true && nextCharacter != "号"
-                if endsWithWord == false || afterExtendsName == false {
+                let adjacentToArrow = beforeCharacter == "→" || beforeCharacter == "←"
+                    || nextCharacter == "→" || nextCharacter == "←"
+                if adjacentToArrow == false && (endsWithWord == false || afterExtendsName == false) {
                     return true
                 }
             }
@@ -164,16 +171,78 @@ public enum TrainServiceBranding {
     }
 
     /// True when the text following a Latin-leading name reads as a train
-    /// number rather than the continuation of an unrelated name: nothing,
-    /// a digit, "号", "no."/"no ", or an opening parenthesis.
-    private static func hasTrainNumberContext(after index: String.Index, in caption: String) -> Bool {
+    /// number rather than the continuation of an unrelated name: a digit,
+    /// "号", "no."/"no ", or an opening parenthesis. Nothing following (the
+    /// name ends the caption) also counts, unless the word immediately
+    /// before the name is "for", "to", or "bound" — "Local for Aso" names a
+    /// destination, not the train.
+    private static func hasTrainNumberContext(
+        before start: String.Index, after index: String.Index, in caption: String
+    ) -> Bool {
         var remainder = Substring(caption[index...])
         while let first = remainder.first, first.isWhitespace {
             remainder = remainder.dropFirst()
         }
-        guard let first = remainder.first else { return true }
+        guard let first = remainder.first else {
+            return precededByBoundMarker(before: start, in: caption) == false
+        }
         if first.isNumber || first == "(" || first == "（" { return true }
         return remainder.hasPrefix("号") || remainder.hasPrefix("no.") || remainder.hasPrefix("no ")
+    }
+
+    /// True when the word immediately before `start` (skipping whitespace)
+    /// is "for", "to", or "bound".
+    private static func precededByBoundMarker(before start: String.Index, in caption: String) -> Bool {
+        var end = start
+        while end > caption.startIndex, caption[caption.index(before: end)].isWhitespace {
+            end = caption.index(before: end)
+        }
+        var begin = end
+        while begin > caption.startIndex, caption[caption.index(before: begin)].isLetter {
+            begin = caption.index(before: begin)
+        }
+        guard begin < end else { return false }
+        let word = caption[begin..<end]
+        return word == "for" || word == "to" || word == "bound"
+    }
+
+    /// Removes every bracketed segment whose content is a station-to-station
+    /// or destination hint (`（宇都宮→日光）`, `(Tokyo-Nikko)`, `（新橋方面）`)
+    /// before matching, so a service name that only appears inside such a
+    /// segment — as part of a route description rather than the caption's
+    /// own service name — cannot match. Brackets are ASCII by the time this
+    /// runs: `normalizedText`'s NFKC pass already folds full-width
+    /// `（…）` to `(…)`.
+    private static func stripDirectionalBrackets(_ text: String) -> String {
+        var result = ""
+        var index = text.startIndex
+        while index < text.endIndex {
+            let character = text[index]
+            if character == "(", let close = text[index...].firstIndex(of: ")") {
+                let content = text[text.index(after: index)..<close]
+                if isDirectionalBracketContent(content) {
+                    index = text.index(after: close)
+                    continue
+                }
+            }
+            result.append(character)
+            index = text.index(after: index)
+        }
+        return result
+    }
+
+    private static func isDirectionalBracketContent(_ content: Substring) -> Bool {
+        let markers = ["→", "->", "～", "〜"]
+        if markers.contains(where: content.contains) { return true }
+        return content.hasSuffix("行") || content.hasSuffix("方面")
+    }
+
+    /// Trims, NFKC-normalizes, and folds a trailing 本線 to 線 so that
+    /// recorded and detected forms of the same line compare equal.
+    public static func canonicalLineName(_ value: String) -> String {
+        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            .precomposedStringWithCompatibilityMapping
+        return normalized.hasSuffix("本線") ? String(normalized.dropLast(2)) + "線" : normalized
     }
 
     private static func recordedValues(
@@ -189,7 +258,7 @@ public enum TrainServiceBranding {
     }
 
     private static func canonicalRecordedValue(_ value: String) -> String {
-        normalizedText(value)
+        normalizedText(canonicalLineName(value))
     }
 
     private static func canonicalOperator(_ value: String) -> String {

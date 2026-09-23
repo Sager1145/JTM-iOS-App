@@ -163,12 +163,35 @@ enum JourneyBranding {
     private static func operatorLogoPath(
         of train: Train, detected: [Statistics.TraversedLine]
     ) -> String? {
-        for operatorName in badgeOperators(of: train, detected: detected) {
+        for operatorName in operatorLogoCandidates(of: train, detected: detected) {
             if let logo = OperatorBranding.operatorLogoForAnySpelling(operatorName) {
                 return logo
             }
         }
         return nil
+    }
+
+    /// Candidate operators for a service mark's fallback, most specific
+    /// first: the route sections actually ridden, then the itinerary's own
+    /// recorded `company`, then the route policy's alternative operators,
+    /// and — only when detection applies to this train at all, see
+    /// ``usesDetectedLines(_:)`` — the operators the drawn route crossed.
+    /// Policy sits after `company` rather than before it: `company` is the
+    /// record's own claim about who ran the train, while a policy operator
+    /// is only a corridor hint that may never have been ridden. This is a
+    /// local ordering for the service-logo fallback only — it does not
+    /// change ``badgeOperators(of:detected:)``, which the line-logo path
+    /// uses and which folds sections/policy together instead of layering
+    /// them.
+    private static func operatorLogoCandidates(
+        of train: Train, detected: [Statistics.TraversedLine]
+    ) -> [String] {
+        let sectionOperators = (train.routeSections ?? []).flatMap { $0.operatorNames ?? [] }
+        let policyOperators = train.routePolicy?.preferredOperatorNames ?? []
+        let detectedOperators = detectedApplies(train, detected: detected)
+            ? detected.compactMap(\.operatorName) : []
+        return uniqueNonEmpty(
+            sectionOperators + [train.company].compactMap { $0 } + policyOperators + detectedOperators)
     }
 
     private static func badgeOperators(

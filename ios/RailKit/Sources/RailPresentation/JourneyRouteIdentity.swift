@@ -24,18 +24,12 @@ public enum JourneyRouteIdentity {
         // canonical forms so 東海道本線 and its detected 東海道線 count as
         // the same line.
         let observed = unique(detected.map(\.name))
-        let observedCanonical = Set(observed.map(canonicalLineName))
+        let observedCanonical = Set(observed.map(TrainServiceBranding.canonicalLineName))
         let sectionLines = unique((train.routeSections ?? []).flatMap { $0.lineNames ?? [] })
-        let uncovered = sectionLines.filter { observedCanonical.contains(canonicalLineName($0)) == false }
+        let uncovered = sectionLines.filter {
+            observedCanonical.contains(TrainServiceBranding.canonicalLineName($0)) == false
+        }
         return unique(observed + uncovered)
-    }
-
-    /// Trims, NFKC-normalizes, and folds a trailing 本線 to 線 so that
-    /// recorded and detected forms of the same line compare equal.
-    private static func canonicalLineName(_ value: String) -> String {
-        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            .precomposedStringWithCompatibilityMapping
-        return normalized.hasSuffix("本線") ? String(normalized.dropLast(2)) + "線" : normalized
     }
 
     public static func operatorNames(of train: Train, detected: [Statistics.TraversedLine]) -> [String] {

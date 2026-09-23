@@ -21,7 +21,7 @@ struct TrainServiceBrandingTests {
     @Test("the bundled catalog has stable unique identities")
     func catalogLoads() {
         let services = TrainServiceBranding.services
-        #expect(services.count >= 30)
+        #expect(services.count >= 100)
         #expect(Set(services.map(\.id)).count == services.count)
         #expect(services.allSatisfy { $0.region.isEmpty == false && $0.names.isEmpty == false })
     }
@@ -44,7 +44,7 @@ struct TrainServiceBrandingTests {
 
     @Test("a shorter name and a foreign region cannot steal a match")
     func matchingIsUnambiguousAndRegionScoped() {
-        #expect(TrainServiceBranding.service(for: Self.train(number: "Fujikawa 3")) == nil)
+        #expect(TrainServiceBranding.service(for: Self.train(number: "Fujinomiya 3")) == nil)
         #expect(TrainServiceBranding.service(for: Self.train(
             number: "Haruka 38", region: "tw")) == nil)
         #expect(TrainServiceBranding.service(for: Self.train(
@@ -181,5 +181,72 @@ struct TrainServiceBrandingTests {
     ])
     func latinLeadingNamesResolveWithTrainNumberContext(caption: String, expectedID: String) {
         #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
+    }
+
+    @Test(arguments: [
+        ("スーパーはくと5号", "super-hakuto"),
+        ("特急ソニック21号", "sonic"),
+        ("あそぼーい！101号", "asoboy"),
+        ("あそ1号", "aso"),
+        ("Fujisan 3", "fujisan"),
+        ("Fuji Excursion 5", "fuji-excursion"),
+        ("新宿さざなみ1号", "shinjuku-sazanami"),
+        ("さざなみ3号", "sazanami"),
+        ("かんぱち", "kanpachi-ichiroku"),
+        ("ゆふいんの森3号", "yufuin-no-mori"),
+        ("ゆふ1号", "yufu"),
+        ("にちりんシーガイア5号", "nichirin-seagaia"),
+        ("Spacia Nikko 1", "spacia-nikko"),
+        ("TWILIGHT EXPRESS 瑞風", "twilight-express-mizukaze"),
+    ])
+    func jrLimitedExpressNamesResolve(caption: String, expectedID: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
+    }
+
+    @Test(arguments: [
+        "日光線（宇都宮→日光）",
+        "東海道線（沼津→富士）",
+        "函館本線（新函館北斗→函館）",
+        "ゆりかもめ（新橋→有明）",
+    ])
+    func directionalRouteBracketsAreNotTheServiceName(caption: String) {
+        let train = Self.train(number: caption, trainType: "普通")
+        #expect(TrainServiceBranding.service(for: train) == nil)
+        #expect(TrainServiceBranding.isLimitedExpress(train) == false)
+    }
+
+    @Test(arguments: [
+        ("特急日光1号（新宿→東武日光）", "nikko"),
+        ("北斗5号（函館→札幌）", "hokuto"),
+    ])
+    func nameBesideADirectionalBracketStillResolves(caption: String, expectedID: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
+    }
+
+    @Test(arguments: [
+        "Local for Aso",
+        "Rapid for Ome",
+    ])
+    func forToBoundBeforeAnEndOfCaptionNameIsNotTrainNumberContext(caption: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption)) == nil)
+    }
+
+    @Test(arguments: [
+        ("Aso 1", "aso"),
+        ("Narita Express", "narita-express"),
+    ])
+    func endOfCaptionNameWithoutABoundMarkerStillResolves(caption: String, expectedID: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
+    }
+
+    @Test("本線 and its 線 form fold together for cross-line detection")
+    func honsenAndSenFormsFoldTogetherForCrossLineDetection() {
+        let train = Self.train(
+            number: "Local", trainType: "普通",
+            routeSections: [
+                RouteSection(lineNames: ["東海道本線"]),
+                RouteSection(lineNames: ["東海道線"]),
+            ])
+        #expect(TrainServiceBranding.usesDetectedLines(train) == false)
     }
 }

@@ -167,6 +167,50 @@ public enum OperatorBranding {
         return nil
     }
 
+    /// Every legal name in ``companyLabels`` whose short label is exactly
+    /// `label` (trimmed), in the table's own insertion order.
+    ///
+    /// This is the inverse of ``companyLabel(_:)`` restricted to the Japan
+    /// table: `companyLabel` goes legal name → short label, and callers that
+    /// only hold the short label — an itinerary's `company` field, for
+    /// instance — need a way back to the legal names ``operatorLogo(_:)`` is
+    /// actually keyed on.
+    public static func legalNames(forLabel label: String) -> [String] {
+        legalNamesByLabel[JSText.trim(label)] ?? []
+    }
+
+    /// ``operatorLogo(_:)`` tried against every spelling `operatorField`
+    /// might use for its company or companies.
+    ///
+    /// `operatorLogo` is keyed on legal names, but an itinerary's `company`
+    /// field (and some `operator` fields) hold the short label instead —
+    /// possibly several, "/"-joined. Each "/"-or-"／"-separated part is tried
+    /// as-is, then as whatever ``companyLabel(_:)`` would turn it into, then
+    /// against every legal name ``legalNames(forLabel:)`` maps it back to;
+    /// the first hit wins.
+    public static func operatorLogoForAnySpelling(_ operatorField: String?) -> String? {
+        let field = operatorField ?? ""
+        let units = Array(field.utf16)
+        var parts: [String] = []
+        var start = 0
+        for index in 0..<units.count where units[index] == slash || units[index] == fullWidthSlash {
+            parts.append(String(decoding: units[start..<index], as: UTF16.self))
+            start = index + 1
+        }
+        parts.append(String(decoding: units[start...], as: UTF16.self))
+
+        for part in parts {
+            let trimmed = JSText.trim(part)
+            if trimmed.isEmpty { continue }
+            if let hit = operatorLogo(trimmed) { return hit }
+            if let hit = operatorLogo(companyLabel(trimmed)) { return hit }
+            for legal in legalNames(forLabel: trimmed) {
+                if let hit = operatorLogo(legal) { return hit }
+            }
+        }
+        return nil
+    }
+
     /// A verified badge for this exact line id, if the app publishes one.
     ///
     /// A missing id indexes the table with `undefined` in JavaScript, which is
@@ -258,6 +302,7 @@ public enum OperatorBranding {
     }
 
     private static let slash: UInt16 = 0x002F
+    private static let fullWidthSlash: UInt16 = 0xFF0F
 
     /// Stripped wherever they appear, before the anchored prefixes below. The
     /// order of the two passes is what makes 公益財団法人株式会社X resolve to X.
@@ -274,7 +319,7 @@ public enum OperatorBranding {
     // hand. Every character that cannot be seen is written as an escape, so
     // that no two entries can differ by something invisible in review.
 
-    private static let companyLabels = CodeUnitTable([
+    private static let companyLabelPairs: [(String, String)] = [
         ("東日本旅客鉄道", "JR東日本"),
         ("西日本旅客鉄道", "JR西日本"),
         ("東海旅客鉄道", "JR東海"),
@@ -310,7 +355,20 @@ public enum OperatorBranding {
         ("阪神電気鉄道", "阪神"),
         ("名古屋鉄道", "名鉄"),
         ("西日本鉄道", "西鉄"),
-    ])
+    ]
+
+    private static let companyLabels = CodeUnitTable(companyLabelPairs)
+
+    /// ``companyLabelPairs`` inverted: short label → every legal name that
+    /// maps to it, in the table's own insertion order. Backs
+    /// ``legalNames(forLabel:)``.
+    private static let legalNamesByLabel: [String: [String]] = {
+        var result: [String: [String]] = [:]
+        for (legal, label) in companyLabelPairs {
+            result[label, default: []].append(legal)
+        }
+        return result
+    }()
 
     private static let taiwanCompanyLabels = CodeUnitTable([
         ("國營臺灣鐵路股份有限公司", "台鐵"),
