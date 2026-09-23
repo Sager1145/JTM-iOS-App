@@ -111,5 +111,30 @@ struct EditorChecks {
         precondition(library.snapshots.count == beforeRefusals)
         precondition(library.lastSaveError == "prior write failed")
         print("PASS not-found and import-owned replacements do not enqueue an unchanged save or clear an error")
+
+        itineraries.setImportingForTest(false)
+        let beforeContentSave = library.snapshots.count
+        var sheet: String? = "edited draft"
+        runContentViewSaveEdit(
+            editing: editing, sheet: &sheet, edited: replacement, originalID: "created")
+        precondition(sheet == nil)
+        precondition(library.snapshots.count == beforeContentSave + 1)
+
+        let beforeMissing = library.snapshots.count
+        sheet = "missing draft"
+        runContentViewSaveEdit(
+            editing: editing, sheet: &sheet,
+            edited: train("missing", number: "Missing"), originalID: "absent")
+        precondition(sheet == "missing draft")
+        precondition(library.snapshots.count == beforeMissing)
+
+        itineraries.setImportingForTest(true)
+        let beforeImportRefusal = library.snapshots.count
+        sheet = "import-owned draft"
+        runContentViewSaveEdit(
+            editing: editing, sheet: &sheet, edited: replacement, originalID: "created")
+        precondition(sheet == "import-owned draft")
+        precondition(library.snapshots.count == beforeImportRefusal)
+        print("PASS ContentView closes a saved edit and retains both refused edit drafts")
     }
 }

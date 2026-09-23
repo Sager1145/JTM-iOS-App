@@ -649,8 +649,12 @@ struct RailWorkspaceView: View {
                 sheet = nil
             },
             onSaveEdit: { edited, originalID in
-                editing.replace(edited, replacing: originalID)
-                sheet = nil
+                switch editing.replace(edited, replacing: originalID) {
+                case .saved, .savedKeepingID:
+                    sheet = nil
+                case .refusedImportRunning, .notFound:
+                    break
+                }
             },
             onSaveDetail: { edited, originalID in
                 editing.replace(edited, replacing: originalID)

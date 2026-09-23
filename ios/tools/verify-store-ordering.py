@@ -106,9 +106,25 @@ with tempfile.TemporaryDirectory(prefix="persistence-harness-", dir=scratch) as 
 }
 '''
     editor_production = generated / "EditorProduction.swift"
+    content_view = (root / "ios/RailMap/ContentView.swift").read_text()
+    save_edit_start = "            onSaveEdit: { edited, originalID in\n"
+    save_edit_end = "            },\n            onSaveDetail:"
+    if content_view.count(save_edit_start) != 1 or content_view.count(save_edit_end) != 1:
+        raise SystemExit("ContentView onSaveEdit closure boundary changed; update the harness slice.")
+    save_edit_body = content_view.split(save_edit_start, 1)[1].split(save_edit_end, 1)[0]
+    content_view_helper = """
+@MainActor
+func runContentViewSaveEdit(
+    editing: JourneyEditing,
+    sheet: inout String?,
+    edited: Train,
+    originalID: String
+) {
+""" + save_edit_body + "\n}\n"
     editor_production.write_text(
         itinerary_prefix + mutate + test_seams
         + (root / "ios/RailMap/JourneyEditing.swift").read_text()
+        + content_view_helper
     )
     compile_and_run(
         "editor-checks",
