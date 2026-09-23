@@ -91,6 +91,12 @@ if [ "$run_swift" = 1 ]; then
     [ -n "$passed" ] || fail "could not read the Swift Testing summary (full log: $scratch.log)"
     echo "  $passed tests pass"
 
+    python3 "$here/tools/verify-editor-validation.py" "$scratch" \
+        || fail "native journey editor validation harness"
+    python3 "$here/tools/verify-store-ordering.py" "$scratch" \
+        || fail "native persistence harness"
+    echo "  native journey editor and persistence harnesses pass"
+
     # Warnings in our own sources fail the gate.
     #
     # Not pedantry: six ports can be in flight at once, each writing a

@@ -29,7 +29,12 @@ struct JourneyEditing {
         replacing originalID: String
     ) -> ItineraryStore.SaveOutcome {
         let outcome = itineraries.replace(train, replacing: originalID)
-        persist()
+        switch outcome {
+        case .saved, .savedKeepingID:
+            persist()
+        case .refusedImportRunning, .notFound:
+            break
+        }
         return outcome
     }
 
