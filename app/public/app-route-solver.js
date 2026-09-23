@@ -592,6 +592,13 @@ function sectionHasEndpointPair(section, aNames, bNames) {
   );
 }
 
+// Stations on the 日豊線 corridor east of 小倉 that ソニック actually uses
+// 日豊線 for. West of 小倉 (e.g. 黒崎, 戸畑, 博多) the train runs on 鹿児島線.
+const SONIC_NIPPO_CORRIDOR_STATIONS = [
+  "小倉", "西小倉", "城野", "行橋", "苅田", "宇佐", "中津", "柳ヶ浦", "杵築",
+  "亀川", "別府", "大分", "鶴崎", "大在", "幸崎", "臼杵", "津久見", "佐伯",
+];
+
 function inferSectionRouteConstraints(section, train) {
   const text = [
     train?.id,
@@ -608,9 +615,15 @@ function inferSectionRouteConstraints(section, train) {
 
   // JR Kyushu Sonic: N02 often gives 大分 as 久大線 and 小倉 as 鹿児島線,
   // while the actual limited express runs on 日豊線 between 大分/別府/中津/小倉.
+  // West of 小倉 the train runs on 鹿児島線, so only require 日豊線 when BOTH
+  // endpoints are on the 日豊線 corridor east of 小倉 (e.g. 黒崎→小倉 must not
+  // be forced onto 日豊線).
   if (
     /ソニック|sonic/i.test(text) &&
-    sectionHasAnyEndpoint(section, ["大分", "別府", "中津", "小倉"])
+    sectionHasAnyEndpoint(section, SONIC_NIPPO_CORRIDOR_STATIONS) &&
+    sectionEndpointNames(section).every((name) =>
+      SONIC_NIPPO_CORRIDOR_STATIONS.includes(name),
+    )
   ) {
     lineNames.add("日豊線");
     operatorNames.add("九州旅客鉄道");

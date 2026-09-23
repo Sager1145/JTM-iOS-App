@@ -498,8 +498,16 @@ public enum RouteSolver {
         var lines = Set<String>()
         var operators = Set<String>()
 
+        // JR Kyushu Sonic: N02 often gives 大分 as 久大線 and 小倉 as 鹿児島線,
+        // while the actual limited express runs on 日豊線 between 大分/別府/中津/小倉.
+        // West of 小倉 the train runs on 鹿児島線, so only require 日豊線 when BOTH
+        // endpoints are on the 日豊線 corridor east of 小倉 (e.g. 黒崎→小倉 must not
+        // be forced onto 日豊線).
         if (text.contains("ソニック") || asciiCaseInsensitiveContains(text, "sonic"))
-            && sectionHasAnyEndpoint(section, names: ["大分", "別府", "中津", "小倉"])
+            && sectionHasAnyEndpoint(section, names: Self.sonicNippoCorridorStations)
+            && sectionEndpointNames(section).allSatisfy({
+                Self.sonicNippoCorridorStations.contains($0)
+            })
         {
             lines.insert("日豊線")
             operators.insert("九州旅客鉄道")
@@ -1364,6 +1372,13 @@ public enum RouteSolver {
     ) -> Set<String> {
         Set(indices.map { getter(stations.features[$0]) }.filter { !$0.isEmpty && $0 != "-" })
     }
+
+    /// Stations on the 日豊線 corridor east of 小倉 that ソニック actually uses
+    /// 日豊線 for. West of 小倉 (e.g. 黒崎, 戸畑, 博多) the train runs on 鹿児島線.
+    private static let sonicNippoCorridorStations: Set<String> = [
+        "小倉", "西小倉", "城野", "行橋", "苅田", "宇佐", "中津", "柳ヶ浦", "杵築",
+        "亀川", "別府", "大分", "鶴崎", "大在", "幸崎", "臼杵", "津久見", "佐伯",
+    ]
 
     private static func sectionEndpointNames(_ section: RouteSection) -> [String] {
         [normalizeRouteHintText(section.from ?? ""), normalizeRouteHintText(section.to ?? "")]
