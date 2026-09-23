@@ -23,6 +23,24 @@ fi
 
 mkdir -p "$target_dir"
 
+# Guard for directories this script fully owns: it deletes them before a
+# `ditto` merge so resources removed from the source do not linger in the
+# built bundle. Refuse to touch anything outside $target_dir.
+prune_owned_dir() {
+    dest="$1"
+    if [ -z "$dest" ]; then
+        echo "error: refusing to prune an empty path" >&2
+        exit 1
+    fi
+    case "$dest" in
+        "$target_dir"/*) rm -rf "$dest" ;;
+        *)
+            echo "error: refusing to prune non-bundle path $dest" >&2
+            exit 1
+            ;;
+    esac
+}
+
 for country in jp tw hk mo kr us ca; do
     package="$source_dir/$country-2025.json"
     if [ ! -f "$package" ]; then
@@ -81,12 +99,13 @@ done
 # ~6 MB over 519 files. That is the whole set: which badge a line draws is a
 # per-line decision made by a table, so shipping a subset would mean shipping
 # the table's answer rather than the table.
-for family in logos line-logos operator-logos; do
+for family in logos line-logos operator-logos service-logos; do
     source="$source_dir/$family"
     if [ ! -d "$source" ]; then
         echo "error: missing $source — the station popup cannot draw its badges" >&2
         exit 1
     fi
+    prune_owned_dir "$target_dir/rail/$family"
     /usr/bin/ditto "$source" "$target_dir/rail/$family"
 done
 
@@ -108,14 +127,21 @@ if [ ! -d "$raster" ]; then
     exit 1
 fi
 
-# A count mismatch means artwork was added or removed without the companions
-# being regenerated. Caught here rather than at run time, where the symptom is
-# one railway quietly wearing a colour swatch.
-svg_count=$(find "$source_dir/logos" "$source_dir/line-logos" "$source_dir/operator-logos" \
-    -name '*.svg' | wc -l | tr -d ' ')
-png_count=$(find "$raster" -name '*.svg.png' | wc -l | tr -d ' ')
-if [ "$svg_count" != "$png_count" ]; then
-    echo "error: $svg_count badge SVGs but $png_count rasterized companions —" >&2
+# A set mismatch means artwork was added or removed without the companions
+# being regenerated (a same-sized swap in one family offsetting a drop in
+# another used to slip past a bare count). Caught here rather than at run
+# time, where the symptom is one railway quietly wearing a colour swatch.
+svg_list_file=$(mktemp)
+png_list_file=$(mktemp)
+trap 'rm -f "$svg_list_file" "$png_list_file"' EXIT
+(cd "$source_dir" && find logos line-logos operator-logos -name '*.svg' 2>/dev/null) | sed 's/\.svg$//' | sort >"$svg_list_file"
+(cd "$raster" && find logos line-logos operator-logos -name '*.svg.png' 2>/dev/null) | sed 's/\.svg\.png$//' | sort >"$png_list_file"
+badge_mismatch=$(comm -3 "$svg_list_file" "$png_list_file")
+rm -f "$svg_list_file" "$png_list_file"
+trap - EXIT
+if [ -n "$badge_mismatch" ]; then
+    echo "error: badge SVGs and rasterized companions disagree —" >&2
+    echo "$badge_mismatch" | sed 's/^/       /' >&2
     echo "       run: swift ios/tools/rasterize-badge-svgs.swift" >&2
     exit 1
 fi
@@ -144,6 +170,7 @@ do
         echo "error: missing $source" >&2
         exit 1
     fi
+    prune_owned_dir "$target_dir/$dataset"
     /usr/bin/ditto "$source" "$target_dir/$dataset"
 done
 

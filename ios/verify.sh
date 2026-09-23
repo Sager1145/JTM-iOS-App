@@ -248,7 +248,7 @@ if [ "$run_swift" = 1 ]; then
     echo "  the annotation layer is used by the map and nothing else"
 
     # Every package is WGS84 and must stay that way for the WebUI, but
-    # Apple's Taiwan, Hong Kong, Macao and Korea basemaps are presented in
+    # Apple's Taiwan, Hong Kong, Macao and Korea basemaps can be presented in
     # GCJ-02. North America is not among them: Apple's basemap there is WGS84,
     # so `us` and `ca` deliberately stay out of the correction below.
     # Keep the datum correction at the MapKit boundary and on every subject
@@ -273,10 +273,15 @@ if [ "$run_swift" = 1 ]; then
     grep -q 'lines: \[segment\.sourceCoordinates\]' \
         "$here/RailMap/MileageStatisticsStore.swift" \
         || fail "mileage statistics no longer use canonical WGS84 coordinates"
-    grep -q 'gcj02Countries: Set<String> = \["tw", "hk", "mo", "kr"\]' \
+    # Whether those four are shifted is the device's MapKit service's call
+    # (China service: GCJ-02; global service: WGS84), measured at launch by
+    # AppleMapDatumProbe. The candidate set bounds what the probe may shift.
+    grep -q 'candidateCountries: Set<String> = \["tw", "hk", "mo", "kr"\]' \
         "$here/RailMap/AppleMapDatum.swift" \
-        || fail "Apple datum correction is no longer scoped to Taiwan, Hong Kong, Macao and Korea"
-    echo "  Taiwan, Hong Kong, Macao and Korea enter Apple Maps in GCJ-02; shared data stays WGS84"
+        || fail "Apple datum correction candidates are no longer Taiwan, Hong Kong, Macao and Korea"
+    grep -q 'AppleMapDatumProbe\.run' "$here/RailMap/AppShell.swift" \
+        || fail "the Apple basemap datum is no longer measured at launch"
+    echo "  Taiwan, Hong Kong, Macao and Korea enter Apple Maps in the datum MapKit answers in; shared data stays WGS84"
 
     # A station hands Apple Maps a PLACE, and every link to one is built in the
     # single tier that is tested.
@@ -373,7 +378,7 @@ if [ "$run_app" = 1 ] && [ "$run_swift" = 1 ]; then
     app_bundle="$scratch-app/Build/Products/Debug-iphonesimulator/RailMap.app"
     [ -d "$app_bundle" ] || fail "no built RailMap.app at $app_bundle"
     python3 - "$repo" "$app_bundle" <<'PY' || fail "badge artwork the device cannot decode (above)"
-import os, re, sys
+import json, os, re, sys
 
 repo, bundle = sys.argv[1], sys.argv[2]
 source = os.path.join(repo, "app", "public", "rail")
@@ -396,7 +401,7 @@ def resolve(relative):
 # tree rather than from the tables, so that art added without a companion is
 # caught even before a line is pointed at it.
 missing, undecodable = [], []
-for family in ("logos", "line-logos", "operator-logos"):
+for family in ("logos", "line-logos", "operator-logos", "service-logos"):
     for directory, _, names in os.walk(os.path.join(source, family)):
         for name in names:
             full = os.path.join(directory, name)
@@ -416,6 +421,9 @@ for family in ("logos", "line-logos", "operator-logos"):
 # which branch wins, and those are not artwork that ships.
 raw = open(os.path.join(repo, "port-fixtures", "station-display.json"), encoding="utf-8").read()
 paths = sorted(set(re.findall(r'/rail/[^"\\ ]+?\.[A-Za-z0-9]+', raw)))
+catalog_path = os.path.join(repo, "ios", "RailKit", "Sources", "RailCore", "Resources", "train-service-branding.json")
+with open(catalog_path, encoding="utf-8") as catalog_file:
+    paths += [service["logoPath"] for service in json.load(catalog_file) if service.get("logoPath")]
 unresolved = [
     path for path in paths
     if not os.path.isfile(os.path.join(bundle, "rail", resolve(path.lstrip("/")[len("rail/"):])))
@@ -531,12 +539,13 @@ PY
     # string rule cannot place them and only `RegionCodeIndex` can. That pass
     # used to run at launch only, so loading the Macanese sample asked Japan's
     # solver for 媽閣 and the card said 無法繪製路線 until the app was next
-    # launched. Three doors admit a store — `load`, `merge`, `replaceAll`. A
-    # fourth is not forbidden; it just has to place its rides too, and be
-    # counted here.
+    # launched. Four doors admit a store — `load`, `merge`, `replaceAll`, and
+    # `setNorthAmericaEnabled`'s ON path, which places the North America file's
+    # rides the same way a merge would. A fifth is not forbidden; it just has
+    # to place its rides too, and be counted here.
     doors=$(grep -c 'await MergedStore.regionTagged(' RailMap/ItineraryStore.swift || true)
-    [ "$doors" = 3 ] || fail \
-        "expected 3 doors that place an incoming store in its region; found $doors"
+    [ "$doors" = 4 ] || fail \
+        "expected 4 doors that place an incoming store in its region; found $doors"
     echo "  a sample loads into its own region on the launch that loads it"
 
     # The route reload key must be the whole record, not a projection of it.
