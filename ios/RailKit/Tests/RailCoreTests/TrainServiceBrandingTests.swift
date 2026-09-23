@@ -249,4 +249,39 @@ struct TrainServiceBrandingTests {
             ])
         #expect(TrainServiceBranding.usesDetectedLines(train) == false)
     }
+
+    @Test(arguments: [
+        ("スーパーはこね7号", "super-hakone"),
+        ("はこね21号", "hakone"),
+        ("メトロはこね23号", "metro-hakone"),
+        ("スカイライナー5号", "skyliner"),
+        ("リバティけごん3号", "revaty"),
+        ("けごん11号", "kegon"),
+        ("スペーシアきぬがわ3号", "spacia-kinugawa"),
+        ("スペーシア X 1号", "spacia-x"),
+        ("スペーシアけごん1号", "spacia"),
+        ("ちちぶ5号", "chichibu"),
+        ("Laview ちちぶ7号", "chichibu"),
+        ("アーバンライナー 名阪特急", "urban-liner"),
+        ("伊勢志摩ライナー", "ise-shima-liner"),
+        ("サザン12号", "southern"),
+        ("ミュースカイ", "mu-sky"),
+        ("京とれいん 雅洛", "kyo-train"),
+        ("フジサン特急3号", "fujisan-tokkyu"),
+        ("Skyliner 41", "skyliner"),
+    ])
+    func privateRailwayNamesResolve(caption: String, expectedID: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
+    }
+
+    @Test(arguments: [
+        "小田急線 各駅停車",
+        "泉北高速鉄道 準急",
+        "東武スカイツリーライン 普通",
+        "京成本線 快速",
+        "南海本線 急行",
+    ])
+    func privateRailwayNamesDoNotFalseMatch(caption: String) {
+        #expect(TrainServiceBranding.service(for: Self.train(number: caption)) == nil)
+    }
 }
