@@ -103,6 +103,13 @@ function dijkstraCase(js, graph, name, sources, targets, train, allowed, hint) {
     allowed,
     segmentHints,
   );
+  for (const row of result) {
+    if (row.edges.length !== Math.max(0, row.pathKeys.length - 1)) {
+      throw new Error(
+        `${name}: edges.length (${row.edges.length}) != pathKeys.length - 1 (${row.pathKeys.length - 1})`,
+      );
+    }
+  }
   return {
     name,
     sources,
@@ -110,13 +117,17 @@ function dijkstraCase(js, graph, name, sources, targets, train, allowed, hint) {
     train,
     allowedCodes: allowed,
     hints: hint,
-    result,
+    // `edges` is dropped from the persisted result (kept only as
+    // `edgeCount`) to keep the fixture small — the invariant
+    // `edges.length === pathKeys.length - 1` is asserted above instead, and
+    // the Swift parity test re-derives `edges` from its own `dijkstra` call.
+    result: result.map(({ edges, ...row }) => ({ ...row, edgeCount: edges.length })),
     pathLengths: result.map((row) => js.pathLengthMeters(graph, row.pathKeys)),
     mismatchPenalties: result.map((row) =>
-      js.routeLineMismatchPenalty(graph, row.pathKeys, segmentHints),
+      js.routeLineMismatchPenalty(row.edges, segmentHints),
     ),
     usedInstitutionTypeCodes: result.map((row) =>
-      js.usedInstitutionTypeCodes(graph, row.pathKeys),
+      js.usedInstitutionTypeCodes(row.edges),
     ),
   };
 }

@@ -34,6 +34,9 @@ struct RouteSectionSolveParityTests {
             let physical_length_m: Double
             let raw_physical_length_m: Double
             let cost: Double
+            // Only `solveSection`'s own attempts set this — `solveOfficialInterval`
+            // (`officialSolved` below) never does, so it's optional here.
+            let solve_attempt_index: Int?
         }
         struct Geometry: Decodable { let coordinates: [[Double]] }
         struct Feature: Decodable { let properties: Properties; let geometry: Geometry }
@@ -146,6 +149,9 @@ struct RouteSectionSolveParityTests {
                 #expect(Self.roundedHundredth(solved.rawPhysicalLength)
                         == feature.properties.raw_physical_length_m)
                 #expect(Self.roundedHundredth(solved.cost) == feature.properties.cost)
+                if let expectedAttemptIndex = feature.properties.solve_attempt_index {
+                    #expect(solved.attemptIndex == expectedAttemptIndex)
+                }
             }
 
             let officialIndex = RouteSolver.OfficialIntervalIndex(sections: sections)

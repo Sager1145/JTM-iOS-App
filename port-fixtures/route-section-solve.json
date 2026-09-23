@@ -74,6 +74,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -228,6 +229,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -358,6 +360,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [],
               "route_template_key": "284xdbs1ygu",
@@ -442,6 +445,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -552,6 +556,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -670,6 +675,7 @@
                 "澳門輕軌"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -1632,6 +1638,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -1758,6 +1765,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -1924,6 +1932,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -2090,6 +2099,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -2232,6 +2242,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"
@@ -2394,6 +2405,7 @@
                 "MTR"
               ],
               "solve_mode": "explicit_section_route_required_home_institution",
+              "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [
                 "4"

@@ -544,6 +544,9 @@ function trainProjection(train) {
   const policy = train.route_policy || {};
   return {
     id: train.id,
+    number: train.number ?? null,
+    origin: train.origin ?? null,
+    destination: train.destination ?? null,
     train_type: train.train_type ?? null,
     company: train.company ?? null,
     route_policy: {

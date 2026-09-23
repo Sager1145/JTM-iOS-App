@@ -355,9 +355,11 @@ function solveRouteSectionOnN02Graph(
 
   let best = null;
   let usedHints = null;
+  let usedAttemptIndex = -1;
   let lastCandidateFailure = false;
 
-  for (const segmentHints of solveAttempts) {
+  for (let attemptIndex = 0; attemptIndex < solveAttempts.length; attemptIndex += 1) {
+    const segmentHints = solveAttempts[attemptIndex];
     let fromCandidates = collectStationCandidateGraphNodes(
       fromStations,
       graph,
@@ -435,14 +437,14 @@ function solveRouteSectionOnN02Graph(
         STATION_SNAP_COST_FACTOR;
       const totalCost = solved.cost + snapPenalty;
       const linePenalty = routeLineMismatchPenalty(
-        graph,
-        solved.pathKeys,
+        solved.edges,
         segmentHints,
       );
       const scoredCost = totalCost + linePenalty;
       if (!attemptBest || scoredCost < attemptBest.scoredCost) {
         attemptBest = {
           pathKeys: solved.pathKeys,
+          edges: solved.edges,
           scoredCost,
           totalCost,
           physicalLength,
@@ -464,6 +466,7 @@ function solveRouteSectionOnN02Graph(
     ) {
       best = attemptBest;
       usedHints = segmentHints;
+      usedAttemptIndex = attemptIndex;
       break;
     }
   }
@@ -519,13 +522,14 @@ function solveRouteSectionOnN02Graph(
       required_operator_names: [...segmentHints.requiredOperators],
       preferred_operator_names: [...segmentHints.preferredOperators],
       solve_mode: segmentHints.solve_mode || "base",
+      // Which entry of buildSegmentRouteSolveAttempts() produced this path —
+      // solveRouteSectionOnDemand only trusts an early regional result when
+      // this is the very first (strictest) attempt; see its comment.
+      solve_attempt_index: usedAttemptIndex,
       require_preferred_institution: Boolean(
         segmentHints.requirePreferredInstitution,
       ),
-      used_institution_type_codes: usedInstitutionTypeCodes(
-        graph,
-        best.pathKeys,
-      ),
+      used_institution_type_codes: usedInstitutionTypeCodes(best.edges),
       route_template_key: routeGraphApi.keyDigest(
         routeGraphApi.templateKey(train),
       ),
@@ -955,10 +959,9 @@ function buildSegmentRouteSolveAttempts(baseHints) {
   return attempts;
 }
 
-function usedInstitutionTypeCodes(graph, pathKeys) {
+function usedInstitutionTypeCodes(edges) {
   const used = new Set();
-  for (let i = 0; i < pathKeys.length - 1; i += 1) {
-    const edge = findEdge(graph, pathKeys[i], pathKeys[i + 1]);
+  for (const edge of edges || []) {
     if (edge?.institution_type_code)
       used.add(String(edge.institution_type_code));
   }
@@ -991,13 +994,12 @@ function nonPreferredLineOperatorPenalty(
   return penalty;
 }
 
-function routeLineMismatchPenalty(graph, pathKeys, segmentHints) {
+function routeLineMismatchPenalty(edges, segmentHints) {
   const preferredLines = segmentHints.preferredLines || new Set();
   const preferredOperators = segmentHints.preferredOperators || new Set();
   if (!preferredLines.size && !preferredOperators.size) return 0;
   let penalty = 0;
-  for (let i = 0; i < pathKeys.length - 1; i += 1) {
-    const edge = findEdge(graph, pathKeys[i], pathKeys[i + 1]);
+  for (const edge of edges || []) {
     if (!edge || edge.is_station_connector) continue;
     penalty += nonPreferredLineOperatorPenalty(
       edge,
@@ -1006,13 +1008,6 @@ function routeLineMismatchPenalty(graph, pathKeys, segmentHints) {
     );
   }
   return penalty;
-}
-
-function findEdge(graph, fromKey, toKey) {
-  return (
-    (graph.adjacency.get(fromKey) || []).find((edge) => edge.to === toKey) ||
-    null
-  );
 }
 
 function collectStationCandidateGraphNodes(
@@ -1168,6 +1163,7 @@ function dijkstraFromCandidateSources(
 ) {
   const distance = new Map();
   const previous = new Map();
+  const previousEdge = new Map();
   const sourceOf = new Map();
   const seedCost = new Map();
   const heap = new MinHeap();
@@ -1214,6 +1210,7 @@ function dijkstraFromCandidateSources(
       if (nextCost < (distance.get(edge.to) ?? Infinity)) {
         distance.set(edge.to, nextCost);
         previous.set(edge.to, current.key);
+        previousEdge.set(edge.to, edge);
         sourceOf.set(edge.to, sourceOf.get(current.key));
         heap.push({ key: edge.to, priority: nextCost });
       }
@@ -1229,6 +1226,11 @@ function dijkstraFromCandidateSources(
       // winning source's seeded snap cost back out.
       cost: entry.settledCost - (seedCost.get(sourceKey) || 0),
       pathKeys: reconstructPath(previous, sourceKey, entry.targetKey),
+      // The edge actually relaxed onto each node, so parallel-edge consumers
+      // (used_institution_type_codes, routeLineMismatchPenalty) score the
+      // path Dijkstra chose rather than the first adjacency entry between
+      // the same pair of nodes.
+      edges: reconstructPathEdges(previous, previousEdge, sourceKey, entry.targetKey),
     };
   });
 }
@@ -1367,6 +1369,23 @@ function reconstructPath(previous, sourceKey, targetKey) {
   }
   path.reverse();
   return path;
+}
+
+// Same walk as reconstructPath, but yields the edge relaxed onto each node
+// instead of the node key. edges[i] is the edge from pathKeys[i] to
+// pathKeys[i + 1].
+function reconstructPathEdges(previous, previousEdge, sourceKey, targetKey) {
+  const edges = [];
+  let current = targetKey;
+  while (current !== sourceKey) {
+    const edge = previousEdge.get(current);
+    const prior = previous.get(current);
+    if (!edge || !prior) return [];
+    edges.push(edge);
+    current = prior;
+  }
+  edges.reverse();
+  return edges;
 }
 
 function graphGridKey(coord, cellSize) {

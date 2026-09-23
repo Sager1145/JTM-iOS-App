@@ -653,8 +653,11 @@ struct PlaybackParityTests {
         for item in fixture.cases {
             #expect(item.path.zoom >= Playback.Tuning.zoomMin)
             #expect(item.path.zoom <= Playback.Tuning.zoomMax)
-            #expect(item.path.duration >= Playback.Tuning.tMin)
-            #expect(item.path.duration <= Playback.Tuning.tMax)
+            // The duration is a float sum of per-interval times, so a clamped
+            // journey can land an ulp or two past the bound (20.000000000000018).
+            let slack = 1e-9
+            #expect(item.path.duration >= Playback.Tuning.tMin - slack)
+            #expect(item.path.duration <= Playback.Tuning.tMax + slack)
         }
     }
 

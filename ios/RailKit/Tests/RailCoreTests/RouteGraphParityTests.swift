@@ -139,6 +139,9 @@ struct RouteGraphParityTests {
         }
         struct TrainProjection: Decodable {
             let id: String
+            let number: String?
+            let origin: String?
+            let destination: String?
             let train_type: String?
             let company: String?
             let route_policy: Policy
@@ -508,8 +511,12 @@ struct RouteGraphParityTests {
         for item in fixture.cacheKeys {
             let policy = item.train.route_policy
             let train = RouteGraph.CacheKeyTrain(
+                id: item.train.id,
+                number: item.train.number ?? "",
                 trainType: item.train.train_type ?? "",
                 company: item.train.company ?? "",
+                origin: item.train.origin ?? "",
+                destination: item.train.destination ?? "",
                 preferredLineNames: policy.preferred_line_names ?? [],
                 preferredOperatorNames: policy.preferred_operator_names ?? [],
                 allowedInstitutionTypeCodes: policy.allowed_institution_type_codes,
@@ -556,5 +563,37 @@ struct RouteGraphParityTests {
         #expect(
             RouteGraph.solveContext(
                 train: RouteGraph.CacheKeyTrain(), routeSections: [], country: "jp") == nil)
+    }
+
+    // MARK: - inferred route constraints and the cache key (G04)
+
+    @Test("a Sonic-triggering number changes the cache key; a non-triggering one does not")
+    func cacheKeyReflectsInferredRouteConstraints() {
+        let sonicSection = [
+            RouteGraph.RouteSection(from: "大分", to: "小倉")
+        ]
+        let sonic = RouteGraph.CacheKeyTrain(number: "ソニック1号")
+        let notSonic = RouteGraph.CacheKeyTrain(number: "1号")
+        let sonicContext = RouteGraph.solveContext(
+            train: sonic, routeSections: sonicSection, country: "jp")
+        let notSonicContext = RouteGraph.solveContext(
+            train: notSonic, routeSections: sonicSection, country: "jp")
+        #expect(sonicContext?.cacheKey != notSonicContext?.cacheKey)
+        #expect(sonicContext?.cacheKey.contains("infer:0:line:日豊線:operator:九州旅客鉄道") == true)
+        #expect(notSonicContext?.cacheKey.contains("infer:") == false)
+
+        // A section whose endpoints never trigger any inference rule keeps a
+        // cache key that does not move when only the number changes —
+        // `inferSectionRouteConstraints` finds nothing to add for either.
+        let plainSection = [
+            RouteGraph.RouteSection(from: "東京", to: "品川")
+        ]
+        let plainA = RouteGraph.CacheKeyTrain(number: "1号")
+        let plainB = RouteGraph.CacheKeyTrain(number: "2号")
+        let plainContextA = RouteGraph.solveContext(
+            train: plainA, routeSections: plainSection, country: "jp")
+        let plainContextB = RouteGraph.solveContext(
+            train: plainB, routeSections: plainSection, country: "jp")
+        #expect(plainContextA?.cacheKey == plainContextB?.cacheKey)
     }
 }

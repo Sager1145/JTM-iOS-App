@@ -161,12 +161,22 @@ public enum RouteSolver {
         public var sourceKey: String
         public var cost: Double
         public var pathKeys: [String]
+        /// The edge actually relaxed onto each node of `pathKeys`, so parallel-edge
+        /// consumers (`usedInstitutionTypeCodes`, `routeLineMismatchPenalty`) score
+        /// the path Dijkstra chose rather than the first adjacency entry between
+        /// the same pair of nodes. `edges[i]` is the edge from `pathKeys[i]` to
+        /// `pathKeys[i + 1]`.
+        public var edges: [RouteGraph.Edge]
 
-        public init(targetKey: String, sourceKey: String, cost: Double, pathKeys: [String]) {
+        public init(
+            targetKey: String, sourceKey: String, cost: Double, pathKeys: [String],
+            edges: [RouteGraph.Edge] = []
+        ) {
             self.targetKey = targetKey
             self.sourceKey = sourceKey
             self.cost = cost
             self.pathKeys = pathKeys
+            self.edges = edges
         }
     }
 
@@ -681,6 +691,11 @@ public enum RouteSolver {
         public var physicalLength: Double
         public var rawPhysicalLength: Double
         public var cost: Double
+        /// Which entry of `buildSegmentRouteSolveAttempts()` produced this
+        /// path — mirrors JS `solve_attempt_index`. `solveSectionOnDemand`
+        /// only trusts an early regional result when this is 0 (the
+        /// strictest attempt); see its comment.
+        public var attemptIndex: Int
     }
 
     public struct OfficialIntervalIndex: Sendable {
@@ -823,7 +838,7 @@ public enum RouteSolver {
             usedInstitutionTypeCodes: match.institutionTypeCode.isEmpty
                 ? [] : [match.institutionTypeCode],
             snapFrom: 0, snapTo: 0, physicalLength: length,
-            rawPhysicalLength: length, cost: length)
+            rawPhysicalLength: length, cost: length, attemptIndex: 0)
     }
 
     /// Solve one itinerary section, including station expansion, candidate
@@ -874,15 +889,17 @@ public enum RouteSolver {
 
         struct Best {
             var pathKeys: [String]
+            var edges: [RouteGraph.Edge]
             var scoredCost: Double
             var totalCost: Double
             var physicalLength: Double
             var from: StationNodeCandidate
             var to: StationNodeCandidate
             var hints: SegmentHints
+            var attemptIndex: Int
         }
         var best: Best?
-        for hints in buildSegmentRouteSolveAttempts(baseHints) {
+        for (attemptIndex, hints) in buildSegmentRouteSolveAttempts(baseHints).enumerated() {
             var fromCandidates = Array(collectStationCandidateGraphNodes(
                 stationIndices: fromStations, stations: stations, graph: graph,
                 hints: hints, allowedCodes: allowedCodes).prefix(12))
@@ -918,12 +935,12 @@ public enum RouteSolver {
                 let snapPenalty = (from.distance + to.distance) * stationSnapCostFactor
                 let totalCost = result.cost + snapPenalty
                 let scoredCost = totalCost + routeLineMismatchPenalty(
-                    graph: graph, pathKeys: result.pathKeys, hints: hints)
+                    edges: result.edges, hints: hints)
                 if attemptBest == nil || scoredCost < attemptBest!.scoredCost {
                     attemptBest = Best(
-                        pathKeys: result.pathKeys, scoredCost: scoredCost,
+                        pathKeys: result.pathKeys, edges: result.edges, scoredCost: scoredCost,
                         totalCost: totalCost, physicalLength: physicalLength,
-                        from: from, to: to, hints: hints)
+                        from: from, to: to, hints: hints, attemptIndex: attemptIndex)
                 }
             }
             if let attemptBest {
@@ -955,12 +972,11 @@ public enum RouteSolver {
             rawPathKeys: best.pathKeys,
             hints: best.hints,
             allowedInstitutionTypeCodes: allowedCodes,
-            usedInstitutionTypeCodes: usedInstitutionTypeCodes(
-                graph: graph, pathKeys: best.pathKeys),
+            usedInstitutionTypeCodes: usedInstitutionTypeCodes(edges: best.edges),
             snapFrom: best.from.distance, snapTo: best.to.distance,
             physicalLength: pathLength(for: coordinates),
             rawPhysicalLength: best.physicalLength,
-            cost: best.totalCost)
+            cost: best.totalCost, attemptIndex: best.attemptIndex)
     }
 
     public static func solveSectionOnDemand(
@@ -992,7 +1008,16 @@ public enum RouteSolver {
                 graph: graph, stations: stations, continuityAnchor: continuityAnchor)
             {
                 lastResult = result
-                if !RouteGraph.pathTouchesRegionEdge(
+                // A regional result is only trustworthy without checking wider
+                // margins or the full graph when it came from the very first
+                // (strictest) solve attempt AND it doesn't touch the region
+                // edge. With ordered hint attempts, a later/looser attempt can
+                // win inside a small region while the strict attempt would
+                // still have won on the full graph — so a non-zero attempt
+                // index has to keep widening/falling back exactly like a path
+                // that touches the edge does.
+                if result.attemptIndex == 0,
+                   !RouteGraph.pathTouchesRegionEdge(
                     lines: [result.coordinates], regionBBox: graph.regionBBox, marginDeg: 0.02)
                 {
                     return result
@@ -1084,17 +1109,13 @@ public enum RouteSolver {
     }
 
     public static func routeLineMismatchPenalty(
-        graph: RouteGraph.Graph, pathKeys: [String], hints: SegmentHints
+        edges: [RouteGraph.Edge], hints: SegmentHints
     ) -> Double {
         guard !hints.preferredLines.isEmpty || !hints.preferredOperators.isEmpty else {
             return 0
         }
-        guard pathKeys.count >= 2 else { return 0 }
         var penalty = 0.0
-        for index in 0..<(pathKeys.count - 1) {
-            guard let edge = findEdge(graph: graph, from: pathKeys[index], to: pathKeys[index + 1]),
-                  edge.connector == nil
-            else { continue }
+        for edge in edges where edge.connector == nil {
             penalty += nonPreferredLineOperatorPenalty(
                 for: edge,
                 preferredLines: hints.preferredLines,
@@ -1104,16 +1125,11 @@ public enum RouteSolver {
     }
 
     public static func usedInstitutionTypeCodes(
-        graph: RouteGraph.Graph, pathKeys: [String]
+        edges: [RouteGraph.Edge]
     ) -> [String] {
-        guard pathKeys.count >= 2 else { return [] }
         var used = Set<String>()
-        for index in 0..<(pathKeys.count - 1) {
-            if let code = findEdge(
-                graph: graph, from: pathKeys[index], to: pathKeys[index + 1]
-            )?.institutionTypeCode, !code.isEmpty {
-                used.insert(code)
-            }
+        for edge in edges where !edge.institutionTypeCode.isEmpty {
+            used.insert(edge.institutionTypeCode)
         }
         return used.sorted { Array($0.utf16).lexicographicallyPrecedes(Array($1.utf16)) }
     }
@@ -1134,6 +1150,11 @@ public enum RouteSolver {
     ) -> [SolvedTarget] {
         var distance: [String: Double] = [:]
         var previous: [String: String] = [:]
+        // Index into `graph.adjacency[current.key]` rather than a copy of the
+        // `Edge` itself — resolved back to an `Edge` in
+        // `reconstructPathEdges`, using `previous` for the adjacency list's
+        // key. Avoids copying the `Edge` struct on every relaxation.
+        var previousEdgeIndex: [String: Int] = [:]
         var sourceOf: [String: String] = [:]
         var seedCost: [String: Double] = [:]
         var heap = MinHeap()
@@ -1158,7 +1179,7 @@ public enum RouteSolver {
             if remaining.remove(current.key) != nil {
                 settled.append((current.key, current.priority))
             }
-            for edge in graph.adjacency[current.key] ?? [] {
+            for (edgeIndex, edge) in (graph.adjacency[current.key] ?? []).enumerated() {
                 guard edgeMatchesAllowedCodes(
                     edge, allowedCodes: allowedCodes, train: train, hints: hints),
                     edgeMatchesRequiredHints(edge, hints: hints)
@@ -1177,6 +1198,7 @@ public enum RouteSolver {
                 if nextCost < (distance[edge.to] ?? .infinity) {
                     distance[edge.to] = nextCost
                     previous[edge.to] = current.key
+                    previousEdgeIndex[edge.to] = edgeIndex
                     sourceOf[edge.to] = sourceOf[current.key]
                     heap.push(Item(key: edge.to, priority: nextCost))
                 }
@@ -1190,7 +1212,10 @@ public enum RouteSolver {
                 sourceKey: sourceKey,
                 cost: entry.settledCost - (seedCost[sourceKey] ?? 0),
                 pathKeys: reconstructPath(
-                    previous: previous, sourceKey: sourceKey, targetKey: entry.targetKey))
+                    previous: previous, sourceKey: sourceKey, targetKey: entry.targetKey),
+                edges: reconstructPathEdges(
+                    graph: graph, previous: previous, previousEdgeIndex: previousEdgeIndex,
+                    sourceKey: sourceKey, targetKey: entry.targetKey))
         }
     }
 
@@ -1205,12 +1230,6 @@ public enum RouteSolver {
             length += Geometry.distanceMeters(a, b)
         }
         return length
-    }
-
-    private static func findEdge(
-        graph: RouteGraph.Graph, from: String, to: String
-    ) -> RouteGraph.Edge? {
-        graph.adjacency[from]?.first { $0.to == to }
     }
 
     private static func sectionEndpointBBox(
@@ -1468,6 +1487,25 @@ public enum RouteSolver {
             path.append(current)
         }
         return path.reversed()
+    }
+
+    /// Same walk as `reconstructPath`, but yields the edge relaxed onto each
+    /// node instead of the node key. `edges[i]` is the edge from
+    /// `pathKeys[i]` to `pathKeys[i + 1]`.
+    private static func reconstructPathEdges(
+        graph: RouteGraph.Graph, previous: [String: String], previousEdgeIndex: [String: Int],
+        sourceKey: String, targetKey: String
+    ) -> [RouteGraph.Edge] {
+        var edges: [RouteGraph.Edge] = []
+        var current = targetKey
+        while current != sourceKey {
+            guard let index = previousEdgeIndex[current], let prior = previous[current],
+                  let adjacent = graph.adjacency[prior], index >= 0, index < adjacent.count
+            else { return [] }
+            edges.append(adjacent[index])
+            current = prior
+        }
+        return edges.reversed()
     }
 
     private struct Item {

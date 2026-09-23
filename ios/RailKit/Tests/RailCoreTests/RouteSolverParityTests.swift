@@ -51,6 +51,7 @@ struct RouteSolverParityTests {
             let sourceKey: String
             let cost: Double
             let pathKeys: [String]
+            let edgeCount: Int
         }
         struct SolveCase: Decodable {
             let name: String
@@ -175,6 +176,8 @@ struct RouteSolverParityTests {
                     #expect(pair.0.targetKey == pair.1.targetKey)
                     #expect(pair.0.sourceKey == pair.1.sourceKey)
                     #expect(pair.0.pathKeys == pair.1.pathKeys)
+                    #expect(pair.0.edges.count == max(0, pair.0.pathKeys.count - 1))
+                    #expect(pair.0.edges.count == pair.1.edgeCount)
                     Self.expectClose(
                         pair.0.cost, pair.1.cost,
                         "\(item.country)/\(testCase.name) result \(index) cost")
@@ -184,14 +187,56 @@ struct RouteSolverParityTests {
                         "\(item.country)/\(testCase.name) result \(index) length")
                     Self.expectClose(
                         RouteSolver.routeLineMismatchPenalty(
-                            graph: graph, pathKeys: pair.0.pathKeys, hints: segmentHints),
+                            edges: pair.0.edges, hints: segmentHints),
                         testCase.mismatchPenalties[index],
                         "\(item.country)/\(testCase.name) result \(index) mismatch")
                     #expect(RouteSolver.usedInstitutionTypeCodes(
-                        graph: graph, pathKeys: pair.0.pathKeys
+                        edges: pair.0.edges
                     ) == testCase.usedInstitutionTypeCodes[index])
                 }
             }
         }
+    }
+
+    /// G05: two parallel A→B edges, the cheaper one added *second* to the
+    /// adjacency list. Dijkstra must still relax onto the cheaper edge, and
+    /// everything downstream (`usedInstitutionTypeCodes`, the line-mismatch
+    /// penalty) must read back the properties of that relaxed edge — not
+    /// whichever edge happened to be inserted first.
+    @Test func parallelEdgesUseRelaxedCheaperEdge() throws {
+        let graph = RouteGraph.Graph(cellSize: 1)
+        graph.nodes["A"] = Coordinate(lon: 0, lat: 0)
+        graph.nodes["B"] = Coordinate(lon: 1, lat: 0)
+        let expensive = RouteGraph.Edge(
+            to: "B", length: 1000, institutionTypeCode: "1", railwayClassCode: "11",
+            lineName: "expensive-line", operator: "op-1", connector: nil)
+        let cheap = RouteGraph.Edge(
+            to: "B", length: 10, institutionTypeCode: "2", railwayClassCode: "21",
+            lineName: "cheap-line", operator: "op-2", connector: nil)
+        // Cheaper edge is second in insertion order — Dijkstra relaxes both
+        // but only the cheaper one should win onto `previousEdgeIndex`.
+        graph.adjacency["A"] = [expensive, cheap]
+
+        let hints = RouteSolver.SegmentHints(
+            preferredLines: ["expensive-line"], preferredOperators: [],
+            requiredLines: [], requiredOperators: [],
+            requirePreferredInstitution: false)
+        let results = RouteSolver.dijkstra(
+            graph: graph,
+            sourceCandidates: [.init(key: "A", distance: 0)],
+            targetKeys: ["B"],
+            train: .init(institutionFilterMode: "soft"),
+            allowedCodes: ["1", "2"],
+            hints: hints)
+
+        let result = try #require(results.first)
+        #expect(result.edges.count == 1)
+        #expect(result.edges.first?.institutionTypeCode == "2")
+        #expect(result.edges.first?.lineName == "cheap-line")
+        #expect(RouteSolver.usedInstitutionTypeCodes(edges: result.edges) == ["2"])
+        // The relaxed edge's line ("cheap-line") isn't the preferred
+        // "expensive-line" — the mismatch penalty must reflect the relaxed
+        // (cheap) edge, not the unrelaxed (expensive) one.
+        #expect(RouteSolver.routeLineMismatchPenalty(edges: result.edges, hints: hints) > 0)
     }
 }

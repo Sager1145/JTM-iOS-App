@@ -126,24 +126,42 @@ public enum RouteGraph {
     /// Deliberately not the whole train: everything else about it — stops,
     /// times, name — changes nothing about which path the solver finds, and a
     /// key that moved when they changed would throw away a valid cache entry.
+    /// `id`, `number`, `origin` and `destination` ARE included, even though
+    /// they look like identity rather than routing data: `solveContext` feeds
+    /// them to `RouteSolver.inferSectionRouteConstraints`, which reads them to
+    /// bias specific named services (Sonic, Haruka) onto specific lines. Two
+    /// trains that differ only in these fields can infer different hints, and
+    /// without them here the cache would hand one train's geometry to another.
     public struct CacheKeyTrain: Sendable {
+        public var id: String
+        public var number: String
         public var trainType: String
         public var company: String
+        public var origin: String
+        public var destination: String
         public var preferredLineNames: [String]
         public var preferredOperatorNames: [String]
         public var allowedInstitutionTypeCodes: [String]?
         public var institutionFilterMode: String?
 
         public init(
+            id: String = "",
+            number: String = "",
             trainType: String = "",
             company: String = "",
+            origin: String = "",
+            destination: String = "",
             preferredLineNames: [String] = [],
             preferredOperatorNames: [String] = [],
             allowedInstitutionTypeCodes: [String]? = nil,
             institutionFilterMode: String? = nil
         ) {
+            self.id = id
+            self.number = number
             self.trainType = trainType
             self.company = company
+            self.origin = origin
+            self.destination = destination
             self.preferredLineNames = preferredLineNames
             self.preferredOperatorNames = preferredOperatorNames
             self.allowedInstitutionTypeCodes = allowedInstitutionTypeCodes
@@ -157,7 +175,7 @@ public enum RouteGraph {
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
     /// parameter here rather than a constant this file owns.
-    public static let routeSolverCacheVersion = "18"
+    public static let routeSolverCacheVersion = "19"
 
     /// The operators a `company` field names, split on `/`.
     ///
@@ -167,7 +185,7 @@ public enum RouteGraph {
     public static func companyParts(company: String, country: String) -> [String] {
         company.components(separatedBy: "/")
             .map { part -> String in
-                let name = part.trimmingCharacters(in: jsTrimSet)
+                let name = JSString.trim(part)
                 return country == "tw"
                     ? OperatorBranding.normalizeTaiwanCompanyName(name) : name
             }
@@ -347,8 +365,25 @@ public enum RouteGraph {
         // shipped Taiwanese store.
         policyParts.append("institution_filter:\(train.institutionFilterMode ?? "soft")")
         let policyKey = jsSorted(policyParts).joined(separator: "|")
-        let cacheKey =
+        var cacheKey =
             "solver:\(cacheVersion)|\(allowedCodes.joined(separator: ","))|\(policyKey)|\(templateKey)"
+        let inferContext = RouteSolver.TrainContext(
+            id: train.id, number: train.number, trainType: train.trainType,
+            company: train.company, origin: train.origin, destination: train.destination)
+        for (index, section) in routeSections.enumerated() {
+            // `inferSectionRouteConstraints` only reads `from`/`to`, but takes
+            // the top-level `RouteSection` (from `Train.swift`), not this
+            // enum's own nested one — the two exist because the graph half of
+            // the port (this file) and the solver half read different subsets
+            // of a section with different optionality.
+            let hintSection = RailCore.RouteSection(from: section.from, to: section.to)
+            let inferred = RouteSolver.inferSectionRouteConstraints(
+                section: hintSection, train: inferContext)
+            guard !inferred.lineNames.isEmpty || !inferred.operatorNames.isEmpty else { continue }
+            let lines = jsSorted(inferred.lineNames).joined(separator: ",")
+            let operators = jsSorted(inferred.operatorNames).joined(separator: ",")
+            cacheKey += "|infer:\(index):line:\(lines):operator:\(operators)"
+        }
         return SolveContext(
             templateKey: templateKey, allowedCodes: allowedCodes,
             policyKey: policyKey, cacheKey: cacheKey)
@@ -1028,11 +1063,6 @@ extension RouteGraph {
         return values.filter { seen.insert($0).inserted }
     }
 
-    /// `String.prototype.trim`'s character set: Unicode whitespace and line
-    /// terminators, plus U+FEFF, which JavaScript trims and Swift's
-    /// `.whitespacesAndNewlines` does not.
-    static let jsTrimSet = CharacterSet.whitespacesAndNewlines.union(
-        CharacterSet(charactersIn: "\u{FEFF}"))
 }
 
 extension Coordinate: RouteGraph.DisplayLocatable {
@@ -1082,14 +1112,17 @@ extension RouteGraph.SectionFeature: Decodable {
 
         init(from decoder: Decoder) throws {
             let c = try decoder.container(keyedBy: CodingKeys.self)
-            railwayClassCode = try c.decodeIfPresent(String.self, forKey: .n02_001)
-                ?? c.decodeIfPresent(String.self, forKey: .railway_class_code)
-            institutionTypeCode = try c.decodeIfPresent(String.self, forKey: .n02_002)
-                ?? c.decodeIfPresent(String.self, forKey: .institution_type_code)
-            lineName = try c.decodeIfPresent(String.self, forKey: .n02_003)
-                ?? c.decodeIfPresent(String.self, forKey: .line_name)
-            `operator` = try c.decodeIfPresent(String.self, forKey: .n02_004)
-                ?? c.decodeIfPresent(String.self, forKey: .operator)
+            // JavaScript's `a || b`: an empty string is falsy, so it falls
+            // through to the next spelling just as a missing key does.
+            func orFallback(_ primary: CodingKeys, _ secondary: CodingKeys) throws -> String? {
+                let value = try c.decodeIfPresent(String.self, forKey: primary)
+                if let value, !value.isEmpty { return value }
+                return try c.decodeIfPresent(String.self, forKey: secondary)
+            }
+            railwayClassCode = try orFallback(.n02_001, .railway_class_code)
+            institutionTypeCode = try orFallback(.n02_002, .institution_type_code)
+            lineName = try orFallback(.n02_003, .line_name)
+            `operator` = try orFallback(.n02_004, .operator)
         }
     }
 

@@ -181,7 +181,20 @@ function buildTrainRouteSolveContext(train) {
   ]
     .sort()
     .join("|");
-  const cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}`;
+  let cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}`;
+  // inferSectionRouteConstraints derives per-section line/operator hints from
+  // id/number/train_type/company/origin/destination (Sonic, Haruka, ...). Two
+  // trains with identical sections/type/company but different id/number/
+  // origin/destination can infer different hints, so those hints join the
+  // cache key too — otherwise one train's geometry could be served to
+  // another under a still-matching templateKey/policyKey.
+  routeSections.forEach((section, index) => {
+    const inferred = inferSectionRouteConstraints(section, train);
+    const lines = (inferred.line_names || []).slice().sort();
+    const operators = (inferred.operator_names || []).slice().sort();
+    if (!lines.length && !operators.length) return;
+    cacheKey += `|infer:${index}:line:${lines.join(",")}:operator:${operators.join(",")}`;
+  });
   return { routeSections, templateKey, allowedCodes, cacheKey };
 }
 
@@ -606,15 +619,22 @@ function commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings
   }
 
   const templateFeatures = stitchAdjacentRouteFeatureEndpoints(
-    generated.map((feature) => ({
-      ...feature,
-      properties: {
-        ...(feature.properties || {}),
-        train_id: "__template__",
-        route_id: `solved-${routeKeyDigest(cacheKey)}-primary`,
-        route_template_key: routeKeyDigest(templateKey),
-      },
-    })),
+    generated.map((feature) => {
+      // `solve_attempt_index` is solver-internal bookkeeping (which relaxed
+      // hint attempt produced this geometry) and isn't part of the persisted
+      // shape: dropped here so cached/exported features are unchanged except
+      // for the version bump, matching the shipped fixtures.
+      const { solve_attempt_index, ...restProperties } = feature.properties || {};
+      return {
+        ...feature,
+        properties: {
+          ...restProperties,
+          train_id: "__template__",
+          route_id: `solved-${routeKeyDigest(cacheKey)}-primary`,
+          route_template_key: routeKeyDigest(templateKey),
+        },
+      };
+    }),
   );
   runtimeRouteCache.set(cacheKey, templateFeatures);
   // Persist the freshly solved geometry so later sessions skip both the solve
@@ -1402,11 +1422,24 @@ function solveRouteSectionOnDemand(
     );
     if (result) {
       lastResult = result;
-      if (!pathTouchesRegionEdge(result, graph.regionBbox, 0.02)) return result;
+      // A regional result is only trustworthy without checking wider margins
+      // or the full graph when it came from the very first (strictest) solve
+      // attempt AND it doesn't touch the region edge. With ordered hint
+      // attempts, a later/looser attempt can win inside a small region while
+      // the strict attempt would still have won on the full graph — so a
+      // non-zero attempt index has to keep widening/falling back exactly like
+      // a path that touches the edge does.
+      if (
+        result.properties?.solve_attempt_index === 0 &&
+        !pathTouchesRegionEdge(result, graph.regionBbox, 0.02)
+      ) {
+        return result;
+      }
     }
   }
-  // The region wasn't conclusively large enough — use the full graph so the
-  // answer is provably identical to the original all-Japan solve.
+  // The region wasn't conclusively large enough, or the regional winner came
+  // from a non-strict attempt — use the full graph so the answer matches the
+  // original all-Japan solve.
   const full = routeSolverApi.solveSection(
     section,
     segmentIndex,
