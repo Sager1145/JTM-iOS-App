@@ -35,7 +35,10 @@ let package = Package(
         .library(name: "RailPresentation", targets: ["RailPresentation"]),
     ],
     targets: [
-        .target(name: "RailCore"),
+        .target(
+            name: "RailCore",
+            resources: [.process("Resources")]
+        ),
         .target(name: "RailPresentation", dependencies: ["RailCore"]),
         .testTarget(name: "RailCoreTests", dependencies: ["RailCore"]),
         .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation"]),

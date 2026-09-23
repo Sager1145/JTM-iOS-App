@@ -70,7 +70,7 @@ public struct TrainStore: Codable, Equatable, Sendable {
 ///     while *rejecting* an explicit `null` one. Absent and null are
 ///     therefore not the same thing, which is why this is `String?` encoded
 ///     only when present rather than always written as null.
-///   - `trainType`, `company`, `direction`, `visible`, `style`,
+///   - `trainType`, `vehicleType`, `company`, `direction`, `visible`, `style`,
 ///     `routePolicy`, `routeSections` are all "filled with a default on
 ///     import, always written on export" (§3.1). The committed stores carry
 ///     every one of them, so the optionality here is about representing a
@@ -93,6 +93,10 @@ public struct Train: Codable, Equatable, Sendable {
     /// — are split into the two fields on import; see ``ServiceCaption``.
     public var numberEn: String?
     public var trainType: String?
+    /// Rolling-stock model or vehicle type, distinct from `trainType`, which
+    /// describes the passenger service class (for example, limited express).
+    /// Optional so existing stores keep their original shape.
+    public var vehicleType: String?
     public var company: String?
     public var origin: String
     public var destination: String
@@ -129,6 +133,7 @@ public struct Train: Codable, Equatable, Sendable {
         number: String,
         numberEn: String? = nil,
         trainType: String? = nil,
+        vehicleType: String? = nil,
         company: String? = nil,
         origin: String,
         destination: String,
@@ -145,6 +150,7 @@ public struct Train: Codable, Equatable, Sendable {
         self.number = number
         self.numberEn = numberEn
         self.trainType = trainType
+        self.vehicleType = vehicleType
         self.company = company
         self.origin = origin
         self.destination = destination
@@ -161,6 +167,7 @@ public struct Train: Codable, Equatable, Sendable {
         case id, date, number, origin, destination, direction, visible, style, stops
         case numberEn = "number_en"
         case trainType = "train_type"
+        case vehicleType = "vehicle_type"
         case company
         case routePolicy = "route_policy"
         case routeSections = "route_sections"
@@ -168,9 +175,14 @@ public struct Train: Codable, Equatable, Sendable {
     }
 
     // Written out only when present, so that a store which omits a field
-    // round-trips as one that omits it. The synthesised encoder would emit
-    // `null` for every nil, which turns 46 route policies in the committed
-    // Japanese store into policies that carry two null arrays they never had.
+    // round-trips as one that omits it. Swift's synthesised encoder already
+    // does this for `Optional` stored properties — it calls
+    // `encodeIfPresent`, not `encode` — so that is not why this encoder is
+    // hand-written. It exists to pin the emitted key order to jsonspec's,
+    // independent of the struct's stored-property order: synthesis follows
+    // declaration order, and a future reordering of these properties would
+    // silently reorder the JSON and produce diff noise across the 201
+    // committed itineraries with no compiler warning to catch it.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -178,6 +190,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encode(number, forKey: .number)
         try container.encodeIfPresent(numberEn, forKey: .numberEn)
         try container.encodeIfPresent(trainType, forKey: .trainType)
+        try container.encodeIfPresent(vehicleType, forKey: .vehicleType)
         try container.encodeIfPresent(company, forKey: .company)
         try container.encode(origin, forKey: .origin)
         try container.encode(destination, forKey: .destination)
@@ -750,9 +763,9 @@ public enum TrainValidation {
                 throw fail("\(prefix): \(key) is required.")
             }
         }
-        // Optional metadata: 車輛類型 / 營運公司 ("/"-separated = 直通) / the
-        // service's Latin name.
-        for key in ["train_type", "company", "number_en"] {
+        // Optional metadata: service class / rolling-stock type / operating
+        // company ("/"-separated = 直通) / the service's Latin name.
+        for key in ["train_type", "vehicle_type", "company", "number_en"] {
             // `undefined` is the only value that skips this. An explicit null
             // IS a value, and `typeof null !== "string"`, so null is rejected —
             // unlike `arrival`/`departure` below, which test for null first.
@@ -1068,7 +1081,8 @@ public enum TrainValidation {
         guard train.isTruthy, case .object = train else {
             throw fail("Each train must be an object.")
         }
-        // The JavaScript's fourteen keys, plus `region`.
+        // The JavaScript's fourteen keys, plus this app's `vehicle_type` and
+        // `region` metadata.
         //
         // `region` is this port's own field and has no JavaScript counterpart,
         // so it is absent from every fixture and cannot change a parity
@@ -1080,7 +1094,7 @@ public enum TrainValidation {
         try assertOnlyKeys(
             train,
             [
-                "id", "date", "number", "number_en", "train_type", "company", "origin",
+                "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region",
             ],
@@ -1121,6 +1135,7 @@ public enum TrainValidation {
             // A non-string is dropped rather than coerced — which is exactly
             // where this path and validateTrain part company.
             trainType: (train["train_type"] ?? .null).stringOrNilIfNotString.map(jsTrim) ?? "",
+            vehicleType: (train["vehicle_type"] ?? .null).stringOrNilIfNotString.map(jsTrim),
             company: normalizeTrainCompany(train["company"], country: country),
             origin: jsToString(train["origin"] ?? .null),
             destination: jsToString(train["destination"] ?? .null),
@@ -1314,6 +1329,7 @@ public enum TrainValidation {
             // Written only when there is one — see `Train.numberEn`.
             numberEn: train.numberEn.flatMap { $0.isEmpty ? nil : $0 },
             trainType: train.trainType ?? "",
+            vehicleType: train.vehicleType,
             company: normalizeTrainCompany(train.company.map(JSON.string), country: country),
             origin: train.origin,
             destination: train.destination,
@@ -1553,12 +1569,19 @@ extension TrainValidation {
             public init(_ pairs: [(String, JSON)]) {
                 var orderedKeys: [String] = []
                 var orderedValues: [JSON] = []
+                // A key index rather than the `firstIndex(where:)` scan this
+                // replaced: that scan made building an object O(n²) in its
+                // key count. `jsStringEquals` compares UTF-16 code units
+                // (not Swift's canonically-equivalent `==`), so the index is
+                // keyed on `[UInt16]`, the same comparison basis — same
+                // winner for a duplicate key, same first-seen order.
+                var indexOfKey: [[UInt16]: Int] = [:]
                 for (key, value) in pairs {
-                    if let existing = orderedKeys.firstIndex(where: {
-                        TrainValidation.jsStringEquals($0, key)
-                    }) {
+                    let codeUnits = Array(key.utf16)
+                    if let existing = indexOfKey[codeUnits] {
                         orderedValues[existing] = value
                     } else {
+                        indexOfKey[codeUnits] = orderedKeys.count
                         orderedKeys.append(key)
                         orderedValues.append(value)
                     }
@@ -1703,6 +1726,14 @@ extension TrainValidation.JSON {
     private struct Parser {
         let bytes: [UInt8]
         var index = 0
+        var depth = 0
+
+        /// How deeply nested an object/array structure this parser accepts.
+        /// Guards the recursive-descent `parseValue`/`parseObject`/
+        /// `parseArray` against a stack overflow on adversarial input
+        /// (`"[[[[…"` thousands deep) by failing with the parser's ordinary
+        /// syntax error instead of crashing.
+        static let maxNestingDepth = 256
 
         init(_ bytes: [UInt8]) { self.bytes = bytes }
 
@@ -1746,6 +1777,9 @@ extension TrainValidation.JSON {
         }
 
         mutating func parseObject() throws -> TrainValidation.JSON {
+            depth += 1
+            defer { depth -= 1 }
+            guard depth <= Parser.maxNestingDepth else { throw error("JSON nested too deeply") }
             index += 1  // {
             var pairs: [(String, TrainValidation.JSON)] = []
             try skipWhitespace()
@@ -1780,6 +1814,9 @@ extension TrainValidation.JSON {
         }
 
         mutating func parseArray() throws -> TrainValidation.JSON {
+            depth += 1
+            defer { depth -= 1 }
+            guard depth <= Parser.maxNestingDepth else { throw error("JSON nested too deeply") }
             index += 1  // [
             var items: [TrainValidation.JSON] = []
             try skipWhitespace()

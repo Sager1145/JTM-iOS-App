@@ -227,7 +227,35 @@ public enum ImportEngine {
         /// editor, the deleter and the country switch all write, and the
         /// engine holds no invariant over it that it enforces itself. All it
         /// does is append and, on a failed append-mode import, truncate.
-        public var trains: [Train]
+        public var trains: [Train] {
+            didSet {
+                // Any external set invalidates the cache outright, rather
+                // than comparing against `oldValue.count` — a same-count
+                // external replacement (the one case the count check below
+                // cannot detect on its own) is exactly the case this exists
+                // to close. `appendImportedTrain`'s own `trains.append` also
+                // runs through this, but it reasserts the cache immediately
+                // afterward (see there), so this costs one extra assignment
+                // on that path, not a rebuild.
+                existingIDsCacheCount = -1
+            }
+        }
+
+        /// A cache of `Set(trains.map(\.id))`, valid only while
+        /// ``existingIDsCacheCount`` still matches `trains.count`.
+        ///
+        /// `appendImportedTrain` rebuilt this set from scratch on every call,
+        /// which made a full import an O(N²) pass. `trains` is publicly
+        /// mutable — the editor, the deleter and the country switch all write
+        /// it directly — so this cache cannot be trusted blindly; it is
+        /// revalidated against the live count on every use and rebuilt
+        /// whenever that count has moved, which covers every mutation this
+        /// type itself performs (append, `removeAll`, the rollback
+        /// `removeLast`), and invalidated outright by ``trains``'s `didSet`
+        /// on every external write, including a same-count one.
+        private var existingIDsCache: Set<String> = []
+        private var existingIDsCacheCount: Int = -1
+
         public var selectedTrainID: String?
         public var focusedTrainID: String?
         /// `selectedDate`, where ``Dates/allDates`` is the combined view.
@@ -325,7 +353,9 @@ public enum ImportEngine {
         ) throws -> String {
             var train = try TrainValidation.normalizeImportedTrain(
                 raw, fallbackDate: fallbackDate, country: country, stations: stations)
-            var existingIDs = Set(trains.map(\.id))
+            var existingIDs =
+                existingIDsCacheCount == trains.count
+                ? existingIDsCache : Set(trains.map(\.id))
             train.id = TrainValidation.makeUniqueTrainId(train.id, existingIDs: existingIDs)
             try TrainValidation.validateTrain(
                 Self.canonicalJSON(
@@ -334,6 +364,10 @@ public enum ImportEngine {
                 index: trains.count,
                 ids: &existingIDs)
             trains.append(train)
+            // `validateTrain` already inserted the new id into `existingIDs`
+            // above, so the cache is exactly `Set(trains.map(\.id))` again.
+            existingIDsCache = existingIDs
+            existingIDsCacheCount = trains.count
             return train.id
         }
 

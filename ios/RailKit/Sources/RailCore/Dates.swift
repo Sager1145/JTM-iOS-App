@@ -184,6 +184,37 @@ public enum Dates {
         digits.reduce(0) { $0 * 10 + Int($1.value - 48) }
     }
 
+    /// Overflow-safe cousin of ``numeric(_:)`` for runs of digits that are
+    /// not bounded to two characters — the `+N` day-offset scan can hand it
+    /// an arbitrarily long digit run, and an unchecked `$0 * 10 + digit`
+    /// there traps on overflow instead of failing to parse.
+    ///
+    /// Returns `nil` once the accumulated value would overflow `Int`, which
+    /// callers treat the same as "too large to be a real day offset" — see
+    /// ``maxDayOffset``.
+    private static func numericCheckingOverflow(
+        _ digits: some Sequence<Unicode.Scalar>
+    ) -> Int? {
+        var value = 0
+        for scalar in digits {
+            let digit = Int(scalar.value - 48)
+            let (multiplied, multiplyOverflowed) = value.multipliedReportingOverflow(by: 10)
+            if multiplyOverflowed { return nil }
+            let (added, addOverflowed) = multiplied.addingReportingOverflow(digit)
+            if addOverflowed { return nil }
+            value = added
+        }
+        return value
+    }
+
+    /// The largest `+N` day offset ``parseTimeToMinutes`` accepts. Chosen
+    /// generously above any real cross-day itinerary (a handful of days at
+    /// most) so normal inputs are unaffected; anything larger — including
+    /// any offset that overflows `Int` while being read — is treated as an
+    /// unparseable time rather than risking a trap or an unreasonable
+    /// magnitude flowing into later arithmetic.
+    static let maxDayOffset = 366
+
     /// `normalizeDateString` — trim, rewrite every `/` as `-`, then validate.
     ///
     /// The slash rewrite is what lets a user type `2026/08/05` into the date
@@ -422,7 +453,15 @@ public enum Dates {
             probe += 1
             while probe < scalars.count, jsWhitespace.contains(scalars[probe]) { probe += 1 }
             let digits = scalars[probe...].prefix(while: isAsciiDigit)
-            if !digits.isEmpty { dayOffset = Double(numeric(digits)) }
+            if !digits.isEmpty {
+                // A digit run this long can't be a real day offset, and
+                // `numeric(_:)`'s unchecked `$0 * 10 + digit` would trap on
+                // it — treat it, and anything past ``maxDayOffset``, as an
+                // unparseable time rather than crashing or overflowing.
+                guard let offset = numericCheckingOverflow(digits), offset <= maxDayOffset
+                else { return nil }
+                dayOffset = Double(offset)
+            }
         }
 
         return dayOffset * 24 * 60 + hours * 60 + minutes
@@ -475,11 +514,19 @@ public enum Dates {
         for (index, stop) in train.stops.enumerated() {
             guard let minutes = stopDayMinutes(stop) else { continue }
             let day = (minutes / 1440).rounded(.down)
+            // `minutes` is bounded by `parseTimeToMinutes`'s two-digit hour
+            // and ``maxDayOffset``-capped day offset, so `day` is always
+            // finite and small — this guard is defensive, not a behavior
+            // change for any input that reaches here.
+            guard day.isFinite, let dayInt = Int(exactly: day) else {
+                lastTimedIndex = index
+                continue
+            }
             // A train whose FIRST timed stop already reads 25:xx is mis-dated,
             // not cross-day: with no earlier station there is nothing to break
             // away from.
             if day > lastDay, lastTimedIndex >= 0 {
-                breaks.append(DayBreak(index: lastTimedIndex, day: Int(day)))
+                breaks.append(DayBreak(index: lastTimedIndex, day: dayInt))
             }
             if day > lastDay { lastDay = day }
             lastTimedIndex = index
@@ -613,12 +660,15 @@ public enum Dates {
 
     /// `sortTrainsByDateAndDeparture` — a sorted copy.
     ///
-    /// `Array.prototype.sort` has been stable since ES2019 and Swift's `sort`
-    /// is not, which would matter if the comparator could report two distinct
-    /// trains equal. It cannot when ids are unique, because the last branch is
-    /// then a strict total order; the risk is only that two trains share an id
-    /// (or both lack one), and in that case neither implementation has an
-    /// order to preserve that the other could disagree with.
+    /// `Array.prototype.sort` has been stable since ES2019, and Swift's
+    /// `sort`/`sorted` has been stable since Swift 5.8 (SE-0372) too, so this
+    /// would agree with the JavaScript even if the comparator could report
+    /// two distinct trains equal. The explicit id tiebreak is kept anyway as
+    /// the deliberate order, not a stability workaround: it is what pins the
+    /// two implementations to the same result independent of each one's
+    /// underlying sort algorithm. The one remaining risk is two trains
+    /// sharing an id (or both lacking one), where the comparator itself has
+    /// no order to prefer between them.
     public static func sortByDateAndDeparture(_ trains: [Train]) -> [Train] {
         trains.sorted { compareByDateAndDeparture($0, $1) < 0 }
     }

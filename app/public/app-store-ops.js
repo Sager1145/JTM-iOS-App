@@ -259,6 +259,9 @@ function normalizeExportTrain(train) {
       ? { number_en: train.number_en }
       : {}),
     train_type: train.train_type || "",
+    ...(typeof train.vehicle_type === "string"
+      ? { vehicle_type: train.vehicle_type }
+      : {}),
     company: normalizeTrainCompany(train.company),
     origin: train.origin || "",
     destination: train.destination || "",
@@ -527,6 +530,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       "number",
       "number_en",
       "train_type",
+      "vehicle_type",
       "company",
       "origin",
       "destination",
@@ -562,6 +566,9 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
     number: service.primary,
     train_type:
       typeof train.train_type === "string" ? train.train_type.trim() : "",
+    ...(typeof train.vehicle_type === "string"
+      ? { vehicle_type: train.vehicle_type.trim() }
+      : {}),
     company: normalizeTrainCompany(train.company),
     origin: train.origin,
     destination: train.destination,

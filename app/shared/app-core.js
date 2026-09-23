@@ -163,6 +163,12 @@
     return inferred || undatedValue;
   }
 
+  // The largest `+N` day offset parseTimeToMinutes accepts — mirrors the
+  // Swift port's `Dates.maxDayOffset` (ios/RailKit/Sources/RailCore/Dates.swift)
+  // exactly, so a `+N` past it is treated the same unparseable-time way on
+  // both sides rather than accepted here and rejected there.
+  const MAX_DAY_OFFSET = 366;
+
   function parseTimeToMinutes(value) {
     if (typeof value !== "string") return null;
     const match = /^(\d{1,2}):(\d{2})(?:\s*\+\s*(\d+))?/.exec(value.trim());
@@ -171,6 +177,7 @@
     const minutes = Number(match[2]);
     const dayOffset = match[3] ? Number(match[3]) : 0;
     if (Number.isNaN(hours) || Number.isNaN(minutes)) return null;
+    if (dayOffset > MAX_DAY_OFFSET) return null;
     return dayOffset * 24 * 60 + hours * 60 + minutes;
   }
 

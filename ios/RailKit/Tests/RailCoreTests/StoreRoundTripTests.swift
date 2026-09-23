@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 
 @testable import RailCore
@@ -107,6 +108,53 @@ struct StoreRoundTripTests {
             try TrainValidation.JSON.parse(text))
         #expect(reimported.number == "のぞみ1号")
         #expect(reimported.numberEn == "Nozomi 1")
+    }
+
+    @Test("vehicle type survives native Codable storage and stays distinct from service class")
+    func vehicleTypeSurvivesNativeCodableRoundTrip() throws {
+        var train = Self.sample(region: "jp")
+        train.vehicleType = "N700S"
+
+        let data = try JSONEncoder().encode(train)
+        let text = try #require(String(data: data, encoding: .utf8))
+        #expect(text.contains("\"train_type\":\"新幹線\""))
+        #expect(text.contains("\"vehicle_type\":\"N700S\""))
+
+        let decoded = try JSONDecoder().decode(Train.self, from: data)
+        #expect(decoded.trainType == "新幹線")
+        #expect(decoded.vehicleType == "N700S")
+    }
+
+    @Test("vehicle type survives canonical export and import")
+    func vehicleTypeSurvivesExportImportRoundTrip() throws {
+        var train = Self.sample(region: "jp")
+        train.vehicleType = "N700S"
+
+        let exported = TrainValidation.normalizeExportTrain(
+            train, country: "jp", stations: TrainValidation.StationTable.empty)
+        let text = StoreOperations.stringify(StoreOperations.json(exported))
+        #expect(text.contains("\"train_type\":\"新幹線\",\"vehicle_type\":\"N700S\""))
+
+        let reimported = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(text))
+        #expect(reimported.trainType == "新幹線")
+        #expect(reimported.vehicleType == "N700S")
+    }
+
+    @Test("an absent vehicle type remains absent from native and canonical output")
+    func absentVehicleTypeStaysAbsent() throws {
+        let train = Self.sample(region: nil)
+        let nativeText = try #require(String(data: JSONEncoder().encode(train), encoding: .utf8))
+        #expect(!nativeText.contains("vehicle_type"))
+
+        let exported = TrainValidation.normalizeExportTrain(
+            train, country: "jp", stations: TrainValidation.StationTable.empty)
+        let canonicalText = StoreOperations.stringify(StoreOperations.json(exported))
+        #expect(!canonicalText.contains("vehicle_type"))
+
+        let reimported = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(canonicalText))
+        #expect(reimported.vehicleType == nil)
     }
 
     /// The whitelist still rejects what it is for. Widening it by one key must
