@@ -136,5 +136,24 @@ struct EditorChecks {
         precondition(sheet == "import-owned draft")
         precondition(library.snapshots.count == beforeImportRefusal)
         print("PASS ContentView closes a saved edit and retains both refused edit drafts")
+
+        itineraries.setImportingForTest(false)
+        library.recordPriorError()
+        let beforeMissingRebuild = library.snapshots.count
+        precondition(editing.rebuildRouteSections("absent") == nil)
+        precondition(library.snapshots.count == beforeMissingRebuild)
+        precondition(library.lastSaveError == "prior write failed")
+
+        itineraries.setImportingForTest(true)
+        let beforeImportRebuild = library.snapshots.count
+        precondition(editing.rebuildRouteSections("created") == nil)
+        precondition(library.snapshots.count == beforeImportRebuild)
+        precondition(library.lastSaveError == "prior write failed")
+
+        itineraries.setImportingForTest(false)
+        let beforeSuccessfulRebuild = library.snapshots.count
+        precondition(editing.rebuildRouteSections("created") == 0)
+        precondition(library.snapshots.count == beforeSuccessfulRebuild + 1)
+        print("PASS only a committed route-section rebuild persists its snapshot")
     }
 }

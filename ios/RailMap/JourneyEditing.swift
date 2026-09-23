@@ -60,7 +60,7 @@ struct JourneyEditing {
 
     @discardableResult
     func rebuildRouteSections(_ id: String) -> Int? {
-        let count = itineraries.rebuildRouteSections(id)
+        guard let count = itineraries.rebuildRouteSections(id) else { return nil }
         persist()
         return count
     }
