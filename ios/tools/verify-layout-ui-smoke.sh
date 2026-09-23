@@ -28,6 +28,7 @@ case "$mode" in
         # build, so its additional cost is small beside the map-layer suite.
         set -- \
             -only-testing:RailMapUITests/WorkspaceEditingTests \
+            -only-testing:RailMapUITests/JourneySaveUITests \
             -only-testing:RailMapUITests/RailMapUITests/testSearchDestinationAlwaysExposesAField \
             -only-testing:RailMapUITests/RailMapUITests/testAllJourneyRowsOpenTheirMatchingJourney \
             -only-testing:RailMapUITests/RailMapUITests/testPhoneMenuHeaderDragsInBothDirectionsRepeatedly \

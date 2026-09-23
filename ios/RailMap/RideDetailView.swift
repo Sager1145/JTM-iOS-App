@@ -28,8 +28,15 @@ struct WorkspaceRideDetailView: View {
         Group {
             if let train {
                 RideDetailView(train: train, onSave: { edited in
-                    if onSave(edited, recordID) == .saved {
+                    switch onSave(edited, recordID) {
+                    case .saved:
                         recordID = edited.id
+                        return true
+                    case let .savedKeepingID(keptID, _):
+                        recordID = keptID
+                        return true
+                    case .refusedImportRunning, .notFound:
+                        return false
                     }
                 }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [])
             }
@@ -45,7 +52,7 @@ struct WorkspaceRideDetailView: View {
 /// then the chronological stop timeline and lower-priority metadata.
 struct RideDetailView: View {
     let train: Train
-    var onSave: ((Train) -> Void)?
+    var onSave: ((Train) -> Bool)?
     var onRebuild: (() -> Int?)?
     var suggestionTrains: [Train] = []
 
@@ -64,14 +71,14 @@ struct RideDetailView: View {
                 { visible in
                     var updated = train
                     updated.visible = visible
-                    save(updated)
+                    _ = save(updated)
                 }
             },
             // The same shape, and for the same reason: confirming a ride is an
             // edit to the record's own `ride_segment` flags, so it travels
             // through the one atomic save rather than a second write path.
             onSetRidden: onSave.map { save in
-                { ridden in save(RideLedger.setRidden(train, ridden)) }
+                { ridden in _ = save(RideLedger.setRidden(train, ridden)) }
             })
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
@@ -91,8 +98,9 @@ struct RideDetailView: View {
                     title: localization.text("ios.editJourney", fallback: "Edit journey"),
                     suggestionTrains: suggestionTrains
                 ) { edited in
-                    onSave?(edited)
-                    showsEditor = false
+                    if onSave?(edited) == true {
+                        showsEditor = false
+                    }
                 }
             }
     }
@@ -178,6 +186,7 @@ struct RideDetailContent: View {
     var body: some View {
         if scrolls {
             ScrollView { cards }
+                .accessibilityIdentifier("rideDetailScrollView")
         } else {
             cards
         }

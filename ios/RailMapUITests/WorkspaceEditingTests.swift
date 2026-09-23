@@ -62,11 +62,14 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertNotEqual(edited, "Review")
         app.buttons["rideEditorSave"].tap()
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
-        let hide = app.buttons["rideDetailHide"]
-        for _ in 0..<12 {
-            if hide.exists && hide.isHittable { break }
-            app.swipeUp()
-        }
+        let detailScroll = app.scrollViews["rideDetailScrollView"]
+        XCTAssertTrue(detailScroll.waitForExistence(timeout: 5))
+        let hide = detailScroll.buttons["rideDetailHide"]
+        // Target the detail content. A gesture on `app` can resize the
+        // presenting sheet instead, leaving the lazy service card unbuilt and
+        // waiting minutes for a detent animation rather than testing Hide.
+        for _ in 0..<6 where !hide.isHittable { detailScroll.swipeUp() }
+        XCTAssertTrue(hide.waitForExistence(timeout: 5))
         XCTAssertTrue(hide.isHittable)
         hide.tap()
         edit.tap()
