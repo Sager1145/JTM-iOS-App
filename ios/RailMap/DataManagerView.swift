@@ -379,8 +379,16 @@ struct DataManagerView: View {
     ///
     /// The web app's 重置示例 — "this sample IS the store" — survives as the
     /// long-press action, where it has an unambiguous subject.
+    /// The last enabled region that actually ships a sample — `us`/`ca` have
+    /// none, and comparing against `Region.enabledOrdered.last` hid the
+    /// footnote entirely once North America was enabled, because it sorts
+    /// after every region this section draws a `Section` for.
+    private var lastRegionWithSamples: Region? {
+        Region.enabledOrdered.last { !RideLibrary.Sample.forRegion($0).isEmpty }
+    }
+
     private var sampleRegionSections: some View {
-        ForEach(Region.ordered) { region in
+        ForEach(Region.enabledOrdered) { region in
             let samples = RideLibrary.Sample.forRegion(region)
             if !samples.isEmpty {
                 Section {
@@ -412,7 +420,7 @@ struct DataManagerView: View {
                 } header: {
                     Text(localization.text(region.localizationKey, fallback: region.fallbackName))
                 } footer: {
-                    if region == Region.ordered.last {
+                    if region == lastRegionWithSamples {
                         Text(localization.dataText("data.sampleFootnote"))
                     }
                 }
@@ -434,18 +442,54 @@ struct DataManagerView: View {
         // Japanese and failing to solve.
         Task {
             do {
+                // Checked before spending a backup write on an action that
+                // was never going to land: `replaceAll`/`merge` refuse under
+                // the same conditions this mirrors, but only after the
+                // snapshot below has already run.
+                guard replacingEverything ? itineraries.canReplace : itineraries.canMutate else {
+                    operationError = OperationError(
+                        titleKey: "data.loadFailedTitle",
+                        detail: localization.dataText("data.errorNothingChanged"),
+                        keptKey: "data.loadFailedKept")
+                    return
+                }
                 let incoming = try await library.sample(sample.resource)
                 if let store = itineraries.store, !store.trains.isEmpty {
-                    library.snapshotBackup(
+                    // Aborts into the catch below on failure, before either
+                    // door touches the working set — a sample load must not
+                    // overwrite rides a backup could not be taken of.
+                    try await library.snapshotBackup(
                         store, reason: replacingEverything ? .beforeReplace : .beforeImport)
                 }
+                // `forgetLoadedSamples`/`noteSampleLoaded` only follow a
+                // commit that actually landed: an import claiming the store
+                // (or, for `replaceAll`, a load still reading it) refuses the
+                // fold, and marking the sample "loaded" or forgetting the
+                // others on the strength of a refusal would tell the reader
+                // something happened that did not.
+                let committed: Bool
                 if replacingEverything {
-                    library.forgetLoadedSamples()
-                    await itineraries.replaceAll(with: incoming, into: library)
+                    switch await itineraries.replaceAll(with: incoming, into: library) {
+                    case .committed:
+                        library.forgetLoadedSamples()
+                        committed = true
+                    case .refused:
+                        committed = false
+                    }
                 } else {
-                    await itineraries.merge(incoming, into: library)
+                    switch await itineraries.merge(incoming, into: library) {
+                    case .committed: committed = true
+                    case .refused: committed = false
+                    }
                 }
-                library.noteSampleLoaded(sample.resource)
+                if committed {
+                    library.noteSampleLoaded(sample.resource)
+                } else {
+                    operationError = OperationError(
+                        titleKey: "data.loadFailedTitle",
+                        detail: ItineraryStore.ImportBusy().localizedDescription,
+                        keptKey: "data.loadFailedKept")
+                }
             } catch {
                 operationError = OperationError(
                     titleKey: "data.loadFailedTitle",
@@ -469,7 +513,7 @@ struct DataManagerView: View {
                             localization.dataText(
                                 "data.packageLoading",
                                 ["region": .string(
-                                    Region.ordered.map(regionName).joined(separator: "・"))]))
+                                    Region.enabledOrdered.map(regionName).joined(separator: "・"))]))
                     }
                 case .loading(let pending):
                     HStack(spacing: 10) {
@@ -632,11 +676,20 @@ struct DataManagerView: View {
             ) {
                 confirmDeleteSaved = false
                 PresentationHost.afterTeardown {
-                    if let store = itineraries.store {
-                        library.snapshotBackup(store, reason: .beforeDeleteAll)
+                    Task {
+                        do {
+                            if let store = itineraries.store {
+                                try await library.snapshotBackup(store, reason: .beforeDeleteAll)
+                            }
+                            library.deleteSavedStore()
+                            itineraries.load(from: library)
+                        } catch {
+                            operationError = OperationError(
+                                titleKey: "data.loadFailedTitle",
+                                detail: error.localizedDescription,
+                                keptKey: "data.errorNothingChanged")
+                        }
                     }
-                    library.deleteSavedStore()
-                    itineraries.load(from: library)
                 }
             }
         } message: {
@@ -653,12 +706,37 @@ struct DataManagerView: View {
             Button(localization.dataText("data.deleteAllTitle"), role: .destructive) {
                 confirmDeleteAll = false
                 PresentationHost.afterTeardown {
-                    if let store = itineraries.store {
-                        library.snapshotBackup(store, reason: .beforeDeleteAll)
-                    }
-                    itineraries.deleteAll(clearing: library)
-                    if let store = itineraries.store {
-                        library.save(store)
+                    Task {
+                        do {
+                            // Checked before spending a backup write on a
+                            // delete that `deleteAll`'s own `mutate` was
+                            // always going to refuse.
+                            guard itineraries.canMutate else {
+                                operationError = OperationError(
+                                    titleKey: "data.loadFailedTitle",
+                                    detail: localization.dataText("data.errorNothingChanged"),
+                                    keptKey: "data.loadFailedKept")
+                                return
+                            }
+                            if let store = itineraries.store {
+                                try await library.snapshotBackup(store, reason: .beforeDeleteAll)
+                            }
+                            guard itineraries.deleteAll(clearing: library) else {
+                                operationError = OperationError(
+                                    titleKey: "data.loadFailedTitle",
+                                    detail: localization.dataText("data.errorNothingChanged"),
+                                    keptKey: "data.loadFailedKept")
+                                return
+                            }
+                            if let store = itineraries.store {
+                                library.save(store)
+                            }
+                        } catch {
+                            operationError = OperationError(
+                                titleKey: "data.loadFailedTitle",
+                                detail: error.localizedDescription,
+                                keptKey: "data.errorNothingChanged")
+                        }
                     }
                 }
             }

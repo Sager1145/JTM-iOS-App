@@ -31,6 +31,8 @@ struct SettingsView: View {
     @Binding var appearance: String
     @Bindable var network: RailNetworkStore
     @Bindable var controller: RailMapController
+    @Bindable var itineraries: ItineraryStore
+    @Bindable var library: RideLibrary
     /// §5.9's question answered "the map": these two decide where it opens and
     /// nothing else. Read at launch by `RailWorkspaceView.launchExtent`, which
     /// is their only consumer — an `@AppStorage` pair rather than a value
@@ -38,6 +40,7 @@ struct SettingsView: View {
     /// the workspace root with the whole app in between.
     @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
     @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
+    @AppStorage(Region.northAmericaDefaultsKey) private var northAmericaEnabled = false
 
     var body: some View {
         Form {
@@ -51,6 +54,7 @@ struct SettingsView: View {
             selectionSection
             resetSection
             diagnosticsSection
+            northAmericaSection
         }
         .navigationTitle(localization.text("ios.settings", fallback: "Settings"))
         // The switch positions follow the interface language until the reader
@@ -228,7 +232,7 @@ struct SettingsView: View {
                 ) {
                     // The interface's own order — smallest network first, the
                     // same list the statistics scope offers.
-                    ForEach(Region.ordered) { region in
+                    ForEach(Region.enabledOrdered) { region in
                         Text(
                             localization.text(
                                 region.localizationKey, fallback: region.fallbackName)
@@ -430,7 +434,7 @@ struct SettingsView: View {
                 // `nil` is how the engine spells that.
                 localization.setNameReadings(nil)
                 display.syncNameReadingDefaults(to: localization.language)
-                controller.basemapOpacity = 1
+                controller.basemapOpacity = RailMapController.defaultBasemapOpacity
             }
         } footer: {
             Text(
@@ -507,6 +511,33 @@ struct SettingsView: View {
             LabeledContent(
                 localization.text("ios.decodeTime", fallback: "Decode time"),
                 value: "\(elapsed.milliseconds) ms")
+        }
+    }
+
+    // MARK: - North America
+
+    private var northAmericaSection: some View {
+        Section {
+            SettingToggleRow(
+                title: localization.text(
+                    "ios.settings.northAmerica.title", fallback: "North America"),
+                note: localization.text(
+                    "ios.settings.northAmerica.note",
+                    fallback:
+                        "Show United States and Canada lines, stations and journeys. "
+                        + "When off they are completely hidden; saved North American "
+                        + "journeys are hidden, not deleted."),
+                isOn: $northAmericaEnabled
+            )
+        }
+        .onChange(of: northAmericaEnabled) { _, enabled in
+            if launchScope == LaunchMapScope.region.rawValue,
+                let region = Region(rawValue: launchScopeRegion), region.isNorthAmerica, !enabled
+            {
+                launchScopeRegion = Region.jp.rawValue
+            }
+            network.northAmericaEnabledChanged()
+            Task { await itineraries.setNorthAmericaEnabled(enabled, library: library) }
         }
     }
 

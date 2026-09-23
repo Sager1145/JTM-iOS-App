@@ -252,7 +252,7 @@ final class TransferGuideImport {
         // the import survives until the next launch and no further. Awaited,
         // because the screen says "imported 3" immediately afterwards, and a
         // write still queued behind another one has not landed yet.
-        if let store = itineraries.store { await library.save(store).value }
+        if let store = itineraries.store { _ = await library.save(store).value }
         phase = .imported(count: added.count)
         return added
     }

@@ -269,7 +269,7 @@ final class WorkspaceDerived {
         if let regionsKey, ArrayGeneration.same(regionsKey, trains) { return regionsValue }
         var seen = Set<Region>()
         for train in trains { seen.insert(Region.resolved(train)) }
-        regionsValue = Region.ordered.filter { seen.contains($0) }
+        regionsValue = Region.enabledOrdered.filter { seen.contains($0) }
         regionsKey = trains
         return regionsValue
     }

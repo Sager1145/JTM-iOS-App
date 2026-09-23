@@ -11,10 +11,14 @@ struct JourneyEditing {
     let library: RideLibrary
 
     /// Adds and selects the new journey before its snapshot is handed off.
+    ///
+    /// `nil` means the add was refused (an import owns the store, or the
+    /// working set is not there yet) as well as meaning "no id yet" — either
+    /// way there is nothing to select or persist.
     @discardableResult
     func add(_ train: Train) -> String? {
-        let id = itineraries.add(train)
-        if let id { itineraries.selectedTrainID = id }
+        guard let id = itineraries.add(train) else { return nil }
+        itineraries.selectedTrainID = id
         persist()
         return id
     }
@@ -30,22 +34,22 @@ struct JourneyEditing {
     }
 
     func delete(_ id: String) {
-        itineraries.delete(id)
+        guard itineraries.delete(id) else { return }
         persist()
     }
 
     func duplicate(_ id: String) {
-        itineraries.duplicate(id)
+        guard itineraries.duplicate(id) != nil else { return }
         persist()
     }
 
     func move(_ id: String, by offset: Int) {
-        itineraries.move(id, by: offset)
+        guard itineraries.move(id, by: offset) else { return }
         persist()
     }
 
     func toggleVisibility(_ id: String) {
-        itineraries.toggleVisibility(id)
+        guard itineraries.toggleVisibility(id) else { return }
         persist()
     }
 

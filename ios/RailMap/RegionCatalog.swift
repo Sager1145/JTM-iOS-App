@@ -83,6 +83,38 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// first, which is also least to most demanding on the renderer.
     static let ordered: [Region] = [.mo, .hk, .tw, .kr, .ca, .jp, .us]
 
+    // MARK: - the North America switch
+
+    /// The settings key behind ``northAmericaEnabled``. Off unless the reader
+    /// turned it on: North America is an opt-in, and with it off the app
+    /// behaves as if `us` and `ca` did not ship — no lines, no stations, no
+    /// pickers, no rides. The rides are hidden, never deleted; they live in a
+    /// file of their own (see `RideStorage`) that is left untouched while off.
+    static let northAmericaDefaultsKey = "feature-north-america-enabled"
+
+    /// Read straight from `UserDefaults`, which is thread-safe, so that the
+    /// storage actor and the network loader can ask without a main-actor hop.
+    nonisolated static var northAmericaEnabled: Bool {
+        UserDefaults.standard.bool(forKey: northAmericaDefaultsKey)
+    }
+
+    var isNorthAmerica: Bool { self == .us || self == .ca }
+
+    /// Whether the interface offers this region right now.
+    var isEnabled: Bool { !isNorthAmerica || Self.northAmericaEnabled }
+
+    /// ``ordered``, minus whatever the North America switch hides. Every menu,
+    /// picker and loop that shows regions to the reader uses this; ``ordered``
+    /// stays for code that must still see every package (storage, migration).
+    static var enabledOrdered: [Region] { ordered.filter(\.isEnabled) }
+
+    /// Whether a ride belongs to the North American store: any part of it in
+    /// the United States or Canada. A cross-border *Maple Leaf* is one ride,
+    /// and it lives with the network it is drawn on.
+    static func isNorthAmerica(_ train: Train) -> Bool {
+        regionsTouched(train).contains(where: \.isNorthAmerica)
+    }
+
     /// The catalog key for this region's name, so the interface reads in the
     /// reader's language rather than in Chinese for everybody.
     var localizationKey: String { "country.\(rawValue)" }
@@ -189,7 +221,7 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// The regions of one weight, in catalog order.
     static func ordered(_ weight: DataWeight) -> [Region] {
-        ordered.filter { $0.dataWeight == weight }
+        enabledOrdered.filter { $0.dataWeight == weight }
     }
 
     // MARK: - matching a ride to a region

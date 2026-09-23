@@ -111,7 +111,7 @@ struct DataImportView: View {
             Picker(
                 localization.text("country.label", fallback: "Region"), selection: $flow.region
             ) {
-                ForEach(Region.ordered) { entry in
+                ForEach(Region.enabledOrdered) { entry in
                     Text(localization.text(entry.localizationKey, fallback: entry.fallbackName))
                         .tag(entry)
                 }

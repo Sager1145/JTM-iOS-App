@@ -181,6 +181,12 @@ final class ImportFlow {
 
     private var reviewRevision: UInt64 = 0
     private var checkedInput: (text: String, mode: ImportPreflight.Mode, region: Region)?
+    /// The working set's generation at the moment `checkedInput` was
+    /// captured. `commit` compares this against the store's current
+    /// generation before acting on the report: a fold, an edit, or another
+    /// import committed in between makes the report's counts (renames,
+    /// committable ids) describe a store that no longer exists.
+    private var checkedGeneration: Int?
     private var work: Task<Void, Never>?
     private var preflight: Task<ImportPreflight.Report, Error>?
     private var visibilityClock: Task<Void, Never>?
@@ -263,6 +269,7 @@ final class ImportFlow {
         let revision = reviewRevision
         let source = text
         let current = itineraries.store?.trains ?? []
+        let generation = itineraries.storeGeneration
         let checkedMode = mode
         let region = region
         startVisibilityClock()
@@ -296,6 +303,7 @@ final class ImportFlow {
                 let report = try await job.value
                 guard reviewRevision == revision, !Task.isCancelled else { return }
                 checkedInput = (source, checkedMode, region)
+                checkedGeneration = generation
                 stopVisibilityClock()
                 phase = .checked(report)
             } catch is CancellationError {
@@ -326,6 +334,14 @@ final class ImportFlow {
         guard let report, report.isCommittable, let checkedInput,
             checkedInput.text == text, checkedInput.mode == mode,
             checkedInput.region == region else { return }
+        // The working set may have moved since the report was produced — a
+        // fold, an edit, another import — and the report's counts (renames,
+        // committable ids) describe the store as it was, not as it is.
+        // Re-check against the current one instead of committing over it.
+        guard checkedGeneration == itineraries.storeGeneration else {
+            check(itineraries: itineraries)
+            return
+        }
         work?.cancel()
         let source = checkedInput.text
         let region = checkedInput.region
@@ -342,12 +358,26 @@ final class ImportFlow {
 
         work = Task { [weak self] in
             guard let self else { return }
-            // The recovery copy is written BEFORE the store changes, which is
-            // the only moment at which it can still be written (§5.8).
-            if let current = itineraries.store, !current.trains.isEmpty {
-                library.snapshotBackup(current, reason: .beforeImport)
-            }
             do {
+                // The recovery copy is written BEFORE the store changes,
+                // which is the only moment at which it can still be written
+                // (§5.8) — and awaited, so a backup that did not land aborts
+                // the import into the same `catch` below instead of letting
+                // the store change without one.
+                if let current = itineraries.store, !current.trains.isEmpty {
+                    try await library.snapshotBackup(current, reason: .beforeImport)
+                }
+                // The backup await is itself a suspension point, exactly like
+                // the one the guard above this task already worried about —
+                // the working set may have moved again while it was in
+                // flight. Re-checked here for the same reason: importing over
+                // a store the report no longer describes is the bug this
+                // whole generation check exists to prevent, and a mismatch
+                // discovered here re-runs the check rather than proceeding.
+                guard checkedGeneration == itineraries.storeGeneration else {
+                    check(itineraries: itineraries)
+                    return
+                }
                 let summary = try await itineraries.runImport(
                     text: source, region: region, mode: mode,
                     sourceLabel: label.isEmpty ? "JSON" : label
@@ -357,6 +387,19 @@ final class ImportFlow {
                         ProgressSummary(
                             stage: .importing, completed: progress.completed,
                             total: progress.total, canInteract: true, canCancel: true))
+                } onCommit: {
+                    // The last moment at which cancelling would still leave
+                    // the store untouched — `runImport` fires this
+                    // immediately before it publishes. Past this point the
+                    // run finishes and reports so regardless of `cancel()`,
+                    // so the control offering it has to go dark here rather
+                    // than staying lit through a cancel that would do
+                    // nothing.
+                    guard self.reviewRevision == revision else { return }
+                    if case .importing(var summary) = self.phase {
+                        summary.canCancel = false
+                        self.phase = .importing(summary)
+                    }
                 }
                 if reviewRevision == revision {
                     phase = .importing(
@@ -364,21 +407,26 @@ final class ImportFlow {
                             stage: .saving, completed: nil, total: nil, canInteract: false,
                             canCancel: false))
                 }
+                var saved = true
                 if let store = itineraries.store {
                     // Awaited, because the line below reports whether it
                     // landed. The save is queued behind whatever else is
-                    // writing, and `lastSaveError` says nothing about this one
-                    // until it has run.
+                    // writing, so this reads THIS save's own outcome off the
+                    // task it started — rather than `lastSaveError` afterward,
+                    // which a save issued behind this one in the same
+                    // sequence gate could already have overwritten with its
+                    // own, unrelated result.
                     // A completed store mutation still needs its save even if
                     // another review has superseded this run's presentation.
-                    await library.save(store).value
+                    saved = await library.save(store).value
                 }
                 guard reviewRevision == revision else { return }
                 stopVisibilityClock()
                 phase = .finished(
                     Outcome(
                         imported: summary.imported, renamed: renamed, mode: mode,
-                        storeCount: summary.storeCount, saveError: library.lastSaveError))
+                        storeCount: summary.storeCount,
+                        saveError: saved ? nil : library.lastSaveError))
             } catch is CancellationError {
                 guard reviewRevision == revision else { return }
                 stopVisibilityClock()

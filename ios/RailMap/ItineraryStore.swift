@@ -101,6 +101,37 @@ final class ItineraryStore {
         case notFound
     }
 
+    /// What `mutate` and `replaceAll` did, in the two parts a caller cannot
+    /// tell apart from the mutated value alone: whether it landed, and — if
+    /// it did — what to select next.
+    ///
+    /// Before this, a refusal (an import owns the store, or the working set
+    /// is not there yet) returned the SAME value success with "nothing
+    /// changed" would: `mutate` handed back the existing `selectedTrainID`
+    /// either way, and a caller like `JourneyEditing` persisted and selected
+    /// on the strength of that value without any way to see the refusal.
+    enum MutationOutcome: Equatable {
+        case committed(selectedID: String?)
+        case refused
+
+        var isCommitted: Bool {
+            if case .committed = self { return true }
+            return false
+        }
+
+        var committedSelectedID: String? {
+            if case .committed(let id) = self { return id }
+            return nil
+        }
+    }
+
+    /// `merge`'s own outcome: the ids folded in on success, distinct from a
+    /// refusal — which otherwise reads exactly like "merged 0 ids" (§8.7).
+    enum MergeOutcome: Equatable {
+        case committed(ids: [String])
+        case refused
+    }
+
     /// Replace one edited train and rebuild the date buckets from the same
     /// ported rules used on load. The editor commits a complete draft once,
     /// so views never observe a half-edited canonical record.
@@ -132,7 +163,10 @@ final class ItineraryStore {
         if selectedTrainID == originalID { selectedTrainID = candidate.id }
         publishRecordIndex()
 
-        regroup(next)
+        // `self.store`, not `next`: when North America is off,
+        // `publishWorkingSet` has already stripped it out, and grouping
+        // `next` instead would put a hidden ride back on screen.
+        regroup(self.store ?? next)
         return outcome
     }
 
@@ -146,7 +180,7 @@ final class ItineraryStore {
     func add(region: Region) -> String? {
         mutate(region: region) { workspace in
             StoreOperations.addTrain(in: &workspace)
-        }
+        }.committedSelectedID
     }
 
     /// Inserts a completed editor draft. Keeping this separate from the
@@ -156,26 +190,28 @@ final class ItineraryStore {
     func add(_ train: Train) -> String? {
         mutate(region: Region.resolved(train)) { workspace in
             StoreOperations.addTrain(train.taggingRegion(), in: &workspace)
-        }
+        }.committedSelectedID
     }
 
     @discardableResult
     func duplicate(_ id: String) -> String? {
         mutate(region: region(of: id)) { workspace in
             StoreOperations.duplicateTrain(id, in: &workspace)
-        }
+        }.committedSelectedID
     }
 
-    func delete(_ id: String) {
-        _ = mutate(region: region(of: id)) { workspace in
+    @discardableResult
+    func delete(_ id: String) -> Bool {
+        mutate(region: region(of: id)) { workspace in
             StoreOperations.deleteTrain(id, in: &workspace)
-        }
+        }.isCommitted
     }
 
-    func toggleVisibility(_ id: String) {
-        _ = mutate(region: region(of: id)) { workspace in
+    @discardableResult
+    func toggleVisibility(_ id: String) -> Bool {
+        mutate(region: region(of: id)) { workspace in
             StoreOperations.toggleTrainVisibility(id, in: &workspace)
-        }
+        }.isCommitted
     }
 
     /// The region of the ride an operation acts on.
@@ -232,10 +268,11 @@ final class ItineraryStore {
         RideStatusCenter.shared.publish(trainIDs: Set(store?.trains.map(\.id) ?? []))
     }
 
-    func move(_ id: String, by offset: Int) {
-        _ = mutate(region: region(of: id)) { workspace in
+    @discardableResult
+    func move(_ id: String, by offset: Int) -> Bool {
+        mutate(region: region(of: id)) { workspace in
             StoreOperations.moveTrain(id, by: offset, in: &workspace)
-        }
+        }.isCommitted
     }
 
     /// One import's per-journey position, as the engine reports it.
@@ -264,6 +301,18 @@ final class ItineraryStore {
     /// overwritten by the commit (§8.7 — "防止并发修改造成不明确结果").
     private(set) var isImporting = false
 
+    /// Read-only mirror of ``mutate(region:operation:)``'s own refusal
+    /// condition — a caller (a screen deciding whether to even ASK for a
+    /// backup before a destructive action) needs to know it will be refused
+    /// before spending a backup write on an action that was never going to
+    /// land, not after.
+    var canMutate: Bool { !isImporting && store != nil }
+
+    /// Read-only mirror of ``replaceAll(with:into:)``'s own refusal
+    /// condition, checked before the suspension inside it re-checks the
+    /// same three facts. See ``canMutate``.
+    var canReplace: Bool { !isImporting && store != nil && !loadInFlight }
+
     /// The staged import: parse and validate off the main actor, report every
     /// journey as it lands, and only then replace the store in one assignment.
     ///
@@ -287,11 +336,21 @@ final class ItineraryStore {
         region: Region,
         mode: ImportPreflight.Mode,
         sourceLabel: String = "JSON",
-        onProgress: @MainActor (ImportProgress) -> Void
+        onProgress: @MainActor (ImportProgress) -> Void,
+        onCommit: @MainActor () -> Void = {}
     ) async throws -> ImportSummary {
         guard !isImporting else { throw ImportBusy() }
         isImporting = true
-        defer { isImporting = false }
+        defer {
+            isImporting = false
+            // A North America toggle asked for while this import ran is
+            // replayed now that it no longer owns the store — see
+            // `setNorthAmericaEnabled`'s guard.
+            if pendingNorthAmericaReconcile, let library {
+                pendingNorthAmericaReconcile = false
+                Task { await setNorthAmericaEnabled(Region.northAmericaEnabled, library: library) }
+            }
+        }
 
         let current = store?.trains ?? []
         let (stream, continuation) = AsyncStream<ImportProgress>.makeStream(
@@ -363,9 +422,21 @@ final class ItineraryStore {
         // strictly newer than this grouping.
         groupingTicket += 1
         let ticket = groupingTicket
-        let grouped = try await Self.group(store: next)
+        // Published before grouping now — not after, as the comment above
+        // used to describe: `publishWorkingSet` may strip North American
+        // rides out of `next` when the switch is off, and the group has to
+        // run over what is actually published, or a hidden ride reappears in
+        // `loaded.trains`.
+        //
+        // `onCommit` fires immediately before this line — the last point at
+        // which cancelling would still leave the store untouched. A caller
+        // showing a cancel control uses it to retire that control: cancelling
+        // after this line has no effect (the run reports finished either
+        // way), and a control that is still offered past this point is a lie.
+        onCommit()
         publishWorkingSet(next)
         selectedTrainID = commit.selectedTrainID
+        let grouped = try await Self.group(store: self.store ?? next)
         // The import happened and is reported either way; what is skipped is
         // publishing an older grouping over a newer one.
         if ticket == groupingTicket { state = .loaded(grouped) }
@@ -401,20 +472,124 @@ final class ItineraryStore {
         publishWorkingSet(next)
         selectedTrainID = session.selectedTrainID
         publishRecordIndex()
-        regroup(next, reassertingSelection: true)
+        regroup(self.store ?? next, reassertingSelection: true)
     }
 
-    func deleteAll() {
-        _ = mutate(region: .jp) { workspace in
+    @discardableResult
+    func deleteAll() -> Bool {
+        mutate(region: .jp) { workspace in
             StoreOperations.deleteAllTrains(in: &workspace)
-        }
+        }.isCommitted
     }
 
     /// Same, plus the note about which samples are in the working set — which
-    /// is no longer true of an empty one.
-    func deleteAll(clearing library: RideLibrary) {
-        deleteAll()
+    /// is no longer true of an empty one. Only when the delete actually
+    /// landed: an import owning the store must not also forget the samples
+    /// as though the store had been emptied.
+    @discardableResult
+    func deleteAll(clearing library: RideLibrary) -> Bool {
+        guard deleteAll() else { return false }
         library.forgetLoadedSamples()
+        return true
+    }
+
+    /// Flips the North America switch's effect on the working set.
+    ///
+    /// The switch itself is `UserDefaults`, flipped by the caller (the
+    /// settings screen) BEFORE this runs — `Region.northAmericaEnabled`
+    /// already reads the new value by the time this executes. What this does
+    /// is bring the working set into line with it.
+    ///
+    /// Turning off: the North American rides in the current working set are
+    /// flushed to their own file first — `saveIncludingNorthAmerica` rather
+    /// than the ordinary `save`, because the switch already reads `false` and
+    /// the ordinary save would only stray-merge them (correct, but a needless
+    /// read-modify-write of the NA file when a plain overwrite will do) — and
+    /// only then stripped from what is shown.
+    ///
+    /// Turning on: the NA file is read and merged into the working set. No
+    /// save follows — nothing changed that was not already on disk in one
+    /// file or the other.
+    ///
+    /// A running import owns the store (§8.7), same as `merge`. A load still
+    /// reading the file owns it too — a toggle mid-load is asking about a
+    /// store that has not been decided yet — so both defer to
+    /// `pendingNorthAmericaReconcile` and are replayed once the owner finishes
+    /// (`runImport` and `load(from:)` both check it when they are done).
+    func setNorthAmericaEnabled(_ enabled: Bool, library: RideLibrary) async {
+        guard !isImporting, !loadInFlight else {
+            pendingNorthAmericaReconcile = true
+            return
+        }
+        guard let current = store else { return }
+
+        if enabled {
+            let naStore: TrainStore
+            do {
+                naStore = try await library.northAmericaStore()
+            } catch {
+                // Left false deliberately: a decode failure means nothing was
+                // actually folded in, and a save issued on the strength of
+                // `northAmericaInWorkingSet == true` here would be free to
+                // full-replace `train-store-na.json` with a working set that
+                // never held its rides — the exact wipe this flag exists to
+                // prevent.
+                library.reportError(error.localizedDescription)
+                return
+            }
+            // The switch, or which door owns the store, may have moved while
+            // that decode suspended. If either now disagrees with what this
+            // call is about to do, defer rather than publish and mark the
+            // flag true on the strength of a decode that is no longer current
+            // — the OFF call, or the resumed load, replays this once it is
+            // safe. If the switch itself has gone off, the OFF branch already
+            // handles reconciling; asking for a replay here would double it.
+            guard Region.northAmericaEnabled, !isImporting, !loadInFlight else {
+                if Region.northAmericaEnabled { pendingNorthAmericaReconcile = true }
+                return
+            }
+            guard !naStore.trains.isEmpty else {
+                if Region.northAmericaEnabled { library.northAmericaInWorkingSet = true }
+                return
+            }
+            let tagged = await MergedStore.regionTagged(naStore)
+            guard Region.northAmericaEnabled, !isImporting, !loadInFlight else {
+                if Region.northAmericaEnabled { pendingNorthAmericaReconcile = true }
+                return
+            }
+            // Re-read rather than reuse `current`: the decode above suspended,
+            // and another door may have published a newer working set while
+            // it was away.
+            guard let latest = store else { return }
+            let next = MergedStore.merging(tagged, into: latest)
+            publishWorkingSet(next)
+            // Only after publishing, and only if the switch is still on:
+            // `publishWorkingSet` itself may have stripped North America back
+            // out if the switch flipped off during this suspension, and the
+            // flag must describe what `store` actually holds now, not what
+            // this call meant to leave it holding.
+            if Region.northAmericaEnabled { library.northAmericaInWorkingSet = true }
+            publishRecordIndex()
+            regroup(self.store ?? next)
+        } else {
+            // Only when the working set actually holds North America rides,
+            // and only when nothing is mid-load: a load in flight is reading
+            // a store this flag has not caught up with yet, and flushing
+            // `current` — which predates that read — could restore rides a
+            // restore or a newer save already retired.
+            if library.northAmericaInWorkingSet, !loadInFlight {
+                library.saveIncludingNorthAmerica(current)
+            }
+            let next = current
+            let hadSelection = selectedTrainID.map { id in
+                current.trains.first { $0.id == id }.map(Region.isNorthAmerica) ?? false
+            } ?? false
+            publishWorkingSet(next)
+            library.northAmericaInWorkingSet = false
+            if hadSelection { selectedTrainID = nil }
+            publishRecordIndex()
+            regroup(self.store ?? next)
+        }
     }
 
     /// The canonical JSON for every ride, whatever region each belongs to.
@@ -434,16 +609,20 @@ final class ItineraryStore {
     private func mutate(
         region: Region,
         operation: (inout StoreOperations.Workspace) -> StoreOperations.MutationResult?
-    ) -> String? {
-        guard !isImporting else { return selectedTrainID }
-        guard let store else { return nil }
+    ) -> MutationOutcome {
+        // Refused rather than answered with the existing `selectedTrainID`:
+        // that used to be indistinguishable from a mutation that ran and
+        // happened to leave the selection unchanged, and a caller acting on
+        // it (persisting, selecting) could not tell the two apart.
+        guard !isImporting else { return .refused }
+        guard let store else { return .refused }
         var workspace = StoreOperations.Workspace(
             store: store,
             selectedTrainID: selectedTrainID,
             focusedTrainID: nil,
             country: region.code
         )
-        guard operation(&workspace) != nil else { return workspace.selectedTrainID }
+        guard operation(&workspace) != nil else { return .refused }
         // A journey created by one of these transitions — `addTrain`'s blank
         // scaffold, `duplicateTrain`'s copy — arrives without a region, and
         // the scaffold's stops are the only thing that could say. Tagging the
@@ -452,7 +631,7 @@ final class ItineraryStore {
         selectedTrainID = workspace.selectedTrainID
         publishRecordIndex()
         regroup(self.store ?? workspace.store, reassertingSelection: true)
-        return workspace.selectedTrainID
+        return .committed(selectedID: workspace.selectedTrainID)
     }
 
     /// The reader's own rides, or nothing at all.
@@ -464,7 +643,9 @@ final class ItineraryStore {
     /// own store means anything. The samples are on the data screen, one
     /// region at a time, and loading one is an action.
     func load(from library: RideLibrary) {
+        self.library = library
         state = .loading
+        loadInFlight = true
         // Taken before the first suspension. What this load reads is only
         // publishable while the working set is still the one it started from.
         let generation = storeGeneration
@@ -478,9 +659,16 @@ final class ItineraryStore {
                 // before it left on disk.
                 await library.migrateLegacyStores()
                 await library.refreshSavedState()
-                let loaded = library.hasSavedStore
-                    ? try await library.savedStore()
-                    : TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: [])
+                let loaded: TrainStore
+                let includedNorthAmerica: Bool
+                if library.hasSavedStore {
+                    let read = try await library.savedStore()
+                    loaded = read.store
+                    includedNorthAmerica = read.includedNorthAmerica
+                } else {
+                    loaded = TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: [])
+                    includedNorthAmerica = Region.northAmericaEnabled
+                }
                 // A store saved before `number_en` existed carries the Latin
                 // name inside the caption. Split once, here; written back
                 // below, only if this load is still the one being published.
@@ -494,13 +682,36 @@ final class ItineraryStore {
                 // saved; this is the file as it was BEFORE that happened, so
                 // it is abandoned rather than written over the top. The door
                 // that published has already republished `state`.
-                guard generation == storeGeneration else { return }
-                // The split above is written back so the next launch reads a
-                // store that already has the field. After the guard, not
-                // before: a save of the file as it was BEFORE somebody else
-                // published would put their edit under this one.
-                if migratedCaptions != nil { _ = library.save(saved) }
+                guard generation == storeGeneration else {
+                    loadInFlight = false
+                    // A toggle asked for while this load owned the store (per
+                    // the guard above, `setNorthAmericaEnabled` deferred to
+                    // us) must still be replayed even though this read is
+                    // being abandoned — the door that published in the
+                    // meantime is not the one that saw the toggle.
+                    if pendingNorthAmericaReconcile {
+                        pendingNorthAmericaReconcile = false
+                        await setNorthAmericaEnabled(Region.northAmericaEnabled, library: library)
+                    }
+                    return
+                }
                 publishWorkingSet(store)
+                // What the file actually held, not what the switch says now —
+                // except that `publishWorkingSet` just above may itself have
+                // stripped North America out if the switch reads off, and the
+                // flag must describe what `store` actually holds after that,
+                // not what the file held before it. Set after the publish,
+                // not before, or a save issued on the strength of this flag
+                // could full-replace the NA file with a working set that
+                // never held its rides (see `RideStorage.writeStore`).
+                library.northAmericaInWorkingSet = includedNorthAmerica && Region.northAmericaEnabled
+                // The split above is written back so the next launch reads a
+                // store that already has the field. After the guard AND
+                // after the flag is set, not before: a save of the file as it
+                // was BEFORE somebody else published would put their edit
+                // under this one, and a save issued before the flag is
+                // correct could carry the wrong `includeNorthAmerica` choice.
+                if migratedCaptions != nil { _ = library.save(saved) }
                 publishRecordIndex()
                 // Taken, not bumped.
                 //
@@ -513,8 +724,19 @@ final class ItineraryStore {
                 // does.
                 groupingTicket += 1
                 let ticket = groupingTicket
-                let grouped = try await Self.group(store: store)
-                guard ticket == groupingTicket else { return }
+                let grouped = try await Self.group(store: self.store ?? store)
+                guard ticket == groupingTicket else {
+                    loadInFlight = false
+                    // A stale grouping abandons its publish exactly like the
+                    // generation guard above, and the same toggle-while-in-
+                    // flight case applies here too: whatever asked for North
+                    // America to change while this load owned the store must
+                    // still be replayed even though the grouping it produced
+                    // is being thrown away.
+                    await reconcileNorthAmericaIfNeeded(
+                        includedNorthAmerica: includedNorthAmerica, library: library)
+                    return
+                }
                 state = .loaded(grouped)
                 selectedTrainID = nil
                 // Written back, because the point of the pass is that it
@@ -523,13 +745,48 @@ final class ItineraryStore {
                 // something — a store this app wrote is already tagged, and
                 // rewriting it on every launch would be a file touched for
                 // nothing.
-                if store != saved { library.save(store) }
+                if store != saved { library.save(self.store ?? store) }
+                loadInFlight = false
+                // The file may have held North America rides the switch now
+                // disagrees with — the switch changed while nothing was
+                // loaded, or a stray write left them somewhere the flag does
+                // not expect. Reconcile once, after publishing, rather than
+                // leaving the working set stale until the reader does
+                // something else that happens to touch it. A toggle that
+                // arrived while this load was in flight left the same request
+                // behind in `pendingNorthAmericaReconcile`.
+                await reconcileNorthAmericaIfNeeded(
+                    includedNorthAmerica: includedNorthAmerica, library: library)
             } catch {
                 // A failure from a load nobody is waiting on any more must not
                 // replace a working set that arrived while it was reading.
+                loadInFlight = false
+                // A toggle deferred to this load (see the generation-guard
+                // return above) is replayed here too — the load failing is
+                // still the load finishing, and the reconcile must not wait
+                // for whatever the reader does next.
+                if pendingNorthAmericaReconcile {
+                    pendingNorthAmericaReconcile = false
+                    await setNorthAmericaEnabled(Region.northAmericaEnabled, library: library)
+                }
                 guard generation == storeGeneration else { return }
                 state = .failed(error.localizedDescription)
             }
+        }
+    }
+
+    /// Replay a North America toggle that arrived while a load owned the
+    /// store, whether that load's grouping published or was abandoned.
+    ///
+    /// `includedNorthAmerica` is what the file actually held; the switch may
+    /// have moved since, or a toggle may have been deferred to this load via
+    /// `pendingNorthAmericaReconcile` — either is reason enough to reconcile.
+    private func reconcileNorthAmericaIfNeeded(
+        includedNorthAmerica: Bool, library: RideLibrary
+    ) async {
+        if includedNorthAmerica != Region.northAmericaEnabled || pendingNorthAmericaReconcile {
+            pendingNorthAmericaReconcile = false
+            await setNorthAmericaEnabled(Region.northAmericaEnabled, library: library)
         }
     }
 
@@ -537,9 +794,13 @@ final class ItineraryStore {
     /// working set and save the result.
     ///
     /// Returns the ids that were added or updated, so the caller can say how
-    /// many rides arrived rather than how many the file held.
+    /// many rides arrived rather than how many the file held — or `.refused`,
+    /// distinct from ``MergeOutcome/committed(ids:)`` holding an empty list,
+    /// so a caller cannot mistake "an import owns the store" for "merged
+    /// nothing".
     @discardableResult
-    func merge(_ incoming: TrainStore, into library: RideLibrary) async -> [String] {
+    func merge(_ incoming: TrainStore, into library: RideLibrary) async -> MergeOutcome {
+        self.library = library
         // Placed BEFORE the fold, not corrected after it. Every bundled sample
         // is a web-app store with no `region` in it, and outside Japan its
         // codes name no region on their face — so a sample folded in untagged
@@ -552,35 +813,49 @@ final class ItineraryStore {
         // `.disabled` modifier on one screen — a UI accident, not an
         // invariant, and one that says nothing about the sample load already
         // in flight when the import starts.
-        guard !isImporting else { return [] }
+        guard !isImporting else { return .refused }
         let tagged = await MergedStore.regionTagged(incoming)
-        // Refused while the working set is still being read from disk. Folding
-        // into a store that is not there yet would merge into nothing and then
-        // SAVE that — which is how loading a sample seconds after launch
-        // deletes every ride the reader already had. Read after the tagging
-        // rather than before: an `await` is a suspension point, so a working
-        // set checked before it is not the one being folded into.
-        guard let current = store else { return [] }
+        // Refused while the working set is still being read from disk, OR
+        // while an import has started claiming the store since the guard
+        // above ran — `await` is a suspension point, so both facts have to be
+        // re-read rather than trusted from before it. Folding into a store
+        // that is not there yet would merge into nothing and then SAVE that —
+        // which is how loading a sample seconds after launch deletes every
+        // ride the reader already had.
+        guard !isImporting, let current = store else { return .refused }
         let next = MergedStore.merging(tagged, into: current)
         publishWorkingSet(next)
         publishRecordIndex()
-        library.save(next)
-        regroup(next)
-        return incoming.trains.map(\.id)
+        // The working set (`self.store`), not `next`: when North America is
+        // off, `publishWorkingSet` has already stashed its NA rides to their
+        // own file, and saving the unstripped `next` here would only repeat
+        // that write as a stray merge (harmless, but pointless).
+        library.save(self.store ?? next)
+        regroup(self.store ?? next)
+        return .committed(ids: incoming.trains.map(\.id))
     }
 
     /// Replace the whole working set with one store — the 重置示例 action,
     /// which is the only place the web app's "this sample IS the store"
     /// meaning survives.
-    func replaceAll(with incoming: TrainStore, into library: RideLibrary) async {
+    @discardableResult
+    func replaceAll(with incoming: TrainStore, into library: RideLibrary) async -> MutationOutcome {
+        self.library = library
         // As `merge`: a running import owns the store.
-        guard !isImporting else { return }
+        guard !isImporting else { return .refused }
         let next = await MergedStore.regionTagged(incoming)
+        // Re-checked after the suspension above, exactly as `setNorthAmericaEnabled`
+        // does before it publishes: an import may have started claiming the
+        // store, or a load may still be reading the file this would otherwise
+        // overwrite, since the guard above ran.
+        guard !isImporting, store != nil, !loadInFlight else { return .refused }
         publishWorkingSet(next)
         selectedTrainID = nil
         publishRecordIndex()
-        library.save(next)
-        regroup(next)
+        // `self.store`, not `next` — see the identical note in `merge`.
+        library.save(self.store ?? next)
+        regroup(self.store ?? next)
+        return .committed(selectedID: nil)
     }
 
     /// The number of the most recent rebuild that was asked for.
@@ -602,15 +877,75 @@ final class ItineraryStore {
     /// takes the same answer: work that suspended may only publish if nothing
     /// published while it was away. `groupingTicket` guards the grouping;
     /// this guards the store the grouping is derived FROM.
-    private var storeGeneration = 0
+    private(set) var storeGeneration = 0
+
+    /// The library ``publishWorkingSet(_:)`` hands stripped North American
+    /// rides to, so an import or sample load that arrives with NA rides while
+    /// the switch is off does not lose them. Set by ``load(from:)``, `merge`
+    /// and `replaceAll` — the three doors a store can arrive through — and
+    /// also by ``attach(_:)``, which the app calls as soon as both stores
+    /// exist, before any of those doors can be reached.
+    @ObservationIgnored private weak var library: RideLibrary?
+
+    /// Wires this store to its library before either is otherwise used.
+    ///
+    /// `library` is `weak`, and `merge`/`replaceAll`/`load(from:)` each set it
+    /// again as they run — but all three are reachable from the UI (a sample
+    /// load, an import) before `load(from:)` is ever called, and a commit
+    /// that races ahead of it would strip North American rides against a
+    /// `nil` library, silently dropping them (see ``publishWorkingSet(_:)``).
+    /// Called once, where the app creates both stores, so the weak reference
+    /// is live from the start rather than from whichever door happens first.
+    func attach(_ library: RideLibrary) {
+        self.library = library
+    }
+
+    /// Whether `load(from:)`'s file read is still in flight.
+    ///
+    /// A toggle mid-load is asking about a store that has not been decided
+    /// yet — the file might hold North America rides the switch disagrees
+    /// with, or might not. `setNorthAmericaEnabled` defers to
+    /// `pendingNorthAmericaReconcile` instead of acting on a store `load` is
+    /// about to overwrite.
+    private var loadInFlight = false
+
+    /// A North America toggle asked for while an import or a load owned the
+    /// store, to be replayed once whichever of them finishes.
+    private var pendingNorthAmericaReconcile = false
 
     /// The one door onto the working set.
     ///
     /// Every assignment goes through here so that a future one cannot forget
     /// to count itself. A generation that misses a writer is worse than no
     /// generation at all, because `load` would then believe it was safe.
+    ///
+    /// North American rides are stripped out here — not upstream — when the
+    /// switch is off, so that every caller (`replace`, `mutate`, imports,
+    /// `merge`, `replaceAll`) gets the same answer without repeating the
+    /// check: the working set the reader sees never holds a ride the switch
+    /// says is hidden. Stripped rides are not dropped — they are handed to
+    /// the library, which merges them into the North America file, exactly
+    /// as a stray in ``RideStorage/writeStore(_:includeNorthAmerica:)`` would
+    /// be.
     private func publishWorkingSet(_ next: TrainStore) {
-        store = next
+        var published = next
+        if !Region.northAmericaEnabled {
+            var kept: [Train] = []
+            var hidden: [Train] = []
+            for train in next.trains {
+                if Region.isNorthAmerica(train) { hidden.append(train) } else { kept.append(train) }
+            }
+            published = TrainStore(schemaVersion: next.schemaVersion, trains: kept)
+            if !hidden.isEmpty { library?.stashHidden(hidden) }
+            // Set unconditionally on this branch, not only when something was
+            // actually stripped: the invariant is that
+            // `northAmericaInWorkingSet == true` implies every NA ride from
+            // the file is in `store` right now, and the switch being off
+            // means `store` never holds any of them, whatever the flag last
+            // said.
+            library?.northAmericaInWorkingSet = false
+        }
+        store = published
         storeGeneration &+= 1
     }
 
