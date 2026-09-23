@@ -35,6 +35,11 @@ struct RideEditorView: View {
     /// recovery. A confirmation would be asking permission to do something
     /// that costs nothing to reverse.
     @State private var undoableDeletion: [Deletion] = []
+    /// The JP limited-express pattern picker and its replace-existing-stops
+    /// confirmation. The picker is presented as a sheet; a chosen pattern is
+    /// held here so the confirmation dialog (when needed) can apply it.
+    @State private var showsServicePatternPicker = false
+    @State private var showsReplaceStopsConfirmation = false
     /// Whether the reader has moved the ride switch themselves. Once true the
     /// date pre-fill is finished for this session — see ``prefillRidden(forDate:)``.
     @State private var riddenIsTheReaders = false
@@ -249,6 +254,21 @@ struct RideEditorView: View {
                 }
                 Button(localization.editorText("ios.editor.keepEditing"), role: .cancel) { pendingRegion = nil }
             } message: { _ in Text(localization.editorText("ios.editor.changeRegionNote")) }
+        .confirmationDialog(
+            "既存の駅を置き換えますか？", isPresented: $showsReplaceStopsConfirmation, titleVisibility: .visible
+        ) {
+            Button("置き換える", role: .destructive) { showsServicePatternPicker = true }
+            Button("キャンセル", role: .cancel) {}
+        }
+        .sheet(isPresented: $showsServicePatternPicker) {
+            ServicePatternPickerView(region: Region.resolved(draft).code) { pattern, reversed in
+                let ridden = RideLedger.hasBeenRidden(draft)
+                draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
+                stopIDs = draft.stops.map { _ in UUID() }
+                undoableDeletion = []
+                addedStopID = nil
+            }
+        }
         .interactiveDismissDisabled(draft != original)
     }
 
@@ -688,6 +708,19 @@ struct RideEditorView: View {
             .onMove(perform: moveStops)
 
             if !undoableDeletion.isEmpty { undoBanner }
+
+            if Region.resolved(draft).code == "jp" {
+                Button {
+                    if draft.stops.contains(where: { !$0.name.isEmpty }) {
+                        showsReplaceStopsConfirmation = true
+                    } else {
+                        showsServicePatternPicker = true
+                    }
+                } label: {
+                    Label("特急から駅を入力", systemImage: "train.side.front.car")
+                }
+                .accessibilityIdentifier("rideEditorServicePattern")
+            }
 
             Button {
                 undoableDeletion = []

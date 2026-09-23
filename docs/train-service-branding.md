@@ -11,3 +11,7 @@
 验证：`SCRATCH=/private/tmp/jtm-service-verify ios/verify.sh --swift`。单元测试覆盖名称匹配、默认标识回退和跨线信息；构建检查还会验证数据库中所有非空图片路径都已打包。
 
 匹配前会剔除「（宇都宮→日光）」这类带箭头或「行／方面」的方向括号，避免站名（日光、北斗、富士、有明）误判成特急。运营公司 logo 查询接受短名（JR東日本）、法定全名（東日本旅客鉄道）以及「/」连写的联合运营；候选顺序为已记录区段的运营公司、`company` 字段、路线策略、最后才是识别出的运营公司。资料库已收录 JR 六社现行及近年停运的特急（停运列车保留以辨识历史行程）；私铁特急仍待补充。
+
+## 特急停靠站模式
+
+`TrainServicePatterns` 读取 `ios/RailKit/Sources/RailCore/Resources/train-service-patterns.json`，为每条特急路线记录一份停靠站清单，供编辑行程时一键套用。每项包含 `patternId`、关联的品牌 `serviceId`、日文名称 `name`、以「/」连写的法定运营公司 `company`（经 `OperatorBranding.companyLabel` 转换为短名）、说明用 `label`、起讫站 `origin`／`destination`、必停站顺序 `stops`、以及 `optionalStops`／`via`／`confidence`／`source` 等参考信息。套用一个模式时，`stops` 中的所有车站都写成 `passenger_stop`（首末两站除外），`optionalStops` 记录的「一部停車」车站不会自动插入，而是留给使用者按需添加。同一品牌名称但不同路线的列车——例如サンライズ出雲与サンライズ瀬戸共用「サンライズ」品牌、共同从東京始发，却分别开往出雲市与高松——各自登记为独立的 `patternId`，不合并成一条记录。单元测试会核对 `stops`／`optionalStops`／`via` 中的每一个车站名称都存在于 `app/data/stations.json`，避免拼写或旧站名混入。`confidence` 标注数据可信度（如 `medium`），提醒尚未逐条核对到官方时刻表的条目。
