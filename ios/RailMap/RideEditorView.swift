@@ -303,7 +303,10 @@ struct RideEditorView: View {
             Button("キャンセル", role: .cancel) {}
         }
         .sheet(isPresented: $showsServicePatternPicker) {
-            ServicePatternPickerView(region: Region.resolved(draft).code) { pattern, reversed in
+            ServicePatternPickerView(
+                region: Region.resolved(draft).code,
+                rideDate: draft.date.flatMap { $0.isEmpty ? nil : $0 }
+            ) { pattern, reversed in
                 let ridden = RideLedger.hasBeenRidden(draft)
                 draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
                 stopIDs = draft.stops.map { _ in UUID() }

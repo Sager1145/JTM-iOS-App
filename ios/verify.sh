@@ -76,6 +76,10 @@ if [ "$run_swift" = 1 ]; then
     echo "== Swift ======================================================="
     cd "$here/RailKit"
 
+    python3 "$here/tools/build-train-service-station-refs.py" --check \
+        || fail "train-service station references are missing or ambiguous"
+    echo "  train-service stations resolve to fixed catalog identities"
+
     swift build --scratch-path "$scratch" >/dev/null 2>&1 || {
         swift build --scratch-path "$scratch" 2>&1 | grep -E 'error:' | head -20
         fail "swift build"

@@ -58,11 +58,11 @@ def completeness_is_full(pattern):
 
 def format_validity(pattern):
     valid_from = pattern.get("validFrom")
-    valid_to = pattern.get("validTo")
-    if not valid_from and not valid_to:
+    valid_until = pattern.get("validUntil")
+    if not valid_from and not valid_until:
         return "—"
     left = valid_from or "?"
-    right = valid_to if valid_to else "现行"
+    right = "<" + valid_until if valid_until else "?"
     return "{}〜{}".format(left, right)
 
 
@@ -197,14 +197,20 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
             lines.append("| {} | {} |".format(level, confidence_counts[level]))
     lines.append("")
 
-    current_count = sum(1 for pattern in patterns if not pattern.get("validTo"))
-    discontinued_count = len(patterns) - current_count
-    lines.append("### 运行状态")
+    from datetime import date
+    today = date.today().isoformat()
+    known = [p for p in patterns if (p.get("completeness") or {}).get("validity") != "missing"]
+    current_count = sum(1 for p in known if
+                        (not p.get("validFrom") or p["validFrom"] <= today) and
+                        (not p.get("validUntil") or today < p["validUntil"]))
+    discontinued_count = len(known) - current_count
+    lines.append("### 记录的有效期（截至 {}）".format(today))
     lines.append("")
     lines.append("| 状态 | 数量 |")
     lines.append("|---|---|")
-    lines.append("| 运行中 | {} |".format(current_count))
-    lines.append("| 廃止・終了 | {} |".format(discontinued_count))
+    lines.append("| 记录覆盖今日 | {} |".format(current_count))
+    lines.append("| 记录不覆盖今日 | {} |".format(discontinued_count))
+    lines.append("| 有效期资料缺失 | {} |".format(len(patterns) - len(known)))
     lines.append("")
 
     lines.append("### 存在缺口的条目（资料不完整或求解失败/含历史不可解区间）")

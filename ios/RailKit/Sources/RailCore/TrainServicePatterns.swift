@@ -11,6 +11,22 @@ public enum TrainServicePatterns {
     /// different destinations — is recorded as separate patterns, one per
     /// `serviceId`.
     public struct Pattern: Codable, Sendable, Identifiable, Hashable {
+        /// A fixed station identity in the shipped JP station directory.
+        /// `name` is a display snapshot; `sourceCode` is the identity.
+        public struct StationRef: Codable, Sendable, Hashable {
+            public let name: String
+            public let sourceCode: String
+
+            public init(name: String, sourceCode: String) {
+                self.name = name
+                self.sourceCode = sourceCode
+            }
+
+            public var stationKey: StationKey {
+                StationKey(regionCode: "jp", sourceCode: sourceCode)
+            }
+        }
+
         /// A per-field data-completeness rating recorded on a ``Pattern``.
         public enum Level: String, Codable, Sendable {
             case complete, partial, missing
@@ -42,8 +58,10 @@ public enum TrainServicePatterns {
         public let label: String
         public let origin: String
         public let destination: String
-        public let stops: [String]
-        public let optionalStops: [String]
+        public let stopRefs: [StationRef]
+        public let optionalStopRefs: [StationRef]
+        public var stops: [String] { stopRefs.map(\.name) }
+        public var optionalStops: [String] { optionalStopRefs.map(\.name) }
         public let via: [String]
         public let confidence: String?
         public let source: String?
@@ -52,7 +70,8 @@ public enum TrainServicePatterns {
         /// ISO `YYYY-MM-DD`. Not parsed to `Date` here — comparisons and
         /// formatting are the caller's concern.
         public let validFrom: String?
-        public let validTo: String?
+        /// Exclusive end date, matching the dated rail network's [from, until) interval.
+        public let validUntil: String?
         public let completeness: Completeness
         public let notes: String?
         /// Consecutive-stop pairs known not to solve against the route
@@ -64,7 +83,7 @@ public enum TrainServicePatterns {
             case id = "patternId"
             case serviceId, name, company, label, origin, destination
             case stops, optionalStops, via, confidence, source
-            case lines, validFrom, validTo, completeness, notes, unsolvableLegs
+            case lines, validFrom, validUntil, completeness, notes, unsolvableLegs
         }
 
         public init(from decoder: Decoder) throws {
@@ -76,14 +95,14 @@ public enum TrainServicePatterns {
             label = try container.decode(String.self, forKey: .label)
             origin = try container.decode(String.self, forKey: .origin)
             destination = try container.decode(String.self, forKey: .destination)
-            stops = try container.decode([String].self, forKey: .stops)
-            optionalStops = try container.decode([String].self, forKey: .optionalStops)
+            stopRefs = try container.decode([StationRef].self, forKey: .stops)
+            optionalStopRefs = try container.decode([StationRef].self, forKey: .optionalStops)
             via = try container.decode([String].self, forKey: .via)
             confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
             source = try container.decodeIfPresent(String.self, forKey: .source)
             lines = try container.decodeIfPresent([String].self, forKey: .lines) ?? []
             validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
-            validTo = try container.decodeIfPresent(String.self, forKey: .validTo)
+            validUntil = try container.decodeIfPresent(String.self, forKey: .validUntil)
             completeness = try container.decodeIfPresent(
                 Completeness.self, forKey: .completeness) ?? .missing
             notes = try container.decodeIfPresent(String.self, forKey: .notes)
@@ -93,9 +112,9 @@ public enum TrainServicePatterns {
 
         public init(
             id: String, serviceId: String, name: String, company: String, label: String,
-            origin: String, destination: String, stops: [String], optionalStops: [String],
+            origin: String, destination: String, stopRefs: [StationRef], optionalStopRefs: [StationRef],
             via: [String], confidence: String?, source: String?, lines: [String] = [],
-            validFrom: String? = nil, validTo: String? = nil,
+            validFrom: String? = nil, validUntil: String? = nil,
             completeness: Completeness = .missing, notes: String? = nil,
             unsolvableLegs: [[String]] = []
         ) {
@@ -106,17 +125,39 @@ public enum TrainServicePatterns {
             self.label = label
             self.origin = origin
             self.destination = destination
-            self.stops = stops
-            self.optionalStops = optionalStops
+            self.stopRefs = stopRefs
+            self.optionalStopRefs = optionalStopRefs
             self.via = via
             self.confidence = confidence
             self.source = source
             self.lines = lines
             self.validFrom = validFrom
-            self.validTo = validTo
+            self.validUntil = validUntil
             self.completeness = completeness
             self.notes = notes
             self.unsolvableLegs = unsolvableLegs
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(id, forKey: .id)
+            try container.encode(serviceId, forKey: .serviceId)
+            try container.encode(name, forKey: .name)
+            try container.encode(company, forKey: .company)
+            try container.encode(label, forKey: .label)
+            try container.encode(origin, forKey: .origin)
+            try container.encode(destination, forKey: .destination)
+            try container.encode(stopRefs, forKey: .stops)
+            try container.encode(optionalStopRefs, forKey: .optionalStops)
+            try container.encode(via, forKey: .via)
+            try container.encodeIfPresent(confidence, forKey: .confidence)
+            try container.encodeIfPresent(source, forKey: .source)
+            try container.encode(lines, forKey: .lines)
+            try container.encodeIfPresent(validFrom, forKey: .validFrom)
+            try container.encodeIfPresent(validUntil, forKey: .validUntil)
+            try container.encode(completeness, forKey: .completeness)
+            try container.encodeIfPresent(notes, forKey: .notes)
+            try container.encode(unsolvableLegs, forKey: .unsolvableLegs)
         }
 
         /// `company`, mapped through ``OperatorBranding/companyLabel(_:)`` —
@@ -124,8 +165,35 @@ public enum TrainServicePatterns {
         /// short names.
         public var companyLabel: String { OperatorBranding.companyLabel(company) }
 
-        /// True when the pattern has no recorded end-of-service date.
-        public var isCurrent: Bool { validTo == nil }
+        /// Whether the recorded validity interval covers an ISO calendar day.
+        /// An absent bound is open; completeness describes how well that bound is verified.
+        public func isValid(on day: String) -> Bool {
+            guard completeness.validity != .missing else { return false }
+            guard day.count == 10 else { return false }
+            if let validFrom, day < validFrom { return false }
+            if let validUntil, day >= validUntil { return false }
+            return true
+        }
+
+        /// Whether a pattern's recorded interval covers today. Unknown validity
+        /// is not presented as a confirmed current service.
+        public var isCurrent: Bool {
+            guard completeness.validity == .complete else { return false }
+            return isValid(on: Self.today)
+        }
+
+        /// A recorded exclusive end date that has already passed.
+        public var isDiscontinued: Bool {
+            validUntil.map { $0 <= Self.today } ?? false
+        }
+
+        private static var today: String {
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = .current
+            let parts = calendar.dateComponents([.year, .month, .day], from: Date())
+            guard let year = parts.year, let month = parts.month, let day = parts.day else { return "" }
+            return String(format: "%04d-%02d-%02d", year, month, day)
+        }
     }
 
     /// The bundled pattern catalog. A missing or malformed resource is a
@@ -158,20 +226,26 @@ public enum TrainServicePatterns {
     /// operator, and/or traversed line, on top of the free-text query.
     public struct Filter: Sendable, Hashable {
         public enum Status: Sendable, Hashable {
-            case any, current, discontinued
+            case any, onDate, current, discontinued
         }
 
         /// Matches `Pattern.companyLabel` exactly.
         public var company: String?
         public var status: Status
+        /// ISO calendar date used by `onDate` and date-aware ordering.
+        public var rideDate: String?
         /// A canonical line name (see `TrainServiceBranding.canonicalLineName`)
         /// that must appear in `pattern.lines`.
         public var line: String?
 
-        public init(company: String? = nil, status: Status = .any, line: String? = nil) {
+        public init(
+            company: String? = nil, status: Status = .any,
+            line: String? = nil, rideDate: String? = nil
+        ) {
             self.company = company
             self.status = status
             self.line = line
+            self.rideDate = rideDate
         }
     }
 
@@ -204,8 +278,12 @@ public enum TrainServicePatterns {
         }
         switch filter.status {
         case .any: break
+        case .onDate:
+            if let day = filter.rideDate {
+                candidates = candidates.filter { $0.isValid(on: day) }
+            }
         case .current: candidates = candidates.filter { $0.isCurrent }
-        case .discontinued: candidates = candidates.filter { $0.isCurrent == false }
+        case .discontinued: candidates = candidates.filter { $0.isDiscontinued }
         }
         if let line = filter.line {
             let canonicalLine = TrainServiceBranding.canonicalLineName(line)
@@ -225,6 +303,9 @@ public enum TrainServicePatterns {
 
         if normalizedQuery.isEmpty {
             return matched.sorted {
+                if let day = filter.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
+                    return $0.isValid(on: day)
+                }
                 if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
                 if $0.name != $1.name { return $0.name < $1.name }
                 return $0.label < $1.label
@@ -236,6 +317,9 @@ public enum TrainServicePatterns {
         }
 
         return matched.sorted {
+            if let day = filter.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
+                return $0.isValid(on: day)
+            }
             if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
             let primary0 = isPrimaryMatch($0)
             let primary1 = isPrimaryMatch($1)
@@ -330,8 +414,8 @@ public enum TrainServicePatterns {
     ) -> Train {
         var result = train
 
-        let orderedStops = reversed ? pattern.stops.reversed().map { $0 } : pattern.stops
-        result.stops = orderedStops.enumerated().map { index, name in
+        let orderedStops = reversed ? Array(pattern.stopRefs.reversed()) : pattern.stopRefs
+        result.stops = orderedStops.enumerated().map { index, station in
             let stopType: String
             if index == 0 {
                 stopType = "origin"
@@ -340,7 +424,9 @@ public enum TrainServicePatterns {
             } else {
                 stopType = "passenger_stop"
             }
-            return Stop(name: name, stopType: stopType, rideSegment: ridden)
+            return Stop(
+                name: station.name, n02StationCode: station.sourceCode,
+                stopType: stopType, rideSegment: ridden)
         }
         result.origin = reversed ? pattern.destination : pattern.origin
         result.destination = reversed ? pattern.origin : pattern.destination

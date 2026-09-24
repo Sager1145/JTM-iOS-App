@@ -8,10 +8,11 @@ import SwiftUI
 struct ServicePatternPickerView: View {
     @Environment(\.dismiss) private var dismiss
     let region: String
+    let rideDate: String?
     let onSelect: (TrainServicePatterns.Pattern, Bool) -> Void
 
     @State private var query = ""
-    @State private var statusFilter: TrainServicePatterns.Filter.Status = .any
+    @State private var showsAllHistory = false
     @State private var companyFilter: String?
     @State private var lineFilter: String?
 
@@ -19,7 +20,9 @@ struct ServicePatternPickerView: View {
         var order: [String] = []
         var byName: [String: [TrainServicePatterns.Pattern]] = [:]
         let filter = TrainServicePatterns.Filter(
-            company: companyFilter, status: statusFilter, line: lineFilter)
+            company: companyFilter,
+            status: showsAllHistory || rideDate == nil ? .any : .onDate,
+            line: lineFilter, rideDate: rideDate)
         for pattern in TrainServicePatterns.search(query, region: region, filter: filter) {
             if byName[pattern.name] == nil { order.append(pattern.name) }
             byName[pattern.name, default: []].append(pattern)
@@ -33,13 +36,17 @@ struct ServicePatternPickerView: View {
         NavigationStack {
             List {
                 Section {
-                    Picker("運行状況", selection: $statusFilter) {
-                        Text("すべて").tag(TrainServicePatterns.Filter.Status.any)
-                        Text("運行中").tag(TrainServicePatterns.Filter.Status.current)
-                        Text("廃止・終了").tag(TrainServicePatterns.Filter.Status.discontinued)
+                    if let rideDate {
+                        Toggle("すべての履歴を表示", isOn: $showsAllHistory)
+                            .accessibilityIdentifier("servicePatternHistoryFilter")
+                        Text("乗車日: \(rideDate)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("乗車日を設定すると、その日に有効なパターンを表示します")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
-                    .pickerStyle(.segmented)
-                    .accessibilityIdentifier("servicePatternStatusFilter")
 
                     HStack {
                         Menu {
@@ -117,19 +124,19 @@ struct ServicePatternPickerView: View {
                         .background(Color.orange.opacity(0.2))
                         .clipShape(Capsule())
                 }
-                if pattern.isCurrent == false {
-                    Text("廃止")
+                if let rideDate, pattern.isValid(on: rideDate) == false {
+                    Text("乗車日の対象外")
                         .font(.caption2)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(Color.gray.opacity(0.2))
                         .clipShape(Capsule())
                 }
-                if pattern.completeness.stops == .missing
-                    || pattern.completeness.lines == .missing
-                    || pattern.completeness.validity == .missing
+                if pattern.completeness.stops != .complete
+                    || pattern.completeness.lines != .complete
+                    || pattern.completeness.validity != .complete
                 {
-                    Text("資料不完全")
+                    Text("停站\(mark(pattern.completeness.stops)) 路線\(mark(pattern.completeness.lines)) 日付\(mark(pattern.completeness.validity))")
                         .font(.caption2)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
@@ -140,7 +147,7 @@ struct ServicePatternPickerView: View {
             Text("\(pattern.origin) → \(pattern.destination) · \(pattern.stops.count)駅")
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            if pattern.validFrom != nil || pattern.validTo != nil {
+            if pattern.validFrom != nil || pattern.validUntil != nil {
                 Text(validityCaption(for: pattern))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -160,9 +167,17 @@ struct ServicePatternPickerView: View {
 
     private func validityCaption(for pattern: TrainServicePatterns.Pattern) -> String {
         let from = pattern.validFrom ?? "?"
-        if let to = pattern.validTo {
-            return "\(from)〜\(to)"
+        if let until = pattern.validUntil {
+            return "\(from)〜\(until)未満"
         }
         return "\(from)〜"
+    }
+
+    private func mark(_ level: TrainServicePatterns.Pattern.Level) -> String {
+        switch level {
+        case .complete: "✓"
+        case .partial: "△"
+        case .missing: "?"
+        }
     }
 }
