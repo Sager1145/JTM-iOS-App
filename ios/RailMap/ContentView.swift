@@ -296,6 +296,15 @@ struct RailWorkspaceView: View {
                       presentationLayoutMode == nil else { return }
                 presentationLayoutMode = layout.mode
             }
+            .onChange(of: journeyEditor != nil) { wasEditing, isEditing in
+                if !wasEditing, isEditing {
+                    // The editor owns its draft and stop identities. Keep its
+                    // presenting subtree mounted across layout breakpoints.
+                    presentationLayoutMode = layout.mode
+                } else if wasEditing, !isEditing, sheet == nil {
+                    presentationLayoutMode = nil
+                }
+            }
             // §4.3's bottom clearance is NOT published from here any more, and
             // there is nothing left to publish: the system already gives it to
             // every scroll view inside the sheet.
@@ -609,7 +618,9 @@ struct RailWorkspaceView: View {
                 editing.delete(train.id)
                 signal(.deleted)
             },
-            onSheetDismiss: { presentationLayoutMode = nil },
+            onSheetDismiss: {
+                if journeyEditor == nil { presentationLayoutMode = nil }
+            },
             sheetContent: presentedSheet))
         // Was attached to `statisticsPanel` directly, i.e. inside
         // `workspaceTabs` — which under the docked card is a
@@ -1001,6 +1012,7 @@ struct RailWorkspaceView: View {
             },
             highlightedStopID: $highlightedStopID,
             onSave: { commitJourneyEditor($0, launch: launch) })
+        .disabled(journeySaveAttemptID != nil)
         .alert(
             localization.journeyText(
                 "ios.journey.saveFailedTitle", fallback: "Could not save this journey"),

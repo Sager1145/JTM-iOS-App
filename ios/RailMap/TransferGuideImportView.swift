@@ -58,7 +58,7 @@ struct TransferGuideImportView: View {
                             Button { showsAICompletion = true } label: {
                                 Label(localization.text("ios.ai.title", fallback: "AI completion"), systemImage: "sparkles")
                             }
-                            .disabled(!draft.build.trains.contains(where: JourneyCompletion.isEligible))
+                            .disabled(!draft.build.trains.contains(where: completionEligible))
                             .accessibilityIdentifier("guideAICompletion")
                         }
                     }
@@ -158,6 +158,17 @@ struct TransferGuideImportView: View {
     /// reads as unmatched, which looks like a bad screenshot and is not.
     private var hasNetwork: Bool {
         (network?.stations.contains { $0.region == .jp }) ?? false
+    }
+
+    /// Keep the screenshot entry point on the same database-station plus corresponding-time
+    /// rule as the editor and the completion sheet. The sheet repeats this check immediately
+    /// before a request; this one only explains whether opening it can be useful yet.
+    private func completionEligible(_ train: Train) -> Bool {
+        JourneyCompletion.isRequestEligible(train) { code in
+            network?.stations.contains {
+                $0.region == .jp && $0.stationCode == code
+            } ?? false
+        }
     }
 
     @ViewBuilder

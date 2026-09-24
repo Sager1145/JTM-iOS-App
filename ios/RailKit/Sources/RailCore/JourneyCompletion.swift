@@ -74,6 +74,82 @@ public enum JourneyCompletion {
         return anchors >= 2 && hasMissingCompletionField(train)
     }
 
+    /// The request gate shared by the editor, pasted-text flow, and screenshot importer.
+    /// A station name or code copied from outside the app is not enough: at least one stop
+    /// must resolve to the loaded regional catalog and carry a valid time on that same stop.
+    public static func requestDenial(
+        train: Train,
+        stationIsInDatabase: (String) -> Bool,
+        providerAvailable: Bool = true,
+        requestInFlight: Bool = false
+    ) -> EditorAIDenial? {
+        let stops = train.stops.map { stop in
+            let code = stop.n02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let resolved = !code.isEmpty && stationIsInDatabase(code)
+
+            func input(_ value: String?) -> EditorTimeInput {
+                guard let value, !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                    return EditorTime.input("", confirmed: false)
+                }
+                return EditorTime.input(value, confirmed: true)
+            }
+
+            return EditorAIStop(
+                occurrenceID: UUID(),
+                stationResolved: resolved,
+                arrival: input(stop.arrival),
+                departure: input(stop.departure))
+        }
+        return EditorAIEligibility.denial(
+            stops: stops,
+            providerAvailable: providerAvailable,
+            requestInFlight: requestInFlight)
+    }
+
+    public static func requestDenial(
+        train: Train,
+        catalog: EditorCatalog?,
+        providerAvailable: Bool = true,
+        requestInFlight: Bool = false
+    ) -> EditorAIDenial? {
+        let declaredRegion = train.region ?? "jp"
+        let regionCodes = [declaredRegion] + Localization.supportedCountries.filter {
+            $0 != declaredRegion
+        }
+        return requestDenial(
+            train: train,
+            stationIsInDatabase: { code in
+                regionCodes.contains { regionCode in
+                    catalog?.station(StationKey(regionCode: regionCode, sourceCode: code)) != nil
+                }
+            },
+            providerAvailable: providerAvailable,
+            requestInFlight: requestInFlight)
+    }
+
+    public static func isRequestEligible(_ train: Train, catalog: EditorCatalog?) -> Bool {
+        guard train.stops.count >= 2,
+              nonempty(train.origin) != nil,
+              nonempty(train.destination) != nil,
+              train.stops.allSatisfy({ nonempty($0.name) != nil }),
+              hasMissingCompletionField(train)
+        else { return false }
+        return requestDenial(train: train, catalog: catalog) == nil
+    }
+
+    public static func isRequestEligible(
+        _ train: Train, stationIsInDatabase: (String) -> Bool
+    ) -> Bool {
+        guard train.stops.count >= 2,
+              nonempty(train.origin) != nil,
+              nonempty(train.destination) != nil,
+              train.stops.allSatisfy({ nonempty($0.name) != nil }),
+              hasMissingCompletionField(train)
+        else { return false }
+        return requestDenial(
+            train: train, stationIsInDatabase: stationIsInDatabase) == nil
+    }
+
     /// Returns a ready-to-copy research prompt containing only eligible journeys and only the
     /// fields needed to identify them. Styling, visibility, station codes, stop type, ride state,
     /// and route-solving constraints are intentionally excluded.

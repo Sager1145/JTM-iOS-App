@@ -470,4 +470,147 @@ struct JourneyCompletionTests {
         #expect(prompt.isEmpty == false)
         #expect(prompt.contains("Alpha"))
     }
+
+    @Test("request eligibility requires a catalog station and valid time on the same stop")
+    func requestEligibilityUsesCatalogIdentityAndCorrespondingTime() {
+        let catalog = Self.catalog()
+        var train = Self.train(date: nil, number: "")
+        train.stops[0].n02StationCode = "TOK"
+        train.stops[0].name = "東京"
+        train.origin = "東京"
+        train.stops[1].n02StationCode = "OSA"
+        train.stops[1].name = "新大阪"
+        train.destination = "新大阪"
+
+        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
+
+        train.stops[0].n02StationCode = "NOT-IN-CATALOG"
+        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog) == false)
+
+        train.stops[0].departure = nil
+        train.stops[1].arrival = "not a time"
+        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == .invalidTime)
+
+        train.stops[0].n02StationCode = "TOK"
+        train.stops[0].departure = nil
+        train.stops[1].n02StationCode = "NOT-IN-CATALOG"
+        train.stops[1].arrival = "10:00"
+        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == .timeNotOnThatStation)
+    }
+
+    @Test("catalog request eligibility accepts a station from another catalog region")
+    func requestEligibilitySearchesCatalogRegions() {
+        let catalog = EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "us", lineID: "maple-us", name: "Maple Leaf", stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "NYP", name: "New York", longitude: -73.993, latitude: 40.750),
+                ]),
+            EditorCatalogLineSource(
+                regionCode: "ca", lineID: "maple-ca", name: "Maple Leaf", stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "TWO", name: "Toronto", longitude: -79.380, latitude: 43.645),
+                ]),
+        ])
+        let train = Train(
+            id: "cross-border", number: "", origin: "New York", destination: "Toronto",
+            visible: true,
+            stops: [
+                Stop(
+                    name: "New York", n02StationCode: "NYP", departure: "7:15",
+                    stopType: "origin", rideSegment: true),
+                Stop(
+                    name: "Toronto", n02StationCode: "TWO", arrival: nil,
+                    stopType: "destination", rideSegment: true),
+            ],
+            region: "ca")
+
+        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == nil)
+        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
+    }
+
+    @Test("pasted text is locally extracted and only catalog-confirmed stations build a train")
+    func pastedTextBuildsConfirmedStructuredDraft() throws {
+        let catalog = Self.catalog()
+        let seed = Train(
+            id: "draft", number: "", origin: "", destination: "", visible: true,
+            stops: [
+                Stop(name: "", stopType: "origin", rideSegment: true),
+                Stop(name: "", stopType: "destination", rideSegment: true),
+            ],
+            region: "jp")
+        let draft = JourneyCompletion.rawDraft(
+            text: """
+            2026-09-24
+            列車: ひかり501号
+            東京 09:03 発 14番線
+            新大阪 11:57 着
+            """,
+            catalog: catalog,
+            regionCode: "jp",
+            seed: seed)
+
+        #expect(draft.date == "2026-09-24")
+        #expect(draft.service == "ひかり501号")
+        #expect(draft.stops.count == 2)
+        #expect(draft.stops[0].departure == "9:03")
+        #expect(draft.stops[0].platformNumber == 14)
+        #expect(draft.stops[1].arrival == "11:57")
+        #expect(draft.stops[0].automaticSelection == StationKey(regionCode: "jp", sourceCode: "TOK"))
+
+        #expect(draft.train(seed: seed, selections: [:], catalog: catalog) == nil)
+        let selections = Dictionary(uniqueKeysWithValues: draft.stops.compactMap { stop in
+            stop.automaticSelection.map { (stop.id, $0) }
+        })
+        let train = try #require(draft.train(seed: seed, selections: selections, catalog: catalog))
+        #expect(train.number == "ひかり501号")
+        #expect(train.origin == "東京")
+        #expect(train.destination == "新大阪")
+        #expect(train.stops.map(\.n02StationCode) == ["TOK", "OSA"])
+        #expect(train.routePolicy == nil)
+        #expect(train.routeSections == nil)
+        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
+    }
+
+    @Test("ambiguous pasted station names remain unselected for confirmation")
+    func ambiguousStationRequiresSelection() {
+        let catalog = EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "a", name: "A", stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "CENTRAL-A", name: "中央", longitude: 139, latitude: 35),
+                ]),
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "b", name: "B", stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "CENTRAL-B", name: "中央", longitude: 135, latitude: 34),
+                    EditorCatalogStationSource(
+                        sourceCode: "WEST", name: "西", longitude: 135.1, latitude: 34),
+                ]),
+        ])
+        let seed = Self.train(id: "draft", date: nil, number: "")
+        let draft = JourneyCompletion.rawDraft(
+            text: "中央 9:00 発\n西 10:00 着",
+            catalog: catalog,
+            regionCode: "jp",
+            seed: seed)
+
+        #expect(draft.stops.first?.candidates.count == 2)
+        #expect(draft.stops.first?.automaticSelection == nil)
+    }
+
+    private static func catalog() -> EditorCatalog {
+        EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "shinkansen", name: "東海道新幹線",
+                stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "TOK", name: "東京", nameRoma: "Tokyo",
+                        longitude: 139.767, latitude: 35.681),
+                    EditorCatalogStationSource(
+                        sourceCode: "OSA", name: "新大阪", nameRoma: "Shin-Osaka",
+                        longitude: 135.500, latitude: 34.733),
+                ])
+        ])
+    }
 }

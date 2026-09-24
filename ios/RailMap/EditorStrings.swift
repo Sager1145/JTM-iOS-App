@@ -250,6 +250,19 @@ enum EditorStrings {
             .ja: "選択した時刻を使用",
             .en: "Use selected time",
         ],
+        "ios.editor.serviceDay": [
+            .zhHant: "行車日", .zhHans: "运行日", .ja: "運行日", .en: "Service day",
+        ],
+        "ios.editor.today": [
+            .zhHant: "當日", .zhHans: "当天", .ja: "当日", .en: "Today",
+        ],
+        "ios.editor.later": [
+            .zhHant: "更晚", .zhHans: "更晚", .ja: "後日", .en: "Later",
+        ],
+        "ios.editor.serviceDaysLater": [
+            .zhHant: "{count} 個行車日後", .zhHans: "{count} 个运行日后",
+            .ja: "{count} 運行日後", .en: "{count} service days later",
+        ],
         "ios.editor.noLineMatches": [
             .zhHant: "沒有符合的線路。可輸入線路名稱並加入。",
             .zhHans: "没有匹配的线路。可输入线路名称并添加。",
@@ -919,6 +932,18 @@ enum EditorStrings {
             .zhHant: "時間無效，不會改成 00:00。",
             .ja: "時刻が無効です。00:00 には置き換えません。",
             .en: "That time is not valid and was not changed to 00:00.",
+        ],
+        "ios.editor.invalidArrivalTime": [
+            .zhHans: "到达时间无效。",
+            .zhHant: "到達時間無效。",
+            .ja: "到着時刻が無効です。",
+            .en: "Arrival time is invalid.",
+        ],
+        "ios.editor.invalidDepartureTime": [
+            .zhHans: "出发时间无效。",
+            .zhHant: "出發時間無效。",
+            .ja: "出発時刻が無効です。",
+            .en: "Departure time is invalid.",
         ],
         "ios.editor.ai.noStation": [
             .zhHans: "请先选择车站",

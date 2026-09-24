@@ -94,10 +94,22 @@ struct EditorDateField: View {
 /// Clock text plus an hour/minute picker. Empty stores nil. Invalid text is
 /// kept — never rewritten to 00:00 — and 25:10 stays 25:10.
 struct EditorTimeField: View {
+    /// Must stay aligned with RailCore's `Dates.maxDayOffset`, which is
+    /// internal to that module. `EditorTime.confirmPicker` remains the final
+    /// grammar check when this bound changes.
+    private static let maximumPickerDayOffset = 366
+
+    private enum ServiceDay: Hashable {
+        case today
+        case next
+        case later
+    }
+
     @Environment(AppLocalization.self) private var localization
     let title: String
     @Binding var time: String?
     @State private var pendingPickerTime: Date?
+    @State private var pendingPickerDayOffset: Int?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -112,28 +124,31 @@ struct EditorTimeField: View {
                     .autocorrectionDisabled()
             }
             .frame(minHeight: 44)
+            Picker(localization.editorText("ios.editor.serviceDay"), selection: pickerDay) {
+                Text(localization.editorText("ios.editor.today")).tag(ServiceDay.today)
+                Text(localization.editorText("ios.editor.nextServiceDay")).tag(ServiceDay.next)
+                Text(localization.editorText("ios.editor.later")).tag(ServiceDay.later)
+            }
+            if pickerDay.wrappedValue == .later {
+                Stepper(
+                    localization.editorText("ios.editor.serviceDaysLater", [
+                        "count": .number(Double(pickerDayOffset.wrappedValue))
+                    ]),
+                    value: pickerDayOffset,
+                    in: 2...Self.maximumPickerDayOffset
+                )
+            }
             DatePicker(title, selection: pickerSelection, displayedComponents: .hourAndMinute)
             Button(localization.editorText("ios.editor.useSelectedTime")) {
                 let parts = Self.pickerCalendar.dateComponents(
                     [.hour, .minute], from: pickerSelection.wrappedValue)
-                let dayOffset: Int
-                if case .valid(_, let clock) = EditorTime.parseTime(time) {
-                    dayOffset = clock.dayOffset
-                } else {
-                    dayOffset = 0
-                }
                 let confirmed = EditorTime.confirmPicker(
-                    dayOffset: dayOffset,
+                    dayOffset: pickerDayOffset.wrappedValue,
                     hour: parts.hour ?? 0,
                     minute: parts.minute ?? 0)
                 if case .valid(_, let clock) = confirmed.parsed {
                     time = EditorTime.canonical(clock)
                 }
-            }
-            if case .valid(_, let clock) = EditorTime.parseTime(time), clock.dayOffset > 0 {
-                Text(localization.editorText("ios.editor.nextServiceDay"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
             }
             if case .invalid = EditorTime.parseTime(time) {
                 Text(localization.editorText("ios.editor.invalidClock"))
@@ -142,7 +157,10 @@ struct EditorTimeField: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .onChange(of: time) { _, _ in pendingPickerTime = nil }
+        .onChange(of: time) { _, _ in
+            pendingPickerTime = nil
+            pendingPickerDayOffset = nil
+        }
     }
 
     private var text: Binding<String> {
@@ -175,6 +193,41 @@ struct EditorTimeField: View {
                 return Date()
             },
             set: { pendingPickerTime = $0 }
+        )
+    }
+
+    /// The day selector has three compact choices. Selecting “Later” starts
+    /// at two days and exposes the exact offset, while existing multi-day
+    /// values retain their own offset until confirmation.
+    private var pickerDay: Binding<ServiceDay> {
+        Binding(
+            get: {
+                switch pickerDayOffset.wrappedValue {
+                case 0: .today
+                case 1: .next
+                default: .later
+                }
+            },
+            set: { selection in
+                switch selection {
+                case .today: pendingPickerDayOffset = 0
+                case .next: pendingPickerDayOffset = 1
+                case .later: pendingPickerDayOffset = max(2, pickerDayOffset.wrappedValue)
+                }
+            }
+        )
+    }
+
+    private var pickerDayOffset: Binding<Int> {
+        Binding(
+            get: {
+                if let pendingPickerDayOffset { return pendingPickerDayOffset }
+                if case .valid(_, let clock) = EditorTime.parseTime(time) {
+                    return clock.dayOffset
+                }
+                return 0
+            },
+            set: { pendingPickerDayOffset = $0 }
         )
     }
 

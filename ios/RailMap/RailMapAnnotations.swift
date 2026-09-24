@@ -337,11 +337,12 @@ final class DraftStopAnnotation: NSObject, MKAnnotation {
     let timeText: String
     let stopTypeLabel: String
     let timeLabel: String
+    let stackPosition: Int
 
     init(
         occurrenceID: UUID, coordinate: CLLocationCoordinate2D, index: Int,
         name: String, stopType: String, timeText: String,
-        stopTypeLabel: String, timeLabel: String
+        stopTypeLabel: String, timeLabel: String, stackPosition: Int = 0
     ) {
         self.occurrenceID = occurrenceID
         self.coordinate = coordinate
@@ -351,6 +352,7 @@ final class DraftStopAnnotation: NSObject, MKAnnotation {
         self.timeText = timeText
         self.stopTypeLabel = stopTypeLabel
         self.timeLabel = timeLabel
+        self.stackPosition = stackPosition
     }
 }
 
@@ -382,7 +384,7 @@ final class DraftStopAnnotationView: MKAnnotationView {
         let size = CGSize(width: min(180, ceil(fitted.width) + 16), height: ceil(fitted.height) + 10)
         bounds.size = size
         bubble.frame = bounds.insetBy(dx: 8, dy: 5)
-        centerOffset = CGPoint(x: 0, y: -size.height / 2)
+        centerOffset = CGPoint(x: 0, y: -size.height / 2 - CGFloat(item.stackPosition) * (size.height + 4))
         isAccessibilityElement = true
         accessibilityLabel = bubble.text
     }
@@ -447,7 +449,7 @@ enum MapAnnotationReconciler {
         case let (a as DraftStopAnnotation, b as DraftStopAnnotation):
             return a.name == b.name && a.stopType == b.stopType && a.timeText == b.timeText
                 && a.index == b.index && a.stopTypeLabel == b.stopTypeLabel
-                && a.timeLabel == b.timeLabel
+                && a.timeLabel == b.timeLabel && a.stackPosition == b.stackPosition
         default:
             return false
         }

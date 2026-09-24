@@ -166,6 +166,17 @@ enum RideDraftValidation {
                 issues.append(
                     RideDraftIssue(field: .stop(index), key: "ios.editor.platformRule"))
             }
+            // The shared file schema deliberately keeps arrival and departure
+            // opaque strings. The editor accepts typed clock text, so it must
+            // apply its stricter grammar here before enabling Save.
+            if case .invalid = EditorTime.parseTime(stop.arrival) {
+                issues.append(
+                    RideDraftIssue(field: .stop(index), key: "ios.editor.invalidArrivalTime"))
+            }
+            if case .invalid = EditorTime.parseTime(stop.departure) {
+                issues.append(
+                    RideDraftIssue(field: .stop(index), key: "ios.editor.invalidDepartureTime"))
+            }
         }
         // The two cross-field rules: neither end of the journey needs both an
         // arrival and a departure.

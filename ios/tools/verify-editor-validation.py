@@ -61,6 +61,11 @@ import RailCore
         accepts("middle stop may have both times") {
             $0.stops.insert(Stop(name: "Intermediate", arrival: "23:55", departure: "23:56"), at: 1)
         }
+        let nextDayPickerTime = EditorTime.confirmPicker(dayOffset: 1, hour: 1, minute: 10)
+        precondition(nextDayPickerTime.raw == "25:10")
+        precondition(nextDayPickerTime.parsed == .valid(
+            raw: "25:10", time: ServiceClockTime(dayOffset: 1, hour: 1, minute: 10)))
+        count += 1
         rejects("empty ID", field: .id) { $0.id = "" }
         rejects("invalid ID", field: .id) { $0.id = "invalid id" }
         rejects("blank service", field: .number) { $0.number = " \n" }
@@ -77,6 +82,7 @@ import RailCore
         rejects("invalid role", field: .stop(1)) { $0.stops[1].stopType = "invalid" }
         rejects("invalid station code", field: .stop(0)) { $0.stops[0].n02StationCode = "?" }
         rejects("negative platform", field: .stop(0)) { $0.stops[0].platformNumber = -1 }
+        rejects("invalid departure time", field: .stop(0)) { $0.stops[0].departure = "09:99" }
         rejects("origin both times", field: .stop(0)) { $0.stops[0].arrival = "23:49" }
         rejects("destination both times", field: .stop(1)) { $0.stops[1].departure = "00:11+1" }
         rejects("incomplete route section", field: .routeSection(0)) { $0.routeSections = [RouteSection(from: "Tokyo")] }

@@ -682,8 +682,12 @@ struct RailMapView: View {
                 let unfilled = MainActor.assumeIsolated {
                     localization?.editorText("ios.editor.timeUnfilled") ?? "Time not entered"
                 }
+                var visitsAtCoordinate: [String: Int] = [:]
                 let desired: [MKAnnotation] = snapshot.pins.enumerated().compactMap { offset, pin in
                     guard let latitude = pin.latitude, let longitude = pin.longitude else { return nil }
+                    let coordinateKey = "\(latitude)|\(longitude)"
+                    let stackPosition = visitsAtCoordinate[coordinateKey, default: 0]
+                    visitsAtCoordinate[coordinateKey] = stackPosition + 1
                     let stopTypeLabel = MainActor.assumeIsolated {
                         localization?.countryText(
                             "stoptype.\(pin.stopType)", fallback: pin.stopType) ?? pin.stopType
@@ -696,7 +700,8 @@ struct RailMapView: View {
                         stopType: pin.stopType,
                         timeText: pin.timeText,
                         stopTypeLabel: stopTypeLabel,
-                        timeLabel: pin.timeText.isEmpty ? unfilled : pin.timeText)
+                        timeLabel: pin.timeText.isEmpty ? unfilled : pin.timeText,
+                        stackPosition: stackPosition)
                 }
                 draftAnnotations = MapAnnotationReconciler.reconcile(
                     desired, replacing: draftAnnotations, on: mapView)
