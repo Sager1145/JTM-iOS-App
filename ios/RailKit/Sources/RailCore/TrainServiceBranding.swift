@@ -161,7 +161,18 @@ public enum TrainServiceBranding {
                 let afterExtendsName = nextCharacter?.isLetter == true && nextCharacter != "号"
                 let adjacentToArrow = beforeCharacter == "→" || beforeCharacter == "←"
                     || nextCharacter == "→" || nextCharacter == "←"
-                if adjacentToArrow == false && (endsWithWord == false || afterExtendsName == false) {
+                // A kana-leading name found right after more kana is the tail
+                // of a longer word — かもめ inside ゆりかもめ — not the service.
+                // Longer catalog names (リレーかもめ) are tried first, so a
+                // genuine prefix still wins through its own entry. The
+                // prolonged-sound mark ("ー") is excluded from this check so
+                // old-style captions like スーパーやくも / スーパーしおかぜ /
+                // スーパーいしづち / スーパーいなほ still resolve to their
+                // base service.
+                let kanaRunContinues = name.first?.isKana == true && beforeCharacter?.isKana == true
+                    && beforeCharacter != "ー"
+                if adjacentToArrow == false && kanaRunContinues == false
+                    && (endsWithWord == false || afterExtendsName == false) {
                     return true
                 }
             }
@@ -268,6 +279,19 @@ public enum TrainServiceBranding {
 
 private extension Character {
     var isLetterOrNumber: Bool { isLetter || isNumber }
+    /// Hiragana, katakana, or the prolonged-sound mark — the characters
+    /// that continue a kana word. Excludes the katakana middle dot (・) and
+    /// the katakana-hiragana double hyphen (゠), which separate words rather
+    /// than continue them.
+    var isKana: Bool {
+        guard let scalar = unicodeScalars.first else { return false }
+        if scalar.value == 0x30FB || scalar.value == 0x30A0 { return false }
+        switch scalar.value {
+        case 0x3041...0x309F, 0x30A0...0x30FF, 0x31F0...0x31FF, 0xFF66...0xFF9F: return true
+        default: return false
+        }
+    }
+
 
     var isASCIIWord: Bool {
         unicodeScalars.count == 1

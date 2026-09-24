@@ -54,11 +54,55 @@ struct NetworkVisibilityPolicyTests {
     func backboneAndBranch() {
         #expect(lineFloor(rank: 0, km: 66) < -8)
         #expect(lineFloor(rank: 1, km: 66, region: "kr") < -8)
-        #expect(lineFloor(rank: 1, km: 66, region: "hk") == 5)
+        #expect(lineFloor(rank: 1, km: 66, region: "hk") == 4)
         #expect(lineFloor(rank: 4, km: 10) == 7)
         #expect(lineFloor(rank: 1, km: 350) == 3)
         #expect(lineFloor(rank: 1, km: 150) == 4)
         #expect(lineFloor(rank: 3, km: 25) == 6)
+    }
+
+    @Test("Short important connectors appear before short minor branches")
+    func shortLinesFollowImportanceTier() {
+        let mapLibreFloors = (1...4).map { lineFloor(rank: $0, km: 5) }
+
+        #expect(mapLibreFloors == [4, 5, 6, 7])
+        #expect(mapLibreFloors.map { $0 + 1 } == [5, 6, 7, 8])
+    }
+
+    @Test("Missing and invalid ranks retain the ported and length floors")
+    func invalidRanksUseFallbackFloors() {
+        #expect(lineFloor(rank: nil, km: 66) == 5)
+        #expect(lineFloor(rank: -1, km: 66) == 5)
+        #expect(lineFloor(rank: 5, km: 66) == 5)
+        #expect(NetworkVisibilityPolicy.lineMinZoomMapLibre(
+            portedMinZoom: 8, rank: nil, visibilityLengthKm: 350) == 8)
+    }
+
+    @Test("Administrative pieces use their complete group length and appear together")
+    func groupedLinePiecesShareClassification() throws {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0..<5 { root.deleteLastPathComponent() }
+        let package = try CompactPackage.load(contentsOf:
+            root.appendingPathComponent("app/public/rail/jp-2025.json"))
+        let pieceIDs = Set([
+            "jp-えちごトキめき鉄道-日本海ひすいライン",
+            "jp-えちごトキめき鉄道-日本海ひすいライン-p1",
+        ])
+        let pieces = package.lines.filter { pieceIDs.contains($0.id) }
+        try #require(pieces.count == 2)
+        #expect(Set(pieces.map(Visibility.visibilityGroupKey)).count == 1)
+
+        let groupLengths = Visibility.groupLengthByLineId(package)
+        let groupedFloors = try pieces.map { line in
+            let km = try #require(groupLengths[line.id])
+            return lineFloor(rank: line.rank, km: km)
+        }
+        let individualFloors = pieces.map { line in
+            lineFloor(rank: line.rank, km: line.segments.reduce(0) { $0 + $1.distanceKm })
+        }
+
+        #expect(Set(groupedFloors) == Set([5]))
+        #expect(Set(individualFloors) == Set([5, 6]))
     }
 
     @Test("Every shipped railway has monotonic detail and the full high-speed network survives overview")
@@ -105,7 +149,7 @@ struct NetworkVisibilityPolicyTests {
     }
 
     private func lineFloor(
-        rank: Int, km: Double, region: String = "jp", operator: String? = nil
+        rank: Int?, km: Double, region: String = "jp", operator: String? = nil
     ) -> Int {
         NetworkVisibilityPolicy.lineMinZoomMapLibre(
             portedMinZoom: Visibility.minZoomForLength(totalKm: km),

@@ -57,6 +57,7 @@ struct WorkspaceSheetContent: View {
     let onStartExport: () -> Void
     let onDismiss: () -> Void
     let onPick: (Train) -> Void
+    var onEditJourney: ((Train) -> Void)? = nil
 
     init(
         sheet: WorkspaceSheet,
@@ -79,7 +80,8 @@ struct WorkspaceSheetContent: View {
         onRebuild: @escaping (Train) -> Int?,
         onStartExport: @escaping () -> Void,
         onDismiss: @escaping () -> Void,
-        onPick: @escaping (Train) -> Void
+        onPick: @escaping (Train) -> Void,
+        onEditJourney: ((Train) -> Void)? = nil
     ) {
         self.sheet = sheet
         self.itineraries = itineraries
@@ -102,6 +104,7 @@ struct WorkspaceSheetContent: View {
         self.onStartExport = onStartExport
         self.onDismiss = onDismiss
         self.onPick = onPick
+        self.onEditJourney = onEditJourney
     }
 
     var body: some View {
@@ -113,15 +116,15 @@ struct WorkspaceSheetContent: View {
                     title: localization.text("ios.editorTitleNew", fallback: "New"),
                     isNew: true,
                     suggestionTrains: itineraries.loaded?.trains ?? [],
+                    onCancel: onDismiss,
                     onSave: onSaveNew)
             case .edit(let train):
                 RideEditorView(
                     train: train,
                     title: localization.text("ios.edit", fallback: "Edit"),
-                    suggestionTrains: itineraries.loaded?.trains ?? []
-                ) { edited in
-                    onSaveEdit(edited, train.id)
-                }
+                    suggestionTrains: itineraries.loaded?.trains ?? [],
+                    onCancel: onDismiss,
+                    onSave: { onSaveEdit($0, train.id) })
             case .videoOptions:
                 VideoExportOptionsView(
                     settings: videoSettings,
@@ -138,7 +141,8 @@ struct WorkspaceSheetContent: View {
                         trainID: id,
                         itineraries: itineraries,
                         onSave: onSaveDetail,
-                        onRebuild: onRebuild)
+                        onRebuild: onRebuild,
+                        onEditJourney: onEditJourney)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button(localization.text("ios.cancel", fallback: "Cancel")) {

@@ -14,7 +14,7 @@ before. Copied into the app bundle by `ios/copy-rail-packages.sh` alongside
       "type": "Feature",
       "properties": {
         "history_id": "jp.rumoi.rumoi-mashike",
-        "N02_001": "11", "N02_002": "1",
+        "N02_001": "11", "N02_002": "2",
         "N02_003": "留萌線", "N02_004": "北海道旅客鉄道",
         "valid_to": "2016-12-05",
         "source": "N02-16; MLIT 鉄軌道の廃止実績"
@@ -69,13 +69,61 @@ Rules:
 - Sources: N02 releases as permitted by their licence, and official abolition
   notices. N05 derivatives need a separate licence check before shipping.
 
+## Building the jp overlay
+
+`app/data/rail-history.json` is generated; do not hand-edit it. Edit
+`app/scripts/railway/jp-rail-history-events.json` and rerun:
+
+```sh
+python3 app/scripts/railway/build-jp-rail-history.py --revision YYYY-MM-DD.N
+```
+
+Inputs: `app/data/rail-sections.json` / `stations.json` (the current package)
+and the MLIT releases N02-05 … N02-24, which are local-only like the rest of
+the railway sources. By default they are read from
+`~/Documents/GitHub/Japan-Train-Map/app/data/raw/railway/jp/history/`
+(`--source-dir` to override); fetch a missing one from
+`https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-YY/N02-YY_GML.zip`
+(N02-13 is `N02-13.zip`; there are no 09/10 releases).
+
+Each event names the N02 spelling of the line and operator, the last
+release that still carried the section (`year`), the official date
+(`valid_to`) and its `source`. The builder takes that release's geometry
+wherever it lies more than 40 m from current track (and from retired track a
+later event already emitted) and drops digitising noise. Loose ends are then
+tied in, because the graph joins lines only where 5-decimal coordinates are
+equal: two ends of one event within 120 m are bridged to each other (a line
+cut where it crossed another on a bridge); an end is walked along the old
+line through any corridor it shared with open track (≤ 3 km) to the
+platform of a junction station, so a ride naming the retired line has an
+edge of it at 屋代 or 木古内; finally it is joined to an exact vertex of
+non-新幹線 track within 200 m. `--report` lists the line each join lands on
+— check it after every rebuild. Options:
+`bbox` (restrict/split an event), `station_year` (a release that still lists
+the stations when the last one with track already dropped them), `join:
+false` (stand-alone systems such as monorails, whose ends must not be tied
+to a neighbouring railway), `min_maxd_m`, and `kind: "relocation"`, which
+also stamps `valid_from` onto the new alignment through a `retirements`
+entry (only when a bbox selects exactly the new features and no unmoved
+station) and joins the old alignment only to track valid before the switch.
+Stations of an event's line within 2 km of its emitted track go into the
+overlay unless the same station on the same line is still within 300 m;
+junction platforms of the retired line (屋代 on 屋代線) are kept, without
+the group code, so a ride naming the line finds an endpoint and the open
+lines' transfer group is untouched. A station shared by two events keeps
+the later date.
+
+Not recoverable from N02: lines closed before N02-05 (名鉄岐阜600V線区,
+日立電鉄線, のと鉄道能登線 穴水—蛸島, …). Not yet covered: individual
+station closures on lines still open, and opening dates of new lines.
+`ios/RailKit/Tests/RailCoreTests/RailHistoryPackageTests.swift` solves dated
+rides on the real package (retired lines, a relocation, the 2026 retirement).
+
 ## Known gaps (accepted 2026-09-23, from the independent review)
 
-- **Station snapping ignores validity.** Only rail edges and transfer
-  connectors are dated. Once an overlay ships retired stations that share a
-  name with active ones, `collectStationCandidateGraphNodes` can fill its
-  candidate cap with dead nodes. Filter candidates by ride date before adding
-  such stations.
+- **Station snapping** (closed 2026-09-23): endpoint station candidates are
+  filtered by ride date with the same half-open rule as edges, in both
+  solvers (`filterStationCandidatesByRideDate`).
 - **Connector validity comes from the nearest station feature.** At a junction
   where a retired line's platform is nearer to a node than the active line's,
   active-to-active transfers inherit the retired `valid_to`. Safe for the seed

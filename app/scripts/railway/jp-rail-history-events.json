@@ -1,0 +1,51 @@
+{
+  "comment": "Curated retirements for app/data/rail-history.json. Each event names the N02 line/operator spelling and the last N02 release that still carried the section (year); build-jp-rail-history.py takes that release's geometry where it is absent from app/data/rail-sections.json. valid_to is the official 廃止日 / 新線切替日 (first day without the old section).",
+  "events": [
+    {"id": "jp.chiho.ikeda-kitami", "line": "ふるさと銀河線", "operator": "北海道ちほく高原鉄道", "year": "05", "valid_to": "2006-04-21", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.tokadai.komaki-tokadaihigashi", "line": "桃花台線", "join": false, "operator": "桃花台新交通", "year": "06", "valid_to": "2006-10-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.kamioka.inotani-okuhidaonsenguchi", "line": "神岡線", "operator": "神岡鉄道", "year": "06", "valid_to": "2006-12-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.kurihara.ishikoshi-hosokura", "line": "くりはら田園鉄道線", "operator": "くりはら田園鉄道", "year": "06", "valid_to": "2007-04-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.kashima.ishioka-hokota", "line": "鹿島鉄道線", "operator": "鹿島鉄道", "year": "06", "valid_to": "2007-04-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.nishitetsu.miyajidake.shingu-tsuyazaki", "line": "宮地岳線", "operator": "西日本鉄道", "year": "06", "valid_to": "2007-04-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.takachiho.nobeoka-makimine", "line": "高千穂線", "operator": "高千穂鉄道", "year": "07", "valid_to": "2007-09-06", "bbox": [131.4474, 32.50, 131.75, 32.75], "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）; 2005-09-06 台風被災以降運休"},
+    {"id": "jp.takachiho.makimine-takachiho", "line": "高千穂線", "operator": "高千穂鉄道", "year": "07", "valid_to": "2008-12-28", "source": "tetsudokyogikai.net 廃線一覧; 2005-09-06 台風被災以降運休"},
+    {"id": "jp.shimabara.shimabaragaiko-kazusa", "line": "島原鉄道線", "operator": "島原鉄道", "year": "07", "valid_to": "2008-04-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.miki.miki-yakujin", "line": "三木線", "operator": "三木鉄道", "year": "07", "valid_to": "2008-04-01", "source": "国土交通省 近年廃止された鉄道路線（平成12年度以降）"},
+    {"id": "jp.toyama-ko.jr", "line": "富山港線", "operator": "西日本旅客鉄道", "year": "05", "valid_to": "2006-03-01", "min_maxd_m": 0, "source": "Wikipedia 富山地方鉄道富山港線（JR線として2006-03-01廃止、富山駅北—奥田中学校前は併用軌道新線へ）"},
+    {"id": "jp.meitetsu.monkeypark", "line": "モンキーパークモノレール線", "join": false, "operator": "名古屋鉄道", "year": "08", "valid_to": "2008-12-28", "source": "Wikipedia 名鉄モンキーパークモノレール線"},
+    {"id": "jp.hokutetsu.ishikawa.tsurugi-kaganoichinomiya", "line": "石川線", "operator": "北陸鉄道", "year": "08", "valid_to": "2009-11-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.towada.towadashi-misawa", "line": "十和田観光電鉄線", "operator": "十和田観光電鉄", "year": "11", "valid_to": "2012-04-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.nagaden.yashiro", "line": "屋代線", "operator": "長野電鉄", "year": "11", "valid_to": "2012-04-01", "source": "tetsudokyogikai.net 廃線一覧; Wikipedia 長野電鉄屋代線"},
+    {"id": "jp.jre.iwaizumi", "line": "岩泉線", "operator": "東日本旅客鉄道", "year": "13", "valid_to": "2014-04-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.jrh.esashi.kikonai-esashi", "line": "江差線", "operator": "北海道旅客鉄道", "year": "13", "valid_to": "2014-05-12", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.jre.agatsuma.old-iwashima-naganoharakusatsuguchi", "kind": "relocation", "line": "吾妻線", "operator": "東日本旅客鉄道", "year": "13", "valid_to": "2014-10-01", "bbox": [138.60, 36.50, 138.80, 36.60], "source": "八ッ場ダム建設に伴う岩島—長野原草津口 新線切替（2014-10-01）"},
+    {"id": "jp.jre.senseki.old-rikuzenotsuka-rikuzenono", "kind": "relocation", "line": "仙石線", "operator": "東日本旅客鉄道", "year": "14", "valid_to": "2015-05-30", "bbox": [141.08, 38.33, 141.25, 38.45], "source": "東日本大震災復旧 陸前大塚—陸前小野 内陸移設・運転再開（2015-05-30）"},
+    {"id": "jp.jre.joban.old-komagamine-hamayoshida", "kind": "relocation", "line": "常磐線", "operator": "東日本旅客鉄道", "year": "15", "valid_to": "2016-12-10", "bbox": [140.80, 37.80, 141.00, 38.08], "source": "東日本大震災復旧 駒ケ嶺—浜吉田 内陸移設・運転再開（2016-12-10）"},
+    {"id": "jp.jrh.rumoi.rumoi-mashike", "line": "留萌線", "operator": "北海道旅客鉄道", "year": "15", "valid_to": "2016-12-05", "source": "tetsudokyogikai.net 廃線一覧; JR北海道"},
+    {"id": "jp.jrw.sanko", "line": "三江線", "operator": "西日本旅客鉄道", "year": "17", "valid_to": "2018-04-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.kanden.tunnel-trolleybus", "line": "関電トンネルトロリーバス", "operator": "関西電力", "year": "17", "valid_to": "2018-12-01", "source": "Wikipedia 関電トンネル電気バス（2018-11-30 限り運行終了、12-01 廃止）"},
+    {"id": "jp.jrh.sekisho.yubari-branch", "line": "石勝線", "operator": "北海道旅客鉄道", "year": "18", "valid_to": "2019-04-01", "bbox": [141.90, 42.90, 142.10, 43.10], "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.jre.kesennuma.yanaizu-kesennuma", "line": "気仙沼線", "operator": "東日本旅客鉄道", "year": "19", "valid_to": "2020-04-01", "source": "tetsudokyogikai.net 廃線一覧（BRT転換区間の鉄道事業廃止）"},
+    {"id": "jp.jre.ofunato.kesennuma-sakari", "line": "大船渡線", "operator": "東日本旅客鉄道", "year": "19", "valid_to": "2020-04-01", "source": "tetsudokyogikai.net 廃線一覧（BRT転換区間の鉄道事業廃止）"},
+    {"id": "jp.jrh.sassho.iryodaigaku-shintotsukawa", "line": "札沼線", "operator": "北海道旅客鉄道", "year": "20", "station_year": "19", "valid_to": "2020-05-07", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.jrh.hidaka.mukawa-samani", "line": "日高線", "operator": "北海道旅客鉄道", "year": "20", "valid_to": "2021-04-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.jrh.rumoi.ishikarinumata-rumoi", "line": "留萌線", "operator": "北海道旅客鉄道", "year": "22", "valid_to": "2023-04-01", "source": "tetsudokyogikai.net 廃線一覧; JR北海道"},
+    {"id": "jp.nose.cable", "line": "鋼索線", "operator": "能勢電鉄", "year": "22", "valid_to": "2023-12-04", "min_maxd_m": 0, "source": "Wikipedia 能勢電鉄妙見の森ケーブル（2023-12-03 限り営業終了、12-04 廃止）"},
+    {"id": "jp.toei.ueno-monorail", "line": "上野懸垂線", "join": false, "operator": "東京都", "year": "22", "valid_to": "2023-12-27", "min_maxd_m": 0, "source": "Wikipedia 東京都交通局上野懸垂線（2019-11-01 から運休、2023-12-27 廃止）"},
+    {"id": "jp.jrh.nemuro.furano-shintoku", "line": "根室線", "operator": "北海道旅客鉄道", "year": "23", "valid_to": "2024-04-01", "source": "tetsudokyogikai.net 廃線一覧"},
+    {"id": "jp.skyrail.seno", "line": "広島短距離交通瀬野線", "join": false, "operator": "スカイレールサービス", "year": "23", "valid_to": "2024-05-01", "source": "Wikipedia スカイレールサービス広島短距離交通瀬野線（2024-04-30 運行終了、05-01 廃止）"},
+    {"id": "jp.tateyama.tunnel-trolleybus", "line": "無軌条電車線", "operator": "立山黒部貫光", "year": "23", "valid_to": "2024-12-01", "source": "Wikipedia 立山トンネル電気バス（2024-11-30 限り、12-01 廃止）"}
+  ],
+  "retirements": [
+    {
+      "history_id": "jp.rumoi.fukagawa-ishikarinumata",
+      "match": {"line_name": "留萌線", "operator": "北海道旅客鉄道", "bbox": [141.93, 43.715, 142.05, 43.815]},
+      "valid_to": "2026-04-01",
+      "source": "国土交通省 鉄軌道の廃止実績（2026-04-01 深川—石狩沼田）; JR北海道 2026-03-31 最終運行日告知。N02-25 still carries the section."
+    }
+  ],
+  "not_in_n02": [
+    "2005-04-01 以前に廃止され N02-05 に含まれない路線（名鉄岐阜600V線区・日立電鉄線・のと鉄道能登線 穴水—蛸島 など）は N02 から復元できない。",
+    "阪堺電気軌道 上町線 住吉—住吉公園（0.2 km）は現行線から 40 m 以内のため未収録。"
+  ]
+}

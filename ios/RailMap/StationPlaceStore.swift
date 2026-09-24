@@ -116,14 +116,23 @@ final class StationPlaceStore {
 
     // MARK: - The lookup
 
-    /// The search plan `StationPlaceLink` names, run until one step answers.
+    /// The search plan `StationPlaceLink` names, run until one step answers
+    /// with a place that is not merely `.namedStop` — the tier ranked below
+    /// every other one.
     ///
-    /// The third step repeats the first query with the transport filter off.
+    /// The last step repeats the first query with the transport filter off.
     /// A live sweep never needed it — every station that resolved at all
     /// resolved on a filtered pass — but the filter is the service's own
     /// categorisation of a place, and a station it has failed to categorise is
     /// exactly the case a filtered search cannot see. It costs one request on
     /// stations that were going to miss anyway.
+    ///
+    /// A `.namedStop` winner is remembered rather than returned immediately:
+    /// a bus stop wearing a station's romanised name can win an early query
+    /// — 泰安's "Taian" finds "Taian Stop" 80 m away before the third query,
+    /// "Taian Station", ever runs — and the whole rest of the plan has to be
+    /// given the chance to find something stronger before that weak match is
+    /// accepted.
     private static func resolve(_ card: StationCard, aliases: [String]) async -> Resolution {
         let station = StationPlaceLink.Station(
             names: card.searchNames + aliases, country: card.region.code)
@@ -133,9 +142,11 @@ final class StationPlaceStore {
 
         let deadline = ContinuousClock.now.advanced(by: lookupBudget)
         var definitive = true
+        var weak: MKMapItem?
         for (query, transportOnly) in plan {
             guard !Task.isCancelled, ContinuousClock.now < deadline else {
-                return Resolution(place: nil, definitive: false)
+                definitive = false
+                break
             }
             let items: [MKMapItem]
             do {
@@ -153,10 +164,27 @@ final class StationPlaceStore {
                     isPublicTransport: item.pointOfInterestCategory == .publicTransport,
                     metres: metres(from: card.coordinate, to: coordinate(of: item)))
             }
-            guard let index = StationPlaceLink.best(candidates, for: station) else { continue }
-            let item = items[index]
+            guard let match = StationPlaceLink.bestMatch(candidates, for: station) else { continue }
+            let item = items[match.index]
+            if match.isWeak {
+                if weak == nil { weak = item }
+                continue
+            }
+            // The filter-off pass answers a light-rail stop's name with the
+            // landmark it is named after; a stop already in hand, typed as
+            // transport and within 150 m, is the better link.
+            if weak != nil, !match.isTransport { continue }
             return Resolution(place: Place(item: item, name: item.name ?? "", url: placeURL(of: item)),
                 definitive: true)
+        }
+        if let weak {
+            // A named stop is only the answer once every stronger step has
+            // been heard. If one of them timed out or errored, `definitive`
+            // is already false: the reader gets the stop now, and the next
+            // card open asks again rather than pinning it in the cache.
+            return Resolution(
+                place: Place(item: weak, name: weak.name ?? "", url: placeURL(of: weak)),
+                definitive: definitive)
         }
         return Resolution(place: nil, definitive: definitive)
     }

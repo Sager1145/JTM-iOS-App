@@ -62,6 +62,14 @@ if [ "$run_js" = 1 ]; then
     node scripts/build/build-port-fixtures.mjs --check >/dev/null 2>&1 \
         || fail "fixtures are stale — rerun build-port-fixtures.mjs and review the diff"
     echo "  fixtures match the code that generated them"
+
+    # ADR 0010: the four station tables share one schema, one code grammar
+    # per region and one readings row shape. The validator is the contract.
+    # Its failure lines are the report, so they are left on stdout.
+    python3 scripts/railway/validate-station-tables.py >/dev/null 2>"$scratch.stations" \
+        || { python3 scripts/railway/validate-station-tables.py 2>&1 | head -40
+             fail "station tables violate ADR 0010 (see the lines above)"; }
+    echo "  station tables share one schema and one code grammar per region"
 fi
 
 if [ "$run_swift" = 1 ]; then
@@ -96,6 +104,12 @@ if [ "$run_swift" = 1 ]; then
     python3 "$here/tools/verify-store-ordering.py" "$scratch" \
         || fail "native persistence harness"
     echo "  native journey editor and persistence harnesses pass"
+
+    python3 "$here/tools/verify-subscription-auth.py" \
+        || fail "subscription authentication harness"
+    python3 "$here/tools/verify-subscription-service.py" "$scratch" \
+        || fail "subscription HTTP harness"
+    echo "  subscription authentication and HTTP harnesses pass"
 
     # Warnings in our own sources fail the gate.
     #

@@ -479,6 +479,18 @@ public enum Stations {
         ])!.jsString
     }
 
+    /// ADR 0011: dated validity stamped onto a station feature (overlay
+    /// stations, or a current station stamped by `RailHistory`'s
+    /// `retirements`), mirroring `app-rail-history.js`'s
+    /// `feature.properties.valid_from` / `valid_to`.
+    public static func stationValidFrom(_ feature: Feature) -> String? {
+        truthyString(feature.properties["valid_from"])
+    }
+
+    public static func stationValidTo(_ feature: Feature) -> String? {
+        truthyString(feature.properties["valid_to"])
+    }
+
     /// The value when it is truthy, otherwise nil — the shape of a chain that
     /// ends in an explicit `|| null`.
     private static func truthyString(_ value: Value?) -> String? {

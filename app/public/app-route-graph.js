@@ -596,10 +596,12 @@ function solveTrainRouteSection(
 
 function routeSectionBoundarySharesExplicitStop(previousSection, section) {
   if (!previousSection || !section) return false;
-  const previousCode = String(
-    previousSection.to_n02_station_code || "",
-  ).trim();
-  const nextCode = String(section.from_n02_station_code || "").trim();
+  const previousCode = canonicalStationCode(
+    String(previousSection.to_n02_station_code || "").trim(),
+  );
+  const nextCode = canonicalStationCode(
+    String(section.from_n02_station_code || "").trim(),
+  );
   if (previousCode && nextCode) return previousCode === nextCode;
   const previousName = normalizeStationName(previousSection.to || "");
   const nextName = normalizeStationName(section.from || "");
@@ -1341,22 +1343,39 @@ function getRegionalRouteGraph(bbox) {
 // Resolve BOTH endpoint station candidate lists of a route section (shared
 // by the bbox helper and the on-graph solver so the from/to lookup pattern
 // lives in exactly one place).
+function filterStationCandidatesByRideDate(features, rideDate) {
+  return (features || []).filter((feature) =>
+    isRailValid(
+      feature?.properties?.valid_from,
+      feature?.properties?.valid_to,
+      rideDate,
+    ),
+  );
+}
+
 function resolveSectionEndpoints(section, train, allowedCodes) {
   // A section that names its line has already said which railway calls here,
   // so the endpoint expansion may only reach for platforms belonging to it.
   const lineNames = normalizedRouteSectionHintValues(section.line_names);
+  const rideDate = train?.date;
   return {
-    fromStations: routeSolverApi.resolveEndpointCandidates(
-      { name: section.from, n02_station_code: section.from_n02_station_code },
-      train,
-      allowedCodes,
-      lineNames,
+    fromStations: filterStationCandidatesByRideDate(
+      routeSolverApi.resolveEndpointCandidates(
+        { name: section.from, n02_station_code: section.from_n02_station_code },
+        train,
+        allowedCodes,
+        lineNames,
+      ),
+      rideDate,
     ),
-    toStations: routeSolverApi.resolveEndpointCandidates(
-      { name: section.to, n02_station_code: section.to_n02_station_code },
-      train,
-      allowedCodes,
-      lineNames,
+    toStations: filterStationCandidatesByRideDate(
+      routeSolverApi.resolveEndpointCandidates(
+        { name: section.to, n02_station_code: section.to_n02_station_code },
+        train,
+        allowedCodes,
+        lineNames,
+      ),
+      rideDate,
     ),
   };
 }

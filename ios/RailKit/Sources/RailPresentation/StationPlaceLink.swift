@@ -151,17 +151,41 @@ public enum StationPlaceLink {
     /// noun or a district (新町, 中央) where the bare query drowns in unrelated
     /// transport.
     ///
-    /// Two queries and no more. Each one is a network round trip taken while
-    /// the reader is looking at an open card, and the third spelling has never
-    /// been the one that answered.
+    /// Two queries for every country but Japan, Taiwan, Hong Kong and Macao,
+    /// which get a third: a live audit of 400 Japanese stations found 8 whose
+    /// kanji an English-language map service answers nothing for at all —
+    /// 新豊田, 本町, 近鉄名古屋 — while "<romaji> Station" found each of them
+    /// at 2-187 m. The same English-service sweep found the Chinese query
+    /// answering nothing for some Taiwan and Hong Kong stations too — 灣仔
+    /// found only Admiralty, 動物園 only the gondola — while "Wan Chai
+    /// Station" and "Taipei Zoo Station" found the station itself at 18-89 m.
+    /// Korea's own packages already spell the word into the station's name
+    /// (서울역), so there is nothing a third, English query would add there.
     public static func queries(for station: Station) -> [String] {
         guard let primary = station.names.first else { return [] }
         let word = stationWord(country: station.country)
         // Korea's packages spell the word into the station's own name (서울역),
         // and 東京駅前 is a Japanese name that ends in one without being one.
         // Either way a second query would ask for 서울역역.
-        guard !primary.hasSuffix(word) else { return [primary] }
-        return [primary, primary + word]
+        var plan = primary.hasSuffix(word) ? [primary] : [primary, primary + word]
+        let countriesWithARomajiFallback: Set<String> = ["jp", "tw", "hk", "mo"]
+        if countriesWithARomajiFallback.contains(station.country.lowercased()),
+            let romaji = station.names.first(where: isLatinScript)
+        {
+            // `word` is the CJK/Hangul word for "station" and is never a
+            // suffix of a Latin name, so the check has to read the Latin
+            // spelling's own endings instead.
+            // Whole last words only: "Costa" and "Vista" are not stations.
+            let lowered = romaji.lowercased()
+            let lastWord = lowered.split(whereSeparator: { $0 == " " || $0 == "-" }).last.map(String.init) ?? lowered
+            let alreadyNamesAStation =
+                ["station", "sta.", "stn", "sta", "terminus", "depot"].contains(lastWord)
+            let suffixed = alreadyNamesAStation ? romaji : romaji + " Station"
+            if !plan.contains(suffixed) {
+                plan.append(suffixed)
+            }
+        }
+        return plan
     }
 
     /// The local word for "station", appended only when the bare query failed.
@@ -191,6 +215,25 @@ public enum StationPlaceLink {
     /// card sent before any of this existed — the feature can only add a
     /// better link, never take the working one away.
     public static func best(_ candidates: [Candidate], for station: Station) -> Int? {
+        bestMatch(candidates, for: station)?.index
+    }
+
+    /// The same winner as `best`, plus whether it is only a `.namedStop` —
+    /// the tier ranked below every other one, and the one a caller running a
+    /// multi-query plan must not settle for while a later step in
+    /// that SAME plan might still answer with something stronger. A caller
+    /// with only one step of candidates to offer can ignore `isWeak` and use
+    /// `best` instead.
+    ///
+    /// `isTransport` says whether the winner carries Apple's transport
+    /// category. A plan holding a weak `.namedStop` — itself always transport,
+    /// within 150 m — must not trade it for an untyped winner from the
+    /// filter-off pass: that pass returns the landmark a light-rail stop is
+    /// named after (Kaohsiung Exhibition Center, the hall, 249 m away) ahead
+    /// of the stop itself (0 m), and the hall is not where the train is.
+    public static func bestMatch(_ candidates: [Candidate], for station: Station)
+        -> (index: Int, isWeak: Bool, isTransport: Bool)?
+    {
         let aliases = normalizedNames(of: station)
         guard !aliases.isEmpty else { return nil }
         var winner: (index: Int, tier: Tier, metres: Double)?
@@ -204,7 +247,8 @@ public enum StationPlaceLink {
             }
             winner = (index, tier, candidate.metres)
         }
-        return winner?.index
+        guard let winner else { return nil }
+        return (winner.index, winner.tier == .namedStop, candidates[winner.index].isPublicTransport)
     }
 
     /// How good a match one candidate is, best first.
@@ -231,6 +275,17 @@ public enum StationPlaceLink {
         /// the rails point.
         case namedInQualifier = 4
         case untypedNamedInQualifier = 5
+        /// An English "Stop" on a name that is not otherwise the station's
+        /// own — Hong Kong's tram network holds street furniture as "Whitty
+        /// Street Stop" rather than under 屈地街 itself. Ranked below every
+        /// other tier because "Stop" is also the English rendering of a bus
+        /// stop's Chinese name, and the safer reading loses to any tier that
+        /// matched the station more directly — not just within one response,
+        /// but across an entire multi-query plan: `bestMatch` marks a
+        /// `.namedStop` winner `isWeak`, and a caller running several queries
+        /// for one station must keep it only as a fallback, in case a later
+        /// query in the SAME plan answers with a stronger tier.
+        case namedStop = 6
 
         /// How far this kind of match may sit from the platform.
         ///
@@ -238,10 +293,11 @@ public enum StationPlaceLink {
         /// because the shape they match is a street: 渣華道's own tram stop is
         /// 7 m away and four OTHER stops on the same road carry the same street
         /// name between 300 m and 1.2 km. The looser cap would pick whichever
-        /// the service happened to list first.
+        /// the service happened to list first. The named-stop tier is held to
+        /// the same cap for the same reason.
         var maxMetres: Double {
             switch self {
-            case .namedInQualifier, .untypedNamedInQualifier: return 150
+            case .namedInQualifier, .untypedNamedInQualifier, .namedStop: return 150
             default: return StationPlaceLink.maxMetres
             }
         }
@@ -251,7 +307,8 @@ public enum StationPlaceLink {
         guard !isRoadTransport(candidate.name) else { return nil }
         let brackets = qualifiers(in: candidate.name)
         let name = normalize(candidate.name)
-        if !name.isEmpty, aliases.contains(name) {
+        let matchesWhole = !name.isEmpty && aliases.contains(name)
+        if matchesWhole || matchesSegment(of: candidate.name, aliases: aliases) {
             switch (candidate.isPublicTransport, brackets.isEmpty) {
             case (true, true): return .station
             case (true, false): return .qualifiedStation
@@ -259,8 +316,49 @@ public enum StationPlaceLink {
             case (false, false): return .qualifiedUntypedStation
             }
         }
-        guard brackets.contains(where: { aliases.contains(normalize($0)) }) else { return nil }
-        return candidate.isPublicTransport ? .namedInQualifier : .untypedNamedInQualifier
+        if brackets.contains(where: { aliases.contains(normalize($0)) }) {
+            return candidate.isPublicTransport ? .namedInQualifier : .untypedNamedInQualifier
+        }
+        return namedStopTier(of: candidate, aliases: aliases)
+    }
+
+    /// Whether one "/"-separated half of the candidate's bare name is one of
+    /// the station's aliases — Apple's "Caoya / KRTC Station" only carries
+    /// 草衙 in the first half, and Apple's "Xyz / KRTC Station" is not the
+    /// station because the OTHER half is what it names.
+    private static func matchesSegment(of rawName: String, aliases: Set<String>) -> Bool {
+        let plain = bare(rawName)
+        guard plain.contains("/") || plain.contains("／") else { return false }
+        return plain.components(separatedBy: CharacterSet(charactersIn: "/／"))
+            .map { normalize($0.trimmingCharacters(in: .whitespaces)) }
+            .contains { !$0.isEmpty && aliases.contains($0) }
+    }
+
+    /// The lowest tier: an English "Stop" whose remainder is one of the
+    /// station's aliases.
+    ///
+    /// The remainder is checked BEFORE it is normalized for one thing
+    /// `normalize` would otherwise hide: whether it still ends in a station
+    /// word of its own. "Taian Station Stop" is the English form of a bus
+    /// stop's Chinese name, 泰安(公交站), and rejecting it here — rather than
+    /// letting a plain "Stop" suffix waved it through — is what keeps this
+    /// tier from re-admitting the road stops `isRoadTransport` was written to
+    /// turn away.
+    private static func namedStopTier(of candidate: Candidate, aliases: Set<String>) -> Tier? {
+        guard candidate.isPublicTransport else { return nil }
+        let plain = bare(candidate.name).trimmingCharacters(in: .whitespacesAndNewlines)
+        guard plain.lowercased().hasSuffix(" stop") else { return nil }
+        let remainder = String(plain.dropLast(" stop".count))
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !remainder.isEmpty else { return nil }
+        let strippedRemainder = remainder.lowercased().filter { $0.isLetter || $0.isNumber }
+        let endsInAStationWord = stationWords.contains {
+            strippedRemainder.count > $0.count && strippedRemainder.hasSuffix($0)
+        }
+        guard !endsInAStationWord else { return nil }
+        let normalized = normalize(remainder)
+        guard !normalized.isEmpty, aliases.contains(normalized) else { return nil }
+        return .namedStop
     }
 
     /// Whether a result is a road stop rather than a railway station.
@@ -291,6 +389,7 @@ public enum StationPlaceLink {
     public static func normalize(_ raw: String) -> String {
         var text = bare(raw)
         text = foldWidth(text).lowercased()
+        text = foldLatinDiacritics(text)
         text = text.filter { $0.isLetter || $0.isNumber }
         text = stripMarks(text)
         text = simplified(text)
@@ -298,9 +397,54 @@ public enum StationPlaceLink {
         return text
     }
 
-    /// Every spelling of the station, folded.
+    /// Nishijō → nishijo, so either side's macroned romaji folds to the same
+    /// string as the other's plain spelling. The direction is not fixed to one
+    /// side: the packages carry macrons too — Kansai-Kūkō is the package's own
+    /// name — and the fold runs the same way on both, so it does not matter
+    /// which side wrote the macron.
+    ///
+    /// NFD-decomposes so a macron, acute or other diacritic separates out into
+    /// its own combining mark, drops only the combining marks in the Latin
+    /// range U+0300...U+036F, and NFC-recomposes what is left. This is a
+    /// custom fold so exactly which marks are dropped is explicit: only
+    /// U+0300–U+036F; kana voicing marks and Hangul jamo are outside that
+    /// range.
+    static func foldLatinDiacritics(_ text: String) -> String {
+        let decomposed = text.decomposedStringWithCanonicalMapping
+        let stripped = String(
+            decomposed.unicodeScalars.filter { !(0x0300...0x036F).contains($0.value) })
+        return stripped.precomposedStringWithCanonicalMapping
+    }
+
+    /// Whether a name's letters are all Latin, once macrons and the like are
+    /// folded off. Used to find the romaji spelling among a Japanese
+    /// station's names, whichever position it is carried in.
+    static func isLatinScript(_ name: String) -> Bool {
+        let folded = foldLatinDiacritics(name.lowercased())
+        let letters = folded.filter { $0.isLetter }
+        guard !letters.isEmpty else { return false }
+        return letters.allSatisfy { $0.isASCII }
+    }
+
+    /// Every spelling of the station, folded — and, for a package name that
+    /// is two names joined by "/", each half as well.
+    ///
+    /// The Taiwan package spells the Kaohsiung stops 凱旋/前鎮之星 and
+    /// 凹子底/愛河之心 that way while Apple holds "Aozihdi Station" and
+    /// "Kaisyuan Station (Light Rail Cianjhen Star Station)": only a half
+    /// matches. The cost is that 台北101/世貿 also gains the alias
+    /// "taipei101", which the tower could answer to on the filter-off pass;
+    /// the station's whole name matches on the first pass, so the tower is
+    /// never asked. A candidate's own "/" — "Caoya / KRTC Station" — is split
+    /// on its side instead, in `matchesSegment(of:aliases:)`.
     static func normalizedNames(of station: Station) -> Set<String> {
-        Set(station.names.map(normalize).filter { !$0.isEmpty })
+        var names: [String] = []
+        for name in station.names {
+            names.append(name)
+            let halves = name.split(whereSeparator: { $0 == "/" || $0 == "／" })
+            if halves.count > 1 { names.append(contentsOf: halves.map(String.init)) }
+        }
+        return Set(names.map(normalize).filter { !$0.isEmpty })
     }
 
     /// The bracketed pieces of a name — `台北车站(地铁站)` has one.
@@ -461,7 +605,7 @@ public enum StationPlaceLink {
     static let stationWords: [String] = [
         "火車站", "火车站", "車站", "车站", "地鐵站", "地铁站",
         "捷運站", "捷运站", "輕軌站", "轻轨站",
-        "站", "駅", "역", "station", "stn",
+        "站", "駅", "역", "mainstation", "railwaystation", "trainstation", "station", "stn",
     ]
 
     /// Operator marks either side glues to a station's name — 港铁金钟站 on
@@ -475,6 +619,7 @@ public enum StationPlaceLink {
         "港鐵", "港铁", "台鐵", "臺鐵", "台铁", "高鐵", "高铁",
         "捷運", "捷运", "地鐵", "地铁", "輕軌", "轻轨", "都營", "都营",
         "thsr", "mtr",
+        "taiwanhighspeedrail", "highspeedrail", "hsr", "lightrail",
     ]
 
     /// What a road stop is called, in the languages the five packages are read

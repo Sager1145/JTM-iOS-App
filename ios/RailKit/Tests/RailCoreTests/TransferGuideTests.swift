@@ -129,6 +129,27 @@ struct TransferGuideParseTests {
         #expect(leaving?.arrival == nil)
     }
 
+    @Test("separate arrival and departure badges stay with their adjacent times")
+    func separateTransferBadges() {
+        var shot = Screenshot()
+        shot.row(("09:00", 10), ("発", 70), ("東京", 110))
+        shot.row(("1駅", 10), ("JR東海道本線", 110))
+        // Vision can split both grey badges away from their time. Token order
+        // is the only remaining evidence of which time each badge describes.
+        shot.row(
+            ("09:08", 10), ("着", 65), ("09:12", 85), ("発", 140), ("品川", 170))
+        shot.row(("1駅", 10), ("JR山手線", 110))
+        shot.row(("09:25", 10), ("着", 70), ("渋谷", 110))
+
+        let route = TransferGuide.parse(shot.lines)
+
+        #expect(route.legs.count == 2)
+        #expect(route.legs[0].calls.last?.arrival == "09:08")
+        #expect(route.legs[0].calls.last?.departure == nil)
+        #expect(route.legs[1].calls.first?.arrival == nil)
+        #expect(route.legs[1].calls.first?.departure == "09:12")
+    }
+
     @Test("the bracketed prefecture is kept and the 構内図 icon is not")
     func names() {
         let route = TransferGuide.parse(sapporoToHakata())
@@ -430,6 +451,20 @@ struct TransferGuideTextTests {
         }
         #expect(!TransferGuide.Text.looksLikeStationName("47,280円"))
         #expect(!TransferGuide.Text.looksLikeStationName("8番線"))
+    }
+
+    @Test("OCR spacing and punctuation do not change summary numbers")
+    func summaryNumberVariants() {
+        let tokens = TransferGuide.Token.read("14時間8分 乗換 2回 47.280円")
+
+        #expect(tokens.contains(.duration(minutes: 14 * 60 + 8)))
+        #expect(tokens.contains(.transfers(2)))
+        #expect(tokens.contains(.fare(47_280)))
+    }
+
+    @Test("a clipped transfer count may still have layout whitespace")
+    func clippedTransferCountWithWhitespace() {
+        #expect(TransferGuide.Token.read("乗換 7").contains(.transfers(7)))
     }
 
     @Test("the year a screenshot never prints is the nearest reading of the day")

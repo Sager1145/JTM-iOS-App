@@ -13,11 +13,9 @@ import UniformTypeIdentifiers
 //  preview is not a courtesy — it is the only place a misread digit can be
 //  caught before it becomes a journey.
 //
-//  Nothing on this screen is editable except the three answers the screenshot
-//  cannot give: which day, whether it happened, and which of its trains to
-//  keep. Everything else is repaired in the ride editor afterwards, which is
-//  a screen that already validates every rule; a second half-editor here
-//  would be a second set of rules to keep in step.
+//  Date, ridden status and included legs are edited here. Optional AI
+//  additions are reviewed in a separate sheet and only fill missing fields.
+//  Corrections to recognized values remain in the ordinary ride editor.
 // =========================================================================
 
 struct TransferGuideImportView: View {
@@ -32,6 +30,7 @@ struct TransferGuideImportView: View {
     @State private var choosesFiles = false
     @State private var expandedLeg: Int?
     @State private var showsRaw = false
+    @State private var showsAICompletion = false
     @State private var loadTask: Task<Void, Never>?
     @State private var isLoadingPages = false
     @State private var loadError: String?
@@ -55,6 +54,22 @@ struct TransferGuideImportView: View {
                         matchSection(draft)
                         noteSection(draft)
                         rawSection(draft)
+                        Section {
+                            Button { showsAICompletion = true } label: {
+                                Label(localization.text("ios.ai.title", fallback: "AI completion"), systemImage: "sparkles")
+                            }
+                            .disabled(!draft.build.trains.contains(where: JourneyCompletion.isEligible))
+                            .accessibilityIdentifier("guideAICompletion")
+                        }
+                    }
+                }
+            }
+            .disabled(flow.isCommitting)
+            .sheet(isPresented: $showsAICompletion) {
+                if let draft = flow.draft {
+                    JourneyCompletionView(trains: draft.build.trains,
+                        context: draft.reading.rawRows.joined(separator: "\n")) { trains in
+                        flow.applyCompletion(trains)
                     }
                 }
             }
@@ -104,19 +119,19 @@ struct TransferGuideImportView: View {
         let choosePhotos = localization.guideText("ios.guide.choosePhotos")
         Section {
             PhotosPicker(
-                selection: $picked, maxSelectionCount: 8, matching: .images,
+                selection: $picked, maxSelectionCount: 8, selectionBehavior: .ordered, matching: .images,
                 photoLibrary: .shared()
             ) {
                 Label(choosePhotos, systemImage: "photo")
             }
             .accessibilityIdentifier("guidePhotoPicker")
-            .disabled(isLoadingPages || flow.isRunning || !hasNetwork)
+            .disabled(isLoadingPages || flow.isRunning || flow.isCommitting || !hasNetwork)
 
             Button { choosesFiles = true } label: {
                 Label(localization.guideText("ios.guide.chooseFiles"), systemImage: "folder")
             }
             .accessibilityIdentifier("guideFilePicker")
-            .disabled(isLoadingPages || flow.isRunning || !hasNetwork)
+            .disabled(isLoadingPages || flow.isRunning || flow.isCommitting || !hasNetwork)
 
             if !flow.pageNames.isEmpty {
                 LabeledContent(
@@ -320,12 +335,12 @@ struct TransferGuideImportView: View {
                     set: { flow.setIncluded($0, at: position, existingIDs: existingIDs) })
             ) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(leg.service).font(.headline)
+                    Text(record(draft, position: position)?.number ?? leg.service).font(.headline)
                     Text(legSummary(leg))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .monospacedDigit()
-                    if let detail = legDetail(leg) {
+                    if let detail = legDetail(leg, train: record(draft, position: position)) {
                         Text(detail).font(.caption).foregroundStyle(.secondary)
                     }
                     if let lines = legLines(draft, position: position) {
@@ -363,8 +378,11 @@ struct TransferGuideImportView: View {
     private func callRow(
         _ draft: TransferGuideImport.Draft, position: Int, index: Int, call: TransferGuide.Call
     ) -> some View {
+        let train = record(draft, position: position)
+        let stop = train.flatMap { $0.stops.indices.contains(index) ? $0.stops[index] : nil }
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text([call.arrival, call.departure].compactMap { $0 }.joined(separator: " / "))
+            Text([stop?.arrival ?? call.arrival, stop?.departure ?? call.departure]
+                .compactMap { $0 }.joined(separator: " / "))
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
                 .frame(width: 92, alignment: .leading)
@@ -487,7 +505,7 @@ struct TransferGuideImportView: View {
                     .buttonStyle(.borderedProminent)
                     .railMinimumTouchTarget()
                     .accessibilityIdentifier("guideImportCommit")
-                    .disabled(draft.build.trains.isEmpty || itineraries.isImporting)
+                    .disabled(draft.build.trains.isEmpty || itineraries.isImporting || flow.isCommitting)
                     if draft.build.trains.isEmpty {
                         Text(localization.guideText("ios.guide.nothing"))
                             .font(.caption)
@@ -524,7 +542,10 @@ struct TransferGuideImportView: View {
                 var pages: [Data] = []
                 for item in items {
                     try Task.checkCancellation()
-                    if let data = try await item.loadTransferable(type: Data.self) { pages.append(data) }
+                    guard let data = try await item.loadTransferable(type: Data.self) else {
+                        throw TransferGuideOCR.Failure.undecodable
+                    }
+                    pages.append(data)
                 }
                 try Task.checkCancellation()
                 isLoadingPages = false
@@ -631,9 +652,10 @@ struct TransferGuideImportView: View {
         }
     }
 
-    private func legDetail(_ leg: TransferGuide.Leg) -> String? {
+    private func legDetail(_ leg: TransferGuide.Leg, train: Train?) -> String? {
         var parts = leg.notes
-        if let equipment = leg.equipment { parts.insert(equipment, at: 0) }
+        if let equipment = train?.vehicleType ?? leg.equipment { parts.insert(equipment, at: 0) }
+        if let company = train?.company, !company.isEmpty { parts.insert(company, at: 0) }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 

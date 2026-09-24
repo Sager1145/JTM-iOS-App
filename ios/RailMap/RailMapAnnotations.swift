@@ -327,6 +327,67 @@ final class EndpointLabelAnnotation: NSObject, MKAnnotation {
     }
 }
 
+/// One edited stop, keyed by the editor's occurrence id rather than its place.
+final class DraftStopAnnotation: NSObject, MKAnnotation {
+    let occurrenceID: UUID
+    dynamic var coordinate: CLLocationCoordinate2D
+    let index: Int
+    let name: String
+    let stopType: String
+    let timeText: String
+    let stopTypeLabel: String
+    let timeLabel: String
+
+    init(
+        occurrenceID: UUID, coordinate: CLLocationCoordinate2D, index: Int,
+        name: String, stopType: String, timeText: String,
+        stopTypeLabel: String, timeLabel: String
+    ) {
+        self.occurrenceID = occurrenceID
+        self.coordinate = coordinate
+        self.index = index
+        self.name = name
+        self.stopType = stopType
+        self.timeText = timeText
+        self.stopTypeLabel = stopTypeLabel
+        self.timeLabel = timeLabel
+    }
+}
+
+/// Always shows the 1-based index, name, stop type, and time. No callout.
+final class DraftStopAnnotationView: MKAnnotationView {
+    private let bubble = UILabel()
+
+    override init(annotation: (any MKAnnotation)?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        bubble.numberOfLines = 4
+        bubble.font = .preferredFont(forTextStyle: .caption1)
+        bubble.textAlignment = .center
+        bubble.textColor = .label
+        addSubview(bubble)
+        canShowCallout = false
+        collisionMode = .none
+        backgroundColor = .systemBackground
+        layer.cornerRadius = 8
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.separator.cgColor
+    }
+
+    required init?(coder: NSCoder) { nil }
+
+    func configure(_ item: DraftStopAnnotation) {
+        annotation = item
+        bubble.text = "\(item.index)\n\(item.name)\n\(item.stopTypeLabel)\n\(item.timeLabel)"
+        let fitted = bubble.sizeThatFits(CGSize(width: 160, height: 220))
+        let size = CGSize(width: min(180, ceil(fitted.width) + 16), height: ceil(fitted.height) + 10)
+        bounds.size = size
+        bubble.frame = bounds.insetBy(dx: 8, dy: 5)
+        centerOffset = CGPoint(x: 0, y: -size.height / 2)
+        isAccessibilityElement = true
+        accessibilityLabel = bubble.text
+    }
+}
+
 /// Preserve MapKit annotation identity when its complete presentation is
 /// unchanged. Buckets support coincident ride markers without merging them.
 @MainActor
@@ -358,6 +419,8 @@ enum MapAnnotationReconciler {
             return "ride|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.role)|\(item.rawName)"
         case let item as RideLabelAnnotation:
             return "label|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.rawName)"
+        case let item as DraftStopAnnotation:
+            return "draft|\(item.occurrenceID)"
         default:
             return "\(ObjectIdentifier(annotation))"
         }
@@ -381,6 +444,10 @@ enum MapAnnotationReconciler {
                 && a.alpha == b.alpha && a.focusBoost == b.focusBoost && a.selected == b.selected
                 && a.core?.radius == b.core?.radius && a.core?.focusScale == b.core?.focusScale
                 && a.core?.color == b.core?.color
+        case let (a as DraftStopAnnotation, b as DraftStopAnnotation):
+            return a.name == b.name && a.stopType == b.stopType && a.timeText == b.timeText
+                && a.index == b.index && a.stopTypeLabel == b.stopTypeLabel
+                && a.timeLabel == b.timeLabel
         default:
             return false
         }
@@ -480,10 +547,9 @@ final class StationAnnotationView: MKAnnotationView {
         dot.layer.cornerRadius = diameter / 2
         dot.layer.borderWidth = RailStyle.stationRing * scale
 
-        // The beads appear at each station's own minZoom; the NAMES
-        // wait for a second, higher floor, because a name needs a
-        // district's worth of room and a bead does not.
-        let names = showsName && zoom >= MapLabelStyle.stationLabelMinZoom
+        // The coordinator has already applied the importance-specific zoom
+        // floor and collision pass; a second floor would hide distant hubs.
+        let names = showsName
         var width = diameter
         // Nothing below is worth doing for a name that is not drawn
         // and was not drawn a moment ago — and that is the state

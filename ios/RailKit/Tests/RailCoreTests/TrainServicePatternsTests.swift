@@ -37,7 +37,9 @@ struct TrainServicePatternsTests {
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         let features = json?["features"] as? [[String: Any]] ?? []
         let knownNames = Set(features.compactMap { feature -> String? in
-            (feature["properties"] as? [String: Any])?["N02_005"] as? String
+            // ADR 0010: the neutral key, with the pre-2026-09 N02 key as fallback.
+            let props = feature["properties"] as? [String: Any]
+            return (props?["station_name"] ?? props?["N02_005"]) as? String
         })
         #expect(knownNames.isEmpty == false)
 
@@ -225,5 +227,184 @@ struct TrainServicePatternsTests {
 
         let harukaHiragana = TrainServicePatterns.search("はるか ")
         #expect(harukaHiragana.count == 2)
+    }
+
+    // MARK: - v2 schema
+
+    @Test("every line named in a pattern exists in the shipped rail-sections table, canonically")
+    func lineNamesExistInRailSections() throws {
+        let root = try Self.repositoryRoot()
+        let url = root.appending(path: "app/data/rail-sections.json")
+        let data = try Data(contentsOf: url)
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        let features = json?["features"] as? [[String: Any]] ?? []
+        let knownLines = Set(features.compactMap { feature -> String? in
+            let props = feature["properties"] as? [String: Any]
+            return (props?["line_name"] ?? props?["N02_003"]) as? String
+        }).map(TrainServiceBranding.canonicalLineName)
+        let knownLineSet = Set(knownLines)
+
+        var offenders: [String] = []
+        for pattern in TrainServicePatterns.patterns {
+            for line in pattern.lines {
+                let canonical = TrainServiceBranding.canonicalLineName(line)
+                if knownLineSet.contains(canonical) == false {
+                    offenders.append("(\(pattern.id), \(line))")
+                }
+            }
+        }
+        #expect(offenders.isEmpty, "unknown line names: \(offenders)")
+    }
+
+    @Test("validFrom/validTo, when present, are well-formed ISO dates with validFrom <= validTo")
+    func validityDatesAreWellFormed() {
+        let datePattern = try! NSRegularExpression(pattern: #"^\d{4}-\d{2}-\d{2}$"#)
+        func matches(_ value: String) -> Bool {
+            datePattern.firstMatch(
+                in: value, range: NSRange(value.startIndex..., in: value)) != nil
+        }
+
+        var offenders: [String] = []
+        for pattern in TrainServicePatterns.patterns {
+            if let from = pattern.validFrom, matches(from) == false {
+                offenders.append("\(pattern.id): malformed validFrom \(from)")
+            }
+            if let to = pattern.validTo, matches(to) == false {
+                offenders.append("\(pattern.id): malformed validTo \(to)")
+            }
+            if let from = pattern.validFrom, let to = pattern.validTo, from > to {
+                offenders.append("\(pattern.id): validFrom \(from) > validTo \(to)")
+            }
+        }
+        #expect(offenders.isEmpty, "\(offenders)")
+    }
+
+    @Test("unsolvableLegs entries are pairs of consecutive stops")
+    func unsolvableLegsAreConsecutiveStopPairs() {
+        var offenders: [String] = []
+        for pattern in TrainServicePatterns.patterns {
+            let consecutivePairs = zip(pattern.stops, pattern.stops.dropFirst()).map { [$0, $1] }
+            for leg in pattern.unsolvableLegs {
+                if leg.count != 2 || consecutivePairs.contains(leg) == false {
+                    offenders.append("\(pattern.id): \(leg)")
+                }
+            }
+        }
+        #expect(offenders.isEmpty, "unsolvableLegs not consecutive stop pairs: \(offenders)")
+    }
+
+    @Test("a v2-shape pattern decodes with all new fields, and a v1-shape pattern decodes with defaults")
+    func decodesBothSchemaVersions() throws {
+        let v2JSON = """
+        {
+            "patternId": "test-v2",
+            "serviceId": "test",
+            "name": "テスト",
+            "company": "テスト鉄道",
+            "label": "テスト区間",
+            "origin": "A",
+            "destination": "C",
+            "stops": ["A", "B", "C"],
+            "optionalStops": [],
+            "via": [],
+            "confidence": "high",
+            "source": "https://example.com",
+            "lines": ["テスト線"],
+            "validFrom": "2020-01-01",
+            "validTo": "2024-03-15",
+            "completeness": {"stops": "complete", "lines": "partial", "validity": "complete"},
+            "notes": "テストノート",
+            "unsolvableLegs": [["A", "B"]]
+        }
+        """
+        let v2 = try JSONDecoder().decode(
+            TrainServicePatterns.Pattern.self, from: Data(v2JSON.utf8))
+        #expect(v2.lines == ["テスト線"])
+        #expect(v2.validFrom == "2020-01-01")
+        #expect(v2.validTo == "2024-03-15")
+        #expect(v2.isCurrent == false)
+        #expect(v2.completeness.stops == .complete)
+        #expect(v2.completeness.lines == .partial)
+        #expect(v2.completeness.validity == .complete)
+        #expect(v2.notes == "テストノート")
+        #expect(v2.unsolvableLegs == [["A", "B"]])
+
+        let v1JSON = """
+        {
+            "patternId": "test-v1",
+            "serviceId": "test",
+            "name": "テスト",
+            "company": "テスト鉄道",
+            "label": "テスト区間",
+            "origin": "A",
+            "destination": "C",
+            "stops": ["A", "B", "C"],
+            "optionalStops": [],
+            "via": [],
+            "confidence": "high",
+            "source": "https://example.com"
+        }
+        """
+        let v1 = try JSONDecoder().decode(
+            TrainServicePatterns.Pattern.self, from: Data(v1JSON.utf8))
+        #expect(v1.lines == [])
+        #expect(v1.validFrom == nil)
+        #expect(v1.validTo == nil)
+        #expect(v1.isCurrent == true)
+        #expect(v1.completeness == .missing)
+        #expect(v1.notes == nil)
+        #expect(v1.unsolvableLegs == [])
+    }
+
+    @Test("search filters by status, company, and line")
+    func searchWithFilter() throws {
+        let all = TrainServicePatterns.patterns
+
+        if let discontinued = all.first(where: { $0.validTo != nil }) {
+            let results = TrainServicePatterns.search(
+                "", filter: TrainServicePatterns.Filter(status: .discontinued))
+            #expect(results.isEmpty == false)
+            #expect(results.allSatisfy { $0.validTo != nil })
+            #expect(results.contains { $0.id == discontinued.id })
+        }
+
+        let company = try #require(all.first?.companyLabel)
+        let byCompany = TrainServicePatterns.search(
+            "", filter: TrainServicePatterns.Filter(company: company))
+        #expect(byCompany.isEmpty == false)
+        #expect(byCompany.allSatisfy { $0.companyLabel == company })
+
+        if let lineName = all.first(where: { $0.lines.isEmpty == false })?.lines.first {
+            let byLine = TrainServicePatterns.search(lineName)
+            #expect(byLine.isEmpty == false)
+            #expect(byLine.contains { pattern in pattern.lines.contains(lineName) })
+        }
+
+        let byCurrentStatus = TrainServicePatterns.search(
+            "", filter: TrainServicePatterns.Filter(status: .current))
+        #expect(byCurrentStatus.isEmpty == false)
+        #expect(byCurrentStatus.allSatisfy { $0.validTo == nil })
+
+        let someLine = try #require(TrainServicePatterns.lineNames().first)
+        let canonicalSomeLine = TrainServiceBranding.canonicalLineName(someLine)
+        let byLineFilter = TrainServicePatterns.search(
+            "", filter: TrainServicePatterns.Filter(line: someLine))
+        #expect(byLineFilter.isEmpty == false)
+        #expect(byLineFilter.allSatisfy { pattern in
+            pattern.lines.contains { TrainServiceBranding.canonicalLineName($0) == canonicalSomeLine }
+        })
+    }
+
+    @Test("a name match ranks ahead of a stop-only match")
+    func searchRanksNameMatchesFirst() {
+        let hidaByName = TrainServicePatterns.search("ひだ")
+        #expect(hidaByName.isEmpty == false)
+        if let firstNonHida = hidaByName.firstIndex(where: { $0.name != "ひだ" }) {
+            let lastHida = hidaByName.lastIndex(where: { $0.name == "ひだ" })
+            #expect(lastHida != nil && lastHida! < firstNonHida)
+        }
+
+        let hidaByStop = TrainServicePatterns.search("岐阜")
+        #expect(hidaByStop.contains { $0.name == "ひだ" })
     }
 }

@@ -356,12 +356,18 @@ extension TransferGuide {
                 }
                 var start = head
                 if !prefixes.isEmpty {
-                    let before = String(chars[0..<head])
+                    // The label and value are separate UI elements in both
+                    // apps, so OCR may assemble them as `乗換 2回`. Ignore the
+                    // layout whitespace when locating the required prefix,
+                    // but remove it with the token so it cannot survive as a
+                    // spurious name.
+                    while start > 0, chars[start - 1] == " " { start -= 1 }
+                    let before = String(chars[0..<start])
                     guard let matched = prefixes.first(where: { before.hasSuffix($0) }) else {
                         index += 1
                         continue
                     }
-                    start = head - matched.count
+                    start -= matched.count
                 }
                 let remainder = String(chars[0..<start]) + String(chars[(index + 1)...])
                 return (value, remainder)
@@ -377,20 +383,24 @@ extension TransferGuide {
                 guard let range = text.range(of: prefix) else { continue }
                 let chars = Array(text)
                 var cursor = chars.count - text.distance(from: range.upperBound, to: text.endIndex)
+                while cursor < chars.count, chars[cursor] == " " { cursor += 1 }
                 var digits = ""
                 while cursor < chars.count, isDigit(chars[cursor]) {
                     digits.append(chars[cursor])
                     cursor += 1
                 }
                 guard let value = Int(digits) else { continue }
-                let start = cursor - digits.count - prefix.count
+                let start = chars.count - text.distance(from: range.lowerBound, to: text.endIndex)
                 return (value, String(chars[0..<start]) + String(chars[cursor...]))
             }
             return nil
         }
 
         private static func isSeparator(_ character: Character) -> Bool {
-            character == "," || character == "'" || character == "，"
+            // Vision has returned the thousands mark in fares as each of
+            // these. A period is not a decimal here: the scanner only handles
+            // integer-valued fields such as yen, station counts and cars.
+            character == "," || character == "." || character == "'" || character == "，"
         }
 
         /// `13時間24分`, `10時間`. Never a bare `5分` — that shape is decided

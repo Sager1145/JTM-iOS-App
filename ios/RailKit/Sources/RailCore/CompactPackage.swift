@@ -382,3 +382,69 @@ extension CompactPackage.Headers.Line: Decodable {
         nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
     }
 }
+
+extension CompactPackage {
+
+    // Segments are not decoded: catalog identity does not read geometry.
+    public struct StationDirectory: Sendable, Decodable {
+        public let country: String
+        public let lines: [Line]
+
+        public struct Line: Sendable, Decodable {
+            public let id: String
+            public let name: String
+            public let nameRoma: String?
+            public let `operator`: String?
+            public let operatorShort: String?
+            public let nameNorm: String?
+            public let stations: [CompactPackage.Station]
+
+            enum CodingKeys: String, CodingKey {
+                case id, name, nameRoma, `operator`, operatorShort, nameNorm, stations
+            }
+
+            public init(from decoder: Decoder) throws {
+                let row = try decoder.container(keyedBy: CodingKeys.self)
+                id = try row.decode(String.self, forKey: .id)
+                name = try row.decode(String.self, forKey: .name)
+                nameRoma = try row.decodeIfPresent(String.self, forKey: .nameRoma)
+                self.operator = try row.decodeIfPresent(String.self, forKey: .operator)
+                operatorShort = try row.decodeIfPresent(String.self, forKey: .operatorShort)
+                nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
+                stations = try row.decodeIfPresent([CompactPackage.Station].self, forKey: .stations) ?? []
+            }
+        }
+
+        enum CodingKeys: String, CodingKey { case country, lines }
+
+        public init(from decoder: Decoder) throws {
+            let row = try decoder.container(keyedBy: CodingKeys.self)
+            country = try row.decodeIfPresent(String.self, forKey: .country) ?? ""
+            lines = try row.decodeIfPresent([Line].self, forKey: .lines) ?? []
+        }
+
+        public func lineSources(regionCode: String? = nil) -> [EditorCatalogLineSource] {
+            let region = regionCode ?? country
+            return lines.map { line in
+                EditorCatalogLineSource(
+                    regionCode: region,
+                    lineID: line.id,
+                    name: line.name,
+                    nameNorm: line.nameNorm,
+                    nameRoma: line.nameRoma,
+                    operatorName: line.operator,
+                    operatorShort: line.operatorShort,
+                    stations: line.stations.map { station in
+                        EditorCatalogStationSource(
+                            sourceCode: station.id,
+                            name: station.name,
+                            nameRoma: station.nameRoma,
+                            longitude: station.coordinate.lon,
+                            latitude: station.coordinate.lat
+                        )
+                    }
+                )
+            }
+        }
+    }
+}

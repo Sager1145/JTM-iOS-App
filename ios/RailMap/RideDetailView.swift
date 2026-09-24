@@ -10,14 +10,17 @@ struct WorkspaceRideDetailView: View {
     @Environment(\.dismiss) private var dismiss
     let onSave: (Train, String) -> ItineraryStore.SaveOutcome
     let onRebuild: (Train) -> Int?
+    var onEditJourney: ((Train) -> Void)? = nil
 
     init(trainID: String, itineraries: ItineraryStore,
          onSave: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
-         onRebuild: @escaping (Train) -> Int?) {
+         onRebuild: @escaping (Train) -> Int?,
+         onEditJourney: ((Train) -> Void)? = nil) {
         self.itineraries = itineraries
         _recordID = State(initialValue: trainID)
         self.onSave = onSave
         self.onRebuild = onRebuild
+        self.onEditJourney = onEditJourney
     }
 
     private var train: Train? {
@@ -38,7 +41,8 @@ struct WorkspaceRideDetailView: View {
                     case .refusedImportRunning, .notFound:
                         return false
                     }
-                }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [])
+                }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [],
+                   onEditJourney: onEditJourney)
             }
         }
         .onChange(of: train == nil, initial: true) { _, missing in
@@ -55,6 +59,7 @@ struct RideDetailView: View {
     var onSave: ((Train) -> Bool)?
     var onRebuild: (() -> Int?)?
     var suggestionTrains: [Train] = []
+    var onEditJourney: ((Train) -> Void)? = nil
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
@@ -63,7 +68,7 @@ struct RideDetailView: View {
         RideDetailContent(
             train: train,
             onRebuild: onRebuild,
-            onEditStops: onSave == nil ? nil : { showsEditor = true },
+            onEditStops: onSave == nil ? nil : { beginEdit() },
             // §8.5's "从地图隐藏" is an edit to one field of the record, so it
             // travels through the same atomic save every other edit does
             // rather than through a second write path of its own.
@@ -86,7 +91,7 @@ struct RideDetailView: View {
                 if onSave != nil {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
-                            showsEditor = true
+                            beginEdit()
                         }
                         .accessibilityIdentifier("rideDetailEdit")
                     }
@@ -96,13 +101,22 @@ struct RideDetailView: View {
                 RideEditorView(
                     train: train,
                     title: localization.text("ios.editJourney", fallback: "Edit journey"),
-                    suggestionTrains: suggestionTrains
-                ) { edited in
-                    if onSave?(edited) == true {
-                        showsEditor = false
-                    }
-                }
+                    suggestionTrains: suggestionTrains,
+                    onCancel: { showsEditor = false },
+                    onSave: { edited in
+                        if onSave?(edited) == true {
+                            showsEditor = false
+                        }
+                    })
             }
+    }
+
+    private func beginEdit() {
+        if let onEditJourney {
+            onEditJourney(train)
+        } else {
+            showsEditor = true
+        }
     }
 }
 

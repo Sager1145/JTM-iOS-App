@@ -451,7 +451,7 @@ public enum StoreOperations {
             createBlankRegionalTrain(
                 id: "HK-MTR", trainType: "港鐵", company: "香港鐵路有限公司",
                 origin: "香港", destination: "機場",
-                originCode: "AEL-MTR-HOK", destinationCode: "AEL-MTR-AIR",
+                originCode: "MTR-HOK", destinationCode: "MTR-AIR",
                 lineName: "機場快綫", color: "#1C7670")
         case "kr":
             createBlankRegionalTrain(
@@ -464,7 +464,7 @@ public enum StoreOperations {
             createBlankRegionalTrain(
                 id: "MO-LRT", trainType: "輕軌", company: "澳門輕軌股份有限公司",
                 origin: "媽閣", destination: "海洋",
-                originCode: "MLM-TAIPA-MLM-BARRA", destinationCode: "MLM-TAIPA-MLM-OCEAN",
+                originCode: "MLM-BARRA", destinationCode: "MLM-OCEAN",
                 lineName: "氹仔線", color: "#72BF44")
         default: createBlankTrainJp()
         }

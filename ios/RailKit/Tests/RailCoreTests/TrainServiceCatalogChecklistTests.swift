@@ -42,10 +42,10 @@ struct TrainServiceCatalogChecklistTests {
         return first.isASCII ? "\(name) 1" : "\(name)1号"
     }
 
-    @Test("catalog has 163 uniquely identified services")
+    @Test("catalog has 221 uniquely identified services")
     func catalogSize() {
         let services = TrainServiceBranding.services
-        #expect(services.count == 163, "expected 163 services, found \(services.count)")
+        #expect(services.count == 221, "expected 221 services, found \(services.count)")
         #expect(Set(services.map(\.id)).count == services.count, "service ids must be unique")
     }
 

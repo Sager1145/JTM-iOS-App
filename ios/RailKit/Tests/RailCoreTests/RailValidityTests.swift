@@ -154,10 +154,32 @@ final class RailValidityTests: XCTestCase {
         let c = try XCTUnwrap(cacheKey(rideDate: "2019-12-31", historyRevision: "r2"))
         XCTAssertNotEqual(a, b)
         XCTAssertNotEqual(a, c)
-        XCTAssertTrue(a.contains("solver:20"), a)
-        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "20")
+        XCTAssertTrue(a.contains("solver:21"), a)
+        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "21")
         XCTAssertTrue(a.contains("|date:2019-12-31|history:r1"), a)
         let undated = try XCTUnwrap(cacheKey(rideDate: nil, historyRevision: nil))
         XCTAssertTrue(undated.contains("|date:none|history:none"), undated)
+    }
+
+    // MARK: - Endpoint station candidates honour the ride date
+
+    func testEndpointStationCandidatesAreFilteredByRideDate() {
+        func station(_ name: String, validTo: String?) -> Stations.Feature {
+            var feature = Stations.Feature(
+                properties: ["station_name": .string(name)],
+                geometry: Stations.Geometry(
+                    type: "Point", coordinates: .array([.number(141.6), .number(43.8)])))
+            if let validTo { feature.properties["valid_to"] = .string(validTo) }
+            return feature
+        }
+        let index = Stations.Index(Stations.FeatureCollection(features: [
+            station("増毛", validTo: "2016-12-05"), station("留萌", validTo: nil),
+        ]))
+        func kept(_ date: String?) -> [Int] {
+            RouteSolver.filterStationCandidatesByRideDate([0, 1], in: index, rideDate: date)
+        }
+        XCTAssertEqual(kept("2016-12-04"), [0, 1])
+        XCTAssertEqual(kept("2016-12-05"), [1])
+        XCTAssertEqual(kept(nil), [1])
     }
 }

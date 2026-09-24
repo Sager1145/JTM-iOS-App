@@ -261,6 +261,7 @@ struct RailMapView: View {
             // tracking around, so a switch first read down there might never
             // schedule the update that redraws it.
             layers: controller.layers,
+            draftMap: controller.draftMap,
             categoryIndexes: categoryIndexes,
             autoFocusRequest: controller.autoFocusRequest,
             isMapReady: controller.isMapReady,
@@ -287,6 +288,7 @@ struct RailMapView: View {
         var selectedDate: String
         var showsNetwork: Bool
         var layers: MapLayers
+        var draftMap: DraftMapSnapshot
         var categoryIndexes: [String: Statistics.EdgeIndex]
         var autoFocusRequest: MapCameraPolicy.FocusRequest?
         var isMapReady: Bool
@@ -501,6 +503,7 @@ struct RailMapView: View {
             context.coordinator.onSelectStation = onSelectStation
             context.coordinator.onBuildRect = onBuildRect
             context.coordinator.localization = localization
+            context.coordinator.reconcileDraftPins(draftMap, on: mapView)
             playback.mapRenderer = context.coordinator
             playback.mapRendererViewSize = mapView.bounds.size
             playback.drawnCoordinates = { [weak coordinator = context.coordinator] ride, segment in
@@ -643,6 +646,9 @@ struct RailMapView: View {
             private lazy var overlayInstaller = MapOverlayInstaller(styles: overlayStyles)
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
+            private var draftAnnotations: [MKAnnotation] = []
+            private var draftSnapshot = DraftMapSnapshot(revision: 0, pins: [])
+            private var draftLanguage: String?
             private var endpointAnnotations: [EndpointLabelAnnotation] = []
             private var display = DisplayValues()
             /// The value of ``RailStyle/scale(atZoom:)`` the marks on screen were
@@ -665,6 +671,36 @@ struct RailMapView: View {
             /// cleared as the next touch arrives, so it only ever describes
             /// the touch in hand.
             private var rideAnsweredTap: ContinuousClock.Instant?
+
+            /// Draft bubbles are not network or ride markers. Missing coordinates
+            /// stay off the map; nothing here asks the route solver for a line.
+            func reconcileDraftPins(_ snapshot: DraftMapSnapshot, on mapView: MKMapView) {
+                let language = MainActor.assumeIsolated { localization?.language.rawValue }
+                guard snapshot != draftSnapshot || language != draftLanguage else { return }
+                draftSnapshot = snapshot
+                draftLanguage = language
+                let unfilled = MainActor.assumeIsolated {
+                    localization?.editorText("ios.editor.timeUnfilled") ?? "Time not entered"
+                }
+                let desired: [MKAnnotation] = snapshot.pins.enumerated().compactMap { offset, pin in
+                    guard let latitude = pin.latitude, let longitude = pin.longitude else { return nil }
+                    let stopTypeLabel = MainActor.assumeIsolated {
+                        localization?.countryText(
+                            "stoptype.\(pin.stopType)", fallback: pin.stopType) ?? pin.stopType
+                    }
+                    return DraftStopAnnotation(
+                        occurrenceID: pin.occurrenceID,
+                        coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+                        index: offset + 1,
+                        name: pin.name,
+                        stopType: pin.stopType,
+                        timeText: pin.timeText,
+                        stopTypeLabel: stopTypeLabel,
+                        timeLabel: pin.timeText.isEmpty ? unfilled : pin.timeText)
+                }
+                draftAnnotations = MapAnnotationReconciler.reconcile(
+                    desired, replacing: draftAnnotations, on: mapView)
+            }
 
             func update(
                 lines: [RailNetworkStore.DrawnLine],
@@ -1287,37 +1323,19 @@ struct RailMapView: View {
                 rebuild(on: mapView)
             }
 
-            /// Basemap dimming is one polygon, not a reason to rebuild every
-            /// railway and station mounted above it.
+            /// Keep the veil mounted. Changing the renderer's compositing alpha
+            /// avoids baking each slider value into separately redrawn map tiles.
             private func updateBasemapVeil(on mapView: MKMapView) {
-                if basemapOpacity >= 0.999 {
-                    if let basemapVeil { mapView.removeOverlay(basemapVeil) }
-                    basemapVeil = nil
-                    return
-                }
-                let alpha = 1 - min(max(basemapOpacity, 0), 1)
                 if let basemapVeil, mapView.overlays.contains(where: { $0 === basemapVeil }) {
-                    if let renderer = mapView.renderer(for: basemapVeil) as? BasemapVeilRenderer {
-                        renderer.veilColor = Self.veilColor(alpha: alpha, on: mapView)
-                        renderer.setNeedsDisplay()
-                    }
+                    mapView.renderer(for: basemapVeil)?.alpha =
+                        CGFloat(1 - min(max(basemapOpacity, 0), 1))
                     return
                 }
-                // The whole world, not the loaded network's bounds: the veil
-                // used to follow `builtRect`, so with the network switched off
-                // (the default) it covered nothing, and panning past the
-                // network showed an undimmed edge.
                 let veil = BasemapVeilOverlay()
                 basemapVeil = veil
-                // Under the railways, which mount at `.aboveLabels`.
-                mapView.addOverlay(veil, level: .aboveRoads)
-            }
-
-            /// Black in both appearances: lowering the basemap's opacity DIMS it
-            /// in light mode too, rather than washing it out toward white, so
-            /// the rail colours keep their contrast either way.
-            private static func veilColor(alpha: Double, on mapView: MKMapView) -> CGColor {
-                UIColor.black.withAlphaComponent(alpha).cgColor
+                // Include Apple's labels in the dimmed basemap, but keep every
+                // railway overlay and annotation above the veil.
+                mapView.insertOverlay(veil, at: 0, level: .aboveLabels)
             }
 
             private var geometryPreparation: Task<Void, Never>?
@@ -1431,7 +1449,7 @@ struct RailMapView: View {
                 // With both layers absent there is nothing to build. Hiding the
                 // complete network does not hide the reader's routes.
                 guard showsNetwork || !rides.isEmpty else {
-                    mapView.removeOverlays(mapView.overlays(in: .aboveLabels))
+                    mapView.removeOverlays(mapView.overlays(in: .aboveLabels).filter { !($0 is BasemapVeilOverlay) })
                     updateBasemapVeil(on: mapView)
                     if !networkAnnotations.isEmpty { mapView.removeAnnotations(networkAnnotations) }
                     networkAnnotations = []
@@ -1701,8 +1719,6 @@ struct RailMapView: View {
                 let teardown = RailSignpost.map.begin("map.rebuild.teardown")
                 let overlayReconciliation = overlayInstaller.reconciliation(on: mapView)
                 var desiredOverlays: [MKOverlay] = []
-                if let basemapVeil { mapView.removeOverlay(basemapVeil) }
-                basemapVeil = nil
                 if annotationsNeedRefresh {
                     mapView.removeAnnotations(networkAnnotations + rideStationAnnotations)
                     networkAnnotations = []
@@ -1712,14 +1728,7 @@ struct RailMapView: View {
                 if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
                 endpointAnnotations = []
                 RailSignpost.map.end("map.rebuild.teardown", teardown)
-                // `.aboveRoads` is what keeps the veil UNDER every rail
-                // layer, which all mount at `.aboveLabels`: a level is
-                // ordered before insertion order is, so the slider can add
-                // this after a rebuild has already drawn the railways and
-                // still not dim them. It is also why the base map's labels
-                // stay full-strength while its roads fade — they are drawn
-                // above this level, and 底圖不透明度 is a control over the
-                // map behind the railways, not over their labelling.
+                // The persistent veil is excluded from railway reconciliation.
                 updateBasemapVeil(on: mapView)
                 let networkOverlays = RailSignpost.map.begin("map.rebuild.networkOverlays")
                 let overlays = overlayInstaller.networkOverlays(
@@ -2072,6 +2081,12 @@ struct RailMapView: View {
                 // because a station reached by twenty trains ships twenty records
                 // that all know the same name, and only one of them may print it.
                 let drawn = markerRecords(for: rides, settings: display.markers)
+                var connectionsByPlace: [String: Int] = [:]
+                for station in stations {
+                    let key = "\(station.region.rawValue)|\(station.stationCode)"
+                    connectionsByPlace[key] = max(
+                        connectionsByPlace[key] ?? 0, station.popup.lines.count)
+                }
                 // A journey every one of whose ridden segments is switched off
                 // by category loses its station dots with its line. Its beads
                 // would otherwise be left floating over a route that is not
@@ -2107,16 +2122,14 @@ struct RailMapView: View {
                 // marker.
                 let ridesByID = Dictionary(
                     rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-                // Each role has its own floor: terminals and cross-day breaks
-                // at every zoom, intermediate stops from `STOP_MIN_ZOOM`, the
-                // numerous pass-throughs only from `PASSTHROUGH_MIN_ZOOM`. So
-                // pulling back sheds pass-throughs first and stops second,
-                // while a ride's two ends — the whole of what it says at a
-                // national view — never leave.
+                // The full-network map retains role-specific zoom floors.
+                // The journey-only map admits all names to collision placement;
+                // below-floor dots return only when their name fits.
                 var markerAnnotations: [MKAnnotation] = []
                 var pendingRideLabels: [(
                     claimName: String, position: Coordinate,
-                    annotation: RideLabelAnnotation, importance: Int
+                    annotation: RideLabelAnnotation, importance: Int,
+                    supportingDot: RideStationAnnotation?
                 )] = []
                 var lastEmitted: RideStationAnnotation?
                 for item in drawn {
@@ -2130,7 +2143,11 @@ struct RailMapView: View {
                         lastEmitted = nil
                         continue
                     }
-                    guard MapRideMarkers.drawsDot(item, atZoom: zoom)
+                    let drawsDot = MapRideMarkers.drawsDot(item, atZoom: zoom)
+                    // In the journey-only map, space rather than the network's
+                    // zoom ladder decides which names are useful. A hidden dot
+                    // must not prevent its name from entering that election.
+                    guard !showsNetwork || drawsDot
                             || feature.role == "stop-center" else {
                         lastEmitted = nil
                         continue
@@ -2215,7 +2232,7 @@ struct RailMapView: View {
                             isSelected: selected, hasSelection: hasSelection),
                         focusBoost: CGFloat(display.focusBoost),
                         selected: selected)
-                    markerAnnotations.append(annotation)
+                    if drawsDot { markerAnnotations.append(annotation) }
                     lastEmitted = annotation
                     // …and its name, if it won one and the view is wide enough for
                     // its tier. Each floor is a hard gate rather than a fade,
@@ -2234,7 +2251,7 @@ struct RailMapView: View {
                             ? record.name : "")
                         : feature.name
                     guard !labelName.isEmpty, let tier = annotation.labelTier,
-                          zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom))
+                          !showsNetwork || zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom))
                     else { continue }
                     // The election runs on the package's own names — see
                     // `markerRecords` — and only the winner is translated, so
@@ -2249,12 +2266,19 @@ struct RailMapView: View {
                         tier: tier,
                         dotRadiusToken: annotation.drawnRadiusToken(atZoom: zoom),
                         selected: annotation.selected)
+                    let connectionCount = item.region.flatMap { region in
+                        item.stationCode.map { connectionsByPlace["\(region.rawValue)|\($0)"] ?? 0 }
+                    } ?? 0
+                    let importance = prominent ? 300
+                        : (connectionCount > 1 ? 200 + min(connectionCount, 50)
+                            : (feature.role == "stop" ? 100 : 0))
                     pendingRideLabels.append((
                         claimName: labelName, position: record.position,
                         annotation: label,
-                        // A lower floor means a rarer, more important role:
-                        // terminals before stops before pass-through stations.
-                        importance: (annotation.selected ? 1_000 : 0) - tier.minZoom))
+                        // Journey boundaries, then connected hubs, calls and
+                        // pass-throughs. Selection retains first priority.
+                        importance: (annotation.selected ? 1_000 : 0) + importance,
+                        supportingDot: drawsDot ? nil : annotation))
                 }
                 pendingRideLabels.sort {
                     if $0.importance != $1.importance {
@@ -2285,6 +2309,11 @@ struct RailMapView: View {
                     guard labelCollisions.insertIfClear(box),
                           claimName(candidate.claimName, at: candidate.position)
                     else { continue }
+                    // Only revive a below-threshold dot when its label fits;
+                    // a national view must not instantiate every station view.
+                    if let dot = candidate.supportingDot {
+                        markerAnnotations.append(dot)
+                    }
                     markerAnnotations.append(item)
                 }
 
@@ -2371,6 +2400,17 @@ struct RailMapView: View {
                             && drawnLineIDs.contains(candidate.lineID)
                             && buildRect.contains(MKMapPoint(candidate.coordinate.clLocation))
                     }
+                    func nameIsEligible(_ station: RailNetworkStore.DrawnStation) -> Bool {
+                        zoom >= RailStyle.zoom(fromMapLibre:
+                            StationLabelVisibility.minimumMapLibreZoom(
+                                lineCount: station.popup.lines.count,
+                                isTerminal: station.isTerminal))
+                    }
+                    func promotesName(_ station: RailNetworkStore.DrawnStation) -> Bool {
+                        layers.networkStationNames && !hasSelection && station.showsLabel
+                            && (station.popup.lines.count > 1 || station.isTerminal)
+                            && nameIsEligible(station)
+                    }
                     func tenantGroupID(_ candidate: RailNetworkStore.DrawnStation) -> String? {
                         guard let slot = candidate.slot,
                               let (line, measure) = anchorMeasure(
@@ -2408,13 +2448,19 @@ struct RailMapView: View {
                             }
                             .map(\.lineID)
                             .min()
+                        // When every tenant is below the dot floor there is no
+                        // existing bead to defer to. Let elected hub names reach
+                        // placement; name deduplication and collision admission
+                        // decide whether a supporting bead is restored.
+                        guard let lowestTenantLineID else { return false }
                         return station.lineID != lowestTenantLineID
                     }
                     let visibleStations = stations.compactMap { station -> (
                         key: String, station: RailNetworkStore.DrawnStation,
                         displayName: String, readings: [String]?
                     )? in
-                        guard station.lodMinZoom <= visibilityZoom else { return nil }
+                        guard station.lodMinZoom <= visibilityZoom || promotesName(station)
+                        else { return nil }
                         let point = MKMapPoint(station.coordinate.clLocation)
                         guard buildRect.contains(point) else { return nil }
                         guard drawnLineIDs.contains(station.lineID) else { return nil }
@@ -2438,13 +2484,14 @@ struct RailMapView: View {
                     // its own candidates, Apple-style navigational hierarchy
                     // wins: interchanges, then line ends, then ordinary stops.
                     var acceptedStationNames: Set<String> = []
-                    if layers.networkStationNames, !hasSelection,
-                       zoom >= MapLabelStyle.stationLabelMinZoom {
-                        let ordered = visibleStations.filter(\.station.showsLabel).sorted {
+                    if layers.networkStationNames, !hasSelection {
+                        let ordered = visibleStations.filter {
+                            $0.station.showsLabel && nameIsEligible($0.station)
+                        }.sorted {
                             let left = $0.station.popup.lines.count > 1
-                                ? 2 : ($0.station.isTerminal ? 1 : 0)
+                                ? $0.station.popup.lines.count + 1 : ($0.station.isTerminal ? 1 : 0)
                             let right = $1.station.popup.lines.count > 1
-                                ? 2 : ($1.station.isTerminal ? 1 : 0)
+                                ? $1.station.popup.lines.count + 1 : ($1.station.isTerminal ? 1 : 0)
                             if left != right { return left > right }
                             return $0.key < $1.key
                         }
@@ -2475,8 +2522,10 @@ struct RailMapView: View {
                         }
                     }
 
-                    let stationAnnotations = visibleStations.map { candidate in
+                    let stationAnnotations = visibleStations.compactMap { candidate -> StationAnnotation? in
                         let station = candidate.station
+                        guard station.lodMinZoom <= visibilityZoom
+                            || acceptedStationNames.contains(candidate.key) else { return nil }
                         return StationAnnotation(
                             station: station, displayName: candidate.displayName,
                             // The name switch is folded in HERE rather than in
@@ -3601,6 +3650,11 @@ struct RailMapView: View {
             /// false), and one that found no ride under it makes no claim — so
             /// both of those still open their card.
             func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
+                if let draft = annotation as? DraftStopAnnotation {
+                    mapView.deselectAnnotation(annotation, animated: false)
+                    controller?.onDraftPin?(draft.occurrenceID)
+                    return
+                }
                 guard let card = stationCard(for: annotation) else { return }
                 mapView.deselectAnnotation(annotation, animated: false)
                 if let answered = rideAnsweredTap, ContinuousClock.now - answered < .seconds(1) {
@@ -3764,8 +3818,7 @@ struct RailMapView: View {
             func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
                 if let veil = overlay as? BasemapVeilOverlay {
                     let renderer = BasemapVeilRenderer(overlay: veil)
-                    renderer.veilColor = Self.veilColor(
-                        alpha: 1 - min(max(basemapOpacity, 0), 1), on: mapView)
+                    renderer.alpha = CGFloat(1 - min(max(basemapOpacity, 0), 1))
                     return renderer
                 }
                 // The weight ramp, applied at the one place a token becomes points.
@@ -3851,6 +3904,15 @@ struct RailMapView: View {
                     view.configure(label, scale: scale, zoom: zoom)
                     return view
                 }
+                if let draft = annotation as? DraftStopAnnotation {
+                    let identifier = "draft-stop"
+                    let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+                        as? DraftStopAnnotationView
+                        ?? DraftStopAnnotationView(annotation: draft, reuseIdentifier: identifier)
+                    view.annotation = draft
+                    view.configure(draft)
+                    return view
+                }
                 if let endpoint = annotation as? EndpointLabelAnnotation {
                     let identifier = "ride-endpoint-label"
                     let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -3886,9 +3948,8 @@ struct RailMapView: View {
     }
 }
 
-/// 底圖不透明度's veil: one world-sized black overlay, so the basemap dims in
-/// both light and dark mode. It sits at `.aboveRoads`, under every rail layer
-/// and under MapKit's own labels.
+/// A persistent black surface above the complete basemap and below railways.
+/// Pixel content never changes with the slider; opacity belongs to the renderer.
 final class BasemapVeilOverlay: NSObject, MKOverlay {
     let boundingMapRect = MKMapRect.world
     var coordinate: CLLocationCoordinate2D { MKMapPoint(x: MKMapRect.world.midX, y: MKMapRect.world.midY).coordinate }
@@ -3896,10 +3957,8 @@ final class BasemapVeilOverlay: NSObject, MKOverlay {
 }
 
 final class BasemapVeilRenderer: MKOverlayRenderer {
-    var veilColor = UIColor.clear.cgColor
-
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-        context.setFillColor(veilColor)
+        context.setFillColor(CGColor(gray: 0, alpha: 1))
         context.fill(rect(for: mapRect))
     }
 }

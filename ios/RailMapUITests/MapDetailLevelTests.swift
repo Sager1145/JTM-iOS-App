@@ -21,7 +21,8 @@ final class MapDetailLevelTests: XCTestCase {
         try waitFor(status) { self.number("camera", $0) < 4 && self.number("backbones", $0) >= 9 }
         let widest = status.label
         assertViewportAdjustedDetail(widest)
-        XCTAssertEqual(number("networkStations", widest), 0)
+        // Major interchange names may now survive at this scale when their
+        // backbone is drawn. Ordinary station dots still obey density LOD.
         XCTAssertEqual(number("budgetDrops", widest), 0)
         target.pinch(withScale: 0.25, velocity: -1)
         Thread.sleep(forTimeInterval: 2)

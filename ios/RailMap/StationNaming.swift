@@ -14,7 +14,7 @@ import RailCore
 //     it from the station code, and `Region.fromStationCode` reads the
 //     PACKAGE's ids — `tw-official-…`, `hk-official-…`, six ASCII digits for
 //     Japan. A journey does not carry those. Its stops carry the OPERATOR's
-//     own code (`TYMC-A13`, `AEL-MTR-HOK`, `MLM-TAIPA-MLM-BARRA`), which
+//     own code (`TYMC-A13`, `MTR-HOK`, `MLM-BARRA`), which
 //     names no region, so every Taiwanese, Hong Kong and Macanese stop fell
 //     through to Japan's engine — and Japan's table annotates rather than
 //     replaces, so `stationName` handed the name straight back. A caller

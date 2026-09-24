@@ -45,6 +45,7 @@ enum AppStrings {
         ("StatisticsStrings", StatisticsStrings.table),
         ("TransferGuideStrings", TransferGuideStrings.table),
         ("ClockStrings", ClockStrings.table),
+        ("JourneyCompletionStrings", JourneyCompletionStrings.table),
     ]
 
     typealias Table = [String: [Localization.Language: String]]

@@ -113,7 +113,9 @@
           "institution_type_code": "4",
           "railway_class_code": "21",
           "line_name": "氹仔線",
-          "operator": "澳門輕軌"
+          "operator": "澳門輕軌",
+          "valid_from": null,
+          "valid_to": null
         },
         "allowedCodes": [
           "4"
@@ -780,7 +782,9 @@
           "institution_type_code": "4",
           "railway_class_code": "21",
           "line_name": "機場快綫",
-          "operator": "MTR"
+          "operator": "MTR",
+          "valid_from": null,
+          "valid_to": null
         },
         "allowedCodes": [
           "4"

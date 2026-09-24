@@ -199,7 +199,9 @@ final class MapOverlayInstaller {
     }
 
     func reconciliation(on mapView: MKMapView) -> MapOverlayReconciliation {
-        MapOverlayReconciliation(overlays: mapView.overlays(in: .aboveLabels))
+        MapOverlayReconciliation(overlays: mapView.overlays(in: .aboveLabels).filter {
+            !($0 is BasemapVeilOverlay)
+        })
     }
 
     func networkOverlays(
@@ -268,7 +270,9 @@ final class MapOverlayInstaller {
         )
 
         // Selection changes stacking without changing geometry.
-        var installed = mapView.overlays(in: .aboveLabels)
+        var installed = mapView.overlays(in: .aboveLabels).filter {
+            !($0 is BasemapVeilOverlay)
+        }
         for (position, overlay) in desiredOverlays.enumerated() {
             guard installed[position] !== overlay,
                   let other = installed.firstIndex(where: { $0 === overlay })

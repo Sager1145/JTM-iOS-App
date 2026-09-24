@@ -64,8 +64,8 @@ struct RegionScopeRuleTests {
     @Test("an operator's own code names nothing rather than guessing")
     func operatorCodesNameNothing() {
         #expect(rule.regionCode(forStationCode: "TYMC-A13") == nil)
-        #expect(rule.regionCode(forStationCode: "AEL-MTR-HOK") == nil)
-        #expect(rule.regionCode(forStationCode: "MLM-TAIPA-MLM-BARRA") == nil)
+        #expect(rule.regionCode(forStationCode: "MTR-HOK") == nil)
+        #expect(rule.regionCode(forStationCode: "MLM-BARRA") == nil)
         // Digits, but not SIX of them. The length is written down rather than
         // "all digits" so that a numeric code from another country's operator
         // cannot be read as a Japanese one.

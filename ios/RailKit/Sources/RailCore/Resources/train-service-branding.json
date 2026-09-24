@@ -1,165 +1,2072 @@
 [
-  { "id": "haruka", "region": "jp", "names": ["はるか", "Haruka"], "logoPath": null },
-  { "id": "narita-express", "region": "jp", "names": ["成田エクスプレス", "Narita Express", "N'EX", "NEX"], "logoPath": "/rail/service-logos/narita-express.png" },
-  { "id": "sunrise-izumo", "region": "jp", "names": ["サンライズ出雲", "Sunrise Izumo"], "logoPath": null },
-  { "id": "sunrise-seto", "region": "jp", "names": ["サンライズ瀬戸", "Sunrise Seto"], "logoPath": null },
-  { "id": "thunderbird", "region": "jp", "names": ["サンダーバード", "Thunderbird"], "logoPath": null },
-  { "id": "azusa", "region": "jp", "names": ["あずさ", "Azusa"], "logoPath": null },
-  { "id": "kaiji", "region": "jp", "names": ["かいじ", "Kaiji"], "logoPath": null },
-  { "id": "hitachi", "region": "jp", "names": ["ひたち", "Hitachi"], "logoPath": null },
-  { "id": "tokiwa", "region": "jp", "names": ["ときわ", "Tokiwa"], "logoPath": null },
-  { "id": "odoriko", "region": "jp", "names": ["踊り子", "Odoriko"], "logoPath": null },
-  { "id": "saphir-odoriko", "region": "jp", "names": ["サフィール踊り子", "Saphir Odoriko"], "logoPath": null },
-  { "id": "spacia-x", "region": "jp", "names": ["スペーシア X", "スペーシアX", "Spacia X"], "logoPath": "/rail/service-logos/spacia-x.png" },
-  { "id": "revaty", "region": "jp", "names": ["リバティ", "Revaty", "リバティけごん", "リバティきぬ", "リバティりょうもう", "リバティ会津", "Revaty Kegon", "Revaty Kinu", "Revaty Ryomo", "Revaty Aizu"], "logoPath": null },
-  { "id": "hinotori", "region": "jp", "names": ["ひのとり", "Hinotori"], "logoPath": "/rail/service-logos/hinotori.png" },
-  { "id": "shimakaze", "region": "jp", "names": ["しまかぜ", "Shimakaze"], "logoPath": "/rail/service-logos/shimakaze.png" },
-  { "id": "hokuto", "region": "jp", "names": ["北斗", "Hokuto"], "logoPath": null },
-  { "id": "ozora", "region": "jp", "names": ["おおぞら", "Ozora", "Ōzora"], "logoPath": null },
-  { "id": "kamui", "region": "jp", "names": ["カムイ", "Kamui"], "logoPath": null },
-  { "id": "lilac", "region": "jp", "names": ["ライラック", "Lilac"], "logoPath": null },
-  { "id": "sonic", "region": "jp", "names": ["ソニック", "Sonic"], "logoPath": null },
-  { "id": "shirasagi", "region": "jp", "names": ["しらさぎ", "Shirasagi"], "logoPath": null },
-  { "id": "kuroshio", "region": "jp", "names": ["くろしお", "Kuroshio"], "logoPath": null },
-  { "id": "yakumo", "region": "jp", "names": ["やくも", "Yakumo"], "logoPath": null },
-  { "id": "shinano", "region": "jp", "names": ["しなの", "Shinano"], "logoPath": null },
-  { "id": "hida", "region": "jp", "names": ["ひだ", "Hida"], "logoPath": null },
-  { "id": "nanki", "region": "jp", "names": ["南紀", "Nanki"], "logoPath": null },
-  { "id": "kinosaki", "region": "jp", "names": ["きのさき", "Kinosaki"], "logoPath": null },
-  { "id": "kounotori", "region": "jp", "names": ["こうのとり", "Kounotori", "Kōnotori"], "logoPath": null },
-  { "id": "kusatsu-shima", "region": "jp", "names": ["草津・四万", "草津四万", "Kusatsu-Shima"], "logoPath": null },
-  { "id": "fuji", "region": "jp", "names": ["富士", "Fuji"], "logoPath": null },
-  { "id": "nanpu", "region": "jp", "names": ["南風", "Nanpu", "Nanpū", "Nampu"], "logoPath": null },
-  { "id": "ishizuchi", "region": "jp", "names": ["いしづち", "Ishizuchi"], "logoPath": null },
-  { "id": "midori", "region": "jp", "names": ["みどり", "Midori"], "logoPath": null },
-  { "id": "kirishima", "region": "jp", "names": ["きりしま", "Kirishima"], "logoPath": null },
-  { "id": "kirameki", "region": "jp", "names": ["きらめき", "Kirameki"], "logoPath": null },
-  { "id": "relay-kamome", "region": "jp", "names": ["リレーかもめ", "Relay Kamome"], "logoPath": null },
-  { "id": "inaho", "region": "jp", "names": ["いなほ", "Inaho"], "logoPath": null },
-  { "id": "super-tsugaru", "region": "jp", "names": ["スーパーつがる", "Super Tsugaru"], "logoPath": null },
-  { "id": "asoboy", "region": "jp", "names": ["あそぼーい！", "あそぼーい", "Aso Boy!", "Aso Boy"], "logoPath": null },
-  { "id": "uzushio", "region": "jp", "names": ["うずしお", "Uzushio"], "logoPath": null },
-  { "id": "shiokaze", "region": "jp", "names": ["しおかぜ", "Shiokaze"], "logoPath": null },
-  { "id": "soya", "region": "jp", "names": ["宗谷", "Soya", "Sōya"], "logoPath": null },
-  { "id": "super-oki", "region": "jp", "names": ["スーパーおき", "Super Oki"], "logoPath": null },
-  { "id": "rapit", "region": "jp", "names": ["ラピートα", "ラピート", "Rapi:t", "Rapit Alpha", "Rapit"], "logoPath": null },
-  { "id": "new-red-arrow", "region": "jp", "names": ["ニューレッドアロー", "New Red Arrow", "NRA"], "logoPath": "/rail/service-logos/new-red-arrow.png" },
-  { "id": "suzuran", "region": "jp", "names": ["すずらん", "Suzuran"], "logoPath": null },
-  { "id": "tokachi", "region": "jp", "names": ["とかち", "Tokachi"], "logoPath": null },
-  { "id": "sarobetsu", "region": "jp", "names": ["サロベツ", "Sarobetsu"], "logoPath": null },
-  { "id": "okhotsk", "region": "jp", "names": ["オホーツク", "Okhotsk", "Ohotsuku"], "logoPath": null },
-  { "id": "niseko", "region": "jp", "names": ["ニセコ", "Niseko"], "logoPath": null },
-  { "id": "fuji-excursion", "region": "jp", "names": ["富士回遊", "Fuji Excursion"], "logoPath": null },
-  { "id": "hachioji", "region": "jp", "names": ["はちおうじ", "Hachioji", "Hachiōji"], "logoPath": null },
-  { "id": "ome", "region": "jp", "names": ["おうめ", "Ome", "Ōme"], "logoPath": null },
-  { "id": "shonan", "region": "jp", "names": ["湘南", "Shonan", "Shōnan"], "logoPath": null },
-  { "id": "wakashio", "region": "jp", "names": ["わかしお", "Wakashio"], "logoPath": null },
-  { "id": "sazanami", "region": "jp", "names": ["さざなみ", "Sazanami"], "logoPath": null },
-  { "id": "shiosai", "region": "jp", "names": ["しおさい", "Shiosai"], "logoPath": null },
-  { "id": "akagi", "region": "jp", "names": ["あかぎ", "Akagi"], "logoPath": null },
-  { "id": "nikko", "region": "jp", "names": ["日光", "Nikko", "Nikkō"], "logoPath": null },
-  { "id": "kinugawa", "region": "jp", "names": ["きぬがわ", "Kinugawa"], "logoPath": null },
-  { "id": "spacia-nikko", "region": "jp", "names": ["スペーシア日光", "Spacia Nikko"], "logoPath": null },
-  { "id": "spacia-kinugawa", "region": "jp", "names": ["スペーシアきぬがわ", "Spacia Kinugawa"], "logoPath": null },
-  { "id": "shirayuki", "region": "jp", "names": ["しらゆき", "Shirayuki"], "logoPath": null },
-  { "id": "tsugaru", "region": "jp", "names": ["つがる", "Tsugaru"], "logoPath": null },
-  { "id": "kamakura", "region": "jp", "names": ["鎌倉", "Kamakura"], "logoPath": null },
-  { "id": "inaji", "region": "jp", "names": ["伊那路", "Inaji"], "logoPath": null },
-  { "id": "fujikawa", "region": "jp", "names": ["ふじかわ", "Fujikawa"], "logoPath": null },
-  { "id": "hashidate", "region": "jp", "names": ["はしだて", "Hashidate"], "logoPath": null },
-  { "id": "maizuru", "region": "jp", "names": ["まいづる", "Maizuru"], "logoPath": null },
-  { "id": "hamakaze", "region": "jp", "names": ["はまかぜ", "Hamakaze"], "logoPath": null },
-  { "id": "super-hakuto", "region": "jp", "names": ["スーパーはくと", "Super Hakuto"], "logoPath": null },
-  { "id": "super-inaba", "region": "jp", "names": ["スーパーいなば", "Super Inaba"], "logoPath": null },
-  { "id": "super-matsukaze", "region": "jp", "names": ["スーパーまつかぜ", "Super Matsukaze"], "logoPath": null },
-  { "id": "rakuraku-harima", "region": "jp", "names": ["らくラクはりま", "Raku Raku Harima", "Rakuraku Harima"], "logoPath": null },
-  { "id": "rakuraku-biwako", "region": "jp", "names": ["らくラクびわこ", "Raku Raku Biwako", "Rakuraku Biwako"], "logoPath": null },
-  { "id": "rakuraku-yamato", "region": "jp", "names": ["らくラクやまと", "Raku Raku Yamato", "Rakuraku Yamato"], "logoPath": null },
-  { "id": "noto-kagaribi", "region": "jp", "names": ["能登かがり火", "Noto Kagaribi"], "logoPath": null },
-  { "id": "west-express-ginga", "region": "jp", "names": ["WEST EXPRESS 銀河", "West Express Ginga"], "logoPath": null },
-  { "id": "hanaakari", "region": "jp", "names": ["はなあかり", "Hanaakari"], "logoPath": null },
-  { "id": "mahoroba", "region": "jp", "names": ["まほろば", "Mahoroba"], "logoPath": null },
-  { "id": "shimanto", "region": "jp", "names": ["しまんと", "Shimanto"], "logoPath": null },
-  { "id": "ashizuri", "region": "jp", "names": ["あしずり", "Ashizuri"], "logoPath": null },
-  { "id": "uwakai", "region": "jp", "names": ["宇和海", "Uwakai"], "logoPath": null },
-  { "id": "tsurugisan", "region": "jp", "names": ["剣山", "Tsurugisan"], "logoPath": null },
-  { "id": "morning-exp", "region": "jp", "names": ["モーニングEXP", "Morning EXP", "Morning Express"], "logoPath": null },
-  { "id": "shikoku-mannaka-sennen-monogatari", "region": "jp", "names": ["四国まんなか千年ものがたり", "Shikoku Mannaka Sennen Monogatari"], "logoPath": null },
-  { "id": "shikoku-tosa-jidai-no-yoake", "region": "jp", "names": ["志国土佐 時代の夜明けのものがたり", "志国土佐時代の夜明けのものがたり", "Shikoku Tosa Jidai no Yoake no Monogatari"], "logoPath": null },
-  { "id": "iyonada-monogatari", "region": "jp", "names": ["伊予灘ものがたり", "Iyonada Monogatari"], "logoPath": null },
-  { "id": "nichirin", "region": "jp", "names": ["にちりん", "Nichirin"], "logoPath": null },
-  { "id": "nichirin-seagaia", "region": "jp", "names": ["にちりんシーガイア", "Nichirin Seagaia"], "logoPath": null },
-  { "id": "hyuga", "region": "jp", "names": ["ひゅうが", "Hyuga", "Hyūga"], "logoPath": null },
-  { "id": "huis-ten-bosch", "region": "jp", "names": ["ハウステンボス", "Huis Ten Bosch"], "logoPath": null },
-  { "id": "kasasagi", "region": "jp", "names": ["かささぎ", "Kasasagi"], "logoPath": null },
-  { "id": "yufu", "region": "jp", "names": ["ゆふ", "Yufu"], "logoPath": null },
-  { "id": "yufuin-no-mori", "region": "jp", "names": ["ゆふいんの森", "Yufuin no Mori"], "logoPath": null },
-  { "id": "kyushu-odan-tokkyu", "region": "jp", "names": ["九州横断特急", "Kyushu Odan Tokkyu", "Trans-Kyushu Limited Express"], "logoPath": null },
-  { "id": "kawasemi-yamasemi", "region": "jp", "names": ["かわせみ やませみ", "かわせみやませみ", "Kawasemi Yamasemi"], "logoPath": null },
-  { "id": "umisachi-yamasachi", "region": "jp", "names": ["海幸山幸", "Umisachi Yamasachi"], "logoPath": null },
-  { "id": "36-plus-3", "region": "jp", "names": ["36ぷらす3", "36+3", "36 Plus 3"], "logoPath": null },
-  { "id": "a-ressha-de-iko", "region": "jp", "names": ["A列車で行こう", "A-Train", "A Ressha de Iko"], "logoPath": null },
-  { "id": "futatsuboshi-4047", "region": "jp", "names": ["ふたつ星4047", "Futatsuboshi 4047"], "logoPath": null },
-  { "id": "aru-ressha", "region": "jp", "names": ["或る列車", "Aru Ressha"], "logoPath": null },
-  { "id": "fujisan", "region": "jp", "names": ["ふじさん", "Fujisan"], "logoPath": null },
-  { "id": "twilight-express-mizukaze", "region": "jp", "names": ["TWILIGHT EXPRESS 瑞風", "トワイライトエクスプレス瑞風", "瑞風", "Twilight Express Mizukaze", "Mizukaze"], "logoPath": null },
-  { "id": "ibusuki-no-tamatebako", "region": "jp", "names": ["指宿のたまて箱", "Ibusuki no Tamatebako"], "logoPath": null },
-  { "id": "kaio", "region": "jp", "names": ["かいおう", "Kaio", "Kaiō", "Kaiou"], "logoPath": null },
-  { "id": "kanpachi-ichiroku", "region": "jp", "names": ["かんぱち・いちろく", "かんぱち", "いちろく", "Kanpachi Ichiroku", "Kanpachi", "Ichiroku"], "logoPath": null },
-  { "id": "muroto", "region": "jp", "names": ["むろと", "Muroto"], "logoPath": null },
-  { "id": "midnight-exp", "region": "jp", "names": ["ミッドナイトEXP", "Midnight EXP", "Midnight Express"], "logoPath": null },
-  { "id": "dinostar", "region": "jp", "names": ["ダイナスター", "Dinostar"], "logoPath": null },
-  { "id": "aso", "region": "jp", "names": ["あそ", "Aso"], "logoPath": null },
-  { "id": "ariake", "region": "jp", "names": ["有明", "Ariake"], "logoPath": null },
-  { "id": "isaburo-shinpei", "region": "jp", "names": ["いさぶろう・しんぺい", "いさぶろう", "しんぺい", "Isaburo Shinpei", "Isaburō", "Shinpei"], "logoPath": null },
-  { "id": "taisetsu", "region": "jp", "names": ["大雪", "Taisetsu"], "logoPath": null },
-  { "id": "shinjuku-sazanami", "region": "jp", "names": ["新宿さざなみ", "Shinjuku Sazanami"], "logoPath": null },
-  { "id": "shinjuku-wakashio", "region": "jp", "names": ["新宿わかしお", "Shinjuku Wakashio"], "logoPath": null },
-  { "id": "romancecar", "region": "jp", "names": ["ロマンスカー", "Romancecar", "Romance Car"], "logoPath": null },
-  { "id": "hakone", "region": "jp", "names": ["はこね", "Hakone"], "logoPath": null },
-  { "id": "super-hakone", "region": "jp", "names": ["スーパーはこね", "Super Hakone"], "logoPath": null },
-  { "id": "sagami", "region": "jp", "names": ["さがみ", "Sagami"], "logoPath": null },
-  { "id": "enoshima", "region": "jp", "names": ["えのしま", "Enoshima"], "logoPath": null },
-  { "id": "metro-hakone", "region": "jp", "names": ["メトロはこね", "Metro Hakone"], "logoPath": null },
-  { "id": "metro-enoshima", "region": "jp", "names": ["メトロえのしま", "Metro Enoshima"], "logoPath": null },
-  { "id": "metro-sagami", "region": "jp", "names": ["メトロさがみ", "Metro Sagami"], "logoPath": null },
-  { "id": "morningway", "region": "jp", "names": ["モーニングウェイ", "Morningway", "Morning Way"], "logoPath": null },
-  { "id": "homeway", "region": "jp", "names": ["ホームウェイ", "Homeway", "Home Way"], "logoPath": null },
-  { "id": "metro-morningway", "region": "jp", "names": ["メトロモーニングウェイ", "Metro Morningway"], "logoPath": null },
-  { "id": "metro-homeway", "region": "jp", "names": ["メトロホームウェイ", "Metro Homeway"], "logoPath": null },
-  { "id": "skyliner", "region": "jp", "names": ["スカイライナー", "Skyliner"], "logoPath": null },
-  { "id": "morning-liner", "region": "jp", "names": ["モーニングライナー", "Morning Liner"], "logoPath": null },
-  { "id": "evening-liner", "region": "jp", "names": ["イブニングライナー", "Evening Liner"], "logoPath": null },
-  { "id": "city-liner", "region": "jp", "names": ["シティライナー", "City Liner"], "logoPath": null },
-  { "id": "kegon", "region": "jp", "names": ["けごん", "Kegon"], "logoPath": null },
-  { "id": "kinu", "region": "jp", "names": ["きぬ", "Kinu"], "logoPath": null },
-  { "id": "ryomo", "region": "jp", "names": ["りょうもう", "Ryomo", "Ryōmō"], "logoPath": null },
-  { "id": "spacia", "region": "jp", "names": ["スペーシア", "スペーシアけごん", "スペーシアきぬ", "Spacia", "Spacia Kegon", "Spacia Kinu"], "logoPath": null },
-  { "id": "shimotsuke", "region": "jp", "names": ["しもつけ", "Shimotsuke"], "logoPath": null },
-  { "id": "kirifuri", "region": "jp", "names": ["きりふり", "Kirifuri"], "logoPath": null },
-  { "id": "yunosato", "region": "jp", "names": ["ゆのさと", "Yunosato"], "logoPath": null },
-  { "id": "urban-park-liner", "region": "jp", "names": ["アーバンパークライナー", "Urban Park Liner"], "logoPath": null },
-  { "id": "skytree-liner", "region": "jp", "names": ["スカイツリーライナー", "Skytree Liner"], "logoPath": null },
-  { "id": "chichibu", "region": "jp", "names": ["ちちぶ", "Chichibu"], "logoPath": null },
-  { "id": "musashi", "region": "jp", "names": ["むさし", "Musashi"], "logoPath": null },
-  { "id": "koedo", "region": "jp", "names": ["小江戸", "Koedo"], "logoPath": null },
-  { "id": "laview", "region": "jp", "names": ["ラビュー", "Laview"], "logoPath": null },
-  { "id": "red-arrow", "region": "jp", "names": ["レッドアロー", "Red Arrow"], "logoPath": null },
-  { "id": "urban-liner", "region": "jp", "names": ["アーバンライナー", "Urban Liner", "Urbanliner"], "logoPath": null },
-  { "id": "ise-shima-liner", "region": "jp", "names": ["伊勢志摩ライナー", "Ise-Shima Liner", "Iseshima Liner"], "logoPath": null },
-  { "id": "sakura-liner", "region": "jp", "names": ["さくらライナー", "Sakura Liner"], "logoPath": null },
-  { "id": "vista-car", "region": "jp", "names": ["ビスタカー", "Vista Car", "Vistacar"], "logoPath": null },
-  { "id": "ao-no-symphony", "region": "jp", "names": ["青の交響曲", "青のシンフォニー", "Blue Symphony", "Ao no Symphony"], "logoPath": null },
-  { "id": "southern", "region": "jp", "names": ["サザン", "Southern"], "logoPath": null },
-  { "id": "koya", "region": "jp", "names": ["こうや", "Koya", "Kōya"], "logoPath": null },
-  { "id": "rinkan", "region": "jp", "names": ["りんかん", "Rinkan"], "logoPath": null },
-  { "id": "semboku-liner", "region": "jp", "names": ["泉北ライナー", "Semboku Liner", "Senboku Liner"], "logoPath": null },
-  { "id": "mu-sky", "region": "jp", "names": ["ミュースカイ", "μスカイ", "μSKY", "μ-SKY", "Mu Sky", "MuSky"], "logoPath": null },
-  { "id": "kyo-train", "region": "jp", "names": ["京とれいん 雅洛", "京とれいん雅洛", "京とれいん", "Kyo-train Garaku", "Kyo-train"], "logoPath": null },
-  { "id": "fujisan-tokkyu", "region": "jp", "names": ["フジサン特急", "Fujisan Express"], "logoPath": null },
-  { "id": "fujisan-view-express", "region": "jp", "names": ["富士山ビュー特急", "Fujisan View Express", "Mt. Fuji View Express"], "logoPath": null },
-  { "id": "yukemuri", "region": "jp", "names": ["ゆけむり", "Yukemuri"], "logoPath": null },
-  { "id": "snow-monkey", "region": "jp", "names": ["スノーモンキー", "Snow Monkey"], "logoPath": null },
-  { "id": "tango-relay", "region": "jp", "names": ["たんごリレー", "Tango Relay"], "logoPath": null },
-  { "id": "tango-discovery", "region": "jp", "names": ["タンゴディスカバリー", "Tango Discovery"], "logoPath": null }
+ {
+  "id": "haruka",
+  "region": "jp",
+  "names": [
+   "はるか",
+   "Haruka"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "narita-express",
+  "region": "jp",
+  "names": [
+   "成田エクスプレス",
+   "Narita Express",
+   "N'EX",
+   "NEX"
+  ],
+  "logoPath": "/rail/service-logos/narita-express.png"
+ },
+ {
+  "id": "sunrise-izumo",
+  "region": "jp",
+  "names": [
+   "サンライズ出雲",
+   "Sunrise Izumo"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sunrise-seto",
+  "region": "jp",
+  "names": [
+   "サンライズ瀬戸",
+   "Sunrise Seto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "thunderbird",
+  "region": "jp",
+  "names": [
+   "サンダーバード",
+   "Thunderbird"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "azusa",
+  "region": "jp",
+  "names": [
+   "あずさ",
+   "Azusa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kaiji",
+  "region": "jp",
+  "names": [
+   "かいじ",
+   "Kaiji"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hitachi",
+  "region": "jp",
+  "names": [
+   "ひたち",
+   "Hitachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tokiwa",
+  "region": "jp",
+  "names": [
+   "ときわ",
+   "Tokiwa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "odoriko",
+  "region": "jp",
+  "names": [
+   "踊り子",
+   "Odoriko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "saphir-odoriko",
+  "region": "jp",
+  "names": [
+   "サフィール踊り子",
+   "Saphir Odoriko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "spacia-x",
+  "region": "jp",
+  "names": [
+   "スペーシア X",
+   "スペーシアX",
+   "Spacia X"
+  ],
+  "logoPath": "/rail/service-logos/spacia-x.png"
+ },
+ {
+  "id": "revaty",
+  "region": "jp",
+  "names": [
+   "リバティ",
+   "Revaty",
+   "リバティけごん",
+   "リバティきぬ",
+   "リバティりょうもう",
+   "リバティ会津",
+   "Revaty Kegon",
+   "Revaty Kinu",
+   "Revaty Ryomo",
+   "Revaty Aizu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hinotori",
+  "region": "jp",
+  "names": [
+   "ひのとり",
+   "Hinotori"
+  ],
+  "logoPath": "/rail/service-logos/hinotori.png"
+ },
+ {
+  "id": "shimakaze",
+  "region": "jp",
+  "names": [
+   "しまかぜ",
+   "Shimakaze"
+  ],
+  "logoPath": "/rail/service-logos/shimakaze.png"
+ },
+ {
+  "id": "hokuto",
+  "region": "jp",
+  "names": [
+   "北斗",
+   "Hokuto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ozora",
+  "region": "jp",
+  "names": [
+   "おおぞら",
+   "Ozora",
+   "Ōzora"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kamui",
+  "region": "jp",
+  "names": [
+   "カムイ",
+   "Kamui"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "lilac",
+  "region": "jp",
+  "names": [
+   "ライラック",
+   "Lilac"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sonic",
+  "region": "jp",
+  "names": [
+   "ソニック",
+   "Sonic"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shirasagi",
+  "region": "jp",
+  "names": [
+   "しらさぎ",
+   "Shirasagi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kuroshio",
+  "region": "jp",
+  "names": [
+   "くろしお",
+   "Kuroshio"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yakumo",
+  "region": "jp",
+  "names": [
+   "やくも",
+   "Yakumo"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shinano",
+  "region": "jp",
+  "names": [
+   "しなの",
+   "Shinano",
+   "ワイドビューしなの"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hida",
+  "region": "jp",
+  "names": [
+   "ひだ",
+   "Hida",
+   "ワイドビューひだ"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nanki",
+  "region": "jp",
+  "names": [
+   "南紀",
+   "Nanki",
+   "ワイドビュー南紀"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kinosaki",
+  "region": "jp",
+  "names": [
+   "きのさき",
+   "Kinosaki"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kounotori",
+  "region": "jp",
+  "names": [
+   "こうのとり",
+   "Kounotori",
+   "Kōnotori"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kusatsu-shima",
+  "region": "jp",
+  "names": [
+   "草津・四万",
+   "草津四万",
+   "Kusatsu-Shima"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fuji",
+  "region": "jp",
+  "names": [
+   "富士",
+   "Fuji"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nanpu",
+  "region": "jp",
+  "names": [
+   "南風",
+   "Nanpu",
+   "Nanpū",
+   "Nampu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ishizuchi",
+  "region": "jp",
+  "names": [
+   "いしづち",
+   "Ishizuchi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "midori",
+  "region": "jp",
+  "names": [
+   "みどり",
+   "Midori"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kirishima",
+  "region": "jp",
+  "names": [
+   "きりしま",
+   "Kirishima"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kirameki",
+  "region": "jp",
+  "names": [
+   "きらめき",
+   "Kirameki"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "relay-kamome",
+  "region": "jp",
+  "names": [
+   "リレーかもめ",
+   "Relay Kamome"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "inaho",
+  "region": "jp",
+  "names": [
+   "いなほ",
+   "Inaho"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-tsugaru",
+  "region": "jp",
+  "names": [
+   "スーパーつがる",
+   "Super Tsugaru"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "asoboy",
+  "region": "jp",
+  "names": [
+   "あそぼーい！",
+   "あそぼーい",
+   "Aso Boy!",
+   "Aso Boy"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "uzushio",
+  "region": "jp",
+  "names": [
+   "うずしお",
+   "Uzushio"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shiokaze",
+  "region": "jp",
+  "names": [
+   "しおかぜ",
+   "Shiokaze"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "soya",
+  "region": "jp",
+  "names": [
+   "宗谷",
+   "Soya",
+   "Sōya"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-oki",
+  "region": "jp",
+  "names": [
+   "スーパーおき",
+   "Super Oki"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rapit",
+  "region": "jp",
+  "names": [
+   "ラピートα",
+   "ラピート",
+   "Rapi:t",
+   "Rapit Alpha",
+   "Rapit"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "new-red-arrow",
+  "region": "jp",
+  "names": [
+   "ニューレッドアロー",
+   "New Red Arrow",
+   "NRA"
+  ],
+  "logoPath": "/rail/service-logos/new-red-arrow.png"
+ },
+ {
+  "id": "suzuran",
+  "region": "jp",
+  "names": [
+   "すずらん",
+   "Suzuran"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tokachi",
+  "region": "jp",
+  "names": [
+   "とかち",
+   "Tokachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sarobetsu",
+  "region": "jp",
+  "names": [
+   "サロベツ",
+   "Sarobetsu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "okhotsk",
+  "region": "jp",
+  "names": [
+   "オホーツク",
+   "Okhotsk",
+   "Ohotsuku"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "niseko",
+  "region": "jp",
+  "names": [
+   "ニセコ",
+   "Niseko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fuji-excursion",
+  "region": "jp",
+  "names": [
+   "富士回遊",
+   "Fuji Excursion"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hachioji",
+  "region": "jp",
+  "names": [
+   "はちおうじ",
+   "Hachioji",
+   "Hachiōji"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ome",
+  "region": "jp",
+  "names": [
+   "おうめ",
+   "Ome",
+   "Ōme"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shonan",
+  "region": "jp",
+  "names": [
+   "湘南",
+   "Shonan",
+   "Shōnan"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "wakashio",
+  "region": "jp",
+  "names": [
+   "わかしお",
+   "Wakashio"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sazanami",
+  "region": "jp",
+  "names": [
+   "さざなみ",
+   "Sazanami"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shiosai",
+  "region": "jp",
+  "names": [
+   "しおさい",
+   "Shiosai"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "akagi",
+  "region": "jp",
+  "names": [
+   "あかぎ",
+   "Akagi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nikko",
+  "region": "jp",
+  "names": [
+   "日光",
+   "Nikko",
+   "Nikkō"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kinugawa",
+  "region": "jp",
+  "names": [
+   "きぬがわ",
+   "Kinugawa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "spacia-nikko",
+  "region": "jp",
+  "names": [
+   "スペーシア日光",
+   "Spacia Nikko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "spacia-kinugawa",
+  "region": "jp",
+  "names": [
+   "スペーシアきぬがわ",
+   "Spacia Kinugawa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shirayuki",
+  "region": "jp",
+  "names": [
+   "しらゆき",
+   "Shirayuki"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tsugaru",
+  "region": "jp",
+  "names": [
+   "つがる",
+   "Tsugaru"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kamakura",
+  "region": "jp",
+  "names": [
+   "鎌倉",
+   "Kamakura"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "inaji",
+  "region": "jp",
+  "names": [
+   "伊那路",
+   "Inaji",
+   "ワイドビュー伊那路"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fujikawa",
+  "region": "jp",
+  "names": [
+   "ふじかわ",
+   "Fujikawa",
+   "ワイドビューふじかわ"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hashidate",
+  "region": "jp",
+  "names": [
+   "はしだて",
+   "Hashidate"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "maizuru",
+  "region": "jp",
+  "names": [
+   "まいづる",
+   "Maizuru"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hamakaze",
+  "region": "jp",
+  "names": [
+   "はまかぜ",
+   "Hamakaze"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-hakuto",
+  "region": "jp",
+  "names": [
+   "スーパーはくと",
+   "Super Hakuto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-inaba",
+  "region": "jp",
+  "names": [
+   "スーパーいなば",
+   "Super Inaba"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-matsukaze",
+  "region": "jp",
+  "names": [
+   "スーパーまつかぜ",
+   "Super Matsukaze"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rakuraku-harima",
+  "region": "jp",
+  "names": [
+   "らくラクはりま",
+   "Raku Raku Harima",
+   "Rakuraku Harima"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rakuraku-biwako",
+  "region": "jp",
+  "names": [
+   "らくラクびわこ",
+   "Raku Raku Biwako",
+   "Rakuraku Biwako"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rakuraku-yamato",
+  "region": "jp",
+  "names": [
+   "らくラクやまと",
+   "Raku Raku Yamato",
+   "Rakuraku Yamato"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "noto-kagaribi",
+  "region": "jp",
+  "names": [
+   "能登かがり火",
+   "Noto Kagaribi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "west-express-ginga",
+  "region": "jp",
+  "names": [
+   "WEST EXPRESS 銀河",
+   "West Express Ginga"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hanaakari",
+  "region": "jp",
+  "names": [
+   "はなあかり",
+   "Hanaakari"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "mahoroba",
+  "region": "jp",
+  "names": [
+   "まほろば",
+   "Mahoroba"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shimanto",
+  "region": "jp",
+  "names": [
+   "しまんと",
+   "Shimanto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ashizuri",
+  "region": "jp",
+  "names": [
+   "あしずり",
+   "Ashizuri"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "uwakai",
+  "region": "jp",
+  "names": [
+   "宇和海",
+   "Uwakai"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tsurugisan",
+  "region": "jp",
+  "names": [
+   "剣山",
+   "Tsurugisan"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "morning-exp",
+  "region": "jp",
+  "names": [
+   "モーニングEXP",
+   "Morning EXP",
+   "Morning Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shikoku-mannaka-sennen-monogatari",
+  "region": "jp",
+  "names": [
+   "四国まんなか千年ものがたり",
+   "Shikoku Mannaka Sennen Monogatari"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shikoku-tosa-jidai-no-yoake",
+  "region": "jp",
+  "names": [
+   "志国土佐 時代の夜明けのものがたり",
+   "志国土佐時代の夜明けのものがたり",
+   "Shikoku Tosa Jidai no Yoake no Monogatari"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "iyonada-monogatari",
+  "region": "jp",
+  "names": [
+   "伊予灘ものがたり",
+   "Iyonada Monogatari"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nichirin",
+  "region": "jp",
+  "names": [
+   "にちりん",
+   "Nichirin"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nichirin-seagaia",
+  "region": "jp",
+  "names": [
+   "にちりんシーガイア",
+   "Nichirin Seagaia"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hyuga",
+  "region": "jp",
+  "names": [
+   "ひゅうが",
+   "Hyuga",
+   "Hyūga"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "huis-ten-bosch",
+  "region": "jp",
+  "names": [
+   "ハウステンボス",
+   "Huis Ten Bosch"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kasasagi",
+  "region": "jp",
+  "names": [
+   "かささぎ",
+   "Kasasagi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yufu",
+  "region": "jp",
+  "names": [
+   "ゆふ",
+   "Yufu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yufuin-no-mori",
+  "region": "jp",
+  "names": [
+   "ゆふいんの森",
+   "Yufuin no Mori"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kyushu-odan-tokkyu",
+  "region": "jp",
+  "names": [
+   "九州横断特急",
+   "Kyushu Odan Tokkyu",
+   "Trans-Kyushu Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kawasemi-yamasemi",
+  "region": "jp",
+  "names": [
+   "かわせみ やませみ",
+   "かわせみやませみ",
+   "Kawasemi Yamasemi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "umisachi-yamasachi",
+  "region": "jp",
+  "names": [
+   "海幸山幸",
+   "Umisachi Yamasachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "36-plus-3",
+  "region": "jp",
+  "names": [
+   "36ぷらす3",
+   "36+3",
+   "36 Plus 3"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "a-ressha-de-iko",
+  "region": "jp",
+  "names": [
+   "A列車で行こう",
+   "A-Train",
+   "A Ressha de Iko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "futatsuboshi-4047",
+  "region": "jp",
+  "names": [
+   "ふたつ星4047",
+   "Futatsuboshi 4047"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "aru-ressha",
+  "region": "jp",
+  "names": [
+   "或る列車",
+   "Aru Ressha"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fujisan",
+  "region": "jp",
+  "names": [
+   "ふじさん",
+   "Fujisan"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "twilight-express-mizukaze",
+  "region": "jp",
+  "names": [
+   "TWILIGHT EXPRESS 瑞風",
+   "トワイライトエクスプレス瑞風",
+   "瑞風",
+   "Twilight Express Mizukaze",
+   "Mizukaze"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ibusuki-no-tamatebako",
+  "region": "jp",
+  "names": [
+   "指宿のたまて箱",
+   "Ibusuki no Tamatebako"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kaio",
+  "region": "jp",
+  "names": [
+   "かいおう",
+   "Kaio",
+   "Kaiō",
+   "Kaiou"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kanpachi-ichiroku",
+  "region": "jp",
+  "names": [
+   "かんぱち・いちろく",
+   "かんぱち",
+   "いちろく",
+   "Kanpachi Ichiroku",
+   "Kanpachi",
+   "Ichiroku"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "muroto",
+  "region": "jp",
+  "names": [
+   "むろと",
+   "Muroto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "midnight-exp",
+  "region": "jp",
+  "names": [
+   "ミッドナイトEXP",
+   "Midnight EXP",
+   "Midnight Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "dinostar",
+  "region": "jp",
+  "names": [
+   "ダイナスター",
+   "Dinostar"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "aso",
+  "region": "jp",
+  "names": [
+   "あそ",
+   "Aso"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ariake",
+  "region": "jp",
+  "names": [
+   "有明",
+   "Ariake"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "isaburo-shinpei",
+  "region": "jp",
+  "names": [
+   "いさぶろう・しんぺい",
+   "いさぶろう",
+   "しんぺい",
+   "Isaburo Shinpei",
+   "Isaburō",
+   "Shinpei"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "taisetsu",
+  "region": "jp",
+  "names": [
+   "大雪",
+   "Taisetsu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shinjuku-sazanami",
+  "region": "jp",
+  "names": [
+   "新宿さざなみ",
+   "Shinjuku Sazanami"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shinjuku-wakashio",
+  "region": "jp",
+  "names": [
+   "新宿わかしお",
+   "Shinjuku Wakashio"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "romancecar",
+  "region": "jp",
+  "names": [
+   "ロマンスカー",
+   "Romancecar",
+   "Romance Car"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hakone",
+  "region": "jp",
+  "names": [
+   "はこね",
+   "Hakone"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-hakone",
+  "region": "jp",
+  "names": [
+   "スーパーはこね",
+   "Super Hakone"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sagami",
+  "region": "jp",
+  "names": [
+   "さがみ",
+   "Sagami"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "enoshima",
+  "region": "jp",
+  "names": [
+   "えのしま",
+   "Enoshima"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "metro-hakone",
+  "region": "jp",
+  "names": [
+   "メトロはこね",
+   "Metro Hakone"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "metro-enoshima",
+  "region": "jp",
+  "names": [
+   "メトロえのしま",
+   "Metro Enoshima"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "metro-sagami",
+  "region": "jp",
+  "names": [
+   "メトロさがみ",
+   "Metro Sagami"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "morningway",
+  "region": "jp",
+  "names": [
+   "モーニングウェイ",
+   "Morningway",
+   "Morning Way"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "homeway",
+  "region": "jp",
+  "names": [
+   "ホームウェイ",
+   "Homeway",
+   "Home Way"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "metro-morningway",
+  "region": "jp",
+  "names": [
+   "メトロモーニングウェイ",
+   "Metro Morningway"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "metro-homeway",
+  "region": "jp",
+  "names": [
+   "メトロホームウェイ",
+   "Metro Homeway"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "skyliner",
+  "region": "jp",
+  "names": [
+   "スカイライナー",
+   "Skyliner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "morning-liner",
+  "region": "jp",
+  "names": [
+   "モーニングライナー",
+   "Morning Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "evening-liner",
+  "region": "jp",
+  "names": [
+   "イブニングライナー",
+   "Evening Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "city-liner",
+  "region": "jp",
+  "names": [
+   "シティライナー",
+   "City Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kegon",
+  "region": "jp",
+  "names": [
+   "けごん",
+   "Kegon"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kinu",
+  "region": "jp",
+  "names": [
+   "きぬ",
+   "Kinu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ryomo",
+  "region": "jp",
+  "names": [
+   "りょうもう",
+   "Ryomo",
+   "Ryōmō"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "spacia",
+  "region": "jp",
+  "names": [
+   "スペーシア",
+   "スペーシアけごん",
+   "スペーシアきぬ",
+   "Spacia",
+   "Spacia Kegon",
+   "Spacia Kinu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "shimotsuke",
+  "region": "jp",
+  "names": [
+   "しもつけ",
+   "Shimotsuke"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kirifuri",
+  "region": "jp",
+  "names": [
+   "きりふり",
+   "Kirifuri"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yunosato",
+  "region": "jp",
+  "names": [
+   "ゆのさと",
+   "Yunosato"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "urban-park-liner",
+  "region": "jp",
+  "names": [
+   "アーバンパークライナー",
+   "Urban Park Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "skytree-liner",
+  "region": "jp",
+  "names": [
+   "スカイツリーライナー",
+   "Skytree Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "chichibu",
+  "region": "jp",
+  "names": [
+   "ちちぶ",
+   "Chichibu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "musashi",
+  "region": "jp",
+  "names": [
+   "むさし",
+   "Musashi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "koedo",
+  "region": "jp",
+  "names": [
+   "小江戸",
+   "Koedo"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "laview",
+  "region": "jp",
+  "names": [
+   "ラビュー",
+   "Laview"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "red-arrow",
+  "region": "jp",
+  "names": [
+   "レッドアロー",
+   "Red Arrow"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "urban-liner",
+  "region": "jp",
+  "names": [
+   "アーバンライナー",
+   "Urban Liner",
+   "Urbanliner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ise-shima-liner",
+  "region": "jp",
+  "names": [
+   "伊勢志摩ライナー",
+   "Ise-Shima Liner",
+   "Iseshima Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sakura-liner",
+  "region": "jp",
+  "names": [
+   "さくらライナー",
+   "Sakura Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "vista-car",
+  "region": "jp",
+  "names": [
+   "ビスタカー",
+   "Vista Car",
+   "Vistacar"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ao-no-symphony",
+  "region": "jp",
+  "names": [
+   "青の交響曲",
+   "青のシンフォニー",
+   "Blue Symphony",
+   "Ao no Symphony"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "southern",
+  "region": "jp",
+  "names": [
+   "サザン",
+   "Southern"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "koya",
+  "region": "jp",
+  "names": [
+   "こうや",
+   "Koya",
+   "Kōya"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rinkan",
+  "region": "jp",
+  "names": [
+   "りんかん",
+   "Rinkan"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "semboku-liner",
+  "region": "jp",
+  "names": [
+   "泉北ライナー",
+   "Semboku Liner",
+   "Senboku Liner"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "mu-sky",
+  "region": "jp",
+  "names": [
+   "ミュースカイ",
+   "μスカイ",
+   "μSKY",
+   "μ-SKY",
+   "Mu Sky",
+   "MuSky"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kyo-train",
+  "region": "jp",
+  "names": [
+   "京とれいん 雅洛",
+   "京とれいん雅洛",
+   "Kyo-train Garaku"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fujisan-tokkyu",
+  "region": "jp",
+  "names": [
+   "フジサン特急",
+   "Fujisan Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fujisan-view-express",
+  "region": "jp",
+  "names": [
+   "富士山ビュー特急",
+   "Fujisan View Express",
+   "Mt. Fuji View Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yukemuri",
+  "region": "jp",
+  "names": [
+   "ゆけむり",
+   "Yukemuri"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "snow-monkey",
+  "region": "jp",
+  "names": [
+   "スノーモンキー",
+   "Snow Monkey"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tango-relay",
+  "region": "jp",
+  "names": [
+   "たんごリレー",
+   "Tango Relay"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tango-discovery",
+  "region": "jp",
+  "names": [
+   "タンゴディスカバリー",
+   "Tango Discovery"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-hokuto",
+  "region": "jp",
+  "names": [
+   "スーパー北斗",
+   "Super Hokuto"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-ozora",
+  "region": "jp",
+  "names": [
+   "スーパーおおぞら",
+   "Super Ozora"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-tokachi",
+  "region": "jp",
+  "names": [
+   "スーパーとかち",
+   "Super Tokachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-kamui",
+  "region": "jp",
+  "names": [
+   "スーパーカムイ",
+   "Super Kamui"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-soya",
+  "region": "jp",
+  "names": [
+   "スーパー宗谷",
+   "Super Soya"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "asahiyama-zoo",
+  "region": "jp",
+  "names": [
+   "旭山動物園号",
+   "Asahiyama Zoo"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "furano-lavender-express",
+  "region": "jp",
+  "names": [
+   "フラノラベンダーエクスプレス",
+   "Furano Lavender Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-hakucho",
+  "region": "jp",
+  "names": [
+   "スーパー白鳥",
+   "Super Hakucho"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hakucho",
+  "region": "jp",
+  "names": [
+   "白鳥",
+   "Hakucho"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hokutosei",
+  "region": "jp",
+  "names": [
+   "北斗星",
+   "Hokutosei"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "cassiopeia",
+  "region": "jp",
+  "names": [
+   "カシオペア",
+   "Cassiopeia"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-hitachi",
+  "region": "jp",
+  "names": [
+   "スーパーひたち",
+   "Super Hitachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "fresh-hitachi",
+  "region": "jp",
+  "names": [
+   "フレッシュひたち",
+   "Fresh Hitachi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-azusa",
+  "region": "jp",
+  "names": [
+   "スーパーあずさ",
+   "Super Azusa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-view-odoriko",
+  "region": "jp",
+  "names": [
+   "スーパービュー踊り子",
+   "Super View Odoriko"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ayame",
+  "region": "jp",
+  "names": [
+   "あやめ",
+   "Ayame"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "minakami",
+  "region": "jp",
+  "names": [
+   "水上",
+   "Minakami"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kusatsu",
+  "region": "jp",
+  "names": [
+   "草津",
+   "Kusatsu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "swallow-akagi",
+  "region": "jp",
+  "names": [
+   "スワローあかぎ",
+   "Swallow Akagi"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "akebono",
+  "region": "jp",
+  "names": [
+   "あけぼの",
+   "Akebono"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hokuriku",
+  "region": "jp",
+  "names": [
+   "北陸",
+   "Hokuriku"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hokuetsu",
+  "region": "jp",
+  "names": [
+   "北越",
+   "Hokuetsu"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hakutaka-zairaisen",
+  "region": "jp",
+  "names": [
+   "はくたか",
+   "Hakutaka"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kamoshika",
+  "region": "jp",
+  "names": [
+   "かもしか",
+   "Kamoshika"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hama-kaiji",
+  "region": "jp",
+  "names": [
+   "はまかいじ",
+   "Hama Kaiji"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "raicho",
+  "region": "jp",
+  "names": [
+   "雷鳥",
+   "Raicho"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "twilight-express",
+  "region": "jp",
+  "names": [
+   "トワイライトエクスプレス",
+   "Twilight Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "nihonkai",
+  "region": "jp",
+  "names": [
+   "日本海",
+   "Nihonkai"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kitakinki",
+  "region": "jp",
+  "names": [
+   "北近畿",
+   "Kita-Kinki"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "monju",
+  "region": "jp",
+  "names": [
+   "文殊",
+   "Monju"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tanba",
+  "region": "jp",
+  "names": [
+   "たんば",
+   "Tanba"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "tango-explorer",
+  "region": "jp",
+  "names": [
+   "タンゴエクスプローラー",
+   "Tango Explorer"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "super-kuroshio",
+  "region": "jp",
+  "names": [
+   "スーパーくろしお",
+   "Super Kuroshio"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ocean-arrow",
+  "region": "jp",
+  "names": [
+   "オーシャンアロー",
+   "Ocean Arrow"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "biwako-express",
+  "region": "jp",
+  "names": [
+   "びわこエクスプレス",
+   "Biwako Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "ohayo-express",
+  "region": "jp",
+  "names": [
+   "おはようエクスプレス",
+   "Ohayo Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "oyasumi-express",
+  "region": "jp",
+  "names": [
+   "おやすみエクスプレス",
+   "Oyasumi Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hanayome-noren",
+  "region": "jp",
+  "names": [
+   "花嫁のれん",
+   "Hanayome Noren"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "home-express-anan",
+  "region": "jp",
+  "names": [
+   "ホームエクスプレス阿南",
+   "Home Express Anan"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kamome",
+  "region": "jp",
+  "names": [
+   "かもめ",
+   "Kamome"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "relay-tsubame",
+  "region": "jp",
+  "names": [
+   "リレーつばめ",
+   "Relay Tsubame"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "yufu-dx",
+  "region": "jp",
+  "names": [
+   "ゆふDX",
+   "Yufu DX"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kumagawa",
+  "region": "jp",
+  "names": [
+   "くまがわ",
+   "Kumagawa"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "sendai-express",
+  "region": "jp",
+  "names": [
+   "川内エクスプレス",
+   "Sendai Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "hayato-no-kaze",
+  "region": "jp",
+  "names": [
+   "はやとの風",
+   "Hayato no Kaze"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "dream-nichirin",
+  "region": "jp",
+  "names": [
+   "ドリームにちりん",
+   "Dream Nichirin"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "seaboldt",
+  "region": "jp",
+  "names": [
+   "シーボルト",
+   "Seaboldt"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "asagiri",
+  "region": "jp",
+  "names": [
+   "あさぎり",
+   "Asagiri"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-meihan",
+  "region": "jp",
+  "names": [
+   "名阪特急",
+   "名阪甲特急",
+   "名阪乙特急",
+   "Meihan Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-hanise",
+  "region": "jp",
+  "names": [
+   "阪伊特急",
+   "Han-I Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-meii",
+  "region": "jp",
+  "names": [
+   "名伊特急",
+   "Mei-I Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-kyoise",
+  "region": "jp",
+  "names": [
+   "京伊特急",
+   "Kyo-I Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-keina",
+  "region": "jp",
+  "names": [
+   "京奈特急",
+   "Keina Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-kyokashi",
+  "region": "jp",
+  "names": [
+   "京橿特急",
+   "Kyokashi Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-hanna",
+  "region": "jp",
+  "names": [
+   "阪奈特急",
+   "Hanna Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kintetsu-yoshino",
+  "region": "jp",
+  "names": [
+   "吉野特急",
+   "Yoshino Limited Express"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "rapit-beta",
+  "region": "jp",
+  "names": [
+   "ラピートβ",
+   "Rapi:t Beta",
+   "Rapit Beta"
+  ],
+  "logoPath": null
+ },
+ {
+  "id": "kyo-train-original",
+  "region": "jp",
+  "names": [
+   "京とれいん",
+   "Kyo-train"
+  ],
+  "logoPath": null
+ }
 ]

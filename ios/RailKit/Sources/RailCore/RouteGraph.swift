@@ -174,9 +174,10 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns. Bumped to "20"
-    /// for ADR 0011 (dated rail-history validity joins the cache key).
-    public static let routeSolverCacheVersion = "20"
+    /// parameter here rather than a constant this file owns. Bumped to "21"
+    /// because endpoint station candidates are now filtered by ride-date
+    /// validity (ADR 0011), the same rule already applied to edges.
+    public static let routeSolverCacheVersion = "21"
 
     /// The operators a `company` field names, split on `/`.
     ///

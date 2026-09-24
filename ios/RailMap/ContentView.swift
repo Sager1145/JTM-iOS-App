@@ -4,6 +4,13 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
+/// Seed for the resident journey editor. Edit keeps the id `replace` must target.
+struct JourneyEditorLaunch {
+    var train: Train
+    var isNew: Bool
+    var originalID: String?
+}
+
 /// The railway over Apple Maps, in the two shapes iOS asks for.
 ///
 /// The compact case is a persistent map workspace: the map and the ride panel
@@ -91,6 +98,15 @@ struct RailWorkspaceView: View {
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
     @State private var sheet: WorkspaceSheet?
+    /// The journey editor lives in the resident sheet, not a second presentation.
+    @State private var journeyEditor: JourneyEditorLaunch?
+    /// Once an editor mutation reaches the working set, retries replace this
+    /// exact record instead of adding the same draft again.
+    @State private var journeyEditorRecordID: String?
+    @State private var journeySaveAttemptID: UUID?
+    @State private var journeySaveFailureDetail: String?
+    /// A draft-pin tap asks the editor to open that stop. Cleared after it is consumed.
+    @State private var highlightedStopID: UUID?
     /// The composition that owns an active workspace sheet.
     ///
     /// Compact and docked layouts deliberately attach presentations to
@@ -431,10 +447,13 @@ struct RailWorkspaceView: View {
             switch wanted {
             case "info": sheet = .mapInfo
             case "import": sheet = .importData
-            case "new": sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
+            case "new":
+                presentJourneyEditor(JourneyEditorLaunch(
+                    train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
             case "edit":
                 if let train = itineraries.selectedTrain ?? itineraries.loaded?.trains.first {
-                    sheet = .edit(train)
+                    presentJourneyEditor(JourneyEditorLaunch(
+                        train: train, isNew: false, originalID: train.id))
                 }
             case "detail":
                 var train = StoreOperations.createBlankTrain(country: "jp")
@@ -661,7 +680,12 @@ struct RailWorkspaceView: View {
             },
             onRebuild: rebuildRoute, onStartExport: startVideoExport,
             onDismiss: { sheet = nil },
-            onPick: { train in PresentationHost.afterTeardown { pick(train) } })
+            onPick: { train in PresentationHost.afterTeardown { pick(train) } },
+            onEditJourney: { train in
+                sheet = nil
+                presentJourneyEditor(JourneyEditorLaunch(
+                    train: train, isNew: false, originalID: train.id))
+            })
     }
 
     // MARK: - the map, and the resident sheet over it (§9.5.6)
@@ -940,18 +964,136 @@ struct RailWorkspaceView: View {
     /// capsule, each of them an icon over its own label, in whichever language
     /// the reader picked. Search is the fourth destination rather than the
     /// semantic role's separated circle — see the `Tab` below for why.
-    private func workspaceTabs() -> some View {
-        WorkspaceTabs(selection: $selection) { tab in
-            switch tab {
-            case .upcoming:
-                page(tab) { upcomingPanel }
-            case .stats:
-                page(tab) { statisticsPanel }
-            case .all:
-                page(tab) { allJourneysPanel() }
-            case .search:
-                page(tab) { searchPanel }
+    @ViewBuilder private func workspaceTabs() -> some View {
+        if let launch = journeyEditor {
+            journeyEditorPage(launch)
+        } else {
+            WorkspaceTabs(selection: $selection) { tab in
+                switch tab {
+                case .upcoming:
+                    page(tab) { upcomingPanel }
+                case .stats:
+                    page(tab) { statisticsPanel }
+                case .all:
+                    page(tab) { allJourneysPanel() }
+                case .search:
+                    page(tab) { searchPanel }
+                }
             }
+        }
+    }
+
+    private func journeyEditorPage(_ launch: JourneyEditorLaunch) -> some View {
+        RideEditorView(
+            train: launch.train,
+            title: localization.text(
+                launch.isNew ? "ios.editorTitleNew" : "ios.edit",
+                fallback: launch.isNew ? "New" : "Edit"),
+            isNew: launch.isNew,
+            suggestionTrains: itineraries.loaded?.trains ?? [],
+            onCancel: {
+                guard journeySaveAttemptID == nil else { return }
+                closeJourneyEditor()
+            },
+            onDraftMap: { snapshot in
+                guard controller.acceptsDraftMap else { return }
+                controller.draftMap = snapshot
+            },
+            highlightedStopID: $highlightedStopID,
+            onSave: { commitJourneyEditor($0, launch: launch) })
+        .alert(
+            localization.journeyText(
+                "ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
+            isPresented: Binding(
+                get: { journeySaveFailureDetail != nil },
+                set: { if !$0 { journeySaveFailureDetail = nil } })
+        ) {
+            Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {
+                journeySaveFailureDetail = nil
+            }
+        } message: {
+            let kept = localization.journeyText(
+                "ios.journey.saveFailedKept", fallback: "Your edits are still open.")
+            if let detail = journeySaveFailureDetail, !detail.isEmpty {
+                Text("\(kept)\n\n\(detail)")
+            } else {
+                Text(kept)
+            }
+        }
+    }
+
+    private func presentJourneyEditor(_ launch: JourneyEditorLaunch) {
+        journeyEditorRecordID = nil
+        journeySaveAttemptID = nil
+        journeySaveFailureDetail = nil
+        controller.acceptsDraftMap = true
+        controller.onDraftPin = { highlightedStopID = $0 }
+        journeyEditor = launch
+    }
+
+    private func closeJourneyEditor() {
+        controller.acceptsDraftMap = false
+        controller.onDraftPin = nil
+        controller.draftMap = DraftMapSnapshot(revision: 0, pins: [])
+        highlightedStopID = nil
+        journeyEditorRecordID = nil
+        journeySaveAttemptID = nil
+        journeySaveFailureDetail = nil
+        journeyEditor = nil
+    }
+
+    private func commitJourneyEditor(_ train: Train, launch: JourneyEditorLaunch) {
+        guard journeySaveAttemptID == nil else { return }
+
+        let persistence: Task<Bool, Never>
+        let rollback: @MainActor () -> Bool
+        if let committedID = journeyEditorRecordID {
+            let attempt = editing.replaceAndPersist(train, replacing: committedID)
+            guard let task = attempt.persistence, let undo = attempt.rollback else { return }
+            switch attempt.outcome {
+            case .saved:
+                journeyEditorRecordID = train.id
+            case let .savedKeepingID(keptID, _):
+                journeyEditorRecordID = keptID
+            case .refusedImportRunning, .notFound:
+                return
+            }
+            persistence = task
+            rollback = undo
+        } else if launch.isNew {
+            guard let attempt = editing.addAndPersist(train) else { return }
+            journeyEditorRecordID = attempt.id
+            persistence = attempt.persistence
+            rollback = attempt.rollback
+        } else {
+            let attempt = editing.replaceAndPersist(
+                train, replacing: launch.originalID ?? launch.train.id)
+            guard let task = attempt.persistence, let undo = attempt.rollback else { return }
+            switch attempt.outcome {
+            case .saved:
+                journeyEditorRecordID = train.id
+            case let .savedKeepingID(keptID, _):
+                journeyEditorRecordID = keptID
+            case .refusedImportRunning, .notFound:
+                return
+            }
+            persistence = task
+            rollback = undo
+        }
+
+        let attemptID = UUID()
+        journeySaveAttemptID = attemptID
+        Task { @MainActor in
+            let saved = await persistence.value
+            guard journeySaveAttemptID == attemptID else { return }
+            journeySaveAttemptID = nil
+            guard saved else {
+                if rollback() { journeyEditorRecordID = nil }
+                journeySaveFailureDetail = library.lastSaveError ?? ""
+                return
+            }
+            if launch.isNew { signal(.saved) }
+            closeJourneyEditor()
         }
     }
 
@@ -1296,7 +1438,10 @@ struct RailWorkspaceView: View {
                 if let compactTrain { perform(action, on: compactTrain) }
             },
             backToList: { itineraries.selectedTrainID = nil },
-            newJourney: { sheet = .newJourney(newJourneyScaffold(in: defaultRegion)) },
+            newJourney: {
+                presentJourneyEditor(JourneyEditorLaunch(
+                    train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
+            },
             playback: { playbackButton },
             journeyDate: { journeyDateMenu(for: tab) },
             region: { regionMenu },
@@ -2208,7 +2353,8 @@ struct RailWorkspaceView: View {
         // header replaced (§9.5.6). The buttons moved; the shortcuts are the
         // same two actions and belong wherever the actions are reachable from.
         Button(localization.text("ios.newJourney", fallback: "New journey")) {
-            sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
+            presentJourneyEditor(JourneyEditorLaunch(
+                train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
         }
         .keyboardShortcut("n", modifiers: .command)
         .opacity(0)
@@ -2324,7 +2470,8 @@ struct RailWorkspaceView: View {
     private func perform(_ action: JourneyPresentation.PrimaryAction, on train: Train?) {
         switch action {
         case .add:
-            sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
+            presentJourneyEditor(JourneyEditorLaunch(
+                train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
         case .importData:
             sheet = .importData
         case .locate:
@@ -2345,7 +2492,10 @@ struct RailWorkspaceView: View {
             _ = rebuildRoute(train)
         case .save:
             // §8.3: the draft and its atomic commit belong to the editor.
-            if let train { sheet = .edit(train) }
+            if let train {
+                presentJourneyEditor(JourneyEditorLaunch(
+                    train: train, isNew: false, originalID: train.id))
+            }
         case .pause, .resume:
             playback.togglePause()
         case .retry:
@@ -2363,7 +2513,10 @@ struct RailWorkspaceView: View {
         case .stop:
             stopPlayback()
         case .edit:
-            if let train { sheet = .edit(train) }
+            if let train {
+                presentJourneyEditor(JourneyEditorLaunch(
+                    train: train, isNew: false, originalID: train.id))
+            }
         case .duplicate:
             guard let train else { return }
             editing.duplicate(train.id)
@@ -2384,7 +2537,8 @@ struct RailWorkspaceView: View {
         case .importData:
             sheet = .importData
         case .add:
-            sheet = .newJourney(newJourneyScaffold(in: defaultRegion))
+            presentJourneyEditor(JourneyEditorLaunch(
+                train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
         }
     }
 
@@ -2706,7 +2860,10 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             onSelectRide: { selectFromMap($0) },
-            onSelectStation: { sheet = .station($0) },
+            onSelectStation: { card in
+                guard journeyEditor == nil else { return }
+                sheet = .station(card)
+            },
             // Which countries the reader is actually looking at, from the rect
             // the map rebuilt for. Only while the network is on: with it off
             // there are no rails and no station dots to draw, so a pan across

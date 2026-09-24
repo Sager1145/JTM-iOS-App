@@ -110,7 +110,8 @@ enum TransferGuideOCR {
         var plans: [(width: Int, height: Int, scale: Double, tiles: [Int])] = []
         for (index, page) in pages.enumerated() {
             guard let size = imageSize(page) else { throw Failure.undecodable }
-            let pixels = size.width * size.height
+            let (pixels, overflow) = size.width.multipliedReportingOverflow(by: size.height)
+            guard !overflow else { throw Failure.tooLarge(megapixels: Int.max) }
             if pixels > pixelLimit { throw Failure.tooLarge(megapixels: pixels / 1_000_000) }
             // One document width, so a route captured on two devices — or the
             // same device before and after a text-size change — still lines
@@ -132,6 +133,7 @@ enum TransferGuideOCR {
         var done = 0
         onProgress(0, totalTiles)
         for (index, plan) in plans.enumerated() {
+            try Task.checkCancellation()
             guard let image = decode(pages[index]) else { throw Failure.undecodable }
             let scale = recognitionScale(width: plan.width)
             let tileSourceHeight = Int((tileHeight / scale).rounded())
@@ -139,15 +141,16 @@ enum TransferGuideOCR {
             for origin in plan.tiles {
                 try Task.checkCancellation()
                 let height = min(tileSourceHeight, plan.height - origin)
-                if let tile = render(image, sourceY: origin, sourceHeight: height, scale: scale)
-                {
+                guard let tile = render(image, sourceY: origin, sourceHeight: height, scale: scale)
+                else { throw Failure.undecodable }
+                do {
                     let edges = Edges(
                         cutAtTop: origin > 0,
                         cutAtBottom: origin + height < plan.height)
-                    for found in recognize(tile.image, edges: edges) {
+                    for found in try recognize(tile.image, edges: edges) {
                         collected.add(
                             found.mapped(
-                                tileScale: scale, sourceY: Double(origin),
+                                tileScale: Double(tile.image.width) / Double(image.width), sourceY: Double(origin),
                                 documentScale: plan.scale, documentY: 0),
                             clipped: found.clipped)
                     }
@@ -269,7 +272,8 @@ enum TransferGuideOCR {
             let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil)
                 as? [CFString: Any],
             let width = properties[kCGImagePropertyPixelWidth] as? Int,
-            let height = properties[kCGImagePropertyPixelHeight] as? Int
+            let height = properties[kCGImagePropertyPixelHeight] as? Int,
+            width > 0, height > 0
         else { return nil }
         return (width, height)
     }
@@ -367,7 +371,7 @@ enum TransferGuideOCR {
         var cutAtBottom: Bool
     }
 
-    private static func recognize(_ image: CGImage, edges: Edges) -> [Found] {
+    private static func recognize(_ image: CGImage, edges: Edges) throws -> [Found] {
         let interval = RailSignpost.jobs.begin("ocr.recognize")
         defer { RailSignpost.jobs.end("ocr.recognize", interval) }
         let request = VNRecognizeTextRequest()
@@ -380,9 +384,9 @@ enum TransferGuideOCR {
         request.automaticallyDetectsLanguage = false
 
         let handler = VNImageRequestHandler(cgImage: image, options: [:])
-        guard (try? handler.perform([request])) != nil,
-            let results = request.results
-        else { return [] }
+        try handler.perform([request])
+        try Task.checkCancellation()
+        let results = request.results ?? []
 
         let width = Double(image.width)
         let height = Double(image.height)

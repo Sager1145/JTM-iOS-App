@@ -57,6 +57,8 @@ final class TransferGuideImport {
         var included: [Bool]
         /// The records as they stand, rebuilt whenever any of the above moves.
         var build: TransferGuide.BuildResult
+        /// AI additions are keyed by leg so toggling inclusion cannot move them to another train.
+        var completions: [Int: Train] = [:]
         /// Which record each leg became. Kept rather than re-derived from the
         /// endpoints: an out-and-back journey has two legs with the same two
         /// station names, and matching by name would hand the second one the
@@ -71,9 +73,11 @@ final class TransferGuideImport {
     /// library have none, so this can be shorter than the page count.
     private(set) var pageNames: [String] = []
     private(set) var draft: Draft?
+    private(set) var isCommitting = false
     private var pages: [Data] = []
     private var index = StationIndex([])
     private var task: Task<Void, Never>?
+    private var readingID = UUID()
 
     var isRunning: Bool {
         if case .reading = phase { return true }
@@ -91,6 +95,9 @@ final class TransferGuideImport {
         lines: [RailNetworkStore.DrawnLine], existingIDs: Set<String>
     ) {
         task?.cancel()
+        let readingID = UUID()
+        self.readingID = readingID
+        draft = nil
         self.pages = pages
         pageNames = names
         index = Self.index(stations: stations, lines: lines)
@@ -104,21 +111,21 @@ final class TransferGuideImport {
             do {
                 let reading = try await TransferGuideOCR.read(pages) { done, total in
                     Task { @MainActor in
-                        guard self.isRunning else { return }
+                        guard self.readingID == readingID, self.isRunning else { return }
                         self.phase = .reading(done: done, total: total)
                     }
                 }
                 try Task.checkCancellation()
-                await MainActor.run { self.parsed(reading, existingIDs: existingIDs) }
+                guard self.readingID == readingID else { return }
+                self.parsed(reading, existingIDs: existingIDs)
             } catch is CancellationError {
                 return
             } catch {
+                guard !Task.isCancelled, self.readingID == readingID else { return }
                 let failure = error as? TransferGuideOCR.Failure
-                await MainActor.run {
-                    self.phase = .failed(
-                        key: Self.key(for: failure),
-                        detail: failure == nil ? error.localizedDescription : Self.detail(failure))
-                }
+                self.phase = .failed(
+                    key: Self.key(for: failure),
+                    detail: failure == nil ? error.localizedDescription : Self.detail(failure))
             }
         }
     }
@@ -139,6 +146,7 @@ final class TransferGuideImport {
     }
 
     func cancel() {
+        readingID = UUID()
         task?.cancel()
         task = nil
     }
@@ -186,23 +194,34 @@ final class TransferGuideImport {
     // MARK: - the reader's changes
 
     func setDate(_ date: Date, existingIDs: Set<String>) {
-        guard var draft else { return }
+        guard !isCommitting, var draft else { return }
         draft.date = date
+        draft.completions = [:]
         rebuild(&draft, existingIDs: existingIDs)
         self.draft = draft
     }
 
     func setRidden(_ ridden: Bool, existingIDs: Set<String>) {
-        guard var draft else { return }
+        guard !isCommitting, var draft else { return }
         draft.ridden = ridden
         rebuild(&draft, existingIDs: existingIDs)
         self.draft = draft
     }
 
     func setIncluded(_ included: Bool, at position: Int, existingIDs: Set<String>) {
-        guard var draft, draft.included.indices.contains(position) else { return }
+        guard !isCommitting, var draft, draft.included.indices.contains(position) else { return }
         draft.included[position] = included
         rebuild(&draft, existingIDs: existingIDs)
+        self.draft = draft
+    }
+
+    func applyCompletion(_ trains: [Train]) {
+        guard !isCommitting, var draft, case .read = phase else { return }
+        for (leg, index) in draft.recordByLeg where trains.indices.contains(index) {
+            guard trains[index].id == draft.build.trains[index].id else { continue }
+            draft.completions[leg] = trains[index]
+            draft.build.trains[index] = trains[index]
+        }
         self.draft = draft
     }
 
@@ -232,6 +251,46 @@ final class TransferGuideImport {
                 ridden: draft.ridden,
                 existingIDs: existingIDs),
             stations: index)
+        func isEmpty(_ value: String?) -> Bool {
+            (value ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+        for (leg, recordIndex) in recordByLeg {
+            guard let completed = draft.completions[leg],
+                  draft.build.trains.indices.contains(recordIndex) else { continue }
+            var train = draft.build.trains[recordIndex]
+            if isEmpty(train.number) { train.number = completed.number }
+            if isEmpty(train.numberEn) { train.numberEn = completed.numberEn }
+            if isEmpty(train.trainType) { train.trainType = completed.trainType }
+            if isEmpty(train.vehicleType) { train.vehicleType = completed.vehicleType }
+            if isEmpty(train.company) { train.company = completed.company }
+            if isEmpty(train.direction) { train.direction = completed.direction }
+
+            let completedLines = (completed.routePolicy?.preferredLineNames ?? [])
+                .filter { isEmpty($0) == false }
+            if (train.routePolicy?.preferredLineNames?.isEmpty ?? true), completedLines.isEmpty == false {
+                if train.routePolicy != nil {
+                    train.routePolicy?.preferredLineNames = completedLines
+                } else {
+                    var policy = TrainValidation.canonicalRoutePolicy(nil)
+                    policy.preferredLineNames = completedLines
+                    train.routePolicy = policy
+                }
+            }
+
+            for stopIndex in train.stops.indices where completed.stops.indices.contains(stopIndex) {
+                guard train.stops[stopIndex].name == completed.stops[stopIndex].name else { continue }
+                if isEmpty(train.stops[stopIndex].arrival) {
+                    train.stops[stopIndex].arrival = completed.stops[stopIndex].arrival
+                }
+                if isEmpty(train.stops[stopIndex].departure) {
+                    train.stops[stopIndex].departure = completed.stops[stopIndex].departure
+                }
+                if train.stops[stopIndex].platformNumber == nil {
+                    train.stops[stopIndex].platformNumber = completed.stops[stopIndex].platformNumber
+                }
+            }
+            draft.build.trains[recordIndex] = train
+        }
     }
 
     // MARK: - committing
@@ -243,7 +302,9 @@ final class TransferGuideImport {
     /// was asked for.
     @discardableResult
     func commit(into itineraries: ItineraryStore, library: RideLibrary) async -> [String] {
-        guard let draft else { return [] }
+        guard case .read = phase, !isCommitting, let draft else { return [] }
+        isCommitting = true
+        defer { isCommitting = false }
         var added: [String] = []
         for train in draft.build.trains {
             if let id = itineraries.add(train) { added.append(id) }

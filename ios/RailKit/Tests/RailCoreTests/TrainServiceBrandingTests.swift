@@ -198,6 +198,8 @@ struct TrainServiceBrandingTests {
         ("にちりんシーガイア5号", "nichirin-seagaia"),
         ("Spacia Nikko 1", "spacia-nikko"),
         ("TWILIGHT EXPRESS 瑞風", "twilight-express-mizukaze"),
+        ("スーパーやくも3号", "yakumo"),
+        ("スーパーいなほ1号", "inaho"),
     ])
     func jrLimitedExpressNamesResolve(caption: String, expectedID: String) {
         #expect(TrainServiceBranding.service(for: Self.train(number: caption))?.id == expectedID)
@@ -280,8 +282,17 @@ struct TrainServiceBrandingTests {
         "東武スカイツリーライン 普通",
         "京成本線 快速",
         "南海本線 急行",
+        "ゆりかもめ",
     ])
     func privateRailwayNamesDoNotFalseMatch(caption: String) {
         #expect(TrainServiceBranding.service(for: Self.train(number: caption)) == nil)
+    }
+
+    @Test("a dot-joined pair of limited express names resolves to one of them")
+    func dotJoinedServiceNamesResolveToOneOfThem() {
+        let train = Self.train(number: "かもめ・みどり5号")
+        let service = TrainServiceBranding.service(for: train)
+        #expect(service != nil)
+        #expect(TrainServiceBranding.isLimitedExpress(train) == true)
     }
 }

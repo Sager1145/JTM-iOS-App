@@ -120,7 +120,10 @@ public struct StationIndex: Sendable {
         byKey[TransferGuide.Text.matchKey(name)] ?? []
     }
 
-    public func place(code: String) -> Place? { byCode[code] }
+    /// A legacy HK/MO code resolves through ``StationCodeAliases`` (ADR 0010).
+    public func place(code: String) -> Place? {
+        byCode[code] ?? byCode[StationCodeAliases.canonical(code)]
+    }
 
     // MARK: - choosing a station
 

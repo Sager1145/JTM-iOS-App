@@ -83,7 +83,7 @@ enum MergedStore {
     /// This half answers for Japan and for any ride that already carries a
     /// `region`. It cannot answer for the other four, and it does not pretend
     /// to: outside Japan a store's codes are the OPERATOR's own spelling —
-    /// `TYMC-A13`, `AEL-MTR-HOK`, `MLM-TAIPA-MLM-BARRA` — which names no
+    /// `TYMC-A13`, `MTR-HOK`, `MLM-BARRA` — which names no
     /// region. Use ``regionTagged(_:)`` for anything arriving from outside
     /// this app.
     static func tagged(_ store: TrainStore) -> TrainStore {

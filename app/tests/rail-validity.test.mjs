@@ -205,3 +205,17 @@ test("buildTrainRouteSolveContext keys on ride date and history revision", () =>
   const undated = build(train(null));
   assert.ok(undated.cacheKey.endsWith("|date:none|history:none"), undated.cacheKey);
 });
+
+test("endpoint station candidates are filtered by ride date", () => {
+  const filter = load().run("filterStationCandidatesByRideDate");
+  const station = (name, validTo) => ({
+    type: "Feature",
+    properties: { station_name: name, ...(validTo ? { valid_to: validTo } : {}) },
+    geometry: { type: "Point", coordinates: [141.6, 43.8] },
+  });
+  const features = [station("増毛", "2016-12-05"), station("留萌", null)];
+  const names = (date) => filter(features, date).map((f) => f.properties.station_name);
+  assert.deepEqual(names("2016-12-04"), ["増毛", "留萌"]);
+  assert.deepEqual(names("2016-12-05"), ["留萌"]);
+  assert.deepEqual(names(null), ["留萌"]);
+});

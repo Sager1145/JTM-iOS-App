@@ -31,8 +31,8 @@
       "solved": [
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-BARRA",
-            "to_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
+            "from_n02_station_code": "MLM-BARRA",
+            "to_n02_station_code": "MLM-OCEAN",
             "line_names": [
               "氹仔線"
             ],
@@ -56,8 +56,8 @@
               "segment_index": 0,
               "from": "媽閣",
               "to": "海洋",
-              "from_n02_station_code": "MLM-TAIPA-MLM-BARRA",
-              "to_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
+              "from_n02_station_code": "MLM-BARRA",
+              "to_n02_station_code": "MLM-OCEAN",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -79,7 +79,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 20,
               "raw_path_coordinate_count": 19,
               "snap_distance_m": {
@@ -183,8 +183,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
-            "to_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
+            "from_n02_station_code": "MLM-OCEAN",
+            "to_n02_station_code": "MLM-JOCKEY",
             "line_names": [
               "氹仔線"
             ],
@@ -211,8 +211,8 @@
               "segment_index": 1,
               "from": "海洋",
               "to": "馬會",
-              "from_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
-              "to_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
+              "from_n02_station_code": "MLM-OCEAN",
+              "to_n02_station_code": "MLM-JOCKEY",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -234,7 +234,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 14,
               "raw_path_coordinate_count": 12,
               "snap_distance_m": {
@@ -314,8 +314,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
-            "to_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
+            "from_n02_station_code": "MLM-JOCKEY",
+            "to_n02_station_code": "MLM-STADIUM",
             "line_names": [
               "氹仔線"
             ],
@@ -342,8 +342,8 @@
               "segment_index": 2,
               "from": "馬會",
               "to": "運動場",
-              "from_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
-              "to_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
+              "from_n02_station_code": "MLM-JOCKEY",
+              "to_n02_station_code": "MLM-STADIUM",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -363,7 +363,7 @@
               "solve_attempt_index": 0,
               "require_preferred_institution": true,
               "used_institution_type_codes": [],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 3,
               "raw_path_coordinate_count": 2,
               "snap_distance_m": {
@@ -399,8 +399,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
-            "to_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
+            "from_n02_station_code": "MLM-STADIUM",
+            "to_n02_station_code": "MLM-PAIKOK",
             "line_names": [
               "氹仔線"
             ],
@@ -427,8 +427,8 @@
               "segment_index": 3,
               "from": "運動場",
               "to": "排角",
-              "from_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
-              "to_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
+              "from_n02_station_code": "MLM-STADIUM",
+              "to_n02_station_code": "MLM-PAIKOK",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -450,7 +450,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 9,
               "raw_path_coordinate_count": 7,
               "snap_distance_m": {
@@ -510,8 +510,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
-            "to_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
+            "from_n02_station_code": "MLM-PAIKOK",
+            "to_n02_station_code": "MLM-COTAIW",
             "line_names": [
               "氹仔線"
             ],
@@ -538,8 +538,8 @@
               "segment_index": 4,
               "from": "排角",
               "to": "路氹西",
-              "from_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
-              "to_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
+              "from_n02_station_code": "MLM-PAIKOK",
+              "to_n02_station_code": "MLM-COTAIW",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -561,7 +561,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 11,
               "raw_path_coordinate_count": 9,
               "snap_distance_m": {
@@ -629,8 +629,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
-            "to_n02_station_code": "MLM-TAIPA-MLM-LOTUS",
+            "from_n02_station_code": "MLM-COTAIW",
+            "to_n02_station_code": "MLM-LOTUS",
             "line_names": [
               "氹仔線"
             ],
@@ -657,8 +657,8 @@
               "segment_index": 5,
               "from": "路氹西",
               "to": "蓮花",
-              "from_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
-              "to_n02_station_code": "MLM-TAIPA-MLM-LOTUS",
+              "from_n02_station_code": "MLM-COTAIW",
+              "to_n02_station_code": "MLM-LOTUS",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -680,7 +680,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 11,
               "raw_path_coordinate_count": 9,
               "snap_distance_m": {
@@ -750,8 +750,8 @@
       "officialSolved": [
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-BARRA",
-            "to_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
+            "from_n02_station_code": "MLM-BARRA",
+            "to_n02_station_code": "MLM-OCEAN",
             "line_names": [
               "氹仔線"
             ],
@@ -775,8 +775,8 @@
               "segment_index": 0,
               "from": "媽閣",
               "to": "海洋",
-              "from_n02_station_code": "MLM-TAIPA-MLM-BARRA",
-              "to_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
+              "from_n02_station_code": "MLM-BARRA",
+              "to_n02_station_code": "MLM-OCEAN",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -804,7 +804,7 @@
               "used_operator_names": {
                 "澳門輕軌": 21
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 22,
               "raw_path_coordinate_count": 22,
               "snap_distance_m": {
@@ -917,8 +917,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
-            "to_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
+            "from_n02_station_code": "MLM-OCEAN",
+            "to_n02_station_code": "MLM-JOCKEY",
             "line_names": [
               "氹仔線"
             ],
@@ -945,8 +945,8 @@
               "segment_index": 1,
               "from": "海洋",
               "to": "馬會",
-              "from_n02_station_code": "MLM-TAIPA-MLM-OCEAN",
-              "to_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
+              "from_n02_station_code": "MLM-OCEAN",
+              "to_n02_station_code": "MLM-JOCKEY",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -974,7 +974,7 @@
               "used_operator_names": {
                 "澳門輕軌": 14
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 15,
               "raw_path_coordinate_count": 15,
               "snap_distance_m": {
@@ -1059,8 +1059,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
-            "to_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
+            "from_n02_station_code": "MLM-JOCKEY",
+            "to_n02_station_code": "MLM-STADIUM",
             "line_names": [
               "氹仔線"
             ],
@@ -1087,8 +1087,8 @@
               "segment_index": 2,
               "from": "馬會",
               "to": "運動場",
-              "from_n02_station_code": "MLM-TAIPA-MLM-JOCKEY",
-              "to_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
+              "from_n02_station_code": "MLM-JOCKEY",
+              "to_n02_station_code": "MLM-STADIUM",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -1116,7 +1116,7 @@
               "used_operator_names": {
                 "澳門輕軌": 14
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 15,
               "raw_path_coordinate_count": 15,
               "snap_distance_m": {
@@ -1201,8 +1201,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
-            "to_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
+            "from_n02_station_code": "MLM-STADIUM",
+            "to_n02_station_code": "MLM-PAIKOK",
             "line_names": [
               "氹仔線"
             ],
@@ -1229,8 +1229,8 @@
               "segment_index": 3,
               "from": "運動場",
               "to": "排角",
-              "from_n02_station_code": "MLM-TAIPA-MLM-STADIUM",
-              "to_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
+              "from_n02_station_code": "MLM-STADIUM",
+              "to_n02_station_code": "MLM-PAIKOK",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -1258,7 +1258,7 @@
               "used_operator_names": {
                 "澳門輕軌": 9
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 10,
               "raw_path_coordinate_count": 10,
               "snap_distance_m": {
@@ -1323,8 +1323,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
-            "to_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
+            "from_n02_station_code": "MLM-PAIKOK",
+            "to_n02_station_code": "MLM-COTAIW",
             "line_names": [
               "氹仔線"
             ],
@@ -1351,8 +1351,8 @@
               "segment_index": 4,
               "from": "排角",
               "to": "路氹西",
-              "from_n02_station_code": "MLM-TAIPA-MLM-PAIKOK",
-              "to_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
+              "from_n02_station_code": "MLM-PAIKOK",
+              "to_n02_station_code": "MLM-COTAIW",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -1380,7 +1380,7 @@
               "used_operator_names": {
                 "澳門輕軌": 9
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 10,
               "raw_path_coordinate_count": 10,
               "snap_distance_m": {
@@ -1445,8 +1445,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
-            "to_n02_station_code": "MLM-TAIPA-MLM-LOTUS",
+            "from_n02_station_code": "MLM-COTAIW",
+            "to_n02_station_code": "MLM-LOTUS",
             "line_names": [
               "氹仔線"
             ],
@@ -1473,8 +1473,8 @@
               "segment_index": 5,
               "from": "路氹西",
               "to": "蓮花",
-              "from_n02_station_code": "MLM-TAIPA-MLM-COTAIW",
-              "to_n02_station_code": "MLM-TAIPA-MLM-LOTUS",
+              "from_n02_station_code": "MLM-COTAIW",
+              "to_n02_station_code": "MLM-LOTUS",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -1502,7 +1502,7 @@
               "used_operator_names": {
                 "澳門輕軌": 9
               },
-              "route_template_key": "284xdbs1ygu",
+              "route_template_key": "dbrrvp09n2",
               "path_coordinate_count": 10,
               "raw_path_coordinate_count": 10,
               "snap_distance_m": {
@@ -1595,8 +1595,8 @@
       "solved": [
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-ADM",
-            "to_n02_station_code": "EAL-LOW-MTR-EXC",
+            "from_n02_station_code": "MTR-ADM",
+            "to_n02_station_code": "MTR-EXC",
             "line_names": [
               "東鐵綫"
             ],
@@ -1620,8 +1620,8 @@
               "segment_index": 0,
               "from": "金鐘",
               "to": "會展",
-              "from_n02_station_code": "EAL-LOW-MTR-ADM",
-              "to_n02_station_code": "EAL-LOW-MTR-EXC",
+              "from_n02_station_code": "MTR-ADM",
+              "to_n02_station_code": "MTR-EXC",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -1643,7 +1643,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 13,
               "raw_path_coordinate_count": 12,
               "snap_distance_m": {
@@ -1719,8 +1719,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-EXC",
-            "to_n02_station_code": "EAL-LOW-MTR-HUH",
+            "from_n02_station_code": "MTR-EXC",
+            "to_n02_station_code": "MTR-HUH",
             "line_names": [
               "東鐵綫"
             ],
@@ -1747,8 +1747,8 @@
               "segment_index": 1,
               "from": "會展",
               "to": "紅磡",
-              "from_n02_station_code": "EAL-LOW-MTR-EXC",
-              "to_n02_station_code": "EAL-LOW-MTR-HUH",
+              "from_n02_station_code": "MTR-EXC",
+              "to_n02_station_code": "MTR-HUH",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -1770,20 +1770,20 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 23,
-              "raw_path_coordinate_count": 22,
+              "raw_path_coordinate_count": 21,
               "snap_distance_m": {
                 "from": 0,
-                "to": 0
+                "to": 23.16
               },
               "endpoint_display_gap_m": {
                 "from": 160.82,
-                "to": 0.51
+                "to": 124.31
               },
-              "physical_length_m": 3095.87,
-              "raw_physical_length_m": 2935.11,
-              "cost": 2935.11
+              "physical_length_m": 3092.91,
+              "raw_physical_length_m": 2807.84,
+              "cost": 2900.47
             },
             "geometry": {
               "type": "LineString",
@@ -1877,8 +1877,8 @@
                   22.3013
                 ],
                 [
-                  114.18213,
-                  22.30244
+                  114.1820897276158,
+                  22.302416121641336
                 ]
               ]
             }
@@ -1886,8 +1886,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-HUH",
-            "to_n02_station_code": "EAL-LOW-MTR-MKK",
+            "from_n02_station_code": "MTR-HUH",
+            "to_n02_station_code": "MTR-MKK",
             "line_names": [
               "東鐵綫"
             ],
@@ -1898,8 +1898,8 @@
             "to": "旺角東"
           },
           "continuityAnchor": [
-            114.18213,
-            22.30244
+            114.1820897276158,
+            22.302416121641336
           ],
           "feature": {
             "type": "Feature",
@@ -1914,8 +1914,8 @@
               "segment_index": 2,
               "from": "紅磡",
               "to": "旺角東",
-              "from_n02_station_code": "EAL-LOW-MTR-HUH",
-              "to_n02_station_code": "EAL-LOW-MTR-MKK",
+              "from_n02_station_code": "MTR-HUH",
+              "to_n02_station_code": "MTR-MKK",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -1937,7 +1937,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 23,
               "raw_path_coordinate_count": 21,
               "snap_distance_m": {
@@ -1948,7 +1948,7 @@
                 "from": 191.35,
                 "to": 0.54
               },
-              "physical_length_m": 2494.33,
+              "physical_length_m": 2498.37,
               "raw_physical_length_m": 2302.47,
               "cost": 2347.14
             },
@@ -1956,8 +1956,8 @@
               "type": "LineString",
               "coordinates": [
                 [
-                  114.18213,
-                  22.30244
+                  114.1820897276158,
+                  22.302416121641336
                 ],
                 [
                   114.18212859532751,
@@ -2053,8 +2053,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-MKK",
-            "to_n02_station_code": "EAL-LOW-MTR-KOT",
+            "from_n02_station_code": "MTR-MKK",
+            "to_n02_station_code": "MTR-KOT",
             "line_names": [
               "東鐵綫"
             ],
@@ -2081,8 +2081,8 @@
               "segment_index": 3,
               "from": "旺角東",
               "to": "九龍塘",
-              "from_n02_station_code": "EAL-LOW-MTR-MKK",
-              "to_n02_station_code": "EAL-LOW-MTR-KOT",
+              "from_n02_station_code": "MTR-MKK",
+              "to_n02_station_code": "MTR-KOT",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -2104,7 +2104,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 17,
               "raw_path_coordinate_count": 15,
               "snap_distance_m": {
@@ -2196,8 +2196,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-KOT",
-            "to_n02_station_code": "EAL-LOW-MTR-TAW",
+            "from_n02_station_code": "MTR-KOT",
+            "to_n02_station_code": "MTR-TAW",
             "line_names": [
               "東鐵綫"
             ],
@@ -2224,8 +2224,8 @@
               "segment_index": 4,
               "from": "九龍塘",
               "to": "大圍",
-              "from_n02_station_code": "EAL-LOW-MTR-KOT",
-              "to_n02_station_code": "EAL-LOW-MTR-TAW",
+              "from_n02_station_code": "MTR-KOT",
+              "to_n02_station_code": "MTR-TAW",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -2247,7 +2247,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 22,
               "raw_path_coordinate_count": 20,
               "snap_distance_m": {
@@ -2359,8 +2359,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-TAW",
-            "to_n02_station_code": "EAL-LOW-MTR-SHT",
+            "from_n02_station_code": "MTR-TAW",
+            "to_n02_station_code": "MTR-SHT",
             "line_names": [
               "東鐵綫"
             ],
@@ -2387,8 +2387,8 @@
               "segment_index": 5,
               "from": "大圍",
               "to": "沙田",
-              "from_n02_station_code": "EAL-LOW-MTR-TAW",
-              "to_n02_station_code": "EAL-LOW-MTR-SHT",
+              "from_n02_station_code": "MTR-TAW",
+              "to_n02_station_code": "MTR-SHT",
               "allowed_institution_type_codes": [
                 "4"
               ],
@@ -2410,7 +2410,7 @@
               "used_institution_type_codes": [
                 "4"
               ],
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 11,
               "raw_path_coordinate_count": 11,
               "snap_distance_m": {
@@ -2480,8 +2480,8 @@
       "officialSolved": [
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-ADM",
-            "to_n02_station_code": "EAL-LOW-MTR-EXC",
+            "from_n02_station_code": "MTR-ADM",
+            "to_n02_station_code": "MTR-EXC",
             "line_names": [
               "東鐵綫"
             ],
@@ -2505,8 +2505,8 @@
               "segment_index": 0,
               "from": "金鐘",
               "to": "會展",
-              "from_n02_station_code": "EAL-LOW-MTR-ADM",
-              "to_n02_station_code": "EAL-LOW-MTR-EXC",
+              "from_n02_station_code": "MTR-ADM",
+              "to_n02_station_code": "MTR-EXC",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -2534,7 +2534,7 @@
               "used_operator_names": {
                 "MTR": 12
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 13,
               "raw_path_coordinate_count": 13,
               "snap_distance_m": {
@@ -2611,8 +2611,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-EXC",
-            "to_n02_station_code": "EAL-LOW-MTR-HUH",
+            "from_n02_station_code": "MTR-EXC",
+            "to_n02_station_code": "MTR-HUH",
             "line_names": [
               "東鐵綫"
             ],
@@ -2639,8 +2639,8 @@
               "segment_index": 1,
               "from": "會展",
               "to": "紅磡",
-              "from_n02_station_code": "EAL-LOW-MTR-EXC",
-              "to_n02_station_code": "EAL-LOW-MTR-HUH",
+              "from_n02_station_code": "MTR-EXC",
+              "to_n02_station_code": "MTR-HUH",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -2668,7 +2668,7 @@
               "used_operator_names": {
                 "MTR": 22
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 23,
               "raw_path_coordinate_count": 23,
               "snap_distance_m": {
@@ -2785,8 +2785,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-HUH",
-            "to_n02_station_code": "EAL-LOW-MTR-MKK",
+            "from_n02_station_code": "MTR-HUH",
+            "to_n02_station_code": "MTR-MKK",
             "line_names": [
               "東鐵綫"
             ],
@@ -2797,8 +2797,8 @@
             "to": "旺角東"
           },
           "continuityAnchor": [
-            114.18213,
-            22.30244
+            114.1820897276158,
+            22.302416121641336
           ],
           "feature": {
             "type": "Feature",
@@ -2813,8 +2813,8 @@
               "segment_index": 2,
               "from": "紅磡",
               "to": "旺角東",
-              "from_n02_station_code": "EAL-LOW-MTR-HUH",
-              "to_n02_station_code": "EAL-LOW-MTR-MKK",
+              "from_n02_station_code": "MTR-HUH",
+              "to_n02_station_code": "MTR-MKK",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -2842,7 +2842,7 @@
               "used_operator_names": {
                 "MTR": 21
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 22,
               "raw_path_coordinate_count": 22,
               "snap_distance_m": {
@@ -2955,8 +2955,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-MKK",
-            "to_n02_station_code": "EAL-LOW-MTR-KOT",
+            "from_n02_station_code": "MTR-MKK",
+            "to_n02_station_code": "MTR-KOT",
             "line_names": [
               "東鐵綫"
             ],
@@ -2983,8 +2983,8 @@
               "segment_index": 3,
               "from": "旺角東",
               "to": "九龍塘",
-              "from_n02_station_code": "EAL-LOW-MTR-MKK",
-              "to_n02_station_code": "EAL-LOW-MTR-KOT",
+              "from_n02_station_code": "MTR-MKK",
+              "to_n02_station_code": "MTR-KOT",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -3012,7 +3012,7 @@
               "used_operator_names": {
                 "MTR": 17
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 18,
               "raw_path_coordinate_count": 18,
               "snap_distance_m": {
@@ -3109,8 +3109,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-KOT",
-            "to_n02_station_code": "EAL-LOW-MTR-TAW",
+            "from_n02_station_code": "MTR-KOT",
+            "to_n02_station_code": "MTR-TAW",
             "line_names": [
               "東鐵綫"
             ],
@@ -3137,8 +3137,8 @@
               "segment_index": 4,
               "from": "九龍塘",
               "to": "大圍",
-              "from_n02_station_code": "EAL-LOW-MTR-KOT",
-              "to_n02_station_code": "EAL-LOW-MTR-TAW",
+              "from_n02_station_code": "MTR-KOT",
+              "to_n02_station_code": "MTR-TAW",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -3166,7 +3166,7 @@
               "used_operator_names": {
                 "MTR": 20
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 21,
               "raw_path_coordinate_count": 21,
               "snap_distance_m": {
@@ -3275,8 +3275,8 @@
         },
         {
           "section": {
-            "from_n02_station_code": "EAL-LOW-MTR-TAW",
-            "to_n02_station_code": "EAL-LOW-MTR-SHT",
+            "from_n02_station_code": "MTR-TAW",
+            "to_n02_station_code": "MTR-SHT",
             "line_names": [
               "東鐵綫"
             ],
@@ -3303,8 +3303,8 @@
               "segment_index": 5,
               "from": "大圍",
               "to": "沙田",
-              "from_n02_station_code": "EAL-LOW-MTR-TAW",
-              "to_n02_station_code": "EAL-LOW-MTR-SHT",
+              "from_n02_station_code": "MTR-TAW",
+              "to_n02_station_code": "MTR-SHT",
               "station_code_system": "TDX",
               "allowed_institution_type_codes": [
                 "4"
@@ -3332,7 +3332,7 @@
               "used_operator_names": {
                 "MTR": 10
               },
-              "route_template_key": "r634rr9bfa",
+              "route_template_key": "8zmjhnkag1",
               "path_coordinate_count": 11,
               "raw_path_coordinate_count": 11,
               "snap_distance_m": {

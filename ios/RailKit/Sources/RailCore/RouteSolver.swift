@@ -16,6 +16,23 @@ public enum RouteSolver {
     public static let nonPreferredStationSnapPenalty = 20_000.0
     public static let nonPreferredOperatorStationSnapPenalty = 12_000.0
     public static let nonPreferredLineStationSnapPenalty = 15_000.0
+    /// Endpoint plausibility guard. When a section names a station without an
+    /// N02 code, every same-name station in the country is an endpoint
+    /// candidate. A strict attempt can then drop the nearby station's graph
+    /// node on institution grounds and reach a same-name station in another
+    /// region instead (糸魚川→泊 snapping to 泊 on 山陰線); the detour guard
+    /// cannot see that because the straight line is just as long as the path.
+    /// A result whose endpoint station is more than
+    /// `endpointAmbiguityDistanceFactor` times as far as another same-name
+    /// candidate is rejected so a laxer attempt (or the final fallback) can
+    /// find the near one. Only applied beyond
+    /// `endpointAmbiguityMinStraightMeters`, only to endpoints the section
+    /// names without an N02 code, never to a from-station pinned by the
+    /// continuity anchor, and a rejected result is still returned as a last
+    /// resort when no attempt (including the fallback) finds anything else,
+    /// so a section that solved before this guard existed never becomes nil.
+    public static let endpointAmbiguityMinStraightMeters = 20_000.0
+    public static let endpointAmbiguityDistanceFactor = 2.0
 
     public struct TrainPolicy: Sendable, Equatable {
         public var institutionFilterMode: String
@@ -243,6 +260,20 @@ public enum RouteSolver {
     /// platform/line; a long-distance section may need a nearby same-name
     /// platform on the section's actual line, so that candidate is added while
     /// the exact-code station remains the fallback.
+    /// ADR 0011: drop endpoint station candidates not valid on the ride date,
+    /// with the same half-open rule as rail edges (`app-route-graph.js`'s
+    /// `filterStationCandidatesByRideDate`). Order is preserved.
+    public static func filterStationCandidatesByRideDate(
+        _ candidates: [Int], in index: Stations.Index, rideDate: String?
+    ) -> [Int] {
+        candidates.filter { i in
+            let feature = index.features[i]
+            return RouteGraph.RailValidity.isValid(
+                validFrom: Stations.stationValidFrom(feature),
+                validTo: Stations.stationValidTo(feature), on: rideDate)
+        }
+    }
+
     public static func resolveRouteEndpointStationCandidates(
         _ endpoint: Stations.Query,
         in index: Stations.Index,
@@ -907,12 +938,16 @@ public enum RouteSolver {
             name: section.from, n02StationCode: section.fromN02StationCode)
         let toStop = Stations.Stop(
             name: section.to, n02StationCode: section.toN02StationCode)
-        let fromStations = resolveRouteEndpointStationCandidates(
-            .stop(fromStop), in: stations, allowedCodes: allowedCodes,
-            sectionLineNames: lineNames)
-        let toStations = resolveRouteEndpointStationCandidates(
-            .stop(toStop), in: stations, allowedCodes: allowedCodes,
-            sectionLineNames: lineNames)
+        let fromStations = filterStationCandidatesByRideDate(
+            resolveRouteEndpointStationCandidates(
+                .stop(fromStop), in: stations, allowedCodes: allowedCodes,
+                sectionLineNames: lineNames),
+            in: stations, rideDate: train.rideDate)
+        let toStations = filterStationCandidatesByRideDate(
+            resolveRouteEndpointStationCandidates(
+                .stop(toStop), in: stations, allowedCodes: allowedCodes,
+                sectionLineNames: lineNames),
+            in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
         let baseHints = buildSegmentRouteHints(
@@ -932,23 +967,71 @@ public enum RouteSolver {
             var hints: SegmentHints
             var attemptIndex: Int
         }
-        var best: Best?
-        for (attemptIndex, hints) in buildSegmentRouteSolveAttempts(baseHints).enumerated() {
+        func stationCoordinates(_ indices: [Int]) -> [Int: Coordinate] {
+            var result: [Int: Coordinate] = [:]
+            for index in indices {
+                if let coord = coordinate(Stations.displayCoordinate(stations.features[index])) {
+                    result[index] = coord
+                }
+            }
+            return result
+        }
+        let fromStationCoordinates = stationCoordinates(fromStations)
+        let toStationCoordinates = stationCoordinates(toStations)
+        func nearestAlternative(
+            _ candidates: [Int: Coordinate], excluding: Int, from anchor: Coordinate
+        ) -> Double? {
+            var nearest: Double?
+            for (index, coord) in candidates where index != excluding {
+                let distance = Geometry.distanceMeters(coord, anchor)
+                if nearest == nil || distance < nearest! { nearest = distance }
+            }
+            return nearest
+        }
+        let fromIsNameOnly = (section.fromN02StationCode ?? "").isEmpty
+        let toIsNameOnly = (section.toN02StationCode ?? "").isEmpty
+        /// See `endpointAmbiguityDistanceFactor`.
+        func endpointIsImplausible(
+            fromStationIndex: Int, toStationIndex: Int, fromAnchored: Bool
+        ) -> Bool {
+            guard fromIsNameOnly || toIsNameOnly,
+                  let fromCoord = fromStationCoordinates[fromStationIndex],
+                  let toCoord = toStationCoordinates[toStationIndex] else { return false }
+            let straight = Geometry.distanceMeters(fromCoord, toCoord)
+            guard straight > endpointAmbiguityMinStraightMeters else { return false }
+            if toIsNameOnly, let alternative = nearestAlternative(
+                toStationCoordinates, excluding: toStationIndex, from: fromCoord),
+               straight > alternative * endpointAmbiguityDistanceFactor { return true }
+            if fromIsNameOnly, !fromAnchored, let alternative = nearestAlternative(
+                fromStationCoordinates, excluding: fromStationIndex, from: toCoord),
+               straight > alternative * endpointAmbiguityDistanceFactor { return true }
+            return false
+        }
+        /// `guarded` is the attempt's best result among those the endpoint
+        /// plausibility guard rejected; it is only used when nothing else
+        /// solves.
+        func runAttempt(
+            hints: SegmentHints, attemptIndex: Int, allowedCodes: [String]
+        ) -> (best: Best?, guarded: Best?) {
             var fromCandidates = Array(collectStationCandidateGraphNodes(
                 stationIndices: fromStations, stations: stations, graph: graph,
                 hints: hints, allowedCodes: allowedCodes).prefix(12))
+            var fromAnchored = false
             if let continuityAnchor {
                 let continuous = fromCandidates.filter {
                     guard let stationCoordinate = coordinate(Stations.displayCoordinate(
                         stations.features[$0.stationIndex])) else { return false }
                     return Geometry.distanceMeters(stationCoordinate, continuityAnchor) <= 60
                 }
-                if !continuous.isEmpty { fromCandidates = continuous }
+                if !continuous.isEmpty {
+                    fromCandidates = continuous
+                    fromAnchored = true
+                }
             }
             let toCandidates = Array(collectStationCandidateGraphNodes(
                 stationIndices: toStations, stations: stations, graph: graph,
                 hints: hints, allowedCodes: allowedCodes).prefix(12))
-            guard !fromCandidates.isEmpty, !toCandidates.isEmpty else { continue }
+            guard !fromCandidates.isEmpty, !toCandidates.isEmpty else { return (nil, nil) }
             let fromByKey = Dictionary(uniqueKeysWithValues: fromCandidates.map { ($0.key, $0) })
             let toByKey = Dictionary(uniqueKeysWithValues: toCandidates.map { ($0.key, $0) })
             let solved = dijkstra(
@@ -957,6 +1040,7 @@ public enum RouteSolver {
                 targetKeys: Set(toByKey.keys), train: train.policy,
                 allowedCodes: allowedCodes, hints: hints)
             var attemptBest: Best?
+            var guardedBest: Best?
             for result in solved where result.pathKeys.count >= 2 {
                 guard let from = fromByKey[result.sourceKey],
                       let to = toByKey[result.targetKey],
@@ -970,18 +1054,67 @@ public enum RouteSolver {
                 let totalCost = result.cost + snapPenalty
                 let scoredCost = totalCost + routeLineMismatchPenalty(
                     edges: result.edges, hints: hints)
+                let candidate = Best(
+                    pathKeys: result.pathKeys, edges: result.edges, scoredCost: scoredCost,
+                    totalCost: totalCost, physicalLength: physicalLength,
+                    from: from, to: to, hints: hints, attemptIndex: attemptIndex)
+                if endpointIsImplausible(
+                    fromStationIndex: from.stationIndex, toStationIndex: to.stationIndex,
+                    fromAnchored: fromAnchored)
+                {
+                    if guardedBest == nil || scoredCost < guardedBest!.scoredCost {
+                        guardedBest = candidate
+                    }
+                    continue
+                }
                 if attemptBest == nil || scoredCost < attemptBest!.scoredCost {
-                    attemptBest = Best(
-                        pathKeys: result.pathKeys, edges: result.edges, scoredCost: scoredCost,
-                        totalCost: totalCost, physicalLength: physicalLength,
-                        from: from, to: to, hints: hints, attemptIndex: attemptIndex)
+                    attemptBest = candidate
                 }
             }
-            if let attemptBest {
+            return (attemptBest, guardedBest)
+        }
+
+        var best: Best?
+        var guardedFallback: Best?
+        let baseAttempts = buildSegmentRouteSolveAttempts(baseHints)
+        for (attemptIndex, hints) in baseAttempts.enumerated() {
+            let attempt = runAttempt(
+                hints: hints, attemptIndex: attemptIndex, allowedCodes: allowedCodes)
+            if guardedFallback == nil { guardedFallback = attempt.guarded }
+            if let attemptBest = attempt.best {
                 best = attemptBest
                 break
             }
         }
+        // Fallback for `institutionFilterMode == "soft"` legs where every
+        // preferred-institution attempt either forbids the non-preferred
+        // track outright or pays the institution penalty, so a physically
+        // through-running leg (e.g. JR 糸魚川→魚津, which crosses third-sector
+        // track sharing institution code "5" with the JR line) has no
+        // surviving path within the detour guard. Retry once with the
+        // institution preference dropped entirely and the default allowed
+        // codes, so any real rail geometry can still be found.
+        // Explicit per-section line/operator constraints are user intent and
+        // survive; only the inferred hints and the institution preference
+        // are dropped.
+        if best == nil, train.institutionFilterMode != "hard" {
+            var fallback = baseHints
+            fallback.requiredLines = baseHints.explicitRequiredLines
+            fallback.requiredOperators = baseHints.explicitRequiredOperators
+            fallback.preferredLines = []
+            fallback.preferredOperators = []
+            fallback.requirePreferredInstitution = false
+            fallback.solveMode = "institution_unpenalised_soft_fallback"
+            let fallbackAllowedCodes = RouteGraph.defaultAllowedInstitutionTypeCodes
+            let attempt = runAttempt(
+                hints: fallback, attemptIndex: baseAttempts.count,
+                allowedCodes: fallbackAllowedCodes)
+            if guardedFallback == nil { guardedFallback = attempt.guarded }
+            best = attempt.best
+        }
+        // Last resort: a result the endpoint guard rejected is better than
+        // no route at all (see `endpointAmbiguityDistanceFactor`).
+        if best == nil { best = guardedFallback }
         guard let best else { return nil }
         let rawCoordinates = best.pathKeys.compactMap { graph.nodes[$0] }
         guard rawCoordinates.count == best.pathKeys.count else { return nil }
@@ -1291,12 +1424,16 @@ public enum RouteSolver {
             institutionFilterMode: train.institutionFilterMode)
         let allowed = RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: country)
         let lines = (section.lineNames ?? []).filter { !$0.isEmpty }
-        let from = resolveRouteEndpointStationCandidates(
-            .stop(.init(name: section.from, n02StationCode: section.fromN02StationCode)),
-            in: stations, allowedCodes: allowed, sectionLineNames: lines)
-        let to = resolveRouteEndpointStationCandidates(
-            .stop(.init(name: section.to, n02StationCode: section.toN02StationCode)),
-            in: stations, allowedCodes: allowed, sectionLineNames: lines)
+        let from = filterStationCandidatesByRideDate(
+            resolveRouteEndpointStationCandidates(
+                .stop(.init(name: section.from, n02StationCode: section.fromN02StationCode)),
+                in: stations, allowedCodes: allowed, sectionLineNames: lines),
+            in: stations, rideDate: train.rideDate)
+        let to = filterStationCandidatesByRideDate(
+            resolveRouteEndpointStationCandidates(
+                .stop(.init(name: section.to, n02StationCode: section.toN02StationCode)),
+                in: stations, allowedCodes: allowed, sectionLineNames: lines),
+            in: stations, rideDate: train.rideDate)
         let coordinates = (from + to).compactMap {
             coordinate(Stations.displayCoordinate(stations.features[$0]))
         }

@@ -15,6 +15,24 @@
 //  §29.  Route solving: institution/edge rules, route hints & Dijkstra
 // =========================================================================
 
+// Endpoint plausibility guard (mirrors RouteSolver.endpointAmbiguity* in
+// RouteSolver.swift). When a section names a station without an N02 code,
+// every same-name station in the country is an endpoint candidate. A strict
+// attempt can then drop the nearby station's graph node on institution
+// grounds and reach a same-name station in another region instead (糸魚川→泊
+// snapping to 泊 on 山陰線); the detour guard cannot see that because the
+// straight line is just as long as the path. A result whose endpoint station
+// is more than ENDPOINT_AMBIGUITY_DISTANCE_FACTOR times as far as another
+// same-name candidate is rejected so a laxer attempt (or the final fallback)
+// can find the near one. Only applied beyond
+// ENDPOINT_AMBIGUITY_MIN_STRAIGHT_METERS, only to endpoints the section names
+// without an N02 code, never to a from-station pinned by the continuity
+// anchor, and a rejected result is still returned as a last resort when no
+// attempt (including the fallback) finds anything else, so a section that
+// solved before this guard existed never becomes null.
+const ENDPOINT_AMBIGUITY_MIN_STRAIGHT_METERS = 20000;
+const ENDPOINT_AMBIGUITY_DISTANCE_FACTOR = 2;
+
 let routeGraphApi = null;
 
 function configureRouteGraphApi(api) {
@@ -367,19 +385,74 @@ function solveRouteSectionOnN02Graph(
   );
   const solveAttempts = buildSegmentRouteSolveAttempts(baseHints);
 
-  let best = null;
-  let usedHints = null;
-  let usedAttemptIndex = -1;
-  let lastCandidateFailure = false;
+  // Runs a single solve attempt (candidate collection, one multi-source →
+  // multi-target Dijkstra, detour guard, snap penalty and line-mismatch
+  // scoring) and returns its best path, or null. Factored out of the
+  // attempts loop below so the institution-unpenalised last-resort fallback
+  // (after the loop) can reuse it byte-for-byte instead of duplicating the
+  // scoring logic.
+  const stationCoordinates = (features) =>
+    features.map((feature) => getFeatureDisplayCoordinate(feature) || null);
+  const fromStationCoordinates = stationCoordinates(fromStations);
+  const toStationCoordinates = stationCoordinates(toStations);
+  // Candidate station features may come from the per-station candidate
+  // cache rather than the endpoint arrays, so "another same-name station"
+  // is decided by location (more than 1 m from the chosen one), not by
+  // object identity.
+  const nearestAlternative = (coordinates, chosen, anchor) => {
+    let nearest = null;
+    coordinates.forEach((coord) => {
+      if (!coord || distanceMeters(coord, chosen) <= 1) return;
+      const distance = distanceMeters(coord, anchor);
+      if (nearest === null || distance < nearest) nearest = distance;
+    });
+    return nearest;
+  };
+  const fromIsNameOnly = !section.from_n02_station_code;
+  const toIsNameOnly = !section.to_n02_station_code;
+  // See ENDPOINT_AMBIGUITY_DISTANCE_FACTOR.
+  const endpointIsImplausible = (fromFeature, toFeature, fromAnchored) => {
+    if (!fromIsNameOnly && !toIsNameOnly) return false;
+    const fromCoord = getFeatureDisplayCoordinate(fromFeature);
+    const toCoord = getFeatureDisplayCoordinate(toFeature);
+    if (!fromCoord || !toCoord) return false;
+    const straight = distanceMeters(fromCoord, toCoord);
+    if (straight <= ENDPOINT_AMBIGUITY_MIN_STRAIGHT_METERS) return false;
+    if (toIsNameOnly) {
+      const toAlternative = nearestAlternative(
+        toStationCoordinates,
+        toCoord,
+        fromCoord,
+      );
+      if (
+        toAlternative !== null &&
+        straight > toAlternative * ENDPOINT_AMBIGUITY_DISTANCE_FACTOR
+      ) {
+        return true;
+      }
+    }
+    if (!fromIsNameOnly || fromAnchored) return false;
+    const fromAlternative = nearestAlternative(
+      fromStationCoordinates,
+      fromCoord,
+      toCoord,
+    );
+    return (
+      fromAlternative !== null &&
+      straight > fromAlternative * ENDPOINT_AMBIGUITY_DISTANCE_FACTOR
+    );
+  };
 
-  for (let attemptIndex = 0; attemptIndex < solveAttempts.length; attemptIndex += 1) {
-    const segmentHints = solveAttempts[attemptIndex];
+  // `guardedBest` is the attempt's best result among those the endpoint
+  // plausibility guard rejected; it is only used when nothing else solves.
+  function runAttempt(segmentHints, attemptIndex, attemptAllowedCodes) {
     let fromCandidates = collectStationCandidateGraphNodes(
       fromStations,
       graph,
       segmentHints,
-      allowedCodes,
+      attemptAllowedCodes,
     ).slice(0, 12);
+    let fromAnchored = false;
     if (continuityAnchor) {
       const continuousCandidates = fromCandidates.filter((candidate) => {
         const stationCoord = getFeatureDisplayCoordinate(
@@ -391,17 +464,19 @@ function solveRouteSectionOnN02Graph(
             ROUTE_SECTION_CONTINUITY_STATION_METERS
         );
       });
-      if (continuousCandidates.length) fromCandidates = continuousCandidates;
+      if (continuousCandidates.length) {
+        fromCandidates = continuousCandidates;
+        fromAnchored = true;
+      }
     }
     const toCandidates = collectStationCandidateGraphNodes(
       toStations,
       graph,
       segmentHints,
-      allowedCodes,
+      attemptAllowedCodes,
     ).slice(0, 12);
     if (!fromCandidates.length || !toCandidates.length) {
-      lastCandidateFailure = true;
-      continue;
+      return { attemptBest: null, guardedBest: null, candidateFailure: true };
     }
 
     // ONE multi-source → multi-target Dijkstra per attempt instead of a
@@ -410,6 +485,7 @@ function solveRouteSectionOnN02Graph(
     // each settled target yields the pair-optimal (path cost + from-snap)
     // route; the to-snap and line-mismatch scoring below is unchanged.
     let attemptBest = null;
+    let guardedBest = null;
     const fromByKey = new Map(fromCandidates.map((c) => [c.key, c]));
     const toByKey = new Map(toCandidates.map((c) => [c.key, c]));
     const solvedTargets = dijkstraFromCandidateSources(
@@ -417,7 +493,7 @@ function solveRouteSectionOnN02Graph(
       fromCandidates,
       new Set(toByKey.keys()),
       train,
-      allowedCodes,
+      attemptAllowedCodes,
       segmentHints,
     );
     solvedTargets.forEach((solved) => {
@@ -455,20 +531,62 @@ function solveRouteSectionOnN02Graph(
         segmentHints,
       );
       const scoredCost = totalCost + linePenalty;
+      const candidate = {
+        pathKeys: solved.pathKeys,
+        edges: solved.edges,
+        scoredCost,
+        totalCost,
+        physicalLength,
+        snapFrom: fromCandidate.distance,
+        snapTo: toCandidate.distance,
+        fromCandidate,
+        toCandidate,
+      };
+      if (
+        endpointIsImplausible(
+          fromCandidate.stationFeature,
+          toCandidate.stationFeature,
+          fromAnchored,
+        )
+      ) {
+        if (!guardedBest || scoredCost < guardedBest.scoredCost) {
+          guardedBest = candidate;
+        }
+        return;
+      }
       if (!attemptBest || scoredCost < attemptBest.scoredCost) {
-        attemptBest = {
-          pathKeys: solved.pathKeys,
-          edges: solved.edges,
-          scoredCost,
-          totalCost,
-          physicalLength,
-          snapFrom: fromCandidate.distance,
-          snapTo: toCandidate.distance,
-          fromCandidate,
-          toCandidate,
-        };
+        attemptBest = candidate;
       }
     });
+
+    return { attemptBest, guardedBest, candidateFailure: false };
+  }
+
+  let best = null;
+  let usedHints = null;
+  let usedAttemptIndex = -1;
+  let lastCandidateFailure = false;
+  // Earliest attempt's best guard-rejected result, used only as a last resort.
+  let guardedFallback = null;
+
+  for (let attemptIndex = 0; attemptIndex < solveAttempts.length; attemptIndex += 1) {
+    const segmentHints = solveAttempts[attemptIndex];
+    const { attemptBest, guardedBest, candidateFailure } = runAttempt(
+      segmentHints,
+      attemptIndex,
+      allowedCodes,
+    );
+    if (!guardedFallback && guardedBest) {
+      guardedFallback = {
+        best: guardedBest,
+        hints: segmentHints,
+        attemptIndex,
+      };
+    }
+    if (candidateFailure) {
+      lastCandidateFailure = true;
+      continue;
+    }
 
     // Important: the first successful attempt wins. This prevents a soft fallback
     // from adding/choosing a parallel or detour route when the strict N02 route-line
@@ -483,6 +601,60 @@ function solveRouteSectionOnN02Graph(
       usedAttemptIndex = attemptIndex;
       break;
     }
+  }
+
+  // Last resort: a JR-labelled train can be scheduled to run through onto
+  // third-sector track with no line/operator in common at either endpoint
+  // (e.g. 糸魚川→魚津 crosses 日本海ひすいライン + あいの風とやま鉄道線, both
+  // ex-JR Hokuriku-line sections handed to third-sector operators). Every
+  // attempt above still charges the non-preferred-institution penalty, which
+  // makes a ~500km all-JR detour look cheaper than the real ~30km path; the
+  // detour then trips the guard above and the segment is dropped entirely.
+  // Only when institution filtering is not hard-mode do we retry once with
+  // institution matching fully disabled (zero penalty, no candidate
+  // filtering) so the true shortest path can win.
+  if (
+    (!best || !best.pathKeys || best.pathKeys.length < 2) &&
+    train?.route_policy?.institution_filter_mode !== "hard"
+  ) {
+    const fallbackAllowedCodes = [...DEFAULT_ALLOWED_INSTITUTION_TYPE_CODES];
+    // Explicit per-section line/operator constraints are user intent and
+    // survive; only the inferred hints and the institution preference are
+    // dropped.
+    const fallbackHints = cloneSegmentHints(baseHints, {
+      requiredLines: new Set(baseHints.explicitRequiredLines || []),
+      requiredOperators: new Set(baseHints.explicitRequiredOperators || []),
+      preferredLines: new Set(),
+      preferredOperators: new Set(),
+      requirePreferredInstitution: false,
+      solve_mode: "institution_unpenalised_soft_fallback",
+    });
+    const fallbackAttemptIndex = solveAttempts.length;
+    const { attemptBest, guardedBest } = runAttempt(
+      fallbackHints,
+      fallbackAttemptIndex,
+      fallbackAllowedCodes,
+    );
+    if (!guardedFallback && guardedBest) {
+      guardedFallback = {
+        best: guardedBest,
+        hints: fallbackHints,
+        attemptIndex: fallbackAttemptIndex,
+      };
+    }
+    if (attemptBest && attemptBest.pathKeys && attemptBest.pathKeys.length >= 2) {
+      best = attemptBest;
+      usedHints = fallbackHints;
+      usedAttemptIndex = fallbackAttemptIndex;
+    }
+  }
+
+  // Last resort: a result the endpoint guard rejected is better than no
+  // route at all (see ENDPOINT_AMBIGUITY_DISTANCE_FACTOR).
+  if ((!best || !best.pathKeys || best.pathKeys.length < 2) && guardedFallback) {
+    best = guardedFallback.best;
+    usedHints = guardedFallback.hints;
+    usedAttemptIndex = guardedFallback.attemptIndex;
   }
 
   if (!best || !best.pathKeys || best.pathKeys.length < 2) {

@@ -57,6 +57,48 @@ struct StationPlaceLinkTests {
         #expect(StationPlaceLink.normalize(package) == StationPlaceLink.normalize(apple))
     }
 
+    /// A live en-US sweep returns Taiwan's high-speed line and light-rail
+    /// stops wearing an operator name English packages do not carry, and
+    /// "Main Station" where the package and the reading both just say
+    /// "Station".
+    @Test(arguments: [
+        ("HSR Taoyuan Station", "Taoyuan"),
+        ("Taoyuan HSR Station", "Taoyuan"),
+        ("High Speed Rail Taichung Station", "Taichung"),
+        ("Taiwan High Speed Rail Tainan Station", "Tainan"),
+        ("Light Rail Shoushan Park Station", "Shoushan Park"),
+    ])
+    func foldsAnOperatorOrFormNameOffAnEnglishStationName(_ apple: String, _ plain: String) {
+        #expect(StationPlaceLink.normalize(apple) == StationPlaceLink.normalize(plain))
+    }
+
+    @Test
+    func foldsMainStationTheSameAsStation() {
+        #expect(
+            StationPlaceLink.normalize("Kaohsiung Main Station")
+                == StationPlaceLink.normalize("Kaohsiung Station"))
+    }
+
+    /// Apple spells Japanese romaji with macrons the packages do not carry,
+    /// or the other way round, and the fold has to reach across either
+    /// direction.
+    @Test(arguments: [
+        ("Nishijō", "nishijo station"),
+        ("Hongō", "Hongo Station"),
+        ("Minami-Ōtsuka", "Minami-Otsuka Station"),
+    ])
+    func foldsMacronedRomajiToThePlainSpelling(_ one: String, _ other: String) {
+        #expect(StationPlaceLink.normalize(one) == StationPlaceLink.normalize(other))
+    }
+
+    /// ガ and カ differ only by a dakuten, and that mark is the difference
+    /// between two distinct stations rather than two spellings of one — the
+    /// diacritic fold must not reach into kana the way it reaches into Latin.
+    @Test
+    func keepsDakutenStationsApart() {
+        #expect(StationPlaceLink.normalize("ガーラ湯沢") != StationPlaceLink.normalize("カーラ湯沢"))
+    }
+
     /// Two different stations must not fold together. 新埔 is both a Taipei
     /// metro station and a TRA station 60 km away, and 左營/新左營 are two
     /// stations 400 m apart — the fold is allowed to ignore script and
@@ -186,11 +228,108 @@ struct StationPlaceLinkTests {
         #expect(StationPlaceLink.best(candidates, for: station("大安")) == 2)
     }
 
+    /// The slash split runs on the CANDIDATE's side only. Apple's own "Caoya
+    /// / KRTC Station" carries 草衙 in only the first half of a slash-joined
+    /// name, and picks it; a candidate whose first half is unrelated, "Xyz /
+    /// KRTC Station", must not match just because it shares the second half.
+    @Test
+    func picksAStationByOneHalfOfASlashSeparatedCandidateName() {
+        let matching = [transit("Caoya / KRTC Station", 40)]
+        #expect(StationPlaceLink.best(matching, for: station("草衙", "Caoya", country: "tw")) == 0)
+        let nonMatching = [transit("Xyz / KRTC Station", 40)]
+        #expect(StationPlaceLink.best(nonMatching, for: station("草衙", "Caoya", country: "tw")) == nil)
+    }
+
+    /// Hong Kong's tram network holds street furniture as "Whitty Street
+    /// Stop" rather than under 屈地街 itself — the lowest tier, but still a
+    /// match within the 150 m the bracket tiers use.
+    @Test
+    func picksANamedStopWhenNothingElseCarriesTheStationsName() {
+        let candidates = [transit("Whitty Street Stop", 17)]
+        let index = StationPlaceLink.best(
+            candidates, for: station("屈地街", "Whitty Street", country: "hk"))
+        #expect(index == 0)
+    }
+
+    @Test
+    func doesNotTakeADistantNamedStop() {
+        let candidates = [transit("Whitty Street Stop", 300)]
+        #expect(
+            StationPlaceLink.best(candidates, for: station("屈地街", "Whitty Street", country: "hk"))
+                == nil)
+    }
+
+    /// "Taian Station Stop" is the English rendering of a bus stop's Chinese
+    /// name, 泰安(公交站), and the named-stop tier must not re-admit it. The
+    /// station is given "Taian" as a second name so the guard under test —
+    /// "the remainder still ends in a station word" — is the thing doing the
+    /// rejecting, rather than there being no Latin alias to match at all.
+    @Test
+    func rejectsAStopThatIsTheEnglishFormOfARoadStop() {
+        let candidates = [transit("Taian Station Stop", 3)]
+        #expect(StationPlaceLink.best(candidates, for: station("泰安", "Taian")) == nil)
+    }
+
+    @Test
+    func doesNotMatchANamedStopByAPartialName() {
+        let candidates = [transit("Shalun Rd Sec 1 Stop", 40)]
+        #expect(
+            StationPlaceLink.best(candidates, for: station("沙崙", "Shalun", country: "tw")) == nil)
+    }
+
+    /// `bestMatch` marks a `.namedStop` winner weak, so a caller running a
+    /// multi-query plan knows to keep looking rather than settle for it —
+    /// but a station winner from any other tier is never weak.
+    @Test
+    func reportsANamedStopWinnerAsWeak() {
+        let stopOnly = [transit("Whitty Street Stop", 17)]
+        let stopMatch = StationPlaceLink.bestMatch(
+            stopOnly, for: station("屈地街", "Whitty Street", country: "hk"))
+        #expect(stopMatch?.index == 0)
+        #expect(stopMatch?.isWeak == true)
+
+        let properStation = [transit("屈地街", 137)]
+        let stationMatch = StationPlaceLink.bestMatch(
+            properStation, for: station("屈地街", "Whitty Street", country: "hk"))
+        #expect(stationMatch?.index == 0)
+        #expect(stationMatch?.isWeak == false)
+        #expect(stationMatch?.isTransport == true)
+    }
+
+    @Test("an untyped landmark from the filter-off pass is reported as such")
+    func reportsAnUntypedWinnerAsNotTransport() {
+        let hall = [untyped("Kaohsiung Exhibition Center", 249)]
+        let match = StationPlaceLink.bestMatch(
+            hall, for: station("高雄展覽館", "Kaohsiung Exhibition Center"))
+        #expect(match?.index == 0)
+        #expect(match?.isWeak == false)
+        #expect(match?.isTransport == false)
+    }
+
+    @Test("a package name joined by a slash matches on either half")
+    func picksAStationByOneHalfOfASlashSeparatedPackageName() {
+        let aozihdi = station("凹子底/愛河之心")
+        #expect(StationPlaceLink.best([transit("Aozihdi Station", 42)], for: station("凹子底/愛河之心", "Aozihdi/Heart of Love River")) == 0)
+        #expect(StationPlaceLink.best([transit("愛河之心", 40)], for: aozihdi) == 0)
+        #expect(StationPlaceLink.best([transit("凹子底", 40)], for: aozihdi) == 0)
+        #expect(StationPlaceLink.best([transit("凹子", 40)], for: aozihdi) == nil)
+    }
+
+    @Test
+    func prefersAProperStationOverANamedStop() {
+        let candidates = [
+            transit("Whitty Street Stop", 5),
+            transit("屈地街", 137),
+        ]
+        let index = StationPlaceLink.best(
+            candidates, for: station("屈地街", "Whitty Street", country: "hk"))
+        #expect(index == 1)
+    }
+
     // MARK: - Queries
 
     @Test
     func asksForTheBareNameFirstAndTheSuffixedOneSecond() {
-        #expect(StationPlaceLink.queries(for: station("東京", country: "jp")) == ["東京", "東京駅"])
         #expect(StationPlaceLink.queries(for: station("臺北", country: "tw")) == ["臺北", "臺北站"])
         #expect(StationPlaceLink.queries(for: station("金鐘", country: "hk")) == ["金鐘", "金鐘站"])
     }
@@ -200,6 +339,65 @@ struct StationPlaceLinkTests {
     func neverDoublesAStationWordThatIsAlreadyThere() {
         #expect(StationPlaceLink.queries(for: station("서울역", country: "kr")) == ["서울역"])
         #expect(StationPlaceLink.queries(for: station("山鼻站", country: "tw")) == ["山鼻站"])
+    }
+
+    /// A live audit found 8 Japanese stations an English-language map service
+    /// answers nothing for by kanji alone — 新豊田, 本町, 近鉄名古屋 — while
+    /// "<romaji> Station" found each of them. So a jp station with a romaji
+    /// spelling gets a third query built off it; a jp station without one
+    /// keeps the same two-query plan as every other country.
+    @Test
+    func addsAThirdQueryForJapanWhenARomajiNameExists() {
+        #expect(
+            StationPlaceLink.queries(for: station("新豊田", "Shin-Toyota", country: "jp"))
+                == ["新豊田", "新豊田駅", "Shin-Toyota Station"])
+        #expect(StationPlaceLink.queries(for: station("東京", country: "jp")) == ["東京", "東京駅"])
+    }
+
+    /// The same English-service gap the romaji fallback closes for Japan
+    /// shows up in Hong Kong too: 灣仔 alone answers only Admiralty, while
+    /// "Wan Chai Station" finds the station itself.
+    @Test
+    func addsAThirdQueryForHongKongWhenAnEnglishNameExists() {
+        #expect(
+            StationPlaceLink.queries(for: station("灣仔", "Wan Chai", country: "hk"))
+                == ["灣仔", "灣仔站", "Wan Chai Station"])
+    }
+
+    /// The suffix guard reads the Latin name's own ending rather than the
+    /// CJK/Hangul `word`, so a Latin name that already says "Station" is
+    /// never doubled into "Kaohsiung Main Station Station".
+    @Test
+    func doesNotDoubleAStationWordAlreadyOnTheLatinName() {
+        #expect(
+            StationPlaceLink.queries(for: station("高雄", "Kaohsiung Main Station", country: "tw"))
+                == ["高雄", "高雄站", "Kaohsiung Main Station"])
+    }
+
+    /// "Terminus", "Depot" and "Sta" (no period) are also read as already
+    /// naming a station, so a Latin name ending in one of them is never
+    /// doubled into "Kennedy Town Terminus Station" or "Light Rail Depot
+    /// Station".
+    @Test(arguments: [
+        ("九龍", "Kowloon Terminus", "Kowloon Terminus"),
+        ("石排灣", "Wong Chuk Hang Depot", "Wong Chuk Hang Depot"),
+        ("高雄", "Kaohsiung Sta", "Kaohsiung Sta"),
+    ])
+    func doesNotDoubleATerminusDepotOrStaSuffix(
+        _ package: String, _ latin: String, _ expected: String
+    ) {
+        #expect(
+            StationPlaceLink.queries(for: station(package, latin, country: "tw"))
+                == [package, package + "站", expected])
+    }
+
+    /// Korea's own packages already spell the word into the station's name,
+    /// so a Latin name buys it nothing and it stays at two queries.
+    @Test
+    func keepsKoreaAtTwoQueriesEvenWithALatinName() {
+        #expect(
+            StationPlaceLink.queries(for: station("서울", "Seoul Station", country: "kr"))
+                == ["서울", "서울역"])
     }
 
     // MARK: - Links

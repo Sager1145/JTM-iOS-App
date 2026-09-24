@@ -11,6 +11,28 @@ public enum TrainServicePatterns {
     /// different destinations — is recorded as separate patterns, one per
     /// `serviceId`.
     public struct Pattern: Codable, Sendable, Identifiable, Hashable {
+        /// A per-field data-completeness rating recorded on a ``Pattern``.
+        public enum Level: String, Codable, Sendable {
+            case complete, partial, missing
+        }
+
+        /// Per-field completeness of a pattern's data — how much of the
+        /// stop list, line list, and validity window is actually known,
+        /// as opposed to merely present-but-empty.
+        public struct Completeness: Codable, Sendable, Hashable {
+            public let stops: Level
+            public let lines: Level
+            public let validity: Level
+
+            public init(stops: Level, lines: Level, validity: Level) {
+                self.stops = stops
+                self.lines = lines
+                self.validity = validity
+            }
+
+            public static let missing = Completeness(stops: .missing, lines: .missing, validity: .missing)
+        }
+
         public let id: String
         public let serviceId: String
         public let name: String
@@ -25,17 +47,85 @@ public enum TrainServicePatterns {
         public let via: [String]
         public let confidence: String?
         public let source: String?
+        /// Ordered N02 line names traversed by this pattern.
+        public let lines: [String]
+        /// ISO `YYYY-MM-DD`. Not parsed to `Date` here — comparisons and
+        /// formatting are the caller's concern.
+        public let validFrom: String?
+        public let validTo: String?
+        public let completeness: Completeness
+        public let notes: String?
+        /// Consecutive-stop pairs known not to solve against the route
+        /// graph — recorded so route-solving tests can skip them without
+        /// masking genuine regressions.
+        public let unsolvableLegs: [[String]]
 
         private enum CodingKeys: String, CodingKey {
             case id = "patternId"
             case serviceId, name, company, label, origin, destination
             case stops, optionalStops, via, confidence, source
+            case lines, validFrom, validTo, completeness, notes, unsolvableLegs
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            id = try container.decode(String.self, forKey: .id)
+            serviceId = try container.decode(String.self, forKey: .serviceId)
+            name = try container.decode(String.self, forKey: .name)
+            company = try container.decode(String.self, forKey: .company)
+            label = try container.decode(String.self, forKey: .label)
+            origin = try container.decode(String.self, forKey: .origin)
+            destination = try container.decode(String.self, forKey: .destination)
+            stops = try container.decode([String].self, forKey: .stops)
+            optionalStops = try container.decode([String].self, forKey: .optionalStops)
+            via = try container.decode([String].self, forKey: .via)
+            confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
+            source = try container.decodeIfPresent(String.self, forKey: .source)
+            lines = try container.decodeIfPresent([String].self, forKey: .lines) ?? []
+            validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
+            validTo = try container.decodeIfPresent(String.self, forKey: .validTo)
+            completeness = try container.decodeIfPresent(
+                Completeness.self, forKey: .completeness) ?? .missing
+            notes = try container.decodeIfPresent(String.self, forKey: .notes)
+            unsolvableLegs = try container.decodeIfPresent(
+                [[String]].self, forKey: .unsolvableLegs) ?? []
+        }
+
+        public init(
+            id: String, serviceId: String, name: String, company: String, label: String,
+            origin: String, destination: String, stops: [String], optionalStops: [String],
+            via: [String], confidence: String?, source: String?, lines: [String] = [],
+            validFrom: String? = nil, validTo: String? = nil,
+            completeness: Completeness = .missing, notes: String? = nil,
+            unsolvableLegs: [[String]] = []
+        ) {
+            self.id = id
+            self.serviceId = serviceId
+            self.name = name
+            self.company = company
+            self.label = label
+            self.origin = origin
+            self.destination = destination
+            self.stops = stops
+            self.optionalStops = optionalStops
+            self.via = via
+            self.confidence = confidence
+            self.source = source
+            self.lines = lines
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.completeness = completeness
+            self.notes = notes
+            self.unsolvableLegs = unsolvableLegs
         }
 
         /// `company`, mapped through ``OperatorBranding/companyLabel(_:)`` —
         /// which already splits and rejoins on "/" — to the passenger-facing
         /// short names.
         public var companyLabel: String { OperatorBranding.companyLabel(company) }
+
+        /// True when the pattern has no recorded end-of-service date.
+        public var isCurrent: Bool { validTo == nil }
     }
 
     /// The bundled pattern catalog. A missing or malformed resource is a
@@ -64,20 +154,64 @@ public enum TrainServicePatterns {
         TrainServiceBranding.services.first { $0.id == pattern.serviceId }
     }
 
+    /// Narrows a ``search(_:region:filter:)`` call by validity status,
+    /// operator, and/or traversed line, on top of the free-text query.
+    public struct Filter: Sendable, Hashable {
+        public enum Status: Sendable, Hashable {
+            case any, current, discontinued
+        }
+
+        /// Matches `Pattern.companyLabel` exactly.
+        public var company: String?
+        public var status: Status
+        /// A canonical line name (see `TrainServiceBranding.canonicalLineName`)
+        /// that must appear in `pattern.lines`.
+        public var line: String?
+
+        public init(company: String? = nil, status: Status = .any, line: String? = nil) {
+            self.company = company
+            self.status = status
+            self.line = line
+        }
+    }
+
     /// Searches the catalog by every name the pattern's service is known by,
-    /// plus the pattern's own name, label, origin, destination, and
-    /// passenger-facing company label — case- and width-insensitive, and
-    /// hiragana/katakana-insensitive. An empty or whitespace-only query
-    /// matches every pattern in `region`. Results are sorted by name, then
-    /// label.
+    /// plus the pattern's own name, label, origin, destination, traversed
+    /// lines, stops, and passenger-facing company label — case- and
+    /// width-insensitive, and hiragana/katakana-insensitive. An empty or
+    /// whitespace-only query matches every pattern in `region`. `filter`
+    /// further narrows results by validity status, operator, and/or line.
+    /// Results are sorted with current patterns before discontinued ones;
+    /// for a non-empty query, patterns whose name, label, or service names
+    /// contain the query rank ahead of patterns that matched only via a
+    /// stop or traversed line; ties break by name, then label.
     public static func search(_ query: String, region: String = "jp") -> [Pattern] {
+        search(query, region: region, filter: Filter())
+    }
+
+    public static func search(_ query: String, region: String = "jp", filter: Filter) -> [Pattern] {
         let normalizedQuery = normalizedText(
             query.trimmingCharacters(in: .whitespacesAndNewlines))
         let servicesByID = Dictionary(
             uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
 
-        let candidates = patterns.filter { pattern in
+        var candidates = patterns.filter { pattern in
             servicesByID[pattern.serviceId]?.region == region
+        }
+
+        if let company = filter.company {
+            candidates = candidates.filter { $0.companyLabel == company }
+        }
+        switch filter.status {
+        case .any: break
+        case .current: candidates = candidates.filter { $0.isCurrent }
+        case .discontinued: candidates = candidates.filter { $0.isCurrent == false }
+        }
+        if let line = filter.line {
+            let canonicalLine = TrainServiceBranding.canonicalLineName(line)
+            candidates = candidates.filter { pattern in
+                pattern.lines.contains { TrainServiceBranding.canonicalLineName($0) == canonicalLine }
+            }
         }
 
         let matched: [Pattern]
@@ -89,21 +223,77 @@ public enum TrainServicePatterns {
             }
         }
 
+        if normalizedQuery.isEmpty {
+            return matched.sorted {
+                if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
+                if $0.name != $1.name { return $0.name < $1.name }
+                return $0.label < $1.label
+            }
+        }
+
+        func isPrimaryMatch(_ pattern: Pattern) -> Bool {
+            (primaryHaystacksByPatternID[pattern.id] ?? "").contains(normalizedQuery)
+        }
+
         return matched.sorted {
-            $0.name != $1.name ? $0.name < $1.name : $0.label < $1.label
+            if $0.isCurrent != $1.isCurrent { return $0.isCurrent && !$1.isCurrent }
+            let primary0 = isPrimaryMatch($0)
+            let primary1 = isPrimaryMatch($1)
+            if primary0 != primary1 { return primary0 && !primary1 }
+            if $0.name != $1.name { return $0.name < $1.name }
+            return $0.label < $1.label
         }
     }
 
+    /// Every distinct `companyLabel` among `region`'s patterns, sorted.
+    public static func companyLabels(region: String = "jp") -> [String] {
+        let servicesByID = Dictionary(
+            uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
+        let labels = patterns
+            .filter { servicesByID[$0.serviceId]?.region == region }
+            .map(\.companyLabel)
+        return Array(Set(labels)).sorted()
+    }
+
+    /// Every distinct raw line name among `region`'s patterns, sorted.
+    public static func lineNames(region: String = "jp") -> [String] {
+        let servicesByID = Dictionary(
+            uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
+        let names = patterns
+            .filter { servicesByID[$0.serviceId]?.region == region }
+            .flatMap(\.lines)
+        return Array(Set(names)).sorted()
+    }
+
     /// Each pattern's normalised search haystack — its name, label, origin,
-    /// destination, passenger-facing company label, and every name its
-    /// service is known by — joined and normalised once, rather than on
-    /// every ``search(_:region:)`` call.
+    /// destination, passenger-facing company label, traversed lines, stops,
+    /// and every name its service is known by — joined and normalised once,
+    /// rather than on every ``search(_:region:filter:)`` call.
     private static let haystacksByPatternID: [String: String] = {
         let servicesByID = Dictionary(
             uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
         return Dictionary(uniqueKeysWithValues: patterns.map { pattern in
             var haystacks = [pattern.name, pattern.label, pattern.origin,
                               pattern.destination, pattern.companyLabel]
+            haystacks.append(contentsOf: pattern.lines)
+            haystacks.append(contentsOf: pattern.stops)
+            if let service = servicesByID[pattern.serviceId] {
+                haystacks.append(contentsOf: service.names)
+            }
+            return (pattern.id, haystacks.map(normalizedText).joined(separator: " "))
+        })
+    }()
+
+    /// Each pattern's "primary" search haystack — its name, label, and every
+    /// name its service is known by, joined and normalised once. A query
+    /// that matches here names the service or pattern directly, rather than
+    /// matching only via a stop or traversed line; ``search(_:region:filter:)``
+    /// ranks those matches first.
+    private static let primaryHaystacksByPatternID: [String: String] = {
+        let servicesByID = Dictionary(
+            uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
+        return Dictionary(uniqueKeysWithValues: patterns.map { pattern in
+            var haystacks = [pattern.name, pattern.label]
             if let service = servicesByID[pattern.serviceId] {
                 haystacks.append(contentsOf: service.names)
             }

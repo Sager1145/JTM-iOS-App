@@ -48,12 +48,24 @@ final class RideStatusCenter {
 final class RideLibrary {
     private(set) var snapshots: [TrainStore] = []
     private(set) var lastSaveError: String? = "prior write failed"
+    private var shouldFailNextSave = false
 
     @discardableResult
     func save(_ store: TrainStore) -> Task<Bool, Never> {
         snapshots.append(store)
+        if shouldFailNextSave {
+            shouldFailNextSave = false
+            return Task {
+                lastSaveError = "simulated write failure"
+                return false
+            }
+        }
         lastSaveError = nil
         return Task { true }
+    }
+
+    func failNextSave() {
+        shouldFailNextSave = true
     }
 
     func recordPriorError() {
@@ -98,6 +110,38 @@ struct EditorChecks {
         precondition(collision == .savedKeepingID(keptID: "created", requestedID: "other"))
         precondition(Set(library.snapshots.last?.trains.map(\.id) ?? []) == ["created", "other"])
         print("PASS an edited ID collision preserves both journey identities on save")
+
+        library.failNextSave()
+        let failedNew = train("retry-new", number: "First draft")
+        let failedAdd = try require(editing.addAndPersist(failedNew))
+        let failedAddSaved = await failedAdd.persistence.value
+        precondition(failedAddSaved == false)
+        precondition(library.lastSaveError == "simulated write failure")
+        precondition(itineraries.loaded?.trains.filter { $0.id == failedAdd.id }.count == 1)
+        precondition(failedAdd.rollback())
+        precondition(itineraries.loaded?.trains.contains { $0.id == failedAdd.id } == false)
+
+        var revisedNew = failedNew
+        revisedNew.number = "Revised draft"
+        let retry = try require(editing.addAndPersist(revisedNew))
+        let retrySaved = await retry.persistence.value
+        precondition(retrySaved == true)
+        precondition(itineraries.loaded?.trains.filter { $0.id == retry.id }.count == 1)
+        precondition(itineraries.loaded?.trains.first { $0.id == retry.id }?.number == "Revised draft")
+        print("PASS a failed new-journey write rolls back its working record and retry adds it once")
+
+        library.failNextSave()
+        var failedEdit = replacement
+        failedEdit.id = "renamed-created"
+        failedEdit.number = "Unsaved edit"
+        let editAttempt = editing.replaceAndPersist(failedEdit, replacing: "created")
+        let failedEditSaved = await editAttempt.persistence?.value
+        precondition(failedEditSaved == false)
+        precondition(itineraries.loaded?.trains.contains { $0.id == "renamed-created" } == true)
+        precondition(editAttempt.rollback?() == true)
+        precondition(itineraries.loaded?.trains.first { $0.id == "created" } == replacement.taggingRegion())
+        precondition(itineraries.loaded?.trains.contains { $0.id == "renamed-created" } == false)
+        print("PASS a failed edited-journey write restores its prior record and identity")
 
         let beforeRefusals = library.snapshots.count
         library.recordPriorError()

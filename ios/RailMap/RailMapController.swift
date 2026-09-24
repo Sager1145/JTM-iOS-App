@@ -75,6 +75,16 @@ final class RailMapController {
     /// the browser.
     var showsNetwork = false
 
+    /// Pins for the journey being edited. Empty when the editor is not up.
+    /// The map reads this; the editor does not solve a route from it.
+    var draftMap = DraftMapSnapshot(revision: 0, pins: [])
+
+    /// A tap on a draft bubble. Not a station-sheet opener.
+    @ObservationIgnored var onDraftPin: ((UUID) -> Void)?
+
+    /// False after the editor closes, so a late publish cannot put pins back.
+    @ObservationIgnored var acceptsDraftMap = false
+
     /// The rest of the layers menu: which of the reader's own route lines,
     /// station dots and ridden-line categories are drawn. See ``MapLayers``.
     var layers = MapLayers()

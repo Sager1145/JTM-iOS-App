@@ -255,7 +255,7 @@ function getStopFeature(stop, train) {
     const p = f.properties || {};
     return (
       p.train_id === train.id &&
-      (p.n02_station_code === stopStationCode(stop) ||
+      (canonicalStationCode(p.n02_station_code) === stopStationCode(stop) ||
         p.name === stopName(stop))
     );
   });

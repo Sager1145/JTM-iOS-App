@@ -27,9 +27,33 @@ function stationName(feature) {
   );
 }
 
+/**
+ * Map a legacy HK/MO platform code to the one-code-per-station grammar
+ * (`{OPERATOR}-{STOP}`); every other code passes through unchanged.
+ *   canonicalStationCode("TKL-POA-MTR-NOP")     === "MTR-NOP"
+ *   canonicalStationCode("MLM-TAIPA-MLM-BARRA") === "MLM-BARRA"
+ * Trams (`TRAM-HV-105`) become `TRAM-105`; Taiwan KLRT drops the `NETWORK`
+ * segment (`KLRT-NETWORK-C1` → `KLRT-C1`). Web twin of RailCore's
+ * `StationCodeAliases.canonical(_:)` — see docs/decisions/0010.
+ */
+function canonicalStationCode(code) {
+  if (typeof code !== "string" || !code) return code;
+  const parts = code.split("-");
+  if (parts.length >= 3) {
+    const secondLast = parts[parts.length - 2];
+    const last = parts[parts.length - 1];
+    if (secondLast === "MTR" || secondLast === "LR" || secondLast === "MLM")
+      return `${secondLast}-${last}`;
+    if (parts[0] === "TRAM") return `TRAM-${last}`;
+    if (parts[1] === "NETWORK")
+      return [parts[0], ...parts.slice(2)].join("-");
+  }
+  return code;
+}
+
 function stationCode(feature) {
   const p = feature.properties || {};
-  return p.n02_station_code || p.N02_005c || null;
+  return canonicalStationCode(p.n02_station_code || p.N02_005c || null);
 }
 
 // jsonspec 1.3 keeps the historical serialized key `n02_station_code` for
@@ -84,7 +108,7 @@ function stopName(stop) {
 }
 
 function stopStationCode(stop) {
-  return stop.n02_station_code || stop.N02_005c || null;
+  return canonicalStationCode(stop.n02_station_code || stop.N02_005c || null);
 }
 
 // Normalize a station name for tolerant matching against imperfect JSON.

@@ -273,7 +273,9 @@ public struct Stop: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
+        // ADR 0010: persisted rides may carry a legacy HK/MO code.
         n02StationCode = try container.decodeIfPresent(String.self, forKey: .n02StationCode)
+            .map(StationCodeAliases.canonical)
         hasPlatformNumberField = container.contains(.platformNumber)
         platformNumber = try container.decodeIfPresent(Int.self, forKey: .platformNumber)
         arrival = try container.decodeIfPresent(String.self, forKey: .arrival)
@@ -355,6 +357,24 @@ public struct RouteSection: Codable, Equatable, Sendable {
         case toN02StationCode = "to_n02_station_code"
         case lineNames = "line_names"
         case operatorNames = "operator_names"
+    }
+
+    /// Station codes are canonicalised on decode (ADR 0010), so a stored
+    /// legacy HK/MO code never reaches routing or matching.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        from = try container.decodeIfPresent(String.self, forKey: .from)
+        to = try container.decodeIfPresent(String.self, forKey: .to)
+        fromN02StationCode = try container.decodeIfPresent(
+            String.self, forKey: .fromN02StationCode
+        ).map(StationCodeAliases.canonical)
+        toN02StationCode = try container.decodeIfPresent(
+            String.self, forKey: .toN02StationCode
+        ).map(StationCodeAliases.canonical)
+        lineNames = try container.decodeIfPresent([String].self, forKey: .lineNames)
+        operatorNames = try container.decodeIfPresent([String].self, forKey: .operatorNames)
+        number = try container.decodeIfPresent(String.self, forKey: .number)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -1042,7 +1062,9 @@ public enum TrainValidation {
             "Route section")
 
         let fromCode = (section["from_n02_station_code"] ?? .null).orNullString
+            .map(StationCodeAliases.canonical)
         let toCode = (section["to_n02_station_code"] ?? .null).orNullString
+            .map(StationCodeAliases.canonical)
         var normalized = RouteSection(
             from: (section["from"] ?? .null).stringOrNilIfFalsy ?? stations.nameForCode(fromCode),
             to: (section["to"] ?? .null).stringOrNilIfFalsy ?? stations.nameForCode(toCode),
@@ -1174,7 +1196,8 @@ public enum TrainValidation {
     public static func canonicalStopShape(_ stop: JSON) -> Stop {
         Stop(
             name: (stop["name"] ?? .null).isTruthy ? jsToString(stop["name"] ?? .null) : "",
-            n02StationCode: (stop["n02_station_code"] ?? .null).orNullString,
+            n02StationCode: (stop["n02_station_code"] ?? .null).orNullString
+                .map(StationCodeAliases.canonical),
             platformNumber: platformNumber(stop["platform_number"]),
             arrival: normalizeNullableTime(stop["arrival"]),
             departure: normalizeNullableTime(stop["departure"]),
@@ -1191,7 +1214,9 @@ public enum TrainValidation {
     public static func canonicalStopShape(_ stop: Stop) -> Stop {
         Stop(
             name: stop.name,
-            n02StationCode: stop.n02StationCode.flatMap { $0.isEmpty ? nil : $0 },
+            n02StationCode: stop.n02StationCode.flatMap {
+                $0.isEmpty ? nil : StationCodeAliases.canonical($0)
+            },
             platformNumber: stop.platformNumber.flatMap { $0 >= 0 ? $0 : nil },
             arrival: normalizeNullableTime(stop.arrival.map(JSON.string)),
             departure: normalizeNullableTime(stop.departure.map(JSON.string)),
@@ -1399,10 +1424,10 @@ public enum TrainValidation {
     /// pair therefore counts as the same section rather than forcing the two
     /// codes to be identical.
     private static func matches(_ section: RouteSection, _ fromStop: Stop, _ toStop: Stop) -> Bool {
-        let fromCode = fromStop.n02StationCode.flatMap { $0.isEmpty ? nil : $0 }
-        let toCode = toStop.n02StationCode.flatMap { $0.isEmpty ? nil : $0 }
-        let sectionFrom = section.fromN02StationCode.flatMap { $0.isEmpty ? nil : $0 }
-        let sectionTo = section.toN02StationCode.flatMap { $0.isEmpty ? nil : $0 }
+        let fromCode = fromStop.n02StationCode.flatMap { $0.isEmpty ? nil : StationCodeAliases.canonical($0) }
+        let toCode = toStop.n02StationCode.flatMap { $0.isEmpty ? nil : StationCodeAliases.canonical($0) }
+        let sectionFrom = section.fromN02StationCode.flatMap { $0.isEmpty ? nil : StationCodeAliases.canonical($0) }
+        let sectionTo = section.toN02StationCode.flatMap { $0.isEmpty ? nil : StationCodeAliases.canonical($0) }
         let codeMatches =
             if let fromCode, let toCode, let sectionFrom, let sectionTo {
                 jsStringEquals(fromCode, sectionFrom) && jsStringEquals(toCode, sectionTo)
@@ -1420,8 +1445,12 @@ public enum TrainValidation {
         var normalized = RouteSection(
             from: section.from ?? "",
             to: section.to ?? "",
-            fromN02StationCode: section.fromN02StationCode.flatMap { $0.isEmpty ? nil : $0 },
-            toN02StationCode: section.toN02StationCode.flatMap { $0.isEmpty ? nil : $0 })
+            fromN02StationCode: section.fromN02StationCode.flatMap {
+                $0.isEmpty ? nil : StationCodeAliases.canonical($0)
+            },
+            toN02StationCode: section.toN02StationCode.flatMap {
+                $0.isEmpty ? nil : StationCodeAliases.canonical($0)
+            })
         if let lines = section.lineNames, !lines.isEmpty { normalized.lineNames = lines }
         if let operators = section.operatorNames, !operators.isEmpty {
             normalized.operatorNames = operators
@@ -1441,8 +1470,12 @@ public enum TrainValidation {
     private static func leanExportSection(_ section: RouteSection, stations: StationTable)
         -> RouteSection
     {
-        let fromCode = section.fromN02StationCode.flatMap { $0.isEmpty ? nil : $0 }
-        let toCode = section.toN02StationCode.flatMap { $0.isEmpty ? nil : $0 }
+        let fromCode = section.fromN02StationCode.flatMap {
+            $0.isEmpty ? nil : StationCodeAliases.canonical($0)
+        }
+        let toCode = section.toN02StationCode.flatMap {
+            $0.isEmpty ? nil : StationCodeAliases.canonical($0)
+        }
         var out = RouteSection(fromN02StationCode: fromCode, toN02StationCode: toCode)
         if let from = section.from, !from.isEmpty,
             fromCode == nil || !jsStringEquals(stations.nameForCode(fromCode), from)

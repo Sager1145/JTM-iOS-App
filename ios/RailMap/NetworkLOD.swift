@@ -5,7 +5,8 @@ import RailPresentation
 /// Native railway selection at the current MapKit scale.
 ///
 /// High-speed backbones remain visible at overview. Other lines wait for
-/// their complete-group length/rank tier; station density is gated separately.
+/// their importance tier, adjusted by complete-group length; station density
+/// is gated separately.
 /// Viewport culling and a post-simplification vertex budget bound rendering.
 /// RailCore.Visibility retains the independent, fixture-tested Web contract.
 enum NetworkLOD {
@@ -22,9 +23,9 @@ enum NetworkLOD {
     /// `RailStyle.simplifyTolerance`, which was eight times too loose — raised
     /// the worst build measured anywhere in the five packages from 25,000
     /// drawn vertices to 38,698 (largest iPad, app zoom 8, over the Kansai and
-    /// Chugoku density). That is still under the budget, so nothing is dropped
-    /// today, but the backstop is now within a few per cent of binding, and if
-    /// a denser package pushes it past, this is where it shows: branches shed
+    /// Chugoku density). That measurement predates the importance-led zoom
+    /// ladder; earlier admission of short important lines can increase load.
+    /// If a frame exceeds the budget, this is where it shows: branches shed
     /// first, ``fitToBudget`` reports the threshold it stopped at, and the
     /// diagnostics panel shows a threshold below the zoom. The measured lever
     /// if that happens is clipping each interval to the build rect before
@@ -43,7 +44,8 @@ enum NetworkLOD {
 
     /// One native policy supplies both lazy region loading and line rendering.
     /// High-speed backbones remain at overview; ordinary railways use the
-    /// complete-group length/rank ladder. RailCore's web parity is unchanged.
+    /// importance ladder with a bounded complete-group length adjustment.
+    /// RailCore's web parity is unchanged.
     static func minZoomMapLibre(
         portedMinZoom: Int,
         rank: Int?,

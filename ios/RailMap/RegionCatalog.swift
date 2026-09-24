@@ -54,7 +54,7 @@ import RailPresentation
 ///
 /// The codes in a train store are `n02_station_code`, not the packages' group
 /// ids, and outside Japan they are the OPERATOR's own spelling — `TYMC-A13`
-/// (a TDX StationUID), `AEL-MTR-HOK`, `MLM-TAIPA-MLM-BARRA`,
+/// (a TDX StationUID), `MTR-HOK`, `MLM-BARRA`,
 /// `KR-GYEONGBUSEON-BUSAN`. Only Korea's happens to begin with its region.
 /// Nothing in the string says Taiwan or Hong Kong, and a rule invented from
 /// the operator prefixes that ship today would be a guess that breaks on the

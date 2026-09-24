@@ -16,9 +16,14 @@ import MapKit
 /// The package side is read from `app/public/rail/*-2025.json` and
 /// `app/data/station-readings*.json`; the Apple side is live `MKLocalSearch`,
 /// through the same search plan, the same alias set and the same winner rule
-/// the card runs. Coordinates are shifted into the basemap's datum for the four
-/// GCJ-02 regions before anything is measured, exactly as `AppleMapDatum`
-/// shifts them before anything is drawn.
+/// the card runs. Which datum a GCJ-02-candidate region (tw, hk, mo, kr) is
+/// measured in is decided the way `AppleMapDatumProbe` decides it for the
+/// running app: a handful of stations MapKit is known to answer accurately
+/// vote WGS84 or GCJ-02 by which datum's image the result lands nearer to,
+/// and a majority decides — printed as a `DATUM` line before that country's
+/// sweep. `--datum wgs84|gcj02|auto` (default `auto`) overrides the probe for
+/// every region when the running machine's own verdict is already known.
+/// Japan is never a candidate and is neither probed nor shifted.
 ///
 /// Two things about the running machine change the answer, and both are worth
 /// re-running for.
@@ -130,7 +135,7 @@ struct AuditStationPlaces {
     /// the place: a complex whose six platforms are six rows in the package is
     /// one station on Apple Maps, and measuring it six times would report the
     /// same hit six times and make the interchanges dominate the score.
-    static func subjects(country: String) throws -> [Subject] {
+    static func subjects(country: String, shiftToGCJ02: Bool) throws -> [Subject] {
         let url = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appending(path: "app/public/rail/\(country)-2025.json")
         let root = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as! [String: Any]
@@ -151,7 +156,7 @@ struct AuditStationPlaces {
                     roma: (row.count > 4 ? row[4] as? String : nil) ?? "",
                     aliases: code.flatMap { table.byCode[$0] } ?? table.byName[name] ?? [],
                     source: source,
-                    display: gcjCountries.contains(country) ? gcj02(source) : source))
+                    display: shiftToGCJ02 ? gcj02(source) : source))
             }
         }
         return result
@@ -196,6 +201,62 @@ struct AuditStationPlaces {
         throw lastError!
     }
 
+    // MARK: - Datum probe
+
+    /// Mirrors `AppleMapDatumProbe`'s references and its accept/margin
+    /// thresholds, so the tool's verdict is decided the same way the app's is.
+    struct DatumReference {
+        let country: String
+        let query: String
+        let anchor: Point
+    }
+
+    static let datumReferences: [DatumReference] = [
+        DatumReference(country: "tw", query: "臺中車站", anchor: Point(lon: 120.686991, lat: 24.137117)),
+        DatumReference(country: "tw", query: "新竹車站", anchor: Point(lon: 120.971691, lat: 24.801403)),
+        DatumReference(country: "tw", query: "屏東車站", anchor: Point(lon: 120.486143, lat: 22.668859)),
+        DatumReference(country: "tw", query: "羅東車站", anchor: Point(lon: 121.7746, lat: 24.677899)),
+        DatumReference(country: "hk", query: "Kowloon Tong Station", anchor: Point(lon: 114.175843, lat: 22.336974)),
+        DatumReference(country: "hk", query: "Tung Chung Station", anchor: Point(lon: 113.941692, lat: 22.289366)),
+        DatumReference(country: "hk", query: "Sha Tin Station", anchor: Point(lon: 114.18739, lat: 22.382538)),
+        DatumReference(country: "mo", query: "Barra Station", anchor: Point(lon: 113.529403, lat: 22.183615)),
+        DatumReference(country: "mo", query: "Cotai East Station", anchor: Point(lon: 113.569082, lat: 22.14827)),
+        DatumReference(country: "kr", query: "수원역", anchor: Point(lon: 126.999704, lat: 37.266118)),
+        DatumReference(country: "kr", query: "광주송정역", anchor: Point(lon: 126.790887, lat: 35.138142)),
+        DatumReference(country: "kr", query: "대전역", anchor: Point(lon: 127.435002, lat: 36.332538)),
+    ]
+
+    /// A result counts only when it is this close to one candidate…
+    static let datumAcceptMetres = 250.0
+    /// …and at least this much further from the other.
+    static let datumMarginMetres = 200.0
+
+    enum Datum: String { case wgs84, gcj02 }
+
+    /// Votes every reference for `country` and returns the majority verdict,
+    /// with how many references agreed. Fewer than two references answering,
+    /// or a mixed vote, defaults to WGS84 — the global service's datum and
+    /// `AppleMapDatum`'s own unprobed default.
+    static func probeDatum(country: String) async -> (datum: Datum, agree: Int, total: Int) {
+        let references = datumReferences.filter { $0.country == country }
+        var votes: [Datum] = []
+        for reference in references {
+            let items: [MKMapItem]
+            do { items = try await search(reference.query, near: reference.anchor, transportOnly: false) }
+            catch { continue }
+            guard let item = items.first else { continue }
+            let found = Point(
+                lon: item.location.coordinate.longitude, lat: item.location.coordinate.latitude)
+            let wgs84 = distance(found, reference.anchor)
+            let gcj = distance(found, gcj02(reference.anchor))
+            if wgs84 <= datumAcceptMetres, gcj - wgs84 >= datumMarginMetres { votes.append(.wgs84) }
+            else if gcj <= datumAcceptMetres, wgs84 - gcj >= datumMarginMetres { votes.append(.gcj02) }
+        }
+        let decision: Datum = (votes.count >= 2 && Set(votes).count == 1) ? votes[0] : .wgs84
+        let agree = votes.filter { $0 == decision }.count
+        return (decision, agree, references.count)
+    }
+
     struct Outcome {
         var subject: Subject
         var appleName: String
@@ -213,6 +274,11 @@ struct AuditStationPlaces {
             perCountry = Int(arguments[index + 1]) ?? perCountry
             arguments.removeSubrange(index...(index + 1))
         }
+        var datumOverride: Datum?
+        if let index = arguments.firstIndex(of: "--datum"), index + 1 < arguments.count {
+            datumOverride = Datum(rawValue: arguments[index + 1])
+            arguments.removeSubrange(index...(index + 1))
+        }
         // Anything else beginning with a dash belongs to `NSUserDefaults`'
         // argument domain rather than to this tool: `-AppleLanguages "(en)"`
         // is how the sweep is re-run in another language, and the answers
@@ -225,7 +291,19 @@ struct AuditStationPlaces {
         let wanted = arguments.isEmpty ? ["jp", "tw", "hk", "mo", "kr"] : arguments
 
         for country in wanted {
-            let sample = spread(try subjects(country: country), count: perCountry)
+            var shiftToGCJ02 = false
+            if gcjCountries.contains(country) {
+                if let datumOverride {
+                    shiftToGCJ02 = datumOverride == .gcj02
+                } else {
+                    let verdict = await probeDatum(country: country)
+                    shiftToGCJ02 = verdict.datum == .gcj02
+                    print(String(
+                        format: "DATUM\t%@\t%@\t(%d/%d references agree)",
+                        country, verdict.datum.rawValue, verdict.agree, verdict.total))
+                }
+            }
+            let sample = spread(try subjects(country: country, shiftToGCJ02: shiftToGCJ02), count: perCountry)
             var outcomes: [Outcome] = []
             var unmatched: [Subject] = []
             var unserved = 0
@@ -238,7 +316,13 @@ struct AuditStationPlaces {
                 if let first = plan.first { plan.append((first.0, false)) }
 
                 var resolved: Outcome?
+                var weak: Outcome?
                 var answered = false
+                // A `.namedStop` winner is remembered rather than accepted: it
+                // is the tier ranked below every other one, and a step later
+                // in this SAME plan may still answer with something stronger
+                // — 泰安's "Taian" finds the bus stop "Taian Stop" before the
+                // third query, "Taian Station", ever runs.
                 for (pass, step) in plan.enumerated() where resolved == nil {
                     let items: [MKMapItem]
                     do { items = try await search(step.0, near: subject.display, transportOnly: step.1) }
@@ -254,12 +338,21 @@ struct AuditStationPlaces {
                                     lon: item.location.coordinate.longitude,
                                     lat: item.location.coordinate.latitude)))
                     }
-                    guard let index = StationPlaceLink.best(candidates, for: station) else { continue }
-                    resolved = Outcome(
-                        subject: subject, appleName: items[index].name ?? "",
-                        identifier: items[index].identifier?.rawValue ?? "",
-                        metres: candidates[index].metres, pass: pass)
+                    guard let match = StationPlaceLink.bestMatch(candidates, for: station) else { continue }
+                    let outcome = Outcome(
+                        subject: subject, appleName: items[match.index].name ?? "",
+                        identifier: items[match.index].identifier?.rawValue ?? "",
+                        metres: candidates[match.index].metres, pass: pass)
+                    if match.isWeak {
+                        if weak == nil { weak = outcome }
+                        continue
+                    }
+                    // Mirrors `StationPlaceStore.resolve`: a held stop beats
+                    // an untyped landmark from the filter-off pass.
+                    if weak != nil, !match.isTransport { continue }
+                    resolved = outcome
                 }
+                if resolved == nil { resolved = weak }
 
                 if let resolved {
                     outcomes.append(resolved)

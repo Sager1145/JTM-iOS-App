@@ -238,6 +238,18 @@ enum EditorStrings {
             .ja: "「{value}」を使用",
             .en: "Use “{value}”",
         ],
+        "ios.editor.useSelectedDate": [
+            .zhHant: "使用所選日期",
+            .zhHans: "使用所选日期",
+            .ja: "選択した日付を使用",
+            .en: "Use selected date",
+        ],
+        "ios.editor.useSelectedTime": [
+            .zhHant: "使用所選時刻",
+            .zhHans: "使用所选时间",
+            .ja: "選択した時刻を使用",
+            .en: "Use selected time",
+        ],
         "ios.editor.noLineMatches": [
             .zhHant: "沒有符合的線路。可輸入線路名稱並加入。",
             .zhHans: "没有匹配的线路。可输入线路名称并添加。",
@@ -773,6 +785,11 @@ enum EditorStrings {
         "ios.editor.stationCode": [
             .zhHant: "車站代碼", .zhHans: "车站代码", .ja: "駅コード", .en: "Station code",
         ],
+        "ios.editor.stationUnmatched": [
+            .zhHant: "未對應到目錄中的車站", .zhHans: "未匹配到目录中的车站",
+            .ja: "ディレクトリの駅と一致していません",
+            .en: "This station is not matched to the catalog",
+        ],
         "ios.editor.platformNumber": [
             .zhHant: "月台編號", .zhHans: "站台编号", .ja: "番線", .en: "Platform number",
         ],
@@ -878,6 +895,60 @@ enum EditorStrings {
             .zhHans: "硬约束可能让路线完全无法求解；软偏好只影响排序。",
             .ja: "ハード制約は経路が全く見つからなくなる場合があります。ソフト優先は順位付けにのみ影響します。",
             .en: "A hard filter can stop a route resolving at all; a soft preference only influences ranking.",
+        ],
+        "ios.editor.nextServiceDay": [
+            .zhHans: "次日运行",
+            .zhHant: "次日運行",
+            .ja: "翌運行日",
+            .en: "Next service day",
+        ],
+        "ios.editor.passTime": [
+            .zhHans: "通过时刻",
+            .zhHant: "通過時刻",
+            .ja: "通過時刻",
+            .en: "Pass time",
+        ],
+        "ios.editor.timeUnfilled": [
+            .zhHans: "时间未填写",
+            .zhHant: "時間未填寫",
+            .ja: "時刻未入力",
+            .en: "Time not entered",
+        ],
+        "ios.editor.invalidClock": [
+            .zhHans: "时间无效，不会改成 00:00。",
+            .zhHant: "時間無效，不會改成 00:00。",
+            .ja: "時刻が無効です。00:00 には置き換えません。",
+            .en: "That time is not valid and was not changed to 00:00.",
+        ],
+        "ios.editor.ai.noStation": [
+            .zhHans: "请先选择车站",
+            .zhHant: "請先選擇車站",
+            .ja: "先に駅を選択してください",
+            .en: "Choose a station first.",
+        ],
+        "ios.editor.ai.noTime": [
+            .zhHans: "请填写该站时间",
+            .zhHant: "請填寫該站時間",
+            .ja: "その駅の時刻を入力してください",
+            .en: "Enter a time at that station.",
+        ],
+        "ios.editor.ai.invalidTime": [
+            .zhHans: "时间格式无效",
+            .zhHant: "時間格式無效",
+            .ja: "時刻の形式が正しくありません",
+            .en: "The time is not valid.",
+        ],
+        "ios.editor.ai.timeNotOnStation": [
+            .zhHans: "时间和车站不在同一站",
+            .zhHant: "時間和車站不在同一站",
+            .ja: "時刻と駅が同じ停車にありません",
+            .en: "The time and station are not on the same stop.",
+        ],
+        "ios.editor.ai.busy": [
+            .zhHans: "正在处理，请稍候",
+            .zhHant: "正在處理，請稍候",
+            .ja: "処理中です",
+            .en: "A request is already in progress.",
         ],
     ]
 }

@@ -111,7 +111,7 @@ function exportTrainStore() {
 function canonicalStopShape(stop) {
   return {
     name: stop.name || "",
-    n02_station_code: stop.n02_station_code || null,
+    n02_station_code: canonicalStationCode(stop.n02_station_code || null),
     // `??` is intentional: platform 0 exists and must not collapse to null.
     platform_number: stop.platform_number ?? null,
     arrival: normalizeNullableTime(stop.arrival),
@@ -155,8 +155,12 @@ function normalizeExportRouteSection(section) {
   const normalized = {
     from: section.from || "",
     to: section.to || "",
-    from_n02_station_code: section.from_n02_station_code || null,
-    to_n02_station_code: section.to_n02_station_code || null,
+    from_n02_station_code: canonicalStationCode(
+      section.from_n02_station_code || null,
+    ),
+    to_n02_station_code: canonicalStationCode(
+      section.to_n02_station_code || null,
+    ),
   };
   if (Array.isArray(section.line_names) && section.line_names.length)
     normalized.line_names = [...section.line_names];
@@ -297,8 +301,8 @@ function normalizeTrainCompany(value) {
 // path — getRideRouteSectionsForTrain() itself stays untouched because it also
 // feeds live routing / in-memory state (which must keep the resolved names).
 function leanExportSection(section) {
-  const fromCode = section.from_n02_station_code || null;
-  const toCode = section.to_n02_station_code || null;
+  const fromCode = canonicalStationCode(section.from_n02_station_code || null);
+  const toCode = canonicalStationCode(section.to_n02_station_code || null);
   const out = {};
   if (section.from && (!fromCode || stationNameForCode(fromCode) !== section.from))
     out.from = section.from;
@@ -426,8 +430,8 @@ function normalizeImportedRouteSection(section) {
   // §13.4: from/to names are optional — when absent, resolve them from the
   // from/to codes via the station table so all in-memory logic (name matching,
   // §6.4 branch checks, tooltips) keeps working on a lean stored section.
-  const fromCode = section.from_n02_station_code || null;
-  const toCode = section.to_n02_station_code || null;
+  const fromCode = canonicalStationCode(section.from_n02_station_code || null);
+  const toCode = canonicalStationCode(section.to_n02_station_code || null);
   const normalized = {
     from: section.from || stationNameForCode(fromCode),
     to: section.to || stationNameForCode(toCode),
@@ -661,8 +665,8 @@ function createBlankTrain() {
       company: "香港鐵路有限公司",
       origin: "香港",
       destination: "機場",
-      originCode: "AEL-MTR-HOK",
-      destinationCode: "AEL-MTR-AIR",
+      originCode: "MTR-HOK",
+      destinationCode: "MTR-AIR",
       lineName: "機場快綫",
       color: "#1C7670",
     });
@@ -686,8 +690,8 @@ function createBlankTrain() {
       company: "澳門輕軌股份有限公司",
       origin: "媽閣",
       destination: "海洋",
-      originCode: "MLM-TAIPA-MLM-BARRA",
-      destinationCode: "MLM-TAIPA-MLM-OCEAN",
+      originCode: "MLM-BARRA",
+      destinationCode: "MLM-OCEAN",
       lineName: "氹仔線",
       color: "#72BF44",
     });

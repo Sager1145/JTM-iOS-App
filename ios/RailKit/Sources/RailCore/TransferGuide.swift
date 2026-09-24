@@ -702,13 +702,25 @@ public enum TransferGuide {
         var times: [(minutes: Int, marker: Marker?)] = []
         var names: [String] = []
         var fallbackNames: [String] = []
-        var markers: [Marker] = []
+        var pendingMarkers: [Marker] = []
         var continues = false
 
         for token in row.tokens {
             switch token {
-            case .time(let minutes, let marker): times.append((minutes, marker))
-            case .marker(let marker): markers.append(marker)
+            case .time(let minutes, let marker):
+                // Vision frequently returns the grey 着/発 badge as its own
+                // observation. Preserve token order so a leading badge can
+                // mark the next time and a trailing badge marks the time just
+                // read. Collecting all markers separately made
+                // `14:18 着 14:39 発` apply 着 to 14:39 and discard 発.
+                let adopted = marker ?? (pendingMarkers.isEmpty ? nil : pendingMarkers.removeFirst())
+                times.append((minutes, adopted))
+            case .marker(let marker):
+                if let index = times.lastIndex(where: { $0.marker == nil }) {
+                    times[index].marker = marker
+                } else {
+                    pendingMarkers.append(marker)
+                }
             case .name(let text): names.append(text)
             // A station can wear a badge. `乗換不要 犀潟` is where the line
             // changes under a train that does not — rejecting the row for
@@ -725,7 +737,7 @@ public enum TransferGuide {
             default: return nil
             }
         }
-        guard !times.isEmpty || !markers.isEmpty else { return nil }
+        guard !times.isEmpty || !pendingMarkers.isEmpty else { return nil }
         // The LEFTMOST name, not the last. The 駅構内図 icon stands to the
         // RIGHT of the station and comes back as its own word — `東京 iff` —
         // so taking the last one names the journey's transfer station `iff`.
@@ -743,7 +755,7 @@ public enum TransferGuide {
         // attached the badge to the second time and not the first — still
         // reads as arrive-then-depart.
         var resolved = times
-        if let marker = markers.first ?? glued.marker,
+        if let marker = pendingMarkers.first ?? glued.marker,
             let index = resolved.lastIndex(where: { $0.marker == nil })
         {
             resolved[index].marker = marker

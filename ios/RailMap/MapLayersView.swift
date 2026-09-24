@@ -28,7 +28,7 @@ struct MapLayersView: View {
         NavigationStack {
             List {
                 // 底圖: the one control here that is not about railways. Live
-                // while dragging — the veil is one overlay, cheap to repaint —
+                // while dragging — only the persistent veil’s alpha changes —
                 // so the reader sees the map fade behind this half sheet.
                 Section {
                     VStack(alignment: .leading, spacing: 6) {

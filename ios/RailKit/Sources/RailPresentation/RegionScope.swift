@@ -108,7 +108,7 @@ public struct RegionScopeRule: Sendable {
     /// Windsor in Connecticut when both packages are in one graph.
     ///
     /// An operator's own code that names no region — `TYMC-A13`,
-    /// `AEL-MTR-HOK`, `MLM-TAIPA-MLM-BARRA` — answers `nil` rather than a
+    /// `MTR-HOK`, `MLM-BARRA` — answers `nil` rather than a
     /// guess. Those are placed from the shipped station tables instead; see
     /// the app's `RegionCodeIndex`.
     public func regionCode(forStationCode code: String?) -> String? {

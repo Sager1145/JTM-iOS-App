@@ -78,8 +78,10 @@ public struct NetworkVisibilityPolicy: Equatable, Sendable {
     /// Native thresholds in the 512-point MapLibre convention. The MapKit
     /// boundary converts once to the app's 256-point scale (+1). Length is
     /// the complete visibility group's length, so administrative pieces enter
-    /// together. Ordinary lines appear at app z4/5/6/7/8; short high-speed
-    /// branches remain with the backbone instead of leaving holes at overview.
+    /// together. Editorial importance sets the base tier; length may delay a
+    /// ranked line by at most one level. Short airport connectors and urban
+    /// trunks therefore remain useful at regional scale instead of all waiting
+    /// for the shortest-line tier. These are app policy, not Apple thresholds.
     public static func lineMinZoomMapLibre(
         portedMinZoom: Int, rank: Int?, visibilityLengthKm: Double,
         region: String? = nil, operator: String? = nil, name: String? = nil
@@ -87,8 +89,6 @@ public struct NetworkVisibilityPolicy: Equatable, Sendable {
         if isOverviewBackbone(rank: rank, region: region, operator: `operator`, name: name) {
             return overviewMinZoomMapLibre
         }
-        let ranks = [3, 3, 4, 5, 6]
-        let byRank = rank.flatMap { ranks.indices.contains($0) ? ranks[$0] : nil } ?? 0
         let byLength: Int
         switch visibilityLengthKm {
         case 300...: byLength = 3
@@ -97,6 +97,9 @@ public struct NetworkVisibilityPolicy: Equatable, Sendable {
         case 20...: byLength = 6
         default: byLength = 7
         }
-        return max(portedMinZoom, byRank, byLength)
+        let lengthFloor = max(portedMinZoom, byLength)
+        guard let rank, (1...4).contains(rank) else { return lengthFloor }
+        let importanceFloor = rank + 2
+        return max(importanceFloor, min(lengthFloor, importanceFloor + 1))
     }
 }
