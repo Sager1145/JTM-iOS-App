@@ -21,6 +21,9 @@ public struct MapDrawChanges: Equatable, Sendable {
     /// The display change touched only ride paint (width/opacity tokens), not what is drawn.
     public var routePaintOnly: Bool
     public var dateChanged: Bool
+    /// Era or the selected train's ride date changed. That filters geometry,
+    /// so it is a rebuild even when the selection itself is only paint.
+    public var networkFilterChanged: Bool
     public var namingChanged: Bool
     public var showsNetwork: Bool
     public var hasRides: Bool
@@ -36,6 +39,7 @@ public struct MapDrawChanges: Equatable, Sendable {
         displayChanged: Bool,
         routePaintOnly: Bool,
         dateChanged: Bool,
+        networkFilterChanged: Bool = false,
         namingChanged: Bool,
         showsNetwork: Bool,
         hasRides: Bool,
@@ -50,6 +54,7 @@ public struct MapDrawChanges: Equatable, Sendable {
         self.displayChanged = displayChanged
         self.routePaintOnly = routePaintOnly
         self.dateChanged = dateChanged
+        self.networkFilterChanged = networkFilterChanged
         self.namingChanged = namingChanged
         self.showsNetwork = showsNetwork
         self.hasRides = hasRides
@@ -70,6 +75,7 @@ public struct MapDrawChanges: Equatable, Sendable {
             || indexesChanged
             || (displayChanged && !routePaintOnly)
             || dateChanged
+            || networkFilterChanged
             || namingChanged
     }
 

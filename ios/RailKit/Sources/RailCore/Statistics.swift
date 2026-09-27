@@ -12,7 +12,7 @@ import Foundation
 /// edge set, and those edge ids are folded into one Set. Riding 東京–品川 forty
 /// times puts the same ids into the Set forty times and into the total once,
 /// which is why the percentage is a percentage of the network rather than a
-/// running tally. ``aggregateMileageStats(index:entries:country:)`` is where
+/// running tally. ``aggregateMileageStats(index:entries:country:asOf:)`` is where
 /// that happens, and it is the one function in here whose contract cannot be
 /// relaxed without the panel becoming a different claim.
 ///
@@ -184,11 +184,22 @@ public enum Statistics {
         public var lineName: JSValue?
         public var operatorName: JSValue?
 
+        /// ADR 0011 bounds. Empty and missing are the same: unbounded.
+        public var validFrom: String?
+        public var validTo: String?
+        /// Overlay `history_id`, when this section has one.
+        public var historyId: String?
+        /// Stamped by ``RailHistory/apply(_:sections:stations:)``. Default
+        /// `.current` for a section read from the current package.
+        public var temporalKind: RouteGraph.TemporalKind
+
         public init(
             n02_001: JSValue? = nil, n02_002: JSValue? = nil,
             n02_003: JSValue? = nil, n02_004: JSValue? = nil,
             railwayClassCode: JSValue? = nil, institutionTypeCode: JSValue? = nil,
-            lineName: JSValue? = nil, operatorName: JSValue? = nil
+            lineName: JSValue? = nil, operatorName: JSValue? = nil,
+            validFrom: String? = nil, validTo: String? = nil,
+            historyId: String? = nil, temporalKind: RouteGraph.TemporalKind = .current
         ) {
             self.n02_001 = n02_001
             self.n02_002 = n02_002
@@ -198,6 +209,10 @@ public enum Statistics {
             self.institutionTypeCode = institutionTypeCode
             self.lineName = lineName
             self.operatorName = operatorName
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.historyId = historyId
+            self.temporalKind = temporalKind
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -209,6 +224,10 @@ public enum Statistics {
             case institutionTypeCode = "institution_type_code"
             case lineName = "line_name"
             case operatorName = "operator"
+            case validFrom = "valid_from"
+            case validTo = "valid_to"
+            case historyId = "history_id"
+            case temporalKind = "temporal_kind"
         }
 
         public init(from decoder: Decoder) throws {
@@ -229,6 +248,13 @@ public enum Statistics {
             institutionTypeCode = try read(.institutionTypeCode)
             lineName = try read(.lineName)
             operatorName = try read(.operatorName)
+            validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
+            validTo = try container.decodeIfPresent(String.self, forKey: .validTo)
+            let rawHistory = try container.decodeIfPresent(String.self, forKey: .historyId)?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            historyId = (rawHistory?.isEmpty == false) ? rawHistory : nil
+            temporalKind = try container.decodeIfPresent(
+                RouteGraph.TemporalKind.self, forKey: .temporalKind) ?? .current
         }
 
         /// `a || b || ""`.
@@ -631,6 +657,19 @@ public enum Statistics {
         /// company at a joint station, and first-wins let that one edge label
         /// the whole line wrongly.
         public let lineOperator: OrderedDictionary<String, String>
+        /// Parallel to ``km``. Empty on an index built before temporal edges
+        /// existed; a missing row is treated as `.current` with no bounds.
+        public let temporalKind: [RouteGraph.TemporalKind]
+        public let validFrom: [String?]
+        public let validTo: [String?]
+        public let historyId: [String?]
+        /// `false` when this edge's length stays out of the base-map coverage
+        /// denominator: `.historical` or `.relocatedOld`. In-place retirement
+        /// (`.current` or `.relocatedNew` with `validTo`) stays `true`.
+        public let currentNetwork: [Bool]
+        /// Geometry keys claimed by more than one temporal slot. Absent keys
+        /// have a single edge, the one in ``map``.
+        public let variants: [EdgeKey: [Int]]
 
         /// Plumbing, not a rule.
         ///
@@ -651,7 +690,13 @@ public enum Statistics {
             totalKm: Double,
             totalsByMask: [Int: Double],
             lineTotByCat: OrderedDictionary<String, [Int: Double]>,
-            lineOperator: OrderedDictionary<String, String>
+            lineOperator: OrderedDictionary<String, String>,
+            temporalKind: [RouteGraph.TemporalKind] = [],
+            validFrom: [String?] = [],
+            validTo: [String?] = [],
+            historyId: [String?] = [],
+            currentNetwork: [Bool] = [],
+            variants: [EdgeKey: [Int]] = [:]
         ) {
             self.map = map
             self.km = km
@@ -662,6 +707,139 @@ public enum Statistics {
             self.totalsByMask = totalsByMask
             self.lineTotByCat = lineTotByCat
             self.lineOperator = lineOperator
+            self.temporalKind = temporalKind
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.historyId = historyId
+            self.currentNetwork = currentNetwork
+            self.variants = variants
+        }
+
+        /// The edge of `key` that ``RouteGraph/RailValidity`` accepts on
+        /// `rideDate`. `nil` when every claimant is out of service that day.
+        ///
+        /// An index with no temporal columns (tests, a merge of legacy parts)
+        /// returns ``map`` unchanged: those edges have no `valid_to`.
+        public func edgeID(for key: EdgeKey, on rideDate: String?) -> Int? {
+            let ids = variants[key] ?? map[key].map { [$0] } ?? []
+            guard !temporalKind.isEmpty else { return ids.first }
+            for id in ids {
+                let from = id < validFrom.count ? validFrom[id] : nil
+                let to = id < validTo.count ? validTo[id] : nil
+                if RouteGraph.RailValidity.isValid(validFrom: from, validTo: to, on: rideDate) {
+                    return id
+                }
+            }
+            return nil
+        }
+    }
+
+    /// Whether an edge's length belongs in the base-map coverage denominator.
+    /// `.current` and `.relocatedNew` do, even when `validTo` is set.
+    /// `.historical` and `.relocatedOld` do not. `validTo` is not read:
+    /// in-place retirement stays reference geometry.
+    public static func countsTowardCurrentNetwork(
+        kind: RouteGraph.TemporalKind, validTo _: String?
+    ) -> Bool {
+        switch kind {
+        case .historical, .relocatedOld:
+            return false
+        case .current, .relocatedNew:
+            return true
+        }
+    }
+
+    /// Bucket for ridden km that is not still-active reference geometry.
+    /// `nil` means the edge is not historically classified on `asOf`.
+    public enum HistoricalBucket: Sendable, Equatable {
+        case retired
+        case relocatedOld
+    }
+
+    /// Historical classification for ridden-km buckets only. Does not decide
+    /// reference-geometry membership or ``EdgeIndex/totalKm``.
+    ///
+    /// `.relocatedOld` and `.historical` are always classified. `.current` and
+    /// `.relocatedNew` are `.retired` only when service has already ended on
+    /// `asOf` (`validTo` set and ``RouteGraph/RailValidity/isValid`` fails
+    /// because of that end). A future `validTo` and a not-yet-open `validFrom`
+    /// are `nil` — `validTo != nil` alone is not retirement.
+    public static func historicalClassification(
+        kind: RouteGraph.TemporalKind,
+        validFrom: String?,
+        validTo: String?,
+        asOf: String
+    ) -> HistoricalBucket? {
+        switch kind {
+        case .relocatedOld:
+            return .relocatedOld
+        case .historical:
+            return .retired
+        case .current, .relocatedNew:
+            let from = validFrom.flatMap { $0.isEmpty ? nil : $0 }
+            let to = validTo.flatMap { $0.isEmpty ? nil : $0 }
+            guard to != nil else { return nil }
+            // Not-yet-open is not retired, even if a `validTo` is also set.
+            if !RouteGraph.RailValidity.isValid(validFrom: from, validTo: nil, on: asOf) {
+                return nil
+            }
+            if RouteGraph.RailValidity.isValid(validFrom: from, validTo: to, on: asOf) {
+                return nil
+            }
+            return .retired
+        }
+    }
+
+    /// ``historicalClassification(kind:validFrom:validTo:asOf:)`` is `.retired`.
+    /// A future `validTo` is not retired.
+    public static func isRetiredNetworkEdge(
+        kind: RouteGraph.TemporalKind,
+        validFrom: String?,
+        validTo: String?,
+        asOf: String
+    ) -> Bool {
+        historicalClassification(
+            kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf) == .retired
+    }
+
+    /// Fold `overlay` through ``RailHistory/apply(_:sections:stations:)`` and
+    /// return the sections the statistics index should walk. `nil` leaves
+    /// `sections` untouched, which is every country that ships no history file.
+    public static func applyingHistoryOverlay(
+        _ overlay: RailHistoryOverlay?, to sections: [Section]
+    ) -> [Section] {
+        guard let overlay else { return sections }
+        var features: [RouteGraph.SectionFeature] = sections.map { section in
+            let props = section.properties
+            return RouteGraph.SectionFeature(
+                properties: RouteGraph.SectionProperties(
+                    lineName: props.lineNameString,
+                    operator: props.operatorString,
+                    institutionTypeCode: props.institutionTypeCodeString,
+                    railwayClassCode: props.railwayClassCodeString,
+                    validFrom: props.validFrom,
+                    validTo: props.validTo,
+                    historyId: props.historyId,
+                    temporalKind: props.temporalKind),
+                lines: [section.coordinates])
+        }
+        var stations: [Stations.Feature] = []
+        _ = RailHistory.apply(overlay, sections: &features, stations: &stations)
+        return features.flatMap { feature in
+            let props = feature.properties
+            func text(_ value: String) -> JSValue? {
+                value.isEmpty ? nil : .string(value)
+            }
+            let properties = SectionProperties(
+                n02_001: text(props.railwayClassCode),
+                n02_002: text(props.institutionTypeCode),
+                n02_003: text(props.lineName),
+                n02_004: text(props.operator),
+                validFrom: props.validFrom,
+                validTo: props.validTo,
+                historyId: props.historyId,
+                temporalKind: props.temporalKind)
+            return feature.lines.map { Section(properties: properties, coordinates: $0) }
         }
     }
 
@@ -723,6 +901,20 @@ public enum Statistics {
         var lineArr: [String] = []
         var lineMaskArr: [Int] = []
         var lineOpArr: [String] = []
+        var kindArr: [RouteGraph.TemporalKind] = []
+        var fromArr: [String?] = []
+        var toArr: [String?] = []
+        var historyArr: [String?] = []
+        var currentArr: [Bool] = []
+        var variants: [EdgeKey: [Int]] = [:]
+
+        func bound(_ value: String?) -> String? {
+            guard let value, !value.isEmpty else { return nil }
+            return value
+        }
+        func slot(_ index: Int) -> (RouteGraph.TemporalKind, String?, String?, String?) {
+            (kindArr[index], bound(fromArr[index]), bound(toArr[index]), bound(historyArr[index]))
+        }
 
         // Reclassification accumulators, applied after the full pass. Every
         // edge is recorded against the CURRENT feature's line name (not the
@@ -745,14 +937,21 @@ public enum Statistics {
             let operatorName = props.operatorString
             let fullReclass = hsrReclassifyFullLines.first { $0.line == lineName }?.display
             let isOuLine = lineName == hsrReclassifyOuLine
+            let kind = props.temporalKind
+            let from = bound(props.validFrom)
+            let to = bound(props.validTo)
+            let history = bound(props.historyId)
+            let onCurrentNetwork = countsTowardCurrentNetwork(kind: kind, validTo: to)
+            let incoming = (kind, from, to, history)
 
             guard coords.count >= 2 else { continue }
             for i in 1..<coords.count {
                 let a = coords[i - 1]
                 let b = coords[i]
                 let key = packedEdgeKey(a, b)
+                let claimants = variants[key] ?? map[key].map { [$0] } ?? []
                 let ei: Int
-                if let existing = map[key] {
+                if let existing = claimants.first(where: { slot($0) == incoming }) {
                     ei = existing
                     maskArr[ei] |= mask
                     if lineArr[ei].isEmpty && !lineName.isEmpty {
@@ -762,14 +961,29 @@ public enum Statistics {
                     }
                 } else {
                     ei = kmArr.count
-                    map[key] = ei
+                    if map[key] == nil { map[key] = ei }
                     kmArr.append(equirectKm(a.lon, a.lat, b.lon, b.lat))
                     maskArr.append(mask)
                     lineArr.append(lineName)
                     lineMaskArr.append(lineName.isEmpty ? 0 : mask)
                     lineOpArr.append(lineName.isEmpty ? "" : operatorName)
+                    kindArr.append(kind)
+                    fromArr.append(from)
+                    toArr.append(to)
+                    historyArr.append(history)
+                    currentArr.append(onCurrentNetwork)
+                    if let first = map[key], first != ei {
+                        var list = variants[key] ?? [first]
+                        list.append(ei)
+                        variants[key] = list
+                    }
                 }
 
+                // Corridor reclassification is a current-network correction.
+                // A retired alignment that happens to share a name must not
+                // pull today's 奥羽線 trace onto geometry the denominator
+                // does not contain.
+                guard onCurrentNetwork || currentArr[ei] else { continue }
                 if let fullReclass {
                     if hsrFullSeen[fullReclass]!.insert(ei).inserted {
                         hsrFullHits[fullReclass]!.append(ei)
@@ -816,7 +1030,7 @@ public enum Statistics {
         var lineTotByCat = OrderedDictionary<String, [Int: Double]>()
         var lineOpKm = OrderedDictionary<String, OrderedDictionary<String, Double>>()
 
-        for i in 0..<kmArr.count {
+        for i in 0..<kmArr.count where currentArr[i] {
             totalKm += kmArr[i]
             let km = kmArr[i]
             let m = maskArr[i]
@@ -855,7 +1069,9 @@ public enum Statistics {
         return EdgeIndex(
             map: map, km: kmArr, mask: maskArr, lineName: lineArr, lineMask: lineMaskArr,
             totalKm: totalKm, totalsByMask: totalsByMask,
-            lineTotByCat: lineTotByCat, lineOperator: lineOperator)
+            lineTotByCat: lineTotByCat, lineOperator: lineOperator,
+            temporalKind: kindArr, validFrom: fromArr, validTo: toArr,
+            historyId: historyArr, currentNetwork: currentArr, variants: variants)
     }
 
     /// Zero km accumulator keyed by category mask, for per-line-per-category sums.
@@ -1140,7 +1356,7 @@ public enum Statistics {
     /// are recorded with the category mask of the edge they reconnect to
     /// (mask 0 = truly unattributable).
     public static func collectTrainStatsEntry(
-        features: [RouteFeature], index: EdgeIndex
+        features: [RouteFeature], index: EdgeIndex, rideDate: String? = nil
     ) -> TrainEntry {
         var edges: [Int] = []
         var spans: [Span] = []
@@ -1165,14 +1381,14 @@ public enum Statistics {
                 let prev = coords[i - 1]
                 let v = coords[i]
                 if anchor.lon == v.lon && anchor.lat == v.lat { continue }
-                if let e = index.map[packedEdgeKey(anchor, v)] {
+                if let e = index.edgeID(for: packedEdgeKey(anchor, v), on: rideDate) {
                     edges.append(e)
                     anchor = v
                     anchorMask = index.mask[e]
                     pendingKm = 0  // pending hops were interior to this matched edge
                     continue
                 }
-                if let e2 = index.map[packedEdgeKey(prev, v)] {
+                if let e2 = index.edgeID(for: packedEdgeKey(prev, v), on: rideDate) {
                     recordSpan(anchor, prev, pendingKm, index.mask[e2])
                     edges.append(e2)
                     anchor = v
@@ -1256,6 +1472,24 @@ public enum Statistics {
         public var rideMinutes: Double = 0
         public var services: ServiceGroups = ServiceGroups()
         public var topSegments: TopSegments? = nil
+        /// Deduped km of every service-valid edge a ride matched, current and
+        /// not. Connector spans are not edges and are not included.
+        public var totalRiddenKm: Double = 0
+        /// Reference-geometry ridden km whose ``historicalClassification``
+        /// is nil on the statistics reference date. In-place retirement is
+        /// excluded; it stays in ``riddenAll`` and ``retiredNetworkKm``.
+        public var currentNetworkRiddenKm: Double = 0
+        /// `.historical`, plus reference geometry already closed on the
+        /// statistics reference date. A future `validTo` is not retired.
+        public var retiredNetworkKm: Double = 0
+        /// ``RouteGraph/TemporalKind/relocatedOld`` only.
+        public var relocatedOldKm: Double = 0
+        /// ``retiredNetworkKm`` plus ``relocatedOldKm``. Not added into
+        /// ``totalRiddenKm``.
+        public var historicalUniqueKm: Double = 0
+        /// Distinct history ids on those edges, plus line names that have no
+        /// history id and are not current-only.
+        public var historicalLineCount: Int = 0
 
         /// The part of ``riddenAll`` a coverage percentage may be taken of.
         ///
@@ -1290,8 +1524,60 @@ public enum Statistics {
     /// listing the same rides in reverse order moves `riddenAll` by 1 ULP —
     /// which is why the ridden set is kept as an array plus a membership set
     /// rather than as a `Set`.
+    /// Civil today in the region's zone — the statistics reference clock.
+    /// Not the map era and not a ride date. Zone identifiers match the
+    /// region clocks (Japan when the country is unknown).
+    static func statisticsReferenceDate(country: String, now: Date = Date()) -> String {
+        let identifier: String
+        let fallbackSeconds: Int
+        switch country.lowercased() {
+        case "tw":
+            identifier = "Asia/Taipei"
+            fallbackSeconds = 8 * 3600
+        case "hk":
+            identifier = "Asia/Hong_Kong"
+            fallbackSeconds = 8 * 3600
+        case "mo":
+            identifier = "Asia/Macau"
+            fallbackSeconds = 8 * 3600
+        case "kr":
+            identifier = "Asia/Seoul"
+            fallbackSeconds = 9 * 3600
+        case "us":
+            identifier = "America/New_York"
+            fallbackSeconds = -5 * 3600
+        case "ca":
+            identifier = "America/Toronto"
+            fallbackSeconds = -5 * 3600
+        default:
+            identifier = "Asia/Tokyo"
+            fallbackSeconds = 9 * 3600
+        }
+        let zone =
+            TimeZone(identifier: identifier)
+            ?? TimeZone(secondsFromGMT: fallbackSeconds)
+            ?? TimeZone(secondsFromGMT: 0)
+            ?? .gmt
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = zone
+        let parts = calendar.dateComponents([.year, .month, .day], from: now)
+        return String(
+            format: "%04d-%02d-%02d", parts.year ?? 2000, parts.month ?? 1, parts.day ?? 1)
+    }
+
+    /// ``aggregateMileageStats(index:entries:country:asOf:)`` dated on the
+    /// region civil today. Callers that already know the reference date pass
+    /// it explicitly; this is not the ride date and not the map era.
     public static func aggregateMileageStats(
         index: EdgeIndex, entries: [TrainEntry], country: String
+    ) -> MileageStats {
+        aggregateMileageStats(
+            index: index, entries: entries, country: country,
+            asOf: statisticsReferenceDate(country: country))
+    }
+
+    public static func aggregateMileageStats(
+        index: EdgeIndex, entries: [TrainEntry], country: String, asOf: String
     ) -> MileageStats {
         var riddenOrder: [Int] = []
         var riddenSeen = Set<Int>()
@@ -1311,20 +1597,59 @@ public enum Statistics {
 
         var riddenAll = 0.0
         var unmatchedKm = 0.0
+        var totalRiddenKm = 0.0
+        var currentNetworkRiddenKm = 0.0
+        var retiredNetworkKm = 0.0
+        var relocatedOldKm = 0.0
+        var historyIDs: [String] = []
+        var historySeen = Set<String>()
+        var fallbackLines: [String] = []
+        var fallbackSeen = Set<String>()
+        var currentLines = Set<String>()
         let cats = categories(country: country)
         var riddenByMask: [Int: Double] = [:]
         for category in cats { riddenByMask[category.mask] = 0 }
         var lineRidByCat = OrderedDictionary<String, [Int: Double]>()
 
         for e in riddenOrder {
-            riddenAll += index.km[e]
             let km = index.km[e]
+            let kind = e < index.temporalKind.count ? index.temporalKind[e] : RouteGraph.TemporalKind.current
+            let validFrom = e < index.validFrom.count ? index.validFrom[e] : nil
+            let validTo = e < index.validTo.count ? index.validTo[e] : nil
+            let onCurrent = e < index.currentNetwork.count
+                ? index.currentNetwork[e]
+                : countsTowardCurrentNetwork(kind: kind, validTo: validTo)
+            let bucket = historicalClassification(
+                kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf)
+            totalRiddenKm += km
+            switch bucket {
+            case .relocatedOld:
+                relocatedOldKm += km
+            case .retired:
+                retiredNetworkKm += km
+            case nil:
+                break
+            }
+            if bucket != nil {
+                if e < index.historyId.count, let id = index.historyId[e], !id.isEmpty {
+                    if historySeen.insert(id).inserted { historyIDs.append(id) }
+                } else {
+                    let name = index.lineName[e]
+                    if !name.isEmpty, fallbackSeen.insert(name).inserted { fallbackLines.append(name) }
+                }
+            }
+            if !onCurrent { continue }
+            // Reference geometry, including in-place retirement. Only the
+            // still-active part (classification nil) is current-network ridden.
+            if bucket == nil { currentNetworkRiddenKm += km }
+            riddenAll += km
             let m = index.mask[e]
             for category in cats where m & category.mask != 0 {
                 riddenByMask[category.mask]! += km
             }
             let ln = index.lineName[e]
             guard !ln.isEmpty else { continue }
+            if bucket == nil { currentLines.insert(ln) }
             let lm = index.lineMask[e]
             var byCat = lineRidByCat[ln] ?? zeroCategoryKm(country: country)
             for category in cats where lm & category.mask != 0 { byCat[category.mask]! += km }
@@ -1344,9 +1669,16 @@ public enum Statistics {
             }
         }
 
+        let namedLines = fallbackLines.filter { !currentLines.contains($0) }
         return MileageStats(
             riddenAll: riddenAll, riddenByMask: riddenByMask,
-            unmatchedKm: unmatchedKm, lineRidByCat: lineRidByCat)
+            unmatchedKm: unmatchedKm, lineRidByCat: lineRidByCat,
+            totalRiddenKm: totalRiddenKm,
+            currentNetworkRiddenKm: currentNetworkRiddenKm,
+            retiredNetworkKm: retiredNetworkKm,
+            relocatedOldKm: relocatedOldKm,
+            historicalUniqueKm: retiredNetworkKm + relocatedOldKm,
+            historicalLineCount: historyIDs.count + namedLines.count)
     }
 
     // MARK: - ride time

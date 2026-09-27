@@ -199,15 +199,11 @@ function buildTrainRouteSolveContext(train) {
   ]
     .sort()
     .join("|");
-  const rideDate =
-    typeof train.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(train.date)
-      ? train.date
-      : null;
-  const historyRevision =
-    typeof getRailHistoryRevision === "function"
-      ? getRailHistoryRevision()
-      : null;
-  let cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}|date:${rideDate || "none"}|history:${historyRevision || "none"}`;
+  const rideDate = normalizeDateString(train.date);
+  const historyRegions = railHistoryRegionsForTrain(train);
+  const historyRevisions = getRailHistoryRevisionsForRegions(historyRegions);
+  const historyKey = canonicalRailHistoryRevisionsForRegions(historyRegions);
+  let cacheKey = `solver:${ROUTE_SOLVER_CACHE_VERSION}|${allowedCodes.join(",")}|${policyKey}|${templateKey}|date:${rideDate || "none"}|history:${historyKey}`;
   // inferSectionRouteConstraints derives per-section line/operator hints from
   // id/number/train_type/company/origin/destination (Sonic, Haruka, ...). Two
   // trains with identical sections/type/company but different id/number/
@@ -221,7 +217,28 @@ function buildTrainRouteSolveContext(train) {
     if (!lines.length && !operators.length) return;
     cacheKey += `|infer:${index}:line:${lines.join(",")}:operator:${operators.join(",")}`;
   });
-  return { routeSections, templateKey, allowedCodes, cacheKey };
+  return {
+    routeSections,
+    templateKey,
+    allowedCodes,
+    cacheKey,
+    rideDate,
+    historyRevisions,
+  };
+}
+
+// Stable, serialized solve provenance shared by browser parts and the native
+// decoder. It intentionally exposes a digest rather than the potentially huge
+// full route cache key; Swift RouteGraph.keyDigest implements the same digest.
+function getTrainRouteSolveContext(train) {
+  const context = buildTrainRouteSolveContext(train);
+  if (!context) return null;
+  return {
+    solver_version: String(ROUTE_SOLVER_CACHE_VERSION),
+    route_cache_digest: routeKeyDigest(context.cacheKey),
+    ride_date: context.rideDate,
+    history_revisions: { ...context.historyRevisions },
+  };
 }
 
 // Both route keys enumerate EVERY route section, so they grow with the train:
@@ -1068,6 +1085,7 @@ function buildRouteGraphFromFeatures(features) {
     recordNodeMeta(a, properties);
     recordNodeMeta(b, properties);
     const length = routeSolverApi.distanceMeters(nodes.get(a), nodes.get(b));
+    const bounds = railServiceBounds(properties);
     const edge = {
       to: b,
       length: Math.max(length, 0.01),
@@ -1079,8 +1097,8 @@ function buildRouteGraphFromFeatures(features) {
       ),
       line_name: properties?.N02_003 || properties?.line_name || "",
       operator: properties?.N02_004 || properties?.operator || "",
-      valid_from: properties?.valid_from ?? null,
-      valid_to: properties?.valid_to ?? null,
+      valid_from: bounds.valid_from,
+      valid_to: bounds.valid_to,
     };
     adjacency.get(a).push(edge);
     adjacency.get(b).push({ ...edge, to: a });
@@ -1344,13 +1362,10 @@ function getRegionalRouteGraph(bbox) {
 // by the bbox helper and the on-graph solver so the from/to lookup pattern
 // lives in exactly one place).
 function filterStationCandidatesByRideDate(features, rideDate) {
-  return (features || []).filter((feature) =>
-    isRailValid(
-      feature?.properties?.valid_from,
-      feature?.properties?.valid_to,
-      rideDate,
-    ),
-  );
+  return (features || []).filter((feature) => {
+    const bounds = railServiceBounds(feature?.properties);
+    return isRailValid(bounds.valid_from, bounds.valid_to, rideDate);
+  });
 }
 
 function resolveSectionEndpoints(section, train, allowedCodes) {

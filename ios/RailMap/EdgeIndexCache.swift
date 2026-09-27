@@ -29,14 +29,26 @@ actor EdgeIndexCache {
     /// Keep the last multi-region merge as well as its component indexes.
     /// Returning to All Regions after a single-region visit must not copy
     /// every edge dictionary again. One slot bounds the extra memory.
-    private var mergedIndex: (countries: [String], index: Statistics.EdgeIndex)?
+    /// `policy` is `attribution-policy-v2`: a merge cached before in-place
+    /// retirement stayed in the reference-geometry denominator must not be
+    /// reused. Country-list equality is otherwise unchanged, and the ride
+    /// date is not part of this key — the index is date-independent.
+    private var mergedIndex: (countries: [String], policy: String, index: Statistics.EdgeIndex)?
+
+    /// In-memory identity of one region's index. Not persisted: this actor
+    /// holds indexes only for the life of the process, so there is no disk
+    /// key to extend. The ride date is intentionally absent.
+    private nonisolated static func countryCacheKey(_ country: String) -> String {
+        "\(country)|attribution-policy-v2"
+    }
 
     /// The index for one region, building it if this is the first ask.
     func index(country: String) async throws -> Statistics.EdgeIndex {
-        if let ready = indexes[country] { return ready }
+        let key = Self.countryCacheKey(country)
+        if let ready = indexes[key] { return ready }
         // Joined rather than started again: the second caller of a region
         // whose build is already running is exactly the case this exists for.
-        if let running = inFlight[country] { return try await running.value }
+        if let running = inFlight[key] { return try await running.value }
 
         let task = Task.detached(priority: .userInitiated) {
             let n02 = try Self.build(country: country)
@@ -49,7 +61,7 @@ actor EdgeIndexCache {
             else { return n02 }
             return Self.appendingVector(to: n02, network: network)
         }
-        inFlight[country] = task
+        inFlight[key] = task
         // Detached, so a caller that is cancelled while waiting does not take
         // the build down with it — the other caller is still waiting on it.
         //
@@ -62,11 +74,11 @@ actor EdgeIndexCache {
         // next one seconds.
         do {
             let built = try await task.value
-            if inFlight[country] == task { inFlight[country] = nil }
-            indexes[country] = built
+            if inFlight[key] == task { inFlight[key] = nil }
+            indexes[key] = built
             return built
         } catch {
-            if inFlight[country] == task { inFlight[country] = nil }
+            if inFlight[key] == task { inFlight[key] = nil }
             throw error
         }
     }
@@ -130,7 +142,10 @@ actor EdgeIndexCache {
     /// comes first and lays down edge offsets that index into the arrays it
     /// builds, so the order it sees may not become a property of the schedule.
     func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
-        if let mergedIndex, mergedIndex.countries == countries { return mergedIndex.index }
+        if let mergedIndex,
+            mergedIndex.countries == countries,
+            mergedIndex.policy == "attribution-policy-v2"
+        { return mergedIndex.index }
         guard countries.count > 1 else {
             // One region needs no group, and none at all still answers what
             // the sequential version answered: `merge` of nothing.
@@ -162,11 +177,14 @@ actor EdgeIndexCache {
 
         // Another caller may have completed this merge while we awaited its
         // component indexes. Reuse that answer instead of duplicating it.
-        if let mergedIndex, mergedIndex.countries == countries { return mergedIndex.index }
+        if let mergedIndex,
+            mergedIndex.countries == countries,
+            mergedIndex.policy == "attribution-policy-v2"
+        { return mergedIndex.index }
         let result = Self.merge(countries.enumerated().compactMap { position, country in
             byPosition[position].map { (country, $0) }
         })
-        mergedIndex = (countries, result)
+        mergedIndex = (countries, "attribution-policy-v2", result)
         return result
     }
 
@@ -193,6 +211,12 @@ actor EdgeIndexCache {
         var mask: [Int] = []
         var lineName: [String] = []
         var lineMask: [Int] = []
+        var temporalKind: [RouteGraph.TemporalKind] = []
+        var validFrom: [String?] = []
+        var validTo: [String?] = []
+        var historyId: [String?] = []
+        var currentNetwork: [Bool] = []
+        var variants: [Statistics.EdgeKey: [Int]] = [:]
         var totalKm = 0.0
         var totalsByMask: [Int: Double] = [:]
         var lineTotByCat = Statistics.OrderedDictionary<String, [Int: Double]>()
@@ -204,6 +228,14 @@ actor EdgeIndexCache {
             mask += part.index.mask
             lineName += part.index.lineName.map { qualified($0, part.country) }
             lineMask += part.index.lineMask
+            temporalKind += Self.padded(part.index.temporalKind, count: part.index.km.count, fill: .current)
+            validFrom += Self.padded(part.index.validFrom, count: part.index.km.count, fill: nil)
+            validTo += Self.padded(part.index.validTo, count: part.index.km.count, fill: nil)
+            historyId += Self.padded(part.index.historyId, count: part.index.km.count, fill: nil)
+            currentNetwork += Self.padded(part.index.currentNetwork, count: part.index.km.count, fill: true)
+            for (key, ids) in part.index.variants {
+                variants[key, default: []].append(contentsOf: ids.map { $0 + offset })
+            }
             totalKm += part.index.totalKm
             // Edge keys are built from coordinates, so two regions cannot
             // produce the same one — but `merging` states what happens rather
@@ -228,7 +260,17 @@ actor EdgeIndexCache {
         return Statistics.EdgeIndex(
             map: map, km: km, mask: mask, lineName: lineName, lineMask: lineMask,
             totalKm: totalKm, totalsByMask: totalsByMask,
-            lineTotByCat: lineTotByCat, lineOperator: lineOperator)
+            lineTotByCat: lineTotByCat, lineOperator: lineOperator,
+            temporalKind: temporalKind, validFrom: validFrom, validTo: validTo,
+            historyId: historyId, currentNetwork: currentNetwork, variants: variants)
+    }
+
+    private nonisolated static func padded<T>(
+        _ values: [T], count: Int, fill: T
+    ) -> [T] {
+        if values.count == count { return values }
+        if values.count > count { return Array(values.prefix(count)) }
+        return values + Array(repeating: fill, count: count - values.count)
     }
 
     /// The index for one region if it is already built, without building one.
@@ -236,7 +278,9 @@ actor EdgeIndexCache {
     /// For callers that cannot wait — the render path, which must answer
     /// "is this segment's category hidden?" synchronously and treats a missing
     /// index as "undetermined, stays visible", exactly as the web app does.
-    func ready(country: String) -> Statistics.EdgeIndex? { indexes[country] }
+    func ready(country: String) -> Statistics.EdgeIndex? {
+        indexes[Self.countryCacheKey(country)]
+    }
 
     private nonisolated static func build(
         country: String
@@ -247,7 +291,17 @@ actor EdgeIndexCache {
             forResource: Region.countrySuffixed("rail-sections", country: country),
             withExtension: "json")
         else { throw MissingSections(country: country) }
-        let sections = try Statistics.SectionFeatureCollection.load(contentsOf: url).sections
+        let loaded = try Statistics.SectionFeatureCollection.load(contentsOf: url).sections
+        let overlay: RailHistoryOverlay?
+        if let historyURL = Bundle.main.url(
+            forResource: Region.countrySuffixed("rail-history", country: country),
+            withExtension: "json")
+        {
+            overlay = try? RailHistoryOverlay.load(from: historyURL)
+        } else {
+            overlay = nil
+        }
+        let sections = Statistics.applyingHistoryOverlay(overlay, to: loaded)
         return Statistics.buildEdgeIndex(sections: sections, country: country)
     }
 
@@ -306,6 +360,11 @@ actor EdgeIndexCache {
         var mask = n02.mask
         var lineName = n02.lineName
         var lineMask = n02.lineMask
+        var temporalKind = Self.padded(n02.temporalKind, count: n02.km.count, fill: .current)
+        var validFrom = Self.padded(n02.validFrom, count: n02.km.count, fill: nil)
+        var validTo = Self.padded(n02.validTo, count: n02.km.count, fill: nil)
+        var historyId = Self.padded(n02.historyId, count: n02.km.count, fill: nil)
+        var currentNetwork = Self.padded(n02.currentNetwork, count: n02.km.count, fill: true)
 
         for line in network.lines {
             guard let name = line.name, !name.isEmpty else { continue }
@@ -335,6 +394,11 @@ actor EdgeIndexCache {
                     mask.append(classified.mask)
                     lineName.append(name)
                     lineMask.append(classified.lineMask)
+                    temporalKind.append(.current)
+                    validFrom.append(nil)
+                    validTo.append(nil)
+                    historyId.append(nil)
+                    currentNetwork.append(true)
                 }
             }
         }
@@ -343,7 +407,9 @@ actor EdgeIndexCache {
             map: map, km: km, mask: mask, lineName: lineName, lineMask: lineMask,
             // The denominator is the classified network and nothing else.
             totalKm: n02.totalKm, totalsByMask: n02.totalsByMask,
-            lineTotByCat: n02.lineTotByCat, lineOperator: n02.lineOperator)
+            lineTotByCat: n02.lineTotByCat, lineOperator: n02.lineOperator,
+            temporalKind: temporalKind, validFrom: validFrom, validTo: validTo,
+            historyId: historyId, currentNetwork: currentNetwork, variants: n02.variants)
     }
 
     struct MissingSections: LocalizedError {

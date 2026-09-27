@@ -34,8 +34,12 @@ final class MapOverlayStyles {
         var alpha: CGFloat
         /// Dashed strokes carry the pair in LINE WIDTHS, so it is derived from
         /// the token and needs no ramp of its own — the same factor carries
-        /// dash and stroke down together.
+        /// dash and stroke down together. Cross-day rides and withheld
+        /// casings. Not the historical network mark.
         var dashed = false
+        /// Historical and relocated-old network strokes. A different on/off
+        /// from ``dashed`` (`RailStyle.historyDot`, not `dashPattern`).
+        var historical = false
     }
 
     private var styles: [String: Style] = [:]
@@ -84,6 +88,14 @@ final class MapOverlayStyles {
         renderers[key] = renderer
     }
 
+    /// Cross-day dash and the historical dot are different patterns. A style
+    /// that sets neither is solid.
+    static func dashPattern(_ style: Style?, atScale scale: CGFloat) -> [NSNumber]? {
+        if style?.dashed == true { return RailStyle.dashPattern(atScale: scale) }
+        if style?.historical == true { return RailStyle.historyDot(atScale: scale) }
+        return nil
+    }
+
     /// The one place a stored token becomes points on screen.
     static func drawnWidth(_ style: Style?, atScale scale: CGFloat) -> CGFloat {
         (style?.widthToken ?? RailStyle.railWidth) * scale
@@ -99,7 +111,7 @@ final class MapOverlayStyles {
         for (key, renderer) in renderers {
             let style = styles[key]
             let width = Self.drawnWidth(style, atScale: scale)
-            let dash = style?.dashed == true ? RailStyle.dashPattern(atScale: scale) : nil
+            let dash = Self.dashPattern(style, atScale: scale)
             let color = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
             if let polyline = renderer as? MKPolylineRenderer {
                 guard polyline.strokeColor != color || polyline.lineWidth != width

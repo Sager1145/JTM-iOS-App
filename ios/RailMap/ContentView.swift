@@ -2855,6 +2855,14 @@ struct RailWorkspaceView: View {
     /// destinations is not the map but the QUESTION being asked of it, so what
     /// varies here are its inputs: which rides are drawn, and whether the
     /// complete network is on.
+    /// Normalized date of the selected train. Undated and unselected both
+    /// pass nil so the ride-date era uses the Current predicate.
+    private var selectedTrainNetworkDate: String? {
+        guard let train = selectedTrain else { return nil }
+        let day = Dates.normalizeTrainDate(train.forDates)
+        return day == Dates.undated ? nil : day
+    }
+
     private var map: some View {
         RailMapView(
             lines: lines,
@@ -2863,6 +2871,8 @@ struct RailWorkspaceView: View {
             networkExtent: store.networkExtent,
             selectedTrainID: itineraries.selectedTrainID,
             selectedDate: selectedDate,
+            networkRideDate: selectedTrainNetworkDate,
+
             // One display switch, one source of truth. Statistics can change
             // the reported region and frame the camera, but it must not force
             // the complete network back on after the reader turns it off.

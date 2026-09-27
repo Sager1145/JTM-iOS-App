@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The 設定 workspace.
@@ -255,7 +256,8 @@ struct SettingsView: View {
     // MARK: - 3. Map content
 
     private var mapContentSection: some View {
-        Section {
+        @Bindable var display = display
+        return Section {
             SettingToggleRow(
                 title: localization.countryText("map.allRailways", fallback: "Complete rail network"),
                 note: localization.text(
@@ -287,6 +289,21 @@ struct SettingsView: View {
             LabeledContent(localization.text("ios.renderer", fallback: "Renderer")) {
                 Text(verbatim: "Apple Maps")
             }
+            Picker(
+                localization.text("ios.networkEra", fallback: "Network era"),
+                selection: Binding(
+                    get: { display.networkEra },
+                    set: { display.networkEra = $0; display.persist() }
+                )
+            ) {
+                Text(localization.text("ios.networkEra.current", fallback: "Current"))
+                    .tag(DisplayNetworkEra.current)
+                Text(localization.text("ios.networkEra.rideDate", fallback: "Selected ride's date"))
+                    .tag(DisplayNetworkEra.rideDate)
+                Text(localization.text("ios.networkEra.overlay", fallback: "Historical overlay"))
+                    .tag(DisplayNetworkEra.historicalOverlay)
+            }
+            .pickerStyle(.navigationLink)
         } header: {
             Text(localization.text("ios.mapContent", fallback: "Map content"))
         }

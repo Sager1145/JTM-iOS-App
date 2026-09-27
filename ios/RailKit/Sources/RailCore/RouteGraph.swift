@@ -174,10 +174,17 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns. Bumped to "21"
-    /// because endpoint station candidates are now filtered by ride-date
-    /// validity (ADR 0011), the same rule already applied to edges.
-    public static let routeSolverCacheVersion = "21"
+    /// parameter here rather than a constant this file owns. Version 22
+    /// invalidates routes solved before the Phase 1 history context and
+    /// temporal connector corrections.
+    public static let routeSolverCacheVersion = "22"
+
+    /// On-disk drawn-route cache (`RiddenRouteStore` save/read). Not part of
+    /// `solveContext` or the route digest: version 22 files may have
+    /// canonicalized historical geometry onto the current display network,
+    /// and those files must miss. Precomputed `solver_version` stays
+    /// ``routeSolverCacheVersion``.
+    public static let routeDrawnCacheVersion = "23"
 
     /// The operators a `company` field names, split on `/`.
     ///
@@ -428,11 +435,17 @@ public enum RouteGraph {
         /// `[validFrom, validTo)`. `nil` means unbounded on that side.
         public var validFrom: String?
         public var validTo: String?
+        /// Overlay `history_id`, when the feature has one. A current-package
+        /// feature a retirement stamps with `valid_from` receives that
+        /// retirement's id. Not dropped at decode.
+        public var historyId: String?
+        public var temporalKind: TemporalKind
 
         public init(
             lineName: String = "", operator: String = "",
             institutionTypeCode: String = "", railwayClassCode: String = "",
-            validFrom: String? = nil, validTo: String? = nil
+            validFrom: String? = nil, validTo: String? = nil,
+            historyId: String? = nil, temporalKind: TemporalKind = .current
         ) {
             self.lineName = lineName
             self.operator = `operator`
@@ -440,6 +453,14 @@ public enum RouteGraph {
             self.railwayClassCode = railwayClassCode
             self.validFrom = validFrom
             self.validTo = validTo
+            self.historyId = historyId
+            self.temporalKind = temporalKind
+        }
+
+        var carriedHistoryIDs: [String] {
+            guard let historyId else { return [] }
+            let trimmed = historyId.trimmingCharacters(in: .whitespacesAndNewlines)
+            return trimmed.isEmpty ? [] : [trimmed]
         }
     }
 
@@ -526,6 +547,70 @@ public enum RouteGraph {
         }
     }
 
+    /// How a section relates to the current package. Raw values are the
+    /// on-disk spellings. A solved section keeps the most specific kind among
+    /// its edges: `relocatedOld`, then `relocatedNew`, then `historical`,
+    /// then `current`.
+    public enum TemporalKind: String, Sendable, Equatable, Codable {
+        case current
+        case historical
+        case relocatedOld
+        case relocatedNew
+
+        var specificity: Int {
+            switch self {
+            case .relocatedOld: 3
+            case .relocatedNew: 2
+            case .historical: 1
+            case .current: 0
+            }
+        }
+
+        /// Display-network canonicalization redraws a hop onto track that is
+        /// still in the current package. Historical and relocated geometry
+        /// must keep the coordinates the solver walked.
+        public static func shouldCanonicalizeDisplayNetwork(_ kind: TemporalKind) -> Bool {
+            kind == .current
+        }
+    }
+
+    /// Validity and provenance shared by a solved section's edges. `validFrom`
+    /// is the max of present bounds and `validTo` the min — the same
+    /// intersection a station-transfer connector uses. `historyIDs` is the
+    /// union, sorted. An empty input is `.current`.
+    struct TemporalProvenance: Sendable, Equatable {
+        var historyIDs: [String]
+        var validFrom: String?
+        var validTo: String?
+        var temporalKind: TemporalKind
+
+        static func aggregate(
+            historyIDs: [String], validFrom: [String?], validTo: [String?],
+            kinds: [TemporalKind]
+        ) -> TemporalProvenance {
+            var seen = Set<String>()
+            var unique: [String] = []
+            for id in historyIDs where !id.isEmpty && seen.insert(id).inserted {
+                unique.append(id)
+            }
+            unique.sort()
+            let kind = kinds.max { $0.specificity < $1.specificity } ?? .current
+            return TemporalProvenance(
+                historyIDs: unique,
+                validFrom: validFrom.compactMap { $0 }.max(),
+                validTo: validTo.compactMap { $0 }.min(),
+                temporalKind: kind)
+        }
+
+        static func aggregate(edges: [Edge]) -> TemporalProvenance {
+            aggregate(
+                historyIDs: edges.flatMap(\.historyIDs),
+                validFrom: edges.map(\.validFrom),
+                validTo: edges.map(\.validTo),
+                kinds: edges.map(\.temporalKind))
+        }
+    }
+
     public struct Edge: Sendable, Equatable {
         public var to: String
         /// Metres, floored at 0.01 so a zero-length edge cannot make a
@@ -541,6 +626,10 @@ public enum RouteGraph {
         /// station-transfer connector, from the station) this edge came from.
         public var validFrom: String? = nil
         public var validTo: String? = nil
+        /// History-overlay identifiers this edge came from. Empty on current
+        /// package track and on station-transfer connectors.
+        public var historyIDs: [String] = []
+        public var temporalKind: TemporalKind = .current
     }
 
     /// What is known about the railways meeting at one node. Used only for
@@ -652,7 +741,9 @@ public enum RouteGraph {
                 operator: properties.operator,
                 connector: nil,
                 validFrom: properties.validFrom,
-                validTo: properties.validTo)
+                validTo: properties.validTo,
+                historyIDs: properties.carriedHistoryIDs,
+                temporalKind: properties.temporalKind)
             graph.adjacency[keyA]!.append(edge)
             var reverse = edge
             reverse.to = keyA
@@ -1169,6 +1260,7 @@ extension RouteGraph.SectionFeature: Decodable {
         let railwayClassCode: String?
         let validFrom: String?
         let validTo: String?
+        let historyId: String?
 
         private enum CodingKeys: String, CodingKey {
             case n02_001 = "N02_001"
@@ -1176,7 +1268,8 @@ extension RouteGraph.SectionFeature: Decodable {
             case n02_003 = "N02_003"
             case n02_004 = "N02_004"
             case line_name, `operator`, institution_type_code, railway_class_code
-            case valid_from, valid_to
+            case valid_from, valid_to, history_id
+            case service_validity, infrastructure_validity
         }
 
         init(from decoder: Decoder) throws {
@@ -1192,8 +1285,20 @@ extension RouteGraph.SectionFeature: Decodable {
             institutionTypeCode = try orFallback(.n02_002, .institution_type_code)
             lineName = try orFallback(.n02_003, .line_name)
             `operator` = try orFallback(.n02_004, .operator)
-            validFrom = try c.decodeIfPresent(String.self, forKey: .valid_from)
-            validTo = try c.decodeIfPresent(String.self, forKey: .valid_to)
+            let legacyFrom = try c.decodeIfPresent(String.self, forKey: .valid_from)
+            let legacyTo = try c.decodeIfPresent(String.self, forKey: .valid_to)
+            let service = try c.decodeIfPresent([String?].self, forKey: .service_validity)
+            let infrastructure = try c.decodeIfPresent([String?].self, forKey: .infrastructure_validity)
+            let resolved = RailServiceValidity.bounds(
+                service: service, infrastructure: infrastructure,
+                validFrom: legacyFrom, validTo: legacyTo,
+                hasLegacy: c.contains(.valid_from) || c.contains(.valid_to))
+            validFrom = resolved.0
+            validTo = resolved.1
+            let rawHistoryID = try c.decodeIfPresent(String.self, forKey: .history_id)
+            let trimmedHistoryID = rawHistoryID?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            historyId = (trimmedHistoryID?.isEmpty == false) ? trimmedHistoryID : nil
         }
     }
 
@@ -1239,7 +1344,8 @@ extension RouteGraph.SectionFeature: Decodable {
                 institutionTypeCode: nonEmpty(properties?.institutionTypeCode),
                 railwayClassCode: nonEmpty(properties?.railwayClassCode),
                 validFrom: properties?.validFrom,
-                validTo: properties?.validTo),
+                validTo: properties?.validTo,
+                historyId: properties?.historyId),
             lines: geometry?.lines ?? [], geometryType: geometry?.type ?? "")
     }
 }

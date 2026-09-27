@@ -1,6 +1,7 @@
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 import SwiftUI
 import os
 
@@ -106,6 +107,11 @@ final class RailNetworkStore {
         /// One polyline per station-to-station interval, exactly as the web
         /// app draws them.
         let intervals: [[Coordinate]]
+        /// Parallel to ``intervals`` when any part of this fragment is dated.
+        /// Empty means every part is today's undecorated network. A nil entry
+        /// is an unstamped part beside a stamped one — not one span for the
+        /// whole fragment.
+        let partSpans: [DisplayTemporalDecoration?]
         /// The same off-screen test one level down, and the reason a whole
         /// railway can be resident without a whole railway being drawn.
         ///
@@ -135,7 +141,8 @@ final class RailNetworkStore {
             totalMetres: Double = 0,
             follows: [StrokeFollow] = [],
             withheld: [WithheldSpan] = [],
-            familyWindows: [FamilyWindow] = []
+            familyWindows: [FamilyWindow] = [],
+            partSpans: [DisplayTemporalDecoration?] = []
         ) {
             self.id = id
             self.lineID = lineID
@@ -159,6 +166,7 @@ final class RailNetworkStore {
             self.follows = follows
             self.withheld = withheld
             self.familyWindows = familyWindows
+            self.partSpans = partSpans
             self.intervals = intervals
             let rects = intervals.map(Self.boundingRect(of:))
             self.intervalRects = rects
@@ -221,6 +229,21 @@ final class RailNetworkStore {
         /// On a continuous-stroke line, the chain and vertex this platform
         /// sits on; its bead is that vertex's offset at every zoom.
         var slot: StrokeSlot? = nil
+        /// Retirement or overlay dates. Nil bounds and `.current` with no
+        /// history id draw in every era.
+        var historyId: String? = nil
+        var validFrom: String? = nil
+        var validTo: String? = nil
+        var temporalKind: RouteGraph.TemporalKind = .current
+        /// Closed overlay platforms. Never a cross-day diamond — the map
+        /// draws the ordinary dot at a lower alpha.
+        var isOverlay: Bool = false
+
+        var temporalDecoration: DisplayTemporalDecoration {
+            DisplayTemporalDecoration(
+                historyId: historyId, validFrom: validFrom, validTo: validTo,
+                kind: temporalKind, isOverlayStation: isOverlay)
+        }
     }
 
     struct StrokeSlot: Sendable, Hashable {
@@ -439,6 +462,10 @@ final class RailNetworkStore {
         displayAttempts = [:]
         displayFailures = [:]
         displayManifest = nil
+        displayHistoryByRegion = [:]
+        displayHistoryFullLineIDs = []
+        displayHistoryOverlayLines = [:]
+        displayHistoryOverlayStations = [:]
         lastDisplayRequest = nil
         lastRequestedDisplayLine = [:]
         requestSerial = 0
@@ -460,6 +487,12 @@ final class RailNetworkStore {
                 let manifest = try await Self.loadDisplayManifest()
                 guard startedEpoch == loadEpoch else { return }
                 displayManifest = manifest
+                let history = Self.loadDisplayHistories(manifest)
+                guard startedEpoch == loadEpoch else { return }
+                displayHistoryByRegion = history.files
+                displayHistoryFullLineIDs = history.fullDetailLineIDs
+                displayHistoryOverlayLines = history.overlayLines
+                displayHistoryOverlayStations = history.overlayStations
                 let index = RailDisplayNetworkIndex.lineIndex(for: manifest)
                 guard startedEpoch == loadEpoch else { return }
                 displayIndex = index
@@ -681,6 +714,13 @@ final class RailNetworkStore {
     /// keystroke.
     @ObservationIgnored private var decodeFailedAt: [Region: Date] = [:]
     @ObservationIgnored private var displayManifest: RailDisplayNetworkManifest?
+    @ObservationIgnored private var displayHistoryByRegion: [String: RailDisplayHistoryFile] = [:]
+    /// Bare line ids with a history part row. Overview chunks stay in the
+    /// blob; they are not used for these lines.
+    @ObservationIgnored private var displayHistoryFullLineIDs: Set<String> = []
+    /// Built once per manifest so a republish does not mint new content ids.
+    @ObservationIgnored private var displayHistoryOverlayLines: [String: [DrawnLine]] = [:]
+    @ObservationIgnored private var displayHistoryOverlayStations: [String: [DrawnStation]] = [:]
     /// The in-flight (or already finished) attempt to read the manifest,
     /// started by ``loadAll()``. `decodeGeometry(_:)` awaits its `.value`
     /// before reading `displayManifest`, which is the only thing that makes
@@ -758,7 +798,8 @@ final class RailNetworkStore {
     private func wantedDetail(
         for entry: RailDisplayNetworkIndex.Entry, cameraZoom: Double
     ) -> DisplayDetail {
-        cameraZoom <= Self.overviewDetailMaxZoom && entry.overview != nil ? .overview : .full
+        if displayHistoryFullLineIDs.contains(entry.id) { return .full }
+        return cameraZoom <= Self.overviewDetailMaxZoom && entry.overview != nil ? .overview : .full
     }
 
     private func activateDisplayLines(intersecting rect: MKMapRect, cameraZoom: Double) {
@@ -915,6 +956,7 @@ final class RailNetworkStore {
             let started = ContinuousClock.now
             let result = await Self.loadDisplayChunks(
                 batch, blobs: displayBlobs, catalog: manifest.lines, index: index,
+                histories: displayHistoryByRegion,
                 maximumConcurrent: Self.maximumConcurrent, detailByID: detailByID)
             #if DEBUG
             let elapsed = ContinuousClock.now - started
@@ -1042,6 +1084,12 @@ final class RailNetworkStore {
                 bytes += prepared.bytes
             }
         }
+        // Overlay geometry is not in the blob and is not a continuous stroke.
+        // Appended after the resident lines of a region that has actually loaded.
+        for region in residentRegions.sorted() {
+            nextLines.append(contentsOf: displayHistoryOverlayLines[region] ?? [])
+            nextStations.append(contentsOf: displayHistoryOverlayStations[region] ?? [])
+        }
         mapLines = nextLines
         mapStations = nextStations
         activeRegionCount = residentRegions.count
@@ -1090,6 +1138,112 @@ final class RailNetworkStore {
     private nonisolated static func loadDisplayManifest() async throws
         -> RailDisplayNetworkManifest {
         try RailDisplayNetwork.manifest()
+    }
+
+    private struct LoadedDisplayHistory: Sendable {
+        var files: [String: RailDisplayHistoryFile]
+        var fullDetailLineIDs: Set<String>
+        var overlayLines: [String: [DrawnLine]]
+        var overlayStations: [String: [DrawnStation]]
+    }
+
+    /// Reads each region's side file once. A missing or unreadable overlay
+    /// leaves that region on today's geometry; it does not fail the manifest.
+    private nonisolated static func loadDisplayHistories(
+        _ manifest: RailDisplayNetworkManifest
+    ) -> LoadedDisplayHistory {
+        var files: [String: RailDisplayHistoryFile] = [:]
+        var full: Set<String> = []
+        var lines: [String: [DrawnLine]] = [:]
+        var stations: [String: [DrawnStation]] = [:]
+        for record in manifest.regions {
+            guard let file = try? RailDisplayNetwork.history(record) else { continue }
+            files[record.region] = file
+            full.formUnion(file.fullDetailLineIDs)
+            guard let region = Region(rawValue: record.region) else { continue }
+            lines[record.region] = overlayLines(from: file, region: region)
+            stations[record.region] = overlayStations(from: file, region: region)
+        }
+        return LoadedDisplayHistory(
+            files: files, fullDetailLineIDs: full,
+            overlayLines: lines, overlayStations: stations)
+    }
+
+    /// One drawn line per overlay `historyId`, ordinal 0. Not continuous, so
+    /// it never enters the stroke index.
+    private nonisolated static func overlayLines(
+        from file: RailDisplayHistoryFile, region: Region
+    ) -> [DrawnLine] {
+        file.lines.compactMap { line in
+            var intervals: [[Coordinate]] = []
+            var spans: [DisplayTemporalDecoration?] = []
+            let kind = RouteGraph.TemporalKind(rawValue: line.kind) ?? .historical
+            for part in line.parts {
+                let source = part.coordinates.compactMap(Coordinate.init(pair:))
+                guard source.count >= 2 else { continue }
+                intervals.append(AppleMapDatum.display(source, country: region.code))
+                spans.append(DisplayTemporalDecoration(
+                    historyId: line.historyId, validFrom: part.validFrom, validTo: part.validTo,
+                    kind: RouteGraph.TemporalKind(rawValue: part.kind) ?? kind))
+            }
+            guard !intervals.isEmpty else { return nil }
+            let native = NetworkLOD.minZoomMapLibre(
+                portedMinZoom: line.minZoomMapLibre, rank: line.rank,
+                visibilityLengthKm: line.visibilityLengthKm, region: region.code,
+                operator: line.operator, name: line.name)
+            return DrawnLine(
+                id: "hist|\(line.historyId)|0",
+                lineID: line.historyId,
+                region: region, name: line.name, nameRoma: nil,
+                operatorName: line.operator.isEmpty ? nil : line.operator,
+                color: Color(hex: line.color) ?? .accentColor,
+                colorDark: Color(hex: line.colorDark) ?? .accentColor,
+                colorHex: line.color.lowercased(),
+                colorDarkHex: line.colorDark.lowercased(),
+                rank: line.rank, minZoom: line.minZoomMapLibre,
+                visibilityLengthKm: line.visibilityLengthKm,
+                lodMinZoom: RailStyle.zoom(fromMapLibre: Double(native)),
+                lane: 0, intervals: intervals, partSpans: spans)
+        }
+    }
+
+    private nonisolated static func overlayStations(
+        from file: RailDisplayHistoryFile, region: Region
+    ) -> [DrawnStation] {
+        file.stations.compactMap { station in
+            let kind = RouteGraph.TemporalKind(rawValue: station.kind) ?? .historical
+            let coordinate = AppleMapDatum.display(
+                Coordinate(lon: station.lon, lat: station.lat), country: region.code)
+            let parent = file.lines.first { $0.historyId == station.lineHistoryId }
+            let minZoom = parent?.minZoomMapLibre ?? station.minZoomMapLibre
+            let native = NetworkLOD.minZoomMapLibre(
+                portedMinZoom: minZoom, rank: parent?.rank ?? 1,
+                visibilityLengthKm: parent?.visibilityLengthKm ?? 0, region: region.code,
+                operator: station.operator, name: station.lineName)
+            let color = station.color
+            let popup = StationDisplay.PopupModel(
+                name: station.name, nameRoma: station.nameRoma ?? "", readings: nil,
+                lines: [
+                    StationDisplay.PopupRow(
+                        lineID: station.lineHistoryId,
+                        company: OperatorBranding.companyFor(
+                            operator: station.operator, lineName: station.lineName),
+                        label: station.lineName, color: color, logo: nil,
+                        logoNeedsDarkMatte: false),
+                ])
+            return DrawnStation(
+                id: "hist|\(station.historyId)",
+                region: region, lineID: station.lineHistoryId,
+                stationCode: station.historyId, name: station.name,
+                nameRoma: station.nameRoma ?? "", coordinate: coordinate,
+                colorHex: color, minZoom: minZoom,
+                lodMinZoom: NetworkLOD.stationMinZoom(
+                    portedMinZoom: minZoom, lineMinZoomMapLibre: native),
+                isTerminal: false, showsLabel: false, popup: popup,
+                lane: 0, laneBearing: nil, slot: nil,
+                historyId: station.historyId, validFrom: station.validFrom,
+                validTo: station.validTo, temporalKind: kind, isOverlay: true)
+        }
     }
 
     #if DEBUG
@@ -1143,6 +1297,7 @@ final class RailNetworkStore {
         blobs: [String: Data],
         catalog: [String: RailDisplayNetworkManifest.Line],
         index: RailDisplayNetworkIndex,
+        histories: [String: RailDisplayHistoryFile],
         maximumConcurrent: Int,
         detailByID: [String: DisplayDetail]
     ) async -> DisplayChunkLoadResult {
@@ -1165,10 +1320,11 @@ final class RailNetworkStore {
                 let regionBlob = blob(for: entry.region)
                 let families = index.recordsByRegion[entry.region]?.families ?? [:]
                 let detail = detailByID[entry.id] ?? .full
+                let history = histories[entry.region]
                 group.addTask {
                     loadDisplayChunk(
                         entry, blob: regionBlob, detail: detail, catalog: catalog,
-                        families: families)
+                        families: families, history: history)
                 }
             }
 
@@ -1187,10 +1343,11 @@ final class RailNetworkStore {
                     let regionBlob = blob(for: entry.region)
                     let families = index.recordsByRegion[entry.region]?.families ?? [:]
                     let detail = detailByID[entry.id] ?? .full
+                    let history = histories[entry.region]
                     group.addTask {
                         loadDisplayChunk(
                             entry, blob: regionBlob, detail: detail, catalog: catalog,
-                            families: families)
+                            families: families, history: history)
                     }
                 }
             }
@@ -1203,7 +1360,8 @@ final class RailNetworkStore {
         blob: Data?,
         detail: DisplayDetail,
         catalog: [String: RailDisplayNetworkManifest.Line],
-        families: [String: RailDisplayNetworkFile.FamilyColor]
+        families: [String: RailDisplayNetworkFile.FamilyColor],
+        history: RailDisplayHistoryFile?
     ) -> DisplayChunkLoadItem {
         do {
             try Task.checkCancellation()
@@ -1225,7 +1383,7 @@ final class RailNetworkStore {
                 lineId: entry.id, region: entry.region,
                 prepared: prepareDisplayLine(
                     file: file, entry: entry, catalog: catalog, families: families,
-                    bytes: usedBytes, detail: usedDetail),
+                    bytes: usedBytes, detail: usedDetail, history: history),
                 failure: nil)
         } catch is CancellationError {
             return DisplayChunkLoadItem(
@@ -1243,23 +1401,36 @@ final class RailNetworkStore {
         catalog: [String: RailDisplayNetworkManifest.Line],
         families: [String: RailDisplayNetworkFile.FamilyColor],
         bytes: Int,
-        detail: DisplayDetail
+        detail: DisplayDetail,
+        history: RailDisplayHistoryFile?
     ) -> PreparedDisplayLine {
+        let partRows = detail == .full ? history?.partRows : nil
+        let stationStamps = detail == .full ? history?.stationStampRows : nil
         let lines = file.lines.compactMap { fragment -> DrawnLine? in
             guard let metadata = catalog[fragment.lineKey],
                   let region = Region(rawValue: metadata.region) else { return nil }
-            let intervals = fragment.parts.compactMap { part -> [Coordinate]? in
+            let drawID = fragment.continuous == true
+                ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
+                : "\(fragment.lineKey)@\(fragment.lane ?? 0)"
+            var intervals: [[Coordinate]] = []
+            var spans: [DisplayTemporalDecoration?] = []
+            var stamped = false
+            for (index, part) in fragment.parts.enumerated() {
                 let source = part.compactMap(Coordinate.init(pair:))
-                guard source.count >= 2 else { return nil }
-                return AppleMapDatum.display(source, country: region.code)
+                guard source.count >= 2 else { continue }
+                intervals.append(AppleMapDatum.display(source, country: region.code))
+                if let span = partRows?[drawID]?[index] {
+                    spans.append(span)
+                    stamped = true
+                } else {
+                    spans.append(nil)
+                }
             }
             guard !intervals.isEmpty else { return nil }
             return DrawnLine(
                 // One fragment per railway and lane, so the lane is the whole
                 // of what distinguishes two entries of the same line.
-                id: fragment.continuous == true
-                    ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
-                    : "\(fragment.lineKey)@\(fragment.lane ?? 0)",
+                id: drawID,
                 lineID: metadata.id,
                 region: region, name: metadata.name, nameRoma: metadata.nameRoma,
                 operatorName: metadata.operator,
@@ -1298,7 +1469,8 @@ final class RailNetworkStore {
                         isLandlord: window.isLandlord, groupID: window.groupID,
                         colorHex: group.color.lowercased(),
                         colorDarkHex: group.colorDark.lowercased())
-                })
+                },
+                partSpans: stamped ? spans : [])
         }
         let stations = file.stations.compactMap { station -> DrawnStation? in
             guard let metadata = catalog[station.lineKey],
@@ -1316,7 +1488,11 @@ final class RailNetworkStore {
                 isTerminal: station.isTerminal, showsLabel: station.showsLabel,
                 popup: RailDisplayNetwork.popup(for: station, catalog: catalog),
                 lane: station.lane ?? 0, laneBearing: station.bearing,
-                slot: station.slot.map { StrokeSlot(chain: $0[0], anchor: $0[1]) })
+                slot: station.slot.map { StrokeSlot(chain: $0[0], anchor: $0[1]) },
+                historyId: stationStamps?[station.id]?.historyId,
+                validFrom: stationStamps?[station.id]?.validFrom,
+                validTo: stationStamps?[station.id]?.validTo,
+                temporalKind: stationStamps?[station.id]?.kind ?? .current)
         }
         return PreparedDisplayLine(
             region: entry.region, lines: lines, stations: stations, bytes: bytes, detail: detail)

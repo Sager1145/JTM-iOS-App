@@ -213,7 +213,12 @@ final class MileageStatisticsStore {
                 // The entry cache is only valid against the index it was
                 // matched on — its edge ids are indices into that index's
                 // arrays — so a change of scope starts from nothing.
-                let indexKey = countries.joined(separator: ",")
+                // `attribution-policy-v2` is part of that identity: in-place
+                // retirement stays in the reference-geometry denominator, and
+                // a country-only key would reuse entries matched under the
+                // previous attribution. No history or package revision is in
+                // scope here, so the key does not carry one.
+                let indexKey = countries.joined(separator: ",") + "|attribution-policy-v2"
                 if self.entryCacheIndexKey != indexKey {
                     self.entryCache = [:]
                     self.entryCacheIndexKey = indexKey
@@ -269,6 +274,11 @@ final class MileageStatisticsStore {
                     String(describing: matched.duration(to: finished)),
                     String(describing: started.duration(to: finished)))
 #endif
+                // A date or region load that was superseded during `group`
+                // can still be the one running here. It must not publish over
+                // the fingerprint now being served. Same check as the progress
+                // updates and the failure path.
+                guard !Task.isCancelled, self.servedFingerprint == fingerprint else { return }
 
                 self.context = context
                 self.contextFingerprint = fingerprint
@@ -505,12 +515,14 @@ final class MileageStatisticsStore {
     /// One journey's matched entry, with the digest of everything it was
     /// computed from.
     ///
-    /// `collectTrainStatsEntry` is a pure function of four things: the drawn
-    /// geometry, each section's two endpoint names, which sections were
-    /// RIDDEN, and the edge index. So an entry can be reused exactly when all
-    /// four are unchanged, and the digest is those four and nothing else — a
-    /// key built from fewer would reuse an entry the reader's edit had
-    /// invalidated, which is a mileage figure that silently does not move.
+    /// `collectTrainStatsEntry` is a pure function of the drawn geometry, each
+    /// section's two endpoint names, which sections were RIDDEN, the edge
+    /// index, and the ride date (`Dates.trainDate` — the day the walk keeps
+    /// an edge only when it is in service). So an entry can be reused exactly
+    /// when all of those are unchanged, and the digest is those inputs and
+    /// nothing else — a key built from fewer would reuse an entry the reader's
+    /// edit had invalidated, which is a mileage figure that silently does not
+    /// move. The date is an input even when the geometry is identical.
     struct CachedEntry: Sendable {
         let digest: Int
         let entry: Statistics.TrainEntry
@@ -535,7 +547,8 @@ final class MileageStatisticsStore {
     private var entryCache: [String: CachedEntry] = [:]
     /// Which index `entryCache` was built against; a scope change invalidates
     /// every entry in it, because the edge ids an entry holds are indices into
-    /// that index's own arrays.
+    /// that index's own arrays. The string is the country list joined by
+    /// commas, then `|attribution-policy-v2`.
     private var entryCacheIndexKey = ""
 
     private nonisolated static func matchRides(
@@ -595,7 +608,8 @@ final class MileageStatisticsStore {
                         stops, segmentIndex: segment.segmentIndex),
                     from: segment.from, to: segment.to)
             } ?? []
-            let entry = Statistics.collectTrainStatsEntry(features: features, index: index)
+            let entry = Statistics.collectTrainStatsEntry(
+                features: features, index: index, rideDate: statisticsTrain.date)
             entries.append(entry)
             fresh[train.id] = CachedEntry(digest: digest, entry: entry)
             // Reported in blocks: one hop to the main actor per train would
@@ -619,8 +633,9 @@ final class MileageStatisticsStore {
     ///     measured against and the vocabulary the category rows are named in;
     ///   - per journey, in order: the id, the service description that groups
     ///     the 種別 rows, the normalised date bucket the day slice compares
-    ///     against, ``entryDigest(train:ride:)`` — which is itself the four
-    ///     things `collectTrainStatsEntry` reads — and ``passportDigest(train:)``,
+    ///     against, ``entryDigest(train:ride:)`` — geometry, endpoints, ridden
+    ///     stops, and the ride date `collectTrainStatsEntry` reads — and
+    ///     ``passportDigest(train:)``,
     ///     which covers everything ``PassportStatistics/build(trains:entries:)``
     ///     reads off the record directly that is not already one of the first
     ///     three. ``passport`` is grouped from the same matched entries this
@@ -727,15 +742,16 @@ final class MileageStatisticsStore {
         return hasher.finalize()
     }
 
-    /// Everything ``Statistics/collectTrainStatsEntry(features:index:)`` reads
+    /// Everything ``Statistics/collectTrainStatsEntry(features:index:rideDate:)`` reads
     /// about one journey, as one number.
     ///
     /// The geometry arrives already digested — `DrawnRide.geometryDigest`
     /// covers the section count, each section's index and each section's
-    /// canonical WGS84 coordinates — so this adds the two things it does not
+    /// canonical WGS84 coordinates — so this adds what that digest does not
     /// cover and that the entry does read: each section's `from`/`to`, which
-    /// decide whether a section is attributed at all, and the stop fields
-    /// `isRideSegment` consults.
+    /// decide whether a section is attributed at all, the stop fields
+    /// `isRideSegment` consults, and the ride date (`Dates.trainDate`). A
+    /// date change with identical geometry must miss the cached entry.
     ///
     /// A journey with no drawn route is distinguished from one whose route
     /// arrived: both produce an empty feature list today, but the second will
@@ -761,6 +777,9 @@ final class MileageStatisticsStore {
             hasher.combine(stop.stopType)
             hasher.combine(stop.rideSegment)
         }
+        // The walk keeps an edge only when it is in service on this date.
+        hasher.combine(Dates.trainDate(
+            Dates.Train(id: train.id, date: train.date, stops: [])))
         return hasher.finalize()
     }
 

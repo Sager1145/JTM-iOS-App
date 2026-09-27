@@ -32,6 +32,14 @@ public enum TrainServicePatterns {
             case complete, partial, missing
         }
 
+        /// Whether the available validity evidence establishes that this
+        /// pattern applies on a particular day.
+        public enum Applicability: Sendable, Hashable {
+            case applicable
+            case notApplicable
+            case unknown
+        }
+
         /// Per-field completeness of a pattern's data — how much of the
         /// stop list, line list, and validity window is actually known,
         /// as opposed to merely present-but-empty.
@@ -67,8 +75,7 @@ public enum TrainServicePatterns {
         public let source: String?
         /// Ordered N02 line names traversed by this pattern.
         public let lines: [String]
-        /// ISO `YYYY-MM-DD`. Not parsed to `Date` here — comparisons and
-        /// formatting are the caller's concern.
+        /// Strict Gregorian `YYYY-MM-DD`, validated when the pattern is created.
         public let validFrom: String?
         /// Exclusive end date, matching the dated rail network's [from, until) interval.
         public let validUntil: String?
@@ -101,8 +108,14 @@ public enum TrainServicePatterns {
             confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
             source = try container.decodeIfPresent(String.self, forKey: .source)
             lines = try container.decodeIfPresent([String].self, forKey: .lines) ?? []
-            validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
-            validUntil = try container.decodeIfPresent(String.self, forKey: .validUntil)
+            let decodedValidFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
+            let decodedValidUntil = try container.decodeIfPresent(String.self, forKey: .validUntil)
+            try Self.validateValidityInterval(
+                validFrom: decodedValidFrom,
+                validUntil: decodedValidUntil,
+                codingPath: decoder.codingPath)
+            validFrom = decodedValidFrom
+            validUntil = decodedValidUntil
             completeness = try container.decodeIfPresent(
                 Completeness.self, forKey: .completeness) ?? .missing
             notes = try container.decodeIfPresent(String.self, forKey: .notes)
@@ -118,6 +131,9 @@ public enum TrainServicePatterns {
             completeness: Completeness = .missing, notes: String? = nil,
             unsolvableLegs: [[String]] = []
         ) {
+            precondition(
+                Self.hasValidValidityInterval(validFrom: validFrom, validUntil: validUntil),
+                "Pattern validity must use a nonempty Gregorian [validFrom, validUntil) interval")
             self.id = id
             self.serviceId = serviceId
             self.name = name
@@ -165,34 +181,130 @@ public enum TrainServicePatterns {
         /// short names.
         public var companyLabel: String { OperatorBranding.companyLabel(company) }
 
-        /// Whether the recorded validity interval covers an ISO calendar day.
-        /// An absent bound is open; completeness describes how well that bound is verified.
+        /// Classifies a strict Gregorian `YYYY-MM-DD` using the evidence in
+        /// this pattern. A known bound can exclude a day even when validity
+        /// evidence is incomplete; only complete evidence can confirm one.
+        /// Returns `nil` when `day` is malformed or is not a real Gregorian date.
+        public func applicability(on day: String) -> Applicability? {
+            guard let day = GregorianDay(day),
+                  Self.hasValidValidityInterval(validFrom: validFrom, validUntil: validUntil)
+            else { return nil }
+
+            if let validFrom = validFrom.flatMap(GregorianDay.init), day < validFrom {
+                return .notApplicable
+            }
+            if let validUntil = validUntil.flatMap(GregorianDay.init), day >= validUntil {
+                return .notApplicable
+            }
+            return completeness.validity == .complete ? .applicable : .unknown
+        }
+
+        /// Compatibility facade for callers that require a definite answer.
+        /// Invalid input and incomplete evidence both fail closed.
         public func isValid(on day: String) -> Bool {
-            guard completeness.validity != .missing else { return false }
-            guard day.count == 10 else { return false }
-            if let validFrom, day < validFrom { return false }
-            if let validUntil, day >= validUntil { return false }
-            return true
+            applicability(on: day) == .applicable
         }
 
         /// Whether a pattern's recorded interval covers today. Unknown validity
         /// is not presented as a confirmed current service.
         public var isCurrent: Bool {
-            guard completeness.validity == .complete else { return false }
-            return isValid(on: Self.today)
+            isCurrent(at: Date())
+        }
+
+        /// Whether a pattern covers the calendar day containing `instant` in
+        /// Japan. Inject an instant in tests to avoid dependence on wall-clock time.
+        public func isCurrent(at instant: Date) -> Bool {
+            isValid(on: Self.japanOperationalDay(at: instant))
         }
 
         /// A recorded exclusive end date that has already passed.
         public var isDiscontinued: Bool {
-            validUntil.map { $0 <= Self.today } ?? false
+            isDiscontinued(at: Date())
         }
 
-        private static var today: String {
+        /// Whether the recorded exclusive end is at or before the calendar day
+        /// containing `instant` in Japan.
+        public func isDiscontinued(at instant: Date) -> Bool {
+            guard let validUntil = validUntil.flatMap(GregorianDay.init),
+                  let day = GregorianDay(Self.japanOperationalDay(at: instant))
+            else { return false }
+            return validUntil <= day
+        }
+
+        /// The Gregorian calendar day at `instant` in Japan Standard Time.
+        public static func japanOperationalDay(at instant: Date) -> String {
             var calendar = Calendar(identifier: .gregorian)
-            calendar.timeZone = .current
-            let parts = calendar.dateComponents([.year, .month, .day], from: Date())
+            calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+            let parts = calendar.dateComponents([.year, .month, .day], from: instant)
             guard let year = parts.year, let month = parts.month, let day = parts.day else { return "" }
             return String(format: "%04d-%02d-%02d", year, month, day)
+        }
+
+        private static func hasValidValidityInterval(
+            validFrom: String?, validUntil: String?
+        ) -> Bool {
+            let from: GregorianDay?
+            if let validFrom {
+                guard let parsed = GregorianDay(validFrom) else { return false }
+                from = parsed
+            } else {
+                from = nil
+            }
+
+            let until: GregorianDay?
+            if let validUntil {
+                guard let parsed = GregorianDay(validUntil) else { return false }
+                until = parsed
+            } else {
+                until = nil
+            }
+
+            if let from, let until { return from < until }
+            return true
+        }
+
+        private static func validateValidityInterval(
+            validFrom: String?, validUntil: String?, codingPath: [any CodingKey]
+        ) throws {
+            guard hasValidValidityInterval(validFrom: validFrom, validUntil: validUntil) else {
+                throw DecodingError.dataCorrupted(.init(
+                    codingPath: codingPath,
+                    debugDescription: "validFrom/validUntil must be real Gregorian YYYY-MM-DD dates forming a nonempty [from, until) interval"))
+            }
+        }
+
+        private struct GregorianDay: Comparable {
+            let rawValue: String
+
+            init?(_ rawValue: String) {
+                let bytes = Array(rawValue.utf8)
+                guard bytes.count == 10,
+                      bytes[4] == 45, bytes[7] == 45,
+                      bytes.enumerated().allSatisfy({ index, byte in
+                          index == 4 || index == 7 || (48...57).contains(byte)
+                      })
+                else { return nil }
+
+                func number(_ range: Range<Int>) -> Int {
+                    range.reduce(0) { $0 * 10 + Int(bytes[$1] - 48) }
+                }
+                let year = number(0..<4)
+                let month = number(5..<7)
+                let day = number(8..<10)
+                guard year > 0, (1...12).contains(month) else { return nil }
+                let leapYear = year.isMultiple(of: 400)
+                    || (year.isMultiple(of: 4) && year.isMultiple(of: 100) == false)
+                let daysInMonth = [
+                    31, leapYear ? 29 : 28, 31, 30, 31, 30,
+                    31, 31, 30, 31, 30, 31,
+                ][month - 1]
+                guard (1...daysInMonth).contains(day) else { return nil }
+                self.rawValue = rawValue
+            }
+
+            static func < (lhs: GregorianDay, rhs: GregorianDay) -> Bool {
+                lhs.rawValue < rhs.rawValue
+            }
         }
     }
 

@@ -295,8 +295,6 @@ public enum RouteSolver {
             return candidates
         }
 
-        let preferredCandidates = filterStationsByPreferredInstitution(
-            candidates, in: index, allowedCodes: allowedCodes)
         let sameNameStop = Stations.Stop(name: name)
         let sameNameCandidates = index.candidateIndices(for: .stop(sameNameStop))
         let sameNamePreferred = filterStationsByPreferredInstitution(
@@ -310,9 +308,11 @@ public enum RouteSolver {
         if !additions.isEmpty {
             return dedupeStationIndices(candidates + additions, in: index)
         }
-        if !preferredCandidates.isEmpty { return candidates }
-        if sameNamePreferred.isEmpty { return candidates }
-        return dedupeStationIndices(candidates + sameNamePreferred, in: index)
+        // A fixed code anchors the physical station even when its operator
+        // does not match the preferred institution. Expanding nationwide here
+        // can send a cross-company service to a distant same-name JR station
+        // (for example 高田 in Niigata to 高田 in Nara).
+        return candidates
     }
 
     /// Every graph-node candidate for one physical station record, scored by
@@ -434,24 +434,36 @@ public enum RouteSolver {
     public static func addStationTransferConnectorEdges(
         graph: RouteGraph.Graph, stations: [Stations.Feature]
     ) {
+        struct PlatformMembership {
+            let featureID: String
+            let stationName: String
+            let groupCode: String?
+            let lineName: String
+            let operatorName: String
+            let institutionTypeCode: String
+            let validFrom: String?
+            let validTo: String?
+        }
+        /// Graph snap bookkeeping around one platform membership. Closer snaps
+        /// replace the list; equal distance keeps a distinct validity.
         struct Info {
             var key: String
             var distance: Double
-            var stationName: String
-            var groupCode: String
-            var institutionTypeCode: String
             var order: Int
-            /// ADR 0011: the station's own `valid_from`/`valid_to`.
-            var validFrom: String? = nil
-            var validTo: String? = nil
+            var membership: PlatformMembership
         }
         struct GroupKey: Hashable { var units: [UInt16] }
 
-        func validityBound(_ feature: Stations.Feature, _ name: String) -> String? {
-            if case .string(let text)? = feature.properties[name], !text.isEmpty { return text }
-            return nil
+        func featureID(_ feature: Stations.Feature) -> String {
+            for key in ["id", "history_id"] {
+                if case .string(let text)? = feature.properties[key], !text.isEmpty {
+                    return text
+                }
+            }
+            if let code = Stations.stationCode(feature), !code.isEmpty { return code }
+            return ""
         }
-        var groups: [GroupKey: [String: Info]] = [:]
+        var groups: [GroupKey: [String: [Info]]] = [:]
         var groupOrder: [GroupKey] = []
 
         func key(for feature: Stations.Feature) -> GroupKey {
@@ -480,66 +492,90 @@ public enum RouteSolver {
                 where nearest.distance <= 520 {
                     let nextOrder = groups[groupKey]!.count
                     let info = Info(
-                        key: nearest.key, distance: nearest.distance,
-                        stationName: Stations.stationName(feature) ?? "",
-                        groupCode: Stations.stationGroupCode(feature) ?? "",
-                        institutionTypeCode: Stations.stationInstitutionTypeCode(feature),
-                        order: nextOrder,
-                        validFrom: validityBound(feature, "valid_from"),
-                        validTo: validityBound(feature, "valid_to"))
-                    if let existing = groups[groupKey]![nearest.key] {
-                        if nearest.distance < existing.distance {
-                            var replacement = info
-                            replacement.order = existing.order
-                            groups[groupKey]![nearest.key] = replacement
+                        key: nearest.key, distance: nearest.distance, order: nextOrder,
+                        membership: PlatformMembership(
+                            featureID: featureID(feature),
+                            stationName: Stations.stationName(feature) ?? "",
+                            groupCode: Stations.stationGroupCode(feature),
+                            lineName: Stations.stationLineName(feature),
+                            operatorName: Stations.stationOperator(feature),
+                            institutionTypeCode: Stations.stationInstitutionTypeCode(feature),
+                            validFrom: Stations.stationValidFrom(feature),
+                            validTo: Stations.stationValidTo(feature)))
+                    if let existing = groups[groupKey]![nearest.key], let closest = existing.first {
+                        var kept = info
+                        kept.order = closest.order
+                        if nearest.distance < closest.distance {
+                            groups[groupKey]![nearest.key] = [kept]
+                        } else if nearest.distance == closest.distance,
+                                  !existing.contains(where: {
+                                      $0.membership.validFrom == info.membership.validFrom
+                                          && $0.membership.validTo == info.membership.validTo
+                                  }) {
+                            // Co-located station records may represent different eras.
+                            // Keep each membership instead of letting input order decide
+                            // whether this platform is current or retired.
+                            groups[groupKey]![nearest.key]!.append(kept)
                         }
                     } else {
-                        groups[groupKey]![nearest.key] = info
+                        groups[groupKey]![nearest.key] = [info]
                     }
                 }
             }
         }
 
-        var edgeKeys = Set<String>()
+        struct ConnectorKey: Hashable {
+            let pair: String
+            let validFrom: String?
+            let validTo: String?
+        }
+        var edgeKeys = Set<ConnectorKey>()
         for groupKey in groupOrder {
-            let nodes = (groups[groupKey]?.values ?? Dictionary<String, Info>().values)
+            let nodes = (groups[groupKey]?.values ?? Dictionary<String, [Info]>().values)
                 .sorted {
-                    $0.distance == $1.distance ? $0.order < $1.order : $0.distance < $1.distance
+                    let a = $0[0], b = $1[0]
+                    return a.distance == b.distance ? a.order < b.order : a.distance < b.distance
                 }.prefix(24)
             guard nodes.count >= 2 else { continue }
             let values = Array(nodes)
             for i in 0..<(values.count - 1) {
                 for j in (i + 1)..<values.count {
-                    let a = values[i]
-                    let b = values[j]
-                    if a.key == b.key { continue }
-                    let pairKey = jsSorted([a.key, b.key]).joined(separator: "|")
-                    if edgeKeys.contains(pairKey) { continue }
-                    guard let aCoordinate = graph.nodes[a.key],
-                          let bCoordinate = graph.nodes[b.key] else { continue }
-                    let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
-                    if gap > 900 { continue }
-                    edgeKeys.insert(pairKey)
-                    var codes: [String] = []
-                    for code in [a.institutionTypeCode, b.institutionTypeCode]
-                    where !code.isEmpty && !codes.contains(code) { codes.append(code) }
-                    let connector = RouteGraph.StationConnector(
-                        institutionTypeCodes: codes,
-                        stationName: a.stationName,
-                        groupCode: a.groupCode)
-                    // ADR 0011: a transfer is valid only while both ends'
-                    // stations are, so the edge carries the intersection.
-                    let validFrom = [a.validFrom, b.validFrom].compactMap { $0 }.max()
-                    let validTo = [a.validTo, b.validTo].compactMap { $0 }.min()
-                    let edge = RouteGraph.Edge(
-                        to: b.key, length: max(gap + 180, 0.01),
-                        institutionTypeCode: "", railwayClassCode: "",
-                        lineName: "", operator: "", connector: connector,
-                        validFrom: validFrom, validTo: validTo)
-                    graph.adjacency[a.key, default: []].append(edge)
-                    var reverse = edge
-                    reverse.to = a.key
-                    graph.adjacency[b.key, default: []].append(reverse)
+                    for a in values[i] {
+                        for b in values[j] {
+                            if a.key == b.key { continue }
+                            let pairKey = jsSorted([a.key, b.key]).joined(separator: "|")
+                            guard let aCoordinate = graph.nodes[a.key],
+                                  let bCoordinate = graph.nodes[b.key] else { continue }
+                            let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
+                            if gap > 900 { continue }
+                            var codes: [String] = []
+                            for code in [a.membership.institutionTypeCode, b.membership.institutionTypeCode]
+                            where !code.isEmpty && !codes.contains(code) { codes.append(code) }
+                            let connector = RouteGraph.StationConnector(
+                                institutionTypeCodes: codes,
+                                stationName: a.membership.stationName,
+                                groupCode: a.membership.groupCode ?? "")
+                            // ADR 0011: a transfer is valid only while both ends'
+                            // stations are, so the edge carries the intersection.
+                            // lineName and operatorName stay on the membership;
+                            // the connector edge does not copy them yet.
+                            let validFrom = [a.membership.validFrom, b.membership.validFrom].compactMap { $0 }.max()
+                            let validTo = [a.membership.validTo, b.membership.validTo].compactMap { $0 }.min()
+                            if let validFrom, let validTo, validFrom >= validTo { continue }
+                            let edgeKey = ConnectorKey(
+                                pair: pairKey, validFrom: validFrom, validTo: validTo)
+                            guard edgeKeys.insert(edgeKey).inserted else { continue }
+                            let edge = RouteGraph.Edge(
+                                to: b.key, length: max(gap + 180, 0.01),
+                                institutionTypeCode: "", railwayClassCode: "",
+                                lineName: "", operator: "", connector: connector,
+                                validFrom: validFrom, validTo: validTo)
+                            graph.adjacency[a.key, default: []].append(edge)
+                            var reverse = edge
+                            reverse.to = a.key
+                            graph.adjacency[b.key, default: []].append(reverse)
+                        }
+                    }
                 }
             }
         }
@@ -761,6 +797,10 @@ public enum RouteSolver {
         /// only trusts an early regional result when this is 0 (the
         /// strictest attempt); see its comment.
         public var attemptIndex: Int
+        public var historyIDs: [String] = []
+        public var validFrom: String? = nil
+        public var validTo: String? = nil
+        public var temporalKind: RouteGraph.TemporalKind = .current
     }
 
     public struct OfficialIntervalIndex: Sendable {
@@ -771,6 +811,10 @@ public enum RouteSolver {
             let operatorName: String
             let institutionTypeCode: String
             let reversed: Bool
+            let validFrom: String?
+            let validTo: String?
+            let historyIDs: [String]
+            let temporalKind: RouteGraph.TemporalKind
         }
         let records: [String: [Record]]
 
@@ -791,14 +835,20 @@ public enum RouteSolver {
                         featureIndex: index, coordinates: coordinates, lineName: line,
                         operatorName: operatorName,
                         institutionTypeCode: feature.properties.institutionTypeCode,
-                        reversed: false))
+                        reversed: false, validFrom: feature.properties.validFrom,
+                        validTo: feature.properties.validTo,
+                        historyIDs: feature.properties.carriedHistoryIDs,
+                        temporalKind: feature.properties.temporalKind))
                 }
                 if !reverse.isEmpty {
                     records[reverse, default: []].append(Record(
                         featureIndex: index, coordinates: coordinates, lineName: line,
                         operatorName: operatorName,
                         institutionTypeCode: feature.properties.institutionTypeCode,
-                        reversed: true))
+                        reversed: true, validFrom: feature.properties.validFrom,
+                        validTo: feature.properties.validTo,
+                        historyIDs: feature.properties.carriedHistoryIDs,
+                        temporalKind: feature.properties.temporalKind))
                 }
             }
             self.records = records
@@ -829,10 +879,14 @@ public enum RouteSolver {
         if section.to?.isEmpty != false {
             section.to = stations.name(forCode: section.toN02StationCode)
         }
-        let fromStations = stations.candidateIndices(for: .stop(.init(
-            name: section.from, n02StationCode: section.fromN02StationCode)))
-        let toStations = stations.candidateIndices(for: .stop(.init(
-            name: section.to, n02StationCode: section.toN02StationCode)))
+        let fromStations = filterStationCandidatesByRideDate(
+            stations.candidateIndices(for: .stop(.init(
+                name: section.from, n02StationCode: section.fromN02StationCode))),
+            in: stations, rideDate: train.rideDate)
+        let toStations = filterStationCandidatesByRideDate(
+            stations.candidateIndices(for: .stop(.init(
+                name: section.to, n02StationCode: section.toN02StationCode))),
+            in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
         struct Identity: Hashable { let featureIndex: Int; let reversed: Bool }
@@ -864,6 +918,9 @@ public enum RouteSolver {
                         line: line, operatorName: fromOperator,
                         from: fromCoordinate, to: toCoordinate)
                     for record in intervalIndex.records[key] ?? [] {
+                        guard RouteGraph.RailValidity.isValid(
+                            validFrom: record.validFrom, validTo: record.validTo,
+                            on: train.rideDate) else { continue }
                         if identities.insert(.init(
                             featureIndex: record.featureIndex, reversed: record.reversed)).inserted
                         {
@@ -895,6 +952,9 @@ public enum RouteSolver {
             preferredLines: preferredLines, preferredOperators: preferredOperators,
             requiredLines: Set(requiredLines), requiredOperators: Set(requiredOperators),
             solveMode: "official_interval_exact")
+        let provenance = RouteGraph.TemporalProvenance.aggregate(
+            historyIDs: match.historyIDs, validFrom: [match.validFrom],
+            validTo: [match.validTo], kinds: [match.temporalKind])
         return SolvedSection(
             segmentIndex: segmentIndex,
             fromStationIndex: fromStations[0], toStationIndex: toStations[0],
@@ -903,7 +963,9 @@ public enum RouteSolver {
             usedInstitutionTypeCodes: match.institutionTypeCode.isEmpty
                 ? [] : [match.institutionTypeCode],
             snapFrom: 0, snapTo: 0, physicalLength: length,
-            rawPhysicalLength: length, cost: length, attemptIndex: 0)
+            rawPhysicalLength: length, cost: length, attemptIndex: 0,
+            historyIDs: provenance.historyIDs, validFrom: provenance.validFrom,
+            validTo: provenance.validTo, temporalKind: provenance.temporalKind)
     }
 
     /// Solve one itinerary section, including station expansion, candidate
@@ -1131,6 +1193,7 @@ public enum RouteSolver {
                 coordinates.insert(continuityAnchor, at: 0)
             }
         }
+        let provenance = RouteGraph.TemporalProvenance.aggregate(edges: best.edges)
         return SolvedSection(
             segmentIndex: segmentIndex,
             fromStationIndex: best.from.stationIndex,
@@ -1143,7 +1206,9 @@ public enum RouteSolver {
             snapFrom: best.from.distance, snapTo: best.to.distance,
             physicalLength: pathLength(for: coordinates),
             rawPhysicalLength: best.physicalLength,
-            cost: best.totalCost, attemptIndex: best.attemptIndex)
+            cost: best.totalCost, attemptIndex: best.attemptIndex,
+            historyIDs: provenance.historyIDs, validFrom: provenance.validFrom,
+            validTo: provenance.validTo, temporalKind: provenance.temporalKind)
     }
 
     public static func solveSectionOnDemand(

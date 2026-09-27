@@ -66,20 +66,25 @@ def format_validity(pattern):
     return "{}〜{}".format(left, right)
 
 
-def format_route_result(pattern_id, route_report):
-    if route_report is None:
-        return NOT_RUN
-    entry = route_report.get(pattern_id)
+def verification_mark(entry, key):
     if entry is None:
         return NOT_RUN
-    legs = entry.get("legs", 0)
-    failed = entry.get("failed", []) or []
-    unsolvable = entry.get("unsolvable", 0) or 0
-    if failed:
-        return "{} {} failed".format(MARK_MISSING, len(failed))
-    if unsolvable:
-        return "⏸ {} unsolvable-historical".format(unsolvable)
-    return "{} {}/{}".format(MARK_OK, legs, legs)
+    value = entry.get(key, "unverified")
+    if value == "passed":
+        return MARK_OK
+    if value == "failed":
+        return MARK_MISSING
+    if value == "incomplete":
+        return MARK_PARTIAL + " 未完成"
+    if value == "catalog-covered":
+        return MARK_PARTIAL + " 目录区间覆盖"
+    return "⏸ 未验证"
+
+
+def report_entry(pattern_id, route_report):
+    if route_report is None or "_metadata" not in route_report:
+        return None
+    return route_report.get(pattern_id)
 
 
 def format_recognition(service_id, catalog_report):
@@ -105,8 +110,33 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
     lines = []
     lines.append("# 特急数据库检查清单")
     lines.append("")
+    metadata = (route_report or {}).get("_metadata", {})
+    lines.append("## 验收证据版本")
+    lines.append("")
+    if metadata:
+        for key in ("commitSHA", "workingTreeStatus", "patternCatalogHash",
+                    "stationPackageHash", "editorStationPackageHash",
+                    "historyOverlayRevision", "historyOverlayHash", "railSectionsHash",
+                    "solverVersion", "graphVersion",
+                    "testVersion", "testDate", "asOfDate", "runId",
+                    "expectedPatternCount", "completedPatternCount",
+                    "expectedCaseCount", "completedCaseCount", "runComplete"):
+            value = metadata.get(key, "未记录")
+            if key == "workingTreeStatus" and isinstance(value, str):
+                value = "clean" if not value else "dirty ({} paths)".format(len(value.splitlines()))
+            lines.append("- `{}`: `{}`".format(key, value))
+        lines.append("")
+        lines.append(
+            "`runComplete` 只表示计划中的 case（pattern、乘车日期、方向、变体）都已有结果，"
+            "不表示所有维度通过。历史经由未验证或界面未执行时，整体验收仍未完成。")
+        if metadata.get("runComplete") is not True:
+            lines.append("")
+            lines.append("**路线测试未完成；已有条目仅表示局部执行结果，不能视为全库验收。**")
+    else:
+        lines.append("路线报告未运行，或缺少来源元数据；下方路线结果不作为验收证据。")
+    lines.append("")
     lines.append(
-        "每一项都由自动化测试逐条执行，不跳过任何条目。勾选含义：")
+        "每条 pattern 均列出；每个验收维度独立标明通过、失败或未验证。标记含义：")
     lines.append("")
     lines.append(
         "- 列车名数据库：**辨识** = 每个别名都解析到本条目且被归为特急"
@@ -115,9 +145,8 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
     lines.append(
         "- 停靠站模式：**资料完整度** = 停站/线路/生效日期三项的记录完整度"
         "（{ok} complete ⚠️ partial ❌ missing）；"
-        "**站序/求解** = 每个相邻站区间是否被真实路线求解器求出，"
-        "`unsolvableLegs` 中登记的历史区间会被跳过并单独计入 ⏸"
-        "（来自 TrainServicePatternRouteTests 报告）。".format(ok=MARK_OK))
+        "**固定引用/日期/连通/历史经由/保存重开** 分别记录。目录区间覆盖只证明"
+        "有效期记录覆盖测试日；求解连通不证明实际经由正确。⏸ 表示证据不足。".format(ok=MARK_OK))
     lines.append("")
 
     # Section 1
@@ -139,8 +168,8 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
     lines.append("")
     lines.append(
         "| # | patternId | 列车名 | 运行方案 | 公司 | 生效日期 | 经由线路 | "
-        "停站数 | 资料完整度 | 站序/求解 | 可信度 |")
-    lines.append("|---|---|---|---|---|---|---|---|---|---|---|")
+        "停站数 | 资料完整度 | 固定引用 | 日期适用性 | 路线连通 | 历史经由 | 保存重开 | 可信度 |")
+    lines.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     gap_patterns = []
     for i, pattern in enumerate(patterns, start=1):
         pattern_id = pattern.get("patternId", "")
@@ -149,21 +178,27 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
         company = pattern.get("company", "")
         validity = format_validity(pattern)
         via_lines = pattern.get("lines") or []
-        via = "・".join(via_lines) if via_lines else "—"
+        via_description = "・".join(via_lines) if via_lines else "—"
         stop_count = len(pattern.get("stops") or [])
         completeness_str = format_completeness(pattern)
-        route_result = format_route_result(pattern_id, route_report)
+        entry = report_entry(pattern_id, route_report)
+        reference = verification_mark(entry, "referenceIntegrity")
+        applicability = verification_mark(entry, "dateApplicability")
+        connectivity = verification_mark(entry, "routeConnectivity")
+        via_correctness = verification_mark(entry, "viaCorrectness")
+        save_reopen = verification_mark(entry, "saveReopenConsistency")
         confidence = pattern.get("confidence") or "—"
-        lines.append("| {} | `{}` | {} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
-            i, pattern_id, name, label, company, validity, via, stop_count,
-            completeness_str, route_result, confidence))
+        lines.append("| {} | `{}` | {} | {} | {} | {} | {} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
+            i, pattern_id, name, label, company, validity, via_description, stop_count,
+            completeness_str, reference, applicability, connectivity, via_correctness,
+            save_reopen, confidence))
 
         has_gap = (
             completeness_is_full(pattern) is False
-            or MARK_MISSING in route_result
-            or "unsolvable" in route_result)
+            or connectivity in (MARK_MISSING, MARK_PARTIAL + " 未完成")
+            or reference == MARK_MISSING)
         if has_gap:
-            gap_patterns.append((pattern_id, name, completeness_str, route_result))
+            gap_patterns.append((pattern_id, name, completeness_str, connectivity))
     lines.append("")
 
     # Section 3: summary
@@ -197,8 +232,9 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
             lines.append("| {} | {} |".format(level, confidence_counts[level]))
     lines.append("")
 
-    from datetime import date
-    today = date.today().isoformat()
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
     known = [p for p in patterns if (p.get("completeness") or {}).get("validity") != "missing"]
     current_count = sum(1 for p in known if
                         (not p.get("validFrom") or p["validFrom"] <= today) and
@@ -213,10 +249,10 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
     lines.append("| 有效期资料缺失 | {} |".format(len(patterns) - len(known)))
     lines.append("")
 
-    lines.append("### 存在缺口的条目（资料不完整或求解失败/含历史不可解区间）")
+    lines.append("### 存在明确缺口的条目（资料不完整、固定引用失败或路线未连通）")
     lines.append("")
     if gap_patterns:
-        lines.append("| patternId | 列车名 | 资料完整度 | 站序/求解 |")
+        lines.append("| patternId | 列车名 | 资料完整度 | 路线连通 |")
         lines.append("|---|---|---|---|")
         for pattern_id, name, completeness_str, route_result in gap_patterns:
             lines.append("| `{}` | {} | {} | {} |".format(

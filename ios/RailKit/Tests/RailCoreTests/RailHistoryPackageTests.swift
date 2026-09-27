@@ -101,6 +101,134 @@ struct RailHistoryPackageTests {
         return nil
     }
 
+    /// `path_digest` in `port-fixtures/historical-routes.json`: five decimal
+    /// `lon,lat`, semicolons between coordinates, pipes between MultiLineString
+    /// members. One solved section is one LineString feature.
+    static func canonicalPath(_ coordinates: [Coordinate]) -> String {
+        coordinates.map { coordinate in
+            Self.fixed5(coordinate.lon) + "," + Self.fixed5(coordinate.lat)
+        }.joined(separator: ";")
+    }
+
+    /// JavaScript `Number.prototype.toFixed(5)` (half away from zero).
+    static func fixed5(_ value: Double) -> String {
+        var scaled = (value * 100_000).rounded()
+        if scaled == 0 { scaled = 0 }
+        let negative = scaled < 0
+        let digits = Int(abs(scaled).rounded())
+        let body = "\(digits / 100_000)." + String(format: "%05d", digits % 100_000)
+        return negative ? "-" + body : body
+    }
+
+    struct HistoricalRoutesFixture: Decodable {
+        struct Answer: Decodable {
+            struct Section: Decodable {
+                let from: String
+                let to: String
+                let lineNames: [String]
+                enum CodingKeys: String, CodingKey {
+                    case from, to
+                    case lineNames = "line_names"
+                }
+            }
+            struct TrainBody: Decodable { let date: String }
+            struct Revisions: Decodable { let jp: String }
+            struct SolverContext: Decodable {
+                let historyRevisions: Revisions
+                enum CodingKeys: String, CodingKey {
+                    case historyRevisions = "history_revisions"
+                }
+            }
+            let id: String
+            let train: TrainBody
+            let section: Section
+            let solverContext: SolverContext
+            let outcome: String
+            let segmentCount: Int
+            let pathDigest: String
+            enum CodingKeys: String, CodingKey {
+                case id, train, section, outcome
+                case solverContext = "solver_context"
+                case segmentCount = "segment_count"
+                case pathDigest = "path_digest"
+            }
+        }
+        let cases: [Answer]
+        let pinned: [Answer]
+    }
+
+    /// The six Gate A rides, solved on demand, against the dual-solver fixture.
+    @Test func historicalFixtureSixRidesMatchOnDemandSolve() throws {
+        let fixture = try PortFixtures.decode(HistoricalRoutesFixture.self, "historical-routes.json")
+        let expectedOutcome = [
+            "yubari:historical": "solved",
+            "yubari:unsolvable-2019-04-01": "unsolvable",
+            "mashike:historical": "solved",
+            "mashike:unsolvable-2020-06-01": "unsolvable",
+            "joban:historical": "solved",
+            "joban:post-relocation-2020-06-01": "solved",
+        ]
+        let answers = Dictionary(
+            uniqueKeysWithValues: (fixture.cases + fixture.pinned).map { ($0.id, $0) })
+        for (id, outcome) in expectedOutcome {
+            let answer = try #require(answers[id])
+            #expect(answer.outcome == outcome)
+            #expect(answer.solverContext.historyRevisions.jp == Self.environment.overlay.revision)
+            let lineName = answer.section.lineNames.first { !$0.isEmpty }
+            let solved = Self.solve(
+                answer.section.from, answer.section.to,
+                lineName: lineName, rideDate: answer.train.date)
+            if outcome == "unsolvable" {
+                #expect(solved == nil)
+                #expect(answer.segmentCount == 0)
+                #expect(answer.pathDigest == RouteGraph.keyDigest(""))
+            } else {
+                let solved = try #require(solved)
+                #expect(answer.segmentCount == 1)
+                #expect(RouteGraph.keyDigest(Self.canonicalPath(solved.coordinates)) == answer.pathDigest)
+            }
+        }
+    }
+
+    /// Generate a boundary assertion from every shipped temporal feature and
+    /// retirement rule. This catches a newly added event whose switch day is
+    /// off by one without adding a hand-written route for each fragment.
+    @Test func allHistoryIntervalsUseHalfOpenBoundaries() throws {
+        let overlay = Self.environment.overlay
+        var intervals = overlay.sections.map {
+            ($0.properties.validFrom, $0.properties.validTo)
+        }
+        intervals += overlay.stations.map {
+            ($0.properties["valid_from"]?.jsString, $0.properties["valid_to"]?.jsString)
+        }
+        intervals += overlay.retirements.map { ($0.validFrom, $0.validTo) }
+        #expect(intervals.count >= 900)
+
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)!
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.isLenient = false
+        for (from, to) in intervals {
+            if let from {
+                let date = try #require(formatter.date(from: from))
+                let before = try #require(formatter.calendar.date(byAdding: .day, value: -1, to: date))
+                #expect(!RouteGraph.RailValidity.isValid(
+                    validFrom: from, validTo: to, on: formatter.string(from: before)))
+                #expect(RouteGraph.RailValidity.isValid(
+                    validFrom: from, validTo: to, on: from))
+            }
+            if let to {
+                let date = try #require(formatter.date(from: to))
+                let before = try #require(formatter.calendar.date(byAdding: .day, value: -1, to: date))
+                #expect(RouteGraph.RailValidity.isValid(
+                    validFrom: from, validTo: to, on: formatter.string(from: before)))
+                #expect(!RouteGraph.RailValidity.isValid(
+                    validFrom: from, validTo: to, on: to))
+            }
+        }
+    }
+
     // MARK: - 1. 石勝線 新夕張→夕張 (夕張支線, retired 2019-04-01)
 
     @Test func shintoyuubariToYuubariSolves2018() throws {

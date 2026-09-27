@@ -1,5 +1,6 @@
 import CoreGraphics
 import Foundation
+import RailPresentation
 
 /// The railway's screen-space weight contract, as renderer parameters.
 ///
@@ -362,6 +363,16 @@ nonisolated public enum RailStyle {
         [
             NSNumber(value: Double(dash.on * scale)),
             NSNumber(value: Double(dash.off * scale)),
+        ]
+    }
+
+    /// Historical network strokes. The on/off pair is
+    /// ``DisplayNetworkDash/history``, not ``dashRatio``, so it cannot be
+    /// read as a cross-day ride.
+    static func historyDot(atScale scale: CGFloat) -> [NSNumber] {
+        [
+            NSNumber(value: DisplayNetworkDash.history.on * Double(dashReferenceWidth * scale)),
+            NSNumber(value: DisplayNetworkDash.history.off * Double(dashReferenceWidth * scale)),
         ]
     }
 

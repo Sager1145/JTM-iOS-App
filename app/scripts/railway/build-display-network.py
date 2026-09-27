@@ -54,6 +54,7 @@ import na_geo  # noqa: E402
 
 
 FORMAT = "jtm-display-network-v2"
+HISTORY_FORMAT = "jtm-display-history-v1"
 
 # Overview chunks (spec: size-aware loading) trade precision for bytes at app
 # zoom <= 7, where the renderer's own decimation already exceeds this
@@ -167,6 +168,77 @@ LANE_RAMP_QUANTUM = 0.25
 LANE_PLATEAU_MIN_METRES = 60.0
 
 
+class DisplayInterval(list):
+    """Welded display coordinates. `pre_weld` is the segment before station
+    endpoints are written onto it. Neither field is part of a shipped part."""
+
+    def __init__(self, points=(), pre_weld=None, length_km=None):
+        super().__init__(points)
+        self.pre_weld = pre_weld
+        self.length_km = length_km
+
+
+def _interval_provenance(interval: list) -> tuple[list | None, float | None]:
+    raw = getattr(interval, "pre_weld", None)
+    length = getattr(interval, "length_km", None)
+    pre_weld = None if raw is None else [list(point) for point in raw]
+    length_km = None if length is None else float(length)
+    return pre_weld, length_km
+
+
+def _copy_display_interval(interval: list) -> list:
+    points = [list(point) for point in interval]
+    pre_weld, length_km = _interval_provenance(interval)
+    if pre_weld is None and length_km is None:
+        return points
+    return DisplayInterval(points, pre_weld, length_km)
+
+
+def _retain_source_interval(old: list, points: list) -> list:
+    """Replacement display geometry keeps the source interval's pre-weld list."""
+    pre_weld, length_km = _interval_provenance(old)
+    if pre_weld is None and length_km is None:
+        return points
+    return DisplayInterval([list(point) for point in points], pre_weld, length_km)
+
+
+def _record_part_provenance(chain: dict, interval: list) -> None:
+    pre_weld, length_km = _interval_provenance(interval)
+    chain.setdefault("preWeldParts", [])
+    chain.setdefault("partLengths", [])
+    chain["preWeldParts"].append(pre_weld)
+    chain["partLengths"].append(length_km)
+
+
+def _attach_fragment_provenance(fragment: dict, rows: list[tuple]) -> None:
+    """In-memory only. `build` drops both keys before the display package is encoded."""
+    if not rows:
+        return
+    pres = [row[0] for row in rows]
+    lengths = [row[1] for row in rows]
+    if any(item is not None for item in pres):
+        fragment["preWeldParts"] = pres
+    if any(item is not None for item in lengths):
+        fragment["partLengths"] = lengths
+
+
+def _chain_provenance_rows(chain: dict) -> list[tuple]:
+    pres = chain.get("preWeldParts")
+    lengths = chain.get("partLengths")
+    rows = []
+    for index in range(len(chain["parts"])):
+        pre_weld = pres[index] if pres and index < len(pres) else None
+        length_km = lengths[index] if lengths and index < len(lengths) else None
+        rows.append((pre_weld, length_km))
+    return rows
+
+
+def _drop_memory_only_fragment_fields(fragments: list[dict]) -> None:
+    for fragment in fragments:
+        fragment.pop("preWeldParts", None)
+        fragment.pop("partLengths", None)
+
+
 def decoded_intervals(line: dict) -> list[list[list[float]]]:
     stations = line.get("stations") or []
     if not stations:
@@ -175,17 +247,21 @@ def decoded_intervals(line: dict) -> list[list[list[float]]]:
     previous = None
     for index, row in enumerate(line.get("segments") or []):
         coordinates = [list(point) for point in row[2]]
+        # Segment vertices before the reversed-run join and the station weld.
+        # The bbox test reads this list; the welded list is what is drawn.
+        pre_weld = [list(point) for point in coordinates]
+        length_km = float(row[0]) if row and isinstance(row[0], (int, float)) else None
         if row[1]:
             coordinates.insert(0, previous or (coordinates[0] if coordinates else [0, 0]))
         if not coordinates:
-            intervals.append([])
+            intervals.append(DisplayInterval([], pre_weld, length_km))
             continue
         start = stations[index % len(stations)]
         end = stations[(index + 1) % len(stations)]
         coordinates[0] = [start[2], start[3]]
         coordinates[-1] = [end[2], end[3]]
         previous = coordinates[-1]
-        intervals.append(coordinates)
+        intervals.append(DisplayInterval(coordinates, pre_weld, length_km))
     return intervals
 
 
@@ -449,6 +525,7 @@ def split_intervals_by_lane(
     for interval in intervals:
         current_lane = None
         current: list[list[float]] = []
+        emitted_at = len(pieces)
         for first, second in zip(interval, interval[1:]):
             length = lane_measure_metres(first, second)
             if length <= EPSILON:
@@ -477,6 +554,14 @@ def split_intervals_by_lane(
             measure += length
         if len(current) >= 2:
             pieces.append((float(current_lane), current))
+        # One rebuilt piece for this interval is still that interval. A lane
+        # cut that produced several pieces is not the whole pre-weld span, so
+        # those pieces keep today's display-vertex test.
+        if len(pieces) == emitted_at + 1:
+            lane, piece = pieces[-1]
+            pre_weld, length_km = _interval_provenance(interval)
+            if pre_weld is not None or length_km is not None:
+                pieces[-1] = (lane, DisplayInterval(piece, pre_weld, length_km))
     return pieces
 
 
@@ -541,6 +626,7 @@ def continuous_chains(
             current["polyline"].extend(list(point) for point in interval[1:])
         interval_start = measure
         current["parts"].append(interval)
+        _record_part_provenance(current, interval)
         current["anchorIndexByStation"][index + 1] = len(current["polyline"]) - 1
         measure += length
         current["endMetres"] = measure
@@ -600,6 +686,7 @@ def chain_from_interval_range(
             chain["polyline"].extend(list(point) for point in interval[1:])
         interval_start = measure
         chain["parts"].append(interval)
+        _record_part_provenance(chain, interval)
         chain["anchorIndexByStation"][index + 1] = len(chain["polyline"]) - 1
         measure += length
         chain["endMetres"] = measure
@@ -724,6 +811,8 @@ def chain_from_embedded_coordinates(
     polyline = [list(point) for point in coordinates]
     anchors = anchor_indices_for_polyline(stations, polyline)
     spans, placed = withheld_spans_for_embedded(polyline, anchors, withheld)
+    # No source interval: ownership stays the every-vertex test of this
+    # polyline. Do not invent a pre-weld list from the embedded vertices.
     return {
         "firstInterval": None, "startMetres": 0.0, "endMetres": lane_measure_length(polyline),
         "parts": [polyline], "polyline": polyline,
@@ -1131,8 +1220,8 @@ def straighten_st_clair_west_display(
     before = sum(line_length_metres(part) for part in intervals[:index - 1])
     old_station = before + line_length_metres(intervals[index - 1])
     old_end = old_station + line_length_metres(intervals[index])
-    intervals[index - 1] = [list(a), projected]
-    intervals[index] = [projected, list(b)]
+    intervals[index - 1] = _retain_source_interval(intervals[index - 1], [list(a), projected])
+    intervals[index] = _retain_source_interval(intervals[index], [projected, list(b)])
     set_station_point(line, intervals, station_code, projected)
     new_station = before + line_length_metres(intervals[index - 1])
     new_end = new_station + line_length_metres(intervals[index])
@@ -1291,7 +1380,8 @@ def apply_shared_corridors(
                                 "from the reviewed shared interval")
                     replacement = [list(point) for point in (
                         canonical_path if forward else reversed(canonical_path))]
-                    intervals_by_line[line_id][interval_index] = replacement
+                    intervals_by_line[line_id][interval_index] = _retain_source_interval(
+                        old_interval, replacement)
                     # Releasing the alignment gate's verdict here is
                     # DELIBERATE, and is the only place other than the
                     # reviewed release table where that may happen. The line
@@ -1440,7 +1530,8 @@ def apply_shared_corridors(
             else:
                 raise RuntimeError(
                     f"{corridor_id}: invalid side {member['side']!r}")
-            intervals_by_line[line["id"]][interval_index] = replacement
+            intervals_by_line[line["id"]][interval_index] = _retain_source_interval(
+                interval, replacement)
             if (interval_index in blocked_by_line[line["id"]] and
                     (line["id"], interval_index) not in released_intervals):
                 released_intervals.add((line["id"], interval_index))
@@ -1475,6 +1566,904 @@ def rounded(part: list[list[float]]) -> list[list[float]]:
     return [[round(point[0], 7), round(point[1], 7)] for point in part]
 
 
+def history_overlay_path(history_dir: Path, region: str) -> Path:
+    """`app/data/rail-history.json` for Japan, `rail-history-<cc>.json` elsewhere."""
+    if region == "jp":
+        return history_dir / "rail-history.json"
+    return history_dir / f"rail-history-{region}.json"
+
+
+def swift_lane(value: float) -> str:
+    """Swift's `Double` interpolation, which is what `DrawnLine.id` uses for `@lane`."""
+    text = format(float(value), ".15g")
+    if "." not in text and "e" not in text and "E" not in text:
+        text += ".0"
+    return text
+
+
+def display_draw_id(fragment: dict) -> str:
+    """The id `prepareDisplayLine` already gives this fragment."""
+    if fragment.get("continuous"):
+        return f"{fragment['lineKey']}#{int(fragment.get('chain') or 0)}"
+    return f"{fragment['lineKey']}@{swift_lane(float(fragment.get('lane') or 0))}"
+
+
+def _blank_stamp() -> dict:
+    return {"kind": "current", "validFrom": None, "validTo": None, "historyId": None}
+
+
+def _stamp_key(stamp: dict) -> tuple:
+    return (stamp["kind"], stamp["validFrom"], stamp["validTo"], stamp["historyId"])
+
+
+def _part_inside_bbox(part: list[list[float]], bbox: list[float]) -> bool:
+    """Every vertex inside `bbox`, inclusive. An empty part never matches."""
+    if len(bbox) != 4 or not part:
+        return False
+    min_lon, min_lat, max_lon, max_lat = bbox
+    return all(
+        min_lon <= point[0] <= max_lon and min_lat <= point[1] <= max_lat
+        for point in part
+    )
+
+
+def _apply_retirement_dates(stamp: dict, retirement: dict) -> None:
+    """`RailHistory.apply`: `valid_from` upgrades `.current` and sets historyId
+    only when nil; `valid_to` writes the end date and nothing else."""
+    valid_from = retirement.get("valid_from")
+    valid_to = retirement.get("valid_to")
+    if valid_from:
+        stamp["validFrom"] = valid_from
+        if stamp["kind"] == "current":
+            stamp["kind"] = "relocatedNew"
+        if stamp["historyId"] is None:
+            stamp["historyId"] = retirement["history_id"]
+    if valid_to:
+        stamp["validTo"] = valid_to
+
+
+def _overlay_section_kind(history_id: str, retirement_ids: set[str]) -> str:
+    relocated = history_id.replace(".old-", ".new-")
+    if relocated != history_id and relocated in retirement_ids:
+        return "relocatedOld"
+    return "historical"
+
+
+def _prop(props: dict, *keys: str) -> str:
+    for key in keys:
+        value = props.get(key)
+        if isinstance(value, str) and value:
+            return value
+    return ""
+
+
+def _flatten_coordinates(value) -> list[list[float]]:
+    if (
+        isinstance(value, list) and len(value) == 2
+        and all(isinstance(item, (int, float)) for item in value)
+    ):
+        return [[float(value[0]), float(value[1])]]
+    if not isinstance(value, list):
+        return []
+    points: list[list[float]] = []
+    for item in value:
+        points.extend(_flatten_coordinates(item))
+    return points
+
+
+def _linestring_parts(geometry: dict) -> list[list[list[float]]]:
+    kind = geometry.get("type")
+    coordinates = geometry.get("coordinates")
+    if kind == "LineString":
+        points = [
+            [round(float(point[0]), 7), round(float(point[1]), 7)]
+            for point in (coordinates or [])
+            if isinstance(point, list) and len(point) >= 2
+        ]
+        return [points] if len(points) >= 2 else []
+    if kind == "MultiLineString":
+        parts = []
+        for line in coordinates or []:
+            points = [
+                [round(float(point[0]), 7), round(float(point[1]), 7)]
+                for point in line
+                if isinstance(point, list) and len(point) >= 2
+            ]
+            if len(points) >= 2:
+                parts.append(points)
+        return parts
+    return []
+
+
+def _dated_fields(stamp: dict) -> dict:
+    row = {"kind": stamp["kind"]}
+    if stamp.get("validFrom"):
+        row["validFrom"] = stamp["validFrom"]
+    if stamp.get("validTo"):
+        row["validTo"] = stamp["validTo"]
+    if stamp.get("historyId"):
+        row["historyId"] = stamp["historyId"]
+    return row
+
+
+def _is_unbounded_current(stamp: dict) -> bool:
+    return (
+        stamp["kind"] == "current"
+        and not stamp.get("validFrom")
+        and not stamp.get("validTo")
+        and not stamp.get("historyId")
+    )
+
+
+def _stamp_runs(part_stamps: list[dict]) -> list[tuple[int, int]]:
+    """Half-open ranges of consecutive parts that share one stamp."""
+    if not part_stamps:
+        return []
+    runs: list[tuple[int, int]] = []
+    start = 0
+    current = _stamp_key(part_stamps[0])
+    for index, stamp in enumerate(part_stamps[1:], start=1):
+        key = _stamp_key(stamp)
+        if key != current:
+            runs.append((start, index))
+            start = index
+            current = key
+    runs.append((start, len(part_stamps)))
+    return runs
+
+
+def _joined_part_bounds(parts: list[list[list[float]]]) -> list[tuple[int, int]]:
+    """Inclusive vertex range of each part in the joined chain polyline.
+
+    Same join as `chain_from_interval_range`: the first part contributes
+    every vertex, and each later part drops its duplicated start.
+    """
+    bounds: list[tuple[int, int]] = []
+    end = 0
+    for index, part in enumerate(parts):
+        if index == 0:
+            start = 0
+            end = max(0, len(part) - 1)
+        else:
+            start = end
+            end = start + max(0, len(part) - 1)
+        bounds.append((start, end))
+    return bounds
+
+
+def _clip_measure_rows(rows: list, start: float, end: float) -> list:
+    """Clip `[from, to, ...]` rows to `[start, end]` and rebase them to 0."""
+    clipped = []
+    for row in rows:
+        low = max(start, float(row[0]))
+        high = min(end, float(row[1]))
+        if high - low <= EPSILON:
+            continue
+        reb_low = round(low - start, 1)
+        reb_high = round(high - start, 1)
+        if reb_high <= reb_low:
+            continue
+        clipped.append([reb_low, reb_high, *row[2:]])
+    return clipped
+
+
+def _clip_follow_rows(rows: list, start: float, end: float) -> list:
+    """Clip follow rows to one sub-chain, interpolating the canonical span."""
+    clipped = []
+    for row in rows:
+        low = max(start, float(row[0]))
+        high = min(end, float(row[1]))
+        if high - low <= EPSILON:
+            continue
+        span = float(row[1]) - float(row[0])
+        if span <= EPSILON:
+            canon_from = float(row[4])
+            canon_to = float(row[5])
+        else:
+            canon_from = float(row[4]) + (low - float(row[0])) / span * (
+                float(row[5]) - float(row[4]))
+            canon_to = float(row[4]) + (high - float(row[0])) / span * (
+                float(row[5]) - float(row[4]))
+        reb_low = round(low - start, 1)
+        reb_high = round(high - start, 1)
+        if reb_high <= reb_low:
+            continue
+        clipped.append([
+            reb_low, reb_high, row[2], row[3],
+            round(canon_from, 1), round(canon_to, 1),
+        ])
+    return clipped
+
+
+def _subchain_fragment(
+    fragment: dict, parts: list, measure_start: float, measure_end: float,
+    chain: int, keep_join: bool,
+) -> dict:
+    sub = {
+        "lineKey": fragment["lineKey"],
+        "lane": fragment.get("lane", 0.0),
+        "parts": parts,
+        "continuous": True,
+        "chain": chain,
+        "laneRows": _clip_measure_rows(
+            fragment.get("laneRows") or [], measure_start, measure_end),
+        "follows": _clip_follow_rows(
+            fragment.get("follows") or [], measure_start, measure_end),
+        "totalMetres": round(measure_end - measure_start, 1),
+        "withheld": _clip_measure_rows(
+            fragment.get("withheld") or [], measure_start, measure_end),
+        "familyWindows": _clip_measure_rows(
+            fragment.get("familyWindows") or [], measure_start, measure_end),
+    }
+    if keep_join and "joinPrevious" in fragment:
+        sub["joinPrevious"] = fragment["joinPrevious"]
+    return sub
+
+
+def _retarget_follow(row: list, pieces: list[dict]) -> list:
+    """Point one follow at the sub-chains its canonical span now covers."""
+    if len(pieces) == 1:
+        if pieces[0]["new_index"] == int(row[3]):
+            return [row]
+        copied = list(row)
+        copied[3] = pieces[0]["new_index"]
+        return [copied]
+    canon_from = float(row[4])
+    canon_to = float(row[5])
+    reverse = canon_to < canon_from
+    span_low, span_high = (canon_to, canon_from) if reverse else (canon_from, canon_to)
+    span = span_high - span_low
+    own_from = float(row[0])
+    own_to = float(row[1])
+    own_span = own_to - own_from
+    ordered = sorted(pieces, key=lambda piece: piece["measure_start"], reverse=reverse)
+    out = []
+    last = len(ordered) - 1
+    for index, piece in enumerate(ordered):
+        start = piece["measure_start"] - (0.051 if index == 0 else 0.0)
+        end = piece["measure_end"] + (0.051 if index == last else 0.0)
+        low = max(span_low, start)
+        high = min(span_high, end)
+        if high - low <= EPSILON:
+            continue
+        if span <= EPSILON:
+            frac0 = frac1 = 0.0
+            canon_a, canon_b = canon_from, canon_to
+        elif not reverse:
+            frac0 = (low - span_low) / span
+            frac1 = (high - span_low) / span
+            canon_a, canon_b = low, high
+        else:
+            frac0 = (span_high - high) / span
+            frac1 = (span_high - low) / span
+            canon_a, canon_b = high, low
+        if own_span <= EPSILON:
+            left = right = own_from
+        else:
+            left = own_from + frac0 * own_span
+            right = own_from + frac1 * own_span
+        reb_left = round(left, 1)
+        reb_right = round(right, 1)
+        if reb_right <= reb_left:
+            continue
+        out.append([
+            reb_left, reb_right, row[2], piece["new_index"],
+            round(canon_a, 1), round(canon_b, 1),
+        ])
+    if out:
+        return out
+    copied = list(row)
+    copied[3] = ordered[0]["new_index"]
+    return [copied]
+
+
+def _split_mixed_continuous_chains(
+    fragments: list[dict], stations: list[dict], stamps: list[list[dict]],
+) -> None:
+    """Split a continuous chain whose parts do not share one history stamp.
+
+    The era filter reads one decoration for a whole continuous chain, so a
+    relocated span in the middle of an otherwise current line has to be its
+    own chain. Parts outside a retirement bbox stay unstamped, and nothing
+    is dropped. Lines whose chains are already uniform are left untouched,
+    which keeps a build without a mixed chain byte-identical.
+    """
+    indices_by_line: dict[str, list[int]] = defaultdict(list)
+    for index, fragment in enumerate(fragments):
+        if fragment.get("continuous"):
+            indices_by_line[fragment["lineKey"]].append(index)
+    changed: dict[str, dict[int, list[dict]]] = {}
+    replacement: dict[int, list[dict]] = {}
+    replacement_stamps: dict[int, list[list[dict]]] = {}
+    for line_key, indices in indices_by_line.items():
+        if not any(len({_stamp_key(stamp) for stamp in stamps[index]}) > 1 for index in indices):
+            continue
+        next_chain = 0
+        pieces_by_old: dict[int, list[dict]] = {}
+        for index in indices:
+            fragment = fragments[index]
+            part_stamps = stamps[index]
+            runs = _stamp_runs(part_stamps)
+            old_chain = int(fragment.get("chain") or 0)
+            if len(runs) <= 1:
+                updated = fragment
+                if next_chain != old_chain:
+                    updated = dict(fragment)
+                    updated["chain"] = next_chain
+                pieces_by_old[old_chain] = [{
+                    "new_index": next_chain,
+                    "measure_start": 0.0,
+                    "measure_end": float(fragment.get("totalMetres") or 0.0),
+                    "vertex_start": 0,
+                    "vertex_end": 10**9,
+                }]
+                replacement[index] = [updated]
+                replacement_stamps[index] = [part_stamps]
+                next_chain += 1
+                continue
+            parts = fragment["parts"]
+            lengths = [lane_measure_length(part) for part in parts]
+            cumulative = [0.0]
+            for length in lengths:
+                cumulative.append(cumulative[-1] + length)
+            bounds = _joined_part_bounds(parts)
+            subs: list[dict] = []
+            sub_stamps: list[list[dict]] = []
+            pieces: list[dict] = []
+            for offset, (start, end) in enumerate(runs):
+                chain = next_chain + offset
+                measure_start = cumulative[start]
+                measure_end = cumulative[end]
+                subs.append(_subchain_fragment(
+                    fragment, parts[start:end], measure_start, measure_end,
+                    chain, keep_join=(offset == 0)))
+                sub_stamps.append(part_stamps[start:end])
+                pieces.append({
+                    "new_index": chain,
+                    "measure_start": measure_start,
+                    "measure_end": measure_end,
+                    "vertex_start": bounds[start][0],
+                    "vertex_end": bounds[end - 1][1],
+                })
+            pieces_by_old[old_chain] = pieces
+            replacement[index] = subs
+            replacement_stamps[index] = sub_stamps
+            next_chain += len(runs)
+        changed[line_key] = pieces_by_old
+    if not changed:
+        return
+    new_fragments: list[dict] = []
+    new_stamps: list[list[dict]] = []
+    for index, fragment in enumerate(fragments):
+        if index in replacement:
+            new_fragments.extend(replacement[index])
+            new_stamps.extend(replacement_stamps[index])
+        else:
+            new_fragments.append(fragment)
+            new_stamps.append(stamps[index])
+    fragments[:] = new_fragments
+    stamps[:] = new_stamps
+    for fragment in fragments:
+        follows = fragment.get("follows")
+        if not follows:
+            continue
+        rewritten = []
+        did_change = False
+        for row in follows:
+            pieces = changed.get(str(row[2]), {}).get(int(row[3]))
+            if not pieces or (
+                len(pieces) == 1 and pieces[0]["new_index"] == int(row[3])
+            ):
+                rewritten.append(row)
+                continue
+            did_change = True
+            rewritten.extend(_retarget_follow(row, pieces))
+        if did_change:
+            fragment["follows"] = rewritten
+    for station in stations:
+        slot = station.get("slot")
+        if not slot:
+            continue
+        pieces = changed.get(station["lineKey"], {}).get(int(slot[0]))
+        if not pieces:
+            continue
+        vertex = int(slot[1])
+        for piece in pieces:
+            if piece["vertex_start"] <= vertex <= piece["vertex_end"]:
+                new_chain = piece["new_index"]
+                new_vertex = vertex - piece["vertex_start"]
+                if new_chain != int(slot[0]) or new_vertex != vertex:
+                    station["slot"] = [new_chain, new_vertex]
+                break
+
+
+def _rule_length_km(retirement: dict) -> float | None:
+    for key in ("length_km", "lengthKm", "affectedLengthKm", "length"):
+        value = retirement.get(key)
+        if isinstance(value, (int, float)):
+            return float(value)
+    return None
+
+
+def _sum_stored_lengths(values: list) -> float | None:
+    if not values or any(value is None for value in values):
+        return None
+    return round(sum(float(value) for value in values), 3)
+
+
+def _line_name_matches(entry: dict, line_name, operator) -> bool:
+    return entry.get("name") == line_name and (entry.get("operator") or "") == (operator or "")
+
+
+def _vertex_inside_bbox(point: list[float], bbox: list[float]) -> bool:
+    """Same inclusive test as `_part_inside_bbox`, for one vertex."""
+    if len(bbox) != 4 or len(point) < 2:
+        return False
+    min_lon, min_lat, max_lon, max_lat = bbox
+    return min_lon <= point[0] <= max_lon and min_lat <= point[1] <= max_lat
+
+
+def _measure_row_clip_safe(row) -> bool:
+    if not isinstance(row, (list, tuple)) or len(row) < 2:
+        return False
+    try:
+        float(row[0])
+        float(row[1])
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def _fragment_measures_clip_safe(fragment: dict) -> bool:
+    """Continuous chains clip lane/follow rows in metres. A row that is not a
+    numeric span cannot be clipped without dropping it, so the part stays whole."""
+    if not fragment.get("continuous"):
+        return True
+    for key in ("laneRows", "withheld", "familyWindows"):
+        for row in fragment.get(key) or []:
+            if not _measure_row_clip_safe(row):
+                return False
+    for row in fragment.get("follows") or []:
+        if not _measure_row_clip_safe(row) or len(row) < 6:
+            return False
+        try:
+            float(row[4])
+            float(row[5])
+        except (TypeError, ValueError):
+            return False
+    return True
+
+
+def _ownership_flags(part: list, pre_weld, bbox: list[float]) -> tuple[str, list[bool] | None]:
+    """`all_in` / `all_out` / `flags` for the vertices that decide this part.
+
+    A pre-weld list that is entirely inside or entirely outside wins, even
+    when the welded display vertex at an end has left the box. A straddle
+    uses the pre-weld flags when they line up with the display part, and the
+    display vertices otherwise (the drawn run is what gets cut).
+    """
+    if pre_weld is not None and len(pre_weld) > 0:
+        pre_flags = [_vertex_inside_bbox(point, bbox) for point in pre_weld]
+        if all(pre_flags):
+            return "all_in", None
+        if not any(pre_flags):
+            return "all_out", None
+        if len(pre_weld) == len(part):
+            return "flags", pre_flags
+    if len(part) < 2:
+        return "all_out", None
+    flags = [_vertex_inside_bbox(point, bbox) for point in part]
+    if all(flags):
+        return "all_in", None
+    if not any(flags):
+        return "all_out", None
+    return "flags", flags
+
+
+def _straddle_subparts(part: list, flags: list[bool]) -> list[tuple[list, bool, int]] | None:
+    """Cut `part` on edges that are not wholly inside the bbox.
+
+    An edge is inside only when both ends are. Each original edge lands in
+    one sub-part. The vertex where an inside edge meets an outside edge is
+    copied onto both so the pieces meet. Returns None when there is no
+    drawable inside edge (nothing to date without pulling an outside vertex
+    into the dated piece).
+    """
+    count = len(part)
+    if count < 2 or len(flags) != count:
+        return None
+    edge_inside = [bool(flags[index] and flags[index + 1]) for index in range(count - 1)]
+    if not any(edge_inside) or all(edge_inside):
+        return None
+    groups: list[tuple[int, int, bool]] = []
+    start = 0
+    for edge in range(1, count - 1):
+        if edge_inside[edge] != edge_inside[start]:
+            groups.append((start, edge, edge_inside[start]))
+            start = edge
+    groups.append((start, count - 1, edge_inside[start]))
+    subparts: list[tuple[list, bool, int]] = []
+    for edge_start, edge_end, inside in groups:
+        coords = [list(point) for point in part[edge_start:edge_end + 1]]
+        if len(coords) < 2:
+            return None
+        subparts.append((coords, inside, edge_start))
+    return subparts
+
+
+def _stamp_overlay_parts(
+    region: str,
+    overlay: dict,
+    fragments: list[dict],
+    stations: list[dict],
+    metadata: dict[str, dict],
+    exclusions: dict[str, str] | None = None,
+) -> tuple[list[list[dict]], dict[str, dict], list[dict]]:
+    """Stamp display parts from the pre-weld interval when one is stored.
+
+    All-inside pre-weld dates the whole welded part, even if a station weld
+    sits outside the bbox. All-outside leaves it undated. A straddle is cut
+    into sub-parts at the inside/outside edge; only inside edges are dated.
+    The chain splitter then clips metres. A continuous fragment whose measure
+    rows are not numeric spans is left unsplit and the rule is
+    `straddle split unsupported`. Embedded parts have no pre-weld, so the
+    display vertices themselves are cut when they straddle. `exclusions`
+    maps a history id to a reason the rule is outside this package; a
+    missing line is never that case.
+    """
+    retirements = overlay.get("retirements") or []
+    stamps = [[_blank_stamp() for _ in fragment["parts"]] for fragment in fragments]
+    station_stamps_by_id: dict[str, dict] = {}
+    reports: list[dict] = []
+    exclusions = exclusions or {}
+    for retirement in retirements:
+        history_id = retirement.get("history_id")
+        match = retirement.get("match") or {}
+        bbox = match.get("bbox") or []
+        line_name = match.get("line_name")
+        operator = match.get("operator")
+        solved_hits = 0
+        raw_hits = 0
+        stamped_parts = 0
+        failed_inside = 0
+        matched_lengths: list[float | None] = []
+        stamped_lengths: list[float | None] = []
+        line_present = False
+        if history_id in exclusions:
+            report = {
+                "historyId": history_id,
+                "lineName": line_name,
+                "operator": operator,
+                "solvedIntervalHits": 0,
+                "rawDisplayIntervalHits": 0,
+                "displayFragmentHits": 0,
+                "displayFragmentHitsStage": "before chain split",
+                "stationHits": 0,
+                "expectedAffectedLength": _rule_length_km(retirement),
+                "actualAffectedLength": None,
+                "unmatchedReason": exclusions[history_id],
+                "reviewStatus": "not_applicable",
+            }
+            reports.append(report)
+            print(
+                "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
+                file=sys.stderr,
+            )
+            continue
+        for fragment_index, fragment in enumerate(fragments):
+            entry = metadata.get(fragment["lineKey"]) or {}
+            if not _line_name_matches(entry, line_name, operator):
+                continue
+            line_present = True
+            pres = fragment.get("preWeldParts")
+            lengths = fragment.get("partLengths")
+            clip_safe = _fragment_measures_clip_safe(fragment)
+            new_parts: list = []
+            new_pres: list = []
+            new_lengths: list = []
+            new_stamps: list = []
+            split_any = False
+            for part_index, part in enumerate(fragment["parts"]):
+                raw_hit = _part_inside_bbox(part, bbox)
+                if raw_hit:
+                    raw_hits += 1
+                pre_weld = pres[part_index] if pres and part_index < len(pres) else None
+                length_km = lengths[part_index] if lengths and part_index < len(lengths) else None
+                stamp = stamps[fragment_index][part_index]
+                decision, flags = _ownership_flags(part, pre_weld, bbox)
+                subparts = _straddle_subparts(part, flags) if decision == "flags" and flags else None
+                if decision == "flags" and subparts is None:
+                    # Vertices cross the box but no edge has both ends inside.
+                    decision = "all_out"
+                if decision == "flags" and not clip_safe:
+                    failed_inside += 1
+                    solved_hits += 1
+                    new_parts.append(part)
+                    new_pres.append(pre_weld)
+                    new_lengths.append(length_km)
+                    new_stamps.append(stamp)
+                    continue
+                if decision != "flags" or not subparts:
+                    if decision == "all_in":
+                        solved_hits += 1
+                        matched_lengths.append(length_km)
+                        _apply_retirement_dates(stamp, retirement)
+                        stamped_parts += 1
+                        stamped_lengths.append(length_km)
+                    new_parts.append(part)
+                    new_pres.append(pre_weld)
+                    new_lengths.append(length_km)
+                    new_stamps.append(stamp)
+                    continue
+                split_any = True
+                for coords, inside, origin in subparts:
+                    piece_stamp = dict(stamp)
+                    # The parent segment's stored kilometres are not a length
+                    # for one run. Leave it unset rather than invent one.
+                    piece_length = None
+                    if pre_weld is not None and len(pre_weld) == len(part):
+                        piece_pre = [
+                            list(point) for point in pre_weld[origin:origin + len(coords)]
+                        ]
+                    elif pre_weld is not None:
+                        piece_pre = [list(point) for point in coords]
+                    else:
+                        piece_pre = None
+                    if inside:
+                        solved_hits += 1
+                        matched_lengths.append(piece_length)
+                        _apply_retirement_dates(piece_stamp, retirement)
+                        stamped_parts += 1
+                        stamped_lengths.append(piece_length)
+                    new_parts.append(coords)
+                    new_pres.append(piece_pre)
+                    new_lengths.append(piece_length)
+                    new_stamps.append(piece_stamp)
+            if split_any:
+                fragment["parts"] = new_parts
+                if pres is not None:
+                    fragment["preWeldParts"] = new_pres
+                if lengths is not None:
+                    fragment["partLengths"] = new_lengths
+                stamps[fragment_index] = new_stamps
+        station_hits = 0
+        for station in stations:
+            entry = metadata.get(station["lineKey"]) or {}
+            if not _line_name_matches(entry, line_name, operator):
+                continue
+            point = [[station["lon"], station["lat"]]]
+            if not _part_inside_bbox(point, bbox):
+                continue
+            station_hits += 1
+            station_stamp = station_stamps_by_id.setdefault(station["id"], _blank_stamp())
+            _apply_retirement_dates(station_stamp, retirement)
+        if failed_inside:
+            status = "incomplete"
+            reason = "straddle split unsupported"
+        elif not line_present:
+            status = "incomplete"
+            reason = "display geometry absent"
+        elif stamped_parts == 0:
+            status = "incomplete"
+            reason = "original interval outside bbox"
+        elif stamped_parts != solved_hits:
+            status = "incomplete"
+            reason = "matched source interval was not stamped"
+        else:
+            status = "matched"
+            reason = None
+        rule_length = _rule_length_km(retirement)
+        if rule_length is not None:
+            expected_length = rule_length
+        else:
+            expected_length = _sum_stored_lengths(matched_lengths)
+        report = {
+            "historyId": history_id,
+            "lineName": line_name,
+            "operator": operator,
+            "solvedIntervalHits": solved_hits,
+            "rawDisplayIntervalHits": raw_hits,
+            "displayFragmentHits": stamped_parts,
+            "displayFragmentHitsStage": "before chain split",
+            "stationHits": station_hits,
+            "expectedAffectedLength": expected_length,
+            "actualAffectedLength": _sum_stored_lengths(stamped_lengths),
+            "unmatchedReason": reason,
+            "reviewStatus": status,
+        }
+        reports.append(report)
+        print(
+            "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
+            file=sys.stderr,
+        )
+    return stamps, station_stamps_by_id, reports
+
+
+def build_region_history(
+    region: str,
+    history_dir: Path | None,
+    fragments: list[dict],
+    stations: list[dict],
+    metadata: dict[str, dict],
+    exclusions: dict[str, str] | None = None,
+) -> dict | None:
+    """Side file for one region, or None when that region has no overlay.
+
+    Ownership is the pre-weld interval when the fragment still carries one.
+    A continuous chain whose parts do not share one stamp is split on the
+    existing clip path. `matchReport` is one record per retirement. A line
+    this region does not draw is `incomplete` (`display geometry absent`),
+    not `not_applicable`. `exclusions` is the only way into `not_applicable`.
+    """
+    if history_dir is None:
+        return None
+    path = history_overlay_path(history_dir, region)
+    if not path.exists():
+        return None
+    overlay = json.loads(path.read_bytes())
+    if overlay.get("schema_version") != "1":
+        raise RuntimeError(f"{path}: expected schema_version '1'")
+    retirements = overlay.get("retirements") or []
+    retirement_ids = {
+        retirement["history_id"] for retirement in retirements if retirement.get("history_id")
+    }
+
+    stamps, station_stamps_by_id, match_report = _stamp_overlay_parts(
+        region, overlay, fragments, stations, metadata, exclusions)
+    _split_mixed_continuous_chains(fragments, stations, stamps)
+
+    for fragment, part_stamps in zip(fragments, stamps):
+        if not fragment.get("continuous"):
+            continue
+        distinct = {_stamp_key(stamp) for stamp in part_stamps}
+        if len(distinct) > 1:
+            shown = ", ".join(repr(item) for item in distinct)
+            raise RuntimeError(
+                f"{region}: continuous chain {display_draw_id(fragment)} has "
+                f"parts with different history stamps: {shown}")
+
+    part_rows = []
+    for fragment, part_stamps in zip(fragments, stamps):
+        draw_id = display_draw_id(fragment)
+        for part_index, stamp in enumerate(part_stamps):
+            if _is_unbounded_current(stamp):
+                continue
+            part_rows.append({"id": draw_id, "index": part_index, **_dated_fields(stamp)})
+
+    station_stamps = []
+    for station in stations:
+        stamp = station_stamps_by_id.get(station["id"])
+        if stamp is None or _is_unbounded_current(stamp):
+            continue
+        station_stamps.append({"id": station["id"], **_dated_fields(stamp)})
+
+    grouped: dict[str, dict] = {}
+    for feature in overlay.get("sections") or []:
+        props = feature.get("properties") or {}
+        history_id = props.get("history_id")
+        if not isinstance(history_id, str) or not history_id.strip():
+            raise RuntimeError(f"{region}: overlay section is missing history_id")
+        history_id = history_id.strip()
+        parts = _linestring_parts(feature.get("geometry") or {})
+        if not parts:
+            continue
+        kind = _overlay_section_kind(history_id, retirement_ids)
+        name = _prop(props, "line_name", "N02_003")
+        operator = _prop(props, "operator", "N02_004")
+        group = grouped.get(history_id)
+        if group is None:
+            color, color_dark, rank, min_zoom, visibility = _history_line_style(
+                region, name, operator, metadata)
+            group = {
+                "historyId": history_id,
+                "name": name,
+                "operator": operator,
+                "color": color,
+                "colorDark": color_dark,
+                "kind": kind,
+                "rank": rank,
+                "minZoomMapLibre": min_zoom,
+                "visibilityLengthKm": visibility,
+                "parts": [],
+            }
+            grouped[history_id] = group
+        for part in parts:
+            row = {"coordinates": part, "kind": kind}
+            if props.get("valid_from"):
+                row["validFrom"] = props["valid_from"]
+            if props.get("valid_to"):
+                row["validTo"] = props["valid_to"]
+            group["parts"].append(row)
+
+    overlay_stations = []
+    for feature in overlay.get("stations") or []:
+        props = feature.get("properties") or {}
+        history_id = props.get("history_id")
+        if not isinstance(history_id, str) or not history_id.strip():
+            raise RuntimeError(f"{region}: overlay station is missing history_id")
+        history_id = history_id.strip()
+        points = _flatten_coordinates((feature.get("geometry") or {}).get("coordinates"))
+        if not points:
+            continue
+        lon = round(sum(point[0] for point in points) / len(points), 7)
+        lat = round(sum(point[1] for point in points) / len(points), 7)
+        name = _prop(props, "station_name", "N02_005", "name")
+        line_name = _prop(props, "line_name", "N02_003")
+        operator = _prop(props, "operator", "N02_004")
+        line_history_id = _overlay_station_line(
+            grouped, line_name, operator, lon, lat)
+        color, _, _, min_zoom, _ = _history_line_style(
+            region, line_name, operator, metadata)
+        row = {
+            "historyId": history_id,
+            "name": name,
+            "lineName": line_name,
+            "operator": operator,
+            "lon": lon,
+            "lat": lat,
+            "kind": "historical",
+            "color": color,
+            "minZoomMapLibre": min_zoom,
+            "lineHistoryId": line_history_id or history_id,
+        }
+        if props.get("valid_from"):
+            row["validFrom"] = props["valid_from"]
+        if props.get("valid_to"):
+            row["validTo"] = props["valid_to"]
+        if props.get("station_name_roma") or props.get("nameRoma"):
+            row["nameRoma"] = props.get("station_name_roma") or props.get("nameRoma")
+        overlay_stations.append(row)
+
+    lines = [group for group in grouped.values() if group["parts"]]
+    # Swift's synthesized RailDisplayHistoryFile decode ignores unknown keys,
+    # so this diagnostic list can ride in the side file. It is not geometry.
+    return {
+        "format": HISTORY_FORMAT,
+        "region": region,
+        "parts": part_rows,
+        "lines": lines,
+        "stations": overlay_stations,
+        "stationStamps": station_stamps,
+        "matchReport": match_report,
+    }
+
+
+def _history_line_style(
+    region: str, name: str, operator: str, metadata: dict[str, dict]
+) -> tuple[str, str, int, int, float]:
+    for entry in metadata.values():
+        if entry.get("region") != region:
+            continue
+        if entry.get("name") == name and (entry.get("operator") or "") == operator:
+            return (
+                entry.get("color") or "#7a7a7a",
+                entry.get("colorDark") or entry.get("color") or "#7a7a7a",
+                int(entry.get("rank") or 0),
+                int(entry.get("minZoomMapLibre") or 0),
+                float(entry.get("visibilityLengthKm") or 0),
+            )
+    return "#7a7a7a", "#7a7a7a", 1, 12, 0.0
+
+
+def _overlay_station_line(
+    grouped: dict[str, dict], line_name: str, operator: str, lon: float, lat: float
+) -> str | None:
+    matches = [
+        group for group in grouped.values()
+        if group["name"] == line_name and group["operator"] == operator
+    ]
+    if not matches:
+        return None
+    for group in matches:
+        for part in group["parts"]:
+            points = part["coordinates"]
+            lons = [point[0] for point in points]
+            lats = [point[1] for point in points]
+            if min(lons) - 0.02 <= lon <= max(lons) + 0.02 and min(lats) - 0.02 <= lat <= max(lats) + 0.02:
+                return group["historyId"]
+    return matches[0]["historyId"]
+
+
 def bounds_of(fragments: list[dict], stations: list[dict]) -> dict:
     """The region's own extent, so the client never guesses one from a constant."""
     min_lon = min_lat = math.inf
@@ -1497,6 +2486,7 @@ def bounds_of(fragments: list[dict], stations: list[dict]) -> dict:
 def build(
     rail_dir: Path, output: Path,
     small_region_max_bytes: int = DEFAULT_SMALL_REGION_MAX_BYTES,
+    history_dir: Path | None = None,
 ) -> dict:
     if output.exists():
         shutil.rmtree(output)
@@ -1697,7 +2687,7 @@ def build(
             line["id"]: decoded_intervals(line) for line in package["lines"]
         }
         intervals_by_line = {
-            line_id: [[list(point) for point in interval] for interval in intervals]
+            line_id: [_copy_display_interval(interval) for interval in intervals]
             for line_id, intervals in source_intervals_by_line.items()
         }
         released_intervals: set[tuple[str, int]] = set()
@@ -1894,6 +2884,7 @@ def build(
             # viewport and skips the rest, so nothing has to be clipped here for
             # a transcontinental railway to cost only what is on screen.
             parts_by_lane: dict[float, list[list[list[float]]]] = defaultdict(list)
+            provenance_by_lane: dict[float, list[tuple]] = defaultdict(list)
             continuous_chains_for_line: list[dict] = []
             line_is_continuous = (
                 region in CONTINUOUS_STROKE_REGIONS
@@ -1984,6 +2975,7 @@ def build(
                     if (line["id"], chain_index) in (
                             non_joining_previous_by_region.get(region) or set()):
                         fragment["joinPrevious"] = False
+                    _attach_fragment_provenance(fragment, _chain_provenance_rows(chain))
                     region_fragments.append(fragment)
                     built_fragments += 1
                     built_parts += len(chain["parts"])
@@ -2005,14 +2997,17 @@ def build(
                         continue
                     if len(interval) >= 2:
                         parts_by_lane[0.0].append(rounded(interval))
+                        provenance_by_lane[0.0].append(_interval_provenance(interval))
             else:
                 for lane, piece in lane_pieces:
                     if len(piece) >= 2:
                         parts_by_lane[float(lane)].append(rounded(piece))
+                        provenance_by_lane[float(lane)].append(_interval_provenance(piece))
 
             for lane, parts in sorted(parts_by_lane.items()):
-                region_fragments.append(
-                    {"lineKey": key, "lane": lane, "parts": parts})
+                fragment = {"lineKey": key, "lane": lane, "parts": parts}
+                _attach_fragment_provenance(fragment, provenance_by_lane[lane])
+                region_fragments.append(fragment)
                 built_fragments += 1
                 built_parts += len(parts)
                 built_vertices += sum(len(part) for part in parts)
@@ -2092,6 +3087,19 @@ def build(
             station["groupLineKeys"] = line_keys_by_station[station["stationCode"]]
             station.pop("order", None)
         built_stations += len(region_stations)
+
+        # History is a side file, except that a continuous chain whose parts
+        # do not share one stamp is split here. The era filter reads a single
+        # decoration per chain, so the relocated span has to be its own chain.
+        # With no overlay, or when every chain is already uniform, the
+        # fragments are not rewritten and the bins stay byte-identical.
+        # Pre-weld coordinates decide the stamp, then leave memory: they are
+        # not part of the display package.
+        fragments_before_history = len(region_fragments)
+        region_history = build_region_history(
+            region, history_dir, region_fragments, region_stations, metadata)
+        _drop_memory_only_fragment_fields(region_fragments)
+        built_fragments += len(region_fragments) - fragments_before_history
 
         # Group this region's fragments and station rows by lineKey (already
         # `f"{region}|{line['id']}"`, the same key `metadata` is keyed by) and
@@ -2281,6 +3289,13 @@ def build(
         # in the Gulf of Guinea. Absent bounds mean "never".
         if region_fragments or region_stations:
             record.update(bounds_of(region_fragments, region_stations))
+        if region_history is not None:
+            history_name = f"{region}.display-history.json"
+            history_bytes = compact_json(region_history)
+            (output / history_name).write_bytes(history_bytes)
+            record["historyFile"] = history_name
+            record["historyBytes"] = len(history_bytes)
+            record["historySHA256"] = hashlib.sha256(history_bytes).hexdigest()
         region_records.append(record)
 
         timings_seconds[region] = round(time.monotonic() - region_start_time, 3)
@@ -2464,8 +3479,14 @@ def main() -> None:
     parser.add_argument(
         "--small-region-max-bytes", type=int,
         default=DEFAULT_SMALL_REGION_MAX_BYTES)
+    parser.add_argument(
+        "--history-dir", type=Path, default=None,
+        help="Directory of optional rail-history[-cc].json overlays. "
+             "Omit to leave the display network unchanged.")
     args = parser.parse_args()
-    manifest = build(args.rail_dir, args.output, args.small_region_max_bytes)
+    manifest = build(
+        args.rail_dir, args.output, args.small_region_max_bytes,
+        history_dir=args.history_dir)
     print(json.dumps({
         "format": manifest["format"], **manifest["source"], **manifest["built"],
         "bytes": {

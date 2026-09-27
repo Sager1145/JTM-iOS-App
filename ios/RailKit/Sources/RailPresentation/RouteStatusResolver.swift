@@ -66,6 +66,9 @@ public enum RouteOutcome: Sendable, Equatable {
     case partial(solved: Int, expected: Int, unsolved: [SectionGap])
     /// Not one section solved. The record is untouched and still exports.
     case unavailable(expected: Int)
+    /// The history overlay for a region failed to load. This is not an empty
+    /// journey: `expected == 0` would otherwise be reported as `noRoute`.
+    case historyDatabaseInvalid(String)
 
     public var isResolved: Bool { self == .resolved }
 }
@@ -192,6 +195,10 @@ public enum RouteStatusResolver {
             return .resolved(sections: max(entry.drawnSegments, 1))
         case .partial(let solved, let expected, let unsolved):
             return .needsReview(solved: solved, expected: expected, gaps: unsolved)
+        case .historyDatabaseInvalid(let message):
+            // A corrupt overlay is a stated load failure. `expected == 0`
+            // with no reason is `noRoute`, and this must not collapse into that.
+            return .unavailable(expected: 0, reason: message)
         case .unavailable(let expected):
             // `expected == 0` is the store's spelling for "this journey asked
             // for nothing": `solveMissing` skips a train whose canonical

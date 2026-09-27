@@ -131,6 +131,9 @@ final class StationAnnotation: NSObject, MKAnnotation {
     /// zoom floor in `relayout` still applies under them: a switch
     /// can take a name away, never make it appear earlier.
     let showsName: Bool
+    /// 1 for an open platform. A closed overlay station uses the same dot
+    /// at a lower alpha — never the cross-day diamond.
+    let markerAlpha: CGFloat
     var title: String? { displayName }
     var subtitle: String? {
         if let first = readings?.first { return first }
@@ -140,12 +143,14 @@ final class StationAnnotation: NSObject, MKAnnotation {
     init(
         station: RailNetworkStore.DrawnStation,
         displayName: String, showsName: Bool, readings: [String]?,
+        markerAlpha: CGFloat = 1,
         displayCoordinate: CLLocationCoordinate2D? = nil
     ) {
         self.station = station
         self.displayName = displayName
         self.showsName = showsName
         self.readings = readings
+        self.markerAlpha = markerAlpha
         coordinate = displayCoordinate ?? station.coordinate.clLocation
     }
 }
@@ -435,6 +440,7 @@ enum MapAnnotationReconciler {
         case let (a as StationAnnotation, b as StationAnnotation):
             return a.station.contentID == b.station.contentID && a.displayName == b.displayName
                 && a.readings == b.readings && a.showsName == b.showsName
+                && a.markerAlpha == b.markerAlpha
         case let (a as RideLabelAnnotation, b as RideLabelAnnotation):
             return a.text == b.text && a.rawName == b.rawName && a.stationCode == b.stationCode
                 && a.tier == b.tier && a.dotRadiusToken == b.dotRadiusToken && a.selected == b.selected
@@ -496,6 +502,7 @@ final class StationAnnotationView: MKAnnotationView {
     func configure(_ item: StationAnnotation, scale: CGFloat, zoom: Double) {
         station = item.station
         showsName = item.showsName
+        alpha = item.markerAlpha
         self.scale = scale
         self.zoom = zoom
         let station = item.station

@@ -94,6 +94,15 @@ function railPackageUrlsForCountry(country) {
 function stationReadingsApiForCountry(country) {
   return AppCore.countrySuffixed("station-readings", country);
 }
+// Rail-history overlays are optional per region. Listing shipped overlays
+// explicitly distinguishes "this region has no overlay" from a failed fetch
+// of an overlay that the release promises to provide.
+const COUNTRY_RAIL_HISTORY_APIS = {
+  jp: "rail-history",
+};
+function railHistoryApiForCountry(country) {
+  return COUNTRY_RAIL_HISTORY_APIS[country] || null;
+}
 // Solver + statistics geometry, one FULLY SEPARATE pair per country. The two
 // pairs answer the same schema (line_name / operator / institution_type_code /
 // railway_class_code on sections; station_name / n02_station_code /
@@ -225,7 +234,10 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // 21: endpoint station candidates are now filtered by ride-date validity
 // (ADR 0011), the same rule already applied to edges, so a cache entry that
 // snapped to a since-retired station is no longer reused.
-const ROUTE_SOLVER_CACHE_VERSION = "21";
+// 22: dated history overlays now participate in Web and precompute solves;
+// cache identity includes normalized ride date plus every touched region's
+// overlay revision.
+const ROUTE_SOLVER_CACHE_VERSION = "22";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],

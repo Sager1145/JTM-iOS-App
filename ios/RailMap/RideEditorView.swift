@@ -40,6 +40,10 @@ struct RideEditorView: View {
     /// held here so the confirmation dialog (when needed) can apply it.
     @State private var showsServicePatternPicker = false
     @State private var showsReplaceStopsConfirmation = false
+    /// The pattern chosen in this editing session. Kept separately from the
+    /// editable stops so a later date change can be checked without rewriting
+    /// any of the reader's subsequent edits.
+    @State private var selectedPatternID: String?
     /// Whether the reader has moved the ride switch themselves. Once true the
     /// date pre-fill is finished for this session — see ``prefillRidden(forDate:)``.
     @State private var riddenIsTheReaders = false
@@ -298,6 +302,7 @@ struct RideEditorView: View {
                     draft.destination = ""
                     draft.routePolicy = nil
                     draft.routeSections = nil
+                    selectedPatternID = nil
                     undoableDeletion = []
                     pendingRegion = nil
                     prefillRidden(forDate: draft.date)
@@ -310,7 +315,7 @@ struct RideEditorView: View {
                 allowsRawImport: true,
                 onApply: { completed in
                     guard let train = completed.first else { return }
-                    draft = train
+                    applyCompletedDraft(train)
                 })
         }
         .confirmationDialog(
@@ -332,10 +337,46 @@ struct RideEditorView: View {
         ) { pattern, reversed in
             let ridden = RideLedger.hasBeenRidden(draft)
             draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
+            selectedPatternID = pattern.id
             stopIDs = draft.stops.map { _ in UUID() }
             undoableDeletion = []
             addedStopID = nil
         }
+    }
+
+    /// Keep editor occurrence identity only when completion updates the same
+    /// ordered station visits. A raw import can replace the entire route even
+    /// when the number of stops happens to stay the same.
+    private func applyCompletedDraft(_ completed: Train) {
+        let sameVisits = stopIDs.count == draft.stops.count
+            && draft.stops.count == completed.stops.count
+            && zip(draft.stops, completed.stops).allSatisfy { pair in
+                pair.0.name == pair.1.name
+                    && pair.0.n02StationCode == pair.1.n02StationCode
+            }
+        if !sameVisits {
+            stopIDs = completed.stops.map { _ in UUID() }
+            addedStopID = nil
+            highlightedStopID.wrappedValue = nil
+            focused = nil
+            stopEditMode = .inactive
+            undoableDeletion = []
+            selectedPatternID = nil
+        }
+        if !sameVisits || draft.routePolicy != completed.routePolicy {
+            let region = Region.resolved(completed).code
+            if let catalog = editorCatalogs[region] ?? (Region.resolved(draft).code == region ? editorCatalog : nil) {
+                let matched = CatalogLinePreferenceMapping.matching(
+                    lineNames: completed.routePolicy?.preferredLineNames ?? [],
+                    operatorNames: completed.routePolicy?.preferredOperatorNames ?? [],
+                    regionCode: region,
+                    catalog: catalog)
+                selectedCatalogLineIDs = Set(matched.lineIDs)
+            } else {
+                selectedCatalogLineIDs = []
+            }
+        }
+        draft = completed
     }
 
 #if DEBUG
@@ -679,6 +720,21 @@ struct RideEditorView: View {
                     .id(RideDraftIssue.Field.date)
             }
             if !isNew { fieldIssues(.date) }
+            if let selectedPatternID,
+               let pattern = TrainServicePatterns.patterns.first(where: { $0.id == selectedPatternID }),
+               let date = draft.date,
+               let applicability = pattern.applicability(on: date),
+               applicability != .applicable {
+                Label(
+                    applicability == .notApplicable
+                        ? "選択した列車パターンはこの乗車日の対象外です。停車駅はそのまま保持されます。"
+                        : "選択した列車パターンの有効期間は確認できません。停車駅はそのまま保持されます。",
+                    systemImage: "exclamationmark.triangle"
+                )
+                .font(.footnote)
+                .foregroundStyle(.orange)
+                .accessibilityIdentifier("rideEditorPatternDateNotice")
+            }
 
     }
 
@@ -1781,7 +1837,8 @@ private struct StopEditorView: View {
                 if stop.stopType == "pass_through" {
                     EditorTimeField(
                         title: localization.editorText("ios.editor.passTime"),
-                        time: $stop.departure)
+                        time: $stop.departure,
+                        accessibilityID: "rideEditorStopDeparture")
                     if let arrival = stop.arrival, arrival.isEmpty == false {
                         EditorTimeField(
                             title: localization.countryText("popup.arrival", fallback: "Arrival"),
@@ -1790,10 +1847,12 @@ private struct StopEditorView: View {
                 } else {
                     EditorTimeField(
                         title: localization.countryText("popup.arrival", fallback: "Arrival"),
-                        time: $stop.arrival)
+                        time: $stop.arrival,
+                        accessibilityID: "rideEditorStopArrival")
                     EditorTimeField(
                         title: localization.countryText("popup.departure", fallback: "Departure"),
-                        time: $stop.departure)
+                        time: $stop.departure,
+                        accessibilityID: "rideEditorStopDeparture")
                 }
             } header: {
                 Text(localization.editorText("ios.editor.times"))

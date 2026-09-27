@@ -33,6 +33,7 @@ struct JourneyCompletionView: View {
     @State private var rawDraft: JourneyCompletion.RawDraft?
     @State private var rawSelections: [Int: StationKey] = [:]
     @State private var rawWasConfirmed = false
+    @State private var inputRevision = 0
     @State private var catalogs: [String: EditorCatalog] = [:]
     @State private var catalogsAreLoading = true
 
@@ -83,7 +84,7 @@ struct JourneyCompletionView: View {
                 guard value != rawDraft?.sourceText else { return }
                 rawDraft = nil
                 rawSelections = [:]
-                rawWasConfirmed = false
+                invalidateRawConfirmation()
             }
             .onDisappear {
                 operation?.cancel()
@@ -155,7 +156,11 @@ struct JourneyCompletionView: View {
                     text("stationMatch"),
                     selection: Binding<StationKey?>(
                         get: { rawSelections[stop.id] },
-                        set: { value in rawSelections[stop.id] = value })
+                        set: { value in
+                            guard rawSelections[stop.id] != value else { return }
+                            rawSelections[stop.id] = value
+                            invalidateRawConfirmation()
+                        })
                 ) {
                     Text(text("chooseStation")).tag(nil as StationKey?)
                     ForEach(stop.candidates, id: \.key) { station in
@@ -180,10 +185,18 @@ struct JourneyCompletionView: View {
         rawSelections = Dictionary(uniqueKeysWithValues: extracted.stops.compactMap { stop in
             stop.automaticSelection.map { (stop.id, $0) }
         })
+        invalidateRawConfirmation()
+        failure = extracted.stops.count < 2 ? text("notEnoughStops") : nil
+    }
+
+    private func invalidateRawConfirmation() {
+        inputRevision += 1
         rawWasConfirmed = false
+        draftTrains = initialTrains
         proposed = nil
         response = ""
-        failure = extracted.stops.count < 2 ? text("notEnoughStops") : nil
+        previewResponse = ""
+        refreshPrompt(reportFailure: false)
     }
 
     private func builtTrain(from rawDraft: JourneyCompletion.RawDraft) -> Train? {
@@ -252,10 +265,12 @@ struct JourneyCompletionView: View {
                 }
             }
             Button(text("apply")) {
+                guard !allowsRawImport || rawDraft == nil || rawWasConfirmed else { return }
                 onApply(reviewed)
                 dismiss()
             }
-            .disabled(isWorking || reviewed == initialTrains)
+            .disabled(isWorking || reviewed == initialTrains
+                || (allowsRawImport && rawDraft != nil && !rawWasConfirmed))
             .accessibilityIdentifier("aiCompletionApply")
         } header: { Text(text("preview")) }
     }
@@ -278,9 +293,11 @@ struct JourneyCompletionView: View {
                 Button {
                     run {
                         let requestPrompt = try makePrompt()
+                        let requestRevision = inputRevision
                         let result = try await currentService().complete(
                             prompt: requestPrompt, model: selectedModel)
                         try Task.checkCancellation()
+                        guard requestRevision == inputRevision else { return }
                         response = result
                         preview()
                     }

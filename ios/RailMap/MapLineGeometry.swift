@@ -1,5 +1,6 @@
 import MapKit
 import RailCore
+import RailPresentation
 import SwiftUI
 
 extension RailNetworkStore.DrawnLine: LODLine {}
@@ -9,6 +10,8 @@ extension RailNetworkStore.DrawnLine: LODLine {}
 struct LineBuild: LODBuild {
     let line: RailNetworkStore.DrawnLine
     let polylines: [MKPolyline]
+    /// Historical and relocated-old intervals. Not the cross-day dash.
+    let historicalPolylines: [MKPolyline]
     /// Landlord family-window polylines (`ContinuousStrokeBuild.familyRuns`,
     /// simplified through the same Douglas–Peucker call `polylines` above
     /// is), keyed by the shared family's own colour hex pair. Drawn under
@@ -18,15 +21,18 @@ struct LineBuild: LODBuild {
     let familyPolylines: [String: FamilyRunBuild]
     init(
         line: RailNetworkStore.DrawnLine, polylines: [MKPolyline],
+        historicalPolylines: [MKPolyline] = [],
         familyPolylines: [String: FamilyRunBuild] = [:]
     ) {
         self.line = line
         self.polylines = polylines
+        self.historicalPolylines = historicalPolylines
         self.familyPolylines = familyPolylines
     }
     func intersecting(_ rect: MKMapRect) -> LineBuild {
         LineBuild(line: line,
             polylines: polylines.filter { $0.boundingMapRect.intersects(rect) },
+            historicalPolylines: historicalPolylines.filter { $0.boundingMapRect.intersects(rect) },
             familyPolylines: familyPolylines.compactMapValues { family in
                 let kept = family.polylines.filter { $0.boundingMapRect.intersects(rect) }
                 return kept.isEmpty ? nil : FamilyRunBuild(
@@ -36,6 +42,7 @@ struct LineBuild: LODBuild {
 
     var drawnVertexCount: Int {
         polylines.reduce(0) { $0 + $1.pointCount }
+            + historicalPolylines.reduce(0) { $0 + $1.pointCount }
             + familyPolylines.values.reduce(0) { $0 + $1.polylines.reduce(0) { $0 + $1.pointCount } }
     }
 }
@@ -84,6 +91,7 @@ struct PreparedFamilyRunBuild: Sendable {
 struct PreparedLineBuild: Sendable {
     let line: RailNetworkStore.DrawnLine
     let coordinateChunks: [[CLLocationCoordinate2D]]
+    let historicalCoordinateChunks: [[CLLocationCoordinate2D]]
     let familyCoordinateChunks: [String: PreparedFamilyRunBuild]
 }
 
@@ -490,7 +498,10 @@ enum MapLineGeometry {
         lines: [RailNetworkStore.DrawnLine], strokes: [RailNetworkStore.DrawnLine],
         allLines: [String: RailNetworkStore.DrawnLine], anchors: [String: [Int]],
         cachedStrokes: [String: ContinuousStrokeBuild],
-        mapScale: Double, scale: CGFloat, laneScale: Double
+        mapScale: Double, scale: CGFloat, laneScale: Double,
+        era: DisplayNetworkEra = .current,
+        rideDate: String? = nil,
+        todayByRegion: [String: String] = [:]
     ) throws -> PreparedGeometry {
         let interval = RailSignpost.map.begin("map.geometry.prepare")
         defer { RailSignpost.map.end("map.geometry.prepare", interval) }
@@ -506,7 +517,7 @@ enum MapLineGeometry {
         for line in lines {
             try Task.checkCancellation()
             let stroke = result.strokes[line.id] ?? cachedStrokes[line.id]
-            let runs = stroke?.runs ?? line.intervals
+            let today = todayByRegion[line.region.rawValue] ?? ""
             let latitude = MKMapPoint(x: line.mapRect.midX, y: line.mapRect.midY).coordinate.latitude
             let epsilon = line.continuous ? 0 : MKMetersPerMapPointAtLatitude(latitude)
                 * mapScale * RailStyle.simplifyTolerance
@@ -527,14 +538,55 @@ enum MapLineGeometry {
                 }
                 return result
             }
+            // Draw filter only. `intervals` and `continuousStrokeBuild` stay
+            // whole — a hidden continuous chain still builds above for rides,
+            // and simply contributes no network stroke here.
+            let solidRuns: [[Coordinate]]
+            let historicalRuns: [[Coordinate]]
+            let drawFamilies: Bool
+            if line.continuous {
+                let span = line.partSpans.first ?? nil
+                let shown = era.shows(span, today: today, rideDate: rideDate)
+                drawFamilies = shown
+                if !shown {
+                    solidRuns = []
+                    historicalRuns = []
+                } else if DisplayNetworkEra.strokeStyle(for: span?.kind ?? .current) == .historical {
+                    solidRuns = []
+                    historicalRuns = stroke?.runs ?? line.intervals
+                } else {
+                    solidRuns = stroke?.runs ?? line.intervals
+                    historicalRuns = []
+                }
+            } else {
+                drawFamilies = true
+                var solid: [[Coordinate]] = []
+                var historical: [[Coordinate]] = []
+                for (index, interval) in line.intervals.enumerated() {
+                    let span: DisplayTemporalDecoration? = line.partSpans.isEmpty
+                        ? nil
+                        : (line.partSpans.indices.contains(index) ? line.partSpans[index] : nil)
+                    guard era.shows(span, today: today, rideDate: rideDate) else { continue }
+                    if DisplayNetworkEra.strokeStyle(for: span?.kind ?? .current) == .historical {
+                        historical.append(interval)
+                    } else {
+                        solid.append(interval)
+                    }
+                }
+                solidRuns = solid
+                historicalRuns = historical
+            }
             var families: [String: PreparedFamilyRunBuild] = [:]
-            for family in stroke?.familyRuns ?? [] {
-                families[family.colorHex] = PreparedFamilyRunBuild(
-                    colorHex: family.colorHex, colorDarkHex: family.colorDarkHex,
-                    coordinateChunks: try coordinateChunks(family.runs))
+            if drawFamilies {
+                for family in stroke?.familyRuns ?? [] {
+                    families[family.colorHex] = PreparedFamilyRunBuild(
+                        colorHex: family.colorHex, colorDarkHex: family.colorDarkHex,
+                        coordinateChunks: try coordinateChunks(family.runs))
+                }
             }
             result.lines[line.id] = PreparedLineBuild(
-                line: line, coordinateChunks: try coordinateChunks(runs),
+                line: line, coordinateChunks: try coordinateChunks(solidRuns),
+                historicalCoordinateChunks: try coordinateChunks(historicalRuns),
                 familyCoordinateChunks: families)
         }
         try Task.checkCancellation()
@@ -557,6 +609,7 @@ enum MapLineGeometry {
             result.lines[id] = LineBuild(
                 line: prepared.line,
                 polylines: mapPolylineChunks(prepared.coordinateChunks),
+                historicalPolylines: mapPolylineChunks(prepared.historicalCoordinateChunks),
                 familyPolylines: families)
         }
         return result

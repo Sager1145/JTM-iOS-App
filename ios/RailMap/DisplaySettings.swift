@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The 顯示調節 values, and nothing that acts on them.
@@ -60,6 +61,9 @@ final class DisplaySettings {
     /// other calendar day dashed while a date is selected; `true` draws the
     /// whole itinerary solid, like every other ride.
     var showFullCrossDay: Bool = Defaults.showFullCrossDay
+    /// Which dated picture of the display network is drawn. Separate from
+    /// the cross-day ride dash.
+    var networkEra: DisplayNetworkEra = Defaults.networkEra
 
     /// Station-name reading annotations: three INDEPENDENT toggles. Until the
     /// reader touches one (``nameReadingsCustomized``) they follow the UI
@@ -94,6 +98,7 @@ final class DisplaySettings {
         /// Apple Maps' roughly 14-point endpoint footprint.
         static let focusBoost: Double = 1
         static let showFullCrossDay = false
+        static let networkEra = DisplayNetworkEra.current
         static let nameReadingKana = false
         static let nameReadingRomaji = false
         static let nameReadingZh = false
@@ -131,6 +136,7 @@ final class DisplaySettings {
         markerStrokeScale = Defaults.markerStrokeScale
         focusBoost = Defaults.focusBoost
         showFullCrossDay = Defaults.showFullCrossDay
+        networkEra = Defaults.networkEra
         nameReadingKana = Defaults.nameReadingKana
         nameReadingRomaji = Defaults.nameReadingRomaji
         nameReadingZh = Defaults.nameReadingZh
@@ -154,6 +160,7 @@ final class DisplaySettings {
                 "focusBoost": focusBoost,
                 "markerStyleVersion": Self.markerStyleVersion,
                 "showFullCrossDay": showFullCrossDay,
+                "networkEra": networkEra.rawValue,
                 "nameReadingKana": nameReadingKana,
                 "nameReadingRomaji": nameReadingRomaji,
                 "nameReadingZh": nameReadingZh,
@@ -181,6 +188,11 @@ final class DisplaySettings {
         markerStrokeScale = number("markerStrokeScale", Defaults.markerStrokeScale)
         focusBoost = number("focusBoost", Defaults.focusBoost)
         showFullCrossDay = flag("showFullCrossDay", Defaults.showFullCrossDay)
+        if let raw = saved["networkEra"] as? String, let era = DisplayNetworkEra(rawValue: raw) {
+            networkEra = era
+        } else {
+            networkEra = Defaults.networkEra
+        }
         nameReadingKana = flag("nameReadingKana", Defaults.nameReadingKana)
         nameReadingRomaji = flag("nameReadingRomaji", Defaults.nameReadingRomaji)
         nameReadingZh = flag("nameReadingZh", Defaults.nameReadingZh)

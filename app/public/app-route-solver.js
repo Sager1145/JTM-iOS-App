@@ -109,6 +109,20 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
     return groups.get(key);
   }
 
+  function membershipOf(nearest, feature) {
+    return {
+      key: nearest.key,
+      distance: nearest.distance,
+      station_name: stationName(feature),
+      n02_group_code: stationGroupCode(feature),
+      line_name: stationLineName(feature),
+      operator: stationOperator(feature),
+      institution_type_code: stationInstitutionTypeCode(feature),
+      valid_from: railServiceBounds(feature.properties).valid_from,
+      valid_to: railServiceBounds(feature.properties).valid_to,
+    };
+  }
+
   function rememberNode(group, nearest, feature) {
     if (
       !nearest ||
@@ -116,20 +130,19 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
       nearest.distance > STATION_TRANSFER_MAX_SNAP_METERS
     )
       return;
+    const membership = membershipOf(nearest, feature);
     const existing = group.get(nearest.key);
-    if (!existing || nearest.distance < existing.distance) {
-      group.set(nearest.key, {
-        key: nearest.key,
-        distance: nearest.distance,
-        station_name: stationName(feature),
-        n02_group_code: stationGroupCode(feature),
-        line_name: stationLineName(feature),
-        operator: stationOperator(feature),
-        institution_type_code: stationInstitutionTypeCode(feature),
-        valid_from: feature.properties?.valid_from ?? null,
-        valid_to: feature.properties?.valid_to ?? null,
-      });
+    if (!existing || nearest.distance < existing[0].distance) {
+      group.set(nearest.key, [membership]);
+      return;
     }
+    if (nearest.distance > existing[0].distance) return;
+    const duplicate = existing.some(
+      (item) =>
+        item.valid_from === membership.valid_from &&
+        item.valid_to === membership.valid_to,
+    );
+    if (!duplicate) existing.push(membership);
   }
 
   stations.forEach((feature) => {
@@ -149,9 +162,23 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
     });
   });
 
-  function addConnectorEdge(a, b, infoA, infoB) {
+  function addConnectorEdge(infoA, infoB) {
+    const a = infoA?.key;
+    const b = infoB?.key;
     if (!a || !b || a === b) return;
-    const key = [a, b].sort().join("|");
+    // ADR 0011: a transfer exists only while BOTH platforms do — the later
+    // valid_from and the earlier valid_to (mirrors Swift's connector overlap).
+    const laterFrom = [infoA?.valid_from, infoB?.valid_from]
+      .filter((v) => typeof v === "string" && v !== "")
+      .sort()
+      .pop() ?? null;
+    const earlierTo = [infoA?.valid_to, infoB?.valid_to]
+      .filter((v) => typeof v === "string" && v !== "")
+      .sort()
+      .shift() ?? null;
+    if (laterFrom && earlierTo && laterFrom >= earlierTo) return;
+    const key =
+      [a, b].sort().join("|") + "|" + (laterFrom ?? "") + "|" + (earlierTo ?? "");
     if (edgeKeys.has(key)) return;
     const aCoord = graph.nodes.get(a);
     const bCoord = graph.nodes.get(b);
@@ -168,16 +195,6 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
           .filter(Boolean),
       ),
     ];
-    // ADR 0011: a transfer exists only while BOTH platforms do — the later
-    // valid_from and the earlier valid_to (mirrors Swift's connector overlap).
-    const laterFrom = [infoA?.valid_from, infoB?.valid_from]
-      .filter((v) => typeof v === "string" && v !== "")
-      .sort()
-      .pop() ?? null;
-    const earlierTo = [infoA?.valid_to, infoB?.valid_to]
-      .filter((v) => typeof v === "string" && v !== "")
-      .sort()
-      .shift() ?? null;
     const baseEdge = {
       to: b,
       length: Math.max(gap + STATION_TRANSFER_EDGE_PENALTY, 0.01),
@@ -198,11 +215,13 @@ function addStationTransferConnectorEdges(graph, stationFeatures) {
 
   groups.forEach((nodeMap) => {
     const nodes = [...nodeMap.values()]
-      .sort((a, b) => a.distance - b.distance)
+      .sort((a, b) => a[0].distance - b[0].distance)
       .slice(0, STATION_TRANSFER_MAX_NODES_PER_GROUP);
     for (let i = 0; i < nodes.length - 1; i += 1) {
       for (let j = i + 1; j < nodes.length; j += 1) {
-        addConnectorEdge(nodes[i].key, nodes[j].key, nodes[i], nodes[j]);
+        for (const infoA of nodes[i]) {
+          for (const infoB of nodes[j]) addConnectorEdge(infoA, infoB);
+        }
       }
     }
   });

@@ -481,14 +481,38 @@ public enum Stations {
 
     /// ADR 0011: dated validity stamped onto a station feature (overlay
     /// stations, or a current station stamped by `RailHistory`'s
-    /// `retirements`), mirroring `app-rail-history.js`'s
-    /// `feature.properties.valid_from` / `valid_to`.
+    /// `retirements`). The ride solver reads the service interval:
+    /// `service_validity` when present, otherwise `valid_from` / `valid_to`.
+    /// A lone `infrastructure_validity` pair is that service interval.
+    public static func stationServiceBounds(_ feature: Feature) -> (String?, String?) {
+        let hasLegacy = feature.properties["valid_from"] != nil
+            || feature.properties["valid_to"] != nil
+        return RailServiceValidity.bounds(
+            service: optionalPair(feature.properties["service_validity"]),
+            infrastructure: optionalPair(feature.properties["infrastructure_validity"]),
+            validFrom: truthyString(feature.properties["valid_from"]),
+            validTo: truthyString(feature.properties["valid_to"]),
+            hasLegacy: hasLegacy)
+    }
+
     public static func stationValidFrom(_ feature: Feature) -> String? {
-        truthyString(feature.properties["valid_from"])
+        stationServiceBounds(feature).0
     }
 
     public static func stationValidTo(_ feature: Feature) -> String? {
-        truthyString(feature.properties["valid_to"])
+        stationServiceBounds(feature).1
+    }
+
+    /// `[from, to]` with null ends. Anything else is not a domain pair.
+    private static func optionalPair(_ value: Value?) -> [String?]? {
+        guard let value, case .array(let items) = value, items.count == 2 else { return nil }
+        return items.map { item in
+            switch item {
+            case .null: return nil
+            case .string(let text): return text.utf16.isEmpty ? nil : text
+            default: return nil
+            }
+        }
     }
 
     /// The value when it is truthy, otherwise nil — the shape of a chain that

@@ -696,6 +696,26 @@ struct StatisticsDashboardContent: View {
                     fraction: categoryTotal > 0 ? ridden / categoryTotal : 0,
                     spoken: coverageSpoken(ridden: ridden, total: categoryTotal))
             }
+            // Outside the coverage fraction: historical km is not part of the
+            // current-network numerator or denominator above.
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.totalRiddenKm"),
+                value: "\(StatisticsFormat.km(stats.totalRiddenKm)) km")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.currentRiddenKm"),
+                value: "\(StatisticsFormat.km(stats.currentNetworkRiddenKm)) km")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.historicalKm"),
+                value: "\(StatisticsFormat.km(stats.historicalUniqueKm)) km")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.retiredKm"),
+                value: "\(StatisticsFormat.km(stats.retiredNetworkKm)) km")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.relocatedOldKm"),
+                value: "\(StatisticsFormat.km(stats.relocatedOldKm)) km")
+            StatisticsMetricRow(
+                label: localization.statsText("ios.stats.retiredLines"),
+                value: stats.historicalLineCount.formatted())
             // The one sentence that stops these being read as an accumulating
             // odometer: the numerator is a deduped union over ridden intervals,
             // the denominator the whole N02 network.

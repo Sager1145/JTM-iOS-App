@@ -1,0 +1,1409 @@
+{
+  "fixture": "historical-routes.json",
+  "describes": "Six rail-history-dependent Japan routes, their automatic half-open event boundaries, and three pinned dates",
+  "contract": "Each answer was produced independently by the browser RouteService and Node PrecomputeAdapter, and generation failed unless the two answers were identical. path_digest is routeKeyDigest over features in segment order; each LineString coordinate is fixed to five decimals as lon,lat, coordinates are joined by semicolons, MultiLineString members by pipes, and features by newlines. segment_count is the emitted route feature count.",
+  "cases": [
+    {
+      "id": "yubari:historical",
+      "train": {
+        "id": "history-yubari-historical",
+        "date": "2018-06-01",
+        "number": "History yubari",
+        "train_type": "",
+        "company": "",
+        "origin": "新夕張",
+        "destination": "夕張",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "新夕張",
+            "to": "夕張",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "石勝線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "新夕張",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "夕張",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "新夕張",
+        "to": "夕張",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "石勝線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "stvsuqsvig",
+        "ride_date": "2018-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "1z06r0p0iee",
+      "physical_length_m": 16107.19
+    },
+    {
+      "id": "mashike:historical",
+      "train": {
+        "id": "history-mashike-historical",
+        "date": "2015-06-01",
+        "number": "History mashike",
+        "train_type": "",
+        "company": "",
+        "origin": "深川",
+        "destination": "増毛",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "深川",
+            "to": "増毛",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "留萌線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "深川",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "増毛",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "深川",
+        "to": "増毛",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "留萌線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "1xk2f3zp3pw",
+        "ride_date": "2015-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "10u7cq5elfo",
+      "physical_length_m": 66414.04
+    },
+    {
+      "id": "takachiho:historical",
+      "train": {
+        "id": "history-takachiho-historical",
+        "date": "2004-06-01",
+        "number": "History takachiho",
+        "train_type": "",
+        "company": "",
+        "origin": "延岡",
+        "destination": "高千穂",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "延岡",
+            "to": "高千穂",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "高千穂線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "延岡",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "高千穂",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "延岡",
+        "to": "高千穂",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "高千穂線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "yip999kwcs",
+        "ride_date": "2004-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "1pkj3wqn5u6",
+      "physical_length_m": 49546.32
+    },
+    {
+      "id": "ofunato:historical",
+      "train": {
+        "id": "history-ofunato-historical",
+        "date": "2019-06-01",
+        "number": "History ofunato",
+        "train_type": "",
+        "company": "",
+        "origin": "気仙沼",
+        "destination": "盛",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "気仙沼",
+            "to": "盛",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "気仙沼",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "盛",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "気仙沼",
+        "to": "盛",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "2bstj96o5xl",
+        "ride_date": "2019-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "bduobs6810",
+      "physical_length_m": 43758.24
+    },
+    {
+      "id": "hidaka:historical",
+      "train": {
+        "id": "history-hidaka-historical",
+        "date": "2020-06-01",
+        "number": "History hidaka",
+        "train_type": "",
+        "company": "",
+        "origin": "鵡川",
+        "destination": "様似",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "鵡川",
+            "to": "様似",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "日高線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "鵡川",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "様似",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "鵡川",
+        "to": "様似",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "日高線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "1u0gzf85lpa",
+        "ride_date": "2020-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "1fpa3fanjpm",
+      "physical_length_m": 115701.44
+    },
+    {
+      "id": "joban:historical",
+      "train": {
+        "id": "history-joban-historical",
+        "date": "2010-06-01",
+        "number": "History joban",
+        "train_type": "",
+        "company": "",
+        "origin": "相馬",
+        "destination": "亘理",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "相馬",
+            "to": "亘理",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "常磐線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "相馬",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "亘理",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "相馬",
+        "to": "亘理",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "常磐線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "1vu59kfanrt",
+        "ride_date": "2010-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "1qrkkbtk00c",
+      "physical_length_m": 27797.64
+    }
+  ],
+  "eventBoundaries": [
+    {
+      "id": "yubari",
+      "event_date": "2019-04-01",
+      "before": {
+        "id": "yubari:before-event",
+        "train": {
+          "id": "history-yubari-before-event",
+          "date": "2019-03-31",
+          "number": "History yubari",
+          "train_type": "",
+          "company": "",
+          "origin": "新夕張",
+          "destination": "夕張",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "新夕張",
+              "to": "夕張",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "石勝線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "新夕張",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "夕張",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "新夕張",
+          "to": "夕張",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "石勝線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "19fgjqg9ogf",
+          "ride_date": "2019-03-31",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "1z06r0p0iee",
+        "physical_length_m": 16107.19
+      },
+      "at": {
+        "id": "yubari:at-event",
+        "train": {
+          "id": "history-yubari-at-event",
+          "date": "2019-04-01",
+          "number": "History yubari",
+          "train_type": "",
+          "company": "",
+          "origin": "新夕張",
+          "destination": "夕張",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "新夕張",
+              "to": "夕張",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "石勝線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "新夕張",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "夕張",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "新夕張",
+          "to": "夕張",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "石勝線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "fc0d0anw5h",
+          "ride_date": "2019-04-01",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "unsolvable",
+        "segment_count": 0,
+        "path_digest": "wvjl67o803",
+        "physical_length_m": 0
+      }
+    },
+    {
+      "id": "mashike",
+      "event_date": "2016-12-05",
+      "before": {
+        "id": "mashike:before-event",
+        "train": {
+          "id": "history-mashike-before-event",
+          "date": "2016-12-04",
+          "number": "History mashike",
+          "train_type": "",
+          "company": "",
+          "origin": "深川",
+          "destination": "増毛",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "深川",
+              "to": "増毛",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "留萌線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "深川",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "増毛",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "深川",
+          "to": "増毛",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "留萌線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "1867igy26it",
+          "ride_date": "2016-12-04",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "10u7cq5elfo",
+        "physical_length_m": 66414.04
+      },
+      "at": {
+        "id": "mashike:at-event",
+        "train": {
+          "id": "history-mashike-at-event",
+          "date": "2016-12-05",
+          "number": "History mashike",
+          "train_type": "",
+          "company": "",
+          "origin": "深川",
+          "destination": "増毛",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "深川",
+              "to": "増毛",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "留萌線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "深川",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "増毛",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "深川",
+          "to": "増毛",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "留萌線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "x04d47cgn4",
+          "ride_date": "2016-12-05",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "unsolvable",
+        "segment_count": 0,
+        "path_digest": "wvjl67o803",
+        "physical_length_m": 0
+      }
+    },
+    {
+      "id": "takachiho",
+      "event_date": "2007-09-06",
+      "before": {
+        "id": "takachiho:before-event",
+        "train": {
+          "id": "history-takachiho-before-event",
+          "date": "2007-09-05",
+          "number": "History takachiho",
+          "train_type": "",
+          "company": "",
+          "origin": "延岡",
+          "destination": "高千穂",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "延岡",
+              "to": "高千穂",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "高千穂線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "延岡",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "高千穂",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "延岡",
+          "to": "高千穂",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "高千穂線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "1ley3qfy0ej",
+          "ride_date": "2007-09-05",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "1pkj3wqn5u6",
+        "physical_length_m": 49546.32
+      },
+      "at": {
+        "id": "takachiho:at-event",
+        "train": {
+          "id": "history-takachiho-at-event",
+          "date": "2007-09-06",
+          "number": "History takachiho",
+          "train_type": "",
+          "company": "",
+          "origin": "延岡",
+          "destination": "高千穂",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "延岡",
+              "to": "高千穂",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "高千穂線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "延岡",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "高千穂",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "延岡",
+          "to": "高千穂",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "高千穂線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "1d2bjs05sc3",
+          "ride_date": "2007-09-06",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "unsolvable",
+        "segment_count": 0,
+        "path_digest": "wvjl67o803",
+        "physical_length_m": 0
+      }
+    },
+    {
+      "id": "ofunato",
+      "event_date": "2020-04-01",
+      "before": {
+        "id": "ofunato:before-event",
+        "train": {
+          "id": "history-ofunato-before-event",
+          "date": "2020-03-31",
+          "number": "History ofunato",
+          "train_type": "",
+          "company": "",
+          "origin": "気仙沼",
+          "destination": "盛",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "気仙沼",
+              "to": "盛",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "気仙沼",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "盛",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "気仙沼",
+          "to": "盛",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "22maa7gwdq1",
+          "ride_date": "2020-03-31",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "bduobs6810",
+        "physical_length_m": 43758.24
+      },
+      "at": {
+        "id": "ofunato:at-event",
+        "train": {
+          "id": "history-ofunato-at-event",
+          "date": "2020-04-01",
+          "number": "History ofunato",
+          "train_type": "",
+          "company": "",
+          "origin": "気仙沼",
+          "destination": "盛",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "気仙沼",
+              "to": "盛",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "気仙沼",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "盛",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "気仙沼",
+          "to": "盛",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "25x6kybneey",
+          "ride_date": "2020-04-01",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "unsolvable",
+        "segment_count": 0,
+        "path_digest": "wvjl67o803",
+        "physical_length_m": 0
+      }
+    },
+    {
+      "id": "hidaka",
+      "event_date": "2021-04-01",
+      "before": {
+        "id": "hidaka:before-event",
+        "train": {
+          "id": "history-hidaka-before-event",
+          "date": "2021-03-31",
+          "number": "History hidaka",
+          "train_type": "",
+          "company": "",
+          "origin": "鵡川",
+          "destination": "様似",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "鵡川",
+              "to": "様似",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "日高線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "鵡川",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "様似",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "鵡川",
+          "to": "様似",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "日高線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "2etqf5jg8wf",
+          "ride_date": "2021-03-31",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "1fpa3fanjpm",
+        "physical_length_m": 115701.44
+      },
+      "at": {
+        "id": "hidaka:at-event",
+        "train": {
+          "id": "history-hidaka-at-event",
+          "date": "2021-04-01",
+          "number": "History hidaka",
+          "train_type": "",
+          "company": "",
+          "origin": "鵡川",
+          "destination": "様似",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "鵡川",
+              "to": "様似",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "日高線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "鵡川",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "様似",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "鵡川",
+          "to": "様似",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "日高線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "1ks03le3y7g",
+          "ride_date": "2021-04-01",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "unsolvable",
+        "segment_count": 0,
+        "path_digest": "wvjl67o803",
+        "physical_length_m": 0
+      }
+    },
+    {
+      "id": "joban",
+      "event_date": "2016-12-10",
+      "before": {
+        "id": "joban:before-event",
+        "train": {
+          "id": "history-joban-before-event",
+          "date": "2016-12-09",
+          "number": "History joban",
+          "train_type": "",
+          "company": "",
+          "origin": "相馬",
+          "destination": "亘理",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "相馬",
+              "to": "亘理",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "常磐線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "相馬",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "亘理",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "相馬",
+          "to": "亘理",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "常磐線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "1oxe8043hgd",
+          "ride_date": "2016-12-09",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "1qrkkbtk00c",
+        "physical_length_m": 27797.64
+      },
+      "at": {
+        "id": "joban:at-event",
+        "train": {
+          "id": "history-joban-at-event",
+          "date": "2016-12-10",
+          "number": "History joban",
+          "train_type": "",
+          "company": "",
+          "origin": "相馬",
+          "destination": "亘理",
+          "direction": "down",
+          "visible": true,
+          "style": {
+            "color": "#d9364f"
+          },
+          "route_policy": {},
+          "route_sections": [
+            {
+              "from": "相馬",
+              "to": "亘理",
+              "from_n02_station_code": null,
+              "to_n02_station_code": null,
+              "line_names": [
+                "常磐線"
+              ],
+              "operator_names": []
+            }
+          ],
+          "stops": [
+            {
+              "name": "相馬",
+              "departure": "00:00",
+              "stop_type": "origin",
+              "ride_segment": true
+            },
+            {
+              "name": "亘理",
+              "arrival": "01:00",
+              "stop_type": "destination",
+              "ride_segment": false
+            }
+          ]
+        },
+        "section": {
+          "from": "相馬",
+          "to": "亘理",
+          "from_n02_station_code": null,
+          "to_n02_station_code": null,
+          "line_names": [
+            "常磐線"
+          ],
+          "operator_names": []
+        },
+        "solver_context": {
+          "solver_version": "22",
+          "route_cache_digest": "18bxrcasoqh",
+          "ride_date": "2016-12-10",
+          "history_revisions": {
+            "jp": "2026-09-23.2"
+          }
+        },
+        "outcome": "solved",
+        "segment_count": 1,
+        "path_digest": "1sgik87hdpm",
+        "physical_length_m": 28293.83
+      }
+    }
+  ],
+  "pinned": [
+    {
+      "id": "yubari:unsolvable-2019-04-01",
+      "train": {
+        "id": "history-yubari-unsolvable-2019-04-01",
+        "date": "2019-04-01",
+        "number": "History yubari",
+        "train_type": "",
+        "company": "",
+        "origin": "新夕張",
+        "destination": "夕張",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "新夕張",
+            "to": "夕張",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "石勝線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "新夕張",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "夕張",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "新夕張",
+        "to": "夕張",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "石勝線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "fc0d0anw5h",
+        "ride_date": "2019-04-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "unsolvable",
+      "segment_count": 0,
+      "path_digest": "wvjl67o803",
+      "physical_length_m": 0
+    },
+    {
+      "id": "mashike:unsolvable-2020-06-01",
+      "train": {
+        "id": "history-mashike-unsolvable-2020-06-01",
+        "date": "2020-06-01",
+        "number": "History mashike",
+        "train_type": "",
+        "company": "",
+        "origin": "深川",
+        "destination": "増毛",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "深川",
+            "to": "増毛",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "留萌線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "深川",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "増毛",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "深川",
+        "to": "増毛",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "留萌線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "21yvbcv1rzb",
+        "ride_date": "2020-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "unsolvable",
+      "segment_count": 0,
+      "path_digest": "wvjl67o803",
+      "physical_length_m": 0
+    },
+    {
+      "id": "joban:post-relocation-2020-06-01",
+      "train": {
+        "id": "history-joban-post-relocation-2020-06-01",
+        "date": "2020-06-01",
+        "number": "History joban",
+        "train_type": "",
+        "company": "",
+        "origin": "相馬",
+        "destination": "亘理",
+        "direction": "down",
+        "visible": true,
+        "style": {
+          "color": "#d9364f"
+        },
+        "route_policy": {},
+        "route_sections": [
+          {
+            "from": "相馬",
+            "to": "亘理",
+            "from_n02_station_code": null,
+            "to_n02_station_code": null,
+            "line_names": [
+              "常磐線"
+            ],
+            "operator_names": []
+          }
+        ],
+        "stops": [
+          {
+            "name": "相馬",
+            "departure": "00:00",
+            "stop_type": "origin",
+            "ride_segment": true
+          },
+          {
+            "name": "亘理",
+            "arrival": "01:00",
+            "stop_type": "destination",
+            "ride_segment": false
+          }
+        ]
+      },
+      "section": {
+        "from": "相馬",
+        "to": "亘理",
+        "from_n02_station_code": null,
+        "to_n02_station_code": null,
+        "line_names": [
+          "常磐線"
+        ],
+        "operator_names": []
+      },
+      "solver_context": {
+        "solver_version": "22",
+        "route_cache_digest": "q4kdht915o",
+        "ride_date": "2020-06-01",
+        "history_revisions": {
+          "jp": "2026-09-23.2"
+        }
+      },
+      "outcome": "solved",
+      "segment_count": 1,
+      "path_digest": "1sgik87hdpm",
+      "physical_length_m": 28293.83
+    }
+  ]
+}

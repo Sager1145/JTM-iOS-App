@@ -129,9 +129,14 @@ async function ensureRailSectionsLoaded() {
         collections.push(await parseFeatureCollectionChunked(text));
       if (generation !== railSectionsLoadGeneration)
         return ensureRailSectionsLoaded();
-      const data = AppDatasets.installRailSections(
-        mergeFeatureCollections(collections),
-      );
+      const merged = mergeFeatureCollections(collections);
+      // History must be present before the collection is installed and before
+      // RouteService can build a graph from it. Passing the already-installed
+      // station collection also makes unmatched retirements a strict error
+      // across the complete solver dataset.
+      if (typeof applyLoadedRailHistoryToSections === "function")
+        applyLoadedRailHistoryToSections(merged, stationsGeoJson);
+      const data = AppDatasets.installRailSections(merged);
       // Release the raw ~12 MB JSON string (≈24 MB as a JS string): the memoised
       // download promise would otherwise keep it resident for the whole session,
       // which matters on memory-tight iPhones.

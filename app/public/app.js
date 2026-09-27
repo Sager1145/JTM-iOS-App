@@ -84,6 +84,7 @@ async function loadAppData() {
   // station names. Keeping the tables separate prevents same-named Taiwanese
   // stations (板橋, 松山, 岡山, …) from falling through to Japanese readings.
   const stationReadingsReady = loadActiveCountryStationReadings();
+  const railHistoryReady = loadActiveCountryRailHistory();
 
   // `stations` (3.3 MB / 456 KB gz) feeds the marker/station-resolution paths
   // used by the very first render, so it blocks first paint — but its native
@@ -103,7 +104,10 @@ async function loadAppData() {
   const stationCollections = [];
   for (const text of await stationsTextReady)
     stationCollections.push(await parseFeatureCollectionChunked(text));
-  AppDatasets.installStations(mergeFeatureCollections(stationCollections));
+  await railHistoryReady;
+  const mergedStations = mergeFeatureCollections(stationCollections);
+  applyLoadedRailHistoryToStations(mergedStations);
+  AppDatasets.installStations(mergedStations);
 
   // Build the two station-resolution indexes in ~12 ms slices so this no
   // longer lands as one long synchronous task at the tail of boot Block 1
@@ -151,14 +155,34 @@ async function reloadSolverDatasetsForCountrySwitch() {
       err,
     ),
   );
-  const stationTexts = await Promise.all(
-    stationsApisForCountry(activeCountry).map((resource) => fetchText(resource)),
-  );
+  const [stationTexts] = await Promise.all([
+    Promise.all(
+      stationsApisForCountry(activeCountry).map((resource) => fetchText(resource)),
+    ),
+    loadActiveCountryRailHistory(),
+  ]);
   const stationCollections = [];
   for (const text of stationTexts)
     stationCollections.push(await parseFeatureCollectionChunked(text));
-  AppDatasets.installStations(mergeFeatureCollections(stationCollections));
+  const mergedStations = mergeFeatureCollections(stationCollections);
+  applyLoadedRailHistoryToStations(mergedStations);
+  AppDatasets.installStations(mergedStations);
   await buildStationIndexesSliced(stationsGeoJson);
+}
+
+async function loadActiveCountryRailHistory() {
+  const country = activeCountry;
+  await Promise.all(
+    railScopeCountriesForCountry(country).map(async (code) => {
+      const resource = railHistoryApiForCountry(code);
+      if (!resource) return;
+      const overlay = await fetchJson(resource, { cache: "no-cache" });
+      // A switch may finish after a newer switch. Keeping the decoded overlay
+      // in the per-region registry is harmless, but only the active scope will
+      // be applied by the install helpers.
+      loadRailHistoryOverlay(overlay, code);
+    }),
+  );
 }
 
 let stationReadingsLoadGeneration = 0;

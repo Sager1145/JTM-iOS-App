@@ -364,6 +364,8 @@ function render(name, build) {
 
 const check = process.argv.includes("--check");
 const stats = process.argv.includes("--stats");
+const onlyArg = process.argv.find((arg) => arg.startsWith("--only="));
+const only = onlyArg ? onlyArg.slice("--only=".length) : null;
 let changed = 0;
 
 // Modules are imported up front, because a name collision should be reported
@@ -385,6 +387,7 @@ fs.mkdirSync(OUT_DIR, { recursive: true });
 const rendered = new Set();
 for (const fixture of [...builtInFixtures(), ...modules]) {
   const name = fixture.name;
+  if (only && name !== only) continue;
   if (rendered.has(name)) {
     console.error(
       `  ! ${name} is already built in — rename the module's fixture`,
@@ -422,6 +425,11 @@ for (const fixture of [...builtInFixtures(), ...modules]) {
         ` · rss ${(usage.rss / 1e6).toFixed(0)} MB`,
     );
   }
+}
+
+if (only && !rendered.has(only)) {
+  console.error(`Unknown fixture: ${only}`);
+  process.exitCode = 1;
 }
 
 if (check && changed) {

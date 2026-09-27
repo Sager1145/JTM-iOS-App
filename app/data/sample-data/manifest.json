@@ -5,6 +5,12 @@
   "solved": 201,
   "unsolvable": 0,
   "no_route": 0,
+  "solver_context": {
+    "solver_version": "22",
+    "history_revisions": {
+      "jp": "2026-09-23.2"
+    }
+  },
   "parts": [
     "part-000",
     "part-001",

@@ -18,6 +18,15 @@ import RailCore
 final class TraversedLineDetector {
     static let shared = TraversedLineDetector()
 
+    /// Geometry plus the ride date: an undated ride must not keep a match
+    /// that only a dated ride is allowed to take.
+    private nonisolated static func detectionDigest(_ ride: RiddenRouteStore.DrawnRide) -> Int {
+        var hasher = Hasher()
+        hasher.combine(ride.geometryDigest)
+        hasher.combine(ride.daySpan.date)
+        return hasher.finalize()
+    }
+
     private struct CachedResult {
         let digest: Int
         let lines: [Statistics.TraversedLine]
@@ -40,7 +49,7 @@ final class TraversedLineDetector {
         var stale: [RiddenRouteStore.DrawnRide] = []
         var reusable: [String: [Statistics.TraversedLine]] = [:]
         for ride in rides {
-            if let hit = cache[ride.id], hit.digest == ride.geometryDigest {
+            if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
                 reusable[ride.id] = hit.lines
             } else {
                 stale.append(ride)
@@ -72,9 +81,10 @@ final class TraversedLineDetector {
                             rideSegment: true,
                             from: segment.from, to: segment.to)
                     }
-                    let entry = Statistics.collectTrainStatsEntry(features: features, index: index)
+                    let entry = Statistics.collectTrainStatsEntry(
+                        features: features, index: index, rideDate: ride.daySpan.date)
                     let lines = Statistics.traversedLines(edges: entry.edges, index: index)
-                    fresh[ride.id] = (ride.geometryDigest, lines)
+                    fresh[ride.id] = (Self.detectionDigest(ride), lines)
                 }
             }
             guard !Task.isCancelled else { return }

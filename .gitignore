@@ -1,6 +1,7 @@
 .DS_Store
 
 # Xcode / SwiftPM
+.build/
 DerivedData/
 ios/DerivedData/
 ios/**/.build/

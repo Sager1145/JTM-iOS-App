@@ -18,7 +18,8 @@
 //   manifest.json  { format, schema_version, total, parts: ["part-000", ...],
 //                    dates: { "2026-07-03": ["part-000", ...], ... } }
 //   part-NNN.json  { format, train: <raw train from train-store.json>,
-//                    route: null | { cache_key, features } | { cache_key, unsolvable: true } }
+//                    route: null | { cache_key, solver_context, features } |
+//                                  { cache_key, solver_context, unsolvable: true } }
 //
 // Every train is its own file, and the manifest's `dates` map groups the part
 // names by calendar day (trains without a date land under ""), so the static
@@ -65,8 +66,33 @@ const COUNTRY = SUPPORTED_COUNTRIES.has(requestedCountry)
 const suffix = COUNTRY === "jp" ? "" : `-${COUNTRY}`;
 const RAIL_SECTIONS_FILE = `rail-sections${suffix}.json`;
 const STATIONS_FILE = `stations${suffix}.json`;
+const RAIL_HISTORY_FILE = `rail-history${suffix}.json`;
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
+
+let validateRailHistoryOverlay = null;
+function precomputeHistoryValidator() {
+  if (validateRailHistoryOverlay) return validateRailHistoryOverlay;
+  const source = fs.readFileSync(
+    path.join(APP_DIR, "public", "app-rail-history.js"),
+    "utf8",
+  );
+  const context = vm.createContext({ console });
+  vm.runInContext(source, context);
+  validateRailHistoryOverlay = context.validateRailHistoryOverlay;
+  if (typeof validateRailHistoryOverlay !== "function") {
+    throw new Error("app-rail-history.js did not publish validateRailHistoryOverlay");
+  }
+  return validateRailHistoryOverlay;
+}
+
+// The overlay main hands to PrecomputeAdapter. A corrupt file aborts the
+// build here, before any train is solved.
+export function readPrecomputeHistoryOverlay(text) {
+  const json = JSON.parse(text);
+  precomputeHistoryValidator()(json);
+  return json;
+}
 
 // ---------------------------------------------------------------------------
 // Driver — calls the frontend's named adapter. The VM remains the deployment-
@@ -76,6 +102,90 @@ const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 const DRIVER_SOURCE = `
 globalThis.PrecomputeAdapter.solveStore(__host)
 `;
+
+export function deriveManifestSolverContext(contexts) {
+  let manifestContext = null;
+  for (let index = 0; index < contexts.length; index += 1) {
+    const context = contexts[index];
+    const label = `route solver context ${index}`;
+    if (!context || typeof context !== "object" || Array.isArray(context))
+      throw new Error(`${label} is missing or invalid`);
+    if (typeof context.solver_version !== "string" || !context.solver_version.trim())
+      throw new Error(`${label} has no solver_version`);
+    if (
+      typeof context.route_cache_digest !== "string" ||
+      !context.route_cache_digest.trim()
+    )
+      throw new Error(`${label} has no route_cache_digest`);
+    if (
+      context.ride_date !== null &&
+      (typeof context.ride_date !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(context.ride_date))
+    )
+      throw new Error(`${label} has an invalid ride_date`);
+    if (
+      !context.history_revisions ||
+      typeof context.history_revisions !== "object" ||
+      Array.isArray(context.history_revisions)
+    )
+      throw new Error(`${label} has no history_revisions`);
+    const historyEntries = Object.entries(context.history_revisions).sort(
+      ([a], [b]) => a.localeCompare(b),
+    );
+    if (
+      !historyEntries.length ||
+      historyEntries.some(
+        ([code, revision]) =>
+          !code || typeof revision !== "string" || !revision.trim(),
+      )
+    )
+      throw new Error(`${label} has invalid history_revisions`);
+    const candidate = {
+      solver_version: context.solver_version,
+      history_revisions: Object.fromEntries(historyEntries),
+    };
+    if (!manifestContext) manifestContext = candidate;
+    else if (JSON.stringify(manifestContext) !== JSON.stringify(candidate))
+      throw new Error(`${label} disagrees with the manifest solver context`);
+  }
+  return manifestContext;
+}
+
+export function currentPrecomputeSolverContext({
+  country = COUNTRY,
+  dataDir = DATA_DIR,
+  appConfigPath = path.join(APP_DIR, "public", "app-config.js"),
+} = {}) {
+  const configSource = fs.readFileSync(appConfigPath, "utf8");
+  const versionMatch = configSource.match(
+    /const\s+ROUTE_SOLVER_CACHE_VERSION\s*=\s*["']([^"']+)["']/,
+  );
+  if (!versionMatch)
+    throw new Error("Cannot read ROUTE_SOLVER_CACHE_VERSION from app-config.js");
+  const historySuffix = country === "jp" ? "" : `-${country}`;
+  const historyPath = path.join(dataDir, `rail-history${historySuffix}.json`);
+  const revision = fs.existsSync(historyPath)
+    ? readJson(historyPath)?.revision
+    : "none";
+  if (typeof revision !== "string" || !revision.trim())
+    throw new Error(`${path.basename(historyPath)} has no revision`);
+  return {
+    solver_version: versionMatch[1],
+    history_revisions: { [country]: revision },
+  };
+}
+
+export function assertCurrentPrecomputeSolverContext(
+  actual,
+  expected = currentPrecomputeSolverContext(),
+) {
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(
+      `Precomputed route provenance is stale: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`,
+    );
+  }
+  return actual;
+}
 
 // Assemble manifest.json from already-emitted part files (used after sliced
 // runs; see PRECOMPUTE_RANGE below). Validates that every train in the store
@@ -89,6 +199,7 @@ function finalizeManifestFromParts() {
   let solvedCount = 0;
   let unsolvableCount = 0;
   let noRouteCount = 0;
+  const routeSolverContexts = [];
   for (let i = 0; i < store.trains.length; i += 1) {
     const name = `part-${String(i).padStart(3, "0")}`;
     const part = JSON.parse(
@@ -100,11 +211,16 @@ function finalizeManifestFromParts() {
     if (!partsByDate.has(dateKey)) partsByDate.set(dateKey, []);
     partsByDate.get(dateKey).push(name);
     if (!part.route) noRouteCount += 1;
-    else if (part.route.unsolvable) unsolvableCount += 1;
-    else solvedCount += 1;
+    else {
+      routeSolverContexts.push(part.route.solver_context);
+      if (part.route.unsolvable) unsolvableCount += 1;
+      else solvedCount += 1;
+    }
   }
   if (solvedCount === 0)
     throw new Error("No train solved — refusing to publish empty parts.");
+  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  assertCurrentPrecomputeSolverContext(solverContext);
   const manifest = {
     format: 1,
     schema_version: store.schema_version || "1.3",
@@ -112,6 +228,7 @@ function finalizeManifestFromParts() {
     solved: solvedCount,
     unsolvable: unsolvableCount,
     no_route: noRouteCount,
+    solver_context: solverContext,
     parts: partNames,
     full: "sample-full",
     dates: Object.fromEntries(
@@ -156,6 +273,10 @@ async function main() {
   console.log(`Country: ${COUNTRY} (${RAIL_SECTIONS_FILE}, ${STATIONS_FILE}).`);
   const railSections = readJson(path.join(DATA_DIR, RAIL_SECTIONS_FILE));
   const stations = readJson(path.join(DATA_DIR, STATIONS_FILE));
+  const historyPath = path.join(DATA_DIR, RAIL_HISTORY_FILE);
+  const historyOverlays = fs.existsSync(historyPath)
+    ? { [COUNTRY]: readPrecomputeHistoryOverlay(fs.readFileSync(historyPath, "utf8")) }
+    : {};
   const matchedStops = readJson(path.join(DATA_DIR, "matched-stops.json"));
   // Curated per-train geometry — the offline fallback for trains the solver
   // cannot route (see the unsolvable branch in the driver).
@@ -219,6 +340,7 @@ async function main() {
   let solvedCount = 0;
   let unsolvableCount = 0;
   let noRouteCount = 0;
+  const routeSolverContexts = [];
 
   context.__host = {
     country: COUNTRY,
@@ -226,6 +348,7 @@ async function main() {
     stations,
     matchedStops,
     matchedRoutes,
+    historyOverlays,
     trainStoreText,
     onTrainSolved({ index, id, raw, route, featureCount, ms }) {
       const name = `part-${String(sliceStart + index).padStart(3, "0")}`;
@@ -234,8 +357,11 @@ async function main() {
       if (!partsByDate.has(dateKey)) partsByDate.set(dateKey, []);
       partsByDate.get(dateKey).push(name);
       if (!route) noRouteCount += 1;
-      else if (route.unsolvable) unsolvableCount += 1;
-      else solvedCount += 1;
+      else {
+        routeSolverContexts.push(route.solver_context);
+        if (route.unsolvable) unsolvableCount += 1;
+        else solvedCount += 1;
+      }
       fs.writeFileSync(
         path.join(writeDir, `${name}.json`),
         JSON.stringify({ format: 1, train: raw, route }),
@@ -259,6 +385,14 @@ async function main() {
     );
   }
 
+  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  assertCurrentPrecomputeSolverContext(solverContext);
+  if (JSON.stringify(solverContext) !== JSON.stringify(summary.solverContext)) {
+    throw new Error(
+      "Route parts disagree with the precompute adapter's manifest solver context.",
+    );
+  }
+
   if (!rangeEnv) {
     const manifest = {
       format: 1,
@@ -267,6 +401,7 @@ async function main() {
       solved: solvedCount,
       unsolvable: unsolvableCount,
       no_route: noRouteCount,
+      solver_context: solverContext,
       parts: partNames,
       full: "sample-full",
       dates: Object.fromEntries(
@@ -301,10 +436,15 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error("\nprecompute-train-parts FAILED:", err);
-  // The published sample is intact (nothing is swapped in until the whole set
-  // is written), so only the half-solved staging directory needs clearing.
-  fs.rmSync(`${OUT_DIR}.staging`, { recursive: true, force: true });
-  process.exit(1);
-});
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  main().catch((err) => {
+    console.error("\nprecompute-train-parts FAILED:", err);
+    // The published sample is intact (nothing is swapped in until the whole set
+    // is written), so only the half-solved staging directory needs clearing.
+    fs.rmSync(`${OUT_DIR}.staging`, { recursive: true, force: true });
+    process.exit(1);
+  });
+}

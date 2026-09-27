@@ -164,6 +164,7 @@ struct RouteGraphParityTests {
             let derivedPreferredOperatorNames: [String]
             let templateKey: String
             let templateKeyDigest: String
+            let historyRevision: String
             let cacheKey: String
             let cacheKeyDigest: String
         }
@@ -545,7 +546,7 @@ struct RouteGraphParityTests {
             let context = try #require(
                 RouteGraph.solveContext(
                     train: train, routeSections: sections, country: item.country,
-                    rideDate: item.train.date))
+                    rideDate: item.train.date, historyRevision: item.historyRevision))
             #expect(context.templateKey == item.templateKey, "template key — \(where_)")
             #expect(context.allowedCodes == item.allowedCodes, "allowed codes — \(where_)")
             // The one that is a persisted format: a route cache written by

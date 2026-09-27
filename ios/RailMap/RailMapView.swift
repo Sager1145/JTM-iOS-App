@@ -115,6 +115,11 @@ struct RailMapView: View {
     /// runs on the other calendar day, which `showFullCrossDay` either dashes
     /// or draws solid. Defaulted so a preview needs no date.
     var selectedDate: String = Dates.allDates
+    /// The selected train's normalized ride date (`Dates.normalizeTrainDate`),
+    /// or nil when nothing is selected or the train is undated. This is not
+    /// ``selectedDate`` — that scopes the journey list. A nil date uses the
+    /// Current era predicate.
+    var networkRideDate: String? = nil
     /// Whether the network is drawn. Kept separate from `lines` on purpose:
     /// hiding the network used to be expressed by passing an empty list, which
     /// made showing it again indistinguishable from loading a country, so the
@@ -194,6 +199,7 @@ struct RailMapView: View {
         var dimOpacity = DisplaySettings.Defaults.dimOpacity
         var focusBoost = DisplaySettings.Defaults.focusBoost
         var showFullCrossDay = DisplaySettings.Defaults.showFullCrossDay
+        var networkEra = DisplayNetworkEra.current
         var markers = MapRideMarkers.Settings(
             terminalRadius: DisplaySettings.Defaults.terminalRadius,
             passRadius: DisplaySettings.Defaults.passRadius,
@@ -213,6 +219,7 @@ struct RailMapView: View {
             dimOpacity = settings.dimOpacity
             focusBoost = settings.focusBoost
             showFullCrossDay = settings.showFullCrossDay
+            networkEra = settings.networkEra
             markers = MapRideMarkers.Settings(
                 terminalRadius: settings.terminalRadius,
                 passRadius: settings.passRadius,
@@ -255,6 +262,7 @@ struct RailMapView: View {
             networkExtent: networkExtent,
             selectedTrainID: selectedTrainID,
             selectedDate: selectedDate,
+            networkRideDate: networkRideDate,
             showsNetwork: showsNetwork,
             // Read HERE, in a body, for the same reason the 顯示調節 numbers
             // are: `updateUIView` is not a scope SwiftUI installs observation
@@ -286,6 +294,7 @@ struct RailMapView: View {
         var networkExtent: MKCoordinateRegion?
         var selectedTrainID: String?
         var selectedDate: String
+        var networkRideDate: String?
         var showsNetwork: Bool
         var layers: MapLayers
         var draftMap: DraftMapSnapshot
@@ -518,6 +527,7 @@ struct RailMapView: View {
                 networkExtent: networkExtent,
                 selectedTrainID: selectedTrainID,
                 selectedDate: selectedDate,
+                networkRideDate: networkRideDate,
                 showsNetwork: showsNetwork,
                 layers: layers,
                 categoryIndexes: categoryIndexes,
@@ -559,6 +569,7 @@ struct RailMapView: View {
             private var networkExtent: MKCoordinateRegion?
             private var selectedTrainID: String?
             private var selectedDate = Dates.allDates
+            private var networkRideDate: String?
             private var naming = MapNaming()
             private var minZoomByLineId: [String: Int] = [:]
             /// Starts where `RailMapController.showsNetwork` starts, so the
@@ -714,6 +725,7 @@ struct RailMapView: View {
                 networkExtent: MKCoordinateRegion?,
                 selectedTrainID: String?,
                 selectedDate: String,
+                networkRideDate: String?,
                 showsNetwork: Bool,
                 layers: MapLayers,
                 categoryIndexes: [String: Statistics.EdgeIndex],
@@ -754,7 +766,10 @@ struct RailMapView: View {
                 // Pure route paint updates existing renderers. Marker geometry
                 // and cross-day segmentation still need a layout pass.
                 let displayChanged = display != self.display
+                let rideDateChanged = networkRideDate != self.networkRideDate
+                let eraChanged = display.networkEra != self.display.networkEra
                 let routePaintOnly = displayChanged
+                    && !eraChanged
                     && display.markers == self.display.markers
                     && display.focusBoost == self.display.focusBoost
                     && display.dimOpacity == self.display.dimOpacity
@@ -764,6 +779,7 @@ struct RailMapView: View {
                 // one is dashed. Both are properties of things already built,
                 // so a scope change is a rebuild like the others.
                 let dateChanged = selectedDate != self.selectedDate
+                let networkFilterChanged = rideDateChanged || eraChanged
                 let namingChanged = naming != self.naming
                 // `networkExtent` follows the camera's countries, not residency
                 // (see `RailNetworkStore.networkExtent`), so a batch that merely
@@ -790,6 +806,7 @@ struct RailMapView: View {
                 guard linesChanged || stationsChanged || ridesChanged
                         || selectionChanged || visibilityChanged || indexesChanged
                         || basemapChanged || displayChanged || dateChanged
+                        || networkFilterChanged
                         || namingChanged || focusRequest != nil || extentChanged else { return }
 
                 if ridesChanged || indexesChanged {
@@ -799,6 +816,7 @@ struct RailMapView: View {
                 self.categoryIndexes = categoryIndexes
 
                 self.display = display
+                self.networkRideDate = networkRideDate
                 self.selectedDate = selectedDate
                 self.naming = naming
 #if DEBUG
@@ -941,6 +959,7 @@ struct RailMapView: View {
                     displayChanged: displayChanged,
                     routePaintOnly: routePaintOnly,
                     dateChanged: dateChanged,
+                    networkFilterChanged: networkFilterChanged,
                     namingChanged: namingChanged,
                     showsNetwork: showsNetwork,
                     hasRides: !rides.isEmpty,
@@ -1366,7 +1385,8 @@ struct RailMapView: View {
                 // Preparation can be cancelled. Only installed geometry may
                 // advance the hysteresis bucket used by shouldRebuild.
                 let laneLOD = networkBuildState.previewLaneLOD(at: zoom)
-                let key = "\(mapScale)|\(scale)|\(laneLOD.scale)"
+                let eraKey = "\(display.networkEra.rawValue)|\(networkRideDate ?? "")"
+                let key = "\(mapScale)|\(scale)|\(laneLOD.scale)|\(eraKey)"
                 if geometryPreparation != nil, geometryPreparationKey != key {
                     cancelGeometryPreparation()
                 }
@@ -1403,11 +1423,18 @@ struct RailMapView: View {
                 let requestID = UUID()
                 geometryPreparationID = requestID
                 geometryPreparationKey = key
+                let era = display.networkEra
+                let rideDate = networkRideDate
+                let todayByRegion = MainActor.assumeIsolated {
+                    Dictionary(
+                        uniqueKeysWithValues: RegionToday.byRegion().map { ($0.key.rawValue, $0.value) })
+                }
                 let worker = Task.detached(priority: .userInitiated) {
                     try MapLineGeometry.prepare(
                         lines: missingLines, strokes: missingStrokes, allLines: byID,
                         anchors: anchors, cachedStrokes: cachedStrokes,
-                        mapScale: mapScale, scale: scale, laneScale: laneLOD.scale)
+                        mapScale: mapScale, scale: scale, laneScale: laneLOD.scale,
+                        era: era, rideDate: rideDate, todayByRegion: todayByRegion)
                 }
                 geometryPreparation = Task { @MainActor [weak self, weak mapView] in
                     let result = await withTaskCancellationHandler {
@@ -1599,7 +1626,8 @@ struct RailMapView: View {
                 // The pad covers screen-space lane offsets and rounded corners.
                 let rideBuildRect = buildRect.insetBy(dx: -256 * mapPointsPerScreenPoint,
                     dy: -256 * mapPointsPerScreenPoint)
-                let frameKey = "\(mapPointsPerScreenPoint)|\(buildScale)|\(laneLOD.scale)"
+                let eraKey = "\(display.networkEra.rawValue)|\(networkRideDate ?? "")"
+                let frameKey = "\(mapPointsPerScreenPoint)|\(buildScale)|\(laneLOD.scale)|\(eraKey)"
                 networkGeometry.beginFrame(key: frameKey)
                 var neededStrokeLineIDs: Set<String> = []
                 if layers.routes {
@@ -1636,7 +1664,10 @@ struct RailMapView: View {
                         withheldRunsByLineID[line.id] = stroke.withheldRuns
                     }
                     return cached.intersecting(buildRect)
-                }.filter { !$0.polylines.isEmpty || !$0.familyPolylines.isEmpty }
+                }.filter {
+                    !$0.polylines.isEmpty || !$0.historicalPolylines.isEmpty
+                        || !$0.familyPolylines.isEmpty
+                }
 
                 // A needed chain the LOD/budget pass above never reached —
                 // culled, below its own zoom floor, or the whole network
@@ -1673,6 +1704,7 @@ struct RailMapView: View {
                 let dark = mapView.traitCollection.userInterfaceStyle == .dark
 
                 var byColor: [String: [MKPolyline]] = [:]
+                var historicalByColor: [String: [MKPolyline]] = [:]
                 var colors: [String: UIColor] = [:]
                 var vertices = 0
                 // Withheld dashed runs, grouped by EACH RUN's own colour key
@@ -1686,7 +1718,12 @@ struct RailMapView: View {
                 for build in fitted.kept {
                     let key = dark ? build.line.colorDarkHex : build.line.colorHex
                     colors[key] = UIColor(dark ? build.line.colorDark : build.line.color)
-                    byColor[key, default: []].append(contentsOf: build.polylines)
+                    if !build.polylines.isEmpty {
+                        byColor[key, default: []].append(contentsOf: build.polylines)
+                    }
+                    if !build.historicalPolylines.isEmpty {
+                        historicalByColor[key, default: []].append(contentsOf: build.historicalPolylines)
+                    }
                     vertices += build.drawnVertexCount
                     // Landlord family-window polylines: one MKMultiPolyline
                     // per distinct colour already exists (`byColor` below),
@@ -1737,7 +1774,8 @@ struct RailMapView: View {
                 updateBasemapVeil(on: mapView)
                 let networkOverlays = RailSignpost.map.begin("map.rebuild.networkOverlays")
                 let overlays = overlayInstaller.networkOverlays(
-                    byColor: byColor, withheldByColor: withheldByColor,
+                    byColor: byColor, historicalByColor: historicalByColor,
+                    withheldByColor: withheldByColor,
                     colors: colors, dark: dark,
                     reconciliation: overlayReconciliation)
                 desiredOverlays.append(contentsOf: overlays)
@@ -2460,10 +2498,18 @@ struct RailMapView: View {
                         guard let lowestTenantLineID else { return false }
                         return station.lineID != lowestTenantLineID
                     }
+                    let era = display.networkEra
+                    let rideDate = networkRideDate
+                    let todayByRegion = MainActor.assumeIsolated { RegionToday.byRegion() }
                     let visibleStations = stations.compactMap { station -> (
                         key: String, station: RailNetworkStore.DrawnStation,
-                        displayName: String, readings: [String]?
+                        displayName: String, readings: [String]?, alpha: CGFloat
                     )? in
+                        let today = todayByRegion[station.region] ?? ""
+                        guard era.shows(
+                            station.temporalDecoration, today: today, rideDate: rideDate,
+                            isStation: true)
+                        else { return nil }
                         guard station.lodMinZoom <= visibilityZoom || promotesName(station)
                         else { return nil }
                         let point = MKMapPoint(station.coordinate.clLocation)
@@ -2477,11 +2523,19 @@ struct RailMapView: View {
                         // through to the by-name lookup exactly as it does in
                         // the web app.
                         let named = self.localized(station.name, code: station.id)
+                        let referenceDay = era == .rideDate && Dates.isValidDateString(rideDate)
+                            ? (rideDate ?? today) : today
+                        let open = RouteGraph.RailValidity.isValid(
+                            validFrom: station.validFrom, validTo: station.validTo, on: referenceDay)
+                        // Closed overlay stations stay a normal dot. Never the
+                        // cross-day diamond (`role == "xday"`).
+                        let alpha: CGFloat = station.isOverlay && !open ? 0.4 : 1
                         return (
                             key: "\(station.region.rawValue)|\(station.lineID)|\(station.id)",
                             station: station, displayName: named.display,
                             readings: self.localization == nil
-                                ? nil : named.readings.map(\.text))
+                                ? nil : named.readings.map(\.text),
+                            alpha: alpha)
                     }
 
                     // The network is the broadest naming layer, so it fills the
@@ -2551,6 +2605,7 @@ struct RailMapView: View {
                             // engine at all — which is what keeps the single
                             // `nameRoma` subline. See `StationCardView`.
                             readings: candidate.readings,
+                            markerAlpha: candidate.alpha,
                             displayCoordinate: station.slot.flatMap { slot in
                                 strokeAnchors[
                                     "\(station.region.rawValue)|\(station.lineID)#\(slot.chain)"
@@ -3850,11 +3905,10 @@ struct RailMapView: View {
                     // its gap, the same reason the web app's dashed layers
                     // (`rn-segments-withheld-casing`, `train-routes-xday`, the
                     // suspended layers) all set `line-cap: butt`.
-                    renderer.lineCap = style?.dashed == true ? .butt : .round
+                    let patterned = style?.dashed == true || style?.historical == true
+                    renderer.lineCap = patterned ? .butt : .round
                     renderer.lineJoin = .round
-                    if style?.dashed == true {
-                        renderer.lineDashPattern = RailStyle.dashPattern(atScale: scale)
-                    }
+                    renderer.lineDashPattern = MapOverlayStyles.dashPattern(style, atScale: scale)
                     overlayStyles.remember(renderer, forKey: key)
                     return renderer
                 }
@@ -3866,11 +3920,10 @@ struct RailMapView: View {
                 let style = overlayStyles[key]
                 renderer.strokeColor = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
                 renderer.lineWidth = MapOverlayStyles.drawnWidth(style, atScale: scale)
-                renderer.lineCap = style?.dashed == true ? .butt : .round
+                let patterned = style?.dashed == true || style?.historical == true
+                renderer.lineCap = patterned ? .butt : .round
                 renderer.lineJoin = .round
-                if style?.dashed == true {
-                    renderer.lineDashPattern = RailStyle.dashPattern(atScale: scale)
-                }
+                renderer.lineDashPattern = MapOverlayStyles.dashPattern(style, atScale: scale)
                 overlayStyles.remember(renderer, forKey: key)
                 return renderer
             }

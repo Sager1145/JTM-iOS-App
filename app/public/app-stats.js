@@ -422,7 +422,91 @@ function statsTrainSig(train) {
   const stops = train.stops || [];
   for (let i = 0; i < stops.length; i += 1)
     rides += stops[i].ride_segment ? "1" : "0";
-  return `${getTrainRouteTemplateKey(train)}:${rides}`;
+  const rideDate = typeof getTrainDate === "function" ? getTrainDate(train) : "";
+  return `${getTrainRouteTemplateKey(train)}:${rides}:${rideDate}`;
+}
+
+function statsRideDate(train) {
+  if (typeof getTrainDate === "function") return getTrainDate(train);
+  return train && train.date ? train.date : null;
+}
+
+// ADR 0011 half-open interval. Same rule as isRailValid; kept here because
+// this file is loaded before app-route-graph.js.
+function statsRailValid(validFrom, validTo, rideDate) {
+  if (typeof isRailValid === "function") return isRailValid(validFrom, validTo, rideDate);
+  const d =
+    typeof rideDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(rideDate)
+      ? rideDate
+      : null;
+  const from = validFrom == null || validFrom === "" ? null : validFrom;
+  const to = validTo == null || validTo === "" ? null : validTo;
+  if (d === null) return to === null;
+  return (from === null || from <= d) && (to === null || d < to);
+}
+
+function statsBound(value) {
+  return value == null || value === "" ? null : value;
+}
+
+function statsIsCurrentNetwork(kind, _validTo) {
+  // Reference geometry. validTo does not remove it (in-place retirement).
+  if (kind === "historical" || kind === "relocatedOld") return false;
+  return kind === "relocatedNew" || kind === "current" || !kind;
+}
+
+// Ridden-km bucket only. Does not decide reference-geometry membership.
+// "retired" | "relocatedOld" | null. A future validTo is not retired.
+function statsHistoricalClassification(kind, validFrom, validTo, asOf) {
+  if (kind === "relocatedOld") return "relocatedOld";
+  if (kind === "historical") return "retired";
+  if (kind !== "current" && kind !== "relocatedNew") return null;
+  const to = statsBound(validTo);
+  if (to === null) return null;
+  const from = statsBound(validFrom);
+  if (!statsRailValid(from, null, asOf)) return null;
+  if (statsRailValid(from, to, asOf)) return null;
+  return "retired";
+}
+
+function statsIsRetiredNetworkEdge(kind, validFrom, validTo, asOf) {
+  return (
+    statsHistoricalClassification(kind, validFrom, validTo, asOf) === "retired"
+  );
+}
+
+// Civil today in the region zone. Not the map era and not a ride date.
+function statsRegionCivilToday(country) {
+  const zones = {
+    jp: "Asia/Tokyo",
+    tw: "Asia/Taipei",
+    hk: "Asia/Hong_Kong",
+    mo: "Asia/Macau",
+    kr: "Asia/Seoul",
+    us: "America/New_York",
+    ca: "America/Toronto",
+  };
+  const zone = zones[country] || zones.jp;
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: zone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const pick = (type) => parts.find((part) => part.type === type).value;
+  return `${pick("year")}-${pick("month")}-${pick("day")}`;
+}
+
+function statsEdgeForRide(idx, key, rideDate) {
+  const list = idx.variants && idx.variants.get(key);
+  const ids = list || (idx.map.has(key) ? [idx.map.get(key)] : null);
+  if (!ids) return undefined;
+  if (!idx.validTo) return ids[0];
+  for (let i = 0; i < ids.length; i += 1) {
+    const e = ids[i];
+    if (statsRailValid(idx.validFrom[e], idx.validTo[e], rideDate)) return e;
+  }
+  return undefined;
 }
 
 function pruneStatsTrainCache() {
@@ -447,6 +531,7 @@ function collectTrainStatsEntry(train, idx) {
   // build (no segments) is treated as a miss and rebuilt.
   if (cached && cached.sig === sig && cached.segments !== undefined)
     return cached;
+  const rideDate = statsRideDate(train);
   const edges = [];
   const spans = []; // [spanKey, km, mask]
   // One record per matched route feature = one station-to-station ridden
@@ -470,7 +555,7 @@ function collectTrainStatsEntry(train, idx) {
       const prev = coords[i - 1];
       const v = coords[i];
       if (anchor[0] === v[0] && anchor[1] === v[1]) continue;
-      const e = idx.map.get(statsEdgeKey(anchor, v));
+      const e = statsEdgeForRide(idx, statsEdgeKey(anchor, v), rideDate);
       if (e !== undefined) {
         edges.push(e);
         anchor = v;
@@ -478,7 +563,7 @@ function collectTrainStatsEntry(train, idx) {
         pendingKm = 0; // pending hops were interior to this matched edge
         continue;
       }
-      const e2 = idx.map.get(statsEdgeKey(prev, v));
+      const e2 = statsEdgeForRide(idx, statsEdgeKey(prev, v), rideDate);
       if (e2 !== undefined) {
         recordSpan(anchor, prev, pendingKm, idx.mask[e2]);
         edges.push(e2);
@@ -643,7 +728,13 @@ function serviceGroupStats(trains, entries) {
   return groups;
 }
 
-function aggregateMileageStats(idx, entries) {
+function aggregateMileageStats(idx, entries, asOf) {
+  const reference =
+    typeof asOf === "string" && asOf
+      ? asOf
+      : statsRegionCivilToday(
+          typeof activeCountry !== "undefined" ? activeCountry : "jp",
+        );
   const ridden = new Set();
   const extraSpans = new Map(); // spanKey -> { km, mask } (dedupe repeat rides)
   for (const en of entries) {
@@ -656,18 +747,48 @@ function aggregateMileageStats(idx, entries) {
   }
   let riddenAll = 0;
   let unmatchedKm = 0;
+  let totalRiddenKm = 0;
+  let currentNetworkRiddenKm = 0;
+  let retiredNetworkKm = 0;
+  let relocatedOldKm = 0;
+  const historyIDs = new Set();
+  const fallbackLines = new Set();
+  const currentLines = new Set();
   const riddenByMask = new Map(activeStatCategories().map((c) => [c.mask, 0]));
   // Deduped ridden km per line, split by category (drives the per-line
   // breakdown under each coverage row). Same ridden edge Set as the category sums.
   const lineRidByCat = new Map();
   for (const e of ridden) {
-    riddenAll += idx.km[e];
     const km = idx.km[e];
+    const kind = (idx.temporalKind && idx.temporalKind[e]) || "current";
+    const validFrom = idx.validFrom ? idx.validFrom[e] : null;
+    const validTo = idx.validTo ? idx.validTo[e] : null;
+    const onCurrent = idx.currentNetwork
+      ? idx.currentNetwork[e] !== false
+      : statsIsCurrentNetwork(kind, validTo);
+    const bucket = statsHistoricalClassification(
+      kind,
+      validFrom,
+      validTo,
+      reference,
+    );
+    totalRiddenKm += km;
+    if (bucket === "relocatedOld") relocatedOldKm += km;
+    else if (bucket === "retired") retiredNetworkKm += km;
+    if (bucket) {
+      const historyId = idx.historyId && idx.historyId[e];
+      if (historyId) historyIDs.add(historyId);
+      else if (idx.lineArr && idx.lineArr[e]) fallbackLines.add(idx.lineArr[e]);
+    }
+    if (!onCurrent) continue;
+    if (!bucket) currentNetworkRiddenKm += km;
+    riddenAll += km;
     const m = idx.mask[e];
     for (const c of activeStatCategories())
       if (m & c.mask) riddenByMask.set(c.mask, riddenByMask.get(c.mask) + km);
     const ln = idx.lineArr && idx.lineArr[e];
     if (ln) {
+      if (!bucket) currentLines.add(ln);
       const lm = idx.lineMaskArr ? idx.lineMaskArr[e] : m;
       let o = lineRidByCat.get(ln);
       if (!o) lineRidByCat.set(ln, (o = statsZeroCatKm()));
@@ -686,6 +807,10 @@ function aggregateMileageStats(idx, entries) {
       if (span.mask & c.mask)
         riddenByMask.set(c.mask, riddenByMask.get(c.mask) + span.km);
   }
+  let historicalLineCount = historyIDs.size;
+  fallbackLines.forEach((name) => {
+    if (!currentLines.has(name)) historicalLineCount += 1;
+  });
   return {
     totals: idx.totals,
     riddenAll,
@@ -694,6 +819,12 @@ function aggregateMileageStats(idx, entries) {
     lineTotByCat: idx.lineTotByCat,
     lineRidByCat,
     lineOperator: idx.lineOperator,
+    totalRiddenKm,
+    currentNetworkRiddenKm,
+    retiredNetworkKm,
+    relocatedOldKm,
+    historicalUniqueKm: retiredNetworkKm + relocatedOldKm,
+    historicalLineCount,
   };
 }
 
@@ -963,6 +1094,12 @@ async function buildStatsEdgeIndexSliced() {
   // be grouped by company. A mini-Shinkansen corridor keeps its source line's
   // operator (奥羽線/田沢湖線 = JR東日本, 博多南線 = JR西日本), which is correct.
   const lineOpArr = []; // edge index -> naming feature's operator
+  const temporalKind = [];
+  const validFromArr = [];
+  const validToArr = [];
+  const historyIdArr = [];
+  const currentNetwork = [];
+  const variants = new Map(); // edge key -> [edge index], only when slots differ
   // Mini-Shinkansen reclassification accumulators (applied after the full pass):
   // whole-line corridors collect their edge indices; the two 奥羽線 sub-corridors
   // collect a subgraph to trace along afterwards. Every edge is recorded against
@@ -984,19 +1121,40 @@ async function buildStatsEdgeIndexSliced() {
     const operatorName = sectionOperatorOf(props);
     const fullReclass = HSR_RECLASSIFY_FULL_LINES.get(lineName) || null;
     const isOuLine = lineName === HSR_RECLASSIFY_OU_LINE;
+    const kind = props.temporal_kind || "current";
+    const from = statsBound(props.valid_from);
+    const to = statsBound(props.valid_to);
+    const historyId = statsBound(props.history_id);
+    const onCurrent = statsIsCurrentNetwork(kind, to);
+    const slot = `${kind}|${from || ""}|${to || ""}|${historyId || ""}`;
     for (let i = 1; i < coords.length; i += 1) {
       const a = coords[i - 1];
       const b = coords[i];
       const key = statsEdgeKey(a, b);
-      let ei = map.get(key);
+      const claimants = variants.get(key) || (map.has(key) ? [map.get(key)] : []);
+      let ei = claimants.find((index) => {
+        const same =
+          `${temporalKind[index]}|${validFromArr[index] || ""}|${validToArr[index] || ""}|${historyIdArr[index] || ""}`;
+        return same === slot;
+      });
       if (ei === undefined) {
         ei = kmArr.length;
-        map.set(key, ei);
+        if (!map.has(key)) map.set(key, ei);
         kmArr.push(statsEdgeKm(a[0], a[1], b[0], b[1]));
         maskArr.push(mask);
         lineArr.push(lineName);
         lineMaskArr.push(lineName ? mask : 0);
         lineOpArr.push(lineName ? operatorName : "");
+        temporalKind.push(kind);
+        validFromArr.push(from);
+        validToArr.push(to);
+        historyIdArr.push(historyId);
+        currentNetwork.push(onCurrent);
+        if (map.get(key) !== ei) {
+          const list = variants.get(key) || [map.get(key)];
+          list.push(ei);
+          variants.set(key, list);
+        }
       } else {
         maskArr[ei] |= mask;
         if (!lineArr[ei] && lineName) {
@@ -1005,6 +1163,7 @@ async function buildStatsEdgeIndexSliced() {
           lineOpArr[ei] = operatorName;
         }
       }
+      if (!onCurrent && !currentNetwork[ei]) continue;
       if (fullReclass) {
         hsrFullHits.get(fullReclass).add(ei);
       } else if (isOuLine) {
@@ -1069,6 +1228,7 @@ async function buildStatsEdgeIndexSliced() {
   // so hoist it instead of re-deriving it twice per edge.
   const cats = activeStatCategories();
   for (let i = 0; i < kmArr.length; i += 1) {
+    if (!currentNetwork[i]) continue;
     if ((i & 8191) === 8191 && performance.now() - t0 > 12) {
       await yieldToEventLoop();
       t0 = performance.now();
@@ -1114,5 +1274,11 @@ async function buildStatsEdgeIndexSliced() {
     lineMaskArr,
     lineTotByCat,
     lineOperator,
+    temporalKind,
+    validFrom: validFromArr,
+    validTo: validToArr,
+    historyId: historyIdArr,
+    currentNetwork,
+    variants,
   };
 }

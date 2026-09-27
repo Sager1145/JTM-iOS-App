@@ -206,6 +206,7 @@ final class MapOverlayInstaller {
 
     func networkOverlays(
         byColor: [String: [MKPolyline]],
+        historicalByColor: [String: [MKPolyline]],
         withheldByColor: [String: [MKPolyline]],
         colors: [String: UIColor],
         dark: Bool,
@@ -219,6 +220,17 @@ final class MapOverlayInstaller {
                 color: colors[key] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
                 alpha: RailStyle.networkOpacity
+            )
+            overlays.append(multi)
+        }
+        for (key, polylines) in historicalByColor {
+            let styleKey = "network-hist|\(key)"
+            let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+            styles[styleKey] = .init(
+                color: colors[key] ?? .systemGray,
+                widthToken: RailStyle.railWidth,
+                alpha: RailStyle.networkOpacity,
+                historical: true
             )
             overlays.append(multi)
         }

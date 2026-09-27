@@ -208,11 +208,35 @@ function renderMileageStatsDom(view) {
         ${detail}
       </div>`;
     }).join("") +
+    temporalCoverageHtml(s) +
     `<div class="divider"></div>
      <h3 class="subhead">${escapeHtml(I18N.t("stats.actualTitle"))}</h3>` +
     serviceRowsHtml(s.services) +
     timeRow +
     topSegmentsHtml(s.topSegments);
+}
+
+function temporalStatRow(labelKey, value) {
+  return `
+      <div class="stat-row">
+        <div class="stat-row-head">
+          <span class="stat-label">${escapeHtml(I18N.t(labelKey))}</span>
+          <span class="stat-val"><span class="stat-km">${value}</span></span>
+        </div>
+      </div>`;
+}
+
+// Figures that sit beside coverage and are not part of its fraction.
+function temporalCoverageHtml(s) {
+  const km = (value) => `${formatStatKm(value || 0)} km`;
+  return (
+    temporalStatRow("stats.totalRiddenKm", km(s.totalRiddenKm)) +
+    temporalStatRow("stats.currentRiddenKm", km(s.currentNetworkRiddenKm)) +
+    temporalStatRow("stats.historicalKm", km(s.historicalUniqueKm)) +
+    temporalStatRow("stats.retiredKm", km(s.retiredNetworkKm)) +
+    temporalStatRow("stats.relocatedOldKm", km(s.relocatedOldKm)) +
+    temporalStatRow("stats.retiredLines", String(s.historicalLineCount || 0))
+  );
 }
 
 async function runMileageStatsJob() {

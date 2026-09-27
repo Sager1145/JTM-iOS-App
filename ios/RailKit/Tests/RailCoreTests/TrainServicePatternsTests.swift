@@ -258,7 +258,7 @@ struct TrainServicePatternsTests {
         #expect(harukaHiragana.count == 2)
     }
 
-    // MARK: - v2 schema
+    // MARK: - v3 schema and date semantics
 
     @Test("every line named in a pattern exists in the shipped rail-sections table, canonically")
     func lineNamesExistInRailSections() throws {
@@ -285,27 +285,89 @@ struct TrainServicePatternsTests {
         #expect(offenders.isEmpty, "unknown line names: \(offenders)")
     }
 
-    @Test("validFrom/validUntil, when present, are well-formed ISO dates with validFrom <= validUntil")
+    @Test("catalog validity bounds are real Gregorian dates and form nonempty intervals")
     func validityDatesAreWellFormed() {
-        let datePattern = try! NSRegularExpression(pattern: #"^\d{4}-\d{2}-\d{2}$"#)
-        func matches(_ value: String) -> Bool {
-            datePattern.firstMatch(
-                in: value, range: NSRange(value.startIndex..., in: value)) != nil
-        }
-
         var offenders: [String] = []
         for pattern in TrainServicePatterns.patterns {
-            if let from = pattern.validFrom, matches(from) == false {
+            if let from = pattern.validFrom, pattern.applicability(on: from) == nil {
                 offenders.append("\(pattern.id): malformed validFrom \(from)")
             }
-            if let to = pattern.validUntil, matches(to) == false {
+            if let to = pattern.validUntil, pattern.applicability(on: to) == nil {
                 offenders.append("\(pattern.id): malformed validUntil \(to)")
             }
-            if let from = pattern.validFrom, let to = pattern.validUntil, from > to {
-                offenders.append("\(pattern.id): validFrom \(from) > validUntil \(to)")
+            if let from = pattern.validFrom, let to = pattern.validUntil, from >= to {
+                offenders.append("\(pattern.id): empty or reversed interval \(from)..<\(to)")
             }
         }
         #expect(offenders.isEmpty, "\(offenders)")
+    }
+
+    @Test("applicability distinguishes evidence from exclusion")
+    func applicabilityIsTriState() {
+        let complete = Self.makePattern(validity: .complete)
+        let partial = Self.makePattern(validity: .partial)
+        let missing = Self.makePattern(validity: .missing)
+        let boundedPartial = Self.makePattern(
+            validFrom: "2020-01-01", validUntil: "2021-01-01", validity: .partial)
+
+        #expect(complete.applicability(on: "2020-06-01") == .applicable)
+        #expect(partial.applicability(on: "2020-06-01") == .unknown)
+        #expect(missing.applicability(on: "2020-06-01") == .unknown)
+        #expect(boundedPartial.applicability(on: "2019-12-31") == .notApplicable)
+        #expect(boundedPartial.applicability(on: "2020-06-01") == .unknown)
+        #expect(boundedPartial.applicability(on: "2021-01-01") == .notApplicable)
+
+        #expect(complete.isValid(on: "2020-06-01"))
+        #expect(partial.isValid(on: "2020-06-01") == false)
+        #expect(missing.isValid(on: "2020-06-01") == false)
+    }
+
+    @Test("strict Gregorian parsing accepts leap days and rejects malformed or nonexistent days")
+    func strictGregorianDates() {
+        let pattern = Self.makePattern(validity: .complete)
+        #expect(pattern.applicability(on: "2020-02-29") == .applicable)
+
+        for invalidDay in [
+            "2021-02-29", "2021-02-30", "2021-13-01", "2021-00-01",
+            "2021-04-31", "2021-01-00", "0000-01-01", "2021-1-01",
+            "２０２１-01-01", "2021-01-01Z", "not-a-date",
+        ] {
+            #expect(pattern.applicability(on: invalidDay) == nil, "accepted \(invalidDay)")
+            #expect(pattern.isValid(on: invalidDay) == false, "accepted \(invalidDay)")
+        }
+    }
+
+    @Test("decoding rejects malformed bounds and empty or reversed intervals")
+    func rejectsInvalidValidityIntervals() throws {
+        let invalidIntervals: [(String?, String?)] = [
+            ("2021-02-29", nil),
+            (nil, "2021-13-01"),
+            ("2024-03-16", "2024-03-16"),
+            ("2024-03-17", "2024-03-16"),
+        ]
+        for (validFrom, validUntil) in invalidIntervals {
+            let data = try Self.makePatternData(validFrom: validFrom, validUntil: validUntil)
+            #expect(throws: DecodingError.self) {
+                try JSONDecoder().decode(TrainServicePatterns.Pattern.self, from: data)
+            }
+        }
+    }
+
+    @Test("Japan operational day and current status accept an injected instant")
+    func japanOperationalTodayIsInjectable() {
+        // 2024-01-01 14:59Z and 15:00Z straddle midnight in Japan.
+        let beforeMidnight = Date(timeIntervalSince1970: 1_704_121_140)
+        let atMidnight = Date(timeIntervalSince1970: 1_704_121_200)
+        let nextMidnight = Date(timeIntervalSince1970: 1_704_207_600)
+        let pattern = Self.makePattern(
+            validFrom: "2024-01-02", validUntil: "2024-01-03", validity: .complete)
+
+        #expect(TrainServicePatterns.Pattern.japanOperationalDay(at: beforeMidnight) == "2024-01-01")
+        #expect(TrainServicePatterns.Pattern.japanOperationalDay(at: atMidnight) == "2024-01-02")
+        #expect(pattern.isCurrent(at: beforeMidnight) == false)
+        #expect(pattern.isCurrent(at: atMidnight))
+        #expect(pattern.isDiscontinued(at: atMidnight) == false)
+        #expect(pattern.isDiscontinued(at: nextMidnight))
     }
 
     @Test("unsolvableLegs entries are pairs of consecutive stops")
@@ -418,14 +480,17 @@ struct TrainServicePatternsTests {
         #expect(byCurrentStatus.allSatisfy { $0.isCurrent })
 
         let onDate = TrainServicePatterns.search(
-            "", filter: TrainServicePatterns.Filter(status: .onDate, rideDate: "2021-03-12"))
+            "", filter: TrainServicePatterns.Filter(status: .onDate, rideDate: "2025-03-14"))
         #expect(onDate.isEmpty == false)
-        #expect(onDate.allSatisfy { $0.isValid(on: "2021-03-12") })
-        #expect(onDate.allSatisfy { $0.completeness.validity != .missing })
-        #expect(onDate.contains { $0.id == "ariake-omuta-hakata" })
+        #expect(onDate.allSatisfy { $0.applicability(on: "2025-03-14") == .applicable })
+        #expect(onDate.contains { $0.id == "hachioji-tokyo-hachioji" })
         let nextDay = TrainServicePatterns.search(
-            "", filter: TrainServicePatterns.Filter(status: .onDate, rideDate: "2021-03-13"))
-        #expect(nextDay.contains { $0.id == "ariake-omuta-hakata" } == false)
+            "", filter: TrainServicePatterns.Filter(status: .onDate, rideDate: "2025-03-15"))
+        #expect(nextDay.contains { $0.id == "hachioji-tokyo-hachioji" } == false)
+
+        let unknownValidity = try #require(all.first { $0.id == "ariake-omuta-hakata" })
+        #expect(unknownValidity.applicability(on: "2021-03-12") == .unknown)
+        #expect(unknownValidity.applicability(on: "2021-03-13") == .notApplicable)
 
         let someLine = try #require(TrainServicePatterns.lineNames().first)
         let canonicalSomeLine = TrainServiceBranding.canonicalLineName(someLine)
@@ -448,5 +513,73 @@ struct TrainServicePatternsTests {
 
         let hidaByStop = TrainServicePatterns.search("岐阜")
         #expect(hidaByStop.contains { $0.name == "ひだ" })
+    }
+
+    /// Catalog window recorded for はちおうじ. This checks the pattern record
+    /// only. It does not re-judge a selected editor template or the map.
+    @Test("はちおうじ catalog window is half-open through 2025-03-15")
+    func hachiojiCatalogWindow() throws {
+        let pattern = try #require(
+            TrainServicePatterns.patterns.first { $0.id == "hachioji-tokyo-hachioji" })
+        #expect(pattern.validFrom == "2019-03-16")
+        #expect(pattern.validUntil == "2025-03-15")
+        #expect(pattern.applicability(on: "2019-03-15") == .notApplicable)
+        #expect(pattern.applicability(on: "2019-03-16") == .applicable)
+        #expect(pattern.applicability(on: "2025-03-14") == .applicable)
+        #expect(pattern.applicability(on: "2025-03-15") == .notApplicable)
+        #expect(pattern.applicability(on: "2024-02-30") == nil)
+    }
+
+    private static func makePattern(
+        validFrom: String? = nil,
+        validUntil: String? = nil,
+        validity: TrainServicePatterns.Pattern.Level
+    ) -> TrainServicePatterns.Pattern {
+        TrainServicePatterns.Pattern(
+            id: "test-pattern",
+            serviceId: "test-service",
+            name: "Test",
+            company: "Test Railway",
+            label: "A–B",
+            origin: "A",
+            destination: "B",
+            stopRefs: [
+                .init(name: "A", sourceCode: "001"),
+                .init(name: "B", sourceCode: "002"),
+            ],
+            optionalStopRefs: [],
+            via: [],
+            confidence: "high",
+            source: "https://example.com",
+            validFrom: validFrom,
+            validUntil: validUntil,
+            completeness: .init(stops: .complete, lines: .complete, validity: validity))
+    }
+
+    private static func makePatternData(validFrom: String?, validUntil: String?) throws -> Data {
+        let object: [String: Any] = [
+            "patternId": "test-pattern",
+            "serviceId": "test-service",
+            "name": "Test",
+            "company": "Test Railway",
+            "label": "A–B",
+            "origin": "A",
+            "destination": "B",
+            "stops": [
+                ["name": "A", "sourceCode": "001"],
+                ["name": "B", "sourceCode": "002"],
+            ],
+            "optionalStops": [],
+            "via": [],
+            "lines": [],
+            "validFrom": validFrom as Any? ?? NSNull(),
+            "validUntil": validUntil as Any? ?? NSNull(),
+            "completeness": [
+                "stops": "complete",
+                "lines": "complete",
+                "validity": "complete",
+            ],
+        ]
+        return try JSONSerialization.data(withJSONObject: object)
     }
 }

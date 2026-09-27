@@ -17,6 +17,14 @@ For `kind: relocation` events the current features of that line inside the
 event bbox that the old release did not have receive valid_from = valid_to
 through a `retirements` entry, when a bbox can select exactly them.
 
+Events with no kind are closures. Other kinds (opening, station_opening,
+station_closure, suspension, resumption, operator_transfer) are emitted only
+from a release this script already reads, plus an explicit date on the event.
+service_validity / infrastructure_validity are optional half-open [from, to]
+pairs. The solver interval stays valid_from/valid_to; a feature that states
+neither domain pair keeps those keys exactly. A lone infrastructure pair is
+the service interval and is not also emitted as infrastructure.
+
 Raw releases are local-only (see app/data/raw/README); default source dir is
 the web repo's app/data/raw/railway/jp/history, fetched from
 https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-YY/N02-YY_GML.zip.
@@ -24,9 +32,17 @@ https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-YY/N02-YY_GML.zip.
 Usage: python3 app/scripts/railway/build-jp-rail-history.py [--source-dir DIR]
        [--revision YYYY-MM-DD.N] [--report PATH]
 """
-import argparse, io, json, math, os, sys, zipfile
+import argparse, datetime, io, json, math, os, sys, zipfile
 from collections import defaultdict
 import shapefile
+
+# Events with no kind are closures. The ride solver reads the service interval
+# only. A lone valid_from/valid_to pair is that interval; infrastructure_validity
+# is emitted beside it only when both domains are stated.
+EVENT_KINDS = (
+    'opening', 'closure', 'relocation', 'station_opening', 'station_closure',
+    'suspension', 'resumption', 'operator_transfer',
+)
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 EVENTS = os.path.join(ROOT, 'app/scripts/railway/jp-rail-history-events.json')
@@ -150,6 +166,220 @@ def in_bbox(p, bbox):
     return bbox is None or (bbox[0] <= p[0] <= bbox[2] and bbox[1] <= p[1] <= bbox[3])
 
 
+def event_kind(ev):
+    kind = ev.get('kind') or 'closure'
+    if kind not in EVENT_KINDS:
+        sys.exit(f"{ev.get('id', '?')}: unknown kind {kind!r}")
+    return kind
+
+
+def parse_day(value, label):
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        sys.exit(f'{label} must be YYYY-MM-DD or null')
+    try:
+        datetime.date.fromisoformat(value)
+    except ValueError:
+        sys.exit(f'{label} is not a real Gregorian date: {value}')
+    if len(value) != 10:
+        sys.exit(f'{label} must be YYYY-MM-DD or null')
+    return value
+
+
+def parse_pair(value, label):
+    if not isinstance(value, (list, tuple)) or len(value) != 2:
+        sys.exit(f'{label} must be a [from, to] pair')
+    start = parse_day(value[0], label + '[0]')
+    end = parse_day(value[1], label + '[1]')
+    if start and end and start >= end:
+        sys.exit(f'{label} from must precede to')
+    return start, end
+
+
+def split_domains(ev):
+    """(service_from, service_to, infrastructure_or_None).
+
+    infrastructure_or_None is None when that pair is absent, and also when it
+    is the only pair — then it *is* the service interval (today's
+    valid_from/valid_to). The ride solver never reads the infrastructure pair.
+    """
+    label = ev.get('id', '?')
+    has_service = 'service_validity' in ev
+    has_infra = 'infrastructure_validity' in ev
+    has_legacy = 'valid_from' in ev or 'valid_to' in ev
+    if has_service:
+        service = parse_pair(ev['service_validity'], f'{label}.service_validity')
+    elif has_legacy or not has_infra:
+        if 'valid_from' in ev and ev.get('valid_from') is None:
+            sys.exit(f'{label}.valid_from cannot be null')
+        if 'valid_to' in ev and ev.get('valid_to') is None:
+            sys.exit(f'{label}.valid_to cannot be null')
+        service = (
+            parse_day(ev.get('valid_from'), f'{label}.valid_from') if 'valid_from' in ev else None,
+            parse_day(ev.get('valid_to'), f'{label}.valid_to') if 'valid_to' in ev else None,
+        )
+    else:
+        service = parse_pair(ev['infrastructure_validity'], f'{label}.infrastructure_validity')
+        has_infra = False
+    if service[0] and service[1] and service[0] >= service[1]:
+        sys.exit(f'{label} service interval from must precede to')
+    if service[0] is None and service[1] is None:
+        sys.exit(f'{label} needs a service interval')
+    infra = parse_pair(ev['infrastructure_validity'], f'{label}.infrastructure_validity') if has_infra else None
+    return service[0], service[1], infra
+
+
+def write_stated_domains(props, ev):
+    """Attach domain pairs only when the event states them.
+
+    Today's closure/relocation events state neither, and this is a no-op so
+    their property keys stay valid_from/valid_to alone.
+    """
+    if 'service_validity' not in ev and 'infrastructure_validity' not in ev:
+        return
+    start, end, infra = split_domains(ev)
+    props.pop('valid_from', None)
+    props.pop('valid_to', None)
+    if start:
+        props['valid_from'] = start
+    if end:
+        props['valid_to'] = end
+    if 'service_validity' in ev:
+        props['service_validity'] = [start, end]
+    if infra is not None:
+        props['infrastructure_validity'] = list(infra)
+    kind = event_kind(ev)
+    if kind not in ('closure', 'relocation'):
+        props['kind'] = kind
+
+
+def station_names(ev):
+    if 'stations' in ev:
+        names = ev['stations']
+        if not isinstance(names, list) or not names or not all(isinstance(n, str) and n for n in names):
+            sys.exit(f"{ev.get('id', '?')}: stations must be a non-empty list of names")
+        return list(names)
+    if 'station' in ev:
+        name = ev['station']
+        if not isinstance(name, str) or not name:
+            sys.exit(f"{ev.get('id', '?')}: station must be a name")
+        return [name]
+    return None
+
+
+def line_coords(feature):
+    coords = feature['geometry']['coordinates']
+    if coords and isinstance(coords[0], (int, float)):
+        return [coords]
+    return coords
+
+
+def features_of(features, line, operator, line_key, op_key):
+    return [f for f in features
+            if f['properties'].get(line_key) == line and f['properties'].get(op_key) == operator]
+
+
+def retirement_for(ev, chosen, universe, line, operator, line_key, op_key):
+    """A retirement whose bbox selects exactly `chosen`, or a skip reason."""
+    if not chosen:
+        return None
+    xs = [c[0] for f in chosen for c in line_coords(f)]
+    ys = [c[1] for f in chosen for c in line_coords(f)]
+    tight = [round(min(xs) - 1e-5, 5), round(min(ys) - 1e-5, 5),
+             round(max(xs) + 1e-5, 5), round(max(ys) + 1e-5, 5)]
+    same = features_of(universe, line, operator, line_key, op_key)
+    selected = [f for f in same if all(in_bbox(c, tight) for c in line_coords(f))]
+    chosen_ids = {id(f) for f in chosen}
+    if len(selected) != len(chosen) or any(id(f) not in chosen_ids for f in selected):
+        return f'skipped: bbox would also select {len(selected) - len(chosen)} other features'
+    start, end, infra = split_domains(ev)
+    entry = {
+        'history_id': ev['id'],
+        'match': {'line_name': line, 'operator': operator, 'bbox': tight},
+        'source': ev['source'],
+        'kind': event_kind(ev),
+    }
+    if start:
+        entry['valid_from'] = start
+    if end:
+        entry['valid_to'] = end
+    if 'service_validity' in ev:
+        entry['service_validity'] = [start, end]
+    if infra is not None:
+        entry['infrastructure_validity'] = list(infra)
+    return entry
+
+
+def closed_station_rows(ev, station_rows, cur_station_pos):
+    """Stations of this line/operator in an old release that are not still open."""
+    names = station_names(ev)
+    if names is None:
+        sys.exit(f"{ev['id']}: station_closure needs station or stations")
+    wanted = set(names)
+    out = []
+    for props, pts in station_rows:
+        if props['N02_003'] != ev['line'] or props['N02_004'] != ev['operator']:
+            continue
+        name = props['N02_005']
+        if name not in wanted:
+            continue
+        mid = pts[len(pts) // 2]
+        if not in_bbox(mid, ev.get('bbox')):
+            continue
+        nearby = [line for line, c in cur_station_pos.get(name, ()) if dist_m(mid, c) <= STATION_KEEP_M]
+        if ev['line'] in nearby:
+            continue
+        out.append((props, pts))
+    return out
+
+
+def overlay_section_feature(ev, props, pts):
+    coords = []
+    for p in pts:
+        if not coords or q(p) != tuple(coords[-1]):
+            coords.append(list(q(p)))
+    if len(coords) < 2:
+        return None
+    fprops = {
+        'history_id': ev['id'], 'kind': event_kind(ev),
+        'N02_001': props['N02_001'], 'N02_002': props['N02_002'],
+        'N02_003': props['N02_003'], 'N02_004': props['N02_004'],
+        'source': f"N02-{ev['year']}; {ev['source']}",
+    }
+    write_stated_domains(fprops, ev)
+    if 'valid_from' not in fprops and 'valid_to' not in fprops:
+        start, end, _ = split_domains(ev)
+        if start:
+            fprops['valid_from'] = start
+        if end:
+            fprops['valid_to'] = end
+    return {'type': 'Feature', 'properties': fprops,
+            'geometry': {'type': 'LineString', 'coordinates': coords}}
+
+
+def overlay_station_feature(ev, props, pts):
+    name = props['N02_005']
+    sprops = {
+        'history_id': f"{ev['id']}.{name}", 'kind': event_kind(ev),
+        'station_name': name, 'line_name': ev['line'], 'operator': ev['operator'],
+        'railway_class_code': props['N02_001'], 'institution_type_code': props['N02_002'],
+        'source': f"N02-{ev['year']}",
+    }
+    for k, dst in (('N02_005c', 'n02_station_code'), ('N02_005g', 'n02_group_code')):
+        if props.get(k):
+            sprops[dst] = props[k]
+    write_stated_domains(sprops, ev)
+    if 'valid_from' not in sprops and 'valid_to' not in sprops:
+        start, end, _ = split_domains(ev)
+        if start:
+            sprops['valid_from'] = start
+        if end:
+            sprops['valid_to'] = end
+    return {'type': 'Feature', 'properties': sprops, 'geometry': {
+        'type': 'LineString', 'coordinates': [list(q(p)) for p in pts]}}
+
+
 def uncovered_runs(pts, cover, bbox):
     """Runs of the polyline farther than COVER_M from `cover` and inside bbox.
 
@@ -233,6 +463,132 @@ def walk_to_junction(end, feats, snap, junctions):
     return None
 
 
+def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
+                  sections, station_by_key, retirements, cover, joinable, retired_geometry):
+    """Kinds other than closure/relocation. Geometry comes only from a release
+    the builder already reads, or from the current package. No match emits nothing
+    invented: the event fails closed instead.
+    """
+    kind = event_kind(ev)
+    start, end, _infra = split_domains(ev)
+    if kind in ('opening', 'station_opening', 'resumption') and not start:
+        sys.exit(f"{ev['id']}: {kind} needs a service start (valid_from or service_validity)")
+    if kind in ('station_closure', 'suspension', 'operator_transfer') and not end:
+        sys.exit(f"{ev['id']}: {kind} needs a service end (valid_to or service_validity)")
+    if kind == 'operator_transfer' and not ev.get('to_operator'):
+        sys.exit(f"{ev['id']}: operator_transfer needs to_operator")
+    secs, stas = release(ev['year'])
+    old_secs = [(p, pts) for p, pts in secs if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']]
+    old_stas = [(p, pts) for p, pts in stas if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']]
+    def in_event(feature):
+        bbox = ev.get('bbox')
+        return bbox is None or all(in_bbox(c, bbox) for c in line_coords(feature))
+
+    current_secs = [f for f in features_of(
+        cur_sections, ev['line'], ev['operator'], 'N02_003', 'N02_004') if in_event(f)]
+    note = None
+    emitted_coords = []
+    station_names_out = []
+
+    def remember_section(feature):
+        if feature is None:
+            return
+        sections.append(feature)
+        emitted_coords.append(feature['geometry']['coordinates'])
+
+    def remember_station(feature):
+        name = feature['properties']['station_name']
+        key = (name, ev['line'], ev['operator'])
+        prev = station_by_key.get(key)
+        if prev and prev['properties'].get('valid_to') and feature['properties'].get('valid_to') \
+                and prev['properties']['valid_to'] >= feature['properties']['valid_to']:
+            return
+        station_by_key[key] = feature
+        station_names_out.append(name)
+
+    if kind == 'station_closure':
+        if not old_stas:
+            sys.exit(f"{ev['id']}: no {ev['line']}/{ev['operator']} stations in N02-{ev['year']}")
+        rows = closed_station_rows(ev, old_stas, cur_station_pos)
+        if not rows:
+            sys.exit(f"{ev['id']}: no closed station in N02-{ev['year']}")
+        for props, pts in rows:
+            feature = overlay_station_feature(ev, props, pts)
+            mid = pts[len(pts) // 2]
+            other = [line for line, c in cur_station_pos.get(props['N02_005'], ())
+                     if dist_m(mid, c) <= STATION_KEEP_M]
+            if other:
+                feature['properties'].pop('n02_group_code', None)
+            remember_station(feature)
+    elif kind == 'station_opening':
+        names = station_names(ev)
+        if names is None:
+            sys.exit(f"{ev['id']}: station_opening needs station or stations")
+        old_names = {p['N02_005'] for p, _ in old_stas}
+        missing = [name for name in names if name not in old_names]
+        if missing:
+            sys.exit(f"{ev['id']}: N02-{ev['year']} has no station {'/'.join(missing)}")
+        chosen = features_of(cur_stations, ev['line'], ev['operator'], 'line_name', 'operator')
+        chosen = [f for f in chosen if f['properties'].get('station_name') in names and in_event(f)]
+        if len(chosen) != len(names):
+            have = {f['properties'].get('station_name') for f in chosen}
+            sys.exit(f"{ev['id']}: current package has no station {'/'.join(n for n in names if n not in have)}")
+        entry = retirement_for(ev, chosen, cur_stations, ev['line'], ev['operator'], 'line_name', 'operator')
+        if not isinstance(entry, dict):
+            sys.exit(f"{ev['id']}: {entry or 'no current station'}")
+        entry['match']['targets'] = ['stations']
+        retirements.append(entry)
+        note = f"stations {'/'.join(names)}"
+    elif kind in ('opening', 'suspension', 'resumption'):
+        if current_secs:
+            entry = retirement_for(
+                ev, current_secs, cur_sections, ev['line'], ev['operator'], 'N02_003', 'N02_004')
+            if not isinstance(entry, dict):
+                sys.exit(f"{ev['id']}: {entry or 'no current features'}")
+            retirements.append(entry)
+            note = f"{len(current_secs)} current features"
+        elif old_secs and kind != 'resumption':
+            for props, pts in old_secs:
+                remember_section(overlay_section_feature(ev, props, pts))
+            if not emitted_coords:
+                sys.exit(f"{ev['id']}: no geometry in N02-{ev['year']}")
+        else:
+            sys.exit(f"{ev['id']}: no {ev['line']}/{ev['operator']} in N02-{ev['year']} or the current package")
+    elif kind == 'operator_transfer':
+        if not old_secs:
+            sys.exit(f"{ev['id']}: no {ev['line']}/{ev['operator']} in N02-{ev['year']}")
+        for props, pts in old_secs:
+            remember_section(overlay_section_feature(ev, props, pts))
+        successor = [f for f in features_of(
+            cur_sections, ev['line'], ev['to_operator'], 'N02_003', 'N02_004') if in_event(f)]
+        if successor:
+            # Old service ends where the successor's service starts (half-open).
+            stamped = {
+                'id': ev['id'] + '.to', 'kind': kind, 'source': ev['source'],
+                'service_validity': [end or start, None],
+            }
+            if 'infrastructure_validity' in ev:
+                stamped['infrastructure_validity'] = ev['infrastructure_validity']
+            entry = retirement_for(
+                stamped, successor, cur_sections, ev['line'], ev['to_operator'], 'N02_003', 'N02_004')
+            if not isinstance(entry, dict):
+                sys.exit(f"{ev['id']}: {entry}")
+            retirements.append(entry)
+            note = f"to {ev['to_operator']}: {len(successor)} features"
+    else:
+        sys.exit(f"{ev['id']}: unhandled kind {kind}")
+
+    for coords in emitted_coords:
+        cover.add(coords)
+        joinable.add(coords)
+        retired_geometry.append(coords)
+    return {
+        'id': ev['id'], 'kind': kind, 'year': ev['year'],
+        'valid_from': start, 'valid_to': end,
+        'runs': len(emitted_coords), 'stations': station_names_out, 'note': note,
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--source-dir', default=DEFAULT_SRC)
@@ -273,6 +629,15 @@ def main():
     station_by_key = {}
     events = sorted(enumerate(spec['events']), key=lambda ie: (-int(ie[1]['year']), ie[0]))
     for _, ev in events:
+        kind = event_kind(ev)
+        if kind not in ('closure', 'relocation'):
+            entry = emit_extended(
+                ev, release, cur_sections, cur_stations, cur_station_pos,
+                sections, station_by_key, retirements, cover, joinable, retired_geometry)
+            report.append(entry)
+            print(f"{ev['id']}: {kind} {entry.get('note') or ''} "
+                  f"{entry['runs']} runs, {len(entry['stations'])} stations", file=sys.stderr)
+            continue
         secs, stas = release(ev['year'])
         feats = [(p, pts) for p, pts in secs if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']]
         if not feats:
@@ -372,6 +737,7 @@ def main():
             fprops = {'history_id': ev['id'], 'N02_001': props['N02_001'], 'N02_002': props['N02_002'],
                       'N02_003': props['N02_003'], 'N02_004': props['N02_004'], 'valid_to': ev['valid_to'],
                       'source': f"N02-{ev['year']}; {ev['source']}"}
+            write_stated_domains(fprops, ev)
             sections.append({'type': 'Feature', 'properties': fprops,
                              'geometry': {'type': 'LineString', 'coordinates': coords}})
         # Stations on the emitted geometry.
@@ -412,6 +778,7 @@ def main():
                 if props.get(k) and not (junction and k == 'N02_005g'):
                     sprops[dst] = props[k]
             sprops.update({'valid_to': ev['valid_to'], 'source': f"N02-{ev['year']}"})
+            write_stated_domains(sprops, ev)
             station_by_key[key] = {'type': 'Feature', 'properties': sprops, 'geometry': {
                 'type': 'LineString', 'coordinates': [list(q(p)) for p in pts]}}
         for c in emitted:
@@ -476,6 +843,9 @@ def relocation_retirement(ev, cur_sections, cur_stations, old_feats, retirements
                if min(old.dist(tuple(c), 300) for c in f['geometry']['coordinates']) <= COVER_M * 2]
     if unmoved:
         return f"skipped: bbox would date unmoved stations {'/'.join(unmoved)}"
+    # The new alignment opens on the switch day. Domain pairs, when an event
+    # states them, are written onto the retired geometry only — this stamp
+    # stays valid_from = valid_to so an event without domains is unchanged.
     retirements.append({'history_id': ev['id'].replace('.old-', '.new-'),
                         'match': {'line_name': line, 'operator': op, 'bbox': tight},
                         'valid_from': ev['valid_to'], 'source': ev['source']})

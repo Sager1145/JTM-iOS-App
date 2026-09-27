@@ -108,6 +108,7 @@ struct EditorTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
     @Binding var time: String?
+    var accessibilityID: String? = nil
     @State private var pendingPickerTime: Date?
     @State private var pendingPickerDayOffset: Int?
 
@@ -118,10 +119,7 @@ struct EditorTimeField: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                TextField(title, text: text, prompt: Text("H:MM"))
-                    .keyboardType(.numbersAndPunctuation)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
+                timeTextField
             }
             .frame(minHeight: 44)
             Picker(localization.editorText("ios.editor.serviceDay"), selection: pickerDay) {
@@ -161,6 +159,14 @@ struct EditorTimeField: View {
             pendingPickerTime = nil
             pendingPickerDayOffset = nil
         }
+    }
+
+    private var timeTextField: some View {
+        TextField(title, text: text, prompt: Text("H:MM"))
+            .keyboardType(.numbersAndPunctuation)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .accessibilityIdentifier(accessibilityID ?? "")
     }
 
     private var text: Binding<String> {

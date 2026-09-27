@@ -2,6 +2,7 @@ import CryptoKit
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The bundle format produced by `build-display-network.py`.
@@ -159,6 +160,13 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         /// `fullBytes` in the same blob. Absent when `loadStrategy` is
         /// absent, or zero for a `"lines"` region with no overview lines.
         var overviewBytes: Int?
+        /// Optional history side file (`{region}.display-history.json`).
+        /// Absent when the region has no overlay. ``validated()`` does not
+        /// require these; a manifest built without `--history-dir` decodes
+        /// exactly as before.
+        var historyFile: String?
+        var historyBytes: Int?
+        var historySHA256: String?
 
         /// The same threshold in **this app's** zoom, which is what the camera
         /// callback carries.
@@ -650,6 +658,110 @@ struct RailDisplayStationTable: Decodable, Sendable {
     var similarNameGroups: [SimilarNameGroup]
 }
 
+/// `{region}.display-history.json` (`jtm-display-history-v1`). Not part of
+/// the geometry blob. `LineFragment` is unchanged.
+struct RailDisplayHistoryFile: Decodable, Sendable {
+    static let format = "jtm-display-history-v1"
+
+    struct PartRow: Decodable, Sendable {
+        var id: String
+        var index: Int
+        var kind: String
+        var validFrom: String?
+        var validTo: String?
+        var historyId: String?
+    }
+
+    struct LinePart: Decodable, Sendable {
+        var coordinates: [[Double]]
+        var kind: String
+        var validFrom: String?
+        var validTo: String?
+    }
+
+    struct Line: Decodable, Sendable {
+        var historyId: String
+        var name: String
+        var `operator`: String
+        var color: String
+        var colorDark: String
+        var kind: String
+        var rank: Int
+        var minZoomMapLibre: Int
+        var visibilityLengthKm: Double
+        var parts: [LinePart]
+    }
+
+    struct Station: Decodable, Sendable {
+        var historyId: String
+        var name: String
+        var nameRoma: String?
+        var lineName: String
+        var `operator`: String
+        var lon: Double
+        var lat: Double
+        var kind: String
+        var color: String
+        var minZoomMapLibre: Int
+        var lineHistoryId: String
+        var validFrom: String?
+        var validTo: String?
+    }
+
+    struct StationStamp: Decodable, Sendable {
+        var id: String
+        var kind: String
+        var validFrom: String?
+        var validTo: String?
+        var historyId: String?
+    }
+
+    var format: String
+    var region: String
+    var parts: [PartRow]
+    var lines: [Line]
+    var stations: [Station]
+    var stationStamps: [StationStamp]
+
+    /// Draw id (`lineKey#chain` or `lineKey@lane`) → part index → decoration.
+    var partRows: [String: [Int: DisplayTemporalDecoration]] {
+        var rows: [String: [Int: DisplayTemporalDecoration]] = [:]
+        for part in parts {
+            rows[part.id, default: [:]][part.index] = DisplayTemporalDecoration(
+                historyId: part.historyId, validFrom: part.validFrom, validTo: part.validTo,
+                kind: RouteGraph.TemporalKind(rawValue: part.kind) ?? .current)
+        }
+        return rows
+    }
+
+    var stationStampRows: [String: DisplayTemporalDecoration] {
+        Dictionary(uniqueKeysWithValues: stationStamps.map { stamp in
+            (stamp.id, DisplayTemporalDecoration(
+                historyId: stamp.historyId, validFrom: stamp.validFrom, validTo: stamp.validTo,
+                kind: RouteGraph.TemporalKind(rawValue: stamp.kind) ?? .current))
+        })
+    }
+
+    /// Bare package line ids that have at least one stamped part. Those lines
+    /// stay on the full chunk: overview vertices are not the stamped parts.
+    var fullDetailLineIDs: Set<String> {
+        Set(parts.map { Self.bareLineID(fromDrawID: $0.id) })
+    }
+
+    static func bareLineID(fromDrawID id: String) -> String {
+        let head: String
+        if let hash = id.lastIndex(of: "#") {
+            head = String(id[..<hash])
+        } else if let at = id.lastIndex(of: "@") {
+            head = String(id[..<at])
+        } else {
+            head = id
+        }
+        guard let bar = head.firstIndex(of: "|") else { return head }
+        return String(head[head.index(after: bar)...])
+    }
+}
+
 enum RailDisplayNetwork {
     static let subdirectory = "rail-display-network"
 
@@ -726,6 +838,31 @@ enum RailDisplayNetwork {
     /// loads this — it exists for a future station-identity feature — so
     /// this is a plain read rather than an `mmap`, and there is no chunk to
     /// slice.
+    /// The history side file, when the manifest names one and the bundle has
+    /// it. A missing file is not a failed region — the current network still
+    /// draws. A named file whose bytes or digest disagree is.
+    static func history(
+        _ record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
+    ) throws -> RailDisplayHistoryFile? {
+        guard let name = record.historyFile else { return nil }
+        guard let url = bundle.url(
+            forResource: name, withExtension: nil, subdirectory: subdirectory)
+        else { return nil }
+        let data = try Data(contentsOf: url)
+        if let historyBytes = record.historyBytes, data.count != historyBytes {
+            throw RailDisplayNetworkError.corruptRegion(record.region)
+        }
+        if let digest = record.historySHA256,
+           SHA256.hash(data: data).hex != digest {
+            throw RailDisplayNetworkError.corruptRegion(record.region)
+        }
+        let file = try JSONDecoder().decode(RailDisplayHistoryFile.self, from: data)
+        guard file.format == RailDisplayHistoryFile.format, file.region == record.region else {
+            throw RailDisplayNetworkError.unsupportedFormat(file.format)
+        }
+        return file
+    }
+
     static func stationIdentity(
         region record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
     ) throws -> RailDisplayStationTable {

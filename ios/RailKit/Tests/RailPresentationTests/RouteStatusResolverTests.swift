@@ -126,6 +126,18 @@ struct RouteStatusResolverTests {
     }
 
     @Test
+    func historyDatabaseInvalidIsUnavailableWithTheLoadErrorAndNeverNoRoute() {
+        let message = "Rail history database for jp is invalid: schema"
+        let entries = [
+            "t1": RouteStatusEntry(
+                outcome: .historyDatabaseInvalid(message), drawnSegments: 0)
+        ]
+        let status = Self.status(entries: entries)
+        #expect(status == .unavailable(expected: 0, reason: message))
+        #expect(status != .noRoute)
+    }
+
+    @Test
     func unavailableExpectingNothingIsNoRoute() {
         // `expected == 0` is the store's spelling for "this journey asked for
         // nothing" — `solveMissing` skips a train whose canonical section list

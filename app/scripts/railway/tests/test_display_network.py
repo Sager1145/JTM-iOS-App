@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import json
 import tempfile
 import unittest
@@ -2667,6 +2669,595 @@ class DisplayNetworkTests(unittest.TestCase):
         nearest = (first[0] + parameter * dx, first[1] + parameter * dy)
         return abs(point[0] - nearest[0]) <= tolerance \
             and abs(point[1] - nearest[1]) <= tolerance
+
+
+class DisplayNetworkHistoryTests(unittest.TestCase):
+    """Phase 3 side file. A build with no overlay leaves the bins untouched.
+    A continuous chain whose parts do not share one stamp is split."""
+
+    def test_history_shapes_partial_bbox_and_default_build_is_unchanged(self):
+        jp_lines = [
+            self._line("relocated-new", "New Line", [[139.0, 35.0], [139.1, 35.1]]),
+            self._line("closed-inplace", "Closed Line", [[140.0, 36.0], [140.1, 36.1]]),
+        ]
+        tw_lines = [
+            self._line("partial", "Partial", [[121.0, 25.0], [121.1, 25.0]],
+                       second=[[121.5, 25.5], [121.6, 25.5]]),
+        ]
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows(jp_lines)},
+        }
+        overlay_jp = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [
+                self._section("jp.demo.historical", "Old Line", "Test Rail", "2010-01-01",
+                              [[141.0, 37.0], [141.1, 37.1]]),
+                self._section("jp.demo.historical", "Old Line", "Test Rail", "2010-01-01",
+                              [[141.2, 37.2], [141.3, 37.3]]),
+                self._section("jp.demo.old-west", "Old Line", "Test Rail", "2020-03-14",
+                              [[139.5, 35.0], [139.6, 35.2]]),
+            ],
+            "stations": [{
+                "type": "Feature",
+                "properties": {
+                    "history_id": "jp.demo.mashike",
+                    "station_name": "増毛",
+                    "line_name": "Old Line",
+                    "operator": "Test Rail",
+                    "valid_to": "2010-01-01",
+                },
+                "geometry": {"type": "Point", "coordinates": [141.05, 37.05]},
+            }],
+            "retirements": [
+                {
+                    "history_id": "jp.demo.new-west",
+                    "match": {
+                        "line_name": "New Line", "operator": "Test Rail",
+                        "bbox": [138.9, 34.9, 139.2, 35.2],
+                    },
+                    "valid_from": "2020-03-14",
+                },
+                {
+                    "history_id": "jp.demo.closed",
+                    "match": {
+                        "line_name": "Closed Line", "operator": "Test Rail",
+                        "bbox": [139.9, 35.9, 140.2, 36.2],
+                    },
+                    "valid_to": "2019-01-01",
+                },
+                {
+                    "history_id": "jp.demo.missing",
+                    "match": {
+                        "line_name": "Nope", "operator": "Test Rail",
+                        "bbox": [0, 0, 0.1, 0.1],
+                    },
+                    "valid_to": "2001-01-01",
+                },
+            ],
+        }
+        overlay_tw = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "tw.partial",
+                "match": {
+                    "line_name": "Partial", "operator": "Test Rail",
+                    "bbox": [120.9, 24.9, 121.2, 25.1],
+                },
+                "valid_to": "2018-05-01",
+            }],
+        }
+
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            plain = root / "plain"
+            flagged = root / "flagged"
+            dated = root / "dated"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": jp_lines, "tw": tw_lines})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay_jp))
+            (history / "rail-history-tw.json").write_text(json.dumps(overlay_tw))
+
+            display_network.build(rail, plain)
+            display_network.build(rail, flagged, history_dir=None)
+            self.assertEqual(self._files(plain), self._files(flagged))
+            for region in display_network.REGIONS:
+                plain_bin = (plain / f"{region}.display.bin").read_bytes()
+                self.assertEqual(
+                    plain_bin, (flagged / f"{region}.display.bin").read_bytes(), region)
+
+            display_network.build(rail, dated, history_dir=history)
+            for region in display_network.REGIONS:
+                self.assertEqual(
+                    (plain / f"{region}.display.bin").read_bytes(),
+                    (dated / f"{region}.display.bin").read_bytes(),
+                    region)
+            extra = self._files(dated) - self._files(plain)
+            self.assertEqual(extra, {
+                "jp.display-history.json", "tw.display-history.json",
+            })
+
+            jp_history = json.loads((dated / "jp.display-history.json").read_bytes())
+            self.assertEqual(jp_history["format"], display_network.HISTORY_FORMAT)
+            by_id = {(row["id"], row["index"]): row for row in jp_history["parts"]}
+            new_row = by_id[("jp|relocated-new#0", 0)]
+            self.assertEqual(new_row["kind"], "relocatedNew")
+            self.assertEqual(new_row["validFrom"], "2020-03-14")
+            self.assertEqual(new_row["historyId"], "jp.demo.new-west")
+            self.assertNotIn("validTo", new_row)
+            closed = by_id[("jp|closed-inplace#0", 0)]
+            self.assertEqual(closed["kind"], "current")
+            self.assertEqual(closed["validTo"], "2019-01-01")
+            self.assertNotIn("historyId", closed)
+            self.assertNotIn("validFrom", closed)
+
+            lines = {row["historyId"]: row for row in jp_history["lines"]}
+            self.assertEqual(len(jp_history["lines"]), 2)
+            self.assertEqual(lines["jp.demo.historical"]["kind"], "historical")
+            self.assertEqual(len(lines["jp.demo.historical"]["parts"]), 2)
+            self.assertEqual(lines["jp.demo.old-west"]["kind"], "relocatedOld")
+            self.assertEqual(len(lines["jp.demo.old-west"]["parts"]), 1)
+            self.assertEqual(
+                [station["historyId"] for station in jp_history["stations"]],
+                ["jp.demo.mashike"])
+
+            tw_history = json.loads((dated / "tw.display-history.json").read_bytes())
+            tw_parts = {(row["id"], row["index"]): row for row in tw_history["parts"]}
+            self.assertEqual(set(tw_parts), {("tw|partial@0.0", 0)})
+            self.assertEqual(tw_parts[("tw|partial@0.0", 0)]["kind"], "current")
+            self.assertEqual(tw_parts[("tw|partial@0.0", 0)]["validTo"], "2018-05-01")
+            self.assertNotIn("historyId", tw_parts[("tw|partial@0.0", 0)])
+
+            manifest = json.loads((dated / "manifest.json").read_bytes())
+            jp_record = next(row for row in manifest["regions"] if row["region"] == "jp")
+            self.assertEqual(jp_record["historyFile"], "jp.display-history.json")
+            kr_record = next(row for row in manifest["regions"] if row["region"] == "kr")
+            self.assertNotIn("historyFile", kr_record)
+
+    def test_continuous_chain_with_a_partial_bbox_splits(self):
+        """A bbox that covers only the first part no longer fails the build.
+        The stamped part becomes its own chain and the part outside the bbox
+        stays an unbounded current chain."""
+        line = self._line("split-chain", "Split Line", [[142.0, 38.0], [142.1, 38.0]],
+                          second=[[142.4, 38.4], [142.5, 38.4]])
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows([line])},
+        }
+        overlay = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.split",
+                "match": {
+                    "line_name": "Split Line", "operator": "Test Rail",
+                    "bbox": [141.9, 37.9, 142.2, 38.1],
+                },
+                "valid_to": "2018-01-01",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            out = root / "out"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": [line]})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            display_network.build(rail, out, history_dir=history)
+            payload = DisplayNetworkTests.load_region_payload(out, "jp")
+            chains = [
+                fragment for fragment in payload["lines"]
+                if fragment["lineKey"] == "jp|split-chain"
+            ]
+            self.assertEqual([fragment["chain"] for fragment in chains], [0, 1])
+            self.assertEqual(chains[0]["parts"], [[[142.0, 38.0], [142.1, 38.0]]])
+            # The package marks the second segment reversed, so the display
+            # interval opens on the previous station rather than dropping it.
+            self.assertEqual(
+                chains[1]["parts"], [[[142.1, 38.0], [142.4, 38.4], [142.5, 38.4]]])
+            history_doc = json.loads((out / "jp.display-history.json").read_bytes())
+            self.assertEqual(
+                [(row["id"], row["index"], row["kind"], row["validTo"])
+                 for row in history_doc["parts"]],
+                [("jp|split-chain#0", 0, "current", "2018-01-01")])
+
+    def test_middle_relocated_span_splits_the_chain_and_undated_bin_matches(self):
+        """A continuous chain with a relocatedNew middle and unbounded
+        current neighbours builds as more than one chain. The relocated
+        span is kept. Without --history-dir the bin is byte-identical."""
+        line = {
+            "id": "senseki-like", "name": "Senseki Like", "operator": "Test Rail",
+            "rank": 0, "color": "#123456", "colorDark": "#654321",
+            "stations": [
+                ["a", "A", 139.0, 35.0, "A"],
+                ["b", "B", 139.1, 35.0, "B"],
+                ["c", "C", 139.2, 35.0, "C"],
+                ["d", "D", 139.3, 35.0, "D"],
+            ],
+            "segments": [
+                [1.0, 0, [[139.0, 35.0], [139.1, 35.0]]],
+                [1.0, 0, [[139.1, 35.0], [139.2, 35.0]]],
+                [1.0, 0, [[139.2, 35.0], [139.3, 35.0]]],
+            ],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows([line])},
+        }
+        overlay = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.new-span",
+                "match": {
+                    "line_name": "Senseki Like", "operator": "Test Rail",
+                    "bbox": [139.05, 34.9, 139.25, 35.1],
+                },
+                "valid_from": "2015-05-30",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            plain = root / "plain"
+            flagged = root / "flagged"
+            dated = root / "dated"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": [line]})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+
+            display_network.build(rail, plain)
+            display_network.build(rail, flagged, history_dir=None)
+            for region in display_network.REGIONS:
+                self.assertEqual(
+                    (plain / f"{region}.display.bin").read_bytes(),
+                    (flagged / f"{region}.display.bin").read_bytes(),
+                    region)
+            plain_payload = DisplayNetworkTests.load_region_payload(plain, "jp")
+            plain_chains = [
+                fragment for fragment in plain_payload["lines"]
+                if fragment["lineKey"] == "jp|senseki-like"
+            ]
+            self.assertEqual(len(plain_chains), 1)
+
+            display_network.build(rail, dated, history_dir=history)
+            payload = DisplayNetworkTests.load_region_payload(dated, "jp")
+            chains = [
+                fragment for fragment in payload["lines"]
+                if fragment["lineKey"] == "jp|senseki-like"
+            ]
+            self.assertEqual([fragment["chain"] for fragment in chains], [0, 1, 2])
+            self.assertEqual(chains[1]["parts"], [[[139.1, 35.0], [139.2, 35.0]]])
+            self.assertEqual(chains[0]["parts"][0][0], [139.0, 35.0])
+            self.assertEqual(chains[2]["parts"][-1][-1], [139.3, 35.0])
+            stations = {station["stationCode"]: station for station in payload["stations"]}
+            self.assertEqual(stations["a"]["slot"][0], 0)
+            self.assertEqual(stations["b"]["slot"][0], 0)
+            self.assertEqual(stations["c"]["slot"][0], 1)
+            self.assertEqual(stations["d"]["slot"][0], 2)
+            history_doc = json.loads((dated / "jp.display-history.json").read_bytes())
+            self.assertEqual(history_doc["format"], display_network.HISTORY_FORMAT)
+            self.assertEqual(len(history_doc["parts"]), 1)
+            row = history_doc["parts"][0]
+            self.assertEqual(row["id"], "jp|senseki-like#1")
+            self.assertEqual(row["index"], 0)
+            self.assertEqual(row["kind"], "relocatedNew")
+            self.assertEqual(row["validFrom"], "2015-05-30")
+            self.assertEqual(row["historyId"], "jp.demo.new-span")
+            self.assertNotIn("validTo", row)
+
+    def test_pre_weld_interval_stamps_when_station_endpoint_is_outside_bbox(self):
+        """The welded station vertex is outside the bbox. The segment's own
+        vertices are inside, so the whole display part is dated. An undated
+        build stays byte-identical, and the pre-weld list is not in the bin."""
+        line = {
+            "id": "welded-end", "name": "Welded Line", "operator": "Test Rail",
+            "rank": 0, "color": "#123456", "colorDark": "#654321",
+            "stations": [
+                ["a", "A", 139.0, 35.0, "A"],
+                ["b", "B", 140.5, 36.5, "B"],
+            ],
+            "segments": [[1.25, 0, [[139.0, 35.0], [139.05, 35.05], [139.1, 35.1]]]],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows([line])},
+        }
+        overlay = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.welded-end",
+                "match": {
+                    "line_name": "Welded Line", "operator": "Test Rail",
+                    "bbox": [138.9, 34.9, 139.2, 35.2],
+                },
+                "valid_to": "2014-10-01",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            plain = root / "plain"
+            flagged = root / "flagged"
+            dated = root / "dated"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": [line]})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+
+            display_network.build(rail, plain)
+            display_network.build(rail, flagged, history_dir=None)
+            for region in display_network.REGIONS:
+                self.assertEqual(
+                    (plain / f"{region}.display.bin").read_bytes(),
+                    (flagged / f"{region}.display.bin").read_bytes(),
+                    region)
+
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                display_network.build(rail, dated, history_dir=history)
+            for region in display_network.REGIONS:
+                self.assertEqual(
+                    (plain / f"{region}.display.bin").read_bytes(),
+                    (dated / f"{region}.display.bin").read_bytes(),
+                    region)
+            blob = (dated / "jp.display.bin").read_bytes()
+            self.assertNotIn(b"preWeld", blob)
+            self.assertNotIn(b"partLengths", blob)
+            payload = DisplayNetworkTests.load_region_payload(dated, "jp")
+            chains = [
+                fragment for fragment in payload["lines"]
+                if fragment["lineKey"] == "jp|welded-end"
+            ]
+            self.assertEqual(len(chains), 1)
+            self.assertEqual(chains[0]["parts"][0][-1], [140.5, 36.5])
+            history_doc = json.loads((dated / "jp.display-history.json").read_bytes())
+            self.assertEqual(
+                [(row["id"], row["index"], row["kind"], row["validTo"])
+                 for row in history_doc["parts"]],
+                [("jp|welded-end#0", 0, "current", "2014-10-01")])
+            self.assertEqual(len(history_doc["matchReport"]), 1)
+            report = history_doc["matchReport"][0]
+            self.assertEqual(report["historyId"], "jp.demo.welded-end")
+            self.assertEqual(report["reviewStatus"], "matched")
+            self.assertIsNone(report["unmatchedReason"])
+            self.assertEqual(report["solvedIntervalHits"], 1)
+            self.assertEqual(report["rawDisplayIntervalHits"], 0)
+            self.assertEqual(report["displayFragmentHits"], 1)
+            self.assertEqual(report["displayFragmentHitsStage"], "before chain split")
+            self.assertEqual(report["stationHits"], 1)
+            self.assertEqual(report["expectedAffectedLength"], 1.25)
+            self.assertEqual(report["actualAffectedLength"], 1.25)
+            self.assertIn('"reviewStatus":"matched"', stderr.getvalue())
+
+    def test_straddling_interval_splits_inside_run_from_outside_vertex(self):
+        """吾妻 shape: the drawn interval is inside the bbox except its last
+        vertex. The inside edges are dated. The outside vertex stays on an
+        undated sub-part that restarts on the shared boundary. An undated
+        build does not cut the part."""
+        inside = [[139.0, 35.0], [139.01, 35.01], [139.02, 35.02]]
+        outside = [139.05, 35.05]
+        segment = inside + [outside]
+        line = {
+            "id": "straddle", "name": "Straddle Line", "operator": "Test Rail",
+            "rank": 0, "color": "#123456", "colorDark": "#654321",
+            "stations": [
+                ["a", "A", segment[0][0], segment[0][1], "A"],
+                ["b", "B", outside[0], outside[1], "B"],
+            ],
+            "segments": [[4.0, 0, segment]],
+        }
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows([line])},
+        }
+        overlay = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.straddle",
+                "match": {
+                    "line_name": "Straddle Line", "operator": "Test Rail",
+                    "bbox": [138.99, 34.99, 139.03, 35.03],
+                },
+                "valid_to": "2014-10-01",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            plain = root / "plain"
+            flagged = root / "flagged"
+            dated = root / "dated"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": [line]})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            display_network.build(rail, plain)
+            display_network.build(rail, flagged, history_dir=None)
+            for region in display_network.REGIONS:
+                self.assertEqual(
+                    (plain / f"{region}.display.bin").read_bytes(),
+                    (flagged / f"{region}.display.bin").read_bytes(),
+                    region)
+            plain_payload = DisplayNetworkTests.load_region_payload(plain, "jp")
+            plain_chains = [
+                fragment for fragment in plain_payload["lines"]
+                if fragment["lineKey"] == "jp|straddle"
+            ]
+            self.assertEqual(len(plain_chains), 1)
+            self.assertEqual(plain_chains[0]["parts"], [segment])
+
+            display_network.build(rail, dated, history_dir=history)
+            payload = DisplayNetworkTests.load_region_payload(dated, "jp")
+            chains = [
+                fragment for fragment in payload["lines"]
+                if fragment["lineKey"] == "jp|straddle"
+            ]
+            self.assertEqual([fragment["chain"] for fragment in chains], [0, 1])
+            self.assertEqual(chains[0]["parts"], [inside])
+            self.assertEqual(chains[1]["parts"], [[inside[-1], outside]])
+            self.assertEqual(chains[0]["parts"][0][-1], chains[1]["parts"][0][0])
+            self.assertEqual(chains[1]["parts"][0][-1], outside)
+            self.assertNotIn(outside, chains[0]["parts"][0])
+            dated_count = len(chains[0]["parts"][0])
+            undated_count = len(chains[1]["parts"][0])
+            self.assertEqual(dated_count + undated_count - 1, len(segment))
+            stations = {station["stationCode"]: station for station in payload["stations"]}
+            self.assertEqual(stations["a"]["slot"][0], 0)
+            self.assertEqual(stations["b"]["slot"][0], 1)
+            self.assertEqual(
+                chains[1]["parts"][0][stations["b"]["slot"][1]], outside)
+            history_doc = json.loads((dated / "jp.display-history.json").read_bytes())
+            self.assertEqual(
+                [(row["id"], row["index"], row["kind"], row.get("validTo"))
+                 for row in history_doc["parts"]],
+                [("jp|straddle#0", 0, "current", "2014-10-01")])
+            report = history_doc["matchReport"][0]
+            self.assertEqual(report["reviewStatus"], "matched")
+            self.assertEqual(report["solvedIntervalHits"], 1)
+            self.assertEqual(report["rawDisplayIntervalHits"], 0)
+            self.assertEqual(report["displayFragmentHits"], 1)
+            self.assertIsNone(report["unmatchedReason"])
+
+    def test_missing_display_line_is_incomplete_not_not_applicable(self):
+        """留萌 is in the retirement list and absent from this region's
+        fragments. The build still returns. That gap is incomplete."""
+        line = self._line("other", "Other Line", [[141.0, 43.0], [141.1, 43.1]])
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": {"jp": self._rows([line])},
+        }
+        overlay = {
+            "schema_version": "1",
+            "revision": "test",
+            "sections": [],
+            "stations": [],
+            "retirements": [{
+                "history_id": "jp.jrh.rumoi.rumoi-mashike",
+                "match": {
+                    "line_name": "留萌線", "operator": "北海道旅客鉄道",
+                    "bbox": [141.6, 43.9, 141.7, 44.0],
+                },
+                "valid_to": "2016-12-04",
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            rail = root / "rail"
+            out = root / "out"
+            history = root / "history"
+            rail.mkdir()
+            history.mkdir()
+            self._write_packages(rail, {"jp": [line]})
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                manifest = display_network.build(rail, out, history_dir=history)
+            self.assertEqual(manifest["format"], display_network.FORMAT)
+            history_doc = json.loads((out / "jp.display-history.json").read_bytes())
+            self.assertEqual(history_doc["parts"], [])
+            self.assertEqual(len(history_doc["matchReport"]), 1)
+            report = history_doc["matchReport"][0]
+            self.assertEqual(report["historyId"], "jp.jrh.rumoi.rumoi-mashike")
+            self.assertEqual(report["reviewStatus"], "incomplete")
+            self.assertNotEqual(report["reviewStatus"], "not_applicable")
+            self.assertIn("display geometry absent", report["unmatchedReason"])
+            self.assertEqual(report["solvedIntervalHits"], 0)
+            self.assertEqual(report["displayFragmentHits"], 0)
+            self.assertEqual(report["stationHits"], 0)
+            self.assertIsNone(report["expectedAffectedLength"])
+            self.assertIsNone(report["actualAffectedLength"])
+            logged = stderr.getvalue()
+            self.assertIn("MATCH ", logged)
+            self.assertIn("display geometry absent", logged)
+            self.assertIn("留萌線", logged)
+
+    @staticmethod
+    def _line(line_id, name, first, second=None):
+        stations = [
+            ["a", "A", first[0][0], first[0][1], "A"],
+            ["b", "B", first[-1][0], first[-1][1], "B"],
+        ]
+        segments = [[1.0, 0, first]]
+        if second is not None:
+            stations.append(["c", "C", second[-1][0], second[-1][1], "C"])
+            segments.append([1.0, 1, second])
+        return {
+            "id": line_id, "name": name, "operator": "Test Rail",
+            "rank": 0, "color": "#123456", "colorDark": "#654321",
+            "stations": stations, "segments": segments,
+        }
+
+    @staticmethod
+    def _rows(lines):
+        rows = []
+        for line in lines:
+            last = len(line["segments"]) - 1
+            rows.append([
+                line["id"], 0, 0, last, len(line["stations"]), 0.0,
+            ])
+        return rows
+
+    @staticmethod
+    def _section(history_id, name, operator, valid_to, coordinates):
+        return {
+            "type": "Feature",
+            "properties": {
+                "history_id": history_id,
+                "line_name": name,
+                "operator": operator,
+                "valid_to": valid_to,
+            },
+            "geometry": {"type": "LineString", "coordinates": coordinates},
+        }
+
+    @staticmethod
+    def _write_packages(rail: Path, by_region: dict):
+        for region in display_network.REGIONS:
+            package = {
+                "format": "compact-v1", "version": "test",
+                "country": region.upper(), "lines": by_region.get(region, []),
+            }
+            (rail / f"{region}-2025.json").write_text(json.dumps(package))
+
+    @staticmethod
+    def _files(directory: Path) -> set[str]:
+        return {path.name for path in directory.iterdir() if path.is_file()}
 
 
 if __name__ == "__main__":

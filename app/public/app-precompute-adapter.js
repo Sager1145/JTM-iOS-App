@@ -7,6 +7,10 @@
 
 async function precomputeTrainStoreParts(host) {
   activeCountry = host.country;
+  for (const [country, overlay] of Object.entries(host.historyOverlays || {}))
+    loadRailHistoryOverlay(overlay, country);
+  applyLoadedRailHistoryToStations(host.stations, host.country);
+  applyLoadedRailHistoryToSections(host.railSections, host.stations, host.country);
   AppDatasets.installRailSections(host.railSections);
   AppDatasets.installStations(host.stations);
   AppDatasets.installMatchedData({
@@ -22,6 +26,7 @@ async function precomputeTrainStoreParts(host) {
     const id = appendImportedTrain(raw, null);
     const train = getTrain(id);
     const solveContext = buildTrainRouteSolveContext(train);
+    const serializedSolveContext = getTrainRouteSolveContext(train);
     const cacheKey = solveContext ? solveContext.cacheKey : null;
 
     const startedAt = performance.now();
@@ -31,7 +36,11 @@ async function precomputeTrainStoreParts(host) {
     let route = null;
     if (cacheKey) {
       if (RouteService.has(cacheKey)) {
-        route = { cache_key: cacheKey, features: RouteService.get(cacheKey) };
+        route = {
+          cache_key: cacheKey,
+          solver_context: serializedSolveContext,
+          features: RouteService.get(cacheKey),
+        };
       } else if (RouteService.isNegative(cacheKey)) {
         const matched = (host.matchedRoutes.features || [])
           .filter((feature) => {
@@ -45,9 +54,17 @@ async function precomputeTrainStoreParts(host) {
           );
         if (matched.length) {
           RouteService.seed(cacheKey, matched);
-          route = { cache_key: cacheKey, features: matched };
+          route = {
+            cache_key: cacheKey,
+            solver_context: serializedSolveContext,
+            features: matched,
+          };
         } else {
-          route = { cache_key: cacheKey, unsolvable: true };
+          route = {
+            cache_key: cacheKey,
+            solver_context: serializedSolveContext,
+            unsolvable: true,
+          };
         }
       } else {
         throw new Error(
@@ -82,6 +99,10 @@ async function precomputeTrainStoreParts(host) {
   return {
     total: store.trains.length,
     schemaVersion: store.schema_version,
+    solverContext: {
+      solver_version: String(ROUTE_SOLVER_CACHE_VERSION),
+      history_revisions: getRailHistoryRevisions(host.country),
+    },
     results,
   };
 }

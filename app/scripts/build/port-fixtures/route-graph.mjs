@@ -80,6 +80,7 @@ const dataFile = (base, country) =>
 //   app-coords.js             the coordinate primitives (quant5 grid)
 //   app-config.js             activeCountry, ROUTE_SOLVER_CACHE_VERSION,
 //                             DEFAULT_ALLOWED_INSTITUTION_TYPE_CODES
+//   app-rail-history.js       canonical per-region history revision token
 //   app-route-simplify.js     distanceMeters (the one haversine)
 //   app-datasets.js           railSectionsGeoJson / stationsGeoJson + the
 //                             named installs that write them
@@ -96,6 +97,7 @@ const SCOPE_FILES = [
   "railmap-style.js",
   "app-coords.js",
   "app-config.js",
+  "app-rail-history.js",
   "app-route-simplify.js",
   "app-datasets.js",
   "app-state.js",
@@ -587,6 +589,9 @@ function cacheKeyCases(js, country, store) {
       templateKeyDigest: js.routeKeyDigest(context.templateKey),
       cacheKey: context.cacheKey,
       cacheKeyDigest: js.routeKeyDigest(context.cacheKey),
+      historyRevision: Object.entries(context.historyRevisions)
+        .map(([code, revision]) => `${code}:${revision}`)
+        .join("|"),
     });
   }
   return cases;

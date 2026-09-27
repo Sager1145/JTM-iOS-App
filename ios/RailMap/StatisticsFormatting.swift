@@ -278,6 +278,30 @@ enum StatisticsStrings {
             .zhHans: "尚未确认乘坐的行程：{n} 趟。确认后即计入统计。",
             .zhHant: "尚未確認乘坐的行程：{n} 趟。確認後即計入統計。",
         ],
+        "ios.stats.totalRiddenKm": [
+            .en: "Total ridden km", .ja: "乗車した全区間",
+            .zhHans: "已乘总里程", .zhHant: "已乘總里程",
+        ],
+        "ios.stats.currentRiddenKm": [
+            .en: "Current network ridden", .ja: "現行路線の乗車",
+            .zhHans: "现行路网已乘", .zhHant: "現行路網已乘",
+        ],
+        "ios.stats.retiredKm": [
+            .en: "Retired network ridden", .ja: "廃止路線の乗車",
+            .zhHans: "停运路网已乘", .zhHant: "停運路網已乘",
+        ],
+        "ios.stats.relocatedOldKm": [
+            .en: "Relocated old alignment", .ja: "移設前の線路",
+            .zhHans: "改线前线路", .zhHant: "改線前線路",
+        ],
+        "ios.stats.historicalKm": [
+            .en: "Historical unique km ridden", .ja: "歴史区間の乗車距離",
+            .zhHans: "历史区间已乘里程", .zhHant: "歷史區間已乘里程",
+        ],
+        "ios.stats.retiredLines": [
+            .en: "Retired lines ridden", .ja: "乗った廃止路線",
+            .zhHans: "已乘停运线路", .zhHant: "已乘停運線路",
+        ],
         "ios.stats.coverageA11y": [
             .en: "{pct} percent covered, {ridden} of {total} kilometres",
             .ja: "カバー率 {pct} パーセント、{total} キロ中 {ridden} キロ",

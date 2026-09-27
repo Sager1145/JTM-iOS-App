@@ -64,7 +64,8 @@ done
 # truth.
 network_dir="$target_dir/rail-display-network"
 python3 "$source_dir/../../scripts/railway/build-display-network.py" \
-    --rail-dir "$source_dir" --output "$network_dir"
+    --rail-dir "$source_dir" --output "$network_dir" \
+    --history-dir "$here/../app/data"
 
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply

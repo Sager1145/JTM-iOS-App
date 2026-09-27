@@ -36,6 +36,13 @@ final class RiddenRouteStore {
         /// Macao and Korea, where Apple's basemap is displaced to GCJ-02.
         let coordinates: [Coordinate]
         let boundingRect: MKMapRect
+        /// History-overlay identifiers carried from the solved section.
+        /// Empty for current track and for precomputed dataset geometry,
+        /// which has no provenance of its own.
+        let historyIDs: [String]
+        let validFrom: String?
+        let validTo: String?
+        let temporalKind: RouteGraph.TemporalKind
 
         /// - Parameter sourceCoordinates: the N02-datum path, when it is not
         ///   the same array as what gets drawn. A hop re-drawn against the
@@ -55,7 +62,11 @@ final class RiddenRouteStore {
         init(
             segmentIndex: Int, partIndex: Int = 0, from: String?, to: String?,
             coordinates: [Coordinate], sourceCoordinates: [Coordinate]? = nil,
-            country: String
+            country: String,
+            historyIDs: [String] = [],
+            validFrom: String? = nil,
+            validTo: String? = nil,
+            temporalKind: RouteGraph.TemporalKind = .current
         ) {
             self.segmentIndex = segmentIndex
             self.partIndex = partIndex
@@ -64,6 +75,10 @@ final class RiddenRouteStore {
             self.sourceCoordinates = sourceCoordinates ?? coordinates
             drawnCoordinates = coordinates
             self.coordinates = AppleMapDatum.display(coordinates, country: country)
+            self.historyIDs = historyIDs
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.temporalKind = temporalKind
             var bounds = MKMapRect.null
             for coordinate in self.coordinates {
                 let point = MKMapPoint(CLLocationCoordinate2D(latitude: coordinate.lat, longitude: coordinate.lon))
@@ -267,6 +282,12 @@ final class RiddenRouteStore {
         TraversedLineDetector.shared.update(rides: rides)
     }
 
+    private enum SingleResolve: Sendable {
+        case ride(DrawnRide?)
+        case invalidHistory(String)
+        case failed
+    }
+
     /// Solve one journey's route again, in place (§8.4).
     ///
     /// The failure this guards against: the drawn line stops being a picture
@@ -287,29 +308,49 @@ final class RiddenRouteStore {
         resolutionTickets[id] = ticket
         RideStatusCenter.shared.beginResolving(id)
         Task {
-            let solved = await Task.detached(priority: .userInitiated) { () -> DrawnRide? in
-                try? await Self.resolveOne(train, scope: scope)
+            let resolved = await Task.detached(priority: .userInitiated) { () -> SingleResolve in
+                do {
+                    return .ride(try await Self.resolveOne(train, scope: scope))
+                } catch let error as LoadError {
+                    if case .invalidHistory = error {
+                        return .invalidHistory(error.localizedDescription)
+                    }
+                    return .failed
+                } catch {
+                    return .failed
+                }
             }.value
 
             guard loadRevision == revision, resolutionTickets[id] == ticket else { return }
             resolutionTickets[id] = nil
             completedInputs[id] = train
-            if let solved {
-                if let index = rides.firstIndex(where: { $0.id == id }) {
-                    rides[index] = solved
+            let entry: RideStatusCenter.Entry
+            switch resolved {
+            case .ride(let solved):
+                if let solved {
+                    if let index = rides.firstIndex(where: { $0.id == id }) {
+                        rides[index] = solved
+                    } else {
+                        rides.append(solved)
+                    }
                 } else {
-                    rides.append(solved)
+                    rides.removeAll { $0.id == id }
                 }
-            } else {
-                rides.removeAll { $0.id == id }
+                entry = solved.map {
+                    RideStatusCenter.Entry(outcome: $0.route, drawnSegments: $0.segments.count)
+                } ?? RideStatusCenter.Entry(outcome: .unavailable(expected: 0), drawnSegments: 0)
+            case .invalidHistory(let message):
+                // No DrawnRide to publish. Removing the journey here would make
+                // the status centre report noRoute once the entry was lost.
+                entry = RideStatusCenter.Entry(
+                    outcome: .historyDatabaseInvalid(message), drawnSegments: 0)
+            case .failed:
+                entry = RideStatusCenter.Entry(
+                    outcome: .unavailable(expected: 1), drawnSegments: 0)
             }
             visibleRides = rides.filter(\.visible)
             if case .loaded = state { state = .loaded(rides: rides) }
-            RideStatusCenter.shared.finishResolving(
-                id,
-                entry: solved.map {
-                    RideStatusCenter.Entry(outcome: $0.route, drawnSegments: $0.segments.count)
-                } ?? RideStatusCenter.Entry(outcome: .unavailable(expected: 0), drawnSegments: 0))
+            RideStatusCenter.shared.finishResolving(id, entry: entry)
             detectTraversedLines()
         }
     }
@@ -507,13 +548,23 @@ final class RiddenRouteStore {
             ) else { throw LoadError.missingPart(dataset, hit.name) }
             let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
             guard let train = wanted[part.train.id] else { continue }
+            guard let precomputedRoute = part.route,
+                  let precomputedFeatures = precomputedRoute.features else { continue }
             let trainCanonical = canonical(for: train)
             let trainDigest = routeCacheDigest(trainCanonical, raw: train, country: country)
             guard trainDigest == routeCacheDigest(
                 normalizedTrain(part.train, country: country), raw: part.train, country: country
             ) else { continue }
+            guard let expectedDigest = trainDigest,
+                  let revisions = historyRevisionSet(for: train) else { continue }
+            guard RailPrecomputedRouteGate.accepts(
+                precomputedRoute.solverContext,
+                expectedDigest: expectedDigest,
+                solverVersion: RouteGraph.routeSolverCacheVersion,
+                rideDate: Dates.normalizeDateString(train.date),
+                revisions: revisions) else { continue } // RailHistoryTests.testLegacyNilSolverContextRejectsDatedHistoryButOnDemandStillSolves
             let expectedTemplate = routeTemplateDigest(trainCanonical, country: country)
-            let matchingFeatures = part.route.features.filter { feature in
+            let matchingFeatures = precomputedFeatures.filter { feature in
                 guard let expectedTemplate else { return true }
                 return feature.properties?.routeTemplateKey == expectedTemplate
             }
@@ -696,7 +747,7 @@ final class RiddenRouteStore {
                 .load(contentsOf: stationsURL).features
             // ADR 0011: fold the region's dated history overlay in before the
             // graph and the station-transfer connectors see the features.
-            applyRailHistory(
+            try applyRailHistory(
                 region: region.code, sections: &regionSections, stations: &regionStations)
             sections += regionSections
             stationFeatures += regionStations
@@ -765,11 +816,17 @@ final class RiddenRouteStore {
                         preferredLineNames: context.preferredLineNames.map(Optional.some),
                         requiredOperatorNames: (section.operatorNames ?? []).map(Optional.some),
                         preferredOperatorNames: context.preferredOperatorNames.map(Optional.some))
-                    let canonical = displayNetwork?.canonicalizeRouteFeature(
-                        RouteFeature(
-                            geometry: .lineString(solved.coordinates), hints: hints),
-                        continueFrom: sharesBoundary ? displayContinuity : nil,
-                        cache: &projectionCache)
+                    // Historical and relocated geometry is not on the current
+                    // display network. Canonicalizing it would pull the stroke
+                    // onto today's alignment.
+                    let canonical = RouteGraph.TemporalKind.shouldCanonicalizeDisplayNetwork(
+                        solved.temporalKind)
+                        ? displayNetwork?.canonicalizeRouteFeature(
+                            RouteFeature(
+                                geometry: .lineString(solved.coordinates), hints: hints),
+                            continueFrom: sharesBoundary ? displayContinuity : nil,
+                            cache: &projectionCache)
+                        : nil
                     let drawnCoordinates = canonical?.geometry.lines.first
                         ?? solved.coordinates
                     segments.append(DrawnSegment(
@@ -781,7 +838,11 @@ final class RiddenRouteStore {
                         // the path the solver actually walked, which is N02's
                         // own vertices and is the datum the edge index is in.
                         sourceCoordinates: solved.coordinates,
-                        country: country))
+                        country: country,
+                        historyIDs: solved.historyIDs,
+                        validFrom: solved.validFrom,
+                        validTo: solved.validTo,
+                        temporalKind: solved.temporalKind))
                     lastSolvedIndex = index
                     continuity = solved.coordinates.last
                     displayContinuity = drawnCoordinates.last
@@ -824,44 +885,63 @@ final class RiddenRouteStore {
             withExtension: "json")
     }
 
-    /// ADR 0011: stamps the region's `rail-history<suffix>.json` overlay onto
-    /// its decoded sections/stations. A missing overlay is a no-op; a broken
-    /// one is logged and the region solves without it.
+    private enum RailHistoryLoadState: Sendable {
+        case absent
+        case loaded(RailHistoryOverlay)
+        case invalid(String)
+    }
+
+    private nonisolated static let historyStateCache = OSAllocatedUnfairLock(
+        initialState: [String: RailHistoryLoadState]())
+
+    private nonisolated static func historyState(region: String) -> RailHistoryLoadState {
+        if let cached = historyStateCache.withLock({ $0[region] }) { return cached }
+        let state: RailHistoryLoadState
+        if let url = railHistoryURL(region: region) {
+            do { state = .loaded(try RailHistoryOverlay.load(from: url)) }
+            catch { state = .invalid(String(describing: error)) }
+        } else {
+            state = .absent
+        }
+        historyStateCache.withLock { $0[region] = state }
+        return state
+    }
+
+    /// Stamp history before any graph or station index is built. A broken
+    /// bundled overlay is a load error, never a current-only solve.
     private nonisolated static func applyRailHistory(
         region: String,
         sections: inout [RouteGraph.SectionFeature],
         stations: inout [Stations.Feature]
-    ) {
-        guard let url = railHistoryURL(region: region) else { return }
+    ) throws {
         let overlay: RailHistoryOverlay
-        do {
-            overlay = try RailHistoryOverlay.load(from: url)
-        } catch {
-            routesLog.error(
-                "rail-history \(region, privacy: .public) failed to load: \(String(describing: error), privacy: .public)")
-            return
+        switch historyState(region: region) {
+        case .absent: return
+        case .loaded(let value): overlay = value
+        case .invalid(let reason): throw LoadError.invalidHistory(region, reason)
         }
         let report = RailHistory.apply(overlay, sections: &sections, stations: &stations)
         routesLog.info(
             "rail-history \(region, privacy: .public) rev \(overlay.revision, privacy: .public): +\(report.sectionsAdded) sections, +\(report.stationsAdded) stations, \(report.retirementsApplied.count) retirements applied")
         if !report.unmatchedRetirements.isEmpty {
-            routesLog.error(
-                "rail-history \(region, privacy: .public) unmatched retirements: \(report.unmatchedRetirements.joined(separator: ", "), privacy: .public)")
+            throw LoadError.invalidHistory(
+                region, "unmatched retirements: \(report.unmatchedRetirements.joined(separator: ", "))")
         }
     }
 
-    /// Memoised per region: the overlay's `revision`, folded into the route
-    /// cache key so a changed overlay invalidates cached solves. `nil` when
-    /// the region ships no overlay (or it fails to decode).
-    private nonisolated static let historyRevisionCache = OSAllocatedUnfairLock(
-        initialState: [String: String?]())
-
     private nonisolated static func railHistoryRevision(region: String) -> String? {
-        if let cached = historyRevisionCache.withLock({ $0[region] }) { return cached }
-        let revision = railHistoryURL(region: region)
-            .flatMap { try? RailHistoryOverlay.load(from: $0) }?.revision
-        historyRevisionCache.withLock { $0[region] = .some(revision) }
-        return revision
+        if case .loaded(let overlay) = historyState(region: region) { return overlay.revision }
+        return nil
+    }
+
+    private nonisolated static func historyRevisionSet(for train: Train) -> RailHistoryRevisionSet? {
+        let regions = RouteScope(train).graphRegions
+        guard regions.allSatisfy({ region in
+            if case .invalid = historyState(region: region.code) { return false }
+            return true
+        }) else { return nil }
+        return RailHistoryRevisionSet(Dictionary(uniqueKeysWithValues:
+            regions.map { ($0.code, railHistoryRevision(region: $0.code)) }))
     }
 
     private nonisolated static func routeTemplateDigest(
@@ -893,6 +973,7 @@ final class RiddenRouteStore {
                 operatorNames: section.operatorNames ?? [])
         }
         let policy = canonical.routePolicy
+        guard let history = historyRevisionSet(for: raw) else { return nil }
         let cacheTrain = RouteGraph.CacheKeyTrain(
             // id/number/origin/destination/trainType come from the raw train,
             // matching the inputs `routeContext(train)` uses to solve — the
@@ -909,7 +990,7 @@ final class RiddenRouteStore {
         guard let context = RouteGraph.solveContext(
             train: cacheTrain, routeSections: sections, country: country,
             rideDate: Dates.normalizeDateString(raw.date),
-            historyRevision: railHistoryRevision(region: country)) else { return nil }
+            historyRevision: history.canonical) else { return nil }
         return RouteGraph.keyDigest(context.cacheKey)
     }
 
@@ -1022,7 +1103,7 @@ final class RiddenRouteStore {
         guard let digest = routeCacheDigest(canonical, raw: train, country: country),
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
-              cache.version == RouteGraph.routeSolverCacheVersion,
+              cache.version == RouteGraph.routeDrawnCacheVersion,
               cache.digest == digest
         else { return nil }
         // A given `segmentIndex` can carry more than one cached entry — one
@@ -1044,7 +1125,9 @@ final class RiddenRouteStore {
                 return DrawnSegment(
                     segmentIndex: cached.segmentIndex, partIndex: partIndex, from: cached.from,
                     to: cached.to, coordinates: drawn, sourceCoordinates: source,
-                    country: country)
+                    country: country,
+                    historyIDs: cached.historyIDs, validFrom: cached.validFrom,
+                    validTo: cached.validTo, temporalKind: cached.temporalKind)
             }
         guard !segments.isEmpty else { return nil }
         return drawnRide(
@@ -1065,12 +1148,14 @@ final class RiddenRouteStore {
         try FileManager.default.createDirectory(
             at: directory, withIntermediateDirectories: true)
         let cache = RuntimeCache(
-            version: RouteGraph.routeSolverCacheVersion, digest: digest,
+            version: RouteGraph.routeDrawnCacheVersion, digest: digest,
             segments: ride.segments.map {
                 CachedSegment(
                     segmentIndex: $0.segmentIndex, from: $0.from, to: $0.to,
                     coordinates: $0.sourceCoordinates.map(\.pair),
-                    drawnCoordinates: $0.drawnCoordinates.map(\.pair))
+                    drawnCoordinates: $0.drawnCoordinates.map(\.pair),
+                    historyIDs: $0.historyIDs, validFrom: $0.validFrom,
+                    validTo: $0.validTo, temporalKind: $0.temporalKind)
             })
         try JSONEncoder().encode(cache).write(
             to: cacheURL(country: country, digest: digest), options: .atomic)
@@ -1181,11 +1266,17 @@ final class RiddenRouteStore {
 
     private struct Part: Decodable {
         let train: Train
-        let route: CachedRoute
+        let route: CachedRoute?
     }
 
     private struct CachedRoute: Decodable {
-        let features: [Feature]
+        let features: [Feature]?
+        let solverContext: RailPrecomputedSolverContext?
+
+        private enum CodingKeys: String, CodingKey {
+            case features
+            case solverContext = "solver_context"
+        }
     }
 
     private struct Feature: Decodable {
@@ -1228,6 +1319,61 @@ final class RiddenRouteStore {
         /// again — which retires every stale entry without spending a cache
         /// version on it.
         let drawnCoordinates: [[Double]]
+        let historyIDs: [String]
+        let validFrom: String?
+        let validTo: String?
+        let temporalKind: RouteGraph.TemporalKind
+
+        private enum CodingKeys: String, CodingKey {
+            case segmentIndex, from, to, coordinates, drawnCoordinates
+            case historyIDs, validFrom, validTo, temporalKind
+        }
+
+        init(
+            segmentIndex: Int, from: String?, to: String?,
+            coordinates: [[Double]], drawnCoordinates: [[Double]],
+            historyIDs: [String], validFrom: String?, validTo: String?,
+            temporalKind: RouteGraph.TemporalKind
+        ) {
+            self.segmentIndex = segmentIndex
+            self.from = from
+            self.to = to
+            self.coordinates = coordinates
+            self.drawnCoordinates = drawnCoordinates
+            self.historyIDs = historyIDs
+            self.validFrom = validFrom
+            self.validTo = validTo
+            self.temporalKind = temporalKind
+        }
+
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            segmentIndex = try c.decode(Int.self, forKey: .segmentIndex)
+            from = try c.decodeIfPresent(String.self, forKey: .from)
+            to = try c.decodeIfPresent(String.self, forKey: .to)
+            coordinates = try c.decode([[Double]].self, forKey: .coordinates)
+            drawnCoordinates = try c.decode([[Double]].self, forKey: .drawnCoordinates)
+            // A version-23 file written before these keys existed, or one that
+            // omits them, is current track — not a cache miss.
+            historyIDs = try c.decodeIfPresent([String].self, forKey: .historyIDs) ?? []
+            validFrom = try c.decodeIfPresent(String.self, forKey: .validFrom)
+            validTo = try c.decodeIfPresent(String.self, forKey: .validTo)
+            temporalKind = try c.decodeIfPresent(
+                RouteGraph.TemporalKind.self, forKey: .temporalKind) ?? .current
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var c = encoder.container(keyedBy: CodingKeys.self)
+            try c.encode(segmentIndex, forKey: .segmentIndex)
+            try c.encodeIfPresent(from, forKey: .from)
+            try c.encodeIfPresent(to, forKey: .to)
+            try c.encode(coordinates, forKey: .coordinates)
+            try c.encode(drawnCoordinates, forKey: .drawnCoordinates)
+            try c.encode(historyIDs, forKey: .historyIDs)
+            try c.encodeIfPresent(validFrom, forKey: .validFrom)
+            try c.encodeIfPresent(validTo, forKey: .validTo)
+            try c.encode(temporalKind, forKey: .temporalKind)
+        }
     }
 
     private struct Geometry: Decodable {
@@ -1261,6 +1407,7 @@ final class RiddenRouteStore {
         case missingManifest(String)
         case missingPart(String, String)
         case missingSolverResources(String)
+        case invalidHistory(String, String)
 
         var errorDescription: String? {
             switch self {
@@ -1270,6 +1417,8 @@ final class RiddenRouteStore {
                 "\(dataset)/\(name).json is missing from the app bundle."
             case .missingSolverResources(let country):
                 "Runtime solver resources for \(country) are missing from the app bundle."
+            case .invalidHistory(let country, let reason):
+                "Rail history database for \(country) is invalid: \(reason)"
             }
         }
     }
