@@ -1,0 +1,193 @@
+{
+  "source": {
+    "source_id": "jr-hokkaido-20260403-special",
+    "publisher": "北海道旅客鉄道",
+    "title": "札幌で開催されるコンサートにあわせて臨時特急を運転します",
+    "source_type": "official_planned_exception",
+    "url_or_locator": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20260403_KO_rinjitokkyu.pdf",
+    "publication_date": "2026-04-03",
+    "effective_date": "2026-05-16",
+    "accessed_at": "2026-09-27",
+    "license_status": "unknown",
+    "redistribution_status": "unknown",
+    "notes": "Published plan; no claim of actual operation. Intermediate departures and internal train numbers not supplied."
+  },
+  "stations": [
+    {
+      "station_id": "jp.n02.000227",
+      "name_snapshot": "札幌",
+      "current_source_code": "000227",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000153",
+      "name_snapshot": "岩見沢",
+      "current_source_code": "000153",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000139",
+      "name_snapshot": "美唄",
+      "current_source_code": "000139",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000124",
+      "name_snapshot": "砂川",
+      "current_source_code": "000124",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000117",
+      "name_snapshot": "滝川",
+      "current_source_code": "000117",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000102",
+      "name_snapshot": "深川",
+      "current_source_code": "000102",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    },
+    {
+      "station_id": "jp.n02.000095",
+      "name_snapshot": "旭川",
+      "current_source_code": "000095",
+      "rail_history_id": null,
+      "reference_kind": "current_n02"
+    }
+  ],
+  "trips": [
+    {
+      "service_id": "kamui",
+      "public_number": "93",
+      "train_number": null,
+      "operating_dates": [
+        "2026-05-16",
+        "2026-05-17"
+      ],
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "station_id": "jp.n02.000227",
+          "call_type": "origin",
+          "arrival_time": null,
+          "departure_time": "21:30"
+        },
+        {
+          "stop_sequence": 2,
+          "station_id": "jp.n02.000153",
+          "call_type": "passenger_stop",
+          "arrival_time": "21:59",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 3,
+          "station_id": "jp.n02.000139",
+          "call_type": "passenger_stop",
+          "arrival_time": "22:10",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 4,
+          "station_id": "jp.n02.000124",
+          "call_type": "passenger_stop",
+          "arrival_time": "22:21",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 5,
+          "station_id": "jp.n02.000117",
+          "call_type": "passenger_stop",
+          "arrival_time": "22:27",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 6,
+          "station_id": "jp.n02.000102",
+          "call_type": "passenger_stop",
+          "arrival_time": "22:40",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 7,
+          "station_id": "jp.n02.000095",
+          "call_type": "destination",
+          "arrival_time": "23:00",
+          "departure_time": null
+        }
+      ],
+      "route_status": "unknown",
+      "time_status": "partial",
+      "source_locator": "page 1 運転時刻と停車駅"
+    },
+    {
+      "service_id": "lilac",
+      "public_number": "95",
+      "train_number": null,
+      "operating_dates": [
+        "2026-05-16"
+      ],
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "station_id": "jp.n02.000227",
+          "call_type": "origin",
+          "arrival_time": null,
+          "departure_time": "22:55"
+        },
+        {
+          "stop_sequence": 2,
+          "station_id": "jp.n02.000153",
+          "call_type": "passenger_stop",
+          "arrival_time": "23:28",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 3,
+          "station_id": "jp.n02.000139",
+          "call_type": "passenger_stop",
+          "arrival_time": "23:40",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 4,
+          "station_id": "jp.n02.000124",
+          "call_type": "passenger_stop",
+          "arrival_time": "23:53",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 5,
+          "station_id": "jp.n02.000117",
+          "call_type": "passenger_stop",
+          "arrival_time": "23:59",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 6,
+          "station_id": "jp.n02.000102",
+          "call_type": "passenger_stop",
+          "arrival_time": "24:12",
+          "departure_time": null
+        },
+        {
+          "stop_sequence": 7,
+          "station_id": "jp.n02.000095",
+          "call_type": "destination",
+          "arrival_time": "24:32",
+          "departure_time": null
+        }
+      ],
+      "route_status": "unknown",
+      "time_status": "partial",
+      "source_locator": "page 1 運転時刻と停車駅"
+    }
+  ]
+}

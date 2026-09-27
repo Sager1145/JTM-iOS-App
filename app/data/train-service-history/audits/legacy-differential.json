@@ -1,0 +1,2415 @@
+{
+  "complete": false,
+  "differences": [
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "hida-nagoya-takayama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "hida-nagoya-toyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "hida-osaka-takayama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-shinano-920beb8eca17"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "shinano-nagoya-nagano",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "nanki-nagoya-kiikatsuura",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "fujikawa-shizuoka-kofu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "nanpu-okayama-kochi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shimanto-takamatsu-kochi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "tsurugisan-tokushima-awaikeda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "uzushio-takamatsu-tokushima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "uzushio-okayama-tokushima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "muroto-tokushima-mugi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 11,
+      "legacyPatternId": "azusa-shinjuku-matsumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "azusa-chiba-matsumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "azusa-minamiotari",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "kaiji-shinjuku-kofu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "fuji-excursion-shinjuku-kawaguchiko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "hachioji-tokyo-hachioji",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "ome-tokyo-ome",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-hitachi-bb809d8cb66e"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 9,
+      "legacyPatternId": "hitachi-shinagawa-iwaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-hitachi-bb809d8cb66e"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 9,
+      "legacyPatternId": "hitachi-shinagawa-sendai",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "tokiwa-shinagawa-katsuta",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "tokiwa-shinagawa-takahagi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "odoriko-tokyo-izukyushimoda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "odoriko-tokyo-shuzenji",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "saphir-odoriko-tokyo-izukyushimoda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "shonan-tokyo-odawara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "shonan-shinjuku-odawara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "narita-express-tokyo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "narita-express-shinjuku",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "narita-express-ikebukuro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "narita-express-omiya",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "narita-express-yokohama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "narita-express-ofuna",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kamakura-yoshikawaminami-kamakura",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "wakashio-tokyo-awakamogawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "shinjuku-wakashio-shinjuku-awakamogawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "sazanami-tokyo-kimitsu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shinjuku-sazanami-shinjuku-tateyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "shiosai-tokyo-choshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "akagi-ueno-takasaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kusatsu-shima-ueno-naganoharakusatsuguchi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "nikko-shinjuku-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kinugawa-shinjuku-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "spacia-nikko-shinjuku-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "spacia-kinugawa-shinjuku-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "inaho-niigata-akita",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "shirayuki-niigata-joetsumyoko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "tsugaru-akita-aomori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "super-tsugaru-akita-aomori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "hokuto-hakodate-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "suzuran-muroran-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "ozora-sapporo-kushiro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "tokachi-sapporo-obihiro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-kamui-8af8e0fc0612"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kamui-sapporo-asahikawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-lilac-ad0a2d304b31"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "lilac-sapporo-asahikawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "soya-sapporo-wakkanai",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "sarobetsu-asahikawa-wakkanai",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "okhotsk-sapporo-abashiri",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "taisetsu-asahikawa-abashiri",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "niseko-sapporo-hakodate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 11,
+      "legacyPatternId": "sonic-hakata-oita",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "sonic-hakata-saiki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "nichirin-oita-miyazakikuko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "nichirin-seagaia-hakata-miyazakikuko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "hyuga-nobeoka-miyazakikuko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "kirishima-miyazaki-kagoshimachuo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "relay-kamome-hakata-takeoonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "midori-hakata-sasebo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "huis-ten-bosch-hakata-huistenbosch",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "kasasagi-mojiko-hizenkashima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "kirameki-mojiko-hakata",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "ariake-omuta-hakata",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kaio-nogata-hakata",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "yufu-hakata-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-yufuin-no-mori-4d28cf5c9ee0",
+        "tt-yufuin-no-mori-4d61f7ad549a",
+        "tt-yufuin-no-mori-5c3772ee507a",
+        "tt-yufuin-no-mori-94c5ca2bc84f"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "yufuin-no-mori-hakata-yufuin",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-yufuin-no-mori-4d28cf5c9ee0",
+        "tt-yufuin-no-mori-4d61f7ad549a",
+        "tt-yufuin-no-mori-5c3772ee507a",
+        "tt-yufuin-no-mori-94c5ca2bc84f"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "yufuin-no-mori-hakata-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kyushu-odan-tokkyu-beppu-kumamoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "aso-kumamoto-miyaji",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "asoboy-kumamoto-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "kawasemi-yamasemi-kumamoto-miyaji",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "umisachi-yamasachi-miyazaki-nango",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "36-plus-3-red-hakata-kagoshima-chuo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "36-plus-3-black-kagoshima-chuo-miyazaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "36-plus-3-green-miyazaki-airport-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "36-plus-3-blue-oita-hakata",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "36-plus-3-gold-hakata-sasebo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "a-ressha-de-iko-kumamoto-misumi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "futatsuboshi-4047-takeo-onsen-nagasaki-am",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "futatsuboshi-4047-nagasaki-takeo-onsen-pm",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "aru-ressha-hakata-yufuin",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "ibusuki-no-tamatebako-kagoshima-chuo-ibusuki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "kanpachi-ichiroku-hakata-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "isaburo-shinpei-kumamoto-yoshimatsu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "thunderbird-osaka-tsuruga",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "shirasagi-nagoya-tsuruga",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "shirasagi-maibara-tsuruga",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "kuroshio-shinosaka-shirahama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 10,
+      "legacyPatternId": "kuroshio-shinosaka-shingu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "kounotori-shinosaka-kinosaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "kinosaki-kyoto-kinosaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "hashidate-kyoto-amanohashidate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "hashidate-kyoto-toyooka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "maizuru-kyoto-higashimaizuru",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "hamakaze-osaka-hamasaka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "hamakaze-osaka-tottori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "super-hakuto-kyoto-kurayoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "super-inaba-okayama-tottori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "yakumo-okayama-izumoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "haruka-kyoto-kansai-airport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "haruka-yasu-kansai-airport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "super-oki-tottori-shinyamaguchi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "super-matsukaze-tottori-masuda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rakuraku-harima-kyoto-aboshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rakuraku-biwako-osaka-maibara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rakuraku-yamato-shinosaka-nara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rakuraku-yamato-shinosaka-nara-2025",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "dinostar-fukui-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "noto-kagaribi-kanazawa-wakuraonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "west-express-ginga-sanin",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "west-express-ginga-sanyo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "west-express-ginga-kinan",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "hanaakari-current",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "mahoroba-osaka-nara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "sunrise-izumo-tokyo-izumoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "sunrise-seto-tokyo-takamatsu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "mizukaze-sanin-course",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "mizukaze-sanyo-course",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "inaji-toyohashi-iida",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "shiokaze-okayama-matsuyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "ishizuchi-takamatsu-matsuyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "ashizuri-kochi-nakamura",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "ashizuri-kochi-sukumo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "uwakai-matsuyama-uwajima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "morning-exp-iyosaijo-takamatsu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "morning-exp-niihama-matsuyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "super-hokuto-hakodate-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "super-ozora-sapporo-kushiro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "super-tokachi-sapporo-obihiro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "super-kamui-sapporo-asahikawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "super-soya-sapporo-wakkanai",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "asahiyama-zoo-sapporo-asahikawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "furano-lavender-express-sapporo-furano",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "super-hakucho-hachinohe-hakodate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "super-hakucho-shinaomori-hakodate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "hakucho-hachinohe-hakodate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "hakucho-shinaomori-hakodate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "hokutosei-ueno-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "cassiopeia-ueno-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "super-hitachi-ueno-iwaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "super-hitachi-ueno-sendai",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "fresh-hitachi-ueno-katsuta",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "super-azusa-shinjuku-matsumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "super-view-odoriko-tokyo-izukyushimoda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "super-view-odoriko-ikebukuro-izukyushimoda",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "ayame-tokyo-kashimajingu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "minakami-ueno-minakami",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "kusatsu-ueno-naganoharakusatsuguchi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "kusatsu-ueno-manzakazawaguchi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "swallow-akagi-ueno-takasaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "akagi-ueno-maebashi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 13,
+      "legacyPatternId": "akebono-ueno-aomori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "hokuriku-ueno-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 10,
+      "legacyPatternId": "hokuetsu-niigata-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "hakutaka-echigoyuzawa-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "hakutaka-echigoyuzawa-fukui",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "hakutaka-echigoyuzawa-wakuraonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "tsugaru-hachinohe-hirosaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "kamoshika-akita-aomori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "inaho-niigata-sakata",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 11,
+      "legacyPatternId": "sazanami-tokyo-tateyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "hama-kaiji-yokohama-matsumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "raicho-osaka-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 11,
+      "legacyPatternId": "thunderbird-osaka-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 13,
+      "legacyPatternId": "thunderbird-osaka-toyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 14,
+      "legacyPatternId": "thunderbird-osaka-uozu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "thunderbird-osaka-wakuraonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "shirasagi-nagoya-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "shirasagi-nagoya-toyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "shirasagi-maibara-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "twilight-express-osaka-sapporo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "nihonkai-osaka-aomori",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "kitakinki-shinosaka-kinosakionsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "monju-shinosaka-amanohashidate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "tanba-kyoto-fukuchiyama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "tango-explorer-shinosaka-toyooka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "super-kuroshio-kyoto-shingu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "super-kuroshio-kyoto-shirahama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 8,
+      "legacyPatternId": "ocean-arrow-kyoto-shingu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "ocean-arrow-kyoto-shirahama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "biwako-express-osaka-maibara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "ohayo-express-fukui-kanazawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "oyasumi-express-kanazawa-fukui",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "hanayome-noren-kanazawa-wakuraonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [
+        "tt-shinano-920beb8eca17"
+      ],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "shinano-osaka-nagano",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "nanpu-okayama-nakamura",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "nanpu-okayama-sukumo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "muroto-tokushima-kaifu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "home-express-anan-tokushima-anan",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "kamome-hakata-nagasaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "relay-tsubame-hakata-shinyatsushiro",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "ariake-hakata-kumamoto-pre2011",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "ariake-hakata-nagasu-2011",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "yufu-dx-hakata-beppu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "kumagawa-kumamoto-hitoyoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "sendai-express-sendai-kagoshimachuo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "hayato-no-kaze-yoshimatsu-kagoshimachuo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 11,
+      "legacyPatternId": "dream-nichirin-hakata-miyazakikuko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 6,
+      "legacyPatternId": "kyushu-odan-tokkyu-beppu-hitoyoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "asoboy-kumamoto-miyaji",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "kawasemi-yamasemi-kumamoto-hitoyoshi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "ibusuki-no-tamatebako-kagoshimachuo-ibusuki-2011",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "seaboldt-sasebo-nagasaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "hakone-shinjuku-hakoneyumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "super-hakone-shinjuku-hakoneyumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "sagami-shinjuku-odawara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "enoshima-shinjuku-katasenoshima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "metro-hakone-kitasenju-hakoneyumoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "metro-enoshima-kitasenju-katasenoshima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "metro-sagami-kitasenju-honatsugi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "morningway-odawara-shinjuku",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "homeway-shinjuku-odawara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "homeway-shinjuku-katasenoshima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "metro-morningway-honatsugi-kitasenju",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "metro-homeway-kitasenju-honatsugi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "fujisan-shinjuku-gotemba",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "asagiri-shinjuku-numazu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "asagiri-shinjuku-gotemba",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "skyliner-keiseiueno-naritaairport-access",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "skyliner-keiseiueno-naritaairport-main",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "morning-liner-naritaairport-keiseiueno",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "evening-liner-keiseiueno-naritaairport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "city-liner-keiseiueno-naritaairport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "chichibu-ikebukuro-seibuchichibu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "musashi-ikebukuro-hanno",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "koedo-seibushinjuku-honkawagoe",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "kegon-asakusa-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "kinu-asakusa-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "ryomo-asakusa-akagi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "ryomo-asakusa-ota",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "ryomo-asakusa-isesaki",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "ryomo-asakusa-kuzu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "spacia-x-asakusa-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "spacia-x-asakusa-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "revaty-kegon-asakusa-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "revaty-kinu-asakusa-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 9,
+      "legacyPatternId": "revaty-aizu-asakusa-aizutajima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "revaty-ryomo-asakusa-akagi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "shimotsuke-asakusa-tobuutsunomiya",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "kirifuri-asakusa-tobunikko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "kirifuri-asakusa-minamikurihashi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 5,
+      "legacyPatternId": "yunosato-asakusa-kinugawaonsen",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "urban-park-liner-asakusa-omiya",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "urban-park-liner-omiya-kashiwa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "skytree-liner-asakusa-kasukabe",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "fujisan-tokkyu-otsuki-kawaguchiko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "fujisan-view-express-otsuki-kawaguchiko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "yukemuri-nagano-yudanaka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "snow-monkey-nagano-yudanaka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "hinotori-namba-nagoya",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shimakaze-namba-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shimakaze-kyoto-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shimakaze-nagoya-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "urban-liner-namba-nagoya",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "ise-shima-liner-namba-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "ise-shima-liner-nagoya-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "ise-shima-liner-kyoto-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "sakura-liner-abenobashi-yoshino",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "ao-no-symphony-abenobashi-yoshino",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 4,
+      "legacyPatternId": "kintetsu-meihan-ko",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "kintetsu-meihan-otsu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 12,
+      "legacyPatternId": "kintetsu-hanise-namba-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 7,
+      "legacyPatternId": "kintetsu-meii-nagoya-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 3,
+      "legacyPatternId": "kintetsu-kyoise-kyoto-kashikojima",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "kintetsu-keina-kyoto-nara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "kintetsu-kyokashi-kyoto-kashiharajingumae",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kintetsu-hanna-namba-nara",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "kintetsu-yoshino-abenobashi-yoshino",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rapit-alpha-namba-kansai-airport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rapit-beta-namba-kansai-airport",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "southern-namba-wakayamashi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "koya-namba-gokurakubashi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "rinkan-namba-hashimoto",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "semboku-liner-namba-izumichuo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "mu-sky-meitetsu-gifu-centrair",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "mu-sky-shin-unuma-centrair",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "kyo-train-garaku-umeda-kawaramachi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "kyo-train-original-umeda-kawaramachi",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "tango-relay-amanohashidate-toyooka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "tango-discovery-kyoto-amanohashidate",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "tango-discovery-kyoto-toyooka",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "shikoku-tosa-jidai-no-yoake-kochi-kubokawa",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "iyonada-monogatari-matsuyama-iyo-ozu",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "iyonada-monogatari-matsuyama-yawatahama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 1,
+      "legacyPatternId": "midnight-exp-takamatsu-iyo-saijo",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 0,
+      "legacyPatternId": "midnight-exp-matsuyama-niihama",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    },
+    {
+      "candidatePatternIds": [],
+      "classification": "new DB missing evidence",
+      "legacyOptionalStopCount": 2,
+      "legacyPatternId": "fuji-tokyo-oita",
+      "matchingSignatureIds": [],
+      "verificationStatus": "unknown"
+    }
+  ],
+  "legacyCatalogHash": "02fd7820716de4d9338002f1af2ab68d42eff46459305ed1bfefc7e4707a66fd",
+  "legacyPatternCount": 298,
+  "note": "No legacy summary is promoted to a verified timetable trip. Candidate equality is not daily validity evidence.",
+  "schemaVersion": 1
+}

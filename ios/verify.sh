@@ -153,7 +153,18 @@ if [ "$run_swift" = 1 ]; then
         Sources/RailCore/ Sources/RailPresentation/ 2>/dev/null | grep .; then
         fail "a pure target imported a platform framework (see the files above)"
     fi
-    echo "  RailCore imports nothing but Foundation"
+    unexpected_core_imports=$(grep -rhE '^import ' Sources/RailCore/ 2>/dev/null \
+        | sort -u | grep -vE '^import (Foundation|SQLite3)$' || true)
+    if [ -n "$unexpected_core_imports" ]; then
+        echo "$unexpected_core_imports"
+        fail "RailCore imported something other than Foundation/SQLite3"
+    fi
+    sqlite_imports=$(grep -rl '^import SQLite3$' Sources/RailCore/ 2>/dev/null || true)
+    if [ "$sqlite_imports" != "Sources/RailCore/TrainTimetableDatabase.swift" ]; then
+        echo "$sqlite_imports"
+        fail "SQLite3 must remain isolated to TrainTimetableDatabase.swift"
+    fi
+    echo "  RailCore imports Foundation; SQLite3 is isolated to the read-only timetable database"
 
     # And RailPresentation nothing but Foundation and RailCore: it may consume
     # the ported business logic, never the app's storage or map objects.

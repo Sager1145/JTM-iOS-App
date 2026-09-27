@@ -1,0 +1,6 @@
+{"display_name": "北海道旅客鉄道", "legal_name": "北海道旅客鉄道株式会社", "operator_id": "jr-hokkaido", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}
+{"display_name": "東日本旅客鉄道", "legal_name": "東日本旅客鉄道株式会社", "operator_id": "jr-east", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}
+{"display_name": "東海旅客鉄道", "legal_name": "東海旅客鉄道株式会社", "operator_id": "jr-central", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}
+{"display_name": "西日本旅客鉄道", "legal_name": "西日本旅客鉄道株式会社", "operator_id": "jr-west", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}
+{"display_name": "四国旅客鉄道", "legal_name": "四国旅客鉄道株式会社", "operator_id": "jr-shikoku", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}
+{"display_name": "九州旅客鉄道", "legal_name": "九州旅客鉄道株式会社", "operator_id": "jr-kyushu", "operator_type": "jr_passenger", "valid_from": "1987-04-01", "valid_until": null}

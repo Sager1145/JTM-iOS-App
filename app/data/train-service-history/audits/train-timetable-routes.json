@@ -1,0 +1,152 @@
+{
+  "asOfDate": "2026-09-27",
+  "complete": false,
+  "passedLegs": 0,
+  "passengerLegs": 76,
+  "schemaVersion": 1,
+  "solverExecuted": false,
+  "tripTemplates": 10,
+  "trips": [
+    {
+      "calendarId": "jr-hokkaido.kamui.93.2026-05-16.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.kamui.93.2026-05-16.version",
+      "tripId": "jr-hokkaido.kamui.93.2026-05-16",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.lilac.95.2026-05-16.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.lilac.95.2026-05-16.version",
+      "tripId": "jr-hokkaido.lilac.95.2026-05-16",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.shinano.1.2026-09-18.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 11,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.shinano.1.2026-09-18.version",
+      "tripId": "jr-central.shinano.1.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-east.hitachi.26.2026-09-18.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 13,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-east.hitachi.26.2026-09-18.version",
+      "tripId": "jr-east.hitachi.26.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.1.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.1.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.1.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.2.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.2.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.2.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.3.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 8,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.3.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.3.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.4.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 8,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.4.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.4.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.5.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.5.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.5.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.yufuin-no-mori.6.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 6,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.yufuin-no-mori.6.2026-09-19.version",
+      "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19",
+      "viaStatus": "unverified"
+    }
+  ],
+  "unverifiedLegs": 76
+}

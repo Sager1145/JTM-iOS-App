@@ -1,0 +1,209 @@
+import json
+from pathlib import Path
+import shutil
+import sqlite3
+import sys
+import tempfile
+import unittest
+
+
+TOOLS = Path(__file__).resolve().parents[1]
+ROOT = TOOLS.parents[1]
+sys.path.insert(0, str(TOOLS))
+
+import train_timetable as timetable
+
+
+def write_jsonl(path, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(timetable.canonical_json(row) + "\n" for row in rows), encoding="utf-8")
+
+
+class TrainTimetablePipelineTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.canonical = Path(self.temporary.name)
+        shutil.copy(ROOT / "app/data/train-service-history/schema.sql", self.canonical / "schema.sql")
+        manifest = json.loads((ROOT / "app/data/train-service-history/manifest.json").read_text(encoding="utf-8"))
+        manifest.update({
+            "as_of_date": "2026-01-04", "first_scope_date": "2026-01-01",
+            "expected_coverage_scopes": [{"operator_scope": "test-scope", "valid_from": "2026-01-01", "valid_until": "2026-01-05"}],
+        })
+        (self.canonical / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        package = json.loads((ROOT / "app/public/rail/jp-2025.json").read_text(encoding="utf-8"))
+        station_rows = []
+        seen = set()
+        for line in package["lines"]:
+            for station in line.get("stations", []):
+                if station[0] not in seen:
+                    station_rows.append(station)
+                    seen.add(station[0])
+                if len(station_rows) == 2: break
+            if len(station_rows) == 2: break
+        self.station_a, self.station_b = station_rows
+        self._seed()
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def _seed(self):
+        source = {"source_id": "source.test", "publisher": "Test Publisher", "title": "Test timetable", "source_type": "fixture", "url_or_locator": "fixture:test", "accessed_at": "2026-01-01", "license_status": "test_only", "redistribution_status": "test_only", "automated_extraction_allowed": False}
+        write_jsonl(self.canonical / "sources/source-registry-test.jsonl", [source])
+        write_jsonl(self.canonical / "normalized/operators-test.jsonl", [{"operator_id": "operator.test", "legal_name": "Operator Legal", "display_name": "Operator", "operator_type": "jr", "valid_from": "1987-04-01"}])
+        write_jsonl(self.canonical / "normalized/services-test.jsonl", [{"service_id": "service.test", "canonical_name": "テスト", "service_class": "limited_express", "historical_generation": 1, "first_verified_date": "2026-01-01", "last_verified_date": "2026-01-03", "jr_scope": "jr"}])
+        write_jsonl(self.canonical / "normalized/service-name-periods-test.jsonl", [{"service_id": "service.test", "name": "テスト", "language": "ja", "valid_from": "2026-01-01", "valid_until": "2026-01-04", "name_type": "official", "source_id": "source.test"}])
+        write_jsonl(self.canonical / "normalized/timetable-versions-test.jsonl", [{"timetable_version_id": "version.test", "operator_scope": "test-scope", "effective_from": "2026-01-01", "effective_until": "2026-01-04", "edition_name": "fixture", "revision_type": "regular", "completeness": "partial", "source_ids": ["source.test"]}])
+        write_jsonl(self.canonical / "normalized/calendars/test.jsonl", [{"calendar_id": "calendar.test", "monday": 1, "tuesday": 1, "wednesday": 1, "thursday": 1, "friday": 1, "saturday": 1, "sunday": 1, "valid_from": "2026-01-01", "valid_until": "2026-01-04", "holiday_policy": "none"}])
+        write_jsonl(self.canonical / "normalized/calendar-exceptions/test.jsonl", [{"calendar_id": "calendar.test", "service_date": "2026-01-02", "exception_type": "remove", "reason": "fixture removal", "source_id": "source.test"}])
+        write_jsonl(self.canonical / "normalized/station-identities-test.jsonl", [
+            {"station_id": "station.a", "name_snapshot": self.station_a[1], "reference_kind": "current_n02", "current_source_code": self.station_a[0]},
+            {"station_id": "station.b", "name_snapshot": self.station_b[1], "reference_kind": "current_n02", "current_source_code": self.station_b[0]},
+        ])
+        write_jsonl(self.canonical / "normalized/trips/test/seeds.jsonl", [{"trip_id": "trip.test", "timetable_version_id": "version.test", "service_id": "service.test", "calendar_id": "calendar.test", "train_number": "1001M", "public_number": "1", "origin_station_id": "station.a", "destination_station_id": "station.b", "direction": "down", "service_class": "limited_express"}])
+        write_jsonl(self.canonical / "normalized/stop-times/test/seeds.jsonl", [
+            {"trip_id": "trip.test", "stop_sequence": 0, "station_id": "station.a", "departure_time": "23:55", "call_type": "origin", "time_accuracy": "minute", "source_id": "source.test"},
+            {"trip_id": "trip.test", "stop_sequence": 1, "station_id": "station.b", "arrival_time": "00:15", "day_offset": 1, "call_type": "destination", "time_accuracy": "minute", "source_id": "source.test"},
+        ])
+        write_jsonl(self.canonical / "normalized/trip-stop-time-overrides/test/seeds.jsonl", [{"trip_id": "trip.test", "service_date": "2026-01-01", "stop_sequence": 1, "arrival_override": "00:20", "source_id": "source.test"}])
+        write_jsonl(self.canonical / "normalized/trip-operator-segments/test/seeds.jsonl", [{"trip_id": "trip.test", "from_sequence": 0, "to_sequence": 1, "operator_id": "operator.test"}])
+        write_jsonl(self.canonical / "normalized/trip-lines/test/seeds.jsonl", [{"trip_id": "trip.test", "sequence": 0, "from_station_id": "station.a", "to_station_id": "station.b", "line_name": "Test Line", "operator_id": "operator.test", "source_id": "source.test", "confidence": "high"}])
+        write_jsonl(self.canonical / "normalized/fact-completeness-test.jsonl", [
+            {"entity_type": "trip", "entity_id": "trip.test", "dimension": "stops", "status": "verified", "confidence": "high"},
+            {"entity_type": "trip", "entity_id": "trip.test", "dimension": "route_lines", "status": "verified", "confidence": "high"},
+        ])
+        write_jsonl(self.canonical / "normalized/fact-sources-test.jsonl", [
+            {"entity_type": "trip", "entity_id": "trip.test", "field_name": "identity", "source_id": "source.test", "page_or_locator": "fixture", "confidence": "high", "verification_status": "verified"},
+            {"entity_type": "trip", "entity_id": "trip.test", "field_name": "stops", "source_id": "source.test", "page_or_locator": "fixture", "confidence": "high", "verification_status": "verified"},
+            {"entity_type": "trip", "entity_id": "trip.test", "field_name": "route_lines", "source_id": "source.test", "page_or_locator": "fixture", "confidence": "high", "verification_status": "verified"},
+        ])
+
+    def load(self):
+        manifest = timetable.load_manifest(self.canonical)
+        data, origins = timetable.load_dataset(self.canonical, manifest)
+        return manifest, data, origins
+
+    def test_service_day_materialization_preserves_after_midnight_time(self):
+        _, data, origins = self.load()
+        self.assertEqual([], timetable.validate_dataset(data, origins, timetable.load_manifest(self.canonical)))
+        occurrence = timetable.materialize(data, "2026-01-01")[0]
+        self.assertEqual("trip.test@2026-01-01", occurrence["occurrence_key"])
+        self.assertEqual(23 * 3600 + 55 * 60, occurrence["stop_times"][0]["departure_seconds"])
+        self.assertEqual(24 * 3600 + 20 * 60, occurrence["stop_times"][1]["arrival_seconds"])
+        self.assertEqual("00:20", occurrence["stop_times"][1]["arrival_time"])
+        self.assertEqual([], timetable.materialize(data, "2026-01-02"))
+
+    def test_builder_is_byte_reproducible_and_creates_runtime_indexes(self):
+        first = self.canonical / "first.sqlite"
+        second = self.canonical / "second.sqlite"
+        timetable.build_database(self.canonical, first)
+        timetable.build_database(self.canonical, second)
+        self.assertEqual(timetable.file_sha256(first), timetable.file_sha256(second))
+        connection = sqlite3.connect(first)
+        try:
+            metadata = dict(connection.execute("SELECT key,value FROM metadata"))
+            indexes = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='index'")}
+            seconds = connection.execute("SELECT departure_seconds FROM stop_times WHERE trip_id='trip.test' AND stop_sequence=0").fetchone()[0]
+        finally:
+            connection.close()
+        self.assertEqual("Asia/Tokyo", metadata["timezone"])
+        self.assertIn("idx_calendar_exceptions_date", indexes)
+        self.assertIn("idx_stop_times_trip_sequence", indexes)
+        self.assertEqual(86100, seconds)
+
+    def test_unknown_station_and_backwards_time_are_rejected(self):
+        manifest, data, origins = self.load()
+        data["station_identities"][0]["current_source_code"] = "invented"
+        data["stop_times"][1]["arrival_time"] = "22:00"
+        data["stop_times"][1]["day_offset"] = 0
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("not in jp-2025" in error for error in errors))
+        self.assertTrue(any("move backwards" in error for error in errors))
+
+    def test_unverified_historical_holiday_rule_is_rejected(self):
+        manifest, data, origins = self.load()
+        data["calendars"][0]["holiday_policy"] = "treat_as_sunday"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("holiday calendar 2026 is not verified" in error for error in errors))
+
+    def test_empty_verified_coverage_is_rejected(self):
+        manifest, data, origins = self.load()
+        data["coverage_declarations"].append({"coverage_id": "coverage.test", "operator_scope": "test-scope", "year": 2026, "dimension": "inventory", "status": "verified", "record_count": 0, "source_id": "source.test"})
+        origins[("coverage_declarations", 0)] = "fixture:coverage"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("empty coverage cannot be verified" in error for error in errors))
+
+    def test_verified_completeness_requires_field_level_source(self):
+        manifest, data, origins = self.load()
+        data["fact_sources"] = [row for row in data["fact_sources"] if row["field_name"] != "stops"]
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("matching verified fact_source" in error for error in errors))
+
+    def test_station_and_operator_must_cover_trip_operation_interval(self):
+        manifest, data, origins = self.load()
+        data["station_identities"][0]["valid_from"] = "2026-01-02"
+        data["operators"][0]["valid_from"] = "2027-01-01"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("station station.a begins after" in error for error in errors))
+        self.assertTrue(any("operator operator.test is not valid" in error for error in errors))
+        self.assertTrue(any("line endpoint station station.a begins after" in error for error in errors))
+        self.assertTrue(any("line operator operator.test is not valid" in error for error in errors))
+
+    def test_total_service_time_is_bounded_below_72_hours(self):
+        self.assertEqual(25 * 3600, timetable.service_seconds("01:00", 1, "fixture"))
+        with self.assertRaises(timetable.DatasetError):
+            timetable.service_seconds("01:00", 3, "fixture")
+
+    def test_overlapping_duplicate_published_occurrence_is_rejected(self):
+        manifest, data, origins = self.load()
+        duplicate = dict(data["trips"][0], trip_id="trip.duplicate", train_number="1002M")
+        data["trips"].append(duplicate)
+        origins[("trips", 1)] = "fixture:duplicate-trip"
+        for stop in list(data["stop_times"]):
+            copy = dict(stop, trip_id="trip.duplicate")
+            data["stop_times"].append(copy)
+            origins[("stop_times", len(data["stop_times"]) - 1)] = "fixture:duplicate-stop"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("ambiguous duplicate" in error for error in errors))
+
+    def test_number_and_operator_segments_must_be_bounded_and_cover_trip(self):
+        manifest, data, origins = self.load()
+        data["trip_operator_segments"][0]["from_sequence"] = 99
+        data["trip_operator_segments"][0]["to_sequence"] = 100
+        data["trip_number_segments"].append({"trip_id": "trip.test", "from_sequence": 99, "to_sequence": 100, "train_number": "1001M"})
+        origins[("trip_number_segments", 0)] = "fixture:number-range"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("trip_operator_segments boundaries must reference" in error for error in errors))
+        self.assertTrue(any("trip_operator_segments must cover" in error for error in errors))
+        self.assertTrue(any("trip_number_segments boundaries must reference" in error for error in errors))
+        self.assertTrue(any("trip_number_segments must cover" in error for error in errors))
+
+    def test_invalid_calendar_exception_date_reports_without_crashing(self):
+        manifest, data, origins = self.load()
+        data["calendar_exceptions"][0]["service_date"] = "2026-99-99"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("invalid Gregorian date" in error for error in errors))
+
+    def test_coverage_defaults_to_missing_and_never_complete_on_sparse_data(self):
+        database, _, _ = timetable.build_database(self.canonical)
+        report = timetable.coverage_report(self.canonical, database)
+        self.assertFalse(report["coverageComplete"])
+        self.assertGreater(report["missingCoverageCells"], 0)
+        self.assertEqual(2, report["dailyOccurrencesRepresented"])
+
+    def test_projection_keeps_legacy_fallback_and_marks_calendar_loss(self):
+        legacy = self.canonical / "legacy.json"
+        legacy.write_text(json.dumps([{"patternId": "legacy-test", "serviceId": "service.test", "name": "テスト", "company": "legacy", "label": "legacy", "origin": "A", "destination": "B", "stops": [], "optionalStops": [], "via": [], "lines": [], "validFrom": None, "validUntil": None, "completeness": {"stops": "missing", "lines": "missing", "validity": "missing"}, "confidence": "low", "source": "legacy"}]), encoding="utf-8")
+        output = self.canonical / "projection.json"
+        audit = self.canonical / "projection-audit.json"
+        timetable.build_projection(self.canonical, legacy, output, audit)
+        patterns = json.loads(output.read_text(encoding="utf-8"))
+        canonical = next(row for row in patterns if row["_derivation"]["status"] == "canonical_trip_projection")
+        fallback = next(row for row in patterns if row["_derivation"]["status"] == "legacy_unverified_fallback")
+        self.assertEqual("Operator Legal", canonical["company"])
+        self.assertEqual("partial", canonical["completeness"]["validity"])
+        self.assertEqual("legacy-test", fallback["patternId"])
+        self.assertFalse(json.loads(audit.read_text(encoding="utf-8"))["safeToReplaceBundledLegacyCatalog"])
+
+
+if __name__ == "__main__":
+    unittest.main()

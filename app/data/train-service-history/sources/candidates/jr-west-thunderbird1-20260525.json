@@ -1,0 +1,91 @@
+{
+  "candidate_id": "jr-west-thunderbird1-4001m-20260525",
+  "candidate_status": "unreviewed",
+  "canonical": false,
+  "promotion_status": "blocked_by_source_terms_and_single_date_scope",
+  "observed_service_date": "2026-05-25",
+  "valid_from": "2026-05-25",
+  "valid_until": "2026-05-26",
+  "operator_id": "jr-west",
+  "operator_name": "西日本旅客鉄道株式会社",
+  "service_name": "サンダーバード",
+  "service_class": "limited_express",
+  "train_number": "4001M",
+  "public_number": "1",
+  "origin_station_id": "jp.n02.007068",
+  "destination_station_id": "jp.n02.004004",
+  "direction": "大阪→敦賀",
+  "source_id": "jr-west-thunderbird1-20260525",
+  "source_calendar_label": "毎日運転",
+  "calendar_verification": "observed_date_only",
+  "all_year_completeness_claimed": false,
+  "line_order": [
+    "東海道線",
+    "湖西線",
+    "北陸線"
+  ],
+  "passenger_stops": [
+    {
+      "stop_sequence": 0,
+      "station_id": "jp.n02.007068",
+      "station_name": "大阪",
+      "source_code": "007068",
+      "arrival_time": null,
+      "departure_time": "06:30",
+      "call_type": "origin"
+    },
+    {
+      "stop_sequence": 1,
+      "station_id": "jp.n02.006910",
+      "station_name": "新大阪",
+      "source_code": "006910",
+      "arrival_time": "06:33",
+      "departure_time": "06:34",
+      "call_type": "passenger_stop"
+    },
+    {
+      "stop_sequence": 2,
+      "station_id": "jp.n02.006432",
+      "station_name": "高槻",
+      "source_code": "006432",
+      "arrival_time": "06:44",
+      "departure_time": "06:45",
+      "call_type": "passenger_stop"
+    },
+    {
+      "stop_sequence": 3,
+      "station_id": "jp.n02.006077",
+      "station_name": "京都",
+      "source_code": "006077",
+      "arrival_time": "06:58",
+      "departure_time": "06:59",
+      "call_type": "passenger_stop"
+    },
+    {
+      "stop_sequence": 4,
+      "station_id": "jp.n02.004004",
+      "station_name": "敦賀",
+      "source_code": "004004",
+      "arrival_time": "07:54",
+      "departure_time": null,
+      "call_type": "destination"
+    }
+  ],
+  "completeness": {
+    "identity": "verified",
+    "train_number": "verified",
+    "operator": "verified",
+    "validity_calendar": "partial",
+    "origin_destination": "verified",
+    "passenger_stops": "verified_for_observed_date",
+    "times": "verified_for_observed_date",
+    "route_lines": "verified",
+    "station_refs": "verified",
+    "provenance": "verified"
+  },
+  "review_notes": [
+    "The public page is an exact train-level timetable for 2026-05-25 and exposes a daily-operation label, but this candidate deliberately verifies only the requested service date.",
+    "The source page explicitly prohibits unauthorized reproduction, copying and processing. Keep this record out of canonical redistribution until a permitted source or legal review resolves the blocker.",
+    "Only passenger calls are retained here. Pass rows shown on the source page are intentionally not staged."
+  ]
+}

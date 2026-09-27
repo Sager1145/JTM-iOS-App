@@ -546,7 +546,9 @@ public enum TrainServicePatterns {
         result.routePolicy = nil
 
         let trimmedNumber = result.number.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedNumber.isEmpty || allPatternNames.contains(trimmedNumber) {
+        if pattern.id.hasPrefix("timetable:")
+            || trimmedNumber.isEmpty || allPatternNames.contains(trimmedNumber)
+        {
             result.number = pattern.name
         }
         let trimmedTrainType = (result.trainType ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
@@ -556,7 +558,9 @@ public enum TrainServicePatterns {
                 ? "寝台特急" : "特急"
         }
         let trimmedCompany = (result.company ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedCompany.isEmpty || allPatternCompanyLabels.contains(trimmedCompany) {
+        if pattern.id.hasPrefix("timetable:")
+            || trimmedCompany.isEmpty || allPatternCompanyLabels.contains(trimmedCompany)
+        {
             result.company = pattern.companyLabel
         }
         if result.region == nil {

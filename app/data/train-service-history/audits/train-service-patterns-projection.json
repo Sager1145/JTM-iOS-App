@@ -1,0 +1,9 @@
+{
+  "asOfDate": "2026-09-27",
+  "canonicalPatternCount": 8,
+  "canonicalSourceHash": "337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb549f1a0687",
+  "legacyUnverifiedFallbackCount": 298,
+  "outputHash": "edb460d0661d9862297df42d4a5dbaac091925446cf9188ad97aa3e3faaa8b6f",
+  "safeToReplaceBundledLegacyCatalog": false,
+  "schemaVersion": "1.0.0"
+}

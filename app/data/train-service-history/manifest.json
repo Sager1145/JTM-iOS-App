@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "build_version": "train-timetable-pipeline-v1",
+  "as_of_date": "2026-09-27",
+  "first_scope_date": "1912-06-15",
+  "timezone": "Asia/Tokyo",
+  "service_day_time_semantics": "seconds_since_service_day_start",
+  "solver_version": "22",
+  "schema_path": "schema.sql",
+  "database_path": "derived/train-service-timetable.sqlite",
+  "runtime_database_path": "../../../ios/RailKit/Sources/RailCore/Resources/train-service-timetable.sqlite",
+  "coverage_report_path": "audits/train-timetable-coverage.json",
+  "projection_path": "derived/train-service-patterns.json",
+  "projection_audit_path": "audits/train-service-patterns-projection.json",
+  "entities": {
+    "source_documents": ["sources/source-registry*.jsonl"],
+    "operators": ["normalized/operators*.jsonl"],
+    "services": ["normalized/services*.jsonl"],
+    "service_name_periods": ["normalized/service-name-periods*.jsonl"],
+    "timetable_versions": ["normalized/timetable-versions*.jsonl"],
+    "holiday_calendar_years": ["normalized/holidays/years*.jsonl"],
+    "holiday_dates": ["normalized/holidays/dates*.jsonl"],
+    "calendars": ["normalized/calendars/**/*.jsonl"],
+    "calendar_exceptions": ["normalized/calendar-exceptions/**/*.jsonl"],
+    "station_identities": ["normalized/station-identities*.jsonl"],
+    "trips": ["normalized/trips/**/*.jsonl"],
+    "stop_times": ["normalized/stop-times/**/*.jsonl"],
+    "trip_stop_time_overrides": ["normalized/trip-stop-time-overrides/**/*.jsonl"],
+    "trip_number_segments": ["normalized/trip-number-segments/**/*.jsonl"],
+    "trip_operator_segments": ["normalized/trip-operator-segments/**/*.jsonl"],
+    "trip_line_segments": ["normalized/trip-lines/**/*.jsonl"],
+    "trip_relations": ["normalized/trip-relations/**/*.jsonl"],
+    "fact_sources": ["normalized/fact-sources*.jsonl"],
+    "fact_completeness": ["normalized/fact-completeness*.jsonl"],
+    "verified_zero_service_intervals": ["normalized/verified-zero-service-intervals*.jsonl"],
+    "coverage_declarations": ["normalized/coverage-declarations*.jsonl"],
+    "research_queue": ["normalized/research-queue*.jsonl"],
+    "actual_operation_events": ["normalized/actual-operation-events*.jsonl"]
+  },
+  "expected_coverage_scopes": [
+    {
+      "operator_scope": "jr-ancestral-national-railways",
+      "valid_from": "1912-06-15",
+      "valid_until": "1987-04-01"
+    },
+    {
+      "operator_scope": "jr-hokkaido",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    },
+    {
+      "operator_scope": "jr-east",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    },
+    {
+      "operator_scope": "jr-central",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    },
+    {
+      "operator_scope": "jr-west",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "valid_from": "1987-04-01",
+      "valid_until": "2026-09-28"
+    }
+  ],
+  "coverage_dimensions": [
+    "inventory",
+    "train_number",
+    "calendar",
+    "stops",
+    "times",
+    "route_lines",
+    "station_refs",
+    "provenance"
+  ]
+}

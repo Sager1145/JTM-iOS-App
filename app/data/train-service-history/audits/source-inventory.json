@@ -1,0 +1,317 @@
+{
+  "inventoryComplete": false,
+  "method": "Curated official web search and archive guide discoveries; no complete timetable inventory inferred.",
+  "sourceCount": 31,
+  "sources": [
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jrhokkaido.co.jp/corporate/company/comtop.html",
+      "publisher": "北海道旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-hokkaido.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jreast.co.jp/company/outline/",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-east.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://company.jr-central.co.jp/company/outline/",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-central.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.westjr.co.jp/company/info/outline/",
+      "publisher": "西日本旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-west.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jr-shikoku.co.jp/04_company/brochure/corporate_profile.pdf",
+      "publisher": "四国旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-shikoku.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jrkyushu.co.jp/company/info/outline/",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata",
+      "sourceId": "jr-kyushu.corporate-identity",
+      "sourceType": "official_corporate_profile",
+      "title": "会社概要"
+    },
+    {
+      "automatedExtractionAllowed": true,
+      "licenseStatus": "repository_source_terms",
+      "locator": "app/public/rail/jp-2025.json",
+      "publisher": "JTM / MLIT N02",
+      "redistributionStatus": "existing_repository_resource",
+      "sourceId": "jtm-current-station-directory",
+      "sourceType": "station_identity_directory",
+      "title": "Shipped JP compact station directory"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20260403_KO_rinjitokkyu.pdf",
+      "publisher": "北海道旅客鉄道",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-hokkaido-20260403-special",
+      "sourceType": "official_planned_exception",
+      "title": "札幌で開催されるコンサートにあわせて臨時特急を運転します"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://timetables.jreast.co.jp/2610/train/000/000041.html",
+      "publisher": "東日本旅客鉄道 / 交通新聞社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-central-shinano1-202609",
+      "sourceType": "official_train_timetable",
+      "title": "しなの 1号 停車駅一覧"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://timetables.jreast.co.jp/2610/train/095/098731.html",
+      "publisher": "東日本旅客鉄道 / 交通新聞社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-east-hitachi26-202609",
+      "sourceType": "official_train_timetable",
+      "title": "ひたち 26号 停車駅一覧"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jrkyushu.co.jp/railway/index.html",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-kyushu-yufuin-plan-20260919",
+      "sourceType": "official_planned_exception",
+      "title": "ゆふいんの森・ゆふ 9月19日〜30日の運行計画"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "third_party_timetable_data_terms_apply",
+      "locator": "https://www.jrhokkaido.co.jp/network/",
+      "publisher": "北海道旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-hokkaido-network-2026",
+      "sourceType": "official_timetable_portal",
+      "title": "鉄道・きっぷ"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "third_party_timetable_data_terms_apply",
+      "locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?p=y&s=151",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-hokkaido-vtime-hokuto-20260927",
+      "sourceType": "official_line_timetable",
+      "title": "［特急］すずらん・北斗（札幌―室蘭・東室蘭・函館）上り"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "terms_published_no_reuse_grant_identified",
+      "locator": "https://jrhokkaidonorikae.com/support.html",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "redistributionStatus": "metadata_only",
+      "sourceId": "jr-hokkaido-support-20260831",
+      "sourceType": "official_terms_and_coverage",
+      "title": "時刻検索 ご利用にあたって"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://timetables.jreast.co.jp/",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-east-timetables-2026",
+      "sourceType": "official_timetable_portal",
+      "title": "時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://railway.jr-central.co.jp/timetable/nr_doc/search.html",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-central-access-search-2026",
+      "sourceType": "official_journey_and_train_timetable_portal",
+      "title": "アクセス検索"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://railway.jr-central.co.jp/time-schedule/search/",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-central-station-timetable-2026",
+      "sourceType": "official_station_timetable_portal",
+      "title": "各駅の時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "explicit_reproduction_and_processing_prohibition",
+      "locator": "https://timetable.jr-odekake.net/",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-west-timetable-portal-2026",
+      "sourceType": "official_timetable_portal",
+      "title": "JRおでかけネット 時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "explicit_reproduction_and_processing_prohibition",
+      "locator": "https://timetable.jr-odekake.net/train-timetable/258901?date=20260525",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-west-thunderbird1-20260525",
+      "sourceType": "official_train_timetable",
+      "title": "特急 サンダーバード1号 敦賀行 列車時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "site_terms_apply_no_data_license_identified",
+      "locator": "https://www.jr-shikoku.co.jp/01_trainbus/",
+      "publisher": "四国旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-shikoku-timetable-portal-2026",
+      "sourceType": "official_station_timetable_portal",
+      "title": "駅・鉄道情報"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "site_terms_apply",
+      "locator": "https://www.jr-shikoku.co.jp/site_policy/index.shtm",
+      "publisher": "四国旅客鉄道株式会社",
+      "redistributionStatus": "metadata_only",
+      "sourceId": "jr-shikoku-site-policy-2026",
+      "sourceType": "official_terms",
+      "title": "JR四国サイト利用規約"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "third_party_timetable_data_terms_apply",
+      "locator": "https://www.jrkyushu-timetable.jp/",
+      "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-station-timetable-2026",
+      "sourceType": "official_station_timetable_portal",
+      "title": "JR九州 駅別時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-yufuin-no-mori-20260314",
+      "sourceType": "official_train_service_timetable",
+      "title": "特急ゆふいんの森"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jrkyushu.co.jp/railway/index.html",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-railway-status-20260927",
+      "sourceType": "official_current_operation_notice",
+      "title": "鉄道・きっぷの予約・旅行"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2026/05/15/20260515_Special_Train_Operation_Plan_and_DS_Train_Operating_Dates.pdf",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-summer-plan-20260515",
+      "sourceType": "official_special_train_plan_pdf",
+      "title": "2026年7月～9月 臨時列車運転計画・D&S列車運転日"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "ndl_site_terms_apply",
+      "locator": "https://ndlsearch.ndl.go.jp/rnavi/business/post_102066",
+      "publisher": "国立国会図書館",
+      "redistributionStatus": "bibliographic_metadata_only",
+      "sourceId": "ndl-timetable-research-guide-20260316",
+      "sourceType": "official_archive_inventory_guide",
+      "title": "時刻表（リサーチ・ナビ）"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "ndl_site_terms_apply",
+      "locator": "https://www.ndl.go.jp/kaleido/entry/32/2.html",
+      "publisher": "国立国会図書館",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "ndl-railway-history-kaleidoscope-2022",
+      "sourceType": "official_historical_exhibit",
+      "title": "鉄道が変えたコト・モノ 第1章 時間感覚"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.railway-museum.jp/press/pdf/20220706_1.pdf",
+      "publisher": "鉄道博物館",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "railway-museum-travel-exhibit-20220706",
+      "sourceType": "official_museum_press_pdf",
+      "title": "鉄道開業150年記念企画展『鉄道と旅』プレス資料"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "government_document_terms_apply",
+      "locator": "https://www.mhlw.go.jp/content/001248012.pdf",
+      "publisher": "昭和館 / 厚生労働省",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "showakan-expert-meeting-2024-24",
+      "sourceType": "official_public_body_pdf",
+      "title": "第24回昭和館運営有識者会議 資料"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.showakan.go.jp/blog/tosho20240312-02/",
+      "publisher": "昭和館",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "showakan-postwar-limited-express-20240312",
+      "sourceType": "official_museum_article",
+      "title": "資料紹介 戦後復興への希望をのせて 特急列車の復活"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.railway-museum.jp/news/pdf/20190227_1.pdf",
+      "publisher": "鉄道博物館",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "railway-museum-era-change-exhibit-20190227",
+      "sourceType": "official_museum_press_pdf",
+      "title": "さようなら平成・新元号制定記念 大正／昭和／平成 改元時の鉄道資料ミニ展示"
+    }
+  ]
+}

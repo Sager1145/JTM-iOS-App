@@ -1,0 +1,144 @@
+{
+  "candidate_id": "jr-kyushu-yufuin-no-mori-20260314",
+  "candidate_status": "unreviewed",
+  "canonical": false,
+  "promotion_status": "blocked_by_partial_times_and_unresolved_calendars",
+  "published_effective_date": "2026-03-14",
+  "page_updated_date": "2026-08-21",
+  "operator_id": "jr-kyushu",
+  "operator_name": "九州旅客鉄道株式会社",
+  "service_name": "ゆふいんの森",
+  "service_class": "limited_express",
+  "source_id": "jr-kyushu-yufuin-no-mori-20260314",
+  "all_year_completeness_claimed": false,
+  "time_semantics": "The official service page prints one time per station. Origins and intermediate stations are treated as departures and destinations as arrivals; unprinted arrivals/departures remain null.",
+  "route_lines": [
+    "鹿児島線",
+    "久大線",
+    "日豊線"
+  ],
+  "station_directory_resolution": {
+    "博多": "jp.n02.009033",
+    "鳥栖": "jp.n02.009327",
+    "久留米": "jp.n02.009383",
+    "日田": "jp.n02.009391",
+    "天ヶ瀬": "jp.n02.009457",
+    "豊後森": "jp.n02.009425",
+    "由布院": "jp.n02.009447",
+    "大分": "jp.n02.009479",
+    "別府": "jp.n02.009428"
+  },
+  "trips": [
+    {
+      "public_number": "1",
+      "direction": "down",
+      "origin_station_id": "jp.n02.009033",
+      "destination_station_id": "jp.n02.009447",
+      "displayed_times": [
+        ["jp.n02.009033", "博多", null, "09:17", "origin"],
+        ["jp.n02.009327", "鳥栖", null, "09:43", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "09:51", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "10:37", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "10:49", "passenger_stop"],
+        ["jp.n02.009425", "豊後森", null, "11:04", "passenger_stop"],
+        ["jp.n02.009447", "由布院", "11:31", null, "destination"]
+      ]
+    },
+    {
+      "public_number": "2",
+      "direction": "up",
+      "origin_station_id": "jp.n02.009447",
+      "destination_station_id": "jp.n02.009033",
+      "displayed_times": [
+        ["jp.n02.009447", "由布院", null, "12:01", "origin"],
+        ["jp.n02.009425", "豊後森", null, "12:32", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "12:47", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "13:01", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "13:46", "passenger_stop"],
+        ["jp.n02.009327", "鳥栖", null, "13:55", "passenger_stop"],
+        ["jp.n02.009033", "博多", "14:19", null, "destination"]
+      ]
+    },
+    {
+      "public_number": "3",
+      "direction": "down",
+      "origin_station_id": "jp.n02.009033",
+      "destination_station_id": "jp.n02.009428",
+      "displayed_times": [
+        ["jp.n02.009033", "博多", null, "10:11", "origin"],
+        ["jp.n02.009327", "鳥栖", null, "10:37", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "10:47", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "11:33", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "11:45", "passenger_stop"],
+        ["jp.n02.009425", "豊後森", null, "12:00", "passenger_stop"],
+        ["jp.n02.009447", "由布院", null, "12:32", "passenger_stop"],
+        ["jp.n02.009479", "大分", null, "13:20", "passenger_stop"],
+        ["jp.n02.009428", "別府", "13:31", null, "destination"]
+      ]
+    },
+    {
+      "public_number": "4",
+      "direction": "up",
+      "origin_station_id": "jp.n02.009428",
+      "destination_station_id": "jp.n02.009033",
+      "displayed_times": [
+        ["jp.n02.009428", "別府", null, "14:36", "origin"],
+        ["jp.n02.009479", "大分", null, "14:58", "passenger_stop"],
+        ["jp.n02.009447", "由布院", null, "15:56", "passenger_stop"],
+        ["jp.n02.009425", "豊後森", null, "16:24", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "16:40", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "16:53", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "17:36", "passenger_stop"],
+        ["jp.n02.009327", "鳥栖", null, "17:44", "passenger_stop"],
+        ["jp.n02.009033", "博多", "18:10", null, "destination"]
+      ]
+    },
+    {
+      "public_number": "5",
+      "direction": "down",
+      "origin_station_id": "jp.n02.009033",
+      "destination_station_id": "jp.n02.009447",
+      "displayed_times": [
+        ["jp.n02.009033", "博多", null, "14:38", "origin"],
+        ["jp.n02.009327", "鳥栖", null, "15:04", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "15:12", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "15:56", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "16:09", "passenger_stop"],
+        ["jp.n02.009425", "豊後森", null, "16:24", "passenger_stop"],
+        ["jp.n02.009447", "由布院", "16:50", null, "destination"]
+      ]
+    },
+    {
+      "public_number": "6",
+      "direction": "up",
+      "origin_station_id": "jp.n02.009447",
+      "destination_station_id": "jp.n02.009033",
+      "displayed_times": [
+        ["jp.n02.009447", "由布院", null, "17:17", "origin"],
+        ["jp.n02.009425", "豊後森", null, "17:44", "passenger_stop"],
+        ["jp.n02.009457", "天ヶ瀬", null, "17:59", "passenger_stop"],
+        ["jp.n02.009391", "日田", null, "18:12", "passenger_stop"],
+        ["jp.n02.009383", "久留米", null, "18:54", "passenger_stop"],
+        ["jp.n02.009327", "鳥栖", null, "19:02", "passenger_stop"],
+        ["jp.n02.009033", "博多", "19:27", null, "destination"]
+      ]
+    }
+  ],
+  "completeness": {
+    "identity": "verified",
+    "public_number": "verified",
+    "operator": "verified",
+    "validity_calendar": "unknown_pending_image_calendar_review",
+    "origin_destination": "verified",
+    "passenger_stops": "verified",
+    "times": "partial_missing_intermediate_arrivals",
+    "route_lines": "verified",
+    "station_refs": "verified_against_current_directory",
+    "provenance": "verified"
+  },
+  "review_notes": [
+    "The page's image-coded operation calendar must be extracted deterministically and reviewed before any service dates are promoted.",
+    "Later special-operation plans and disruption notices can supersede the page calendar for affected dates.",
+    "The page does not provide internal train numbers or intermediate arrival times."
+  ]
+}
