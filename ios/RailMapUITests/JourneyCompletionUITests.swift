@@ -16,7 +16,9 @@ final class JourneyCompletionUITests: XCTestCase {
         next.tap()
         let completion = app.buttons["rideEditorAICompletion"]
         XCTAssertTrue(completion.waitForExistence(timeout: 8))
-        XCTAssertFalse(completion.isEnabled)
+        // The sheet also accepts raw text imports, so it is reachable before
+        // the draft is eligible for an AI request.
+        XCTAssertTrue(completion.isEnabled)
         for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
             let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
             XCTAssertTrue(stop.waitForExistence(timeout: 8))
@@ -38,7 +40,7 @@ final class JourneyCompletionUITests: XCTestCase {
         // SwiftUI exposes the entire labelled row as a switch. Tap the
         // actual control on its trailing edge, then verify the binding changed.
         date.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
-        XCTAssertTrue(app.otherElements["rideEditorDateInput"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.textFields["rideEditorDateInput"].waitForExistence(timeout: 8))
         for _ in 0..<10 where !completion.isHittable { app.swipeUp() }
         XCTAssertTrue(completion.isEnabled)
         completion.tap()

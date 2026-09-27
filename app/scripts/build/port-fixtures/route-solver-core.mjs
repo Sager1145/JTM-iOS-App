@@ -21,6 +21,7 @@ const SCOPE_FILES = [
   "app-stations.js",
   "app-store-ops.js",
   "app-route-features.js",
+  "app-rail-history.js",
   "app-route-graph.js",
   "app-route-solver.js",
 ];

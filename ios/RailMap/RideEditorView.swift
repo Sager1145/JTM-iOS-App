@@ -701,7 +701,11 @@ struct RideEditorView: View {
                 if draft.date != nil {
                     EditorDateField(
                         title: localization.editorText("ios.editor.date"),
-                        date: $draft.date,
+                        // Clearing text keeps the explicitly enabled date
+                        // visible and invalid until it is repaired or disabled.
+                        date: Binding(
+                            get: { draft.date },
+                            set: { draft.date = $0 ?? "" }),
                         region: Region.resolved(draft),
                         focus: $focused,
                         field: .date,

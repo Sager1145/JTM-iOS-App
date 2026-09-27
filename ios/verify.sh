@@ -277,13 +277,14 @@ if [ "$run_swift" = 1 ]; then
     # so `us` and `ca` deliberately stay out of the correction below.
     # Keep the datum correction at the MapKit boundary and on every subject
     # that can be drawn: package-decoded network lines/stations,
-    # display-network lines/stations, and ridden routes. The latter keeps its
-    # WGS84 copy for statistics and the on-disk route cache, or fixing the
-    # picture would silently break route classification and double-shift
+    # display-network lines/stations, historical lines/stations, and ridden
+    # routes. The latter keeps its WGS84 copy for statistics and the on-disk
+    # route cache, or fixing the picture would silently break route
+    # classification and double-shift
     # cached rides.
     datum_network_calls=$(grep -c 'AppleMapDatum\.display' \
         "$here/RailMap/RailNetworkStore.swift" || true)
-    [ "$datum_network_calls" = 4 ] || fail \
+    [ "$datum_network_calls" = 6 ] || fail \
         "expected Apple datum conversion on package/display network lines and stations; found $datum_network_calls"
     grep -q 'self\.coordinates = AppleMapDatum\.display(coordinates, country: country)' \
         "$here/RailMap/RiddenRouteStore.swift" \

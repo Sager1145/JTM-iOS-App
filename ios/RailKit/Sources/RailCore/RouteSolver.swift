@@ -780,6 +780,10 @@ public enum RouteSolver {
 
     public struct SolvedSection: Sendable, Equatable {
         public var segmentIndex: Int
+        /// The section endpoint's fixed station identity when its dated record
+        /// is available. Route solving may internally snap through a nearby
+        /// same-name platform on the actual line, but that implementation
+        /// detail must not replace the station code stored by the journey.
         public var fromStationIndex: Int
         public var toStationIndex: Int
         public var coordinates: [Coordinate]
@@ -1178,6 +1182,20 @@ public enum RouteSolver {
         // no route at all (see `endpointAmbiguityDistanceFactor`).
         if best == nil { best = guardedFallback }
         guard let best else { return nil }
+        func fixedIdentityStationIndex(
+            _ candidates: [Int], requestedCode: String?, routingIndex: Int
+        ) -> Int {
+            guard let requestedCode, !requestedCode.isEmpty else { return routingIndex }
+            return candidates.first {
+                Stations.stationCode(stations.features[$0]) == requestedCode
+            } ?? routingIndex
+        }
+        let fromIdentityIndex = fixedIdentityStationIndex(
+            fromStations, requestedCode: section.fromN02StationCode,
+            routingIndex: best.from.stationIndex)
+        let toIdentityIndex = fixedIdentityStationIndex(
+            toStations, requestedCode: section.toN02StationCode,
+            routingIndex: best.to.stationIndex)
         let rawCoordinates = best.pathKeys.compactMap { graph.nodes[$0] }
         guard rawCoordinates.count == best.pathKeys.count else { return nil }
         var coordinates = completeRouteEndpointCoordinates(
@@ -1196,8 +1214,8 @@ public enum RouteSolver {
         let provenance = RouteGraph.TemporalProvenance.aggregate(edges: best.edges)
         return SolvedSection(
             segmentIndex: segmentIndex,
-            fromStationIndex: best.from.stationIndex,
-            toStationIndex: best.to.stationIndex,
+            fromStationIndex: fromIdentityIndex,
+            toStationIndex: toIdentityIndex,
             coordinates: coordinates,
             rawPathKeys: best.pathKeys,
             hints: best.hints,

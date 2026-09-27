@@ -53,17 +53,22 @@ final class TrainServicePatternUITests: XCTestCase {
         let includeDate = app.switches["Include a date"]
         XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
         includeDate.switches.firstMatch.tap()
-        let date = app.otherElements["rideEditorDateInput"].textFields.firstMatch
+        let date = app.textFields["rideEditorDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 8))
         let oldValue = date.value as? String ?? ""
         date.tap()
         date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,
                              count: oldValue.count) + "2026-10-12")
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorPatternDateNotice"]
-            .waitForExistence(timeout: 8))
+        XCTAssertEqual(date.value as? String, "2026-10-12")
+        let notice = app.descendants(matching: .any)["rideEditorPatternDateNotice"]
+        // The keyboard covers a screen-wide swipe's start point; scroll
+        // the editor form so its date notice is actually materialized.
+        for _ in 0..<4 where !notice.exists { app.collectionViews.firstMatch.swipeUp() }
+        XCTAssertTrue(notice.waitForExistence(timeout: 8))
 
         app.buttons["rideEditorPrevious"].tap()
         app.buttons["rideEditorPrevious"].tap()
+        for _ in 0..<4 where !origin.exists { app.collectionViews.firstMatch.swipeDown() }
         XCTAssertTrue(origin.waitForExistence(timeout: 8))
         XCTAssertTrue(origin.label.contains("東京"),
                       "Changing the ride date must not rewrite selected stops.")

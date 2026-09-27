@@ -244,7 +244,7 @@ final class WorkspaceEditingTests: XCTestCase {
         let includeDate = app.switches["Include a date"]
         XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
         includeDate.switches.firstMatch.tap()
-        let date = app.otherElements["rideEditorDateInput"].textFields.firstMatch
+        let date = app.textFields["rideEditorDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 5))
         let previous = date.value as? String ?? ""
         date.tap()
@@ -283,7 +283,7 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
         XCTAssertFalse(save.exists)
         includeDate.switches.firstMatch.tap()
-        let date = app.otherElements["rideEditorDateInput"].textFields.firstMatch
+        let date = app.textFields["rideEditorDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 5))
         let initialDate = date.value as? String ?? ""
         date.tap()
@@ -394,7 +394,7 @@ final class WorkspaceEditingTests: XCTestCase {
         advanceToDateStep(in: app, number: "Date repair")
         let includeDate = app.switches["Include a date"]
         includeDate.switches.firstMatch.tap()
-        let date = app.otherElements["rideEditorDateInput"].textFields.firstMatch
+        let date = app.textFields["rideEditorDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 5))
         replaceText(in: date, with: "")
 

@@ -9,7 +9,7 @@ const FILES = [
   "app-operator-branding.js", "railmap-basemap.js", "railmap-style.js",
   "app-coords.js", "app-config.js", "app-route-simplify.js", "app-datasets.js",
   "app-state.js", "app-stations.js", "app-store-ops.js", "app-route-features.js",
-  "app-route-graph.js", "app-route-solver.js",
+  "app-rail-history.js", "app-route-graph.js", "app-route-solver.js",
 ];
 
 function loadScope(APP_DIR, AppCore, RailNetwork) {

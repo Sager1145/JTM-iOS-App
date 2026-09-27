@@ -3455,8 +3455,8 @@ struct RailMapView: View {
 
                 let overlaysInterval = RailSignpost.map.begin("map.selection.overlays")
                 let dark = mapView.traitCollection.userInterfaceStyle == .dark
-                let installed = mapView.overlays(in: .aboveLabels)
-                let reconciliation = MapOverlayReconciliation(overlays: installed)
+                let reconciliation = overlayInstaller.reconciliation(on: mapView)
+                let installed = reconciliation.oldOverlays
                 var others: [MKOverlay] = []
                 var casings: [MKMultiPolyline] = []
                 var unselectedCores: [MKMultiPolyline] = []
