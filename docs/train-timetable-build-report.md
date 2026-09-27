@@ -39,7 +39,7 @@
 
 - `derived/train-service-timetable.sqlite`：`60ef25356d73b97ba62e92cf567e340aff8d001b123cd9fc4ad544271eb36ecf`
 - `derived/train-service-patterns.json`：`edb460d0661d9862297df42d4a5dbaac091925446cf9188ad97aa3e3faaa8b6f`
-- `audits/train-timetable-coverage.json`：`82ba46456bf690fbbfc448784d6ca7fdf263bce0909f81b7ef631b9c6ab26bd6`
+- `audits/train-timetable-coverage.json`：`4e22e7489119744639a1d9de2513251e3d30c892455800dcddcf1e5cbd82c753`
 - `migration/legacy-pattern-map.json`：`f71474289ce37c84162aa5556295f98c3286ecb038d086e45f96cd4b64c9516d`
 
 Canonical source hash：`337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb549f1a0687`。SQLite 为 417792 bytes；RailCore 资源副本字节相同。
@@ -52,4 +52,4 @@ Canonical source hash：`337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb5
 
 本次验证期间其他任务更新了 `rail-history.json` 至 2026-09-27.1。产物元数据已重建，绑定当前工作树的历史线路哈希 `13f451d4e30f7f6209ef8ce7d68b2ff4afc251cb47a40d72d48ed83f62133343`；这些历史线路改动不属于本次提交。
 
-阶段提交：`405851d` 为数据库、来源管线、种子数据和运行时基础；后续提交包含日期车次界面、跨午夜时钟修复及最终验证报告。
+阶段提交：`405851d` 为数据库、来源管线、种子数据和运行时基础；`e44ae8d` 包含日期车次界面、跨午夜时钟修复及最终验证报告。
