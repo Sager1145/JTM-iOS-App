@@ -74,6 +74,23 @@ struct TrainTimetableDatabaseTests {
         #expect(try database.coverage(on: "2026-09-29").status == .partial)
     }
 
+    @Test func applyingNormalizedClockRetainsItsFollowingServiceDay() throws {
+        let fixture = try FixtureDatabase(normalizedDayOffsetTime: true)
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let trip = try #require(queried)
+        #expect(trip.stops[1].arrivalTime == "01:03")
+        #expect(trip.stops[1].dayOffset == 1)
+        let draft = Train(id: "draft", date: nil, number: "", origin: "", destination: "",
+                          stops: [], region: "jp")
+        let applied = try #require(trip.applying(to: draft))
+        #expect(applied.stops[1].arrival == "25:03")
+        let reopened = try JSONDecoder().decode(Train.self, from: JSONEncoder().encode(applied))
+        #expect(reopened.date == "2026-09-29")
+        #expect(reopened.stops[1].arrival == "25:03")
+    }
+
     @Test func incompleteTripRemainsQueryableButCannotBecomeEditorRoute() throws {
         let fixture = try FixtureDatabase()
         defer { fixture.remove() }
@@ -184,7 +201,7 @@ private final class FixtureDatabase {
         unrelatedHolidayCalendar: Bool = false,
         stationValidUntil: String? = nil, operatorValidUntil: String? = nil,
         nationalZeroInterval: Bool = false, invalidOperatorSegmentBounds: Bool = false,
-        mixedOperatorSegments: Bool = false
+        mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false
     ) throws {
         url = FileManager.default.temporaryDirectory
             .appendingPathComponent("train-timetable-\(UUID().uuidString).sqlite")
@@ -196,6 +213,14 @@ private final class FixtureDatabase {
 
         try execute(Self.schema, on: connection)
         try execute(Self.data, on: connection)
+        if normalizedDayOffsetTime {
+            try execute("""
+                UPDATE stop_times SET arrival_time = '01:00', day_offset = 1
+                WHERE trip_id = 'shinano-1' AND stop_sequence = 1;
+                UPDATE trip_stop_time_overrides SET arrival_override = '01:03'
+                WHERE trip_id = 'shinano-1' AND stop_sequence = 1;
+                """, on: connection)
+        }
         if holidayPolicy != "none" {
             try execute(
                 "UPDATE calendars SET holiday_policy = '\(holidayPolicy)'; "

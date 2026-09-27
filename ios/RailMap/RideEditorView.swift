@@ -43,7 +43,7 @@ struct RideEditorView: View {
     /// The pattern chosen in this editing session. Kept separately from the
     /// editable stops so a later date change can be checked without rewriting
     /// any of the reader's subsequent edits.
-    @State private var selectedPatternID: String?
+    @State private var selectedPattern: TrainServicePatterns.Pattern?
     /// Whether the reader has moved the ride switch themselves. Once true the
     /// date pre-fill is finished for this session — see ``prefillRidden(forDate:)``.
     @State private var riddenIsTheReaders = false
@@ -302,7 +302,7 @@ struct RideEditorView: View {
                     draft.destination = ""
                     draft.routePolicy = nil
                     draft.routeSections = nil
-                    selectedPatternID = nil
+                    selectedPattern = nil
                     undoableDeletion = []
                     pendingRegion = nil
                     prefillRidden(forDate: draft.date)
@@ -333,11 +333,20 @@ struct RideEditorView: View {
     private var servicePatternPicker: some View {
         ServicePatternPickerView(
             region: Region.resolved(draft).code,
-            rideDate: draft.date.flatMap { $0.isEmpty ? nil : $0 }
+            rideDate: draft.date.flatMap { $0.isEmpty ? nil : $0 },
+            onSelectTrip: { trip in
+                let ridden = RideLedger.hasBeenRidden(draft)
+                guard let applied = trip.applying(to: draft, ridden: ridden) else { return }
+                draft = applied
+                selectedPattern = trip.compatibilityPattern()
+                stopIDs = draft.stops.map { _ in UUID() }
+                undoableDeletion = []
+                addedStopID = nil
+            }
         ) { pattern, reversed in
             let ridden = RideLedger.hasBeenRidden(draft)
             draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
-            selectedPatternID = pattern.id
+            selectedPattern = pattern
             stopIDs = draft.stops.map { _ in UUID() }
             undoableDeletion = []
             addedStopID = nil
@@ -361,7 +370,7 @@ struct RideEditorView: View {
             focused = nil
             stopEditMode = .inactive
             undoableDeletion = []
-            selectedPatternID = nil
+            selectedPattern = nil
         }
         if !sameVisits || draft.routePolicy != completed.routePolicy {
             let region = Region.resolved(completed).code
@@ -724,8 +733,7 @@ struct RideEditorView: View {
                     .id(RideDraftIssue.Field.date)
             }
             if !isNew { fieldIssues(.date) }
-            if let selectedPatternID,
-               let pattern = TrainServicePatterns.patterns.first(where: { $0.id == selectedPatternID }),
+            if let pattern = selectedPattern,
                let date = draft.date,
                let applicability = pattern.applicability(on: date),
                applicability != .applicable {

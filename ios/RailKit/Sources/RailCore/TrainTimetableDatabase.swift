@@ -302,13 +302,24 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     name: stop.station.name,
                     n02StationCode: stop.station.currentSourceCode,
                     platformNumber: stop.platform.flatMap(Int.init),
-                    arrival: stop.arrivalTime,
-                    departure: stop.departureTime,
+                    arrival: Self.editorTime(seconds: stop.arrivalSeconds, source: stop.arrivalTime),
+                    departure: Self.editorTime(seconds: stop.departureSeconds, source: stop.departureTime),
                     stopType: type,
                     rideSegment: ridden)
             }
             if result.region == nil { result.region = "jp" }
             return result
+        }
+
+        private static func editorTime(seconds: Int?, source: String?) -> String? {
+            guard let seconds else { return source }
+            let hour = seconds / 3600
+            let minute = seconds % 3600 / 60
+            let second = seconds % 60
+            if second != 0 || source?.split(separator: ":").count == 3 {
+                return String(format: "%02d:%02d:%02d", hour, minute, second)
+            }
+            return String(format: "%02d:%02d", hour, minute)
         }
 
         private static func nextGregorianDay(after day: String) -> String? {

@@ -32,12 +32,12 @@
 15. **车站映射**：42 个样本车站身份；研究队列有 1 个未解决映射项目（历史首班相关）。这不是全部历史车站已解决。
 16. **历史线路**：研究队列有 11 个路线项目；全部样本尚缺完整、按日期的线路与运营区段证据。历史专属站可查询，但旧编辑器暂不能应用。
 17. **来源/许可**：登记 31 个研究来源。明确限制来源为 JR 西日本时刻表门户及 Thunderbird 1 页面；12 个来源仅供核对。其余 unknown 许可不能理解为允许批量再发布。未提交受限制原始数据库或整页扫描件。
-18. **测试**：17 项 Python 管线及原始出处 golden 测试、3 项 JR East 解析测试通过；SQLite integrity_check=ok、foreign_key_check 为空；重复构建字节相同；3512 个旧站点引用及 298 个有效期迁移检查通过。最终数据库资源上的 Swift 运行时 11 项专项测试与 iOS 27 模拟器应用编译已通过；数据库冷启动打开及按日查询小样本实测约 3 ms，最终资源在并行构建负载下约 98 ms，`./ios/verify.sh --core` 输出 OK：874 项 Swift 测试及编辑/持久化/订阅 harness、导入边界检查通过。此全量 gate 启动于最后的直通策略修改之前，该修改已在最终 11 项专项测试中单独编译验证。
+18. **测试**：17 项 Python 管线及原始出处 golden 测试、3 项 JR East 解析测试通过；SQLite integrity_check=ok、foreign_key_check 为空；重复构建字节相同；3512 个旧站点引用及 298 个有效期迁移检查通过。最终数据库资源上的 Swift 运行时 12 项专项测试与 iOS 27 模拟器应用编译已通过；数据库冷启动打开及按日查询小样本实测约 3 ms，最终资源在并行构建负载下约 98 ms，`./ios/verify.sh --core` 输出 OK：874 项 Swift 测试及编辑/持久化/订阅 harness、导入边界检查通过。此全量 gate 启动于最后的直通策略修改之前，该修改已在最终 12 项专项测试中单独编译验证；新增跨午夜 day_offset 回归验证 01:03 + 次日保存、重开后仍为 25:03，最终专项冷查询约 10 ms。
 19. **Route audit**：76 段样本乘客停站之间的路线前置条件未验证，solver 未运行；报告 `complete=false`，不把缺乏 route/operator 的样本开放为可靠路线选择。
-20. **UI regression**：专用 iOS 27 设备上，草稿丢弃（86.962 s）、保存后重启（55.827 s）、日期变更保留编辑（37.269 s）分别输出通过。只读精确车次用例的导航前置步骤仍在修正验证，暂不算通过。共享设备首轮受另一测试任务并发影响；失败断言与运行器异常没有计作通过。旧 298 Pattern 全部保留，派生的 8 个 Pattern 不能替换旧目录。精确车次不可简单反转；日期改变保留用户编辑并提示重核。
+20. **UI regression**：专用 iOS 27 设备上，草稿丢弃（86.962 s）、保存后重启（55.827 s）、日期变更保留编辑（37.269 s）分别输出通过。只读精确车次用例单独运行通过（29.161 s，TEST SUCCEEDED），验证しなの的 07:00、名古屋、未确认状态及无应用按钮；结果位于 `/tmp/jtm-runtime-readonly-agent-2.xcresult`。用例补齐既有“置き換える”确认步骤，未因此修改产品行为。这四个用例来自分别运行的结果，不能理解为同一批全套 UI 测试通过。共享设备首轮受另一测试任务并发影响；失败断言与运行器异常没有计作通过。旧 298 Pattern 全部保留，派生的 8 个 Pattern 不能替换旧目录。精确车次不可简单反转；日期改变保留用户编辑并提示重核。
 21. **生成产物哈希（SHA-256）**：
 
-- `derived/train-service-timetable.sqlite`：`250a0c00f2a063981126f15e91fd839b55780c2cc54090f3145e8a90e703d709`
+- `derived/train-service-timetable.sqlite`：`60ef25356d73b97ba62e92cf567e340aff8d001b123cd9fc4ad544271eb36ecf`
 - `derived/train-service-patterns.json`：`edb460d0661d9862297df42d4a5dbaac091925446cf9188ad97aa3e3faaa8b6f`
 - `audits/train-timetable-coverage.json`：`82ba46456bf690fbbfc448784d6ca7fdf263bce0909f81b7ef631b9c6ab26bd6`
 - `migration/legacy-pattern-map.json`：`f71474289ce37c84162aa5556295f98c3286ecb038d086e45f96cd4b64c9516d`
@@ -50,4 +50,6 @@ Canonical source hash：`337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb5
 
 复现步骤见 [数据库架构](train-timetable-database.md) 与 `ios/tools/train_timetable.py --help`。覆盖明细见 `app/data/train-service-history/audits/train-timetable-coverage.json`。
 
-本次验证期间其他任务更新了 `rail-history.json` 至 2026-09-27.1。产物元数据已重建，绑定当前工作树的历史线路哈希 `e968a8a76b4dd1c6d8ac6b1c090d34163e8f735fba4959d5696716126f30ed1d`；这些历史线路改动不属于本次提交。
+本次验证期间其他任务更新了 `rail-history.json` 至 2026-09-27.1。产物元数据已重建，绑定当前工作树的历史线路哈希 `13f451d4e30f7f6209ef8ce7d68b2ff4afc251cb47a40d72d48ed83f62133343`；这些历史线路改动不属于本次提交。
+
+阶段提交：`405851d` 为数据库、来源管线、种子数据和运行时基础；后续提交包含日期车次界面、跨午夜时钟修复及最终验证报告。

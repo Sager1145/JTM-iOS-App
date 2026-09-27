@@ -7,6 +7,64 @@ final class TrainServicePatternUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    func testPartialExactTripShowsSourceTimesWithoutOfferingRouteApplication() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
+        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = "new"
+        app.launch()
+
+        let next = app.buttons["rideEditorNext"]
+        XCTAssertTrue(next.waitForExistence(timeout: 30))
+        next.tap()
+        app.buttons["rideEditorServicePattern"].tap()
+        let initialSearch = app.searchFields.firstMatch
+        XCTAssertTrue(initialSearch.waitForExistence(timeout: 8))
+        initialSearch.tap()
+        initialSearch.typeText("はちおうじ")
+        let legacy = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS %@", "東京〜八王子")).firstMatch
+        XCTAssertTrue(legacy.waitForExistence(timeout: 8))
+        legacy.tap()
+        next.tap()
+        next.tap()
+        let includeDate = app.switches["Include a date"]
+        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
+        includeDate.switches.firstMatch.tap()
+        let date = app.textFields["rideEditorDateInput"]
+        XCTAssertTrue(date.waitForExistence(timeout: 8))
+        let oldValue = date.value as? String ?? ""
+        date.tap()
+        date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue,
+                             count: oldValue.count) + "2026-09-27")
+        app.buttons["rideEditorPrevious"].tap()
+        XCTAssertTrue(app.otherElements["rideEditorNumber"].textFields.firstMatch
+            .waitForExistence(timeout: 8))
+        app.buttons["rideEditorPrevious"].tap()
+        let picker = app.buttons["rideEditorServicePattern"]
+        for _ in 0..<6 where !picker.exists { app.collectionViews.firstMatch.swipeDown() }
+        XCTAssertTrue(picker.waitForExistence(timeout: 8), app.debugDescription)
+        picker.tap()
+        let replaceStops = app.buttons["置き換える"]
+        XCTAssertTrue(replaceStops.waitForExistence(timeout: 8), app.debugDescription)
+        replaceStops.tap()
+
+        let row = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier BEGINSWITH %@",
+                                  "timetableIncompleteTrip-jr-central.shinano.1.")).firstMatch
+        for _ in 0..<10 {
+            if row.waitForExistence(timeout: 1) { break }
+            app.collectionViews.firstMatch.swipeUp()
+        }
+        XCTAssertTrue(row.waitForExistence(timeout: 8), app.debugDescription)
+        XCTAssertTrue(row.label.contains("07:00"))
+        XCTAssertTrue(row.label.contains("名古屋"))
+        XCTAssertTrue(row.label.contains("未確認"))
+        XCTAssertEqual(app.buttons.matching(identifier: row.identifier).count, 0,
+                       "Unverified route facts must remain read-only.")
+    }
+
     func testSelectedPatternRechecksChangedDateWithoutReplacingStops() {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
@@ -75,7 +133,9 @@ final class TrainServicePatternUITests: XCTestCase {
         origin.tap()
         let departureAfter = app.textFields["rideEditorStopDeparture"]
         XCTAssertTrue(departureAfter.waitForExistence(timeout: 8))
-        XCTAssertEqual(departureAfter.value as? String, "07:15")
+        XCTAssertEqual((departureAfter.value as? String)?.split(separator: ":")
+            .compactMap { Int($0) }, [7, 15],
+            "Changing the date must preserve the edited departure time.")
         let riddenAfter = app.switches["rideEditorStopRidden"]
         XCTAssertTrue(riddenAfter.waitForExistence(timeout: 8))
         XCTAssertNotEqual(riddenAfter.value as? String, "1",
