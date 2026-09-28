@@ -22193,6 +22193,258 @@
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
+        "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "札幌",
+    "label": "富良野〜札幌",
+    "lines": [],
+    "name": "フラノラベンダーエクスプレス",
+    "optionalStops": [],
+    "origin": "富良野",
+    "patternId": "tt-furano-lavender-express-9e88ea827abf",
+    "serviceId": "furano-lavender-express",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "富良野",
+        "sourceCode": "000137"
+      },
+      {
+        "name": "芦別",
+        "sourceCode": "000123"
+      },
+      {
+        "name": "滝川",
+        "sourceCode": "000117"
+      },
+      {
+        "name": "岩見沢",
+        "sourceCode": "000153"
+      },
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "富良野",
+    "label": "札幌〜富良野",
+    "lines": [],
+    "name": "フラノラベンダーエクスプレス",
+    "optionalStops": [],
+    "origin": "札幌",
+    "patternId": "tt-furano-lavender-express-e7508936b4e9",
+    "serviceId": "furano-lavender-express",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      },
+      {
+        "name": "岩見沢",
+        "sourceCode": "000153"
+      },
+      {
+        "name": "滝川",
+        "sourceCode": "000117"
+      },
+      {
+        "name": "芦別",
+        "sourceCode": "000123"
+      },
+      {
+        "name": "富良野",
+        "sourceCode": "000137"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.hida.61.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "高山",
+    "label": "名古屋〜高山",
+    "lines": [],
+    "name": "ひだ",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-hida-02d847fe5a76",
+    "serviceId": "hida",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "高山",
+        "sourceCode": "002587"
+      }
+    ],
+    "validFrom": "2013-07-06",
+    "validUntil": "2013-09-08",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.hida.82.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "名古屋",
+    "label": "高山〜名古屋",
+    "lines": [],
+    "name": "ひだ",
+    "optionalStops": [],
+    "origin": "高山",
+    "patternId": "tt-hida-33bc59d879a8",
+    "serviceId": "hida",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "高山",
+        "sourceCode": "002587"
+      },
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.hida.83.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "高山",
+    "label": "名古屋〜高山",
+    "lines": [],
+    "name": "ひだ",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-hida-77d3b6df4aca",
+    "serviceId": "hida",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "高山",
+        "sourceCode": "002587"
+      }
+    ],
+    "validFrom": "2013-07-15",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.hida.81.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "高山",
+    "label": "名古屋〜高山",
+    "lines": [],
+    "name": "ひだ",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-hida-8bfd81f2b5d7",
+    "serviceId": "hida",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "高山",
+        "sourceCode": "002587"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-23",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
         "jr-east.hitachi.26.2026-09-18"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
@@ -22291,6 +22543,270 @@
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
+        "jr-hokkaido.hokuto.84.2026-08-07"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "函館",
+    "label": "札幌〜函館",
+    "lines": [],
+    "name": "北斗",
+    "optionalStops": [],
+    "origin": "札幌",
+    "patternId": "tt-hokuto-60044bf01f23",
+    "serviceId": "hokuto",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      },
+      {
+        "name": "新札幌",
+        "sourceCode": "000278"
+      },
+      {
+        "name": "南千歳",
+        "sourceCode": "000353"
+      },
+      {
+        "name": "苫小牧",
+        "sourceCode": "000367"
+      },
+      {
+        "name": "白老",
+        "sourceCode": "000383"
+      },
+      {
+        "name": "登別",
+        "sourceCode": "000395"
+      },
+      {
+        "name": "東室蘭",
+        "sourceCode": "000406"
+      },
+      {
+        "name": "伊達紋別",
+        "sourceCode": "000393"
+      },
+      {
+        "name": "洞爺",
+        "sourceCode": "000384"
+      },
+      {
+        "name": "長万部",
+        "sourceCode": "000387"
+      },
+      {
+        "name": "八雲",
+        "sourceCode": "000412"
+      },
+      {
+        "name": "森",
+        "sourceCode": "000420"
+      },
+      {
+        "name": "大沼公園",
+        "sourceCode": "000426"
+      },
+      {
+        "name": "新函館北斗",
+        "sourceCode": "000429"
+      },
+      {
+        "name": "五稜郭",
+        "sourceCode": "000439"
+      },
+      {
+        "name": "函館",
+        "sourceCode": "000455"
+      }
+    ],
+    "validFrom": "2026-08-07",
+    "validUntil": "2026-09-21",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.hokuto.91.2026-08-07"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "札幌",
+    "label": "函館〜札幌",
+    "lines": [],
+    "name": "北斗",
+    "optionalStops": [],
+    "origin": "函館",
+    "patternId": "tt-hokuto-b6894912ef74",
+    "serviceId": "hokuto",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "函館",
+        "sourceCode": "000455"
+      },
+      {
+        "name": "五稜郭",
+        "sourceCode": "000439"
+      },
+      {
+        "name": "新函館北斗",
+        "sourceCode": "000429"
+      },
+      {
+        "name": "大沼公園",
+        "sourceCode": "000426"
+      },
+      {
+        "name": "森",
+        "sourceCode": "000420"
+      },
+      {
+        "name": "八雲",
+        "sourceCode": "000412"
+      },
+      {
+        "name": "長万部",
+        "sourceCode": "000387"
+      },
+      {
+        "name": "洞爺",
+        "sourceCode": "000384"
+      },
+      {
+        "name": "伊達紋別",
+        "sourceCode": "000393"
+      },
+      {
+        "name": "東室蘭",
+        "sourceCode": "000406"
+      },
+      {
+        "name": "登別",
+        "sourceCode": "000395"
+      },
+      {
+        "name": "白老",
+        "sourceCode": "000383"
+      },
+      {
+        "name": "苫小牧",
+        "sourceCode": "000367"
+      },
+      {
+        "name": "南千歳",
+        "sourceCode": "000353"
+      },
+      {
+        "name": "新札幌",
+        "sourceCode": "000278"
+      },
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      }
+    ],
+    "validFrom": "2026-08-07",
+    "validUntil": "2026-09-21",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.kamui.26.2026-07-04"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "札幌",
+    "label": "旭川〜札幌",
+    "lines": [],
+    "name": "カムイ",
+    "optionalStops": [],
+    "origin": "旭川",
+    "patternId": "tt-kamui-2260eb11a822",
+    "serviceId": "kamui",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      },
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      }
+    ],
+    "validFrom": "2026-07-04",
+    "validUntil": "2026-09-28",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.kamui.15.2026-08-07"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "旭川",
+    "label": "札幌〜旭川",
+    "lines": [],
+    "name": "カムイ",
+    "optionalStops": [],
+    "origin": "札幌",
+    "patternId": "tt-kamui-3ec593053d32",
+    "serviceId": "kamui",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      },
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      }
+    ],
+    "validFrom": "2026-08-07",
+    "validUntil": "2026-08-10",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
         "jr-hokkaido.kamui.93.2026-05-16"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
@@ -22349,6 +22865,82 @@
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
+        "jr-hokkaido.kamui.36.2026-08-07"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "札幌",
+    "label": "旭川〜札幌",
+    "lines": [],
+    "name": "カムイ",
+    "optionalStops": [],
+    "origin": "旭川",
+    "patternId": "tt-kamui-b52182dac25d",
+    "serviceId": "kamui",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      },
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      }
+    ],
+    "validFrom": "2026-08-07",
+    "validUntil": "2026-08-10",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.kamui.9.2026-07-04"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "旭川",
+    "label": "札幌〜旭川",
+    "lines": [],
+    "name": "カムイ",
+    "optionalStops": [],
+    "origin": "札幌",
+    "patternId": "tt-kamui-f98be3d7e547",
+    "serviceId": "kamui",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      },
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      }
+    ],
+    "validFrom": "2026-07-04",
+    "validUntil": "2026-09-28",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
         "jr-hokkaido.lilac.95.2026-05-16"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
@@ -22401,6 +22993,486 @@
     ],
     "validFrom": "2026-05-16",
     "validUntil": "2026-05-17",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.nanki.84.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "名古屋",
+    "label": "紀伊勝浦〜名古屋",
+    "lines": [],
+    "name": "ワイドビュー南紀",
+    "optionalStops": [],
+    "origin": "紀伊勝浦",
+    "patternId": "tt-nanki-07dcd72ef451",
+    "serviceId": "nanki",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      },
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.nanki.83.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "紀伊勝浦",
+    "label": "名古屋〜紀伊勝浦",
+    "lines": [],
+    "name": "ワイドビュー南紀",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-nanki-42a890226b9b",
+    "serviceId": "nanki",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      }
+    ],
+    "validFrom": "2013-07-14",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.nanki.81.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "紀伊勝浦",
+    "label": "名古屋〜紀伊勝浦",
+    "lines": [],
+    "name": "ワイドビュー南紀",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-nanki-aa87a44051e6",
+    "serviceId": "nanki",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-22",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.nanki.82.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "名古屋",
+    "label": "紀伊勝浦〜名古屋",
+    "lines": [],
+    "name": "ワイドビュー南紀",
+    "optionalStops": [],
+    "origin": "紀伊勝浦",
+    "patternId": "tt-nanki-ada7d84fc272",
+    "serviceId": "nanki",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      },
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      }
+    ],
+    "validFrom": "2013-08-09",
+    "validUntil": "2013-08-19",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "函館",
+    "label": "札幌〜函館",
+    "lines": [],
+    "name": "特急ニセコ号",
+    "optionalStops": [],
+    "origin": "札幌",
+    "patternId": "tt-niseko-78b57d0fbad2",
+    "serviceId": "niseko",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      },
+      {
+        "name": "手稲",
+        "sourceCode": "000192"
+      },
+      {
+        "name": "小樽",
+        "sourceCode": "000159"
+      },
+      {
+        "name": "余市",
+        "sourceCode": "000164"
+      },
+      {
+        "name": "倶知安",
+        "sourceCode": "000338"
+      },
+      {
+        "name": "ニセコ",
+        "sourceCode": "000352"
+      },
+      {
+        "name": "昆布",
+        "sourceCode": "000356"
+      },
+      {
+        "name": "黒松内",
+        "sourceCode": "000366"
+      },
+      {
+        "name": "長万部",
+        "sourceCode": "000387"
+      },
+      {
+        "name": "八雲",
+        "sourceCode": "000412"
+      },
+      {
+        "name": "森",
+        "sourceCode": "000420"
+      },
+      {
+        "name": "新函館北斗",
+        "sourceCode": "000429"
+      },
+      {
+        "name": "五稜郭",
+        "sourceCode": "000439"
+      },
+      {
+        "name": "函館",
+        "sourceCode": "000455"
+      }
+    ],
+    "validFrom": "2026-09-05",
+    "validUntil": "2026-09-28",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "札幌",
+    "label": "函館〜札幌",
+    "lines": [],
+    "name": "特急ニセコ号",
+    "optionalStops": [],
+    "origin": "函館",
+    "patternId": "tt-niseko-d8db2f27c784",
+    "serviceId": "niseko",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "函館",
+        "sourceCode": "000455"
+      },
+      {
+        "name": "五稜郭",
+        "sourceCode": "000439"
+      },
+      {
+        "name": "新函館北斗",
+        "sourceCode": "000429"
+      },
+      {
+        "name": "大沼公園",
+        "sourceCode": "000426"
+      },
+      {
+        "name": "森",
+        "sourceCode": "000420"
+      },
+      {
+        "name": "八雲",
+        "sourceCode": "000412"
+      },
+      {
+        "name": "長万部",
+        "sourceCode": "000387"
+      },
+      {
+        "name": "黒松内",
+        "sourceCode": "000366"
+      },
+      {
+        "name": "昆布",
+        "sourceCode": "000356"
+      },
+      {
+        "name": "ニセコ",
+        "sourceCode": "000352"
+      },
+      {
+        "name": "倶知安",
+        "sourceCode": "000338"
+      },
+      {
+        "name": "余市",
+        "sourceCode": "000164"
+      },
+      {
+        "name": "小樽",
+        "sourceCode": "000159"
+      },
+      {
+        "name": "手稲",
+        "sourceCode": "000192"
+      },
+      {
+        "name": "札幌",
+        "sourceCode": "000227"
+      }
+    ],
+    "validFrom": "2026-09-05",
+    "validUntil": "2026-09-28",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.sarobetsu.3.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "稚内",
+    "label": "旭川〜稚内",
+    "lines": [],
+    "name": "サロベツ",
+    "optionalStops": [],
+    "origin": "旭川",
+    "patternId": "tt-sarobetsu-29c8684ac556",
+    "serviceId": "sarobetsu",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      },
+      {
+        "name": "稚内",
+        "sourceCode": "000001"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-hokkaido.sarobetsu.4.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "旭川",
+    "label": "稚内〜旭川",
+    "lines": [],
+    "name": "サロベツ",
+    "optionalStops": [],
+    "origin": "稚内",
+    "patternId": "tt-sarobetsu-61c4d0c6ef53",
+    "serviceId": "sarobetsu",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "稚内",
+        "sourceCode": "000001"
+      },
+      {
+        "name": "旭川",
+        "sourceCode": "000095"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.shinano.85.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "松本",
+    "label": "名古屋〜松本",
+    "lines": [],
+    "name": "しなの",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-shinano-2e0c912b2af0",
+    "serviceId": "shinano",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "松本",
+        "sourceCode": "002506"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.shinano.84.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "名古屋",
+    "label": "白馬〜名古屋",
+    "lines": [],
+    "name": "しなの",
+    "optionalStops": [],
+    "origin": "白馬",
+    "patternId": "tt-shinano-68c29ceb73d4",
+    "serviceId": "shinano",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "白馬",
+        "sourceCode": "001946"
+      },
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
     "via": []
   },
   {
@@ -22479,6 +23551,82 @@
     ],
     "validFrom": "2026-09-18",
     "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.shinano.81.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "白馬",
+    "label": "名古屋〜白馬",
+    "lines": [],
+    "name": "しなの",
+    "optionalStops": [],
+    "origin": "名古屋",
+    "patternId": "tt-shinano-947dcb2020cb",
+    "serviceId": "shinano",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      },
+      {
+        "name": "白馬",
+        "sourceCode": "001946"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-central.shinano.82.2013-summer"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "名古屋",
+    "label": "松本〜名古屋",
+    "lines": [],
+    "name": "しなの",
+    "optionalStops": [],
+    "origin": "松本",
+    "patternId": "tt-shinano-9d85b58cf5b0",
+    "serviceId": "shinano",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "松本",
+        "sourceCode": "002506"
+      },
+      {
+        "name": "名古屋",
+        "sourceCode": "005451"
+      }
+    ],
+    "validFrom": "2013-07-13",
+    "validUntil": "2013-09-24",
     "via": []
   },
   {
@@ -22577,6 +23725,162 @@
     ],
     "validFrom": "2026-08-08",
     "validUntil": "2026-08-17",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-west.west-express-ginga.kumano-day.2026-07-05"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "京都",
+    "label": "新宮〜京都",
+    "lines": [],
+    "name": "WEST EXPRESS 銀河",
+    "optionalStops": [],
+    "origin": "新宮",
+    "patternId": "tt-west-express-ginga-3286be1d4f0e",
+    "serviceId": "west-express-ginga",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "新宮",
+        "sourceCode": "008874"
+      },
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      },
+      {
+        "name": "太地",
+        "sourceCode": "009025"
+      },
+      {
+        "name": "古座",
+        "sourceCode": "009224"
+      },
+      {
+        "name": "串本",
+        "sourceCode": "009265"
+      },
+      {
+        "name": "周参見",
+        "sourceCode": "009191"
+      },
+      {
+        "name": "白浜",
+        "sourceCode": "008915"
+      },
+      {
+        "name": "紀伊田辺",
+        "sourceCode": "008867"
+      },
+      {
+        "name": "御坊",
+        "sourceCode": "008657"
+      },
+      {
+        "name": "海南",
+        "sourceCode": "008442"
+      },
+      {
+        "name": "和歌山",
+        "sourceCode": "008365"
+      },
+      {
+        "name": "日根野",
+        "sourceCode": "008072"
+      },
+      {
+        "name": "天王寺",
+        "sourceCode": "007439"
+      },
+      {
+        "name": "大阪",
+        "sourceCode": "007068"
+      },
+      {
+        "name": "新大阪",
+        "sourceCode": "006911"
+      },
+      {
+        "name": "京都",
+        "sourceCode": "006079"
+      }
+    ],
+    "validFrom": "2026-07-05",
+    "validUntil": "2026-09-28",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-west.west-express-ginga.kumano-night.2026-07-03"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "新宮",
+    "label": "京都〜新宮",
+    "lines": [],
+    "name": "WEST EXPRESS 銀河",
+    "optionalStops": [],
+    "origin": "京都",
+    "patternId": "tt-west-express-ginga-7f7a871e0fd8",
+    "serviceId": "west-express-ginga",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "京都",
+        "sourceCode": "006079"
+      },
+      {
+        "name": "新大阪",
+        "sourceCode": "006911"
+      },
+      {
+        "name": "大阪",
+        "sourceCode": "007068"
+      },
+      {
+        "name": "串本",
+        "sourceCode": "009265"
+      },
+      {
+        "name": "古座",
+        "sourceCode": "009224"
+      },
+      {
+        "name": "太地",
+        "sourceCode": "009025"
+      },
+      {
+        "name": "紀伊勝浦",
+        "sourceCode": "008974"
+      },
+      {
+        "name": "新宮",
+        "sourceCode": "008874"
+      }
+    ],
+    "validFrom": "2026-07-03",
+    "validUntil": "2026-09-29",
     "via": []
   },
   {

@@ -90,6 +90,7 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertEqual(23 * 3600 + 55 * 60, occurrence["stop_times"][0]["departure_seconds"])
         self.assertEqual(24 * 3600 + 20 * 60, occurrence["stop_times"][1]["arrival_seconds"])
         self.assertEqual("00:20", occurrence["stop_times"][1]["arrival_time"])
+        self.assertEqual(1, occurrence["stop_times"][1]["arrival_day_offset"])
         self.assertEqual([], timetable.materialize(data, "2026-01-02"))
 
     def test_builder_is_byte_reproducible_and_creates_runtime_indexes(self):
@@ -103,7 +104,10 @@ class TrainTimetablePipelineTests(unittest.TestCase):
             metadata = dict(connection.execute("SELECT key,value FROM metadata"))
             indexes = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='index'")}
             line_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_line_segments)")}
+            stop_columns = {row[1] for row in connection.execute("PRAGMA table_info(stop_times)")}
+            override_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_stop_time_overrides)")}
             seconds = connection.execute("SELECT departure_seconds FROM stop_times WHERE trip_id='trip.test' AND stop_sequence=0").fetchone()[0]
+            override_offset = connection.execute("SELECT arrival_day_offset_override FROM trip_stop_time_overrides WHERE trip_id='trip.test'").fetchone()[0]
         finally:
             connection.close()
         self.assertEqual("Asia/Tokyo", metadata["timezone"])
@@ -112,7 +116,10 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertIn("idx_line_segments_current_identity", indexes)
         self.assertIn("idx_line_segments_history_identity", indexes)
         self.assertTrue({"reference_kind", "current_n02_line_id", "rail_history_id"} <= line_columns)
+        self.assertTrue({"arrival_day_offset", "departure_day_offset"} <= stop_columns)
+        self.assertTrue({"arrival_day_offset_override", "departure_day_offset_override"} <= override_columns)
         self.assertEqual(86100, seconds)
+        self.assertEqual(1, override_offset)
 
     def test_unknown_station_and_backwards_time_are_rejected(self):
         manifest, data, origins = self.load()
@@ -154,8 +161,59 @@ class TrainTimetablePipelineTests(unittest.TestCase):
 
     def test_total_service_time_is_bounded_below_72_hours(self):
         self.assertEqual(25 * 3600, timetable.service_seconds("01:00", 1, "fixture"))
+        self.assertEqual(25 * 3600 + 3 * 60, timetable.service_seconds("25:03", 0, "fixture"))
+        with self.assertRaises(timetable.DatasetError):
+            timetable.service_seconds("25:03", 1, "fixture")
         with self.assertRaises(timetable.DatasetError):
             timetable.service_seconds("01:00", 3, "fixture")
+
+    def test_arrival_and_departure_offsets_can_cross_midnight_at_one_stop(self):
+        manifest, data, origins = self.load()
+        data["station_identities"].append({
+            "station_id": "station.c",
+            "name_snapshot": self.station_c[1],
+            "reference_kind": "current_n02",
+            "current_source_code": self.station_c[0],
+        })
+        origins[("station_identities", 2)] = "fixture:station-c"
+        data["stop_times"][0]["departure_time"] = "23:30"
+        middle = data["stop_times"][1]
+        middle.update({
+            "arrival_time": "23:42",
+            "departure_time": "00:30",
+            "arrival_day_offset": 0,
+            "departure_day_offset": 1,
+            "call_type": "passenger_stop",
+        })
+        middle.pop("day_offset", None)
+        data["stop_times"].append({
+            "trip_id": "trip.test",
+            "stop_sequence": 2,
+            "station_id": "station.c",
+            "arrival_time": "00:50",
+            "arrival_day_offset": 1,
+            "call_type": "destination",
+            "time_accuracy": "minute",
+            "source_id": "source.test",
+        })
+        origins[("stop_times", 2)] = "fixture:station-c-stop"
+        data["trips"][0]["destination_station_id"] = "station.c"
+        data["trip_operator_segments"][0]["to_sequence"] = 2
+        data["trip_stop_time_overrides"] = []
+
+        self.assertEqual([], timetable.validate_dataset(data, origins, manifest))
+        stops = timetable.materialize(data, "2026-01-01")[0]["stop_times"]
+        self.assertEqual(23 * 3600 + 42 * 60, stops[1]["arrival_seconds"])
+        self.assertEqual(24 * 3600 + 30 * 60, stops[1]["departure_seconds"])
+        self.assertEqual(24 * 3600 + 50 * 60, stops[2]["arrival_seconds"])
+
+    def test_side_offset_requires_its_corresponding_clock(self):
+        manifest, data, origins = self.load()
+        data["stop_times"][0]["arrival_day_offset"] = 0
+        data["trip_stop_time_overrides"][0]["departure_day_offset_override"] = 1
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("arrival_day_offset requires arrival_time" in error for error in errors))
+        self.assertTrue(any("departure_day_offset_override requires departure_override" in error for error in errors))
 
     def test_overlapping_duplicate_published_occurrence_is_rejected(self):
         manifest, data, origins = self.load()

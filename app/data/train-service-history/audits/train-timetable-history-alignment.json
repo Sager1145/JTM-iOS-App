@@ -2,9 +2,73 @@
   "alignedChecks": 0,
   "asOfDate": "2026-09-28",
   "complete": false,
-  "dailyOccurrencesChecked": 181,
+  "dailyOccurrencesChecked": 865,
   "errorChecks": 0,
   "findings": [
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.hida.61.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.hida.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 15,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.hida.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.hida.83.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 13,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.nanki.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.nanki.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 28,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.nanki.83.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 29,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.nanki.84.2013-summer"
+    },
     {
       "canPublishRouteLines": false,
       "kind": "route",
@@ -12,6 +76,38 @@
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-central.shinano.1.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 25,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.shinano.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 27,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.shinano.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 25,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.shinano.84.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 27,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.shinano.85.2013-summer"
     },
     {
       "canPublishRouteLines": false,
@@ -225,6 +321,70 @@
     {
       "canPublishRouteLines": false,
       "kind": "route",
+      "occurrenceCount": 57,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 57,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 12,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.hokuto.84.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 12,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.hokuto.91.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.15.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 32,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.26.2026-07-04"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.36.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 32,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.9.2026-07-04"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
       "occurrenceCount": 2,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
@@ -237,6 +397,38 @@
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-hokkaido.lilac.95.2026-05-16"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 16,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 16,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.sarobetsu.3.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.sarobetsu.4.2026-07-01"
     },
     {
       "canPublishRouteLines": false,
@@ -477,6 +669,22 @@
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-shikoku.shiokaze.9.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 23,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-west.west-express-ginga.kumano-day.2026-07-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 24,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-west.west-express-ginga.kumano-night.2026-07-03"
     }
   ],
   "historicalStationChecks": 0,
@@ -488,11 +696,107 @@
   "routeAttestations": [
     {
       "canPublishRouteLines": false,
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.hida.61.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.hida.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 15,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.hida.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.hida.83.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 13,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.nanki.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.nanki.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 28,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.nanki.83.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 29,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.nanki.84.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
       "occurrenceCount": 11,
       "reason": "missing_trip_line_segments",
       "segments": [],
       "status": "unverified",
       "tripId": "jr-central.shinano.1.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 25,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.shinano.81.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 27,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.shinano.82.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 25,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.shinano.84.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 27,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.shinano.85.2013-summer"
     },
     {
       "canPublishRouteLines": false,
@@ -692,6 +996,70 @@
     },
     {
       "canPublishRouteLines": false,
+      "occurrenceCount": 57,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 57,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 12,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.hokuto.84.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 12,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.hokuto.91.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.15.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 32,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.26.2026-07-04"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 3,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.36.2026-08-07"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 32,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.9.2026-07-04"
+    },
+    {
+      "canPublishRouteLines": false,
       "occurrenceCount": 2,
       "reason": "missing_trip_line_segments",
       "segments": [],
@@ -705,6 +1073,38 @@
       "segments": [],
       "status": "unverified",
       "tripId": "jr-hokkaido.lilac.95.2026-05-16"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 16,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 16,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.sarobetsu.3.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.sarobetsu.4.2026-07-01"
     },
     {
       "canPublishRouteLines": false,
@@ -945,12 +1345,28 @@
       "segments": [],
       "status": "unverified",
       "tripId": "jr-shikoku.shiokaze.9.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 23,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-west.west-express-ginga.kumano-day.2026-07-05"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 24,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-west.west-express-ginga.kumano-night.2026-07-03"
     }
   ],
   "schemaVersion": "1.0.0",
   "serviceDateSemantics": "Asia/Tokyo operating day; stop day_offset does not change the service date",
   "timezone": "Asia/Tokyo",
-  "tripTemplates": 34,
-  "tripTemplatesWithOccurrences": 34,
-  "unverifiedChecks": 44
+  "tripTemplates": 60,
+  "tripTemplatesWithOccurrences": 60,
+  "unverifiedChecks": 70
 }

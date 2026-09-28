@@ -76,3 +76,17 @@ boundary or physical feature identifiers, so no Shinano line segment is
 normalized. The JR East and JR Central website terms prohibit unlicensed reuse;
 the registry stores factual metadata and locators only, with automated extraction
 disabled.
+
+## Parallel reviewed batches
+
+The 2013 JR Central summer announcement adds only its twelve printed temporary
+endpoint templates and explicit dates. The seven Shinano 81 departure exceptions
+are separate dated overrides. Current directory lookup is marked partial for
+2013 correspondence; it does not certify a historical railway identity.
+
+Each independent batch uses separate source/candidate/normalized files. The
+manifest selects these via existing globs. `rebuild-reviewed-train-timetable.py`
+runs their normalizers in dependency order and builds the read-only artifact.
+Original source documents are not shipped; content hashes identify reviewed
+public documents. Scheduled announcements are planned-service evidence, not
+proof that a train actually ran without disruption.

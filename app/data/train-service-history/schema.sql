@@ -149,12 +149,16 @@ CREATE TABLE stop_times (
     arrival_seconds INTEGER CHECK (arrival_seconds IS NULL OR arrival_seconds >= 0),
     departure_seconds INTEGER CHECK (departure_seconds IS NULL OR departure_seconds >= 0),
     day_offset INTEGER NOT NULL DEFAULT 0 CHECK (day_offset >= 0),
+    arrival_day_offset INTEGER CHECK (arrival_day_offset IS NULL OR arrival_day_offset >= 0),
+    departure_day_offset INTEGER CHECK (departure_day_offset IS NULL OR departure_day_offset >= 0),
     call_type TEXT NOT NULL CHECK (call_type IN ('origin', 'passenger_stop', 'destination', 'pass', 'operational_stop', 'unknown')),
     pickup_allowed INTEGER NOT NULL DEFAULT 1 CHECK (pickup_allowed IN (0, 1)),
     dropoff_allowed INTEGER NOT NULL DEFAULT 1 CHECK (dropoff_allowed IN (0, 1)),
     platform TEXT,
     time_accuracy TEXT NOT NULL CHECK (time_accuracy IN ('exact', 'minute', 'approximate', 'unknown')),
     source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    CHECK (arrival_day_offset IS NULL OR arrival_time IS NOT NULL),
+    CHECK (departure_day_offset IS NULL OR departure_time IS NOT NULL),
     PRIMARY KEY (trip_id, stop_sequence)
 );
 
@@ -166,7 +170,11 @@ CREATE TABLE trip_stop_time_overrides (
     departure_override TEXT,
     arrival_seconds_override INTEGER CHECK (arrival_seconds_override IS NULL OR arrival_seconds_override >= 0),
     departure_seconds_override INTEGER CHECK (departure_seconds_override IS NULL OR departure_seconds_override >= 0),
+    arrival_day_offset_override INTEGER CHECK (arrival_day_offset_override IS NULL OR arrival_day_offset_override >= 0),
+    departure_day_offset_override INTEGER CHECK (departure_day_offset_override IS NULL OR departure_day_offset_override >= 0),
     source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    CHECK (arrival_day_offset_override IS NULL OR arrival_override IS NOT NULL),
+    CHECK (departure_day_offset_override IS NULL OR departure_override IS NOT NULL),
     PRIMARY KEY (trip_id, service_date, stop_sequence),
     FOREIGN KEY (trip_id, stop_sequence) REFERENCES stop_times(trip_id, stop_sequence) ON DELETE CASCADE
 );

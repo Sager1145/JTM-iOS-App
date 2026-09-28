@@ -17,6 +17,59 @@ struct TrainTimetableDatabaseTests {
         print("bundled timetable cold open + date query: \(elapsed)")
     }
 
+    @Test func bundled2013ShinanoFootnoteKeepsItsDateAndReadOnlyStatus() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let id = "jr-central.shinano.81.2013-summer"
+        let earlyQuery = try database.trip(id: id, on: "2013-08-12")
+        let early = try #require(earlyQuery)
+        let regularQuery = try database.trip(id: id, on: "2013-08-03")
+        let regular = try #require(regularQuery)
+        #expect(early.serviceDate == "2013-08-12")
+        #expect(early.stops.first?.departureTime == "08:25")
+        #expect(early.stops.first?.departureSeconds == 30_300)
+        #expect(regular.stops.first?.departureTime == "08:28")
+        #expect(try database.trip(id: id, on: "2013-08-01") == nil)
+        #expect(!early.canApplyToRouteEditor)
+        #expect(early.stops.count == 2)
+        let sources = try database.sources(for: early)
+        #expect(sources.contains { $0.id == "jr-central-summer-20130517" })
+    }
+
+    @Test func sameStationDwellCanCrossMidnightWithoutChangingSourceClocks() throws {
+        let fixture = try FixtureDatabase(splitMidnightDwell: true)
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let trip = try #require(queried)
+        let stop = try #require(trip.stops.first)
+        #expect(trip.serviceDate == "2026-09-29")
+        #expect(stop.arrivalTime == "23:42")
+        #expect(stop.departureTime == "00:30")
+        #expect(stop.arrivalSeconds == 85_320)
+        #expect(stop.departureSeconds == 88_200)
+        #expect(stop.arrivalDayOffset == 0)
+        #expect(stop.departureDayOffset == 1)
+    }
+
+    @Test func bundledGingaNightUsesOriginalServiceDateAcrossWakayamaDwell() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let queried = try database.trip(
+            id: "jr-west.west-express-ginga.kumano-night.2026-07-03", on: "2026-09-28")
+        let trip = try #require(queried)
+        let wakayama = try #require(trip.stops.first { $0.station.name == "和歌山" })
+        #expect(trip.serviceDate == "2026-09-28")
+        #expect(wakayama.arrivalTime == "23:42")
+        #expect(wakayama.departureTime == "0:30")
+        #expect(wakayama.arrivalSeconds == 85_320)
+        #expect(wakayama.departureSeconds == 88_200)
+        #expect(wakayama.arrivalDayOffset == 0)
+        #expect(wakayama.departureDayOffset == 1)
+        #expect(!wakayama.isPassengerCall)
+        #expect(!wakayama.pickupAllowed && !wakayama.dropoffAllowed)
+        #expect(!trip.canApplyToRouteEditor)
+        #expect(trip.stops.last?.arrivalSeconds == 120_900)
+    }
+
     @Test func calendarExceptionsAndOverridesMaterializeExactServiceDay() throws {
         let fixture = try FixtureDatabase()
         defer { fixture.remove() }
@@ -272,6 +325,7 @@ private final class FixtureDatabase {
         stationValidUntil: String? = nil, operatorValidUntil: String? = nil,
         nationalZeroInterval: Bool = false, invalidOperatorSegmentBounds: Bool = false,
         mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false,
+        splitMidnightDwell: Bool = false,
         multiSegmentPassengerPair: Bool = false, mismatchedLineOperatorCoverage: Bool = false,
         historicalLineReference: Bool = false, missingLineReference: Bool = false
     ) throws {
@@ -285,6 +339,14 @@ private final class FixtureDatabase {
 
         try execute(Self.schema, on: connection)
         try execute(Self.data, on: connection)
+        if splitMidnightDwell {
+            try execute("""
+                UPDATE stop_times SET arrival_time='23:42', departure_time='00:30',
+                  arrival_seconds=85320, departure_seconds=88200,
+                  arrival_day_offset=0, departure_day_offset=1
+                WHERE trip_id='shinano-1' AND stop_sequence=0;
+                """, on: connection)
+        }
         if normalizedDayOffsetTime {
             try execute("""
                 UPDATE stop_times SET arrival_time = '01:00', day_offset = 1
@@ -418,10 +480,10 @@ private final class FixtureDatabase {
         CREATE TABLE stop_times(trip_id TEXT, stop_sequence INTEGER, station_id TEXT,
           arrival_time TEXT, departure_time TEXT, arrival_seconds INTEGER, departure_seconds INTEGER,
           day_offset INTEGER, call_type TEXT, pickup_allowed INTEGER, dropoff_allowed INTEGER,
-          platform TEXT, time_accuracy TEXT);
+          platform TEXT, time_accuracy TEXT, arrival_day_offset INTEGER, departure_day_offset INTEGER);
         CREATE TABLE trip_stop_time_overrides(trip_id TEXT, service_date TEXT, stop_sequence INTEGER,
           arrival_override TEXT, departure_override TEXT, arrival_seconds_override INTEGER,
-          departure_seconds_override INTEGER);
+          departure_seconds_override INTEGER, arrival_day_offset_override INTEGER, departure_day_offset_override INTEGER);
         CREATE TABLE trip_operator_segments(trip_id TEXT, from_sequence INTEGER, to_sequence INTEGER,
           operator_id TEXT);
         CREATE TABLE trip_line_segments(trip_id TEXT, sequence INTEGER, from_station_id TEXT,
@@ -459,15 +521,15 @@ private final class FixtureDatabase {
           'nagoya','nagano','outbound','limited_express',NULL,NULL);
         INSERT INTO trips VALUES('research-trip','v1','shinano','monday','9001M','臨時',
           'nagoya','nagano','outbound','limited_express',NULL,'route research pending');
-        INSERT INTO stop_times VALUES('shinano-1',0,'nagoya',NULL,'23:50',NULL,85800,0,
+        INSERT INTO stop_times(trip_id,stop_sequence,station_id,arrival_time,departure_time,arrival_seconds,departure_seconds,day_offset,call_type,pickup_allowed,dropoff_allowed,platform,time_accuracy) VALUES('shinano-1',0,'nagoya',NULL,'23:50',NULL,85800,0,
           'origin',1,0,'10','exact');
-        INSERT INTO stop_times VALUES('shinano-1',1,'nagano','25:00',NULL,90000,NULL,0,
+        INSERT INTO stop_times(trip_id,stop_sequence,station_id,arrival_time,departure_time,arrival_seconds,departure_seconds,day_offset,call_type,pickup_allowed,dropoff_allowed,platform,time_accuracy) VALUES('shinano-1',1,'nagano','25:00',NULL,90000,NULL,0,
           'destination',0,1,'2','exact');
-        INSERT INTO trip_stop_time_overrides VALUES('shinano-1','2026-09-29',1,
+        INSERT INTO trip_stop_time_overrides(trip_id,service_date,stop_sequence,arrival_override,departure_override,arrival_seconds_override,departure_seconds_override) VALUES('shinano-1','2026-09-29',1,
           '25:03',NULL,90180,NULL);
-        INSERT INTO stop_times VALUES('research-trip',0,'nagoya',NULL,'08:00',NULL,28800,0,
+        INSERT INTO stop_times(trip_id,stop_sequence,station_id,arrival_time,departure_time,arrival_seconds,departure_seconds,day_offset,call_type,pickup_allowed,dropoff_allowed,platform,time_accuracy) VALUES('research-trip',0,'nagoya',NULL,'08:00',NULL,28800,0,
           'origin',1,0,NULL,'exact');
-        INSERT INTO stop_times VALUES('research-trip',1,'nagano','11:00',NULL,39600,NULL,0,
+        INSERT INTO stop_times(trip_id,stop_sequence,station_id,arrival_time,departure_time,arrival_seconds,departure_seconds,day_offset,call_type,pickup_allowed,dropoff_allowed,platform,time_accuracy) VALUES('research-trip',1,'nagano','11:00',NULL,39600,NULL,0,
           'destination',0,1,NULL,'exact');
         INSERT INTO trip_operator_segments VALUES('shinano-1',0,1,'jr-central');
         INSERT INTO trip_line_segments VALUES(

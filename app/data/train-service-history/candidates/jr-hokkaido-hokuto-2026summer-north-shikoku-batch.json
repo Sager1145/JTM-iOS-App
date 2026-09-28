@@ -1,0 +1,236 @@
+{
+  "source": {
+    "source_id": "jr-hokkaido-20260515-summer",
+    "publisher": "北海道旅客鉄道株式会社",
+    "title": "特急列車の運転計画および夏の臨時列車のお知らせ ～7月から9月に運転する列車です～",
+    "source_type": "official_planned_exception",
+    "url_or_locator": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20260515_KO_2026summer.pdf",
+    "publication_date": "2026-05-15",
+    "effective_date": "2026-07-01",
+    "accessed_at": "2026-09-28",
+    "content_hash": "sha256:ec9d9d5e890f800e7ae9d52ef8c3b2a2a63837a14817669675d2f3f8f2a0993f",
+    "license_status": "unknown",
+    "redistribution_status": "unknown",
+    "automated_extraction_allowed": false,
+    "notes": "Visually reviewed PDF pages 1 and 4. Raw PDF is not bundled. Records the published plan, not proof of actual operation."
+  },
+  "operator_name_for_station_match": "北海道旅客鉄道",
+  "service_groups": [
+    {
+      "group_id": "hokuto-84-91",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "emit_service": true,
+      "page": 4,
+      "table_heading": "札幌～函館間で臨時特急「北斗84・91号」を運転します。",
+      "date_cell_text": "8/7-16, 9/19,20",
+      "date_cell_interpretation": "One vertically merged operating-date cell applies to both train rows 84 and 91.",
+      "date_ranges": [["2026-08-07", "2026-08-16"]],
+      "single_dates": ["2026-09-19", "2026-09-20"],
+      "trips": [
+        {
+          "trip_id_component": "84",
+          "public_number": "84",
+          "direction": null,
+          "origin": "札幌",
+          "departure_time": "07:43",
+          "destination": "函館",
+          "arrival_time": "11:54",
+          "intermediate_stops": ["新札幌", "南千歳", "苫小牧", "白老", "登別", "東室蘭", "伊達紋別", "洞爺", "長万部", "八雲", "森", "大沼公園", "新函館北斗", "五稜郭"],
+          "source_locator": "PDF p.4 Hokuto table, 84 row; shared date cell and intermediate-stop line"
+        },
+        {
+          "trip_id_component": "91",
+          "public_number": "91",
+          "direction": null,
+          "origin": "函館",
+          "departure_time": "13:00",
+          "destination": "札幌",
+          "arrival_time": "17:00",
+          "intermediate_stops": ["五稜郭", "新函館北斗", "大沼公園", "森", "八雲", "長万部", "洞爺", "伊達紋別", "東室蘭", "登別", "白老", "苫小牧", "南千歳", "新札幌"],
+          "source_locator": "PDF p.4 Hokuto table, 91 row; shared date cell and intermediate-stop line"
+        }
+      ]
+    },
+    {
+      "group_id": "sarobetsu-3-4",
+      "service_id": "sarobetsu",
+      "service_name": "サロベツ",
+      "emit_service": true,
+      "page": 1,
+      "table_heading": "サロベツ",
+      "date_cell_text": "7/1-31, 8/1-31, 9/1-30",
+      "date_cell_interpretation": "One vertically merged operating-date cell applies to both rows 4 and 3; dates after manifest as_of_date are excluded.",
+      "date_ranges": [["2026-07-01", "2026-07-31"], ["2026-08-01", "2026-08-31"], ["2026-09-01", "2026-09-30"]],
+      "single_dates": [],
+      "trips": [
+        {
+          "trip_id_component": "4",
+          "public_number": "4",
+          "direction": null,
+          "origin": "稚内",
+          "departure_time": "13:01",
+          "destination": "旭川",
+          "arrival_time": "16:45",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Sarobetsu table, 4 row and shared date cell"
+        },
+        {
+          "trip_id_component": "3",
+          "public_number": "3",
+          "direction": null,
+          "origin": "旭川",
+          "departure_time": "20:06",
+          "destination": "稚内",
+          "arrival_time": "23:47",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Sarobetsu table, 3 row and shared date cell"
+        }
+      ]
+    },
+    {
+      "group_id": "kamui-9-26",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "emit_service": false,
+      "page": 1,
+      "table_heading": "カムイ",
+      "date_cell_text": "7/4,5,11,12,18-20,25,26, 8/1,2,7-16,22,23, 9/12,13,19-23,26,27",
+      "date_cell_interpretation": "The upper merged operating-date cell applies only to rows 9 and 26.",
+      "date_ranges": [["2026-07-18", "2026-07-20"], ["2026-08-07", "2026-08-16"], ["2026-09-19", "2026-09-23"]],
+      "single_dates": ["2026-07-04", "2026-07-05", "2026-07-11", "2026-07-12", "2026-07-25", "2026-07-26", "2026-08-01", "2026-08-02", "2026-08-22", "2026-08-23", "2026-09-12", "2026-09-13", "2026-09-26", "2026-09-27"],
+      "trips": [
+        {
+          "trip_id_component": "9",
+          "public_number": "9",
+          "direction": null,
+          "origin": "札幌",
+          "departure_time": "09:30",
+          "destination": "旭川",
+          "arrival_time": "10:55",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Kamui table, 9 row and upper merged date cell"
+        },
+        {
+          "trip_id_component": "26",
+          "public_number": "26",
+          "direction": null,
+          "origin": "旭川",
+          "departure_time": "14:30",
+          "destination": "札幌",
+          "arrival_time": "15:55",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Kamui table, 26 row and upper merged date cell"
+        }
+      ]
+    },
+    {
+      "group_id": "kamui-15-36",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "emit_service": false,
+      "page": 1,
+      "table_heading": "カムイ",
+      "date_cell_text": "8/7-9",
+      "date_cell_interpretation": "The lower merged operating-date cell applies only to rows 15 and 36.",
+      "date_ranges": [["2026-08-07", "2026-08-09"]],
+      "single_dates": [],
+      "trips": [
+        {
+          "trip_id_component": "15",
+          "public_number": "15",
+          "direction": null,
+          "origin": "札幌",
+          "departure_time": "11:30",
+          "destination": "旭川",
+          "arrival_time": "12:55",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Kamui table, 15 row and lower merged date cell"
+        },
+        {
+          "trip_id_component": "36",
+          "public_number": "36",
+          "direction": null,
+          "origin": "旭川",
+          "departure_time": "17:30",
+          "destination": "札幌",
+          "arrival_time": "18:55",
+          "intermediate_stops": null,
+          "source_locator": "PDF p.1 Kamui table, 36 row and lower merged date cell"
+        }
+      ]
+    },
+    {
+      "group_id": "niseko-bidirectional",
+      "service_id": "niseko",
+      "service_name": "特急ニセコ号",
+      "emit_service": true,
+      "page": 4,
+      "table_heading": "札幌～倶知安～函館間で臨時特急「特急ニセコ号」を運転します。",
+      "date_cell_text": "9/5-7,11-14,18-23,25-27",
+      "date_cell_interpretation": "One vertically merged operating-date cell applies to both unnumbered directions.",
+      "date_ranges": [["2026-09-05", "2026-09-07"], ["2026-09-11", "2026-09-14"], ["2026-09-18", "2026-09-23"], ["2026-09-25", "2026-09-27"]],
+      "single_dates": [],
+      "trips": [
+        {
+          "trip_id_component": "sapporo-to-hakodate",
+          "public_number": null,
+          "direction": "sapporo_to_hakodate",
+          "origin": "札幌",
+          "departure_time": "07:56",
+          "destination": "函館",
+          "arrival_time": "13:23",
+          "intermediate_stops": ["手稲", "小樽", "余市", "倶知安", "ニセコ", "昆布", "黒松内", "長万部", "八雲", "森", "新函館北斗", "五稜郭"],
+          "source_locator": "PDF p.4 Niseko table, Sapporo-origin row; 函館行 intermediate-stop line"
+        },
+        {
+          "trip_id_component": "hakodate-to-sapporo",
+          "public_number": null,
+          "direction": "hakodate_to_sapporo",
+          "origin": "函館",
+          "departure_time": "13:55",
+          "destination": "札幌",
+          "arrival_time": "19:28",
+          "intermediate_stops": ["五稜郭", "新函館北斗", "大沼公園", "森", "八雲", "長万部", "黒松内", "昆布", "ニセコ", "倶知安", "余市", "小樽", "手稲"],
+          "source_locator": "PDF p.4 Niseko table, Hakodate-origin row; 札幌行 intermediate-stop line"
+        }
+      ]
+    },
+    {
+      "group_id": "furano-lavender-bidirectional",
+      "service_id": "furano-lavender-express",
+      "service_name": "フラノラベンダーエクスプレス",
+      "emit_service": true,
+      "page": 4,
+      "table_heading": "札幌～富良野間で臨時特急「フラノラベンダーエクスプレス」を運転します。",
+      "date_cell_text": "7/1-31, 8/1-11,15,16,22,23,29,30, 9/5,6,12,13,19-23",
+      "date_cell_interpretation": "One vertically merged operating-date cell applies to both unnumbered directions.",
+      "date_ranges": [["2026-07-01", "2026-07-31"], ["2026-08-01", "2026-08-11"], ["2026-09-19", "2026-09-23"]],
+      "single_dates": ["2026-08-15", "2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29", "2026-08-30", "2026-09-05", "2026-09-06", "2026-09-12", "2026-09-13"],
+      "trips": [
+        {
+          "trip_id_component": "sapporo-to-furano",
+          "public_number": null,
+          "direction": "sapporo_to_furano",
+          "origin": "札幌",
+          "departure_time": "07:41",
+          "destination": "富良野",
+          "arrival_time": "09:44",
+          "intermediate_stops": ["岩見沢", "滝川", "芦別"],
+          "source_locator": "PDF p.4 Furano Lavender Express, Sapporo-origin row and shared intermediate-stop line"
+        },
+        {
+          "trip_id_component": "furano-to-sapporo",
+          "public_number": null,
+          "direction": "furano_to_sapporo",
+          "origin": "富良野",
+          "departure_time": "16:53",
+          "destination": "札幌",
+          "arrival_time": "18:52",
+          "intermediate_stops": ["芦別", "滝川", "岩見沢"],
+          "source_locator": "PDF p.4 Furano Lavender Express, Furano-origin row and shared intermediate-stop line"
+        }
+      ]
+    }
+  ]
+}

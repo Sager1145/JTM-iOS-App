@@ -23,7 +23,10 @@ zero-service intervals, research tasks and actual operation events.
 
 All validity intervals are `[from, until)`. Dates are Japanese service dates;
 times are seconds since that service day's start. `24:12` is part of the
-previous day's trip. Actual disruption events do not overwrite the published
+previous day's trip. Arrival and departure have separate optional day offsets,
+falling back to the original shared `day_offset`. A stop can arrive at `23:42`
+on day zero and depart at source clock `0:30` on day one. Dated overrides
+inherit the corresponding side's offset unless they explicitly replace it. Actual disruption events do not overwrite the published
 schedule. No source-listed pass mark is invented where a source omits it.
 
 Station identities refer either to the shipped compact directory `sourceCode`
@@ -61,8 +64,9 @@ still pending.
 
 `normalize-reviewed-timetable-seeds.py` promotes reviewed official candidates
 for Kamui 93, Lilac 95, Shinano 1, Hitachi 26 and Yufuin no Mori 1–6.
-Together with the reviewed Shiokaze endpoint-only announcement they represent
-34 templates and 181 explicitly attested service-date occurrences;
+Together with the reviewed Shiokaze, 2013 JR Central, Hokkaido summer and
+WEST EXPRESS Ginga announcements they represent
+60 templates and 865 explicitly attested service-date occurrences;
 these small samples do not establish any company’s complete daily inventory. The special Hokkaido trips exercise explicit dates and overnight
 arrival; two JR East HTML tables exercise full passenger arrival/departure
 times. Unknown internal numbers, intermediate times and routes stay unknown.
@@ -101,22 +105,14 @@ fixtures to prove semantics; those fixtures are not production timetable facts.
 ## Reproduce
 
 ```sh
-python3 ios/tools/normalize-reviewed-timetable-seeds.py
-python3 ios/tools/normalize-reviewed-route-evidence.py
-python3 ios/tools/normalize-reviewed-shiokaze-seeds.py
-python3 ios/tools/validate-train-timetable.py
-python3 ios/tools/build-train-timetable-db.py
-python3 ios/tools/verify-train-timetable-artifact.py
-python3 ios/tools/audit-train-timetable-coverage.py
-python3 ios/tools/build-train-service-patterns.py
-python3 ios/tools/audit-train-timetable-routes.py
-python3 ios/tools/audit-train-timetable-history-alignment.py
-python3 ios/tools/audit-train-timetable-migration.py
+python3 ios/tools/rebuild-reviewed-train-timetable.py
 python3 -m unittest discover -s ios/tools/tests -v
 python3 ios/tools/test_jreast_trip_parser.py
 ```
 
-The reviewed normalizers are intentional input-generation steps, not automatic
+The rebuild entry point runs reviewed normalizers in dependency order, then
+validates, builds, checks the snapshot and regenerates audits. It does not fetch
+new facts from the web. The reviewed normalizers are intentional input-generation steps, not automatic
 web fact promotion. Source discovery currently indexes reviewed search results;
 it does not claim exhaustive crawling or an all-services inventory.
 
@@ -172,4 +168,4 @@ missing values, explain partial station lists, and expose deduplicated source
 titles, publishers and URLs. Overnight civil dates are derived without changing
 the original service date or clock string.
 
-Latest evidence, counts and validation: [fill report](train-timetable-fill-report.md).
+Latest evidence, counts and validation: [parallel report](train-timetable-parallel-report.md).

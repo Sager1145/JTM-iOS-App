@@ -1,9 +1,9 @@
 {
   "asOfDate": "2026-09-28",
-  "calendarExceptions": 181,
-  "calendarRules": 34,
-  "canonicalSourceHash": "42c57bc029052ce63d71dfb241ed400a8f7320944af224b614283ed30758a5f1",
-  "commitSHA": "448b096bf995d81218075ed4dd8419433fbe9958",
+  "calendarExceptions": 865,
+  "calendarRules": 60,
+  "canonicalSourceHash": "2026a048d9d14ebdcdd93b048eb18d18c8dc74ea8b22dc34ae15967233658c30",
+  "commitSHA": "5c0b76ef36d11b91740eb86305bbdeffbae8890e",
   "conflicts": 0,
   "coverageComplete": false,
   "coverageMatrix": [
@@ -7371,7 +7371,7 @@
       "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 2,
+      "recordCount": 14,
       "status": "partial",
       "year": 2026
     },
@@ -7379,7 +7379,7 @@
       "declaredStatus": "missing",
       "dimension": "train_number",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 2,
+      "recordCount": 10,
       "status": "missing",
       "year": 2026
     },
@@ -7387,7 +7387,7 @@
       "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 2,
+      "recordCount": 14,
       "status": "partial",
       "year": 2026
     },
@@ -7395,7 +7395,7 @@
       "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 14,
+      "recordCount": 97,
       "status": "partial",
       "year": 2026
     },
@@ -7403,7 +7403,7 @@
       "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 14,
+      "recordCount": 38,
       "status": "partial",
       "year": 2026
     },
@@ -7419,7 +7419,7 @@
       "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 7,
+      "recordCount": 32,
       "status": "partial",
       "year": 2026
     },
@@ -7427,7 +7427,7 @@
       "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-hokkaido",
-      "recordCount": 10,
+      "recordCount": 94,
       "status": "partial",
       "year": 2026
     },
@@ -11656,47 +11656,47 @@
       "year": 2012
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 12,
+      "status": "partial",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "train_number",
       "operatorScope": "jr-central",
-      "recordCount": 0,
+      "recordCount": 12,
       "status": "missing",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 12,
+      "status": "partial",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 24,
+      "status": "partial",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 24,
+      "status": "partial",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "route_lines",
       "operatorScope": "jr-central",
       "recordCount": 0,
@@ -11704,19 +11704,19 @@
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 5,
+      "status": "partial",
       "year": 2013
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-central",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 84,
+      "status": "partial",
       "year": 2013
     },
     {
@@ -15048,15 +15048,15 @@
       "year": 2025
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 2,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "train_number",
       "operatorScope": "jr-west",
       "recordCount": 0,
@@ -15064,31 +15064,31 @@
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 2,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 25,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 25,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "route_lines",
       "operatorScope": "jr-west",
       "recordCount": 0,
@@ -15096,19 +15096,19 @@
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 16,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-west",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 16,
+      "status": "partial",
       "year": 2026
     },
     {
@@ -20232,28 +20232,28 @@
       "year": 2026
     }
   ],
-  "dailyOccurrencesRepresented": 181,
-  "databaseHash": "0b2bd13e6faa59ff609cce542130047baa429ba31ad0f2950d07a1323fcc62e1",
+  "dailyOccurrencesRepresented": 865,
+  "databaseHash": "1c288bfb5880f600196a531d2b55a60e910dfc0ea2bd4b3e44cee6b241663d9c",
   "expectedCoverageScopes": 7,
-  "firstCoveredDate": "2026-05-16",
+  "firstCoveredDate": "2013-07-06",
   "lastCoveredDate": "2026-09-28",
   "lastCoveredUntil": "2026-09-29",
   "licenseBlockedSources": [
     "jr-west-timetable-portal-2026",
     "jr-west-thunderbird1-20260525"
   ],
-  "missingCoverageCells": 2463,
+  "missingCoverageCells": 2451,
   "operatorsCovered": 0,
   "operatorsExpected": 6,
-  "partialOrBlockedCoverageCells": 33,
+  "partialOrBlockedCoverageCells": 45,
   "perOperatorCoverage": {
     "jr-ancestral-national-railways": {
       "missing": 576,
       "verified_no_service": 32
     },
     "jr-central": {
-      "missing": 313,
-      "partial": 7
+      "missing": 307,
+      "partial": 13
     },
     "jr-east": {
       "missing": 312,
@@ -20272,7 +20272,8 @@
       "partial": 6
     },
     "jr-west": {
-      "missing": 320
+      "missing": 314,
+      "partial": 6
     }
   },
   "perYearCoverage": {
@@ -20885,7 +20886,8 @@
     "2013": {
       "complete": false,
       "statusCounts": {
-        "missing": 48
+        "missing": 42,
+        "partial": 6
       }
     },
     "2014": {
@@ -20963,8 +20965,8 @@
     "2026": {
       "complete": false,
       "statusCounts": {
-        "missing": 15,
-        "partial": 33
+        "missing": 9,
+        "partial": 39
       }
     }
   },
@@ -20972,21 +20974,23 @@
   "railHistoryRevision": "2026-09-28.1",
   "routeAuditStatus": "not_run",
   "schemaVersion": "1.0.0",
-  "serviceFamilies": 7,
+  "serviceFamilies": 14,
   "solverVersion": "24",
-  "sourceRegistryHash": "1519d6842ad5be52d487ace45d0d5ec9a669745b9e1f7f976b54986f20fa0426",
+  "sourceRegistryHash": "cda181fc03ae1d117b8a4bc802c942d8086fb7416dfbfcd2c05fda9bf846ba00",
   "stationPackageHash": "ab20ee37a2c031772e61e25d6c736291689617c2337b973e9b0b62098998ef32",
-  "stopTimes": 134,
-  "timetableVersions": 34,
-  "tripTemplates": 34,
-  "unresolvedRoutes": 35,
+  "stopTimes": 266,
+  "timetableVersions": 60,
+  "tripTemplates": 60,
+  "unresolvedRoutes": 61,
   "unresolvedSources": 2,
-  "unresolvedStations": 1,
+  "unresolvedStations": 14,
   "verificationOnlySources": [
+    "jr-central-summer-20130517",
     "jr-east-kanto-route-map-202604",
     "jr-east-ueno-tokyo-line-20150314",
     "jr-central-nagoya-chuo-timetable-202603",
     "jr-shikoku-west-shiokaze-obon-20260624",
+    "jr-west-west-express-ginga-kumano-20260410",
     "jr-hokkaido-network-2026",
     "jr-hokkaido-vtime-hokuto-20260927",
     "jr-east-timetables-2026",

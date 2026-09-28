@@ -1,9 +1,9 @@
 {
   "asOfDate": "2026-09-28",
-  "canonicalPatternCount": 10,
-  "canonicalSourceHash": "42c57bc029052ce63d71dfb241ed400a8f7320944af224b614283ed30758a5f1",
+  "canonicalPatternCount": 36,
+  "canonicalSourceHash": "2026a048d9d14ebdcdd93b048eb18d18c8dc74ea8b22dc34ae15967233658c30",
   "legacyUnverifiedFallbackCount": 298,
-  "outputHash": "cc9fe88e317e489d383eb84c9f6187f911f61d1bb4b42a74dbdeb7b9f79c2d4a",
+  "outputHash": "0cdb201ebcfa8d48ab5d7ba36cbf715dbdc6c9bf09a7ef4d5542b1e598dbd517",
   "safeToReplaceBundledLegacyCatalog": false,
   "schemaVersion": "1.0.0"
 }

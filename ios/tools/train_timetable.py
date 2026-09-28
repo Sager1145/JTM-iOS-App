@@ -52,8 +52,8 @@ FIELDS = {
     "calendar_exceptions": ({"calendar_id", "service_date", "exception_type", "source_id"}, {"reason"}),
     "station_identities": ({"station_id", "name_snapshot", "reference_kind"}, {"current_source_code", "rail_history_id", "valid_from", "valid_until"}),
     "trips": ({"trip_id", "timetable_version_id", "service_id", "calendar_id", "origin_station_id", "destination_station_id", "service_class"}, {"train_number", "public_number", "direction", "operation_group_id", "notes"}),
-    "stop_times": ({"trip_id", "stop_sequence", "station_id", "call_type", "source_id"}, {"arrival_time", "departure_time", "day_offset", "pickup_allowed", "dropoff_allowed", "platform", "time_accuracy"}),
-    "trip_stop_time_overrides": ({"trip_id", "service_date", "stop_sequence", "source_id"}, {"arrival_override", "departure_override"}),
+    "stop_times": ({"trip_id", "stop_sequence", "station_id", "call_type", "source_id"}, {"arrival_time", "departure_time", "day_offset", "arrival_day_offset", "departure_day_offset", "pickup_allowed", "dropoff_allowed", "platform", "time_accuracy"}),
+    "trip_stop_time_overrides": ({"trip_id", "service_date", "stop_sequence", "source_id"}, {"arrival_override", "departure_override", "arrival_day_offset_override", "departure_day_offset_override"}),
     "trip_number_segments": ({"trip_id", "from_sequence", "to_sequence", "train_number"}, set()),
     "trip_operator_segments": ({"trip_id", "from_sequence", "to_sequence", "operator_id"}, set()),
     "trip_line_segments": ({"trip_id", "sequence", "from_station_id", "to_station_id", "line_name", "operator_id", "source_id", "confidence"}, {"reference_kind", "current_n02_line_id", "rail_history_id"}),
@@ -159,6 +159,12 @@ def service_seconds(value, day_offset, context):
     if total >= 72 * 3600:
         raise DatasetError(f"{context}: resolved time must be less than 72 hours from service-day start")
     return total
+
+
+def stop_day_offset(row, side):
+    """Resolve an arrival/departure offset with legacy shared-offset fallback."""
+    value = row.get(f"{side}_day_offset")
+    return row.get("day_offset", 0) if value is None else value
 
 
 def load_manifest(canonical_dir):
@@ -477,10 +483,15 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
         previous = None
         for stop in stops:
             stop_where = f"{where}.stop_times[{stop.get('stop_sequence')}]"
-            day_offset = stop.get("day_offset", 0)
+            arrival_offset = stop_day_offset(stop, "arrival")
+            departure_offset = stop_day_offset(stop, "departure")
+            if stop.get("arrival_day_offset") is not None and stop.get("arrival_time") is None:
+                errors.append(f"{stop_where}: arrival_day_offset requires arrival_time")
+            if stop.get("departure_day_offset") is not None and stop.get("departure_time") is None:
+                errors.append(f"{stop_where}: departure_day_offset requires departure_time")
             try:
-                arrival = service_seconds(stop.get("arrival_time"), day_offset, stop_where + ".arrival_time")
-                departure = service_seconds(stop.get("departure_time"), day_offset, stop_where + ".departure_time")
+                arrival = service_seconds(stop.get("arrival_time"), arrival_offset, stop_where + ".arrival_time")
+                departure = service_seconds(stop.get("departure_time"), departure_offset, stop_where + ".departure_time")
             except DatasetError as exc:
                 errors.append(str(exc)); continue
             if arrival is not None and departure is not None and arrival > departure:
@@ -502,18 +513,28 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
             if row.get("pickup_allowed", 0) not in (0, False) or row.get("dropoff_allowed", 0) not in (0, False):
                 errors.append(f"{where}: non-passenger call cannot allow pickup/dropoff")
 
-    stop_keys = {(r["trip_id"], r["stop_sequence"]) for r in data["stop_times"]}
+    stops_by_key = {(r["trip_id"], r["stop_sequence"]): r for r in data["stop_times"]}
+    stop_keys = set(stops_by_key)
     for i, row in enumerate(data["trip_stop_time_overrides"]):
         where = origins[("trip_stop_time_overrides", i)]
         if (row.get("trip_id"), row.get("stop_sequence")) not in stop_keys:
             errors.append(f"{where}: override does not reference a stop_time")
         try:
             strict_date(row["service_date"], where + ".service_date")
-            base_stop = next((stop for stop in data["stop_times"] if stop["trip_id"] == row["trip_id"] and stop["stop_sequence"] == row["stop_sequence"]), None)
-            base_offset = base_stop.get("day_offset", 0) if base_stop else 0
-            service_seconds(row.get("arrival_override"), base_offset, where + ".arrival_override")
-            service_seconds(row.get("departure_override"), base_offset, where + ".departure_override")
+            base_stop = stops_by_key.get((row.get("trip_id"), row.get("stop_sequence")))
+            base_arrival_offset = stop_day_offset(base_stop, "arrival") if base_stop else 0
+            base_departure_offset = stop_day_offset(base_stop, "departure") if base_stop else 0
+            arrival_offset = row.get("arrival_day_offset_override")
+            departure_offset = row.get("departure_day_offset_override")
+            if arrival_offset is None: arrival_offset = base_arrival_offset
+            if departure_offset is None: departure_offset = base_departure_offset
+            service_seconds(row.get("arrival_override"), arrival_offset, where + ".arrival_override")
+            service_seconds(row.get("departure_override"), departure_offset, where + ".departure_override")
         except DatasetError as exc: errors.append(str(exc))
+        if row.get("arrival_day_offset_override") is not None and row.get("arrival_override") is None:
+            errors.append(f"{where}: arrival_day_offset_override requires arrival_override")
+        if row.get("departure_day_offset_override") is not None and row.get("departure_override") is None:
+            errors.append(f"{where}: departure_day_offset_override requires departure_override")
         if row.get("arrival_override") is None and row.get("departure_override") is None:
             errors.append(f"{where}: override changes neither arrival nor departure")
 
@@ -822,16 +843,36 @@ def prepared_row(entity, row):
         for field in ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"):
             result[field] = int(result[field])
     if entity == "stop_times":
-        offset = result.setdefault("day_offset", 0)
+        result.setdefault("day_offset", 0)
         result.setdefault("pickup_allowed", 1)
         result.setdefault("dropoff_allowed", 1)
         result.setdefault("time_accuracy", "unknown")
-        result["arrival_seconds"] = service_seconds(result.get("arrival_time"), offset, "stop_times.arrival_time")
-        result["departure_seconds"] = service_seconds(result.get("departure_time"), offset, "stop_times.departure_time")
+        result["arrival_seconds"] = service_seconds(
+            result.get("arrival_time"), stop_day_offset(result, "arrival"), "stop_times.arrival_time")
+        result["departure_seconds"] = service_seconds(
+            result.get("departure_time"), stop_day_offset(result, "departure"), "stop_times.departure_time")
     if entity == "trip_stop_time_overrides":
-        base_offset = result.pop("_base_day_offset", 0)
-        result["arrival_seconds_override"] = service_seconds(result.get("arrival_override"), base_offset, "override.arrival")
-        result["departure_seconds_override"] = service_seconds(result.get("departure_override"), base_offset, "override.departure")
+        legacy_base = result.pop("_base_day_offset", 0)
+        base_arrival = result.pop("_base_arrival_day_offset", legacy_base)
+        base_departure = result.pop("_base_departure_day_offset", legacy_base)
+        if result.get("arrival_override") is not None:
+            arrival_offset = result.get("arrival_day_offset_override")
+            if arrival_offset is None: arrival_offset = base_arrival
+            result["arrival_day_offset_override"] = arrival_offset
+            result["arrival_seconds_override"] = service_seconds(
+                result["arrival_override"], arrival_offset, "override.arrival")
+        else:
+            result.pop("arrival_day_offset_override", None)
+            result["arrival_seconds_override"] = None
+        if result.get("departure_override") is not None:
+            departure_offset = result.get("departure_day_offset_override")
+            if departure_offset is None: departure_offset = base_departure
+            result["departure_day_offset_override"] = departure_offset
+            result["departure_seconds_override"] = service_seconds(
+                result["departure_override"], departure_offset, "override.departure")
+        else:
+            result.pop("departure_day_offset_override", None)
+            result["departure_seconds_override"] = None
     if entity == "coverage_declarations":
         result.setdefault("record_count", 0)
     return result
@@ -895,8 +936,16 @@ def build_database(canonical_dir, output=None):
             for entity in INSERT_ORDER:
                 rows = data[entity]
                 if entity == "trip_stop_time_overrides":
-                    offsets = {(row["trip_id"], row["stop_sequence"]): row.get("day_offset", 0) for row in data["stop_times"]}
-                    rows = [dict(row, _base_day_offset=offsets[(row["trip_id"], row["stop_sequence"])]) for row in rows]
+                    offsets = {
+                        (row["trip_id"], row["stop_sequence"]):
+                            (stop_day_offset(row, "arrival"), stop_day_offset(row, "departure"))
+                        for row in data["stop_times"]
+                    }
+                    rows = [dict(
+                        row,
+                        _base_arrival_day_offset=offsets[(row["trip_id"], row["stop_sequence"])][0],
+                        _base_departure_day_offset=offsets[(row["trip_id"], row["stop_sequence"])][1],
+                    ) for row in rows]
                 insert_rows(connection, entity, rows)
                 if entity == "timetable_versions":
                     joins = []
@@ -953,10 +1002,16 @@ def materialize(data, service_day):
     stops = defaultdict(list)
     for row in data["stop_times"]:
         stops[row["trip_id"]].append(prepared_row("stop_times", row))
-    stop_offsets = {(row["trip_id"], row["stop_sequence"]): row.get("day_offset", 0) for row in data["stop_times"]}
+    stop_offsets = {
+        (row["trip_id"], row["stop_sequence"]):
+            (stop_day_offset(row, "arrival"), stop_day_offset(row, "departure"))
+        for row in data["stop_times"]
+    }
     overrides = {}
     for row in data["trip_stop_time_overrides"]:
-        candidate = dict(row, _base_day_offset=stop_offsets[(row["trip_id"], row["stop_sequence"])])
+        base_arrival, base_departure = stop_offsets[(row["trip_id"], row["stop_sequence"])]
+        candidate = dict(row, _base_arrival_day_offset=base_arrival,
+                         _base_departure_day_offset=base_departure)
         overrides[(row["trip_id"], row["service_date"], row["stop_sequence"])] = prepared_row("trip_stop_time_overrides", candidate)
     occurrences = []
     for trip in sorted(data["trips"], key=lambda row: row["trip_id"]):
@@ -976,9 +1031,11 @@ def materialize(data, service_day):
                 if override.get("arrival_override") is not None:
                     stop["arrival_time"] = override["arrival_override"]
                     stop["arrival_seconds"] = override["arrival_seconds_override"]
+                    stop["arrival_day_offset"] = override["arrival_day_offset_override"]
                 if override.get("departure_override") is not None:
                     stop["departure_time"] = override["departure_override"]
                     stop["departure_seconds"] = override["departure_seconds_override"]
+                    stop["departure_day_offset"] = override["departure_day_offset_override"]
             occurrence_stops.append(stop)
         occurrence = deepcopy(trip)
         occurrence["service_date"] = day_text

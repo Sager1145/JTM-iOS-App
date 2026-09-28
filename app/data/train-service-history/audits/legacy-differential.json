@@ -2,7 +2,12 @@
   "complete": false,
   "differences": [
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-hida-02d847fe5a76",
+        "tt-hida-33bc59d879a8",
+        "tt-hida-77d3b6df4aca",
+        "tt-hida-8bfd81f2b5d7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
       "legacyPatternId": "hida-nagoya-takayama",
@@ -10,7 +15,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-hida-02d847fe5a76",
+        "tt-hida-33bc59d879a8",
+        "tt-hida-77d3b6df4aca",
+        "tt-hida-8bfd81f2b5d7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
       "legacyPatternId": "hida-nagoya-toyama",
@@ -18,7 +28,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-hida-02d847fe5a76",
+        "tt-hida-33bc59d879a8",
+        "tt-hida-77d3b6df4aca",
+        "tt-hida-8bfd81f2b5d7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "hida-osaka-takayama",
@@ -27,7 +42,11 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-7f889217ccde"
+        "tt-shinano-2e0c912b2af0",
+        "tt-shinano-68c29ceb73d4",
+        "tt-shinano-7f889217ccde",
+        "tt-shinano-947dcb2020cb",
+        "tt-shinano-9d85b58cf5b0"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -36,7 +55,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nanki-07dcd72ef451",
+        "tt-nanki-42a890226b9b",
+        "tt-nanki-aa87a44051e6",
+        "tt-nanki-ada7d84fc272"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "nanki-nagoya-kiikatsuura",
@@ -408,7 +432,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-hokuto-60044bf01f23",
+        "tt-hokuto-b6894912ef74"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "hokuto-hakodate-sapporo",
@@ -441,7 +468,11 @@
     },
     {
       "candidatePatternIds": [
-        "tt-kamui-8af8e0fc0612"
+        "tt-kamui-2260eb11a822",
+        "tt-kamui-3ec593053d32",
+        "tt-kamui-8af8e0fc0612",
+        "tt-kamui-b52182dac25d",
+        "tt-kamui-f98be3d7e547"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -468,7 +499,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sarobetsu-29c8684ac556",
+        "tt-sarobetsu-61c4d0c6ef53"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "sarobetsu-asahikawa-wakkanai",
@@ -492,7 +526,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-niseko-78b57d0fbad2",
+        "tt-niseko-d8db2f27c784"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "niseko-sapporo-hakodate",
@@ -974,7 +1011,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-7f7a871e0fd8"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 5,
       "legacyPatternId": "west-express-ginga-sanin",
@@ -982,7 +1022,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-7f7a871e0fd8"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "west-express-ginga-sanyo",
@@ -990,7 +1033,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-7f7a871e0fd8"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
       "legacyPatternId": "west-express-ginga-kinan",
@@ -1161,7 +1207,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-furano-lavender-express-9e88ea827abf",
+        "tt-furano-lavender-express-e7508936b4e9"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "furano-lavender-express-sapporo-furano",
@@ -1578,7 +1627,11 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-7f889217ccde"
+        "tt-shinano-2e0c912b2af0",
+        "tt-shinano-68c29ceb73d4",
+        "tt-shinano-7f889217ccde",
+        "tt-shinano-947dcb2020cb",
+        "tt-shinano-9d85b58cf5b0"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,

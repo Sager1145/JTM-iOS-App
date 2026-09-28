@@ -105,7 +105,10 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// Total seconds from the start of the trip's Japanese service day.
         public let arrivalSeconds: Int?
         public let departureSeconds: Int?
+        /// Legacy shared fallback. A dwell across midnight uses separate offsets.
         public let dayOffset: Int
+        public let arrivalDayOffset: Int
+        public let departureDayOffset: Int
         public let callType: String
         public let pickupAllowed: Bool
         public let dropoffAllowed: Bool
@@ -815,7 +818,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                        COALESCE(o.arrival_seconds_override, st.arrival_seconds),
                        COALESCE(o.departure_seconds_override, st.departure_seconds),
                        st.day_offset, st.call_type, st.pickup_allowed,
-                       st.dropoff_allowed, st.platform, st.time_accuracy
+                       st.dropoff_allowed, st.platform, st.time_accuracy,
+                       COALESCE(o.arrival_day_offset_override, st.arrival_day_offset, st.day_offset),
+                       COALESCE(o.departure_day_offset_override, st.departure_day_offset, st.day_offset)
                 FROM stop_times st
                 JOIN station_identities si ON si.station_id = st.station_id
                 LEFT JOIN trip_stop_time_overrides o
@@ -836,7 +841,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                     sequence: row.int(1), station: station,
                     arrivalTime: row.optionalString(9), departureTime: row.optionalString(10),
                     arrivalSeconds: row.optionalInt(11), departureSeconds: row.optionalInt(12),
-                    dayOffset: row.int(13), callType: row.string(14),
+                    dayOffset: row.int(13), arrivalDayOffset: row.int(19),
+                    departureDayOffset: row.int(20), callType: row.string(14),
                     pickupAllowed: row.int(15) != 0, dropoffAllowed: row.int(16) != 0,
                     platform: row.optionalString(17), timeAccuracy: row.optionalString(18)))
             }
@@ -1049,11 +1055,13 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                       "public_number", "origin_station_id", "destination_station_id", "direction",
                       "service_class", "operation_group_id", "notes"],
             "stop_times": ["trip_id", "stop_sequence", "station_id", "arrival_time", "departure_time",
-                           "arrival_seconds", "departure_seconds", "day_offset", "call_type",
+                           "arrival_seconds", "departure_seconds", "day_offset", "arrival_day_offset",
+                           "departure_day_offset", "call_type",
                            "pickup_allowed", "dropoff_allowed", "platform", "time_accuracy"],
             "trip_stop_time_overrides": ["trip_id", "service_date", "stop_sequence", "arrival_override",
                                          "departure_override", "arrival_seconds_override",
-                                         "departure_seconds_override"],
+                                         "departure_seconds_override", "arrival_day_offset_override",
+                                         "departure_day_offset_override"],
             "trip_operator_segments": ["trip_id", "from_sequence", "to_sequence", "operator_id"],
             "trip_line_segments": ["trip_id", "sequence", "from_station_id", "to_station_id",
                                    "line_name", "operator_id", "confidence", "reference_kind",

@@ -2,11 +2,347 @@
   "asOfDate": "2026-09-28",
   "complete": false,
   "passedLegs": 0,
-  "passengerLegs": 100,
+  "passengerLegs": 205,
   "schemaVersion": 1,
   "solverExecuted": false,
-  "tripTemplates": 34,
+  "tripTemplates": 60,
   "trips": [
+    {
+      "calendarId": "jr-hokkaido.hokuto.84.2026-08-07.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 15,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.hokuto.84.2026-08-07.version",
+      "tripId": "jr-hokkaido.hokuto.84.2026-08-07",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.hokuto.91.2026-08-07.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 15,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.hokuto.91.2026-08-07.version",
+      "tripId": "jr-hokkaido.hokuto.91.2026-08-07",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.sarobetsu.4.2026-07-01.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.sarobetsu.4.2026-07-01.version",
+      "tripId": "jr-hokkaido.sarobetsu.4.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.sarobetsu.3.2026-07-01.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.sarobetsu.3.2026-07-01.version",
+      "tripId": "jr-hokkaido.sarobetsu.3.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.kamui.9.2026-07-04.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.kamui.9.2026-07-04.version",
+      "tripId": "jr-hokkaido.kamui.9.2026-07-04",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.kamui.26.2026-07-04.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.kamui.26.2026-07-04.version",
+      "tripId": "jr-hokkaido.kamui.26.2026-07-04",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.kamui.15.2026-08-07.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.kamui.15.2026-08-07.version",
+      "tripId": "jr-hokkaido.kamui.15.2026-08-07",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.kamui.36.2026-08-07.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.kamui.36.2026-08-07.version",
+      "tripId": "jr-hokkaido.kamui.36.2026-08-07",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 13,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05.version",
+      "tripId": "jr-hokkaido.niseko.sapporo-to-hakodate.2026-09-05",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 14,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05.version",
+      "tripId": "jr-hokkaido.niseko.hakodate-to-sapporo.2026-09-05",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 4,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01.version",
+      "tripId": "jr-hokkaido.furano-lavender-express.sapporo-to-furano.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 4,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01.version",
+      "tripId": "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.shinano.81.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.shinano.81.2013-summer.version",
+      "tripId": "jr-central.shinano.81.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.shinano.84.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.shinano.84.2013-summer.version",
+      "tripId": "jr-central.shinano.84.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.shinano.85.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.shinano.85.2013-summer.version",
+      "tripId": "jr-central.shinano.85.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.shinano.82.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.shinano.82.2013-summer.version",
+      "tripId": "jr-central.shinano.82.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.hida.81.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.hida.81.2013-summer.version",
+      "tripId": "jr-central.hida.81.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.hida.82.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.hida.82.2013-summer.version",
+      "tripId": "jr-central.hida.82.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.hida.83.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.hida.83.2013-summer.version",
+      "tripId": "jr-central.hida.83.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.hida.61.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.hida.61.2013-summer.version",
+      "tripId": "jr-central.hida.61.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.nanki.81.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.nanki.81.2013-summer.version",
+      "tripId": "jr-central.nanki.81.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.nanki.82.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.nanki.82.2013-summer.version",
+      "tripId": "jr-central.nanki.82.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.nanki.83.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.nanki.83.2013-summer.version",
+      "tripId": "jr-central.nanki.83.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-central.nanki.84.2013-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-central.nanki.84.2013-summer.version",
+      "tripId": "jr-central.nanki.84.2013-summer",
+      "viaStatus": "unverified"
+    },
     {
       "calendarId": "jr-hokkaido.kamui.93.2026-05-16.calendar",
       "dateApplicabilityStatus": "calendar_materialization_required",
@@ -479,7 +815,35 @@
       "timetableVersionId": "jr-shikoku.shiokaze.28.2026-08-08.version",
       "tripId": "jr-shikoku.shiokaze.28.2026-08-08",
       "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-west.west-express-ginga.kumano-day.2026-07-05.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 15,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-west.west-express-ginga.kumano-day.2026-07-05.version",
+      "tripId": "jr-west.west-express-ginga.kumano-day.2026-07-05",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-west.west-express-ginga.kumano-night.2026-07-03.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 7,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-west.west-express-ginga.kumano-night.2026-07-03.version",
+      "tripId": "jr-west.west-express-ginga.kumano-night.2026-07-03",
+      "viaStatus": "unverified"
     }
   ],
-  "unverifiedLegs": 100
+  "unverifiedLegs": 205
 }
