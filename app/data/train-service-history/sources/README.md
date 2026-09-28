@@ -5,11 +5,19 @@ uses the `source_documents` field names from `schema.sql`. Candidate files are n
 canonical database inputs and must not be promoted without source, calendar,
 station-reference and license review.
 
-`accessed_at` records the task snapshot date, 2026-09-27. A live page may change
-after that date. None of the portal landing pages listed here proves an all-year,
+The initial inventory was reviewed on 2026-09-27; later batches record their own
+access dates in `accessed_at`. A live page may change after that date.
+None of the portal landing pages listed here proves an all-year,
 operator-wide limited-express inventory.
 
 ## Current official source coverage
+
+The East-next batch preserves two disjoint Azusa 1 schedule calendars and the
+explicit Tokiwa 55 dates from official train pages. The Kyushu-next batch pairs
+the Ibusuki no Tamatebako stop table with the visually reviewed summer plan.
+Historical-next candidates retain directly read 1926/1934 facts without daily
+calendar promotion. Their independent normalizers are part of the reviewed
+rebuild entry point; source inventory now refreshes with every rebuild.
 
 | Operator | Registry source | Observed coverage | Effective-date evidence | Reuse/extraction blocker |
 | --- | --- | --- | --- | --- |

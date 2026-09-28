@@ -1,0 +1,476 @@
+{
+  "candidate_id": "jr-shikoku-ishizuchi-silver-week-2026-following",
+  "candidate_status": "visually_reviewed_preparation_only",
+  "canonical": false,
+  "database_as_of_date": "2026-09-28",
+  "notes": "Preparation for a later batch only. The official table publishes endpoint clocks for shortened Ishizuchi operations during Silver Week. It does not publish intermediate passenger calls or internal train numbers. Dates are planned operation evidence, not actual-operation events. Publisher identity is not promoted to operator-segment evidence.",
+  "source": {
+    "source_id": "jr-shikoku-summer-20260515-ishizuchi-silver-week-following",
+    "publisher": "四国旅客鉄道株式会社",
+    "title": "夏の臨時列車運転のお知らせ",
+    "source_type": "official_planned_exception",
+    "url_or_locator": "https://www.jr-shikoku.co.jp/03_news/press/assets/2026/07/15/20260515%20.pdf",
+    "publication_date": "2026-05-15",
+    "effective_date": "2026-09-18",
+    "accessed_at": "2026-09-28",
+    "content_hash": "sha256:64e69d7df9da8d58326653d9334a7b0683c1645b5b6ba2d42d32d0f714d3c2c6",
+    "page_or_locator": "PDF page 17 (zero-based P16; printed footer -16-), table 高松～宇多津・多度津間『いしづち』",
+    "license_status": "unknown",
+    "redistribution_status": "metadata_and_transcribed_facts_only",
+    "automated_extraction_allowed": false,
+    "notes": "Visually checked against the original page. The PDF header is 2026-05-15; the hosted file includes a 2026-07-15 revision note for another section. No PDF bytes should be committed."
+  },
+  "service": {
+    "service_id": "ishizuchi",
+    "canonical_name": "いしづち",
+    "service_class": "limited_express",
+    "jr_scope": "jr"
+  },
+  "evidence_interpretation": {
+    "date_cell_9_19_to_23": [
+      "2026-09-19",
+      "2026-09-20",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-23"
+    ],
+    "date_cell_9_18_to_23": [
+      "2026-09-18",
+      "2026-09-19",
+      "2026-09-20",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-23"
+    ],
+    "merged_cell_scope": "The 9/19-23 cell applies only to Ishizuchi 3 and 4. The 9/18-23 merged cells apply to all remaining displayed rows in their respective direction blocks.",
+    "expected_trip_templates": 26,
+    "expected_explicit_occurrences": 154,
+    "stops_completeness": "partial_endpoint_only",
+    "times_completeness": "partial_endpoint_only",
+    "train_number_completeness": "unknown",
+    "operator_completeness": "unknown",
+    "route_lines_completeness": "unknown"
+  },
+  "trips": [
+    {
+      "public_number": "3",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "08:45",
+      "destination": "宇多津",
+      "arrival_time": "09:06",
+      "operating_dates": [
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "5",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "09:42",
+      "destination": "多度津",
+      "arrival_time": "10:10",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "7",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "10:47",
+      "destination": "多度津",
+      "arrival_time": "11:17",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "9",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "11:50",
+      "destination": "多度津",
+      "arrival_time": "12:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "11",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "12:50",
+      "destination": "多度津",
+      "arrival_time": "13:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "13",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "13:50",
+      "destination": "多度津",
+      "arrival_time": "14:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "15",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "14:50",
+      "destination": "多度津",
+      "arrival_time": "15:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "17",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "15:50",
+      "destination": "多度津",
+      "arrival_time": "16:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "19",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "16:50",
+      "destination": "多度津",
+      "arrival_time": "17:18",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "21",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "17:53",
+      "destination": "多度津",
+      "arrival_time": "18:22",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "23",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "18:59",
+      "destination": "多度津",
+      "arrival_time": "19:26",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "25",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "19:51",
+      "destination": "多度津",
+      "arrival_time": "20:22",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "27",
+      "direction": "down",
+      "origin": "高松",
+      "departure_time": "20:59",
+      "destination": "多度津",
+      "arrival_time": "21:27",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "4",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "07:14",
+      "destination": "高松",
+      "arrival_time": "07:36",
+      "operating_dates": [
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "6",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "08:26",
+      "destination": "高松",
+      "arrival_time": "08:45",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "8",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "09:25",
+      "destination": "高松",
+      "arrival_time": "09:47",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "10",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "10:19",
+      "destination": "高松",
+      "arrival_time": "10:39",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "12",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "11:33",
+      "destination": "高松",
+      "arrival_time": "11:54",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "14",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "12:33",
+      "destination": "高松",
+      "arrival_time": "12:54",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "16",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "13:34",
+      "destination": "高松",
+      "arrival_time": "13:55",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "18",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "14:34",
+      "destination": "高松",
+      "arrival_time": "14:56",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "20",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "15:34",
+      "destination": "高松",
+      "arrival_time": "15:56",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "22",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "16:34",
+      "destination": "高松",
+      "arrival_time": "16:54",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "24",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "17:35",
+      "destination": "高松",
+      "arrival_time": "17:57",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "26",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "18:36",
+      "destination": "高松",
+      "arrival_time": "18:56",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    },
+    {
+      "public_number": "28",
+      "direction": "up",
+      "origin": "宇多津",
+      "departure_time": "19:38",
+      "destination": "高松",
+      "arrival_time": "19:58",
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23"
+      ]
+    }
+  ],
+  "independent_review": {
+    "status": "visually_reviewed_preparation_only",
+    "reviewed_at": "2026-09-28",
+    "locator": "PDF physical page 17, printed page 16",
+    "notes": "Parent independently re-fetched the PDF, matched SHA-256, inspected the original merged-date cells, and checked all 26 endpoint/clock rows. Still excluded from canonical inputs until a subsequent reviewed normalization batch."
+  }
+}

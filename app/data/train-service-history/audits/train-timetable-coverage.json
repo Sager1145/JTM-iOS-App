@@ -1,9 +1,9 @@
 {
   "asOfDate": "2026-09-28",
-  "calendarExceptions": 865,
-  "calendarRules": 60,
-  "canonicalSourceHash": "0a87186def05c9ec0fd63d7bdeb1956edf319eb87121e476bc10b68f4007bb6c",
-  "commitSHA": "ab457c2c834c6b63943662455b0f2de981e8b1d1",
+  "calendarExceptions": 984,
+  "calendarRules": 66,
+  "canonicalSourceHash": "a20604eb383516b7340cf851dda685ed2084c7bc1cd7c579dd0acd21166a71b2",
+  "commitSHA": "db2a453b92ffb5ab9524bbe7cb23e96a69ef4e45",
   "conflicts": 0,
   "coverageComplete": false,
   "coverageMatrix": [
@@ -9931,7 +9931,7 @@
       "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-east",
-      "recordCount": 1,
+      "recordCount": 4,
       "status": "partial",
       "year": 2026
     },
@@ -9939,7 +9939,7 @@
       "declaredStatus": "partial",
       "dimension": "train_number",
       "operatorScope": "jr-east",
-      "recordCount": 1,
+      "recordCount": 4,
       "status": "partial",
       "year": 2026
     },
@@ -9947,7 +9947,7 @@
       "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-east",
-      "recordCount": 1,
+      "recordCount": 4,
       "status": "partial",
       "year": 2026
     },
@@ -9955,7 +9955,7 @@
       "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-east",
-      "recordCount": 14,
+      "recordCount": 47,
       "status": "partial",
       "year": 2026
     },
@@ -9963,7 +9963,7 @@
       "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-east",
-      "recordCount": 14,
+      "recordCount": 47,
       "status": "partial",
       "year": 2026
     },
@@ -9979,7 +9979,7 @@
       "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-east",
-      "recordCount": 14,
+      "recordCount": 30,
       "status": "partial",
       "year": 2026
     },
@@ -9987,7 +9987,7 @@
       "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-east",
-      "recordCount": 42,
+      "recordCount": 66,
       "status": "partial",
       "year": 2026
     },
@@ -17611,7 +17611,7 @@
       "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-shikoku",
-      "recordCount": 24,
+      "recordCount": 50,
       "status": "partial",
       "year": 2026
     },
@@ -17619,7 +17619,7 @@
       "declaredStatus": "missing",
       "dimension": "train_number",
       "operatorScope": "jr-shikoku",
-      "recordCount": 24,
+      "recordCount": 50,
       "status": "missing",
       "year": 2026
     },
@@ -17627,7 +17627,7 @@
       "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-shikoku",
-      "recordCount": 24,
+      "recordCount": 26,
       "status": "partial",
       "year": 2026
     },
@@ -17635,7 +17635,7 @@
       "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-shikoku",
-      "recordCount": 48,
+      "recordCount": 100,
       "status": "partial",
       "year": 2026
     },
@@ -17643,7 +17643,7 @@
       "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-shikoku",
-      "recordCount": 48,
+      "recordCount": 100,
       "status": "partial",
       "year": 2026
     },
@@ -17659,7 +17659,7 @@
       "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-shikoku",
-      "recordCount": 2,
+      "recordCount": 5,
       "status": "partial",
       "year": 2026
     },
@@ -17667,7 +17667,7 @@
       "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-shikoku",
-      "recordCount": 96,
+      "recordCount": 304,
       "status": "partial",
       "year": 2026
     },
@@ -20171,44 +20171,44 @@
       "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-kyushu",
-      "recordCount": 6,
-      "status": "partial",
-      "year": 2026
-    },
-    {
-      "declaredStatus": "missing",
-      "dimension": "train_number",
-      "operatorScope": "jr-kyushu",
-      "recordCount": 6,
-      "status": "missing",
-      "year": 2026
-    },
-    {
-      "declaredStatus": "partial",
-      "dimension": "calendar",
-      "operatorScope": "jr-kyushu",
-      "recordCount": 6,
-      "status": "partial",
-      "year": 2026
-    },
-    {
-      "declaredStatus": "partial",
-      "dimension": "stops",
-      "operatorScope": "jr-kyushu",
-      "recordCount": 46,
-      "status": "partial",
-      "year": 2026
-    },
-    {
-      "declaredStatus": "partial",
-      "dimension": "times",
-      "operatorScope": "jr-kyushu",
-      "recordCount": 46,
+      "recordCount": 12,
       "status": "partial",
       "year": 2026
     },
     {
       "declaredStatus": "missing",
+      "dimension": "train_number",
+      "operatorScope": "jr-kyushu",
+      "recordCount": 12,
+      "status": "missing",
+      "year": 2026
+    },
+    {
+      "declaredStatus": "partial",
+      "dimension": "calendar",
+      "operatorScope": "jr-kyushu",
+      "recordCount": 7,
+      "status": "partial",
+      "year": 2026
+    },
+    {
+      "declaredStatus": "partial",
+      "dimension": "stops",
+      "operatorScope": "jr-kyushu",
+      "recordCount": 58,
+      "status": "partial",
+      "year": 2026
+    },
+    {
+      "declaredStatus": "partial",
+      "dimension": "times",
+      "operatorScope": "jr-kyushu",
+      "recordCount": 58,
+      "status": "partial",
+      "year": 2026
+    },
+    {
+      "declaredStatus": "missing",
       "dimension": "route_lines",
       "operatorScope": "jr-kyushu",
       "recordCount": 0,
@@ -20219,7 +20219,7 @@
       "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-kyushu",
-      "recordCount": 9,
+      "recordCount": 11,
       "status": "partial",
       "year": 2026
     },
@@ -20227,15 +20227,17 @@
       "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-kyushu",
-      "recordCount": 30,
+      "recordCount": 78,
       "status": "partial",
       "year": 2026
     }
   ],
-  "dailyOccurrencesRepresented": 865,
-  "databaseHash": "813dfc89bae04f44bd7ecae455532d0110072f5a511c8dca99f2a7eca8878d33",
+  "dailyEvidenceSemantics": "Dates attest at least one represented planned trip, not a complete daily inventory or actual operation. Ranges are half-open.",
+  "dailyOccurrencesRepresented": 1577,
+  "databaseHash": "3222ceee7d6539ab4970ca9897601b57c02b69673ec86c40d20c13b307027f6b",
   "expectedCoverageScopes": 7,
   "firstCoveredDate": "2013-07-06",
+  "firstTimetableEffectiveDate": "2013-07-06",
   "lastCoveredDate": "2026-09-28",
   "lastCoveredUntil": "2026-09-29",
   "licenseBlockedSources": [
@@ -20274,6 +20276,296 @@
     "jr-west": {
       "missing": 314,
       "partial": 6
+    }
+  },
+  "perOperatorDailyEvidence": {
+    "jr-ancestral-national-railways": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 0,
+      "distinctServiceDatesWithEvidence": 0,
+      "firstServiceDateWithEvidence": null,
+      "lastServiceDateWithEvidence": null,
+      "scopeServiceDates": 27318,
+      "serviceDateRangesWithEvidence": [],
+      "tripTemplatesWithOccurrences": 0
+    },
+    "jr-central": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 228,
+      "distinctServiceDatesWithEvidence": 46,
+      "firstServiceDateWithEvidence": "2013-07-06",
+      "lastServiceDateWithEvidence": "2026-09-28",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2013-07-06",
+          "validUntil": "2013-07-07"
+        },
+        {
+          "validFrom": "2013-07-13",
+          "validUntil": "2013-07-16"
+        },
+        {
+          "validFrom": "2013-07-20",
+          "validUntil": "2013-07-22"
+        },
+        {
+          "validFrom": "2013-07-27",
+          "validUntil": "2013-07-29"
+        },
+        {
+          "validFrom": "2013-08-01",
+          "validUntil": "2013-08-19"
+        },
+        {
+          "validFrom": "2013-08-24",
+          "validUntil": "2013-08-26"
+        },
+        {
+          "validFrom": "2013-09-07",
+          "validUntil": "2013-09-08"
+        },
+        {
+          "validFrom": "2013-09-14",
+          "validUntil": "2013-09-17"
+        },
+        {
+          "validFrom": "2013-09-21",
+          "validUntil": "2013-09-24"
+        },
+        {
+          "validFrom": "2026-09-18",
+          "validUntil": "2026-09-29"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 13
+    },
+    "jr-east": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 29,
+      "distinctServiceDatesWithEvidence": 11,
+      "firstServiceDateWithEvidence": "2026-09-18",
+      "lastServiceDateWithEvidence": "2026-09-28",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2026-09-18",
+          "validUntil": "2026-09-29"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 4
+    },
+    "jr-hokkaido": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 423,
+      "distinctServiceDatesWithEvidence": 92,
+      "firstServiceDateWithEvidence": "2026-05-16",
+      "lastServiceDateWithEvidence": "2026-09-28",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2026-05-16",
+          "validUntil": "2026-05-18"
+        },
+        {
+          "validFrom": "2026-07-01",
+          "validUntil": "2026-09-29"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 14
+    },
+    "jr-kyushu": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 600,
+      "distinctServiceDatesWithEvidence": 90,
+      "firstServiceDateWithEvidence": "2026-07-01",
+      "lastServiceDateWithEvidence": "2026-09-28",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2026-07-01",
+          "validUntil": "2026-09-29"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 12
+    },
+    "jr-shikoku": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 250,
+      "distinctServiceDatesWithEvidence": 10,
+      "firstServiceDateWithEvidence": "2026-08-08",
+      "lastServiceDateWithEvidence": "2026-09-23",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2026-08-08",
+          "validUntil": "2026-08-10"
+        },
+        {
+          "validFrom": "2026-08-15",
+          "validUntil": "2026-08-17"
+        },
+        {
+          "validFrom": "2026-09-18",
+          "validUntil": "2026-09-24"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 50
+    },
+    "jr-west": {
+      "completeDailyInventory": false,
+      "dailyOccurrencesRepresented": 47,
+      "distinctServiceDatesWithEvidence": 47,
+      "firstServiceDateWithEvidence": "2026-07-03",
+      "lastServiceDateWithEvidence": "2026-09-28",
+      "scopeServiceDates": 14426,
+      "serviceDateRangesWithEvidence": [
+        {
+          "validFrom": "2026-07-03",
+          "validUntil": "2026-07-04"
+        },
+        {
+          "validFrom": "2026-07-05",
+          "validUntil": "2026-07-07"
+        },
+        {
+          "validFrom": "2026-07-08",
+          "validUntil": "2026-07-09"
+        },
+        {
+          "validFrom": "2026-07-10",
+          "validUntil": "2026-07-11"
+        },
+        {
+          "validFrom": "2026-07-12",
+          "validUntil": "2026-07-14"
+        },
+        {
+          "validFrom": "2026-07-15",
+          "validUntil": "2026-07-16"
+        },
+        {
+          "validFrom": "2026-07-17",
+          "validUntil": "2026-07-18"
+        },
+        {
+          "validFrom": "2026-07-19",
+          "validUntil": "2026-07-21"
+        },
+        {
+          "validFrom": "2026-07-22",
+          "validUntil": "2026-07-23"
+        },
+        {
+          "validFrom": "2026-07-24",
+          "validUntil": "2026-07-25"
+        },
+        {
+          "validFrom": "2026-07-26",
+          "validUntil": "2026-07-28"
+        },
+        {
+          "validFrom": "2026-07-29",
+          "validUntil": "2026-07-30"
+        },
+        {
+          "validFrom": "2026-07-31",
+          "validUntil": "2026-08-01"
+        },
+        {
+          "validFrom": "2026-08-02",
+          "validUntil": "2026-08-04"
+        },
+        {
+          "validFrom": "2026-08-05",
+          "validUntil": "2026-08-06"
+        },
+        {
+          "validFrom": "2026-08-07",
+          "validUntil": "2026-08-08"
+        },
+        {
+          "validFrom": "2026-08-09",
+          "validUntil": "2026-08-10"
+        },
+        {
+          "validFrom": "2026-08-17",
+          "validUntil": "2026-08-18"
+        },
+        {
+          "validFrom": "2026-08-19",
+          "validUntil": "2026-08-20"
+        },
+        {
+          "validFrom": "2026-08-21",
+          "validUntil": "2026-08-22"
+        },
+        {
+          "validFrom": "2026-08-23",
+          "validUntil": "2026-08-25"
+        },
+        {
+          "validFrom": "2026-08-26",
+          "validUntil": "2026-08-27"
+        },
+        {
+          "validFrom": "2026-08-28",
+          "validUntil": "2026-08-29"
+        },
+        {
+          "validFrom": "2026-08-30",
+          "validUntil": "2026-09-01"
+        },
+        {
+          "validFrom": "2026-09-02",
+          "validUntil": "2026-09-03"
+        },
+        {
+          "validFrom": "2026-09-04",
+          "validUntil": "2026-09-05"
+        },
+        {
+          "validFrom": "2026-09-06",
+          "validUntil": "2026-09-08"
+        },
+        {
+          "validFrom": "2026-09-09",
+          "validUntil": "2026-09-10"
+        },
+        {
+          "validFrom": "2026-09-11",
+          "validUntil": "2026-09-12"
+        },
+        {
+          "validFrom": "2026-09-13",
+          "validUntil": "2026-09-15"
+        },
+        {
+          "validFrom": "2026-09-16",
+          "validUntil": "2026-09-17"
+        },
+        {
+          "validFrom": "2026-09-18",
+          "validUntil": "2026-09-19"
+        },
+        {
+          "validFrom": "2026-09-20",
+          "validUntil": "2026-09-22"
+        },
+        {
+          "validFrom": "2026-09-23",
+          "validUntil": "2026-09-24"
+        },
+        {
+          "validFrom": "2026-09-25",
+          "validUntil": "2026-09-26"
+        },
+        {
+          "validFrom": "2026-09-27",
+          "validUntil": "2026-09-29"
+        }
+      ],
+      "tripTemplatesWithOccurrences": 2
     }
   },
   "perYearCoverage": {
@@ -20970,22 +21262,24 @@
       }
     }
   },
-  "railHistoryHash": "3fb48e1bbc413af1fcb533ca23eb13e6d9bbcc9c40d6c1d2976210abee8a93f6",
-  "railHistoryRevision": "2026-09-28.2",
+  "railHistoryHash": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+  "railHistoryRevision": "2026-09-28.3",
   "routeAuditStatus": "not_run",
   "schemaVersion": "1.0.0",
-  "serviceFamilies": 14,
+  "serviceFamilies": 18,
   "solverVersion": "24",
-  "sourceRegistryHash": "cda181fc03ae1d117b8a4bc802c942d8086fb7416dfbfcd2c05fda9bf846ba00",
+  "sourceRegistryHash": "a6f40a962f741e57753f113720bf6936713e0d12205df311a4ae732f24f2ad20",
   "stationPackageHash": "ab20ee37a2c031772e61e25d6c736291689617c2337b973e9b0b62098998ef32",
-  "stopTimes": 266,
-  "timetableVersions": 60,
-  "tripTemplates": 60,
-  "unresolvedRoutes": 61,
+  "stopTimes": 363,
+  "timetableVersions": 65,
+  "tripTemplates": 95,
+  "unresolvedRoutes": 96,
   "unresolvedSources": 2,
-  "unresolvedStations": 14,
+  "unresolvedStations": 15,
   "verificationOnlySources": [
     "jr-central-summer-20130517",
+    "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314",
+    "jr-kyushu-summer-ds-plan-current-20260515",
     "jr-east-kanto-route-map-202604",
     "jr-east-ueno-tokyo-line-20150314",
     "jr-central-nagoya-chuo-timetable-202603",

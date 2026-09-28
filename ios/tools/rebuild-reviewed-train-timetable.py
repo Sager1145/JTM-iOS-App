@@ -15,11 +15,16 @@ NORMALIZERS=[
     'normalize-reviewed-shiokaze-seeds.py',
     'normalize-reviewed-west-seeds.py',
     'normalize-reviewed-north-shikoku-seeds.py',
+    'normalize-reviewed-east-next-batch-seeds.py',
+    'normalize-reviewed-kyushu-next-seeds.py',
+    'normalize-reviewed-ishizuchi-next-seeds.py',
     'normalize-reviewed-historical-seeds.py',
+    'normalize-reviewed-historical-next-batch.py',
     'normalize-reviewed-route-evidence.py',
 ]
 STEPS=[
     'validate-train-timetable.py',
+    'discover-jr-limited-express-sources.py',
     'build-train-timetable-db.py',
     'verify-train-timetable-artifact.py',
     'audit-train-timetable-coverage.py',

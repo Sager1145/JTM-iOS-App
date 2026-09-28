@@ -785,6 +785,10 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
                 errors.append(f"{where}: verified_no_service lacks a full-year verified zero-service interval")
         _require_ref(errors, row.get("source_id"), source_ids, where + ".source_id")
 
+    for i, row in enumerate(data['research_queue']):
+        if row['status'] not in {'open', 'source_unavailable', 'license_blocked', 'not_digitized', 'resolved'}:
+            errors.append(f"{origins[('research_queue', i)]}.status: unsupported research status {row['status']!r}")
+
     for i, row in enumerate(data["actual_operation_events"]):
         where = origins[("actual_operation_events", i)]
         _require_ref(errors, row.get("trip_id"), trip_ids, where + ".trip_id")
@@ -1591,13 +1595,63 @@ def coverage_report(canonical_dir, database_path=None):
     for row in data["calendar_exceptions"]: exceptions_by_calendar[row["calendar_id"]].append(row)
     holiday_dates = {row["service_date"] for row in data["holiday_dates"]}
     occurrence_cache = {}
+    exception_lookup = {(row['calendar_id'], row['service_date']): row['exception_type']
+                        for row in data['calendar_exceptions']}
+    holiday_years = {row['year']: row['status'] for row in data['holiday_calendar_years']}
+    evidence_days = defaultdict(set)
+    evidence_days_by_trip = defaultdict(list)
     for trip in data["trips"]:
         key = (trip["timetable_version_id"], trip["calendar_id"])
         if key not in occurrence_cache:
-            occurrence_cache[key] = _operating_day_count(
-                calendars_by_id[trip["calendar_id"]], versions_by_id[trip["timetable_version_id"]],
-                first, last + timedelta(days=1), exceptions_by_calendar, holiday_dates)
-        occurrence_count += occurrence_cache[key]
+            calendar_row = calendars_by_id[trip['calendar_id']]
+            version = versions_by_id[trip['timetable_version_id']]
+            start = max(first, date.fromisoformat(calendar_row['valid_from']),
+                        date.fromisoformat(version['effective_from']))
+            end = min(last + timedelta(days=1), date.fromisoformat(calendar_row['valid_until']),
+                      date.fromisoformat(version['effective_until']))
+            days = set()
+            # Explicit-date calendars need no scan across the edition envelope.
+            if not any(calendar_row[name] for name in
+                       ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')):
+                candidates = (date.fromisoformat(row['service_date'])
+                              for row in exceptions_by_calendar[calendar_row['calendar_id']]
+                              if row['exception_type'] == 'add')
+            else:
+                candidates = (start + timedelta(days=offset) for offset in range(max(0, (end-start).days)))
+            for day in candidates:
+                if start <= day < end and calendar_operates(calendar_row, day, exception_lookup, holiday_dates, holiday_years):
+                    days.add(day)
+            occurrence_cache[key] = days
+        days = occurrence_cache[key]
+        scope_name = versions_by_id[trip['timetable_version_id']]['operator_scope']
+        evidence_days[scope_name].update(days)
+        evidence_days_by_trip[scope_name].append(days)
+        occurrence_count += len(days)
+    all_evidence_days = set().union(*evidence_days.values()) if evidence_days else set()
+    per_operator_evidence = {}
+    for scope in manifest['expected_coverage_scopes']:
+        name = scope['operator_scope']
+        start = max(first, date.fromisoformat(scope['valid_from']))
+        end = min(last + timedelta(days=1), date.fromisoformat(scope['valid_until']))
+        scoped_days = {day for day in evidence_days[name] if start <= day < end}
+        days = sorted(scoped_days)
+        scoped_trip_days = [trip_days.intersection(scoped_days) for trip_days in evidence_days_by_trip[name]]
+        ranges = []
+        for day in days:
+            if ranges and ranges[-1]['validUntil'] == day.isoformat():
+                ranges[-1]['validUntil'] = (day + timedelta(days=1)).isoformat()
+            else:
+                ranges.append({'validFrom': day.isoformat(), 'validUntil': (day + timedelta(days=1)).isoformat()})
+        per_operator_evidence[name] = {
+            'tripTemplatesWithOccurrences': sum(bool(trip_days) for trip_days in scoped_trip_days),
+            'dailyOccurrencesRepresented': sum(len(trip_days) for trip_days in scoped_trip_days),
+            'distinctServiceDatesWithEvidence': len(days),
+            'scopeServiceDates': max(0, (end-start).days),
+            'firstServiceDateWithEvidence': days[0].isoformat() if days else None,
+            'lastServiceDateWithEvidence': days[-1].isoformat() if days else None,
+            'serviceDateRangesWithEvidence': ranges,
+            'completeDailyInventory': False,
+        }
     source_paths = entity_paths(canonical_dir, manifest["entities"]["source_documents"])
     history = json.loads(RAIL_HISTORY.read_text(encoding="utf-8"))
     try:
@@ -1622,7 +1676,8 @@ def coverage_report(canonical_dir, database_path=None):
         "solverVersion": manifest.get("solver_version"),
         "routeAuditStatus": "not_run",
         "operatorsExpected": len(jr_scope_names),
-        "operatorsCovered": sum(1 for name in jr_scope_names if per_operator[name].get("missing", 0) == 0),
+        "operatorsCovered": sum(1 for name in jr_scope_names
+                                if per_operator[name] and set(per_operator[name]) <= {'verified', 'verified_no_service'}),
         "expectedCoverageScopes": len(manifest["expected_coverage_scopes"]),
         "serviceFamilies": counts["services"],
         "timetableVersions": counts["timetable_versions"],
@@ -1631,9 +1686,12 @@ def coverage_report(canonical_dir, database_path=None):
         "calendarRules": counts["calendars"],
         "calendarExceptions": counts["calendar_exceptions"],
         "stopTimes": counts["stop_times"],
-        "firstCoveredDate": min((row["effective_from"] for row in versions), default=None),
+        "firstCoveredDate": min(all_evidence_days).isoformat() if all_evidence_days else None,
         "lastCoveredUntil": last_covered_until,
-        "lastCoveredDate": (date.fromisoformat(last_covered_until) - timedelta(days=1)).isoformat() if last_covered_until else None,
+        "lastCoveredDate": max(all_evidence_days).isoformat() if all_evidence_days else None,
+        "firstTimetableEffectiveDate": min((row['effective_from'] for row in versions), default=None),
+        "dailyEvidenceSemantics": "Dates attest at least one represented planned trip, not a complete daily inventory or actual operation. Ranges are half-open.",
+        "perOperatorDailyEvidence": per_operator_evidence,
         "verifiedZeroServiceIntervals": data["verified_zero_service_intervals"],
         "unresolvedSources": sum(1 for row in data["research_queue"] if row["missing_dimension"] in {"source", "timetable_issue"} and row["status"] != "resolved"),
         "unresolvedStations": sum(1 for row in data["research_queue"] if row["missing_dimension"] == "station_refs" and row["status"] != "resolved"),

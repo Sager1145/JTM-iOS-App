@@ -2,11 +2,53 @@
   "asOfDate": "2026-09-28",
   "complete": false,
   "passedLegs": 0,
-  "passengerLegs": 205,
+  "passengerLegs": 267,
   "schemaVersion": 1,
   "solverExecuted": false,
-  "tripTemplates": 60,
+  "tripTemplates": 95,
   "trips": [
+    {
+      "calendarId": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 11,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19.version",
+      "tripId": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-east.azusa.1.base.2026-09-18.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 11,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-east.azusa.1.base.2026-09-18.version",
+      "tripId": "jr-east.azusa.1.base.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-east.tokiwa.55.main.2026-09-19.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 8,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-east.tokiwa.55.main.2026-09-19.version",
+      "tripId": "jr-east.tokiwa.55.main.2026-09-19",
+      "viaStatus": "unverified"
+    },
     {
       "calendarId": "jr-hokkaido.hokuto.84.2026-08-07.calendar",
       "dateApplicabilityStatus": "calendar_materialization_required",
@@ -341,6 +383,454 @@
       "solverStatus": "not_run",
       "timetableVersionId": "jr-central.nanki.84.2013-summer.version",
       "tripId": "jr-central.nanki.84.2013-summer",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.five-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.3.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.5.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.7.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.9.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.11.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.13.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.15.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.17.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.19.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.21.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.23.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.25.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.27.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.five-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.4.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.6.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.8.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.10.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.12.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.14.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.16.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.18.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.20.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.22.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.24.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.26.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.ishizuchi.silver-week-2026.six-day.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.ishizuchi.silver-week-2026.version",
+      "tripId": "jr-shikoku.ishizuchi.28.2026-09-18",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-kyushu.ibusuki-no-tamatebako.2026-summer.version",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01",
       "viaStatus": "unverified"
     },
     {
@@ -845,5 +1335,5 @@
       "viaStatus": "unverified"
     }
   ],
-  "unverifiedLegs": 205
+  "unverifiedLegs": 267
 }

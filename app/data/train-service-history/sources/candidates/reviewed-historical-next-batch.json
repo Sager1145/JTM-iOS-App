@@ -1,0 +1,152 @@
+{
+  "batch_id": "reviewed-historical-next-batch-20260928",
+  "canonical_promotion_allowed": false,
+  "notes": "A second, independent review of public NDL scans. An unqualified timetable row is not treated as daily service. OCR was used only to locate candidate text; every reported timetable or legend statement was checked against the cited scan canvas.",
+  "research_queue": [
+    {
+      "entity_id": "tokyo-shimonoseki-special-express-19260401",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "explicit_operating_calendar_after_full_issue_review",
+      "notes": "NDL PID 914814 was reviewed across all 37 OCR pages and the relevant original canvases. R0000008 gives the special-express rows; R0000009 says a Tokyo-Shimonoseki special express is in operation. Other pages use explicit limited-operation annotations (for example the seasonal date range on R0000007 and symbol/date annotations on R0000017), but no affirmative daily, weekday, or enumerated-date rule was found for trains 1 or 3. Absence of an annotation is not calendar evidence. Next evidence target: a Railway Ministry working timetable, official operating notice, or issue legend that expressly assigns operating days to trains 1 and 3.",
+      "research_id": "historical-next-batch.19260401.explicit-calendar",
+      "status": "open"
+    },
+    {
+      "entity_id": "fuji-sakura-tsubame-19341201-principal-trains",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "complete_stops_and_explicit_operating_calendar",
+      "notes": "NDL PID 1212739 canvas R0000002 is explicitly titled 東京下関間主要列車時刻表, so it cannot prove that every passenger stop is shown. Canvas R0000122 lists the limited-express names, endpoints, train numbers/classes, and origin departure times as of the 1934-12-01 revision. Canvas R0000127 has a scoped sleeper-list note that ※ trains run only when passenger demand is high; it does not state that every unmarked limited express runs daily. Acquire the original December 1934 Railway Ministry/Japan Tourist Bureau timetable or an official working timetable/notice with complete calls and operating-day rules.",
+      "research_id": "historical-next-batch.19341201.full-timetable-calendar",
+      "status": "open"
+    },
+    {
+      "entity_id": "fuji-sakura-tsubame-19341201-principal-trains",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "station_refs",
+      "notes": "Resolve only against existing rail-history identities that are valid on 1934-12-01. Do not map historical station names to current N02 identities by name alone. This candidate does not upgrade route-line completeness.",
+      "research_id": "historical-next-batch.19341201.station-refs",
+      "status": "open"
+    }
+  ],
+  "source_documents": [
+    {
+      "accessed_at": "2026-09-28",
+      "archive_locator": "NDL PID 1212739; IIIF canvases R0000002, R0000122, R0000127",
+      "automated_extraction_allowed": true,
+      "content_hash": "sha256:8bc412176a3aeb0f5e246f64bdfd394846926ae58466dab006a398af19a4ad6a",
+      "effective_date": "1934-12-01",
+      "issue": "昭和9年12月1日改正を反映",
+      "license_status": "public_domain_mark",
+      "notes": "The content hash is for the NDL IIIF manifest bytes fetched on the access date. This is a contemporary commercial handbook digitized by NDL, not a Railway Ministry publication. Canvas R0000002 contains the principal-train table; R0000122 defines the limited-express services; R0000127 contains the demand-only symbol note scoped to a sleeper-equipped-train list. Official NDL OCR was used for discovery and checked against the scans. No scan is committed.",
+      "publication_date": null,
+      "publisher": "ダイヤモンド出版 (NDL manifest)",
+      "redistribution_status": "metadata_and_transcribed_facts_only",
+      "source_id": "ndl-railway-knowledge-passenger-1934",
+      "source_type": "official_archive_digitization_of_contemporary_handbook",
+      "title": "鉄道の知識. 旅客及手小荷物篇",
+      "url_or_locator": "https://dl.ndl.go.jp/pid/1212739"
+    }
+  ],
+  "timetable_candidates": [
+    {
+      "calendar_status": "unknown_after_full_issue_review",
+      "candidate_id": "tokyo-shimonoseki-special-express-19260401-calendar-review",
+      "canonical_record_count": 0,
+      "evidence_artifact_hashes": {
+        "ndl_fulltext_json": "sha256:19085134e8c2f3547a769eaf0a7b816324405e5e8db8bcf4e76af9e7d70a17d3",
+        "ndl_iiif_manifest": "sha256:c85c2bec1f90631add396f6f0d6726148c43ab97e914a33d9d7d86c6a4dd1cd9",
+        "r0000008_image": "sha256:d2e5f4ee5e05fb3ff5fc1fe228c25792e4bf06186df078a4ae9e1490bc37a2e6",
+        "r0000017_image": "sha256:531e7067fccadbf027c65b87958c669cdebf2d96dff78690b07ca4dd0418fa41"
+      },
+      "evidence_review": [
+        {
+          "finding": "The down principal-train table directly shows trains 3 and 1 as special expresses between Tokyo and Shimonoseki, with the endpoint times already recorded in reviewed-historical-batch.",
+          "locator": "NDL PID 914814, IIIF canvas R0000008"
+        },
+        {
+          "finding": "The passenger-rule page says that a special express operates between Shimonoseki and Tokyo, but gives no recurrence or operating-day rule.",
+          "locator": "NDL PID 914814, IIIF canvas R0000009, printed pp. 4-5"
+        },
+        {
+          "finding": "The issue contains explicit limited-operation annotations for other trains, including a seasonal date range and symbol/date notes. Those annotations do not apply to the special-express rows and do not define an all-unmarked-trains-are-daily default.",
+          "locator": "NDL PID 914814, IIIF canvases R0000007 and R0000017"
+        }
+      ],
+      "related_candidate_id": "tokyo-shimonoseki-special-express-19260401",
+      "source_id": "ndl-kyushu-line-timetable-80-1926",
+      "verification_status": "direct_scan_review_plus_official_ocr_index",
+      "why_not_canonical": "No explicit operating calendar was found for trains 1 or 3. The existing historical station-reference gap also remains."
+    },
+    {
+      "calendar_status": "unknown",
+      "candidate_id": "fuji-sakura-tsubame-19341201-principal-trains",
+      "canonical_record_count": 0,
+      "directly_read_facts": [
+        {
+          "direction": "down",
+          "origin_departure_time": "15:00",
+          "origin_name_snapshot": "東京",
+          "service_name": "富士",
+          "train_number": "1"
+        },
+        {
+          "direction": "up",
+          "origin_departure_time": "20:30",
+          "origin_name_snapshot": "下関",
+          "service_name": "富士",
+          "train_number": "2"
+        },
+        {
+          "direction": "down",
+          "origin_departure_time": "13:30",
+          "origin_name_snapshot": "東京",
+          "service_name": "櫻",
+          "train_number": "3"
+        },
+        {
+          "direction": "up",
+          "origin_departure_time": "22:00",
+          "origin_name_snapshot": "下関",
+          "service_name": "櫻",
+          "train_number": "4"
+        },
+        {
+          "direction": "down",
+          "origin_departure_time": "09:00",
+          "origin_name_snapshot": "東京",
+          "service_name": "燕",
+          "train_number": "11"
+        },
+        {
+          "direction": "up",
+          "origin_departure_time": "12:20",
+          "origin_name_snapshot": "神戸",
+          "service_name": "燕",
+          "train_number": "12"
+        },
+        {
+          "direction": "down",
+          "origin_departure_time": "08:50",
+          "origin_name_snapshot": "東京",
+          "service_name": "燕",
+          "train_number": "13"
+        },
+        {
+          "direction": "up",
+          "origin_departure_time": "12:50",
+          "origin_name_snapshot": "大阪",
+          "service_name": "燕",
+          "train_number": "14"
+        }
+      ],
+      "effective_date": "1934-12-01",
+      "historical_station_identity_status": "unresolved",
+      "page_or_locator": "NDL PID 1212739: R0000002 (東京下関間主要列車時刻表); R0000122, printed pp. 222-223 (special-express definitions); R0000127, printed pp. 232-233 (scoped demand-only symbol note)",
+      "route_evidence_status": "not_reviewed_for_promotion",
+      "schedule_scope": "principal_stations_only",
+      "source_id": "ndl-railway-knowledge-passenger-1934",
+      "verification_status": "direct_scan_review",
+      "why_not_canonical": "The table is expressly limited to principal trains/stations and does not establish complete passenger calls. Neither the table nor the service-definition page states a daily, weekday, or enumerated-date operating calendar. The demand-only symbol note is scoped to a different sleeper-equipment list, so an unmarked row cannot be promoted as daily."
+    }
+  ]
+}

@@ -1,8 +1,128 @@
 {
   "inventoryComplete": false,
   "method": "Curated official web search and archive guide discoveries; no complete timetable inventory inferred.",
-  "sourceCount": 31,
+  "sourceCount": 52,
   "sources": [
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "no_reuse_grant_identified",
+      "locator": "https://jr-central.co.jp/news/release/_pdf/000018518.pdf",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-central-summer-20130517",
+      "sourceType": "official_planned_exception",
+      "title": "“夏”の臨時列車のお知らせ（平成25年）"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://timetables.jreast.co.jp/2610/train/005/008042.html",
+      "publisher": "東日本旅客鉄道 / 交通新聞社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-east-azusa1-202609-east-next",
+      "sourceType": "official_train_timetable",
+      "title": "あずさ 1号 停車駅一覧"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://timetables.jreast.co.jp/2610/train/005/008041.html",
+      "publisher": "東日本旅客鉄道 / 交通新聞社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-east-azusa1-base-202609-east-next",
+      "sourceType": "official_train_timetable",
+      "title": "あずさ 1号 停車駅一覧（通常時刻）"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://timetables.jreast.co.jp/2610/train/075/076301.html",
+      "publisher": "東日本旅客鉄道 / 交通新聞社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-east-tokiwa55-202609-east-next",
+      "sourceType": "official_train_timetable",
+      "title": "ときわ 55号 停車駅一覧"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "jacar_site_terms_apply",
+      "locator": "https://www.jacar.archives.go.jp/acv/contents/pub/pdf/B25/B25090979800.BAdash_0035.RAdash-0869.00000131.pdf",
+      "publisher": "外務省 / アジア歴史資料センター",
+      "redistributionStatus": "citation_and_metadata_only",
+      "sourceId": "jacar-desai-tsubame-plan-19591018",
+      "sourceType": "official_archive_document",
+      "title": "インド大蔵大臣一行の特別急行「つばめ」乗車予定に関する文書"
+    },
+    {
+      "automatedExtractionAllowed": true,
+      "licenseStatus": "public_domain_mark",
+      "locator": "https://dl.ndl.go.jp/pid/914814",
+      "publisher": "駸々堂 (NDL manifest metadata)",
+      "redistributionStatus": "metadata_and_transcribed_facts_only",
+      "sourceId": "ndl-kyushu-line-timetable-80-1926",
+      "sourceType": "official_archive_digitization",
+      "title": "九州線汽車時間表. 第80号"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "ndl_access_terms_apply",
+      "locator": "https://ndlsearch.ndl.go.jp/books/R100000039-I14603552",
+      "publisher": "新人物往来社",
+      "redistributionStatus": "bibliographic_metadata_only",
+      "sourceId": "ndl-meiji-taisho-timetable-reprint-vol4",
+      "sourceType": "official_archive_catalog_record",
+      "title": "復刻版明治大正鐵道省列車時刻表 [4]"
+    },
+    {
+      "automatedExtractionAllowed": true,
+      "licenseStatus": "public_domain_mark",
+      "locator": "https://dl.ndl.go.jp/pid/1212739",
+      "publisher": "ダイヤモンド出版 (NDL manifest)",
+      "redistributionStatus": "metadata_and_transcribed_facts_only",
+      "sourceId": "ndl-railway-knowledge-passenger-1934",
+      "sourceType": "official_archive_digitization_of_contemporary_handbook",
+      "title": "鉄道の知識. 旅客及手小荷物篇"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jr-shikoku.co.jp/03_news/press/assets/2026/07/15/20260515%20.pdf",
+      "publisher": "四国旅客鉄道株式会社",
+      "redistributionStatus": "metadata_and_transcribed_facts_only",
+      "sourceId": "jr-shikoku-summer-20260515-ishizuchi-silver-week-following",
+      "sourceType": "official_planned_exception",
+      "title": "夏の臨時列車運転のお知らせ"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "no_reuse_grant_identified",
+      "locator": "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314",
+      "sourceType": "official_train_service_timetable",
+      "title": "特急指宿のたまて箱"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "no_reuse_grant_identified",
+      "locator": "https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2026/07/13/20260515_Special_Train_Operation_Plan_and_DS_Train_Operating_Dates.pdf",
+      "publisher": "九州旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-kyushu-summer-ds-plan-current-20260515",
+      "sourceType": "official_special_train_plan_pdf",
+      "title": "2026年夏季（7月～9月）臨時列車運転計画とD&S列車の運転日について"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "unknown",
+      "locator": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20260515_KO_2026summer.pdf",
+      "publisher": "北海道旅客鉄道株式会社",
+      "redistributionStatus": "unknown",
+      "sourceId": "jr-hokkaido-20260515-summer",
+      "sourceType": "official_planned_exception",
+      "title": "特急列車の運転計画および夏の臨時列車のお知らせ ～7月から9月に運転する列車です～"
+    },
     {
       "automatedExtractionAllowed": false,
       "licenseStatus": "unknown",
@@ -112,6 +232,96 @@
       "sourceId": "jr-kyushu-yufuin-plan-20260919",
       "sourceType": "official_planned_exception",
       "title": "ゆふいんの森・ゆふ 9月19日〜30日の運行計画"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jreast.co.jp/multi/traininformation/hitachi/",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata_only",
+      "sourceId": "jr-east-hitachi-route-current",
+      "sourceType": "official_service_route_guide",
+      "title": "ひたち・ときわ（E657系）"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jreast.co.jp/map/pdf/kanto.pdf",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-east-kanto-route-map-202604",
+      "sourceType": "official_network_route_map",
+      "title": "JR東日本路線図（関東・甲信越エリア）"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://www.jreast.co.jp/hitachi_tokiwa/uenotokyoline/pdf/uenotokyoline.pdf",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-east-ueno-tokyo-line-20150314",
+      "sourceType": "official_service_change_brochure",
+      "title": "上野東京ライン 3月14日開業"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_reuse_prohibited",
+      "locator": "https://www.jreast.co.jp/site/rules.html/",
+      "publisher": "東日本旅客鉄道株式会社",
+      "redistributionStatus": "metadata_only",
+      "sourceId": "jr-east-web-terms-20260928",
+      "sourceType": "official_website_terms",
+      "title": "JR東日本ウェブサイトのご利用にあたって"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://recommend.jr-central.co.jp/oshi-tabi/ekimemo4th/",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "factual_metadata_only",
+      "sourceId": "jr-central-shinano-route-guide",
+      "sourceType": "official_service_route_guide",
+      "title": "東海ななと巡る！橙色の在来線旅 中央本線 東濃・木曽おでかけ編"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_no_data_license_identified",
+      "locator": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/chuo_Nagoya_A_w_d.pdf",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-central-nagoya-chuo-timetable-202603",
+      "sourceType": "official_station_line_timetable",
+      "title": "名古屋駅 中央線 多治見・中津川方面 平日時刻表"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "all_rights_reserved_reuse_prohibited",
+      "locator": "https://jr-central.co.jp/policy/",
+      "publisher": "東海旅客鉄道株式会社",
+      "redistributionStatus": "metadata_only",
+      "sourceId": "jr-central-web-terms-20260928",
+      "sourceType": "official_website_terms",
+      "title": "JR東海ウェブサイトのご利用にあたって"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "no_reuse_grant_identified",
+      "locator": "https://www.jr-shikoku.co.jp/03_news/press/assets/2026/06/24/20260624.pdf",
+      "publisher": "四国旅客鉄道株式会社・西日本旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-shikoku-west-shiokaze-obon-20260624",
+      "sourceType": "official_planned_exception",
+      "title": "2026年度お盆期間における特急列車しおかぜの指定席拡大"
+    },
+    {
+      "automatedExtractionAllowed": false,
+      "licenseStatus": "no_reuse_grant_identified",
+      "locator": "https://www.westjr.co.jp/press/article/2026/04/10/items/260410_00_press_westexpressginga.pdf",
+      "publisher": "西日本旅客鉄道株式会社",
+      "redistributionStatus": "verification_only",
+      "sourceId": "jr-west-west-express-ginga-kumano-20260410",
+      "sourceType": "official_planned_exception",
+      "title": "2026年夏「WEST EXPRESS 銀河」紀南コース運転計画について"
     },
     {
       "automatedExtractionAllowed": false,

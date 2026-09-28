@@ -1,0 +1,138 @@
+{
+  "candidate_status": "reviewed_official_html",
+  "issue": "JR時刻表2026年10月号",
+  "notes": "Each operating date through manifest.as_of_date is copied only from a calendar td.ok cell on the corresponding official train-detail page. No recurring weekday service or pass records are inferred.",
+  "operator_name_for_station_match": "東日本旅客鉄道",
+  "schema_version": 1,
+  "trips": [
+    {
+      "operating_dates": [
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-26"
+      ],
+      "public_name": "あずさ 1号",
+      "public_number": "1",
+      "service_id": "azusa",
+      "service_name": "あずさ",
+      "source": {
+        "accessed_at": "2026-09-28T17:00:41Z",
+        "automated_extraction_allowed": false,
+        "content_hash": "sha256:e715b0b17a9c8c75ef04857689e9d0084ddf0d58813046519a35bc854a375e8c",
+        "issue": "JR時刻表2026年10月号",
+        "license_status": "unknown",
+        "notes": "Official train-detail page visually and structurally reviewed. Operation dates are only td.ok calendar cells. Raw HTML is not bundled; redistribution authorization is unresolved.",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "redistribution_status": "unknown",
+        "source_id": "jr-east-azusa1-202609-east-next",
+        "source_type": "official_train_timetable",
+        "title": "あずさ 1号 停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/005/008042.html"
+      },
+      "stop_times": [
+        {"arrival_time": null, "call_type": "origin", "departure_time": "07:00", "name_snapshot": "新宿", "platform": "９", "stop_sequence": 1},
+        {"arrival_time": "07:20", "call_type": "passenger_stop", "departure_time": "07:21", "name_snapshot": "立川", "platform": "６", "stop_sequence": 2},
+        {"arrival_time": "07:29", "call_type": "passenger_stop", "departure_time": "07:30", "name_snapshot": "八王子", "platform": "４", "stop_sequence": 3},
+        {"arrival_time": "07:56", "call_type": "passenger_stop", "departure_time": "07:57", "name_snapshot": "大月", "platform": "３", "stop_sequence": 4},
+        {"arrival_time": "08:27", "call_type": "passenger_stop", "departure_time": "08:28", "name_snapshot": "甲府", "platform": "１", "stop_sequence": 5},
+        {"arrival_time": "08:36", "call_type": "passenger_stop", "departure_time": "08:37", "name_snapshot": "韮崎", "platform": null, "stop_sequence": 6},
+        {"arrival_time": "08:53", "call_type": "passenger_stop", "departure_time": "08:54", "name_snapshot": "小淵沢", "platform": "１", "stop_sequence": 7},
+        {"arrival_time": "09:07", "call_type": "passenger_stop", "departure_time": "09:08", "name_snapshot": "茅野", "platform": null, "stop_sequence": 8},
+        {"arrival_time": "09:13", "call_type": "passenger_stop", "departure_time": "09:14", "name_snapshot": "上諏訪", "platform": null, "stop_sequence": 9},
+        {"arrival_time": "09:22", "call_type": "passenger_stop", "departure_time": "09:22", "name_snapshot": "岡谷", "platform": null, "stop_sequence": 10},
+        {"arrival_time": "09:31", "call_type": "passenger_stop", "departure_time": "09:33", "name_snapshot": "塩尻", "platform": null, "stop_sequence": 11},
+        {"arrival_time": "09:43", "call_type": "destination", "departure_time": null, "name_snapshot": "松本", "platform": "４", "stop_sequence": 12}
+      ],
+      "train_number": "1M",
+      "variant_id": "selected-saturday-holiday"
+    },
+    {
+      "operating_dates": [
+        "2026-09-18",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-27",
+        "2026-09-28"
+      ],
+      "public_name": "あずさ 1号",
+      "public_number": "1",
+      "service_id": "azusa",
+      "service_name": "あずさ",
+      "source": {
+        "accessed_at": "2026-09-28T17:00:41Z",
+        "automated_extraction_allowed": false,
+        "content_hash": "sha256:b86839567b5c38369bd19bc9e72f1e5f6b2bc323863cc488a7de414432e8cb64",
+        "issue": "JR時刻表2026年10月号",
+        "license_status": "unknown",
+        "notes": "Official train-detail page visually and structurally reviewed. Operation dates through the manifest cutoff are only td.ok calendar cells. Raw HTML is not bundled; redistribution authorization is unresolved.",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "redistribution_status": "unknown",
+        "source_id": "jr-east-azusa1-base-202609-east-next",
+        "source_type": "official_train_timetable",
+        "title": "あずさ 1号 停車駅一覧（通常時刻）",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/005/008041.html"
+      },
+      "stop_times": [
+        {"arrival_time": null, "call_type": "origin", "departure_time": "07:00", "name_snapshot": "新宿", "platform": "９", "stop_sequence": 1},
+        {"arrival_time": "07:20", "call_type": "passenger_stop", "departure_time": "07:21", "name_snapshot": "立川", "platform": "６", "stop_sequence": 2},
+        {"arrival_time": "07:29", "call_type": "passenger_stop", "departure_time": "07:30", "name_snapshot": "八王子", "platform": "４", "stop_sequence": 3},
+        {"arrival_time": "07:56", "call_type": "passenger_stop", "departure_time": "07:57", "name_snapshot": "大月", "platform": "３", "stop_sequence": 4},
+        {"arrival_time": "08:27", "call_type": "passenger_stop", "departure_time": "08:28", "name_snapshot": "甲府", "platform": "１", "stop_sequence": 5},
+        {"arrival_time": "08:36", "call_type": "passenger_stop", "departure_time": "08:37", "name_snapshot": "韮崎", "platform": null, "stop_sequence": 6},
+        {"arrival_time": "08:53", "call_type": "passenger_stop", "departure_time": "08:54", "name_snapshot": "小淵沢", "platform": "１", "stop_sequence": 7},
+        {"arrival_time": "09:07", "call_type": "passenger_stop", "departure_time": "09:08", "name_snapshot": "茅野", "platform": null, "stop_sequence": 8},
+        {"arrival_time": "09:13", "call_type": "passenger_stop", "departure_time": "09:13", "name_snapshot": "上諏訪", "platform": null, "stop_sequence": 9},
+        {"arrival_time": "09:20", "call_type": "passenger_stop", "departure_time": "09:21", "name_snapshot": "岡谷", "platform": null, "stop_sequence": 10},
+        {"arrival_time": "09:28", "call_type": "passenger_stop", "departure_time": "09:28", "name_snapshot": "塩尻", "platform": null, "stop_sequence": 11},
+        {"arrival_time": "09:38", "call_type": "destination", "departure_time": null, "name_snapshot": "松本", "platform": "４", "stop_sequence": 12}
+      ],
+      "train_number": "1M",
+      "variant_id": "base"
+    },
+    {
+      "operating_dates": [
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-26",
+        "2026-09-27"
+      ],
+      "public_name": "ときわ 55号",
+      "public_number": "55",
+      "service_id": "tokiwa",
+      "service_name": "ときわ",
+      "source": {
+        "accessed_at": "2026-09-28T17:00:41Z",
+        "automated_extraction_allowed": false,
+        "content_hash": "sha256:aaaa428210b824f16f5fa4a7a786245b19c3fabc1579148da2431b0a181bf380",
+        "issue": "JR時刻表2026年10月号",
+        "license_status": "unknown",
+        "notes": "Official train-detail page visually and structurally reviewed. Operation dates are only td.ok calendar cells. Raw HTML is not bundled; redistribution authorization is unresolved.",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "redistribution_status": "unknown",
+        "source_id": "jr-east-tokiwa55-202609-east-next",
+        "source_type": "official_train_timetable",
+        "title": "ときわ 55号 停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/075/076301.html"
+      },
+      "stop_times": [
+        {"arrival_time": null, "call_type": "origin", "departure_time": "09:15", "name_snapshot": "品川", "platform": "９", "stop_sequence": 1},
+        {"arrival_time": "09:23", "call_type": "passenger_stop", "departure_time": "09:24", "name_snapshot": "東京", "platform": "８", "stop_sequence": 2},
+        {"arrival_time": "09:29", "call_type": "passenger_stop", "departure_time": "09:30", "name_snapshot": "上野", "platform": "８", "stop_sequence": 3},
+        {"arrival_time": "09:50", "call_type": "passenger_stop", "departure_time": "09:51", "name_snapshot": "柏", "platform": null, "stop_sequence": 4},
+        {"arrival_time": "10:14", "call_type": "passenger_stop", "departure_time": "10:15", "name_snapshot": "土浦", "platform": null, "stop_sequence": 5},
+        {"arrival_time": "10:25", "call_type": "passenger_stop", "departure_time": "10:26", "name_snapshot": "石岡", "platform": null, "stop_sequence": 6},
+        {"arrival_time": "10:37", "call_type": "passenger_stop", "departure_time": "10:37", "name_snapshot": "友部", "platform": null, "stop_sequence": 7},
+        {"arrival_time": "10:47", "call_type": "passenger_stop", "departure_time": "10:48", "name_snapshot": "水戸", "platform": "４", "stop_sequence": 8},
+        {"arrival_time": "10:53", "call_type": "destination", "departure_time": null, "name_snapshot": "勝田", "platform": null, "stop_sequence": 9}
+      ],
+      "train_number": "55M",
+      "variant_id": "main"
+    }
+  ]
+}

@@ -143,6 +143,14 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         errors = timetable.validate_dataset(data, origins, manifest)
         self.assertTrue(any("empty coverage cannot be verified" in error for error in errors))
 
+    def test_unknown_research_status_is_rejected_before_sqlite_build(self):
+        manifest, data, origins = self.load()
+        data['research_queue'].append({'research_id': 'research.test', 'entity_type': 'trip',
+            'entity_id': 'trip.test', 'missing_dimension': 'calendar', 'status': 'open_evidence_exhausted_in_issue'})
+        origins[('research_queue', 0)] = 'fixture:research'
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any('unsupported research status' in error for error in errors))
+
     def test_verified_completeness_requires_field_level_source(self):
         manifest, data, origins = self.load()
         data["fact_sources"] = [row for row in data["fact_sources"] if row["field_name"] != "stops"]
@@ -251,6 +259,67 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertFalse(report["coverageComplete"])
         self.assertGreater(report["missingCoverageCells"], 0)
         self.assertEqual(2, report["dailyOccurrencesRepresented"])
+        evidence = report['perOperatorDailyEvidence']['test-scope']
+        self.assertEqual(2, evidence['distinctServiceDatesWithEvidence'])
+        self.assertEqual(4, evidence['scopeServiceDates'])
+        self.assertEqual([{'validFrom': '2026-01-01', 'validUntil': '2026-01-02'},
+                          {'validFrom': '2026-01-03', 'validUntil': '2026-01-04'}],
+                         evidence['serviceDateRangesWithEvidence'])
+        self.assertFalse(evidence['completeDailyInventory'])
+        manifest = timetable.load_manifest(self.canonical)
+        write_jsonl(self.canonical / 'normalized/coverage-declarations-test.jsonl', [
+            {'coverage_id': 'coverage.' + dimension, 'operator_scope': 'test-scope',
+             'year': 2026, 'dimension': dimension, 'status': 'partial', 'record_count': 1,
+             'source_id': 'source.test'} for dimension in manifest['coverage_dimensions']])
+        report = timetable.coverage_report(self.canonical, database)
+        self.assertEqual(0, report['missingCoverageCells'])
+        self.assertEqual(0, report['operatorsCovered'])
+        self.assertFalse(report['coverageComplete'])
+
+    def test_daily_evidence_uses_actual_calendar_not_edition_envelope(self):
+        calendar_path = self.canonical / 'normalized/calendars/test.jsonl'
+        rows = [json.loads(line) for line in calendar_path.read_text().splitlines()]
+        for field in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
+            rows[0][field] = 0
+        write_jsonl(calendar_path, rows)
+        write_jsonl(self.canonical / 'normalized/calendar-exceptions/test.jsonl', [
+            {'calendar_id': 'calendar.test', 'service_date': '2026-01-03',
+             'exception_type': 'add', 'source_id': 'source.test'}])
+        trips_path = self.canonical / 'normalized/trips/test/seeds.jsonl'
+        trips = [json.loads(line) for line in trips_path.read_text().splitlines()]
+        trips.append(dict(trips[0], trip_id='trip.second', train_number='1002M', public_number='2'))
+        write_jsonl(trips_path, trips)
+        stops_path = self.canonical / 'normalized/stop-times/test/seeds.jsonl'
+        stops = [json.loads(line) for line in stops_path.read_text().splitlines()]
+        write_jsonl(stops_path, stops + [dict(row, trip_id='trip.second') for row in stops])
+        report = timetable.coverage_report(self.canonical)
+        self.assertEqual('2026-01-01', report['firstTimetableEffectiveDate'])
+        self.assertEqual('2026-01-03', report['firstCoveredDate'])
+        self.assertEqual('2026-01-03', report['lastCoveredDate'])
+        evidence = report['perOperatorDailyEvidence']['test-scope']
+        self.assertEqual(2, evidence['dailyOccurrencesRepresented'])
+        self.assertEqual(1, evidence['distinctServiceDatesWithEvidence'])
+        self.assertFalse(report['coverageComplete'])
+
+    def test_daily_operator_evidence_clips_all_counts_to_scope(self):
+        path = self.canonical / 'manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['expected_coverage_scopes'][0]['valid_from'] = '2026-01-02'
+        path.write_text(json.dumps(manifest))
+        report = timetable.coverage_report(self.canonical)
+        evidence = report['perOperatorDailyEvidence']['test-scope']
+        self.assertEqual(1, evidence['dailyOccurrencesRepresented'])
+        self.assertEqual(1, evidence['tripTemplatesWithOccurrences'])
+        self.assertEqual(1, evidence['distinctServiceDatesWithEvidence'])
+        self.assertEqual('2026-01-03', evidence['firstServiceDateWithEvidence'])
+        self.assertEqual('2026-01-04', report['lastCoveredUntil'])
+        self.assertEqual('2026-01-03', report['lastCoveredDate'])
+        manifest['expected_coverage_scopes'][0]['valid_from'] = '2026-01-04'
+        path.write_text(json.dumps(manifest))
+        evidence = timetable.coverage_report(self.canonical)['perOperatorDailyEvidence']['test-scope']
+        self.assertEqual(0, evidence['tripTemplatesWithOccurrences'])
+        self.assertEqual(0, evidence['dailyOccurrencesRepresented'])
+        self.assertEqual([], evidence['serviceDateRangesWithEvidence'])
 
     def test_projection_keeps_legacy_fallback_and_marks_calendar_loss(self):
         legacy = self.canonical / "legacy.json"

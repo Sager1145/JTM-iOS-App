@@ -2,7 +2,7 @@
   "alignedChecks": 0,
   "asOfDate": "2026-09-28",
   "complete": false,
-  "dailyOccurrencesChecked": 865,
+  "dailyOccurrencesChecked": 1577,
   "errorChecks": 0,
   "findings": [
     {
@@ -108,6 +108,22 @@
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-central.shinano.85.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 7,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-east.azusa.1.base.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19"
     },
     {
       "canPublishRouteLines": false,
@@ -321,6 +337,14 @@
     {
       "canPublishRouteLines": false,
       "kind": "route",
+      "occurrenceCount": 7,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-east.tokiwa.55.main.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
       "occurrenceCount": 57,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
@@ -433,6 +457,54 @@
     {
       "canPublishRouteLines": false,
       "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
       "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
@@ -477,6 +549,214 @@
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.10.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.11.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.12.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.13.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.14.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.15.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.16.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.17.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.18.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.19.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.20.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.21.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.22.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.23.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.24.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.25.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.27.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.28.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.3.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.4.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.5.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.6.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.7.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.8.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.9.2026-09-18"
     },
     {
       "canPublishRouteLines": false,
@@ -691,8 +971,8 @@
   "intervalSemantics": "[validFrom, validUntil)",
   "lineSegmentChecks": 11,
   "publishableRouteTrips": 0,
-  "railHistoryHash": "3fb48e1bbc413af1fcb533ca23eb13e6d9bbcc9c40d6c1d2976210abee8a93f6",
-  "railHistoryRevision": "2026-09-28.2",
+  "railHistoryHash": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+  "railHistoryRevision": "2026-09-28.3",
   "routeAttestations": [
     {
       "canPublishRouteLines": false,
@@ -797,6 +1077,22 @@
       "segments": [],
       "status": "unverified",
       "tripId": "jr-central.shinano.85.2013-summer"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 7,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-east.azusa.1.base.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19"
     },
     {
       "canPublishRouteLines": false,
@@ -996,6 +1292,14 @@
     },
     {
       "canPublishRouteLines": false,
+      "occurrenceCount": 7,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-east.tokiwa.55.main.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
       "occurrenceCount": 57,
       "reason": "missing_trip_line_segments",
       "segments": [],
@@ -1108,6 +1412,54 @@
     },
     {
       "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 90,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01"
+    },
+    {
+      "canPublishRouteLines": false,
       "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "segments": [],
@@ -1153,6 +1505,214 @@
       "segments": [],
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.10.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.11.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.12.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.13.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.14.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.15.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.16.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.17.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.18.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.19.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.20.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.21.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.22.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.23.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.24.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.25.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.27.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.28.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.3.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 5,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.4.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.5.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.6.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.7.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.8.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 6,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.ishizuchi.9.2026-09-18"
     },
     {
       "canPublishRouteLines": false,
@@ -1366,7 +1926,7 @@
   "schemaVersion": "1.0.0",
   "serviceDateSemantics": "Asia/Tokyo operating day; stop day_offset does not change the service date",
   "timezone": "Asia/Tokyo",
-  "tripTemplates": 60,
-  "tripTemplatesWithOccurrences": 60,
-  "unverifiedChecks": 70
+  "tripTemplates": 95,
+  "tripTemplatesWithOccurrences": 95,
+  "unverifiedChecks": 105
 }

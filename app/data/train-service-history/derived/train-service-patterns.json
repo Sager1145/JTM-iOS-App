@@ -22193,6 +22193,162 @@
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
+        "jr-east.azusa.1.selected-saturday-holiday.2026-09-19"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "松本",
+    "label": "新宿〜松本",
+    "lines": [],
+    "name": "あずさ",
+    "optionalStops": [],
+    "origin": "新宿",
+    "patternId": "tt-azusa-52b00b27dc4b",
+    "serviceId": "azusa",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "新宿",
+        "sourceCode": "003700"
+      },
+      {
+        "name": "立川",
+        "sourceCode": "003634"
+      },
+      {
+        "name": "八王子",
+        "sourceCode": "003947"
+      },
+      {
+        "name": "大月",
+        "sourceCode": "004166"
+      },
+      {
+        "name": "甲府",
+        "sourceCode": "003867"
+      },
+      {
+        "name": "韮崎",
+        "sourceCode": "003533"
+      },
+      {
+        "name": "小淵沢",
+        "sourceCode": "002981"
+      },
+      {
+        "name": "茅野",
+        "sourceCode": "002764"
+      },
+      {
+        "name": "上諏訪",
+        "sourceCode": "002706"
+      },
+      {
+        "name": "岡谷",
+        "sourceCode": "002696"
+      },
+      {
+        "name": "塩尻",
+        "sourceCode": "002616"
+      },
+      {
+        "name": "松本",
+        "sourceCode": "002506"
+      }
+    ],
+    "validFrom": "2026-09-19",
+    "validUntil": "2026-09-27",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-east.azusa.1.base.2026-09-18"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "松本",
+    "label": "新宿〜松本",
+    "lines": [],
+    "name": "あずさ",
+    "optionalStops": [],
+    "origin": "新宿",
+    "patternId": "tt-azusa-60fad23a2d4d",
+    "serviceId": "azusa",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "新宿",
+        "sourceCode": "003700"
+      },
+      {
+        "name": "立川",
+        "sourceCode": "003634"
+      },
+      {
+        "name": "八王子",
+        "sourceCode": "003947"
+      },
+      {
+        "name": "大月",
+        "sourceCode": "004166"
+      },
+      {
+        "name": "甲府",
+        "sourceCode": "003867"
+      },
+      {
+        "name": "韮崎",
+        "sourceCode": "003533"
+      },
+      {
+        "name": "小淵沢",
+        "sourceCode": "002981"
+      },
+      {
+        "name": "茅野",
+        "sourceCode": "002764"
+      },
+      {
+        "name": "上諏訪",
+        "sourceCode": "002706"
+      },
+      {
+        "name": "岡谷",
+        "sourceCode": "002696"
+      },
+      {
+        "name": "塩尻",
+        "sourceCode": "002616"
+      },
+      {
+        "name": "松本",
+        "sourceCode": "002506"
+      }
+    ],
+    "validFrom": "2026-09-18",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
         "jr-hokkaido.furano-lavender-express.furano-to-sapporo.2026-07-01"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
@@ -22725,6 +22881,223 @@
     ],
     "validFrom": "2026-08-07",
     "validUntil": "2026-09-21",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01",
+        "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01",
+        "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "鹿児島中央",
+    "label": "指宿〜鹿児島中央",
+    "lines": [],
+    "name": "指宿のたまて箱",
+    "optionalStops": [],
+    "origin": "指宿",
+    "patternId": "tt-ibusuki-no-tamatebako-661c422c49f0",
+    "serviceId": "ibusuki-no-tamatebako",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "指宿",
+        "sourceCode": "010115"
+      },
+      {
+        "name": "鹿児島中央",
+        "sourceCode": "010047"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01",
+        "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01",
+        "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "指宿",
+    "label": "鹿児島中央〜指宿",
+    "lines": [],
+    "name": "指宿のたまて箱",
+    "optionalStops": [],
+    "origin": "鹿児島中央",
+    "patternId": "tt-ibusuki-no-tamatebako-8ab18fcaff2a",
+    "serviceId": "ibusuki-no-tamatebako",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "鹿児島中央",
+        "sourceCode": "010047"
+      },
+      {
+        "name": "指宿",
+        "sourceCode": "010115"
+      }
+    ],
+    "validFrom": "2026-07-01",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-shikoku.ishizuchi.10.2026-09-18",
+        "jr-shikoku.ishizuchi.12.2026-09-18",
+        "jr-shikoku.ishizuchi.14.2026-09-18",
+        "jr-shikoku.ishizuchi.16.2026-09-18",
+        "jr-shikoku.ishizuchi.18.2026-09-18",
+        "jr-shikoku.ishizuchi.20.2026-09-18",
+        "jr-shikoku.ishizuchi.22.2026-09-18",
+        "jr-shikoku.ishizuchi.24.2026-09-18",
+        "jr-shikoku.ishizuchi.26.2026-09-18",
+        "jr-shikoku.ishizuchi.28.2026-09-18",
+        "jr-shikoku.ishizuchi.4.2026-09-18",
+        "jr-shikoku.ishizuchi.6.2026-09-18",
+        "jr-shikoku.ishizuchi.8.2026-09-18"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "高松",
+    "label": "宇多津〜高松",
+    "lines": [],
+    "name": "いしづち",
+    "optionalStops": [],
+    "origin": "宇多津",
+    "patternId": "tt-ishizuchi-608a7594b99b",
+    "serviceId": "ishizuchi",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "宇多津",
+        "sourceCode": "008252"
+      },
+      {
+        "name": "高松",
+        "sourceCode": "008163"
+      }
+    ],
+    "validFrom": "2026-09-18",
+    "validUntil": "2026-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-shikoku.ishizuchi.3.2026-09-18"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "宇多津",
+    "label": "高松〜宇多津",
+    "lines": [],
+    "name": "いしづち",
+    "optionalStops": [],
+    "origin": "高松",
+    "patternId": "tt-ishizuchi-74c242f7acce",
+    "serviceId": "ishizuchi",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "高松",
+        "sourceCode": "008163"
+      },
+      {
+        "name": "宇多津",
+        "sourceCode": "008252"
+      }
+    ],
+    "validFrom": "2026-09-18",
+    "validUntil": "2026-09-24",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-shikoku.ishizuchi.11.2026-09-18",
+        "jr-shikoku.ishizuchi.13.2026-09-18",
+        "jr-shikoku.ishizuchi.15.2026-09-18",
+        "jr-shikoku.ishizuchi.17.2026-09-18",
+        "jr-shikoku.ishizuchi.19.2026-09-18",
+        "jr-shikoku.ishizuchi.21.2026-09-18",
+        "jr-shikoku.ishizuchi.23.2026-09-18",
+        "jr-shikoku.ishizuchi.25.2026-09-18",
+        "jr-shikoku.ishizuchi.27.2026-09-18",
+        "jr-shikoku.ishizuchi.5.2026-09-18",
+        "jr-shikoku.ishizuchi.7.2026-09-18",
+        "jr-shikoku.ishizuchi.9.2026-09-18"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "多度津",
+    "label": "高松〜多度津",
+    "lines": [],
+    "name": "いしづち",
+    "optionalStops": [],
+    "origin": "高松",
+    "patternId": "tt-ishizuchi-84bd56653752",
+    "serviceId": "ishizuchi",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "高松",
+        "sourceCode": "008163"
+      },
+      {
+        "name": "多度津",
+        "sourceCode": "008300"
+      }
+    ],
+    "validFrom": "2026-09-18",
+    "validUntil": "2026-09-24",
     "via": []
   },
   {
@@ -23725,6 +24098,72 @@
     ],
     "validFrom": "2026-08-08",
     "validUntil": "2026-08-17",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-east.tokiwa.55.main.2026-09-19"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "勝田",
+    "label": "品川〜勝田",
+    "lines": [],
+    "name": "ときわ",
+    "optionalStops": [],
+    "origin": "品川",
+    "patternId": "tt-tokiwa-f314d67208ff",
+    "serviceId": "tokiwa",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "品川",
+        "sourceCode": "004095"
+      },
+      {
+        "name": "東京",
+        "sourceCode": "003766"
+      },
+      {
+        "name": "上野",
+        "sourceCode": "003505"
+      },
+      {
+        "name": "柏",
+        "sourceCode": "002984"
+      },
+      {
+        "name": "土浦",
+        "sourceCode": "002660"
+      },
+      {
+        "name": "石岡",
+        "sourceCode": "002552"
+      },
+      {
+        "name": "友部",
+        "sourceCode": "002350"
+      },
+      {
+        "name": "水戸",
+        "sourceCode": "002319"
+      },
+      {
+        "name": "勝田",
+        "sourceCode": "002280"
+      }
+    ],
+    "validFrom": "2026-09-19",
+    "validUntil": "2026-09-28",
     "via": []
   },
   {

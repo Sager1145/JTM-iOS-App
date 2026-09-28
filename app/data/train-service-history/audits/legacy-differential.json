@@ -124,7 +124,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-azusa-52b00b27dc4b",
+        "tt-azusa-60fad23a2d4d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 11,
       "legacyPatternId": "azusa-shinjuku-matsumoto",
@@ -132,7 +135,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-azusa-52b00b27dc4b",
+        "tt-azusa-60fad23a2d4d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "azusa-chiba-matsumoto",
@@ -140,7 +146,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-azusa-52b00b27dc4b",
+        "tt-azusa-60fad23a2d4d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "azusa-minamiotari",
@@ -200,7 +209,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-tokiwa-f314d67208ff"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "tokiwa-shinagawa-katsuta",
@@ -208,7 +219,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-tokiwa-f314d67208ff"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "tokiwa-shinagawa-takahagi",
@@ -787,7 +800,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-ibusuki-no-tamatebako-661c422c49f0",
+        "tt-ibusuki-no-tamatebako-8ab18fcaff2a"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "ibusuki-no-tamatebako-kagoshima-chuo-ibusuki",
@@ -1111,7 +1127,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-ishizuchi-608a7594b99b",
+        "tt-ishizuchi-74c242f7acce",
+        "tt-ishizuchi-84bd56653752"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "ishizuchi-takamatsu-matsuyama",
@@ -1768,7 +1788,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-ibusuki-no-tamatebako-661c422c49f0",
+        "tt-ibusuki-no-tamatebako-8ab18fcaff2a"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "ibusuki-no-tamatebako-kagoshimachuo-ibusuki-2011",

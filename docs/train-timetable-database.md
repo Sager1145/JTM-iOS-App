@@ -5,6 +5,14 @@ historical inventory**. Scope is 1912-06-15 through 2026-09-28. Coverage must be
 read from `app/data/train-service-history/audits/train-timetable-coverage.json`;
 neither a successful build nor 298 legacy patterns establishes completeness.
 
+`perOperatorDailyEvidence` reports the distinct Japanese service dates on which
+at least one represented planned trip has calendar evidence. Its compact date
+ranges use `[validFrom, validUntil)`. Multiple trains on the same day increase
+the occurrence count but count as one evidence date. These dates do not certify
+a complete daily inventory or actual operation. `firstCoveredDate` and
+`lastCoveredDate` now use actual calendar dates; the edition envelope remains
+available as `firstTimetableEffectiveDate` and `lastCoveredUntil`.
+
 ## Fact ownership
 
 `app/data/train-service-history/manifest.json` selects canonical JSONL inputs.
@@ -65,8 +73,9 @@ still pending.
 `normalize-reviewed-timetable-seeds.py` promotes reviewed official candidates
 for Kamui 93, Lilac 95, Shinano 1, Hitachi 26 and Yufuin no Mori 1–6.
 Together with the reviewed Shiokaze, 2013 JR Central, Hokkaido summer and
-WEST EXPRESS Ginga announcements they represent
-60 templates and 865 explicitly attested service-date occurrences;
+WEST EXPRESS Ginga announcements, Azusa/Tokiwa date variants and
+Ibusuki no Tamatebako summer dates they represent
+95 templates and 1577 explicitly attested service-date occurrences;
 these small samples do not establish any company’s complete daily inventory. The special Hokkaido trips exercise explicit dates and overnight
 arrival; two JR East HTML tables exercise full passenger arrival/departure
 times. Unknown internal numbers, intermediate times and routes stay unknown.
@@ -111,7 +120,7 @@ python3 ios/tools/test_jreast_trip_parser.py
 ```
 
 The rebuild entry point runs reviewed normalizers in dependency order, then
-validates, builds, checks the snapshot and regenerates audits. It does not fetch
+validates, refreshes the source inventory, builds, checks the snapshot and regenerates audits. It does not fetch
 new facts from the web. The reviewed normalizers are intentional input-generation steps, not automatic
 web fact promotion. Source discovery currently indexes reviewed search results;
 it does not claim exhaustive crawling or an all-services inventory.
@@ -168,4 +177,4 @@ missing values, explain partial station lists, and expose deduplicated source
 titles, publishers and URLs. Overnight civil dates are derived without changing
 the original service date or clock string.
 
-Latest evidence, counts and validation: [parallel report](train-timetable-parallel-report.md).
+Latest evidence, counts and validation: [East/Kyushu and historical report](train-timetable-next-report.md).

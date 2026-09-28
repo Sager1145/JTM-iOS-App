@@ -1,0 +1,65 @@
+{
+  "candidate_id": "jr-kyushu-ibusuki-no-tamatebako-2026-summer-kyushu-next-batch",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "promotion_scope": "six numbered endpoint-only templates and every explicitly published origin date through manifest as_of_date",
+  "sources": [
+    {
+      "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "特急指宿のたまて箱",
+      "source_type": "official_train_service_timetable",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/",
+      "issue": "2026年3月14日改正",
+      "effective_date": "2026-03-14",
+      "accessed_at": "2026-09-28",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Official service page visually reviewed. Its timetable section explicitly labels the two displayed rows as 停車駅 and prints public numbers 1-6 with endpoint minute clocks. No HTML snapshot is redistributed."
+    },
+    {
+      "source_id": "jr-kyushu-summer-ds-plan-current-20260515",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "2026年夏季（7月～9月）臨時列車運転計画とD&S列車の運転日について",
+      "source_type": "official_special_train_plan_pdf",
+      "url_or_locator": "https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2026/07/13/20260515_Special_Train_Operation_Plan_and_DS_Train_Operating_Dates.pdf",
+      "archive_locator": "https://www.jrkyushu.co.jp/news/release/index.html",
+      "publication_date": "2026-05-15",
+      "effective_date": "2026-07-01",
+      "accessed_at": "2026-09-28",
+      "content_hash": "3309ec0977ecb9f75a483a626d3cfc71a66ea5bf3db8e5bd809ef9113576b166",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Current official news-index download visually reviewed. PDF p.10 merges 7/1-31, 8/1-31 and 9/1-30 across all three rows in each direction; the printed 276-per-direction total independently equals 92 dates times 3 trains. No PDF copy is redistributed."
+    }
+  ],
+  "service": {
+    "service_id": "ibusuki-no-tamatebako",
+    "canonical_name": "指宿のたまて箱",
+    "service_class": "limited_express",
+    "historical_generation": 1,
+    "jr_scope": "jr"
+  },
+  "operating_date_range": {
+    "from": "2026-07-01",
+    "until_inclusive": "2026-09-30",
+    "source_id": "jr-kyushu-summer-ds-plan-current-20260515",
+    "locator": "PDF p.10 merged operating-date cells for both three-row directional tables"
+  },
+  "trips": [
+    {"public_number": "1", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "9:56", "destination": "指宿", "arrival_time": "10:47"},
+    {"public_number": "3", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "11:56", "destination": "指宿", "arrival_time": "12:48"},
+    {"public_number": "5", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "13:56", "destination": "指宿", "arrival_time": "14:49"},
+    {"public_number": "2", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "10:56", "destination": "鹿児島中央", "arrival_time": "11:48"},
+    {"public_number": "4", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "12:57", "destination": "鹿児島中央", "arrival_time": "13:48"},
+    {"public_number": "6", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "15:07", "destination": "鹿児島中央", "arrival_time": "16:00"}
+  ],
+  "evidence_locators": [
+    {"claim": "service identity, limited-express class, six public numbers and the complete displayed stop list", "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314", "locator": "official HTML timetable heading and two 停車駅 tables"},
+    {"claim": "all twelve endpoint minute clocks", "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314", "locator": "official HTML timetable, 2026-03-14 revision"},
+    {"claim": "all six trains operate on every source date from July 1 through September 30", "source_id": "jr-kyushu-summer-ds-plan-current-20260515", "locator": "PDF p.10, merged operating-date cells and 276 trains per direction"},
+    {"claim": "source dates after the manifest boundary must be excluded", "source_id": "jr-kyushu-summer-ds-plan-current-20260515", "locator": "manifest as_of_date 2026-09-28 excludes PDF dates September 29-30"}
+  ]
+}

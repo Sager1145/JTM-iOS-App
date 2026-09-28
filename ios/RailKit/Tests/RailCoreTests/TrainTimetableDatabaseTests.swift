@@ -35,6 +35,25 @@ struct TrainTimetableDatabaseTests {
         #expect(sources.contains { $0.id == "jr-central-summer-20130517" })
     }
 
+    @Test func bundledEastVariantsAndKyushuSummerDatesSelectExactOccurrences() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let saturday = try database.trips(for: "azusa", on: "2026-09-26")
+        let sunday = try database.trips(for: "azusa", on: "2026-09-27")
+        #expect(saturday.count == 1 && sunday.count == 1)
+        let selected = try #require(saturday.first)
+        let regular = try #require(sunday.first)
+        #expect(selected.id != regular.id)
+        #expect(selected.trainNumber == "1M" && regular.trainNumber == "1M")
+        #expect(selected.stops.count == 12 && regular.stops.count == 12)
+        #expect(selected.stops.last?.arrivalTime == "09:43")
+        #expect(regular.stops.last?.arrivalTime == "09:38")
+        #expect(!selected.canApplyToRouteEditor && !regular.canApplyToRouteEditor)
+        #expect(try database.trips(for: "tokiwa", on: "2026-09-18").isEmpty)
+        #expect(try database.trips(for: "tokiwa", on: "2026-09-22").count == 1)
+        #expect(try database.trips(for: "ibusuki-no-tamatebako", on: "2026-09-28").count == 6)
+        #expect(try database.trips(for: "ibusuki-no-tamatebako", on: "2026-09-29").isEmpty)
+    }
+
     @Test func sameStationDwellCanCrossMidnightWithoutChangingSourceClocks() throws {
         let fixture = try FixtureDatabase(splitMidnightDwell: true)
         defer { fixture.remove() }
