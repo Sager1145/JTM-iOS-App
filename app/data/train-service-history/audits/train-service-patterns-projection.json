@@ -1,7 +1,7 @@
 {
   "asOfDate": "2026-09-28",
   "canonicalPatternCount": 36,
-  "canonicalSourceHash": "2026a048d9d14ebdcdd93b048eb18d18c8dc74ea8b22dc34ae15967233658c30",
+  "canonicalSourceHash": "0a87186def05c9ec0fd63d7bdeb1956edf319eb87121e476bc10b68f4007bb6c",
   "legacyUnverifiedFallbackCount": 298,
   "outputHash": "0cdb201ebcfa8d48ab5d7ba36cbf715dbdc6c9bf09a7ef4d5542b1e598dbd517",
   "safeToReplaceBundledLegacyCatalog": false,

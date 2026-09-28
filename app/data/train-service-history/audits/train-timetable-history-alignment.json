@@ -691,8 +691,8 @@
   "intervalSemantics": "[validFrom, validUntil)",
   "lineSegmentChecks": 11,
   "publishableRouteTrips": 0,
-  "railHistoryHash": "1389424fc150db8c0377715fc7584a7ae24f12c5b664a90538908fee15a97cc6",
-  "railHistoryRevision": "2026-09-28.1",
+  "railHistoryHash": "3fb48e1bbc413af1fcb533ca23eb13e6d9bbcc9c40d6c1d2976210abee8a93f6",
+  "railHistoryRevision": "2026-09-28.2",
   "routeAttestations": [
     {
       "canPublishRouteLines": false,
