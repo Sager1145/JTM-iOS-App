@@ -1,0 +1,426 @@
+{
+  "candidate_id": "jr-west-hakutaka-thunderbird-connections-2026-summer-daily-cooperation",
+  "candidate_status": "visually_reviewed_candidate_with_one_unresolved_clock_conflict",
+  "canonical": false,
+  "promotion_authorized": false,
+  "as_of_date": "2026-09-28",
+  "valid_from": "2026-07-18",
+  "valid_until": "2026-09-24",
+  "half_open_boundary_basis": "Earliest explicit origin date through the day after the latest explicit origin date in this bounded candidate. This is an evidence envelope, not a continuous daily-operation claim.",
+  "candidate_scope": "Only the four train templates printed in the PDF section titled 関西⇔北信越を結ぶ臨時『はくたか』の新規運転. The source's other summer trains are outside this candidate.",
+  "source": {
+    "source_id": "jr-west-20260515-summer-hakutaka-thunderbird-connections",
+    "publisher": "西日本旅客鉄道株式会社",
+    "title": "2026年【夏】の臨時列車の運転について【2026年7月1日（水）～2026年9月30日（水）：92日間】",
+    "source_type": "official_planned_exception",
+    "sourceURL": "https://www.westjr.co.jp/press/article/2026/05/15/items/260515_00_press_2026einjiunten.pdf",
+    "archiveURL": "https://www.westjr.co.jp/press/article/2026/05/15/page_30644.html",
+    "publication_date": "2026-05-15",
+    "accessed_at": "2026-09-28T22:18:53Z",
+    "content_hash": "sha256:0e53aa203fcd480ec92823ba7e7cfd468a856618c79ca3b30e4647c80f6563c1",
+    "page_count": 13,
+    "license_status": "no_reuse_grant_identified",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "review_method": "Official PDF downloaded to temporary storage, hashed, and pages 7 and 8 rendered with Poppler for visual review. No PDF copy is stored in the repository.",
+    "source_claim_status": "published_plan_not_actual_operation"
+  },
+  "source_locators": [
+    {
+      "locator_id": "jrwest-summer-p7-connection-summary",
+      "locator": "PDF physical page 7, heading 関西⇔北信越を結ぶ臨時『はくたか』の新規運転, two connection tables and the two 途中停車駅 lines",
+      "supports": [
+        "four public train numbers",
+        "two shared five-date cells",
+        "selected station clocks",
+        "complete intermediate-stop lists for はくたか668号 and はくたか665号",
+        "explicit Thunderbird connection at 敦賀"
+      ]
+    },
+    {
+      "locator_id": "jrwest-summer-p8-detailed-first-row",
+      "locator": "PDF physical page 8, 在来線特急『サンダーバード』・北陸新幹線『つるぎ』, 臨時列車等の詳細 table, first row for サンダーバード95号 / はくたか668号",
+      "supports": [
+        "same five origin dates for サンダーバード95号 and はくたか668号",
+        "大阪08:51発, 敦賀10:20着, 敦賀10:30発, 金沢11:11着, 富山11:36着",
+        "conflicting 京都 departure value 09:22"
+      ]
+    },
+    {
+      "locator_id": "jrwest-summer-p7-travel-time-mini-table",
+      "locator": "PDF physical page 7, lower-left 京都→北信越 travel-time comparison, highlighted サンダーバード95号 + はくたか668号 row",
+      "supports": [
+        "conflicting 京都 departure value 09:23"
+      ]
+    }
+  ],
+  "date_groups": [
+    {
+      "date_group_id": "thunderbird95-hakutaka668",
+      "date_cell_locator": "PDF physical page 7 upper connection table, one vertically merged 運転日 cell spanning both train rows; corroborated by PDF physical page 8 detailed table first row",
+      "date_cell_text": "7/18, 8/8,9, 9/19,20",
+      "date_cell_interpretation": "The single merged date cell applies to both サンダーバード95号 and はくたか668号.",
+      "operating_dates": [
+        "2026-07-18",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-09-19",
+        "2026-09-20"
+      ],
+      "valid_from": "2026-07-18",
+      "valid_until": "2026-09-21",
+      "date_status": "explicit_origin_dates"
+    },
+    {
+      "date_group_id": "hakutaka665-thunderbird32",
+      "date_cell_locator": "PDF physical page 7 lower connection table, one vertically merged 運転日 cell spanning both train rows",
+      "date_cell_text": "7/20, 8/15,16, 9/22,23",
+      "date_cell_interpretation": "The single merged date cell applies to both はくたか665号 and サンダーバード32号.",
+      "operating_dates": [
+        "2026-07-20",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-09-22",
+        "2026-09-23"
+      ],
+      "valid_from": "2026-07-20",
+      "valid_until": "2026-09-24",
+      "date_status": "explicit_origin_dates"
+    }
+  ],
+  "templates": [
+    {
+      "template_key": "thunderbird-95-jrwest-summer-2026-connection",
+      "service_id": "thunderbird",
+      "service_name": "サンダーバード",
+      "service_class": "limited_express",
+      "public_number": "95",
+      "train_number": null,
+      "direction_label": "大阪→敦賀",
+      "date_group_id": "thunderbird95-hakutaka668",
+      "operating_dates": [
+        "2026-07-18",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-09-19",
+        "2026-09-20"
+      ],
+      "valid_from": "2026-07-18",
+      "valid_until": "2026-09-21",
+      "operation_status": "officially_planned_not_observed",
+      "candidate_status": "blocked_for_clock_conflict_review",
+      "route_status": "partial_selected_points_only",
+      "time_status": "partial_with_unresolved_source_conflict",
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "station_name": "大阪",
+          "call_type": "origin",
+          "arrival_time": null,
+          "departure_time": "08:51",
+          "clock_status": "exact_agreement",
+          "source_locators": [
+            "jrwest-summer-p7-connection-summary",
+            "jrwest-summer-p8-detailed-first-row"
+          ]
+        },
+        {
+          "stop_sequence": 2,
+          "station_name": "京都",
+          "call_type": "selected_intermediate_point",
+          "arrival_time": null,
+          "departure_time": null,
+          "clock_status": "unresolved_official_source_conflict",
+          "conflict": {
+            "field": "departure_time",
+            "values": [
+              {
+                "value": "09:23",
+                "locator": "PDF physical page 7 upper connection table, サンダーバード95号 row, 京都 発 column"
+              },
+              {
+                "value": "09:23",
+                "locator": "PDF physical page 7 lower-left 京都→北信越 travel-time comparison, highlighted サンダーバード95号 + はくたか668号 row, 京都（発時刻） column"
+              },
+              {
+                "value": "09:22",
+                "locator": "PDF physical page 8 臨時列車等の詳細 table, first row, サンダーバード95号, 京都 発 column"
+              }
+            ],
+            "resolution": "No production clock selected. Retain all printed values pending a corrigendum or another official train-level timetable for one of the listed dates."
+          }
+        },
+        {
+          "stop_sequence": 3,
+          "station_name": "敦賀",
+          "call_type": "destination_connection",
+          "arrival_time": "10:20",
+          "departure_time": null,
+          "clock_status": "exact_agreement",
+          "source_locators": [
+            "jrwest-summer-p7-connection-summary",
+            "jrwest-summer-p8-detailed-first-row"
+          ]
+        }
+      ],
+      "evidence_missing": [
+        "complete intermediate-stop list and all arrival/departure clocks",
+        "internal train number",
+        "actual-operation confirmation",
+        "resolution of the 09:22 versus 09:23 Kyoto departure conflict"
+      ],
+      "scope_guard": "Applies only to the five explicit origin dates. Do not extend this shortened endpoint pattern or either Kyoto clock to regular サンダーバード95号 service."
+    },
+    {
+      "template_key": "hakutaka-668-jrwest-summer-2026-connection",
+      "service_id": "hakutaka",
+      "service_name": "はくたか",
+      "service_class": "shinkansen",
+      "public_number": "668",
+      "train_number": null,
+      "direction_label": "敦賀→長野",
+      "date_group_id": "thunderbird95-hakutaka668",
+      "operating_dates": [
+        "2026-07-18",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-09-19",
+        "2026-09-20"
+      ],
+      "valid_from": "2026-07-18",
+      "valid_until": "2026-09-21",
+      "operation_status": "officially_planned_not_observed",
+      "candidate_status": "visually_verified_candidate_only",
+      "route_status": "complete_ordered_calls_from_official_intermediate-stop_line",
+      "time_status": "partial_selected_points_only",
+      "ordered_calls": [
+        "敦賀",
+        "福井",
+        "金沢",
+        "新高岡",
+        "富山",
+        "黒部宇奈月温泉",
+        "糸魚川",
+        "上越妙高",
+        "飯山",
+        "長野"
+      ],
+      "stop_times": [
+        {
+          "station_name": "敦賀",
+          "call_type": "origin_connection",
+          "arrival_time": null,
+          "departure_time": "10:30",
+          "clock_status": "exact_agreement"
+        },
+        {
+          "station_name": "金沢",
+          "call_type": "passenger_stop",
+          "arrival_time": "11:11",
+          "departure_time": null,
+          "clock_status": "exact_from_detailed_table_only"
+        },
+        {
+          "station_name": "富山",
+          "call_type": "passenger_stop",
+          "arrival_time": "11:36",
+          "departure_time": null,
+          "clock_status": "exact_agreement"
+        },
+        {
+          "station_name": "上越妙高",
+          "call_type": "passenger_stop",
+          "arrival_time": "12:16",
+          "departure_time": null,
+          "clock_status": "exact_from_connection_summary_only"
+        },
+        {
+          "station_name": "長野",
+          "call_type": "destination",
+          "arrival_time": "12:41",
+          "departure_time": null,
+          "clock_status": "exact_from_connection_summary_only"
+        }
+      ],
+      "evidence_missing": [
+        "arrival/departure clocks for 福井, 新高岡, 黒部宇奈月温泉, 糸魚川 and 飯山",
+        "departure clocks at the listed intermediate stations",
+        "internal train number",
+        "actual-operation confirmation"
+      ],
+      "scope_guard": "Applies only to the five explicit origin dates; no recurrence is inferred."
+    },
+    {
+      "template_key": "hakutaka-665-jrwest-summer-2026-connection",
+      "service_id": "hakutaka",
+      "service_name": "はくたか",
+      "service_class": "shinkansen",
+      "public_number": "665",
+      "train_number": null,
+      "direction_label": "東京→敦賀",
+      "date_group_id": "hakutaka665-thunderbird32",
+      "operating_dates": [
+        "2026-07-20",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-09-22",
+        "2026-09-23"
+      ],
+      "valid_from": "2026-07-20",
+      "valid_until": "2026-09-24",
+      "operation_status": "officially_planned_not_observed",
+      "candidate_status": "visually_verified_candidate_only",
+      "route_status": "complete_ordered_calls_from_official_intermediate-stop_line",
+      "time_status": "partial_selected_points_only",
+      "ordered_calls": [
+        "東京",
+        "上野",
+        "大宮",
+        "高崎",
+        "軽井沢",
+        "長野",
+        "飯山",
+        "上越妙高",
+        "糸魚川",
+        "黒部宇奈月温泉",
+        "富山",
+        "新高岡",
+        "金沢",
+        "福井",
+        "敦賀"
+      ],
+      "stop_times": [
+        {
+          "station_name": "東京",
+          "call_type": "origin",
+          "arrival_time": null,
+          "departure_time": "12:48",
+          "clock_status": "exact_from_connection_summary"
+        },
+        {
+          "station_name": "長野",
+          "call_type": "passenger_stop",
+          "arrival_time": null,
+          "departure_time": "14:17",
+          "clock_status": "exact_from_connection_summary"
+        },
+        {
+          "station_name": "上越妙高",
+          "call_type": "passenger_stop",
+          "arrival_time": null,
+          "departure_time": "14:40",
+          "clock_status": "exact_from_connection_summary"
+        },
+        {
+          "station_name": "富山",
+          "call_type": "passenger_stop",
+          "arrival_time": null,
+          "departure_time": "15:21",
+          "clock_status": "exact_from_connection_summary"
+        },
+        {
+          "station_name": "敦賀",
+          "call_type": "destination_connection",
+          "arrival_time": "16:26",
+          "departure_time": null,
+          "clock_status": "exact_from_connection_summary"
+        }
+      ],
+      "evidence_missing": [
+        "arrival/departure clocks for the other printed intermediate stops",
+        "arrival clocks at 長野, 上越妙高 and 富山",
+        "internal train number",
+        "actual-operation confirmation"
+      ],
+      "scope_guard": "Applies only to the five explicit origin dates; no recurrence is inferred."
+    },
+    {
+      "template_key": "thunderbird-32-jrwest-summer-2026-connection",
+      "service_id": "thunderbird",
+      "service_name": "サンダーバード",
+      "service_class": "limited_express",
+      "public_number": "32",
+      "train_number": null,
+      "direction_label": "敦賀→大阪",
+      "date_group_id": "hakutaka665-thunderbird32",
+      "operating_dates": [
+        "2026-07-20",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-09-22",
+        "2026-09-23"
+      ],
+      "valid_from": "2026-07-20",
+      "valid_until": "2026-09-24",
+      "operation_status": "officially_planned_not_observed",
+      "candidate_status": "visually_verified_candidate_only",
+      "route_status": "partial_selected_points_only",
+      "time_status": "partial_selected_points_only",
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "station_name": "敦賀",
+          "call_type": "origin_connection",
+          "arrival_time": null,
+          "departure_time": "16:43",
+          "clock_status": "exact_from_connection_summary"
+        },
+        {
+          "stop_sequence": 2,
+          "station_name": "京都",
+          "call_type": "selected_intermediate_point",
+          "arrival_time": "17:39",
+          "departure_time": null,
+          "clock_status": "exact_from_connection_summary_and_travel-time_comparison"
+        },
+        {
+          "stop_sequence": 3,
+          "station_name": "大阪",
+          "call_type": "destination",
+          "arrival_time": "18:09",
+          "departure_time": null,
+          "clock_status": "exact_from_connection_summary"
+        }
+      ],
+      "evidence_missing": [
+        "complete intermediate-stop list and all arrival/departure clocks",
+        "internal train number",
+        "actual-operation confirmation"
+      ],
+      "scope_guard": "Applies only to the five explicit origin dates. Do not extend this endpoint pattern or clocks to regular サンダーバード32号 service."
+    }
+  ],
+  "cutoff_validation": {
+    "cutoff_date_inclusive": "2026-09-28",
+    "template_count": 4,
+    "distinct_origin_date_count": 10,
+    "train_date_occurrence_count": 20,
+    "latest_origin_date": "2026-09-23",
+    "future_dates_excluded": [],
+    "status": "pass"
+  },
+  "global_evidence_gaps": [
+    "The release is an advance operating plan and does not prove that any train actually operated.",
+    "The official release does not supply internal train numbers.",
+    "Only clocks printed in the bounded page-7/page-8 tables are recorded; missing station clocks are not inferred.",
+    "The PDF contains an unresolved one-minute conflict for サンダーバード95号 京都 departure: 09:23 on page 7 versus 09:22 on page 8.",
+    "No source note is generalized to unlisted days, and no ordinary recurring timetable is inferred from these exceptional dates."
+  ],
+  "promotion_note": "Candidate only. Do not write normalized rows, rebuild derived artifacts, or promote any clock until the source conflict and schema mapping have been reviewed.",
+  "scope_counts": {
+    "conventional_limited_express_templates": 2,
+    "conventional_limited_express_occurrences": 10,
+    "shinkansen_connection_templates": 2,
+    "shinkansen_connection_occurrences": 10,
+    "production_added": 0
+  },
+  "parent_review": {
+    "status": "candidate_reviewed_not_promoted",
+    "checks": [
+      "4 templates and 20 explicit-date occurrences; 2 conventional limited-express and 2 Shinkansen connection templates",
+      "10 distinct dates; half-open bounds and AS_OF cap",
+      "Kyoto conflict retained as two values with null chosen clock"
+    ],
+    "scope_note": "Shinkansen connection evidence is retained separately in this candidate, not counted as new conventional limited-express production records."
+  }
+}

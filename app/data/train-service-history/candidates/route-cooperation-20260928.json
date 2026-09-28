@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "candidate_status": "partial_non_publishable",
+  "reviewed_at": "2026-09-28",
+  "scope": {
+    "service_id": "nanki",
+    "templates": [
+      "jr-central.nanki.81.2013-summer",
+      "jr-central.nanki.82.2013-summer",
+      "jr-central.nanki.83.2013-summer",
+      "jr-central.nanki.84.2013-summer"
+    ],
+    "question": "Does official, date-applicable material prove an ordered physical-line chain or an operating-company boundary for the reviewed 2013 summer Nanki templates?"
+  },
+  "sources": [
+    {
+      "source_id": "jr-central-summer-20130517",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "“夏”の臨時列車のお知らせ（平成25年）",
+      "source_type": "official_planned_exception",
+      "url_or_locator": "https://jr-central.co.jp/news/release/_pdf/000018518.pdf",
+      "publication_date": "2013-05-17",
+      "applicable_period": {
+        "valid_from": "2013-07-01",
+        "valid_until": "2013-10-01",
+        "basis": "PDF physical page 1 states that the announcement covers trains operated during 2013-07-01 through 2013-09-30; physical page 4 prints the exact dates for each Nanki row.",
+        "interval_semantics": "half_open"
+      },
+      "accessed_at": "2026-09-28",
+      "content_hash": "21351235fea7435a2bda0cd14f3f2bec4748b72c2f0f2303ac6ecbdc07058161",
+      "locator": "PDF physical page 4, section '（3）関西・紀勢線', rows 南紀81号 through 南紀84号; web extraction lines 83-101",
+      "primary_source": true,
+      "notes": "Official JR Central PDF visually reviewed at physical pages 3-4. Raw source is not bundled or redistributed."
+    },
+    {
+      "source_id": "mie-prefecture-nanki-route-20201203",
+      "publisher": "三重県 地域連携・交通部 交通政策課",
+      "title": "三重の交通機関の魅力（東海旅客鉄道）",
+      "source_type": "official_government_route_description",
+      "url_or_locator": "https://www.pref.mie.lg.jp/KOTSU/HP/m0009200175.htm",
+      "publication_date": "2020-12-03",
+      "applicable_period": {
+        "valid_from": "2020-12-03",
+        "valid_until": null,
+        "basis": "The page is dated 令和02年12月03日 and gives no retrospective 2013 applicability statement. This is a publication snapshot; null upper bound does not prove continued or retrospective service validity."
+      },
+      "accessed_at": "2026-09-28",
+      "content_hash": null,
+      "locator": "Heading '特急「ワイドビュー南紀」', page text lines 140-144: 関西本線 名古屋–四日市（河原田）, 伊勢鉄道 伊勢線 四日市（河原田）–津, 紀勢本線 津–新宮; some trains continue on JR West きのくに線 新宮–紀伊勝浦",
+      "primary_source": true,
+      "notes": "Useful exact-boundary cross-check, but it postdates the target templates by seven years and therefore is not promoted into 2013 route facts."
+    }
+  ],
+  "candidate_evidence": [
+    {
+      "evidence_id": "jr-central.nanki.2013-summer.published-line-group",
+      "target_trip_ids": [
+        "jr-central.nanki.81.2013-summer",
+        "jr-central.nanki.82.2013-summer",
+        "jr-central.nanki.83.2013-summer",
+        "jr-central.nanki.84.2013-summer"
+      ],
+      "source_id": "jr-central-summer-20130517",
+      "source_locator": "PDF physical page 4, section heading '（3）関西・紀勢線' immediately above the dated Nanki 81/82/83/84 table",
+      "applicable_dates_by_trip": {
+        "jr-central.nanki.81.2013-summer": "2013-07-13; 2013-08-09 through 2013-08-18; 2013-09-14; 2013-09-21",
+        "jr-central.nanki.82.2013-summer": "2013-08-09 through 2013-08-18",
+        "jr-central.nanki.83.2013-summer": "2013-07-14, 2013-07-15, 2013-07-20, 2013-07-21, 2013-07-27, 2013-07-28; 2013-08-03 through 2013-08-18; 2013-08-24, 2013-08-25; 2013-09-15, 2013-09-16, 2013-09-22, 2013-09-23",
+        "jr-central.nanki.84.2013-summer": "2013-07-13 through 2013-07-15; 2013-07-20, 2013-07-21, 2013-07-27, 2013-07-28; 2013-08-03 through 2013-08-16; 2013-08-24, 2013-08-25; 2013-09-14 through 2013-09-16; 2013-09-21 through 2013-09-23"
+      },
+      "published_line_group_labels": [
+        "関西線",
+        "紀勢線"
+      ],
+      "confidence": "medium",
+      "verification_status": "partial",
+      "can_prove": [
+        "JR Central grouped the four specifically dated 2013 summer Nanki services under its published '関西・紀勢線' heading.",
+        "The line-label association is contemporaneous with the exact operating dates printed for each template.",
+        "The rows prove the service directions and endpoints already present in the reviewed templates: 名古屋 to 紀伊勝浦 for 81/83 and 紀伊勝浦 to 名古屋 for 82/84."
+      ],
+      "cannot_prove": [
+        "The heading's typography does not prove that 関西線 then 紀勢線 is a complete ordered physical-line chain for outbound trains or the reverse chain for inbound trains.",
+        "It does not identify the omitted 伊勢鉄道 伊勢線 segment, nor boundaries at 河原田 and 津.",
+        "It does not identify the 新宮–紀伊勝浦 physical line label or a JR Central/JR West operating boundary at 新宮.",
+        "It does not prove any adjacent-stop pair because the announcement prints endpoints rather than intermediate calls.",
+        "It does not identify current N02 line ids, rail-history ids, physical feature ids, or historical station identities.",
+        "JR Central authorship and branding do not prove one operator for every segment."
+      ],
+      "normalization_decision": {
+        "publish_trip_line_rows": false,
+        "publish_operator_segment_rows": false,
+        "publishable_route_count": 0,
+        "reason": "The evidence supports a date-bound published line group only. The route normalizer requires physical segment identity and boundaries; neither may be inferred from source order, endpoints, topology, train name, or publisher."
+      }
+    }
+  ],
+  "cross_check_not_promoted": [
+    {
+      "source_id": "mie-prefecture-nanki-route-20201203",
+      "candidate_ordered_chain": [
+        {
+          "line_name": "関西本線",
+          "from": "名古屋",
+          "to": "四日市（河原田）"
+        },
+        {
+          "line_name": "伊勢鉄道 伊勢線",
+          "from": "四日市（河原田）",
+          "to": "津"
+        },
+        {
+          "line_name": "紀勢本線",
+          "from": "津",
+          "to": "新宮"
+        },
+        {
+          "line_name": "きのくに線",
+          "from": "新宮",
+          "to": "紀伊勝浦",
+          "qualification": "The page says only that some Nanki trains continue on this segment."
+        }
+      ],
+      "can_prove": [
+        "The government page explicitly describes these named boundaries for the Nanki service as published on 2020-12-03."
+      ],
+      "cannot_prove": [
+        "That the same complete chain and boundaries applied to Nanki 81/82/83/84 on their 2013 dates.",
+        "Which 2020 trains are included in the phrase 'some trains' for the 新宮–紀伊勝浦 continuation.",
+        "Any 2013 operator contract, operating-company boundary, N02 identity, or rail-history identity."
+      ],
+      "normalization_decision": "Do not join across dates or promote into the 2013 templates."
+    }
+  ],
+  "research_note": {
+    "summary": "One useful official evidence item was found: the dated JR Central announcement directly binds the four reviewed 2013 summer Nanki templates to the published '関西・紀勢線' line group. It is insufficient for an ordered physical route or operator boundary, so this candidate deliberately leaves production route and operator rows empty.",
+    "searched_scope": [
+      "JR Central official 2013 summer announcement PDF and its official release index page.",
+      "JR West official 2026 WEST EXPRESS 銀河紀南コース announcement and official 2022 course overview.",
+      "Ise Railway official route, company-history, station and timetable pages.",
+      "Mie Prefecture official transport pages describing Nanki and the Kansai Main Line history."
+    ],
+    "rejected_for_target_dates": [
+      "The 2026 WEST EXPRESS 銀河 announcement fixes dates, endpoints and stops but its schematic does not print physical line identities or segment boundaries.",
+      "The JR West 2022 overview explicitly says the Ginga Kinan course uses 阪和線・紀勢線, but it cannot establish the 2026 course without a 2026 applicability statement.",
+      "Current Ise Railway pages explicitly show Nanki entering the 伊勢線 between 河原田 and 津, but they do not state retrospective applicability to the 2013 summer trains.",
+      "The 2020 Mie Prefecture page supplies an exact ordered Nanki chain but is not contemporaneous with the 2013 templates."
+    ],
+    "missing_evidence_needed": "A contemporaneous 2013 official working/public timetable, route table, fare-route statement, or operator agreement that names 関西本線→伊勢鉄道伊勢線→紀勢本線→the 新宮–紀伊勝浦 segment with boundary stations, plus direct historical/N02 identity mapping if production physical feature ids are required."
+  },
+  "parent_review": {
+    "status": "reviewed_candidate_only",
+    "checked": [
+      "Official 2013 PDF physical page 4 dated Nanki table and published heading",
+      "2013 summer envelope corrected to half-open [2013-07-01,2013-10-01)",
+      "2020 government page is a publication snapshot, not proof of 2013 applicability"
+    ],
+    "canonical_promotion": false
+  }
+}

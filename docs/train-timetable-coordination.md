@@ -37,3 +37,9 @@
 ## 最终历史交接
 
 历史任务确认完整验收通过：93条路线、93组boundary与5组pins双求解器fixture；201份实际预计算；203项历史依赖资源字节对照；2项provenance测试；298模式路线；25项statistics；808项Python及84项Web／lint。主任务直接复核了`/tmp/jtm-native-history-5.log`的25项PASS及其[验收记录](jp-history-h1-plan.md)，并再次执行特急快照核验，`snapshotAligned=true`、错误0。历史验收不等同于全部JR时刻或路线证据完成；特急路线仍为0可发布、105项未确认。特急产物没有因交接而重建或更改hash。
+
+## 下一轮有界取证
+
+已保存[南紀路线合作候选](../app/data/train-service-history/candidates/route-cooperation-20260928.json)。2013年官方公告只证明日期约束下的「関西・紀勢線」发布分组；2020年三重县官方页虽然列明河原田、津、新宮边界，但没有2013适用性，故不提升为canonical有序线路。候选不在manifest事实输入内，生产SQLite和105项未确认路线审计保持不变。缺失目标已回传历史任务：同年代经由表／运行图、历史站点和物理线路身份。
+
+另保存[JR西日本日期合作候选](../app/data/train-service-history/candidates/daily-cooperation-20260928.json)：[2026夏季官方公告](https://www.westjr.co.jp/press/article/2026/05/15/items/260515_00_press_2026einjiunten.pdf)物理第7／8页提供2个在来线特急与2个新干线接续模板，共20个明确日期候选实例（在来线10、新干线接续10），10个不同日期。サンダーバード95号京都发在第7页为09:23、第8页为09:22，主任务也独立查阅同一PDF文本确认；保留冲突及null选定值，不选择其中一个值入库。サンダーバード32号所列5个接续日不代表完整全年运行日。JSON语法、20实例计数、半开边界及截止日验证通过；本轮新增生产记录为0，95／1577快照保持不变。
