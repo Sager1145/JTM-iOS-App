@@ -1,6 +1,6 @@
 {
   "candidate_id": "jr-west-hakutaka-thunderbird-connections-2026-summer-daily-cooperation",
-  "candidate_status": "visually_reviewed_candidate_with_one_unresolved_clock_conflict",
+  "candidate_status": "clock_conflict_resolved_for_five_dates_candidate_only",
   "canonical": false,
   "promotion_authorized": false,
   "as_of_date": "2026-09-28",
@@ -108,9 +108,9 @@
       "valid_from": "2026-07-18",
       "valid_until": "2026-09-21",
       "operation_status": "officially_planned_not_observed",
-      "candidate_status": "blocked_for_clock_conflict_review",
+      "candidate_status": "clock_resolved_candidate_only_other_dimensions_pending",
       "route_status": "partial_selected_points_only",
-      "time_status": "partial_with_unresolved_source_conflict",
+      "time_status": "partial_selected_points_with_five_date_kyoto_clock_resolved",
       "stop_times": [
         {
           "stop_sequence": 1,
@@ -147,7 +147,19 @@
                 "locator": "PDF physical page 8 臨時列車等の詳細 table, first row, サンダーバード95号, 京都 発 column"
               }
             ],
-            "resolution": "No production clock selected. Retain all printed values pending a corrigendum or another official train-level timetable for one of the listed dates."
+            "resolution": "Original PDF values retained. Five date-specific official train-level timetables support09:22; see clock_resolution. Candidate remains unpromoted."
+          },
+          "resolved_clock": {
+            "arrival_time": "09:20",
+            "departure_time": "09:22",
+            "evidence_reference": "clock_resolution",
+            "applicable_dates": [
+              "2026-07-18",
+              "2026-08-08",
+              "2026-08-09",
+              "2026-09-19",
+              "2026-09-20"
+            ]
           }
         },
         {
@@ -166,8 +178,7 @@
       "evidence_missing": [
         "complete intermediate-stop list and all arrival/departure clocks",
         "internal train number",
-        "actual-operation confirmation",
-        "resolution of the 09:22 versus 09:23 Kyoto departure conflict"
+        "actual-operation confirmation"
       ],
       "scope_guard": "Applies only to the five explicit origin dates. Do not extend this shortened endpoint pattern or either Kyoto clock to regular サンダーバード95号 service."
     },
@@ -403,10 +414,10 @@
     "The release is an advance operating plan and does not prove that any train actually operated.",
     "The official release does not supply internal train numbers.",
     "Only clocks printed in the bounded page-7/page-8 tables are recorded; missing station clocks are not inferred.",
-    "The PDF contains an unresolved one-minute conflict for サンダーバード95号 京都 departure: 09:23 on page 7 versus 09:22 on page 8.",
+    "The PDF retains an original one-minute discrepancy (the five-date Kyoto departure is resolved independently as09:22) for サンダーバード95号 京都 departure: 09:23 on page 7 versus 09:22 on page 8.",
     "No source note is generalized to unlisted days, and no ordinary recurring timetable is inferred from these exceptional dates."
   ],
-  "promotion_note": "Candidate only. Do not write normalized rows, rebuild derived artifacts, or promote any clock until the source conflict and schema mapping have been reviewed.",
+  "promotion_note": "Candidate only. Kyoto clock conflict is resolved for the five explicit dates by official train-level pages; schema mapping, other evidence dimensions and reuse authorization remain pending. Original PDF conflict is preserved.",
   "scope_counts": {
     "conventional_limited_express_templates": 2,
     "conventional_limited_express_occurrences": 10,
@@ -419,8 +430,77 @@
     "checks": [
       "4 templates and 20 explicit-date occurrences; 2 conventional limited-express and 2 Shinkansen connection templates",
       "10 distinct dates; half-open bounds and AS_OF cap",
-      "Kyoto conflict retained as two values with null chosen clock"
+      "Original PDF two-value discrepancy retained with null original observation; date-specific resolved_clock is09:22"
     ],
     "scope_note": "Shinkansen connection evidence is retained separately in this candidate, not counted as new conventional limited-express production records."
+  },
+  "clock_resolution": {
+    "status": "resolved_by_date_specific_official_train_timetables",
+    "scope_dates": [
+      "2026-07-18",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-09-19",
+      "2026-09-20"
+    ],
+    "train_number": "9095M",
+    "station_name": "京都",
+    "arrival_time": "09:20",
+    "departure_time": "09:22",
+    "source_priority_basis": "All five date-specific official train-level pages identify Thunderbird95 9095M and agree with PDF physical page8. No official PDF corrigendum has been identified; the original printed discrepancy remains retained.",
+    "publication_conflict_retained": true,
+    "canonical_promoted": false,
+    "sources": [
+      {
+        "service_date": "2026-07-18",
+        "url": "https://timetable.jr-odekake.net/train-timetable/382721?date=20260718",
+        "accessed_at": "2026-09-28T22:44:53.542840+00:00",
+        "sha256": "7101aa3ffbad8d5a8fadd17fbf9b7057f51004dc0caac50b3d7b2decc0791ac1",
+        "locator": "Train detail row: 9095M; Kyoto arrival09:20 departure09:22; explicit operation-date note includes the target date",
+        "edition_id": "382721",
+        "license_status": "reuse_prohibited_without_permission",
+        "redistribution_status": "verification_only"
+      },
+      {
+        "service_date": "2026-08-08",
+        "url": "https://timetable.jr-odekake.net/train-timetable/387131?date=20260808",
+        "accessed_at": "2026-09-28T22:44:53.543382+00:00",
+        "sha256": "bf90380a6ae1e5518b41dc66c627c5508dccf608b532cd159565fcc8454f20f0",
+        "locator": "Train detail row: 9095M; Kyoto arrival09:20 departure09:22; explicit operation-date note includes the target date",
+        "edition_id": "387131",
+        "license_status": "reuse_prohibited_without_permission",
+        "redistribution_status": "verification_only"
+      },
+      {
+        "service_date": "2026-08-09",
+        "url": "https://timetable.jr-odekake.net/train-timetable/387131?date=20260809",
+        "accessed_at": "2026-09-28T22:44:53.543567+00:00",
+        "sha256": "5009763bccfef3b91ba6490f019b029bc429e3db82a23978e792c948ab158b74",
+        "locator": "Train detail row: 9095M; Kyoto arrival09:20 departure09:22; explicit operation-date note includes the target date",
+        "edition_id": "387131",
+        "license_status": "reuse_prohibited_without_permission",
+        "redistribution_status": "verification_only"
+      },
+      {
+        "service_date": "2026-09-19",
+        "url": "https://timetable.jr-odekake.net/train-timetable/385171?date=20260919",
+        "accessed_at": "2026-09-28T22:44:53.543722+00:00",
+        "sha256": "667683e18f2b38b06d2837d6be2c1e5cee07ac58b0b13c62b6db779f8a7e0c1b",
+        "locator": "Train detail row: 9095M; Kyoto arrival09:20 departure09:22; explicit operation-date note includes the target date",
+        "edition_id": "385171",
+        "license_status": "reuse_prohibited_without_permission",
+        "redistribution_status": "verification_only"
+      },
+      {
+        "service_date": "2026-09-20",
+        "url": "https://timetable.jr-odekake.net/train-timetable/385171?date=20260920",
+        "accessed_at": "2026-09-28T22:44:53.543929+00:00",
+        "sha256": "3714858b2ee0238d938490772d16b9f0822630317c65c41eea141e0623273b96",
+        "locator": "Train detail row: 9095M; Kyoto arrival09:20 departure09:22; explicit operation-date note includes the target date",
+        "edition_id": "385171",
+        "license_status": "reuse_prohibited_without_permission",
+        "redistribution_status": "verification_only"
+      }
+    ]
   }
 }

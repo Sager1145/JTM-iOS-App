@@ -49,13 +49,19 @@ final class TrainServicePatternUITests: XCTestCase {
         let replaceStops = app.buttons["置き換える"]
         XCTAssertTrue(replaceStops.waitForExistence(timeout: 8), app.debugDescription)
         replaceStops.tap()
+        let exactSearch = app.searchFields.firstMatch
+        XCTAssertTrue(exactSearch.waitForExistence(timeout: 8))
+        exactSearch.tap()
+        exactSearch.typeText("しなの\n")
 
         let row = app.descendants(matching: .any)
             .matching(NSPredicate(format: "identifier BEGINSWITH %@",
                                   "timetableIncompleteTrip-jr-central.shinano.1.")).firstMatch
         for _ in 0..<10 {
             if row.waitForExistence(timeout: 1) { break }
-            app.collectionViews.firstMatch.swipeUp()
+            let list = app.collectionViews.firstMatch
+            list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+                .press(forDuration: 0.1, thenDragTo: list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)))
         }
         XCTAssertTrue(row.waitForExistence(timeout: 8), app.debugDescription)
         XCTAssertTrue(row.label.contains("07:00"))
@@ -66,6 +72,12 @@ final class TrainServicePatternUITests: XCTestCase {
         let details = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "timetableDetails-jr-central.shinano.1.")).firstMatch
         XCTAssertTrue(details.waitForExistence(timeout: 8))
+        // The floating search bar can cover a row while XCTest still reports it hittable.
+        for _ in 0..<8 {
+            if details.isHittable && details.frame.maxY < app.frame.maxY - 120 { break }
+            app.collectionViews.firstMatch.swipeUp()
+        }
+        XCTAssertTrue(details.isHittable, app.debugDescription)
         details.tap()
         let originTime = app.descendants(matching: .any)
             .matching(identifier: "timetableStop-1").firstMatch

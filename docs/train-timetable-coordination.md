@@ -43,3 +43,7 @@
 已保存[南紀路线合作候选](../app/data/train-service-history/candidates/route-cooperation-20260928.json)。2013年官方公告只证明日期约束下的「関西・紀勢線」发布分组；2020年三重县官方页虽然列明河原田、津、新宮边界，但没有2013适用性，故不提升为canonical有序线路。候选不在manifest事实输入内，生产SQLite和105项未确认路线审计保持不变。缺失目标已回传历史任务：同年代经由表／运行图、历史站点和物理线路身份。
 
 另保存[JR西日本日期合作候选](../app/data/train-service-history/candidates/daily-cooperation-20260928.json)：[2026夏季官方公告](https://www.westjr.co.jp/press/article/2026/05/15/items/260515_00_press_2026einjiunten.pdf)物理第7／8页提供2个在来线特急与2个新干线接续模板，共20个明确日期候选实例（在来线10、新干线接续10），10个不同日期。サンダーバード95号京都发在第7页为09:23、第8页为09:22，主任务也独立查阅同一PDF文本确认；保留冲突及null选定值，不选择其中一个值入库。サンダーバード32号所列5个接续日不代表完整全年运行日。JSON语法、20实例计数、半开边界及截止日验证通过；本轮新增生产记录为0，95／1577快照保持不变。
+
+## 冲突与应用检查后续
+
+サンダーバード95号的五个目标日期官方列车页均支持9095M、京都09:20着／09:22发。已在日期合作候选中追加逐日期URL、hash及resolved_clock，原公告的09:23／09:22观测仍保留，不称为正式勘误。candidate仍不进入manifest事实输入；生产95／1577和3222ceee哈希不变。详见[冲突审计](train-timetable-conflict-audit.md)及[应用内检查](train-timetable-app-usability.md)。
