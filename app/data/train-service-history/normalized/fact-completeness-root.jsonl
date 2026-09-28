@@ -30,12 +30,12 @@
 {"confidence": "low", "dimension": "provenance", "entity_id": "jr-central.shinano.1.2026-09-18", "entity_type": "trip", "status": "partial"}
 {"confidence": "high", "dimension": "identity", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
 {"confidence": "high", "dimension": "train_number", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
-{"confidence": "low", "dimension": "operator", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "unknown"}
+{"confidence": "medium", "dimension": "operator", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "notes": "Official JR East timetable and service pages support operator attribution, but branding alone is not promoted to high confidence.", "status": "partial"}
 {"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
 {"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
 {"confidence": "high", "dimension": "stops", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
 {"confidence": "high", "dimension": "times", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
-{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "unknown"}
+{"confidence": "medium", "dimension": "route_lines", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "notes": "Official sources support eleven Joban Line passenger-pair intervals from Iwaki through Ueno. Ueno-Tokyo-Shinagawa physical line identities remain unverified, and no N02 or rail-history feature id is asserted.", "status": "partial"}
 {"confidence": "high", "dimension": "station_refs", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "verified"}
 {"confidence": "low", "dimension": "provenance", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "status": "partial"}
 {"confidence": "high", "dimension": "identity", "entity_id": "jr-kyushu.yufuin-no-mori.1.2026-09-19", "entity_type": "trip", "status": "verified"}

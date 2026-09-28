@@ -1,5 +1,5 @@
 {"language": "ja", "name": "カムイ", "name_type": "display", "service_id": "kamui", "source_id": "jr-hokkaido-20260403-special", "valid_from": "2026-05-16", "valid_until": "2026-05-18"}
 {"language": "ja", "name": "ライラック", "name_type": "display", "service_id": "lilac", "source_id": "jr-hokkaido-20260403-special", "valid_from": "2026-05-16", "valid_until": "2026-05-17"}
-{"language": "ja", "name": "しなの", "name_type": "display", "service_id": "shinano", "source_id": "jr-central-shinano1-202609", "valid_from": "2026-09-18", "valid_until": "2026-09-28"}
-{"language": "ja", "name": "ひたち", "name_type": "display", "service_id": "hitachi", "source_id": "jr-east-hitachi26-202609", "valid_from": "2026-09-18", "valid_until": "2026-09-28"}
-{"language": "ja", "name": "ゆふいんの森", "name_type": "display", "service_id": "yufuin-no-mori", "source_id": "jr-kyushu-yufuin-no-mori-20260314", "valid_from": "2026-09-19", "valid_until": "2026-09-28"}
+{"language": "ja", "name": "しなの", "name_type": "display", "service_id": "shinano", "source_id": "jr-central-shinano1-202609", "valid_from": "2026-09-18", "valid_until": "2026-09-29"}
+{"language": "ja", "name": "ひたち", "name_type": "display", "service_id": "hitachi", "source_id": "jr-east-hitachi26-202609", "valid_from": "2026-09-18", "valid_until": "2026-09-29"}
+{"language": "ja", "name": "ゆふいんの森", "name_type": "display", "service_id": "yufuin-no-mori", "source_id": "jr-kyushu-yufuin-no-mori-20260314", "valid_from": "2026-09-19", "valid_until": "2026-09-29"}

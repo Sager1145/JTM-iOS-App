@@ -1,25 +1,229 @@
 {
   "alignedChecks": 0,
-  "asOfDate": "2026-09-27",
+  "asOfDate": "2026-09-28",
   "complete": false,
-  "dailyOccurrencesChecked": 77,
+  "dailyOccurrencesChecked": 181,
   "errorChecks": 0,
   "findings": [
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 10,
+      "occurrenceCount": 11,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-central.shinano.1.2026-09-18"
     },
     {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.001657",
       "kind": "route",
-      "occurrenceCount": 10,
-      "reason": "missing_trip_line_segments",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 1,
       "status": "unverified",
+      "toStationId": "jp.n02.001684",
       "tripId": "jr-east.hitachi.26.2026-09-18"
     },
     {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.001684",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 2,
+      "status": "unverified",
+      "toStationId": "jp.n02.001710",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.001710",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 3,
+      "status": "unverified",
+      "toStationId": "jp.n02.001738",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.001738",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 4,
+      "status": "unverified",
+      "toStationId": "jp.n02.001903",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.001903",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 5,
+      "status": "unverified",
+      "toStationId": "jp.n02.002079",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002079",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 6,
+      "status": "unverified",
+      "toStationId": "jp.n02.002129",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002129",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 7,
+      "status": "unverified",
+      "toStationId": "jp.n02.002171",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002171",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 8,
+      "status": "unverified",
+      "toStationId": "jp.n02.002207",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002207",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 9,
+      "status": "unverified",
+      "toStationId": "jp.n02.002280",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002280",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 10,
+      "status": "unverified",
+      "toStationId": "jp.n02.002319",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "candidateHistoryIds": [
+        "jp.jre.joban.old-komagamine-hamayoshida"
+      ],
+      "currentN02LineId": null,
+      "fromStationId": "jp.n02.002319",
+      "kind": "route",
+      "lineName": "常磐線",
+      "occurrenceCount": 11,
+      "operatorId": "jr-east",
+      "railHistoryId": null,
+      "reason": "missing_explicit_route_identity",
+      "referenceKind": null,
+      "segmentSequence": 11,
+      "status": "unverified",
+      "toStationId": "jp.n02.003505",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
       "kind": "route",
       "occurrenceCount": 2,
       "reason": "missing_trip_line_segments",
@@ -27,6 +231,7 @@
       "tripId": "jr-hokkaido.kamui.93.2026-05-16"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
       "occurrenceCount": 1,
       "reason": "missing_trip_line_segments",
@@ -34,57 +239,718 @@
       "tripId": "jr-hokkaido.lilac.95.2026-05-16"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.1.2026-09-19"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.2.2026-09-19"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.3.2026-09-19"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.4.2026-09-19"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.5.2026-09-19"
     },
     {
+      "canPublishRouteLines": false,
       "kind": "route",
-      "occurrenceCount": 9,
+      "occurrenceCount": 10,
       "reason": "missing_trip_line_segments",
       "status": "unverified",
       "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.10.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.11.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.12.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.13.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.14.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.15.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.16.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.17.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.18.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.19.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.20.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.21.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.22.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.23.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.24.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.25.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.26.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.27.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.28.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.5.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.6.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.7.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.8.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "kind": "route",
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.9.2026-08-08"
     }
   ],
   "historicalStationChecks": 0,
   "intervalSemantics": "[validFrom, validUntil)",
-  "lineSegmentChecks": 0,
-  "railHistoryHash": "ccdc5b5dc1d328a74cef27f8bf91c6bf6e8b42c0128b6ec660ed7ed8e25dfb5a",
-  "railHistoryRevision": "2026-09-27.2",
+  "lineSegmentChecks": 11,
+  "publishableRouteTrips": 0,
+  "railHistoryHash": "1389424fc150db8c0377715fc7584a7ae24f12c5b664a90538908fee15a97cc6",
+  "railHistoryRevision": "2026-09-28.1",
+  "routeAttestations": [
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 11,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-central.shinano.1.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 11,
+      "reason": "one_or_more_route_segments_unverified",
+      "segments": [
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.001657",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 1,
+          "status": "unverified",
+          "toStationId": "jp.n02.001684",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.001684",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 2,
+          "status": "unverified",
+          "toStationId": "jp.n02.001710",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.001710",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 3,
+          "status": "unverified",
+          "toStationId": "jp.n02.001738",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.001738",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 4,
+          "status": "unverified",
+          "toStationId": "jp.n02.001903",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.001903",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 5,
+          "status": "unverified",
+          "toStationId": "jp.n02.002079",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002079",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 6,
+          "status": "unverified",
+          "toStationId": "jp.n02.002129",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002129",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 7,
+          "status": "unverified",
+          "toStationId": "jp.n02.002171",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002171",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 8,
+          "status": "unverified",
+          "toStationId": "jp.n02.002207",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002207",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 9,
+          "status": "unverified",
+          "toStationId": "jp.n02.002280",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002280",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 10,
+          "status": "unverified",
+          "toStationId": "jp.n02.002319",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        },
+        {
+          "candidateHistoryIds": [
+            "jp.jre.joban.old-komagamine-hamayoshida"
+          ],
+          "currentN02LineId": null,
+          "fromStationId": "jp.n02.002319",
+          "lineName": "常磐線",
+          "occurrenceCount": 11,
+          "operatorId": "jr-east",
+          "railHistoryId": null,
+          "reason": "missing_explicit_route_identity",
+          "referenceKind": null,
+          "segmentSequence": 11,
+          "status": "unverified",
+          "toStationId": "jp.n02.003505",
+          "tripId": "jr-east.hitachi.26.2026-09-18"
+        }
+      ],
+      "status": "unverified",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 2,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.93.2026-05-16"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 1,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-hokkaido.lilac.95.2026-05-16"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.1.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.2.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.3.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.4.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.5.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.10.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.11.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.12.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.13.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.14.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.15.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.16.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.17.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.18.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.19.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.20.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.21.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.22.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.23.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.24.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.25.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.26.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.27.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.28.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.5.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.6.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.7.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.8.2026-08-08"
+    },
+    {
+      "canPublishRouteLines": false,
+      "occurrenceCount": 4,
+      "reason": "missing_trip_line_segments",
+      "segments": [],
+      "status": "unverified",
+      "tripId": "jr-shikoku.shiokaze.9.2026-08-08"
+    }
+  ],
   "schemaVersion": "1.0.0",
   "serviceDateSemantics": "Asia/Tokyo operating day; stop day_offset does not change the service date",
   "timezone": "Asia/Tokyo",
-  "tripTemplates": 10,
-  "tripTemplatesWithOccurrences": 10,
-  "unverifiedChecks": 10
+  "tripTemplates": 34,
+  "tripTemplatesWithOccurrences": 34,
+  "unverifiedChecks": 44
 }

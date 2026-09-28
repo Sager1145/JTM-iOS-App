@@ -1,11 +1,11 @@
 {
-  "asOfDate": "2026-09-27",
+  "asOfDate": "2026-09-28",
   "complete": false,
   "passedLegs": 0,
-  "passengerLegs": 76,
+  "passengerLegs": 100,
   "schemaVersion": 1,
   "solverExecuted": false,
-  "tripTemplates": 10,
+  "tripTemplates": 34,
   "trips": [
     {
       "calendarId": "jr-hokkaido.kamui.93.2026-05-16.calendar",
@@ -52,10 +52,7 @@
     {
       "calendarId": "jr-east.hitachi.26.2026-09-18.calendar",
       "dateApplicabilityStatus": "calendar_materialization_required",
-      "missingPrerequisites": [
-        "ordered_route_lines",
-        "operator_segments"
-      ],
+      "missingPrerequisites": [],
       "passengerLegs": 13,
       "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
       "solverStatus": "not_run",
@@ -146,7 +143,343 @@
       "timetableVersionId": "jr-kyushu.yufuin-no-mori.6.2026-09-19.version",
       "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19",
       "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.5.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.5.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.5.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.7.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.7.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.7.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.9.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.9.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.9.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.11.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.11.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.11.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.13.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.13.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.13.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.15.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.15.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.15.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.17.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.17.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.17.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.19.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.19.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.19.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.21.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.21.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.21.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.23.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.23.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.23.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.25.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.25.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.25.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.27.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.27.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.27.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.6.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.6.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.6.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.8.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.8.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.8.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.10.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.10.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.10.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.12.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.12.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.12.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.14.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.14.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.14.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.16.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.16.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.16.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.18.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.18.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.18.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.20.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.20.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.20.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.22.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.22.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.22.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.24.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.24.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.24.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.26.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.26.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.26.2026-08-08",
+      "viaStatus": "unverified"
+    },
+    {
+      "calendarId": "jr-shikoku.shiokaze.28.2026-08-08.calendar",
+      "dateApplicabilityStatus": "calendar_materialization_required",
+      "missingPrerequisites": [
+        "ordered_route_lines",
+        "operator_segments"
+      ],
+      "passengerLegs": 1,
+      "reason": "No dated solver execution attests this trip. Explicit route constraints and independent source review are required.",
+      "solverStatus": "not_run",
+      "timetableVersionId": "jr-shikoku.shiokaze.28.2026-08-08.version",
+      "tripId": "jr-shikoku.shiokaze.28.2026-08-08",
+      "viaStatus": "unverified"
     }
   ],
-  "unverifiedLegs": 76
+  "unverifiedLegs": 100
 }

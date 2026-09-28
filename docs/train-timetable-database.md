@@ -1,7 +1,7 @@
 # JR historical timetable database
 
 This implementation is an evidence-backed foundation, **not a completed six-JR
-historical inventory**. Scope is 1912-06-15 through 2026-09-27. Coverage must be
+historical inventory**. Scope is 1912-06-15 through 2026-09-28. Coverage must be
 read from `app/data/train-service-history/audits/train-timetable-coverage.json`;
 neither a successful build nor 298 legacy patterns establishes completeness.
 
@@ -61,7 +61,8 @@ still pending.
 
 `normalize-reviewed-timetable-seeds.py` promotes reviewed official candidates
 for Kamui 93, Lilac 95, Shinano 1, Hitachi 26 and Yufuin no Mori 1–6.
-They represent 10 templates and 77 explicitly attested service-date occurrences;
+Together with the reviewed Shiokaze endpoint-only announcement they represent
+34 templates and 181 explicitly attested service-date occurrences;
 these small samples do not establish any company’s complete daily inventory. The special Hokkaido trips exercise explicit dates and overnight
 arrival; two JR East HTML tables exercise full passenger arrival/departure
 times. Unknown internal numbers, intermediate times and routes stay unknown.
@@ -100,6 +101,9 @@ fixtures to prove semantics; those fixtures are not production timetable facts.
 ## Reproduce
 
 ```sh
+python3 ios/tools/normalize-reviewed-timetable-seeds.py
+python3 ios/tools/normalize-reviewed-route-evidence.py
+python3 ios/tools/normalize-reviewed-shiokaze-seeds.py
 python3 ios/tools/validate-train-timetable.py
 python3 ios/tools/build-train-timetable-db.py
 python3 ios/tools/verify-train-timetable-artifact.py
@@ -147,6 +151,25 @@ junctions remain read-only because `RouteSection` cannot express ordered vias.
 Native persistent route keys now include the history content hash. Bundled
 precomputed routes must attest `history_hashes` as well as revision and solve
 context when a historical overlay exists. Older parts lacking that attestation
-are solved on demand. The shared precompute generator and its 201 sample parts
-still need a coordinated refresh to retain fast initial loading; do not add a
-hash to old geometry without rerunning its solve against the attested snapshot.
+are solved on demand. A separate history task refreshed the shared generator and 201 sample parts
+in the current worktree. Their revisions, history hashes and solve contexts
+were independently checked against 2026-09-28.1. These changes are not part of
+the timetable commit. Do not add a hash to old geometry without rerunning its
+solve against the attested snapshot.
+
+## Direct route references and details
+
+Line segments now carry `reference_kind`, `current_n02_line_id` and
+`rail_history_id`. Historical references must identify an existing dated
+feature; name matching alone cannot establish identity. Current N02 references
+remain unverified without a credible package validity interval. A claimed
+`route_lines=verified` blocks the build unless the entire ordered chain and
+every actual operating date pass the direct-reference audit. Runtime rejects
+older SQLite shapes missing these columns; rebuild the artifact.
+
+Read-only trip details list source arrival/departure strings, explicitly mark
+missing values, explain partial station lists, and expose deduplicated source
+titles, publishers and URLs. Overnight civil dates are derived without changing
+the original service date or clock string.
+
+Latest evidence, counts and validation: [fill report](train-timetable-fill-report.md).

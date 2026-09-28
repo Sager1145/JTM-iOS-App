@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "build_version": "train-timetable-pipeline-v1",
-  "as_of_date": "2026-09-27",
+  "as_of_date": "2026-09-28",
   "first_scope_date": "1912-06-15",
   "timezone": "Asia/Tokyo",
   "service_day_time_semantics": "seconds_since_service_day_start",
@@ -92,32 +92,32 @@
     {
       "operator_scope": "jr-hokkaido",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     },
     {
       "operator_scope": "jr-east",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     },
     {
       "operator_scope": "jr-central",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     },
     {
       "operator_scope": "jr-west",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     },
     {
       "operator_scope": "jr-shikoku",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     },
     {
       "operator_scope": "jr-kyushu",
       "valid_from": "1987-04-01",
-      "valid_until": "2026-09-28"
+      "valid_until": "2026-09-29"
     }
   ],
   "coverage_dimensions": [

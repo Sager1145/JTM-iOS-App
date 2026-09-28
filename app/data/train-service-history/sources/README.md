@@ -58,3 +58,21 @@ sources remain hypotheses until primary timetable evidence is acquired.
 4. Apply calendars only to the dates explicitly supported by the cited issue or notice.
 5. Keep published timetable, later revision, disruption and actual-operation facts in separate layers.
 6. Record source terms before extraction; `automated_extraction_allowed: false` means no automated ingestion authorization was established.
+
+## Reviewed partial route evidence
+
+`reviewed-route-evidence-20260928.json` separates published route labels from
+physical network identities. For Hitachi 26, the exact train table establishes
+the passenger-stop order and official JR East route material establishes the
+Joban Line corridor through Ueno. The eleven passenger-pair intervals from
+Iwaki through Ueno are therefore normalized at medium confidence. Ueno–Tokyo
+and Tokyo–Shinagawa remain candidate-only: the official material calls the
+through service Ueno-Tokyo Line, but that service name does not identify the
+underlying N02 line features.
+
+Official JR Central material states that Shinano connects Nagoya and Nagano via
+the Chuo Main and Shinonoi lines. It does not state the train-specific transition
+boundary or physical feature identifiers, so no Shinano line segment is
+normalized. The JR East and JR Central website terms prohibit unlicensed reuse;
+the registry stores factual metadata and locators only, with automated extraction
+disabled.

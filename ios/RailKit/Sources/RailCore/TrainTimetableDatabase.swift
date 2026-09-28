@@ -50,6 +50,14 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         }
     }
 
+    public struct SourceDocument: Sendable, Hashable, Identifiable {
+        public let id: String
+        public let title: String
+        public let publisher: String
+        public let urlOrLocator: String
+        public let licenseStatus: String
+    }
+
     public struct Service: Sendable, Hashable, Identifiable {
         public let id: String
         public let canonicalName: String
@@ -110,6 +118,11 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
     }
 
     public struct LineSegment: Sendable, Hashable, Identifiable {
+        public enum ReferenceKind: String, Sendable, Hashable, Codable {
+            case currentN02 = "current_n02"
+            case historicalOverlay = "historical_overlay"
+        }
+
         public var id: Int { sequence }
         public let sequence: Int
         public let fromStationID: String
@@ -117,6 +130,19 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let lineName: String
         public let operatorID: String?
         public let confidence: String?
+        public let referenceKind: ReferenceKind?
+        public let currentN02LineID: String?
+        public let railHistoryID: String?
+
+        /// Historical overlay identities cannot yet be represented by the
+        /// editor's RouteSection model. An explicit current-network identity
+        /// is therefore required; all-null and unknown references are research
+        /// records and stay read-only.
+        fileprivate var canApplyToCurrentEditor: Bool {
+            return referenceKind == .currentN02
+                && currentN02LineID?.isEmpty == false
+                && railHistoryID == nil
+        }
     }
 
     public struct OperatorSegment: Sendable, Hashable, Identifiable {
@@ -278,6 +304,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
                 let segment = covered[0]
                 guard !segment.lineName.isEmpty,
+                      segment.canApplyToCurrentEditor,
                       let operatorID = segment.operatorID,
                       let operatorName = operatorNames[operatorID],
                       !operatorName.isEmpty,
@@ -455,10 +482,11 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             throw error
         }
         let required = [
-            "operators", "services", "service_name_periods", "timetable_versions", "trips",
+            "source_documents", "operators", "services", "service_name_periods",
+            "timetable_versions", "timetable_version_sources", "trips",
             "calendars", "calendar_exceptions", "station_identities", "stop_times",
             "trip_stop_time_overrides", "trip_operator_segments", "trip_line_segments",
-            "fact_completeness", "holiday_dates", "holiday_calendar_years",
+            "fact_sources", "fact_completeness", "holiday_dates", "holiday_calendar_years",
             "coverage_declarations", "metadata", "verified_zero_service_intervals",
         ]
         let present: Set<String>
@@ -504,6 +532,33 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
     public func trip(id: String, on serviceDate: String) throws -> Trip? {
         try trips(matching: Query(serviceDate: serviceDate, tripID: id)).first
+    }
+
+    /// Source registry records supporting this trip's timetable edition or
+    /// its trip-level facts. The registry metadata is returned verbatim; the
+    /// runtime does not infer a publisher, locator, or license.
+    public func sources(for trip: Trip) throws -> [SourceDocument] {
+        try withLock {
+            try rows("""
+                SELECT sd.source_id, sd.title, sd.publisher,
+                       sd.url_or_locator, sd.license_status
+                FROM source_documents sd
+                JOIN (
+                    SELECT source_id
+                    FROM timetable_version_sources
+                    WHERE timetable_version_id = ?1
+                    UNION
+                    SELECT source_id
+                    FROM fact_sources
+                    WHERE entity_type = 'trip' AND entity_id = ?2
+                ) refs ON refs.source_id = sd.source_id
+                ORDER BY sd.source_id
+                """, bindings: [trip.timetableVersionID, trip.id]).map { row in
+                    SourceDocument(
+                        id: row.string(0), title: row.string(1), publisher: row.string(2),
+                        urlOrLocator: row.string(3), licenseStatus: row.string(4))
+                }
+        }
     }
 
     public func trips(named name: String, on serviceDate: String) throws -> [Trip] {
@@ -797,7 +852,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             let placeholders = batch.indices.map { "?\($0 + 2)" }.joined(separator: ",")
             for row in try rows("""
                 SELECT tls.trip_id, tls.sequence, tls.from_station_id, tls.to_station_id,
-                       tls.line_name, tls.operator_id, tls.confidence
+                       tls.line_name, tls.operator_id, tls.confidence,
+                       tls.reference_kind, tls.current_n02_line_id, tls.rail_history_id
                 FROM trip_line_segments tls
                 JOIN operators o ON o.operator_id = tls.operator_id
                 JOIN station_identities sf ON sf.station_id = tls.from_station_id
@@ -814,7 +870,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 result[row.string(0), default: []].append(LineSegment(
                     sequence: row.int(1), fromStationID: row.string(2),
                     toStationID: row.string(3), lineName: row.string(4),
-                    operatorID: row.optionalString(5), confidence: row.optionalString(6)))
+                    operatorID: row.optionalString(5), confidence: row.optionalString(6),
+                    referenceKind: row.optionalString(7).flatMap(LineSegment.ReferenceKind.init),
+                    currentN02LineID: row.optionalString(8), railHistoryID: row.optionalString(9)))
             }
         }
         return result
@@ -974,11 +1032,14 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
     private static func validateEssentialColumns(in connection: OpaquePointer) throws {
         let required: [String: Set<String>] = [
+            "source_documents": ["source_id", "title", "publisher", "url_or_locator",
+                                 "license_status"],
             "operators": ["operator_id", "display_name", "valid_from", "valid_until"],
             "services": ["service_id", "canonical_name", "service_class", "historical_generation",
                          "first_verified_date", "last_verified_date", "jr_scope"],
             "service_name_periods": ["service_id", "name", "valid_from", "valid_until"],
             "timetable_versions": ["timetable_version_id", "effective_from", "effective_until", "completeness"],
+            "timetable_version_sources": ["timetable_version_id", "source_id"],
             "calendars": ["calendar_id", "monday", "tuesday", "wednesday", "thursday", "friday",
                           "saturday", "sunday", "valid_from", "valid_until", "holiday_policy"],
             "calendar_exceptions": ["calendar_id", "service_date", "exception_type"],
@@ -995,27 +1056,36 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                                          "departure_seconds_override"],
             "trip_operator_segments": ["trip_id", "from_sequence", "to_sequence", "operator_id"],
             "trip_line_segments": ["trip_id", "sequence", "from_station_id", "to_station_id",
-                                   "line_name", "operator_id", "confidence"],
+                                   "line_name", "operator_id", "confidence", "reference_kind",
+                                   "current_n02_line_id", "rail_history_id"],
+            "fact_sources": ["entity_type", "entity_id", "source_id"],
             "fact_completeness": ["entity_type", "entity_id", "dimension", "status"],
         ]
         for (table, expected) in required {
-            var statement: OpaquePointer?
-            guard sqlite3_prepare_v2(connection, "PRAGMA table_info(\(table))", -1, &statement, nil)
-                    == SQLITE_OK, let statement
-            else { throw DatabaseError.invalidArtifact("cannot inspect table \(table)") }
-            var columns = Set<String>()
-            while sqlite3_step(statement) == SQLITE_ROW {
-                if let name = sqlite3_column_text(statement, 1) {
-                    columns.insert(String(cString: name))
-                }
-            }
-            sqlite3_finalize(statement)
+            let columns = try columnNames(of: table, in: connection)
             let missing = expected.subtracting(columns).sorted()
             guard missing.isEmpty else {
                 throw DatabaseError.invalidArtifact(
                     "table \(table) is missing columns: \(missing.joined(separator: ", "))")
             }
         }
+    }
+
+    private static func columnNames(
+        of table: String, in connection: OpaquePointer
+    ) throws -> Set<String> {
+        var statement: OpaquePointer?
+        guard sqlite3_prepare_v2(connection, "PRAGMA table_info(\(table))", -1, &statement, nil)
+                == SQLITE_OK, let statement
+        else { throw DatabaseError.invalidArtifact("cannot inspect table \(table)") }
+        defer { sqlite3_finalize(statement) }
+        var columns = Set<String>()
+        while sqlite3_step(statement) == SQLITE_ROW {
+            if let name = sqlite3_column_text(statement, 1) {
+                columns.insert(String(cString: name))
+            }
+        }
+        return columns
     }
 
     private static func validate(serviceDate: String) throws {

@@ -1,6 +1,113 @@
 import RailCore
 import SwiftUI
 
+/// Source clocks remain visible even when route evidence is incomplete.
+private struct TimetableTripDetailView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var sources: [TrainTimetableDatabase.SourceDocument] = []
+    @State private var sourceQueryFailed = false
+    let trip: TrainTimetableDatabase.Trip
+    private static let database = TrainTimetableDatabase.bundled()
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text("運転日: \(trip.serviceDate) · 日本時間")
+                    Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?")")
+                    if !trip.canApplyToRouteEditor {
+                        Text("経路・出典などに未確認の情報があるため、乗車記録へ適用できません")
+                            .foregroundStyle(.orange)
+                    }
+                    if trip.factCompleteness["stops"] != .verified {
+                        Text("資料に掲載された駅のみ表示しています。全停車駅の情報は未確認です")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+                Section("停車駅・公表時刻") {
+                    ForEach(trip.stops) { stop in
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(stop.station.name).font(.headline)
+                            Text("着 \(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))")
+                            Text("発 \(clock(stop.departureTime, seconds: stop.departureSeconds))")
+                            if !stop.isPassengerCall {
+                                Text("旅客停車ではありません").font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                        .monospacedDigit()
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("timetableStop-\(stop.sequence)")
+                    }
+                }
+                Section("確認状況") {
+                    ForEach(trip.factCompleteness.keys.sorted(), id: \.self) { key in
+                        LabeledContent(dimension(key), value: status(trip.factCompleteness[key]))
+                    }
+                }
+                Section("出典") {
+                    if sourceQueryFailed {
+                        Text("出典を読み込めませんでした").foregroundStyle(.secondary)
+                    }
+                    ForEach(sources) { source in
+                        VStack(alignment: .leading, spacing: 5) {
+                            if let url = URL(string: source.urlOrLocator),
+                               ["https", "http"].contains(url.scheme ?? "") {
+                                Link(source.title, destination: url)
+                            } else {
+                                Text(source.title)
+                            }
+                            Text(source.publisher).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("閉じる") { dismiss() }
+                }
+            }
+            .task {
+                do {
+                    guard let database = Self.database else {
+                        sourceQueryFailed = true
+                        return
+                    }
+                    sources = try database.sources(for: trip)
+                } catch {
+                    sourceQueryFailed = true
+                }
+            }
+        }
+    }
+
+    private func clock(_ source: String?, seconds: Int?) -> String {
+        guard let source else { return "掲載なし" }
+        guard let seconds, seconds >= 86400,
+              let civilDate = Dates.addDays(trip.serviceDate, seconds / 86400)
+        else { return source }
+        return "\(source)（\(civilDate)）"
+    }
+
+    private func status(_ coverage: TrainTimetableDatabase.Coverage?) -> String {
+        switch coverage {
+        case .verified: "確認済み"
+        case .partial: "一部確認"
+        case .conflict: "資料競合"
+        case .notApplicable: "対象外"
+        default: "未確認"
+        }
+    }
+
+    private func dimension(_ key: String) -> String {
+        ["identity": "列車の識別", "train_number": "列車番号", "operator": "運行会社",
+         "validity_calendar": "運転日", "origin_destination": "始発・終着", "stops": "停車駅",
+         "times": "時刻", "route_lines": "経路", "station_refs": "駅の識別", "provenance": "出典"][key]
+            ?? "その他の資料"
+    }
+}
+
 /// Presented from the ride editor's stops section so a JP limited-express
 /// stop pattern can prefill the draft's stop list. Tapping a row hands the
 /// chosen pattern back to the caller and dismisses; the resulting stops stay
@@ -25,6 +132,7 @@ struct ServicePatternPickerView: View {
     @State private var timetableTripCount = 0
     @State private var incompleteTimetableTripCount = 0
     @State private var timetableQueryFailed = false
+    @State private var inspectedTrip: TrainTimetableDatabase.Trip?
 
     private static let timetableDatabase = TrainTimetableDatabase.bundled()
     private static let jrAndNationalOperatorNames: Set<String> = [
@@ -208,7 +316,14 @@ struct ServicePatternPickerView: View {
                 }
                 if !incompleteTripMatches.isEmpty {
                     Section("当日ダイヤ（調査中・適用不可）") {
-                        ForEach(incompleteTripMatches) { trip in incompleteTripRow(trip) }
+                        ForEach(incompleteTripMatches) { trip in
+                            VStack(alignment: .leading, spacing: 8) {
+                                incompleteTripRow(trip)
+                                Button("停車駅・時刻を確認") { inspectedTrip = trip }
+                                    .buttonStyle(.borderless)
+                                    .accessibilityIdentifier("timetableDetails-\(trip.id)")
+                            }
+                        }
                     }
                 }
                 if !unknownMatches.isEmpty {
@@ -239,6 +354,9 @@ struct ServicePatternPickerView: View {
                 }
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
+            .sheet(item: $inspectedTrip) { trip in
+                TimetableTripDetailView(trip: trip)
+            }
             .confirmationDialog(
                 "このパターンは乗車日の対象外です。適用しますか？",
                 isPresented: Binding(get: { pendingSelection != nil },
@@ -355,7 +473,7 @@ struct ServicePatternPickerView: View {
         VStack(alignment: .leading, spacing: 3) {
             Text([trip.service.canonicalName, trip.publicNumber ?? trip.trainNumber]
                 .filter { !$0.isEmpty }.joined(separator: " "))
-            Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?") · \(trip.passengerStops.count)駅")
+            Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?") · \(trip.factCompleteness["stops"] == .verified ? "" : "掲載")\(trip.passengerStops.count)駅")
                 .font(.caption).foregroundStyle(.secondary)
             if let departure = trip.origin?.departureTime ?? trip.origin?.arrivalTime {
                 Text("始発 \(departure)").font(.caption2).foregroundStyle(.secondary)

@@ -12,6 +12,7 @@ struct TrainTimetableDatabaseTests {
         let trips = try database.trips(on: "2026-05-16")
         let elapsed = start.duration(to: clock.now)
         #expect(!trips.isEmpty)
+        #expect(!(try database.sources(for: trips[0])).isEmpty)
         #expect(elapsed < .seconds(1))
         print("bundled timetable cold open + date query: \(elapsed)")
     }
@@ -79,6 +80,22 @@ struct TrainTimetableDatabaseTests {
         #expect(try database.coverage(on: "2026-09-29").status == .partial)
     }
 
+    @Test func tripSourcesUnionEditionAndFactProvenanceWithoutInventingMetadata() throws {
+        let fixture = try FixtureDatabase()
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let trip = try #require(queried)
+
+        let sources = try database.sources(for: trip)
+        #expect(sources.map(\.id) == ["fact-source", "version-source"])
+        #expect(sources[0].title == "Trip fact page")
+        #expect(sources[0].publisher == "Fact Publisher")
+        #expect(sources[0].urlOrLocator == "archive:fact")
+        #expect(sources[0].licenseStatus == "metadata_only")
+        #expect(sources[1].title == "Edition source")
+    }
+
     @Test func applyingNormalizedClockRetainsItsFollowingServiceDay() throws {
         let fixture = try FixtureDatabase(normalizedDayOffsetTime: true)
         defer { fixture.remove() }
@@ -139,6 +156,29 @@ struct TrainTimetableDatabaseTests {
             id: "draft", date: nil, number: "", origin: "", destination: "",
             stops: [], region: "jp")
         #expect(trip.applying(to: draft) == nil)
+    }
+
+    @Test func historicalLineReferenceRemainsQueryableButCannotEnterCurrentEditor() throws {
+        let fixture = try FixtureDatabase(historicalLineReference: true)
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let trip = try #require(queried)
+        let segment = try #require(trip.lineSegments.first)
+
+        #expect(segment.referenceKind == .historicalOverlay)
+        #expect(segment.currentN02LineID == nil)
+        #expect(segment.railHistoryID == "jp.test.historical-line")
+        #expect(!trip.canApplyToRouteEditor)
+        #expect(trip.compatibilityPattern() == nil)
+
+        let missingFixture = try FixtureDatabase(missingLineReference: true)
+        defer { missingFixture.remove() }
+        let missingDatabase = try TrainTimetableDatabase(url: missingFixture.url)
+        let missingResult = try missingDatabase.trip(id: "shinano-1", on: "2026-09-29")
+        let missingTrip = try #require(missingResult)
+        #expect(missingTrip.lineSegments.first?.referenceKind == nil)
+        #expect(!missingTrip.canApplyToRouteEditor)
     }
 
     @Test func malformedDateFailsBeforeSQLiteQuery() throws {
@@ -232,7 +272,8 @@ private final class FixtureDatabase {
         stationValidUntil: String? = nil, operatorValidUntil: String? = nil,
         nationalZeroInterval: Bool = false, invalidOperatorSegmentBounds: Bool = false,
         mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false,
-        multiSegmentPassengerPair: Bool = false, mismatchedLineOperatorCoverage: Bool = false
+        multiSegmentPassengerPair: Bool = false, mismatchedLineOperatorCoverage: Bool = false,
+        historicalLineReference: Bool = false, missingLineReference: Bool = false
     ) throws {
         url = FileManager.default.temporaryDirectory
             .appendingPathComponent("train-timetable-\(UUID().uuidString).sqlite")
@@ -303,9 +344,11 @@ private final class FixtureDatabase {
                   'shiojiri', '塩尻', 'current_n02', 'SHIOJIRI', NULL, NULL, NULL);
                 DELETE FROM trip_line_segments WHERE trip_id = 'shinano-1';
                 INSERT INTO trip_line_segments VALUES(
-                  'shinano-1',0,'nagoya','shiojiri','中央線','jr-central','high');
+                  'shinano-1',0,'nagoya','shiojiri','中央線','jr-central','high',
+                  'current_n02','N02-CENTRAL',NULL);
                 INSERT INTO trip_line_segments VALUES(
-                  'shinano-1',1,'shiojiri','nagano','篠ノ井線','tobu','high');
+                  'shinano-1',1,'shiojiri','nagano','篠ノ井線','tobu','high',
+                  'current_n02','N02-SHINONOI',NULL);
                 INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
                 """, on: connection)
         }
@@ -314,6 +357,21 @@ private final class FixtureDatabase {
                 UPDATE trip_line_segments SET operator_id = 'tobu'
                 WHERE trip_id = 'shinano-1';
                 INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
+                """, on: connection)
+        }
+        if historicalLineReference {
+            try execute("""
+                UPDATE trip_line_segments
+                SET reference_kind = 'historical_overlay', current_n02_line_id = NULL,
+                    rail_history_id = 'jp.test.historical-line'
+                WHERE trip_id = 'shinano-1';
+                """, on: connection)
+        }
+        if missingLineReference {
+            try execute("""
+                UPDATE trip_line_segments
+                SET reference_kind = NULL, current_n02_line_id = NULL, rail_history_id = NULL
+                WHERE trip_id = 'shinano-1';
                 """, on: connection)
         }
     }
@@ -334,6 +392,8 @@ private final class FixtureDatabase {
     static let schema = """
         PRAGMA application_id = 0x4A544D54;
         PRAGMA user_version = 1;
+        CREATE TABLE source_documents(source_id TEXT PRIMARY KEY, publisher TEXT, title TEXT,
+          url_or_locator TEXT, license_status TEXT);
         CREATE TABLE operators(operator_id TEXT PRIMARY KEY, display_name TEXT,
           valid_from TEXT, valid_until TEXT);
         CREATE TABLE metadata(key TEXT PRIMARY KEY, value TEXT);
@@ -342,6 +402,7 @@ private final class FixtureDatabase {
         CREATE TABLE service_name_periods(service_id TEXT, name TEXT, valid_from TEXT, valid_until TEXT);
         CREATE TABLE timetable_versions(timetable_version_id TEXT PRIMARY KEY, effective_from TEXT,
           effective_until TEXT, completeness TEXT);
+        CREATE TABLE timetable_version_sources(timetable_version_id TEXT, source_id TEXT);
         CREATE TABLE calendars(calendar_id TEXT PRIMARY KEY, monday INTEGER, tuesday INTEGER,
           wednesday INTEGER, thursday INTEGER, friday INTEGER, saturday INTEGER, sunday INTEGER,
           valid_from TEXT, valid_until TEXT, holiday_policy TEXT);
@@ -364,7 +425,9 @@ private final class FixtureDatabase {
         CREATE TABLE trip_operator_segments(trip_id TEXT, from_sequence INTEGER, to_sequence INTEGER,
           operator_id TEXT);
         CREATE TABLE trip_line_segments(trip_id TEXT, sequence INTEGER, from_station_id TEXT,
-          to_station_id TEXT, line_name TEXT, operator_id TEXT, confidence TEXT);
+          to_station_id TEXT, line_name TEXT, operator_id TEXT, confidence TEXT,
+          reference_kind TEXT, current_n02_line_id TEXT, rail_history_id TEXT);
+        CREATE TABLE fact_sources(entity_type TEXT, entity_id TEXT, source_id TEXT);
         CREATE TABLE fact_completeness(entity_type TEXT, entity_id TEXT, dimension TEXT, status TEXT);
         CREATE TABLE verified_zero_service_intervals(
           interval_id TEXT, operator_scope TEXT, valid_from TEXT, valid_until TEXT);
@@ -373,12 +436,19 @@ private final class FixtureDatabase {
 
     static let data = """
         INSERT INTO metadata VALUES('schema_version', '1.0.0');
+        INSERT INTO source_documents VALUES(
+          'version-source','Edition Publisher','Edition source','https://example.test/edition','test_only');
+        INSERT INTO source_documents VALUES(
+          'fact-source','Fact Publisher','Trip fact page','archive:fact','metadata_only');
         INSERT INTO operators VALUES('jr-central', 'JR東海', '1987-04-01', NULL);
         INSERT INTO operators VALUES('tobu', '東武鉄道', '1897-11-01', NULL);
         INSERT INTO services VALUES('shinano', 'しなの', 'limited_express', 1,
           '2026-03-14', NULL, 'jr');
         INSERT INTO service_name_periods VALUES('shinano', 'スーパーしなの', '2026-01-01', NULL);
         INSERT INTO timetable_versions VALUES('v1', '2026-01-01', '2027-01-01', 'verified');
+        INSERT INTO timetable_version_sources VALUES('v1','version-source');
+        INSERT INTO timetable_version_sources VALUES('v1','fact-source');
+        INSERT INTO fact_sources VALUES('trip','shinano-1','fact-source');
         INSERT INTO calendars VALUES('monday', 1,0,0,0,0,0,1,
           '2026-01-01', '2026-09-29', 'none');
         INSERT INTO calendar_exceptions VALUES('monday', '2026-09-28', 'remove');
@@ -400,9 +470,12 @@ private final class FixtureDatabase {
         INSERT INTO stop_times VALUES('research-trip',1,'nagano','11:00',NULL,39600,NULL,0,
           'destination',0,1,NULL,'exact');
         INSERT INTO trip_operator_segments VALUES('shinano-1',0,1,'jr-central');
-        INSERT INTO trip_line_segments VALUES('shinano-1',0,'nagoya','nagano','中央線','jr-central','high');
+        INSERT INTO trip_line_segments VALUES(
+          'shinano-1',0,'nagoya','nagano','中央線','jr-central','high',
+          'current_n02','N02-CENTRAL',NULL);
         INSERT INTO trip_operator_segments VALUES('research-trip',0,1,'jr-central');
-        INSERT INTO trip_line_segments VALUES('research-trip',0,'nagoya','nagano','中央線','jr-central','low');
+        INSERT INTO trip_line_segments VALUES(
+          'research-trip',0,'nagoya','nagano','中央線','jr-central','low',NULL,NULL,NULL);
         INSERT INTO fact_completeness VALUES('trip','shinano-1','validity_calendar','verified');
         INSERT INTO fact_completeness VALUES('trip','shinano-1','identity','verified');
         INSERT INTO fact_completeness VALUES('trip','shinano-1','train_number','verified');

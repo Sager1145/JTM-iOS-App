@@ -63,6 +63,17 @@ final class TrainServicePatternUITests: XCTestCase {
         XCTAssertTrue(row.label.contains("未確認"))
         XCTAssertEqual(app.buttons.matching(identifier: row.identifier).count, 0,
                        "Unverified route facts must remain read-only.")
+        let details = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "timetableDetails-jr-central.shinano.1.")).firstMatch
+        XCTAssertTrue(details.waitForExistence(timeout: 8))
+        details.tap()
+        let originTime = app.descendants(matching: .any)
+            .matching(identifier: "timetableStop-1").firstMatch
+        XCTAssertTrue(originTime.waitForExistence(timeout: 8), app.debugDescription)
+        XCTAssertTrue(originTime.label.contains("名古屋"))
+        XCTAssertTrue(originTime.label.contains("07:00"))
+        XCTAssertTrue(originTime.label.contains("掲載なし"),
+                      "Missing source arrival time must not become a made-up 00:00.")
     }
 
     func testSelectedPatternRechecksChangedDateWithoutReplacingStops() {

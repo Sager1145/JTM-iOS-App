@@ -53,5 +53,22 @@ class ReviewedTimetableGoldenTests(unittest.TestCase):
         self.assertEqual(len(evidence),3)
         self.assertEqual(timetable.materialize(self.data,'1947-06-01'),[])
 
+    def test_shiokaze_obon_announcement_covers_only_its_four_explicit_dates(self):
+        for day in ['2026-08-08','2026-08-09','2026-08-15','2026-08-16']:
+            trips = [t for t in timetable.materialize(self.data,day) if t['service_id']=='shiokaze']
+            self.assertEqual(sorted(int(t['public_number']) for t in trips),list(range(5,29)))
+        for day in ['2026-08-07','2026-08-10','2026-08-14','2026-08-17']:
+            self.assertFalse(any(t['service_id']=='shiokaze' for t in timetable.materialize(self.data,day)))
+        down = self.trip('shiokaze','5','2026-08-08')
+        up = self.trip('shiokaze','6','2026-08-08')
+        self.assertEqual([self.stations[s['station_id']] for s in down['stop_times']],['岡山','松山'])
+        self.assertEqual((down['stop_times'][0]['departure_seconds'],down['stop_times'][1]['arrival_seconds']),
+                         (9*3600+25*60,12*3600+10*60))
+        self.assertEqual((up['stop_times'][0]['departure_seconds'],up['stop_times'][1]['arrival_seconds']),
+                         (6*3600+13*60,9*3600))
+        status = {(r['entity_id'],r['dimension']):r['status'] for r in self.data['fact_completeness']}
+        self.assertEqual(status[(down['trip_id'],'stops')],'partial')
+        self.assertEqual(status[(down['trip_id'],'times')],'partial')
+
 
 if __name__=='__main__': unittest.main()

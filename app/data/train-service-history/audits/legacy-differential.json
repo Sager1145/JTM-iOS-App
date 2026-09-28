@@ -27,7 +27,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-920beb8eca17"
+        "tt-shinano-7f889217ccde"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -157,7 +157,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-hitachi-bb809d8cb66e"
+        "tt-hitachi-bcb3e9bd7c9d"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 9,
@@ -167,7 +167,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-hitachi-bb809d8cb66e"
+        "tt-hitachi-bcb3e9bd7c9d"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 9,
@@ -613,10 +613,10 @@
     },
     {
       "candidatePatternIds": [
-        "tt-yufuin-no-mori-4d28cf5c9ee0",
-        "tt-yufuin-no-mori-4d61f7ad549a",
-        "tt-yufuin-no-mori-5c3772ee507a",
-        "tt-yufuin-no-mori-94c5ca2bc84f"
+        "tt-yufuin-no-mori-8825099d2a78",
+        "tt-yufuin-no-mori-abd867a07779",
+        "tt-yufuin-no-mori-b947e4cfba48",
+        "tt-yufuin-no-mori-f4e31daadeb5"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -626,10 +626,10 @@
     },
     {
       "candidatePatternIds": [
-        "tt-yufuin-no-mori-4d28cf5c9ee0",
-        "tt-yufuin-no-mori-4d61f7ad549a",
-        "tt-yufuin-no-mori-5c3772ee507a",
-        "tt-yufuin-no-mori-94c5ca2bc84f"
+        "tt-yufuin-no-mori-8825099d2a78",
+        "tt-yufuin-no-mori-abd867a07779",
+        "tt-yufuin-no-mori-b947e4cfba48",
+        "tt-yufuin-no-mori-f4e31daadeb5"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -1054,7 +1054,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shiokaze-2c9d880746ab",
+        "tt-shiokaze-cddb1b6d30ac"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "shiokaze-okayama-matsuyama",
@@ -1575,7 +1578,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-920beb8eca17"
+        "tt-shinano-7f889217ccde"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,

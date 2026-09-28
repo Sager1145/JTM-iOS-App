@@ -1,5 +1,5 @@
 {"canonical_name": "カムイ", "first_verified_date": "2026-05-16", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-05-17", "service_class": "limited_express", "service_id": "kamui"}
 {"canonical_name": "ライラック", "first_verified_date": "2026-05-16", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-05-16", "service_class": "limited_express", "service_id": "lilac"}
-{"canonical_name": "しなの", "first_verified_date": "2026-09-18", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-27", "service_class": "limited_express", "service_id": "shinano"}
-{"canonical_name": "ひたち", "first_verified_date": "2026-09-18", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-27", "service_class": "limited_express", "service_id": "hitachi"}
-{"canonical_name": "ゆふいんの森", "first_verified_date": "2026-09-19", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-27", "service_class": "limited_express", "service_id": "yufuin-no-mori"}
+{"canonical_name": "しなの", "first_verified_date": "2026-09-18", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-28", "service_class": "limited_express", "service_id": "shinano"}
+{"canonical_name": "ひたち", "first_verified_date": "2026-09-18", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-28", "service_class": "limited_express", "service_id": "hitachi"}
+{"canonical_name": "ゆふいんの森", "first_verified_date": "2026-09-19", "historical_generation": 1, "jr_scope": "jr", "last_verified_date": "2026-09-28", "service_class": "limited_express", "service_id": "yufuin-no-mori"}

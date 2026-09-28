@@ -196,9 +196,19 @@ CREATE TABLE trip_line_segments (
     to_station_id TEXT NOT NULL REFERENCES station_identities(station_id),
     line_name TEXT NOT NULL,
     operator_id TEXT NOT NULL REFERENCES operators(operator_id),
+    reference_kind TEXT CHECK (reference_kind IN ('current_n02', 'historical_overlay')),
+    current_n02_line_id TEXT,
+    rail_history_id TEXT,
     source_id TEXT NOT NULL REFERENCES source_documents(source_id),
     confidence TEXT NOT NULL CHECK (confidence IN ('high', 'medium', 'low')),
-    PRIMARY KEY (trip_id, sequence)
+    PRIMARY KEY (trip_id, sequence),
+    CHECK (
+        (reference_kind IS NULL AND current_n02_line_id IS NULL AND rail_history_id IS NULL)
+        OR
+        (reference_kind = 'current_n02' AND current_n02_line_id IS NOT NULL AND rail_history_id IS NULL)
+        OR
+        (reference_kind = 'historical_overlay' AND rail_history_id IS NOT NULL AND current_n02_line_id IS NULL)
+    )
 );
 
 CREATE TABLE trip_relations (
@@ -284,5 +294,9 @@ CREATE INDEX idx_stop_times_station ON stop_times(station_id);
 CREATE INDEX idx_overrides_date ON trip_stop_time_overrides(service_date, trip_id);
 CREATE INDEX idx_operator_segments_trip ON trip_operator_segments(trip_id, from_sequence);
 CREATE INDEX idx_line_segments_trip ON trip_line_segments(trip_id, sequence);
+CREATE INDEX idx_line_segments_current_identity ON trip_line_segments(current_n02_line_id)
+    WHERE current_n02_line_id IS NOT NULL;
+CREATE INDEX idx_line_segments_history_identity ON trip_line_segments(rail_history_id)
+    WHERE rail_history_id IS NOT NULL;
 CREATE INDEX idx_fact_sources_entity ON fact_sources(entity_type, entity_id, field_name);
 CREATE INDEX idx_coverage_operator_year ON coverage_declarations(operator_scope, year, status);

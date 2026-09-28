@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / 'app/data/train-service-history'
-AS_OF = '2026-09-27'
+AS_OF = json.loads((BASE / 'manifest.json').read_text())['as_of_date']
 ACCESSED_AT = '2026-09-27T19:36:14Z'
 
 
@@ -128,7 +128,7 @@ def main():
                     departure_time=departure,call_type=call_type,_station=dict(station_id=station_id,
                     name_snapshot=name,reference_kind='current_n02',current_source_code=code,rail_history_id=None)))
             add_trip('yufuin-no-mori','ゆふいんの森','jr-kyushu',t['public_number'],None,
-                     [f'2026-09-{d:02}' for d in range(19,28)],rows,v['source_id'])
+                     [f'2026-09-{d:02}' for d in range(19,31)],rows,v['source_id'])
             trip_id=trips[-1]['trip_id']
             # Published stop times and the date-specific later plan have separate provenance.
             entities['timetable-versions'][-1]['source_ids'].append(plan_source)

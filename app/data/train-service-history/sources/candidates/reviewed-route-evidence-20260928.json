@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-28T05:01:41Z",
+  "review_contract": "Route labels are copied only when official operator material identifies the service corridor. No current N02 line id or historical overlay id is inferred from a line/operator name match.",
+  "sources": [
+    {
+      "source_id": "jr-east-hitachi-route-current",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "ひたち・ときわ（E657系）",
+      "source_type": "official_service_route_guide",
+      "url_or_locator": "https://www.jreast.co.jp/multi/traininformation/hitachi/",
+      "issue": "Live page reviewed 2026-09-28",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "factual_metadata_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official JR East guide states that Hitachi and Tokiwa run on the Joban Line and gives the service corridor Shinagawa/Tokyo/Ueno to Mito/Iwaki/Sendai. It is not a train-number-specific physical-edge schedule."
+    },
+    {
+      "source_id": "jr-east-kanto-route-map-202604",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "JR東日本路線図（関東・甲信越エリア）",
+      "source_type": "official_network_route_map",
+      "url_or_locator": "https://www.jreast.co.jp/map/pdf/kanto.pdf",
+      "issue": "2026年4月現在",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official current network map used only to review the Joban Line station corridor. The PDF is not bundled or redistributed, and its drawn line is not treated as an N02 feature identifier."
+    },
+    {
+      "source_id": "jr-east-ueno-tokyo-line-20150314",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "上野東京ライン 3月14日開業",
+      "source_type": "official_service_change_brochure",
+      "url_or_locator": "https://www.jreast.co.jp/hitachi_tokiwa/uenotokyoline/pdf/uenotokyoline.pdf",
+      "issue": "2015-03-14 opening brochure",
+      "publication_date": null,
+      "effective_date": "2015-03-14",
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official brochure states that Joban Line trains began direct operation to Tokyo and Shinagawa through the Ueno-Tokyo Line. Ueno-Tokyo Line is a service brand/corridor here, not a verified N02 physical line name."
+    },
+    {
+      "source_id": "jr-east-web-terms-20260928",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "JR東日本ウェブサイトのご利用にあたって",
+      "source_type": "official_website_terms",
+      "url_or_locator": "https://www.jreast.co.jp/site/rules.html/",
+      "issue": "Live terms reviewed 2026-09-28",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_reuse_prohibited",
+      "redistribution_status": "metadata_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Terms reject reproduction, diversion, reposting, electronic processing, transmission, distribution and secondary use of site content. Only independently reviewed factual metadata and source locators are stored."
+    },
+    {
+      "source_id": "jr-central-shinano-route-guide",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "東海ななと巡る！橙色の在来線旅 中央本線 東濃・木曽おでかけ編",
+      "source_type": "official_service_route_guide",
+      "url_or_locator": "https://recommend.jr-central.co.jp/oshi-tabi/ekimemo4th/",
+      "issue": "Ended campaign page reviewed 2026-09-28",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "factual_metadata_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official JR Central page states that Limited Express Shinano connects Nagoya and Nagano via the Chuo Main Line and Shinonoi Line. It does not identify the exact transition boundary for Shinano 1 or current N02 line features."
+    },
+    {
+      "source_id": "jr-central-nagoya-chuo-timetable-202603",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "名古屋駅 中央線 多治見・中津川方面 平日時刻表",
+      "source_type": "official_station_line_timetable",
+      "url_or_locator": "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/chuo_Nagoya_A_w_d.pdf",
+      "issue": "2026年3月 timetable",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official Chuo Line station timetable lists Shinano 1 departing Nagoya for Nagano and provides a service stop-guide corridor. It does not assign every displayed interval to a physical line feature."
+    },
+    {
+      "source_id": "jr-central-web-terms-20260928",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "JR東海ウェブサイトのご利用にあたって",
+      "source_type": "official_website_terms",
+      "url_or_locator": "https://jr-central.co.jp/policy/",
+      "issue": "Live terms reviewed 2026-09-28",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-28T05:01:41Z",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_reuse_prohibited",
+      "redistribution_status": "metadata_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Terms prohibit reproduction, alteration, diversion, lending, distribution and public transmission without permission except where law permits."
+    }
+  ],
+  "trip_evidence": [
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "operator_segment": {
+        "from_sequence": 1,
+        "to_sequence": 14,
+        "operator_id": "jr-east",
+        "confidence": "medium",
+        "verification_status": "partial",
+        "source_ids": [
+          "jr-east-hitachi26-202609",
+          "jr-east-hitachi-route-current"
+        ],
+        "notes": "Official JR East train and timetable pages support JR East attribution, but the service guide is not a legal operating-contract statement; do not promote this to high confidence from branding alone."
+      },
+      "line_segments": [
+        {"sequence": 1, "from_station_id": "jp.n02.001657", "to_station_id": "jp.n02.001684", "line_name": "常磐線"},
+        {"sequence": 2, "from_station_id": "jp.n02.001684", "to_station_id": "jp.n02.001710", "line_name": "常磐線"},
+        {"sequence": 3, "from_station_id": "jp.n02.001710", "to_station_id": "jp.n02.001738", "line_name": "常磐線"},
+        {"sequence": 4, "from_station_id": "jp.n02.001738", "to_station_id": "jp.n02.001903", "line_name": "常磐線"},
+        {"sequence": 5, "from_station_id": "jp.n02.001903", "to_station_id": "jp.n02.002079", "line_name": "常磐線"},
+        {"sequence": 6, "from_station_id": "jp.n02.002079", "to_station_id": "jp.n02.002129", "line_name": "常磐線"},
+        {"sequence": 7, "from_station_id": "jp.n02.002129", "to_station_id": "jp.n02.002171", "line_name": "常磐線"},
+        {"sequence": 8, "from_station_id": "jp.n02.002171", "to_station_id": "jp.n02.002207", "line_name": "常磐線"},
+        {"sequence": 9, "from_station_id": "jp.n02.002207", "to_station_id": "jp.n02.002280", "line_name": "常磐線"},
+        {"sequence": 10, "from_station_id": "jp.n02.002280", "to_station_id": "jp.n02.002319", "line_name": "常磐線"},
+        {"sequence": 11, "from_station_id": "jp.n02.002319", "to_station_id": "jp.n02.003505", "line_name": "常磐線"}
+      ],
+      "line_segment_defaults": {
+        "operator_id": "jr-east",
+        "source_id": "jr-east-kanto-route-map-202604",
+        "confidence": "medium",
+        "verification_status": "partial",
+        "source_ids": [
+          "jr-east-hitachi26-202609",
+          "jr-east-hitachi-route-current",
+          "jr-east-kanto-route-map-202604"
+        ],
+        "notes": "The exact train page proves the passenger-stop order; official train and network guides prove the Joban Line corridor. This synthesis does not identify an N02 feature or historical-overlay section, so reference fields remain absent and confidence remains medium."
+      },
+      "unnormalized_corridor_evidence": [
+        {
+          "from_station_id": "jp.n02.003505",
+          "to_station_id": "jp.n02.004095",
+          "published_label": "上野東京ライン",
+          "via_station_ids": ["jp.n02.003766"],
+          "source_ids": [
+            "jr-east-hitachi26-202609",
+            "jr-east-ueno-tokyo-line-20150314"
+          ],
+          "status": "blocked",
+          "reason": "The official source proves Joban service through Ueno, Tokyo and Shinagawa, but Ueno-Tokyo Line is a service name and does not prove the physical N02 line names or feature identifiers for Ueno-Tokyo and Tokyo-Shinagawa."
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-central.shinano.1.2026-09-18",
+      "unnormalized_corridor_evidence": [
+        {
+          "from_station_id": "jp.n02.005451",
+          "to_station_id": "jp.n02.002031",
+          "published_labels": ["中央本線", "篠ノ井線"],
+          "source_ids": [
+            "jr-central-shinano1-202609",
+            "jr-central-shinano-route-guide",
+            "jr-central-nagoya-chuo-timetable-202603"
+          ],
+          "status": "blocked",
+          "reason": "Official material proves the Nagoya-Nagano corridor via the Chuo Main and Shinonoi lines, but the reviewed pages do not state a train-specific transition boundary or physical N02 identifiers. No line or operator segment is normalized."
+        }
+      ]
+    }
+  ]
+}

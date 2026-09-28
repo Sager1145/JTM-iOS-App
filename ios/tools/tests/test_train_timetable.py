@@ -38,9 +38,9 @@ class TrainTimetablePipelineTests(unittest.TestCase):
                 if station[0] not in seen:
                     station_rows.append(station)
                     seen.add(station[0])
-                if len(station_rows) == 2: break
-            if len(station_rows) == 2: break
-        self.station_a, self.station_b = station_rows
+                if len(station_rows) == 3: break
+            if len(station_rows) == 3: break
+        self.station_a, self.station_b, self.station_c = station_rows
         self._seed()
 
     def tearDown(self):
@@ -69,7 +69,7 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         write_jsonl(self.canonical / "normalized/trip-lines/test/seeds.jsonl", [{"trip_id": "trip.test", "sequence": 0, "from_station_id": "station.a", "to_station_id": "station.b", "line_name": "Test Line", "operator_id": "operator.test", "source_id": "source.test", "confidence": "high"}])
         write_jsonl(self.canonical / "normalized/fact-completeness-test.jsonl", [
             {"entity_type": "trip", "entity_id": "trip.test", "dimension": "stops", "status": "verified", "confidence": "high"},
-            {"entity_type": "trip", "entity_id": "trip.test", "dimension": "route_lines", "status": "verified", "confidence": "high"},
+            {"entity_type": "trip", "entity_id": "trip.test", "dimension": "route_lines", "status": "partial", "confidence": "high"},
         ])
         write_jsonl(self.canonical / "normalized/fact-sources-test.jsonl", [
             {"entity_type": "trip", "entity_id": "trip.test", "field_name": "identity", "source_id": "source.test", "page_or_locator": "fixture", "confidence": "high", "verification_status": "verified"},
@@ -102,12 +102,16 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         try:
             metadata = dict(connection.execute("SELECT key,value FROM metadata"))
             indexes = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='index'")}
+            line_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_line_segments)")}
             seconds = connection.execute("SELECT departure_seconds FROM stop_times WHERE trip_id='trip.test' AND stop_sequence=0").fetchone()[0]
         finally:
             connection.close()
         self.assertEqual("Asia/Tokyo", metadata["timezone"])
         self.assertIn("idx_calendar_exceptions_date", indexes)
         self.assertIn("idx_stop_times_trip_sequence", indexes)
+        self.assertIn("idx_line_segments_current_identity", indexes)
+        self.assertIn("idx_line_segments_history_identity", indexes)
+        self.assertTrue({"reference_kind", "current_n02_line_id", "rail_history_id"} <= line_columns)
         self.assertEqual(86100, seconds)
 
     def test_unknown_station_and_backwards_time_are_rejected(self):
@@ -279,7 +283,7 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         report = timetable.audit_history_alignment(data, manifest, rail_history)
         finding = next(row for row in report["findings"] if row["kind"] == "route")
         self.assertEqual("unverified", finding["status"])
-        self.assertEqual("line_segment_has_no_rail_history_id", finding["reason"])
+        self.assertEqual("missing_explicit_route_identity", finding["reason"])
         self.assertEqual(["history.line.candidate"], finding["candidateHistoryIds"])
         self.assertFalse(report["complete"])
 
@@ -295,6 +299,135 @@ class TrainTimetablePipelineTests(unittest.TestCase):
                 self.assertIsNone(start)
                 self.assertIsNone(end)
                 self.assertEqual("valid_from/valid_to", source)
+
+    def test_verified_route_claim_requires_direct_dated_history_attestation(self):
+        manifest, data, origins = self.load()
+        segment = data["trip_line_segments"][0]
+        segment.update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.line.test",
+        })
+        route_completeness = next(
+            row for row in data["fact_completeness"] if row["dimension"] == "route_lines")
+        route_completeness["status"] = "verified"
+        # Jan 1 and Jan 3 are the two actual occurrences. The gap on Jan 2 is
+        # removed by the calendar exception, so two disjoint history periods
+        # can still attest every real service day.
+        rail_history = {
+            "revision": "fixture.1",
+            "stations": [],
+            "sections": [
+                {"properties": {
+                    "history_id": "history.line.test",
+                    "N02_003": "Test Line",
+                    "N02_004": "Operator",
+                    "service_validity": ["2026-01-01", "2026-01-02"],
+                }},
+                {"properties": {
+                    "history_id": "history.line.test",
+                    "N02_003": "Test Line",
+                    "N02_004": "Operator",
+                    "service_validity": ["2026-01-03", "2026-01-04"],
+                }},
+            ],
+        }
+        errors = timetable.validate_dataset(
+            data, origins, manifest, rail_history=rail_history, current_package={"lines": []})
+        self.assertFalse(any("route_lines verified requires" in error for error in errors), errors)
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history=rail_history, current_package={"lines": []})["trip.test"]
+        self.assertEqual("aligned", verdict["status"])
+        self.assertTrue(verdict["canPublishRouteLines"])
+
+        rail_history["sections"].pop()
+        errors = timetable.validate_dataset(
+            data, origins, manifest, rail_history=rail_history, current_package={"lines": []})
+        self.assertTrue(any("route_lines verified requires" in error for error in errors))
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history=rail_history, current_package={"lines": []})["trip.test"]
+        self.assertEqual("error", verdict["status"])
+        self.assertEqual(1, verdict["segments"][0]["invalidOccurrenceCount"])
+
+    def test_current_n02_identity_without_snapshot_interval_stays_unverified(self):
+        manifest, data, origins = self.load()
+        segment = data["trip_line_segments"][0]
+        segment.update({
+            "reference_kind": "current_n02",
+            "current_n02_line_id": "jp-test-line",
+        })
+        next(row for row in data["fact_completeness"]
+             if row["dimension"] == "route_lines")["status"] = "verified"
+        current_package = {"lines": [{
+            "id": "jp-test-line",
+            "name": "Test Line",
+            "operator": "Operator",
+            "stations": [self.station_a, self.station_b],
+        }]}
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history={"sections": [], "stations": []},
+            current_package=current_package)["trip.test"]
+        self.assertEqual("unverified", verdict["status"])
+        self.assertEqual(
+            "current_n02_snapshot_has_no_validity_interval",
+            verdict["segments"][0]["reason"])
+        self.assertTrue(verdict["segments"][0]["identityVerified"])
+        errors = timetable.validate_dataset(
+            data, origins, manifest, rail_history={"sections": [], "stations": []},
+            current_package=current_package)
+        self.assertTrue(any("route_lines verified requires" in error for error in errors))
+
+    def test_partial_route_can_be_a_continuous_prefix_but_verified_must_cover_destination(self):
+        manifest, data, origins = self.load()
+        data["station_identities"].append({
+            "station_id": "station.c",
+            "name_snapshot": self.station_c[1],
+            "reference_kind": "current_n02",
+            "current_source_code": self.station_c[0],
+        })
+        origins[("station_identities", 2)] = "fixture:station-c"
+        data["stop_times"][1]["call_type"] = "passenger_stop"
+        data["stop_times"].append({
+            "trip_id": "trip.test",
+            "stop_sequence": 2,
+            "station_id": "station.c",
+            "arrival_time": "00:30",
+            "day_offset": 1,
+            "call_type": "destination",
+            "time_accuracy": "minute",
+            "source_id": "source.test",
+        })
+        origins[("stop_times", 2)] = "fixture:stop-c"
+        data["trips"][0]["destination_station_id"] = "station.c"
+
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertFalse(any("last segment does not end" in error for error in errors), errors)
+        route_completeness = next(
+            row for row in data["fact_completeness"] if row["dimension"] == "route_lines")
+        route_completeness["status"] = "verified"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("last segment does not end at trip destination" in error for error in errors))
+
+    def test_explicit_route_identity_must_exist_even_for_partial_research(self):
+        manifest, data, origins = self.load()
+        segment = data["trip_line_segments"][0]
+        segment.update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.missing",
+        })
+        errors = timetable.validate_dataset(
+            data, origins, manifest, rail_history={"sections": [], "stations": []},
+            current_package={"lines": []})
+        self.assertTrue(any("rail_history_section_not_found" in error for error in errors))
+
+        segment.pop("rail_history_id")
+        segment.update({
+            "reference_kind": "current_n02",
+            "current_n02_line_id": "current.missing",
+        })
+        errors = timetable.validate_dataset(
+            data, origins, manifest, rail_history={"sections": [], "stations": []},
+            current_package={"lines": []})
+        self.assertTrue(any("current_n02_line_not_found" in error for error in errors))
 
 
 if __name__ == "__main__":

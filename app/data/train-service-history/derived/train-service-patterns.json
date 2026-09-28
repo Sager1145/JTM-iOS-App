@@ -22197,20 +22197,32 @@
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
     },
-    "company": "未解決",
+    "company": "東日本旅客鉄道株式会社",
     "completeness": {
-      "lines": "missing",
+      "lines": "partial",
       "stops": "complete",
       "validity": "partial"
     },
     "confidence": "medium",
     "destination": "品川",
     "label": "いわき〜品川",
-    "lines": [],
+    "lines": [
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線",
+      "常磐線"
+    ],
     "name": "ひたち",
     "optionalStops": [],
     "origin": "いわき",
-    "patternId": "tt-hitachi-bb809d8cb66e",
+    "patternId": "tt-hitachi-bcb3e9bd7c9d",
     "serviceId": "hitachi",
     "source": "generated:train-service-history",
     "stops": [
@@ -22272,7 +22284,7 @@
       }
     ],
     "validFrom": "2026-09-18",
-    "validUntil": "2026-09-28",
+    "validUntil": "2026-09-29",
     "via": []
   },
   {
@@ -22412,7 +22424,7 @@
     "name": "しなの",
     "optionalStops": [],
     "origin": "名古屋",
-    "patternId": "tt-shinano-920beb8eca17",
+    "patternId": "tt-shinano-7f889217ccde",
     "serviceId": "shinano",
     "source": "generated:train-service-history",
     "stops": [
@@ -22466,132 +22478,105 @@
       }
     ],
     "validFrom": "2026-09-18",
-    "validUntil": "2026-09-28",
+    "validUntil": "2026-09-29",
     "via": []
   },
   {
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
-        "jr-kyushu.yufuin-no-mori.3.2026-09-19"
+        "jr-shikoku.shiokaze.10.2026-08-08",
+        "jr-shikoku.shiokaze.12.2026-08-08",
+        "jr-shikoku.shiokaze.14.2026-08-08",
+        "jr-shikoku.shiokaze.16.2026-08-08",
+        "jr-shikoku.shiokaze.18.2026-08-08",
+        "jr-shikoku.shiokaze.20.2026-08-08",
+        "jr-shikoku.shiokaze.22.2026-08-08",
+        "jr-shikoku.shiokaze.24.2026-08-08",
+        "jr-shikoku.shiokaze.26.2026-08-08",
+        "jr-shikoku.shiokaze.28.2026-08-08",
+        "jr-shikoku.shiokaze.6.2026-08-08",
+        "jr-shikoku.shiokaze.8.2026-08-08"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
     },
     "company": "未解決",
     "completeness": {
       "lines": "missing",
-      "stops": "complete",
+      "stops": "partial",
       "validity": "partial"
     },
     "confidence": "medium",
-    "destination": "別府",
-    "label": "博多〜別府",
+    "destination": "岡山",
+    "label": "松山〜岡山",
     "lines": [],
-    "name": "ゆふいんの森",
+    "name": "しおかぜ",
     "optionalStops": [],
-    "origin": "博多",
-    "patternId": "tt-yufuin-no-mori-4d28cf5c9ee0",
-    "serviceId": "yufuin-no-mori",
+    "origin": "松山",
+    "patternId": "tt-shiokaze-2c9d880746ab",
+    "serviceId": "shiokaze",
     "source": "generated:train-service-history",
     "stops": [
       {
-        "name": "博多",
-        "sourceCode": "009033"
+        "name": "松山",
+        "sourceCode": "008765"
       },
       {
-        "name": "鳥栖",
-        "sourceCode": "009327"
-      },
-      {
-        "name": "久留米",
-        "sourceCode": "009383"
-      },
-      {
-        "name": "日田",
-        "sourceCode": "009391"
-      },
-      {
-        "name": "天ヶ瀬",
-        "sourceCode": "009457"
-      },
-      {
-        "name": "豊後森",
-        "sourceCode": "009425"
-      },
-      {
-        "name": "由布院",
-        "sourceCode": "009447"
-      },
-      {
-        "name": "大分",
-        "sourceCode": "009479"
-      },
-      {
-        "name": "別府",
-        "sourceCode": "009428"
+        "name": "岡山",
+        "sourceCode": "007310"
       }
     ],
-    "validFrom": "2026-09-19",
-    "validUntil": "2026-09-28",
+    "validFrom": "2026-08-08",
+    "validUntil": "2026-08-17",
     "via": []
   },
   {
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
-        "jr-kyushu.yufuin-no-mori.1.2026-09-19",
-        "jr-kyushu.yufuin-no-mori.5.2026-09-19"
+        "jr-shikoku.shiokaze.11.2026-08-08",
+        "jr-shikoku.shiokaze.13.2026-08-08",
+        "jr-shikoku.shiokaze.15.2026-08-08",
+        "jr-shikoku.shiokaze.17.2026-08-08",
+        "jr-shikoku.shiokaze.19.2026-08-08",
+        "jr-shikoku.shiokaze.21.2026-08-08",
+        "jr-shikoku.shiokaze.23.2026-08-08",
+        "jr-shikoku.shiokaze.25.2026-08-08",
+        "jr-shikoku.shiokaze.27.2026-08-08",
+        "jr-shikoku.shiokaze.5.2026-08-08",
+        "jr-shikoku.shiokaze.7.2026-08-08",
+        "jr-shikoku.shiokaze.9.2026-08-08"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
     },
     "company": "未解決",
     "completeness": {
       "lines": "missing",
-      "stops": "complete",
+      "stops": "partial",
       "validity": "partial"
     },
     "confidence": "medium",
-    "destination": "由布院",
-    "label": "博多〜由布院",
+    "destination": "松山",
+    "label": "岡山〜松山",
     "lines": [],
-    "name": "ゆふいんの森",
+    "name": "しおかぜ",
     "optionalStops": [],
-    "origin": "博多",
-    "patternId": "tt-yufuin-no-mori-4d61f7ad549a",
-    "serviceId": "yufuin-no-mori",
+    "origin": "岡山",
+    "patternId": "tt-shiokaze-cddb1b6d30ac",
+    "serviceId": "shiokaze",
     "source": "generated:train-service-history",
     "stops": [
       {
-        "name": "博多",
-        "sourceCode": "009033"
+        "name": "岡山",
+        "sourceCode": "007310"
       },
       {
-        "name": "鳥栖",
-        "sourceCode": "009327"
-      },
-      {
-        "name": "久留米",
-        "sourceCode": "009383"
-      },
-      {
-        "name": "日田",
-        "sourceCode": "009391"
-      },
-      {
-        "name": "天ヶ瀬",
-        "sourceCode": "009457"
-      },
-      {
-        "name": "豊後森",
-        "sourceCode": "009425"
-      },
-      {
-        "name": "由布院",
-        "sourceCode": "009447"
+        "name": "松山",
+        "sourceCode": "008765"
       }
     ],
-    "validFrom": "2026-09-19",
-    "validUntil": "2026-09-28",
+    "validFrom": "2026-08-08",
+    "validUntil": "2026-08-17",
     "via": []
   },
   {
@@ -22616,7 +22601,7 @@
     "name": "ゆふいんの森",
     "optionalStops": [],
     "origin": "由布院",
-    "patternId": "tt-yufuin-no-mori-5c3772ee507a",
+    "patternId": "tt-yufuin-no-mori-8825099d2a78",
     "serviceId": "yufuin-no-mori",
     "source": "generated:train-service-history",
     "stops": [
@@ -22650,7 +22635,132 @@
       }
     ],
     "validFrom": "2026-09-19",
-    "validUntil": "2026-09-28",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-kyushu.yufuin-no-mori.1.2026-09-19",
+        "jr-kyushu.yufuin-no-mori.5.2026-09-19"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "由布院",
+    "label": "博多〜由布院",
+    "lines": [],
+    "name": "ゆふいんの森",
+    "optionalStops": [],
+    "origin": "博多",
+    "patternId": "tt-yufuin-no-mori-abd867a07779",
+    "serviceId": "yufuin-no-mori",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "博多",
+        "sourceCode": "009033"
+      },
+      {
+        "name": "鳥栖",
+        "sourceCode": "009327"
+      },
+      {
+        "name": "久留米",
+        "sourceCode": "009383"
+      },
+      {
+        "name": "日田",
+        "sourceCode": "009391"
+      },
+      {
+        "name": "天ヶ瀬",
+        "sourceCode": "009457"
+      },
+      {
+        "name": "豊後森",
+        "sourceCode": "009425"
+      },
+      {
+        "name": "由布院",
+        "sourceCode": "009447"
+      }
+    ],
+    "validFrom": "2026-09-19",
+    "validUntil": "2026-09-29",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-kyushu.yufuin-no-mori.3.2026-09-19"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "別府",
+    "label": "博多〜別府",
+    "lines": [],
+    "name": "ゆふいんの森",
+    "optionalStops": [],
+    "origin": "博多",
+    "patternId": "tt-yufuin-no-mori-b947e4cfba48",
+    "serviceId": "yufuin-no-mori",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "博多",
+        "sourceCode": "009033"
+      },
+      {
+        "name": "鳥栖",
+        "sourceCode": "009327"
+      },
+      {
+        "name": "久留米",
+        "sourceCode": "009383"
+      },
+      {
+        "name": "日田",
+        "sourceCode": "009391"
+      },
+      {
+        "name": "天ヶ瀬",
+        "sourceCode": "009457"
+      },
+      {
+        "name": "豊後森",
+        "sourceCode": "009425"
+      },
+      {
+        "name": "由布院",
+        "sourceCode": "009447"
+      },
+      {
+        "name": "大分",
+        "sourceCode": "009479"
+      },
+      {
+        "name": "別府",
+        "sourceCode": "009428"
+      }
+    ],
+    "validFrom": "2026-09-19",
+    "validUntil": "2026-09-29",
     "via": []
   },
   {
@@ -22674,7 +22784,7 @@
     "name": "ゆふいんの森",
     "optionalStops": [],
     "origin": "別府",
-    "patternId": "tt-yufuin-no-mori-94c5ca2bc84f",
+    "patternId": "tt-yufuin-no-mori-f4e31daadeb5",
     "serviceId": "yufuin-no-mori",
     "source": "generated:train-service-history",
     "stops": [
@@ -22716,7 +22826,7 @@
       }
     ],
     "validFrom": "2026-09-19",
-    "validUntil": "2026-09-28",
+    "validUntil": "2026-09-29",
     "via": []
   },
   {

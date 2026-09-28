@@ -1,9 +1,9 @@
 {
-  "asOfDate": "2026-09-27",
-  "calendarExceptions": 77,
-  "calendarRules": 10,
-  "canonicalSourceHash": "3b9b1e8b369b4848aecb5a7f5a45c482afb20ad17bee02d5c0c5d1317029ddcc",
-  "commitSHA": "df5f448b542746694e4336b0b9f971abd9b50dae",
+  "asOfDate": "2026-09-28",
+  "calendarExceptions": 181,
+  "calendarRules": 34,
+  "canonicalSourceHash": "42c57bc029052ce63d71dfb241ed400a8f7320944af224b614283ed30758a5f1",
+  "commitSHA": "448b096bf995d81218075ed4dd8419433fbe9958",
   "conflicts": 0,
   "coverageComplete": false,
   "coverageMatrix": [
@@ -9968,11 +9968,11 @@
       "year": 2026
     },
     {
-      "declaredStatus": "missing",
+      "declaredStatus": "partial",
       "dimension": "route_lines",
       "operatorScope": "jr-east",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 11,
+      "status": "partial",
       "year": 2026
     },
     {
@@ -9987,7 +9987,7 @@
       "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-east",
-      "recordCount": 7,
+      "recordCount": 42,
       "status": "partial",
       "year": 2026
     },
@@ -17608,47 +17608,47 @@
       "year": 2025
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "inventory",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 24,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "train_number",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
+      "recordCount": 24,
       "status": "missing",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "calendar",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 24,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "stops",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 48,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "times",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 48,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "missing",
       "dimension": "route_lines",
       "operatorScope": "jr-shikoku",
       "recordCount": 0,
@@ -17656,19 +17656,19 @@
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "station_refs",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 2,
+      "status": "partial",
       "year": 2026
     },
     {
-      "declaredStatus": null,
+      "declaredStatus": "partial",
       "dimension": "provenance",
       "operatorScope": "jr-shikoku",
-      "recordCount": 0,
-      "status": "missing",
+      "recordCount": 96,
+      "status": "partial",
       "year": 2026
     },
     {
@@ -20232,20 +20232,20 @@
       "year": 2026
     }
   ],
-  "dailyOccurrencesRepresented": 77,
-  "databaseHash": "a8ef436f63ede608ffc07e4eb80cacf2663e85be80b3b8870e2e63be33c16a15",
+  "dailyOccurrencesRepresented": 181,
+  "databaseHash": "0b2bd13e6faa59ff609cce542130047baa429ba31ad0f2950d07a1323fcc62e1",
   "expectedCoverageScopes": 7,
   "firstCoveredDate": "2026-05-16",
-  "lastCoveredDate": "2026-09-27",
-  "lastCoveredUntil": "2026-09-28",
+  "lastCoveredDate": "2026-09-28",
+  "lastCoveredUntil": "2026-09-29",
   "licenseBlockedSources": [
     "jr-west-timetable-portal-2026",
     "jr-west-thunderbird1-20260525"
   ],
-  "missingCoverageCells": 2470,
+  "missingCoverageCells": 2463,
   "operatorsCovered": 0,
   "operatorsExpected": 6,
-  "partialOrBlockedCoverageCells": 26,
+  "partialOrBlockedCoverageCells": 33,
   "perOperatorCoverage": {
     "jr-ancestral-national-railways": {
       "missing": 576,
@@ -20256,8 +20256,8 @@
       "partial": 7
     },
     "jr-east": {
-      "missing": 313,
-      "partial": 7
+      "missing": 312,
+      "partial": 8
     },
     "jr-hokkaido": {
       "missing": 314,
@@ -20268,7 +20268,8 @@
       "partial": 6
     },
     "jr-shikoku": {
-      "missing": 320
+      "missing": 314,
+      "partial": 6
     },
     "jr-west": {
       "missing": 320
@@ -20962,26 +20963,30 @@
     "2026": {
       "complete": false,
       "statusCounts": {
-        "missing": 22,
-        "partial": 26
+        "missing": 15,
+        "partial": 33
       }
     }
   },
-  "railHistoryHash": "ccdc5b5dc1d328a74cef27f8bf91c6bf6e8b42c0128b6ec660ed7ed8e25dfb5a",
-  "railHistoryRevision": "2026-09-27.2",
+  "railHistoryHash": "1389424fc150db8c0377715fc7584a7ae24f12c5b664a90538908fee15a97cc6",
+  "railHistoryRevision": "2026-09-28.1",
   "routeAuditStatus": "not_run",
   "schemaVersion": "1.0.0",
-  "serviceFamilies": 6,
+  "serviceFamilies": 7,
   "solverVersion": "24",
-  "sourceRegistryHash": "5835d8ac62b0d52c34071bb98b2f7b5b0bfd3531bd053fd9df6cf840d68c6bf7",
+  "sourceRegistryHash": "1519d6842ad5be52d487ace45d0d5ec9a669745b9e1f7f976b54986f20fa0426",
   "stationPackageHash": "ab20ee37a2c031772e61e25d6c736291689617c2337b973e9b0b62098998ef32",
-  "stopTimes": 86,
-  "timetableVersions": 10,
-  "tripTemplates": 10,
-  "unresolvedRoutes": 11,
+  "stopTimes": 134,
+  "timetableVersions": 34,
+  "tripTemplates": 34,
+  "unresolvedRoutes": 35,
   "unresolvedSources": 2,
   "unresolvedStations": 1,
   "verificationOnlySources": [
+    "jr-east-kanto-route-map-202604",
+    "jr-east-ueno-tokyo-line-20150314",
+    "jr-central-nagoya-chuo-timetable-202603",
+    "jr-shikoku-west-shiokaze-obon-20260624",
     "jr-hokkaido-network-2026",
     "jr-hokkaido-vtime-hokuto-20260927",
     "jr-east-timetables-2026",

@@ -56,7 +56,7 @@ FIELDS = {
     "trip_stop_time_overrides": ({"trip_id", "service_date", "stop_sequence", "source_id"}, {"arrival_override", "departure_override"}),
     "trip_number_segments": ({"trip_id", "from_sequence", "to_sequence", "train_number"}, set()),
     "trip_operator_segments": ({"trip_id", "from_sequence", "to_sequence", "operator_id"}, set()),
-    "trip_line_segments": ({"trip_id", "sequence", "from_station_id", "to_station_id", "line_name", "operator_id", "source_id", "confidence"}, set()),
+    "trip_line_segments": ({"trip_id", "sequence", "from_station_id", "to_station_id", "line_name", "operator_id", "source_id", "confidence"}, {"reference_kind", "current_n02_line_id", "rail_history_id"}),
     "trip_relations": ({"trip_id", "related_trip_id", "relation_type", "source_id"}, {"from_sequence", "to_sequence"}),
     "fact_sources": ({"entity_type", "entity_id", "field_name", "source_id", "confidence", "verification_status"}, {"page_or_locator"}),
     "fact_completeness": ({"entity_type", "entity_id", "dimension", "status", "confidence"}, {"notes"}),
@@ -229,7 +229,7 @@ def _require_ref(errors, value, known, context):
         errors.append(f"{context}: unknown reference {value!r}")
 
 
-def validate_dataset(data, origins, manifest):
+def validate_dataset(data, origins, manifest, rail_history=None, current_package=None):
     errors = []
     for entity, records in data.items():
         required, optional = FIELDS[entity]
@@ -566,6 +566,20 @@ def validate_dataset(data, origins, manifest):
         _require_ref(errors, row.get("operator_id"), operator_ids, where + ".operator_id")
         if row.get("confidence") not in CONFIDENCE_VALUES:
             errors.append(f"{where}.confidence: invalid value")
+        reference_kind = row.get("reference_kind")
+        current_line_id = row.get("current_n02_line_id")
+        history_id = row.get("rail_history_id")
+        if reference_kind is None:
+            if current_line_id is not None or history_id is not None:
+                errors.append(f"{where}: route identity ids require reference_kind")
+        elif reference_kind == "current_n02":
+            if not current_line_id or history_id is not None:
+                errors.append(f"{where}: current_n02 requires only current_n02_line_id")
+        elif reference_kind == "historical_overlay":
+            if not history_id or current_line_id is not None:
+                errors.append(f"{where}: historical_overlay requires only rail_history_id")
+        else:
+            errors.append(f"{where}.reference_kind: invalid value")
         bounds = operation_bounds(trips.get(row.get("trip_id")))
         if bounds:
             operation_start, operation_end = bounds
@@ -586,16 +600,32 @@ def validate_dataset(data, origins, manifest):
                     errors.append(f"{where}: line operator {operator['operator_id']} is not valid for the trip operation interval")
     line_rows = defaultdict(list)
     for row in data["trip_line_segments"]: line_rows[row["trip_id"]].append(row)
+    verified_route_trips = {
+        row["entity_id"] for row in data["fact_completeness"]
+        if row.get("entity_type") == "trip"
+        and row.get("dimension") == "route_lines"
+        and row.get("status") == "verified"
+    }
     for trip_id, rows in line_rows.items():
         ordered = sorted(rows, key=lambda row: row["sequence"])
         trip = trips.get(trip_id)
         if trip and ordered:
-            if ordered[0]["from_station_id"] != trip["origin_station_id"]:
+            if trip_id in verified_route_trips and ordered[0]["from_station_id"] != trip["origin_station_id"]:
                 errors.append(f"trip_line_segments {trip_id}: first segment does not start at trip origin")
-            if ordered[-1]["to_station_id"] != trip["destination_station_id"]:
+            if trip_id in verified_route_trips and ordered[-1]["to_station_id"] != trip["destination_station_id"]:
                 errors.append(f"trip_line_segments {trip_id}: last segment does not end at trip destination")
             if any(left["to_station_id"] != right["from_station_id"] for left, right in zip(ordered, ordered[1:])):
                 errors.append(f"trip_line_segments {trip_id}: ordered line segments do not form a chain")
+            station_sequences = defaultdict(list)
+            for stop in stops_by_trip.get(trip_id, []):
+                station_sequences[stop["station_id"]].append(stop["stop_sequence"])
+            for row in ordered:
+                from_sequences = station_sequences.get(row["from_station_id"], [])
+                to_sequences = station_sequences.get(row["to_station_id"], [])
+                if not any(start < end for start in from_sequences for end in to_sequences):
+                    errors.append(
+                        f"trip_line_segments {trip_id}:{row['sequence']}: endpoints must follow "
+                        "the trip stop order")
 
     for i, row in enumerate(data["trip_relations"]):
         where = origins[("trip_relations", i)]
@@ -677,6 +707,38 @@ def validate_dataset(data, origins, manifest):
     for i, row in enumerate(data["fact_completeness"]):
         if row["status"] == "verified" and (row["entity_type"], row["entity_id"], row["dimension"]) not in verified_sources:
             errors.append(f"{origins[('fact_completeness', i)]}: verified completeness requires a matching verified fact_source for the same dimension")
+    route_claims = [
+        (i, row) for i, row in enumerate(data["fact_completeness"])
+        if row.get("entity_type") == "trip"
+        and row.get("dimension") == "route_lines"
+        and row.get("status") == "verified"
+    ]
+    attestations = None
+    if data["trip_line_segments"] or route_claims:
+        attestations = route_attestations(
+            data, manifest, rail_history=rail_history, current_package=current_package)
+        line_origins = {
+            (row["trip_id"], row["sequence"]): origins[("trip_line_segments", index)]
+            for index, row in enumerate(data["trip_line_segments"])
+        }
+        for verdict in attestations.values():
+            for segment in verdict["segments"]:
+                if segment["status"] == "error":
+                    where = line_origins.get(
+                        (segment["tripId"], segment["segmentSequence"]),
+                        f"trip_line_segments {segment['tripId']}:{segment['segmentSequence']}")
+                    errors.append(
+                        f"{where}: route identity/date attestation failed "
+                        f"({segment['reason']})")
+    if route_claims:
+        for index, row in route_claims:
+            verdict = attestations.get(row["entity_id"])
+            if verdict is None or not verdict["canPublishRouteLines"]:
+                status = verdict["status"] if verdict else "missing"
+                reason = verdict["reason"] if verdict else "trip_not_audited"
+                errors.append(
+                    f"{origins[('fact_completeness', index)]}: route_lines verified requires "
+                    f"dated direct-identity attestation; found {status} ({reason})")
 
     zero_intervals = []
     for i, row in enumerate(data["verified_zero_service_intervals"]):
@@ -941,8 +1003,14 @@ def _base_calendar_operates(calendar_row, service_day, holidays):
 
 
 def _operating_day_count(calendar_row, version_row, lower_bound, upper_bound, exceptions, holidays):
-    start = max(lower_bound, date.fromisoformat(calendar_row["valid_from"]), date.fromisoformat(version_row["effective_from"]))
-    end = min(upper_bound, date.fromisoformat(calendar_row["valid_until"]), date.fromisoformat(version_row["effective_until"]))
+    calendar_start = parsed_date_or_none(calendar_row.get("valid_from"))
+    calendar_end = parsed_date_or_none(calendar_row.get("valid_until"))
+    version_start = parsed_date_or_none(version_row.get("effective_from"))
+    version_end = parsed_date_or_none(version_row.get("effective_until"))
+    if None in (calendar_start, calendar_end, version_start, version_end):
+        return 0
+    start = max(lower_bound, calendar_start, version_start)
+    end = min(upper_bound, calendar_end, version_end)
     if start >= end:
         return 0
     flags = [bool(calendar_row[name]) for name in ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")]
@@ -952,11 +1020,15 @@ def _operating_day_count(calendar_row, version_row, lower_bound, upper_bound, ex
     count += sum(flags[(start.weekday() + offset) % 7] for offset in range(remainder))
     if calendar_row["holiday_policy"] == "treat_as_sunday":
         for value in holidays:
-            holiday = date.fromisoformat(value)
+            holiday = parsed_date_or_none(value)
+            if holiday is None:
+                continue
             if start <= holiday < end and holiday.weekday() != 6:
                 count += int(flags[6]) - int(flags[holiday.weekday()])
     for row in exceptions.get(calendar_row["calendar_id"], []):
-        exception_day = date.fromisoformat(row["service_date"])
+        exception_day = parsed_date_or_none(row.get("service_date"))
+        if exception_day is None:
+            continue
         if not start <= exception_day < end:
             continue
         base = _base_calendar_operates(calendar_row, exception_day, holidays)
@@ -1001,13 +1073,222 @@ def rail_history_service_interval(properties, context="rail-history feature"):
     return start, end, label
 
 
-def _trip_occurrence_context(data, trip):
+def route_attestations(data, manifest, rail_history=None, current_package=None):
+    """Return dated route identity verdicts without inferring identifiers.
+
+    Historical segments are attestable only through an explicit overlay
+    history_id. Current N02 segments use the existing jp-2025 line id plus
+    their endpoint station identities, but remain temporally unverified
+    because that package does not publish a validity interval.
+    """
+    if rail_history is None:
+        rail_history = json.loads(RAIL_HISTORY.read_text(encoding="utf-8"))
+    if current_package is None:
+        current_package = json.loads(JP_PACKAGE.read_text(encoding="utf-8"))
+
+    exceptions_by_calendar = defaultdict(list)
+    for row in data["calendar_exceptions"]:
+        exceptions_by_calendar[row["calendar_id"]].append(row)
+    holiday_dates = {row["service_date"] for row in data["holiday_dates"]}
+    stations = {row["station_id"]: row for row in data["station_identities"]}
+    operators = {row["operator_id"]: row for row in data["operators"]}
+    lines_by_trip = defaultdict(list)
+    for row in data["trip_line_segments"]:
+        lines_by_trip[row["trip_id"]].append(row)
+
+    history_sections = defaultdict(list)
+    for feature in rail_history.get("sections", []):
+        properties = feature.get("properties", {})
+        if properties.get("history_id"):
+            history_sections[properties["history_id"]].append(properties)
+    current_lines = defaultdict(list)
+    for line in current_package.get("lines", []):
+        if line.get("id"):
+            current_lines[line["id"]].append(line)
     versions = {row["timetable_version_id"]: row for row in data["timetable_versions"]}
     calendars = {row["calendar_id"]: row for row in data["calendars"]}
+
+    trips = {}
+    for trip in sorted(data["trips"], key=lambda row: row["trip_id"]):
+        version, calendar_row, lower, upper = _trip_occurrence_context(
+            data, trip, versions=versions, calendars=calendars)
+        occurrence_count = _operating_day_count(
+            calendar_row, version, lower, upper, exceptions_by_calendar, holiday_dates)
+        segment_verdicts = []
+        segments = sorted(lines_by_trip[trip["trip_id"]], key=lambda row: row["sequence"])
+        for segment in segments:
+            base = {
+                "tripId": trip["trip_id"],
+                "segmentSequence": segment["sequence"],
+                "fromStationId": segment["from_station_id"],
+                "toStationId": segment["to_station_id"],
+                "lineName": segment["line_name"],
+                "operatorId": segment["operator_id"],
+                "referenceKind": segment.get("reference_kind"),
+                "currentN02LineId": segment.get("current_n02_line_id"),
+                "railHistoryId": segment.get("rail_history_id"),
+                "occurrenceCount": occurrence_count,
+            }
+            if occurrence_count == 0:
+                segment_verdicts.append(dict(
+                    base, status="unverified", reason="no_calendar_occurrences_to_attest"))
+                continue
+            kind = segment.get("reference_kind")
+            if kind is None:
+                operator = operators.get(segment.get("operator_id"))
+                operator_names = ({operator["display_name"], operator["legal_name"]}
+                                  if operator is not None else set())
+                candidates = sorted({
+                    history_id for history_id, rows in history_sections.items()
+                    if any(
+                        (row.get("N02_003") or row.get("line_name")) == segment["line_name"]
+                        and (row.get("N02_004") or row.get("operator")) in operator_names
+                        for row in rows
+                    )
+                })
+                segment_verdicts.append(dict(
+                    base, status="unverified", reason="missing_explicit_route_identity",
+                    candidateHistoryIds=candidates))
+                continue
+            operator = operators.get(segment.get("operator_id"))
+            operator_names = ({operator["display_name"], operator["legal_name"]}
+                              if operator is not None else set())
+            if kind == "current_n02":
+                line_id = segment.get("current_n02_line_id")
+                candidates = current_lines.get(line_id, [])
+                if len(candidates) != 1:
+                    reason = "current_n02_line_not_found" if not candidates else "current_n02_line_id_not_unique"
+                    segment_verdicts.append(dict(base, status="error", reason=reason))
+                    continue
+                line = candidates[0]
+                if line.get("name") != segment["line_name"] or line.get("operator") not in operator_names:
+                    segment_verdicts.append(dict(
+                        base, status="error", reason="current_n02_line_metadata_mismatch"))
+                    continue
+                endpoint_codes = []
+                endpoint_error = False
+                for station_id in (segment["from_station_id"], segment["to_station_id"]):
+                    station = stations.get(station_id)
+                    if station is None or station.get("reference_kind") != "current_n02":
+                        endpoint_error = True
+                        break
+                    endpoint_codes.append(station.get("current_source_code"))
+                line_codes = {row[0] for row in line.get("stations", []) if row}
+                if endpoint_error or any(code not in line_codes for code in endpoint_codes):
+                    segment_verdicts.append(dict(
+                        base, status="error", reason="current_n02_line_endpoint_mismatch"))
+                    continue
+                segment_verdicts.append(dict(
+                    base,
+                    status="unverified",
+                    reason="current_n02_snapshot_has_no_validity_interval",
+                    identityVerified=True,
+                    temporalCoverageVerified=False,
+                ))
+                continue
+            if kind != "historical_overlay":
+                segment_verdicts.append(dict(
+                    base, status="error", reason="invalid_route_reference_kind"))
+                continue
+            history_id = segment.get("rail_history_id")
+            features = history_sections.get(history_id, [])
+            if not features:
+                segment_verdicts.append(dict(
+                    base, status="error", reason="rail_history_section_not_found"))
+                continue
+            mismatched = [row for row in features
+                          if (row.get("N02_003") or row.get("line_name")) != segment["line_name"]
+                          or (row.get("N02_004") or row.get("operator")) not in operator_names]
+            if mismatched:
+                segment_verdicts.append(dict(
+                    base, status="error", reason="rail_history_section_metadata_mismatch"))
+                continue
+            intervals = []
+            invalid_interval = None
+            for index, properties in enumerate(features):
+                try:
+                    valid_from, valid_until, _ = rail_history_service_interval(
+                        properties, f"rail-history section {history_id}[{index}]")
+                except DatasetError as exc:
+                    invalid_interval = str(exc)
+                    break
+                start = max(lower, valid_from) if valid_from is not None else lower
+                end = min(upper, valid_until) if valid_until is not None else upper
+                if start < end:
+                    intervals.append((start, end))
+            if invalid_interval:
+                segment_verdicts.append(dict(
+                    base, status="error", reason="invalid_rail_history_service_interval",
+                    detail=invalid_interval))
+                continue
+            merged = []
+            for start, end in sorted(intervals):
+                if merged and start <= merged[-1][1]:
+                    merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+                else:
+                    merged.append((start, end))
+            aligned_count = sum(
+                _operating_day_count(
+                    calendar_row, version, start, end,
+                    exceptions_by_calendar, holiday_dates)
+                for start, end in merged
+            )
+            invalid_count = occurrence_count - aligned_count
+            segment_verdicts.append(dict(
+                base,
+                status="aligned" if invalid_count == 0 else "error",
+                reason=("all_occurrences_within_history_service_validity"
+                        if invalid_count == 0 else "route_occurrences_outside_history_service_validity"),
+                identityVerified=True,
+                temporalCoverageVerified=invalid_count == 0,
+                alignedOccurrenceCount=aligned_count,
+                invalidOccurrenceCount=invalid_count,
+            ))
+
+        complete_chain = bool(segments) and (
+            segments[0]["from_station_id"] == trip["origin_station_id"]
+            and segments[-1]["to_station_id"] == trip["destination_station_id"]
+            and all(left["to_station_id"] == right["from_station_id"]
+                    for left, right in zip(segments, segments[1:]))
+        )
+        if not segments:
+            status, reason = "unverified", "missing_trip_line_segments"
+        elif any(row["status"] == "error" for row in segment_verdicts):
+            status, reason = "error", "one_or_more_route_segments_failed"
+        elif any(row["status"] != "aligned" for row in segment_verdicts):
+            status, reason = "unverified", "one_or_more_route_segments_unverified"
+        elif not complete_chain:
+            status, reason = "unverified", "route_segments_do_not_cover_complete_trip"
+        else:
+            status, reason = "aligned", "all_route_segments_dated_and_attested"
+        trips[trip["trip_id"]] = {
+            "tripId": trip["trip_id"],
+            "status": status,
+            "reason": reason,
+            "occurrenceCount": occurrence_count,
+            "canPublishRouteLines": status == "aligned",
+            "segments": segment_verdicts,
+        }
+    return trips
+
+
+def _trip_occurrence_context(data, trip, versions=None, calendars=None):
+    versions = versions or {row["timetable_version_id"]: row for row in data["timetable_versions"]}
+    calendars = calendars or {row["calendar_id"]: row for row in data["calendars"]}
     version = versions[trip["timetable_version_id"]]
     calendar_row = calendars[trip["calendar_id"]]
-    lower = max(date.fromisoformat(version["effective_from"]), date.fromisoformat(calendar_row["valid_from"]))
-    upper = min(date.fromisoformat(version["effective_until"]), date.fromisoformat(calendar_row["valid_until"]))
+    starts = (
+        parsed_date_or_none(version.get("effective_from")),
+        parsed_date_or_none(calendar_row.get("valid_from")),
+    )
+    ends = (
+        parsed_date_or_none(version.get("effective_until")),
+        parsed_date_or_none(calendar_row.get("valid_until")),
+    )
+    if None in starts or None in ends:
+        return version, calendar_row, date.min, date.min
+    lower = max(starts)
+    upper = min(ends)
     return version, calendar_row, lower, upper
 
 
@@ -1048,8 +1329,8 @@ def audit_history_alignment(data, manifest, rail_history):
     A timetable occurrence keeps its Asia/Tokyo service date at every stop,
     including stops whose clock time has a positive day_offset.  Direct
     historical station identities can therefore be checked conclusively.
-    trip_line_segments do not carry a rail-history ID, so name/operator
-    matches are reported only as non-authoritative candidates.
+    A trip line can be proven only by its explicit history/current reference;
+    name/operator matches remain non-authoritative candidates.
     """
     exceptions_by_calendar = defaultdict(list)
     exception_lookup = {}
@@ -1059,13 +1340,10 @@ def audit_history_alignment(data, manifest, rail_history):
     holiday_dates = {row["service_date"] for row in data["holiday_dates"]}
     holiday_years = {row["year"]: row["status"] for row in data["holiday_calendar_years"]}
     stations = {row["station_id"]: row for row in data["station_identities"]}
-    operators = {row["operator_id"]: row for row in data["operators"]}
     stops_by_trip = defaultdict(list)
-    lines_by_trip = defaultdict(list)
     for row in data["stop_times"]:
         stops_by_trip[row["trip_id"]].append(row)
-    for row in data["trip_line_segments"]:
-        lines_by_trip[row["trip_id"]].append(row)
+    route_verdicts = route_attestations(data, manifest, rail_history=rail_history)
 
     history_stations = {}
     for feature in rail_history.get("stations", []):
@@ -1074,19 +1352,16 @@ def audit_history_alignment(data, manifest, rail_history):
         if history_id:
             history_stations[history_id] = properties
 
-    history_sections = []
-    for feature in rail_history.get("sections", []):
-        properties = feature.get("properties", {})
-        if properties.get("history_id"):
-            history_sections.append(properties)
-
     findings = []
     occurrence_total = 0
     trips_with_occurrences = 0
     station_checks = 0
     line_checks = 0
+    versions = {row["timetable_version_id"]: row for row in data["timetable_versions"]}
+    calendars = {row["calendar_id"]: row for row in data["calendars"]}
     for trip in sorted(data["trips"], key=lambda row: row["trip_id"]):
-        version, calendar_row, lower, upper = _trip_occurrence_context(data, trip)
+        version, calendar_row, lower, upper = _trip_occurrence_context(
+            data, trip, versions=versions, calendars=calendars)
         trip_occurrences = _operating_day_count(
             calendar_row, version, lower, upper, exceptions_by_calendar, holiday_dates)
         occurrence_total += trip_occurrences
@@ -1134,37 +1409,25 @@ def audit_history_alignment(data, manifest, rail_history):
                     exception_lookup, holiday_dates, holiday_years)
             findings.append(detail)
 
-        segments = sorted(lines_by_trip[trip["trip_id"]], key=lambda row: row["sequence"])
+        route_verdict = route_verdicts[trip["trip_id"]]
+        segments = route_verdict["segments"]
         if not segments:
             findings.append({
                 "kind": "route",
                 "tripId": trip["trip_id"],
-                "status": "unverified",
-                "reason": "missing_trip_line_segments",
+                "status": route_verdict["status"],
+                "reason": route_verdict["reason"],
                 "occurrenceCount": trip_occurrences,
+                "canPublishRouteLines": False,
             })
             continue
-        for segment in segments:
+        for segment_verdict in segments:
             line_checks += 1
-            operator = operators[segment["operator_id"]]
-            operator_names = {operator["display_name"], operator["legal_name"]}
-            candidates = sorted({
-                row["history_id"] for row in history_sections
-                if row.get("N02_003") == segment["line_name"] and row.get("N02_004") in operator_names
-            })
-            findings.append({
-                "kind": "route",
-                "tripId": trip["trip_id"],
-                "segmentSequence": segment["sequence"],
-                "fromStationId": segment["from_station_id"],
-                "toStationId": segment["to_station_id"],
-                "lineName": segment["line_name"],
-                "operatorId": segment["operator_id"],
-                "status": "unverified",
-                "reason": "line_segment_has_no_rail_history_id",
-                "occurrenceCount": trip_occurrences,
-                "candidateHistoryIds": candidates,
-            })
+            findings.append(dict(
+                segment_verdict,
+                kind="route",
+                canPublishRouteLines=segment_verdict["status"] == "aligned",
+            ))
 
     status_counts = Counter(row["status"] for row in findings)
     return {
@@ -1179,10 +1442,13 @@ def audit_history_alignment(data, manifest, rail_history):
         "dailyOccurrencesChecked": occurrence_total,
         "historicalStationChecks": station_checks,
         "lineSegmentChecks": line_checks,
+        "publishableRouteTrips": sum(
+            1 for row in route_verdicts.values() if row["canPublishRouteLines"]),
         "alignedChecks": status_counts.get("aligned", 0),
         "unverifiedChecks": status_counts.get("unverified", 0),
         "errorChecks": status_counts.get("error", 0),
         "complete": bool(findings) and not status_counts.get("unverified", 0) and not status_counts.get("error", 0),
+        "routeAttestations": [route_verdicts[key] for key in sorted(route_verdicts)],
         "findings": findings,
     }
 
