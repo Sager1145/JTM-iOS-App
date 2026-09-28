@@ -1039,6 +1039,8 @@ struct RailWorkspaceView: View {
         journeySaveAttemptID = nil
         journeySaveFailureDetail = nil
         controller.acceptsDraftMap = true
+        controller.draftMap = DraftMapSnapshot(
+            revision: 0, pins: [], networkRideDate: launch.train.date)
         controller.onDraftPin = { highlightedStopID = $0 }
         journeyEditor = launch
     }
@@ -2858,6 +2860,9 @@ struct RailWorkspaceView: View {
     /// Normalized date of the selected train. Undated and unselected both
     /// pass nil so the ride-date era uses the Current predicate.
     private var selectedTrainNetworkDate: String? {
+        if journeyEditor != nil, controller.acceptsDraftMap {
+            return controller.draftMap.networkRideDate
+        }
         guard let train = selectedTrain else { return nil }
         let day = Dates.normalizeTrainDate(train.forDates)
         return day == Dates.undated ? nil : day

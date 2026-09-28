@@ -102,9 +102,11 @@ fixtures to prove semantics; those fixtures are not production timetable facts.
 ```sh
 python3 ios/tools/validate-train-timetable.py
 python3 ios/tools/build-train-timetable-db.py
+python3 ios/tools/verify-train-timetable-artifact.py
 python3 ios/tools/audit-train-timetable-coverage.py
 python3 ios/tools/build-train-service-patterns.py
 python3 ios/tools/audit-train-timetable-routes.py
+python3 ios/tools/audit-train-timetable-history-alignment.py
 python3 ios/tools/audit-train-timetable-migration.py
 python3 -m unittest discover -s ios/tools/tests -v
 python3 ios/tools/test_jreast_trip_parser.py
@@ -113,3 +115,38 @@ python3 ios/tools/test_jreast_trip_parser.py
 The reviewed normalizers are intentional input-generation steps, not automatic
 web fact promotion. Source discovery currently indexes reviewed search results;
 it does not claim exhaustive crawling or an all-services inventory.
+
+## Timetable / historical-map alignment
+
+The selected trip's Japanese **service date** is the historical-network date.
+The map's journey-list date filter is a separate scope and must not replace it.
+An arrival at `25:03` belongs to the original service-date occurrence; its civil
+arrival date is the following day. Preserve both meanings instead of changing
+the occurrence or silently applying today's network.
+
+Station and rail-service validity use inclusive opening and exclusive ending
+boundaries, `[valid_from, valid_until)`, like `RouteGraph.RailValidity`. A
+`service` interval takes precedence over infrastructure existence. Infrastructure
+may remain after passenger service ends. Timetable operating calendars are
+independent evidence; an open line does not prove a train ran that day.
+
+`verify-train-timetable-artifact.py` checks the canonical fingerprint, historical
+network revision **and content hash**, current station-package hash, solver
+version, Japan timezone, service-day semantics, scope dates, SQLite integrity,
+and the bundled resource copy. It is also part of the Swift verification gate.
+Rebuild after a historical network update; do not manually alter metadata to
+make a stale artifact pass. A matching snapshot certifies compatibility of
+inputs, not complete timetable coverage or the surveyed route of a train.
+
+The editor now publishes its draft service date together with draft map pins,
+including date-only edits and removing a date. Cancelling returns the map to
+the saved selection. Exact timetable application preserves explicit line and
+operator constraints per passenger-stop pair; pairs with hidden intermediate
+junctions remain read-only because `RouteSection` cannot express ordered vias.
+
+Native persistent route keys now include the history content hash. Bundled
+precomputed routes must attest `history_hashes` as well as revision and solve
+context when a historical overlay exists. Older parts lacking that attestation
+are solved on demand. The shared precompute generator and its 201 sample parts
+still need a coordinated refresh to retain fast initial loading; do not add a
+hash to old geometry without rerunning its solve against the attested snapshot.

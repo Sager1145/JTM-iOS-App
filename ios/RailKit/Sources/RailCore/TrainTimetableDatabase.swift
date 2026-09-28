@@ -83,8 +83,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         }
 
         public func isValid(on serviceDate: String) -> Bool {
-            (validFrom == nil || validFrom! <= serviceDate)
-                && (validUntil == nil || serviceDate < validUntil!)
+            TimetableServiceDayContext(serviceDate: serviceDate)
+                .contains(validFrom: validFrom, validUntil: validUntil)
         }
     }
 
@@ -177,6 +177,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 && hasValidChronology
                 && hasCompleteLineCoverage
                 && hasCompleteOperatorCoverage
+                && exactRouteSections != nil
                 && required.allSatisfy { factCompleteness[$0] == .verified }
         }
 
@@ -225,6 +226,76 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             }
         }
 
+        /// Hard route constraints for every adjacent passenger-stop pair.
+        /// A globally complete origin-to-destination chain is insufficient:
+        /// each passenger boundary must occur in order in that chain, or the
+        /// verified facts cannot be attached to the editor's route sections.
+        private var exactRouteSections: [RouteSection]? {
+            let calls = passengerStops
+            guard calls.count >= 2, !lineSegments.isEmpty else { return nil }
+            let chainStationIDs = [lineSegments[0].fromStationID]
+                + lineSegments.map(\.toStationID)
+            guard calls.allSatisfy({ call in
+                chainStationIDs.lazy.filter { $0 == call.station.id }.count == 1
+            }) else { return nil }
+            let operatorNames = Dictionary(
+                operatorSegments.map { ($0.operatorID, $0.displayName) },
+                uniquingKeysWith: { first, _ in first })
+            var cursor = lineSegments.startIndex
+            var sections: [RouteSection] = []
+            sections.reserveCapacity(calls.count - 1)
+
+            for index in 0..<(calls.count - 1) {
+                let from = calls[index]
+                let to = calls[index + 1]
+                guard lineSegments.indices.contains(cursor),
+                      lineSegments[cursor].fromStationID == from.station.id
+                else { return nil }
+
+                var covered: [LineSegment] = []
+                var reachedBoundary = false
+                while lineSegments.indices.contains(cursor) {
+                    let segment = lineSegments[cursor]
+                    if let previous = covered.last,
+                       previous.toStationID != segment.fromStationID
+                    { return nil }
+                    covered.append(segment)
+                    cursor += 1
+                    if segment.toStationID == to.station.id {
+                        reachedBoundary = true
+                        break
+                    }
+                }
+                guard reachedBoundary,
+                      // RouteSection expresses allowed line/operator sets, not
+                      // an ordered chain of intermediate waypoints. More than
+                      // one source segment would lose verified traversal facts.
+                      covered.count == 1,
+                      covered.allSatisfy({ $0.confidence == "high" }),
+                      let fromCode = from.station.currentSourceCode,
+                      let toCode = to.station.currentSourceCode
+                else { return nil }
+
+                let segment = covered[0]
+                guard !segment.lineName.isEmpty,
+                      let operatorID = segment.operatorID,
+                      let operatorName = operatorNames[operatorID],
+                      !operatorName.isEmpty,
+                      operatorSegments.contains(where: {
+                          $0.operatorID == operatorID
+                              && $0.fromSequence <= from.sequence
+                              && $0.toSequence >= to.sequence
+                      })
+                else { return nil }
+                sections.append(RouteSection(
+                    from: from.station.name, to: to.station.name,
+                    fromN02StationCode: fromCode, toN02StationCode: toCode,
+                    lineNames: [segment.lineName], operatorNames: [operatorName]))
+            }
+            guard cursor == lineSegments.endIndex else { return nil }
+            return sections
+        }
+
         /// A one-day compatibility projection for the existing route editor.
         /// It contains this trip's exact passenger calls and explicit line
         /// segments; it never invents optional stops or a fallback route.
@@ -270,9 +341,11 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// published times and route facts. Callers must respect
         /// ``canApplyToRouteEditor``; incomplete research records fail closed.
         public func applying(to train: Train, ridden: Bool = true) -> Train? {
-            guard canApplyToRouteEditor, let origin, let destination else { return nil }
+            guard canApplyToRouteEditor, let origin, let destination,
+                  let routeSections = exactRouteSections
+            else { return nil }
             var result = train
-            result.date = serviceDate
+            result.date = TimetableServiceDayContext(serviceDate: serviceDate).networkRideDate
             result.number = [service.canonicalName, publicNumber ?? trainNumber]
                 .filter { !$0.isEmpty }.joined(separator: " ")
             result.trainType = serviceClass == "sleeper_limited_express" ? "寝台特急" : "特急"
@@ -281,7 +354,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             result.origin = origin.station.name
             result.destination = destination.station.name
             result.direction = direction
-            result.routeSections = nil
+            result.routeSections = routeSections
             result.routePolicy = RoutePolicy(
                 mode: "single_primary_route",
                 jrOnly: !operatorSegments.isEmpty && operatorSegments.allSatisfy {

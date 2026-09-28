@@ -65,6 +65,7 @@ struct RideEditorView: View {
     @State private var editorCatalogs: [String: EditorCatalog] = [:]
     @State private var draftMapRevision = 0
     @State private var publishedDraftPins: [DraftStopPin]?
+    @State private var publishedDraftNetworkDate: String?
     @FocusState private var focused: RideDraftIssue.Field?
 
     let original: Train
@@ -188,6 +189,7 @@ struct RideEditorView: View {
                 .environment(\.editMode, $stopEditMode)
                 .onChange(of: draft, initial: true) { _, _ in revalidate() }
                 .onChange(of: draft.stops, initial: true) { _, _ in publishDraftMap() }
+                .onChange(of: draft.date) { _, _ in publishDraftMap() }
                 .onChange(of: stopIDs) { _, _ in publishDraftMap() }
                 .onChange(of: highlightedStopID.wrappedValue) { _, id in
                     guard let id, stopIDs.contains(id) else { return }
@@ -431,10 +433,13 @@ struct RideEditorView: View {
 
     private func publishDraftMap() {
         let pins = draftPins()
-        guard pins != publishedDraftPins else { return }
+        let networkDate = Dates.normalizeDateString(draft.date)
+        guard pins != publishedDraftPins || networkDate != publishedDraftNetworkDate else { return }
         publishedDraftPins = pins
+        publishedDraftNetworkDate = networkDate
         draftMapRevision += 1
-        onDraftMap(DraftMapPins.snapshot(revision: draftMapRevision, pins: pins))
+        onDraftMap(DraftMapPins.snapshot(
+            revision: draftMapRevision, pins: pins, networkRideDate: networkDate))
     }
 
     private func draftPins() -> [DraftStopPin] {

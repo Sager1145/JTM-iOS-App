@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import MapKit
 import Observation
@@ -562,7 +563,9 @@ final class RiddenRouteStore {
                 expectedDigest: expectedDigest,
                 solverVersion: RouteGraph.routeSolverCacheVersion,
                 rideDate: Dates.normalizeDateString(train.date),
-                revisions: revisions) else { continue } // RailHistoryTests.testLegacyNilSolverContextRejectsDatedHistoryButOnDemandStillSolves
+                revisions: revisions,
+                expectedHashes: !revisions.contentHashes.isEmpty ? revisions.contentHashes : nil
+            ) else { continue } // Missing historical content attestation requires an on-demand solve.
             let expectedTemplate = routeTemplateDigest(trainCanonical, country: country)
             let matchingFeatures = precomputedFeatures.filter { feature in
                 guard let expectedTemplate else { return true }
@@ -887,7 +890,7 @@ final class RiddenRouteStore {
 
     private enum RailHistoryLoadState: Sendable {
         case absent
-        case loaded(RailHistoryOverlay)
+        case loaded(RailHistoryOverlay, contentHash: String)
         case invalid(String)
     }
 
@@ -898,7 +901,12 @@ final class RiddenRouteStore {
         if let cached = historyStateCache.withLock({ $0[region] }) { return cached }
         let state: RailHistoryLoadState
         if let url = railHistoryURL(region: region) {
-            do { state = .loaded(try RailHistoryOverlay.load(from: url)) }
+            do {
+                let data = try Data(contentsOf: url)
+                let overlay = try RailHistoryOverlay.decode(data)
+                let hash = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+                state = .loaded(overlay, contentHash: hash)
+            }
             catch { state = .invalid(String(describing: error)) }
         } else {
             state = .absent
@@ -917,7 +925,7 @@ final class RiddenRouteStore {
         let overlay: RailHistoryOverlay
         switch historyState(region: region) {
         case .absent: return
-        case .loaded(let value): overlay = value
+        case .loaded(let value, _): overlay = value
         case .invalid(let reason): throw LoadError.invalidHistory(region, reason)
         }
         let report = RailHistory.apply(overlay, sections: &sections, stations: &stations)
@@ -930,7 +938,7 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func railHistoryRevision(region: String) -> String? {
-        if case .loaded(let overlay) = historyState(region: region) { return overlay.revision }
+        if case .loaded(let overlay, _) = historyState(region: region) { return overlay.revision }
         return nil
     }
 
@@ -940,8 +948,14 @@ final class RiddenRouteStore {
             if case .invalid = historyState(region: region.code) { return false }
             return true
         }) else { return nil }
+        let hashes = Dictionary(uniqueKeysWithValues: regions.compactMap { region -> (String, String)? in
+            if case .loaded(_, let hash) = historyState(region: region.code) {
+                return (region.code, hash)
+            }
+            return nil
+        })
         return RailHistoryRevisionSet(Dictionary(uniqueKeysWithValues:
-            regions.map { ($0.code, railHistoryRevision(region: $0.code)) }))
+            regions.map { ($0.code, railHistoryRevision(region: $0.code)) }), contentHashes: hashes)
     }
 
     private nonisolated static func routeTemplateDigest(

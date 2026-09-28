@@ -204,6 +204,98 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertEqual("legacy-test", fallback["patternId"])
         self.assertFalse(json.loads(audit.read_text(encoding="utf-8"))["safeToReplaceBundledLegacyCatalog"])
 
+    def test_history_alignment_uses_actual_days_and_exclusive_service_end(self):
+        manifest, data, _ = self.load()
+        data["station_identities"][0].update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.station.a",
+        })
+        rail_history = {
+            "revision": "fixture.1",
+            "sections": [],
+            "stations": [{
+                "type": "Feature",
+                "properties": {
+                    "history_id": "history.station.a",
+                    # This authoritative interval wins over legacy valid_to.
+                    "service_validity": [None, "2026-01-02"],
+                    "valid_to": "2027-01-01",
+                },
+                "geometry": None,
+            }],
+        }
+        report = timetable.audit_history_alignment(data, manifest, rail_history)
+        finding = next(row for row in report["findings"] if row["kind"] == "station")
+        # The fixture operates Jan 1 and Jan 3; Jan 2 is explicitly removed.
+        self.assertEqual(2, finding["occurrenceCount"])
+        self.assertEqual(1, finding["alignedOccurrenceCount"])
+        self.assertEqual(1, finding["invalidOccurrenceCount"])
+        self.assertEqual(["2026-01-03"], finding["sampleInvalidServiceDates"])
+        self.assertEqual("error", finding["status"])
+        self.assertEqual("service_validity", finding["validitySource"])
+
+    def test_history_alignment_keeps_cross_midnight_stop_on_original_service_day(self):
+        manifest, data, _ = self.load()
+        data["timetable_versions"][0]["effective_until"] = "2026-01-02"
+        data["calendars"][0]["valid_until"] = "2026-01-02"
+        data["station_identities"][1].update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.station.b",
+        })
+        rail_history = {
+            "revision": "fixture.1",
+            "sections": [],
+            "stations": [{
+                "type": "Feature",
+                "properties": {
+                    "history_id": "history.station.b",
+                    "service_validity": ["2026-01-01", "2026-01-02"],
+                },
+                "geometry": None,
+            }],
+        }
+        report = timetable.audit_history_alignment(data, manifest, rail_history)
+        finding = next(row for row in report["findings"] if row["kind"] == "station")
+        self.assertEqual("aligned", finding["status"])
+        self.assertEqual(1, finding["alignedOccurrenceCount"])
+        self.assertIn("day_offset does not change", report["serviceDateSemantics"])
+
+    def test_line_name_candidate_never_proves_history_alignment(self):
+        manifest, data, _ = self.load()
+        rail_history = {
+            "revision": "fixture.1",
+            "stations": [],
+            "sections": [{
+                "type": "Feature",
+                "properties": {
+                    "history_id": "history.line.candidate",
+                    "N02_003": "Test Line",
+                    "N02_004": "Operator",
+                    "service_validity": ["2026-01-01", "2026-01-04"],
+                },
+                "geometry": None,
+            }],
+        }
+        report = timetable.audit_history_alignment(data, manifest, rail_history)
+        finding = next(row for row in report["findings"] if row["kind"] == "route")
+        self.assertEqual("unverified", finding["status"])
+        self.assertEqual("line_segment_has_no_rail_history_id", finding["reason"])
+        self.assertEqual(["history.line.candidate"], finding["candidateHistoryIds"])
+        self.assertFalse(report["complete"])
+
+    def test_history_interval_legacy_key_presence_blocks_infrastructure_fallback(self):
+        infrastructure = ["2010-01-01", "2011-01-01"]
+        for legacy in (
+            {"valid_from": None},
+            {"valid_from": "", "valid_to": ""},
+        ):
+            with self.subTest(legacy=legacy):
+                properties = dict(legacy, infrastructure_validity=infrastructure)
+                start, end, source = timetable.rail_history_service_interval(properties)
+                self.assertIsNone(start)
+                self.assertIsNone(end)
+                self.assertEqual("valid_from/valid_to", source)
+
 
 if __name__ == "__main__":
     unittest.main()

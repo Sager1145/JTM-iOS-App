@@ -967,6 +967,226 @@ def _operating_day_count(calendar_row, version_row, lower_bound, upper_bound, ex
     return count
 
 
+def rail_history_service_interval(properties, context="rail-history feature"):
+    """Return the half-open service interval consumed by the route solver.
+
+    `service_validity` is authoritative when present.  Legacy valid_from/
+    valid_to values are next; a lone infrastructure_validity pair is the
+    compatibility fallback used by app-rail-history.js.
+    """
+    service = properties.get("service_validity")
+    infrastructure = properties.get("infrastructure_validity")
+    has_legacy = "valid_from" in properties or "valid_to" in properties
+    if isinstance(service, (list, tuple)) and len(service) == 2:
+        values = service
+        label = "service_validity"
+    elif has_legacy:
+        values = [properties.get("valid_from"), properties.get("valid_to")]
+        label = "valid_from/valid_to"
+    elif isinstance(infrastructure, (list, tuple)) and len(infrastructure) == 2:
+        values = infrastructure
+        label = "infrastructure_validity"
+    else:
+        values = [None, None]
+        label = "unbounded"
+    if not isinstance(values, (list, tuple)) or len(values) != 2:
+        raise DatasetError(f"{context}.{label}: expected a two-element interval")
+    # RouteGraph.RailValidity treats an empty-string bound as unbounded.  The
+    # rail-history schema rejects it, but this helper also audits independently
+    # constructed snapshots and must preserve runtime selection semantics.
+    start = strict_date(values[0], f"{context}.{label}[0]") if values[0] not in (None, "") else None
+    end = strict_date(values[1], f"{context}.{label}[1]") if values[1] not in (None, "") else None
+    if start is not None and end is not None and start >= end:
+        raise DatasetError(f"{context}.{label}: expected start < exclusive end")
+    return start, end, label
+
+
+def _trip_occurrence_context(data, trip):
+    versions = {row["timetable_version_id"]: row for row in data["timetable_versions"]}
+    calendars = {row["calendar_id"]: row for row in data["calendars"]}
+    version = versions[trip["timetable_version_id"]]
+    calendar_row = calendars[trip["calendar_id"]]
+    lower = max(date.fromisoformat(version["effective_from"]), date.fromisoformat(calendar_row["valid_from"]))
+    upper = min(date.fromisoformat(version["effective_until"]), date.fromisoformat(calendar_row["valid_until"]))
+    return version, calendar_row, lower, upper
+
+
+def _occurrence_alignment(calendar_row, version_row, lower, upper, valid_from, valid_until,
+                          exceptions_by_calendar, holiday_dates):
+    total = _operating_day_count(
+        calendar_row, version_row, lower, upper, exceptions_by_calendar, holiday_dates)
+    aligned_lower = max(lower, valid_from) if valid_from is not None else lower
+    aligned_upper = min(upper, valid_until) if valid_until is not None else upper
+    aligned = 0 if aligned_lower >= aligned_upper else _operating_day_count(
+        calendar_row, version_row, aligned_lower, aligned_upper,
+        exceptions_by_calendar, holiday_dates)
+    return total, aligned, total - aligned
+
+
+def _sample_invalid_occurrences(calendar_row, lower, upper, valid_from, valid_until,
+                                exception_lookup, holiday_dates, holiday_years, limit=5):
+    ranges = []
+    if valid_from is not None and lower < min(upper, valid_from):
+        ranges.append((lower, min(upper, valid_from)))
+    if valid_until is not None and max(lower, valid_until) < upper:
+        ranges.append((max(lower, valid_until), upper))
+    samples = []
+    for start, end in ranges:
+        service_day = start
+        while service_day < end and len(samples) < limit:
+            if calendar_operates(calendar_row, service_day, exception_lookup, holiday_dates, holiday_years):
+                samples.append(service_day.isoformat())
+            service_day += timedelta(days=1)
+        if len(samples) == limit:
+            break
+    return samples
+
+
+def audit_history_alignment(data, manifest, rail_history):
+    """Audit canonical occurrences against rail-history without inferring routes.
+
+    A timetable occurrence keeps its Asia/Tokyo service date at every stop,
+    including stops whose clock time has a positive day_offset.  Direct
+    historical station identities can therefore be checked conclusively.
+    trip_line_segments do not carry a rail-history ID, so name/operator
+    matches are reported only as non-authoritative candidates.
+    """
+    exceptions_by_calendar = defaultdict(list)
+    exception_lookup = {}
+    for row in data["calendar_exceptions"]:
+        exceptions_by_calendar[row["calendar_id"]].append(row)
+        exception_lookup[(row["calendar_id"], row["service_date"])] = row["exception_type"]
+    holiday_dates = {row["service_date"] for row in data["holiday_dates"]}
+    holiday_years = {row["year"]: row["status"] for row in data["holiday_calendar_years"]}
+    stations = {row["station_id"]: row for row in data["station_identities"]}
+    operators = {row["operator_id"]: row for row in data["operators"]}
+    stops_by_trip = defaultdict(list)
+    lines_by_trip = defaultdict(list)
+    for row in data["stop_times"]:
+        stops_by_trip[row["trip_id"]].append(row)
+    for row in data["trip_line_segments"]:
+        lines_by_trip[row["trip_id"]].append(row)
+
+    history_stations = {}
+    for feature in rail_history.get("stations", []):
+        properties = feature.get("properties", {})
+        history_id = properties.get("history_id")
+        if history_id:
+            history_stations[history_id] = properties
+
+    history_sections = []
+    for feature in rail_history.get("sections", []):
+        properties = feature.get("properties", {})
+        if properties.get("history_id"):
+            history_sections.append(properties)
+
+    findings = []
+    occurrence_total = 0
+    trips_with_occurrences = 0
+    station_checks = 0
+    line_checks = 0
+    for trip in sorted(data["trips"], key=lambda row: row["trip_id"]):
+        version, calendar_row, lower, upper = _trip_occurrence_context(data, trip)
+        trip_occurrences = _operating_day_count(
+            calendar_row, version, lower, upper, exceptions_by_calendar, holiday_dates)
+        occurrence_total += trip_occurrences
+        if trip_occurrences == 0:
+            continue
+        trips_with_occurrences += 1
+
+        seen_station_ids = set()
+        for stop in sorted(stops_by_trip[trip["trip_id"]], key=lambda row: row["stop_sequence"]):
+            station = stations[stop["station_id"]]
+            if station["station_id"] in seen_station_ids or station["reference_kind"] != "historical_overlay":
+                continue
+            seen_station_ids.add(station["station_id"])
+            station_checks += 1
+            history_id = station.get("rail_history_id")
+            properties = history_stations.get(history_id)
+            base = {
+                "kind": "station",
+                "tripId": trip["trip_id"],
+                "stationId": station["station_id"],
+                "railHistoryId": history_id,
+                "occurrenceCount": trip_occurrences,
+            }
+            if properties is None:
+                findings.append(dict(base, status="error", reason="rail_history_station_not_found"))
+                continue
+            valid_from, valid_until, source_field = rail_history_service_interval(
+                properties, f"rail-history station {history_id}")
+            total, aligned, invalid = _occurrence_alignment(
+                calendar_row, version, lower, upper, valid_from, valid_until,
+                exceptions_by_calendar, holiday_dates)
+            detail = dict(
+                base,
+                status="aligned" if invalid == 0 else "error",
+                reason="all_occurrences_within_service_validity" if invalid == 0 else "historical_station_outside_service_validity",
+                alignedOccurrenceCount=aligned,
+                invalidOccurrenceCount=invalid,
+                validitySource=source_field,
+                validFrom=valid_from.isoformat() if valid_from else None,
+                validUntil=valid_until.isoformat() if valid_until else None,
+            )
+            if invalid:
+                detail["sampleInvalidServiceDates"] = _sample_invalid_occurrences(
+                    calendar_row, lower, upper, valid_from, valid_until,
+                    exception_lookup, holiday_dates, holiday_years)
+            findings.append(detail)
+
+        segments = sorted(lines_by_trip[trip["trip_id"]], key=lambda row: row["sequence"])
+        if not segments:
+            findings.append({
+                "kind": "route",
+                "tripId": trip["trip_id"],
+                "status": "unverified",
+                "reason": "missing_trip_line_segments",
+                "occurrenceCount": trip_occurrences,
+            })
+            continue
+        for segment in segments:
+            line_checks += 1
+            operator = operators[segment["operator_id"]]
+            operator_names = {operator["display_name"], operator["legal_name"]}
+            candidates = sorted({
+                row["history_id"] for row in history_sections
+                if row.get("N02_003") == segment["line_name"] and row.get("N02_004") in operator_names
+            })
+            findings.append({
+                "kind": "route",
+                "tripId": trip["trip_id"],
+                "segmentSequence": segment["sequence"],
+                "fromStationId": segment["from_station_id"],
+                "toStationId": segment["to_station_id"],
+                "lineName": segment["line_name"],
+                "operatorId": segment["operator_id"],
+                "status": "unverified",
+                "reason": "line_segment_has_no_rail_history_id",
+                "occurrenceCount": trip_occurrences,
+                "candidateHistoryIds": candidates,
+            })
+
+    status_counts = Counter(row["status"] for row in findings)
+    return {
+        "schemaVersion": manifest["schema_version"],
+        "asOfDate": manifest["as_of_date"],
+        "timezone": manifest["timezone"],
+        "serviceDateSemantics": "Asia/Tokyo operating day; stop day_offset does not change the service date",
+        "intervalSemantics": "[validFrom, validUntil)",
+        "railHistoryRevision": rail_history.get("revision"),
+        "tripTemplates": len(data["trips"]),
+        "tripTemplatesWithOccurrences": trips_with_occurrences,
+        "dailyOccurrencesChecked": occurrence_total,
+        "historicalStationChecks": station_checks,
+        "lineSegmentChecks": line_checks,
+        "alignedChecks": status_counts.get("aligned", 0),
+        "unverifiedChecks": status_counts.get("unverified", 0),
+        "errorChecks": status_counts.get("error", 0),
+        "complete": bool(findings) and not status_counts.get("unverified", 0) and not status_counts.get("error", 0),
+        "findings": findings,
+    }
+
+
 def coverage_report(canonical_dir, database_path=None):
     manifest = load_manifest(canonical_dir)
     data, origins = load_dataset(canonical_dir, manifest)

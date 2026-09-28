@@ -51,6 +51,11 @@ struct TrainTimetableDatabaseTests {
         #expect(applied.number == "しなの 1号")
         #expect(applied.stops[0].departure == "23:50")
         #expect(applied.stops[1].arrival == "25:03")
+        #expect(applied.routeSections?.count == 1)
+        #expect(applied.routeSections?.first?.fromN02StationCode == "NAGOYA")
+        #expect(applied.routeSections?.first?.toN02StationCode == "NAGANO")
+        #expect(applied.routeSections?.first?.lineNames == ["中央線"])
+        #expect(applied.routeSections?.first?.operatorNames == ["JR東海"])
         #expect(applied.routePolicy?.preferredLineNames == ["中央線"])
         #expect(applied.routePolicy?.jrOnly == true)
 
@@ -118,6 +123,24 @@ struct TrainTimetableDatabaseTests {
         #expect(applied.routePolicy?.preferredOperatorNames == ["JR東海", "東武鉄道"])
     }
 
+    @Test func multiSegmentPassengerPairRemainsReadOnlyUntilOrderCanBeEnforced() throws {
+        let fixture = try FixtureDatabase(multiSegmentPassengerPair: true)
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let trip = try #require(queried)
+
+        // The source chain is L1/O1 then L2/O2, but RouteSection only carries
+        // unordered allowed-name sets. It cannot enforce the junction or order.
+        #expect(trip.lineSegments.count == 2)
+        #expect(!trip.canApplyToRouteEditor)
+        #expect(trip.compatibilityPattern() == nil)
+        let draft = Train(
+            id: "draft", date: nil, number: "", origin: "", destination: "",
+            stops: [], region: "jp")
+        #expect(trip.applying(to: draft) == nil)
+    }
+
     @Test func malformedDateFailsBeforeSQLiteQuery() throws {
         let fixture = try FixtureDatabase()
         defer { fixture.remove() }
@@ -182,6 +205,13 @@ struct TrainTimetableDatabaseTests {
             .trip(id: "shinano-1", on: "2026-09-29")
         let boundsTrip = try #require(boundsResult)
         #expect(!boundsTrip.canApplyToRouteEditor)
+
+        let lineOperatorFixture = try FixtureDatabase(mismatchedLineOperatorCoverage: true)
+        defer { lineOperatorFixture.remove() }
+        let lineOperatorResult = try TrainTimetableDatabase(url: lineOperatorFixture.url)
+            .trip(id: "shinano-1", on: "2026-09-29")
+        let lineOperatorTrip = try #require(lineOperatorResult)
+        #expect(!lineOperatorTrip.canApplyToRouteEditor)
     }
 
     @Test func nationalAncestralZeroIntervalIsAuthoritative() throws {
@@ -201,7 +231,8 @@ private final class FixtureDatabase {
         unrelatedHolidayCalendar: Bool = false,
         stationValidUntil: String? = nil, operatorValidUntil: String? = nil,
         nationalZeroInterval: Bool = false, invalidOperatorSegmentBounds: Bool = false,
-        mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false
+        mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false,
+        multiSegmentPassengerPair: Bool = false, mismatchedLineOperatorCoverage: Bool = false
     ) throws {
         url = FileManager.default.temporaryDirectory
             .appendingPathComponent("train-timetable-\(UUID().uuidString).sqlite")
@@ -263,6 +294,25 @@ private final class FixtureDatabase {
         }
         if mixedOperatorSegments {
             try execute("""
+                INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
+                """, on: connection)
+        }
+        if multiSegmentPassengerPair {
+            try execute("""
+                INSERT INTO station_identities VALUES(
+                  'shiojiri', '塩尻', 'current_n02', 'SHIOJIRI', NULL, NULL, NULL);
+                DELETE FROM trip_line_segments WHERE trip_id = 'shinano-1';
+                INSERT INTO trip_line_segments VALUES(
+                  'shinano-1',0,'nagoya','shiojiri','中央線','jr-central','high');
+                INSERT INTO trip_line_segments VALUES(
+                  'shinano-1',1,'shiojiri','nagano','篠ノ井線','tobu','high');
+                INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
+                """, on: connection)
+        }
+        if mismatchedLineOperatorCoverage {
+            try execute("""
+                UPDATE trip_line_segments SET operator_id = 'tobu'
+                WHERE trip_id = 'shinano-1';
                 INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
                 """, on: connection)
         }

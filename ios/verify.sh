@@ -76,6 +76,10 @@ if [ "$run_swift" = 1 ]; then
     echo "== Swift ======================================================="
     cd "$here/RailKit"
 
+    python3 "$here/tools/verify-train-timetable-artifact.py" \
+        || fail "timetable and historical network snapshots differ — rebuild the timetable database"
+    echo "  timetable dates, historical network and bundled resource share one snapshot"
+
     python3 "$here/tools/build-train-service-station-refs.py" --check \
         || fail "train-service station references are missing or ambiguous"
     echo "  train-service stations resolve to fixed catalog identities"

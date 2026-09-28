@@ -37,12 +37,12 @@
 20. **UI regression**：专用 iOS 27 设备上，草稿丢弃（86.962 s）、保存后重启（55.827 s）、日期变更保留编辑（37.269 s）分别输出通过。只读精确车次用例单独运行通过（29.161 s，TEST SUCCEEDED），验证しなの的 07:00、名古屋、未确认状态及无应用按钮；结果位于 `/tmp/jtm-runtime-readonly-agent-2.xcresult`。用例补齐既有“置き換える”确认步骤，未因此修改产品行为。这四个用例来自分别运行的结果，不能理解为同一批全套 UI 测试通过。共享设备首轮受另一测试任务并发影响；失败断言与运行器异常没有计作通过。旧 298 Pattern 全部保留，派生的 8 个 Pattern 不能替换旧目录。精确车次不可简单反转；日期改变保留用户编辑并提示重核。
 21. **生成产物哈希（SHA-256）**：
 
-- `derived/train-service-timetable.sqlite`：`60ef25356d73b97ba62e92cf567e340aff8d001b123cd9fc4ad544271eb36ecf`
+- `derived/train-service-timetable.sqlite`：`a8ef436f63ede608ffc07e4eb80cacf2663e85be80b3b8870e2e63be33c16a15`
 - `derived/train-service-patterns.json`：`edb460d0661d9862297df42d4a5dbaac091925446cf9188ad97aa3e3faaa8b6f`
-- `audits/train-timetable-coverage.json`：`4e22e7489119744639a1d9de2513251e3d30c892455800dcddcf1e5cbd82c753`
+- `audits/train-timetable-coverage.json`：`42dbbcc0fa46d3f829ee766c4299c618a91cf2795cdedd74027ac53d11135c3a`
 - `migration/legacy-pattern-map.json`：`f71474289ce37c84162aa5556295f98c3286ecb038d086e45f96cd4b64c9516d`
 
-Canonical source hash：`337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb549f1a0687`。SQLite 为 417792 bytes；RailCore 资源副本字节相同。
+Canonical source hash：`3b9b1e8b369b4848aecb5a7f5a45c482afb20ad17bee02d5c0c5d1317029ddcc`。SQLite 为 417792 bytes；RailCore 资源副本字节相同。
 
 22. **100% 完整之前的明确剩余门槛**：六 JR 当前全车次清单、每条停站时刻和运行日；1987 至今所有改正版本与临时班次；1912–1987 原始日表和服务身份；历史站点/线路/运营区段、改号/合并拆分及路线求解；历史节假日证据；来源冲突审理和许可处理；历史站点在用户编辑器中的应用；改号区段、合并拆分关系及实际事件的运行时查询界面；完整站站时刻详情页；所有旧 Pattern 的经证据迁移与完整界面回归。当前 2470 个覆盖单元 missing、26 个 partial；冲突计数 0 只描述现有小样本。
 
@@ -50,6 +50,8 @@ Canonical source hash：`337e37b8fababe726eb046b406a72563f77fdaa69c6e2330817cfb5
 
 复现步骤见 [数据库架构](train-timetable-database.md) 与 `ios/tools/train_timetable.py --help`。覆盖明细见 `app/data/train-service-history/audits/train-timetable-coverage.json`。
 
-本次验证期间其他任务更新了 `rail-history.json` 至 2026-09-27.1。产物元数据已重建，绑定当前工作树的历史线路哈希 `13f451d4e30f7f6209ef8ce7d68b2ff4afc251cb47a40d72d48ed83f62133343`；这些历史线路改动不属于本次提交。
+本次验证期间其他任务更新了 `rail-history.json` 至 2026-09-27.2。产物元数据已重建，绑定当前工作树的历史线路哈希 `ccdc5b5dc1d328a74cef27f8bf91c6bf6e8b42c0128b6ec660ed7ed8e25dfb5a`；这些历史线路改动不属于本次提交。
 
 阶段提交：`405851d` 为数据库、来源管线、种子数据和运行时基础；`e44ae8d` 包含日期车次界面、跨午夜时钟修复及最终验证报告。
+
+后续时间对齐工作见 [历史线路时间对齐报告](train-timetable-alignment-report.md)。

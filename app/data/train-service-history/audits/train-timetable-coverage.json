@@ -2,8 +2,8 @@
   "asOfDate": "2026-09-27",
   "calendarExceptions": 77,
   "calendarRules": 10,
-  "canonicalSourceHash": "593f35478573ed19c68cd3a2fd3b5a203fa218ad4c93f988b9fef673e8140897",
-  "commitSHA": "e44ae8dfe02c0fdd412d3fbbf7d19a766d4e71bb",
+  "canonicalSourceHash": "3b9b1e8b369b4848aecb5a7f5a45c482afb20ad17bee02d5c0c5d1317029ddcc",
+  "commitSHA": "df5f448b542746694e4336b0b9f971abd9b50dae",
   "conflicts": 0,
   "coverageComplete": false,
   "coverageMatrix": [
@@ -20233,7 +20233,7 @@
     }
   ],
   "dailyOccurrencesRepresented": 77,
-  "databaseHash": "60ef25356d73b97ba62e92cf567e340aff8d001b123cd9fc4ad544271eb36ecf",
+  "databaseHash": "a8ef436f63ede608ffc07e4eb80cacf2663e85be80b3b8870e2e63be33c16a15",
   "expectedCoverageScopes": 7,
   "firstCoveredDate": "2026-05-16",
   "lastCoveredDate": "2026-09-27",
@@ -20967,12 +20967,12 @@
       }
     }
   },
-  "railHistoryHash": "13f451d4e30f7f6209ef8ce7d68b2ff4afc251cb47a40d72d48ed83f62133343",
-  "railHistoryRevision": "2026-09-27.1",
+  "railHistoryHash": "ccdc5b5dc1d328a74cef27f8bf91c6bf6e8b42c0128b6ec660ed7ed8e25dfb5a",
+  "railHistoryRevision": "2026-09-27.2",
   "routeAuditStatus": "not_run",
   "schemaVersion": "1.0.0",
   "serviceFamilies": 6,
-  "solverVersion": "22",
+  "solverVersion": "24",
   "sourceRegistryHash": "5835d8ac62b0d52c34071bb98b2f7b5b0bfd3531bd053fd9df6cf840d68c6bf7",
   "stationPackageHash": "ab20ee37a2c031772e61e25d6c736291689617c2337b973e9b0b62098998ef32",
   "stopTimes": 86,

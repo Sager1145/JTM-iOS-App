@@ -5,7 +5,7 @@
   "first_scope_date": "1912-06-15",
   "timezone": "Asia/Tokyo",
   "service_day_time_semantics": "seconds_since_service_day_start",
-  "solver_version": "22",
+  "solver_version": "24",
   "schema_path": "schema.sql",
   "database_path": "derived/train-service-timetable.sqlite",
   "runtime_database_path": "../../../ios/RailKit/Sources/RailCore/Resources/train-service-timetable.sqlite",
@@ -13,29 +13,75 @@
   "projection_path": "derived/train-service-patterns.json",
   "projection_audit_path": "audits/train-service-patterns-projection.json",
   "entities": {
-    "source_documents": ["sources/source-registry*.jsonl"],
-    "operators": ["normalized/operators*.jsonl"],
-    "services": ["normalized/services*.jsonl"],
-    "service_name_periods": ["normalized/service-name-periods*.jsonl"],
-    "timetable_versions": ["normalized/timetable-versions*.jsonl"],
-    "holiday_calendar_years": ["normalized/holidays/years*.jsonl"],
-    "holiday_dates": ["normalized/holidays/dates*.jsonl"],
-    "calendars": ["normalized/calendars/**/*.jsonl"],
-    "calendar_exceptions": ["normalized/calendar-exceptions/**/*.jsonl"],
-    "station_identities": ["normalized/station-identities*.jsonl"],
-    "trips": ["normalized/trips/**/*.jsonl"],
-    "stop_times": ["normalized/stop-times/**/*.jsonl"],
-    "trip_stop_time_overrides": ["normalized/trip-stop-time-overrides/**/*.jsonl"],
-    "trip_number_segments": ["normalized/trip-number-segments/**/*.jsonl"],
-    "trip_operator_segments": ["normalized/trip-operator-segments/**/*.jsonl"],
-    "trip_line_segments": ["normalized/trip-lines/**/*.jsonl"],
-    "trip_relations": ["normalized/trip-relations/**/*.jsonl"],
-    "fact_sources": ["normalized/fact-sources*.jsonl"],
-    "fact_completeness": ["normalized/fact-completeness*.jsonl"],
-    "verified_zero_service_intervals": ["normalized/verified-zero-service-intervals*.jsonl"],
-    "coverage_declarations": ["normalized/coverage-declarations*.jsonl"],
-    "research_queue": ["normalized/research-queue*.jsonl"],
-    "actual_operation_events": ["normalized/actual-operation-events*.jsonl"]
+    "source_documents": [
+      "sources/source-registry*.jsonl"
+    ],
+    "operators": [
+      "normalized/operators*.jsonl"
+    ],
+    "services": [
+      "normalized/services*.jsonl"
+    ],
+    "service_name_periods": [
+      "normalized/service-name-periods*.jsonl"
+    ],
+    "timetable_versions": [
+      "normalized/timetable-versions*.jsonl"
+    ],
+    "holiday_calendar_years": [
+      "normalized/holidays/years*.jsonl"
+    ],
+    "holiday_dates": [
+      "normalized/holidays/dates*.jsonl"
+    ],
+    "calendars": [
+      "normalized/calendars/**/*.jsonl"
+    ],
+    "calendar_exceptions": [
+      "normalized/calendar-exceptions/**/*.jsonl"
+    ],
+    "station_identities": [
+      "normalized/station-identities*.jsonl"
+    ],
+    "trips": [
+      "normalized/trips/**/*.jsonl"
+    ],
+    "stop_times": [
+      "normalized/stop-times/**/*.jsonl"
+    ],
+    "trip_stop_time_overrides": [
+      "normalized/trip-stop-time-overrides/**/*.jsonl"
+    ],
+    "trip_number_segments": [
+      "normalized/trip-number-segments/**/*.jsonl"
+    ],
+    "trip_operator_segments": [
+      "normalized/trip-operator-segments/**/*.jsonl"
+    ],
+    "trip_line_segments": [
+      "normalized/trip-lines/**/*.jsonl"
+    ],
+    "trip_relations": [
+      "normalized/trip-relations/**/*.jsonl"
+    ],
+    "fact_sources": [
+      "normalized/fact-sources*.jsonl"
+    ],
+    "fact_completeness": [
+      "normalized/fact-completeness*.jsonl"
+    ],
+    "verified_zero_service_intervals": [
+      "normalized/verified-zero-service-intervals*.jsonl"
+    ],
+    "coverage_declarations": [
+      "normalized/coverage-declarations*.jsonl"
+    ],
+    "research_queue": [
+      "normalized/research-queue*.jsonl"
+    ],
+    "actual_operation_events": [
+      "normalized/actual-operation-events*.jsonl"
+    ]
   },
   "expected_coverage_scopes": [
     {

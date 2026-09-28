@@ -1,0 +1,90 @@
+{
+  "alignedChecks": 0,
+  "asOfDate": "2026-09-27",
+  "complete": false,
+  "dailyOccurrencesChecked": 77,
+  "errorChecks": 0,
+  "findings": [
+    {
+      "kind": "route",
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-central.shinano.1.2026-09-18"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 10,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-east.hitachi.26.2026-09-18"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 2,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.kamui.93.2026-05-16"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 1,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-hokkaido.lilac.95.2026-05-16"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.1.2026-09-19"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.2.2026-09-19"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.3.2026-09-19"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.4.2026-09-19"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.5.2026-09-19"
+    },
+    {
+      "kind": "route",
+      "occurrenceCount": 9,
+      "reason": "missing_trip_line_segments",
+      "status": "unverified",
+      "tripId": "jr-kyushu.yufuin-no-mori.6.2026-09-19"
+    }
+  ],
+  "historicalStationChecks": 0,
+  "intervalSemantics": "[validFrom, validUntil)",
+  "lineSegmentChecks": 0,
+  "railHistoryHash": "ccdc5b5dc1d328a74cef27f8bf91c6bf6e8b42c0128b6ec660ed7ed8e25dfb5a",
+  "railHistoryRevision": "2026-09-27.2",
+  "schemaVersion": "1.0.0",
+  "serviceDateSemantics": "Asia/Tokyo operating day; stop day_offset does not change the service date",
+  "timezone": "Asia/Tokyo",
+  "tripTemplates": 10,
+  "tripTemplatesWithOccurrences": 10,
+  "unverifiedChecks": 10
+}
