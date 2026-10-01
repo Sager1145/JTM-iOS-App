@@ -1,0 +1,145 @@
+{
+  "source": "https://global.jr-central.co.jp/en/info/station/",
+  "publisher": "Central Japan Railway Company",
+  "retrievedAt": "2026-09-29",
+  "licenseNote": "No bulk reuse license identified; short station-name facts only, with attribution.",
+  "description": "English labels in JR Central's station layout index. Codes select the matching station in the published JP rail package, including shared interchange groups.",
+  "byCode": {
+    "003766": {
+      "ja": "東京",
+      "en": "Tokyo"
+    },
+    "004095": {
+      "ja": "品川",
+      "en": "Shinagawa"
+    },
+    "004501": {
+      "ja": "新横浜",
+      "en": "Shin-Yokohama"
+    },
+    "005215": {
+      "ja": "小田原",
+      "en": "Odawara"
+    },
+    "005685": {
+      "ja": "熱海",
+      "en": "Atami"
+    },
+    "005601": {
+      "ja": "三島",
+      "en": "Mishima"
+    },
+    "005554": {
+      "ja": "新富士",
+      "en": "Shin-Fuji"
+    },
+    "006128": {
+      "ja": "静岡",
+      "en": "Shizuoka"
+    },
+    "006746": {
+      "ja": "掛川",
+      "en": "Kakegawa"
+    },
+    "007059": {
+      "ja": "浜松",
+      "en": "Hamamatsu"
+    },
+    "006786": {
+      "ja": "豊橋",
+      "en": "Toyohashi"
+    },
+    "006133": {
+      "ja": "三河安城",
+      "en": "Mikawa-Anjo"
+    },
+    "005451": {
+      "ja": "名古屋",
+      "en": "Nagoya"
+    },
+    "005065": {
+      "ja": "岐阜羽島",
+      "en": "Gifu-Hashima"
+    },
+    "005075": {
+      "ja": "米原",
+      "en": "Maibara"
+    },
+    "006079": {
+      "ja": "京都",
+      "en": "Kyoto"
+    },
+    "006911": {
+      "ja": "新大阪",
+      "en": "Shin-Osaka"
+    },
+    "005689": {
+      "ja": "沼津",
+      "en": "Numazu"
+    },
+    "005522": {
+      "ja": "富士",
+      "en": "Fuji"
+    },
+    "005898": {
+      "ja": "清水",
+      "en": "Shimizu"
+    },
+    "006823": {
+      "ja": "愛野",
+      "en": "Aino"
+    },
+    "006251": {
+      "ja": "岡崎",
+      "en": "Okazaki"
+    },
+    "006052": {
+      "ja": "刈谷",
+      "en": "Kariya"
+    },
+    "005551": {
+      "ja": "金山",
+      "en": "Kanayama"
+    },
+    "004788": {
+      "ja": "岐阜",
+      "en": "Gifu"
+    },
+    "005115": {
+      "ja": "御殿場",
+      "en": "Gotemba"
+    },
+    "005304": {
+      "ja": "富士宮",
+      "en": "Fujinomiya"
+    },
+    "005194": {
+      "ja": "高蔵寺",
+      "en": "Kozoji"
+    },
+    "004521": {
+      "ja": "中津川",
+      "en": "Nakatsugawa"
+    },
+    "003015": {
+      "ja": "木曽福島",
+      "en": "Kiso-Fukushima"
+    },
+    "003075": {
+      "ja": "下呂",
+      "en": "Gero"
+    },
+    "002587": {
+      "ja": "高山",
+      "en": "Takayama"
+    },
+    "007857": {
+      "ja": "伊勢市",
+      "en": "Iseshi"
+    },
+    "006905": {
+      "ja": "津",
+      "en": "Tsu"
+    }
+  }
+}

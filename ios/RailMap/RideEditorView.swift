@@ -25,6 +25,7 @@ struct RideEditorView: View {
     @State private var showsOptionalDetails = false
     @State private var showsValidation = false
     @State private var showsAICompletion = false
+    @State private var limitedExpressName = ""
     @State private var addedStopID: UUID?
     @State private var stopEditMode: EditMode = .inactive
     /// The stops removed by the last delete, with the rows they came from.
@@ -40,10 +41,12 @@ struct RideEditorView: View {
     /// held here so the confirmation dialog (when needed) can apply it.
     @State private var showsServicePatternPicker = false
     @State private var showsReplaceStopsConfirmation = false
+    @State private var pendingTimetableTrip: TrainTimetableDatabase.Trip?
     /// The pattern chosen in this editing session. Kept separately from the
     /// editable stops so a later date change can be checked without rewriting
     /// any of the reader's subsequent edits.
     @State private var selectedPattern: TrainServicePatterns.Pattern?
+    @State private var selectedTimetableDate: String?
     /// Whether the reader has moved the ride switch themselves. Once true the
     /// date pre-fill is finished for this session — see ``prefillRidden(forDate:)``.
     @State private var riddenIsTheReaders = false
@@ -54,6 +57,7 @@ struct RideEditorView: View {
     /// every field's inline message would run that a dozen times per
     /// keystroke, on a form whose stop list can be forty rows long.
     @State private var issues: [RideDraftIssue] = []
+    @State private var aiDenial: EditorAIDenial?
     /// Catalog for station resolution and draft-pin coordinates. Nil until loaded.
     @State private var editorCatalog: EditorCatalog?
     /// Stable catalog identity for route choices during this editor session.
@@ -134,8 +138,20 @@ struct RideEditorView: View {
                                                 isExpanded: $showsOptionalDetails) { serviceDetails }
                             }
                         case .date:
-                            Section { dateFields }
+                            Section {
+                                dateFields
+                                if Region.resolved(draft) == .jp { timetableBrowseButton }
+                            }
                             journeyStatusSection
+                            if Region.resolved(draft) == .jp {
+                                TimetableQuickMatchView(
+                                    train: JourneyCompletion.resolvingUniqueStationNames(
+                                        in: draft, catalogs: editorCatalogs),
+                                    serviceName: limitedExpressName) { trip in
+                                    pendingTimetableTrip = trip
+                                    showsReplaceStopsConfirmation = true
+                                }
+                            }
                         case .confirm:
                             confirmationSections
                         }
@@ -154,6 +170,7 @@ struct RideEditorView: View {
                         completionSection
                     }
                 }
+                .accessibilityIdentifier("rideEditorForm")
                 // Inline, and short. §14.5 forbids a fixed English-width
                 // assumption, and the large title fought both toolbar buttons
                 // for the same row and lost — 「乗車記録を編集」 came back as
@@ -174,7 +191,8 @@ struct RideEditorView: View {
                 .task(id: Region.resolved(draft)) { network.ensure(Region.resolved(draft)) }
                 .navigationDestination(item: $addedStopID) { stopID in
                     if let index = stopIDs.firstIndex(of: stopID) {
-                        StopEditorView(stop: $draft.stops[index], index: index,
+                        StopEditorView(stop: $draft.stops[index], journeyDate: $draft.date,
+                                       index: index, isNew: isNew,
                                        region: Region.resolved(draft), allowsEndpointRoles: !isNew,
                                        selectedLineIDs: selectedCatalogLineIDs,
                                        onRiddenChange: { riddenIsTheReaders = true })
@@ -222,6 +240,7 @@ struct RideEditorView: View {
                         guard !Task.isCancelled else { return }
                         if let pinCatalog { editorCatalogs[regionCode] = pinCatalog }
                     }
+                    revalidate()
                     publishDraftMap()
                 }
                 // Keyed on the date alone, so that editing any other field —
@@ -304,7 +323,9 @@ struct RideEditorView: View {
                     draft.destination = ""
                     draft.routePolicy = nil
                     draft.routeSections = nil
+                    limitedExpressName = ""
                     selectedPattern = nil
+                    selectedTimetableDate = nil
                     undoableDeletion = []
                     pendingRegion = nil
                     prefillRidden(forDate: draft.date)
@@ -314,6 +335,8 @@ struct RideEditorView: View {
         .sheet(isPresented: $showsAICompletion) {
             JourneyCompletionView(
                 trains: [draft],
+                context: limitedExpressName.isEmpty ? ""
+                    : "Limited express service name: \(limitedExpressName)",
                 allowsRawImport: true,
                 onApply: { completed in
                     guard let train = completed.first else { return }
@@ -321,10 +344,25 @@ struct RideEditorView: View {
                 })
         }
         .confirmationDialog(
-            "既存の駅を置き換えますか？", isPresented: $showsReplaceStopsConfirmation, titleVisibility: .visible
+            localization.editorText("ios.editor.replaceExistingStopsTitle"),
+            isPresented: $showsReplaceStopsConfirmation, titleVisibility: .visible
         ) {
-            Button("置き換える", role: .destructive) { showsServicePatternPicker = true }
-            Button("キャンセル", role: .cancel) {}
+            Button(localization.editorText("ios.editor.replaceExistingStops"), role: .destructive) {
+                if let trip = pendingTimetableTrip {
+                    pendingTimetableTrip = nil
+                    applyTimetableTrip(trip)
+                } else {
+                    showsServicePatternPicker = true
+                }
+            }
+            .accessibilityIdentifier("rideEditorReplaceStops")
+            Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {
+                pendingTimetableTrip = nil
+            }
+            .accessibilityIdentifier("rideEditorKeepStops")
+        }
+        .onChange(of: showsReplaceStopsConfirmation) { _, presented in
+            if !presented { pendingTimetableTrip = nil }
         }
         .sheet(isPresented: $showsServicePatternPicker) {
             servicePatternPicker
@@ -332,27 +370,50 @@ struct RideEditorView: View {
         .interactiveDismissDisabled(draft != original)
     }
 
+    private var timetableBrowseButton: some View {
+        Button {
+            if draft.stops.contains(where: { !$0.name.isEmpty }) {
+                showsReplaceStopsConfirmation = true
+            } else {
+                showsServicePatternPicker = true
+            }
+        } label: {
+            Label(localization.editorText("ios.editor.timetableBrowse"), systemImage: "magnifyingglass")
+        }
+        .accessibilityIdentifier("rideEditorTimetableBrowse")
+    }
+
     private var servicePatternPicker: some View {
         ServicePatternPickerView(
             region: Region.resolved(draft).code,
             rideDate: draft.date.flatMap { $0.isEmpty ? nil : $0 },
-            onSelectTrip: { trip in
-                let ridden = RideLedger.hasBeenRidden(draft)
-                guard let applied = trip.applying(to: draft, ridden: ridden) else { return }
-                draft = applied
-                selectedPattern = trip.compatibilityPattern()
-                stopIDs = draft.stops.map { _ in UUID() }
-                undoableDeletion = []
-                addedStopID = nil
-            }
+            onSelectDate: { draft.date = $0 },
+            onSelectTrip: { applyTimetableTrip($0) },
+            onSelectDraft: { applyTimetableTrip($0) }
         ) { pattern, reversed in
             let ridden = RideLedger.hasBeenRidden(draft)
             draft = TrainServicePatterns.apply(pattern, to: draft, reversed: reversed, ridden: ridden)
             selectedPattern = pattern
+            selectedTimetableDate = nil
             stopIDs = draft.stops.map { _ in UUID() }
             undoableDeletion = []
             addedStopID = nil
         }
+    }
+
+    private func applyTimetableTrip(_ trip: TrainTimetableDatabase.Trip) {
+        let ridden = RideLedger.hasBeenRidden(draft)
+        guard let applied = trip.canApplyToRouteEditor
+            ? trip.applying(to: draft, ridden: ridden)
+            : trip.publishedStopsDraft(to: draft, ridden: ridden)
+        else { return }
+        draft = applied
+        selectedTimetableDate = trip.serviceDate
+        limitedExpressName = trip.service.canonicalName
+        selectedPattern = trip.canApplyToRouteEditor ? trip.compatibilityPattern() : nil
+        stopIDs = applied.stops.map { _ in UUID() }
+        undoableDeletion = []
+        addedStopID = nil
     }
 
     /// Keep editor occurrence identity only when completion updates the same
@@ -373,6 +434,7 @@ struct RideEditorView: View {
             stopEditMode = .inactive
             undoableDeletion = []
             selectedPattern = nil
+            selectedTimetableDate = nil
         }
         if !sameVisits || draft.routePolicy != completed.routePolicy {
             let region = Region.resolved(completed).code
@@ -404,8 +466,7 @@ struct RideEditorView: View {
 #endif
 
     private var completionSection: some View {
-        let denial = RideEditorAI.denial(
-            train: draft, catalog: editorCatalog, requestInFlight: showsAICompletion)
+        let denial: EditorAIDenial? = showsAICompletion ? .requestInFlight : aiDenial
         return Section {
             Button { showsAICompletion = true } label: {
                 Label(localization.text("ios.ai.title", fallback: "AI completion"), systemImage: "sparkles")
@@ -527,7 +588,8 @@ struct RideEditorView: View {
                     if dynamicTypeSize.isAccessibilitySize {
                         Image(systemName: "chevron.backward").frame(minWidth: 24, minHeight: 24)
                     } else {
-                        Text(localization.editorText("ios.editor.previous")).fixedSize()
+                        Text(localization.editorText("ios.editor.previous"))
+                            .lineLimit(2)
                     }
                 }
                 .accessibilityLabel(localization.editorText("ios.editor.previous"))
@@ -548,7 +610,7 @@ struct RideEditorView: View {
                     step = WizardStep(rawValue: step.rawValue + 1) ?? .confirm
                 } label: {
                     Text(localization.editorText("ios.editor.next"))
-                        .fixedSize(horizontal: true, vertical: false)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -561,7 +623,7 @@ struct RideEditorView: View {
                     Text(dynamicTypeSize.isAccessibilitySize
                         ? localization.text("ios.save", fallback: "Save")
                         : localization.editorText("ios.editor.saveJourney"))
-                        .fixedSize(horizontal: true, vertical: false)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity)
                 }
                 .accessibilityLabel(localization.editorText("ios.editor.saveJourney"))
@@ -577,6 +639,9 @@ struct RideEditorView: View {
     }
 
     @ViewBuilder private var confirmationSections: some View {
+        if selectedTimetableDate != nil && selectedTimetableDate != draft.date {
+            Section { timetableDateNotice }
+        }
         Section(localization.editorText("ios.editor.step.route")) {
             LabeledContent(localization.countryText("country.label", fallback: "Region"),
                 value: localization.text(Region.resolved(draft).localizationKey,
@@ -738,6 +803,7 @@ struct RideEditorView: View {
                     .id(RideDraftIssue.Field.date)
             }
             if !isNew { fieldIssues(.date) }
+            timetableDateNotice
             if let pattern = selectedPattern,
                let date = draft.date,
                let applicability = pattern.applicability(on: date),
@@ -755,6 +821,15 @@ struct RideEditorView: View {
 
     }
 
+    @ViewBuilder private var timetableDateNotice: some View {
+        if let selectedTimetableDate, selectedTimetableDate != draft.date {
+            Label(localization.editorText("ios.editor.timetableDateChanged", ["date": .string(selectedTimetableDate)]),
+                  systemImage: "exclamationmark.triangle")
+                .font(.footnote).foregroundStyle(.orange)
+                .accessibilityIdentifier("rideEditorTimetableDateNotice")
+        }
+    }
+
     @ViewBuilder private var numberFields: some View {
             EditorSearchField(
                 title: localization.countryText("field.number", fallback: "Train number"),
@@ -764,7 +839,7 @@ struct RideEditorView: View {
             )
             .accessibilityIdentifier("rideEditorNumber")
             .id(RideDraftIssue.Field.number)
-            fieldIssues(.number)
+            if !isNew || step == .confirm { fieldIssues(.number) }
     }
 
     private var journeyStatusSection: some View {
@@ -830,6 +905,15 @@ struct RideEditorView: View {
 
     private var searchableDetailsSection: some View {
         Section {
+            if isNew {
+                EditorSearchField(
+                    title: localization.editorText("ios.editor.limitedExpressName"),
+                    text: $limitedExpressName,
+                    suggestions: TrainServiceBranding.services
+                        .filter { $0.region == Region.resolved(draft).code }
+                        .flatMap(\.names))
+                    .accessibilityIdentifier("rideEditorLimitedExpressName")
+            }
             EditorSearchField(
                 title: localization.countryText("field.trainType", fallback: "Train type"),
                 text: optionalText(\.trainType),
@@ -931,13 +1015,14 @@ struct RideEditorView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         NavigationLink {
                             StopEditorView(
-                                stop: $draft.stops[index], index: index,
+                                stop: $draft.stops[index], journeyDate: $draft.date,
+                                index: index, isNew: isNew,
                                 region: Region.resolved(draft), allowsEndpointRoles: !isNew,
                                 selectedLineIDs: selectedCatalogLineIDs,
                                        onRiddenChange: { riddenIsTheReaders = true })
                         } label: {
                             StopEditorLabel(
-                                stop: draft.stops[index], index: index + 1,
+                                stop: draft.stops[index], journeyDate: draft.date, index: index + 1,
                                 emptyTitle: isNew ? localization.editorText(index == 0
                                     ? "ios.editor.chooseOrigin" : index == stopIDs.count - 1
                                     ? "ios.editor.chooseDestination" : "ios.editor.untitledStop") : nil)
@@ -961,9 +1046,12 @@ struct RideEditorView: View {
                         showsServicePatternPicker = true
                     }
                 } label: {
-                    Label("特急から駅を入力", systemImage: "train.side.front.car")
+                    Label(localization.editorText("ios.editor.selectExpressStops"),
+                          systemImage: "train.side.front.car")
                 }
                 .accessibilityIdentifier("rideEditorServicePattern")
+                Text(localization.editorText("ios.editor.expressStopsNote"))
+                    .font(.caption).foregroundStyle(.secondary)
             }
 
             Button {
@@ -1217,6 +1305,8 @@ struct RideEditorView: View {
     private func revalidate() {
         issues = RideDraftValidation.issues(
             for: draft, originalID: original.id, existingIDs: publishedIDs)
+        aiDenial = RideEditorAI.denial(
+            train: draft, catalogs: editorCatalogs, requestInFlight: false)
     }
 
     private var blocking: [RideDraftIssue] { issues.blocking }
@@ -1230,7 +1320,9 @@ struct RideEditorView: View {
             case .region: return false
             case .route:
                 switch issue.field { case .stops, .stop, .routePolicy, .routeSection: return true; default: return false }
-            case .service: return issue.field == .number
+            // The service name/number can be obtained from the timetable or AI
+            // after the date is entered. It remains required at final review.
+            case .service: return false
             case .date: return issue.field == .date
             case .confirm: return true
             }
@@ -1619,6 +1711,7 @@ private struct RouteSectionEditorView: View {
 private struct StopEditorLabel: View {
     @Environment(AppLocalization.self) private var localization
     let stop: Stop
+    let journeyDate: String?
     let index: Int
     var emptyTitle: String? = nil
 
@@ -1632,8 +1725,14 @@ private struct StopEditorLabel: View {
                 Text(stop.name.isEmpty ? (emptyTitle ?? localization.editorText("ios.editor.untitledStop")) : stop.name)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: 6) {
-                    if let arrival = stop.arrival, !arrival.isEmpty { Text(arrival) }
-                    if let departure = stop.departure, !departure.isEmpty { Text(departure) }
+                    if let arrival = stop.arrival, !arrival.isEmpty { Text(displayTime(arrival)) }
+                    if let departure = stop.departure, !departure.isEmpty { Text(displayTime(departure)) }
+                    if let actual = stop.actualArrival, !actual.isEmpty {
+                        Text("実着 \(displayTime(actual))")
+                    }
+                    if let actual = stop.actualDeparture, !actual.isEmpty {
+                        Text("実発 \(displayTime(actual))")
+                    }
                     if let platform = stop.platformNumber {
                         Text(
                             localization.editorText(
@@ -1660,37 +1759,38 @@ private struct StopEditorLabel: View {
         }
         .frame(minHeight: 44)
     }
+
+    private func displayTime(_ raw: String) -> String {
+        guard let journeyDate,
+              case .valid(_, let clock) = EditorTime.parseTime(raw),
+              clock.dayOffset > 0,
+              let date = Dates.addDays(journeyDate, clock.dayOffset)
+        else { return raw }
+        return "\(date) " + String(format: "%02d:%02d", clock.hour, clock.minute)
+    }
 }
 
 /// Station-and-time gate shared by the AI button and the completion sheet.
 private enum RideEditorAI {
-    static func denial(train: Train, catalog: EditorCatalog?, requestInFlight: Bool) -> EditorAIDenial? {
-        let region = Region.resolved(train).code
-        let stops = train.stops.map { stop in
-            let code = stop.n02StationCode ?? ""
-            let resolved = code.isEmpty == false
-                && catalog?.station(StationKey(regionCode: region, sourceCode: code)) != nil
-            func field(_ text: String?) -> EditorTimeInput {
-                guard let text, text.isEmpty == false else {
-                    return EditorTime.input("", confirmed: false)
+    static func denial(train: Train, catalogs: [String: EditorCatalog], requestInFlight: Bool) -> EditorAIDenial? {
+        let resolved = JourneyCompletion.resolvingUniqueStationNames(in: train, catalogs: catalogs)
+        return JourneyCompletion.requestDenial(
+            train: resolved,
+            stationIsInDatabase: { code in
+                catalogs.contains { region, catalog in
+                    catalog.station(StationKey(regionCode: region, sourceCode: code)) != nil
                 }
-                return EditorTime.input(text, confirmed: true)
-            }
-            return EditorAIStop(
-                occurrenceID: UUID(),
-                stationResolved: resolved,
-                arrival: field(stop.arrival),
-                departure: field(stop.departure))
-        }
-        return EditorAIEligibility.denial(
-            stops: stops, providerAvailable: true, requestInFlight: requestInFlight)
+            },
+            requestInFlight: requestInFlight)
     }
 }
 
 private struct StopEditorView: View {
     @Environment(AppLocalization.self) private var localization
     @Binding var stop: Stop
+    @Binding var journeyDate: String?
     let index: Int
+    var isNew = false
     /// The ride's region, so the picker offers that network's stations rather
     /// than all 14,000 across five countries — where 中央駅 and 中央站 would
     /// sit next to each other and picking the wrong one is a route that will
@@ -1828,6 +1928,86 @@ private struct StopEditorView: View {
             }
 
             Section {
+                if isNew {
+                    Toggle(localization.editorText("ios.editor.includeDate"), isOn: Binding(
+                        get: { journeyDate != nil },
+                        set: { journeyDate = $0 ? RecordDate.today(in: region.clock) : nil }
+                    ))
+                    .accessibilityIdentifier("rideEditorStopIncludeDate")
+                }
+                if !isNew || journeyDate != nil {
+                    EditorDateField(
+                        title: localization.editorText("ios.editor.date"),
+                        date: Binding(
+                            get: { journeyDate },
+                            set: { journeyDate = $0 ?? "" }),
+                        region: region,
+                        accessibilityID: "rideEditorStopJourneyDate")
+                }
+            } header: {
+                Text(localization.editorText("ios.editor.date"))
+            } footer: {
+                Text(localization.editorText("ios.editor.sharedJourneyDateNote"))
+            }
+
+            Section {
+                if stop.stopType == "pass_through" {
+                    EditorTimeField(
+                        title: localization.editorText("ios.editor.passTime"),
+                        time: $stop.departure,
+                        serviceDate: journeyDate,
+                        accessibilityID: "rideEditorStopDeparture")
+                    if let arrival = stop.arrival, arrival.isEmpty == false {
+                        EditorTimeField(
+                            title: localization.countryText("popup.arrival", fallback: "Arrival"),
+                            time: $stop.arrival,
+                            serviceDate: journeyDate)
+                    }
+                } else {
+                    EditorTimeField(
+                        title: localization.countryText("popup.arrival", fallback: "Arrival"),
+                        time: $stop.arrival,
+                        serviceDate: journeyDate,
+                        accessibilityID: "rideEditorStopArrival")
+                    EditorTimeField(
+                        title: localization.countryText("popup.departure", fallback: "Departure"),
+                        time: $stop.departure,
+                        serviceDate: journeyDate,
+                        accessibilityID: "rideEditorStopDeparture")
+                }
+            } header: {
+                Text(localization.editorText("ios.editor.times"))
+            } footer: {
+                // The stored clock keeps its service-day offset (for example,
+                // 25:10); the picker and preview show its civil date.
+                Text(localization.editorText("ios.editor.crossDayHint"))
+            }
+            Section {
+                EditorTimeField(title: localization.editorText("ios.editor.actualArrival"),
+                                time: $stop.actualArrival,
+                                serviceDate: journeyDate,
+                                accessibilityID: "rideEditorStopActualArrival")
+                if let status = StopTimingStatus.localizedLabel(
+                    scheduled: stop.arrival, actual: stop.actualArrival,
+                    localization: localization) {
+                    Text(status).foregroundStyle(.secondary)
+                }
+                EditorTimeField(title: localization.editorText("ios.editor.actualDeparture"),
+                                time: $stop.actualDeparture,
+                                serviceDate: journeyDate,
+                                accessibilityID: "rideEditorStopActualDeparture")
+                if let status = StopTimingStatus.localizedLabel(
+                    scheduled: stop.departure, actual: stop.actualDeparture,
+                    localization: localization) {
+                    Text(status).foregroundStyle(.secondary)
+                }
+            } header: {
+                Text(localization.editorText("ios.editor.actualTimes"))
+            } footer: {
+                Text(localization.editorText("ios.editor.actualTimesNote"))
+            }
+
+            Section {
                 Picker(
                     localization.countryText("popup.stopType", fallback: "Stop type"),
                     selection: $stop.stopType
@@ -1849,43 +2029,17 @@ private struct StopEditorView: View {
             } footer: {
                 Text(localization.editorText("ios.editor.rideSegmentNote"))
             }
-
-            Section {
-                if stop.stopType == "pass_through" {
-                    EditorTimeField(
-                        title: localization.editorText("ios.editor.passTime"),
-                        time: $stop.departure,
-                        accessibilityID: "rideEditorStopDeparture")
-                    if let arrival = stop.arrival, arrival.isEmpty == false {
-                        EditorTimeField(
-                            title: localization.countryText("popup.arrival", fallback: "Arrival"),
-                            time: $stop.arrival)
-                    }
-                } else {
-                    EditorTimeField(
-                        title: localization.countryText("popup.arrival", fallback: "Arrival"),
-                        time: $stop.arrival,
-                        accessibilityID: "rideEditorStopArrival")
-                    EditorTimeField(
-                        title: localization.countryText("popup.departure", fallback: "Departure"),
-                        time: $stop.departure,
-                        accessibilityID: "rideEditorStopDeparture")
-                }
-            } header: {
-                Text(localization.editorText("ios.editor.times"))
-            } footer: {
-                // §7.3 / §10.4: an overnight time is written past 24:00 and
-                // kept that way. Nothing here reformats it into a date.
-                Text(localization.editorText("ios.editor.crossDayHint"))
-            }
         }
         .task(id: region.code) {
             let region = region
             do {
-                catalog = try await Task.detached(priority: .userInitiated) {
+                let loaded = try await Task.detached(priority: .userInitiated) {
                     try loadCatalog(for: region)
                 }.value
+                guard !Task.isCancelled else { return }
+                catalog = loaded
             } catch {
+                guard !Task.isCancelled else { return }
                 catalog = nil
             }
         }
@@ -1900,15 +2054,28 @@ private struct StopEditorView: View {
             guard !query.isEmpty else { return }
             do { try await Task.sleep(for: .milliseconds(120)) } catch { return }
             let found = await Task.detached(priority: .userInitiated) {
-                stations.filter { station in
-                    station.name.localizedStandardContains(query)
-                        || station.aliases.contains { $0.localizedStandardContains(query) }
+                let options: String.CompareOptions = [
+                    .caseInsensitive, .diacriticInsensitive, .widthInsensitive,
+                ]
+                let needle = query.folding(options: options, locale: .current)
+                return stations.compactMap { station -> (station: CatalogStation, rank: Int)? in
+                    let names = ([station.name] + station.aliases).map {
+                        $0.folding(options: options, locale: .current)
+                    }
+                    guard names.contains(where: { $0.contains(needle) }) else { return nil }
+                    let rank = names.contains(needle)
+                        ? 0
+                        : names.contains(where: { $0.hasPrefix(needle) }) ? 1 : 2
+                    return (station, rank)
                 }
                 .sorted { lhs, rhs in
-                    if lhs.name != rhs.name { return lhs.name < rhs.name }
-                    return lhs.key.sourceCode < rhs.key.sourceCode
+                    if lhs.rank != rhs.rank { return lhs.rank < rhs.rank }
+                    let order = lhs.station.name.localizedStandardCompare(rhs.station.name)
+                    if order != .orderedSame { return order == .orderedAscending }
+                    return lhs.station.key.sourceCode < rhs.station.key.sourceCode
                 }
                 .prefix(6)
+                .map(\.station)
             }.value
             guard !Task.isCancelled else { return }
             stationMatches = Array(found)

@@ -1,0 +1,26 @@
+{
+  "candidate_id": "jr-hokkaido-ozora12-tokachi10-standard-formations-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Guide-level basic formation enrichment for the 12 existing Ozora and 10 existing Tokachi trips on 2026-09-30. These fields do not identify the actually dispatched set.",
+  "families": {
+    "ozora": {
+      "service_name": "おおぞら",
+      "train_numbers": ["4001D", "4002D", "4003D", "4004D", "4005D", "4006D", "4007D", "4008D", "4009D", "4010D", "4011D", "4012D"],
+      "vehicle_series": "キハ261系1000代",
+      "standard_car_count": 4,
+      "guide_source_id": "jr-hokkaido-ozora-2025-guide",
+      "guide_url": "https://www.jrhokkaido.co.jp/train/tr007_01.html",
+      "formation_image": "https://www.jrhokkaido.co.jp/train/img/hensei/tr007_261_h_2.gif"
+    },
+    "tokachi": {
+      "service_name": "とかち",
+      "train_numbers": ["31D", "32D", "33D", "34D", "35D", "36D", "37D", "38D", "39D", "40D"],
+      "vehicle_series": "キハ261系1000代",
+      "standard_car_count": 4,
+      "guide_source_id": "jr-hokkaido-tokachi-guide-2026",
+      "guide_url": "https://www.jrhokkaido.co.jp/train/tr005_01.html",
+      "formation_image": "https://www.jrhokkaido.co.jp/train/img/hensei/tr005_261_h.gif"
+    }
+  }
+}

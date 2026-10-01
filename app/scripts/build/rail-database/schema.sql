@@ -287,6 +287,30 @@ CREATE TABLE station (
 );
 CREATE INDEX station_name_norm ON station(country_code, name_norm);
 
+-- English candidates for every station group in the shipped Japan package.
+-- Only official_verified rows are operator-verified translations. All other
+-- rows carry an explicit warning because an OSM label or manual transcription
+-- may be wrong. This key is the package GROUP code, not the reading table's
+-- N02 platform code.
+CREATE TABLE station_english_jp (
+  station_id                INTEGER PRIMARY KEY REFERENCES station(id),
+  en                        TEXT NOT NULL,
+  status                    TEXT NOT NULL CHECK (status IN
+                               ('official_verified', 'official_spelling_candidate',
+                                'community_unverified', 'manual_unverified')),
+  translation_may_be_wrong  INTEGER NOT NULL CHECK (translation_may_be_wrong IN (0, 1)),
+  source                    TEXT NOT NULL
+);
+
+CREATE VIEW jp_station_detail AS
+  SELECT s.code AS station_code, s.name AS name_ja, e.en AS name_en,
+         e.status AS en_status,
+         e.translation_may_be_wrong,
+         e.source AS en_source,
+         s.lon, s.lat, s.line_count
+    FROM station s JOIN station_english_jp e ON e.station_id = s.id
+   WHERE s.country_code = 'JP';
+
 -- A station AS IT SITS ON ONE LINE — the authoritative row. Each line anchors
 -- the station on its own track, so the coordinates differ per line by design.
 CREATE TABLE line_station (
@@ -509,11 +533,15 @@ CREATE VIEW station_name_wide AS
          MAX(CASE WHEN n.field = 'zh_Hant'  THEN n.value END) AS zh_hant,
          MAX(CASE WHEN n.field = 'zh_Hans'  THEN n.value END) AS zh_hans,
          MAX(CASE WHEN n.field = 'ja'       THEN n.value END) AS ja,
-         MAX(CASE WHEN n.field = 'en'       THEN n.value END) AS en
+         COALESCE(je.en, MAX(CASE WHEN n.field = 'en' THEN n.value END)) AS en,
+         je.status AS en_status,
+         je.translation_may_be_wrong AS en_translation_may_be_wrong,
+         je.source AS en_source
     FROM line_station ls
     JOIN station s ON s.id = ls.station_id
     LEFT JOIN line_station_name n
            ON n.line_id = ls.line_id AND n.seq = ls.seq
+    LEFT JOIN station_english_jp je ON je.station_id = s.id
    GROUP BY ls.line_id, ls.seq;
 
 -- Every railway a station is served by, with the operator that runs it.

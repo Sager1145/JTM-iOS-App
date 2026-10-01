@@ -1,0 +1,4 @@
+{"calendar_id": "jr-kyushu.kaio.2.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-kyushu-kaio2-20260930"}
+{"calendar_id": "jr-kyushu.kirameki.2.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-kyushu-kirameki2-20260930"}
+{"calendar_id": "jr-shikoku.nanpu.6.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-odekake-nanpu6-20260930-line"}
+{"calendar_id": "jr-shikoku.nanpu.8.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-odekake-nanpu8-20260930-line"}

@@ -1,0 +1,26 @@
+{
+  "candidate_id":"jr-kyushu-nichirin2-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; thirteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-nichirin2-20260930","source_url":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0007/00075401.html?c=28903&ym=202609&d=30","service_date":"2026-09-30",
+  "trip":{"trip_id":"jr-kyushu.nichirin.2.2026-09-30","service_id":"nichirin","service_name":"にちりん","public_number":"2","train_number":"5002M","direction":"南宮崎→大分",
+    "stop_times":[
+      {"name_snapshot":"南宮崎","arrival_time":null,"departure_time":"05:41","platform":null},
+      {"name_snapshot":"宮崎","arrival_time":"05:45","departure_time":"05:47","platform":null},
+      {"name_snapshot":"佐土原","arrival_time":"05:57","departure_time":"06:00","platform":null},
+      {"name_snapshot":"高鍋","arrival_time":"06:09","departure_time":"06:10","platform":null},
+      {"name_snapshot":"日向市","arrival_time":"06:40","departure_time":"06:40","platform":null},
+      {"name_snapshot":"門川","arrival_time":"06:46","departure_time":"06:47","platform":null},
+      {"name_snapshot":"南延岡","arrival_time":"06:55","departure_time":"06:56","platform":null},
+      {"name_snapshot":"延岡","arrival_time":"07:00","departure_time":"07:06","platform":null},
+      {"name_snapshot":"佐伯","arrival_time":"08:04","departure_time":"08:05","platform":null},
+      {"name_snapshot":"津久見","arrival_time":"08:23","departure_time":"08:24","platform":null},
+      {"name_snapshot":"臼杵","arrival_time":"08:33","departure_time":"08:35","platform":null},
+      {"name_snapshot":"鶴崎","arrival_time":"09:01","departure_time":"09:02","platform":null},
+      {"name_snapshot":"大分","arrival_time":"09:09","departure_time":null,"platform":"4"}
+    ]},
+  "evidence_locators":[
+    {"claim":"limited express identity and 5002M","locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL, 毎日運転 row and September calendar"},
+    {"claim":"thirteen full-route calls and clocks","locator":"駅名 / 時刻 / のりば table from 南宮崎 through 大分"}
+  ]
+}

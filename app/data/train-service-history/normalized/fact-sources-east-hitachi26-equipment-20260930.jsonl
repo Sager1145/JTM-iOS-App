@@ -1,0 +1,2 @@
+{"confidence": "high", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "field_name": "formation.all_reserved", "page_or_locator": "2026-09-30 26M 設備: 普通車全車指定席", "source_id": "jr-east-hitachi26-202609", "verification_status": "verified"}
+{"confidence": "high", "entity_id": "jr-east.hitachi.26.2026-09-18", "entity_type": "trip", "field_name": "formation.green_car_available", "page_or_locator": "2026-09-30 26M 設備: グリーン車指定席", "source_id": "jr-east-hitachi26-202609", "verification_status": "verified"}

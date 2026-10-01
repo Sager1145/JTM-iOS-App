@@ -1,1 +1,4 @@
+{"from_sequence": 1, "operator_id": "jr-east", "to_sequence": 12, "trip_id": "jr-east.azusa.1.base.2026-09-18"}
+{"from_sequence": 1, "operator_id": "jr-east", "to_sequence": 12, "trip_id": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19"}
 {"from_sequence": 1, "operator_id": "jr-east", "to_sequence": 14, "trip_id": "jr-east.hitachi.26.2026-09-18"}
+{"from_sequence": 1, "operator_id": "jr-east", "to_sequence": 9, "trip_id": "jr-east.tokiwa.55.main.2026-09-19"}

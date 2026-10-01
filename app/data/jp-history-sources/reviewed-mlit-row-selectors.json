@@ -1,0 +1,2129 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed MLIT opening and closure row selectors",
+  "scope": "Explicit reconciliation decisions for official source rows. Only entries with verified exact-day evidence are replayed into MLIT inventories; ordinary canonical links remain unresolved.",
+  "reviews": [
+    {
+      "source_row_id": "mlit-closures-20260401:052",
+      "event_id": "jp.takachiho.nobeoka-makimine",
+      "kind": "closure",
+      "official_effective_date": "2007-09-06",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "高千穂線",
+        "operator": "高千穂鉄道",
+        "release": "N02-07",
+        "bbox": [
+          131.4474,
+          32.5,
+          131.75,
+          32.75
+        ],
+        "expected": {
+          "from_station": "槇峰",
+          "to_station": "延岡",
+          "business_km": 29.1
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省",
+          "reference": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+          "date_precision": "exact_day",
+          "locator": "第13報 p.30 rail disruption table: 高千穂鉄道 高千穂線 全線 5日 5:31"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 052: 槇峰—延岡 2007-09-06"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:055",
+      "event_id": "jp.takachiho.makimine-takachiho",
+      "kind": "closure",
+      "official_effective_date": "2008-12-28",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "高千穂線",
+        "operator": "高千穂鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "槇峰",
+          "to_station": "高千穂",
+          "business_km": 20.9
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省",
+          "reference": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+          "date_precision": "exact_day",
+          "locator": "第13報 p.30 rail disruption table: 高千穂鉄道 高千穂線 全線 5日 5:31"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 055: 槇峰—高千穂 2008-12-28"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:060",
+      "event_id": "jp.jre.iwaizumi",
+      "kind": "closure",
+      "official_effective_date": "2014-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "岩泉線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-13",
+        "expected": {
+          "from_station": "茂市",
+          "to_station": "岩泉",
+          "business_km": 38.4
+        }
+      },
+      "evidence": [
+        {
+          "authority": "JR東日本",
+          "reference": "https://www.jreast.co.jp/railway/pdf/iwaizumi_course.pdf",
+          "date_precision": "exact_day"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:062",
+      "event_id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+      "kind": "closure",
+      "official_effective_date": "2016-01-31",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_historical_segment",
+        "line_name": "上町線",
+        "operator": "阪堺電気軌道",
+        "release": "N02-15",
+        "bbox": [
+          135.49055,
+          34.61285,
+          135.49082,
+          34.61355
+        ],
+        "historical_bbox": [
+          135.4905,
+          34.6128,
+          135.49225,
+          34.61465
+        ],
+        "stations": [
+          "住吉公園"
+        ],
+        "historical_stations": [
+          "住吉公園"
+        ]
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        }
+      ],
+      "reason": "Verified rich closure selects an isolated historical N02 segment and exact retired station."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:067",
+      "event_id": "jp.jre.ofunato.kesennuma-sakari",
+      "kind": "closure",
+      "official_effective_date": "2020-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "大船渡線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "気仙沼",
+          "to_station": "盛",
+          "business_km": 43.7
+        }
+      },
+      "evidence": [
+        {
+          "authority": "大船渡市",
+          "reference": "https://www.city.ofunato.iwate.jp/uploads/contents/archive_0000003207_00/17705.pdf",
+          "date_precision": "exact_day"
+        },
+        {
+          "authority": "JR東日本",
+          "reference": "https://www.jreast.co.jp/press/2019/20200131_ho01.pdf",
+          "date_precision": "exact_day"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:068",
+      "event_id": "jp.jre.kesennuma.yanaizu-kesennuma",
+      "kind": "closure",
+      "official_effective_date": "2020-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "気仙沼線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "柳津",
+          "to_station": "気仙沼",
+          "business_km": 55.3
+        }
+      },
+      "evidence": [
+        {
+          "authority": "東日本旅客鉄道株式会社 仙台支社",
+          "reference": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+          "date_precision": "exact_day",
+          "locator": "pp.5,7: 2011-03-11 tsunami damage; BRT began 2012-08-20"
+        },
+        {
+          "authority": "東日本旅客鉄道株式会社",
+          "reference": "https://www.jreast.co.jp/press/2019/20191112_ho01.pdf",
+          "date_precision": "exact_day",
+          "locator": "Railway-business closure filing; BRT is operated under the Road Transportation Act"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 068: 柳津—気仙沼 2020-04-01"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:070",
+      "event_id": "jp.jrh.hidaka.mukawa-samani",
+      "kind": "closure",
+      "official_effective_date": "2021-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "日高線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-20",
+        "expected": {
+          "from_station": "鵡川",
+          "to_station": "様似",
+          "business_km": 116.0
+        }
+      },
+      "evidence": [
+        {
+          "authority": "JR北海道",
+          "reference": "https://www.jrhokkaido.co.jp/press/2015/150113-3.pdf",
+          "date_precision": "exact_day"
+        },
+        {
+          "authority": "JR北海道",
+          "reference": "https://www.jrhokkaido.co.jp/press/2015/150227-1.pdf",
+          "date_precision": "exact_day"
+        }
+      ],
+      "reason": "Verified canonical event uses reviewed release geometry; its official row link alone did not confer review."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:046",
+      "event_id": "jp.chiho.ikeda-kitami",
+      "kind": "closure",
+      "official_effective_date": "2006-04-21",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "ふるさと銀河線",
+        "operator": "北海道ちほく高原鉄道",
+        "release": "N02-05",
+        "expected": {
+          "from_station": "北見",
+          "to_station": "池田",
+          "business_km": 140.0,
+          "historical_sections": 63,
+          "historical_station_features": 33,
+          "surveyed_overlay_km": 139.21
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 046: 北見—池田 2006-04-21"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-05 overlay (63 sections, 33 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:047",
+      "event_id": "jp.tokadai.komaki-tokadaihigashi",
+      "kind": "closure",
+      "official_effective_date": "2006-10-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "桃花台線",
+        "operator": "桃花台新交通",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "小牧",
+          "to_station": "桃花台東",
+          "business_km": 7.4,
+          "historical_sections": 12,
+          "historical_station_features": 7,
+          "surveyed_overlay_km": 5.87
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 047: 小牧—桃花台東 2006-10-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-06 overlay (12 sections, 7 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:048",
+      "event_id": "jp.kamioka.inotani-okuhidaonsenguchi",
+      "kind": "closure",
+      "official_effective_date": "2006-12-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "神岡線",
+        "operator": "神岡鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "猪谷",
+          "to_station": "奥飛騨温泉口",
+          "business_km": 19.9,
+          "historical_sections": 14,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 18.89
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 048: 猪谷—奥飛騨温泉口 2006-12-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-06 overlay (14 sections, 8 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:049",
+      "event_id": "jp.kurihara.ishikoshi-hosokura",
+      "kind": "closure",
+      "official_effective_date": "2007-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "くりはら田園鉄道線",
+        "operator": "くりはら田園鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "石越",
+          "to_station": "細倉マインパーク前",
+          "business_km": 25.7,
+          "historical_sections": 31,
+          "historical_station_features": 16,
+          "surveyed_overlay_km": 25.65
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 049: 石越—細倉マインパーク前 2007-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-06 overlay (31 sections, 16 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:050",
+      "event_id": "jp.kashima.ishioka-hokota",
+      "kind": "closure",
+      "official_effective_date": "2007-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "鹿島鉄道線",
+        "operator": "鹿島鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "石岡",
+          "to_station": "鉾田",
+          "business_km": 27.2,
+          "historical_sections": 32,
+          "historical_station_features": 17,
+          "surveyed_overlay_km": 27.1
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 050: 石岡—鉾田 2007-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-06 overlay (32 sections, 17 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:051",
+      "event_id": "jp.nishitetsu.miyajidake.shingu-tsuyazaki",
+      "kind": "closure",
+      "official_effective_date": "2007-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "宮地岳線",
+        "operator": "西日本鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "西鉄新宮",
+          "to_station": "津屋崎",
+          "business_km": 9.9,
+          "historical_sections": 12,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 9.82
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 051: 西鉄新宮—津屋崎 2007-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-06 overlay (12 sections, 8 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:053",
+      "event_id": "jp.shimabara.shimabaragaiko-kazusa",
+      "kind": "closure",
+      "official_effective_date": "2008-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "島原鉄道線",
+        "operator": "島原鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "島原外港",
+          "to_station": "加津佐",
+          "business_km": 35.3,
+          "historical_sections": 40,
+          "historical_station_features": 23,
+          "surveyed_overlay_km": 35.19
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 053: 島原外港—加津佐 2008-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-07 overlay (40 sections, 23 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:054",
+      "event_id": "jp.miki.miki-yakujin",
+      "kind": "closure",
+      "official_effective_date": "2008-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "三木線",
+        "operator": "三木鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "厄神",
+          "to_station": "三木",
+          "business_km": 6.6,
+          "historical_sections": 16,
+          "historical_station_features": 9,
+          "surveyed_overlay_km": 6.66
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 054: 厄神—三木 2008-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-07 overlay (16 sections, 9 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:057",
+      "event_id": "jp.hokutetsu.ishikawa.tsurugi-kaganoichinomiya",
+      "kind": "closure",
+      "official_effective_date": "2009-11-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "石川線",
+        "operator": "北陸鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "鶴来",
+          "to_station": "加賀一の宮",
+          "business_km": 2.1,
+          "historical_sections": 4,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 2.05
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 057: 鶴来—加賀一の宮 2009-11-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-08 overlay (4 sections, 2 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:058",
+      "event_id": "jp.nagaden.yashiro",
+      "kind": "closure",
+      "official_effective_date": "2012-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "屋代線",
+        "operator": "長野電鉄",
+        "release": "N02-11",
+        "expected": {
+          "from_station": "屋代",
+          "to_station": "須坂",
+          "business_km": 24.4,
+          "historical_sections": 23,
+          "historical_station_features": 13,
+          "surveyed_overlay_km": 24.11
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 058: 屋代—須坂 2012-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-11 overlay (23 sections, 13 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:059",
+      "event_id": "jp.towada.towadashi-misawa",
+      "kind": "closure",
+      "official_effective_date": "2012-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "十和田観光電鉄線",
+        "operator": "十和田観光電鉄",
+        "release": "N02-11",
+        "expected": {
+          "from_station": "十和田市",
+          "to_station": "三沢",
+          "business_km": 14.7,
+          "historical_sections": 22,
+          "historical_station_features": 11,
+          "surveyed_overlay_km": 14.5
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 059: 十和田市—三沢 2012-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-11 overlay (22 sections, 11 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:061",
+      "event_id": "jp.jrh.esashi.kikonai-esashi",
+      "kind": "closure",
+      "official_effective_date": "2014-05-12",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "江差線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-13",
+        "expected": {
+          "from_station": "木古内",
+          "to_station": "江差",
+          "business_km": 42.1,
+          "historical_sections": 19,
+          "historical_station_features": 10,
+          "surveyed_overlay_km": 41.79
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 061: 木古内—江差 2014-05-12"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-13 overlay (19 sections, 10 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:063",
+      "event_id": "jp.jrh.rumoi.rumoi-mashike",
+      "kind": "closure",
+      "official_effective_date": "2016-12-05",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "留萌線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-15",
+        "expected": {
+          "from_station": "留萌",
+          "to_station": "増毛",
+          "business_km": 16.7,
+          "historical_sections": 16,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 16.5
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 063: 留萌—増毛 2016-12-05"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-15 overlay (16 sections, 8 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:064",
+      "event_id": "jp.jrw.sanko",
+      "kind": "closure",
+      "official_effective_date": "2018-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "三江線",
+        "operator": "西日本旅客鉄道",
+        "release": "N02-17",
+        "expected": {
+          "from_station": "江津",
+          "to_station": "三次",
+          "business_km": 108.1,
+          "historical_sections": 67,
+          "historical_station_features": 35,
+          "surveyed_overlay_km": 107.37
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 064: 江津—三次 2018-04-01"
+        }
+      ],
+      "reason": "The official legal-closure row, canonical event identity/date/termini, and measured N02-17 overlay (67 sections, 35 station features) were reviewed together. This decision does not infer an earlier service-suspension date."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:066",
+      "event_id": "jp.jrh.sekisho.yubari-branch",
+      "kind": "closure",
+      "official_effective_date": "2019-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "石勝線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-18",
+        "expected": {
+          "from_station": "新夕張",
+          "to_station": "夕張",
+          "business_km": 16.1,
+          "historical_sections": 10,
+          "historical_station_features": 5,
+          "surveyed_overlay_km": 15.57
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 066: 新夕張—夕張 2019-04-01"
+        }
+      ],
+      "reason": "The official legal-closure boundary matches the canonical half-open service boundary; no earlier suspension is substituted by this review. N02-18 identity and measured historical geometry were reviewed as 10 sections and 5 station features."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:071",
+      "event_id": "jp.jrh.rumoi.ishikarinumata-rumoi",
+      "kind": "closure",
+      "official_effective_date": "2023-04-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "留萌線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-22",
+        "expected": {
+          "from_station": "石狩沼田",
+          "to_station": "留萌",
+          "business_km": 35.7,
+          "historical_sections": 17,
+          "historical_station_features": 7,
+          "surveyed_overlay_km": 35.97
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 071: 石狩沼田—留萌 2023-04-01"
+        }
+      ],
+      "reason": "The official legal-closure boundary matches the canonical half-open service boundary; no earlier suspension is substituted by this review. N02-22 identity and measured historical geometry were reviewed as 17 sections and 7 station features."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:073",
+      "event_id": "jp.toei.ueno-monorail",
+      "kind": "closure",
+      "official_effective_date": "2023-12-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "上野懸垂線",
+        "operator": "東京都",
+        "release": "N02-22",
+        "expected": {
+          "from_station": "上野動物園東園",
+          "to_station": "上野動物園西園",
+          "business_km": 0.3,
+          "historical_sections": 3,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 0.32,
+          "runtime_sections": 6,
+          "runtime_station_features": 4,
+          "runtime_overlay_km": 0.64
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 073: 上野動物園東園—上野動物園西園 2023-12-27"
+        },
+        {
+          "authority": "東京都交通局",
+          "reference": "https://www.kotsu.metro.tokyo.jp/about/service/pdf/05kensui_train.pdf",
+          "date_precision": "exact_day"
+        },
+        {
+          "authority": "東京都交通局",
+          "reference": "https://www.kotsu.metro.tokyo.jp/pickup_information/news/pdf/2018/otr_p_20190123_h_01.pdf",
+          "date_precision": "exact_day"
+        },
+        {
+          "authority": "東京都交通局",
+          "reference": "https://www.kotsu.metro.tokyo.jp/pickup_information/news/others/2023/otr_p_2023111311234_h.html",
+          "date_precision": "exact_day"
+        }
+      ],
+      "reason": "The official 2023-12-27 legal closure is distinct from the reviewed rail-service periods ending 2019-11-01; the two surveyed features are emitted for both service periods. N02-22 identity and measured historical geometry were reviewed as 3 sections and 2 station features."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:075",
+      "event_id": "jp.skyrail.seno",
+      "kind": "closure",
+      "official_effective_date": "2024-05-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "広島短距離交通瀬野線",
+        "operator": "スカイレールサービス",
+        "release": "N02-23",
+        "expected": {
+          "from_station": "みどり口",
+          "to_station": "みどり中央",
+          "business_km": 1.3,
+          "historical_sections": 4,
+          "historical_station_features": 3,
+          "surveyed_overlay_km": 1.31
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 075: みどり口—みどり中央 2024-05-01"
+        }
+      ],
+      "reason": "The official legal-closure boundary matches the canonical half-open service boundary; no earlier suspension is substituted by this review. N02-23 identity and measured historical geometry were reviewed as 4 sections and 3 station features."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:076",
+      "event_id": "jp.tateyama.tunnel-trolleybus",
+      "kind": "closure",
+      "official_effective_date": "2024-12-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "無軌条電車線",
+        "operator": "立山黒部貫光",
+        "release": "N02-23",
+        "expected": {
+          "from_station": "室堂",
+          "to_station": "大観峰",
+          "business_km": 3.7,
+          "historical_sections": 3,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 3.74
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 076: 室堂—大観峰 2024-12-01"
+        }
+      ],
+      "reason": "The official legal-closure boundary matches the canonical half-open service boundary; no earlier suspension is substituted by this review. N02-23 identity and measured historical geometry were reviewed as 3 sections and 2 station features."
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:069",
+      "event_id": "jp.jrh.sassho.iryodaigaku-shintotsukawa",
+      "kind": "closure",
+      "official_effective_date": "2020-05-07",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "札沼線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-20",
+        "station_release": "N02-19",
+        "expected": {
+          "from_station": "北海道医療大学",
+          "to_station": "新十津川",
+          "business_km": 47.6,
+          "historical_sections": 33,
+          "historical_station_features": 16,
+          "surveyed_overlay_km": 47.63
+        }
+      },
+      "evidence": [
+        {
+          "authority": "北海道旅客鉄道株式会社",
+          "reference": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20200416_KO_Sassyouline.pdf",
+          "date_precision": "exact_day",
+          "locator": "p.1: 最終運行は2020-04-17 新十津川10:00発、以降の列車は運休"
+        },
+        {
+          "authority": "北海道旅客鉄道株式会社",
+          "reference": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20181221_KO_Sassyoline.pdf",
+          "date_precision": "exact_day",
+          "locator": "p.1: 北海道医療大学—新十津川 廃止予定日2020-05-07"
+        },
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 069: 北海道医療大学—新十津川 2020-05-07"
+        }
+      ],
+      "reason": "The N02-20/N02-19 historical geometry and official legal closure are resolved independently from passenger service. JR Hokkaido records one final train on 2020-04-17 and cancellation thereafter, so date-only service ends 2020-04-18 while infrastructure ends 2020-05-07."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:005",
+      "event_id": "jp.opening.nankai-airport",
+      "kind": "opening",
+      "official_effective_date": "1994-06-15",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "空港線",
+        "operator": "南海電気鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:006",
+      "event_id": "jp.opening.jr-kansai-airport",
+      "kind": "opening",
+      "official_effective_date": "1994-06-15",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "関西空港線",
+        "operator": "西日本旅客鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:010",
+      "event_id": "jp.opening.chizu",
+      "kind": "opening",
+      "official_effective_date": "1994-12-03",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "智頭線",
+        "operator": "智頭急行",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:021",
+      "event_id": "jp.opening.toyo",
+      "kind": "opening",
+      "official_effective_date": "1996-04-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "東葉高速線",
+        "operator": "東葉高速鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:022",
+      "event_id": "jp.opening.miyazaki-airport",
+      "kind": "opening",
+      "official_effective_date": "1996-07-18",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "宮崎空港線",
+        "operator": "九州旅客鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:024",
+      "event_id": "jp.opening.jr-tozai",
+      "kind": "opening",
+      "official_effective_date": "1997-03-08",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "JR東西線",
+        "operator": "西日本旅客鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:025",
+      "event_id": "jp.opening.hokuhoku",
+      "kind": "opening",
+      "official_effective_date": "1997-03-22",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "ほくほく線",
+        "operator": "北越急行",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:032",
+      "event_id": "jp.opening.sukumo",
+      "kind": "opening",
+      "official_effective_date": "1997-10-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "宿毛線",
+        "operator": "土佐くろしお鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:056",
+      "event_id": "jp.opening.guideway-shidami",
+      "kind": "opening",
+      "official_effective_date": "2001-03-23",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "ガイドウェイバス志段味線",
+        "operator": "名古屋ガイドウェイバス",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:057",
+      "event_id": "jp.opening.saitama-rapid",
+      "kind": "opening",
+      "official_effective_date": "2001-03-28",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "埼玉高速鉄道線",
+        "operator": "埼玉高速鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:059",
+      "event_id": "jp.opening.kobe-kaigan",
+      "kind": "opening",
+      "official_effective_date": "2001-07-07",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "海岸線",
+        "operator": "神戸市",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:060",
+      "event_id": "jp.opening.disney-resort",
+      "kind": "opening",
+      "official_effective_date": "2001-07-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "ディズニーリゾートライン",
+        "operator": "舞浜リゾートライン",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:062",
+      "event_id": "jp.opening.shibayama",
+      "kind": "opening",
+      "official_effective_date": "2002-10-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "芝山鉄道線",
+        "operator": "芝山鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:067",
+      "event_id": "jp.opening.kamiiida",
+      "kind": "opening",
+      "official_effective_date": "2003-03-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "上飯田線",
+        "operator": "名古屋市",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:070",
+      "event_id": "jp.opening.minatomirai",
+      "kind": "opening",
+      "official_effective_date": "2004-02-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "みなとみらい21線",
+        "operator": "横浜高速鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:073",
+      "event_id": "jp.opening.aonami",
+      "kind": "opening",
+      "official_effective_date": "2004-10-06",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "西名古屋港線",
+        "operator": "名古屋臨海高速鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:076",
+      "event_id": "jp.opening.meitetsu-airport",
+      "kind": "opening",
+      "official_effective_date": "2005-01-29",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "空港線",
+        "operator": "名古屋鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:079",
+      "event_id": "jp.opening.tsukuba",
+      "kind": "opening",
+      "official_effective_date": "2005-08-24",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "常磐新線",
+        "operator": "首都圏新都市鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:085",
+      "event_id": "jp.opening.sendai-airport",
+      "kind": "opening",
+      "official_effective_date": "2007-03-18",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "仙台空港線",
+        "operator": "仙台空港鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:089",
+      "event_id": "jp.opening.nippori-toneri",
+      "kind": "opening",
+      "official_effective_date": "2008-03-30",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "日暮里・舎人ライナー",
+        "operator": "東京都",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:090",
+      "event_id": "jp.opening.yokohama-green",
+      "kind": "opening",
+      "official_effective_date": "2008-03-30",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "4号線",
+        "operator": "横浜市",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:092",
+      "event_id": "jp.opening.nakanoshima",
+      "kind": "opening",
+      "official_effective_date": "2008-10-19",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "中之島線",
+        "operator": "京阪電気鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:094",
+      "event_id": "jp.opening.mojiko-retro",
+      "kind": "opening",
+      "official_effective_date": "2009-04-26",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "門司港レトロ観光線",
+        "operator": "平成筑豊鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:095",
+      "event_id": "jp.opening.toyama-city-loop",
+      "kind": "opening",
+      "official_effective_date": "2009-12-23",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "富山都心線",
+        "operator": "富山地方鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:102",
+      "event_id": "jp.opening.toyama-station-connection",
+      "kind": "opening",
+      "official_effective_date": "2015-03-14",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "富山駅南北接続線",
+        "operator": "富山地方鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:104",
+      "event_id": "jp.opening.sendai-tozai",
+      "kind": "opening",
+      "official_effective_date": "2015-12-06",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "東西線",
+        "operator": "仙台市",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:106",
+      "event_id": "jp.opening.hokkaido-shinkansen",
+      "kind": "opening",
+      "official_effective_date": "2016-03-26",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "北海道新幹線",
+        "operator": "北海道旅客鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:112",
+      "event_id": "jp.opening.west-kyushu-shinkansen",
+      "kind": "opening",
+      "official_effective_date": "2022-09-23",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "西九州新幹線",
+        "operator": "九州旅客鉄道",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:114",
+      "event_id": "jp.opening.tokyu-shin-yokohama",
+      "kind": "opening",
+      "official_effective_date": "2023-03-18",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "東急新横浜線",
+        "operator": "東急電鉄",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:116",
+      "event_id": "jp.opening.utsunomiya-lrt",
+      "kind": "opening",
+      "official_effective_date": "2023-08-26",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "whole_identity",
+        "line_name": "宇都宮芳賀ライトレール線",
+        "operator": "宇都宮ライトレール",
+        "release": "current-package"
+      },
+      "evidence": [
+        {
+          "authority": "MLIT",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        }
+      ],
+      "reason": "Verified rich event selects the complete current N02 line/operator identity."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:002",
+      "event_id": "jp.opening.nagoya-tsurumai-kamiotai",
+      "kind": "opening",
+      "official_effective_date": "1993-08-12",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "3号線鶴舞線",
+        "operator": "名古屋市",
+        "release": "current-package",
+        "bbox": [
+          136.87684999,
+          35.21549999,
+          136.88629001,
+          35.22360001
+        ],
+        "stations": [
+          "上小田井"
+        ],
+        "expected": {
+          "from_station": "上小田井",
+          "to_station": "庄内緑地公園",
+          "business_km": 1.4
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "名古屋市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:058",
+      "event_id": "jp.opening.rinkai-tennozu",
+      "kind": "opening",
+      "official_effective_date": "2001-03-31",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "臨海副都心線",
+        "operator": "東京臨海高速鉄道",
+        "release": "current-package",
+        "bbox": [
+          139.75081999,
+          35.61972999,
+          139.77768001,
+          35.62689001
+        ],
+        "stations": [
+          "天王洲アイル"
+        ],
+        "expected": {
+          "from_station": "東京テレポート",
+          "to_station": "天王洲アイル",
+          "business_km": 2.9
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "東京臨海高速鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.twr.co.jp/Default.aspx?TabId=337"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:063",
+      "event_id": "jp.opening.rinkai-osaki",
+      "kind": "opening",
+      "official_effective_date": "2002-12-01",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "臨海副都心線",
+        "operator": "東京臨海高速鉄道",
+        "release": "current-package",
+        "bbox": [
+          139.72742999,
+          35.60668999,
+          139.75082001,
+          35.62041001
+        ],
+        "stations": [
+          "品川シーサイド",
+          "大井町",
+          "大崎"
+        ],
+        "expected": {
+          "from_station": "天王洲アイル",
+          "to_station": "大崎",
+          "business_km": 4.4
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "東京臨海高速鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.twr.co.jp/Default.aspx?TabId=337"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:074",
+      "event_id": "jp.opening.kyoto-tozai-rokujizo",
+      "kind": "opening",
+      "official_effective_date": "2004-11-26",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "東西線",
+        "operator": "京都市",
+        "release": "current-package",
+        "bbox": [
+          135.79580999,
+          34.93277999,
+          135.81047001,
+          34.95000001
+        ],
+        "stations": [
+          "六地蔵",
+          "石田"
+        ],
+        "expected": {
+          "from_station": "六地蔵",
+          "to_station": "醍醐",
+          "business_km": 2.4
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/sogo/page/0000013649.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:028",
+      "event_id": "jp.opening.osaka-monorail-minami-ibaraki-kadomashi",
+      "kind": "opening",
+      "official_effective_date": "1997-08-22",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "大阪モノレール線",
+        "operator": "大阪モノレール",
+        "release": "current-package",
+        "bbox": [
+          135.56116999,
+          34.73685999,
+          135.58262001,
+          34.80283001
+        ],
+        "stations": [
+          "沢良宜",
+          "摂津",
+          "南摂津",
+          "大日",
+          "門真市"
+        ],
+        "expected": {
+          "from_station": "南茨木",
+          "to_station": "門真市",
+          "business_km": 7.9
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "大阪モノレール株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.osaka-monorail.co.jp/company/corporate-info/plan/pdf/ryokaku_shunyu2023.pdf"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:027",
+      "event_id": "jp.opening.kyoto-karasuma-kokusai-kaikan",
+      "kind": "opening",
+      "official_effective_date": "1997-06-03",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "烏丸線",
+        "operator": "京都市",
+        "release": "current-package",
+        "bbox": [
+          135.76668999,
+          35.05135999,
+          135.78525001,
+          35.06373001
+        ],
+        "stations": [
+          "松ヶ崎",
+          "国際会館"
+        ],
+        "expected": {
+          "from_station": "北山",
+          "to_station": "国際会館",
+          "business_km": 2.6
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/kotsu/page/0000219240.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:087",
+      "event_id": "jp.opening.kyoto-tozai-uzumasa-tenjingawa",
+      "kind": "opening",
+      "official_effective_date": "2008-01-16",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "東西線",
+        "operator": "京都市",
+        "release": "current-package",
+        "bbox": [
+          135.71547999,
+          35.01093999,
+          135.74129001,
+          35.01181001
+        ],
+        "stations": [
+          "西大路御池",
+          "太秦天神川"
+        ],
+        "expected": {
+          "from_station": "二条",
+          "to_station": "太秦天神川",
+          "business_km": 2.4
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/kotsu/page/0000024682.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:044",
+      "event_id": "jp.opening.sapporo-tozai-miyanosawa",
+      "kind": "opening",
+      "official_effective_date": "1999-02-25",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "東西線",
+        "operator": "札幌市",
+        "release": "current-package",
+        "bbox": [
+          141.27678999,
+          43.07583999,
+          141.30380001,
+          43.09016001
+        ],
+        "stations": [
+          "発寒南",
+          "宮の沢"
+        ],
+        "expected": {
+          "from_station": "琴似",
+          "to_station": "宮の沢",
+          "business_km": 2.8
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "札幌市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.sapporo.jp/st/subway/gaiyo/gaiyo.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:009",
+      "event_id": "jp.opening.sapporo-toho-fukuzumi",
+      "kind": "opening",
+      "official_effective_date": "1994-10-14",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "東豊線",
+        "operator": "札幌市",
+        "release": "current-package",
+        "bbox": [
+          141.35715999,
+          43.02145999,
+          141.40327001,
+          43.05342001
+        ],
+        "stations": [
+          "学園前",
+          "豊平公園",
+          "美園",
+          "月寒中央",
+          "福住"
+        ],
+        "expected": {
+          "from_station": "豊水すすきの",
+          "to_station": "福住",
+          "business_km": 5.5
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "札幌市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.sapporo.jp/st/subway/gaiyo/gaiyo.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    },
+    {
+      "source_row_id": "mlit-openings-20260401:099",
+      "event_id": "jp.opening.nagoya-sakuradori-nonami-tokushige",
+      "kind": "opening",
+      "official_effective_date": "2011-03-27",
+      "review": {
+        "status": "verified"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_current_segment",
+        "line_name": "6号線桜通線",
+        "operator": "名古屋市",
+        "release": "current-package",
+        "bbox": [
+          136.95535999,
+          35.09445799,
+          136.99810501,
+          35.10294601
+        ],
+        "stations": [
+          "鳴子北",
+          "相生山",
+          "神沢",
+          "徳重"
+        ],
+        "expected": {
+          "from_station": "野並",
+          "to_station": "徳重",
+          "business_km": 4.2
+        }
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "名古屋市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+        },
+        {
+          "authority": "名古屋市",
+          "date_precision": "exact_day",
+          "reference": "https://www.ido.city.nagoya.jp/blog/2011/03/2011327.html"
+        }
+      ],
+      "reason": "Reviewed complete surveyed segment with explicit new-station allow-list; the pre-existing boundary membership is excluded."
+    }
+  ]
+}

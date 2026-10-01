@@ -2,9 +2,12 @@ import XCTest
 
 @MainActor
 final class TrainServicePatternUITests: XCTestCase {
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
-        XCUIDevice.shared.orientation = .portrait
+        await MainActor.run {
+            XCUIDevice.shared.orientation = .portrait
+        }
     }
 
     func testPartialExactTripShowsSourceTimesWithoutOfferingRouteApplication() {
@@ -29,9 +32,7 @@ final class TrainServicePatternUITests: XCTestCase {
         legacy.tap()
         next.tap()
         next.tap()
-        let includeDate = app.switches["Include a date"]
-        XCTAssertTrue(includeDate.waitForExistence(timeout: 8))
-        includeDate.switches.firstMatch.tap()
+        EditorUITestSupport.enableDate(in: app)
         let date = app.textFields["rideEditorDateInput"]
         XCTAssertTrue(date.waitForExistence(timeout: 8))
         let oldValue = date.value as? String ?? ""
@@ -46,7 +47,7 @@ final class TrainServicePatternUITests: XCTestCase {
         for _ in 0..<6 where !picker.exists { app.collectionViews.firstMatch.swipeDown() }
         XCTAssertTrue(picker.waitForExistence(timeout: 8), app.debugDescription)
         picker.tap()
-        let replaceStops = app.buttons["置き換える"]
+        let replaceStops = app.buttons["rideEditorReplaceStops"].firstMatch
         XCTAssertTrue(replaceStops.waitForExistence(timeout: 8), app.debugDescription)
         replaceStops.tap()
         let exactSearch = app.searchFields.firstMatch
@@ -122,6 +123,7 @@ final class TrainServicePatternUITests: XCTestCase {
         departure.tap()
         departure.typeText("07:15")
         let ridden = app.switches["rideEditorStopRidden"]
+        for _ in 0..<8 where !ridden.exists { app.collectionViews.firstMatch.swipeUp() }
         XCTAssertTrue(ridden.waitForExistence(timeout: 8))
         ridden.tap()
         app.navigationBars.buttons.element(boundBy: 0).tap()
@@ -144,22 +146,37 @@ final class TrainServicePatternUITests: XCTestCase {
         let notice = app.descendants(matching: .any)["rideEditorPatternDateNotice"]
         // The keyboard covers a screen-wide swipe's start point; scroll
         // the editor form so its date notice is actually materialized.
-        for _ in 0..<4 where !notice.exists { app.collectionViews.firstMatch.swipeUp() }
-        XCTAssertTrue(notice.waitForExistence(timeout: 8))
+        let dateForm = app.collectionViews["rideEditorForm"]
+        for _ in 0..<10 where !notice.exists {
+            dateForm.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4))
+                .press(forDuration: 0.1, thenDragTo: dateForm.coordinate(
+                    withNormalizedOffset: CGVector(dx: 0.5, dy: 0.15)))
+        }
+        XCTAssertTrue(notice.waitForExistence(timeout: 8), app.debugDescription)
 
         app.buttons["rideEditorPrevious"].tap()
+        // Each step replaces the form contents. Wait for the intermediate
+        // service step before asking its newly rendered Previous button to
+        // move again; two immediate taps can both target the outgoing button.
+        let numberAfterDate = app.otherElements["rideEditorNumber"].textFields.firstMatch
+        XCTAssertTrue(numberAfterDate.waitForExistence(timeout: 8))
         app.buttons["rideEditorPrevious"].tap()
-        for _ in 0..<4 where !origin.exists { app.collectionViews.firstMatch.swipeDown() }
-        XCTAssertTrue(origin.waitForExistence(timeout: 8))
-        XCTAssertTrue(origin.label.contains("東京"),
+
+        // Re-query after the route step is rebuilt instead of retaining the
+        // element proxy resolved before the intervening service/date views.
+        let originAfter = app.buttons["rideEditorStop-0"]
+        XCTAssertTrue(originAfter.waitForExistence(timeout: 8))
+        XCTAssertTrue(originAfter.label.contains("東京"),
                       "Changing the ride date must not rewrite selected stops.")
-        origin.tap()
+        originAfter.tap()
         let departureAfter = app.textFields["rideEditorStopDeparture"]
-        XCTAssertTrue(departureAfter.waitForExistence(timeout: 8))
+        for _ in 0..<8 where !departureAfter.exists { app.collectionViews.firstMatch.swipeUp() }
+        XCTAssertTrue(departureAfter.waitForExistence(timeout: 8), app.debugDescription)
         XCTAssertEqual((departureAfter.value as? String)?.split(separator: ":")
             .compactMap { Int($0) }, [7, 15],
             "Changing the date must preserve the edited departure time.")
         let riddenAfter = app.switches["rideEditorStopRidden"]
+        for _ in 0..<8 where !riddenAfter.exists { app.collectionViews.firstMatch.swipeUp() }
         XCTAssertTrue(riddenAfter.waitForExistence(timeout: 8))
         XCTAssertNotEqual(riddenAfter.value as? String, "1",
                           "A reader-cleared ride segment must survive the date change.")

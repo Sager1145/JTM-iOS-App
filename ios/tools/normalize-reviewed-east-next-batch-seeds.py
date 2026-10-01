@@ -31,7 +31,7 @@ EXPECTED = {
     "jr-east-azusa1-base-202609-east-next": {
         "dates": [
             "2026-09-18", "2026-09-22", "2026-09-23", "2026-09-24",
-            "2026-09-25", "2026-09-27", "2026-09-28",
+            "2026-09-25", "2026-09-27", "2026-09-28", "2026-09-29", "2026-09-30",
         ],
         "stops": 12,
         "url": "https://timetables.jreast.co.jp/2610/train/005/008041.html",
@@ -111,12 +111,13 @@ def validate_candidate(candidate, as_of):
             raise ValueError(f"Schedule variants overlap on {sorted(overlap)}")
         seen_dates[key].update(dates)
 
-    azusa_dates = seen_dates[("azusa", "1")]
-    expected_azusa = {
-        date(2026, 9, day).isoformat() for day in range(18, 29)
-    }
-    if azusa_dates != expected_azusa:
-        raise ValueError("Azusa 1 variants must partition every date through the cutoff")
+    if any(trip["service_id"] == "azusa" for trip in trips):
+        azusa_dates = seen_dates[("azusa", "1")]
+        expected_azusa = {
+            date(2026, 9, day).isoformat() for day in range(18, 31)
+        }
+        if azusa_dates != expected_azusa:
+            raise ValueError("Azusa 1 variants must partition every date through the cutoff")
 
 
 def resolve_stations(candidate):

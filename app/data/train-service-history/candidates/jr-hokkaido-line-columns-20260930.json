@@ -1,0 +1,2193 @@
+{
+  "candidate_id": "jr-hokkaido-line-columns-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Twenty-nine selected 2026-09-30 JR Hokkaido daily columns only; printed passenger clock sides preserved, レ and || rows excluded.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.3.exact-2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "3",
+      "train_number": "3D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "3D / hokuto 3, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "函館",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "stops": [
+        [
+          "函館",
+          null,
+          "07:37"
+        ],
+        [
+          "五稜郭",
+          null,
+          "07:42"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "07:57"
+        ],
+        [
+          "森",
+          null,
+          "08:24"
+        ],
+        [
+          "八雲",
+          null,
+          "08:45"
+        ],
+        [
+          "長万部",
+          null,
+          "09:07"
+        ],
+        [
+          "洞爺",
+          null,
+          "09:34"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "09:45"
+        ],
+        [
+          "東室蘭",
+          "10:02",
+          "10:03"
+        ],
+        [
+          "登別",
+          null,
+          "10:15"
+        ],
+        [
+          "白老",
+          null,
+          "10:27"
+        ],
+        [
+          "苫小牧",
+          null,
+          "10:41"
+        ],
+        [
+          "南千歳",
+          null,
+          "10:57"
+        ],
+        [
+          "新札幌",
+          null,
+          "11:20"
+        ],
+        [
+          "札幌",
+          "11:29",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "大沼公園",
+        "鷲別",
+        "幌別",
+        "沼ノ端",
+        "千歳"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.1.exact-2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "1",
+      "train_number": "1001M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "1001M / suzuran 1, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "室蘭",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(6)"
+      },
+      "stops": [
+        [
+          "室蘭",
+          null,
+          "05:25"
+        ],
+        [
+          "母恋",
+          null,
+          "05:27"
+        ],
+        [
+          "御崎",
+          null,
+          "05:30"
+        ],
+        [
+          "輪西",
+          null,
+          "05:33"
+        ],
+        [
+          "東室蘭",
+          "05:36",
+          "05:40"
+        ],
+        [
+          "鷲別",
+          null,
+          "05:43"
+        ],
+        [
+          "幌別",
+          null,
+          "05:49"
+        ],
+        [
+          "登別",
+          null,
+          "05:54"
+        ],
+        [
+          "白老",
+          null,
+          "06:06"
+        ],
+        [
+          "苫小牧",
+          null,
+          "06:19"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "06:26"
+        ],
+        [
+          "南千歳",
+          null,
+          "06:38"
+        ],
+        [
+          "千歳",
+          null,
+          "06:41"
+        ],
+        [
+          "新札幌",
+          null,
+          "07:01"
+        ],
+        [
+          "札幌",
+          "07:10",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.ozora.3.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "3",
+      "train_number": "4003D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "4003D / ozora 3, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "釧路",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "08:52"
+        ],
+        [
+          "新札幌",
+          null,
+          "09:01"
+        ],
+        [
+          "南千歳",
+          null,
+          "09:25"
+        ],
+        [
+          "追分",
+          null,
+          "09:38"
+        ],
+        [
+          "新夕張",
+          null,
+          "10:02"
+        ],
+        [
+          "占冠",
+          null,
+          "10:28"
+        ],
+        [
+          "トマム",
+          null,
+          "10:44"
+        ],
+        [
+          "新得",
+          "11:13",
+          "11:13"
+        ],
+        [
+          "帯広",
+          "11:42",
+          "11:43"
+        ],
+        [
+          "池田",
+          null,
+          "12:00"
+        ],
+        [
+          "白糠",
+          null,
+          "13:01"
+        ],
+        [
+          "釧路",
+          "13:20",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "十勝清水",
+        "芽室",
+        "浦幌"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.3.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "3",
+      "train_number": "33D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "33D / tokachi 3, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "帯広",
+      "printed_platforms": {
+        "札幌": "(6)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "10:45"
+        ],
+        [
+          "新札幌",
+          null,
+          "10:54"
+        ],
+        [
+          "南千歳",
+          null,
+          "11:17"
+        ],
+        [
+          "追分",
+          null,
+          "11:30"
+        ],
+        [
+          "新夕張",
+          null,
+          "11:54"
+        ],
+        [
+          "占冠",
+          null,
+          "12:15"
+        ],
+        [
+          "トマム",
+          null,
+          "12:29"
+        ],
+        [
+          "新得",
+          "12:53",
+          "12:53"
+        ],
+        [
+          "十勝清水",
+          null,
+          "13:01"
+        ],
+        [
+          "芽室",
+          null,
+          "13:18"
+        ],
+        [
+          "帯広",
+          "13:27",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.3.exact-2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "3",
+      "train_number": "1003M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "1003M / suzuran 3, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "室蘭",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(5)"
+      },
+      "stops": [
+        [
+          "室蘭",
+          null,
+          "06:54"
+        ],
+        [
+          "母恋",
+          null,
+          "06:56"
+        ],
+        [
+          "御崎",
+          null,
+          "06:59"
+        ],
+        [
+          "輪西",
+          null,
+          "07:02"
+        ],
+        [
+          "東室蘭",
+          "07:06",
+          "07:08"
+        ],
+        [
+          "鷲別",
+          null,
+          "07:11"
+        ],
+        [
+          "幌別",
+          null,
+          "07:17"
+        ],
+        [
+          "登別",
+          null,
+          "07:22"
+        ],
+        [
+          "白老",
+          null,
+          "07:34"
+        ],
+        [
+          "苫小牧",
+          null,
+          "07:48"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "07:54"
+        ],
+        [
+          "南千歳",
+          null,
+          "08:05"
+        ],
+        [
+          "千歳",
+          null,
+          "08:08"
+        ],
+        [
+          "新札幌",
+          null,
+          "08:29"
+        ],
+        [
+          "札幌",
+          "08:38",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.5.exact-2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "5",
+      "train_number": "5D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "5D / hokuto 5, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "函館",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "stops": [
+        [
+          "函館",
+          null,
+          "08:56"
+        ],
+        [
+          "五稜郭",
+          null,
+          "09:01"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "09:15"
+        ],
+        [
+          "大沼公園",
+          null,
+          "09:25"
+        ],
+        [
+          "森",
+          null,
+          "09:43"
+        ],
+        [
+          "八雲",
+          null,
+          "10:04"
+        ],
+        [
+          "長万部",
+          null,
+          "10:24"
+        ],
+        [
+          "洞爺",
+          null,
+          "10:49"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "11:00"
+        ],
+        [
+          "東室蘭",
+          "11:15",
+          "11:17"
+        ],
+        [
+          "登別",
+          null,
+          "11:29"
+        ],
+        [
+          "白老",
+          null,
+          "11:41"
+        ],
+        [
+          "苫小牧",
+          null,
+          "11:54"
+        ],
+        [
+          "南千歳",
+          null,
+          "12:10"
+        ],
+        [
+          "新札幌",
+          null,
+          "12:33"
+        ],
+        [
+          "札幌",
+          "12:41",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "鷲別",
+        "幌別",
+        "沼ノ端",
+        "千歳"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.ozora.5.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "5",
+      "train_number": "4005D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "4005D / ozora 5, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "釧路",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "11:46"
+        ],
+        [
+          "新札幌",
+          null,
+          "11:54"
+        ],
+        [
+          "南千歳",
+          null,
+          "12:17"
+        ],
+        [
+          "追分",
+          null,
+          "12:29"
+        ],
+        [
+          "新夕張",
+          null,
+          "12:48"
+        ],
+        [
+          "トマム",
+          null,
+          "13:22"
+        ],
+        [
+          "新得",
+          "13:44",
+          "13:45"
+        ],
+        [
+          "帯広",
+          "14:16",
+          "14:17"
+        ],
+        [
+          "池田",
+          null,
+          "14:34"
+        ],
+        [
+          "白糠",
+          null,
+          "15:31"
+        ],
+        [
+          "釧路",
+          "15:50",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "占冠",
+        "十勝清水",
+        "芽室",
+        "浦幌"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.5.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "5",
+      "train_number": "35D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "35D / tokachi 5, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "帯広",
+      "printed_platforms": {
+        "札幌": "(6)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "15:51"
+        ],
+        [
+          "新札幌",
+          null,
+          "16:00"
+        ],
+        [
+          "南千歳",
+          null,
+          "16:26"
+        ],
+        [
+          "追分",
+          null,
+          "16:38"
+        ],
+        [
+          "新夕張",
+          null,
+          "16:57"
+        ],
+        [
+          "占冠",
+          null,
+          "17:24"
+        ],
+        [
+          "トマム",
+          null,
+          "17:39"
+        ],
+        [
+          "新得",
+          "18:02",
+          "18:03"
+        ],
+        [
+          "十勝清水",
+          null,
+          "18:14"
+        ],
+        [
+          "芽室",
+          null,
+          "18:29"
+        ],
+        [
+          "帯広",
+          "18:39",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.7.exact-2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "7",
+      "train_number": "7D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "7D / hokuto 7, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "函館",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(3)"
+      },
+      "stops": [
+        [
+          "函館",
+          null,
+          "10:05"
+        ],
+        [
+          "五稜郭",
+          null,
+          "10:10"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "10:23"
+        ],
+        [
+          "大沼公園",
+          null,
+          "10:33"
+        ],
+        [
+          "森",
+          null,
+          "10:51"
+        ],
+        [
+          "八雲",
+          null,
+          "11:12"
+        ],
+        [
+          "長万部",
+          null,
+          "11:33"
+        ],
+        [
+          "洞爺",
+          null,
+          "11:58"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "12:09"
+        ],
+        [
+          "東室蘭",
+          "12:28",
+          "12:29"
+        ],
+        [
+          "登別",
+          null,
+          "12:42"
+        ],
+        [
+          "白老",
+          null,
+          "12:55"
+        ],
+        [
+          "苫小牧",
+          null,
+          "13:10"
+        ],
+        [
+          "南千歳",
+          null,
+          "13:28"
+        ],
+        [
+          "新札幌",
+          null,
+          "13:52"
+        ],
+        [
+          "札幌",
+          "14:01",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "鷲別",
+        "幌別",
+        "沼ノ端",
+        "千歳"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.7.exact-2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "7",
+      "train_number": "1007M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "1007M / suzuran 7, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "室蘭",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(3)"
+      },
+      "stops": [
+        [
+          "室蘭",
+          null,
+          "11:29"
+        ],
+        [
+          "母恋",
+          null,
+          "11:31"
+        ],
+        [
+          "御崎",
+          null,
+          "11:34"
+        ],
+        [
+          "輪西",
+          null,
+          "11:37"
+        ],
+        [
+          "東室蘭",
+          "11:40",
+          "11:41"
+        ],
+        [
+          "鷲別",
+          null,
+          "11:44"
+        ],
+        [
+          "幌別",
+          null,
+          "11:50"
+        ],
+        [
+          "登別",
+          null,
+          "11:56"
+        ],
+        [
+          "白老",
+          null,
+          "12:08"
+        ],
+        [
+          "苫小牧",
+          null,
+          "12:21"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "12:28"
+        ],
+        [
+          "南千歳",
+          null,
+          "12:39"
+        ],
+        [
+          "千歳",
+          null,
+          "12:42"
+        ],
+        [
+          "新札幌",
+          null,
+          "13:02"
+        ],
+        [
+          "札幌",
+          "13:11",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.ozora.7.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "7",
+      "train_number": "4007D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "4007D / ozora 7, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "釧路",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "13:57"
+        ],
+        [
+          "新札幌",
+          null,
+          "14:05"
+        ],
+        [
+          "南千歳",
+          null,
+          "14:25"
+        ],
+        [
+          "トマム",
+          null,
+          "15:26"
+        ],
+        [
+          "新得",
+          "15:48",
+          "15:48"
+        ],
+        [
+          "帯広",
+          "16:18",
+          "16:19"
+        ],
+        [
+          "釧路",
+          "17:51",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "追分",
+        "新夕張",
+        "占冠",
+        "十勝清水",
+        "芽室",
+        "池田",
+        "浦幌",
+        "白糠"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.7.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "7",
+      "train_number": "37D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "37D / tokachi 7, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "帯広",
+      "printed_platforms": {
+        "札幌": "(5)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "18:40"
+        ],
+        [
+          "新札幌",
+          null,
+          "18:49"
+        ],
+        [
+          "南千歳",
+          null,
+          "19:13"
+        ],
+        [
+          "追分",
+          null,
+          "19:26"
+        ],
+        [
+          "新夕張",
+          null,
+          "19:45"
+        ],
+        [
+          "占冠",
+          null,
+          "20:06"
+        ],
+        [
+          "トマム",
+          null,
+          "20:20"
+        ],
+        [
+          "新得",
+          "20:44",
+          "20:44"
+        ],
+        [
+          "十勝清水",
+          null,
+          "20:57"
+        ],
+        [
+          "芽室",
+          null,
+          "21:12"
+        ],
+        [
+          "帯広",
+          "21:21",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.5.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "5",
+      "train_number": "3005M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3005M / lilac 5, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "printed_platforms": {
+        "札幌": "(10)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "08:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "08:25"
+        ],
+        [
+          "美唄",
+          null,
+          "08:36"
+        ],
+        [
+          "砂川",
+          null,
+          "08:47"
+        ],
+        [
+          "滝川",
+          null,
+          "08:52"
+        ],
+        [
+          "深川",
+          null,
+          "09:06"
+        ],
+        [
+          "旭川",
+          "09:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.11.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "11",
+      "train_number": "3011M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3011M / lilac 11, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "printed_platforms": {
+        "札幌": "(10)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "10:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "10:25"
+        ],
+        [
+          "美唄",
+          null,
+          "10:36"
+        ],
+        [
+          "砂川",
+          null,
+          "10:47"
+        ],
+        [
+          "滝川",
+          null,
+          "10:52"
+        ],
+        [
+          "深川",
+          null,
+          "11:06"
+        ],
+        [
+          "旭川",
+          "11:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.13.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "13",
+      "train_number": "3013M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3013M / lilac 13, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "printed_platforms": {
+        "札幌": "(10)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "11:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "11:25"
+        ],
+        [
+          "美唄",
+          null,
+          "11:36"
+        ],
+        [
+          "砂川",
+          null,
+          "11:47"
+        ],
+        [
+          "滝川",
+          null,
+          "11:52"
+        ],
+        [
+          "深川",
+          null,
+          "12:06"
+        ],
+        [
+          "旭川",
+          "12:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.6.exact-2026-09-30",
+      "service_id": "kamui",
+      "public_number": "6",
+      "train_number": "2006M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2006M / kamui 6, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(3)"
+      },
+      "stops": [
+        [
+          "旭川",
+          null,
+          "07:18"
+        ],
+        [
+          "深川",
+          null,
+          "07:37"
+        ],
+        [
+          "滝川",
+          null,
+          "07:50"
+        ],
+        [
+          "砂川",
+          null,
+          "07:56"
+        ],
+        [
+          "美唄",
+          null,
+          "08:07"
+        ],
+        [
+          "岩見沢",
+          null,
+          "08:18"
+        ],
+        [
+          "札幌",
+          "08:46",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.10.exact-2026-09-30",
+      "service_id": "kamui",
+      "public_number": "10",
+      "train_number": "2010M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2010M / kamui 10, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(2)"
+      },
+      "stops": [
+        [
+          "旭川",
+          null,
+          "08:30"
+        ],
+        [
+          "深川",
+          null,
+          "08:49"
+        ],
+        [
+          "滝川",
+          null,
+          "09:02"
+        ],
+        [
+          "砂川",
+          null,
+          "09:08"
+        ],
+        [
+          "美唄",
+          null,
+          "09:20"
+        ],
+        [
+          "岩見沢",
+          null,
+          "09:30"
+        ],
+        [
+          "札幌",
+          "09:55",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.12.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "12",
+      "train_number": "3012M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3012M / lilac 12, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(2)"
+      },
+      "stops": [
+        [
+          "旭川",
+          null,
+          "09:00"
+        ],
+        [
+          "深川",
+          null,
+          "09:19"
+        ],
+        [
+          "滝川",
+          null,
+          "09:32"
+        ],
+        [
+          "砂川",
+          null,
+          "09:38"
+        ],
+        [
+          "美唄",
+          null,
+          "09:50"
+        ],
+        [
+          "岩見沢",
+          null,
+          "10:00"
+        ],
+        [
+          "札幌",
+          "10:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.14.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "14",
+      "train_number": "3014M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3014M / lilac 14, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(2)"
+      },
+      "stops": [
+        [
+          "旭川",
+          null,
+          "10:00"
+        ],
+        [
+          "深川",
+          null,
+          "10:19"
+        ],
+        [
+          "滝川",
+          null,
+          "10:33"
+        ],
+        [
+          "砂川",
+          null,
+          "10:38"
+        ],
+        [
+          "美唄",
+          null,
+          "10:50"
+        ],
+        [
+          "岩見沢",
+          null,
+          "11:00"
+        ],
+        [
+          "札幌",
+          "11:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.16.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "16",
+      "train_number": "3016M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3016M / lilac 16, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(2)"
+      },
+      "stops": [
+        [
+          "旭川",
+          null,
+          "10:30"
+        ],
+        [
+          "深川",
+          null,
+          "10:49"
+        ],
+        [
+          "滝川",
+          null,
+          "11:02"
+        ],
+        [
+          "砂川",
+          null,
+          "11:08"
+        ],
+        [
+          "美唄",
+          null,
+          "11:20"
+        ],
+        [
+          "岩見沢",
+          null,
+          "11:30"
+        ],
+        [
+          "札幌",
+          "11:55",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.9.exact-2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "9",
+      "train_number": "9D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "9D / hokuto 9, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "函館",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "stops": [
+        [
+          "函館",
+          null,
+          "10:45"
+        ],
+        [
+          "五稜郭",
+          null,
+          "10:50"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "11:04"
+        ],
+        [
+          "大沼公園",
+          null,
+          "11:13"
+        ],
+        [
+          "森",
+          null,
+          "11:32"
+        ],
+        [
+          "八雲",
+          null,
+          "11:53"
+        ],
+        [
+          "長万部",
+          null,
+          "12:13"
+        ],
+        [
+          "洞爺",
+          null,
+          "12:38"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "12:50"
+        ],
+        [
+          "東室蘭",
+          "13:06",
+          "13:07"
+        ],
+        [
+          "登別",
+          null,
+          "13:20"
+        ],
+        [
+          "白老",
+          null,
+          "13:34"
+        ],
+        [
+          "苫小牧",
+          null,
+          "13:47"
+        ],
+        [
+          "南千歳",
+          null,
+          "14:06"
+        ],
+        [
+          "新札幌",
+          null,
+          "14:32"
+        ],
+        [
+          "札幌",
+          "14:41",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "鷲別",
+        "幌別",
+        "沼ノ端",
+        "千歳"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.9.exact-2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "9",
+      "train_number": "1009M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "1009M / suzuran 9, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "室蘭",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "stops": [
+        [
+          "室蘭",
+          null,
+          "16:37"
+        ],
+        [
+          "母恋",
+          null,
+          "16:39"
+        ],
+        [
+          "御崎",
+          null,
+          "16:42"
+        ],
+        [
+          "輪西",
+          null,
+          "16:45"
+        ],
+        [
+          "東室蘭",
+          "16:48",
+          "16:50"
+        ],
+        [
+          "鷲別",
+          null,
+          "16:53"
+        ],
+        [
+          "幌別",
+          null,
+          "16:59"
+        ],
+        [
+          "登別",
+          null,
+          "17:05"
+        ],
+        [
+          "白老",
+          null,
+          "17:17"
+        ],
+        [
+          "苫小牧",
+          null,
+          "17:30"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "17:36"
+        ],
+        [
+          "南千歳",
+          null,
+          "17:50"
+        ],
+        [
+          "千歳",
+          null,
+          "17:53"
+        ],
+        [
+          "新札幌",
+          null,
+          "18:14"
+        ],
+        [
+          "札幌",
+          "18:23",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.ozora.9.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "9",
+      "train_number": "4009D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "4009D / ozora 9, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "釧路",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "17:26"
+        ],
+        [
+          "新札幌",
+          null,
+          "17:35"
+        ],
+        [
+          "南千歳",
+          null,
+          "18:00"
+        ],
+        [
+          "追分",
+          null,
+          "18:12"
+        ],
+        [
+          "新夕張",
+          null,
+          "18:32"
+        ],
+        [
+          "トマム",
+          null,
+          "19:12"
+        ],
+        [
+          "新得",
+          "19:34",
+          "19:34"
+        ],
+        [
+          "十勝清水",
+          null,
+          "19:42"
+        ],
+        [
+          "芽室",
+          null,
+          "19:57"
+        ],
+        [
+          "帯広",
+          "20:06",
+          "20:07"
+        ],
+        [
+          "池田",
+          null,
+          "20:32"
+        ],
+        [
+          "浦幌",
+          null,
+          "20:51"
+        ],
+        [
+          "白糠",
+          null,
+          "21:31"
+        ],
+        [
+          "釧路",
+          "21:50",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "占冠"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.9.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "9",
+      "train_number": "39D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "39D / tokachi 9, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "帯広",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "21:08"
+        ],
+        [
+          "新札幌",
+          null,
+          "21:16"
+        ],
+        [
+          "南千歳",
+          null,
+          "21:37"
+        ],
+        [
+          "追分",
+          null,
+          "21:52"
+        ],
+        [
+          "新夕張",
+          null,
+          "22:18"
+        ],
+        [
+          "占冠",
+          null,
+          "22:39"
+        ],
+        [
+          "新得",
+          "23:14",
+          "23:15"
+        ],
+        [
+          "十勝清水",
+          null,
+          "23:22"
+        ],
+        [
+          "芽室",
+          null,
+          "23:37"
+        ],
+        [
+          "帯広",
+          "23:46",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "トマム"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.17.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "17",
+      "train_number": "3017M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3017M / lilac 17, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "printed_platforms": {
+        "札幌": "(10)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "12:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "12:25"
+        ],
+        [
+          "美唄",
+          null,
+          "12:36"
+        ],
+        [
+          "砂川",
+          null,
+          "12:47"
+        ],
+        [
+          "滝川",
+          null,
+          "12:52"
+        ],
+        [
+          "深川",
+          null,
+          "13:06"
+        ],
+        [
+          "旭川",
+          "13:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.19.exact-2026-09-30",
+      "service_id": "kamui",
+      "public_number": "19",
+      "train_number": "2019M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2019M / kamui 19, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "printed_platforms": {
+        "札幌": "(9)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "13:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "13:25"
+        ],
+        [
+          "美唄",
+          null,
+          "13:36"
+        ],
+        [
+          "砂川",
+          null,
+          "13:47"
+        ],
+        [
+          "滝川",
+          null,
+          "13:52"
+        ],
+        [
+          "深川",
+          null,
+          "14:06"
+        ],
+        [
+          "旭川",
+          "14:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.11.exact-2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "11",
+      "train_number": "11D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "11D / hokuto 11, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "函館",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "stops": [
+        [
+          "函館",
+          null,
+          "12:14"
+        ],
+        [
+          "五稜郭",
+          null,
+          "12:19"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "12:33"
+        ],
+        [
+          "大沼公園",
+          null,
+          "12:43"
+        ],
+        [
+          "森",
+          null,
+          "13:01"
+        ],
+        [
+          "八雲",
+          null,
+          "13:22"
+        ],
+        [
+          "長万部",
+          null,
+          "13:44"
+        ],
+        [
+          "洞爺",
+          null,
+          "14:09"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "14:20"
+        ],
+        [
+          "東室蘭",
+          "14:36",
+          "14:37"
+        ],
+        [
+          "登別",
+          null,
+          "14:49"
+        ],
+        [
+          "白老",
+          null,
+          "15:01"
+        ],
+        [
+          "苫小牧",
+          null,
+          "15:14"
+        ],
+        [
+          "南千歳",
+          null,
+          "15:30"
+        ],
+        [
+          "新札幌",
+          null,
+          "15:54"
+        ],
+        [
+          "札幌",
+          "16:03",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "鷲別",
+        "幌別",
+        "沼ノ端",
+        "千歳"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.11.exact-2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "11",
+      "train_number": "1011M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "1011M / suzuran 11, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "室蘭",
+      "destination": "札幌",
+      "printed_platforms": {
+        "札幌": "(5)"
+      },
+      "stops": [
+        [
+          "室蘭",
+          null,
+          "18:13"
+        ],
+        [
+          "母恋",
+          null,
+          "18:15"
+        ],
+        [
+          "御崎",
+          null,
+          "18:18"
+        ],
+        [
+          "輪西",
+          null,
+          "18:21"
+        ],
+        [
+          "東室蘭",
+          "18:24",
+          "18:26"
+        ],
+        [
+          "鷲別",
+          null,
+          "18:29"
+        ],
+        [
+          "幌別",
+          null,
+          "18:35"
+        ],
+        [
+          "登別",
+          null,
+          "18:40"
+        ],
+        [
+          "白老",
+          null,
+          "18:52"
+        ],
+        [
+          "苫小牧",
+          null,
+          "19:07"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "19:14"
+        ],
+        [
+          "南千歳",
+          null,
+          "19:25"
+        ],
+        [
+          "千歳",
+          null,
+          "19:28"
+        ],
+        [
+          "新札幌",
+          null,
+          "19:50"
+        ],
+        [
+          "札幌",
+          "19:58",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.ozora.11.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "11",
+      "train_number": "4011D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+      "source_locator": "4011D / ozora 11, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "釧路",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "19:39"
+        ],
+        [
+          "新札幌",
+          null,
+          "19:48"
+        ],
+        [
+          "南千歳",
+          null,
+          "20:13"
+        ],
+        [
+          "追分",
+          null,
+          "20:26"
+        ],
+        [
+          "新夕張",
+          null,
+          "20:47"
+        ],
+        [
+          "トマム",
+          null,
+          "21:26"
+        ],
+        [
+          "新得",
+          "21:48",
+          "21:48"
+        ],
+        [
+          "帯広",
+          "22:17",
+          "22:18"
+        ],
+        [
+          "池田",
+          null,
+          "22:35"
+        ],
+        [
+          "白糠",
+          null,
+          "23:32"
+        ],
+        [
+          "釧路",
+          "23:51",
+          null
+        ]
+      ],
+      "pass_through_names": [
+        "占冠",
+        "十勝清水",
+        "芽室",
+        "浦幌"
+      ]
+    }
+  ]
+}

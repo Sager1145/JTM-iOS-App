@@ -31,32 +31,78 @@ def write_jsonl(relative: str, rows: list[dict]) -> None:
 
 def update_seed_review_state() -> None:
     """Refine root seed status after the root normalizer has recreated it."""
-    completeness_path = BASE / "normalized/fact-completeness-root.jsonl"
-    completeness = read_jsonl(completeness_path)
+    azusa_ids = (
+        "jr-east.azusa.1.base.2026-09-18",
+        "jr-east.azusa.1.selected-saturday-holiday.2026-09-19",
+    )
     hitachi_id = "jr-east.hitachi.26.2026-09-18"
+    tokiwa_id = "jr-east.tokiwa.55.main.2026-09-19"
     updates = {
-        "operator": (
+        **{
+            (trip_id, "operator"): (
+                "The exact JR East train page and its service guide support JR East "
+                "attribution; no train-specific operating contract is asserted."
+            )
+            for trip_id in azusa_ids
+        },
+        **{
+            (trip_id, "route_lines"): (
+                "Official sources support ten Chuo Main Line passenger-pair intervals "
+                "through Shiojiri and one Shinonoi Line interval to Matsumoto. "
+                "No current N02 physical line id or rail-history id is asserted."
+            )
+            for trip_id in azusa_ids
+        },
+        (hitachi_id, "operator"): (
             "Official JR East timetable and service pages support operator attribution, "
             "but branding alone is not promoted to high confidence."
         ),
-        "route_lines": (
+        (hitachi_id, "route_lines"): (
             "Official sources support eleven Joban Line passenger-pair intervals from "
             "Iwaki through Ueno. Ueno-Tokyo-Shinagawa physical line identities remain "
             "unverified, and no N02 or rail-history feature id is asserted."
         ),
+        (tokiwa_id, "operator"): (
+            "Official JR East timetable and service pages support operator attribution, "
+            "but branding alone is not promoted to high confidence."
+        ),
+        (tokiwa_id, "route_lines"): (
+            "Official sources support six Joban Line passenger-pair intervals from Ueno "
+            "through Katsuta. Shinagawa-Tokyo-Ueno physical line identities remain "
+            "unverified, and no N02 or rail-history feature id is asserted."
+        ),
     }
-    seen: set[str] = set()
-    for row in completeness:
-        if row["entity_id"] == hitachi_id and row["dimension"] in updates:
-            row.update(status="partial", confidence="medium", notes=updates[row["dimension"]])
-            seen.add(row["dimension"])
+    seen: set[tuple[str, str]] = set()
+    for completeness_path in sorted((BASE / "normalized").glob("fact-completeness*.jsonl")):
+        completeness = read_jsonl(completeness_path)
+        changed = False
+        for row in completeness:
+            key = (row["entity_id"], row["dimension"])
+            if key in updates:
+                row.update(status="partial", confidence="medium", notes=updates[key])
+                seen.add(key)
+                changed = True
+        if changed:
+            write_jsonl(str(completeness_path.relative_to(BASE)), completeness)
     if seen != set(updates):
-        raise ValueError(f"missing Hitachi completeness seeds: {sorted(set(updates) - seen)}")
-    write_jsonl("normalized/fact-completeness-root.jsonl", completeness)
+        raise ValueError(f"missing completeness seeds: {sorted(set(updates) - seen)}")
 
-    queue_path = BASE / "normalized/research-queue-root.jsonl"
-    queue = read_jsonl(queue_path)
     queue_notes = {
+        **{
+            (trip_id, "operator"): (
+                "Partial JR East attribution is recorded. Obtain a train-specific "
+                "operating-entity statement before raising confidence to verified/high."
+            )
+            for trip_id in azusa_ids
+        },
+        **{
+            (trip_id, "route_lines"): (
+                "Chuo Main through Shiojiri and Shinonoi to Matsumoto are supported "
+                "as ordered line labels. Direct current N02 line or historical-overlay "
+                "feature identities remain unverified."
+            )
+            for trip_id in azusa_ids
+        },
         (hitachi_id, "operator"): (
             "Partial official JR East attribution is recorded. Obtain a train-specific "
             "operating-entity statement before raising operator confidence to verified/high."
@@ -66,6 +112,15 @@ def update_seed_review_state() -> None:
             "and explicit current N02 line ids or historical-overlay ids for all intervals, "
             "especially Ueno-Tokyo-Shinagawa; never resolve them by name matching."
         ),
+        (tokiwa_id, "operator"): (
+            "Partial official JR East attribution is recorded. Obtain a train-specific "
+            "operating-entity statement before raising operator confidence to verified/high."
+        ),
+        (tokiwa_id, "route_lines"): (
+            "Joban Line is supported only from Ueno through Katsuta. Obtain official physical "
+            "line names and explicit current N02 line ids or historical-overlay ids for all "
+            "intervals, especially Shinagawa-Tokyo-Ueno; never resolve them by name matching."
+        ),
         ("jr-central.shinano.1.2026-09-18", "route_lines"): (
             "Official material names the Chuo Main and Shinonoi lines but does not state the "
             "train-specific transition boundary or physical feature ids. Keep unnormalized "
@@ -73,14 +128,19 @@ def update_seed_review_state() -> None:
         ),
     }
     queue_seen: set[tuple[str, str]] = set()
-    for row in queue:
-        key = (row["entity_id"], row["missing_dimension"])
-        if key in queue_notes:
-            row["notes"] = queue_notes[key]
-            queue_seen.add(key)
+    for queue_path in sorted((BASE / "normalized").glob("research-queue*.jsonl")):
+        queue = read_jsonl(queue_path)
+        changed = False
+        for row in queue:
+            key = (row["entity_id"], row["missing_dimension"])
+            if key in queue_notes:
+                row["notes"] = queue_notes[key]
+                queue_seen.add(key)
+                changed = True
+        if changed:
+            write_jsonl(str(queue_path.relative_to(BASE)), queue)
     if queue_seen != set(queue_notes):
         raise ValueError(f"missing research seeds: {sorted(set(queue_notes) - queue_seen)}")
-    write_jsonl("normalized/research-queue-root.jsonl", queue)
 
     coverage_path = BASE / "normalized/coverage-declarations-root.jsonl"
     coverage = read_jsonl(coverage_path)
@@ -90,12 +150,14 @@ def update_seed_review_state() -> None:
         raise ValueError(f"expected one coverage seed: {coverage_id}")
     matching[0].update(
         status="partial",
-        record_count=11,
+        record_count=39,
         source_id="jr-east-kanto-route-map-202604",
         notes=(
-            "Eleven reviewed Joban Line passenger-pair intervals cover Iwaki through "
-            "Ueno for one Hitachi trip. Ueno-Tokyo-Shinagawa, explicit physical line "
-            "identities and the company-wide/full-year denominator remain unverified."
+            "Seventeen reviewed Joban Line passenger-pair intervals cover one Hitachi "
+            "and one Tokiwa trip; twenty-two Chuo Main/Shinonoi intervals cover the "
+            "two Azusa 1 variants. Hitachi/Tokiwa Ueno-Tokyo-Shinagawa intervals, "
+            "explicit physical feature identities and the company-wide/full-year "
+            "denominator remain unverified."
         ),
     )
     write_jsonl("normalized/coverage-declarations-root.jsonl", coverage)
@@ -108,11 +170,13 @@ def main() -> None:
 
     trips = {
         row["trip_id"]
-        for row in read_jsonl(BASE / "normalized/trips/reviewed-root/seeds.jsonl")
+        for path in sorted((BASE / "normalized/trips").rglob("*.jsonl"))
+        for row in read_jsonl(path)
     }
     stations = {
         row["station_id"]: row
-        for row in read_jsonl(BASE / "normalized/station-identities-root.jsonl")
+        for path in sorted((BASE / "normalized").glob("station-identities*.jsonl"))
+        for row in read_jsonl(path)
     }
     operators = {
         row["operator_id"]

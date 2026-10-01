@@ -1,0 +1,2 @@
+{"from_sequence": 1, "related_trip_id": "jr-east.narita-express.30.2230m.exact-2026-09-30", "relation_type": "couples_with", "source_id": "jr-east-narita-express30-20260930", "to_sequence": 4, "trip_id": "jr-east.narita-express.30.2030m.exact-2026-09-30"}
+{"from_sequence": 1, "related_trip_id": "jr-east.narita-express.30.2030m.exact-2026-09-30", "relation_type": "couples_with", "source_id": "jr-east-narita-express30-20260930", "to_sequence": 4, "trip_id": "jr-east.narita-express.30.2230m.exact-2026-09-30"}

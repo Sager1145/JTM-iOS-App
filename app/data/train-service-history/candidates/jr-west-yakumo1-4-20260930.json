@@ -1,0 +1,425 @@
+{
+  "candidate_id": "jr-west-yakumo1-4-20260930",
+  "candidate_status": "visually_reviewed_official_train_pages",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Only September 30 is staged. Pass rows are excluded. The four pages print Green reserved seats and all ordinary seats reserved; no train-specific vehicle series, car count, capacity or actual dispatch is established. Yakumo 2 has a date-specific partial suspension note that does not list September 30.",
+  "trips": [
+    {
+      "trip_id": "jr-west.yakumo.1.2026-09-30",
+      "service_id": "yakumo",
+      "public_number": "1",
+      "train_number": "1001M",
+      "source_id": "jr-west-odekake-yakumo1-1001m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/76231?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "岡山",
+          "code": "007310",
+          "arrival": null,
+          "departure": "07:05",
+          "platform": "2",
+          "call_type": "origin"
+        },
+        {
+          "name": "倉敷",
+          "code": "007598",
+          "arrival": "07:16",
+          "departure": "07:16",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "備中高梁",
+          "code": "006686",
+          "arrival": "07:40",
+          "departure": "07:40",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新見",
+          "code": "006070",
+          "arrival": "08:10",
+          "departure": "08:11",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "生山",
+          "code": "005452",
+          "arrival": "08:43",
+          "departure": "08:44",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "米子",
+          "code": "004758",
+          "arrival": "09:21",
+          "departure": "09:23",
+          "platform": "2",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "安来",
+          "code": "004748",
+          "arrival": "09:30",
+          "departure": "09:30",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "松江",
+          "code": "004638",
+          "arrival": "09:49",
+          "departure": "09:50",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "玉造温泉",
+          "code": "004736",
+          "arrival": "09:56",
+          "departure": "09:56",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "宍道",
+          "code": "004793",
+          "arrival": "10:06",
+          "departure": "10:07",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "出雲市",
+          "code": "004943",
+          "arrival": "10:18",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.yakumo.2.2026-09-30",
+      "service_id": "yakumo",
+      "public_number": "2",
+      "train_number": "1002M",
+      "source_id": "jr-west-odekake-yakumo2-1002m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/76332?date=20260930",
+      "operation_label": "９月１８日・１０月１４～１６・２０～２３・２７～３０日・１１月５・６・１０～１３・１７～２０日は出雲市－米子間運休",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "出雲市",
+          "code": "004943",
+          "arrival": null,
+          "departure": "04:42",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "宍道",
+          "code": "004793",
+          "arrival": "04:52",
+          "departure": "04:53",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "松江",
+          "code": "004638",
+          "arrival": "05:06",
+          "departure": "05:07",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "安来",
+          "code": "004748",
+          "arrival": "05:22",
+          "departure": "05:23",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "米子",
+          "code": "004758",
+          "arrival": "05:30",
+          "departure": "05:32",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "伯耆大山",
+          "code": "004738",
+          "arrival": "05:36",
+          "departure": "05:36",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "生山",
+          "code": "005452",
+          "arrival": "06:09",
+          "departure": "06:10",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新見",
+          "code": "006070",
+          "arrival": "06:39",
+          "departure": "06:40",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "備中高梁",
+          "code": "006686",
+          "arrival": "07:06",
+          "departure": "07:06",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "倉敷",
+          "code": "007598",
+          "arrival": "07:28",
+          "departure": "07:29",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "岡山",
+          "code": "007310",
+          "arrival": "07:41",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.yakumo.3.2026-09-30",
+      "service_id": "yakumo",
+      "public_number": "3",
+      "train_number": "1003M",
+      "source_id": "jr-west-odekake-yakumo3-1003m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/76241?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "岡山",
+          "code": "007310",
+          "arrival": null,
+          "departure": "08:13",
+          "platform": "2",
+          "call_type": "origin"
+        },
+        {
+          "name": "倉敷",
+          "code": "007598",
+          "arrival": "08:24",
+          "departure": "08:24",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "備中高梁",
+          "code": "006686",
+          "arrival": "08:47",
+          "departure": "08:48",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新見",
+          "code": "006070",
+          "arrival": "09:14",
+          "departure": "09:15",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "根雨",
+          "code": "005255",
+          "arrival": "10:00",
+          "departure": "10:00",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "米子",
+          "code": "004758",
+          "arrival": "10:23",
+          "departure": "10:25",
+          "platform": "2",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "安来",
+          "code": "004748",
+          "arrival": "10:32",
+          "departure": "10:32",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "松江",
+          "code": "004638",
+          "arrival": "10:47",
+          "departure": "10:48",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "宍道",
+          "code": "004793",
+          "arrival": "11:01",
+          "departure": "11:01",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "出雲市",
+          "code": "004943",
+          "arrival": "11:12",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.yakumo.4.2026-09-30",
+      "service_id": "yakumo",
+      "public_number": "4",
+      "train_number": "1004M",
+      "source_id": "jr-west-odekake-yakumo4-1004m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/76281?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "出雲市",
+          "code": "004943",
+          "arrival": null,
+          "departure": "05:27",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "宍道",
+          "code": "004793",
+          "arrival": "05:37",
+          "departure": "05:38",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "松江",
+          "code": "004638",
+          "arrival": "05:51",
+          "departure": "05:52",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "安来",
+          "code": "004748",
+          "arrival": "06:07",
+          "departure": "06:08",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "米子",
+          "code": "004758",
+          "arrival": "06:15",
+          "departure": "06:23",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "伯耆大山",
+          "code": "004738",
+          "arrival": "06:27",
+          "departure": "06:27",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "根雨",
+          "code": "005255",
+          "arrival": "06:47",
+          "departure": "06:48",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新見",
+          "code": "006070",
+          "arrival": "07:29",
+          "departure": "07:29",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "備中高梁",
+          "code": "006686",
+          "arrival": "07:59",
+          "departure": "08:00",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "総社",
+          "code": "007263",
+          "arrival": "08:15",
+          "departure": "08:15",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "倉敷",
+          "code": "007598",
+          "arrival": "08:23",
+          "departure": "08:24",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "岡山",
+          "code": "007310",
+          "arrival": "08:35",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    }
+  ]
+}

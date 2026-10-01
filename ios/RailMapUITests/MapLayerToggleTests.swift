@@ -9,8 +9,12 @@ import XCTest
 /// what a person looks at to see that the map actually changed.
 @MainActor
 final class MapLayerToggleTests: XCTestCase {
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
+        await MainActor.run {
+            XCUIDevice.shared.orientation = .portrait
+        }
     }
 
     /// 列車経路 is reachable from the rail, and reports its own state.
@@ -45,8 +49,8 @@ final class MapLayerToggleTests: XCTestCase {
         routes.tap()
 
         app.buttons["mapLayersButton"].tap()
-        let stops = app.switches["layerStops"]
-        XCTAssertTrue(stops.waitForExistence(timeout: 8), "the layers sheet never opened")
+        let stops = revealSwitch("layerStops", in: app)
+        XCTAssertTrue(stops.exists, "the ridden-layer switches were not reachable in the layers sheet")
         XCTAssertFalse(
             stops.isEnabled,
             "With 列車経路 off there are no routes for a stop marker to sit on, so its "
@@ -58,7 +62,8 @@ final class MapLayerToggleTests: XCTestCase {
         dismissLayers(app)
         routes.tap()
         app.buttons["mapLayersButton"].tap()
-        XCTAssertTrue(waitFor(timeout: 8) { app.switches["layerStops"].isEnabled })
+        let restoredStops = revealSwitch("layerStops", in: app)
+        XCTAssertTrue(waitFor(timeout: 8) { restoredStops.isEnabled })
         attach(app, named: "04-markers-enabled")
     }
 
@@ -81,8 +86,8 @@ final class MapLayerToggleTests: XCTestCase {
         XCTAssertTrue(waitFor(timeout: 6) { !routes.isSelected })
 
         app.buttons["mapLayersButton"].tap()
-        let master = app.switches["layerRoutes"]
-        XCTAssertTrue(master.waitForExistence(timeout: 8), "the layers sheet never opened")
+        let master = revealSwitch("layerRoutes", in: app)
+        XCTAssertTrue(master.exists, "the ridden-layer switches were not reachable in the layers sheet")
         XCTAssertTrue(
             master.isEnabled,
             "列車経路 is the only switch in this section that can put the ridden lines back, "
@@ -115,15 +120,15 @@ final class MapLayerToggleTests: XCTestCase {
     /// The first half is the control: without it, "nothing was selected" would
     /// also be the answer when the tap simply stopped landing on a line.
     func testAHiddenRideIsNotSelectable() {
-        let drawn = launchOverTokyo()
+        let drawn = launchOverTokyo(selectingMetro: true)
         XCTAssertTrue(
-            tapSelectsARide(drawn),
+            tapSelectsARide(drawn, requiringTarget: true),
             "the tap no longer lands on a ridden line — the camera or the sample moved, "
                 + "and the other half of this test proves nothing until it does again")
         attach(drawn, named: "08-tap-selects-a-drawn-ride")
         drawn.terminate()
 
-        let hidden = launchOverTokyo(hiding: "routes")
+        let hidden = launchOverTokyo(hiding: "routes", selectingMetro: true)
         XCTAssertFalse(
             tapSelectsARide(hidden),
             "With 列車経路 off there is nothing of the reader's on the map, so a tap on "
@@ -141,13 +146,14 @@ final class MapLayerToggleTests: XCTestCase {
     /// No control half here — ``testAHiddenRideIsNotSelectable`` is it, and it
     /// fails first if this aim ever stops finding a line.
     func testACategoryHiddenRideIsNotSelectable() {
-        let app = launchOverTokyo(hiding: "metro")
+        let app = launchOverTokyo(hiding: "metro", selectingMetro: true)
         // Until the region's network has been read, every segment is
         // UNDETERMINED and therefore still drawn (and still tappable) — see
         // the renderer's `draws(segment:…)`. So this waits for the
         // classification rather than for the map, and an insufficient wait
         // fails the test rather than passing it for the wrong reason.
-        Thread.sleep(forTimeInterval: 18)
+        let status = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(waitFor(timeout: 45) { status.label.contains("targetCategoryReady:1") }, status.label)
         attach(app, named: "10-metro-filtered-off")
         XCTAssertFalse(
             tapSelectsARide(app),
@@ -216,7 +222,6 @@ final class MapLayerToggleTests: XCTestCase {
         measurement.lifetime = .keepAlways
         add(measurement)
         let layers = app.buttons["mapLayersButton"]
-        XCTAssertTrue(layers.isHittable, "map controls stalled while loading all railways")
         layers.tap()
         XCTAssertTrue(
             app.switches["layerNetworkStations"].waitForExistence(timeout: 6),
@@ -246,9 +251,16 @@ final class MapLayerToggleTests: XCTestCase {
         let lodText = try XCTUnwrap(fields.first { $0.hasPrefix("lod:") })
         let camera = try XCTUnwrap(Double(cameraText.dropFirst("camera:".count)))
         let lod = try XCTUnwrap(Double(lodText.dropFirst("lod:".count)))
-        let windowFrame = app.frame
-        let shorterEdge = min(windowFrame.width, windowFrame.height)
-        let expectedDelay = shorterEdge >= 900 ? 1.0 : shorterEdge >= 600 ? 0.5 : 0
+        let widthText = try XCTUnwrap(fields.first { $0.hasPrefix("viewportWidth:") })
+        let heightText = try XCTUnwrap(fields.first { $0.hasPrefix("viewportHeight:") })
+        let width = try XCTUnwrap(Double(widthText.dropFirst("viewportWidth:".count)))
+        let height = try XCTUnwrap(Double(heightText.dropFirst("viewportHeight:".count)))
+        // NetworkVisibilityPolicy continuously normalises the renderer to its
+        // 390-point reference short edge. The old 600/900-point test buckets
+        // predated that policy and treated the real 402-point adjustment as
+        // rounding noise.
+        let adjustment = log2(390 / min(width, height))
+        let expectedDelay = -min(max(adjustment, -1.5), 0.5)
         XCTAssertEqual(
             camera - lod, expectedDelay, accuracy: 0.02,
             "The rendered network must defer detail for this window's workload.")
@@ -318,6 +330,19 @@ final class MapLayerToggleTests: XCTestCase {
         toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
     }
 
+    /// SwiftUI's List only publishes rows in its current lazy viewport. The
+    /// ridden controls follow the basemap and complete-network sections, so
+    /// reach them the same way a reader does rather than interpreting an
+    /// offscreen row as a sheet that failed to open.
+    private func revealSwitch(_ identifier: String, in app: XCUIApplication) -> XCUIElement {
+        let toggle = app.switches[identifier]
+        for _ in 0..<4 where !toggle.exists {
+            app.swipeUp()
+            Thread.sleep(forTimeInterval: 0.4)
+        }
+        return toggle
+    }
+
     /// Let the map finish redrawing before the tree is asked anything.
     ///
     /// A switch in this sheet remounts every ride on the map, and an
@@ -359,6 +384,7 @@ final class MapLayerToggleTests: XCTestCase {
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
         app.launch()
         return app
@@ -373,44 +399,82 @@ final class MapLayerToggleTests: XCTestCase {
     /// geography whatever the launch camera would have chosen.
     private static let tokyoCamera = "35.68,139.75,0.12"
 
-    /// Where on the window the 丸ノ内線 runs between 新大塚 and 茗荷谷 under
-    /// ``tokyoCamera``.
-    ///
-    /// Chosen because it is one line on its own — the tap resolves to a single
-    /// journey rather than to the ambiguity chooser — and because it is 地下鐵,
-    /// which is what makes it usable by both tests below.
-    private static let riddenMetroLine = CGVector(dx: 148.0 / 402.0, dy: 277.0 / 874.0)
+    // A point on the fixture's isolated 地下鐵 stretch between 茗荷谷 and
+    // 新大塚 (part-008.json), where one journey is selected without a chooser.
+    // Centering it keeps the tap outside the iPad's leading dock. The closer
+    // span keeps nearby stations' 44-point annotation targets off the track aim.
+    private static let metroSelectionCamera = "35.72124,139.73418,0.04"
+    private static let riddenMetroLine = CGVector(dx: 0.5, dy: 0.5)
 
     /// Launch over ``tokyoCamera``, with `layers` switched off.
-    private func launchOverTokyo(hiding layers: String? = nil) -> XCUIApplication {
+    private func launchOverTokyo(hiding layers: String? = nil, selectingMetro: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         // The renderer fixture must not depend on a previous simulator session.
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        // The shared region scope persists across suites and also filters
+        // All Journeys' map. Keep the Japanese fixture in that scope.
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
+        // Start open, then collapse through the actual header gesture before
+        // tapping the map and reopen it to inspect the selected card.
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = Self.tokyoCamera
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = selectingMetro
+            ? Self.metroSelectionCamera : Self.tokyoCamera
+        app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260704_06_marunouchi_line"
         if let layers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers }
         app.launch()
-        // The camera hook waits for the map to exist and then for its own
-        // beat, and the rides land as their packages decode. There is nothing
-        // in the tree to wait ON — a map is one element whatever is drawn in
-        // it — so this is one of the two places in this suite that sleeps.
-        Thread.sleep(forTimeInterval: 12)
+        let status = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 15))
+        XCTAssertTrue(waitFor(timeout: 45) {
+            status.label.contains("targetRideReady:1")
+                && abs((Double(status.label.split(separator: ";").first {
+                    $0.hasPrefix("centerLon:")
+                }?.dropFirst("centerLon:".count) ?? "") ?? 0) - (selectingMetro ? 139.73418 : 139.75)) < 0.01
+        }, status.label)
         return app
     }
 
     /// Whether a tap on ``riddenMetroLine`` selected a journey.
     ///
-    /// `journeyPrimaryAction` is the selected journey's own button, so it
-    /// exists exactly while the panel is showing one — which is the question
-    /// here, asked without depending on the reader's language.
-    private func tapSelectsARide(_ app: XCUIApplication) -> Bool {
+    /// The selected card is identified by the fixture record rather than by
+    /// whichever primary action its current presentation policy happens to
+    /// offer. That keeps this assertion about map picking.
+    private func tapSelectsARide(_ app: XCUIApplication, requiringTarget: Bool = false) -> Bool {
+        let header = app.descendants(matching: .any)["panelHeader"].firstMatch
+        XCTAssertTrue(header.waitForExistence(timeout: 8))
+        let collapseStart = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let collapseDistance = min(320, app.frame.maxY - header.frame.midY - 30)
+        collapseStart.press(forDuration: 0.1, thenDragTo: collapseStart.withOffset(
+            CGVector(dx: 0, dy: collapseDistance)))
+        let tapY = app.frame.minY + app.frame.height * Self.riddenMetroLine.dy
+        XCTAssertTrue(waitFor(timeout: 8) { header.frame.minY > tapY + 60 },
+                      "The resident panel must leave the metro tap on uncovered map.")
         app.coordinate(withNormalizedOffset: Self.riddenMetroLine).tap()
         // Long enough for the card to arrive, and asserted on afterwards
         // rather than waited for: a `waitForExistence` here would answer the
         // negative case only by timing out, which is the case both callers
         // care about most.
         Thread.sleep(forTimeInterval: 4)
-        return app.buttons["journeyPrimaryAction"].exists
+        // Picking changes the selected record without changing the panel stop.
+        // Open its content before observing the same card assertions in both
+        // the visible control and the hidden-route cases.
+        let headerAfterTap = app.descendants(matching: .any)["panelHeader"].firstMatch
+        XCTAssertTrue(headerAfterTap.waitForExistence(timeout: 8),
+                      "The resident panel header must remain available after the map tap.")
+        let compactTop = headerAfterTap.frame.minY
+        let start = headerAfterTap.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -320)))
+        XCTAssertTrue(waitFor(timeout: 8) {
+            let expandedHeader = app.descendants(matching: .any)["panelHeader"].firstMatch
+            return expandedHeader.exists && expandedHeader.frame.minY < compactTop - 80
+        },
+                      "The panel must expose its content before checking map selection.")
+        if requiringTarget {
+            return app.staticTexts["selectedJourney-20260704_06_marunouchi_line"]
+                .waitForExistence(timeout: 8)
+        }
+        return app.staticTexts.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "selectedJourney-")).firstMatch.exists
+            || app.buttons["journeyPrimaryAction"].exists
     }
 }

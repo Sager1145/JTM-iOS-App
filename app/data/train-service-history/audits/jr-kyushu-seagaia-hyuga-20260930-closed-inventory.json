@@ -1,0 +1,133 @@
+{
+  "audit_id": "jr-kyushu-seagaia-hyuga-20260930-closed-inventory",
+  "service_date": "2026-09-30",
+  "scope": "Published exact-day JR Kyushu departure tables for the two separate limited-express service names; this is planned timetable coverage, not realtime operation confirmation.",
+  "station_table_urls": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2828301e/?d=20260930",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2890300/?d=20260930",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2887001/?d=20260930"
+  ],
+  "families": {
+    "nichirin-seagaia": {
+      "service_name": "にちりんシーガイア",
+      "published_count": 2,
+      "trips": [
+        {
+          "public_number": "5",
+          "train_number": "5005M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0016/00165801.html?c=28283&ym=202609&d=30",
+          "candidate_present": true
+        },
+        {
+          "public_number": "14",
+          "train_number": "5014M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0019/00193401.html?t=2890300&d=20260930",
+          "candidate_present": true
+        }
+      ]
+    },
+    "hyuga": {
+      "service_name": "ひゅうが",
+      "published_count": 15,
+      "trips": [
+        {
+          "public_number": "1",
+          "train_number": "5071M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00086701.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "2",
+          "train_number": "5072M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00088301.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "3",
+          "train_number": "5073M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00086801.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "4",
+          "train_number": "5074M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00088201.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "5",
+          "train_number": "5075M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0024/00240201.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "6",
+          "train_number": "5076M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00088401.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "7",
+          "train_number": "5077M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00086901.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "8",
+          "train_number": "5078M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00088001.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "9",
+          "train_number": "5079M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00087001.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "10",
+          "train_number": "5080M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117901.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "11",
+          "train_number": "5081M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166301.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "12",
+          "train_number": "5082M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166401.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "13",
+          "train_number": "5083M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00168301.html?t=2887001&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "14",
+          "train_number": "5084M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166201.html?t=2890300&d=20260930",
+          "candidate_present": true
+        },
+        {
+          "public_number": "16",
+          "train_number": "5086M",
+          "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166101.html?t=2890300&d=20260930",
+          "candidate_present": true
+        }
+      ]
+    }
+  },
+  "total_published_count": 17,
+  "candidate_present_count": 17,
+  "remaining_public_numbers": {
+    "nichirin-seagaia": [],
+    "hyuga": []
+  },
+  "closed_set_basis": "宮崎駅 northbound date page displays Seagaia 14 and Hyuga even departures; 延岡駅 southbound date page displays Seagaia 5 and Hyuga odd departures; 博多駅 southbound page checks Seagaia 5. Each numbered detail page was opened to verify train number and operating-day text."
+}

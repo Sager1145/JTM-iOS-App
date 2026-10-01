@@ -1,0 +1,23 @@
+{
+  "candidate_id":"jr-central-hida1-20260930","candidate_status":"visually_reviewed","canonical":false,
+  "selected_service_date":"2026-09-30","valid_until":"2026-10-01","service_id":"hida",
+  "source_id":"jr-west-odekake-hida1-21d-20260930",
+  "source_url":"https://timetable.jr-odekake.net/train-timetable/77261?date=20260930",
+  "source_calendar_label":"毎日運転",
+  "calendar_note":"The selected September 30 page alone is promoted; the general daily label is not expanded.",
+  "trip":{"trip_id":"jr-central.hida.1.2026-09-30","public_number":"1","train_number":"21D","origin":"名古屋","destination":"高山","stop_times":[
+    {"stop_sequence":1,"name_snapshot":"名古屋","arrival_time":null,"departure_time":"07:43","platform":"11","call_type":"origin"},
+    {"stop_sequence":2,"name_snapshot":"尾張一宮","arrival_time":"07:54","departure_time":"07:54","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":3,"name_snapshot":"岐阜","arrival_time":"08:04","departure_time":"08:05","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":4,"name_snapshot":"鵜沼","arrival_time":"08:17","departure_time":"08:17","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":5,"name_snapshot":"美濃太田","arrival_time":"08:26","departure_time":"08:27","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":6,"name_snapshot":"白川口","arrival_time":"08:48","departure_time":"08:49","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":7,"name_snapshot":"飛騨金山","arrival_time":"09:04","departure_time":"09:05","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":8,"name_snapshot":"下呂","arrival_time":"09:25","departure_time":"09:27","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":9,"name_snapshot":"飛騨萩原","arrival_time":"09:35","departure_time":"09:35","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":10,"name_snapshot":"飛騨小坂","arrival_time":"09:46","departure_time":"09:47","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":11,"name_snapshot":"久々野","arrival_time":"10:03","departure_time":"10:03","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":12,"name_snapshot":"高山","arrival_time":"10:16","departure_time":null,"platform":null,"call_type":"destination"}
+  ]},
+  "review_notes":["Official September 30 Takayama line timetable 2363 opens this exact 21D train page.","All timed passenger calls retained; レ pass rows omitted.","Unprinted terminal time sides remain null; operator segments and physical line IDs are not inferred."]
+}

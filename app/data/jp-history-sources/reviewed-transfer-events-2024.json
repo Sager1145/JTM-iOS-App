@@ -1,0 +1,477 @@
+{
+  "schema_version": "1",
+  "source_schema_version": 2,
+  "title": "Reviewed staged Hokuriku parallel-conventional-line transfers",
+  "scope": "Standalone rich-event input. Merge temporal_events into the canonical source only after review.",
+  "sources": [
+    {
+      "source_id": "hapi-opening-fare-release-2023-12-05",
+      "title": "上限運賃の認可と実施運賃の届出について",
+      "authority": "株式会社ハピラインふくい",
+      "published_date": "2023-12-05",
+      "reference": "https://www.hapi-line.co.jp/files/uploads/1-1pressrelease-hf.pdf",
+      "role": "Primary exact-day evidence that the company starts operating the former JR北陸本線 敦賀—大聖寺 84.3 km interval on 2024-03-16."
+    },
+    {
+      "source_id": "mlit-parallel-conventional-railways",
+      "title": "並行在来線鉄道一覧",
+      "authority": "国土交通省 鉄道局",
+      "reference": "https://www.mlit.go.jp/common/001514800.pdf",
+      "role": "Official transfer inventory for exact dates, termini and business kilometres."
+    },
+    {
+      "source_id": "jrtt-hokuriku-transfer-2024",
+      "title": "鉄道・運輸機構とIRいしかわ鉄道・ハピラインふくいは包括的連携協定を締結しました",
+      "authority": "独立行政法人鉄道建設・運輸施設整備支援機構",
+      "published_date": "2024-03-27",
+      "reference": "https://www.jrtt.go.jp/corporate/public_relations/pdf/20240327_comprehensive_cooperation_agreement.pdf",
+      "role": "Primary evidence that the former JR北陸本線 金沢—大聖寺 interval transferred to IRいしかわ鉄道 on 2024-03-16 and 敦賀—大聖寺 transferred to ハピラインふくい."
+    },
+    {
+      "source_id": "ir-kanazawa-daishoji-opening-2024",
+      "title": "IRいしかわ鉄道の金沢以西延伸開業日が2024年3月16日に決定しました",
+      "authority": "IRいしかわ鉄道株式会社",
+      "published_date": "2023-08-31",
+      "reference": "https://www.ishikawa-railway.jp/news/723",
+      "role": "Primary exact-day evidence for the 金沢—大聖寺 extension."
+    },
+    {
+      "source_id": "ir-kurikara-kanazawa-opening-2015",
+      "title": "第3期事業報告書",
+      "authority": "IRいしかわ鉄道株式会社",
+      "reference": "https://www.ishikawa-railway.jp/company/pdf/d3_kk.pdf",
+      "role": "Primary exact-day evidence that IR took over the 17.8 km 金沢—倶利伽羅 interval and began operating it on 2015-03-14."
+    },
+    {
+      "source_id": "ishikawa-prefecture-nishi-matto-2024",
+      "title": "IRいしかわ鉄道の県内全線開業後の利用状況",
+      "authority": "石川県",
+      "published_date": "2024-05-16",
+      "reference": "https://www.pref.ishikawa.lg.jp/chiji/kisya/r6_5_16/documents/0516_kisyakaikensiryou.pdf",
+      "role": "Primary evidence that 西松任 opened with the full-line extension on 2024-03-16."
+    },
+    {
+      "source_id": "mlit-n02-23",
+      "title": "国土数値情報 鉄道データ N02-23",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-23/N02-23_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence": "CC-BY-4.0",
+      "sha256": "e91ecdee90966877c6119ab94dc92ee6562eb9d89194f8a0a91f71b179c82a40",
+      "source_path": "history/N02-23_GML.zip",
+      "role": "Pre-transfer official JR北陸線 identity and geometry."
+    },
+    {
+      "source_id": "mlit-n02-14",
+      "title": "国土数値情報 鉄道データ N02-14",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence": "MLIT current-series terms; commercial use allowed",
+      "sha256": "a8a6dd8b00bb175ca89cd0ac542312b3726cbd81ced06a1d85ae0a6098e56204",
+      "source_path": "history/N02-14_GML.zip",
+      "role": "Pre-2015-transfer official JR北陸線 identity and geometry."
+    },
+    {
+      "source_id": "mlit-n02-25",
+      "title": "国土数値情報 鉄道データ N02-25",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence": "CC-BY-4.0",
+      "sha256": "aaf76af133b2e771e538fabc4646d2e443dc1d5a67b221382a28d744e706cc9f",
+      "source_path": "N02-25_GML.zip",
+      "role": "Current successor line/operator/station identity and geometry."
+    }
+  ],
+  "events": [],
+  "temporal_events": [
+    {
+      "id": "jp-id-ir-kurikara-kanazawa-transfer-2015",
+      "kind": "operator_transfer",
+      "date": "2015-03-14",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "IRいしかわ鉄道線",
+        "operator": "IRいしかわ鉄道"
+      },
+      "corridor_id": "jp.corridor.ir-ishikawa-kurikara-kanazawa",
+      "alignment_id": "jp.alignment.ir-ishikawa-kurikara-kanazawa.n02-14",
+      "service_identity_id": "jp.service.ir-ishikawa-kurikara-kanazawa",
+      "segment": {
+        "from_station": "倶利伽羅",
+        "to_station": "金沢"
+      },
+      "identity_evidence": [
+        {
+          "source_id": "mlit-n02-14",
+          "release": "N02-14",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "source_id": "mlit-n02-25",
+          "release": "N02-25",
+          "line": "IRいしかわ鉄道線",
+          "operator": "IRいしかわ鉄道"
+        }
+      ],
+      "boundary_station_evidence": [
+        {
+          "station": "金沢",
+          "n02_14_station_code": null,
+          "n02_25_station_code": "002093",
+          "geometry_relation": "coordinate_exact",
+          "historical_membership_source": "jp-id-ir-kanazawa-daishoji-transfer-2024"
+        },
+        {
+          "station": "倶利伽羅",
+          "n02_14_station_code": null,
+          "n02_25_station_code": "001986",
+          "geometry_relation": "coordinate_exact",
+          "station_code_basis": "exact_current_geometry_identity"
+        }
+      ],
+      "shared_predecessor_stations": [
+        {
+          "station": "金沢",
+          "source_event_id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+          "geometry_basis": "exact_n02_14_n02_23_station_geometry",
+          "n02_station_code": "002092",
+          "geometry_evidence": {
+            "releases": [
+              "N02-14",
+              "N02-23"
+            ],
+            "line": "北陸線",
+            "operator": "西日本旅客鉄道",
+            "coordinates": [
+              [
+                136.64858,
+                36.57927
+              ],
+              [
+                136.64774,
+                36.57826
+              ],
+              [
+                136.64711,
+                36.57726
+              ]
+            ]
+          }
+        }
+      ],
+      "expected": {
+        "business_km": 17.8,
+        "current_sections": 10,
+        "current_stations": 5,
+        "historical_sections": 9,
+        "historical_stations": 4,
+        "shared_current_station": "金沢"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.64710999,
+            36.57725999,
+            136.79253001,
+            36.67261001
+          ],
+          "historical_bbox": [
+            136.64857,
+            36.57926,
+            136.79254,
+            36.67262
+          ],
+          "stations": [
+            "金沢",
+            "東金沢",
+            "森本",
+            "津幡",
+            "倶利伽羅"
+          ],
+          "historical_stations": [
+            "東金沢",
+            "森本",
+            "津幡",
+            "倶利伽羅"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The current bbox selects only the 2015 倶利伽羅—金沢 identity, including the current IR 金沢 membership. The historical bbox begins at the north edge of the 金沢 platform so the shared pre-2024 JR 金沢 feature is supplied exactly once by the 2024 south-segment event."
+      },
+      "evidence": [
+        {
+          "authority": "IRいしかわ鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.ishikawa-railway.jp/company/pdf/d3_kk.pdf"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-hapi-line-transfer-2024",
+      "kind": "operator_transfer",
+      "date": "2024-03-16",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "ハピラインふくい線",
+        "operator": "ハピラインふくい"
+      },
+      "corridor_id": "jp.corridor.hapi-line-fukui",
+      "alignment_id": "jp.alignment.hapi-line-fukui.n02-23",
+      "service_identity_id": "jp.service.hapi-line-fukui",
+      "segment": {
+        "from_station": "大聖寺",
+        "to_station": "敦賀"
+      },
+      "identity_evidence": [
+        {
+          "source_id": "mlit-n02-23",
+          "release": "N02-23",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "source_id": "mlit-n02-25",
+          "release": "N02-25",
+          "line": "ハピラインふくい線",
+          "operator": "ハピラインふくい"
+        }
+      ],
+      "boundary_station_evidence": [
+        {
+          "station": "大聖寺",
+          "n02_23_station_code": "002425",
+          "n02_25_station_code": "002425",
+          "geometry_relation": "coordinate_exact"
+        },
+        {
+          "station": "敦賀",
+          "n02_23_station_code": "004004",
+          "n02_25_station_code": "010186",
+          "geometry_relation": "coordinate_exact"
+        }
+      ],
+      "expected": {
+        "business_km": 84.3,
+        "current_sections": 41,
+        "current_stations": 19,
+        "historical_sections": 42,
+        "historical_stations": 19
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-23",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "whole_identity",
+          "historical_bbox": [
+            136.07575,
+            35.64392,
+            136.31533,
+            36.30111
+          ],
+          "historical_stations": [
+            "大聖寺",
+            "牛ノ谷",
+            "細呂木",
+            "芦原温泉",
+            "丸岡",
+            "春江",
+            "森田",
+            "福井",
+            "越前花堂",
+            "大土呂",
+            "北鯖江",
+            "鯖江",
+            "武生",
+            "王子保",
+            "南条",
+            "湯尾",
+            "今庄",
+            "南今庄",
+            "敦賀"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The official 大聖寺—敦賀 interval is the entire current ハピラインふくい線 identity. The historical bbox limits N02-23 北陸線 geometry to that interval instead of copying the full former JR identity. All 19 current station names and geometries are present in the pre-transfer snapshot, so this event does not assign the transfer date to a later-added station."
+      },
+      "evidence": [
+        {
+          "authority": "株式会社ハピラインふくい",
+          "date_precision": "exact_day",
+          "reference": "https://www.hapi-line.co.jp/files/uploads/1-1pressrelease-hf.pdf"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+      "kind": "operator_transfer",
+      "date": "2024-03-16",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "IRいしかわ鉄道線",
+        "operator": "IRいしかわ鉄道"
+      },
+      "corridor_id": "jp.corridor.ir-ishikawa-kanazawa-daishoji",
+      "alignment_id": "jp.alignment.ir-ishikawa-kanazawa-daishoji.n02-23",
+      "service_identity_id": "jp.service.ir-ishikawa-kanazawa-daishoji",
+      "segment": {
+        "from_station": "金沢",
+        "to_station": "大聖寺"
+      },
+      "identity_evidence": [
+        {
+          "source_id": "mlit-n02-23",
+          "release": "N02-23",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "source_id": "mlit-n02-25",
+          "release": "N02-25",
+          "line": "IRいしかわ鉄道線",
+          "operator": "IRいしかわ鉄道"
+        }
+      ],
+      "boundary_station_evidence": [
+        {
+          "station": "金沢",
+          "n02_23_station_code": "002092",
+          "n02_25_station_code": "002093",
+          "geometry_relation": "coordinate_exact"
+        },
+        {
+          "station": "大聖寺",
+          "n02_23_station_code": "002425",
+          "n02_25_station_code": "010175",
+          "n02_25_group_code": "002425",
+          "geometry_relation": "coordinate_exact"
+        }
+      ],
+      "expected": {
+        "business_km": 46.4,
+        "current_sections": 28,
+        "current_stations": 14,
+        "historical_sections": 27,
+        "historical_stations": 14,
+        "current_only_station": "西松任",
+        "current_only_station_source_id": "ishikawa-prefecture-nishi-matto-2024"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-23",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.31309999,
+            36.29956999,
+            136.64711001,
+            36.57726001
+          ],
+          "historical_bbox": [
+            136.31309,
+            36.29956,
+            136.64859,
+            36.57928
+          ],
+          "stations": [
+            "大聖寺",
+            "動橋",
+            "加賀温泉",
+            "粟津",
+            "小松",
+            "明峰",
+            "能美根上",
+            "美川",
+            "小舞子",
+            "加賀笠間",
+            "西松任",
+            "松任",
+            "野々市",
+            "西金沢"
+          ],
+          "historical_stations": [
+            "大聖寺",
+            "動橋",
+            "加賀温泉",
+            "粟津",
+            "小松",
+            "明峰",
+            "能美根上",
+            "美川",
+            "小舞子",
+            "加賀笠間",
+            "松任",
+            "野々市",
+            "西金沢",
+            "金沢"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The current bbox ends at the south edge of the surveyed 金沢 platform and the current station selector excludes 金沢. It therefore dates only the 2024 addition and leaves the shared current IR 金沢 membership valid from 2015. The wider historical bbox retains the JR 金沢 membership through 2024. N02-23 lacks 西松任 because that station opened on the transfer date; it is correctly present only in the current side."
+      },
+      "evidence": [
+        {
+          "authority": "IRいしかわ鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.ishikawa-railway.jp/news/723"
+        },
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "candidate_id": "jr-east-shonan11-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "shonan",
+  "service_name": "湘南",
+  "jr_scope": "jr",
+  "public_number": "11",
+  "train_number": "3081M",
+  "trip_id": "jr-east.shonan.11.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-shonan11-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/065/068091.html",
+  "source_sha256": "d5d954bbb4d70c97a4626b3ce571a6e4cb7406db86810f3c6ae75de7e9ec0320",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "東京",
+      null,
+      "20:00"
+    ],
+    [
+      "品川",
+      "20:07",
+      "20:09"
+    ],
+    [
+      "大船",
+      "20:35",
+      "20:36"
+    ],
+    [
+      "藤沢",
+      "20:40",
+      "20:41"
+    ],
+    [
+      "辻堂",
+      "20:44",
+      "20:45"
+    ],
+    [
+      "茅ケ崎",
+      "20:48",
+      "20:49"
+    ],
+    [
+      "平塚",
+      "20:53",
+      "20:53"
+    ],
+    [
+      "二宮",
+      "21:00",
+      "21:01"
+    ],
+    [
+      "国府津",
+      "21:04",
+      "21:05"
+    ],
+    [
+      "小田原",
+      "21:11",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "東京": "９",
+    "品川": "１２",
+    "大船": "３",
+    "茅ケ崎": "６",
+    "平塚": "４",
+    "国府津": "１",
+    "小田原": "４"
+  },
+  "equipment": [
+    "座席未指定券",
+    "グリーン車指定席",
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です",
+  "printed_operating_labels": "平日運転",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": true,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; no unprinted vehicle assignment or number changes inferred.",
+  "actual_dispatch": null
+}

@@ -1,0 +1,20 @@
+{"language": "en", "name": "Azusa", "name_type": "display", "service_id": "azusa", "source_id": "jr-east-azusa-guide-en", "valid_from": "2026-09-18", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Furano Lavender Express", "name_type": "display", "service_id": "furano-lavender-express", "source_id": "jr-hokkaido-furano-lavender-guide-en", "valid_from": "2026-07-01", "valid_until": "2026-09-24"}
+{"language": "en", "name": "Hitachi", "name_type": "display", "service_id": "hitachi", "source_id": "jr-east-hitachi-tokiwa-guide-en", "valid_from": "2026-09-18", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Hokuto", "name_type": "display", "service_id": "hokuto", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-08-07", "valid_until": "2026-09-21"}
+{"language": "en", "name": "Hokuto", "name_type": "display", "service_id": "hokuto", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-09-30", "valid_until": "2026-10-01"}
+{"language": "en", "name": "IBUSUKI NO TAMATEBAKO", "name_type": "display", "service_id": "ibusuki-no-tamatebako", "source_id": "jr-kyushu-ibusuki-guide-en", "valid_from": "2026-07-01", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Ishizuchi", "name_type": "display", "service_id": "ishizuchi", "source_id": "jr-shikoku-limited-express-guide-en", "valid_from": "2026-09-18", "valid_until": "2026-09-24"}
+{"language": "en", "name": "Kamui", "name_type": "display", "service_id": "kamui", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-05-16", "valid_until": "2026-05-18"}
+{"language": "en", "name": "Kamui", "name_type": "display", "service_id": "kamui", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-07-04", "valid_until": "2026-09-28"}
+{"language": "en", "name": "Kamui", "name_type": "display", "service_id": "kamui", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-09-30", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Lilac", "name_type": "display", "service_id": "lilac", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-05-16", "valid_until": "2026-05-17"}
+{"language": "en", "name": "Lilac", "name_type": "display", "service_id": "lilac", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-09-30", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Niseko express", "name_type": "display", "service_id": "niseko", "source_id": "jr-hokkaido-niseko-train-guide-en", "valid_from": "2026-09-05", "valid_until": "2026-09-28"}
+{"language": "en", "name": "Sarobetsu", "name_type": "display", "service_id": "sarobetsu", "source_id": "jr-hokkaido-limited-express-guide-en", "valid_from": "2026-07-01", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Shinano", "name_type": "display", "service_id": "shinano", "source_id": "jr-central-conventional-limited-express-2026-en", "valid_from": "2026-09-18", "valid_until": "2026-10-01"}
+{"language": "en", "name": "Shiokaze", "name_type": "display", "service_id": "shiokaze", "source_id": "jr-shikoku-limited-express-guide-en", "valid_from": "2026-08-08", "valid_until": "2026-08-17"}
+{"language": "en", "name": "Tokiwa", "name_type": "display", "service_id": "tokiwa", "source_id": "jr-east-hitachi-tokiwa-guide-en", "valid_from": "2026-09-19", "valid_until": "2026-09-28"}
+{"language": "en", "name": "WEST EXPRESS GINGA", "name_type": "display", "service_id": "west-express-ginga", "source_id": "jr-west-west-express-ginga-guide-en", "valid_from": "2026-07-03", "valid_until": "2026-10-01"}
+{"language": "en", "name": "YUFUIN NO MORI", "name_type": "display", "service_id": "yufuin-no-mori", "source_id": "jr-kyushu-yufuin-guide-en", "valid_from": "2026-09-19", "valid_until": "2026-09-30"}
+{"language": "en", "name": "YUFUIN NO MORI", "name_type": "display", "service_id": "yufuin-no-mori", "source_id": "jr-kyushu-yufuin-guide-en", "valid_from": "2026-09-30", "valid_until": "2026-10-01"}

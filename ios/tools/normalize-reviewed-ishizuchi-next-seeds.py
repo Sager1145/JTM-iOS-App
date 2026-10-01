@@ -20,6 +20,7 @@ EXPECTED_URL = "https://www.jr-shikoku.co.jp/03_news/press/assets/2026/07/15/202
 EXPECTED_HASH = "sha256:64e69d7df9da8d58326653d9334a7b0683c1645b5b6ba2d42d32d0f714d3c2c6"
 EXPECTED_NUMBERS = {str(value) for value in range(3, 29)}
 FIVE_DAY_NUMBERS = {"3", "4"}
+TRAIN_URL_TEMPLATE = "https://timetable.jr-odekake.net/train-timetable/{page_id}?date={yyyymmdd}"
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -53,6 +54,48 @@ def checked_source(candidate_source: dict) -> dict:
         for key, value in candidate_source.items()
         if key != "page_or_locator"
     }
+
+
+def train_source_id(train_number: str, day: str) -> str:
+    return f"jr-odekake-ishizuchi-{train_number.lower()}-{day.replace('-', '')}-special"
+
+
+def train_url(reviewed_page: dict, day: str) -> str:
+    return TRAIN_URL_TEMPLATE.format(
+        page_id=reviewed_page["page_id"], yyyymmdd=day.replace("-", "")
+    )
+
+
+def official_train_sources(candidate: dict, trips_source: list[dict]) -> list[dict]:
+    policy = candidate["source_policy"]
+    pages = candidate["reviewed_train_pages"]
+    rows = []
+    for trip in trips_source:
+        public_number = trip["public_number"]
+        reviewed_page = pages[public_number]
+        for day in trip["operating_dates"]:
+            rows.append({
+                "source_id": train_source_id(reviewed_page["train_number"], day),
+                "publisher": policy["publisher"],
+                "title": f"いしづち{public_number}号 列車時刻表（{day}）",
+                "source_type": policy["source_type"],
+                "url_or_locator": train_url(reviewed_page, day),
+                "accessed_at": "2026-09-29T00:00:00-04:00",
+                "issue": "JR時刻表 2026年10月号",
+                "effective_date": day,
+                "content_hash": None,
+                "archive_locator": None,
+                "license_status": policy["license_status"],
+                "redistribution_status": policy["redistribution_status"],
+                "automated_extraction_allowed": policy["automated_extraction_allowed"],
+                "notes": (
+                    "Exact dated special-service variant checked from the official line grid and "
+                    "linked train page. Passenger calls, clocks, platforms, train number, "
+                    "operating-day text and published pass marks were reviewed. Pass rows are "
+                    "retained only as negative stop-pattern evidence and are not normalized."
+                ),
+            })
+    return rows
 
 
 def source_rows(base: Path, source: dict, output: Path) -> list[dict]:
@@ -134,8 +177,8 @@ def main() -> int:
         raise SystemExit(f"canonical directory lacks reviewed candidate: {candidate_path}")
 
     candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    if candidate.get("candidate_status") != "visually_reviewed_preparation_only":
-        raise ValueError("Ishizuchi candidate must retain its double-reviewed preparation status")
+    if candidate.get("candidate_status") != "reviewed_official_html":
+        raise ValueError("Ishizuchi candidate has not completed official HTML review")
     if candidate.get("canonical") is not False:
         raise ValueError("Ishizuchi candidate must remain non-canonical input")
     source = checked_source(candidate["source"])
@@ -159,10 +202,41 @@ def main() -> int:
     if sum(len(trip["operating_dates"]) for trip in trips_source) != 154:
         raise ValueError("Reviewed Ishizuchi occurrence total changed")
 
+    reviewed_pages = candidate.get("reviewed_train_pages", {})
+    if set(reviewed_pages) != EXPECTED_NUMBERS:
+        raise ValueError("Reviewed Ishizuchi train-page inventory changed")
+    for trip in trips_source:
+        public_number = trip["public_number"]
+        reviewed_page = reviewed_pages[public_number]
+        expected_direction = "down" if int(public_number) % 2 else "up"
+        if trip["direction"] != expected_direction:
+            raise ValueError(f"Ishizuchi {public_number}: unexpected direction")
+        expected_train_number = f"{9000 + int(public_number)}{'M' if int(public_number) in {3, 9, 10, 15, 16, 21, 22, 27, 28} else 'D'}"
+        if reviewed_page["train_number"] != expected_train_number:
+            raise ValueError(f"Ishizuchi {public_number}: unexpected special train number")
+        calls = reviewed_page["passenger_calls"]
+        if (calls[0][0], calls[-1][0]) != (trip["origin"], trip["destination"]):
+            raise ValueError(f"Ishizuchi {public_number}: announcement and train-page endpoints disagree")
+        if calls[0][1] or calls[0][2] != trip["departure_time"]:
+            raise ValueError(f"Ishizuchi {public_number}: malformed origin clock")
+        if calls[-1][1] != trip["arrival_time"] or calls[-1][2]:
+            raise ValueError(f"Ishizuchi {public_number}: malformed destination clock")
+        expected_row_count = 10 if public_number in FIVE_DAY_NUMBERS or expected_direction == "up" else 13
+        if len(calls) + reviewed_page["omitted_pass_row_count"] != expected_row_count:
+            raise ValueError(f"Ishizuchi {public_number}: reviewed call/pass row total changed")
+        for call in calls:
+            if len(call) != 4 or not call[0]:
+                raise ValueError(f"Ishizuchi {public_number}: malformed passenger call {call}")
+        for day in trip["operating_dates"]:
+            if f"date={day.replace('-', '')}" not in train_url(reviewed_page, day):
+                raise ValueError(f"Ishizuchi {public_number}: exact date missing from train URL")
+
     source_output = base / f"sources/source-registry-{SUFFIX}.jsonl"
     service_output = base / f"normalized/services-{SUFFIX}.jsonl"
     station_output = base / f"normalized/station-identities-{SUFFIX}.jsonl"
-    source_documents = source_rows(base, source, source_output)
+    source_documents = []
+    for reviewed_source in [source] + official_train_sources(candidate, trips_source):
+        source_documents.extend(source_rows(base, reviewed_source, source_output))
 
     existing_source_ids = {
         row["source_id"]
@@ -178,7 +252,11 @@ def main() -> int:
     services = service_rows(base, service, valid_from, "2026-09-23", service_output)
     stations, new_station_rows = resolve_stations(
         base,
-        {value for trip in trips_source for value in (trip["origin"], trip["destination"])},
+        {
+            call[0]
+            for reviewed_page in reviewed_pages.values()
+            for call in reviewed_page["passenger_calls"]
+        },
         station_output,
     )
 
@@ -193,10 +271,14 @@ def main() -> int:
         "effective_from": valid_from,
         "effective_until": valid_until,
         "publication_date": source["publication_date"],
-        "edition_name": "JR Shikoku 2026 Silver Week shortened Ishizuchi endpoint table",
+        "edition_name": "JR Shikoku 2026 Silver Week shortened Ishizuchi complete passenger calls",
         "revision_type": "planned_exception",
         "completeness": "partial",
-        "source_ids": [source["source_id"]],
+        "source_ids": [source["source_id"]] + [
+            train_source_id(reviewed_pages[trip["public_number"]]["train_number"], day)
+            for trip in trips_source
+            for day in trip["operating_dates"]
+        ],
     }]
     calendars = [
         {
@@ -226,76 +308,62 @@ def main() -> int:
     locator = candidate["source"]["page_or_locator"]
     for reviewed in trips_source:
         public_number = reviewed["public_number"]
+        reviewed_page = reviewed_pages[public_number]
+        calls = reviewed_page["passenger_calls"]
+        dated_source_ids = [
+            train_source_id(reviewed_page["train_number"], day)
+            for day in reviewed["operating_dates"]
+        ]
         trip_id = f"jr-shikoku.ishizuchi.{public_number}.2026-09-18"
         calendar_id = calendar_ids["five" if public_number in FIVE_DAY_NUMBERS else "six"]
-        origin = stations[reviewed["origin"]]
-        destination = stations[reviewed["destination"]]
+        origin = stations[calls[0][0]]
+        destination = stations[calls[-1][0]]
         trips.append({
             "trip_id": trip_id,
             "timetable_version_id": version_id,
             "service_id": service["service_id"],
             "calendar_id": calendar_id,
-            "train_number": None,
+            "train_number": reviewed_page["train_number"],
             "public_number": public_number,
             "origin_station_id": origin["station_id"],
             "destination_station_id": destination["station_id"],
             "direction": reviewed["direction"],
             "service_class": service["service_class"],
             "notes": (
-                "Official planned-exception table publishes public number and endpoint clocks only. "
-                "Intermediate stops, internal train number, operator segments and route lines remain unresolved."
+                "Exact-date line grids and linked special-service pages agree across all announced dates. "
+                f"{reviewed_page['omitted_pass_row_count']} published pass rows are deliberately omitted; "
+                "operator segments and route lines remain unresolved."
             ),
         })
-        stop_times.extend([
-            {
+        for sequence, (name, arrival, departure, platform) in enumerate(calls, start=1):
+            first = sequence == 1
+            last = sequence == len(calls)
+            stop_times.append({
                 "trip_id": trip_id,
-                "stop_sequence": 1,
-                "station_id": origin["station_id"],
-                "arrival_time": None,
-                "departure_time": reviewed["departure_time"],
+                "stop_sequence": sequence,
+                "station_id": stations[name]["station_id"],
+                "arrival_time": arrival,
+                "departure_time": departure,
                 "day_offset": 0,
-                "call_type": "origin",
-                "pickup_allowed": 1,
-                "dropoff_allowed": 0,
+                "call_type": "origin" if first else "destination" if last else "passenger_stop",
+                "pickup_allowed": 0 if last else 1,
+                "dropoff_allowed": 0 if first else 1,
+                "platform": platform,
                 "time_accuracy": "minute",
-                "source_id": source["source_id"],
-            },
-            {
-                "trip_id": trip_id,
-                "stop_sequence": 2,
-                "station_id": destination["station_id"],
-                "arrival_time": reviewed["arrival_time"],
-                "departure_time": None,
-                "day_offset": 0,
-                "call_type": "destination",
-                "pickup_allowed": 0,
-                "dropoff_allowed": 1,
-                "time_accuracy": "minute",
-                "source_id": source["source_id"],
-            },
-        ])
+                "source_id": dated_source_ids[0],
+            })
 
         statuses = {
-            "identity": ("verified", "high", "The official row identifies Ishizuchi and its public number."),
-            "train_number": ("unknown", "low", "Public number is printed; internal train number is absent."),
+            "identity": ("verified", "high", "All exact dated line grids and train pages identify Ishizuchi and its public number."),
+            "train_number": ("verified", "high", "All applicable exact dated line grids and train pages agree on the special internal train number."),
             "operator": ("unknown", "low", "Publisher identity is not operator-segment evidence."),
             "validity_calendar": ("verified", "high", "The reviewed merged date cell explicitly applies to this row."),
-            "origin_destination": ("verified", "high", "Both shortened-operation endpoints are printed."),
-            "stops": ("partial", "high", "Only the shortened-operation endpoints are printed; intermediate calls are not supplied."),
-            "times": ("partial", "high", "Only origin departure and destination arrival are printed."),
+            "origin_destination": ("verified", "high", "The announcement and exact dated train pages agree on both shortened-operation endpoints."),
+            "stops": ("verified", "high", "Passenger calls are complete; separately displayed passing rows are deliberately omitted."),
+            "times": ("verified", "high", "Arrival and departure clocks are recorded for every passenger call without inferring blank cells."),
             "route_lines": ("unknown", "low", "No ordered physical route identity is printed."),
-            "station_refs": ("verified", "high", "Each printed station uniquely matches one JR Shikoku sourceCode."),
-            "provenance": ("partial", "high", "Official URL and reviewed PDF hash are recorded; reuse permission remains unresolved."),
-        }
-        source_facts = {
-            "identity": (source["source_id"], locator, "verified"),
-            "train_number": (source["source_id"], locator + "; public number only", "unknown"),
-            "validity_calendar": (source["source_id"], locator + "; merged operating-date cell", "verified"),
-            "origin_destination": (source["source_id"], locator, "verified"),
-            "stops": (source["source_id"], locator + "; endpoints only", "partial"),
-            "times": (source["source_id"], locator + "; endpoint clocks only", "partial"),
-            "station_refs": (STATION_SOURCE_ID, "app/public/rail/jp-2025.json exact JR Shikoku name/code match", "verified"),
-            "provenance": (source["source_id"], "Official PDF URL and SHA-256", "partial"),
+            "station_refs": ("verified", "high", "Each passenger-call station uniquely matches one JR Shikoku sourceCode."),
+            "provenance": ("partial", "medium", "Official exact-date URLs are recorded; the pages explicitly restrict reuse."),
         }
         for dimension, (status, confidence, notes) in statuses.items():
             fact_completeness.append({
@@ -306,23 +374,48 @@ def main() -> int:
                 "confidence": confidence,
                 "notes": notes,
             })
-            if dimension in source_facts:
-                source_id, page_or_locator, verification_status = source_facts[dimension]
+
+        for dimension in ("identity", "train_number", "origin_destination", "stops", "times"):
+            for dated_source_id in dated_source_ids:
                 fact_sources.append({
                     "entity_type": "trip",
                     "entity_id": trip_id,
                     "field_name": dimension,
-                    "source_id": source_id,
-                    "page_or_locator": page_or_locator,
-                    "confidence": confidence,
-                    "verification_status": verification_status,
+                    "source_id": dated_source_id,
+                    "page_or_locator": "Exact dated official line grid and linked special train page",
+                    "confidence": "high",
+                    "verification_status": "verified",
                 })
+        fact_sources.extend([
+            {
+                "entity_type": "trip", "entity_id": trip_id,
+                "field_name": "validity_calendar", "source_id": source["source_id"],
+                "page_or_locator": locator + "; merged operating-date cell",
+                "confidence": "high", "verification_status": "verified",
+            },
+            {
+                "entity_type": "trip", "entity_id": trip_id,
+                "field_name": "station_refs", "source_id": STATION_SOURCE_ID,
+                "page_or_locator": "app/public/rail/jp-2025.json exact JR Shikoku name/code match",
+                "confidence": "high", "verification_status": "verified",
+            },
+            {
+                "entity_type": "trip", "entity_id": trip_id,
+                "field_name": "provenance", "source_id": source["source_id"],
+                "page_or_locator": "Official PDF URL and SHA-256",
+                "confidence": "medium", "verification_status": "partial",
+            },
+        ])
+        for dated_source_id in dated_source_ids:
+            fact_sources.append({
+                "entity_type": "trip", "entity_id": trip_id,
+                "field_name": "provenance", "source_id": dated_source_id,
+                "page_or_locator": "Exact dated official train page; reuse prohibited",
+                "confidence": "medium", "verification_status": "partial",
+            })
 
         research = {
-            "train_number": "Obtain an official internal train-number source; do not derive it from the public number.",
             "operator": "Obtain ordered operator-boundary evidence.",
-            "stops": "Obtain the complete intermediate passenger-stop list.",
-            "times": "Obtain arrival/departure clocks for intermediate passenger stops.",
             "route_lines": "Obtain dated ordered physical route identities.",
             "provenance": "Resolve redistribution authorization for the transcribed timetable facts.",
         }
@@ -361,7 +454,7 @@ def main() -> int:
         write_jsonl(path, rows)
 
     print(
-        f"Normalized 26 Ishizuchi templates, 154 explicit occurrences, {len(stop_times)} endpoint rows, "
+        f"Normalized 26 Ishizuchi templates, 154 exact dated occurrences, {len(stop_times)} passenger-call rows, "
         f"2 shared calendars, and {len(new_station_rows)} new station identities in {base}."
     )
     print("Coverage declarations intentionally unchanged.")

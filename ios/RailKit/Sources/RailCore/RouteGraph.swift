@@ -174,10 +174,10 @@ public enum RouteGraph {
 
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
-    /// parameter here rather than a constant this file owns. Version 22
-    /// invalidates routes solved before the Phase 1 history context and
-    /// temporal connector corrections.
-    public static let routeSolverCacheVersion = "22"
+    /// parameter here rather than a constant this file owns. Version 24
+    /// invalidates pinned routes that could previously contain only station
+    /// transfer connectors without traversing the required railway.
+    public static let routeSolverCacheVersion = "24"
 
     /// On-disk drawn-route cache (`RiddenRouteStore` save/read). Not part of
     /// `solveContext` or the route digest: version 22 files may have

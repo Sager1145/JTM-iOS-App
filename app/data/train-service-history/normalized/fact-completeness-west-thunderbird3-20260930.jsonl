@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page prints サンダーバード3号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page prints 4003M.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Train-operation company segments are not independently dated.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Only 2026-09-30 is materialized.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Both termini printed on the selected train page.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Five timed calls retained; レ pass rows omitted.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks and side blanks retained.", "status": "verified"}
+{"confidence": "high", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Six chained current-N02 segments use pass-through line boundaries; 2026-09-30 physical-line validity remains open.", "status": "partial"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "All calls match current N02 West station groups.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-west.thunderbird.3.2026-09-30", "entity_type": "trip", "notes": "Timetable page is verification-only.", "status": "partial"}

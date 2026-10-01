@@ -1,0 +1,20 @@
+{
+  "candidate_id": "jr-east-reservation-equipment-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "interpretation": "Each exact-date train column prints 普通車全車指定席. グリーン車指定席 is recorded only where that train column prints it. 座席未指定券 permits use of an available seat and does not identify a free-seating car. No car count, vehicle series, car assignment, or actual dispatch is established.",
+  "trips": [
+    {"trip_id": "jr-east.shiosai.6.exact-2026-09-30", "train_number": "4006M", "source_id": "jr-east-shiosai6-20260930-discovery", "source_url": "https://timetables.jreast.co.jp/2610/train/095/098821.html", "all_reserved": true, "green_car_available": null},
+    {"trip_id": "jr-east.kaiji.2.exact-2026-09-30", "train_number": "5102M", "source_id": "jr-east-kaiji2-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/085/087651.html", "all_reserved": true, "green_car_available": true},
+    {"trip_id": "jr-east.kaiji.6.exact-2026-09-30", "train_number": "5106M", "source_id": "jr-east-kaiji6-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/075/076151.html", "all_reserved": true, "green_car_available": true},
+    {"trip_id": "jr-east.kaiji.10.exact-2026-09-30", "train_number": "5110M", "source_id": "jr-east-kaiji10-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/075/076171.html", "all_reserved": true, "green_car_available": true},
+    {"trip_id": "jr-east.kaiji.11.exact-2026-09-30", "train_number": "3111M", "source_id": "jr-east-kaiji11-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/050/054801.html", "all_reserved": true, "green_car_available": true},
+    {"trip_id": "jr-east.wakashio.17.weekday-requested-dates.2026-09-29", "train_number": "1067M", "source_id": "jr-east-wakashio17-20260929-30", "source_url": "https://timetables.jreast.co.jp/2610/train/095/098781.html", "all_reserved": true, "green_car_available": null},
+    {"trip_id": "jr-east.odoriko.1.3021m-izukyu-shimoda.2026-09-29", "train_number": "3021M", "source_id": "jr-east-odoriko1-20260929-30", "source_url": "https://timetables.jreast.co.jp/2610/train/095/098901.html", "all_reserved": true, "green_car_available": true},
+    {"trip_id": "jr-east.odoriko.1.4021m-shuzenji.2026-09-29", "train_number": "4021M", "source_id": "jr-east-odoriko1-20260929-30", "source_url": "https://timetables.jreast.co.jp/2610/train/095/098901.html", "all_reserved": true, "green_car_available": null},
+    {"trip_id": "jr-east.akagi.3.20260930.2026-09-30", "train_number": "4003M", "source_id": "jr-east-akagi3-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/030/034771.html", "all_reserved": true, "green_car_available": null},
+    {"trip_id": "jr-east.akagi.6.20260930.2026-09-30", "train_number": "4006M", "source_id": "jr-east-akagi6-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/075/076101.html", "all_reserved": true, "green_car_available": null},
+    {"trip_id": "jr-east.akagi.9.20260930.2026-09-30", "train_number": "4009M", "source_id": "jr-east-akagi9-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/065/068071.html", "all_reserved": true, "green_car_available": null}
+  ]
+}

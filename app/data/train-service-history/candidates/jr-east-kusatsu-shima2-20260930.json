@@ -1,0 +1,93 @@
+{
+  "candidate_id": "jr-east-kusatsu-shima2-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "kusatsu-shima",
+  "service_name": "草津・四万",
+  "jr_scope": "jr",
+  "public_number": "2",
+  "train_number": "3002M",
+  "trip_id": "jr-east.kusatsu-shima.2.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-kusatsu-shima2-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/045/047061.html",
+  "source_sha256": "5e299047295bdc27565fe41dea4cb17f4deaf28e1885ebc3830b9493470d9d7a",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "長野原草津口",
+      null,
+      "13:07"
+    ],
+    [
+      "中之条",
+      "13:28",
+      "13:29"
+    ],
+    [
+      "渋川",
+      "13:48",
+      "13:49"
+    ],
+    [
+      "新前橋",
+      "13:58",
+      "13:59"
+    ],
+    [
+      "高崎",
+      "14:05",
+      "14:06"
+    ],
+    [
+      "熊谷",
+      "14:33",
+      "14:34"
+    ],
+    [
+      "大宮",
+      "14:59",
+      "15:00"
+    ],
+    [
+      "浦和",
+      "15:06",
+      "15:07"
+    ],
+    [
+      "赤羽",
+      "15:15",
+      "15:15"
+    ],
+    [
+      "上野",
+      "15:26",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "高崎": "７",
+    "大宮": "６",
+    "上野": "１６"
+  },
+  "equipment": [
+    "普通車全車指定席"
+  ],
+  "printed_remarks": null,
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown. Published whole-page train number retained; no unprinted Tobu number changes inferred.",
+  "actual_dispatch": null,
+  "printed_operating_labels": []
+}

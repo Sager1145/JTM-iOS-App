@@ -106,6 +106,7 @@ class TrainTimetablePipelineTests(unittest.TestCase):
             line_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_line_segments)")}
             stop_columns = {row[1] for row in connection.execute("PRAGMA table_info(stop_times)")}
             override_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_stop_time_overrides)")}
+            number_override_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_train_number_overrides)")}
             seconds = connection.execute("SELECT departure_seconds FROM stop_times WHERE trip_id='trip.test' AND stop_sequence=0").fetchone()[0]
             override_offset = connection.execute("SELECT arrival_day_offset_override FROM trip_stop_time_overrides WHERE trip_id='trip.test'").fetchone()[0]
         finally:
@@ -117,7 +118,9 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertIn("idx_line_segments_history_identity", indexes)
         self.assertTrue({"reference_kind", "current_n02_line_id", "rail_history_id"} <= line_columns)
         self.assertTrue({"arrival_day_offset", "departure_day_offset"} <= stop_columns)
-        self.assertTrue({"arrival_day_offset_override", "departure_day_offset_override"} <= override_columns)
+        self.assertTrue({"arrival_day_offset_override", "departure_day_offset_override",
+                         "platform_override", "platform_override_present"} <= override_columns)
+        self.assertTrue({"trip_id", "service_date", "train_number", "source_id"} <= number_override_columns)
         self.assertEqual(86100, seconds)
         self.assertEqual(1, override_offset)
 
@@ -156,6 +159,12 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         data["fact_sources"] = [row for row in data["fact_sources"] if row["field_name"] != "stops"]
         errors = timetable.validate_dataset(data, origins, manifest)
         self.assertTrue(any("matching verified fact_source" in error for error in errors))
+
+    def test_invalid_completeness_dimension_is_rejected_before_sqlite_build(self):
+        manifest, data, origins = self.load()
+        data["fact_completeness"][0]["dimension"] = "formation.car_count"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any(".dimension: invalid value" in error for error in errors))
 
     def test_station_and_operator_must_cover_trip_operation_interval(self):
         manifest, data, origins = self.load()
@@ -222,6 +231,47 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         errors = timetable.validate_dataset(data, origins, manifest)
         self.assertTrue(any("arrival_day_offset requires arrival_time" in error for error in errors))
         self.assertTrue(any("departure_day_offset_override requires departure_override" in error for error in errors))
+
+    def test_dated_platform_override_replaces_or_clears_base_without_spilling(self):
+        manifest, data, origins = self.load()
+        data["stop_times"][1]["platform"] = "2"
+        override = data["trip_stop_time_overrides"][0]
+        override["platform_override_present"] = 1
+        override["platform_override"] = "9"
+        self.assertEqual([], timetable.validate_dataset(data, origins, manifest))
+        dated = timetable.materialize(data, "2026-01-01")[0]
+        ordinary = timetable.materialize(data, "2026-01-03")[0]
+        self.assertEqual("9", dated["stop_times"][1]["platform"])
+        self.assertEqual("2", ordinary["stop_times"][1]["platform"])
+
+        override["platform_override"] = None
+        self.assertEqual([], timetable.validate_dataset(data, origins, manifest))
+        self.assertIsNone(timetable.materialize(data, "2026-01-01")[0]["stop_times"][1]["platform"])
+        override["platform_override_present"] = 0
+        override["platform_override"] = "9"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any("platform_override: requires present=1" in error for error in errors))
+
+    def test_dated_train_number_override_does_not_change_template(self):
+        manifest, data, origins = self.load()
+        data["trip_train_number_overrides"].append({
+            "trip_id": "trip.test", "service_date": "2026-01-01",
+            "train_number": "8071D", "source_id": "source.test"})
+        origins[("trip_train_number_overrides", 0)] = "fixture:dated-number"
+        self.assertEqual([], timetable.validate_dataset(data, origins, manifest))
+        self.assertEqual("8071D", timetable.materialize(data, "2026-01-01")[0]["train_number"])
+        self.assertEqual("1001M", timetable.materialize(data, "2026-01-03")[0]["train_number"])
+        write_jsonl(self.canonical / "normalized/trip-train-number-overrides/test/seeds.jsonl",
+                    data["trip_train_number_overrides"])
+        database_path = self.canonical / "dated-number.sqlite"
+        timetable.build_database(self.canonical, database_path)
+        with sqlite3.connect(database_path) as connection:
+            self.assertEqual("8071D", connection.execute(
+                "SELECT train_number FROM trip_train_number_overrides WHERE trip_id='trip.test'"
+            ).fetchone()[0])
+        data["trip_train_number_overrides"][0]["train_number"] = " "
+        self.assertTrue(any("train_number: expected nonempty" in error
+                            for error in timetable.validate_dataset(data, origins, manifest)))
 
     def test_overlapping_duplicate_published_occurrence_is_rejected(self):
         manifest, data, origins = self.load()
@@ -475,6 +525,53 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertEqual("error", verdict["status"])
         self.assertEqual(1, verdict["segments"][0]["invalidOccurrenceCount"])
 
+    def test_historical_route_before_h1_scope_uses_its_own_service_interval(self):
+        manifest, data, _ = self.load()
+        # H1's 1993 inventory start is not a blanket route-query floor. An
+        # earlier trip can be attested when its actual historical section and
+        # operating days are independently dated.
+        data = json.loads(json.dumps(data).replace("2026-", "1992-"))
+        segment = data["trip_line_segments"][0]
+        segment.update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.line.pre-h1",
+        })
+        feature = {"properties": {
+            "history_id": "history.line.pre-h1",
+            "N02_003": "Test Line",
+            "N02_004": "Operator",
+            "service_validity": ["1992-01-01", None],
+        }}
+        rail_history = {"sections": [feature], "stations": [], "retirements": []}
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history=rail_history, current_package={"lines": []})["trip.test"]
+        self.assertEqual("aligned", verdict["status"])
+        self.assertTrue(verdict["canPublishRouteLines"])
+
+        feature["properties"]["service_validity"] = ["1992-01-03", None]
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history=rail_history, current_package={"lines": []})["trip.test"]
+        self.assertEqual("error", verdict["status"])
+        self.assertEqual(1, verdict["segments"][0]["invalidOccurrenceCount"])
+
+    def test_open_ended_historical_route_can_attest_after_source_as_of_date(self):
+        manifest, data, _ = self.load()
+        data = json.loads(json.dumps(data).replace("2026-", "2030-"))
+        data["trip_line_segments"][0].update({
+            "reference_kind": "historical_overlay",
+            "rail_history_id": "history.line.open-modern",
+        })
+        rail_history = {"sections": [{"properties": {
+            "history_id": "history.line.open-modern",
+            "N02_003": "Test Line",
+            "N02_004": "Operator",
+            "service_validity": ["1992-01-01", None],
+        }}], "stations": [], "retirements": []}
+        verdict = timetable.route_attestations(
+            data, manifest, rail_history=rail_history, current_package={"lines": []})["trip.test"]
+        self.assertEqual("aligned", verdict["status"])
+        self.assertTrue(verdict["canPublishRouteLines"])
+
     def test_current_n02_identity_without_snapshot_interval_stays_unverified(self):
         manifest, data, origins = self.load()
         segment = data["trip_line_segments"][0]
@@ -502,6 +599,61 @@ class TrainTimetablePipelineTests(unittest.TestCase):
             data, origins, manifest, rail_history={"sections": [], "stations": []},
             current_package=current_package)
         self.assertTrue(any("route_lines verified requires" in error for error in errors))
+
+    def test_current_n02_whole_line_stamp_rejects_only_out_of_range_days(self):
+        manifest, data, _ = self.load()
+        data["trip_line_segments"][0].update({
+            "reference_kind": "current_n02", "current_n02_line_id": "jp-test-line"})
+        first = [self.station_a[2], self.station_a[3]]
+        last = [self.station_b[2], self.station_b[3]]
+        bbox = [min(first[0], last[0]) - 0.01, min(first[1], last[1]) - 0.01,
+                max(first[0], last[0]) + 0.01, max(first[1], last[1]) + 0.01]
+        current_package = {"lines": [{
+            "id": "jp-test-line", "name": "Test Line", "operator": "Operator",
+            "stations": [self.station_a, self.station_b],
+            "segments": [[1, 0, [first, last]]],
+        }]}
+        stamp = {
+            "history_id": "history.line.opening",
+            "match": {"line_name": "Test Line", "operator": "Operator", "bbox": bbox,
+                      "targets": ["sections"]},
+            "valid_from": "2026-01-03",
+        }
+        rail_history = {"sections": [], "stations": [], "retirements": [stamp]}
+
+        def verdict():
+            return timetable.route_attestations(
+                data, manifest, rail_history=rail_history,
+                current_package=current_package)["trip.test"]["segments"][0]
+
+        self.assertEqual("error", verdict()["status"])
+        self.assertEqual(1, verdict()["invalidOccurrenceCount"])
+        self.assertEqual(["history.line.opening"], verdict()["constraintHistoryIds"])
+
+        stamp["valid_from"] = "2026-01-01"
+        self.assertEqual("unverified", verdict()["status"])
+        self.assertFalse(verdict()["temporalCoverageVerified"])
+
+        stamp.pop("valid_from")
+        stamp["valid_to"] = "2026-01-03"
+        self.assertEqual(1, verdict()["invalidOccurrenceCount"])
+
+        # A station-only or partial-line stamp is not a whole-line constraint.
+        stamp["match"]["targets"] = ["stations"]
+        self.assertNotIn("constraintHistoryIds", verdict())
+        stamp["match"]["targets"] = ["sections"]
+        stamp["match"]["bbox"] = [first[0], first[1], first[0], first[1]]
+        self.assertNotIn("constraintHistoryIds", verdict())
+
+        stamp["match"]["bbox"] = bbox
+        stamp["valid_to"] = "2026-01-02"
+        stamp["service_validity"] = ["2026-01-01", "2026-01-04"]
+        # Service dates, rather than the different infrastructure/legacy end,
+        # govern a ride. The constraint still does not prove the route.
+        self.assertEqual("unverified", verdict()["status"])
+        stamp.pop("service_validity")
+        stamp["match"]["operator"] = "Another Operator"
+        self.assertNotIn("constraintHistoryIds", verdict())
 
     def test_partial_route_can_be_a_continuous_prefix_but_verified_must_cover_destination(self):
         manifest, data, origins = self.load()
@@ -533,6 +685,77 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         route_completeness["status"] = "verified"
         errors = timetable.validate_dataset(data, origins, manifest)
         self.assertTrue(any("last segment does not end at trip destination" in error for error in errors))
+
+    def test_route_only_line_boundary_is_ordered_without_becoming_a_stop_time(self):
+        manifest, data, origins = self.load()
+        data["station_identities"].append({
+            "station_id": "station.boundary",
+            "name_snapshot": self.station_c[1],
+            "reference_kind": "current_n02",
+            "current_source_code": self.station_c[0],
+        })
+        origins[("station_identities", 2)] = "fixture:route-only-boundary"
+        data["trip_line_segments"] = [
+            {
+                "trip_id": "trip.test", "sequence": 0,
+                "from_station_id": "station.a", "to_station_id": "station.boundary",
+                "line_name": "First Line", "operator_id": "operator.test",
+                "source_id": "source.test", "confidence": "high",
+                "reference_kind": "current_n02", "current_n02_line_id": "jp-first-line",
+            },
+            {
+                "trip_id": "trip.test", "sequence": 1,
+                "from_station_id": "station.boundary", "to_station_id": "station.b",
+                "line_name": "Second Line", "operator_id": "operator.test",
+                "source_id": "source.test", "confidence": "high",
+                "reference_kind": "current_n02", "current_n02_line_id": "jp-second-line",
+            },
+        ]
+        origins[("trip_line_segments", 0)] = "fixture:first-line"
+        origins[("trip_line_segments", 1)] = "fixture:second-line"
+        current_package = {"lines": [
+            {
+                "id": "jp-first-line", "name": "First Line", "operator": "Operator",
+                "stations": [self.station_a, self.station_c],
+            },
+            {
+                "id": "jp-second-line", "name": "Second Line", "operator": "Operator",
+                "stations": [self.station_c, self.station_b],
+            },
+        ]}
+
+        errors = timetable.validate_dataset(
+            data, origins, manifest,
+            rail_history={"sections": [], "stations": [], "retirements": []},
+            current_package=current_package)
+        self.assertEqual([], errors)
+        self.assertEqual(
+            ["station.a", "station.b"],
+            [row["station_id"] for row in data["stop_times"]])
+
+        data["trip_line_segments"][1]["current_n02_line_id"] = "jp-first-line"
+        errors = timetable.validate_dataset(
+            data, origins, manifest,
+            rail_history={"sections": [], "stations": [], "retirements": []},
+            current_package=current_package)
+        self.assertTrue(any(
+            "route-only boundary station 'station.boundary' requires distinct explicit current_n02 route identities"
+            in error for error in errors), errors)
+
+    def test_route_only_station_cannot_be_an_unanchored_chain_endpoint(self):
+        manifest, data, origins = self.load()
+        data["station_identities"].append({
+            "station_id": "station.boundary",
+            "name_snapshot": self.station_c[1],
+            "reference_kind": "current_n02",
+            "current_source_code": self.station_c[0],
+        })
+        origins[("station_identities", 2)] = "fixture:route-only-boundary"
+        data["trip_line_segments"][0]["to_station_id"] = "station.boundary"
+        errors = timetable.validate_dataset(data, origins, manifest)
+        self.assertTrue(any(
+            "route-only stations may only be internal line-boundary nodes between timetable stops"
+            in error for error in errors), errors)
 
     def test_explicit_route_identity_must_exist_even_for_partial_research(self):
         manifest, data, origins = self.load()

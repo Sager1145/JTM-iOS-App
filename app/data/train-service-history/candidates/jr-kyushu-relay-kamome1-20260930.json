@@ -1,0 +1,28 @@
+{
+  "candidate_id": "jr-kyushu-relay-kamome1-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 conventional-line occurrence; seven displayed passenger calls; connecting Shinkansen かもめ1号 excluded",
+  "source_id": "jr-kyushu-relay-kamome1-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0018/00189101.html?c=28283&ym=202609&d=30",
+  "service_date": "2026-09-30",
+  "trip": {
+    "trip_id": "jr-kyushu.relay-kamome.1.2026-09-30",
+    "service_id": "relay-kamome", "service_name": "リレーかもめ", "public_number": "1", "train_number": "2001H",
+    "direction": "博多→武雄温泉",
+    "stop_times": [
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"06:00","platform":"6"},
+      {"name_snapshot":"二日市","arrival_time":"06:10","departure_time":"06:11","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"06:21","departure_time":"06:22","platform":"5"},
+      {"name_snapshot":"新鳥栖","arrival_time":"06:25","departure_time":"06:26","platform":null},
+      {"name_snapshot":"佐賀","arrival_time":"06:38","departure_time":"06:39","platform":null},
+      {"name_snapshot":"江北","arrival_time":"06:49","departure_time":"06:50","platform":"3"},
+      {"name_snapshot":"武雄温泉","arrival_time":"07:00","departure_time":null,"platform":"10"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"conventional limited express identity and 2001H","locator":"first train column, 列車種 / 列車名 / 列車番号"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL and September operating-day calendar"},
+    {"claim":"seven calls and displayed clocks","locator":"first train column through 武雄温泉 arrival; 2001G Shinkansen connection excluded"}
+  ]
+}

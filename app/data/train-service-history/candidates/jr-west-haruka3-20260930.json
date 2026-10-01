@@ -1,0 +1,25 @@
+{
+  "candidate_id": "jr-west-haruka3-20260930",
+  "candidate_status": "visually_reviewed_official_train_page",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "train_number": "1003M",
+  "source_id": "jr-west-odekake-haruka3-1003m-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/181?date=20260930",
+  "operation_label": "土曜・休日運休",
+  "printed_equipment": ["グリーン車指定席", "普通車一部指定席"],
+  "stops": [
+    {"name":"草津","code":"005901","arrival":null,"departure":"05:58","platform":null,"call_type":"origin"},
+    {"name":"南草津","code":"005991","arrival":"06:01","departure":"06:01","platform":null,"call_type":"passenger_stop"},
+    {"name":"石山","code":"006098","arrival":"06:05","departure":"06:06","platform":null,"call_type":"passenger_stop"},
+    {"name":"大津","code":"006000","arrival":"06:09","departure":"06:10","platform":null,"call_type":"passenger_stop"},
+    {"name":"山科","code":"006043","arrival":"06:14","departure":"06:15","platform":null,"call_type":"passenger_stop"},
+    {"name":"京都","code":"006079","arrival":"06:19","departure":"06:21","platform":"7","call_type":"passenger_stop"},
+    {"name":"高槻","code":"006432","arrival":"06:33","departure":"06:34","platform":null,"call_type":"passenger_stop"},
+    {"name":"新大阪","code":"006911","arrival":"06:46","departure":"06:47","platform":"3","call_type":"passenger_stop"},
+    {"name":"大阪","code":"007068","arrival":"06:51","departure":"06:53","platform":"21","call_type":"passenger_stop"},
+    {"name":"天王寺","code":"007439","arrival":"07:05","departure":"07:07","platform":"15","call_type":"passenger_stop"},
+    {"name":"関西空港","code":"007958","arrival":"07:41","departure":null,"platform":null,"call_type":"destination"}
+  ],
+  "scope_note": "Only the selected September 30 weekday variant is staged. Pass rows are not passenger stops; Osaka underground route and physical line validity remain unresolved. Seat equipment is planned, with no exact-day car count or vehicle series."
+}

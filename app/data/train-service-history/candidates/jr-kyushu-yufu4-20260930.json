@@ -1,0 +1,31 @@
+{
+  "candidate_id":"jr-kyushu-yufu4-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; seventeen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-yufu4-20260930","source_url":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167501.html?t=2881400&d=20260930","service_date":"2026-09-30",
+  "new_source":{"source_id":"jr-kyushu-yufu4-20260930","source_type":"official_train_timetable","title":"ゆふ4号 列車詳細","publisher":"九州旅客鉄道株式会社 / 株式会社交通新聞社","url_or_locator":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167501.html?t=2881400&d=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"third_party_timetable_data_terms_apply","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Official exact-date train detail reached from 由布院駅 2026-09-30 departure list. It prints the full ゆふ4号 84D passenger-call table from 別府 to 博多. This documents only the selected date."},
+  "trip":{"trip_id":"jr-kyushu.yufu.4.2026-09-30","service_id":"yufu","service_name":"ゆふ","public_number":"4","train_number":"84D","direction":"別府→博多",
+    "stop_times":[
+      {"name_snapshot":"別府","arrival_time":null,"departure_time":"13:13","platform":null},
+      {"name_snapshot":"大分","arrival_time":"13:24","departure_time":"13:25","platform":"7"},
+      {"name_snapshot":"向之原","arrival_time":"13:40","departure_time":"13:41","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"14:00","departure_time":"14:01","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"14:12","departure_time":"14:15","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"14:34","departure_time":"14:34","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"14:44","departure_time":"14:45","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"14:57","departure_time":"14:58","platform":null},
+      {"name_snapshot":"日田","arrival_time":"15:09","departure_time":"15:10","platform":null},
+      {"name_snapshot":"うきは","arrival_time":"15:26","departure_time":"15:26","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"15:30","departure_time":"15:33","platform":null},
+      {"name_snapshot":"田主丸","arrival_time":"15:38","departure_time":"15:39","platform":null},
+      {"name_snapshot":"久留米大学前","arrival_time":"15:50","departure_time":"15:51","platform":null},
+      {"name_snapshot":"久留米","arrival_time":"15:58","departure_time":"15:59","platform":"4"},
+      {"name_snapshot":"鳥栖","arrival_time":"16:06","departure_time":"16:07","platform":"1"},
+      {"name_snapshot":"二日市","arrival_time":"16:18","departure_time":"16:19","platform":null},
+      {"name_snapshot":"博多","arrival_time":"16:31","departure_time":null,"platform":"3"}
+    ]},
+  "evidence_locators":[
+    {"claim":"exact 2026-09-30 occurrence","locator":"official train page heading 2026年09月30日の時刻 and date-qualified URL"},
+    {"claim":"limited express ゆふ4号 and 84D","locator":"列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号 rows"},
+    {"claim":"seventeen passenger calls and clocks","locator":"駅名 / 時刻 / のりば table from 別府 through 博多"}
+  ]
+}

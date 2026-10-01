@@ -6,7 +6,9 @@ private struct TimetableTripDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var sources: [TrainTimetableDatabase.SourceDocument] = []
     @State private var sourceQueryFailed = false
+    @State private var showsAICheck = false
     let trip: TrainTimetableDatabase.Trip
+    let onUseDraft: ((TrainTimetableDatabase.Trip) -> Void)?
     private static let database = TrainTimetableDatabase.bundled()
 
     var body: some View {
@@ -15,28 +17,60 @@ private struct TimetableTripDetailView: View {
                 Section {
                     Text("運転日: \(trip.serviceDate) · 日本時間")
                     Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?")")
+                    if let englishName = trip.service.englishName {
+                        Text(englishName).foregroundStyle(.secondary)
+                    }
+                    Text("ダイヤ: \(trip.timetableEditionName)")
+                        .font(.caption).foregroundStyle(.secondary)
                     if !trip.canApplyToRouteEditor {
-                        Text("経路・出典などに未確認の情報があるため、乗車記録へ適用できません")
+                        Text(trip.timetableCompleteness == .conflict
+                             ? "資料競合があるため、下書きへ取り込めません"
+                             : "全経路は未確認です。掲載された停車駅・時刻を下書きへ取り込めます")
                             .foregroundStyle(.orange)
                     }
                     if trip.factCompleteness["stops"] != .verified {
                         Text("資料に掲載された駅のみ表示しています。全停車駅の情報は未確認です")
                             .font(.caption).foregroundStyle(.secondary)
                     }
+                    if onUseDraft != nil, trip.timetableCompleteness != .conflict,
+                       trip.passengerStops.count >= 2 {
+                        Button("掲載時刻を編集用の下書きにする") { onUseDraft?(trip) }
+                            .accessibilityIdentifier("timetableUseDraft-\(trip.id)")
+                        Text("掲載駅だけを取り込みます。未掲載の停車駅と経路は編集画面で確認してください。")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    Button("AIで公表時刻を照合") { showsAICheck = true }
+                        .accessibilityIdentifier("timetableAICheck-\(trip.id)")
                 }
                 Section("停車駅・公表時刻") {
                     ForEach(trip.stops) { stop in
                         VStack(alignment: .leading, spacing: 5) {
                             Text(stop.station.name).font(.headline)
-                            Text("着 \(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))")
-                            Text("発 \(clock(stop.departureTime, seconds: stop.departureSeconds))")
-                            if !stop.isPassengerCall {
+                            if stop.callType == "pass" {
+                                Text("レ · 通過").foregroundStyle(.secondary)
+                            } else {
+                                Text("着 \(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))")
+                                Text("発 \(clock(stop.departureTime, seconds: stop.departureSeconds))")
+                            }
+                            if !stop.isPassengerCall && stop.callType != "pass" {
                                 Text("旅客停車ではありません").font(.caption).foregroundStyle(.secondary)
                             }
                         }
                         .monospacedDigit()
                         .accessibilityElement(children: .combine)
                         .accessibilityIdentifier("timetableStop-\(stop.sequence)")
+                        ForEach(trip.timetableSymbols.filter { $0.afterStopSequence == stop.sequence }) { row in
+                            HStack {
+                                Text(row.stationName).font(.headline)
+                                Spacer()
+                                Text(row.symbol)
+                                    .font(.body.monospaced())
+                                    .accessibilityLabel(row.symbol == "レ" ? "通過" : "この列車は経由しません")
+                            }
+                            .foregroundStyle(.secondary)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityIdentifier("timetableSymbol-\(row.id)")
+                        }
                     }
                 }
                 Section("確認状況") {
@@ -61,6 +95,7 @@ private struct TimetableTripDetailView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("timetableDetailList")
             .navigationTitle("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -78,6 +113,9 @@ private struct TimetableTripDetailView: View {
                 } catch {
                     sourceQueryFailed = true
                 }
+            }
+            .sheet(isPresented: $showsAICheck) {
+                TimetableAICheckView(trip: trip, sources: sources)
             }
         }
     }
@@ -108,6 +146,113 @@ private struct TimetableTripDetailView: View {
     }
 }
 
+/// Read-only research result. The published timetable stays intact until the
+/// reader explicitly changes the journey draft in the editor.
+private struct TimetableAICheckView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+    let trip: TrainTimetableDatabase.Trip
+    let sources: [TrainTimetableDatabase.SourceDocument]
+    @State private var auth = ChatGPTSubscriptionAuth.shared
+    @State private var service: ChatGPTSubscriptionService?
+    @State private var models: [ChatGPTSubscriptionProtocol.Model] = []
+    @State private var selectedModel = ""
+    @State private var answer = ""
+    @State private var failure: String?
+    @State private var isWorking = false
+    @State private var activeTask: Task<Void, Never>?
+    @State private var ownsLogin = false
+
+    private var prompt: String {
+        let calls = trip.stops.map { stop in
+            "\(stop.station.name): 着 \(stop.arrivalTime ?? "未掲載") / 発 \(stop.departureTime ?? "未掲載")"
+        }.joined(separator: "\n")
+        let citations = sources.map { "\($0.publisher): \($0.urlOrLocator)" }.joined(separator: "\n")
+        return """
+        日本の鉄道の公表時刻表を照合してください。対象は \(trip.serviceDate) の \(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) です。
+        以下はアプリに保存された掲載時刻です。公式情報と各行を比較し、確認できた差分、追加の停車駅、運転日、資料の版を出典URL付きで示してください。確認できない値は不明と記してください。実際の運行時刻を予定時刻から推定しないでください。
+        ダイヤ版: \(trip.timetableEditionName) (\(trip.timetableVersionID))
+        \(calls)
+        登録済み資料:
+        \(citations.isEmpty ? "なし" : citations)
+        """
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("照合対象") {
+                    Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) · \(trip.serviceDate)")
+                    Text("AIの回答は提案です。公表資料を確認してから編集画面で時刻を変更してください。")
+                        .font(.footnote).foregroundStyle(.secondary)
+                    ShareLink(item: prompt) { Label("照合依頼を共有", systemImage: "square.and.arrow.up") }
+                    Button("ChatGPTを開く") { openURL(URL(string: "https://chatgpt.com/")!) }
+                    DisclosureGroup("照合依頼") {
+                        Text(prompt).font(.caption.monospaced()).textSelection(.enabled)
+                    }
+                }
+                Section("AI照合") {
+                    if auth.isSignedIn {
+                        if !models.isEmpty {
+                            Picker("モデル", selection: $selectedModel) {
+                                ForEach(models) { model in Text(model.displayName).tag(model.id) }
+                            }
+                        }
+                        Button("照合を実行") { activeTask = Task { await check() } }
+                            .disabled(isWorking || selectedModel.isEmpty)
+                    } else {
+                        Button("ChatGPTにサインイン") { activeTask = Task { await signIn() } }
+                            .disabled(isWorking)
+                        if let code = auth.userCode, auth.isSigningIn {
+                            Text(code).font(.title2.monospaced()).textSelection(.enabled)
+                            Button("認証ページを開く") { openURL(auth.loginURL) }
+                        }
+                    }
+                    if isWorking { ProgressView() }
+                    if let failure { Text(failure).foregroundStyle(.red) }
+                    if !answer.isEmpty { Text(answer).textSelection(.enabled) }
+                }
+            }
+            .navigationTitle("時刻表のAI照合")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .confirmationAction) {
+                Button("閉じる") { dismiss() }
+            } }
+            .task { if auth.isSignedIn { await loadModels() } }
+            .onDisappear {
+                activeTask?.cancel()
+                if ownsLogin { auth.cancelLogin() }
+            }
+        }
+    }
+
+    @MainActor private func loadModels() async {
+        do {
+            if service == nil { service = ChatGPTSubscriptionService(auth: .shared) }
+            models = try await service!.models()
+            selectedModel = models.first?.id ?? ""
+        } catch { failure = error.localizedDescription }
+    }
+
+    @MainActor private func signIn() async {
+        isWorking = true
+        defer { isWorking = false }
+        ownsLogin = true
+        defer { ownsLogin = false }
+        do { try await auth.login(); await loadModels() }
+        catch { failure = error.localizedDescription }
+    }
+
+    @MainActor private func check() async {
+        guard let service else { return }
+        isWorking = true
+        failure = nil
+        defer { isWorking = false }
+        do { answer = try await service.complete(prompt: prompt, model: selectedModel) }
+        catch { failure = error.localizedDescription }
+    }
+}
+
 /// Presented from the ride editor's stops section so a JP limited-express
 /// stop pattern can prefill the draft's stop list. Tapping a row hands the
 /// chosen pattern back to the caller and dismisses; the resulting stops stay
@@ -115,8 +260,13 @@ private struct TimetableTripDetailView: View {
 struct ServicePatternPickerView: View {
     @Environment(\.dismiss) private var dismiss
     let region: String
-    let rideDate: String?
+    @Environment(AppLocalization.self) private var localization
+    @State private var rideDate: String?
+    let onSelectDate: ((String?) -> Void)?
+    @State private var showsDateEditor = false
+    @State private var isLoadingTimetable = false
     let onSelectTrip: ((TrainTimetableDatabase.Trip) -> Void)?
+    let onSelectDraft: ((TrainTimetableDatabase.Trip) -> Void)?
     let onSelect: (TrainServicePatterns.Pattern, Bool) -> Void
 
     @State private var query = ""
@@ -143,12 +293,16 @@ struct ServicePatternPickerView: View {
 
     init(
         region: String, rideDate: String?,
+        onSelectDate: ((String?) -> Void)? = nil,
         onSelectTrip: ((TrainTimetableDatabase.Trip) -> Void)? = nil,
+        onSelectDraft: ((TrainTimetableDatabase.Trip) -> Void)? = nil,
         onSelect: @escaping (TrainServicePatterns.Pattern, Bool) -> Void
     ) {
         self.region = region
-        self.rideDate = rideDate
+        _rideDate = State(initialValue: rideDate)
+        self.onSelectDate = onSelectDate
         self.onSelectTrip = onSelectTrip
+        self.onSelectDraft = onSelectDraft
         self.onSelect = onSelect
     }
 
@@ -164,12 +318,13 @@ struct ServicePatternPickerView: View {
     }
 
     private var legacyMatches: [TrainServicePatterns.Pattern] {
-        TrainServicePatterns.search(query, region: region, filter: .init(
+        TrainServicePatterns.search("", region: region, filter: .init(
             company: companyFilter, status: .any, line: lineFilter, rideDate: rideDate))
+            .filter { TimetableSearch(query).matches($0) }
     }
 
     private var exactMatches: [TrainServicePatterns.Pattern] {
-        let needle = normalized(query.trimmingCharacters(in: .whitespacesAndNewlines))
+        let search = TimetableSearch(query)
         return timetablePatterns.filter { pattern in
             if let companyFilter, pattern.companyLabel != companyFilter { return false }
             if let lineFilter {
@@ -178,16 +333,13 @@ struct ServicePatternPickerView: View {
                     TrainServiceBranding.canonicalLineName($0) == line
                 }) else { return false }
             }
-            guard !needle.isEmpty else { return true }
-            return [pattern.name, pattern.label, pattern.origin, pattern.destination]
-                .contains { normalized($0).contains(needle) }
-                || pattern.stops.contains { normalized($0).contains(needle) }
-                || pattern.lines.contains { normalized($0).contains(needle) }
+            if let trip = timetableTripsByPatternID[pattern.id] { return search.matches(trip) }
+            return search.matches(pattern)
         }
     }
 
     private var incompleteTripMatches: [TrainTimetableDatabase.Trip] {
-        let needle = normalized(query.trimmingCharacters(in: .whitespacesAndNewlines))
+        let search = TimetableSearch(query)
         return incompleteTimetableTrips.filter { trip in
             if let companyFilter,
                !trip.operatorSegments.map(\.displayName).contains(companyFilter) { return false }
@@ -197,12 +349,7 @@ struct ServicePatternPickerView: View {
                     TrainServiceBranding.canonicalLineName($0.lineName) == line
                 }) else { return false }
             }
-            guard !needle.isEmpty else { return true }
-            let values = [
-                trip.service.canonicalName, trip.publicNumber ?? trip.trainNumber,
-                trip.origin?.station.name ?? "", trip.destination?.station.name ?? "",
-            ] + trip.stops.map(\.station.name) + trip.lineSegments.map(\.lineName)
-            return values.contains { normalized($0).contains(needle) }
+            return search.matches(trip)
         }
     }
 
@@ -267,6 +414,23 @@ struct ServicePatternPickerView: View {
         NavigationStack {
             List {
                 Section {
+                    Button { showsDateEditor.toggle() } label: {
+                        Label(localization.editorText("ios.editor.timetableBrowseDate")
+                              + (rideDate.map { ": " + $0 } ?? ""), systemImage: "calendar")
+                    }
+                    .accessibilityIdentifier("servicePatternDateEditor")
+                    if showsDateEditor {
+                        EditorDateField(
+                            title: localization.editorText("ios.editor.timetableBrowseDate"),
+                            date: $rideDate, region: Region(rawValue: region) ?? .jp,
+                            accessibilityID: "servicePatternDateInput")
+                        Button(localization.editorText("ios.editor.timetableAnyDate")) { rideDate = nil }
+                    }
+                    Text(localization.editorText("ios.editor.timetableSearchHelp"))
+                        .font(.caption).foregroundStyle(.secondary)
+                    if isLoadingTimetable {
+                        ProgressView(localization.editorText("ios.editor.timetableSearching"))
+                    }
                     if let rideDate {
                         Toggle("すべての履歴を表示", isOn: $showsAllHistory)
                             .accessibilityIdentifier("servicePatternHistoryFilter")
@@ -315,7 +479,7 @@ struct ServicePatternPickerView: View {
                     }
                 }
                 if !incompleteTripMatches.isEmpty {
-                    Section("当日ダイヤ（調査中・適用不可）") {
+                    Section(localization.editorText("ios.editor.timetablePublishedDraft")) {
                         ForEach(incompleteTripMatches) { trip in
                             VStack(alignment: .leading, spacing: 8) {
                                 incompleteTripRow(trip)
@@ -336,7 +500,7 @@ struct ServicePatternPickerView: View {
                         ForEach(outsideMatches) { pattern in patternRow(pattern) }
                     }
                 }
-                if groups.isEmpty && incompleteTripMatches.isEmpty
+                if !isLoadingTimetable && groups.isEmpty && incompleteTripMatches.isEmpty
                     && unknownMatches.isEmpty && outsideMatches.isEmpty
                 {
                     Text(timetableCoverage == .verified && timetableTripCount == 0
@@ -345,9 +509,10 @@ struct ServicePatternPickerView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .accessibilityIdentifier("servicePatternList")
             .navigationTitle("列車パターンから入力")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $query, prompt: Text("列車名・行き先で検索"))
+            .searchable(text: $query, prompt: Text(localization.editorText("ios.editor.timetableSearchPrompt")))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("キャンセル") { dismiss() }
@@ -355,7 +520,12 @@ struct ServicePatternPickerView: View {
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
             .sheet(item: $inspectedTrip) { trip in
-                TimetableTripDetailView(trip: trip)
+                TimetableTripDetailView(trip: trip, onUseDraft: onSelectDraft == nil ? nil : { chosen in
+                    onSelectDate?(chosen.serviceDate)
+                    onSelectDraft?(chosen)
+                    inspectedTrip = nil
+                    dismiss()
+                })
             }
             .confirmationDialog(
                 "このパターンは乗車日の対象外です。適用しますか？",
@@ -392,6 +562,7 @@ struct ServicePatternPickerView: View {
 
     private func select(_ pattern: TrainServicePatterns.Pattern, reversed: Bool) {
         if let trip = timetableTripsByPatternID[pattern.id], let onSelectTrip {
+            onSelectDate?(trip.serviceDate)
             onSelectTrip(trip)
             dismiss()
             return
@@ -405,6 +576,7 @@ struct ServicePatternPickerView: View {
     }
 
     private func apply(_ selection: Selection) {
+        onSelectDate?(rideDate)
         onSelect(selection.pattern, selection.reversed)
         pendingSelection = nil
         dismiss()
@@ -473,11 +645,15 @@ struct ServicePatternPickerView: View {
         VStack(alignment: .leading, spacing: 3) {
             Text([trip.service.canonicalName, trip.publicNumber ?? trip.trainNumber]
                 .filter { !$0.isEmpty }.joined(separator: " "))
+            if let englishName = trip.service.englishName {
+                Text(englishName).font(.caption).foregroundStyle(.secondary)
+            }
             Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?") · \(trip.factCompleteness["stops"] == .verified ? "" : "掲載")\(trip.passengerStops.count)駅")
                 .font(.caption).foregroundStyle(.secondary)
             if let departure = trip.origin?.departureTime ?? trip.origin?.arrivalTime {
                 Text("始発 \(departure)").font(.caption2).foregroundStyle(.secondary)
             }
+            Text(trip.timetableEditionName).font(.caption2).foregroundStyle(.secondary)
             let missing = [
                 "operator": "運行会社", "validity_calendar": "運転日", "stops": "停車駅",
                 "times": "時刻", "route_lines": "経路", "station_refs": "駅参照",
@@ -490,7 +666,7 @@ struct ServicePatternPickerView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("timetableIncompleteTrip-\(trip.id)")
-        .accessibilityHint("調査中のため停車駅へ適用できません")
+        .accessibilityHint(localization.editorText("ios.editor.timetableMatchNote"))
     }
 
     private func validityCaption(for pattern: TrainServicePatterns.Pattern) -> String {
@@ -519,19 +695,28 @@ struct ServicePatternPickerView: View {
         } else if timetableCoverage == .verified && timetableTripCount == 0 {
             Text("\(date) はJR・国鉄の運行予定特急がありません。私鉄の互換パターンは引き続き表示します")
                 .font(.caption).foregroundStyle(.secondary)
-        } else if incompleteTimetableTripCount > 0 {
-            Text("当日ダイヤ \(timetableTripCount)本中 \(incompleteTimetableTripCount)本は停車駅・経路・出典の確認が未完了のため適用できません")
-                .font(.caption).foregroundStyle(.orange)
-        } else if timetableCoverage == .partial || timetableCoverage == .unknown {
-            Text("\(date) の当日ダイヤは調査途中です。互換パターンも別に表示します")
-                .font(.caption).foregroundStyle(.orange)
-        } else if !timetablePatterns.isEmpty {
-            Text("\(date) の列車番号別ダイヤ")
-                .font(.caption).foregroundStyle(.secondary)
+        } else {
+            if timetableCoverage == .partial || timetableCoverage == .unknown {
+                Text("\(date) の当日ダイヤは調査途中です。他の列車が未掲載の可能性があります")
+                    .font(.caption).foregroundStyle(.orange)
+                    .accessibilityIdentifier("timetableInventoryIncomplete")
+            }
+            if incompleteTimetableTripCount > 0 {
+                Text("当日ダイヤ \(timetableTripCount)本中 \(incompleteTimetableTripCount)本は全経路未確認です。掲載駅・時刻を下書きとして確認できます（資料競合を除く）")
+                    .font(.caption).foregroundStyle(.orange)
+                    .accessibilityIdentifier("timetableTripsNotApplicable")
+            }
+            if timetableCoverage == .verified && incompleteTimetableTripCount == 0
+                && !timetablePatterns.isEmpty {
+                Text("\(date) の列車番号別ダイヤ")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
         }
     }
 
     @MainActor private func loadTimetable() async {
+        isLoadingTimetable = true
+        defer { if !Task.isCancelled { isLoadingTimetable = false } }
         timetablePatterns = []
         timetableDetails = [:]
         timetableTripsByPatternID = [:]
@@ -564,13 +749,9 @@ struct ServicePatternPickerView: View {
                     departureTime: trip.origin?.departureTime ?? trip.origin?.arrivalTime)
             }
         } catch {
+            guard !Task.isCancelled else { return }
             timetableQueryFailed = true
         }
-    }
-
-    private func normalized(_ value: String) -> String {
-        let folded = value.precomposedStringWithCompatibilityMapping.lowercased()
-        return folded.applyingTransform(.hiraganaToKatakana, reverse: false) ?? folded
     }
 
     private func isJROrNationalRailway(_ pattern: TrainServicePatterns.Pattern) -> Bool {

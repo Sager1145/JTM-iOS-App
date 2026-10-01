@@ -1,10 +1,12 @@
 # 列车品牌与跨线行程
 
-列车列表、选中行程卡片和详情页共用 `JourneyBranding`。特急列车先查询列车品牌数据库；没有专属图稿时，退回列车运营公司的 logo；运营公司也没有 logo 时显示默认列车图标。任何情况下都不能使用线路 logo。车站中的线路标识不受此规则影响。
+列车列表、选中行程卡片和详情页共用 `JourneyBranding`。特急列车先查询列车品牌数据库；没有专属图稿时，退回列车运营公司的 logo；运营公司也没有 logo 时显示通用火车图标 `train.side.front.car`。任何情况下都不能使用线路 logo。车站中的线路标识不受此规则影响。
 
 数据库位于 `ios/RailKit/Sources/RailCore/Resources/train-service-branding.json`，通过 Swift Package 资源随应用打包。每项包含稳定的 `id`、`region`、日文／英文别名 `names` 和可空的 `logoPath`。匹配使用列车名称及 `number_en`，兼容全角字符、大小写和车次后缀；较长名称优先，避免「サフィール踊り子」匹配成「踊り子」。未收录的列车仍可通过「特急」或 “Limited Express” 等明确类型使用默认图标；「特快」只在台湾／香港／澳门计入特急，日本的「特快」是「特別快速」的简称（如中央特快），不属于特急。以拉丁字母开头的品牌名（如 Haruka）还需要车次上下文——匹配前不能紧跟字母、数字或连字符，匹配后（去除空白后）需为空、以数字、「号」、“no.”／“no ” 或左括号开头，否则视为无关名称（如车站名 Kinosaki-Onsen）中的巧合子串。
 
-专属图稿放在 `app/public/rail/service-logos/`，来源与署名见该目录的 `README.md`。当前使用 iOS 可直接解码的 PNG；新增图稿后，将对应条目的 `logoPath` 设为 `/rail/service-logos/<filename>.png`。没有合适图稿时保留 `null`，交由运营公司 logo 或默认图标兜底，不填线路 logo 或车身照片。车辆品牌只匹配明确写出的品牌名称，不将某一车型标志套给所有可能使用该车型的列车。
+专属图稿放在 `app/public/rail/service-logos/`，来源与署名见该目录的 `README.md`。现有图稿采用 iOS 可直接解码的 PNG 或 JPEG；新增图稿后，将对应条目的 `logoPath` 设为实际文件的 `/rail/service-logos/<filename>`。没有合适图稿时保留 `null`，交由运营公司 logo 或默认图标兜底，不填线路 logo 或整车照片。部分 JPEG 是车身徽章的近照，并在素材清单中注明车型与作者。车辆品牌只匹配明确写出的品牌名称，不将某一车型标志套给所有可能使用该车型的列车。
+
+2026-09-30 Logo 核对：221 个品牌条目中，43 个已有有效的专属图稿路径（29 份不同素材），178 个仍为 `null`，已绑定路径没有缺文件。本轮增加十张有许可的标志近照，并为明确以 SPACIA 命名的日光／きぬがわ条目复用图稿。既有 SPACIA X／Hinotori／Shimakaze 原始素材未声明开放再分发许可，文件存在不代表这一许可缺口已解决。新增的 Romancecar 家族图稿对应 13 个小田急特急名称；官方[时刻表](https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf)将这些名称列在 Romancecar 之下。另补 [WEST EXPRESS 銀河](https://www.westjr.co.jp/global/en/pdf/press_20190319.pdf)、μ-SKY、SPACIA 及多项可署名的车身标志近照。剩余 `null` 仅表示尚未收入经核对且可分发的专属图稿，不证明列车本来没有标志；逐项状态见[检查清单](train-service-database-checklist.md)，候选来源与取舍见[Logo 来源审计](train-service-logo-sources.md)。
 
 跨线识别接受特急／快速等类型、明确的直通或跨线描述，以及已记录的不同线路或运营公司。普通单线列车不会因为共用轨道而改变线路身份。这类跨线证据只来自已记录的行程区段（`routeSections`），路线策略候选线路和 `train.company` 都不计入，因为它们可能从未真正乘坐过。识别尚不完整时保留已记录区段中识别未覆盖到的线路（按去除空白、NFKC 归一化并把「〜本线」等价于「〜线」的规范形式比较），补充识别出的线路和运营公司。
 

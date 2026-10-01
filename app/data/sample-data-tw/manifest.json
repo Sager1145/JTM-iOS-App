@@ -81,5 +81,35 @@
     "2026-08-13": [
       "part-027"
     ]
+  },
+  "part_train_ids": {
+    "part-000": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+    "part-001": "20260802_02_trtc_bl_taipei_main_ximen",
+    "part-002": "20260802_03_trtc_bl_ximen_zhongxiao_fuxing",
+    "part-003": "20260802_04_trtc_bl_zhongxiao_fuxing_ximen",
+    "part-004": "20260805_01_thsr_165_taipei_taichung",
+    "part-005": "20260805_02_tra_local_3262_xinwuri_taichung",
+    "part-006": "20260806_01_tra_tze_chiang_3000_137_taichung_changhua",
+    "part-007": "20260806_02_tra_local_2204_changhua_taichung",
+    "part-008": "20260808_01_tra_tze_chiang_3000_191_taichung_chiayi",
+    "part-009": "20260808_02_alsr_5_chiayi_alishan",
+    "part-010": "20260808_03_alsr_120_alishan_shenmu",
+    "part-011": "20260808_04_alsr_121_shenmu_alishan",
+    "part-012": "20260809_02_alsr_zhushan_observation_alishan_zhushan",
+    "part-013": "20260809_03_alsr_zhushan_observation_zhushan_alishan",
+    "part-014": "20260809_01_alsr_8_alishan_chiayi",
+    "part-015": "20260809_04_tra_tze_chiang_3000_125_chiayi_kaohsiung",
+    "part-016": "20260810_01_krtc_red_kaohsiung_gangshan_station",
+    "part-017": "20260810_02_krtc_red_gangshan_station_siaogang",
+    "part-018": "20260810_03_krtc_red_siaogang_sanduo",
+    "part-019": "20260810_04_krtc_red_sanduo_kaisyuan",
+    "part-020": "20260810_05_klrt_c3_counterclockwise_loop",
+    "part-021": "20260810_06_krtc_red_kaisyuan_kaohsiung",
+    "part-022": "20260812_01_krtc_red_kaohsiung_zuoying",
+    "part-023": "20260812_02_thsr_826_zuoying_taipei",
+    "part-024": "20260812_03_tra_local_1208_taipei_keelung",
+    "part-025": "20260812_04_tra_local_4209_nuannuan_nangang",
+    "part-026": "20260812_05_thsr_161_nangang_taipei",
+    "part-027": "20260813_01_star_of_taiwan_round_island_loop"
   }
 }

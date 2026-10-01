@@ -1,0 +1,804 @@
+{
+  "audit_id": "jr-east-nex-formation-evidence-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "scope": "54 observed public numbers / 84 modeled trips, excluding unseen entrances.",
+  "direct_train_specific": {
+    "planned_reservation_equipment_public_numbers": 54,
+    "planned_reservation_equipment_trips": 84,
+    "new_overlay_trips": 82,
+    "existing_nex5_overlay_trips": 2,
+    "train_specific_car_count": 0,
+    "train_specific_vehicle_assignment": 0,
+    "actual_dispatch": 0
+  },
+  "family_evidence": [
+    {
+      "source_id": "jr-east-nex-equipment-research-september-guide",
+      "source_type": "official_train_guide",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "成田エクスプレスの買い方・ネット予約・停車駅ガイド",
+      "url_or_locator": "https://media.jreast.co.jp/articles/2548",
+      "publication_date": "2026-09-09",
+      "accessed_at": "2026-09-30",
+      "effective_date": null,
+      "issue": "2026年9月現在",
+      "automated_extraction_allowed": false,
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "notes": "Family guide states coupled airport–Tokyo 12 cars, splits to six per branch; some whole-route 12-car services. Does not list public numbers or dated formations."
+    },
+    {
+      "source_id": "jr-east-nex-equipment-research-vehicle-guide",
+      "source_type": "official_train_guide",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "成田エクスプレス／しおさい（E259系）",
+      "url_or_locator": "https://www.jreast.co.jp/train/express/nex.html",
+      "publication_date": null,
+      "accessed_at": "2026-09-30",
+      "effective_date": null,
+      "issue": null,
+      "automated_extraction_allowed": false,
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "notes": "Family vehicle E259; no dated train allocation or car diagram."
+    },
+    {
+      "source_id": "jr-east-nex-equipment-research-multilingual-guide",
+      "source_type": "official_train_guide",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "N’EX 車両案内",
+      "url_or_locator": "https://www.jreast.co.jp/multi/nex/",
+      "publication_date": "2026-03-14",
+      "accessed_at": "2026-09-30",
+      "effective_date": null,
+      "issue": "情報更新日：2026-3-14",
+      "automated_extraction_allowed": false,
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "notes": "Ordinary/Green interior guide. Seat pitch 1020/1160mm; photos rather than numbered seating diagram; no dated train allocation."
+    }
+  ],
+  "inference_policy": "The September family guide plus exact trip coupling permits a composite expectation of six-car branch units and 12-car combined sections. This is not direct per-train evidence. Do not promote into scalar trip car_count or exact-date vehicle_series without train-specific assignment/exception evidence.",
+  "seat_diagram_gap": "Official guides inspected show interior photographs and seat features, not a numbered per-car seating diagram applicable to each dated trip. No car numbers, capacity or consist serial numbers staged.",
+  "research_gaps": [
+    {
+      "public_number": "15",
+      "trip_ids": [
+        "jr-east.narita-express.15.2015m.exact-2026-09-30",
+        "jr-east.narita-express.15.2215m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029071.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "1",
+      "trip_ids": [
+        "jr-east.narita-express.1.2001m.exact-2026-09-30",
+        "jr-east.narita-express.1.2201m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031131.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "5",
+      "trip_ids": [
+        "jr-east.narita-express.5.2005m.exact-2026-09-30",
+        "jr-east.narita-express.5.2205m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031141.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "7",
+      "trip_ids": [
+        "jr-east.narita-express.7.2007m.exact-2026-09-30",
+        "jr-east.narita-express.7.2207m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031151.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "23",
+      "trip_ids": [
+        "jr-east.narita-express.23.2023m.exact-2026-09-30",
+        "jr-east.narita-express.23.2223m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031161.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "27",
+      "trip_ids": [
+        "jr-east.narita-express.27.2027m.exact-2026-09-30",
+        "jr-east.narita-express.27.2227m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031171.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "31",
+      "trip_ids": [
+        "jr-east.narita-express.31.2031m.exact-2026-09-30",
+        "jr-east.narita-express.31.2231m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031181.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "35",
+      "trip_ids": [
+        "jr-east.narita-express.35.2035m.exact-2026-09-30",
+        "jr-east.narita-express.35.2235m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031191.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "39",
+      "trip_ids": [
+        "jr-east.narita-express.39.2039m.exact-2026-09-30",
+        "jr-east.narita-express.39.2239m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031201.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "43",
+      "trip_ids": [
+        "jr-east.narita-express.43.2043m.exact-2026-09-30",
+        "jr-east.narita-express.43.2243m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031211.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "51",
+      "trip_ids": [
+        "jr-east.narita-express.51.2051m.exact-2026-09-30",
+        "jr-east.narita-express.51.2251m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031221.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "53",
+      "trip_ids": [
+        "jr-east.narita-express.53.2053m.exact-2026-09-30",
+        "jr-east.narita-express.53.2253m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031231.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "33",
+      "trip_ids": [
+        "jr-east.narita-express.33.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031511.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "47",
+      "trip_ids": [
+        "jr-east.narita-express.47.2047m.exact-2026-09-30",
+        "jr-east.narita-express.47.2247m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031521.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "3",
+      "trip_ids": [
+        "jr-east.narita-express.3.2003m.exact-2026-09-30",
+        "jr-east.narita-express.3.2203m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037961.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "17",
+      "trip_ids": [
+        "jr-east.narita-express.17.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037971.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "19",
+      "trip_ids": [
+        "jr-east.narita-express.19.2019m.exact-2026-09-30",
+        "jr-east.narita-express.19.2219m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037981.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "9",
+      "trip_ids": [
+        "jr-east.narita-express.9.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054651.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "49",
+      "trip_ids": [
+        "jr-east.narita-express.49.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063321.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "21",
+      "trip_ids": [
+        "jr-east.narita-express.21.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076511.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "25",
+      "trip_ids": [
+        "jr-east.narita-express.25.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076521.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "29",
+      "trip_ids": [
+        "jr-east.narita-express.29.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076541.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "37",
+      "trip_ids": [
+        "jr-east.narita-express.37.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076551.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "41",
+      "trip_ids": [
+        "jr-east.narita-express.41.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076571.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "45",
+      "trip_ids": [
+        "jr-east.narita-express.45.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076581.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "11",
+      "trip_ids": [
+        "jr-east.narita-express.11.2011m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098841.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "13",
+      "trip_ids": [
+        "jr-east.narita-express.13.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098851.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "2",
+      "trip_ids": [
+        "jr-east.narita-express.2.2002m.exact-2026-09-30",
+        "jr-east.narita-express.2.2202m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029041.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "42",
+      "trip_ids": [
+        "jr-east.narita-express.42.2042m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029081.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "28",
+      "trip_ids": [
+        "jr-east.narita-express.28.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031241.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "38",
+      "trip_ids": [
+        "jr-east.narita-express.38.2038m.exact-2026-09-30",
+        "jr-east.narita-express.38.2238m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031251.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "40",
+      "trip_ids": [
+        "jr-east.narita-express.40.2040m.exact-2026-09-30",
+        "jr-east.narita-express.40.2240m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031261.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "46",
+      "trip_ids": [
+        "jr-east.narita-express.46.2046m.exact-2026-09-30",
+        "jr-east.narita-express.46.2246m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031271.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "52",
+      "trip_ids": [
+        "jr-east.narita-express.52.2052m.exact-2026-09-30",
+        "jr-east.narita-express.52.2252m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031281.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "54",
+      "trip_ids": [
+        "jr-east.narita-express.54.2054m.exact-2026-09-30",
+        "jr-east.narita-express.54.2254m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031291.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "10",
+      "trip_ids": [
+        "jr-east.narita-express.10.2010m.exact-2026-09-30",
+        "jr-east.narita-express.10.2210m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031481.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "30",
+      "trip_ids": [
+        "jr-east.narita-express.30.2030m.exact-2026-09-30",
+        "jr-east.narita-express.30.2230m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031491.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "34",
+      "trip_ids": [
+        "jr-east.narita-express.34.2034m.exact-2026-09-30",
+        "jr-east.narita-express.34.2234m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031501.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "14",
+      "trip_ids": [
+        "jr-east.narita-express.14.2014m.exact-2026-09-30",
+        "jr-east.narita-express.14.2214m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047971.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "18",
+      "trip_ids": [
+        "jr-east.narita-express.18.2018m.exact-2026-09-30",
+        "jr-east.narita-express.18.2218m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047981.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "50",
+      "trip_ids": [
+        "jr-east.narita-express.50.2050m.exact-2026-09-30",
+        "jr-east.narita-express.50.2250m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047991.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "12",
+      "trip_ids": [
+        "jr-east.narita-express.12.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049941.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "4",
+      "trip_ids": [
+        "jr-east.narita-express.4.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063331.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "8",
+      "trip_ids": [
+        "jr-east.narita-express.8.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063341.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "16",
+      "trip_ids": [
+        "jr-east.narita-express.16.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063351.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "20",
+      "trip_ids": [
+        "jr-east.narita-express.20.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063361.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "24",
+      "trip_ids": [
+        "jr-east.narita-express.24.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063371.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "32",
+      "trip_ids": [
+        "jr-east.narita-express.32.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063381.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "44",
+      "trip_ids": [
+        "jr-east.narita-express.44.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063391.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "48",
+      "trip_ids": [
+        "jr-east.narita-express.48.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063401.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "6",
+      "trip_ids": [
+        "jr-east.narita-express.6.2006m.exact-2026-09-30",
+        "jr-east.narita-express.6.2206m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063411.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "22",
+      "trip_ids": [
+        "jr-east.narita-express.22.2022m.exact-2026-09-30",
+        "jr-east.narita-express.22.2222m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063421.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "26",
+      "trip_ids": [
+        "jr-east.narita-express.26.2026m.exact-2026-09-30",
+        "jr-east.narita-express.26.2226m.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063431.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    },
+    {
+      "public_number": "36",
+      "trip_ids": [
+        "jr-east.narita-express.36.exact-2026-09-30"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076611.html",
+      "equipment_status": "direct exact-date planned seat classes",
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "actual_dispatch": null,
+      "missing_evidence": "Train-specific dated car count/vehicle allocation and numbered seating diagram; operational record required for actual dispatch."
+    }
+  ],
+  "next_sources": [
+    "https://www.jreast.co.jp/multi/nex/",
+    "https://www.jreast.co.jp/train/express/nex.html",
+    "https://www.eki-net.com/"
+  ],
+  "next_step": "A date/train-selected official reservation formation display could close planned assignment gaps if visible; an actual dispatch record is separately required. No booking performed."
+}

@@ -1,0 +1,107 @@
+{
+  "batch_id": "reviewed-historical-1988-20260929",
+  "canonical_promotion_allowed": false,
+  "notes": "Contemporary JTB timetable preview pages were visually reviewed. 1988-03-13 is the printed revision start, not independent proof of every subsequent operating day. The selected cells below are not asserted to be complete passenger-stop lists. Historical route IDs are research hypotheses, not facts printed by the source.",
+  "source_documents": [
+    {
+      "source_id": "jtb-transport-timetable-198803-google-books",
+      "publisher": "JTBパブリッシング（1988年3月号の復刻版）",
+      "title": "1988年3月号「青函トンネル開通時の時刻表」時刻表復刻版",
+      "source_type": "reprint_of_contemporary_timetable_preview",
+      "url_or_locator": "https://books.google.co.jp/books?id=_ExN2yimM0gC",
+      "issue": "1988年3月号",
+      "publication_date": null,
+      "effective_date": "1988-03-13",
+      "accessed_at": "2026-09-29",
+      "content_hash": null,
+      "license_status": "unknown",
+      "redistribution_status": "metadata_and_reviewed_facts_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": "Google Books preview, printed pp. 358–359 and 428",
+      "notes": "Google Books metadata identifies a JTB Publishing reprint containing all pages of the original March 1988 交通公社の時刻表. The viewed line tables print 63.3.13改正. The preview is a facsimile of a contemporary published timetable, not a JR official operating record. No page image is bundled."
+    }
+  ],
+  "timetable_candidates": [
+    {
+      "candidate_id": "raicho-1-19880313",
+      "source_id": "jtb-transport-timetable-198803-google-books",
+      "source_pages": [
+        "https://books.google.co.jp/books?id=_ExN2yimM0gC&pg=PA358&hl=ja",
+        "https://books.google.co.jp/books?id=_ExN2yimM0gC&pg=PA359&hl=ja"
+      ],
+      "revision_start": "1988-03-13",
+      "service_name_snapshot": "雷鳥",
+      "public_number": "1",
+      "train_number": "4001M",
+      "destination_name_snapshot": "富山",
+      "selected_published_calls": [
+        {"station_name_snapshot": "大阪", "departure": "07:25"},
+        {"station_name_snapshot": "新大阪", "departure": "07:30"},
+        {"station_name_snapshot": "京都", "departure": "07:55"},
+        {"station_name_snapshot": "金沢", "arrival": "10:20", "departure": "10:22"},
+        {"station_name_snapshot": "高岡", "arrival": "10:51"},
+        {"station_name_snapshot": "富山", "arrival": "11:05"}
+      ],
+      "route_identity_candidates_not_source_facts": [
+        "jp-id-hapi-line-transfer-2024.sections",
+        "jp-id-ir-kanazawa-daishoji-transfer-2024.sections",
+        "jp-id-ir-kurikara-kanazawa-transfer-2015.sections",
+        "jp-id-ainokaze-transfer-2015.sections"
+      ],
+      "calendar_status": "revision_start_only",
+      "canonical_record_count": 0,
+      "why_not_canonical": "The inspected cells are a selected subset of the published calls, no explicit per-date calendar or superseding date has been reviewed, and historical station/route identities have not been independently attested."
+    },
+    {
+      "candidate_id": "asama-1-19880313",
+      "source_id": "jtb-transport-timetable-198803-google-books",
+      "source_pages": ["https://books.google.co.jp/books?id=_ExN2yimM0gC&pg=PA428&hl=ja"],
+      "revision_start": "1988-03-13",
+      "service_name_snapshot": "あさま",
+      "public_number": "1",
+      "train_number": "3001M",
+      "destination_name_snapshot": "直江津",
+      "selected_published_calls": [
+        {"station_name_snapshot": "上野", "departure": "07:00"},
+        {"station_name_snapshot": "大宮", "departure": "07:22"},
+        {"station_name_snapshot": "高崎", "departure": "08:10"},
+        {"station_name_snapshot": "横川", "departure": "08:38"},
+        {"station_name_snapshot": "軽井沢", "arrival": "08:55", "departure": "08:58"},
+        {"station_name_snapshot": "直江津", "arrival": "11:06"}
+      ],
+      "route_identity_candidates_not_source_facts": [
+        "jp-id-north-shinano-transfer-2015.sections",
+        "jp-id-echigo-myoko-transfer-2015.sections"
+      ],
+      "calendar_status": "revision_start_only",
+      "canonical_record_count": 0,
+      "why_not_canonical": "The inspected cells are a selected subset of the published calls, no explicit per-date calendar or superseding date has been reviewed, and historical station/route identities have not been independently attested."
+    }
+  ],
+  "research_queue": [
+    {
+      "research_id": "historical-1988.raicho1.complete-calls-calendar",
+      "entity_type": "historical_timetable_candidate",
+      "entity_id": "raicho-1-19880313",
+      "missing_dimension": "complete_stops_and_explicit_operating_calendar",
+      "status": "open",
+      "notes": "Review the entire 4001M column, table legend, and any dated operating exceptions. Do not extend the 1988-03-13 revision start to all later dates without an end boundary."
+    },
+    {
+      "research_id": "historical-1988.asama1.complete-calls-calendar",
+      "entity_type": "historical_timetable_candidate",
+      "entity_id": "asama-1-19880313",
+      "missing_dimension": "complete_stops_and_explicit_operating_calendar",
+      "status": "open",
+      "notes": "Review the entire 3001M column, table legend, and any dated operating exceptions."
+    },
+    {
+      "research_id": "historical-1988.raicho-asama.route-identities",
+      "entity_type": "historical_timetable_candidate",
+      "entity_id": "raicho-1-19880313,asama-1-19880313",
+      "missing_dimension": "historical_station_and_ordered_route_identity",
+      "status": "open",
+      "notes": "Test the reviewed station sequence against dated historical line features; printed line headings are not an explicit mapping to repository history IDs."
+    }
+  ]
+}

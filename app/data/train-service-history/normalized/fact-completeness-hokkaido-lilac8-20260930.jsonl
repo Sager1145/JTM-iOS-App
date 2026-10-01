@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Official 3008M / ライラック 8 3008M column.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Official column prints 3008M.", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Official selector is 2026-09-30.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Asahikawa and Sapporo endpoints printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Seven passenger calls printed.", "status": "verified"}
+{"confidence": "medium", "dimension": "times", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Intermediate arrival sides are unprinted.", "status": "partial"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Current JR Hokkaido N02 station-group matches.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "No dated ordered operator segments.", "status": "unknown"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "No dated ordered physical line identities.", "status": "unknown"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-hokkaido.lilac.8.exact-2026-09-30", "entity_type": "trip", "notes": "Official page pinned; reuse grant unconfirmed.", "status": "partial"}

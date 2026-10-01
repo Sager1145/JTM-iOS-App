@@ -1,0 +1,40 @@
+{
+  "candidate_id": "jr-kyushu-kyushu-odan5-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; complete published passenger stops and minute clocks; no operator or route-line promotion",
+  "source_id": "jr-kyushu-kyushu-odan5-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0030/00308301.html?c=28742&d=30&ym=202609",
+  "service_date": "2026-09-30",
+  "service": {
+    "service_id": "kyushu-cross-express",
+    "canonical_name": "九州横断特急",
+    "service_class": "limited_express",
+    "historical_generation": 1,
+    "jr_scope": "jr"
+  },
+  "trip": {
+    "public_number": "5",
+    "train_number": "1075D",
+    "direction": "熊本→別府",
+    "stop_times": [
+      {"stop_sequence": 1, "name_snapshot": "熊本", "arrival_time": null, "departure_time": "15:23", "platform": "2", "call_type": "origin"},
+      {"stop_sequence": 2, "name_snapshot": "新水前寺", "arrival_time": "15:31", "departure_time": "15:32", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 3, "name_snapshot": "肥後大津", "arrival_time": "15:58", "departure_time": "16:03", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 4, "name_snapshot": "立野", "arrival_time": "16:16", "departure_time": "16:21", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 5, "name_snapshot": "阿蘇", "arrival_time": "16:45", "departure_time": "16:48", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 6, "name_snapshot": "宮地", "arrival_time": "16:52", "departure_time": "16:54", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 7, "name_snapshot": "豊後荻", "arrival_time": "17:17", "departure_time": "17:18", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 8, "name_snapshot": "豊後竹田", "arrival_time": "17:31", "departure_time": "17:32", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 9, "name_snapshot": "緒方", "arrival_time": "17:43", "departure_time": "17:44", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 10, "name_snapshot": "三重町", "arrival_time": "17:55", "departure_time": "17:56", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 11, "name_snapshot": "大分", "arrival_time": "18:30", "departure_time": "18:34", "platform": "6", "call_type": "passenger_stop"},
+      {"stop_sequence": 12, "name_snapshot": "別府", "arrival_time": "18:45", "departure_time": null, "platform": null, "call_type": "destination"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim": "limited-express identity, public number and internal train number", "locator": "列車種 / 列車名 / 列車番号 rows"},
+    {"claim": "single exact 2026-09-30 occurrence", "locator": "date-qualified URL followed from the 2026-09-30 大分 and 熊本 station tables; 30 is an operating day on the detail calendar"},
+    {"claim": "all twelve passenger stops and displayed minute clocks", "locator": "駅名 / 時刻 / のりば table"}
+  ]
+}

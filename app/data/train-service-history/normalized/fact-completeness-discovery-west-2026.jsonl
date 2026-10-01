@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "The exact-date page prints 特急 やくも15号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "The exact-date page prints 1015M and public number 15.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "The train page does not print an ordered operator-boundary table.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "Only the URL-pinned and displayed date 2026-09-30 is normalized.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "The displayed table begins at 岡山 and ends at 出雲市.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "All 11 displayed passenger calls with clocks are retained in order.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "Passenger-call clocks are retained verbatim to the minute.", "status": "verified"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "No dated ordered physical line identities are promoted from this page.", "status": "unknown"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "Every passenger-call name resolves to one current JR West N02 sourceCode.", "status": "verified"}
+{"confidence": "high", "dimension": "provenance", "entity_id": "jr-west.yakumo.15.2026-09-30", "entity_type": "trip", "notes": "Official URL and source terms are recorded; reuse permission was not identified.", "status": "partial"}

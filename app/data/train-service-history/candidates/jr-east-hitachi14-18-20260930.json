@@ -1,0 +1,48 @@
+{
+  "candidate_id": "jr-east-hitachi14-18-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 service day and the two displayed JR East schedule variants. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.14.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "14",
+      "train_number": "14M",
+      "source_id": "jr-east-hitachi14-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098711.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち14号 14M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "１０", "品川": "９"},
+      "stops": [
+        ["いわき", null, "12:18"], ["湯本", "12:23", "12:24"],
+        ["泉", "12:28", "12:29"], ["勿来", "12:37", "12:38"],
+        ["高萩", "12:50", "12:51"], ["日立", "13:01", "13:02"],
+        ["常陸多賀", "13:05", "13:06"], ["大甕", "13:10", "13:10"],
+        ["勝田", "13:20", "13:21"], ["水戸", "13:26", "13:27"],
+        ["上野", "14:35", "14:37"], ["東京", "14:42", "14:43"],
+        ["品川", "14:51", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.18.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "18",
+      "train_number": "18M",
+      "source_id": "jr-east-hitachi18-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048591.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち18号 18M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "９", "品川": "９"},
+      "stops": [
+        ["いわき", null, "14:18"], ["湯本", "14:23", "14:24"],
+        ["泉", "14:28", "14:29"], ["勿来", "14:37", "14:37"],
+        ["高萩", "14:50", "14:50"], ["日立", "15:01", "15:02"],
+        ["常陸多賀", "15:05", "15:06"], ["大甕", "15:09", "15:10"],
+        ["勝田", "15:20", "15:21"], ["水戸", "15:26", "15:27"],
+        ["上野", "16:36", "16:38"], ["東京", "16:43", "16:44"],
+        ["品川", "16:51", null]
+      ]
+    }
+  ]
+}

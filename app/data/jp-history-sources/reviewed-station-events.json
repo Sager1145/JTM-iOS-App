@@ -1,0 +1,211 @@
+{
+  "schema_version": "1",
+  "title": "Promotion-ready reviewed station identity events",
+  "sources": [
+    {
+      "source_id": "keikyu-six-station-renames-2020",
+      "title": "京急線6駅の駅名を2020年3月14日（土）に変更します",
+      "authority": "京浜急行電鉄株式会社",
+      "published_date": "2019-12-16",
+      "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf",
+      "role": "Primary exact-day evidence for all six old/new station names and stable station numbers."
+    },
+    {
+      "source_id": "mlit-n02-19",
+      "title": "国土数値情報 鉄道データ N02-19",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-19/N02-19_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "sha256": "a2ae41ebd42ca43613784e07ac3568d101c5b23fe4ba8194286aeae038247602",
+      "role": "Pre-transition official station geometry and old line/operator/station identity."
+    }
+  ],
+  "events": [
+    {
+      "id": "jp.station-rename.keikyu.kk16.haneda-t3",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk16",
+      "membership_id": "jp.membership.keikyu.airport.kk16",
+      "official_station_number": "KK16",
+      "current_n02_station_code": "004382",
+      "corridor_id": "jp.corridor.keikyu-airport",
+      "alignment_id": "jp.alignment.keikyu-airport.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-airport",
+      "before": {"line": "空港線", "operator": "京浜急行電鉄", "station": "羽田空港国際線ターミナル"},
+      "after": {"line": "空港線", "operator": "京浜急行電鉄", "station": "羽田空港第3ターミナル"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["羽田空港第3ターミナル"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "空港線", "operator": "京浜急行電鉄", "station_name": "羽田空港国際線ターミナル", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.76606, 35.545124], [139.768073, 35.544836]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk17.haneda-t1-t2",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk17",
+      "membership_id": "jp.membership.keikyu.airport.kk17",
+      "official_station_number": "KK17",
+      "current_n02_station_code": "004368",
+      "corridor_id": "jp.corridor.keikyu-airport",
+      "alignment_id": "jp.alignment.keikyu-airport.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-airport",
+      "before": {"line": "空港線", "operator": "京浜急行電鉄", "station": "羽田空港国内線ターミナル"},
+      "after": {"line": "空港線", "operator": "京浜急行電鉄", "station": "羽田空港第1・第2ターミナル"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["羽田空港第1・第2ターミナル"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "空港線", "operator": "京浜急行電鉄", "station_name": "羽田空港国内線ターミナル", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.78448, 35.54904], [139.78598, 35.54978], [139.7864, 35.54999], [139.78724, 35.55039]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk25.daishibashi",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk25",
+      "membership_id": "jp.membership.keikyu.daishi.kk25",
+      "official_station_number": "KK25",
+      "current_n02_station_code": "004407",
+      "corridor_id": "jp.corridor.keikyu-daishi",
+      "alignment_id": "jp.alignment.keikyu-daishi.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-daishi",
+      "before": {"line": "大師線", "operator": "京浜急行電鉄", "station": "産業道路"},
+      "after": {"line": "大師線", "operator": "京浜急行電鉄", "station": "大師橋"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["大師橋"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "大師線", "operator": "京浜急行電鉄", "station_name": "産業道路", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.74087, 35.53661], [139.74002, 35.5366]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk30.kagetsu-sojiji",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk30",
+      "membership_id": "jp.membership.keikyu.main.kk30",
+      "official_station_number": "KK30",
+      "current_n02_station_code": "004520",
+      "corridor_id": "jp.corridor.keikyu-main",
+      "alignment_id": "jp.alignment.keikyu-main.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-main",
+      "before": {"line": "本線", "operator": "京浜急行電鉄", "station": "花月園前"},
+      "after": {"line": "本線", "operator": "京浜急行電鉄", "station": "花月総持寺"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["花月総持寺"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "本線", "operator": "京浜急行電鉄", "station_name": "花月園前", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.67252, 35.50002], [139.6732, 35.50063]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk35.keikyu-higashi-kanagawa",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk35",
+      "membership_id": "jp.membership.keikyu.main.kk35",
+      "official_station_number": "KK35",
+      "current_n02_station_code": "004598",
+      "corridor_id": "jp.corridor.keikyu-main",
+      "alignment_id": "jp.alignment.keikyu-main.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-main",
+      "before": {"line": "本線", "operator": "京浜急行電鉄", "station": "仲木戸"},
+      "after": {"line": "本線", "operator": "京浜急行電鉄", "station": "京急東神奈川"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["京急東神奈川"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "本線", "operator": "京浜急行電鉄", "station_name": "仲木戸", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.63444, 35.47718], [139.63541, 35.47793]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk53.zushi-hayama",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.keikyu.kk53",
+      "membership_id": "jp.membership.keikyu.zushi.kk53",
+      "official_station_number": "KK53",
+      "current_n02_station_code": "005130",
+      "corridor_id": "jp.corridor.keikyu-zushi",
+      "alignment_id": "jp.alignment.keikyu-zushi.n02-19-continuity",
+      "service_identity_id": "jp.service.keikyu-zushi",
+      "before": {"line": "逗子線", "operator": "京浜急行電鉄", "station": "新逗子"},
+      "after": {"line": "逗子線", "operator": "京浜急行電鉄", "station": "逗子・葉山"},
+      "date": "2020-03-14",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["逗子・葉山"]},
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {"railway_class_code": "12", "institution_type_code": "4", "line_name": "逗子線", "operator": "京浜急行電鉄", "station_name": "新逗子", "source_release": "N02-19"},
+            "geometry": {"type": "LineString", "coordinates": [[139.58036, 35.29364], [139.58037, 35.2937], [139.5804, 35.29383], [139.58044, 35.29398], [139.58048, 35.29414], [139.58051, 35.29427], [139.58057, 35.29443], [139.58062, 35.29459], [139.5807, 35.29476], [139.58077, 35.29491]]}
+          }
+        ]
+      },
+      "review": {"status": "verified", "geometry_continuity": "N02-19 coordinates equal the current N02 station geometry."},
+      "evidence": [{"authority": "京浜急行電鉄株式会社", "date_precision": "exact_day", "reference": "https://www.keikyu.co.jp/assets/pdf/20191216HP_19166TS.pdf"}]
+    }
+  ]
+}

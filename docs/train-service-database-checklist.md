@@ -23,234 +23,241 @@
 
 每条 pattern 均列出；每个验收维度独立标明通过、失败或未验证。标记含义：
 
-- 列车名数据库：**辨识** = 每个别名都解析到本条目且被归为特急（来自 TrainServiceCatalogChecklistTests 报告）；**Logo** = 非空 logoPath 的文件已打包（无专属 logo 的条目按规则退回公司 logo／默认图标）。
+- 列车名数据库：**辨识** = 每个别名都解析到本条目且被归为特急（来自 TrainServiceCatalogChecklistTests 报告）；**Logo** = ✅ 专用图稿文件存在、❌ 专用图稿文件缺失、— 未收录专用图稿；未收录时按规则退回公司 logo／默认图标。
 - 停靠站模式：**资料完整度** = 停站/线路/生效日期三项的记录完整度（✅ complete ⚠️ partial ❌ missing）；**固定引用/日期/连通/历史经由/保存重开** 分别记录。目录区间覆盖只证明有效期记录覆盖测试日；求解连通不证明实际经由正确。⏸ 表示证据不足。
 
 ## 一、列车名数据库（221 条）
 
 | # | id | 名称 | 辨识 | Logo |
 |---|---|---|---|---|
-| 1 | `haruka` | はるか | ✅ | ✅ |
+| 1 | `haruka` | はるか | ✅ | ✅ (haruka.jpg) |
 | 2 | `narita-express` | 成田エクスプレス | ✅ | ✅ (narita-express.png) |
-| 3 | `sunrise-izumo` | サンライズ出雲 | ✅ | ✅ |
-| 4 | `sunrise-seto` | サンライズ瀬戸 | ✅ | ✅ |
-| 5 | `thunderbird` | サンダーバード | ✅ | ✅ |
-| 6 | `azusa` | あずさ | ✅ | ✅ |
-| 7 | `kaiji` | かいじ | ✅ | ✅ |
-| 8 | `hitachi` | ひたち | ✅ | ✅ |
-| 9 | `tokiwa` | ときわ | ✅ | ✅ |
-| 10 | `odoriko` | 踊り子 | ✅ | ✅ |
-| 11 | `saphir-odoriko` | サフィール踊り子 | ✅ | ✅ |
+| 3 | `sunrise-izumo` | サンライズ出雲 | ✅ | —（公司标志回退） |
+| 4 | `sunrise-seto` | サンライズ瀬戸 | ✅ | —（公司标志回退） |
+| 5 | `thunderbird` | サンダーバード | ✅ | —（公司标志回退） |
+| 6 | `azusa` | あずさ | ✅ | —（公司标志回退） |
+| 7 | `kaiji` | かいじ | ✅ | —（公司标志回退） |
+| 8 | `hitachi` | ひたち | ✅ | —（公司标志回退） |
+| 9 | `tokiwa` | ときわ | ✅ | —（公司标志回退） |
+| 10 | `odoriko` | 踊り子 | ✅ | —（公司标志回退） |
+| 11 | `saphir-odoriko` | サフィール踊り子 | ✅ | ✅ (saphir-odoriko.jpg) |
 | 12 | `spacia-x` | スペーシア X | ✅ | ✅ (spacia-x.png) |
-| 13 | `revaty` | リバティ | ✅ | ✅ |
+| 13 | `revaty` | リバティ | ✅ | —（公司标志回退） |
 | 14 | `hinotori` | ひのとり | ✅ | ✅ (hinotori.png) |
 | 15 | `shimakaze` | しまかぜ | ✅ | ✅ (shimakaze.png) |
-| 16 | `hokuto` | 北斗 | ✅ | ✅ |
-| 17 | `ozora` | おおぞら | ✅ | ✅ |
-| 18 | `kamui` | カムイ | ✅ | ✅ |
-| 19 | `lilac` | ライラック | ✅ | ✅ |
-| 20 | `sonic` | ソニック | ✅ | ✅ |
-| 21 | `shirasagi` | しらさぎ | ✅ | ✅ |
-| 22 | `kuroshio` | くろしお | ✅ | ✅ |
-| 23 | `yakumo` | やくも | ✅ | ✅ |
-| 24 | `shinano` | しなの | ✅ | ✅ |
-| 25 | `hida` | ひだ | ✅ | ✅ |
-| 26 | `nanki` | 南紀 | ✅ | ✅ |
-| 27 | `kinosaki` | きのさき | ✅ | ✅ |
-| 28 | `kounotori` | こうのとり | ✅ | ✅ |
-| 29 | `kusatsu-shima` | 草津・四万 | ✅ | ✅ |
-| 30 | `fuji` | 富士 | ✅ | ✅ |
-| 31 | `nanpu` | 南風 | ✅ | ✅ |
-| 32 | `ishizuchi` | いしづち | ✅ | ✅ |
-| 33 | `midori` | みどり | ✅ | ✅ |
-| 34 | `kirishima` | きりしま | ✅ | ✅ |
-| 35 | `kirameki` | きらめき | ✅ | ✅ |
-| 36 | `relay-kamome` | リレーかもめ | ✅ | ✅ |
-| 37 | `inaho` | いなほ | ✅ | ✅ |
-| 38 | `super-tsugaru` | スーパーつがる | ✅ | ✅ |
-| 39 | `asoboy` | あそぼーい！ | ✅ | ✅ |
-| 40 | `uzushio` | うずしお | ✅ | ✅ |
-| 41 | `shiokaze` | しおかぜ | ✅ | ✅ |
-| 42 | `soya` | 宗谷 | ✅ | ✅ |
-| 43 | `super-oki` | スーパーおき | ✅ | ✅ |
-| 44 | `rapit` | ラピートα | ✅ | ✅ |
+| 16 | `hokuto` | 北斗 | ✅ | —（公司标志回退） |
+| 17 | `ozora` | おおぞら | ✅ | —（公司标志回退） |
+| 18 | `kamui` | カムイ | ✅ | —（公司标志回退） |
+| 19 | `lilac` | ライラック | ✅ | —（公司标志回退） |
+| 20 | `sonic` | ソニック | ✅ | —（公司标志回退） |
+| 21 | `shirasagi` | しらさぎ | ✅ | —（公司标志回退） |
+| 22 | `kuroshio` | くろしお | ✅ | —（公司标志回退） |
+| 23 | `yakumo` | やくも | ✅ | —（公司标志回退） |
+| 24 | `shinano` | しなの | ✅ | —（公司标志回退） |
+| 25 | `hida` | ひだ | ✅ | —（公司标志回退） |
+| 26 | `nanki` | 南紀 | ✅ | —（公司标志回退） |
+| 27 | `kinosaki` | きのさき | ✅ | —（公司标志回退） |
+| 28 | `kounotori` | こうのとり | ✅ | —（公司标志回退） |
+| 29 | `kusatsu-shima` | 草津・四万 | ✅ | —（公司标志回退） |
+| 30 | `fuji` | 富士 | ✅ | ✅ (fuji.jpg) |
+| 31 | `nanpu` | 南風 | ✅ | —（公司标志回退） |
+| 32 | `ishizuchi` | いしづち | ✅ | —（公司标志回退） |
+| 33 | `midori` | みどり | ✅ | —（公司标志回退） |
+| 34 | `kirishima` | きりしま | ✅ | —（公司标志回退） |
+| 35 | `kirameki` | きらめき | ✅ | —（公司标志回退） |
+| 36 | `relay-kamome` | リレーかもめ | ✅ | —（公司标志回退） |
+| 37 | `inaho` | いなほ | ✅ | —（公司标志回退） |
+| 38 | `super-tsugaru` | スーパーつがる | ✅ | —（公司标志回退） |
+| 39 | `asoboy` | あそぼーい！ | ✅ | —（公司标志回退） |
+| 40 | `uzushio` | うずしお | ✅ | —（公司标志回退） |
+| 41 | `shiokaze` | しおかぜ | ✅ | —（公司标志回退） |
+| 42 | `soya` | 宗谷 | ✅ | —（公司标志回退） |
+| 43 | `super-oki` | スーパーおき | ✅ | —（公司标志回退） |
+| 44 | `rapit` | ラピートα | ✅ | —（公司标志回退） |
 | 45 | `new-red-arrow` | ニューレッドアロー | ✅ | ✅ (new-red-arrow.png) |
-| 46 | `suzuran` | すずらん | ✅ | ✅ |
-| 47 | `tokachi` | とかち | ✅ | ✅ |
-| 48 | `sarobetsu` | サロベツ | ✅ | ✅ |
-| 49 | `okhotsk` | オホーツク | ✅ | ✅ |
-| 50 | `niseko` | ニセコ | ✅ | ✅ |
-| 51 | `fuji-excursion` | 富士回遊 | ✅ | ✅ |
-| 52 | `hachioji` | はちおうじ | ✅ | ✅ |
-| 53 | `ome` | おうめ | ✅ | ✅ |
-| 54 | `shonan` | 湘南 | ✅ | ✅ |
-| 55 | `wakashio` | わかしお | ✅ | ✅ |
-| 56 | `sazanami` | さざなみ | ✅ | ✅ |
-| 57 | `shiosai` | しおさい | ✅ | ✅ |
-| 58 | `akagi` | あかぎ | ✅ | ✅ |
-| 59 | `nikko` | 日光 | ✅ | ✅ |
-| 60 | `kinugawa` | きぬがわ | ✅ | ✅ |
-| 61 | `spacia-nikko` | スペーシア日光 | ✅ | ✅ |
-| 62 | `spacia-kinugawa` | スペーシアきぬがわ | ✅ | ✅ |
-| 63 | `shirayuki` | しらゆき | ✅ | ✅ |
-| 64 | `tsugaru` | つがる | ✅ | ✅ |
-| 65 | `kamakura` | 鎌倉 | ✅ | ✅ |
-| 66 | `inaji` | 伊那路 | ✅ | ✅ |
-| 67 | `fujikawa` | ふじかわ | ✅ | ✅ |
-| 68 | `hashidate` | はしだて | ✅ | ✅ |
-| 69 | `maizuru` | まいづる | ✅ | ✅ |
-| 70 | `hamakaze` | はまかぜ | ✅ | ✅ |
-| 71 | `super-hakuto` | スーパーはくと | ✅ | ✅ |
-| 72 | `super-inaba` | スーパーいなば | ✅ | ✅ |
-| 73 | `super-matsukaze` | スーパーまつかぜ | ✅ | ✅ |
-| 74 | `rakuraku-harima` | らくラクはりま | ✅ | ✅ |
-| 75 | `rakuraku-biwako` | らくラクびわこ | ✅ | ✅ |
-| 76 | `rakuraku-yamato` | らくラクやまと | ✅ | ✅ |
-| 77 | `noto-kagaribi` | 能登かがり火 | ✅ | ✅ |
-| 78 | `west-express-ginga` | WEST EXPRESS 銀河 | ✅ | ✅ |
-| 79 | `hanaakari` | はなあかり | ✅ | ✅ |
-| 80 | `mahoroba` | まほろば | ✅ | ✅ |
-| 81 | `shimanto` | しまんと | ✅ | ✅ |
-| 82 | `ashizuri` | あしずり | ✅ | ✅ |
-| 83 | `uwakai` | 宇和海 | ✅ | ✅ |
-| 84 | `tsurugisan` | 剣山 | ✅ | ✅ |
-| 85 | `morning-exp` | モーニングEXP | ✅ | ✅ |
-| 86 | `shikoku-mannaka-sennen-monogatari` | 四国まんなか千年ものがたり | ✅ | ✅ |
-| 87 | `shikoku-tosa-jidai-no-yoake` | 志国土佐 時代の夜明けのものがたり | ✅ | ✅ |
-| 88 | `iyonada-monogatari` | 伊予灘ものがたり | ✅ | ✅ |
-| 89 | `nichirin` | にちりん | ✅ | ✅ |
-| 90 | `nichirin-seagaia` | にちりんシーガイア | ✅ | ✅ |
-| 91 | `hyuga` | ひゅうが | ✅ | ✅ |
-| 92 | `huis-ten-bosch` | ハウステンボス | ✅ | ✅ |
-| 93 | `kasasagi` | かささぎ | ✅ | ✅ |
-| 94 | `yufu` | ゆふ | ✅ | ✅ |
-| 95 | `yufuin-no-mori` | ゆふいんの森 | ✅ | ✅ |
-| 96 | `kyushu-odan-tokkyu` | 九州横断特急 | ✅ | ✅ |
-| 97 | `kawasemi-yamasemi` | かわせみ やませみ | ✅ | ✅ |
-| 98 | `umisachi-yamasachi` | 海幸山幸 | ✅ | ✅ |
-| 99 | `36-plus-3` | 36ぷらす3 | ✅ | ✅ |
-| 100 | `a-ressha-de-iko` | A列車で行こう | ✅ | ✅ |
-| 101 | `futatsuboshi-4047` | ふたつ星4047 | ✅ | ✅ |
-| 102 | `aru-ressha` | 或る列車 | ✅ | ✅ |
-| 103 | `fujisan` | ふじさん | ✅ | ✅ |
-| 104 | `twilight-express-mizukaze` | TWILIGHT EXPRESS 瑞風 | ✅ | ✅ |
-| 105 | `ibusuki-no-tamatebako` | 指宿のたまて箱 | ✅ | ✅ |
-| 106 | `kaio` | かいおう | ✅ | ✅ |
-| 107 | `kanpachi-ichiroku` | かんぱち・いちろく | ✅ | ✅ |
-| 108 | `muroto` | むろと | ✅ | ✅ |
-| 109 | `midnight-exp` | ミッドナイトEXP | ✅ | ✅ |
-| 110 | `dinostar` | ダイナスター | ✅ | ✅ |
-| 111 | `aso` | あそ | ✅ | ✅ |
-| 112 | `ariake` | 有明 | ✅ | ✅ |
-| 113 | `isaburo-shinpei` | いさぶろう・しんぺい | ✅ | ✅ |
-| 114 | `taisetsu` | 大雪 | ✅ | ✅ |
-| 115 | `shinjuku-sazanami` | 新宿さざなみ | ✅ | ✅ |
-| 116 | `shinjuku-wakashio` | 新宿わかしお | ✅ | ✅ |
-| 117 | `romancecar` | ロマンスカー | ✅ | ✅ |
-| 118 | `hakone` | はこね | ✅ | ✅ |
-| 119 | `super-hakone` | スーパーはこね | ✅ | ✅ |
-| 120 | `sagami` | さがみ | ✅ | ✅ |
-| 121 | `enoshima` | えのしま | ✅ | ✅ |
-| 122 | `metro-hakone` | メトロはこね | ✅ | ✅ |
-| 123 | `metro-enoshima` | メトロえのしま | ✅ | ✅ |
-| 124 | `metro-sagami` | メトロさがみ | ✅ | ✅ |
-| 125 | `morningway` | モーニングウェイ | ✅ | ✅ |
-| 126 | `homeway` | ホームウェイ | ✅ | ✅ |
-| 127 | `metro-morningway` | メトロモーニングウェイ | ✅ | ✅ |
-| 128 | `metro-homeway` | メトロホームウェイ | ✅ | ✅ |
-| 129 | `skyliner` | スカイライナー | ✅ | ✅ |
-| 130 | `morning-liner` | モーニングライナー | ✅ | ✅ |
-| 131 | `evening-liner` | イブニングライナー | ✅ | ✅ |
-| 132 | `city-liner` | シティライナー | ✅ | ✅ |
-| 133 | `kegon` | けごん | ✅ | ✅ |
-| 134 | `kinu` | きぬ | ✅ | ✅ |
-| 135 | `ryomo` | りょうもう | ✅ | ✅ |
-| 136 | `spacia` | スペーシア | ✅ | ✅ |
-| 137 | `shimotsuke` | しもつけ | ✅ | ✅ |
-| 138 | `kirifuri` | きりふり | ✅ | ✅ |
-| 139 | `yunosato` | ゆのさと | ✅ | ✅ |
-| 140 | `urban-park-liner` | アーバンパークライナー | ✅ | ✅ |
-| 141 | `skytree-liner` | スカイツリーライナー | ✅ | ✅ |
-| 142 | `chichibu` | ちちぶ | ✅ | ✅ |
-| 143 | `musashi` | むさし | ✅ | ✅ |
-| 144 | `koedo` | 小江戸 | ✅ | ✅ |
-| 145 | `laview` | ラビュー | ✅ | ✅ |
-| 146 | `red-arrow` | レッドアロー | ✅ | ✅ |
-| 147 | `urban-liner` | アーバンライナー | ✅ | ✅ |
-| 148 | `ise-shima-liner` | 伊勢志摩ライナー | ✅ | ✅ |
-| 149 | `sakura-liner` | さくらライナー | ✅ | ✅ |
-| 150 | `vista-car` | ビスタカー | ✅ | ✅ |
-| 151 | `ao-no-symphony` | 青の交響曲 | ✅ | ✅ |
-| 152 | `southern` | サザン | ✅ | ✅ |
-| 153 | `koya` | こうや | ✅ | ✅ |
-| 154 | `rinkan` | りんかん | ✅ | ✅ |
-| 155 | `semboku-liner` | 泉北ライナー | ✅ | ✅ |
-| 156 | `mu-sky` | ミュースカイ | ✅ | ✅ |
-| 157 | `kyo-train` | 京とれいん 雅洛 | ✅ | ✅ |
-| 158 | `fujisan-tokkyu` | フジサン特急 | ✅ | ✅ |
-| 159 | `fujisan-view-express` | 富士山ビュー特急 | ✅ | ✅ |
-| 160 | `yukemuri` | ゆけむり | ✅ | ✅ |
-| 161 | `snow-monkey` | スノーモンキー | ✅ | ✅ |
-| 162 | `tango-relay` | たんごリレー | ✅ | ✅ |
-| 163 | `tango-discovery` | タンゴディスカバリー | ✅ | ✅ |
-| 164 | `super-hokuto` | スーパー北斗 | ✅ | ✅ |
-| 165 | `super-ozora` | スーパーおおぞら | ✅ | ✅ |
-| 166 | `super-tokachi` | スーパーとかち | ✅ | ✅ |
-| 167 | `super-kamui` | スーパーカムイ | ✅ | ✅ |
-| 168 | `super-soya` | スーパー宗谷 | ✅ | ✅ |
-| 169 | `asahiyama-zoo` | 旭山動物園号 | ✅ | ✅ |
-| 170 | `furano-lavender-express` | フラノラベンダーエクスプレス | ✅ | ✅ |
-| 171 | `super-hakucho` | スーパー白鳥 | ✅ | ✅ |
-| 172 | `hakucho` | 白鳥 | ✅ | ✅ |
-| 173 | `hokutosei` | 北斗星 | ✅ | ✅ |
-| 174 | `cassiopeia` | カシオペア | ✅ | ✅ |
-| 175 | `super-hitachi` | スーパーひたち | ✅ | ✅ |
-| 176 | `fresh-hitachi` | フレッシュひたち | ✅ | ✅ |
-| 177 | `super-azusa` | スーパーあずさ | ✅ | ✅ |
-| 178 | `super-view-odoriko` | スーパービュー踊り子 | ✅ | ✅ |
-| 179 | `ayame` | あやめ | ✅ | ✅ |
-| 180 | `minakami` | 水上 | ✅ | ✅ |
-| 181 | `kusatsu` | 草津 | ✅ | ✅ |
-| 182 | `swallow-akagi` | スワローあかぎ | ✅ | ✅ |
-| 183 | `akebono` | あけぼの | ✅ | ✅ |
-| 184 | `hokuriku` | 北陸 | ✅ | ✅ |
-| 185 | `hokuetsu` | 北越 | ✅ | ✅ |
-| 186 | `hakutaka-zairaisen` | はくたか | ✅ | ✅ |
-| 187 | `kamoshika` | かもしか | ✅ | ✅ |
-| 188 | `hama-kaiji` | はまかいじ | ✅ | ✅ |
-| 189 | `raicho` | 雷鳥 | ✅ | ✅ |
-| 190 | `twilight-express` | トワイライトエクスプレス | ✅ | ✅ |
-| 191 | `nihonkai` | 日本海 | ✅ | ✅ |
-| 192 | `kitakinki` | 北近畿 | ✅ | ✅ |
-| 193 | `monju` | 文殊 | ✅ | ✅ |
-| 194 | `tanba` | たんば | ✅ | ✅ |
-| 195 | `tango-explorer` | タンゴエクスプローラー | ✅ | ✅ |
-| 196 | `super-kuroshio` | スーパーくろしお | ✅ | ✅ |
-| 197 | `ocean-arrow` | オーシャンアロー | ✅ | ✅ |
-| 198 | `biwako-express` | びわこエクスプレス | ✅ | ✅ |
-| 199 | `ohayo-express` | おはようエクスプレス | ✅ | ✅ |
-| 200 | `oyasumi-express` | おやすみエクスプレス | ✅ | ✅ |
-| 201 | `hanayome-noren` | 花嫁のれん | ✅ | ✅ |
-| 202 | `home-express-anan` | ホームエクスプレス阿南 | ✅ | ✅ |
-| 203 | `kamome` | かもめ | ✅ | ✅ |
-| 204 | `relay-tsubame` | リレーつばめ | ✅ | ✅ |
-| 205 | `yufu-dx` | ゆふDX | ✅ | ✅ |
-| 206 | `kumagawa` | くまがわ | ✅ | ✅ |
-| 207 | `sendai-express` | 川内エクスプレス | ✅ | ✅ |
-| 208 | `hayato-no-kaze` | はやとの風 | ✅ | ✅ |
-| 209 | `dream-nichirin` | ドリームにちりん | ✅ | ✅ |
-| 210 | `seaboldt` | シーボルト | ✅ | ✅ |
-| 211 | `asagiri` | あさぎり | ✅ | ✅ |
-| 212 | `kintetsu-meihan` | 名阪特急 | ✅ | ✅ |
-| 213 | `kintetsu-hanise` | 阪伊特急 | ✅ | ✅ |
-| 214 | `kintetsu-meii` | 名伊特急 | ✅ | ✅ |
-| 215 | `kintetsu-kyoise` | 京伊特急 | ✅ | ✅ |
-| 216 | `kintetsu-keina` | 京奈特急 | ✅ | ✅ |
-| 217 | `kintetsu-kyokashi` | 京橿特急 | ✅ | ✅ |
-| 218 | `kintetsu-hanna` | 阪奈特急 | ✅ | ✅ |
-| 219 | `kintetsu-yoshino` | 吉野特急 | ✅ | ✅ |
-| 220 | `rapit-beta` | ラピートβ | ✅ | ✅ |
-| 221 | `kyo-train-original` | 京とれいん | ✅ | ✅ |
+| 46 | `suzuran` | すずらん | ✅ | —（公司标志回退） |
+| 47 | `tokachi` | とかち | ✅ | —（公司标志回退） |
+| 48 | `sarobetsu` | サロベツ | ✅ | —（公司标志回退） |
+| 49 | `okhotsk` | オホーツク | ✅ | —（公司标志回退） |
+| 50 | `niseko` | ニセコ | ✅ | —（公司标志回退） |
+| 51 | `fuji-excursion` | 富士回遊 | ✅ | —（公司标志回退） |
+| 52 | `hachioji` | はちおうじ | ✅ | —（公司标志回退） |
+| 53 | `ome` | おうめ | ✅ | —（公司标志回退） |
+| 54 | `shonan` | 湘南 | ✅ | —（公司标志回退） |
+| 55 | `wakashio` | わかしお | ✅ | —（公司标志回退） |
+| 56 | `sazanami` | さざなみ | ✅ | —（公司标志回退） |
+| 57 | `shiosai` | しおさい | ✅ | —（公司标志回退） |
+| 58 | `akagi` | あかぎ | ✅ | —（公司标志回退） |
+| 59 | `nikko` | 日光 | ✅ | —（公司标志回退） |
+| 60 | `kinugawa` | きぬがわ | ✅ | —（公司标志回退） |
+| 61 | `spacia-nikko` | スペーシア日光 | ✅ | ✅ (spacia.png) |
+| 62 | `spacia-kinugawa` | スペーシアきぬがわ | ✅ | ✅ (spacia.png) |
+| 63 | `shirayuki` | しらゆき | ✅ | —（公司标志回退） |
+| 64 | `tsugaru` | つがる | ✅ | —（公司标志回退） |
+| 65 | `kamakura` | 鎌倉 | ✅ | —（公司标志回退） |
+| 66 | `inaji` | 伊那路 | ✅ | —（公司标志回退） |
+| 67 | `fujikawa` | ふじかわ | ✅ | —（公司标志回退） |
+| 68 | `hashidate` | はしだて | ✅ | —（公司标志回退） |
+| 69 | `maizuru` | まいづる | ✅ | —（公司标志回退） |
+| 70 | `hamakaze` | はまかぜ | ✅ | —（公司标志回退） |
+| 71 | `super-hakuto` | スーパーはくと | ✅ | —（公司标志回退） |
+| 72 | `super-inaba` | スーパーいなば | ✅ | —（公司标志回退） |
+| 73 | `super-matsukaze` | スーパーまつかぜ | ✅ | —（公司标志回退） |
+| 74 | `rakuraku-harima` | らくラクはりま | ✅ | —（公司标志回退） |
+| 75 | `rakuraku-biwako` | らくラクびわこ | ✅ | —（公司标志回退） |
+| 76 | `rakuraku-yamato` | らくラクやまと | ✅ | —（公司标志回退） |
+| 77 | `noto-kagaribi` | 能登かがり火 | ✅ | —（公司标志回退） |
+| 78 | `west-express-ginga` | WEST EXPRESS 銀河 | ✅ | ✅ (west-express-ginga.png) |
+| 79 | `hanaakari` | はなあかり | ✅ | —（公司标志回退） |
+| 80 | `mahoroba` | まほろば | ✅ | —（公司标志回退） |
+| 81 | `shimanto` | しまんと | ✅ | —（公司标志回退） |
+| 82 | `ashizuri` | あしずり | ✅ | —（公司标志回退） |
+| 83 | `uwakai` | 宇和海 | ✅ | —（公司标志回退） |
+| 84 | `tsurugisan` | 剣山 | ✅ | —（公司标志回退） |
+| 85 | `morning-exp` | モーニングEXP | ✅ | —（公司标志回退） |
+| 86 | `shikoku-mannaka-sennen-monogatari` | 四国まんなか千年ものがたり | ✅ | —（公司标志回退） |
+| 87 | `shikoku-tosa-jidai-no-yoake` | 志国土佐 時代の夜明けのものがたり | ✅ | —（公司标志回退） |
+| 88 | `iyonada-monogatari` | 伊予灘ものがたり | ✅ | —（公司标志回退） |
+| 89 | `nichirin` | にちりん | ✅ | —（公司标志回退） |
+| 90 | `nichirin-seagaia` | にちりんシーガイア | ✅ | —（公司标志回退） |
+| 91 | `hyuga` | ひゅうが | ✅ | —（公司标志回退） |
+| 92 | `huis-ten-bosch` | ハウステンボス | ✅ | —（公司标志回退） |
+| 93 | `kasasagi` | かささぎ | ✅ | —（公司标志回退） |
+| 94 | `yufu` | ゆふ | ✅ | —（公司标志回退） |
+| 95 | `yufuin-no-mori` | ゆふいんの森 | ✅ | —（公司标志回退） |
+| 96 | `kyushu-odan-tokkyu` | 九州横断特急 | ✅ | ✅ (kyushu-odan.jpg) |
+| 97 | `kawasemi-yamasemi` | かわせみ やませみ | ✅ | —（公司标志回退） |
+| 98 | `umisachi-yamasachi` | 海幸山幸 | ✅ | —（公司标志回退） |
+| 99 | `36-plus-3` | 36ぷらす3 | ✅ | ✅ (36-plus-3.jpg) |
+| 100 | `a-ressha-de-iko` | A列車で行こう | ✅ | —（公司标志回退） |
+| 101 | `futatsuboshi-4047` | ふたつ星4047 | ✅ | —（公司标志回退） |
+| 102 | `aru-ressha` | 或る列車 | ✅ | —（公司标志回退） |
+| 103 | `fujisan` | ふじさん | ✅ | ✅ (romancecar.png) |
+| 104 | `twilight-express-mizukaze` | TWILIGHT EXPRESS 瑞風 | ✅ | —（公司标志回退） |
+| 105 | `ibusuki-no-tamatebako` | 指宿のたまて箱 | ✅ | —（公司标志回退） |
+| 106 | `kaio` | かいおう | ✅ | —（公司标志回退） |
+| 107 | `kanpachi-ichiroku` | かんぱち・いちろく | ✅ | —（公司标志回退） |
+| 108 | `muroto` | むろと | ✅ | —（公司标志回退） |
+| 109 | `midnight-exp` | ミッドナイトEXP | ✅ | —（公司标志回退） |
+| 110 | `dinostar` | ダイナスター | ✅ | —（公司标志回退） |
+| 111 | `aso` | あそ | ✅ | —（公司标志回退） |
+| 112 | `ariake` | 有明 | ✅ | —（公司标志回退） |
+| 113 | `isaburo-shinpei` | いさぶろう・しんぺい | ✅ | —（公司标志回退） |
+| 114 | `taisetsu` | 大雪 | ✅ | —（公司标志回退） |
+| 115 | `shinjuku-sazanami` | 新宿さざなみ | ✅ | —（公司标志回退） |
+| 116 | `shinjuku-wakashio` | 新宿わかしお | ✅ | —（公司标志回退） |
+| 117 | `romancecar` | ロマンスカー | ✅ | ✅ (romancecar.png) |
+| 118 | `hakone` | はこね | ✅ | ✅ (romancecar.png) |
+| 119 | `super-hakone` | スーパーはこね | ✅ | ✅ (romancecar.png) |
+| 120 | `sagami` | さがみ | ✅ | ✅ (romancecar.png) |
+| 121 | `enoshima` | えのしま | ✅ | ✅ (romancecar.png) |
+| 122 | `metro-hakone` | メトロはこね | ✅ | ✅ (romancecar.png) |
+| 123 | `metro-enoshima` | メトロえのしま | ✅ | ✅ (romancecar.png) |
+| 124 | `metro-sagami` | メトロさがみ | ✅ | ✅ (romancecar.png) |
+| 125 | `morningway` | モーニングウェイ | ✅ | ✅ (romancecar.png) |
+| 126 | `homeway` | ホームウェイ | ✅ | ✅ (romancecar.png) |
+| 127 | `metro-morningway` | メトロモーニングウェイ | ✅ | ✅ (romancecar.png) |
+| 128 | `metro-homeway` | メトロホームウェイ | ✅ | ✅ (romancecar.png) |
+| 129 | `skyliner` | スカイライナー | ✅ | —（公司标志回退） |
+| 130 | `morning-liner` | モーニングライナー | ✅ | —（公司标志回退） |
+| 131 | `evening-liner` | イブニングライナー | ✅ | —（公司标志回退） |
+| 132 | `city-liner` | シティライナー | ✅ | —（公司标志回退） |
+| 133 | `kegon` | けごん | ✅ | —（公司标志回退） |
+| 134 | `kinu` | きぬ | ✅ | —（公司标志回退） |
+| 135 | `ryomo` | りょうもう | ✅ | ✅ (ryomo.jpg) |
+| 136 | `spacia` | スペーシア | ✅ | ✅ (spacia.png) |
+| 137 | `shimotsuke` | しもつけ | ✅ | —（公司标志回退） |
+| 138 | `kirifuri` | きりふり | ✅ | —（公司标志回退） |
+| 139 | `yunosato` | ゆのさと | ✅ | —（公司标志回退） |
+| 140 | `urban-park-liner` | アーバンパークライナー | ✅ | —（公司标志回退） |
+| 141 | `skytree-liner` | スカイツリーライナー | ✅ | —（公司标志回退） |
+| 142 | `chichibu` | ちちぶ | ✅ | —（公司标志回退） |
+| 143 | `musashi` | むさし | ✅ | —（公司标志回退） |
+| 144 | `koedo` | 小江戸 | ✅ | —（公司标志回退） |
+| 145 | `laview` | ラビュー | ✅ | ✅ (laview.jpg) |
+| 146 | `red-arrow` | レッドアロー | ✅ | —（公司标志回退） |
+| 147 | `urban-liner` | アーバンライナー | ✅ | —（公司标志回退） |
+| 148 | `ise-shima-liner` | 伊勢志摩ライナー | ✅ | ✅ (ise-shima-liner.jpg) |
+| 149 | `sakura-liner` | さくらライナー | ✅ | ✅ (sakura-liner.jpg) |
+| 150 | `vista-car` | ビスタカー | ✅ | ✅ (vista-car.jpg) |
+| 151 | `ao-no-symphony` | 青の交響曲 | ✅ | ✅ (blue-symphony.jpg) |
+| 152 | `southern` | サザン | ✅ | —（公司标志回退） |
+| 153 | `koya` | こうや | ✅ | —（公司标志回退） |
+| 154 | `rinkan` | りんかん | ✅ | —（公司标志回退） |
+| 155 | `semboku-liner` | 泉北ライナー | ✅ | —（公司标志回退） |
+| 156 | `mu-sky` | ミュースカイ | ✅ | ✅ (mu-sky.png) |
+| 157 | `kyo-train` | 京とれいん 雅洛 | ✅ | ✅ (kyo-train.jpg) |
+| 158 | `fujisan-tokkyu` | フジサン特急 | ✅ | —（公司标志回退） |
+| 159 | `fujisan-view-express` | 富士山ビュー特急 | ✅ | —（公司标志回退） |
+| 160 | `yukemuri` | ゆけむり | ✅ | —（公司标志回退） |
+| 161 | `snow-monkey` | スノーモンキー | ✅ | ✅ (snow-monkey.jpg) |
+| 162 | `tango-relay` | たんごリレー | ✅ | —（公司标志回退） |
+| 163 | `tango-discovery` | タンゴディスカバリー | ✅ | —（公司标志回退） |
+| 164 | `super-hokuto` | スーパー北斗 | ✅ | —（公司标志回退） |
+| 165 | `super-ozora` | スーパーおおぞら | ✅ | —（公司标志回退） |
+| 166 | `super-tokachi` | スーパーとかち | ✅ | —（公司标志回退） |
+| 167 | `super-kamui` | スーパーカムイ | ✅ | —（公司标志回退） |
+| 168 | `super-soya` | スーパー宗谷 | ✅ | —（公司标志回退） |
+| 169 | `asahiyama-zoo` | 旭山動物園号 | ✅ | —（公司标志回退） |
+| 170 | `furano-lavender-express` | フラノラベンダーエクスプレス | ✅ | —（公司标志回退） |
+| 171 | `super-hakucho` | スーパー白鳥 | ✅ | —（公司标志回退） |
+| 172 | `hakucho` | 白鳥 | ✅ | —（公司标志回退） |
+| 173 | `hokutosei` | 北斗星 | ✅ | ✅ (hokutosei.jpg) |
+| 174 | `cassiopeia` | カシオペア | ✅ | ✅ (cassiopeia.jpg) |
+| 175 | `super-hitachi` | スーパーひたち | ✅ | —（公司标志回退） |
+| 176 | `fresh-hitachi` | フレッシュひたち | ✅ | —（公司标志回退） |
+| 177 | `super-azusa` | スーパーあずさ | ✅ | —（公司标志回退） |
+| 178 | `super-view-odoriko` | スーパービュー踊り子 | ✅ | —（公司标志回退） |
+| 179 | `ayame` | あやめ | ✅ | —（公司标志回退） |
+| 180 | `minakami` | 水上 | ✅ | —（公司标志回退） |
+| 181 | `kusatsu` | 草津 | ✅ | —（公司标志回退） |
+| 182 | `swallow-akagi` | スワローあかぎ | ✅ | —（公司标志回退） |
+| 183 | `akebono` | あけぼの | ✅ | ✅ (akebono.jpg) |
+| 184 | `hokuriku` | 北陸 | ✅ | ✅ (hokuriku.jpg) |
+| 185 | `hokuetsu` | 北越 | ✅ | —（公司标志回退） |
+| 186 | `hakutaka-zairaisen` | はくたか | ✅ | —（公司标志回退） |
+| 187 | `kamoshika` | かもしか | ✅ | —（公司标志回退） |
+| 188 | `hama-kaiji` | はまかいじ | ✅ | —（公司标志回退） |
+| 189 | `raicho` | 雷鳥 | ✅ | —（公司标志回退） |
+| 190 | `twilight-express` | トワイライトエクスプレス | ✅ | ✅ (twilight-express.jpg) |
+| 191 | `nihonkai` | 日本海 | ✅ | —（公司标志回退） |
+| 192 | `kitakinki` | 北近畿 | ✅ | —（公司标志回退） |
+| 193 | `monju` | 文殊 | ✅ | —（公司标志回退） |
+| 194 | `tanba` | たんば | ✅ | —（公司标志回退） |
+| 195 | `tango-explorer` | タンゴエクスプローラー | ✅ | —（公司标志回退） |
+| 196 | `super-kuroshio` | スーパーくろしお | ✅ | —（公司标志回退） |
+| 197 | `ocean-arrow` | オーシャンアロー | ✅ | ✅ (ocean-arrow.jpg) |
+| 198 | `biwako-express` | びわこエクスプレス | ✅ | —（公司标志回退） |
+| 199 | `ohayo-express` | おはようエクスプレス | ✅ | —（公司标志回退） |
+| 200 | `oyasumi-express` | おやすみエクスプレス | ✅ | —（公司标志回退） |
+| 201 | `hanayome-noren` | 花嫁のれん | ✅ | —（公司标志回退） |
+| 202 | `home-express-anan` | ホームエクスプレス阿南 | ✅ | —（公司标志回退） |
+| 203 | `kamome` | かもめ | ✅ | —（公司标志回退） |
+| 204 | `relay-tsubame` | リレーつばめ | ✅ | —（公司标志回退） |
+| 205 | `yufu-dx` | ゆふDX | ✅ | —（公司标志回退） |
+| 206 | `kumagawa` | くまがわ | ✅ | —（公司标志回退） |
+| 207 | `sendai-express` | 川内エクスプレス | ✅ | —（公司标志回退） |
+| 208 | `hayato-no-kaze` | はやとの風 | ✅ | —（公司标志回退） |
+| 209 | `dream-nichirin` | ドリームにちりん | ✅ | —（公司标志回退） |
+| 210 | `seaboldt` | シーボルト | ✅ | —（公司标志回退） |
+| 211 | `asagiri` | あさぎり | ✅ | —（公司标志回退） |
+| 212 | `kintetsu-meihan` | 名阪特急 | ✅ | —（公司标志回退） |
+| 213 | `kintetsu-hanise` | 阪伊特急 | ✅ | —（公司标志回退） |
+| 214 | `kintetsu-meii` | 名伊特急 | ✅ | —（公司标志回退） |
+| 215 | `kintetsu-kyoise` | 京伊特急 | ✅ | —（公司标志回退） |
+| 216 | `kintetsu-keina` | 京奈特急 | ✅ | —（公司标志回退） |
+| 217 | `kintetsu-kyokashi` | 京橿特急 | ✅ | —（公司标志回退） |
+| 218 | `kintetsu-hanna` | 阪奈特急 | ✅ | —（公司标志回退） |
+| 219 | `kintetsu-yoshino` | 吉野特急 | ✅ | —（公司标志回退） |
+| 220 | `rapit-beta` | ラピートβ | ✅ | —（公司标志回退） |
+| 221 | `kyo-train-original` | 京とれいん | ✅ | ✅ (kyo-train-original.jpg) |
+
+专用图稿：43 条服务已绑定，使用 29 份不同素材，178 条未收录；绑定路径中 0 条文件缺失。
+
+Logo 证据单独更新于 2026-09-30，品牌 JSON 的 SHA-256 为 `f7bf617978f15c0c6d78490aa3a7f672ab713c04e2e3088e16de6bb6308a9924`。本次仅同步本节的 Logo 列与素材统计；上方验收元数据、辨识结果及下方路线／停靠站验收仍为原有快照，未由本次 Logo 核对重新验证。
+
+✅ 只表示专用图稿文件存在，不表示已取得开放再分发许可。既有 `spacia-x.png`、`hinotori.png`、`shimakaze.png` 的来源未声明开放再分发许可，三个缺口仍保留。178 条未收录服务继续使用公司标志／默认图标回退；来源、适用范围与许可见[Logo 来源审计](train-service-logo-sources.md)和[素材清单](../app/public/rail/service-logos/README.md)。
+
 
 ## 二、停靠站模式（298 条）
 

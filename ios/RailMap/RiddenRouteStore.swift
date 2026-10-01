@@ -693,7 +693,9 @@ final class RiddenRouteStore {
         _ train: Train, country: String
     ) -> Train {
         TrainValidation.normalizeExportTrain(
-            train, country: country, stations: TrainValidation.StationTable.empty)
+            TrainValidation.restoringRouteSectionEndpointNames(train),
+            country: country,
+            stations: TrainValidation.StationTable.empty)
     }
 
     /// The canonical route sections a journey asks for — the same normalisation
@@ -1445,10 +1447,9 @@ final class RiddenRouteStore {
 /// re-decoded all 201 parts of the Japanese sample to discover that 200 of
 /// them belonged to somebody else.
 ///
-/// The FIRST ask still opens every part, because the manifest names the parts
-/// and nothing else. It is not extended with an id index here: that file is
-/// written by the JavaScript precompute pipeline in the main fork and read by
-/// both apps, so its shape is settled somewhere this repository cannot see.
+/// Complete manifest identities answer the first ask without opening any parts.
+/// Legacy or incomplete identity maps fall back to the original one-time scan.
+/// Selected parts still undergo the normal route decode and provenance checks.
 ///
 /// An `actor` rather than a lock, for the reason ``EdgeIndexCache`` is one:
 /// two regions can be decoding at the same time, and the second must wait on
@@ -1456,15 +1457,8 @@ final class RiddenRouteStore {
 private actor DatasetPartIndex {
     static let shared = DatasetPartIndex()
 
-    /// One part, and where it sat in the manifest.
-    ///
-    /// The position is carried so the rides a dataset answers for come back in
-    /// manifest order on every run. Dictionary iteration order is not stable
-    /// between launches, and this order is the order the map draws in.
-    struct PartRef: Sendable {
-        let name: String
-        let position: Int
-    }
+    /// Positions preserve manifest order, including repeated train identities.
+    typealias PartRef = DatasetManifestIndex.PartRef
 
     private var indexes: [String: [String: [PartRef]]] = [:]
     private var inFlight: [String: Task<[String: [PartRef]], Error>] = [:]
@@ -1487,7 +1481,7 @@ private actor DatasetPartIndex {
         return built
     }
 
-    /// Read every part once, for its train id and nothing else.
+    /// Use manifest identities when complete; otherwise read each part for its id.
     ///
     /// ``PartIdentity`` deliberately cannot see the route: the coordinate
     /// arrays are nearly all of a part's bytes and the scan needs none of
@@ -1501,9 +1495,10 @@ private actor DatasetPartIndex {
         ) else { throw RiddenRouteStore.LoadError.missingManifest(dataset) }
 
         let manifest = try JSONDecoder().decode(
-            Manifest.self,
+            DatasetManifestIndex.self,
             from: Data(contentsOf: manifestURL)
         )
+        if let index = manifest.indexedParts { return index }
         var index: [String: [PartRef]] = [:]
         index.reserveCapacity(manifest.parts.count)
         for (position, name) in manifest.parts.enumerated() {
@@ -1522,10 +1517,6 @@ private actor DatasetPartIndex {
                 PartRef(name: name, position: position))
         }
         return index
-    }
-
-    private struct Manifest: Decodable {
-        let parts: [String]
     }
 
     private struct PartIdentity: Decodable {

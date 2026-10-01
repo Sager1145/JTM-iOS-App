@@ -1,0 +1,27 @@
+{
+  "candidate_status": "reviewed_official_html",
+  "issue": "JR時刻表2026年10月号",
+  "notes": "Only 2026-09-30 is emitted. The official page marks that date with td.ok and prints the complete passenger-stop table. The generic 平日運転 text is not expanded into a recurring calendar.",
+  "operator_name_for_station_match": "東日本旅客鉄道",
+  "schema_version": 1,
+  "trip": {
+    "operating_dates": [
+      "2026-09-30"
+    ],
+    "public_name": "しおさい 6号",
+    "public_number": "6",
+    "service_id": "shiosai",
+    "service_name": "しおさい",
+    "source_id": "jr-east-shiosai6-20260930-discovery",
+    "stop_times": [
+      {"arrival_time": null, "call_type": "origin", "departure_time": "07:04", "name_snapshot": "佐倉", "platform": "２", "stop_sequence": 1},
+      {"arrival_time": "07:10", "call_type": "passenger_stop", "departure_time": "07:11", "name_snapshot": "四街道", "platform": "１", "stop_sequence": 2},
+      {"arrival_time": "07:19", "call_type": "passenger_stop", "departure_time": "07:20", "name_snapshot": "千葉", "platform": "７", "stop_sequence": 3},
+      {"arrival_time": "07:35", "call_type": "passenger_stop", "departure_time": "07:36", "name_snapshot": "船橋", "platform": null, "stop_sequence": 4},
+      {"arrival_time": "07:50", "call_type": "passenger_stop", "departure_time": "07:51", "name_snapshot": "錦糸町", "platform": null, "stop_sequence": 5},
+      {"arrival_time": "07:59", "call_type": "destination", "departure_time": null, "name_snapshot": "東京", "platform": "２", "stop_sequence": 6}
+    ],
+    "train_number": "4006M",
+    "variant_id": "exact-2026-09-30"
+  }
+}

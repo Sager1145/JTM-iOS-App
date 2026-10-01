@@ -1,0 +1,107 @@
+{
+  "trip_id": "jr-east.shirayuki.2.exact-2026-09-30",
+  "service_id": "shirayuki",
+  "service_name": "しらゆき",
+  "jr_scope": "through_jr",
+  "service_date": "2026-09-30",
+  "public_number": "2",
+  "train_number": "52M",
+  "source_id": "jr-east-shirayuki2-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/063961.html",
+  "source_sha256": "d3baf5e52cccfeee4a47442cfdeaf3ece2f0d7f622566e52f4ba651d21c2272c",
+  "source_locator": "2026年9月30日 td.ok; 印刷時刻/番線/設備/備考",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "printed_equipment": [
+    "普通車一部指定席"
+  ],
+  "printed_platforms": {
+    "新潟": "３",
+    "新津": "２",
+    "東三条": "３",
+    "長岡": "４",
+    "柏崎": "３",
+    "直江津": "３"
+  },
+  "printed_remarks": "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません",
+  "stops": [
+    [
+      "新潟",
+      null,
+      "07:35"
+    ],
+    [
+      "新津",
+      "07:49",
+      "07:50"
+    ],
+    [
+      "加茂",
+      "08:03",
+      "08:03"
+    ],
+    [
+      "東三条",
+      "08:09",
+      "08:10"
+    ],
+    [
+      "見附",
+      "08:18",
+      "08:18"
+    ],
+    [
+      "長岡",
+      "08:27",
+      "08:29"
+    ],
+    [
+      "柏崎",
+      "08:54",
+      "08:54"
+    ],
+    [
+      "柿崎",
+      "09:09",
+      "09:10"
+    ],
+    [
+      "直江津",
+      "09:23",
+      "09:25"
+    ],
+    [
+      "高田",
+      "09:32",
+      "09:33"
+    ],
+    [
+      "上越妙高",
+      "09:39",
+      "09:39"
+    ],
+    [
+      "新井",
+      "09:46",
+      null
+    ]
+  ],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": false,
+    "green_car_available": null,
+    "car_count": null,
+    "vehicle_series": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route and operator segments are unknown. The printed ticketing remark is retained without converting it into an operator-segment claim.",
+  "actual_dispatch": null,
+  "candidate_id": "jr-east-shirayuki2-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "printed_operating_labels": [],
+  "train_number_segments": []
+}

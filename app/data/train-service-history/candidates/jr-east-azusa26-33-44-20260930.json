@@ -1,0 +1,33 @@
+{
+  "candidate_id": "jr-east-azusa26-33-44-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30; each individual page has td.ok for that date. Only the printed Azusa column is staged, without physical-line, operator-segment, or vehicle-series inference.",
+  "trips": [
+    {
+      "trip_id": "jr-east.azusa.26.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "26", "train_number": "26M",
+      "source_id": "jr-east-azusa26-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/060/063761.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ26号 26M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"松本": "２", "小淵沢": "２", "甲府": "２", "八王子": "２", "立川": "３", "新宿": "９"},
+      "stops": [["松本", null, "12:10"], ["塩尻", "12:18", "12:18"], ["岡谷", "12:26", "12:27"], ["上諏訪", "12:33", "12:34"], ["茅野", "12:39", "12:40"], ["小淵沢", "12:52", "12:53"], ["甲府", "13:16", "13:17"], ["八王子", "14:10", "14:11"], ["立川", "14:20", "14:21"], ["新宿", "14:43", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.33.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "33", "train_number": "33M",
+      "source_id": "jr-east-azusa33-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/020/020261.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ33号 33M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "９", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "２"},
+      "stops": [["新宿", null, "15:00"], ["立川", "15:22", "15:22"], ["八王子", "15:30", "15:31"], ["甲府", "16:27", "16:28"], ["韮崎", "16:36", "16:36"], ["小淵沢", "16:53", "16:53"], ["茅野", "17:07", "17:07"], ["上諏訪", "17:12", "17:13"], ["岡谷", "17:20", "17:20"], ["塩尻", "17:27", "17:28"], ["松本", "17:37", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.44.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "44", "train_number": "44M",
+      "source_id": "jr-east-azusa44-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/060/063781.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ44号 44M column; 設備, 併結運転 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_coupling": "大月－新宿は2144Mを併結",
+      "printed_platforms": {"松本": "３", "小淵沢": "２", "甲府": "２", "山梨市": "１", "塩山": "３", "大月": "５", "八王子": "２", "立川": "３", "新宿": "１０"},
+      "stops": [["松本", null, "15:50"], ["塩尻", "15:58", "15:58"], ["岡谷", "16:05", "16:06"], ["下諏訪", "16:09", "16:10"], ["上諏訪", "16:13", "16:14"], ["茅野", "16:20", "16:20"], ["富士見", "16:29", "16:30"], ["小淵沢", "16:36", "16:36"], ["韮崎", "16:52", "16:53"], ["甲府", "17:01", "17:02"], ["石和温泉", "17:07", "17:08"], ["山梨市", "17:12", "17:12"], ["塩山", "17:16", "17:17"], ["大月", "17:42", "17:45"], ["八王子", "18:11", "18:11"], ["立川", "18:19", "18:20"], ["新宿", "18:48", null]]
+    }
+  ]
+}

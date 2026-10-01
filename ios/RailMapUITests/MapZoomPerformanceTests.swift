@@ -50,7 +50,7 @@ final class MapZoomPerformanceTests: XCTestCase {
     }
 
     func testTwoFingerMapRotationThenZoomDefersGeometryBuilds() throws {
-        try assertRepeatedZoom(camera: .hudson, attachmentName: "map-rotation-zoom", rotateMapBeforeZoom: true)
+        try assertRepeatedZoom(camera: .hudsonSharedBundle, attachmentName: "map-rotation-zoom", rotateMapBeforeZoom: true)
     }
 
     private func assertRepeatedZoom(
@@ -175,6 +175,7 @@ final class MapZoomPerformanceTests: XCTestCase {
                                // The Hoboken/Hudson/Orange cases are us stations; North America is off by default.
                                "-feature-north-america-enabled", "YES"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"
         app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
@@ -190,6 +191,10 @@ final class MapZoomPerformanceTests: XCTestCase {
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.731,-74.031,0.026"
         case .hudson:
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.749,-74.012,0.065"
+        case .hudsonSharedBundle:
+            // Keep the Penn–Secaucus shared corridor centered at a detail
+            // level where each parallel colour is visible on wide viewports.
+            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.7557,-74.0341,0.04"
         case .orange:
             app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.762,-74.234,0.04"
         case .orangeWide:
@@ -332,12 +337,13 @@ private extension MapZoomPerformanceTests {
         case tokyo
         case hoboken
         case hudson
+        case hudsonSharedBundle
         case orange
         case orangeWide
 
         var isOrange: Bool { self == .orange || self == .orangeWide }
 
-        var isDenseBundle: Bool { self == .hoboken || self == .hudson }
+        var isDenseBundle: Bool { self == .hoboken || self == .hudson || self == .hudsonSharedBundle }
 
         var center: (latitude: Double, longitude: Double) {
             switch self {
@@ -345,6 +351,7 @@ private extension MapZoomPerformanceTests {
             case .tokyo: (35.68, 139.75)
             case .hoboken: (40.731, -74.031)
             case .hudson: (40.749, -74.012)
+            case .hudsonSharedBundle: (40.7557, -74.0341)
             case .orange, .orangeWide: (40.762, -74.234)
             }
         }

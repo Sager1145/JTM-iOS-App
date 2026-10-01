@@ -41,6 +41,8 @@ enum ShellStrings {
         "ios.overview": [.en: "Overview", .ja: "概要", .zhHans: "概览", .zhHant: "概覽"],
         "ios.travelDays": [.en: "Travel days", .ja: "乗車日数", .zhHans: "出行天数", .zhHant: "出行天數"],
         "ios.stops": [.en: "Stops", .ja: "停車駅", .zhHans: "停靠站", .zhHant: "停靠站"],
+        "ios.map.stopTag": [.en: "Stop", .ja: "停車", .zhHans: "停靠", .zhHant: "停靠"],
+        "ios.map.passTag": [.en: "Pass", .ja: "通過", .zhHans: "通过", .zhHant: "通過"],
         "ios.rideTime": [.en: "Ride time", .ja: "乗車時間", .zhHans: "乘车时间", .zhHant: "乘車時間"],
         "ios.serviceMix": [.en: "Service mix", .ja: "列車種別", .zhHans: "列车类型", .zhHant: "列車類型"],
         "ios.highSpeed": [.en: "High speed", .ja: "高速鉄道", .zhHans: "高速铁路", .zhHant: "高速鐵路"],

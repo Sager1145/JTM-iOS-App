@@ -1,0 +1,125 @@
+{
+  "candidate_id": "jr-west-thunderbird-planned-nine-car-20260930",
+  "candidate_status": "reviewed_official_standard_service_formation_plan",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trip_ids": [
+    "jr-west.thunderbird.1.2026-09-30",
+    "jr-west.thunderbird.2.2026-09-30",
+    "jr-west.thunderbird.3.2026-09-30",
+    "jr-west.thunderbird.4.2026-09-30",
+    "jr-west.thunderbird.5.2026-09-30",
+    "jr-west.thunderbird.6.2026-09-30",
+    "jr-west.thunderbird.7.2026-09-30",
+    "jr-west.thunderbird.8.2026-09-30",
+    "jr-west.thunderbird.9.2026-09-30",
+    "jr-west.thunderbird.10.2026-09-30",
+    "jr-west.thunderbird.11.2026-09-30",
+    "jr-west.thunderbird.12.2026-09-30",
+    "jr-west.thunderbird.13.2026-09-30",
+    "jr-west.thunderbird.14.2026-09-30",
+    "jr-west.thunderbird.15.2026-09-30",
+    "jr-west.thunderbird.16.2026-09-30",
+    "jr-west.thunderbird.17.2026-09-30",
+    "jr-west.thunderbird.18.2026-09-30",
+    "jr-west.thunderbird.19.2026-09-30",
+    "jr-west.thunderbird.20.2026-09-30",
+    "jr-west.thunderbird.21.2026-09-30",
+    "jr-west.thunderbird.22.2026-09-30",
+    "jr-west.thunderbird.23.2026-09-30",
+    "jr-west.thunderbird.24.2026-09-30",
+    "jr-west.thunderbird.25.2026-09-30",
+    "jr-west.thunderbird.26.2026-09-30",
+    "jr-west.thunderbird.27.2026-09-30",
+    "jr-west.thunderbird.28.2026-09-30",
+    "jr-west.thunderbird.29.2026-09-30",
+    "jr-west.thunderbird.30.2026-09-30",
+    "jr-west.thunderbird.31.2026-09-30",
+    "jr-west.thunderbird.32.2026-09-30",
+    "jr-west.thunderbird.33.2026-09-30",
+    "jr-west.thunderbird.34.2026-09-30",
+    "jr-west.thunderbird.35.2026-09-30",
+    "jr-west.thunderbird.36.2026-09-30",
+    "jr-west.thunderbird.37.2026-09-30",
+    "jr-west.thunderbird.38.2026-09-30",
+    "jr-west.thunderbird.39.2026-09-30",
+    "jr-west.thunderbird.40.2026-09-30",
+    "jr-west.thunderbird.41.2026-09-30",
+    "jr-west.thunderbird.42.2026-09-30",
+    "jr-west.thunderbird.43.2026-09-30",
+    "jr-west.thunderbird.44.2026-09-30",
+    "jr-west.thunderbird.45.2026-09-30",
+    "jr-west.thunderbird.46.2026-09-30",
+    "jr-west.thunderbird.47.2026-09-30",
+    "jr-west.thunderbird.48.2026-09-30",
+    "jr-west.thunderbird.49.2026-09-30",
+    "jr-west.thunderbird.50.2026-09-30"
+  ],
+  "planned_car_count": 9,
+  "evidence_kind": "planned",
+  "women_only_seat_car_number": "3",
+  "per_car_plan": [
+    {
+      "car_number": "1",
+      "seat_class": "green",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "2",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "3",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "4",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "5",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "6",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "7",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "8",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    },
+    {
+      "car_number": "9",
+      "seat_class": "ordinary",
+      "reservation_type": "reserved"
+    }
+  ],
+  "source": {
+    "source_id": "jr-west-thunderbird-current-nine-car-guide-20260930",
+    "url": "https://www.jr-odekake.net/railroad/train/thunderbird/"
+  },
+  "scope_note": "Current JR West service guide shows a standard nine-car layout with car 1 Green reserved, cars 2–9 ordinary reserved, and women-only seats in car 3. The standard chart totals 546 reserved seats. Exact-date train pages independently print women-only seats, Green reserved and all ordinary seats reserved. This is a planned standard layout, not proof of actual-day dispatch, vehicle series, exact seat assignments, or actual-day seat capacity.",
+  "standard_seats_by_car": [
+    32,
+    64,
+    72,
+    50,
+    72,
+    64,
+    64,
+    64,
+    64
+  ],
+  "standard_reserved_seat_capacity": 546
+}

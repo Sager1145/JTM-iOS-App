@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "candidate_status": "reviewed_official_html",
+  "issue": "JR時刻表2026年10月号",
+  "operator_name_for_station_match": "東日本旅客鉄道",
+  "notes": "Only the September 30 exact-date cells for Akagi 3, 6 and 9 are promoted; other weekdays are outside this reviewed batch.",
+  "trips": [
+    {
+      "service_id": "akagi",
+      "service_name": "あかぎ",
+      "public_name": "あかぎ 6号",
+      "public_number": "6",
+      "train_number": "4006M",
+      "variant_id": "20260930",
+      "operating_dates": [
+        "2026-09-30"
+      ],
+      "source": {
+        "source_id": "jr-east-akagi6-20260930",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "title": "特急あかぎ 6号（高崎－新宿）停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/075/076101.html",
+        "source_type": "official_train_timetable",
+        "issue": "JR時刻表2026年10月号",
+        "accessed_at": "2026-09-29T23:56:22Z",
+        "content_hash": null,
+        "license_status": "unknown",
+        "redistribution_status": "unknown",
+        "automated_extraction_allowed": false,
+        "notes": "Official train-detail page manually reviewed for the 2026-09-30 td.ok calendar cell and 12 passenger calls. Raw HTML is not bundled; redistribution authorization is unresolved."
+      },
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "name_snapshot": "高崎",
+          "arrival_time": null,
+          "departure_time": "07:40",
+          "platform": "８",
+          "call_type": "origin"
+        },
+        {
+          "stop_sequence": 2,
+          "name_snapshot": "新町",
+          "arrival_time": "07:48",
+          "departure_time": "07:49",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 3,
+          "name_snapshot": "本庄",
+          "arrival_time": "07:54",
+          "departure_time": "07:55",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 4,
+          "name_snapshot": "深谷",
+          "arrival_time": "08:01",
+          "departure_time": "08:02",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 5,
+          "name_snapshot": "熊谷",
+          "arrival_time": "08:10",
+          "departure_time": "08:10",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 6,
+          "name_snapshot": "鴻巣",
+          "arrival_time": "08:20",
+          "departure_time": "08:20",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 7,
+          "name_snapshot": "北本",
+          "arrival_time": "08:23",
+          "departure_time": "08:24",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 8,
+          "name_snapshot": "桶川",
+          "arrival_time": "08:27",
+          "departure_time": "08:28",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 9,
+          "name_snapshot": "上尾",
+          "arrival_time": "08:31",
+          "departure_time": "08:32",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 10,
+          "name_snapshot": "大宮",
+          "arrival_time": "08:39",
+          "departure_time": "08:40",
+          "platform": "６",
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 11,
+          "name_snapshot": "池袋",
+          "arrival_time": "09:01",
+          "departure_time": "09:03",
+          "platform": "２",
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 12,
+          "name_snapshot": "新宿",
+          "arrival_time": "09:09",
+          "departure_time": null,
+          "platform": "５",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "service_id": "akagi",
+      "service_name": "あかぎ",
+      "public_name": "あかぎ 9号",
+      "public_number": "9",
+      "train_number": "4009M",
+      "variant_id": "20260930",
+      "operating_dates": [
+        "2026-09-30"
+      ],
+      "source": {
+        "source_id": "jr-east-akagi9-20260930",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "title": "特急あかぎ 9号（上野－高崎）停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/065/068071.html",
+        "source_type": "official_train_timetable",
+        "issue": "JR時刻表2026年10月号",
+        "accessed_at": "2026-09-30T00:00:41Z",
+        "content_hash": null,
+        "license_status": "unknown",
+        "redistribution_status": "unknown",
+        "automated_extraction_allowed": false,
+        "notes": "Official train-detail page manually reviewed for the 2026-09-30 td.ok calendar cell and 13 passenger calls. Raw HTML is not bundled; redistribution authorization is unresolved."
+      },
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "name_snapshot": "上野",
+          "arrival_time": null,
+          "departure_time": "20:00",
+          "platform": "１５",
+          "call_type": "origin"
+        },
+        {
+          "stop_sequence": 2,
+          "name_snapshot": "赤羽",
+          "arrival_time": "20:09",
+          "departure_time": "20:09",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 3,
+          "name_snapshot": "浦和",
+          "arrival_time": "20:18",
+          "departure_time": "20:18",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 4,
+          "name_snapshot": "大宮",
+          "arrival_time": "20:25",
+          "departure_time": "20:26",
+          "platform": "７",
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 5,
+          "name_snapshot": "上尾",
+          "arrival_time": "20:32",
+          "departure_time": "20:33",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 6,
+          "name_snapshot": "桶川",
+          "arrival_time": "20:36",
+          "departure_time": "20:37",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 7,
+          "name_snapshot": "北本",
+          "arrival_time": "20:40",
+          "departure_time": "20:41",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 8,
+          "name_snapshot": "鴻巣",
+          "arrival_time": "20:44",
+          "departure_time": "20:44",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 9,
+          "name_snapshot": "熊谷",
+          "arrival_time": "20:54",
+          "departure_time": "20:55",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 10,
+          "name_snapshot": "深谷",
+          "arrival_time": "21:02",
+          "departure_time": "21:03",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 11,
+          "name_snapshot": "本庄",
+          "arrival_time": "21:10",
+          "departure_time": "21:10",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 12,
+          "name_snapshot": "新町",
+          "arrival_time": "21:16",
+          "departure_time": "21:16",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 13,
+          "name_snapshot": "高崎",
+          "arrival_time": "21:24",
+          "departure_time": null,
+          "platform": "４",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "service_id": "akagi",
+      "service_name": "あかぎ",
+      "public_name": "あかぎ 3号",
+      "public_number": "3",
+      "train_number": "4003M",
+      "variant_id": "20260930",
+      "operating_dates": [
+        "2026-09-30"
+      ],
+      "source": {
+        "source_id": "jr-east-akagi3-20260930",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "title": "特急あかぎ 3号（上野－本庄）停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/030/034771.html",
+        "source_type": "official_train_timetable",
+        "issue": "JR時刻表2026年10月号",
+        "accessed_at": "2026-09-30T00:07:01Z",
+        "content_hash": null,
+        "license_status": "unknown",
+        "redistribution_status": "unknown",
+        "automated_extraction_allowed": false,
+        "notes": "Official train-detail page manually reviewed for the 2026-09-30 td.ok calendar cell and 11 passenger calls. Raw HTML is not bundled; redistribution authorization is unresolved."
+      },
+      "stop_times": [
+        {
+          "stop_sequence": 1,
+          "name_snapshot": "上野",
+          "arrival_time": null,
+          "departure_time": "18:30",
+          "platform": "１４",
+          "call_type": "origin"
+        },
+        {
+          "stop_sequence": 2,
+          "name_snapshot": "赤羽",
+          "arrival_time": "18:40",
+          "departure_time": "18:40",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 3,
+          "name_snapshot": "浦和",
+          "arrival_time": "18:49",
+          "departure_time": "18:49",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 4,
+          "name_snapshot": "大宮",
+          "arrival_time": "18:55",
+          "departure_time": "18:56",
+          "platform": "７",
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 5,
+          "name_snapshot": "上尾",
+          "arrival_time": "19:03",
+          "departure_time": "19:04",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 6,
+          "name_snapshot": "桶川",
+          "arrival_time": "19:07",
+          "departure_time": "19:08",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 7,
+          "name_snapshot": "北本",
+          "arrival_time": "19:11",
+          "departure_time": "19:12",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 8,
+          "name_snapshot": "鴻巣",
+          "arrival_time": "19:15",
+          "departure_time": "19:16",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 9,
+          "name_snapshot": "熊谷",
+          "arrival_time": "19:25",
+          "departure_time": "19:26",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 10,
+          "name_snapshot": "深谷",
+          "arrival_time": "19:33",
+          "departure_time": "19:34",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 11,
+          "name_snapshot": "本庄",
+          "arrival_time": "19:42",
+          "departure_time": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    }
+  ],
+  "english_name_source": {
+    "source_id": "jr-east-akagi6-en-20260930",
+    "publisher": "East Japan Railway Company / Kotsu Shimbunsha",
+    "title": "Limited Express Akagi 6 (Takasaki - Shinjuku), List of Stations",
+    "url_or_locator": "https://timetables.jreast.co.jp/en/2610/train/075/076101.html",
+    "source_type": "official_train_timetable",
+    "issue": "JR Timetable October 2026",
+    "accessed_at": "2026-09-29T23:58:25Z",
+    "content_hash": null,
+    "license_status": "unknown",
+    "redistribution_status": "unknown",
+    "automated_extraction_allowed": false,
+    "notes": "Official English counterpart prints the Akagi 6 service name and the same 4006M and stop clocks. This record supports only the reviewed 2026-09-30 service-date name period."
+  }
+}

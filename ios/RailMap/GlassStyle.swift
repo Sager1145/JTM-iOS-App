@@ -69,6 +69,21 @@ private struct RailGlassSurface: ViewModifier {
 // MARK: - card colours
 
 extension Color {
+    /// One opaque content surface across the resident and secondary menu sheets.
+    /// Resolve at the base interface level so an elevated sheet does not shift
+    /// the specified light/dark colors as it changes detents.
+    static var railMenuBackground: Color {
+        Color(
+            UIColor { traits in
+                let semantic: UIColor = traits.userInterfaceStyle == .dark
+                    ? .secondarySystemBackground : .systemBackground
+                return semantic.resolvedColor(
+                    with: traits.modifyingTraits {
+                        $0.userInterfaceLevel = .base
+                    })
+            })
+    }
+
     /// Resolves a semantic colour at the elevated interface level.
     ///
     /// The printed passport ticket and share images use this for their fill.

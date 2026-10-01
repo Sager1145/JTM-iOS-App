@@ -1,0 +1,47 @@
+特急数据库与加入行程测试报告 — 2026-09-30
+
+改动
+- 新增统一的 TimetableSearch：空格组合关键词、英文列车名、大小写与宽字符归一、平片假名互搜、列车编号、起终时刻搜索。
+- 支持按乘客停站顺序查询：新宿 → 松本，也接受 ->；不把通過站当成可乘坐站。
+- 特急选择器可直接编辑日期；取消选择不会写入行程草稿。
+- 日期步骤增加按日期/列车/车站浏览入口，选择后回填停站、日期、名称、编号和公布时刻。
+- 快捷匹配替换已有停站时增加确认；取消保留现有草稿。
+- 导入班次后再改日期，在日期页与确认页提示重新核对公布时刻。
+- 资料冲突的班次不能生成编辑草稿；缺少完整线路核验的记录仍作为公布停站草稿，不能生成已核验线路。
+- UI 测试改用具名列表与可见区域滚动，避免键盘、底部控件及已保留的滚动位置干扰操作。
+
+数据库检查
+- SQLite integrity_check: ok。
+- foreign_key_check: 0 errors。
+- 68 services / 882 trips / 8,520 stop_times / 1,216 source_documents。
+- 当前打包库没有完整核验的 route_lines/provenance，不能声称其提供完整核验路线。
+
+自动测试
+- 扩大范围的 76 项特急相关 RailKit 测试通过；每条线路验收含 298 个参数化案例。
+- 最终定向的 72 项测试通过（与前述测试有重叠，不相加）。
+- 最终搜索测试 4 项通过，0.102 秒。
+- 覆盖 2013 历史和 2026 当前日期、日历边界、错误日期、车次覆盖、来源、站台、日期变体、跨午夜时刻、完整匹配与短区间拒绝。
+- 真实查询 -> 公布停站草稿 -> Workspace -> 严格校验导出 -> 原生解码 -> 再导入 -> 稳定再导出。
+- 保存后重启保留、脏草稿取消、公布班次详情与来源、Azusa 日期变体原有 UI 测试通过。
+- 取消新日期搜索 UI 测试通过。
+- 新增完整导入 -> 快捷匹配替换确认 -> 取消 -> 确认保存 UI 验收通过，97.019 秒。
+- 原有日期更改与手动时刻/乘坐状态保留 UI 验收通过，107.025 秒；Xcode TEST SUCCEEDED。
+- 共 7 条相关 UI 用例分别验证通过，按改动增量重跑；首轮定位失败与滚动问题已修复，不把首轮失败视为通过。
+
+测试环境和范围
+- Xcode 27.0 / iOS 27 模拟器 JTM-Timetable-Isolated。
+- SwiftPM scratch、Xcode DerivedData 和日志均位于 /tmp。
+- 标准 SwiftUI 样式；本次没有新增自定义动画或视觉效果。
+- 已做静态 UI 扫描和搜索结果截图复核。未做真机、完整 Dynamic Type/VoiceOver/明暗模式矩阵或 Instruments 性能验收；不提供未经验证的视觉评分。
+- 原始特急验收阶段保留既有工作区修改；随后按用户要求一并进入 main 集成测试与分支合并流程，最终状态见 MAIN_INTEGRATION_TEST_REPORT.txt。
+
+证据
+/tmp/jtm-search-tests.log
+/tmp/jtm-timetable-final-core.log
+/tmp/jtm-timetable-search-final.log
+/tmp/jtm-timetable-ui-tests.log
+/tmp/jtm-timetable-verified-ui.log
+/tmp/jtm-timetable-acceptance-ui.log
+/tmp/jtm-timetable-date-retention-ui.log
+/tmp/jtm-timetable-ui-audit.log
+/tmp/jtm-timetable-review-images/manifest.json

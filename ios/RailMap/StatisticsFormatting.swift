@@ -194,8 +194,34 @@ enum StatisticsStrings {
         // §5.3.5's other half: a picture of the numbers, beside the film of
         // the route. See `StatisticsShareImage.swift`.
         "ios.stats.shareImage": [
-            .en: "Share statistics image", .ja: "統計の画像を共有",
-            .zhHans: "分享统计图片", .zhHant: "分享統計圖片",
+            .en: "Share image", .ja: "画像を共有",
+            .zhHans: "分享图片", .zhHant: "分享圖片",
+        ],
+        "ios.stats.shareMapOption": [
+            .en: "Ticket + railway map", .ja: "きっぷ＋鉄道路線図",
+            .zhHans: "车票＋铁路地图", .zhHant: "車票＋鐵路地圖",
+        ],
+        "ios.stats.shareStatisticsOption": [
+            .en: "Ticket + statistics", .ja: "きっぷ＋統計",
+            .zhHans: "车票＋统计", .zhHant: "車票＋統計",
+        ],
+        "ios.stats.shareMapTitle": [
+            .en: "Ticket and railway map", .ja: "きっぷと鉄道路線図",
+            .zhHans: "车票与铁路地图", .zhHant: "車票與鐵路地圖",
+        ],
+        "ios.stats.shareMapImageLabel": [
+            .en: "A picture of the ticket and railway map",
+            .ja: "きっぷと鉄道路線図の画像",
+            .zhHans: "车票与铁路地图的图片",
+            .zhHant: "車票與鐵路地圖的圖片",
+        ],
+        "ios.stats.shareLight": [
+            .en: "Share in light mode", .ja: "ライトモードで共有",
+            .zhHans: "亮色分享", .zhHant: "亮色分享",
+        ],
+        "ios.stats.shareDark": [
+            .en: "Share in dark mode", .ja: "ダークモードで共有",
+            .zhHans: "暗色分享", .zhHant: "暗色分享",
         ],
         // The one line under the app's name on the poster's banner: what the
         // app the picture came from actually is.

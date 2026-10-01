@@ -1,0 +1,137 @@
+{
+  "candidate_id": "jr-central-hida36-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "hida",
+  "source_id": "jr-west-odekake-hida36-36d-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/76971?date=20260930",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "The selected September 30 page alone is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.hida.36.2026-09-30",
+    "public_number": "36",
+    "train_number": "36D",
+    "origin": "高山",
+    "destination": "大阪",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "高山",
+        "arrival_time": null,
+        "departure_time": "15:34",
+        "platform": null,
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "下呂",
+        "arrival_time": "16:17",
+        "departure_time": "16:18",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "美濃太田",
+        "arrival_time": "17:17",
+        "departure_time": "17:17",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "岐阜",
+        "arrival_time": "17:37",
+        "departure_time": "17:45",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "大垣",
+        "arrival_time": "17:53",
+        "departure_time": "17:54",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "米原",
+        "arrival_time": "18:22",
+        "departure_time": "18:23",
+        "platform": "2",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "草津",
+        "arrival_time": "19:01",
+        "departure_time": "19:02",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "京都",
+        "arrival_time": "19:17",
+        "departure_time": "19:18",
+        "platform": "6",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "新大阪",
+        "arrival_time": "19:44",
+        "departure_time": "19:45",
+        "platform": "9",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "大阪",
+        "arrival_time": "19:50",
+        "departure_time": null,
+        "platform": "3",
+        "call_type": "destination"
+      }
+    ],
+    "direction": "up",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": [
+      "９月１８～２３日は普通車全車指定席で運転"
+    ],
+    "train_number_segments": [
+      {
+        "from_sequence": 1,
+        "to_sequence": 4,
+        "train_number": "36D"
+      },
+      {
+        "from_sequence": 4,
+        "to_sequence": 10,
+        "train_number": "2036D"
+      }
+    ],
+    "coupling_note": "高山－岐阜間３６Ｄ〔ひだ１６号〕に併結"
+  },
+  "review_notes": [
+    "Official date-selected detail; September 30 drivingday-01 calendar cell and legend inspected in official HTML.",
+    "All printed passenger calls and platforms retained; レ pass rows omitted.",
+    "September 18–23 seat exception does not apply September 30; no formation inferred.",
+    "Two printed columns of the same public service joined at explicit Gifu through arrow; shared boundary stop retained once."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "cell_class": "drivingday-01",
+    "method": "Official HTML calendar cell and printed drivingday-01 legend inspected",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/76971?date=20260930"
+  }
+}

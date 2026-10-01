@@ -106,6 +106,14 @@ final class MileageStatisticsStore {
     /// Deliberately not shared with `RailWorkspaceView.selectedDate`.
     private(set) var selectedDate: String = Dates.allDates
 
+    /// The distribution card's month/weekday year. `nil` tracks the current
+    /// Gregorian year; the share poster reads the same choice as the screen.
+    private(set) var selectedRhythmYear: Int?
+
+    func selectRhythmYear(_ year: Int?) {
+        selectedRhythmYear = year
+    }
+
     /// The date buckets the loaded rides actually occupy, in date-bar order.
     /// Used to keep a stale scope from surviving a reload.
     private(set) var availableDates: [String] = []

@@ -59,14 +59,20 @@ devices = [
     device
     for runtime in runtimes.values()
     for device in runtime
-    if device.get("isAvailable", False) and device.get("name", "").startswith(family)
+    if device.get("isAvailable", False)
+    and device.get("deviceTypeIdentifier", "").split(".")[-1].startswith(family)
 ]
 if family == "iPad":
-    devices.sort(key=lambda device: ("13-inch" not in device["name"], device["name"]))
+    devices.sort(key=lambda device: (
+        "13-inch" not in device.get("deviceTypeIdentifier", ""),
+        device.get("state") != "Booted",
+        device["name"],
+    ))
 else:
     devices.sort(key=lambda device: (
-        not device["name"].endswith(" Pro"),
-        "Max" in device["name"],
+        "Pro" not in device.get("deviceTypeIdentifier", ""),
+        "Max" in device.get("deviceTypeIdentifier", ""),
+        device.get("state") != "Booted",
         device["name"],
     ))
 if devices:

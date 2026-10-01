@@ -1,0 +1,72 @@
+main 集成测试与分支处理报告 — 2026-09-30
+
+本次范围
+- 特急数据库检索、公布停站导入、日期编辑与替换确认；详见 TIMETABLE_APP_TEST_REPORT.txt。
+- 纳入当前工作区既有铁路历史、来源证据、数据库、编组与预约资料，以及相关工具和测试。
+- 汇总所有本地分支；远端 fetch/prune 与 ls-remote 验证只有 main。
+
+已完成检查
+- app npm test：84 项通过。
+- app npm run lint：63 个本地资源、56 个经典脚本通过。
+- 根目录 Python：17 项通过。
+- ios/tools/tests Python：1,005 项通过；全量发现运行 3,182.064 秒、退出状态 0。
+- Python 总计 1,819 项，零失败、零错误。
+- app/scripts/railway/tests Python：797 项通过。
+- 日本铁路历史来源导入 --check、站表验证及允许 1 个已声明历史缺口的覆盖基线通过。
+- 覆盖报告与仓库报告逐字节一致。
+- 日本历史日期边界：2,713 次状态转换、2,622 个对象、85 个生效日期、124 个退役选择器、1,172 个有效区间交集；生成报告逐字节一致。
+- Swift Testing：941 项（315 + 626）通过；XCTest：41 项通过，总计 982 项。
+- 298 个停站模式逐段求解通过；真实数据库与工作区往返验证通过。
+- 原生编辑校验、顺序持久化、订阅认证及 HTTP harness 全部通过。
+- 完整 JS 夹具一致性、站表、时刻表资源与固定站点引用检查通过。
+- 应用构建与所有 app 静态契约通过（--app 复测退出 0）。
+- iPad 四项专属 UI（反复拖动、标题留白拖动、折叠菜单重开、宽屏停靠）最终批次全部通过。
+
+分支审计
+- codex/jr-historical-timetable-foundation 包含 main 之后的 12 个提交及本次工作区修改。
+- sager1145-fix-railway-map 已是 main 的祖先；保留另一个干净工作树的文件，清理分支时将其切为 detached HEAD。
+- local-snapshot/2026-09-07-pre-pull 是旧工作区快照，包含过时生成物与大量后来已替换的实现。采用保留现有树的 ours merge 纳入其祖先历史；恢复独有 ios/REFACTOR_PROMPT.md、wl.html、yk.html 资料，避免回退最新已验证的地图与代码。
+- 两份编号 SQLite 副本移到 /tmp/jtm-premerge-duplicate-artifacts；正式数据库保持不变。
+
+证据
+/tmp/jtm-merge-node-test-final.log
+/tmp/jtm-merge-lint-final.log
+/tmp/jtm-merge-python-root.log
+/tmp/jtm-merge-python-railway.log
+/tmp/jtm-merge-python-ios.log
+/tmp/jtm-merge-python-boundaries.log
+/tmp/jtm-merge-full-verify.log
+/tmp/jtm-merge-swift-complete.log
+/tmp/jtm-merge-app-gate.log
+/tmp/jtm-merge-all-ui.log
+/tmp/jtm-merge-ipad-ui/LayoutSmoke-83945.log
+/tmp/jtm-merge-ipad-remaining-retry.log
+/tmp/jtm-merge-ipad-final.log
+/tmp/jtm-merge-ui-final-retest.log
+/tmp/jtm-merge-ui-scope-retest.log
+/tmp/jtm-merge-map-selection-final.log
+/tmp/jtm-merge-reduce-motion-final.log
+/tmp/jtm-merge-ui-passed-cases.txt
+
+复测记录
+- 首轮并行 UI 因主机资源压力停止，不能作为通过证据。最终采用单设备串行运行。
+- ConsoleSweep：菜单子动作继承可访问性标识，改为检查实际菜单名称、两种预览与关闭行为。
+- MapLayer：原中心点击被半高面板遮挡；改为点击前证明地图裸露、点击后展开内容，保留精确旅程及隐藏状态正负断言。
+- 完整 iPhone 首批：57 项通过、9 项失败、4 项因设备/系统设置跳过（宽屏 iPad 用例未在手机运行）。失败项逐项修正与复测，不能将该批次称为全绿。
+- 菜单遍历修正复测通过。
+- 地图样本启动明确设全部地区：菜单遍历此前留下台湾筛选。LLDB 确认加载状态 loaded、275 条路线，render status 的 28 条是台湾子集；manifest index 与 201 条样本完整，不是解码缺失。
+- 地图精确点击在收起面板后进行，并缩近相机避免站点标注拦截；精确旅程与隐藏状态原断言保留。
+- 九项缩放/旋转性能最终复测全部通过，原 150 ms 阈值不变；全国缩放最大帧间隔 32 ms。
+- 未乘开关先滚入末节，选择今天后仍关闭的复测通过。
+- 空车次号可进入日期页，最终保存前仍须补齐；旧用例据实际步骤规则更新。
+- 删除撤销角色选择器先滚入末节，保留起终点与地区清除撤销断言。
+
+- 完整 gate 首次在 basemap 检查停止：旧规则要求单行写法；实际仍只更新保留 veil。修复规则兼容多行、保留拒绝全图重建的反例检查，新增 --app 后全部应用检查通过。
+
+最终结果
+- 71 个不同 UI 用例均有通过记录：66 个手机功能用例、1 个真实系统减少动态效果用例、4 个 iPad 专属用例。
+- 结果来自完整批次与修正后的定向复测联合覆盖，不声称首批全绿；Mac Catalyst 条件用例不适用于本次 iOS Simulator。
+- 三项工作区修正最终通过；最后两项地图精确选择对照最终通过；九项性能原门槛全部通过。
+- Python 1,819 + Node 84 + Swift 982 = 2,885 项脚本/核心测试通过，另 71 个 UI 用例通过；构建、lint 与原生 harness 通过。
+- Git 集成：将当前工作区提交后，用 ours 合并旧快照历史，再以 merge commit 合入 main，正常 push origin main；验证所有旧分支头均是 main 祖先后删除旧本地分支。
+- 最终推送 SHA 与清理状态由操作结束后的答复给出。

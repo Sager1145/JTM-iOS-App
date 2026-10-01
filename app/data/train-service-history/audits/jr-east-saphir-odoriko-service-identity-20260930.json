@@ -1,0 +1,46 @@
+{
+  "audit_id": "saphir-odoriko-service-identity-20260930",
+  "decision": "separate_service",
+  "service_id": "saphir-odoriko",
+  "canonical_name": "サフィール踊り子",
+  "existing_related_service_id": "odoriko",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/063451.html",
+  "service_date": "2026-09-30",
+  "reasons": [
+    "Official exact-date page names サフィール踊り子1 and distinct premium all-Green equipment.",
+    "Existing app branding explicitly separates saphir-odoriko and odoriko and resolves the longest name first.",
+    "Legacy pattern map already assigns Saphir route to saphir-odoriko.",
+    "Trip schema exposes service_id but no independent branded-variant field; an alias on odoriko would match every Odoriko trip when searching Saphir."
+  ],
+  "query_semantics": {
+    "serviceID": "exact t.service_id match: keeps the two families separate",
+    "serviceName": "substring canonical_name / dated aliases: 踊り子 may return both; サフィール踊り子 only this service"
+  },
+  "repository_evidence": [
+    {
+      "path": "ios/RailKit/Sources/RailCore/TrainServiceBranding.swift",
+      "locator": "normalizedCatalog longest-first; explicit Saphir versus Odoriko comment"
+    },
+    {
+      "path": "ios/RailKit/Sources/RailCore/Resources/train-service-branding.json",
+      "locator": "separate odoriko and saphir-odoriko entries"
+    },
+    {
+      "path": "ios/RailKit/Sources/RailCore/TrainTimetableDatabase.swift",
+      "locator": "trips(matching:) serviceID exact predicate and serviceName LIKE predicate"
+    },
+    {
+      "path": "app/data/train-service-history/migration/legacy-pattern-map.json",
+      "locator": "saphir-odoriko-tokyo-izukyushimoda → saphir-odoriko"
+    }
+  ],
+  "formation_scope": "All cars Green reserved; Premium Green, Green, six-person and four-person Green compartments printed. Compartment occupancy is not car/total seat count; car numbers, series and actual dispatch unprinted.",
+  "unknowns": [
+    "car_count",
+    "vehicle_series",
+    "reserved_seat_capacity",
+    "actual_dispatch",
+    "dated ordered route/operator segments"
+  ],
+  "changes_to_existing_odoriko": "none"
+}

@@ -88,8 +88,27 @@ def main():
     source_by_id = {source["source_id"]: source for source in sources}
     service_source_id = "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314"
     calendar_source_id = candidate["operating_date_range"]["source_id"]
-    if set(source_by_id) != {service_source_id, calendar_source_id}:
+    route_evidence = candidate["route_evidence"]
+    route_source_id = route_evidence["source_id"]
+    operator_evidence = candidate["operator_evidence"]
+    operator_source_id = operator_evidence["source_id"]
+    if set(source_by_id) != {service_source_id, calendar_source_id, route_source_id, operator_source_id}:
         raise ValueError("Candidate source ids do not match the reviewed source contract")
+    if (route_evidence["line_name"], route_evidence["operator_id"],
+            route_evidence["confidence"]) != ("指宿枕崎線", "jr-kyushu", "medium"):
+        raise ValueError("Ibusuki route evidence changed from the reviewed operator line label")
+    rail_package = json.loads((ROOT / "app/public/rail/jp-2025.json").read_text(encoding="utf-8"))
+    matching_lines = [line for line in rail_package["lines"]
+                      if line["id"] == route_evidence["current_n02_line_id"]]
+    if len(matching_lines) != 1 or matching_lines[0]["name"] != "指宿枕崎線" or matching_lines[0]["operator"] != "九州旅客鉄道":
+        raise ValueError("Ibusuki current N02 line identity is missing or ambiguous")
+    line_station_names = [station[1] for station in matching_lines[0]["stations"]]
+    if "鹿児島中央" not in line_station_names or "指宿" not in line_station_names or line_station_names.index("鹿児島中央") >= line_station_names.index("指宿"):
+        raise ValueError("Ibusuki endpoints are not ordered on the reviewed current N02 line")
+    if (operator_evidence["line_name"], operator_evidence["operator_id"],
+            operator_evidence["line_from"], operator_evidence["line_to"]) != (
+            "指宿枕崎線", "jr-kyushu", "鹿児島中央", "枕崎"):
+        raise ValueError("Ibusuki operator boundary changed from the reviewed company line inventory")
     service = candidate["service"]
     ensure_no_collisions(service, sources)
 
@@ -144,7 +163,7 @@ def main():
         "revision_type": "planned_exception",
         "publication_date": source_by_id[calendar_source_id]["publication_date"],
         "completeness": "partial",
-        "source_ids": [service_source_id, calendar_source_id],
+        "source_ids": [service_source_id, calendar_source_id, route_source_id, operator_source_id],
     })
     data["calendars"].append({
         "calendar_id": calendar_id,
@@ -181,8 +200,26 @@ def main():
             "service_class": service["service_class"],
             "notes": (
                 "Official timetable displays only the two endpoint stops. Public号次 and endpoint clocks are exact; "
-                "internal train number, operator boundary and physical route identity remain unresolved."
+                "internal train number and physical route identity remain unresolved."
             ),
+        })
+        data["trip-lines"].append({
+            "trip_id": trip_id,
+            "sequence": 1,
+            "from_station_id": origin["station_id"],
+            "to_station_id": destination["station_id"],
+            "line_name": route_evidence["line_name"],
+            "reference_kind": "current_n02",
+            "current_n02_line_id": route_evidence["current_n02_line_id"],
+            "operator_id": route_evidence["operator_id"],
+            "source_id": route_source_id,
+            "confidence": route_evidence["confidence"],
+        })
+        data["trip-operator-segments"].append({
+            "trip_id": trip_id,
+            "from_sequence": 1,
+            "to_sequence": 2,
+            "operator_id": route_evidence["operator_id"],
         })
         data["stop-times"].extend([
             {
@@ -216,12 +253,12 @@ def main():
     statuses = {
         "identity": ("verified", "high", "Official service page and PDF identify the named limited express."),
         "train_number": ("partial", "high", "Public numbers 1-6 are printed; internal train numbers are absent."),
-        "operator": ("unknown", "low", "Neither source prints ordered operator-boundary segments."),
+        "operator": ("verified", "high", "JR Kyushu's company line inventory covers the published 鹿児島中央–指宿 segment on 指宿枕崎線; the 2026 service timetable confirms both endpoints."),
         "validity_calendar": ("verified", "high", "PDF p.10 explicitly gives one contiguous date range for every numbered row."),
         "origin_destination": ("verified", "high", "Both official sources print the directional endpoints."),
         "stops": ("verified", "high", "The official page labels its two-row directional tables 停車駅."),
         "times": ("verified", "high", "Both sources agree on all twelve endpoint minute clocks."),
-        "route_lines": ("unknown", "low", "No dated physical line identities are printed."),
+        "route_lines": ("partial", "medium", "The 2026 guide names 指宿枕崎線 and current N02 places both endpoints on it; the current feature ID has no historical validity interval."),
         "station_refs": ("verified", "high", "Each source station name resolves to one JR Kyushu sourceCode."),
         "provenance": ("partial", "high", "Official sources are recorded, but no redistribution grant was identified."),
     }
@@ -232,6 +269,8 @@ def main():
         "origin_destination": (service_source_id, "Official HTML two directional timetable tables"),
         "stops": (service_source_id, "Official HTML tables explicitly headed 停車駅"),
         "times": (service_source_id, "Official HTML timetable, 2026-03-14 revision"),
+        "operator": (operator_source_id, operator_evidence["locator"]),
+        "route_lines": (route_source_id, route_evidence["locator"]),
         "station_refs": (STATION_DIRECTORY_SOURCE, "Shipped current station directory; exact JR Kyushu name/code resolution"),
         "provenance": (calendar_source_id, "Official PDF URL and SHA-256 reviewed 2026-09-28"),
     }
@@ -259,8 +298,7 @@ def main():
 
     research = {
         "train_number": ("open", "Obtain an official working timetable that prints the internal train number."),
-        "operator": ("open", "Obtain ordered operator-boundary evidence; do not infer it from the publisher."),
-        "route_lines": ("open", "Obtain dated direct route identities; do not infer them from endpoint connectivity."),
+        "route_lines": ("open", "Verify the physical line identity's historical validity for each 2026 service date; current N02 alone has no interval."),
         "provenance": ("license_blocked", "No redistribution or automated-extraction grant was found."),
     }
     for trip_id in trip_ids:
@@ -286,6 +324,8 @@ def main():
         "stop-times": BASE / "normalized/stop-times/reviewed-kyushu-next-batch/seeds-kyushu-next-batch.jsonl",
         "calendars": BASE / "normalized/calendars/reviewed-kyushu-next-batch/seeds-kyushu-next-batch.jsonl",
         "calendar-exceptions": BASE / "normalized/calendar-exceptions/reviewed-kyushu-next-batch/seeds-kyushu-next-batch.jsonl",
+        "trip-lines": BASE / "normalized/trip-lines/reviewed-kyushu-next-batch/seeds-kyushu-next-batch.jsonl",
+        "trip-operator-segments": BASE / "normalized/trip-operator-segments/reviewed-kyushu-next-batch/seeds-kyushu-next-batch.jsonl",
     }
     write_jsonl(SOURCE_REGISTRY_PATH, sources)
     data["station-identities"] = new_station_rows

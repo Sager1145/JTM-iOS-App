@@ -1,0 +1,70 @@
+{
+  "candidate_id": "jr-hokkaido-okhotsk1-taisetsu3591d-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Only the selected 2026-09-30 down timetable and its 71D and 3591D train columns. No other date or physical line/operator segment is inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.okhotsk.1.exact-2026-09-30",
+      "service_id": "okhotsk",
+      "service_name": "オホーツク",
+      "service_class": "limited_express",
+      "public_number": "1",
+      "train_number": "71D",
+      "origin": "札幌",
+      "destination": "網走",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-okhotsk1-taisetsu3591d-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; second train column: 71D / オホーツク 1",
+      "printed_platforms": {"札幌": "(10)"},
+      "stops": [
+        ["札幌", null, "06:52"],
+        ["岩見沢", null, "07:20"],
+        ["美唄", null, "07:32"],
+        ["砂川", null, "07:45"],
+        ["滝川", null, "07:51"],
+        ["深川", null, "08:06"],
+        ["旭川", "08:28", "08:31"],
+        ["上川", null, "09:12"],
+        ["白滝", null, "09:54"],
+        ["丸瀬布", null, "10:13"],
+        ["遠軽", null, "10:33"],
+        ["生田原", null, "10:49"],
+        ["留辺蘂", null, "11:09"],
+        ["北見", null, "11:28"],
+        ["美幌", null, "11:51"],
+        ["女満別", null, "12:02"],
+        ["網走", "12:17", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.taisetsu.3591d.exact-2026-09-30",
+      "service_id": "taisetsu",
+      "service_name": "大雪",
+      "service_class": "special_rapid",
+      "public_number": null,
+      "train_number": "3591D",
+      "origin": "旭川",
+      "destination": "網走",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-okhotsk1-taisetsu3591d-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; ninth train column: 3591D / 大雪, public-number cell blank",
+      "printed_platforms": {},
+      "stops": [
+        ["旭川", null, "12:38"],
+        ["上川", null, "13:21"],
+        ["白滝", null, "14:01"],
+        ["丸瀬布", null, "14:19"],
+        ["遠軽", null, "14:41"],
+        ["生田原", null, "14:57"],
+        ["留辺蘂", null, "15:18"],
+        ["北見", null, "15:42"],
+        ["美幌", null, "16:06"],
+        ["女満別", null, "16:17"],
+        ["網走", "16:32", null]
+      ]
+    }
+  ]
+}

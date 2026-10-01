@@ -16,13 +16,15 @@ def days(month, *values):
         result.extend(f'2013-{month:02}-{d:02}' for d in range(bounds[0], bounds[1]+1))
     return result
 
-SHINANO_A = days(7,13,15,20,21,27,28)+days(8,(2,4),(9,18),24,25)+days(9,14,16,21,23)
-SHINANO_B = days(7,13,15,20,21,27,28)+days(8,(1,5),(9,18),24,25)+days(9,14,16,21,23)
+SHINANO_81 = days(7,13,15,20,21,27,28)+days(8,(2,4),(9,18),24,25)
+SHINANO_84 = days(9,14,16,21,23)
+SHINANO_85 = days(7,13,15,20,21,27,28)+days(8,(1,5),(9,18),24,25)
+SHINANO_82 = days(9,14,16,21,23)
 ROWS = [
- ('shinano','しなの','81','名古屋','08:28','白馬','12:02',SHINANO_A,3),
- ('shinano','しなの','84','白馬','14:53','名古屋','18:48',SHINANO_A,3),
- ('shinano','しなの','85','名古屋','10:29','松本','12:54',SHINANO_B,3),
- ('shinano','しなの','82','松本','15:00','名古屋','17:25',SHINANO_B,3),
+ ('shinano','しなの','81','名古屋','08:28','白馬','12:02',SHINANO_81,3),
+ ('shinano','しなの','84','白馬','14:53','名古屋','18:48',SHINANO_84,3),
+ ('shinano','しなの','85','名古屋','10:29','松本','12:54',SHINANO_85,3),
+ ('shinano','しなの','82','松本','15:00','名古屋','17:25',SHINANO_82,3),
  ('hida','ひだ','81','名古屋','10:18','高山','12:56',days(7,13)+days(8,(10,14))+days(9,14,15,21,22),3),
  ('hida','ひだ','82','高山','17:39','名古屋','20:02',days(7,13,15)+days(8,(10,16))+days(9,(14,16),(21,23)),3),
  ('hida','ひだ','83','名古屋','13:39','高山','16:14',days(7,15)+days(8,15,16)+days(9,16,23),3),
@@ -108,7 +110,7 @@ def main():
         count=0 if dimension in ['train_number','route_lines'] else 24 if dimension in ['stops','times','station_refs'] else 12
         data['coverage-declarations'].append(dict(coverage_id='jr-central.2013.'+dimension+'.summer-endpoints',operator_scope='jr-central',year=2013,
             dimension=dimension,status='partial' if count else 'missing',record_count=count,source_id=SOURCE,
-            notes='12 selected temporary endpoint templates; 217 explicitly scheduled occurrences. Not the 2013 inventory or all-stop timetable.'))
+            notes='12 selected temporary endpoint templates; 165 row-supported scheduled occurrences. Not the 2013 inventory or all-stop timetable.'))
     nested={'trips','stop-times','calendars','calendar-exceptions','trip-stop-time-overrides'}
     for entity,rows in data.items():
         path=BASE/f'normalized/{entity}/reviewed-central-2013/seeds.jsonl' if entity in nested else BASE/f'normalized/{entity}-central-2013.jsonl'

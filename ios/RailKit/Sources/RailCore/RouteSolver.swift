@@ -211,7 +211,12 @@ public enum RouteSolver {
     public static func edgeHasPreferredInstitution(
         _ edge: RouteGraph.Edge, allowedCodes: [String]
     ) -> Bool {
-        let allowed = Set(allowedCodes.filter { !$0.isEmpty })
+        edgeHasPreferredInstitution(edge, allowed: Set(allowedCodes.filter { !$0.isEmpty }))
+    }
+
+    private static func edgeHasPreferredInstitution(
+        _ edge: RouteGraph.Edge, allowed: Set<String>
+    ) -> Bool {
         if allowed.isEmpty { return true }
         if let connector = edge.connector {
             if connector.institutionTypeCodes.isEmpty { return true }
@@ -226,7 +231,13 @@ public enum RouteSolver {
     public static func stationMatchesPreferredInstitution(
         _ feature: Stations.Feature, allowedCodes: [String]
     ) -> Bool {
-        let preferred = Set(allowedCodes.filter { !$0.isEmpty })
+        stationMatchesPreferredInstitution(
+            feature, preferred: Set(allowedCodes.filter { !$0.isEmpty }))
+    }
+
+    private static func stationMatchesPreferredInstitution(
+        _ feature: Stations.Feature, preferred: Set<String>
+    ) -> Bool {
         if preferred.isEmpty { return true }
         let code = Stations.stationInstitutionTypeCode(feature)
         return code.isEmpty || preferred.contains(code)
@@ -235,8 +246,9 @@ public enum RouteSolver {
     public static func filterStationsByPreferredInstitution(
         _ indices: [Int], in index: Stations.Index, allowedCodes: [String]
     ) -> [Int] {
-        indices.filter {
-            stationMatchesPreferredInstitution(index.features[$0], allowedCodes: allowedCodes)
+        let preferred = Set(allowedCodes.filter { !$0.isEmpty })
+        return indices.filter {
+            stationMatchesPreferredInstitution(index.features[$0], preferred: preferred)
         }
     }
 
@@ -278,9 +290,11 @@ public enum RouteSolver {
         _ endpoint: Stations.Query,
         in index: Stations.Index,
         allowedCodes: [String],
-        sectionLineNames: [String]
+        sectionLineNames: [String],
+        sectionOperatorNames: [String] = [],
+        rideDate: String? = nil
     ) -> [Int] {
-        let candidates = index.candidateIndices(for: endpoint)
+        var candidates = index.candidateIndices(for: endpoint)
         let name: String
         let code: String?
         switch endpoint {
@@ -290,6 +304,73 @@ public enum RouteSolver {
         case .stop(let stop):
             name = Stations.stopName(stop)
             code = Stations.stopStationCode(stop)
+        }
+        // A fixed code is the stable station identity across a rename. The
+        // ordinary station index still checks the written name first so a
+        // genuinely wrong name/code pair can fall back to its name pool. Keep
+        // that safeguard, but when this written name is known inside the code
+        // pool and its variants are all inactive on the ride date, use the
+        // date-valid same-code predecessor/successor variants instead.
+        if let code, !code.isEmpty, let rideDate,
+           RouteGraph.isPlainISODay(rideDate), !name.isEmpty
+        {
+            let codePool = index.candidateIndices(
+                for: .stop(.init(n02StationCode: code)))
+            let normalizedName = Stations.normalizeStationName(name)
+            let writtenNameKnown = codePool.contains { candidate in
+                sameCodeUnits(
+                    Stations.normalizeStationName(
+                        Stations.stationName(index.features[candidate])),
+                    normalizedName)
+            }
+            let hasValidResolvedCandidate = candidates.contains { candidate in
+                let feature = index.features[candidate]
+                return RouteGraph.RailValidity.isValid(
+                    validFrom: Stations.stationValidFrom(feature),
+                    validTo: Stations.stationValidTo(feature), on: rideDate)
+            }
+            if writtenNameKnown, !hasValidResolvedCandidate {
+                let validCodeIdentity = codePool.filter { candidate in
+                    let feature = index.features[candidate]
+                    return RouteGraph.RailValidity.isValid(
+                        validFrom: Stations.stationValidFrom(feature),
+                        validTo: Stations.stationValidTo(feature), on: rideDate)
+                }
+                if !validCodeIdentity.isEmpty {
+                    candidates = dedupeStationIndices(
+                        candidates + validCodeIdentity, in: index)
+                }
+            }
+        }
+        // A dated old name can remain current at a different operator (梅田
+        // on Osaka Metro after 阪急/阪神 renamed their terminals). If this
+        // section explicitly pins the retired line/operator membership, that
+        // namesake is not a substitute. Keep the full candidate pool whenever
+        // the pinned membership is valid so shared physical stations retain
+        // the existing cross-platform behavior. Fixed codes also retain their
+        // existing stable-identity resolution.
+        if (code ?? "").isEmpty, let rideDate,
+           RouteGraph.isPlainISODay(rideDate)
+        {
+            let lines = Set(sectionLineNames.filter { !$0.isEmpty })
+            let operators = Set(sectionOperatorNames.filter { !$0.isEmpty })
+            if !lines.isEmpty, !operators.isEmpty {
+                let explicitMemberships = index.exactNameCandidateIndices(for: name).filter {
+                    let feature = index.features[$0]
+                    return lines.contains(Stations.stationLineName(feature))
+                        && operators.contains(Stations.stationOperator(feature))
+                }
+                if !explicitMemberships.isEmpty,
+                   !explicitMemberships.contains(where: { candidate in
+                       let feature = index.features[candidate]
+                       return RouteGraph.RailValidity.isValid(
+                           validFrom: Stations.stationValidFrom(feature),
+                           validTo: Stations.stationValidTo(feature), on: rideDate)
+                   })
+                {
+                    return []
+                }
+            }
         }
         guard !name.isEmpty, let code, !code.isEmpty, !candidates.isEmpty else {
             return candidates
@@ -325,6 +406,18 @@ public enum RouteSolver {
         hints: SegmentHints = SegmentHints(),
         allowedCodes: [String] = RouteGraph.defaultAllowedInstitutionTypeCodes
     ) -> [StationNodeCandidate] {
+        stationCandidateGraphNodes(
+            stationIndex: stationIndex, stations: stations, graph: graph,
+            hints: hints, preferredCodes: Set(allowedCodes.filter { !$0.isEmpty }))
+    }
+
+    private static func stationCandidateGraphNodes(
+        stationIndex: Int,
+        stations: Stations.Index,
+        graph: RouteGraph.Graph,
+        hints: SegmentHints,
+        preferredCodes: Set<String>
+    ) -> [StationNodeCandidate] {
         let feature = stations.features[stationIndex]
         let sourceCoordinates = stationGeometryCoordinates(feature)
         let stationLine = Stations.stationLineName(feature)
@@ -337,7 +430,7 @@ public enum RouteSolver {
                 guard nearest.distance <= stationSnapMaxDistanceMeters,
                       let meta = graph.nodeMeta[nearest.key] else { continue }
                 let preferredInstitution = graphNodeHasPreferredInstitution(
-                    meta, allowedCodes: allowedCodes)
+                    meta, preferred: preferredCodes)
                 if hints.requirePreferredInstitution && !preferredInstitution { continue }
                 if !hints.requiredLines.isEmpty
                     && !RouteGraph.intersects(hints.requiredLines, meta.lineNames) { continue }
@@ -395,12 +488,13 @@ public enum RouteSolver {
         hints: SegmentHints,
         allowedCodes: [String]
     ) -> [StationNodeCandidate] {
+        let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
         var byKey: [String: (candidate: StationNodeCandidate, order: Int)] = [:]
         var nextOrder = 0
         for stationIndex in stationIndices {
             for candidate in stationCandidateGraphNodes(
                 stationIndex: stationIndex, stations: stations, graph: graph,
-                hints: hints, allowedCodes: allowedCodes)
+                hints: hints, preferredCodes: preferredCodes)
             {
                 if let previous = byKey[candidate.key] {
                     if candidate.score < previous.candidate.score
@@ -1007,12 +1101,14 @@ public enum RouteSolver {
         let fromStations = filterStationCandidatesByRideDate(
             resolveRouteEndpointStationCandidates(
                 .stop(fromStop), in: stations, allowedCodes: allowedCodes,
-                sectionLineNames: lineNames),
+                sectionLineNames: lineNames,
+                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
             in: stations, rideDate: train.rideDate)
         let toStations = filterStationCandidatesByRideDate(
             resolveRouteEndpointStationCandidates(
                 .stop(toStop), in: stations, allowedCodes: allowedCodes,
-                sectionLineNames: lineNames),
+                sectionLineNames: lineNames,
+                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
             in: stations, rideDate: train.rideDate)
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
@@ -1314,7 +1410,14 @@ public enum RouteSolver {
         for edge: RouteGraph.Edge, allowedCodes: [String], train: TrainPolicy
     ) -> Double {
         if train.institutionFilterMode == "hard" { return 0 }
-        let preferred = Set(allowedCodes.filter { !$0.isEmpty })
+        return institutionPreferencePenalty(
+            for: edge, preferred: Set(allowedCodes.filter { !$0.isEmpty }), train: train)
+    }
+
+    private static func institutionPreferencePenalty(
+        for edge: RouteGraph.Edge, preferred: Set<String>, train: TrainPolicy
+    ) -> Double {
+        if train.institutionFilterMode == "hard" { return 0 }
         if preferred.isEmpty || edge.institutionTypeCode.isEmpty
             || preferred.contains(edge.institutionTypeCode)
         {
@@ -1398,42 +1501,51 @@ public enum RouteSolver {
         allowedCodes: [String],
         hints: SegmentHints = SegmentHints()
     ) -> [SolvedTarget] {
-        var distance: [String: Double] = [:]
-        var previous: [String: String] = [:]
-        // Index into `graph.adjacency[current.key]` rather than a copy of the
+        let preferredCodes = Set(allowedCodes.filter { !$0.isEmpty })
+        let hardInstitutionFilter = train.institutionFilterMode == "hard"
+            || hints.requirePreferredInstitution
+        let requiresPhysicalRail = !hints.requiredLines.isEmpty
+            || !hints.requiredOperators.isEmpty
+        var distance: [DijkstraState: Double] = [:]
+        var previous: [DijkstraState: DijkstraState] = [:]
+        // Index into `graph.adjacency[current.state.key]` rather than a copy of the
         // `Edge` itself — resolved back to an `Edge` in
         // `reconstructPathEdges`, using `previous` for the adjacency list's
         // key. Avoids copying the `Edge` struct on every relaxation.
-        var previousEdgeIndex: [String: Int] = [:]
-        var sourceOf: [String: String] = [:]
-        var seedCost: [String: Double] = [:]
+        var previousEdgeIndex: [DijkstraState: Int] = [:]
+        var sourceOf: [DijkstraState: DijkstraState] = [:]
+        var seedCost: [DijkstraState: Double] = [:]
         var heap = MinHeap()
 
         for candidate in sourceCandidates {
             let initial = candidate.distance * stationSnapCostFactor
-            if initial < (distance[candidate.key] ?? .infinity) {
-                distance[candidate.key] = initial
-                sourceOf[candidate.key] = candidate.key
-                seedCost[candidate.key] = initial
-                heap.push(Item(key: candidate.key, priority: initial))
+            let state = DijkstraState(
+                key: candidate.key, usedRequiredRail: !requiresPhysicalRail)
+            if initial < (distance[state] ?? .infinity) {
+                distance[state] = initial
+                sourceOf[state] = state
+                seedCost[state] = initial
+                heap.push(Item(state: state, priority: initial))
             }
         }
 
-        var visited = Set<String>()
+        var visited = Set<DijkstraState>()
         var remaining = targetKeys
-        var settled: [(targetKey: String, settledCost: Double)] = []
+        var settled: [(targetState: DijkstraState, settledCost: Double)] = []
 
         // ADR 0011: shape-check the ride date once, not per edge.
         let rideDate: String? = train.rideDate.flatMap { RouteGraph.isPlainISODay($0) ? $0 : nil }
         while !heap.isEmpty && !remaining.isEmpty {
             guard let current = heap.pop() else { break }
-            guard visited.insert(current.key).inserted else { continue }
-            if remaining.remove(current.key) != nil {
-                settled.append((current.key, current.priority))
+            guard visited.insert(current.state).inserted else { continue }
+            if current.state.usedRequiredRail,
+               remaining.remove(current.state.key) != nil
+            {
+                settled.append((current.state, current.priority))
             }
-            for (edgeIndex, edge) in (graph.adjacency[current.key] ?? []).enumerated() {
-                guard edgeMatchesAllowedCodes(
-                    edge, allowedCodes: allowedCodes, train: train, hints: hints),
+            for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
+                guard !hardInstitutionFilter
+                    || edgeHasPreferredInstitution(edge, allowed: preferredCodes),
                     edgeMatchesRequiredHints(edge, hints: hints),
                     RouteGraph.RailValidity.isValid(
                         validFrom: edge.validFrom, validTo: edge.validTo, onPlainDay: rideDate)
@@ -1442,34 +1554,38 @@ public enum RouteSolver {
                 var weight = edge.length
                 if edge.connector == nil {
                     weight += institutionPreferencePenalty(
-                        for: edge, allowedCodes: allowedCodes, train: train)
+                        for: edge, preferred: preferredCodes, train: train)
                     weight += nonPreferredLineOperatorPenalty(
                         for: edge,
                         preferredLines: hints.preferredLines,
                         preferredOperators: hints.preferredOperators)
                 }
                 let nextCost = current.priority + weight
-                if nextCost < (distance[edge.to] ?? .infinity) {
-                    distance[edge.to] = nextCost
-                    previous[edge.to] = current.key
-                    previousEdgeIndex[edge.to] = edgeIndex
-                    sourceOf[edge.to] = sourceOf[current.key]
-                    heap.push(Item(key: edge.to, priority: nextCost))
+                let nextState = DijkstraState(
+                    key: edge.to,
+                    usedRequiredRail: current.state.usedRequiredRail || edge.connector == nil)
+                if nextCost < (distance[nextState] ?? .infinity) {
+                    distance[nextState] = nextCost
+                    previous[nextState] = current.state
+                    previousEdgeIndex[nextState] = edgeIndex
+                    sourceOf[nextState] = sourceOf[current.state]
+                    heap.push(Item(state: nextState, priority: nextCost))
                 }
             }
         }
 
         return settled.compactMap { entry in
-            guard let sourceKey = sourceOf[entry.targetKey] else { return nil }
+            guard let sourceState = sourceOf[entry.targetState] else { return nil }
             return SolvedTarget(
-                targetKey: entry.targetKey,
-                sourceKey: sourceKey,
-                cost: entry.settledCost - (seedCost[sourceKey] ?? 0),
+                targetKey: entry.targetState.key,
+                sourceKey: sourceState.key,
+                cost: entry.settledCost - (seedCost[sourceState] ?? 0),
                 pathKeys: reconstructPath(
-                    previous: previous, sourceKey: sourceKey, targetKey: entry.targetKey),
+                    previous: previous, sourceState: sourceState,
+                    targetState: entry.targetState),
                 edges: reconstructPathEdges(
                     graph: graph, previous: previous, previousEdgeIndex: previousEdgeIndex,
-                    sourceKey: sourceKey, targetKey: entry.targetKey))
+                    sourceState: sourceState, targetState: entry.targetState))
         }
     }
 
@@ -1510,12 +1626,14 @@ public enum RouteSolver {
         let from = filterStationCandidatesByRideDate(
             resolveRouteEndpointStationCandidates(
                 .stop(.init(name: section.from, n02StationCode: section.fromN02StationCode)),
-                in: stations, allowedCodes: allowed, sectionLineNames: lines),
+                in: stations, allowedCodes: allowed, sectionLineNames: lines,
+                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
             in: stations, rideDate: train.rideDate)
         let to = filterStationCandidatesByRideDate(
             resolveRouteEndpointStationCandidates(
                 .stop(.init(name: section.to, n02StationCode: section.toN02StationCode)),
-                in: stations, allowedCodes: allowed, sectionLineNames: lines),
+                in: stations, allowedCodes: allowed, sectionLineNames: lines,
+                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
             in: stations, rideDate: train.rideDate)
         let coordinates = (from + to).compactMap {
             coordinate(Stations.displayCoordinate(stations.features[$0]))
@@ -1601,9 +1719,8 @@ public enum RouteSolver {
     }
 
     private static func graphNodeHasPreferredInstitution(
-        _ meta: RouteGraph.NodeMeta, allowedCodes: [String]
+        _ meta: RouteGraph.NodeMeta, preferred: Set<String>
     ) -> Bool {
-        let preferred = Set(allowedCodes.filter { !$0.isEmpty })
         if preferred.isEmpty { return true }
         return RouteGraph.intersects(meta.institutionTypeCodes, preferred)
     }
@@ -1742,14 +1859,15 @@ public enum RouteSolver {
     }
 
     private static func reconstructPath(
-        previous: [String: String], sourceKey: String, targetKey: String
+        previous: [DijkstraState: DijkstraState],
+        sourceState: DijkstraState, targetState: DijkstraState
     ) -> [String] {
-        var path = [targetKey]
-        var current = targetKey
-        while current != sourceKey {
+        var path = [targetState.key]
+        var current = targetState
+        while current != sourceState {
             guard let prior = previous[current] else { return [] }
             current = prior
-            path.append(current)
+            path.append(current.key)
         }
         return path.reversed()
     }
@@ -1758,14 +1876,16 @@ public enum RouteSolver {
     /// node instead of the node key. `edges[i]` is the edge from
     /// `pathKeys[i]` to `pathKeys[i + 1]`.
     private static func reconstructPathEdges(
-        graph: RouteGraph.Graph, previous: [String: String], previousEdgeIndex: [String: Int],
-        sourceKey: String, targetKey: String
+        graph: RouteGraph.Graph,
+        previous: [DijkstraState: DijkstraState],
+        previousEdgeIndex: [DijkstraState: Int],
+        sourceState: DijkstraState, targetState: DijkstraState
     ) -> [RouteGraph.Edge] {
         var edges: [RouteGraph.Edge] = []
-        var current = targetKey
-        while current != sourceKey {
+        var current = targetState
+        while current != sourceState {
             guard let index = previousEdgeIndex[current], let prior = previous[current],
-                  let adjacent = graph.adjacency[prior], index >= 0, index < adjacent.count
+                  let adjacent = graph.adjacency[prior.key], index >= 0, index < adjacent.count
             else { return [] }
             edges.append(adjacent[index])
             current = prior
@@ -1773,8 +1893,13 @@ public enum RouteSolver {
         return edges.reversed()
     }
 
-    private struct Item {
+    private struct DijkstraState: Hashable {
         var key: String
+        var usedRequiredRail: Bool
+    }
+
+    private struct Item {
+        var state: DijkstraState
         var priority: Double
     }
 

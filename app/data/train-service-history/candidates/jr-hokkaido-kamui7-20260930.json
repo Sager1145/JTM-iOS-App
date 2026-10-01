@@ -1,0 +1,28 @@
+{
+  "candidate_id": "jr-hokkaido-kamui7-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Selected 2007M / カムイ 7 column on 2026-09-30 only; unprinted intermediate arrival sides remain null.",
+  "service_metadata_extension": {
+    "service_id": "kamui",
+    "current_last_verified_date": "2026-09-27",
+    "reviewed_last_verified_date": "2026-09-30",
+    "integration_note": "The shared services-root row needs its last_verified_date extended after review. This dedicated batch supplies the dated fact and a Japanese name period without rewriting the shared service row."
+  },
+  "trip": {
+    "trip_id": "jr-hokkaido.kamui.7.exact-2026-09-30",
+    "service_date": "2026-09-30",
+    "service_id": "kamui",
+    "public_number": "7",
+    "train_number": "2007M",
+    "source_id": "jr-hokkaido-kamui7-20260930",
+    "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+    "source_locator": "Selected 2026年9月30日(水), 2007M / カムイ 7, sixth train column",
+    "stops": [
+      ["札幌", null, "09:00"], ["岩見沢", null, "09:25"],
+      ["美唄", null, "09:36"], ["砂川", null, "09:47"],
+      ["滝川", null, "09:52"], ["深川", null, "10:06"],
+      ["旭川", "10:25", null]
+    ]
+  }
+}

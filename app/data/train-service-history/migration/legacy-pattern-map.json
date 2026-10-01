@@ -637,7 +637,9 @@
     "serviceId": "aru-ressha"
   },
   {
-    "derivedPatternIds": [],
+    "derivedPatternIds": [
+      "tt-ibusuki-no-tamatebako-53c75ff917d0"
+    ],
     "legacyPatternId": "ibusuki-no-tamatebako-kagoshima-chuo-ibusuki",
     "migrationStatus": "pending_evidence",
     "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",

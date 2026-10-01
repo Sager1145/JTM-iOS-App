@@ -31,6 +31,73 @@ class ReviewedTimetableGoldenTests(unittest.TestCase):
         self.assertEqual(trip['stop_times'][0]['departure_seconds'],7*3600)
         self.assertEqual(trip['stop_times'][-1]['arrival_seconds'],10*3600+3*60)
 
+    def test_official_english_service_names_are_language_tagged(self):
+        names = {
+            row['service_id']: row['name']
+            for row in self.data['service_name_periods']
+            if row['language'] == 'en' and row['valid_from'] <= '2026-09-30'
+               and (row.get('valid_until') is None or '2026-09-30' < row['valid_until'])
+        }
+        self.assertEqual(names['shinano'], 'Shinano')
+        self.assertEqual(names['hitachi'], 'Hitachi')
+        self.assertEqual(names['ibusuki-no-tamatebako'], 'IBUSUKI NO TAMATEBAKO')
+        self.assertEqual(names['yufuin-no-mori'], 'YUFUIN NO MORI')
+        self.assertNotIn('niseko', names)
+
+    def test_september_30_retains_source_pinned_baseline(self):
+        trips = timetable.materialize(self.data, '2026-09-30')
+        counts = {}
+        for trip in trips:
+            counts[trip['service_id']] = counts.get(trip['service_id'], 0) + 1
+        baseline = {
+            'sarobetsu': 2, 'azusa': 1, 'hitachi': 1, 'shinano': 1,
+            'west-express-ginga': 1, 'ibusuki-no-tamatebako': 6,
+            'yufuin-no-mori': 6, 'shiokaze': 1,
+        }
+        for service_id, minimum in baseline.items():
+            self.assertGreaterEqual(counts.get(service_id, 0), minimum)
+        self.assertEqual(counts.get('ishizuchi'), 7)
+
+    def test_ishizuchi_september_30_uses_exact_dated_evidence(self):
+        # Independent expectations from the reviewed dated pages, separate from Silver Week.
+        expected = {
+            '1': ('18541', 'jr-odekake-shiokaze1-20260930-train', '07:37', '松山', '10:06'),
+            '3': ('33291', 'jr-odekake-ishizuchi3-20260930-train', '08:45', '松山', '11:15'),
+            '5': ('292', 'jr-odekake-ishizuchi5-20260930-train', '09:42', '松山', '12:10'),
+            '7': ('362', 'jr-odekake-ishizuchi7-20260930-train', '10:47', '松山', '13:16'),
+            '9': ('125062', 'jr-odekake-ishizuchi9-20260930-train', '11:50', '松山', '14:13'),
+            '29': ('99561', 'jr-odekake-ishizuchi29-20260930-train', '22:20', '伊予西条', '23:59'),
+            '30': ('28651', 'jr-odekake-ishizuchi30-20260930-train', '18:39', '高松', '21:11'),
+        }
+        trips = [t for t in timetable.materialize(self.data, '2026-09-30')
+                 if t['service_id'] == 'ishizuchi']
+        self.assertEqual(len(trips), len(expected))
+        self.assertEqual({t['public_number'] for t in trips}, set(expected))
+        sources = {r['source_id']: r for r in self.data['source_documents']}
+        exact_ids = set()
+        for trip in trips:
+            public = trip['public_number']
+            page, source_id, departure, destination, arrival = expected[public]
+            number = f'{1000 + int(public)}M'
+            trip_id = f'jr-shikoku.ishizuchi.{public}.{number.lower()}.exact-2026-09-30'
+            exact_ids.add(trip_id)
+            with self.subTest(public=public):
+                self.assertEqual((trip['trip_id'], trip['train_number']), (trip_id, number))
+                stops = trip['stop_times']
+                self.assertEqual((self.stations[stops[0]['station_id']], stops[0]['departure_time']),
+                                 ('松山' if public == '30' else '高松', departure))
+                self.assertEqual((self.stations[stops[-1]['station_id']], stops[-1]['arrival_time']),
+                                 (destination, arrival))
+                self.assertEqual(sources[source_id]['effective_date'], '2026-09-30')
+                self.assertEqual(sources[source_id]['url_or_locator'],
+                                 f'https://timetable.jr-odekake.net/train-timetable/{page}?date=20260930')
+                for field in ('identity', 'train_number', 'stops', 'times'):
+                    self.assertEqual({r['source_id'] for r in self.data['fact_sources']
+                                      if r['entity_id'] == trip_id and r['field_name'] == field},
+                                     {source_id})
+        for day in ('2026-09-19', '2026-09-29', '2026-10-01'):
+            self.assertFalse(exact_ids & {t['trip_id'] for t in timetable.materialize(self.data, day)})
+
     def test_lilac95_retains_previous_service_day_after_midnight(self):
         trip=self.trip('lilac','95','2026-05-16')
         self.assertEqual(trip['stop_times'][-1]['arrival_seconds'],24*3600+32*60)
@@ -61,14 +128,16 @@ class ReviewedTimetableGoldenTests(unittest.TestCase):
             self.assertFalse(any(t['service_id']=='shiokaze' for t in timetable.materialize(self.data,day)))
         down = self.trip('shiokaze','5','2026-08-08')
         up = self.trip('shiokaze','6','2026-08-08')
-        self.assertEqual([self.stations[s['station_id']] for s in down['stop_times']],['岡山','松山'])
-        self.assertEqual((down['stop_times'][0]['departure_seconds'],down['stop_times'][1]['arrival_seconds']),
+        self.assertEqual([self.stations[s['station_id']] for s in down['stop_times']],
+                         ['岡山','児島','宇多津','丸亀','多度津','観音寺','川之江',
+                          '伊予三島','新居浜','伊予西条','壬生川','今治','松山'])
+        self.assertEqual((down['stop_times'][0]['departure_seconds'],down['stop_times'][-1]['arrival_seconds']),
                          (9*3600+25*60,12*3600+10*60))
-        self.assertEqual((up['stop_times'][0]['departure_seconds'],up['stop_times'][1]['arrival_seconds']),
+        self.assertEqual((up['stop_times'][0]['departure_seconds'],up['stop_times'][-1]['arrival_seconds']),
                          (6*3600+13*60,9*3600))
         status = {(r['entity_id'],r['dimension']):r['status'] for r in self.data['fact_completeness']}
-        self.assertEqual(status[(down['trip_id'],'stops')],'partial')
-        self.assertEqual(status[(down['trip_id'],'times')],'partial')
+        self.assertEqual(status[(down['trip_id'],'stops')],'verified')
+        self.assertEqual(status[(down['trip_id'],'times')],'verified')
 
     def test_central_2013_source_totals_and_explicit_dates(self):
         # JR Central 2013-05-17 announcement, physical pages 1, 3 and 4.
@@ -80,7 +149,22 @@ class ReviewedTimetableGoldenTests(unittest.TestCase):
                 if trip['trip_id'].endswith('2013-summer'):
                     counts[trip['service_id']] += 1
             day += timedelta(days=1)
-        self.assertEqual(counts, {'shinano':104, 'hida':33, 'nanki':80})
+        self.assertEqual(counts, {'shinano':52, 'hida':33, 'nanki':80})
+        shinano_dates = {
+            number: [
+                day.isoformat()
+                for day in (date(2013, 7, 1) + timedelta(days=offset)
+                            for offset in range(92))
+                if any(t['service_id'] == 'shinano' and t['public_number'] == number
+                       for t in timetable.materialize(self.data, day.isoformat()))
+            ]
+            for number in ['81', '82', '84', '85']
+        }
+        self.assertEqual({number: len(days) for number, days in shinano_dates.items()},
+                         {'81': 21, '82': 4, '84': 4, '85': 23})
+        self.assertEqual(shinano_dates['82'], ['2013-09-14', '2013-09-16',
+                                               '2013-09-21', '2013-09-23'])
+        self.assertEqual(shinano_dates['84'], shinano_dates['82'])
         self.assertFalse(any(t['trip_id'].endswith('2013-summer')
                              for t in timetable.materialize(self.data,'2013-07-07')))
 
@@ -148,11 +232,39 @@ class ReviewedTimetableGoldenTests(unittest.TestCase):
         self.assertIsNone(down['public_number'])
         self.assertIsNone(up['public_number'])
 
-    def test_sarobetsu_explicit_range_is_capped_at_manifest_service_date(self):
-        trip=self.trip('sarobetsu','4','2026-09-28')
-        self.assertEqual(trip['stop_times'][0]['departure_time'],'13:01')
-        self.assertEqual(trip['stop_times'][-1]['arrival_time'],'16:45')
-        self.assertFalse(any(t['service_id']=='sarobetsu' for t in timetable.materialize(self.data,'2026-09-29')))
+    def test_sarobetsu_september_30_official_columns_preserve_partial_clocks(self):
+        trip=self.trip('sarobetsu','4','2026-09-30')
+        self.assertEqual(trip['train_number'],'6064D')
+        self.assertEqual([self.stations[s['station_id']] for s in trip['stop_times']],
+            ['稚内','南稚内','豊富','幌延','天塩中川','音威子府',
+             '美深','名寄','士別','和寒','旭川'])
+        stops={self.stations[s['station_id']]:s for s in trip['stop_times']}
+        self.assertEqual(stops['稚内']['departure_time'],'13:01')
+        self.assertIsNone(stops['南稚内']['arrival_time'])
+        self.assertEqual(stops['南稚内']['departure_time'],'13:05')
+        self.assertEqual((stops['幌延']['arrival_time'],stops['幌延']['departure_time']),
+                         ('13:56','13:57'))
+        self.assertEqual(stops['旭川']['arrival_time'],'16:45')
+
+        down=self.trip('sarobetsu','3','2026-09-30')
+        self.assertEqual(down['train_number'],'6063D')
+        self.assertEqual([self.stations[s['station_id']] for s in down['stop_times']],
+            ['旭川','和寒','士別','名寄','美深','音威子府',
+             '天塩中川','幌延','豊富','南稚内','稚内'])
+        status={(r['entity_id'],r['dimension']):r['status']
+                for r in self.data['fact_completeness']}
+        self.assertEqual(status[(trip['trip_id'],'stops')],'verified')
+        self.assertEqual(status[(trip['trip_id'],'times')],'partial')
+        self.assertEqual(status[(trip['trip_id'],'operator')],'verified')
+        self.assertEqual(status[(trip['trip_id'],'route_lines')],'partial')
+        operators=[r for r in self.data['trip_operator_segments']
+                   if r['trip_id']==trip['trip_id']]
+        self.assertEqual(operators,[{'trip_id':trip['trip_id'],'from_sequence':1,
+                                     'to_sequence':11,'operator_id':'jr-hokkaido'}])
+        lines=[r for r in self.data['trip_line_segments']
+               if r['trip_id']==trip['trip_id']]
+        self.assertEqual(len(lines),10)
+        self.assertEqual({r['line_name'] for r in lines},{'宗谷線'})
 
     def test_ginga_night_dwell_retains_verbatim_clocks_on_separate_civil_days(self):
         trips=[t for t in timetable.materialize(self.data,'2026-07-03')

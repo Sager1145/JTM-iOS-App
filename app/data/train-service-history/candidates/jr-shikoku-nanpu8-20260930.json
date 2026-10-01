@@ -1,0 +1,27 @@
+{
+  "candidate_id":"jr-shikoku-nanpu8-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; twelve timed passenger calls; レ rows excluded; operator and route unknown",
+  "sources":[
+    {"source_id":"jr-odekake-nanpu8-20260930-train","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"特急 南風8号 列車時刻表（2026-09-30）","source_type":"official_train_timetable","url_or_locator":"https://timetable.jr-odekake.net/train-timetable/59411?date=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Manually reviewed exact-date train page; source bytes are not bundled."},
+    {"source_id":"jr-odekake-nanpu8-20260930-line","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"土讃線区間時刻表 上り（2026-09-30）","source_type":"official_dated_line_timetable","url_or_locator":"https://timetable.jr-odekake.net/line-timetable/2473?day=30&month=9&year=2026","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Dated line grid lists 南風8号 and train number 38D."}
+  ],
+  "trip":{"trip_id":"jr-shikoku.nanpu.8.2026-09-30","service_id":"nanpu","service_name":"南風","public_number":"8","train_number":"38D","service_date":"2026-09-30","stop_times":[
+    {"name_snapshot":"高知","arrival_time":null,"departure_time":"09:13","platform":"1"},
+    {"name_snapshot":"後免","arrival_time":"09:20","departure_time":"09:20","platform":null},
+    {"name_snapshot":"土佐山田","arrival_time":"09:24","departure_time":"09:27","platform":null},
+    {"name_snapshot":"大歩危","arrival_time":"10:02","departure_time":"10:02","platform":null},
+    {"name_snapshot":"阿波池田","arrival_time":"10:20","departure_time":"10:23","platform":null},
+    {"name_snapshot":"琴平","arrival_time":"10:47","departure_time":"10:47","platform":null},
+    {"name_snapshot":"善通寺","arrival_time":"10:52","departure_time":"10:54","platform":null},
+    {"name_snapshot":"多度津","arrival_time":"10:58","departure_time":"10:59","platform":null},
+    {"name_snapshot":"丸亀","arrival_time":"11:03","departure_time":"11:03","platform":null},
+    {"name_snapshot":"宇多津","arrival_time":"11:06","departure_time":"11:07","platform":null},
+    {"name_snapshot":"児島","arrival_time":"11:19","departure_time":"11:21","platform":null},
+    {"name_snapshot":"岡山","arrival_time":"11:40","departure_time":null,"platform":"6"}
+  ]},
+  "evidence_locators":[
+    {"claim":"identity and 38D", "locator":"dated line grid and train-detail header"},
+    {"claim":"exact service day", "locator":"line grid date 2026-09-30 and detail calendar"},
+    {"claim":"twelve calls and clocks", "locator":"時刻詳細 table; レ rows excluded"}
+  ]
+}

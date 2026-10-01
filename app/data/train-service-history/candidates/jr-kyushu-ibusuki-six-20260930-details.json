@@ -1,0 +1,93 @@
+{
+  "candidate_id": "jr-kyushu-ibusuki-six-20260930-details",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "issue": "JR時刻表2026年10月号",
+  "accessed_at": "2026-09-30",
+  "departure_list_urls": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2900703/?d=20260930",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2891900/?d=20260930"
+  ],
+  "scope_note": "Each official train-detail page is headed 2026年09月30日の時刻. The two dated station lists identify the October 2026 JR timetable issue. The train details publish only the two endpoint rows, so no intermediate calls or unprinted platforms are inferred. Each detail prints 列車設備 普通車全車指定席 and 運転日 １１月３０日まで運転. The date-specific number and printed platform cells below apply only to the selected September 30 occurrence. Ibusuki 5 already has a 13:57 departure override, to which its platform must be merged without changing that clock or its source.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01",
+      "public_number": "1",
+      "train_number": "8071D",
+      "source_id": "jr-kyushu-ibusuki1-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167701.html?t=2900703&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "鹿児島中央", "departure_time": "09:56", "arrival_time": null, "platform": "4"},
+        {"stop_sequence": 2, "station_name": "指宿", "departure_time": null, "arrival_time": "10:47", "platform": null}
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01",
+      "public_number": "2",
+      "train_number": "8072D",
+      "source_id": "jr-kyushu-ibusuki2-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00168001.html?t=2891900&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "指宿", "departure_time": "10:56", "arrival_time": null, "platform": null},
+        {"stop_sequence": 2, "station_name": "鹿児島中央", "departure_time": null, "arrival_time": "11:48", "platform": "3"}
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01",
+      "public_number": "3",
+      "train_number": "8073D",
+      "source_id": "jr-kyushu-ibusuki3-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167801.html?t=2900703&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "鹿児島中央", "departure_time": "11:56", "arrival_time": null, "platform": "3"},
+        {"stop_sequence": 2, "station_name": "指宿", "departure_time": null, "arrival_time": "12:48", "platform": null}
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01",
+      "public_number": "4",
+      "train_number": "8074D",
+      "source_id": "jr-kyushu-ibusuki4-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00168101.html?t=2891900&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "指宿", "departure_time": "12:57", "arrival_time": null, "platform": null},
+        {"stop_sequence": 2, "station_name": "鹿児島中央", "departure_time": null, "arrival_time": "13:48", "platform": "4"}
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01",
+      "public_number": "5",
+      "train_number": "8075D",
+      "source_id": "jr-kyushu-ibusuki5-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167901.html?t=2900703&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "鹿児島中央", "departure_time": "13:57", "arrival_time": null, "platform": "4"},
+        {"stop_sequence": 2, "station_name": "指宿", "departure_time": null, "arrival_time": "14:49", "platform": null}
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01",
+      "public_number": "6",
+      "train_number": "8076D",
+      "source_id": "jr-kyushu-ibusuki6-detail-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00168201.html?t=2891900&d=20260930",
+      "equipment": "普通車全車指定席",
+      "operating_note": "１１月３０日まで運転",
+      "stops": [
+        {"stop_sequence": 1, "station_name": "指宿", "departure_time": "15:07", "arrival_time": null, "platform": null},
+        {"stop_sequence": 2, "station_name": "鹿児島中央", "departure_time": null, "arrival_time": "16:00", "platform": "4"}
+      ]
+    }
+  ]
+}

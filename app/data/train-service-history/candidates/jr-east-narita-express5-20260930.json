@@ -1,0 +1,45 @@
+{
+  "candidate_id": "jr-east-narita-express5-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-narita-express5-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/030/031141.html",
+  "source_locator": "2026年9月30日 current-variant calendar cell; 時刻詳細 2005M / 2205M",
+  "coupling_note": "東京－成田空港は2205Mを併結 / 東京－成田空港は2005Mに併結",
+  "trips": [
+    {
+      "trip_id": "jr-east.narita-express.5.2005m.exact-2026-09-30",
+      "train_number": "2005M",
+      "origin": "大船",
+      "destination": "成田空港",
+      "stops": [
+        ["大船", null, "06:38", "６", "origin"],
+        ["戸塚", "06:43", "06:44", null, "passenger_stop"],
+        ["横浜", "06:55", "06:56", "１０", "passenger_stop"],
+        ["武蔵小杉", "07:07", "07:08", null, "passenger_stop"],
+        ["品川", "07:17", "07:18", "１３", "passenger_stop"],
+        ["東京", "07:25", "07:31", "４", "passenger_stop"],
+        ["千葉", "07:58", "07:58", "１０", "passenger_stop"],
+        ["空港第２ビル", "08:32", "08:34", null, "passenger_stop"],
+        ["成田空港", "08:36", null, null, "destination"]
+      ]
+    },
+    {
+      "trip_id": "jr-east.narita-express.5.2205m.exact-2026-09-30",
+      "train_number": "2205M",
+      "origin": "新宿",
+      "destination": "成田空港",
+      "stops": [
+        ["新宿", null, "07:07", "５", "origin"],
+        ["渋谷", "07:12", "07:13", null, "passenger_stop"],
+        ["品川", null, null, null, "pass"],
+        ["東京", "07:29", null, "４", "passenger_stop"],
+        ["千葉", null, null, null, "passenger_stop"],
+        ["空港第２ビル", null, null, null, "passenger_stop"],
+        ["成田空港", null, null, null, "destination"]
+      ],
+      "post_coupling_note": "東京 departure and later 2205M-column cells are blank; downstream shared passenger calls follow the official coupled 2005M operation, but 2205M's independent clocks are unknown."
+    }
+  ]
+}

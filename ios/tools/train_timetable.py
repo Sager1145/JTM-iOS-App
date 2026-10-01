@@ -36,6 +36,11 @@ ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]*$")
 
 STATUS_VALUES = {"verified", "partial", "unknown", "conflict", "not_applicable"}
 CONFIDENCE_VALUES = {"high", "medium", "low"}
+FACT_COMPLETENESS_DIMENSIONS = {
+    "identity", "train_number", "operator", "validity_calendar",
+    "origin_destination", "stops", "times", "route_lines", "station_refs",
+    "formation", "provenance",
+}
 
 # Canonical input field contract. timetable_versions.source_ids is expanded
 # into timetable_version_sources; computed *_seconds fields are not accepted
@@ -53,8 +58,12 @@ FIELDS = {
     "station_identities": ({"station_id", "name_snapshot", "reference_kind"}, {"current_source_code", "rail_history_id", "valid_from", "valid_until"}),
     "trips": ({"trip_id", "timetable_version_id", "service_id", "calendar_id", "origin_station_id", "destination_station_id", "service_class"}, {"train_number", "public_number", "direction", "operation_group_id", "notes"}),
     "stop_times": ({"trip_id", "stop_sequence", "station_id", "call_type", "source_id"}, {"arrival_time", "departure_time", "day_offset", "arrival_day_offset", "departure_day_offset", "pickup_allowed", "dropoff_allowed", "platform", "time_accuracy"}),
-    "trip_stop_time_overrides": ({"trip_id", "service_date", "stop_sequence", "source_id"}, {"arrival_override", "departure_override", "arrival_day_offset_override", "departure_day_offset_override"}),
+    "trip_timetable_symbols": ({"trip_id", "after_stop_sequence", "position", "station_name", "symbol", "source_id"}, set()),
+    "trip_stop_time_overrides": ({"trip_id", "service_date", "stop_sequence", "source_id"}, {"arrival_override", "departure_override", "arrival_day_offset_override", "departure_day_offset_override", "platform_override", "platform_override_present"}),
+    "trip_train_number_overrides": ({"trip_id", "service_date", "train_number", "source_id"}, set()),
     "trip_number_segments": ({"trip_id", "from_sequence", "to_sequence", "train_number"}, set()),
+    "trip_formations": ({"formation_id", "trip_id", "service_date", "evidence_kind", "source_id"}, {"formation_label", "car_count", "reserved_seat_capacity", "vehicle_series", "all_reserved", "green_car_available", "notes"}),
+    "trip_formation_cars": ({"formation_id", "car_sequence", "car_number", "source_id"}, {"vehicle_series", "seat_class", "reservation_type", "notes"}),
     "trip_operator_segments": ({"trip_id", "from_sequence", "to_sequence", "operator_id"}, set()),
     "trip_line_segments": ({"trip_id", "sequence", "from_station_id", "to_station_id", "line_name", "operator_id", "source_id", "confidence"}, {"reference_kind", "current_n02_line_id", "rail_history_id"}),
     "trip_relations": ({"trip_id", "related_trip_id", "relation_type", "source_id"}, {"from_sequence", "to_sequence"}),
@@ -76,8 +85,12 @@ PRIMARY_KEYS = {
     "calendar_exceptions": ("calendar_id", "service_date"),
     "station_identities": ("station_id",), "trips": ("trip_id",),
     "stop_times": ("trip_id", "stop_sequence"),
+    "trip_timetable_symbols": ("trip_id", "after_stop_sequence", "position"),
     "trip_stop_time_overrides": ("trip_id", "service_date", "stop_sequence"),
+    "trip_train_number_overrides": ("trip_id", "service_date"),
     "trip_number_segments": ("trip_id", "from_sequence"),
+    "trip_formations": ("formation_id",),
+    "trip_formation_cars": ("formation_id", "car_sequence"),
     "trip_operator_segments": ("trip_id", "from_sequence"),
     "trip_line_segments": ("trip_id", "sequence"),
     "trip_relations": ("trip_id", "related_trip_id", "relation_type"),
@@ -91,8 +104,8 @@ PRIMARY_KEYS = {
 INSERT_ORDER = [
     "source_documents", "operators", "services", "service_name_periods",
     "timetable_versions", "holiday_calendar_years", "holiday_dates", "calendars",
-    "calendar_exceptions", "station_identities", "trips", "stop_times",
-    "trip_stop_time_overrides", "trip_number_segments", "trip_operator_segments",
+    "calendar_exceptions", "station_identities", "trips", "stop_times", "trip_timetable_symbols",
+    "trip_stop_time_overrides", "trip_train_number_overrides", "trip_number_segments", "trip_formations", "trip_formation_cars", "trip_operator_segments",
     "trip_line_segments", "trip_relations", "fact_sources", "fact_completeness",
     "verified_zero_service_intervals", "coverage_declarations", "research_queue",
     "actual_operation_events",
@@ -321,7 +334,7 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
             errors.append(f"{where}: first_verified_date must not follow last_verified_date")
         _require_ref(errors, row.get("successor_operator_id"), operator_ids, where + ".successor_operator_id")
 
-    for entity, field in (("service_name_periods", "source_id"), ("holiday_dates", "source_id"), ("calendar_exceptions", "source_id"), ("stop_times", "source_id"), ("trip_stop_time_overrides", "source_id"), ("trip_line_segments", "source_id"), ("trip_relations", "source_id"), ("fact_sources", "source_id"), ("verified_zero_service_intervals", "source_id"), ("actual_operation_events", "source_id")):
+    for entity, field in (("service_name_periods", "source_id"), ("holiday_dates", "source_id"), ("calendar_exceptions", "source_id"), ("stop_times", "source_id"), ("trip_timetable_symbols", "source_id"), ("trip_stop_time_overrides", "source_id"), ("trip_train_number_overrides", "source_id"), ("trip_formations", "source_id"), ("trip_formation_cars", "source_id"), ("trip_line_segments", "source_id"), ("trip_relations", "source_id"), ("fact_sources", "source_id"), ("verified_zero_service_intervals", "source_id"), ("actual_operation_events", "source_id")):
         for i, row in enumerate(data[entity]):
             _require_ref(errors, row.get(field), source_ids, origins[(entity, i)] + "." + field)
 
@@ -438,6 +451,19 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
     stops_by_trip = defaultdict(list)
     for row in data["stop_times"]:
         stops_by_trip[row["trip_id"]].append(row)
+    stop_keys = {(row["trip_id"], row["stop_sequence"]) for row in data["stop_times"]}
+    for i, row in enumerate(data["trip_timetable_symbols"]):
+        where = origins[("trip_timetable_symbols", i)]
+        if row.get("trip_id") not in trips:
+            errors.append(f"{where}.trip_id: unknown trip")
+        if (row.get("trip_id"), row.get("after_stop_sequence")) not in stop_keys:
+            errors.append(f"{where}.after_stop_sequence: expected an existing trip stop")
+        if row.get("symbol") not in {"レ", "||"}:
+            errors.append(f"{where}.symbol: expected レ or ||")
+        if not isinstance(row.get("station_name"), str) or not row["station_name"].strip():
+            errors.append(f"{where}.station_name: expected a nonempty station name")
+        if type(row.get("position")) is not int or row["position"] < 0:
+            errors.append(f"{where}.position: expected a nonnegative integer")
     for i, row in enumerate(data["trips"]):
         where = origins[("trips", i)]
         _require_ref(errors, row.get("timetable_version_id"), version_ids, where + ".timetable_version_id")
@@ -501,6 +527,49 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
                     errors.append(f"{stop_where}: known times move backwards within the service day")
                 if current is not None: previous = current
 
+    formations = {row["formation_id"]: row for row in data["trip_formations"]}
+    cars_by_formation = defaultdict(list)
+    for i, row in enumerate(data["trip_formations"]):
+        where = origins[("trip_formations", i)]
+        _require_ref(errors, row.get("trip_id"), trip_ids, where + ".trip_id")
+        try:
+            day = strict_date(row.get("service_date"), where + ".service_date")
+            bounds = operation_bounds(trips.get(row.get("trip_id")))
+            if bounds and not bounds[0] <= day < bounds[1]:
+                errors.append(f"{where}: formation date is outside the trip's operation bounds")
+            if day > strict_date(manifest["as_of_date"], "manifest.as_of_date"):
+                errors.append(f"{where}: formation date exceeds dataset as-of date")
+        except DatasetError as exc:
+            errors.append(str(exc))
+        if row.get("evidence_kind") not in {"planned", "actual"}:
+            errors.append(f"{where}.evidence_kind: expected planned or actual")
+        for field in ("car_count", "reserved_seat_capacity"):
+            value = row.get(field)
+            if value is not None and (type(value) is not int or value < (1 if field == "car_count" else 0)):
+                errors.append(f"{where}.{field}: invalid count")
+        for field in ("all_reserved", "green_car_available"):
+            value = row.get(field)
+            if value is not None and (type(value) not in (bool, int) or value not in (0, 1, False, True)):
+                errors.append(f"{where}.{field}: expected 0/1 or boolean")
+        if not any(row.get(field) is not None for field in
+                   ("formation_label", "car_count", "reserved_seat_capacity", "vehicle_series",
+                    "all_reserved", "green_car_available")):
+            errors.append(f"{where}: formation has no known facts")
+    for i, row in enumerate(data["trip_formation_cars"]):
+        where = origins[("trip_formation_cars", i)]
+        _require_ref(errors, row.get("formation_id"), formations, where + ".formation_id")
+        if type(row.get("car_sequence")) is not int or row["car_sequence"] < 1:
+            errors.append(f"{where}.car_sequence: expected positive integer")
+        if not isinstance(row.get("car_number"), str) or not row["car_number"].strip():
+            errors.append(f"{where}.car_number: expected nonempty text")
+        cars_by_formation[row.get("formation_id")].append(row)
+    for formation_id, cars in cars_by_formation.items():
+        formation = formations.get(formation_id)
+        if formation and formation.get("car_count") is not None and len(cars) > formation["car_count"]:
+            errors.append(f"{formation_id}: more car rows than documented car count")
+        if len({car.get("car_number") for car in cars}) != len(cars):
+            errors.append(f"{formation_id}: duplicate car number")
+
     for i, row in enumerate(data["stop_times"]):
         where = origins[("stop_times", i)]
         _require_ref(errors, row.get("trip_id"), trip_ids, where + ".trip_id")
@@ -535,8 +604,21 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
             errors.append(f"{where}: arrival_day_offset_override requires arrival_override")
         if row.get("departure_day_offset_override") is not None and row.get("departure_override") is None:
             errors.append(f"{where}: departure_day_offset_override requires departure_override")
-        if row.get("arrival_override") is None and row.get("departure_override") is None:
-            errors.append(f"{where}: override changes neither arrival nor departure")
+        platform_present = row.get("platform_override_present", 0)
+        if type(platform_present) not in (bool, int) or platform_present not in (0, 1):
+            errors.append(f"{where}.platform_override_present: expected 0/1")
+        if row.get("platform_override") is not None and (platform_present != 1 or not isinstance(row["platform_override"], str) or not row["platform_override"].strip()):
+            errors.append(f"{where}.platform_override: requires present=1 and nonempty text")
+        if row.get("arrival_override") is None and row.get("departure_override") is None and platform_present != 1:
+            errors.append(f"{where}: override changes neither arrival, departure nor platform")
+
+    for i, row in enumerate(data["trip_train_number_overrides"]):
+        where = origins[("trip_train_number_overrides", i)]
+        _require_ref(errors, row.get("trip_id"), trip_ids, where + ".trip_id")
+        try: strict_date(row["service_date"], where + ".service_date")
+        except DatasetError as exc: errors.append(str(exc))
+        if not isinstance(row.get("train_number"), str) or not row["train_number"].strip():
+            errors.append(f"{where}.train_number: expected nonempty text")
 
     for entity in ("trip_number_segments", "trip_operator_segments"):
         by_trip = defaultdict(list)
@@ -635,18 +717,59 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
                 errors.append(f"trip_line_segments {trip_id}: first segment does not start at trip origin")
             if trip_id in verified_route_trips and ordered[-1]["to_station_id"] != trip["destination_station_id"]:
                 errors.append(f"trip_line_segments {trip_id}: last segment does not end at trip destination")
-            if any(left["to_station_id"] != right["from_station_id"] for left, right in zip(ordered, ordered[1:])):
+            forms_chain = all(
+                left["to_station_id"] == right["from_station_id"]
+                for left, right in zip(ordered, ordered[1:]))
+            if not forms_chain:
                 errors.append(f"trip_line_segments {trip_id}: ordered line segments do not form a chain")
             station_sequences = defaultdict(list)
             for stop in stops_by_trip.get(trip_id, []):
                 station_sequences[stop["station_id"]].append(stop["stop_sequence"])
-            for row in ordered:
-                from_sequences = station_sequences.get(row["from_station_id"], [])
-                to_sequences = station_sequences.get(row["to_station_id"], [])
-                if not any(start < end for start in from_sequences for end in to_sequences):
+            if not forms_chain:
+                continue
+
+            chain_station_ids = [ordered[0]["from_station_id"]] + [
+                row["to_station_id"] for row in ordered]
+            if (not station_sequences.get(chain_station_ids[0])
+                    or not station_sequences.get(chain_station_ids[-1])):
+                errors.append(
+                    f"trip_line_segments {trip_id}: route-only stations may only be internal "
+                    "line-boundary nodes between timetable stops")
+                continue
+
+            previous_sequence = None
+            anchors_in_order = True
+            for station_id in chain_station_ids:
+                candidates = sorted(station_sequences.get(station_id, []))
+                if not candidates:
+                    continue
+                sequence = next(
+                    (candidate for candidate in candidates
+                     if previous_sequence is None or candidate > previous_sequence),
+                    None)
+                if sequence is None:
+                    anchors_in_order = False
+                    break
+                previous_sequence = sequence
+            if not anchors_in_order:
+                errors.append(
+                    f"trip_line_segments {trip_id}: timetable-stop anchors do not follow "
+                    "the ordered line-segment chain")
+
+            for index, station_id in enumerate(chain_station_ids[1:-1], start=1):
+                if station_sequences.get(station_id):
+                    continue
+                left = ordered[index - 1]
+                right = ordered[index]
+                left_identity = left.get("current_n02_line_id")
+                right_identity = right.get("current_n02_line_id")
+                if (left.get("reference_kind") != "current_n02"
+                        or right.get("reference_kind") != "current_n02"
+                        or not left_identity or not right_identity
+                        or left_identity == right_identity):
                     errors.append(
-                        f"trip_line_segments {trip_id}:{row['sequence']}: endpoints must follow "
-                        "the trip stop order")
+                        f"trip_line_segments {trip_id}:{right['sequence']}: route-only boundary "
+                        f"station {station_id!r} requires distinct explicit current_n02 route identities")
 
     for i, row in enumerate(data["trip_relations"]):
         where = origins[("trip_relations", i)]
@@ -708,6 +831,8 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
                 errors.append(f"{where}.verification_status: invalid value")
             if entity == "fact_completeness" and row.get("status") not in STATUS_VALUES:
                 errors.append(f"{where}.status: invalid value")
+            if entity == "fact_completeness" and row.get("dimension") not in FACT_COMPLETENESS_DIMENSIONS:
+                errors.append(f"{where}.dimension: invalid value")
     entity_ids = {
         "operator": operator_ids, "service": service_ids, "timetable_version": version_ids,
         "calendar": calendar_ids, "station": station_ids, "trip": trip_ids,
@@ -856,6 +981,7 @@ def prepared_row(entity, row):
         result["departure_seconds"] = service_seconds(
             result.get("departure_time"), stop_day_offset(result, "departure"), "stop_times.departure_time")
     if entity == "trip_stop_time_overrides":
+        result.setdefault("platform_override_present", 0)
         legacy_base = result.pop("_base_day_offset", 0)
         base_arrival = result.pop("_base_arrival_day_offset", legacy_base)
         base_departure = result.pop("_base_departure_day_offset", legacy_base)
@@ -1017,6 +1143,8 @@ def materialize(data, service_day):
         candidate = dict(row, _base_arrival_day_offset=base_arrival,
                          _base_departure_day_offset=base_departure)
         overrides[(row["trip_id"], row["service_date"], row["stop_sequence"])] = prepared_row("trip_stop_time_overrides", candidate)
+    number_overrides = {(row["trip_id"], row["service_date"]): row["train_number"]
+                        for row in data.get("trip_train_number_overrides", [])}
     occurrences = []
     for trip in sorted(data["trips"], key=lambda row: row["trip_id"]):
         version = versions.get(trip["timetable_version_id"])
@@ -1040,8 +1168,12 @@ def materialize(data, service_day):
                     stop["departure_time"] = override["departure_override"]
                     stop["departure_seconds"] = override["departure_seconds_override"]
                     stop["departure_day_offset"] = override["departure_day_offset_override"]
+                if override["platform_override_present"] == 1:
+                    stop["platform"] = override.get("platform_override")
             occurrence_stops.append(stop)
         occurrence = deepcopy(trip)
+        if (trip["trip_id"], day_text) in number_overrides:
+            occurrence["train_number"] = number_overrides[(trip["trip_id"], day_text)]
         occurrence["service_date"] = day_text
         occurrence["occurrence_key"] = f"{trip['trip_id']}@{day_text}"
         occurrence["stop_times"] = occurrence_stops
@@ -1134,13 +1266,53 @@ def rail_history_service_interval(properties, context="rail-history feature"):
     return start, end, label
 
 
+def whole_current_line_service_bounds(line, rail_history):
+    """Read only retirement constraints that cover an entire compact N02 line.
+
+    A partial bbox cannot identify which part of a trip uses that line. Match
+    the overlay's exact line/operator and all-coordinate rule, and replay its
+    ordered bound stamps. These bounds can disprove a trip date, but cannot by
+    themselves prove the complete historical route.
+    """
+    runs = line.get("segments") or []
+    if not runs or any(len(run) <= 2 or not run[2] for run in runs):
+        return None
+    points = [point for run in runs for point in run[2]]
+    if any(len(point) < 2 for point in points):
+        return None
+    valid_from = valid_until = None
+    matched_ids = []
+    for stamp in rail_history.get("retirements", []):
+        match = stamp.get("match") or {}
+        targets = match.get("targets")
+        bbox = match.get("bbox")
+        if (targets and "sections" not in targets
+                or match.get("line_name") != line.get("name")
+                or match.get("operator") != line.get("operator")
+                or not isinstance(bbox, list) or len(bbox) != 4):
+            continue
+        west, south, east, north = bbox
+        if not all(west <= point[0] <= east and south <= point[1] <= north
+                   for point in points):
+            continue
+        start, end, _ = rail_history_service_interval(
+            stamp, f"rail-history retirement {stamp.get('history_id')}")
+        if start is not None:
+            valid_from = start
+        if end is not None:
+            valid_until = end
+        matched_ids.append(stamp.get("history_id"))
+    return (valid_from, valid_until, matched_ids) if matched_ids else None
+
+
 def route_attestations(data, manifest, rail_history=None, current_package=None):
     """Return dated route identity verdicts without inferring identifiers.
 
     Historical segments are attestable only through an explicit overlay
     history_id. Current N02 segments use the existing jp-2025 line id plus
-    their endpoint station identities, but remain temporally unverified
-    because that package does not publish a validity interval.
+    their endpoint station identities. A whole-line retirement stamp can
+    reject an impossible operating day, but cannot establish complete route
+    coverage, so an in-range current segment remains temporally unverified.
     """
     if rail_history is None:
         rail_history = json.loads(RAIL_HISTORY.read_text(encoding="utf-8"))
@@ -1239,12 +1411,33 @@ def route_attestations(data, manifest, rail_history=None, current_package=None):
                     segment_verdicts.append(dict(
                         base, status="error", reason="current_n02_line_endpoint_mismatch"))
                     continue
+                try:
+                    stamped = whole_current_line_service_bounds(line, rail_history)
+                except DatasetError as exc:
+                    segment_verdicts.append(dict(
+                        base, status="error", reason="invalid_rail_history_service_interval",
+                        detail=str(exc)))
+                    continue
+                if stamped:
+                    valid_from, valid_until, history_ids = stamped
+                    _, _, invalid_count = _occurrence_alignment(
+                        calendar_row, version, lower, upper, valid_from, valid_until,
+                        exceptions_by_calendar, holiday_dates)
+                    if invalid_count:
+                        segment_verdicts.append(dict(
+                            base, status="error",
+                            reason="route_occurrences_outside_history_service_validity",
+                            identityVerified=True, temporalCoverageVerified=False,
+                            constraintHistoryIds=history_ids,
+                            invalidOccurrenceCount=invalid_count))
+                        continue
                 segment_verdicts.append(dict(
                     base,
                     status="unverified",
                     reason="current_n02_snapshot_has_no_validity_interval",
                     identityVerified=True,
                     temporalCoverageVerified=False,
+                    **({"constraintHistoryIds": stamped[2]} if stamped else {}),
                 ))
                 continue
             if kind != "historical_overlay":

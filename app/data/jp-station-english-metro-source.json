@@ -1,0 +1,2560 @@
+{
+  "source": "https://www.tokyometro.jp/lang_en/station/index03.html",
+  "publisher": "Tokyo Metro Co., Ltd.",
+  "retrievedAt": "2026-09-30",
+  "description": "Japanese and English index entries joined on the identical station-page slug. Station numbers are retained as identity evidence. Names and numbers extracted from the rendered official pages.",
+  "names": [
+    "Akabane-iwabuchi",
+    "Akasaka",
+    "Akasaka-mitsuke",
+    "Akihabara",
+    "Aoyama-itchome",
+    "Asakusa",
+    "Awajicho",
+    "Ayase",
+    "Azabu-juban",
+    "Baraki-nakayama",
+    "Chikatetsu-akatsuka",
+    "Chikatetsu-narimasu",
+    "Ebisu",
+    "Edogawabashi",
+    "Gaiemmae",
+    "Ginza",
+    "Ginza-itchome",
+    "Gokokuji",
+    "Gyotoku",
+    "Hanzomon",
+    "Hatchobori",
+    "Heiwadai",
+    "Hibiya",
+    "Higashi-ginza",
+    "Higashi-ikebukuro",
+    "Higashi-koenji",
+    "Higashi-shinjuku",
+    "Hikawadai",
+    "Hiro-o",
+    "Hon-komagome",
+    "Honancho",
+    "Hongo-sanchome",
+    "Ichigaya",
+    "Iidabashi",
+    "Ikebukuro",
+    "Inaricho",
+    "Iriya",
+    "Jimbocho",
+    "Kagurazaka",
+    "Kamiyacho",
+    "Kanamecho",
+    "Kanda",
+    "Kasai",
+    "Kasumigaseki",
+    "Kayabacho",
+    "Kiba",
+    "Kinshicho",
+    "Kita-ayase",
+    "Kita-sando",
+    "Kita-senju",
+    "Kiyosumi-shirakawa",
+    "Kodemmacho",
+    "Kojimachi",
+    "Kokkai-gijidomae",
+    "Komagome",
+    "Korakuen",
+    "Kotake-mukaihara",
+    "Kudanshita",
+    "Kyobashi",
+    "Machiya",
+    "Meguro",
+    "Meiji-jingumae <Harajuku>",
+    "Minami-asagaya",
+    "Minami-gyotoku",
+    "Minami-senju",
+    "Minami-sunamachi",
+    "Minowa",
+    "Mitsukoshimae",
+    "Monzen-nakacho",
+    "Myoden",
+    "Myogadani",
+    "Nagatacho",
+    "Naka-meguro",
+    "Naka-okachimachi",
+    "Nakano",
+    "Nakano-fujimicho",
+    "Nakano-sakaue",
+    "Nakano-shimbashi",
+    "Nezu",
+    "Nihombashi",
+    "Nijubashimae <Marunouchi>",
+    "Ningyocho",
+    "Nishi-funabashi",
+    "Nishi-kasai",
+    "Nishi-nippori",
+    "Nishi-shinjuku",
+    "Nishi-waseda",
+    "Nishigahara",
+    "Nogizaka",
+    "Ochanomizu",
+    "Ochiai",
+    "Ogikubo",
+    "Oji",
+    "Oji-kamiya",
+    "Omote-sando",
+    "Oshiage <SKYTREE>",
+    "Otemachi",
+    "Roppongi",
+    "Roppongi-itchome",
+    "Sakuradamon",
+    "Sendagi",
+    "Senkawa",
+    "Shibuya",
+    "Shimbashi",
+    "Shimo",
+    "Shin-kiba",
+    "Shin-koenji",
+    "Shin-nakano",
+    "Shin-ochanomizu",
+    "Shin-otsuka",
+    "Shinjuku",
+    "Shinjuku-gyoemmae",
+    "Shinjuku-sanchome",
+    "Shintomicho",
+    "Shirokane-takanawa",
+    "Shirokanedai",
+    "Suehirocho",
+    "Suitengumae",
+    "Sumiyoshi",
+    "Takadanobaba",
+    "Takebashi",
+    "Tameike-sanno",
+    "Tatsumi",
+    "Tawaramachi",
+    "Todaimae",
+    "Tokyo",
+    "Toranomon",
+    "Toranomon Hills",
+    "Toyocho",
+    "Toyosu",
+    "Tsukiji",
+    "Tsukishima",
+    "Ueno",
+    "Ueno-hirokoji",
+    "Urayasu",
+    "Wakoshi",
+    "Waseda",
+    "Yotsuya",
+    "Yotsuya-sanchome",
+    "Yoyogi-koen",
+    "Yoyogi-uehara",
+    "Yurakucho",
+    "Yushima",
+    "Zoshigaya"
+  ],
+  "identitySource": "https://www.tokyometro.jp/station/index03.html",
+  "bySlug": {
+    "aoyama-itchome": {
+      "ja": "青山一丁目",
+      "en": "Aoyama-itchome",
+      "stationNumbers": [
+        "G04",
+        "Z03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/aoyama-itchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/aoyama-itchome/index.html"
+    },
+    "akasaka": {
+      "ja": "赤坂",
+      "en": "Akasaka",
+      "stationNumbers": [
+        "C06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/akasaka/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/akasaka/index.html"
+    },
+    "akasaka-mitsuke": {
+      "ja": "赤坂見附",
+      "en": "Akasaka-mitsuke",
+      "stationNumbers": [
+        "G05",
+        "M13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/akasaka-mitsuke/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/akasaka-mitsuke/index.html"
+    },
+    "akabane-iwabuchi": {
+      "ja": "赤羽岩淵",
+      "en": "Akabane-iwabuchi",
+      "stationNumbers": [
+        "N19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/akabane-iwabuchi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/akabane-iwabuchi/index.html"
+    },
+    "akihabara": {
+      "ja": "秋葉原",
+      "en": "Akihabara",
+      "stationNumbers": [
+        "H16"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/akihabara/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/akihabara/index.html"
+    },
+    "asakusa": {
+      "ja": "浅草",
+      "en": "Asakusa",
+      "stationNumbers": [
+        "G19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/asakusa/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/asakusa/index.html"
+    },
+    "azabu-juban": {
+      "ja": "麻布十番",
+      "en": "Azabu-juban",
+      "stationNumbers": [
+        "N04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/azabu-juban/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/azabu-juban/index.html"
+    },
+    "ayase": {
+      "ja": "綾瀬",
+      "en": "Ayase",
+      "stationNumbers": [
+        "C19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ayase/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ayase/index.html"
+    },
+    "awajicho": {
+      "ja": "淡路町",
+      "en": "Awajicho",
+      "stationNumbers": [
+        "M19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/awajicho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/awajicho/index.html"
+    },
+    "iidabashi": {
+      "ja": "飯田橋",
+      "en": "Iidabashi",
+      "stationNumbers": [
+        "N10",
+        "T06",
+        "Y13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/iidabashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/iidabashi/index.html"
+    },
+    "ikebukuro": {
+      "ja": "池袋",
+      "en": "Ikebukuro",
+      "stationNumbers": [
+        "F09",
+        "M25",
+        "Y09"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ikebukuro/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ikebukuro/index.html"
+    },
+    "ichigaya": {
+      "ja": "市ケ谷",
+      "en": "Ichigaya",
+      "stationNumbers": [
+        "N09",
+        "Y14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ichigaya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ichigaya/index.html"
+    },
+    "inaricho": {
+      "ja": "稲荷町",
+      "en": "Inaricho",
+      "stationNumbers": [
+        "G17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/inaricho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/inaricho/index.html"
+    },
+    "iriya": {
+      "ja": "入谷",
+      "en": "Iriya",
+      "stationNumbers": [
+        "H19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/iriya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/iriya/index.html"
+    },
+    "ueno": {
+      "ja": "上野",
+      "en": "Ueno",
+      "stationNumbers": [
+        "G16",
+        "H18"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ueno/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ueno/index.html"
+    },
+    "ueno-hirokoji": {
+      "ja": "上野広小路",
+      "en": "Ueno-hirokoji",
+      "stationNumbers": [
+        "G15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ueno-hirokoji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ueno-hirokoji/index.html"
+    },
+    "urayasu": {
+      "ja": "浦安",
+      "en": "Urayasu",
+      "stationNumbers": [
+        "T18"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/urayasu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/urayasu/index.html"
+    },
+    "edogawabashi": {
+      "ja": "江戸川橋",
+      "en": "Edogawabashi",
+      "stationNumbers": [
+        "Y12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/edogawabashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/edogawabashi/index.html"
+    },
+    "ebisu": {
+      "ja": "恵比寿",
+      "en": "Ebisu",
+      "stationNumbers": [
+        "H02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ebisu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ebisu/index.html"
+    },
+    "oji": {
+      "ja": "王子",
+      "en": "Oji",
+      "stationNumbers": [
+        "N16"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/oji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/oji/index.html"
+    },
+    "oji-kamiya": {
+      "ja": "王子神谷",
+      "en": "Oji-kamiya",
+      "stationNumbers": [
+        "N17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/oji-kamiya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/oji-kamiya/index.html"
+    },
+    "otemachi": {
+      "ja": "大手町",
+      "en": "Otemachi",
+      "stationNumbers": [
+        "C11",
+        "M18",
+        "T09",
+        "Z08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/otemachi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/otemachi/index.html"
+    },
+    "ogikubo": {
+      "ja": "荻窪",
+      "en": "Ogikubo",
+      "stationNumbers": [
+        "M01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ogikubo/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ogikubo/index.html"
+    },
+    "oshiage": {
+      "ja": "押上〈スカイツリー前〉",
+      "en": "Oshiage <SKYTREE>",
+      "stationNumbers": [
+        "Z14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/oshiage/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/oshiage/index.html"
+    },
+    "ochiai": {
+      "ja": "落合",
+      "en": "Ochiai",
+      "stationNumbers": [
+        "T02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ochiai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ochiai/index.html"
+    },
+    "ochanomizu": {
+      "ja": "御茶ノ水",
+      "en": "Ochanomizu",
+      "stationNumbers": [
+        "M20"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ochanomizu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ochanomizu/index.html"
+    },
+    "omote-sando": {
+      "ja": "表参道",
+      "en": "Omote-sando",
+      "stationNumbers": [
+        "C04",
+        "G02",
+        "Z02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/omote-sando/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/omote-sando/index.html"
+    },
+    "kagurazaka": {
+      "ja": "神楽坂",
+      "en": "Kagurazaka",
+      "stationNumbers": [
+        "T05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kagurazaka/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kagurazaka/index.html"
+    },
+    "kasai": {
+      "ja": "葛西",
+      "en": "Kasai",
+      "stationNumbers": [
+        "T17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kasai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kasai/index.html"
+    },
+    "kasumigaseki": {
+      "ja": "霞ケ関",
+      "en": "Kasumigaseki",
+      "stationNumbers": [
+        "C08",
+        "H07",
+        "M15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kasumigaseki/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kasumigaseki/index.html"
+    },
+    "kanamecho": {
+      "ja": "要町",
+      "en": "Kanamecho",
+      "stationNumbers": [
+        "F08",
+        "Y08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kanamecho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kanamecho/index.html"
+    },
+    "kamiyacho": {
+      "ja": "神谷町",
+      "en": "Kamiyacho",
+      "stationNumbers": [
+        "H05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kamiyacho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kamiyacho/index.html"
+    },
+    "kayabacho": {
+      "ja": "茅場町",
+      "en": "Kayabacho",
+      "stationNumbers": [
+        "H13",
+        "T11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kayabacho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kayabacho/index.html"
+    },
+    "kanda": {
+      "ja": "神田",
+      "en": "Kanda",
+      "stationNumbers": [
+        "G13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kanda/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kanda/index.html"
+    },
+    "gaiemmae": {
+      "ja": "外苑前",
+      "en": "Gaiemmae",
+      "stationNumbers": [
+        "G03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/gaiemmae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/gaiemmae/index.html"
+    },
+    "kita-ayase": {
+      "ja": "北綾瀬",
+      "en": "Kita-ayase",
+      "stationNumbers": [
+        "C20"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kita-ayase/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kita-ayase/index.html"
+    },
+    "kita-sando": {
+      "ja": "北参道",
+      "en": "Kita-sando",
+      "stationNumbers": [
+        "F14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kita-sando/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kita-sando/index.html"
+    },
+    "kita-senju": {
+      "ja": "北千住",
+      "en": "Kita-senju",
+      "stationNumbers": [
+        "C18",
+        "H22"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kita-senju/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kita-senju/index.html"
+    },
+    "kiba": {
+      "ja": "木場",
+      "en": "Kiba",
+      "stationNumbers": [
+        "T13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kiba/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kiba/index.html"
+    },
+    "kyobashi": {
+      "ja": "京橋",
+      "en": "Kyobashi",
+      "stationNumbers": [
+        "G10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kyobashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kyobashi/index.html"
+    },
+    "kiyosumi-shirakawa": {
+      "ja": "清澄白河",
+      "en": "Kiyosumi-shirakawa",
+      "stationNumbers": [
+        "Z11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kiyosumi-shirakawa/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kiyosumi-shirakawa/index.html"
+    },
+    "kinshicho": {
+      "ja": "錦糸町",
+      "en": "Kinshicho",
+      "stationNumbers": [
+        "Z13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kinshicho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kinshicho/index.html"
+    },
+    "gyotoku": {
+      "ja": "行徳",
+      "en": "Gyotoku",
+      "stationNumbers": [
+        "T20"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/gyotoku/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/gyotoku/index.html"
+    },
+    "ginza": {
+      "ja": "銀座",
+      "en": "Ginza",
+      "stationNumbers": [
+        "G09",
+        "H09",
+        "M16"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ginza/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ginza/index.html"
+    },
+    "ginza-itchome": {
+      "ja": "銀座一丁目",
+      "en": "Ginza-itchome",
+      "stationNumbers": [
+        "Y19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ginza-itchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ginza-itchome/index.html"
+    },
+    "kudanshita": {
+      "ja": "九段下",
+      "en": "Kudanshita",
+      "stationNumbers": [
+        "T07",
+        "Z06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kudanshita/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kudanshita/index.html"
+    },
+    "kojimachi": {
+      "ja": "麴町",
+      "en": "Kojimachi",
+      "stationNumbers": [
+        "Y15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kojimachi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kojimachi/index.html"
+    },
+    "korakuen": {
+      "ja": "後楽園",
+      "en": "Korakuen",
+      "stationNumbers": [
+        "M22",
+        "N11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/korakuen/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/korakuen/index.html"
+    },
+    "kotake-mukaihara": {
+      "ja": "小竹向原",
+      "en": "Kotake-mukaihara",
+      "stationNumbers": [
+        "F06",
+        "Y06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kotake-mukaihara/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kotake-mukaihara/index.html"
+    },
+    "kokkai-gijidomae": {
+      "ja": "国会議事堂前",
+      "en": "Kokkai-gijidomae",
+      "stationNumbers": [
+        "C07",
+        "M14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kokkai-gijidomae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kokkai-gijidomae/index.html"
+    },
+    "kodemmacho": {
+      "ja": "小伝馬町",
+      "en": "Kodemmacho",
+      "stationNumbers": [
+        "H15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/kodemmacho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/kodemmacho/index.html"
+    },
+    "komagome": {
+      "ja": "駒込",
+      "en": "Komagome",
+      "stationNumbers": [
+        "N14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/komagome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/komagome/index.html"
+    },
+    "gokokuji": {
+      "ja": "護国寺",
+      "en": "Gokokuji",
+      "stationNumbers": [
+        "Y11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/gokokuji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/gokokuji/index.html"
+    },
+    "sakuradamon": {
+      "ja": "桜田門",
+      "en": "Sakuradamon",
+      "stationNumbers": [
+        "Y17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/sakuradamon/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/sakuradamon/index.html"
+    },
+    "shibuya": {
+      "ja": "渋谷",
+      "en": "Shibuya",
+      "stationNumbers": [
+        "F16",
+        "G01",
+        "Z01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shibuya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shibuya/index.html"
+    },
+    "shimo": {
+      "ja": "志茂",
+      "en": "Shimo",
+      "stationNumbers": [
+        "N18"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shimo/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shimo/index.html"
+    },
+    "shirokane-takanawa": {
+      "ja": "白金高輪",
+      "en": "Shirokane-takanawa",
+      "stationNumbers": [
+        "N03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shirokane-takanawa/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shirokane-takanawa/index.html"
+    },
+    "shirokanedai": {
+      "ja": "白金台",
+      "en": "Shirokanedai",
+      "stationNumbers": [
+        "N02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shirokanedai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shirokanedai/index.html"
+    },
+    "shin-otsuka": {
+      "ja": "新大塚",
+      "en": "Shin-otsuka",
+      "stationNumbers": [
+        "M24"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shin-otsuka/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shin-otsuka/index.html"
+    },
+    "shin-ochanomizu": {
+      "ja": "新御茶ノ水",
+      "en": "Shin-ochanomizu",
+      "stationNumbers": [
+        "C12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shin-ochanomizu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shin-ochanomizu/index.html"
+    },
+    "shin-kiba": {
+      "ja": "新木場",
+      "en": "Shin-kiba",
+      "stationNumbers": [
+        "Y24"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shin-kiba/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shin-kiba/index.html"
+    },
+    "shin-koenji": {
+      "ja": "新高円寺",
+      "en": "Shin-koenji",
+      "stationNumbers": [
+        "M03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shin-koenji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shin-koenji/index.html"
+    },
+    "shinjuku": {
+      "ja": "新宿",
+      "en": "Shinjuku",
+      "stationNumbers": [
+        "M08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shinjuku/index.html"
+    },
+    "shinjuku-gyoemmae": {
+      "ja": "新宿御苑前",
+      "en": "Shinjuku-gyoemmae",
+      "stationNumbers": [
+        "M10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku-gyoemmae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shinjuku-gyoemmae/index.html"
+    },
+    "shinjuku-sanchome": {
+      "ja": "新宿三丁目",
+      "en": "Shinjuku-sanchome",
+      "stationNumbers": [
+        "F13",
+        "M09"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku-sanchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shinjuku-sanchome/index.html"
+    },
+    "shintomicho": {
+      "ja": "新富町",
+      "en": "Shintomicho",
+      "stationNumbers": [
+        "Y20"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shintomicho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shintomicho/index.html"
+    },
+    "shin-nakano": {
+      "ja": "新中野",
+      "en": "Shin-nakano",
+      "stationNumbers": [
+        "M05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shin-nakano/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shin-nakano/index.html"
+    },
+    "shimbashi": {
+      "ja": "新橋",
+      "en": "Shimbashi",
+      "stationNumbers": [
+        "G08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/shimbashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/shimbashi/index.html"
+    },
+    "jimbocho": {
+      "ja": "神保町",
+      "en": "Jimbocho",
+      "stationNumbers": [
+        "Z07"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/jimbocho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/jimbocho/index.html"
+    },
+    "suitengumae": {
+      "ja": "水天宮前",
+      "en": "Suitengumae",
+      "stationNumbers": [
+        "Z10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/suitengumae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/suitengumae/index.html"
+    },
+    "suehirocho": {
+      "ja": "末広町",
+      "en": "Suehirocho",
+      "stationNumbers": [
+        "G14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/suehirocho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/suehirocho/index.html"
+    },
+    "sumiyoshi": {
+      "ja": "住吉",
+      "en": "Sumiyoshi",
+      "stationNumbers": [
+        "Z12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/sumiyoshi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/sumiyoshi/index.html"
+    },
+    "senkawa": {
+      "ja": "千川",
+      "en": "Senkawa",
+      "stationNumbers": [
+        "F07",
+        "Y07"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/senkawa/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/senkawa/index.html"
+    },
+    "sendagi": {
+      "ja": "千駄木",
+      "en": "Sendagi",
+      "stationNumbers": [
+        "C15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/sendagi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/sendagi/index.html"
+    },
+    "zoshigaya": {
+      "ja": "雑司が谷",
+      "en": "Zoshigaya",
+      "stationNumbers": [
+        "F10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/zoshigaya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/zoshigaya/index.html"
+    },
+    "takadanobaba": {
+      "ja": "高田馬場",
+      "en": "Takadanobaba",
+      "stationNumbers": [
+        "T03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/takadanobaba/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/takadanobaba/index.html"
+    },
+    "takebashi": {
+      "ja": "竹橋",
+      "en": "Takebashi",
+      "stationNumbers": [
+        "T08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/takebashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/takebashi/index.html"
+    },
+    "tatsumi": {
+      "ja": "辰巳",
+      "en": "Tatsumi",
+      "stationNumbers": [
+        "Y23"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tatsumi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tatsumi/index.html"
+    },
+    "tameike-sanno": {
+      "ja": "溜池山王",
+      "en": "Tameike-sanno",
+      "stationNumbers": [
+        "G06",
+        "N06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tameike-sanno/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tameike-sanno/index.html"
+    },
+    "tawaramachi": {
+      "ja": "田原町",
+      "en": "Tawaramachi",
+      "stationNumbers": [
+        "G18"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tawaramachi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tawaramachi/index.html"
+    },
+    "chikatetsu-akatsuka": {
+      "ja": "地下鉄赤塚",
+      "en": "Chikatetsu-akatsuka",
+      "stationNumbers": [
+        "F03",
+        "Y03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/chikatetsu-akatsuka/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/chikatetsu-akatsuka/index.html"
+    },
+    "chikatetsu-narimasu": {
+      "ja": "地下鉄成増",
+      "en": "Chikatetsu-narimasu",
+      "stationNumbers": [
+        "F02",
+        "Y02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/chikatetsu-narimasu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/chikatetsu-narimasu/index.html"
+    },
+    "tsukishima": {
+      "ja": "月島",
+      "en": "Tsukishima",
+      "stationNumbers": [
+        "Y21"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tsukishima/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tsukishima/index.html"
+    },
+    "tsukiji": {
+      "ja": "築地",
+      "en": "Tsukiji",
+      "stationNumbers": [
+        "H11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tsukiji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tsukiji/index.html"
+    },
+    "tokyo": {
+      "ja": "東京",
+      "en": "Tokyo",
+      "stationNumbers": [
+        "M17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/tokyo/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/tokyo/index.html"
+    },
+    "todaimae": {
+      "ja": "東大前",
+      "en": "Todaimae",
+      "stationNumbers": [
+        "N12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/todaimae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/todaimae/index.html"
+    },
+    "toyocho": {
+      "ja": "東陽町",
+      "en": "Toyocho",
+      "stationNumbers": [
+        "T14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/toyocho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/toyocho/index.html"
+    },
+    "toyosu": {
+      "ja": "豊洲",
+      "en": "Toyosu",
+      "stationNumbers": [
+        "Y22"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/toyosu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/toyosu/index.html"
+    },
+    "toranomon": {
+      "ja": "虎ノ門",
+      "en": "Toranomon",
+      "stationNumbers": [
+        "G07"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/toranomon/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/toranomon/index.html"
+    },
+    "toranomon-hills": {
+      "ja": "虎ノ門ヒルズ",
+      "en": "Toranomon Hills",
+      "stationNumbers": [
+        "H06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/toranomon-hills/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/toranomon-hills/index.html"
+    },
+    "naka-okachimachi": {
+      "ja": "仲御徒町",
+      "en": "Naka-okachimachi",
+      "stationNumbers": [
+        "H17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/naka-okachimachi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/naka-okachimachi/index.html"
+    },
+    "nakano": {
+      "ja": "中野",
+      "en": "Nakano",
+      "stationNumbers": [
+        "T01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nakano/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nakano/index.html"
+    },
+    "nakano-sakaue": {
+      "ja": "中野坂上",
+      "en": "Nakano-sakaue",
+      "stationNumbers": [
+        "M06"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nakano-sakaue/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nakano-sakaue/index.html"
+    },
+    "nakano-shimbashi": {
+      "ja": "中野新橋",
+      "en": "Nakano-shimbashi",
+      "stationNumbers": [
+        "Mb05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nakano-shimbashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nakano-shimbashi/index.html"
+    },
+    "nakano-fujimicho": {
+      "ja": "中野富士見町",
+      "en": "Nakano-fujimicho",
+      "stationNumbers": [
+        "Mb04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nakano-fujimicho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nakano-fujimicho/index.html"
+    },
+    "naka-meguro": {
+      "ja": "中目黒",
+      "en": "Naka-meguro",
+      "stationNumbers": [
+        "H01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/naka-meguro/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/naka-meguro/index.html"
+    },
+    "nagatacho": {
+      "ja": "永田町",
+      "en": "Nagatacho",
+      "stationNumbers": [
+        "N07",
+        "Y16",
+        "Z04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nagatacho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nagatacho/index.html"
+    },
+    "nishi-kasai": {
+      "ja": "西葛西",
+      "en": "Nishi-kasai",
+      "stationNumbers": [
+        "T16"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishi-kasai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishi-kasai/index.html"
+    },
+    "nishigahara": {
+      "ja": "西ケ原",
+      "en": "Nishigahara",
+      "stationNumbers": [
+        "N15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishigahara/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishigahara/index.html"
+    },
+    "nishi-shinjuku": {
+      "ja": "西新宿",
+      "en": "Nishi-shinjuku",
+      "stationNumbers": [
+        "M07"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishi-shinjuku/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishi-shinjuku/index.html"
+    },
+    "nishi-nippori": {
+      "ja": "西日暮里",
+      "en": "Nishi-nippori",
+      "stationNumbers": [
+        "C16"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishi-nippori/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishi-nippori/index.html"
+    },
+    "nishi-funabashi": {
+      "ja": "西船橋",
+      "en": "Nishi-funabashi",
+      "stationNumbers": [
+        "T23"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishi-funabashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishi-funabashi/index.html"
+    },
+    "nishi-waseda": {
+      "ja": "西早稲田",
+      "en": "Nishi-waseda",
+      "stationNumbers": [
+        "F11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nishi-waseda/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nishi-waseda/index.html"
+    },
+    "nijubashimae": {
+      "ja": "二重橋前〈丸の内〉",
+      "en": "Nijubashimae <Marunouchi>",
+      "stationNumbers": [
+        "C10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nijubashimae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nijubashimae/index.html"
+    },
+    "nihombashi": {
+      "ja": "日本橋",
+      "en": "Nihombashi",
+      "stationNumbers": [
+        "G11",
+        "T10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nihombashi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nihombashi/index.html"
+    },
+    "ningyocho": {
+      "ja": "人形町",
+      "en": "Ningyocho",
+      "stationNumbers": [
+        "H14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/ningyocho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/ningyocho/index.html"
+    },
+    "nezu": {
+      "ja": "根津",
+      "en": "Nezu",
+      "stationNumbers": [
+        "C14"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nezu/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nezu/index.html"
+    },
+    "nogizaka": {
+      "ja": "乃木坂",
+      "en": "Nogizaka",
+      "stationNumbers": [
+        "C05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/nogizaka/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/nogizaka/index.html"
+    },
+    "hatchobori": {
+      "ja": "八丁堀",
+      "en": "Hatchobori",
+      "stationNumbers": [
+        "H12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hatchobori/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hatchobori/index.html"
+    },
+    "hanzomon": {
+      "ja": "半蔵門",
+      "en": "Hanzomon",
+      "stationNumbers": [
+        "Z05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hanzomon/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hanzomon/index.html"
+    },
+    "baraki-nakayama": {
+      "ja": "原木中山",
+      "en": "Baraki-nakayama",
+      "stationNumbers": [
+        "T22"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/baraki-nakayama/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/baraki-nakayama/index.html"
+    },
+    "hikawadai": {
+      "ja": "氷川台",
+      "en": "Hikawadai",
+      "stationNumbers": [
+        "F05",
+        "Y05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hikawadai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hikawadai/index.html"
+    },
+    "higashi-ikebukuro": {
+      "ja": "東池袋",
+      "en": "Higashi-ikebukuro",
+      "stationNumbers": [
+        "Y10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/higashi-ikebukuro/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/higashi-ikebukuro/index.html"
+    },
+    "higashi-ginza": {
+      "ja": "東銀座",
+      "en": "Higashi-ginza",
+      "stationNumbers": [
+        "H10"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/higashi-ginza/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/higashi-ginza/index.html"
+    },
+    "higashi-koenji": {
+      "ja": "東高円寺",
+      "en": "Higashi-koenji",
+      "stationNumbers": [
+        "M04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/higashi-koenji/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/higashi-koenji/index.html"
+    },
+    "higashi-shinjuku": {
+      "ja": "東新宿",
+      "en": "Higashi-shinjuku",
+      "stationNumbers": [
+        "F12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/higashi-shinjuku/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/higashi-shinjuku/index.html"
+    },
+    "hibiya": {
+      "ja": "日比谷",
+      "en": "Hibiya",
+      "stationNumbers": [
+        "C09",
+        "H08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hibiya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hibiya/index.html"
+    },
+    "hiro-o": {
+      "ja": "広尾",
+      "en": "Hiro-o",
+      "stationNumbers": [
+        "H03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hiro-o/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hiro-o/index.html"
+    },
+    "heiwadai": {
+      "ja": "平和台",
+      "en": "Heiwadai",
+      "stationNumbers": [
+        "F04",
+        "Y04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/heiwadai/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/heiwadai/index.html"
+    },
+    "honancho": {
+      "ja": "方南町",
+      "en": "Honancho",
+      "stationNumbers": [
+        "Mb03"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/honancho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/honancho/index.html"
+    },
+    "hon-komagome": {
+      "ja": "本駒込",
+      "en": "Hon-komagome",
+      "stationNumbers": [
+        "N13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hon-komagome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hon-komagome/index.html"
+    },
+    "hongo-sanchome": {
+      "ja": "本郷三丁目",
+      "en": "Hongo-sanchome",
+      "stationNumbers": [
+        "M21"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/hongo-sanchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/hongo-sanchome/index.html"
+    },
+    "machiya": {
+      "ja": "町屋",
+      "en": "Machiya",
+      "stationNumbers": [
+        "C17"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/machiya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/machiya/index.html"
+    },
+    "mitsukoshimae": {
+      "ja": "三越前",
+      "en": "Mitsukoshimae",
+      "stationNumbers": [
+        "G12",
+        "Z09"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/mitsukoshimae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/mitsukoshimae/index.html"
+    },
+    "minami-asagaya": {
+      "ja": "南阿佐ケ谷",
+      "en": "Minami-asagaya",
+      "stationNumbers": [
+        "M02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/minami-asagaya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/minami-asagaya/index.html"
+    },
+    "minami-gyotoku": {
+      "ja": "南行徳",
+      "en": "Minami-gyotoku",
+      "stationNumbers": [
+        "T19"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/minami-gyotoku/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/minami-gyotoku/index.html"
+    },
+    "minami-sunamachi": {
+      "ja": "南砂町",
+      "en": "Minami-sunamachi",
+      "stationNumbers": [
+        "T15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/minami-sunamachi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/minami-sunamachi/index.html"
+    },
+    "minami-senju": {
+      "ja": "南千住",
+      "en": "Minami-senju",
+      "stationNumbers": [
+        "H21"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/minami-senju/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/minami-senju/index.html"
+    },
+    "minowa": {
+      "ja": "三ノ輪",
+      "en": "Minowa",
+      "stationNumbers": [
+        "H20"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/minowa/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/minowa/index.html"
+    },
+    "myogadani": {
+      "ja": "茗荷谷",
+      "en": "Myogadani",
+      "stationNumbers": [
+        "M23"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/myogadani/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/myogadani/index.html"
+    },
+    "myoden": {
+      "ja": "妙典",
+      "en": "Myoden",
+      "stationNumbers": [
+        "T21"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/myoden/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/myoden/index.html"
+    },
+    "meiji-jingumae": {
+      "ja": "明治神宮前〈原宿〉",
+      "en": "Meiji-jingumae <Harajuku>",
+      "stationNumbers": [
+        "C03",
+        "F15"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/meiji-jingumae/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/meiji-jingumae/index.html"
+    },
+    "meguro": {
+      "ja": "目黒",
+      "en": "Meguro",
+      "stationNumbers": [
+        "N01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/meguro/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/meguro/index.html"
+    },
+    "monzen-nakacho": {
+      "ja": "門前仲町",
+      "en": "Monzen-nakacho",
+      "stationNumbers": [
+        "T12"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/monzen-nakacho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/monzen-nakacho/index.html"
+    },
+    "yurakucho": {
+      "ja": "有楽町",
+      "en": "Yurakucho",
+      "stationNumbers": [
+        "Y18"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yurakucho/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yurakucho/index.html"
+    },
+    "yushima": {
+      "ja": "湯島",
+      "en": "Yushima",
+      "stationNumbers": [
+        "C13"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yushima/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yushima/index.html"
+    },
+    "yotsuya": {
+      "ja": "四ツ谷",
+      "en": "Yotsuya",
+      "stationNumbers": [
+        "M12",
+        "N08"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yotsuya/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yotsuya/index.html"
+    },
+    "yotsuya-sanchome": {
+      "ja": "四谷三丁目",
+      "en": "Yotsuya-sanchome",
+      "stationNumbers": [
+        "M11"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yotsuya-sanchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yotsuya-sanchome/index.html"
+    },
+    "yoyogi-uehara": {
+      "ja": "代々木上原",
+      "en": "Yoyogi-uehara",
+      "stationNumbers": [
+        "C01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yoyogi-uehara/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yoyogi-uehara/index.html"
+    },
+    "yoyogi-koen": {
+      "ja": "代々木公園",
+      "en": "Yoyogi-koen",
+      "stationNumbers": [
+        "C02"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/yoyogi-koen/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/yoyogi-koen/index.html"
+    },
+    "roppongi": {
+      "ja": "六本木",
+      "en": "Roppongi",
+      "stationNumbers": [
+        "H04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/roppongi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/roppongi/index.html"
+    },
+    "roppongi-itchome": {
+      "ja": "六本木一丁目",
+      "en": "Roppongi-itchome",
+      "stationNumbers": [
+        "N05"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/roppongi-itchome/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/roppongi-itchome/index.html"
+    },
+    "wakoshi": {
+      "ja": "和光市",
+      "en": "Wakoshi",
+      "stationNumbers": [
+        "F01",
+        "Y01"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/wakoshi/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/wakoshi/index.html"
+    },
+    "waseda": {
+      "ja": "早稲田",
+      "en": "Waseda",
+      "stationNumbers": [
+        "T04"
+      ],
+      "source": "https://www.tokyometro.jp/lang_en/station/waseda/index.html",
+      "identitySource": "https://www.tokyometro.jp/station/waseda/index.html"
+    }
+  },
+  "licenseNote": "No bulk reuse license identified; short station-name facts only, with attribution.",
+  "byStationId": {
+    "aoyama-itchome": {
+      "ja": "青山一丁目",
+      "en": "Aoyama-itchome",
+      "numbers": [
+        "G04",
+        "Z03"
+      ]
+    },
+    "akasaka": {
+      "ja": "赤坂",
+      "en": "Akasaka",
+      "numbers": [
+        "C06"
+      ]
+    },
+    "akasaka-mitsuke": {
+      "ja": "赤坂見附",
+      "en": "Akasaka-mitsuke",
+      "numbers": [
+        "G05",
+        "M13"
+      ]
+    },
+    "akabane-iwabuchi": {
+      "ja": "赤羽岩淵",
+      "en": "Akabane-iwabuchi",
+      "numbers": [
+        "N19"
+      ]
+    },
+    "akihabara": {
+      "ja": "秋葉原",
+      "en": "Akihabara",
+      "numbers": [
+        "H16"
+      ]
+    },
+    "asakusa": {
+      "ja": "浅草",
+      "en": "Asakusa",
+      "numbers": [
+        "G19"
+      ]
+    },
+    "azabu-juban": {
+      "ja": "麻布十番",
+      "en": "Azabu-juban",
+      "numbers": [
+        "N04"
+      ]
+    },
+    "ayase": {
+      "ja": "綾瀬",
+      "en": "Ayase",
+      "numbers": [
+        "C19"
+      ]
+    },
+    "awajicho": {
+      "ja": "淡路町",
+      "en": "Awajicho",
+      "numbers": [
+        "M19"
+      ]
+    },
+    "iidabashi": {
+      "ja": "飯田橋",
+      "en": "Iidabashi",
+      "numbers": [
+        "N10",
+        "T06",
+        "Y13"
+      ]
+    },
+    "ikebukuro": {
+      "ja": "池袋",
+      "en": "Ikebukuro",
+      "numbers": [
+        "F09",
+        "M25",
+        "Y09"
+      ]
+    },
+    "ichigaya": {
+      "ja": "市ケ谷",
+      "en": "Ichigaya",
+      "numbers": [
+        "N09",
+        "Y14"
+      ],
+      "packageJa": "市ヶ谷",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "inaricho": {
+      "ja": "稲荷町",
+      "en": "Inaricho",
+      "numbers": [
+        "G17"
+      ]
+    },
+    "iriya": {
+      "ja": "入谷",
+      "en": "Iriya",
+      "numbers": [
+        "H19"
+      ]
+    },
+    "ueno": {
+      "ja": "上野",
+      "en": "Ueno",
+      "numbers": [
+        "G16",
+        "H18"
+      ]
+    },
+    "ueno-hirokoji": {
+      "ja": "上野広小路",
+      "en": "Ueno-hirokoji",
+      "numbers": [
+        "G15"
+      ]
+    },
+    "urayasu": {
+      "ja": "浦安",
+      "en": "Urayasu",
+      "numbers": [
+        "T18"
+      ]
+    },
+    "edogawabashi": {
+      "ja": "江戸川橋",
+      "en": "Edogawabashi",
+      "numbers": [
+        "Y12"
+      ]
+    },
+    "ebisu": {
+      "ja": "恵比寿",
+      "en": "Ebisu",
+      "numbers": [
+        "H02"
+      ]
+    },
+    "oji": {
+      "ja": "王子",
+      "en": "Oji",
+      "numbers": [
+        "N16"
+      ]
+    },
+    "oji-kamiya": {
+      "ja": "王子神谷",
+      "en": "Oji-kamiya",
+      "numbers": [
+        "N17"
+      ]
+    },
+    "otemachi": {
+      "ja": "大手町",
+      "en": "Otemachi",
+      "numbers": [
+        "C11",
+        "M18",
+        "T09",
+        "Z08"
+      ]
+    },
+    "ogikubo": {
+      "ja": "荻窪",
+      "en": "Ogikubo",
+      "numbers": [
+        "M01"
+      ]
+    },
+    "oshiage": {
+      "ja": "押上〈スカイツリー前〉",
+      "en": "Oshiage <SKYTREE>",
+      "numbers": [
+        "Z14"
+      ],
+      "packageJa": "押上",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "ochiai": {
+      "ja": "落合",
+      "en": "Ochiai",
+      "numbers": [
+        "T02"
+      ]
+    },
+    "ochanomizu": {
+      "ja": "御茶ノ水",
+      "en": "Ochanomizu",
+      "numbers": [
+        "M20"
+      ]
+    },
+    "omote-sando": {
+      "ja": "表参道",
+      "en": "Omote-sando",
+      "numbers": [
+        "C04",
+        "G02",
+        "Z02"
+      ]
+    },
+    "kagurazaka": {
+      "ja": "神楽坂",
+      "en": "Kagurazaka",
+      "numbers": [
+        "T05"
+      ]
+    },
+    "kasai": {
+      "ja": "葛西",
+      "en": "Kasai",
+      "numbers": [
+        "T17"
+      ]
+    },
+    "kasumigaseki": {
+      "ja": "霞ケ関",
+      "en": "Kasumigaseki",
+      "numbers": [
+        "C08",
+        "H07",
+        "M15"
+      ],
+      "packageJa": "霞ヶ関",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "kanamecho": {
+      "ja": "要町",
+      "en": "Kanamecho",
+      "numbers": [
+        "F08",
+        "Y08"
+      ]
+    },
+    "kamiyacho": {
+      "ja": "神谷町",
+      "en": "Kamiyacho",
+      "numbers": [
+        "H05"
+      ]
+    },
+    "kayabacho": {
+      "ja": "茅場町",
+      "en": "Kayabacho",
+      "numbers": [
+        "H13",
+        "T11"
+      ]
+    },
+    "kanda": {
+      "ja": "神田",
+      "en": "Kanda",
+      "numbers": [
+        "G13"
+      ]
+    },
+    "gaiemmae": {
+      "ja": "外苑前",
+      "en": "Gaiemmae",
+      "numbers": [
+        "G03"
+      ]
+    },
+    "kita-ayase": {
+      "ja": "北綾瀬",
+      "en": "Kita-ayase",
+      "numbers": [
+        "C20"
+      ]
+    },
+    "kita-sando": {
+      "ja": "北参道",
+      "en": "Kita-sando",
+      "numbers": [
+        "F14"
+      ]
+    },
+    "kita-senju": {
+      "ja": "北千住",
+      "en": "Kita-senju",
+      "numbers": [
+        "C18",
+        "H22"
+      ]
+    },
+    "kiba": {
+      "ja": "木場",
+      "en": "Kiba",
+      "numbers": [
+        "T13"
+      ]
+    },
+    "kyobashi": {
+      "ja": "京橋",
+      "en": "Kyobashi",
+      "numbers": [
+        "G10"
+      ]
+    },
+    "kiyosumi-shirakawa": {
+      "ja": "清澄白河",
+      "en": "Kiyosumi-shirakawa",
+      "numbers": [
+        "Z11"
+      ]
+    },
+    "kinshicho": {
+      "ja": "錦糸町",
+      "en": "Kinshicho",
+      "numbers": [
+        "Z13"
+      ]
+    },
+    "gyotoku": {
+      "ja": "行徳",
+      "en": "Gyotoku",
+      "numbers": [
+        "T20"
+      ]
+    },
+    "ginza": {
+      "ja": "銀座",
+      "en": "Ginza",
+      "numbers": [
+        "G09",
+        "H09",
+        "M16"
+      ]
+    },
+    "ginza-itchome": {
+      "ja": "銀座一丁目",
+      "en": "Ginza-itchome",
+      "numbers": [
+        "Y19"
+      ]
+    },
+    "kudanshita": {
+      "ja": "九段下",
+      "en": "Kudanshita",
+      "numbers": [
+        "T07",
+        "Z06"
+      ]
+    },
+    "kojimachi": {
+      "ja": "麴町",
+      "en": "Kojimachi",
+      "numbers": [
+        "Y15"
+      ],
+      "packageJa": "麹町",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "korakuen": {
+      "ja": "後楽園",
+      "en": "Korakuen",
+      "numbers": [
+        "M22",
+        "N11"
+      ]
+    },
+    "kotake-mukaihara": {
+      "ja": "小竹向原",
+      "en": "Kotake-mukaihara",
+      "numbers": [
+        "F06",
+        "Y06"
+      ]
+    },
+    "kokkai-gijidomae": {
+      "ja": "国会議事堂前",
+      "en": "Kokkai-gijidomae",
+      "numbers": [
+        "C07",
+        "M14"
+      ]
+    },
+    "kodemmacho": {
+      "ja": "小伝馬町",
+      "en": "Kodemmacho",
+      "numbers": [
+        "H15"
+      ]
+    },
+    "komagome": {
+      "ja": "駒込",
+      "en": "Komagome",
+      "numbers": [
+        "N14"
+      ]
+    },
+    "gokokuji": {
+      "ja": "護国寺",
+      "en": "Gokokuji",
+      "numbers": [
+        "Y11"
+      ]
+    },
+    "sakuradamon": {
+      "ja": "桜田門",
+      "en": "Sakuradamon",
+      "numbers": [
+        "Y17"
+      ]
+    },
+    "shibuya": {
+      "ja": "渋谷",
+      "en": "Shibuya",
+      "numbers": [
+        "F16",
+        "G01",
+        "Z01"
+      ]
+    },
+    "shimo": {
+      "ja": "志茂",
+      "en": "Shimo",
+      "numbers": [
+        "N18"
+      ]
+    },
+    "shirokane-takanawa": {
+      "ja": "白金高輪",
+      "en": "Shirokane-takanawa",
+      "numbers": [
+        "N03"
+      ]
+    },
+    "shirokanedai": {
+      "ja": "白金台",
+      "en": "Shirokanedai",
+      "numbers": [
+        "N02"
+      ]
+    },
+    "shin-otsuka": {
+      "ja": "新大塚",
+      "en": "Shin-otsuka",
+      "numbers": [
+        "M24"
+      ]
+    },
+    "shin-ochanomizu": {
+      "ja": "新御茶ノ水",
+      "en": "Shin-ochanomizu",
+      "numbers": [
+        "C12"
+      ]
+    },
+    "shin-kiba": {
+      "ja": "新木場",
+      "en": "Shin-kiba",
+      "numbers": [
+        "Y24"
+      ]
+    },
+    "shin-koenji": {
+      "ja": "新高円寺",
+      "en": "Shin-koenji",
+      "numbers": [
+        "M03"
+      ]
+    },
+    "shinjuku": {
+      "ja": "新宿",
+      "en": "Shinjuku",
+      "numbers": [
+        "M08"
+      ]
+    },
+    "shinjuku-gyoemmae": {
+      "ja": "新宿御苑前",
+      "en": "Shinjuku-gyoemmae",
+      "numbers": [
+        "M10"
+      ]
+    },
+    "shinjuku-sanchome": {
+      "ja": "新宿三丁目",
+      "en": "Shinjuku-sanchome",
+      "numbers": [
+        "F13",
+        "M09"
+      ]
+    },
+    "shintomicho": {
+      "ja": "新富町",
+      "en": "Shintomicho",
+      "numbers": [
+        "Y20"
+      ]
+    },
+    "shin-nakano": {
+      "ja": "新中野",
+      "en": "Shin-nakano",
+      "numbers": [
+        "M05"
+      ]
+    },
+    "shimbashi": {
+      "ja": "新橋",
+      "en": "Shimbashi",
+      "numbers": [
+        "G08"
+      ]
+    },
+    "jimbocho": {
+      "ja": "神保町",
+      "en": "Jimbocho",
+      "numbers": [
+        "Z07"
+      ]
+    },
+    "suitengumae": {
+      "ja": "水天宮前",
+      "en": "Suitengumae",
+      "numbers": [
+        "Z10"
+      ]
+    },
+    "suehirocho": {
+      "ja": "末広町",
+      "en": "Suehirocho",
+      "numbers": [
+        "G14"
+      ]
+    },
+    "sumiyoshi": {
+      "ja": "住吉",
+      "en": "Sumiyoshi",
+      "numbers": [
+        "Z12"
+      ]
+    },
+    "senkawa": {
+      "ja": "千川",
+      "en": "Senkawa",
+      "numbers": [
+        "F07",
+        "Y07"
+      ]
+    },
+    "sendagi": {
+      "ja": "千駄木",
+      "en": "Sendagi",
+      "numbers": [
+        "C15"
+      ]
+    },
+    "zoshigaya": {
+      "ja": "雑司が谷",
+      "en": "Zoshigaya",
+      "numbers": [
+        "F10"
+      ]
+    },
+    "takadanobaba": {
+      "ja": "高田馬場",
+      "en": "Takadanobaba",
+      "numbers": [
+        "T03"
+      ]
+    },
+    "takebashi": {
+      "ja": "竹橋",
+      "en": "Takebashi",
+      "numbers": [
+        "T08"
+      ]
+    },
+    "tatsumi": {
+      "ja": "辰巳",
+      "en": "Tatsumi",
+      "numbers": [
+        "Y23"
+      ]
+    },
+    "tameike-sanno": {
+      "ja": "溜池山王",
+      "en": "Tameike-sanno",
+      "numbers": [
+        "G06",
+        "N06"
+      ]
+    },
+    "tawaramachi": {
+      "ja": "田原町",
+      "en": "Tawaramachi",
+      "numbers": [
+        "G18"
+      ]
+    },
+    "chikatetsu-akatsuka": {
+      "ja": "地下鉄赤塚",
+      "en": "Chikatetsu-akatsuka",
+      "numbers": [
+        "F03",
+        "Y03"
+      ]
+    },
+    "chikatetsu-narimasu": {
+      "ja": "地下鉄成増",
+      "en": "Chikatetsu-narimasu",
+      "numbers": [
+        "F02",
+        "Y02"
+      ]
+    },
+    "tsukishima": {
+      "ja": "月島",
+      "en": "Tsukishima",
+      "numbers": [
+        "Y21"
+      ]
+    },
+    "tsukiji": {
+      "ja": "築地",
+      "en": "Tsukiji",
+      "numbers": [
+        "H11"
+      ]
+    },
+    "tokyo": {
+      "ja": "東京",
+      "en": "Tokyo",
+      "numbers": [
+        "M17"
+      ]
+    },
+    "todaimae": {
+      "ja": "東大前",
+      "en": "Todaimae",
+      "numbers": [
+        "N12"
+      ]
+    },
+    "toyocho": {
+      "ja": "東陽町",
+      "en": "Toyocho",
+      "numbers": [
+        "T14"
+      ]
+    },
+    "toyosu": {
+      "ja": "豊洲",
+      "en": "Toyosu",
+      "numbers": [
+        "Y22"
+      ]
+    },
+    "toranomon": {
+      "ja": "虎ノ門",
+      "en": "Toranomon",
+      "numbers": [
+        "G07"
+      ]
+    },
+    "toranomon-hills": {
+      "ja": "虎ノ門ヒルズ",
+      "en": "Toranomon Hills",
+      "numbers": [
+        "H06"
+      ]
+    },
+    "naka-okachimachi": {
+      "ja": "仲御徒町",
+      "en": "Naka-okachimachi",
+      "numbers": [
+        "H17"
+      ]
+    },
+    "nakano": {
+      "ja": "中野",
+      "en": "Nakano",
+      "numbers": [
+        "T01"
+      ]
+    },
+    "nakano-sakaue": {
+      "ja": "中野坂上",
+      "en": "Nakano-sakaue",
+      "numbers": [
+        "M06"
+      ]
+    },
+    "nakano-shimbashi": {
+      "ja": "中野新橋",
+      "en": "Nakano-shimbashi",
+      "numbers": [
+        "Mb05"
+      ]
+    },
+    "nakano-fujimicho": {
+      "ja": "中野富士見町",
+      "en": "Nakano-fujimicho",
+      "numbers": [
+        "Mb04"
+      ]
+    },
+    "naka-meguro": {
+      "ja": "中目黒",
+      "en": "Naka-meguro",
+      "numbers": [
+        "H01"
+      ]
+    },
+    "nagatacho": {
+      "ja": "永田町",
+      "en": "Nagatacho",
+      "numbers": [
+        "N07",
+        "Y16",
+        "Z04"
+      ]
+    },
+    "nishi-kasai": {
+      "ja": "西葛西",
+      "en": "Nishi-kasai",
+      "numbers": [
+        "T16"
+      ]
+    },
+    "nishigahara": {
+      "ja": "西ケ原",
+      "en": "Nishigahara",
+      "numbers": [
+        "N15"
+      ],
+      "packageJa": "西ヶ原",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "nishi-shinjuku": {
+      "ja": "西新宿",
+      "en": "Nishi-shinjuku",
+      "numbers": [
+        "M07"
+      ]
+    },
+    "nishi-nippori": {
+      "ja": "西日暮里",
+      "en": "Nishi-nippori",
+      "numbers": [
+        "C16"
+      ]
+    },
+    "nishi-funabashi": {
+      "ja": "西船橋",
+      "en": "Nishi-funabashi",
+      "numbers": [
+        "T23"
+      ]
+    },
+    "nishi-waseda": {
+      "ja": "西早稲田",
+      "en": "Nishi-waseda",
+      "numbers": [
+        "F11"
+      ]
+    },
+    "nijubashimae": {
+      "ja": "二重橋前〈丸の内〉",
+      "en": "Nijubashimae <Marunouchi>",
+      "numbers": [
+        "C10"
+      ],
+      "packageJa": "二重橋前",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "nihombashi": {
+      "ja": "日本橋",
+      "en": "Nihombashi",
+      "numbers": [
+        "G11",
+        "T10"
+      ]
+    },
+    "ningyocho": {
+      "ja": "人形町",
+      "en": "Ningyocho",
+      "numbers": [
+        "H14"
+      ]
+    },
+    "nezu": {
+      "ja": "根津",
+      "en": "Nezu",
+      "numbers": [
+        "C14"
+      ]
+    },
+    "nogizaka": {
+      "ja": "乃木坂",
+      "en": "Nogizaka",
+      "numbers": [
+        "C05"
+      ]
+    },
+    "hatchobori": {
+      "ja": "八丁堀",
+      "en": "Hatchobori",
+      "numbers": [
+        "H12"
+      ]
+    },
+    "hanzomon": {
+      "ja": "半蔵門",
+      "en": "Hanzomon",
+      "numbers": [
+        "Z05"
+      ]
+    },
+    "baraki-nakayama": {
+      "ja": "原木中山",
+      "en": "Baraki-nakayama",
+      "numbers": [
+        "T22"
+      ]
+    },
+    "hikawadai": {
+      "ja": "氷川台",
+      "en": "Hikawadai",
+      "numbers": [
+        "F05",
+        "Y05"
+      ]
+    },
+    "higashi-ikebukuro": {
+      "ja": "東池袋",
+      "en": "Higashi-ikebukuro",
+      "numbers": [
+        "Y10"
+      ]
+    },
+    "higashi-ginza": {
+      "ja": "東銀座",
+      "en": "Higashi-ginza",
+      "numbers": [
+        "H10"
+      ]
+    },
+    "higashi-koenji": {
+      "ja": "東高円寺",
+      "en": "Higashi-koenji",
+      "numbers": [
+        "M04"
+      ]
+    },
+    "higashi-shinjuku": {
+      "ja": "東新宿",
+      "en": "Higashi-shinjuku",
+      "numbers": [
+        "F12"
+      ]
+    },
+    "hibiya": {
+      "ja": "日比谷",
+      "en": "Hibiya",
+      "numbers": [
+        "C09",
+        "H08"
+      ]
+    },
+    "hiro-o": {
+      "ja": "広尾",
+      "en": "Hiro-o",
+      "numbers": [
+        "H03"
+      ]
+    },
+    "heiwadai": {
+      "ja": "平和台",
+      "en": "Heiwadai",
+      "numbers": [
+        "F04",
+        "Y04"
+      ]
+    },
+    "honancho": {
+      "ja": "方南町",
+      "en": "Honancho",
+      "numbers": [
+        "Mb03"
+      ]
+    },
+    "hon-komagome": {
+      "ja": "本駒込",
+      "en": "Hon-komagome",
+      "numbers": [
+        "N13"
+      ]
+    },
+    "hongo-sanchome": {
+      "ja": "本郷三丁目",
+      "en": "Hongo-sanchome",
+      "numbers": [
+        "M21"
+      ]
+    },
+    "machiya": {
+      "ja": "町屋",
+      "en": "Machiya",
+      "numbers": [
+        "C17"
+      ]
+    },
+    "mitsukoshimae": {
+      "ja": "三越前",
+      "en": "Mitsukoshimae",
+      "numbers": [
+        "G12",
+        "Z09"
+      ]
+    },
+    "minami-asagaya": {
+      "ja": "南阿佐ケ谷",
+      "en": "Minami-asagaya",
+      "numbers": [
+        "M02"
+      ],
+      "packageJa": "南阿佐ヶ谷",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "minami-gyotoku": {
+      "ja": "南行徳",
+      "en": "Minami-gyotoku",
+      "numbers": [
+        "T19"
+      ]
+    },
+    "minami-sunamachi": {
+      "ja": "南砂町",
+      "en": "Minami-sunamachi",
+      "numbers": [
+        "T15"
+      ]
+    },
+    "minami-senju": {
+      "ja": "南千住",
+      "en": "Minami-senju",
+      "numbers": [
+        "H21"
+      ]
+    },
+    "minowa": {
+      "ja": "三ノ輪",
+      "en": "Minowa",
+      "numbers": [
+        "H20"
+      ]
+    },
+    "myogadani": {
+      "ja": "茗荷谷",
+      "en": "Myogadani",
+      "numbers": [
+        "M23"
+      ]
+    },
+    "myoden": {
+      "ja": "妙典",
+      "en": "Myoden",
+      "numbers": [
+        "T21"
+      ]
+    },
+    "meiji-jingumae": {
+      "ja": "明治神宮前〈原宿〉",
+      "en": "Meiji-jingumae <Harajuku>",
+      "numbers": [
+        "C03",
+        "F15"
+      ],
+      "packageJa": "明治神宮前",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "meguro": {
+      "ja": "目黒",
+      "en": "Meguro",
+      "numbers": [
+        "N01"
+      ]
+    },
+    "monzen-nakacho": {
+      "ja": "門前仲町",
+      "en": "Monzen-nakacho",
+      "numbers": [
+        "T12"
+      ]
+    },
+    "yurakucho": {
+      "ja": "有楽町",
+      "en": "Yurakucho",
+      "numbers": [
+        "Y18"
+      ]
+    },
+    "yushima": {
+      "ja": "湯島",
+      "en": "Yushima",
+      "numbers": [
+        "C13"
+      ]
+    },
+    "yotsuya": {
+      "ja": "四ツ谷",
+      "en": "Yotsuya",
+      "numbers": [
+        "M12",
+        "N08"
+      ]
+    },
+    "yotsuya-sanchome": {
+      "ja": "四谷三丁目",
+      "en": "Yotsuya-sanchome",
+      "numbers": [
+        "M11"
+      ]
+    },
+    "yoyogi-uehara": {
+      "ja": "代々木上原",
+      "en": "Yoyogi-uehara",
+      "numbers": [
+        "C01"
+      ]
+    },
+    "yoyogi-koen": {
+      "ja": "代々木公園",
+      "en": "Yoyogi-koen",
+      "numbers": [
+        "C02"
+      ]
+    },
+    "roppongi": {
+      "ja": "六本木",
+      "en": "Roppongi",
+      "numbers": [
+        "H04"
+      ]
+    },
+    "roppongi-itchome": {
+      "ja": "六本木一丁目",
+      "en": "Roppongi-itchome",
+      "numbers": [
+        "N05"
+      ]
+    },
+    "wakoshi": {
+      "ja": "和光市",
+      "en": "Wakoshi",
+      "numbers": [
+        "F01",
+        "Y01"
+      ]
+    },
+    "waseda": {
+      "ja": "早稲田",
+      "en": "Waseda",
+      "numbers": [
+        "T04"
+      ]
+    }
+  }
+}

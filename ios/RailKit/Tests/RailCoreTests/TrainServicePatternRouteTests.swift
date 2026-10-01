@@ -183,6 +183,44 @@ struct TrainServicePatternRouteTests {
         #expect(!candidates.contains(1))
     }
 
+    @Test func fixedCodeRecognizesOnlyExplicitOrExactHistoricalStationIdentity() {
+        func station(
+            name: String, code: String, group: String, coordinates: [Stations.Value]
+        ) -> Stations.Feature {
+            Stations.Feature(
+                properties: [
+                    "station_name": .string(name), "n02_station_code": .string(code),
+                    "n02_group_code": .string(group),
+                ],
+                geometry: .init(type: "LineString", coordinates: .array(coordinates)))
+        }
+        let shape: [Stations.Value] = [
+            .array([.number(136.64858), .number(36.57927)]),
+            .array([.number(136.64711), .number(36.57726)]),
+        ]
+        let index = Stations.Index([
+            station(name: "金沢", code: "002093", group: "002093", coordinates: shape),
+            station(name: "金沢", code: "002092", group: "002092", coordinates: shape),
+            station(name: "尼崎", code: "006918", group: "006918", coordinates: shape),
+            station(name: "尼崎", code: "006920", group: "006918", coordinates: [
+                .array([.number(135.43066), .number(34.73204)]),
+                .array([.number(135.43290), .number(34.73167)]),
+            ]),
+            station(name: "金沢", code: "distant", group: "distant", coordinates: [
+                .array([.number(139.0), .number(36.0)]),
+                .array([.number(139.1), .number(36.1)]),
+            ]),
+            station(name: "別駅", code: "other-name", group: "other", coordinates: shape),
+        ])
+
+        #expect(index.hasSameStationIdentity(referenceCode: "002093", actualIndex: 0))
+        #expect(index.hasSameStationIdentity(referenceCode: "002093", actualIndex: 1))
+        #expect(index.hasSameStationIdentity(referenceCode: "006918", actualIndex: 3))
+        #expect(!index.hasSameStationIdentity(referenceCode: "002093", actualIndex: 4))
+        #expect(!index.hasSameStationIdentity(referenceCode: "002093", actualIndex: 5))
+        #expect(!index.hasSameStationIdentity(referenceCode: "missing", actualIndex: 0))
+    }
+
     @Test func crossCompanyPatternsKeepFixedStationIdentity() throws {
         for id in ["shirayuki-niigata-joetsumyoko", "super-inaba-okayama-tottori"] {
             let pattern = try #require(TrainServicePatterns.patterns.first { $0.id == id })
@@ -328,19 +366,25 @@ struct TrainServicePatternRouteTests {
                 }
                 for (ref, actual) in [(refs[index], solved.fromStationIndex),
                                       (refs[index + 1], solved.toStationIndex)] {
-                    // The solved feature's own code must be the fixed code.
-                    // A same-name or nearby station with another code fails.
+                    // The stop keeps its fixed directory code. A dated solve
+                    // may select another line/operator membership only when
+                    // the station index proves the same physical identity.
+                    // Same-name or nearby platforms still fail.
                     let actualCode = Stations.stationCode(env.stations.features[actual])
-                    let exact = env.stations.candidateIndices(
-                        for: .stop(Stations.Stop(n02StationCode: ref.sourceCode)))
+                    let sameStationIdentity = env.stations.hasSameStationIdentity(
+                        referenceCode: ref.sourceCode, actualIndex: actual)
                     let valid = RouteSolver.filterStationCandidatesByRideDate(
                         [actual], in: env.stations, rideDate: testDate)
                     let nameMatches = Stations.normalizeStationName(
                         Stations.stationName(env.stations.features[actual]))
                         == Stations.normalizeStationName(ref.name)
+                        || (testDate != nil && env.stations.isCertifiedHistoricalNameAlias(
+                            actualIndex: actual, referenceName: ref.name,
+                            referenceCode: ref.sourceCode))
                     if TrainServicePatternAcceptance.referenceIntegrity(
-                        expectedCode: ref.sourceCode, actualCode: actualCode) != "passed"
-                        || !exact.contains(actual) || valid.isEmpty || !nameMatches {
+                        expectedCode: ref.sourceCode, actualCode: actualCode,
+                        sameStationIdentity: sameStationIdentity) != "passed"
+                        || valid.isEmpty || !nameMatches {
                         outcome.unresolvedReferences.append(
                             "\(direction): \(ref.name) [\(ref.sourceCode)]")
                     }

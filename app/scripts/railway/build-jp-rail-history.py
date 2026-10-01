@@ -35,6 +35,9 @@ Usage: python3 app/scripts/railway/build-jp-rail-history.py [--source-dir DIR]
 import argparse, datetime, io, json, math, os, sys, zipfile
 from collections import defaultdict
 import shapefile
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'history'))
+from temporal_source import (compile_event as compile_temporal_event, normalize_stamps,
+                             expand_legacy_periods, constrain_opening_predecessors)
 
 # Events with no kind are closures. The ride solver reads the service interval
 # only. A lone valid_from/valid_to pair is that interval; infrastructure_validity
@@ -125,6 +128,9 @@ class SegIndex:
 
 
 def open_release(src, year):
+    normalized = os.path.join(src, f'N02-{year}.json')
+    if os.path.exists(normalized):
+        return json.load(open(normalized))
     for name in (f'N02-{year}_GML.zip', f'N02-{year}.zip'):
         path = os.path.join(src, name)
         if os.path.exists(path):
@@ -133,7 +139,12 @@ def open_release(src, year):
 
 
 def read_release(zf, kind):
+    if isinstance(zf, dict):
+        key = 'sections' if kind == 'RailroadSection' else 'stations'
+        return [(f['properties'], line_coords(f)) for f in zf[key]]
     names = [n for n in zf.namelist() if n.endswith(f'{kind}.shp')]
+    if not names:
+        sys.exit(f'no {kind} shapefile; normalize legacy N02 fields and CRS first')
     # Prefer the Shift-JIS copy; N02-05 ships a superseded v1.0 folder too.
     names.sort(key=lambda n: ('v1.0' in n, 'UTF' in n.upper()))
     base = names[0][:-4]
@@ -478,8 +489,10 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
     if kind == 'operator_transfer' and not ev.get('to_operator'):
         sys.exit(f"{ev['id']}: operator_transfer needs to_operator")
     secs, stas = release(ev['year'])
-    old_secs = [(p, pts) for p, pts in secs if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']]
-    old_stas = [(p, pts) for p, pts in stas if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']]
+    old_secs = [(p, pts) for p, pts in secs if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']
+                and all(in_bbox(c, ev.get('bbox')) for c in pts)]
+    old_stas = [(p, pts) for p, pts in stas if p['N02_003'] == ev['line'] and p['N02_004'] == ev['operator']
+                and all(in_bbox(c, ev.get('bbox')) for c in pts)]
     def in_event(feature):
         bbox = ev.get('bbox')
         return bbox is None or all(in_bbox(c, bbox) for c in line_coords(feature))
@@ -550,6 +563,8 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
         elif old_secs and kind != 'resumption':
             for props, pts in old_secs:
                 remember_section(overlay_section_feature(ev, props, pts))
+            for props, pts in old_stas:
+                remember_station(overlay_station_feature(ev, props, pts))
             if not emitted_coords:
                 sys.exit(f"{ev['id']}: no geometry in N02-{ev['year']}")
         else:
@@ -559,8 +574,10 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
             sys.exit(f"{ev['id']}: no {ev['line']}/{ev['operator']} in N02-{ev['year']}")
         for props, pts in old_secs:
             remember_section(overlay_section_feature(ev, props, pts))
+        for props, pts in old_stas:
+            remember_station(overlay_station_feature(ev, props, pts))
         successor = [f for f in features_of(
-            cur_sections, ev['line'], ev['to_operator'], 'N02_003', 'N02_004') if in_event(f)]
+            cur_sections, ev.get('to_line', ev['line']), ev['to_operator'], 'N02_003', 'N02_004') if in_event(f)]
         if successor:
             # Old service ends where the successor's service starts (half-open).
             stamped = {
@@ -570,7 +587,7 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
             if 'infrastructure_validity' in ev:
                 stamped['infrastructure_validity'] = ev['infrastructure_validity']
             entry = retirement_for(
-                stamped, successor, cur_sections, ev['line'], ev['to_operator'], 'N02_003', 'N02_004')
+                stamped, successor, cur_sections, ev.get('to_line', ev['line']), ev['to_operator'], 'N02_003', 'N02_004')
             if not isinstance(entry, dict):
                 sys.exit(f"{ev['id']}: {entry}")
             retirements.append(entry)
@@ -589,17 +606,99 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
     }
 
 
+def source_event_geometry(event, release):
+    """Materialize explicit old-release selectors for rich source events.
+
+    Snapshot identity/coordinates are preserved. Current geometry is never
+    silently presented as an old surveyed alignment.
+    """
+    geometry = event.get('geometry', {})
+    historical_periods = geometry.get('historical_periods')
+    if historical_periods is not None:
+        if not isinstance(historical_periods, list) or not historical_periods:
+            raise ValueError(f"{event.get('id', '?')}: historical_periods must be a non-empty list")
+        import copy
+        event = copy.deepcopy(event)
+        for index, period in enumerate(event['geometry']['historical_periods']):
+            if not isinstance(period, dict) or not isinstance(period.get('selector'), dict):
+                raise ValueError(f"{event.get('id', '?')}: historical period {index} needs a selector")
+            label = period.get('release', '')
+            if period.get('source') != 'N02' or not label.startswith('N02-'):
+                raise ValueError(f"{event.get('id', '?')}: historical period {index} needs N02 release")
+            identity = period.get('historical_identity', {})
+            selector = period.get('selector', {})
+            bbox = selector.get('historical_bbox', selector.get('bbox', event.get('bbox')))
+            names = selector.get('historical_stations')
+            rows, station_rows = release(label[4:])
+            period['historical_sections'] = _historical_sections(rows, identity, bbox)
+            period['historical_stations'] = _historical_stations(station_rows, identity, bbox, names)
+        return event
+    label = geometry.get('release', '')
+    if geometry.get('source') != 'N02' or not label.startswith('N02-'):
+        return event
+    import copy
+    event = copy.deepcopy(event)
+    identity = geometry.get('historical_identity') or event.get('before') or event
+    selector = geometry.get('selector', {})
+    bbox = selector.get('historical_bbox', selector.get('bbox', event.get('bbox')))
+    names = selector.get('historical_stations')
+    if not names and event.get('before', {}).get('station'):
+        names = [event['before']['station']]
+    rows, station_rows = release(label[4:])
+    event['geometry']['historical_sections'] = _historical_sections(rows, identity, bbox)
+    event['geometry']['historical_stations'] = _historical_stations(station_rows, identity, bbox, names)
+    return event
+
+
+def _historical_sections(rows, identity, bbox):
+    return [{'type': 'Feature', 'properties': dict(props),
+             'geometry': {'type': 'LineString', 'coordinates': [list(q(c)) for c in points]}}
+            for props, points in rows
+            if props['N02_003'] == identity.get('line') and props['N02_004'] == identity.get('operator')
+            and all(in_bbox(c, bbox) for c in points)]
+
+
+def _historical_stations(rows, identity, bbox, names=None):
+    result = []
+    for props, points in rows:
+        if props['N02_003'] != identity.get('line') or props['N02_004'] != identity.get('operator') \
+                or not all(in_bbox(c, bbox) for c in points) or names and props['N02_005'] not in names:
+            continue
+        feature = {'type': 'Feature', 'properties': {
+            'line_name': props['N02_003'], 'operator': props['N02_004'],
+            'station_name': props['N02_005'], 'railway_class_code': props['N02_001'],
+            'institution_type_code': props['N02_002']}, 'geometry': {
+                'type': 'LineString', 'coordinates': [list(q(c)) for c in points]}}
+        for field, key in [('N02_005c', 'n02_station_code'), ('N02_005g', 'n02_group_code')]:
+            if props.get(field):
+                feature['properties'][key] = props[field]
+        result.append(feature)
+    return result
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--source-dir', default=DEFAULT_SRC)
     ap.add_argument('--revision', required=True)
     ap.add_argument('--report')
     ap.add_argument('--output', default=OUT)
+    ap.add_argument('--events', default=EVENTS)
+    ap.add_argument('--sections', default=SECTIONS)
+    ap.add_argument('--stations', default=STATIONS)
     args = ap.parse_args()
 
-    spec = json.load(open(EVENTS))
-    cur_sections = json.load(open(SECTIONS))['features']
-    cur_stations = json.load(open(STATIONS))['features']
+    spec = json.load(open(args.events))
+    cur_sections = json.load(open(args.sections))['features']
+    cur_stations = json.load(open(args.stations))['features']
+    event_ids = [e.get('id') for e in spec['events'] + spec.get('temporal_events', [])]
+    if any(not i for i in event_ids) or len(set(event_ids)) != len(event_ids):
+        sys.exit('source events require unique non-empty ids')
+    for event in spec['events']:
+        mode = event.get('geometry_mode')
+        if mode not in (None, 'identity'):
+            sys.exit(event['id'] + ': unsupported geometry_mode')
+        if mode == 'identity' and event.get('review', {}).get('status') != 'verified':
+            sys.exit(event['id'] + ': identity geometry requires verified review')
 
     cover = SegIndex()          # current track + retired geometry emitted so far
     joinable = SegIndex()       # what a loose end may join: no 新幹線
@@ -660,7 +759,13 @@ def main():
                 snap.add(c); join_to.add(c)
         runs = []
         for props, pts in feats:
-            for run in uncovered_runs(pts, snap, bbox):
+            if ev.get('geometry_mode') == 'identity':
+                # Reviewed old identity is authoritative even on current track.
+                # Never cut a partial feature by an approximate bbox.
+                candidates = [pts] if all(in_bbox(p, bbox) for p in pts) else []
+            else:
+                candidates = uncovered_runs(pts, snap, bbox)
+            for run in candidates:
                 runs.append((props, run))
         # N02 splits a line into short features, so judge noise per connected
         # chain of runs: keep a chain that is long enough and strays far enough.
@@ -681,7 +786,7 @@ def main():
             chain_maxd[find(i)] = max(chain_maxd[find(i)], max(snap.dist(p, 3000) for p in run))
         kept, dropped = [], []
         for i, (props, run) in enumerate(runs):
-            ok = chain_len[find(i)] >= MIN_RUN_M and chain_maxd[find(i)] >= min_maxd
+            ok = ev.get('geometry_mode') == 'identity' or (chain_len[find(i)] >= MIN_RUN_M and chain_maxd[find(i)] >= min_maxd)
             (kept if ok else dropped).append((props, run, chain_len[find(i)], chain_maxd[find(i)]))
         # Loose ends: endpoints not shared with another kept run of this event.
         ends = defaultdict(int)
@@ -789,6 +894,8 @@ def main():
                  'dropped_runs': len(dropped), 'dropped_km': round(sum(length_m(r[1]) for r in dropped) / 1000, 2),
                  'km': round(km, 2),
                  'joins': joins, 'joined_lines': joined, 'stations': st_names}
+        if not emitted:
+            sys.exit(f"{ev['id']}: matched no historical geometry; use reviewed identity selection or resolve source gap")
         if ev.get('kind') == 'relocation':
             entry['valid_from'] = relocation_retirement(ev, cur_sections, cur_stations, feats, retirements)
         report.append(entry)
@@ -796,9 +903,32 @@ def main():
               f"{'/'.join(st_names)}", file=sys.stderr)
 
     stations = list(station_by_key.values())
+    try:
+        sections, stations = expand_legacy_periods(spec['events'], sections, stations)
+    except ValueError as error:
+        sys.exit(str(error))
+    for event in spec.get('temporal_events', []):
+        try:
+            event = source_event_geometry(event, release)
+            compiled = compile_temporal_event(event, cur_sections, cur_stations)
+        except (ValueError, KeyError) as error:
+            sys.exit(f"{event.get('id', '?')}: {error}")
+        sections.extend(compiled['sections'])
+        stations.extend(compiled['stations'])
+        retirements.extend(compiled['retirements'])
+        report.append({'id': event['id'], 'kind': event['kind'],
+                       'runs': len(compiled['sections']),
+                       'stations': [s['properties']['station_name'] for s in compiled['stations']],
+                       'retirements': [r['history_id'] for r in compiled['retirements']]})
     retirements.extend(spec.get('retirements', []))
+    try:
+        sections, stations = constrain_opening_predecessors(
+            spec.get('temporal_events', []), sections, stations, cur_sections, cur_stations)
+        retirements = normalize_stamps(retirements, cur_sections, cur_stations)
+    except ValueError as error:
+        sys.exit(str(error))
     out = {'schema_version': '1', 'revision': args.revision,
-           'source': '国土数値情報（鉄道データ N02）2005〜2024年度版（国土交通省）を加工して作成; 廃止日は各 source を参照',
+           'source': '国土数値情報（鉄道データ N02）2005〜2025年度版（国土交通省）を加工して作成; 正確な運行日は各 source を参照',
            'sections': sections, 'stations': stations, 'retirements': retirements}
     with open(args.output, 'w') as fh:
         json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))

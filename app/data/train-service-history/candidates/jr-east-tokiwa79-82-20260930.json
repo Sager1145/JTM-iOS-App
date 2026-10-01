@@ -1,0 +1,326 @@
+{
+  "candidate_id": "jr-east-tokiwa79-82-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30, each selected JR East page has td.ok for that day. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.tokiwa.79.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "79",
+      "train_number": "79M",
+      "source_id": "jr-east-tokiwa79-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/050281.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ79号 79M; 設備 and 番線 columns",
+      "printed_equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "printed_platforms": {
+        "品川": "９",
+        "東京": "７",
+        "上野": "８",
+        "水戸": "４"
+      },
+      "stops": [
+        [
+          "品川",
+          null,
+          "21:15"
+        ],
+        [
+          "東京",
+          "21:22",
+          "21:23"
+        ],
+        [
+          "上野",
+          "21:29",
+          "21:30"
+        ],
+        [
+          "柏",
+          "21:52",
+          "21:53"
+        ],
+        [
+          "龍ケ崎市",
+          "22:04",
+          "22:05"
+        ],
+        [
+          "牛久",
+          "22:08",
+          "22:09"
+        ],
+        [
+          "ひたち野うしく",
+          "22:12",
+          "22:12"
+        ],
+        [
+          "荒川沖",
+          "22:15",
+          "22:15"
+        ],
+        [
+          "土浦",
+          "22:20",
+          "22:21"
+        ],
+        [
+          "石岡",
+          "22:30",
+          "22:31"
+        ],
+        [
+          "友部",
+          "22:41",
+          "22:42"
+        ],
+        [
+          "赤塚",
+          "22:48",
+          "22:49"
+        ],
+        [
+          "水戸",
+          "22:54",
+          "22:55"
+        ],
+        [
+          "勝田",
+          "23:00",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.80.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "80",
+      "train_number": "80M",
+      "source_id": "jr-east-tokiwa80-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048571.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ80号 80M; 設備 and 番線 columns; 運転日 平日運転",
+      "printed_equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "printed_platforms": {
+        "水戸": "７",
+        "上野": "９",
+        "東京": "１０",
+        "品川": "９"
+      },
+      "stops": [
+        [
+          "勝田",
+          null,
+          "18:47"
+        ],
+        [
+          "水戸",
+          "18:52",
+          "18:53"
+        ],
+        [
+          "友部",
+          "19:03",
+          "19:03"
+        ],
+        [
+          "石岡",
+          "19:14",
+          "19:14"
+        ],
+        [
+          "土浦",
+          "19:24",
+          "19:24"
+        ],
+        [
+          "柏",
+          "19:45",
+          "19:46"
+        ],
+        [
+          "上野",
+          "20:08",
+          "20:10"
+        ],
+        [
+          "東京",
+          "20:15",
+          "20:16"
+        ],
+        [
+          "品川",
+          "20:23",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.81.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "81",
+      "train_number": "81M",
+      "source_id": "jr-east-tokiwa81-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076371.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ81号 81M; 設備 and 番線 columns",
+      "printed_equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "printed_platforms": {
+        "品川": "９",
+        "東京": "８",
+        "上野": "８",
+        "水戸": "４"
+      },
+      "stops": [
+        [
+          "品川",
+          null,
+          "21:45"
+        ],
+        [
+          "東京",
+          "21:52",
+          "21:53"
+        ],
+        [
+          "上野",
+          "21:58",
+          "22:00"
+        ],
+        [
+          "柏",
+          "22:21",
+          "22:22"
+        ],
+        [
+          "土浦",
+          "22:42",
+          "22:43"
+        ],
+        [
+          "石岡",
+          "22:52",
+          "22:53"
+        ],
+        [
+          "友部",
+          "23:04",
+          "23:04"
+        ],
+        [
+          "水戸",
+          "23:14",
+          "23:15"
+        ],
+        [
+          "勝田",
+          "23:19",
+          "23:20"
+        ],
+        [
+          "東海",
+          "23:25",
+          "23:26"
+        ],
+        [
+          "大甕",
+          "23:31",
+          "23:31"
+        ],
+        [
+          "常陸多賀",
+          "23:35",
+          "23:35"
+        ],
+        [
+          "日立",
+          "23:39",
+          "23:39"
+        ],
+        [
+          "高萩",
+          "23:50",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.82.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "82",
+      "train_number": "82M",
+      "source_id": "jr-east-tokiwa82-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076481.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ82号 82M; 設備 and 番線 columns",
+      "printed_equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "printed_platforms": {
+        "水戸": "７",
+        "上野": "９",
+        "東京": "１０",
+        "品川": "９"
+      },
+      "stops": [
+        [
+          "勝田",
+          null,
+          "19:47"
+        ],
+        [
+          "水戸",
+          "19:52",
+          "19:53"
+        ],
+        [
+          "友部",
+          "20:03",
+          "20:03"
+        ],
+        [
+          "石岡",
+          "20:14",
+          "20:14"
+        ],
+        [
+          "土浦",
+          "20:24",
+          "20:24"
+        ],
+        [
+          "柏",
+          "20:45",
+          "20:46"
+        ],
+        [
+          "上野",
+          "21:06",
+          "21:08"
+        ],
+        [
+          "東京",
+          "21:13",
+          "21:14"
+        ],
+        [
+          "品川",
+          "21:23",
+          null
+        ]
+      ]
+    }
+  ]
+}

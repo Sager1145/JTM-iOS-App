@@ -24,6 +24,7 @@ def main():
     entities = {k: [] for k in ['services', 'service-name-periods', 'timetable-versions',
                 'station-identities', 'fact-sources', 'fact-completeness', 'research-queue']}
     trips, stops, calendars, exceptions, registry = [], [], [], [], []
+    operator_segments, line_segments = [], []
     stations = {}
     package = json.loads((ROOT / 'app/public/rail/jp-2025.json').read_text())
     registry.append(dict(source_id='jtm-current-station-directory', publisher='JTM / MLIT N02',
@@ -32,7 +33,9 @@ def main():
         license_status='repository_source_terms', redistribution_status='existing_repository_resource',
         automated_extraction_allowed=True, notes='Attests current sourceCode only; not historical station validity or train routing.'))
 
-    def add_trip(service, name, scope, number, internal, days, rows, source):
+    def add_trip(service, name, scope, number, internal, days, rows, source, direction=None,
+                 verified_dimensions=(), fact_page_locators=None):
+        fact_page_locators = fact_page_locators or {}
         days = sorted(d for d in days if d <= AS_OF)
         start, until = days[0], (date.fromisoformat(days[-1])+timedelta(days=1)).isoformat()
         trip_id = f'{scope}.{service}.{number}.{start}'
@@ -54,12 +57,16 @@ def main():
             stations[row['station_id']] = row.pop('_station')
             stops.append(dict(trip_id=trip_id, day_offset=0, pickup_allowed=int(row['call_type'] != 'destination'),
                 dropoff_allowed=int(row['call_type'] != 'origin'), time_accuracy='minute', source_id=source, **row))
-        trips.append(dict(trip_id=trip_id, timetable_version_id=version, service_id=service,
+        trip = dict(trip_id=trip_id, timetable_version_id=version, service_id=service,
             calendar_id=calendar, train_number=internal, public_number=number,
             origin_station_id=rows[0]['station_id'], destination_station_id=rows[-1]['station_id'],
-            service_class='limited_express', notes='Partial seed: operator segments and route lines require independent source review.'))
+            service_class='limited_express', notes='Partial seed: operator segments and route lines require independent source review.')
+        if direction is not None:
+            trip['direction'] = direction
+        trips.append(trip)
         for dimension in ['identity','train_number','operator','validity_calendar','origin_destination','stops','times','route_lines','station_refs','provenance']:
-            status = ('unknown' if dimension in ['operator','route_lines'] or dimension == 'train_number' and internal is None
+            status = ('verified' if dimension in verified_dimensions
+                      else 'unknown' if dimension in ['operator','route_lines'] or dimension == 'train_number' and internal is None
                       else 'partial' if dimension == 'times' and scope in ['jr-hokkaido','jr-kyushu'] or dimension == 'provenance'
                       else 'verified')
             entities['fact-completeness'].append(dict(entity_type='trip', entity_id=trip_id,
@@ -67,7 +74,8 @@ def main():
             if status == 'verified':
                 entities['fact-sources'].append(dict(entity_type='trip', entity_id=trip_id,
                     field_name=dimension, source_id='jtm-current-station-directory' if dimension=='station_refs' else source,
-                    page_or_locator='Shipped station directory' if dimension=='station_refs' else 'Published train table and calendar',
+                    page_or_locator=('Shipped station directory' if dimension=='station_refs'
+                                     else fact_page_locators.get(dimension, 'Published train table and calendar')),
                     confidence='high', verification_status=status))
             else:
                 entities['research-queue'].append(dict(research_id=trip_id+'.'+dimension, entity_type='trip',
@@ -111,13 +119,39 @@ def main():
     yufuin = BASE / 'sources/candidates/jr-kyushu-yufuin-no-mori-20260314.json'
     if yufuin.exists():
         v=json.loads(yufuin.read_text())
-        plan_source='jr-kyushu-yufuin-plan-20260919'
+        route_source=v['route_evidence']['network_map_source_id']
+        registry.append(dict(source_id=route_source,publisher='九州旅客鉄道株式会社',
+            title='JR九州 路線図（2026年1月現在）',source_type='official_network_map',
+            url_or_locator='https://www.jrkyushu.co.jp/railway/routemap/routemap2601.pdf',
+            accessed_at='2026-09-30',publication_date='2026-01-01',
+            license_status='all_rights_reserved_no_data_license_identified',
+            redistribution_status='verification_only',automated_extraction_allowed=False,
+            notes='Visually reviewed for JR ownership and the 鹿児島本線・久大本線・日豊本線 labels.'))
+        plan=v['operating_date_override']
+        plan_source=plan['source_id']
         registry.append(dict(source_id=plan_source,publisher='九州旅客鉄道株式会社',
-            title='ゆふいんの森・ゆふ 9月19日〜30日の運行計画',
-            source_type='official_planned_exception',url_or_locator='https://www.jrkyushu.co.jp/railway/index.html',
-            accessed_at=ACCESSED_AT,effective_date='2026-09-19',license_status='unknown',
-            redistribution_status='unknown',automated_extraction_allowed=False,
+            title=plan['title'], source_type='official_planned_exception',
+            url_or_locator=plan['url_or_locator'], accessed_at=plan['accessed_at'],
+            publication_date=plan['publication_date'], effective_date=plan['from'],
+            license_status='all_rights_reserved_no_data_license_identified',
+            redistribution_status='verification_only',automated_extraction_allowed=False,
             notes='Explicitly states all Yufuin-no-Mori numbers 1–6 normally operate September 19–30. Snapshot capped at AS_OF_DATE.'))
+        first_day=date.fromisoformat(plan['from'])
+        last_day=date.fromisoformat(plan['until_inclusive'])
+        operating_days=[
+            (first_day + timedelta(days=offset)).isoformat()
+            for offset in range((last_day-first_day).days+1)
+        ]
+        exact_day_candidate = BASE / 'candidates/jr-kyushu-yufuin-no-mori-six-20260930.json'
+        if exact_day_candidate.exists():
+            exact_day = json.loads(exact_day_candidate.read_text())
+            if (exact_day.get('service_date') != '2026-09-30' or
+                    {t.get('public_number') for t in exact_day.get('trips', [])} !=
+                    {str(number) for number in range(1, 7)}):
+                raise ValueError('Incomplete exact-date Yufuin-no-Mori replacement')
+            # The six train-specific pages supersede the older six schedule
+            # templates on this one date; retain the source plan through 9/30.
+            operating_days.remove('2026-09-30')
         for t in v['trips']:
             rows=[]
             for i,(station_id,name,arrival,departure,call_type) in enumerate(t['displayed_times']):
@@ -128,8 +162,48 @@ def main():
                     departure_time=departure,call_type=call_type,_station=dict(station_id=station_id,
                     name_snapshot=name,reference_kind='current_n02',current_source_code=code,rail_history_id=None)))
             add_trip('yufuin-no-mori','ゆふいんの森','jr-kyushu',t['public_number'],None,
-                     [f'2026-09-{d:02}' for d in range(19,31)],rows,v['source_id'])
+                     operating_days,rows,v['source_id'],direction=t['direction'],
+                     verified_dimensions={'times'},
+                     fact_page_locators={'times': v['time_evidence']['locator']})
             trip_id=trips[-1]['trip_id']
+            trips[-1]['notes']='All 46 official displayed clocks and their departure/arrival sides are verified across the six templates. Operator and ordered current physical-line identities were separately reviewed.'
+            for fact in entities['fact-completeness']:
+                if fact['entity_id']==trip_id and fact['dimension']=='operator':
+                    fact.update(status='verified',confidence='high')
+                elif fact['entity_id']==trip_id and fact['dimension']=='route_lines':
+                    fact.update(status='partial',confidence='high')
+            entities['research-queue'] = [
+                row for row in entities['research-queue']
+                if not (row['entity_id']==trip_id and row['missing_dimension']=='operator')
+            ]
+            for queued in entities['research-queue']:
+                if queued['entity_id']==trip_id and queued['missing_dimension']=='route_lines':
+                    queued['notes']='Current N02 identities and ordered official route labels are reviewed; a dated physical-identity validity interval is still unavailable.'
+            entities['fact-sources'].append(dict(entity_type='trip',entity_id=trip_id,
+                field_name='operator',source_id=route_source,
+                page_or_locator=v['operator_evidence']['locator'],confidence='high',verification_status='verified'))
+            for source_id, locator in [
+                (v['source_id'],v['route_evidence']['service_map_locator']),
+                (route_source,v['route_evidence']['network_map_locator']),
+                (v['route_evidence']['identity_source_id'],v['route_evidence']['identity_locator']),
+            ]:
+                entities['fact-sources'].append(dict(entity_type='trip',entity_id=trip_id,
+                    field_name='route_lines',source_id=source_id,page_or_locator=locator,
+                    confidence='high',verification_status='partial'))
+            operator_segments.append(dict(trip_id=trip_id,from_sequence=1,
+                to_sequence=len(rows),operator_id=v['operator_id']))
+            for sequence,(from_station,to_station,line_name,line_id) in enumerate(
+                    v['route_segments_by_public_number'][t['public_number']],start=1):
+                matches=[line for line in package['lines'] if line.get('id')==line_id]
+                if len(matches)!=1 or matches[0].get('name')!=line_name or matches[0].get('operator')!='九州旅客鉄道':
+                    raise ValueError(f'Unresolved current N02 line identity: {line_id}')
+                line_codes={station[0] for station in matches[0]['stations']}
+                if {from_station.removeprefix('jp.n02.'),to_station.removeprefix('jp.n02.')} - line_codes:
+                    raise ValueError(f'Line boundary is not on {line_id}: {from_station}, {to_station}')
+                line_segments.append(dict(trip_id=trip_id,sequence=sequence,
+                    from_station_id=from_station,to_station_id=to_station,line_name=line_name,
+                    operator_id=v['operator_id'],source_id=route_source,confidence='high',
+                    reference_kind='current_n02',current_n02_line_id=line_id))
             # Published stop times and the date-specific later plan have separate provenance.
             entities['timetable-versions'][-1]['source_ids'].append(plan_source)
             for fact in entities['fact-sources']:
@@ -145,6 +219,8 @@ def main():
     write(BASE / 'normalized/stop-times/reviewed-root/seeds.jsonl',stops)
     write(BASE / 'normalized/calendars/reviewed-root/seeds.jsonl',calendars)
     write(BASE / 'normalized/calendar-exceptions/reviewed-root/seeds.jsonl',exceptions)
+    write(BASE / 'normalized/trip-operator-segments/reviewed-root/seeds.jsonl',operator_segments)
+    write(BASE / 'normalized/trip-lines/reviewed-root/seeds.jsonl',line_segments)
     write(BASE / 'sources/source-registry-root.jsonl',registry)
     by_scope={}
     for trip in trips:
@@ -156,7 +232,8 @@ def main():
         scoped_stops=[s for s in stops if s['trip_id'] in scoped_ids]
         for dimension in ['inventory','train_number','calendar','stops','times','route_lines','station_refs','provenance']:
             count=(sum(bool(t.get('train_number')) for t in scoped_trips) if dimension=='train_number'
-                   else 0 if dimension=='route_lines' else len(scoped_stops) if dimension in ['stops','times','station_refs']
+                   else len([row for row in line_segments if row['trip_id'] in scoped_ids]) if dimension=='route_lines'
+                   else len(scoped_stops) if dimension in ['stops','times','station_refs']
                    else len(scoped_trips))
             coverage.append(dict(coverage_id=f'{scope}.2026.{dimension}.seed',operator_scope=scope,year=2026,
                 dimension=dimension,status='partial' if count else 'missing',record_count=count,

@@ -1,0 +1,433 @@
+{
+  "source": "https://www.kotsu.metro.tokyo.jp/eng/subway_stations/",
+  "japaneseSource": "https://www.kotsu.metro.tokyo.jp/subway/stations/",
+  "publisher": "Tokyo Metropolitan Bureau of Transportation",
+  "retrievedAt": "2026-09-29",
+  "description": "Toei Subway English and Japanese station lists joined on official station number; package group mapping is verified against operator and Japanese name.",
+  "byNumber": {
+    "A01": {
+      "ja": "西馬込",
+      "en": "Nishi-magome"
+    },
+    "A02": {
+      "ja": "馬込",
+      "en": "Magome"
+    },
+    "A03": {
+      "ja": "中延",
+      "en": "Nakanobu"
+    },
+    "A04": {
+      "ja": "戸越",
+      "en": "Togoshi"
+    },
+    "A05": {
+      "ja": "五反田",
+      "en": "Gotanda"
+    },
+    "A06": {
+      "ja": "高輪台",
+      "en": "Takanawadai"
+    },
+    "A07": {
+      "ja": "泉岳寺",
+      "en": "Sengakuji"
+    },
+    "A08": {
+      "ja": "三田",
+      "en": "Mita"
+    },
+    "A09": {
+      "ja": "大門",
+      "en": "Daimon"
+    },
+    "A10": {
+      "ja": "新橋",
+      "en": "Shimbashi"
+    },
+    "A11": {
+      "ja": "東銀座",
+      "en": "Higashi-ginza"
+    },
+    "A12": {
+      "ja": "宝町",
+      "en": "Takaracho"
+    },
+    "A13": {
+      "ja": "日本橋",
+      "en": "Nihombashi"
+    },
+    "A14": {
+      "ja": "人形町",
+      "en": "Ningyocho"
+    },
+    "A15": {
+      "ja": "東日本橋",
+      "en": "Higashi-nihombashi"
+    },
+    "A16": {
+      "ja": "浅草橋",
+      "en": "Asakusabashi"
+    },
+    "A17": {
+      "ja": "蔵前",
+      "en": "Kuramae"
+    },
+    "A18": {
+      "ja": "浅草",
+      "en": "Asakusa"
+    },
+    "A19": {
+      "ja": "本所吾妻橋",
+      "en": "Honjo-azumabashi"
+    },
+    "A20": {
+      "ja": "押上",
+      "en": "Oshiage"
+    },
+    "I01": {
+      "ja": "目黒",
+      "en": "Meguro"
+    },
+    "I02": {
+      "ja": "白金台",
+      "en": "Shirokanedai"
+    },
+    "I03": {
+      "ja": "白金高輪",
+      "en": "Shirokane-takanawa"
+    },
+    "I04": {
+      "ja": "三田",
+      "en": "Mita"
+    },
+    "I05": {
+      "ja": "芝公園",
+      "en": "Shibakoen"
+    },
+    "I06": {
+      "ja": "御成門",
+      "en": "Onarimon"
+    },
+    "I07": {
+      "ja": "内幸町",
+      "en": "Uchisaiwaicho"
+    },
+    "I08": {
+      "ja": "日比谷",
+      "en": "Hibiya"
+    },
+    "I09": {
+      "ja": "大手町",
+      "en": "Otemachi"
+    },
+    "I10": {
+      "ja": "神保町",
+      "en": "Jimbocho"
+    },
+    "I11": {
+      "ja": "水道橋",
+      "en": "Suidobashi"
+    },
+    "I12": {
+      "ja": "春日",
+      "en": "Kasuga"
+    },
+    "I13": {
+      "ja": "白山",
+      "en": "Hakusan"
+    },
+    "I14": {
+      "ja": "千石",
+      "en": "Sengoku"
+    },
+    "I15": {
+      "ja": "巣鴨",
+      "en": "Sugamo"
+    },
+    "I16": {
+      "ja": "西巣鴨",
+      "en": "Nishi-sugamo"
+    },
+    "I17": {
+      "ja": "新板橋",
+      "en": "Shin-itabashi"
+    },
+    "I18": {
+      "ja": "板橋区役所前",
+      "en": "Itabashikuyakushomae"
+    },
+    "I19": {
+      "ja": "板橋本町",
+      "en": "Itabashihoncho"
+    },
+    "I20": {
+      "ja": "本蓮沼",
+      "en": "Motohasunuma"
+    },
+    "I21": {
+      "ja": "志村坂上",
+      "en": "Shimura-sakaue"
+    },
+    "I22": {
+      "ja": "志村三丁目",
+      "en": "Shimura-sanchome"
+    },
+    "I23": {
+      "ja": "蓮根",
+      "en": "Hasune"
+    },
+    "I24": {
+      "ja": "西台",
+      "en": "Nishidai"
+    },
+    "I25": {
+      "ja": "高島平",
+      "en": "Takashimadaira"
+    },
+    "I26": {
+      "ja": "新高島平",
+      "en": "Shin-takashimadaira"
+    },
+    "I27": {
+      "ja": "西高島平",
+      "en": "Nishi-takashimadaira"
+    },
+    "S01": {
+      "ja": "新宿",
+      "en": "Shinjuku"
+    },
+    "S02": {
+      "ja": "新宿三丁目",
+      "en": "Shinjuku-sanchome"
+    },
+    "S03": {
+      "ja": "曙橋",
+      "en": "Akebonobashi"
+    },
+    "S04": {
+      "ja": "市ヶ谷",
+      "en": "Ichigaya"
+    },
+    "S05": {
+      "ja": "九段下",
+      "en": "Kudanshita"
+    },
+    "S06": {
+      "ja": "神保町",
+      "en": "Jimbocho"
+    },
+    "S07": {
+      "ja": "小川町",
+      "en": "Ogawamachi"
+    },
+    "S08": {
+      "ja": "岩本町",
+      "en": "Iwamotocho"
+    },
+    "S09": {
+      "ja": "馬喰横山",
+      "en": "Bakuro-yokoyama"
+    },
+    "S10": {
+      "ja": "浜町",
+      "en": "Hamacho"
+    },
+    "S11": {
+      "ja": "森下",
+      "en": "Morishita"
+    },
+    "S12": {
+      "ja": "菊川",
+      "en": "Kikukawa"
+    },
+    "S13": {
+      "ja": "住吉",
+      "en": "Sumiyoshi"
+    },
+    "S14": {
+      "ja": "西大島",
+      "en": "Nishi-ojima"
+    },
+    "S15": {
+      "ja": "大島",
+      "en": "Ojima"
+    },
+    "S16": {
+      "ja": "東大島",
+      "en": "Higashi-ojima"
+    },
+    "S17": {
+      "ja": "船堀",
+      "en": "Funabori"
+    },
+    "S18": {
+      "ja": "一之江",
+      "en": "Ichinoe"
+    },
+    "S19": {
+      "ja": "瑞江",
+      "en": "Mizue"
+    },
+    "S20": {
+      "ja": "篠崎",
+      "en": "Shinozaki"
+    },
+    "S21": {
+      "ja": "本八幡",
+      "en": "Motoyawata"
+    },
+    "E01": {
+      "ja": "新宿西口",
+      "en": "Shinjuku-nishiguchi"
+    },
+    "E02": {
+      "ja": "東新宿",
+      "en": "Higashi-shinjuku"
+    },
+    "E03": {
+      "ja": "若松河田",
+      "en": "Wakamatsu-kawada"
+    },
+    "E04": {
+      "ja": "牛込柳町",
+      "en": "Ushigome-yanagicho"
+    },
+    "E05": {
+      "ja": "牛込神楽坂",
+      "en": "Ushigome-kagurazaka"
+    },
+    "E06": {
+      "ja": "飯田橋",
+      "en": "Iidabashi"
+    },
+    "E07": {
+      "ja": "春日",
+      "en": "Kasuga"
+    },
+    "E08": {
+      "ja": "本郷三丁目",
+      "en": "Hongo-sanchome"
+    },
+    "E09": {
+      "ja": "上野御徒町",
+      "en": "Ueno-okachimachi"
+    },
+    "E10": {
+      "ja": "新御徒町",
+      "en": "Shin-okachimachi"
+    },
+    "E11": {
+      "ja": "蔵前",
+      "en": "Kuramae"
+    },
+    "E12": {
+      "ja": "両国",
+      "en": "Ryogoku"
+    },
+    "E13": {
+      "ja": "森下",
+      "en": "Morishita"
+    },
+    "E14": {
+      "ja": "清澄白河",
+      "en": "Kiyosumi-shirakawa"
+    },
+    "E15": {
+      "ja": "門前仲町",
+      "en": "Monzen-nakacho"
+    },
+    "E16": {
+      "ja": "月島",
+      "en": "Tsukishima"
+    },
+    "E17": {
+      "ja": "勝どき",
+      "en": "Kachidoki"
+    },
+    "E18": {
+      "ja": "築地市場",
+      "en": "Tsukijishijo"
+    },
+    "E19": {
+      "ja": "汐留",
+      "en": "Shiodome"
+    },
+    "E20": {
+      "ja": "大門",
+      "en": "Daimon"
+    },
+    "E21": {
+      "ja": "赤羽橋",
+      "en": "Akabanebashi"
+    },
+    "E22": {
+      "ja": "麻布十番",
+      "en": "Azabu-juban"
+    },
+    "E23": {
+      "ja": "六本木",
+      "en": "Roppongi"
+    },
+    "E24": {
+      "ja": "青山一丁目",
+      "en": "Aoyama-itchome"
+    },
+    "E25": {
+      "ja": "国立競技場",
+      "en": "Kokuritsu-kyogijo"
+    },
+    "E26": {
+      "ja": "代々木",
+      "en": "Yoyogi"
+    },
+    "E27": {
+      "ja": "新宿",
+      "en": "Shinjuku"
+    },
+    "E28": {
+      "ja": "都庁前",
+      "en": "Tochomae[Tokyo Metropolitan Government]"
+    },
+    "E29": {
+      "ja": "西新宿五丁目",
+      "en": "Nishi-shinjuku-gochome"
+    },
+    "E30": {
+      "ja": "中野坂上",
+      "en": "Nakano-sakaue"
+    },
+    "E31": {
+      "ja": "東中野",
+      "en": "Higashi-nakano"
+    },
+    "E32": {
+      "ja": "中井",
+      "en": "Nakai"
+    },
+    "E33": {
+      "ja": "落合南長崎",
+      "en": "Ochiai-minami-nagasaki"
+    },
+    "E34": {
+      "ja": "新江古田",
+      "en": "Shin-egota"
+    },
+    "E35": {
+      "ja": "練馬",
+      "en": "Nerima"
+    },
+    "E36": {
+      "ja": "豊島園",
+      "en": "Toshimaen"
+    },
+    "E37": {
+      "ja": "練馬春日町",
+      "en": "Nerima-kasugacho"
+    },
+    "E38": {
+      "ja": "光が丘",
+      "en": "Hikarigaoka"
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "candidate_id": "jr-kyushu-yufuin-no-mori-20260314",
   "candidate_status": "unreviewed",
   "canonical": false,
-  "promotion_status": "blocked_by_partial_times_and_unresolved_calendars",
+  "promotion_status": "blocked_by_unresolved_calendars",
   "published_effective_date": "2026-03-14",
   "page_updated_date": "2026-08-21",
   "operator_id": "jr-kyushu",
@@ -10,13 +10,57 @@
   "service_name": "ゆふいんの森",
   "service_class": "limited_express",
   "source_id": "jr-kyushu-yufuin-no-mori-20260314",
+  "source_url": "https://www.jrkyushu.co.jp/trains/yufuinnomori/",
   "all_year_completeness_claimed": false,
-  "time_semantics": "The official service page prints one time per station. Origins and intermediate stations are treated as departures and destinations as arrivals; unprinted arrivals/departures remain null.",
+  "time_semantics": "The official service page marks each displayed clock as 発 (departure) or 着 (arrival). Unprinted arrival/departure values remain null.",
+  "direction_evidence": {
+    "source_id": "jr-kyushu-yufuin-no-mori-20260314",
+    "locator": "2026年3月14日改正 時刻表: 1・3・5号 are under 下り（由布院・別府方面）; 2・4・6号 are under 上り（博多方面）"
+  },
+  "time_evidence": {
+    "source_id": "jr-kyushu-yufuin-no-mori-20260314",
+    "url_or_locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/",
+    "effective_date": "2026-03-14",
+    "information_current_at": "2026-08-21",
+    "locator": "2026年3月14日改正 時刻表: all 46 displayed clocks for 1～6号 match, including every explicit 発/着 side label"
+  },
+  "operating_date_override": {
+    "source_id": "jr-kyushu-yufuin-plan-20260919",
+    "title": "「特急 ゆふいんの森」運行計画のお知らせ（9月19日以降）",
+    "url_or_locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/__icsFiles/afieldfile/2026/08/18/20260818_yuhuin_no_mori_train_plan_0919_1.pdf",
+    "publication_date": "2026-08-18",
+    "accessed_at": "2026-09-29",
+    "from": "2026-09-19",
+    "until_inclusive": "2026-09-30",
+    "locator": "PDF lines headed 9月19日（土）～9月30日（水）: 特急 ゆふいんの森 1～6号 通常通り運行"
+  },
   "route_lines": [
     "鹿児島線",
     "久大線",
     "日豊線"
   ],
+  "operator_evidence": {
+    "operator_id": "jr-kyushu",
+    "source_id": "jr-kyushu-route-map-202601",
+    "locator": "JR九州 路線図（2026年1月現在）: the legend identifies the green network as JR線, separately identifies other railways and B&Sみやざき, and the complete 博多－久留米－大分－別府 corridor is on that JR network."
+  },
+  "route_evidence": {
+    "service_map_source_id": "jr-kyushu-yufuin-no-mori-20260314",
+    "service_map_locator": "運行区間マップ: 博多－鳥栖－久留米－日田－天ケ瀬－由布院－大分－別府, in that displayed order.",
+    "network_map_source_id": "jr-kyushu-route-map-202601",
+    "network_map_locator": "JR九州 路線図（2026年1月現在） labels 博多－久留米 as 鹿児島本線, 久留米－大分 as 久大本線, and 大分－別府 as 日豊本線.",
+    "identity_source_id": "jtm-current-station-directory",
+    "identity_locator": "app/public/rail/jp-2025.json: exact current N02 identities jp-九州旅客鉄道-鹿児島線, jp-九州旅客鉄道-久大線, and jp-九州旅客鉄道-日豊線; each reviewed boundary station belongs to its cited identity.",
+    "temporal_status": "partial_current_n02_snapshot_has_no_validity_interval"
+  },
+  "route_segments_by_public_number": {
+    "1": [["jp.n02.009033", "jp.n02.009383", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"], ["jp.n02.009383", "jp.n02.009447", "久大線", "jp-九州旅客鉄道-久大線"]],
+    "2": [["jp.n02.009447", "jp.n02.009383", "久大線", "jp-九州旅客鉄道-久大線"], ["jp.n02.009383", "jp.n02.009033", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"]],
+    "3": [["jp.n02.009033", "jp.n02.009383", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"], ["jp.n02.009383", "jp.n02.009479", "久大線", "jp-九州旅客鉄道-久大線"], ["jp.n02.009479", "jp.n02.009428", "日豊線", "jp-九州旅客鉄道-日豊線"]],
+    "4": [["jp.n02.009428", "jp.n02.009479", "日豊線", "jp-九州旅客鉄道-日豊線"], ["jp.n02.009479", "jp.n02.009383", "久大線", "jp-九州旅客鉄道-久大線"], ["jp.n02.009383", "jp.n02.009033", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"]],
+    "5": [["jp.n02.009033", "jp.n02.009383", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"], ["jp.n02.009383", "jp.n02.009447", "久大線", "jp-九州旅客鉄道-久大線"]],
+    "6": [["jp.n02.009447", "jp.n02.009383", "久大線", "jp-九州旅客鉄道-久大線"], ["jp.n02.009383", "jp.n02.009033", "鹿児島線", "jp-九州旅客鉄道-鹿児島線"]]
+  },
   "station_directory_resolution": {
     "博多": "jp.n02.009033",
     "鳥栖": "jp.n02.009327",
@@ -131,14 +175,14 @@
     "validity_calendar": "unknown_pending_image_calendar_review",
     "origin_destination": "verified",
     "passenger_stops": "verified",
-    "times": "partial_missing_intermediate_arrivals",
-    "route_lines": "verified",
+    "times": "verified",
+    "route_lines": "partial_current_n02_snapshot_has_no_validity_interval",
     "station_refs": "verified_against_current_directory",
     "provenance": "verified"
   },
   "review_notes": [
     "The page's image-coded operation calendar must be extracted deterministically and reviewed before any service dates are promoted.",
     "Later special-operation plans and disruption notices can supersede the page calendar for affected dates.",
-    "The page does not provide internal train numbers or intermediate arrival times."
+    "The official table publishes one explicitly marked clock per call; verification covers those 46 displayed clocks and does not infer unpublished intermediate arrivals or internal train numbers."
   ]
 }

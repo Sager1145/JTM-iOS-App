@@ -1,0 +1,3 @@
+{"entity_id": "jr-east.kaiji.23.exact-2026-09-30", "entity_type": "trip", "missing_dimension": "operator", "notes": "No dated ordered operator segments.", "research_id": "jr-east.kaiji.23.exact-2026-09-30.operator", "status": "open"}
+{"entity_id": "jr-east.kaiji.23.exact-2026-09-30", "entity_type": "trip", "missing_dimension": "route_lines", "notes": "No dated ordered physical line identities.", "research_id": "jr-east.kaiji.23.exact-2026-09-30.route_lines", "status": "open"}
+{"entity_id": "jr-east.kaiji.23.exact-2026-09-30", "entity_type": "trip", "missing_dimension": "provenance", "notes": "Official page pinned; reuse grant unconfirmed.", "research_id": "jr-east.kaiji.23.exact-2026-09-30.provenance", "status": "open"}

@@ -1,0 +1,735 @@
+{
+  "audit_id": "jr-limited-express-family-gaps-20260930",
+  "canonical": false,
+  "audit_kind": "source_pinned_family_inventory_discovery",
+  "evidence_date": "2026-09-30",
+  "service_date": "2026-09-30",
+  "scope": "Bounded comparison of conventional JR limited-express family identities shown by official operator catalogues against the current train-service-history SQLite snapshot. This audit does not claim that the catalogues are exhaustive, that every listed family ran on the service date, or that a catalogue owner is the sole train operator.",
+  "comparison_database": {
+    "path": "app/data/train-service-history/derived/train-service-timetable.sqlite",
+    "sha256": "0f9f79adea61002126642106a85f315aeff709cddf8395e1bac74d5799551bd3",
+    "git_head": "b32d5f89b6d4be6de7b6c9363ca60f539eaf4eea",
+    "service_rows": 54,
+    "trip_templates": 577,
+    "represented_trip_families": 53,
+    "active_date_predicate": "effective_from <= '2026-09-30' AND (effective_until IS NULL OR effective_until > '2026-09-30')"
+  },
+  "source_registry_paths": [
+    "sources/source-registry-national-family-gap-audit-20260930.jsonl",
+    "sources/source-registry-discovery-east-2026.jsonl",
+    "sources/source-registry-discovery-west-2026.jsonl",
+    "sources/source-registry-discovery-kyushu-2026.jsonl",
+    "sources/source-registry-discovery-hokkaido-2026.jsonl",
+    "sources/source-registry-discovery-shikoku-central-2026.jsonl"
+  ],
+  "db_status_definitions": {
+    "absent_service_identity": "No services row and no trip template for the proposed family id in the comparison snapshot.",
+    "historical_only_no_active_2026_09_30": "A services row and older or adjacent-date template exist, but no timetable version is active under the service-date predicate.",
+    "active_family_present": "At least one trip template is active under the service-date predicate. This says nothing about family completeness."
+  },
+  "operator_summaries": [
+    {
+      "operator_scope": "jr-hokkaido",
+      "reviewed_official_families": 9,
+      "active_family_present": 9,
+      "gap_rows": 0,
+      "source_id": "jr-hokkaido-family-gap-index-20260930",
+      "official_url": "https://www.jrhokkaido.co.jp/train/",
+      "notes": "No additional regular-family omission was found in the bounded index comparison. Seasonal Furano Lavender Express and Niseko were outside the service-date gap set; closed detail pages were not revisited."
+    },
+    {
+      "operator_scope": "jr-east",
+      "reviewed_official_families": 20,
+      "active_family_present": 9,
+      "gap_rows": 10,
+      "source_id": "jr-east-family-gap-catalog-20260930",
+      "official_url": "https://www.jreast.co.jp/railway/train/",
+      "notes": "Includes Spacia Nikko from an exact 2026-09-30 official timetable. Saphir Odoriko is retained only as a brand/model ambiguity despite exact-date evidence."
+    },
+    {
+      "operator_scope": "jr-central",
+      "reviewed_official_families": 5,
+      "active_family_present": 4,
+      "gap_rows": 1,
+      "source_id": "jr-central-inaji-family-gap-guide-20260930",
+      "official_url": "https://railway.jr-central.co.jp/train/express/detail_02_03/index.html",
+      "notes": "The bounded five-family comparison is Shinano, Hida, Nanki, Fujikawa, and Inaji; it is not asserted as a complete JR Central catalogue."
+    },
+    {
+      "operator_scope": "jr-west",
+      "reviewed_official_families": 25,
+      "active_family_present": 9,
+      "gap_rows": 16,
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "official_url": "https://www.jr-odekake.net/railroad/express-train/",
+      "notes": "Twenty-three directory families plus the two separately presented Sunrise sleeper families. Cross-company and third-sector operator boundaries remain unresolved at this discovery layer."
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "reviewed_official_families": 10,
+      "active_family_present": 5,
+      "gap_rows": 5,
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/",
+      "notes": "The index is a family guide, not a selected-date timetable."
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "reviewed_official_families": 23,
+      "active_family_present": 13,
+      "gap_rows": 10,
+      "source_id": "jr-kyushu-standard-family-gap-catalog-20260930",
+      "official_url": "https://www.jrkyushu.co.jp/trains/sp/otherexpress/",
+      "notes": "Combines the standard limited-express guide, D&S catalogue, current regular timetable, and separate official 36+3 classification evidence. Aru Ressha remains outside the confirmed gap count pending a current explicit limited-express classification."
+    }
+  ],
+  "excluded_parallel_trip_work": [
+    "jr-west Haruka and Thunderbird individual-trip campaigns",
+    "jr-east Hitachi, Tokiwa, and Kaiji individual-trip campaigns",
+    "jr-central Shinano, Hida, Nanki, and Fujikawa individual-trip campaigns",
+    "jr-kyushu Sonic individual-trip campaign",
+    "jr-shikoku Uwakai individual-trip campaign",
+    "jr-hokkaido closed/detail-page campaigns"
+  ],
+  "gaps": [
+    {
+      "operator_scope": "jr-east",
+      "service_id": "kusatsu-shima",
+      "canonical_name": "草津・四万",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/045/047071.html",
+      "source_id": "jr-east-kusatsu-shima4-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Kusatsu-Shima 4."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "kinugawa",
+      "canonical_name": "きぬがわ",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/045/046941.html",
+      "source_id": "jr-east-kinugawa3-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Kinugawa 3."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "spacia-nikko",
+      "canonical_name": "スペーシア日光",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/045/046931.html",
+      "source_id": "jr-east-spacia-nikko1-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Spacia Nikko 1."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "fuji-excursion",
+      "canonical_name": "富士回遊",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/050/054801.html",
+      "source_id": "jr-east-fuji-excursion11-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for the combined Kaiji 11 / Fuji Excursion 11 page. Coupled/split semantics require explicit modelling before promotion."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "shonan",
+      "canonical_name": "湘南",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/095/098931.html",
+      "source_id": "jr-east-shonan14-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Shonan 14."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "sazanami",
+      "canonical_name": "さざなみ",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/045/049711.html",
+      "source_id": "jr-east-sazanami3-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Sazanami 3."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "tsugaru",
+      "canonical_name": "つがる",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/005/008181.html",
+      "source_id": "jr-east-tsugaru42-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Tsugaru 42."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "super-tsugaru",
+      "canonical_name": "スーパーつがる",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/095/098671.html",
+      "source_id": "jr-east-super-tsugaru2-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Super Tsugaru 2."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "inaho",
+      "canonical_name": "いなほ",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/060/064031.html",
+      "source_id": "jr-east-inaho9-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "staged_candidate_present": true,
+      "staged_trip_id": "jr-east.inaho.9.exact-2026-09-30",
+      "candidate_path": "app/data/train-service-history/candidates/jr-east-inaho9-shirayuki1-20260930.json",
+      "normalized_batch": "east-inaho9-shirayuki1-20260930",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Inaho 9. Candidate and normalized seeds are staged after this pinned DB comparison; the db_status and template counts continue to describe only the comparison_database snapshot."
+    },
+    {
+      "operator_scope": "jr-east",
+      "service_id": "shirayuki",
+      "canonical_name": "しらゆき",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/060/063941.html",
+      "source_id": "jr-east-shirayuki1-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "staged_candidate_present": true,
+      "staged_trip_id": "jr-east.shirayuki.1.exact-2026-09-30",
+      "candidate_path": "app/data/train-service-history/candidates/jr-east-inaho9-shirayuki1-20260930.json",
+      "normalized_batch": "east-inaho9-shirayuki1-20260930",
+      "notes": "The official September 2026 calendar marks day 30 with td.ok for Shirayuki 1. Candidate and normalized seeds are staged after this pinned DB comparison; the db_status and template counts continue to describe only the comparison_database snapshot."
+    },
+    {
+      "operator_scope": "jr-central",
+      "service_id": "inaji",
+      "canonical_name": "伊那路",
+      "official_url": "https://railway.jr-central.co.jp/train/express/detail_02_03/index.html",
+      "source_id": "jr-central-inaji-family-gap-guide-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Existing discovery audits identify weekday Inaji 1–4 / 21M–24M but do not prove the 2026-09-30 operating calendar."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "noto-kagaribi",
+      "canonical_name": "能登かがり火",
+      "official_url": "https://www.jr-odekake.net/railroad/train/notokagaribi/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "shirasagi",
+      "canonical_name": "しらさぎ",
+      "official_url": "https://www.jr-odekake.net/railroad/train/shirasagi/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "JR Central/JR West responsibility must be represented at the segment level rather than inferred from the catalogue owner."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "kounotori",
+      "canonical_name": "こうのとり",
+      "official_url": "https://www.jr-odekake.net/railroad/train/kounotori/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "hamakaze",
+      "canonical_name": "はまかぜ",
+      "official_url": "https://www.jr-odekake.net/railroad/train/hamakaze/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "maizuru",
+      "canonical_name": "まいづる",
+      "official_url": "https://www.jr-odekake.net/railroad/train/maizuru/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Coupled-working relations need train-level evidence."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "hashidate",
+      "canonical_name": "はしだて",
+      "official_url": "https://www.jr-odekake.net/railroad/train/hashidate/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Kyoto Tango Railway operator boundaries need train-level evidence."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "rakuraku-harima",
+      "canonical_name": "らくラクはりま",
+      "official_url": "https://www.jr-odekake.net/railroad/train/rakuraku_harima/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "rakuraku-biwako",
+      "canonical_name": "らくラクびわこ",
+      "official_url": "https://www.jr-odekake.net/railroad/train/rakuraku_biwako/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "rakuraku-yamato",
+      "canonical_name": "らくラクやまと",
+      "official_url": "https://www.jr-odekake.net/railroad/train/rakuraku_yamato/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "mahoroba",
+      "canonical_name": "まほろば",
+      "official_url": "https://www.jr-odekake.net/railroad/train/mahoroba/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium",
+      "notes": "Seasonal operating dates must be proven before any 2026-09-30 occurrence is inferred."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "super-matsukaze",
+      "canonical_name": "スーパーまつかぜ",
+      "official_url": "https://www.jr-odekake.net/railroad/train/s-matsukaze/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "super-hakuto",
+      "canonical_name": "スーパーはくと",
+      "official_url": "https://www.jr-odekake.net/railroad/train/s-hakuto/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Chizu Express/JR operator boundaries must be source-pinned."
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "super-oki",
+      "canonical_name": "スーパーおき",
+      "official_url": "https://www.jr-odekake.net/railroad/train/s-oki/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-west",
+      "service_id": "super-inaba",
+      "canonical_name": "スーパーいなば",
+      "official_url": "https://www.jr-odekake.net/railroad/train/s-inaba/",
+      "source_id": "jr-west-family-gap-directory-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Chizu Express/JR operator boundaries must be source-pinned."
+    },
+    {
+      "operator_scope": "jr-through",
+      "service_id": "sunrise-seto",
+      "canonical_name": "サンライズ瀬戸",
+      "official_url": "https://timetable.jr-odekake.net/train-timetable/38492?date=20260930",
+      "source_id": "jr-through-sunrise-family-gap-exact-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "historical_only_no_active_2026_09_30",
+      "all_templates": 1,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Official variant 38492 marks September 30 with drivingday-01 and names Sunrise Seto/Izumo; the DB has only a September 29 slice."
+    },
+    {
+      "operator_scope": "jr-through",
+      "service_id": "sunrise-izumo",
+      "canonical_name": "サンライズ出雲",
+      "official_url": "https://timetable.jr-odekake.net/train-timetable/38492?date=20260930",
+      "source_id": "jr-through-sunrise-family-gap-exact-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "historical_only_no_active_2026_09_30",
+      "all_templates": 1,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Official variant 38492 marks September 30 with drivingday-01 and names Sunrise Seto/Izumo; the DB has only a September 29 slice."
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "service_id": "ishizuchi",
+      "canonical_name": "いしづち",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/ishizuchi.html",
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "historical_only_no_active_2026_09_30",
+      "all_templates": 26,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Existing templates end before the service date; current family guide evidence must be paired with a selected-date timetable."
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "service_id": "morning-exp-matsuyama",
+      "canonical_name": "モーニングEXP松山",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/morning.html",
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "service_id": "morning-exp-takamatsu",
+      "canonical_name": "モーニングEXP高松",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/morning.html",
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "service_id": "ashizuri",
+      "canonical_name": "あしずり",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/ashizuri.html",
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-shikoku",
+      "service_id": "tsurugisan",
+      "canonical_name": "剣山",
+      "official_url": "https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/tsurugisan.html",
+      "source_id": "jr-shikoku-family-gap-index-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "nichirin-seagaia",
+      "canonical_name": "にちりんシーガイア",
+      "official_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0016/00165801.html?c=28283&ym=202609&d=30",
+      "source_id": "jr-kyushu-nichirin-seagaia5-family-gap-hash-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Existing source registry already pins an exact 2026-09-30 official train page; no trip is promoted by this audit."
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "hyuga",
+      "canonical_name": "ひゅうが",
+      "official_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00088301.html?c=28903&ym=202609&d=30",
+      "source_id": "jr-kyushu-hyuga2-family-gap-hash-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Existing source registry already pins an exact 2026-09-30 official train page; no trip is promoted by this audit."
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "aso",
+      "canonical_name": "あそ",
+      "official_url": "https://www.jrkyushu.co.jp/trains/sp/otherexpress/",
+      "source_id": "jr-kyushu-standard-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Family identity is current; a selected-date calendar remains required."
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "aso-boy",
+      "canonical_name": "あそぼーい！",
+      "official_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0026/00262201.html?c=28626&ym=202609&d=30",
+      "source_id": "jr-kyushu-asoboy1-family-gap-hash-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "high",
+      "notes": "Existing source registry already pins an exact 2026-09-30 official train page; no trip is promoted by this audit."
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "a-train",
+      "canonical_name": "A列車で行こう",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "source_id": "jr-kyushu-ds-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "kawasemi-yamasemi",
+      "canonical_name": "かわせみ やませみ",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "source_id": "jr-kyushu-ds-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "two-stars-4047",
+      "canonical_name": "ふたつ星4047",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "source_id": "jr-kyushu-ds-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "umisachi-yamasachi",
+      "canonical_name": "海幸山幸",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "source_id": "jr-kyushu-ds-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "kanpachi-ichiroku",
+      "canonical_name": "かんぱち・いちろく",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "source_id": "jr-kyushu-ds-family-gap-catalog-20260930",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium"
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "service_id": "36-plus-3",
+      "canonical_name": "36ぷらす3",
+      "official_url": "https://www.jrkyushu-36plus3.jp/about/dia/",
+      "source_id": "jr-kyushu-36plus3-routes-20260314",
+      "evidence_date": "2026-09-30",
+      "db_status": "absent_service_identity",
+      "all_templates": 0,
+      "active_templates": 0,
+      "priority": "medium",
+      "notes": "Current routes are published as of the 2026-03-14 timetable; exact operating dates still require review."
+    }
+  ],
+  "classification_review": [
+    {
+      "operator_scope": "jr-east",
+      "question": "Exact September 30 operation is source-pinned, but model as a separate family versus an Odoriko brand/variant remains unresolved; no service id is assigned by this audit.",
+      "candidate_label": "サフィール踊り子",
+      "official_url": "https://timetables.jreast.co.jp/2610/train/060/063451.html",
+      "source_id": "jr-east-saphir-odoriko1-family-gap-20260930",
+      "evidence_date": "2026-09-30",
+      "db_name_match": null
+    },
+    {
+      "operator_scope": "jr-kyushu",
+      "official_url": "https://www.jrkyushu.co.jp/trains/",
+      "question": "Current official D&S index presents the train but does not clearly classify it as a limited express; excluded from the confirmed gap rows and no service id is assigned.",
+      "candidate_label": "或る列車"
+    }
+  ],
+  "bounded_next_family_recommendations": [
+    {
+      "rank": 2,
+      "families": [
+        "nichirin-seagaia",
+        "hyuga",
+        "aso-boy"
+      ],
+      "reason": "Each is wholly absent and already has an official exact-2026-09-30 train page pinned in the existing source registry."
+    },
+    {
+      "rank": 3,
+      "families": [
+        "sunrise-seto",
+        "sunrise-izumo",
+        "ishizuchi"
+      ],
+      "reason": "Service identities already exist, but their current DB templates stop before 2026-09-30; this is a narrower repair than introducing a new family."
+    },
+    {
+      "rank": 4,
+      "families": [
+        "inaji"
+      ],
+      "reason": "Official current family evidence and four numbered weekday discovery rows already exist; selected-date calendar evidence is the remaining gate."
+    },
+    {
+      "rank": 1,
+      "families": [
+        "kusatsu-shima",
+        "kinugawa",
+        "spacia-nikko",
+        "fuji-excursion",
+        "shonan",
+        "sazanami",
+        "inaho",
+        "shirayuki",
+        "tsugaru",
+        "super-tsugaru"
+      ],
+      "reason": "Each is wholly absent and now has raw official JR East timetable HTML with September 30 explicitly marked td.ok; the group avoids the already-owned Hitachi, Tokiwa, and Kaiji campaigns."
+    },
+    {
+      "rank": 5,
+      "families": [
+        "kounotori",
+        "hashidate",
+        "maizuru",
+        "hamakaze",
+        "super-hakuto",
+        "super-inaba",
+        "super-matsukaze",
+        "super-oki"
+      ],
+      "reason": "These are the largest intercity omissions in JR West's official directory after the represented Haruka, Thunderbird, Kinosaki, and Yakumo families."
+    },
+    {
+      "rank": 6,
+      "families": [
+        "ashizuri",
+        "tsurugisan",
+        "morning-exp-matsuyama",
+        "morning-exp-takamatsu"
+      ],
+      "reason": "All are explicit JR Shikoku catalogue families; selected-date timetable evidence is still required."
+    },
+    {
+      "rank": 7,
+      "families": [
+        "a-train",
+        "kawasemi-yamasemi",
+        "two-stars-4047",
+        "umisachi-yamasachi",
+        "kanpachi-ichiroku",
+        "36-plus-3"
+      ],
+      "reason": "Family identity is official, but date-specific D&S calendars and variant modelling make these a later bounded batch."
+    }
+  ],
+  "limitations": [
+    "The official pages are curated service catalogues and are not treated as closed, exhaustive nationwide inventories.",
+    "A family catalogue appearance does not prove operation on 2026-09-30; exact-date sources are called out only where already pinned.",
+    "This audit itself does not alter the pinned comparison database. Inaho 9 and Shirayuki 1 now have staged candidate and normalized seed files, while route lines and operator segments remain unknown.",
+    "The comparison is pinned to the SQLite hash above because parallel work can change the live database after this audit is written."
+  ]
+}

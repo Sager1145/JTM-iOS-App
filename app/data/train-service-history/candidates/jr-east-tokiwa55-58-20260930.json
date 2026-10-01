@@ -1,0 +1,88 @@
+{
+  "candidate_id": "jr-east-tokiwa55-58-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30, each selected JR East page has td.ok for that day. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.tokiwa.55.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "55",
+      "train_number": "55M",
+      "source_id": "jr-east-tokiwa55-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076291.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ55号 55M; 平日運転, 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "７", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "09:15"], ["東京", "09:23", "09:24"],
+        ["上野", "09:29", "09:30"], ["柏", "09:50", "09:51"],
+        ["土浦", "10:14", "10:15"], ["石岡", "10:25", "10:26"],
+        ["友部", "10:37", "10:37"], ["水戸", "10:47", "10:48"],
+        ["勝田", "10:53", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.56.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "56",
+      "train_number": "56M",
+      "source_id": "jr-east-tokiwa56-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076421.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ56号 56M; 平日運転, 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "９", "品川": "９"},
+      "stops": [
+        ["高萩", null, "05:48"], ["日立", "05:58", "05:58"],
+        ["常陸多賀", "06:02", "06:03"], ["大甕", "06:06", "06:07"],
+        ["東海", "06:11", "06:12"], ["勝田", "06:18", "06:19"],
+        ["水戸", "06:24", "06:25"], ["赤塚", "06:30", "06:30"],
+        ["友部", "06:37", "06:38"], ["石岡", "06:48", "06:49"],
+        ["土浦", "06:59", "06:59"], ["牛久", "07:07", "07:08"],
+        ["龍ケ崎市", "07:12", "07:12"], ["柏", "07:29", "07:30"],
+        ["上野", "08:01", "08:03"], ["東京", "08:09", "08:11"],
+        ["品川", "08:19", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.57.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "57",
+      "train_number": "57M",
+      "source_id": "jr-east-tokiwa57-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048311.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ57号 57M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "10:14"], ["東京", "10:22", "10:23"],
+        ["上野", "10:28", "10:30"], ["柏", "10:50", "10:51"],
+        ["土浦", "11:15", "11:16"], ["石岡", "11:26", "11:27"],
+        ["友部", "11:37", "11:38"], ["水戸", "11:48", "11:49"],
+        ["勝田", "11:53", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.58.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "58",
+      "train_number": "58M",
+      "source_id": "jr-east-tokiwa58-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/050301.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ58号 58M; 平日運転, 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "９", "品川": "９"},
+      "stops": [
+        ["高萩", null, "06:56"], ["日立", "07:06", "07:07"],
+        ["常陸多賀", "07:10", "07:11"], ["大甕", "07:14", "07:15"],
+        ["東海", "07:20", "07:20"], ["勝田", "07:26", "07:27"],
+        ["水戸", "07:32", "07:33"], ["赤塚", "07:38", "07:38"],
+        ["友部", "07:45", "07:45"], ["石岡", "07:56", "07:56"],
+        ["土浦", "08:05", "08:06"], ["牛久", "08:15", "08:15"],
+        ["龍ケ崎市", "08:19", "08:20"], ["柏", "08:37", "08:38"],
+        ["上野", "09:05", "09:07"], ["東京", "09:12", "09:13"],
+        ["品川", "09:21", null]
+      ]
+    }
+  ]
+}

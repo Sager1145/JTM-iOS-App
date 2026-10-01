@@ -1,0 +1,100 @@
+{
+  "candidate_id": "jr-central-hida18-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "hida",
+  "source_id": "jr-west-odekake-hida18-38d-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/124611?date=20260930",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "The selected September 30 page alone is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.hida.18.2026-09-30",
+    "public_number": "18",
+    "train_number": "38D",
+    "origin": "高山",
+    "destination": "名古屋",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "高山",
+        "arrival_time": null,
+        "departure_time": "16:33",
+        "platform": null,
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "飛騨萩原",
+        "arrival_time": "17:12",
+        "departure_time": "17:13",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "下呂",
+        "arrival_time": "17:21",
+        "departure_time": "17:22",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "飛騨金山",
+        "arrival_time": "17:44",
+        "departure_time": "17:45",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "美濃太田",
+        "arrival_time": "18:18",
+        "departure_time": "18:19",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "岐阜",
+        "arrival_time": "18:39",
+        "departure_time": "18:41",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "名古屋",
+        "arrival_time": "19:06",
+        "departure_time": null,
+        "platform": "11",
+        "call_type": "destination"
+      }
+    ],
+    "direction": "up",
+    "equipment": [
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": [
+      "９月１８～２３日はグリーン車指定席普通車全車指定席で運転"
+    ]
+  },
+  "review_notes": [
+    "Official date-selected detail; September 30 drivingday-01 calendar cell and legend inspected in official HTML.",
+    "All printed passenger calls and platforms retained; レ pass rows omitted.",
+    "September 18–23 seat exception does not apply September 30; no formation inferred."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "cell_class": "drivingday-01",
+    "method": "Official HTML calendar cell and printed drivingday-01 legend inspected",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/124611?date=20260930"
+  }
+}

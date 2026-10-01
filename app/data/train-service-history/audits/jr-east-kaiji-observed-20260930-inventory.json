@@ -1,0 +1,497 @@
+{
+  "inventory_id": "jr-east-kaiji-observed-20260930",
+  "service_id": "kaiji",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "completeness": "bounded_observed_set",
+  "scope_note": "All Kaiji-labeled links from official weekday Kofu up and Shinjuku down station pages inspected individually, including day30 alternate variants. Not an unconditional closed inventory across unobserved station or holiday pages.",
+  "discovery_station_urls": [
+    "https://timetables.jreast.co.jp/2610/timetable/tt0671/0671020.html",
+    "https://timetables.jreast.co.jp/2610/timetable/tt0866/0866050.html"
+  ],
+  "proven_running_count": 29,
+  "db_present_count": 4,
+  "trains": [
+    {
+      "public_number": "70",
+      "train_number": "8170M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/110/114981.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/110/114981.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "4aa597e2dd38c4da9d7f048c8d35070aa3cdfd05288b3f5f3fcc2361c0614f5a",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "2",
+      "train_number": "5102M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087651.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/085/087651.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": true,
+      "source_sha256": "84cd12ef283cf123b2684c176ee4087a44ca8095ca9323fce4f0acc4ec9dcc51",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "6",
+      "train_number": "5106M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076151.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076151.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": true,
+      "source_sha256": "a928c18f5dea06b094f59bc6a381030f8751830397d17c81cf43481421b1f52b",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "10",
+      "train_number": "5110M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076171.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076171.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": true,
+      "source_sha256": "64e9d6e49fadc29a9304851f4a4ee0aab441b09a833905ddc931511f783c855e",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "14",
+      "train_number": "5114M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076191.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076191.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "719b38101af9bb2f7ea8a232b0ee11c032116b5f0cc3b6f5cbf72e5073cd54e2",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "20",
+      "train_number": "3120M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054771.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/050/054771.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "ad3cbba1499fb514a1bed03583592640a4014d7c6ccf235efeefc694a434d4fb",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "24",
+      "train_number": "3124M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054821.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/050/054821.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "16f0144cd7b29ef1ab2ac7d88909f27575e2e0d9fbca42218311b48a56a06de5",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "28",
+      "train_number": "3128M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063651.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063651.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "7e2834ff390dd876544ef21cf500c1092beeda0d519645771ce6d62dfcd06447",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "32",
+      "train_number": "3132M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063671.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063671.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "1402ddaf71b5a79e931f843b157295e2f80ab5654668c7ba582cf9d8179b0170",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "36",
+      "train_number": "3136M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063461.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063461.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "ef09559fa05f344cd98f9f6efe2a5b126bc8d2b24781b700a650ca8f01593e1f",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "40",
+      "train_number": "3140M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063681.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063682.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "895dba6e5580e6d671f90604f2d52be3d8c3f4170e02c8a7f7acd0602394a334",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "48",
+      "train_number": "3148M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063471.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063471.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "e4de9aba8615243e3ac96aaa1db1ac9a8d25b26c6d0dc0536ee88fed392bf8de",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "52",
+      "train_number": "3152M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063701.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063701.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "d046a2ad506f296630526584eacaaf0a3c8a7afe6eb76988159c34ec3e2069de",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "56",
+      "train_number": "3156M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063721.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063721.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "f830d6eb136870dde941f1a14a06370eae94c5790c4426662b4d537b99e26429",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "58",
+      "train_number": "3158M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076211.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076211.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "2745686b4b33ffe6c69eb0ffa0103d42c230f76f5fde518c18c076e847772844",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "7",
+      "train_number": "3107M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054791.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/050/054791.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "d6c4d08a30291381123a11ee38de8888becca35a46c82e2af582ffea61f4c3de",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "11",
+      "train_number": "3111M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054801.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/050/054802.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": true,
+      "source_sha256": "c162bff7234f8dc3c7283b0f2b399fbfdfcf24524b1a761839b99fc819db3627",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "15",
+      "train_number": "3115M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063481.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063481.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "cc76641f5e38dc9ca244adc8f4e3a24e49a58042f43b9b9d33de34c0de79dc26",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "19",
+      "train_number": "3119M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076111.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076111.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "bcf7693af4e5ca6bf6e13c7e56677a3ac25a52e3da5eb3e5ad44ed5fd839ead7",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "23",
+      "train_number": "3123M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063491.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063491.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "d627b808fd69cf97a8f9e021fb06aead2d912f09c8bc3dcd75e511eebf5d71e5",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "27",
+      "train_number": "3127M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063511.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063511.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "efbc1fc313c53ee5800f6445c59e1f947d9ba498e06816992f3cdabc6d01456e",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "31",
+      "train_number": "3131M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063531.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063531.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "1fddb5188ce3ea801f877c465c2be3ac7a3db90982679dbffb04555ec8d726fb",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "35",
+      "train_number": "5135M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063551.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063551.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "4f5deb10b357bec4c0d69a867a493b05ba7a76e431987598cee7c345d9608bbd",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "39",
+      "train_number": "5139M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063571.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063571.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "ae7f762b602cb2c7ae220f5613f8d6c52bed829f557f0fd927b387e76c8eb8fd",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "43",
+      "train_number": "5143M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076131.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/075/076131.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "739ebeec5d2899d4ab81aaca1a7a6188dbd539ac9b42651ba22c24eff16f77ac",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "47",
+      "train_number": "5147M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/110/111441.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/110/111441.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "60c582e56bf47668b19303ec9302ac9707ae77a39a29fd68b563939964473e0f",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "51",
+      "train_number": "5151M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063591.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063591.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "1277b65df5132749201adafb215aefb82d601fcb8b158ad930c572a60d7e58f2",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "99",
+      "train_number": "8199M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/100/102881.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/100/102881.html",
+      "scheduled_on_date": false,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "bc98d575c6a42ecc4eb5bdca01491d07292730705f2e054be9e7318beb383113",
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "57",
+      "train_number": "5157M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063611.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063611.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "31c67554356dcfdd4aec44796c1aecc277aad80a34b8d715b9c95556dffec458",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "59",
+      "train_number": "5159M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063631.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/train/060/063631.html",
+      "scheduled_on_date": true,
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "db_present_before_staging": false,
+      "source_sha256": "7c18889ae26c5f37ed0d4824f56311754b944d84b3d186117e379a1561be0b81",
+      "staged_candidate_present": true
+    }
+  ],
+  "staged_proven_count": 29
+}

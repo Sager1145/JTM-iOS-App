@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Official selected page prints しなの10号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Official selected page prints 1010M.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Ordered operator boundaries not established.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "September 30 selects variant 000241.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Both terminal calls are printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Ten passenger calls are printed.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Only printed arrival and departure sides are retained.", "status": "verified"}
+{"confidence": "high", "dimension": "route_lines", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "All passenger-pair legs have source-pinned current N02 identities. All passenger legs and the JR East/JR Central boundary have current identities; daily line validity is unverified. No solver result is asserted.", "status": "partial"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Pinned names and codes match current N02 groups.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-central.shinano.10.2026-09-30", "entity_type": "trip", "notes": "Official page is verification-only.", "status": "partial"}

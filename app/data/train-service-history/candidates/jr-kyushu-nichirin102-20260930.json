@@ -1,0 +1,33 @@
+{
+  "candidate_id": "jr-kyushu-nichirin102-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "JR Kyushu's date-selected Nichirin 102 detail. Only printed passenger arrival/departure sides, platform, train number, operating-day label and seat categories are retained; no car count, series or physical route inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.nichirin.102.2026-09-30",
+      "service_id": "nichirin",
+      "service_name": "にちりん",
+      "service_class": "limited_express",
+      "public_number": "102",
+      "train_number": "5092M",
+      "origin": "佐伯",
+      "destination": "大分",
+      "source_id": "jr-kyushu-nichirin102-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117001.html?t=2876000&d=20260930",
+      "source_locator": "2026年09月30日の時刻; にちりん 102号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": ["グリーン車指定席", "普通車自由席"],
+      "stops": [
+        ["佐伯", null, "07:33", null],
+        ["津久見", "07:50", "07:51", null],
+        ["臼杵", "08:00", "08:01", null],
+        ["幸崎", "08:17", "08:18", null],
+        ["大在", "08:25", "08:26", null],
+        ["鶴崎", "08:30", "08:31", null],
+        ["大分", "08:39", null, "4"]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "candidate_id": "jr-kyushu-midori7-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; ten displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-midori7-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085901.html?c=28283&ym=202609&d=30",
+  "service_date": "2026-09-30",
+  "trip": {
+    "trip_id": "jr-kyushu.midori.7.2026-09-30",
+    "service_id": "midori", "service_name": "みどり", "public_number": "7", "train_number": "4007M",
+    "direction": "博多→佐世保",
+    "stop_times": [
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"07:28","platform":"4"},
+      {"name_snapshot":"二日市","arrival_time":"07:44","departure_time":"07:45","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"07:57","departure_time":"07:57","platform":"5"},
+      {"name_snapshot":"新鳥栖","arrival_time":"08:01","departure_time":"08:02","platform":null},
+      {"name_snapshot":"佐賀","arrival_time":"08:14","departure_time":"08:15","platform":null},
+      {"name_snapshot":"江北","arrival_time":"08:25","departure_time":"08:26","platform":"4"},
+      {"name_snapshot":"武雄温泉","arrival_time":"08:37","departure_time":"08:39","platform":"2"},
+      {"name_snapshot":"有田","arrival_time":"08:56","departure_time":"08:57","platform":null},
+      {"name_snapshot":"早岐","arrival_time":"09:08","departure_time":"09:16","platform":null},
+      {"name_snapshot":"佐世保","arrival_time":"09:27","departure_time":null,"platform":null}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"limited express identity and 4007M","locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL and September operating-day calendar"},
+    {"claim":"ten calls and displayed clocks","locator":"駅名 / 時刻 / のりば table"}
+  ]
+}

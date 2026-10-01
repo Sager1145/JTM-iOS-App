@@ -1,0 +1,110 @@
+{
+  "candidate_id": "jr-shikoku-uwakai11-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; eight displayed passenger calls; passing rows excluded; operator segments and physical lines unresolved",
+  "sources": [
+    {
+      "source_id": "jr-odekake-uwakai11-20260930-train",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急 宇和海11号 列車時刻表（2026-09-30）",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/train-timetable/1361?date=20260930",
+      "issue": "JR時刻表2026年10月号",
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-30",
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Reached from exact-date line grid; manually reviewed complete train page. Source bytes are not bundled."
+    },
+    {
+      "source_id": "jr-odekake-uwakai11-20260930-line",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "予讃線・内子線区間時刻表 下り（2026-09-30）",
+      "source_type": "official_dated_line_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/line-timetable/2469?day=30&month=9&year=2026",
+      "issue": "JR時刻表2026年10月号",
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-30",
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Dated line grid lists 宇和海11号, 1061D, and 宇和島 13:03 arrival."
+    }
+  ],
+  "trip": {
+    "trip_id": "jr-shikoku.uwakai.11.2026-09-30",
+    "service_id": "uwakai",
+    "service_name": "宇和海",
+    "public_number": "11",
+    "train_number": "1061D",
+    "service_date": "2026-09-30",
+    "direction": "松山→宇和島",
+    "stop_times": [
+      {
+        "name_snapshot": "松山",
+        "arrival_time": null,
+        "departure_time": "11:30",
+        "platform": "2"
+      },
+      {
+        "name_snapshot": "伊予市",
+        "arrival_time": "11:38",
+        "departure_time": "11:39",
+        "platform": null
+      },
+      {
+        "name_snapshot": "内子",
+        "arrival_time": "11:57",
+        "departure_time": "11:58",
+        "platform": null
+      },
+      {
+        "name_snapshot": "伊予大洲",
+        "arrival_time": "12:08",
+        "departure_time": "12:10",
+        "platform": null
+      },
+      {
+        "name_snapshot": "八幡浜",
+        "arrival_time": "12:27",
+        "departure_time": "12:29",
+        "platform": null
+      },
+      {
+        "name_snapshot": "卯之町",
+        "arrival_time": "12:40",
+        "departure_time": "12:41",
+        "platform": null
+      },
+      {
+        "name_snapshot": "伊予吉田",
+        "arrival_time": "12:52",
+        "departure_time": "12:55",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇和島",
+        "arrival_time": "13:03",
+        "departure_time": null,
+        "platform": null
+      }
+    ],
+    "equipment_note": "普通車一部指定席。"
+  },
+  "evidence_locators": [
+    {
+      "claim": "identity, 1061D, and equipment",
+      "locator": "dated line grid and train-detail header/equipment row"
+    },
+    {
+      "claim": "2026-09-30 occurrence",
+      "locator": "line-grid date, detail date parameter, and 毎日運転 row"
+    },
+    {
+      "claim": "eight full-route calls and clocks",
+      "locator": "時刻詳細 table from 松山 through 宇和島; レ rows excluded"
+    }
+  ]
+}

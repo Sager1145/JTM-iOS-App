@@ -1,0 +1,1549 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed Japanese railway identity-event seeds",
+  "scope": "Primary-source exact-day seeds for H1 review; this file is not a runtime overlay.",
+  "status_definitions": {
+    "reviewed_seed": "The exact date, identity, and surveyed selector are reviewed for promotion; the selector may target a current identity, an isolated current/historical segment, or an exact historical station.",
+    "reviewed_source_only": "The exact source row is reviewed, but promotion must wait for historical geometry, a predecessor-identity dependency or an isolated segment selector.",
+    "ready_whole_identity": "The official interval is the full extent of one current line/operator identity.",
+    "ready_current_station": "The current station point has an exact unique N02 identity.",
+    "unresolved_segment_selector": "The current identity opened in stages; station-to-station historical geometry is required.",
+    "unresolved_historical_geometry": "The event-date surveyed geometry or predecessor railway identity is incomplete; present geometry cannot be backdated without evidence.",
+    "ready_isolated_segment": "A verified canonical bbox/name selector isolates the intended current and historical segment without treating a staged identity as a whole.",
+    "ready_historical_station": "A verified canonical old-release name/bbox selector isolates an absent current station from surveyed historical geometry."
+  },
+  "sources": [
+    {
+      "source_id": "mlit-parallel-conventional-railways",
+      "title": "並行在来線鉄道一覧",
+      "authority": "国土交通省 鉄道局",
+      "reference": "https://www.mlit.go.jp/common/001514800.pdf",
+      "role": "Exact opening dates, termini and business kilometres for parallel conventional rail operators."
+    },
+    {
+      "source_id": "mlit-closures-20260401",
+      "title": "鉄軌道の廃止実績（平成5年度以降）",
+      "authority": "国土交通省 鉄道局 都市鉄道政策課",
+      "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+      "role": "Exact official closure dates and intervals."
+    },
+    {
+      "source_id": "ir-ishikawa-company-history",
+      "title": "会社概要・沿革",
+      "authority": "IRいしかわ鉄道株式会社",
+      "reference": "https://www.ishikawa-railway.jp/company/pdf/d3_kk.pdf",
+      "role": "Exact 2015 operation-start date for 倶利伽羅—金沢."
+    },
+    {
+      "source_id": "ir-ishikawa-2024-opening",
+      "title": "IRいしかわ鉄道線 大聖寺延伸開業",
+      "authority": "IRいしかわ鉄道株式会社",
+      "reference": "https://www.ishikawa-railway.jp/news/723",
+      "role": "Exact 2024 operation-start date for 金沢—大聖寺."
+    },
+    {
+      "source_id": "mlit-igr-aoimori-permit-2002",
+      "title": "ＩＧＲいわて銀河鉄道株式会社、青い森鉄道株式会社及び青森県に係る鉄道事業の許可について",
+      "authority": "国土交通省 鉄道局",
+      "reference": "https://www.mlit.go.jp/kisha/kisha02/08/080528_.html",
+      "role": "Confirms the 2002 predecessor, successor, termini and 82.0/25.9 km scopes."
+    },
+    {
+      "source_id": "nishitetsu-history-1999-2008",
+      "title": "1999年〜2008年 沿革",
+      "authority": "西日本鉄道株式会社",
+      "reference": "https://www.nishitetsu.co.jp/ja/group/company/history/1999-2008.html",
+      "role": "Exact 2001-01-01 line and station rename."
+    },
+    {
+      "source_id": "osaka-prefecture-monorail-rename",
+      "title": "令和3年度大阪府行政経営の取組み",
+      "authority": "大阪府",
+      "reference": "https://www.pref.osaka.lg.jp/documents/12856/r03_gyouseikeieinotorikumip43-p76.pdf",
+      "role": "Exact 2020-06-01 Osaka Monorail company-name change."
+    },
+    {
+      "source_id": "jr-east-takanawa-gateway",
+      "title": "高輪ゲートウェイ駅 基本情報",
+      "authority": "東日本旅客鉄道株式会社",
+      "reference": "https://www.jreast.co.jp/estation/station/info.aspx?StationCd=1750",
+      "role": "Exact station opening date and current station spelling."
+    },
+    {
+      "source_id": "jr-hokkaido-station-use-2020",
+      "title": "駅間別乗車人員 令和2年度特定日調査",
+      "authority": "北海道旅客鉄道株式会社",
+      "reference": "https://www.jrhokkaido.co.jp/corporate/region/pdf/past/05_2020.pdf",
+      "role": "States that 北日ノ出 was abolished on 2021-03-13."
+    },
+    {
+      "source_id": "mlit-n02-legacy-1996",
+      "title": "国土数値情報 鉄道データ 平成7年",
+      "authority": "国土交通省 国土計画局",
+      "reference": "https://nlftp.mlit.go.jp/ksj/old/data/N02/N02-07L/N02-07L-48-01.1a.zip",
+      "role": "Pre-event route and station spelling evidence; this legacy format has no operator field."
+    },
+    {
+      "source_id": "mlit-n02-release-series",
+      "title": "国土数値情報 鉄道データ N02 release series",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "role": "Old/current N02 line, operator and station identity observations."
+    },
+    {
+      "source_id": "joetsu-wakinoda-relocation-2014",
+      "authority": "上越市",
+      "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf",
+      "title": "上越広域連携会議ニュースレター 平成26年11月号",
+      "role": "Exact relocation/rename day; distinct from annual surveyed geometry."
+    },
+    {
+      "source_id": "joetsu-myoko-opening-2015",
+      "authority": "上越市",
+      "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf",
+      "title": "上越市合併20周年 生活とまちを支える20年のあゆみ",
+      "role": "Exact relocation/rename day; distinct from annual surveyed geometry."
+    }
+  ],
+  "snapshot_releases": [
+    {
+      "release_id": "N02-1996",
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N02/N02-07L/N02-07L-48-01.1a.zip",
+      "note": "平成7年 legacy unified text, published 1996-12-31; route names are in DS records and no operator field exists."
+    },
+    {
+      "release_id": "N02-05",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip"
+    },
+    {
+      "release_id": "N02-08",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip"
+    },
+    {
+      "release_id": "N02-11",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-11/N02-11_GML.zip"
+    },
+    {
+      "release_id": "N02-14",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip"
+    },
+    {
+      "release_id": "N02-15",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-15/N02-15_GML.zip"
+    },
+    {
+      "release_id": "N02-16",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-16/N02-16_GML.zip"
+    },
+    {
+      "release_id": "N02-19",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-19/N02-19_GML.zip"
+    },
+    {
+      "release_id": "N02-20",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-20/N02-20_GML.zip"
+    },
+    {
+      "release_id": "N02-21",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-21/N02-21_GML.zip"
+    },
+    {
+      "release_id": "N02-23",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-23/N02-23_GML.zip"
+    },
+    {
+      "release_id": "N02-24",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-24/N02-24_GML.zip"
+    }
+  ],
+  "rows": [
+    {
+      "id": "jp-id-shinano-transfer-1997",
+      "kind": "operator_transfer",
+      "effective_date": "1997-10-01",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "軽井沢",
+        "to_station": "篠ノ井",
+        "length_km": 65.1
+      },
+      "before": {
+        "line": "信越本線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "しなの鉄道線",
+        "operator": "しなの鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-1996",
+          "line": "信越本線",
+          "operator": null,
+          "operator_field_status": "unavailable_in_legacy_format"
+        },
+        {
+          "release_id": "N02-05",
+          "line": "しなの鉄道線",
+          "operator": "しなの鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "しなの鉄道線",
+          "operator": "しなの鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "The exact 1997-10-01 transfer is reviewed, but the current whole identity backdates テクノさかき (1999), 屋代高校前 (2001), 信濃国分寺 (2002) and 千曲 (2009). N02-05 is the earliest redistributable surveyed geometry and postdates the transfer; pre-transfer geometry remains unresolved."
+      },
+      "geometry": {
+        "status": "unresolved_historical_geometry",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "しなの鉄道線",
+          "operator": "しなの鉄道",
+          "role": "discovery_only_current_identity"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-legacy-1996"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "basis": "The exact 1997-10-01 transfer is reviewed, but the current whole identity backdates テクノさかき (1999), 屋代高校前 (2001), 信濃国分寺 (2002) and 千曲 (2009). N02-05 is the earliest redistributable surveyed geometry and postdates the transfer; pre-transfer geometry remains unresolved."
+    },
+    {
+      "id": "jp-id-nishitetsu-line-rename-2001",
+      "kind": "line_rename",
+      "effective_date": "2001-01-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "大牟田線",
+        "operator": "西日本鉄道"
+      },
+      "after": {
+        "line": "天神大牟田線",
+        "operator": "西日本鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-1996",
+          "route_record": "西日本鉄道  大牟田線",
+          "operator_field_status": "unavailable_in_legacy_format"
+        },
+        {
+          "release_id": "N02-05",
+          "line": "天神大牟田線",
+          "operator": "西日本鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "天神大牟田線",
+          "operator": "西日本鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "The exact 2001-01-01 rename is reviewed, but the current identity includes later stations and elevated alignments. The earliest redistributable N02-05 geometry already postdates the 2004 久留米—津福 relocation; event-date historical geometry remains unresolved."
+      },
+      "geometry": {
+        "status": "unresolved_historical_geometry",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "天神大牟田線",
+          "operator": "西日本鉄道",
+          "role": "discovery_only_current_identity"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "nishitetsu-history-1999-2008"
+        },
+        {
+          "source_id": "mlit-n02-legacy-1996"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "basis": "The exact 2001-01-01 rename is reviewed, but the current identity includes later stations and elevated alignments. The earliest redistributable N02-05 geometry already postdates the 2004 久留米—津福 relocation; event-date historical geometry remains unresolved."
+    },
+    {
+      "id": "jp-id-nishitetsu-fukuoka-station-rename-2001",
+      "kind": "station_rename",
+      "effective_date": "2001-01-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "大牟田線",
+        "operator": "西日本鉄道",
+        "station": "西鉄福岡"
+      },
+      "after": {
+        "line": "天神大牟田線",
+        "operator": "西日本鉄道",
+        "station": "西鉄福岡（天神）"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-1996",
+          "line": "大牟田線",
+          "station": "西鉄福岡",
+          "operator_field_status": "unavailable_in_legacy_format"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "天神大牟田線",
+          "operator": "西日本鉄道",
+          "station_raw": "西鉄福岡(天神)",
+          "station_current_normalized": "西鉄福岡（天神）",
+          "n02_station_code": "009036"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "The station rename date and N02-05/current terminal coordinates are reviewed, but the old 大牟田線 railway sections are absent. A production Web route with the old line/operator constraint cannot solve. Promote atomically with the predecessor line geometry; do not replace the old line with the successor name."
+      },
+      "geometry": {
+        "status": "unresolved_historical_geometry",
+        "selector": {
+          "line_name": "天神大牟田線",
+          "operator": "西日本鉄道",
+          "stations": [
+            "西鉄福岡（天神）"
+          ],
+          "role": "discovery_only_current_identity"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "nishitetsu-history-1999-2008"
+        },
+        {
+          "source_id": "mlit-n02-legacy-1996"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "basis": "The station rename date and N02-05/current terminal coordinates are reviewed, but the old 大牟田線 railway sections are absent. A production Web route with the old line/operator constraint cannot solve. Promote atomically with the predecessor line geometry; do not replace the old line with the successor name.",
+      "promotion_dependency": "jp-id-nishitetsu-line-rename-2001",
+      "station_geometry_review": {
+        "status": "verified",
+        "release": "N02-05",
+        "geometry_relation": "exact_quantized_current_geometry",
+        "current_n02_station_code": "009036",
+        "coordinates": [
+          [
+            130.39846,
+            33.59111
+          ],
+          [
+            130.39914,
+            33.58954
+          ],
+          [
+            130.40054,
+            33.5879
+          ]
+        ],
+        "basis": "The official history places terminal completion on 1997-09-27 before the rename; N02-05 and current measured platform geometry agree."
+      }
+    },
+    {
+      "id": "jp-id-igr-transfer-2002",
+      "kind": "operator_transfer",
+      "effective_date": "2002-12-01",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "盛岡",
+        "to_station": "目時",
+        "length_km": 82.0
+      },
+      "before": {
+        "line": "東北本線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "いわて銀河鉄道線",
+        "operator": "アイジーアールいわて銀河鉄道",
+        "official_operator_spelling": "ＩＧＲいわて銀河鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-1996",
+          "line": "東北本線",
+          "operator": null,
+          "operator_field_status": "unavailable_in_legacy_format"
+        },
+        {
+          "release_id": "N02-05",
+          "line": "いわて銀河鉄道線",
+          "operator": "アイジーアールいわて銀河鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "いわて銀河鉄道線",
+          "operator": "アイジーアールいわて銀河鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "The exact 2002-12-01 transfer is reviewed, but current geometry backdates 青山 and 巣子 (2006-03-18) and omits a 3.111 km paired alignment present in N02-05. The interpretation and exact validity boundary of that surveyed representation change remain unresolved."
+      },
+      "geometry": {
+        "status": "unresolved_historical_geometry",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "いわて銀河鉄道線",
+          "operator": "アイジーアールいわて銀河鉄道",
+          "role": "discovery_only_current_identity"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-igr-aoimori-permit-2002"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "basis": "The exact 2002-12-01 transfer is reviewed, but current geometry backdates 青山 and 巣子 (2006-03-18) and omits a 3.111 km paired alignment present in N02-05. The interpretation and exact validity boundary of that surveyed representation change remain unresolved."
+    },
+    {
+      "id": "jp-id-aoimori-metoki-hachinohe-transfer-2002",
+      "kind": "operator_transfer",
+      "effective_date": "2002-12-01",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "目時",
+        "to_station": "八戸",
+        "length_km": 25.9
+      },
+      "before": {
+        "line": "東北本線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "青い森鉄道線",
+        "operator": "青い森鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-1996",
+          "line": "東北本線",
+          "operator": null,
+          "operator_field_status": "unavailable_in_legacy_format"
+        },
+        {
+          "release_id": "N02-05",
+          "line": "青い森鉄道線",
+          "operator": "青い森鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "青い森鉄道線",
+          "operator": "青い森鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "Current 青い森鉄道線 contains a second interval transferred in 2010."
+      },
+      "geometry": {
+        "status": "unresolved_segment_selector",
+        "required_interval": [
+          "目時",
+          "八戸"
+        ],
+        "reason": "Do not stamp the entire current identity with the 2002 date."
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-igr-aoimori-permit-2002"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-aoimori-hachinohe-aomori-transfer-2010",
+      "kind": "operator_transfer",
+      "effective_date": "2010-12-04",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "八戸",
+        "to_station": "青森",
+        "length_km": 96.0
+      },
+      "before": {
+        "line": "東北線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "青い森鉄道線",
+        "operator": "青い森鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-08",
+          "line": "東北線",
+          "operator": "東日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-11",
+          "line": "青い森鉄道線",
+          "operator": "青い森鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "青い森鉄道線",
+          "operator": "青い森鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_source_only",
+        "reason": "Current 青い森鉄道線 also contains the interval transferred in 2002."
+      },
+      "geometry": {
+        "status": "unresolved_segment_selector",
+        "required_interval": [
+          "八戸",
+          "青森"
+        ],
+        "reason": "Do not stamp the entire current identity with the 2010 date."
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-north-shinano-transfer-2015",
+      "kind": "operator_transfer",
+      "effective_date": "2015-03-14",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "長野",
+        "to_station": "妙高高原",
+        "length_km": 37.3
+      },
+      "before": {
+        "line": "信越線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "北しなの線",
+        "operator": "しなの鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-14",
+          "line": "信越線",
+          "operator": "東日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-15",
+          "line": "北しなの線",
+          "operator": "しなの鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official interval is the entire current 北しなの線 identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "北しなの線",
+          "operator": "しなの鉄道"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-echigo-myoko-transfer-2015",
+      "kind": "operator_transfer",
+      "effective_date": "2015-03-14",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "妙高高原",
+        "to_station": "直江津",
+        "length_km": 37.7
+      },
+      "before": {
+        "line": "信越線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "妙高はねうまライン",
+        "operator": "えちごトキめき鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-14",
+          "line": "信越線",
+          "operator": "東日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-15",
+          "line": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official 妙高高原—直江津 interval is the whole successor identity (21 current sections and ten stations). N02-13 preserves the old 脇野田 station and approach through 2014-10-18; N02-14 preserves its relocated position, still named 脇野田, from 2014-10-19 until the 2015-03-14 transfer and rename. Each historical selector includes 19 sections and eight stations. The shared 妙高高原 predecessor platform/station are supplied by North Shinano; the unchanged JR East 直江津 platform/station remain in the current package because JR continues north from that boundary. Both are explicitly reused without duplicate JR geometry. No snapshot year defines an event day."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道"
+        },
+        "historical_periods": [
+          {
+            "service_period": [
+              null,
+              "2014-10-19"
+            ],
+            "source": "N02",
+            "release": "N02-13",
+            "licence_status": "redistributable",
+            "date_geometry_precision": "official_snapshot",
+            "historical_identity": {
+              "line": "信越線",
+              "operator": "東日本旅客鉄道"
+            },
+            "selector": {
+              "scope": "isolated_historical_segment",
+              "historical_bbox": [
+                138.20997,
+                36.87305,
+                138.25882,
+                37.16945
+              ]
+            },
+            "alignment_id": "jp.alignment.myoko-haneuma.wakinoda-old",
+            "evidence": [
+              {
+                "authority": "上越市 新幹線まちづくり推進上越広域連携会議",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf"
+              },
+              {
+                "authority": "上越市",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf"
+              }
+            ]
+          },
+          {
+            "service_period": [
+              "2014-10-19",
+              "2015-03-14"
+            ],
+            "source": "N02",
+            "release": "N02-14",
+            "licence_status": "redistributable",
+            "date_geometry_precision": "official_snapshot",
+            "historical_identity": {
+              "line": "信越線",
+              "operator": "東日本旅客鉄道"
+            },
+            "selector": {
+              "scope": "isolated_historical_segment",
+              "historical_bbox": [
+                138.20997,
+                36.87305,
+                138.25882,
+                37.16945
+              ]
+            },
+            "alignment_id": "jp.alignment.myoko-haneuma.wakinoda-relocated",
+            "evidence": [
+              {
+                "authority": "上越市 新幹線まちづくり推進上越広域連携会議",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf"
+              },
+              {
+                "authority": "上越市",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        },
+        {
+          "source_id": "joetsu-wakinoda-relocation-2014"
+        },
+        {
+          "source_id": "joetsu-myoko-opening-2015"
+        }
+      ],
+      "canonical_event_id": "jp-id-echigo-myoko-transfer-2015",
+      "basis": "The official 妙高高原—直江津 interval is the whole successor identity (21 current sections and ten stations). N02-13 preserves the old 脇野田 station and approach through 2014-10-18; N02-14 preserves its relocated position, still named 脇野田, from 2014-10-19 until the 2015-03-14 transfer and rename. Each historical selector includes 19 sections and eight stations. The shared 妙高高原 predecessor platform/station are supplied by North Shinano; the unchanged JR East 直江津 platform/station remain in the current package because JR continues north from that boundary. Both are explicitly reused without duplicate JR geometry. No snapshot year defines an event day.",
+      "shared_predecessor_stations": [
+        {
+          "station": "妙高高原",
+          "source_event_id": "jp-id-north-shinano-transfer-2015",
+          "n02_station_code": "001746",
+          "geometry_basis": "exact_n02_13_n02_14_station_and_platform_geometry",
+          "geometry_evidence": {
+            "releases": [
+              "N02-13",
+              "N02-14"
+            ],
+            "station_coordinates": [
+              [
+                138.21175,
+                36.87156
+              ],
+              [
+                138.21262,
+                36.87305
+              ]
+            ],
+            "basis": "The same JR 信越線 station/platform is selected by both transfer intervals; keep the predecessor features only under North Shinano."
+          }
+        },
+        {
+          "station": "直江津",
+          "source": "current-package",
+          "n02_station_code": "001600",
+          "geometry_basis": "exact_n02_13_n02_14_current_jr_station_and_platform_geometry",
+          "geometry_evidence": {
+            "releases": [
+              "N02-13",
+              "N02-14",
+              "current-package"
+            ],
+            "station_coordinates": [
+              [
+                138.2436,
+                37.17106
+              ],
+              [
+                138.24239,
+                37.17035
+              ],
+              [
+                138.24128,
+                37.1697
+              ],
+              [
+                138.24087,
+                37.16945
+              ]
+            ],
+            "basis": "JR East 信越線 continues north of 直江津 after the transfer. Its unchanged current platform and station already preserve the predecessor boundary membership; do not emit duplicate JR features."
+          }
+        }
+      ]
+    },
+    {
+      "id": "jp-id-echigo-hisui-transfer-2015",
+      "kind": "operator_transfer",
+      "effective_date": "2015-03-14",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "直江津",
+        "to_station": "市振",
+        "length_km": 59.3
+      },
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "日本海ひすいライン",
+        "operator": "えちごトキめき鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-14",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-15",
+          "line": "日本海ひすいライン",
+          "operator": "えちごトキめき鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official interval is the entire current 日本海ひすいライン identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "日本海ひすいライン",
+          "operator": "えちごトキめき鉄道"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-ainokaze-transfer-2015",
+      "kind": "operator_transfer",
+      "effective_date": "2015-03-14",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "市振",
+        "to_station": "倶利伽羅",
+        "length_km": 100.1
+      },
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "あいの風とやま鉄道線",
+        "operator": "あいの風とやま鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-14",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-15",
+          "line": "あいの風とやま鉄道線",
+          "operator": "あいの風とやま鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official interval is the entire current あいの風とやま鉄道線 identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "あいの風とやま鉄道線",
+          "operator": "あいの風とやま鉄道"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-ir-kurikara-kanazawa-transfer-2015",
+      "kind": "operator_transfer",
+      "effective_date": "2015-03-14",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "倶利伽羅",
+        "to_station": "金沢",
+        "length_km": 17.8
+      },
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "IRいしかわ鉄道線",
+        "operator": "IRいしかわ鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "source_id": "mlit-n02-14",
+          "release": "N02-14",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "source_id": "mlit-n02-25",
+          "release": "N02-25",
+          "line": "IRいしかわ鉄道線",
+          "operator": "IRいしかわ鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The current bbox selects only the 2015 倶利伽羅—金沢 identity, including the current IR 金沢 membership. The historical bbox begins at the north edge of the 金沢 platform so the shared pre-2024 JR 金沢 feature is supplied exactly once by the 2024 south-segment event."
+      },
+      "geometry": {
+        "status": "ready_isolated_segment",
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.64710999,
+            36.57725999,
+            136.79253001,
+            36.67261001
+          ],
+          "historical_bbox": [
+            136.64857,
+            36.57926,
+            136.79254,
+            36.67262
+          ],
+          "stations": [
+            "金沢",
+            "東金沢",
+            "森本",
+            "津幡",
+            "倶利伽羅"
+          ],
+          "historical_stations": [
+            "東金沢",
+            "森本",
+            "津幡",
+            "倶利伽羅"
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "ir-ishikawa-company-history"
+        },
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "canonical_event_id": "jp-id-ir-kurikara-kanazawa-transfer-2015",
+      "basis": "The current bbox selects only the 2015 倶利伽羅—金沢 identity, including the current IR 金沢 membership. The historical bbox begins at the north edge of the 金沢 platform so the shared pre-2024 JR 金沢 feature is supplied exactly once by the 2024 south-segment event.",
+      "boundary_station_evidence": [
+        {
+          "station": "金沢",
+          "n02_14_station_code": null,
+          "n02_25_station_code": "002093",
+          "geometry_relation": "coordinate_exact",
+          "historical_membership_source": "jp-id-ir-kanazawa-daishoji-transfer-2024"
+        },
+        {
+          "station": "倶利伽羅",
+          "n02_14_station_code": null,
+          "n02_25_station_code": "001986",
+          "geometry_relation": "coordinate_exact",
+          "station_code_basis": "exact_current_geometry_identity"
+        }
+      ],
+      "shared_predecessor_stations": [
+        {
+          "station": "金沢",
+          "source_event_id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+          "geometry_basis": "exact_n02_14_n02_23_station_geometry",
+          "n02_station_code": "002092",
+          "geometry_evidence": {
+            "releases": [
+              "N02-14",
+              "N02-23"
+            ],
+            "line": "北陸線",
+            "operator": "西日本旅客鉄道",
+            "coordinates": [
+              [
+                136.64858,
+                36.57927
+              ],
+              [
+                136.64774,
+                36.57826
+              ],
+              [
+                136.64711,
+                36.57726
+              ]
+            ]
+          }
+        }
+      ],
+      "expected": {
+        "business_km": 17.8,
+        "current_sections": 10,
+        "current_stations": 5,
+        "historical_sections": 9,
+        "historical_stations": 4,
+        "shared_current_station": "金沢"
+      }
+    },
+    {
+      "id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+      "kind": "closure",
+      "effective_date": "2016-01-31",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "住吉",
+        "to_station": "住吉公園",
+        "length_km": 0.2
+      },
+      "before": {
+        "line": "上町線",
+        "operator": "阪堺電気軌道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-15",
+          "line": "上町線",
+          "operator": "阪堺電気軌道",
+          "station": "住吉公園"
+        },
+        {
+          "release_id": "N02-16",
+          "line": "上町線",
+          "operator": "阪堺電気軌道",
+          "station": "住吉公園",
+          "presence": false
+        }
+      ],
+      "canonical_event_id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+      "basis": "The historical bbox selects exactly the two N02-15 features from the 住吉 station edge through 住吉公園 and its exact station feature. The tighter current bbox matches no current 上町線 feature or station.",
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The historical bbox selects exactly the two N02-15 features from the 住吉 station edge through 住吉公園 and its exact station feature. The tighter current bbox matches no current 上町線 feature or station."
+      },
+      "geometry": {
+        "status": "ready_isolated_segment",
+        "source": "N02",
+        "release": "N02-15",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "上町線",
+          "operator": "阪堺電気軌道"
+        },
+        "selector": {
+          "scope": "isolated_historical_segment",
+          "bbox": [
+            135.49055,
+            34.61285,
+            135.49082,
+            34.61355
+          ],
+          "historical_bbox": [
+            135.4905,
+            34.6128,
+            135.49225,
+            34.61465
+          ],
+          "stations": [
+            "住吉公園"
+          ],
+          "historical_stations": [
+            "住吉公園"
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-closures-20260401"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "official_event_id": "mlit-closures-20260401:062"
+    },
+    {
+      "id": "jp-id-donan-isaribi-transfer-2016",
+      "kind": "operator_transfer",
+      "effective_date": "2016-03-26",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "木古内",
+        "to_station": "五稜郭",
+        "length_km": 37.8
+      },
+      "before": {
+        "line": "江差線",
+        "operator": "北海道旅客鉄道"
+      },
+      "after": {
+        "line": "道南いさりび鉄道線",
+        "operator": "道南いさりび鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-15",
+          "line": "江差線",
+          "operator": "北海道旅客鉄道"
+        },
+        {
+          "release_id": "N02-16",
+          "line": "道南いさりび鉄道線",
+          "operator": "道南いさりび鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official interval is the entire current 道南いさりび鉄道線 identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "道南いさりび鉄道線",
+          "operator": "道南いさりび鉄道"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-takanawa-gateway-opening-2020",
+      "kind": "station_opening",
+      "effective_date": "2020-03-14",
+      "date_precision": "exact_day",
+      "after": {
+        "line": "東海道線",
+        "operator": "東日本旅客鉄道",
+        "station": "高輪ゲートウェイ"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-20",
+          "line": "東海道線",
+          "operator": "東日本旅客鉄道",
+          "station": "高輪ゲートウェイ"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "東海道線",
+          "operator": "東日本旅客鉄道",
+          "station": "高輪ゲートウェイ",
+          "n02_station_code": "004061"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "JR East supplies the exact date and the current N02 station identity is unique."
+      },
+      "geometry": {
+        "status": "ready_current_station",
+        "selector": {
+          "line_name": "東海道線",
+          "operator": "東日本旅客鉄道",
+          "stations": [
+            "高輪ゲートウェイ"
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "jr-east-takanawa-gateway"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-osaka-monorail-main-operator-rename-2020",
+      "kind": "operator_rename",
+      "effective_date": "2020-06-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "大阪モノレール線",
+        "operator": "大阪高速鉄道"
+      },
+      "after": {
+        "line": "大阪モノレール線",
+        "operator": "大阪モノレール"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-19",
+          "line": "大阪モノレール線",
+          "operator": "大阪高速鉄道"
+        },
+        {
+          "release_id": "N02-20",
+          "line": "大阪モノレール線",
+          "operator": "大阪モノレール"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The company rename applies to the entire current line identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "大阪モノレール線",
+          "operator": "大阪モノレール"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "osaka-prefecture-monorail-rename"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-osaka-monorail-saito-operator-rename-2020",
+      "kind": "operator_rename",
+      "effective_date": "2020-06-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "国際文化公園都市モノレール線(彩都線)",
+        "operator": "大阪高速鉄道"
+      },
+      "after": {
+        "line": "国際文化公園都市モノレール線(彩都線)",
+        "operator": "大阪モノレール"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-19",
+          "line": "国際文化公園都市モノレール線（彩都線）",
+          "operator": "大阪高速鉄道"
+        },
+        {
+          "release_id": "N02-20",
+          "line": "国際文化公園都市モノレール線（彩都線）",
+          "operator": "大阪モノレール"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "国際文化公園都市モノレール線(彩都線)",
+          "operator": "大阪モノレール"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The company rename applies to the entire current line identity; the punctuation normalization is recorded explicitly."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "国際文化公園都市モノレール線(彩都線)",
+          "operator": "大阪モノレール"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "osaka-prefecture-monorail-rename"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-kitahinode-closure-2021",
+      "kind": "station_closure",
+      "effective_date": "2021-03-13",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "石北線",
+        "operator": "北海道旅客鉄道",
+        "station": "北日ノ出"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-20",
+          "line": "石北線",
+          "operator": "北海道旅客鉄道",
+          "station": "北日ノ出"
+        },
+        {
+          "release_id": "N02-21",
+          "station": "北日ノ出",
+          "presence": false
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "北日ノ出 is absent from the current station collection and the name plus tight bbox selects exactly one N02-20 station feature."
+      },
+      "geometry": {
+        "status": "ready_historical_station",
+        "source": "N02",
+        "release": "N02-20",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "石北線",
+          "operator": "北海道旅客鉄道"
+        },
+        "selector": {
+          "scope": "historical_station",
+          "stations": [
+            "北日ノ出"
+          ],
+          "historical_stations": [
+            "北日ノ出"
+          ],
+          "historical_bbox": [
+            142.4657,
+            43.7816,
+            142.4666,
+            43.7822
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "jr-hokkaido-station-use-2020"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "canonical_event_id": "jp-id-kitahinode-closure-2021",
+      "basis": "北日ノ出 is absent from the current station collection and the name plus tight bbox selects exactly one N02-20 station feature."
+    },
+    {
+      "id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+      "kind": "operator_transfer",
+      "effective_date": "2024-03-16",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "金沢",
+        "to_station": "大聖寺",
+        "length_km": 46.4
+      },
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "IRいしかわ鉄道線",
+        "operator": "IRいしかわ鉄道"
+      },
+      "n02_identity_evidence": [
+        {
+          "source_id": "mlit-n02-23",
+          "release": "N02-23",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "source_id": "mlit-n02-25",
+          "release": "N02-25",
+          "line": "IRいしかわ鉄道線",
+          "operator": "IRいしかわ鉄道"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The current bbox ends at the south edge of the surveyed 金沢 platform and the current station selector excludes 金沢. It therefore dates only the 2024 addition and leaves the shared current IR 金沢 membership valid from 2015. The wider historical bbox retains the JR 金沢 membership through 2024. N02-23 lacks 西松任 because that station opened on the transfer date; it is correctly present only in the current side."
+      },
+      "geometry": {
+        "status": "ready_isolated_segment",
+        "source": "N02",
+        "release": "N02-23",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.31309999,
+            36.29956999,
+            136.64711001,
+            36.57726001
+          ],
+          "historical_bbox": [
+            136.31309,
+            36.29956,
+            136.64859,
+            36.57928
+          ],
+          "stations": [
+            "大聖寺",
+            "動橋",
+            "加賀温泉",
+            "粟津",
+            "小松",
+            "明峰",
+            "能美根上",
+            "美川",
+            "小舞子",
+            "加賀笠間",
+            "西松任",
+            "松任",
+            "野々市",
+            "西金沢"
+          ],
+          "historical_stations": [
+            "大聖寺",
+            "動橋",
+            "加賀温泉",
+            "粟津",
+            "小松",
+            "明峰",
+            "能美根上",
+            "美川",
+            "小舞子",
+            "加賀笠間",
+            "松任",
+            "野々市",
+            "西金沢",
+            "金沢"
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "ir-ishikawa-2024-opening"
+        },
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ],
+      "canonical_event_id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+      "basis": "The current bbox ends at the south edge of the surveyed 金沢 platform and the current station selector excludes 金沢. It therefore dates only the 2024 addition and leaves the shared current IR 金沢 membership valid from 2015. The wider historical bbox retains the JR 金沢 membership through 2024. N02-23 lacks 西松任 because that station opened on the transfer date; it is correctly present only in the current side.",
+      "boundary_station_evidence": [
+        {
+          "station": "金沢",
+          "n02_23_station_code": "002092",
+          "n02_25_station_code": "002093",
+          "geometry_relation": "coordinate_exact"
+        },
+        {
+          "station": "大聖寺",
+          "n02_23_station_code": "002425",
+          "n02_25_station_code": "010175",
+          "n02_25_group_code": "002425",
+          "geometry_relation": "coordinate_exact"
+        }
+      ],
+      "expected": {
+        "business_km": 46.4,
+        "current_sections": 28,
+        "current_stations": 14,
+        "historical_sections": 27,
+        "historical_stations": 14,
+        "current_only_station": "西松任",
+        "current_only_station_source_id": "ishikawa-prefecture-nishi-matto-2024"
+      }
+    },
+    {
+      "id": "jp-id-hapi-line-transfer-2024",
+      "kind": "operator_transfer",
+      "effective_date": "2024-03-16",
+      "date_precision": "exact_day",
+      "interval": {
+        "from_station": "大聖寺",
+        "to_station": "敦賀",
+        "length_km": 84.3
+      },
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "ハピラインふくい線",
+        "operator": "ハピラインふくい"
+      },
+      "n02_identity_evidence": [
+        {
+          "release_id": "N02-23",
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "release_id": "N02-24",
+          "line": "ハピラインふくい線",
+          "operator": "ハピラインふくい"
+        }
+      ],
+      "review": {
+        "status": "reviewed_seed",
+        "reason": "The official interval is the entire current ハピラインふくい線 identity."
+      },
+      "geometry": {
+        "status": "ready_whole_identity",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "ハピラインふくい線",
+          "operator": "ハピラインふくい"
+        }
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways"
+        },
+        {
+          "source_id": "mlit-n02-release-series"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "candidate_id": "jr-hokkaido-lilac-kamui-standard-formations-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "The exact-date s=110/s=111 pages prove 26 Lilac and 16 Kamui train identities and their dated formation icons. Current JR Hokkaido train-family guides explicitly publish a basic 6-car 789 series 0 subseries formation for Lilac and a basic 5-car 789 series 1000 subseries formation for Kamui. Those guide facts are planned family-level standard data and do not prove the actual 2026-09-30 vehicle set or per-car assignment.",
+  "timetable_sources": {
+    "down": {
+      "url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    "up": {
+      "url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "issue": "JR時刻表 令和8年10月号"
+    }
+  },
+  "families": {
+    "lilac": {
+      "service_name": "ライラック",
+      "guide_url": "https://www.jrhokkaido.co.jp/train/tr033_01.html",
+      "vehicle_series": "789系0代",
+      "standard_car_count": 6,
+      "formation_icons": ["greensiteidai0.png", "zensekisitei0.png"],
+      "trains": [
+        {"direction": "down", "public_number": "1", "train_number": "3001M", "trip_id": "jr-hokkaido.lilac.1.exact-2026-09-30"},
+        {"direction": "up", "public_number": "2", "train_number": "3002M", "trip_id": "jr-hokkaido.lilac.2.exact-2026-09-30"},
+        {"direction": "down", "public_number": "3", "train_number": "3003M", "trip_id": "jr-hokkaido.lilac.3.exact-2026-09-30"},
+        {"direction": "down", "public_number": "5", "train_number": "3005M", "trip_id": "jr-hokkaido.lilac.5.exact-2026-09-30"},
+        {"direction": "up", "public_number": "8", "train_number": "3008M", "trip_id": "jr-hokkaido.lilac.8.exact-2026-09-30"},
+        {"direction": "down", "public_number": "11", "train_number": "3011M", "trip_id": "jr-hokkaido.lilac.11.exact-2026-09-30"},
+        {"direction": "up", "public_number": "12", "train_number": "3012M", "trip_id": "jr-hokkaido.lilac.12.exact-2026-09-30"},
+        {"direction": "down", "public_number": "13", "train_number": "3013M", "trip_id": "jr-hokkaido.lilac.13.exact-2026-09-30"},
+        {"direction": "up", "public_number": "14", "train_number": "3014M", "trip_id": "jr-hokkaido.lilac.14.exact-2026-09-30"},
+        {"direction": "up", "public_number": "16", "train_number": "3016M", "trip_id": "jr-hokkaido.lilac.16.exact-2026-09-30"},
+        {"direction": "down", "public_number": "17", "train_number": "3017M", "trip_id": "jr-hokkaido.lilac.17.exact-2026-09-30"},
+        {"direction": "up", "public_number": "20", "train_number": "3020M", "trip_id": "jr-hokkaido.lilac.20.exact-2026-09-30"},
+        {"direction": "up", "public_number": "22", "train_number": "3022M", "trip_id": "jr-hokkaido.lilac.22.exact-2026-09-30"},
+        {"direction": "down", "public_number": "23", "train_number": "3023M", "trip_id": "jr-hokkaido.lilac.23.exact-2026-09-30"},
+        {"direction": "up", "public_number": "24", "train_number": "3024M", "trip_id": "jr-hokkaido.lilac.24.exact-2026-09-30"},
+        {"direction": "down", "public_number": "25", "train_number": "3025M", "trip_id": "jr-hokkaido.lilac.25.exact-2026-09-30"},
+        {"direction": "down", "public_number": "27", "train_number": "3027M", "trip_id": "jr-hokkaido.lilac.27.exact-2026-09-30"},
+        {"direction": "up", "public_number": "32", "train_number": "3032M", "trip_id": "jr-hokkaido.lilac.32.exact-2026-09-30"},
+        {"direction": "down", "public_number": "33", "train_number": "3033M", "trip_id": "jr-hokkaido.lilac.33.exact-2026-09-30"},
+        {"direction": "up", "public_number": "34", "train_number": "3034M", "trip_id": "jr-hokkaido.lilac.34.exact-2026-09-30"},
+        {"direction": "down", "public_number": "37", "train_number": "3037M", "trip_id": "jr-hokkaido.lilac.37.exact-2026-09-30"},
+        {"direction": "up", "public_number": "38", "train_number": "3038M", "trip_id": "jr-hokkaido.lilac.38.exact-2026-09-30"},
+        {"direction": "down", "public_number": "39", "train_number": "3039M", "trip_id": "jr-hokkaido.lilac.39.exact-2026-09-30"},
+        {"direction": "down", "public_number": "41", "train_number": "3041M", "trip_id": "jr-hokkaido.lilac.41.exact-2026-09-30"},
+        {"direction": "up", "public_number": "44", "train_number": "3044M", "trip_id": "jr-hokkaido.lilac.44.exact-2026-09-30"},
+        {"direction": "up", "public_number": "46", "train_number": "3046M", "trip_id": "jr-hokkaido.lilac.46.exact-2026-09-30"}
+      ]
+    },
+    "kamui": {
+      "service_name": "カムイ",
+      "guide_url": "https://www.jrhokkaido.co.jp/train/tr013_01.html",
+      "vehicle_series": "789系1000代",
+      "standard_car_count": 5,
+      "formation_icons": ["zensekisitei0.png"],
+      "trains": [
+        {"direction": "up", "public_number": "4", "train_number": "2004M", "trip_id": "jr-hokkaido.kamui.4.exact-2026-09-30"},
+        {"direction": "up", "public_number": "6", "train_number": "2006M", "trip_id": "jr-hokkaido.kamui.6.exact-2026-09-30"},
+        {"direction": "down", "public_number": "7", "train_number": "2007M", "trip_id": "jr-hokkaido.kamui.7.exact-2026-09-30"},
+        {"direction": "up", "public_number": "10", "train_number": "2010M", "trip_id": "jr-hokkaido.kamui.10.exact-2026-09-30"},
+        {"direction": "up", "public_number": "18", "train_number": "2018M", "trip_id": "jr-hokkaido.kamui.18.exact-2026-09-30"},
+        {"direction": "down", "public_number": "19", "train_number": "2019M", "trip_id": "jr-hokkaido.kamui.19.exact-2026-09-30"},
+        {"direction": "down", "public_number": "21", "train_number": "2021M", "trip_id": "jr-hokkaido.kamui.21.exact-2026-09-30"},
+        {"direction": "up", "public_number": "28", "train_number": "2028M", "trip_id": "jr-hokkaido.kamui.28.exact-2026-09-30"},
+        {"direction": "down", "public_number": "29", "train_number": "2029M", "trip_id": "jr-hokkaido.kamui.29.exact-2026-09-30"},
+        {"direction": "up", "public_number": "30", "train_number": "2030M", "trip_id": "jr-hokkaido.kamui.30.exact-2026-09-30"},
+        {"direction": "down", "public_number": "31", "train_number": "2031M", "trip_id": "jr-hokkaido.kamui.31.exact-2026-09-30"},
+        {"direction": "down", "public_number": "35", "train_number": "2035M", "trip_id": "jr-hokkaido.kamui.35.exact-2026-09-30"},
+        {"direction": "up", "public_number": "40", "train_number": "2040M", "trip_id": "jr-hokkaido.kamui.40.exact-2026-09-30"},
+        {"direction": "up", "public_number": "42", "train_number": "2042M", "trip_id": "jr-hokkaido.kamui.42.exact-2026-09-30"},
+        {"direction": "down", "public_number": "43", "train_number": "2043M", "trip_id": "jr-hokkaido.kamui.43.exact-2026-09-30"},
+        {"direction": "down", "public_number": "45", "train_number": "2045M", "trip_id": "jr-hokkaido.kamui.45.exact-2026-09-30"}
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "candidate_id": "jr-hokkaido-lilac3-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Only the selected 2026-09-30 third train column on the JR Hokkaido down page.",
+  "trip_id": "jr-hokkaido.lilac.3.exact-2026-09-30",
+  "service_id": "lilac",
+  "service_name": "ライラック",
+  "service_class": "limited_express",
+  "public_number": "3",
+  "train_number": "3003M",
+  "origin": "札幌",
+  "destination": "旭川",
+  "service_date": "2026-09-30",
+  "source_id": "jr-hokkaido-lilac3-20260930",
+  "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+  "source_locator": "2026年9月30日(水) selected; third train column: 3003M / ライラック 3",
+  "printed_platforms": {
+    "札幌": "(9)"
+  },
+  "stops": [
+    [
+      "札幌",
+      null,
+      "07:13"
+    ],
+    [
+      "岩見沢",
+      null,
+      "07:38"
+    ],
+    [
+      "美唄",
+      null,
+      "07:49"
+    ],
+    [
+      "砂川",
+      null,
+      "08:00"
+    ],
+    [
+      "滝川",
+      null,
+      "08:06"
+    ],
+    [
+      "深川",
+      null,
+      "08:21"
+    ],
+    [
+      "旭川",
+      "08:40",
+      null
+    ]
+  ]
+}

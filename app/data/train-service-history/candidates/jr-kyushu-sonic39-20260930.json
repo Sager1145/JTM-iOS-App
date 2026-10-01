@@ -1,0 +1,155 @@
+{
+  "candidate_id": "jr-kyushu-sonic39-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; displayed passenger calls only; physical lines and operator boundaries unresolved",
+  "source_id": "jr-kyushu-sonic39-20260930-train",
+  "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015601.html?t=2828301e&d=20260930",
+  "service_date": "2026-09-30",
+  "new_source": {
+    "source_id": "jr-kyushu-sonic39-20260930-train",
+    "source_type": "official_train_timetable",
+    "title": "ソニック39号 列車詳細（2026-09-30）",
+    "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+    "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015601.html?t=2828301e&d=20260930",
+    "issue": "JR時刻表2026年10月号",
+    "effective_date": "2026-09-30",
+    "accessed_at": "2026-09-30",
+    "license_status": "third_party_timetable_data_terms_apply",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "notes": "Date-selected official train detail; station, clock, train number and equipment rows reviewed. Source bytes not bundled."
+  },
+  "trip": {
+    "trip_id": "jr-kyushu.sonic.39.2026-09-30",
+    "service_id": "sonic",
+    "service_name": "ソニック",
+    "public_number": "39",
+    "train_number": "3039M",
+    "service_date": "2026-09-30",
+    "direction": "博多→大分",
+    "operating_note": "毎日運転",
+    "seat_description_snapshot": [
+      "「白いソニック」で運転",
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "stop_times": [
+      {
+        "name_snapshot": "博多",
+        "arrival_time": null,
+        "departure_time": "16:20",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "香椎",
+        "arrival_time": "16:26",
+        "departure_time": "16:26",
+        "platform": null
+      },
+      {
+        "name_snapshot": "赤間",
+        "arrival_time": "16:41",
+        "departure_time": "16:41",
+        "platform": null
+      },
+      {
+        "name_snapshot": "折尾",
+        "arrival_time": "16:52",
+        "departure_time": "16:52",
+        "platform": "5"
+      },
+      {
+        "name_snapshot": "黒崎",
+        "arrival_time": "16:56",
+        "departure_time": "16:57",
+        "platform": null
+      },
+      {
+        "name_snapshot": "戸畑",
+        "arrival_time": "17:02",
+        "departure_time": "17:02",
+        "platform": null
+      },
+      {
+        "name_snapshot": "小倉",
+        "arrival_time": "17:08",
+        "departure_time": "17:10",
+        "platform": "7"
+      },
+      {
+        "name_snapshot": "行橋",
+        "arrival_time": "17:25",
+        "departure_time": "17:25",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇島",
+        "arrival_time": "17:38",
+        "departure_time": "17:39",
+        "platform": null
+      },
+      {
+        "name_snapshot": "中津",
+        "arrival_time": "17:43",
+        "departure_time": "17:44",
+        "platform": null
+      },
+      {
+        "name_snapshot": "柳ケ浦",
+        "arrival_time": "17:53",
+        "departure_time": "17:54",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇佐",
+        "arrival_time": "17:58",
+        "departure_time": "17:59",
+        "platform": null
+      },
+      {
+        "name_snapshot": "杵築",
+        "arrival_time": "18:13",
+        "departure_time": "18:13",
+        "platform": null
+      },
+      {
+        "name_snapshot": "亀川",
+        "arrival_time": "18:24",
+        "departure_time": "18:24",
+        "platform": null
+      },
+      {
+        "name_snapshot": "別府",
+        "arrival_time": "18:28",
+        "departure_time": "18:29",
+        "platform": null
+      },
+      {
+        "name_snapshot": "大分",
+        "arrival_time": "18:39",
+        "departure_time": null,
+        "platform": "1"
+      }
+    ]
+  },
+  "evidence_locators": [
+    {
+      "claim": "exact-day identity, internal number, operating and equipment",
+      "locator": "date heading and train-detail header / expanded other-train-info rows"
+    },
+    {
+      "claim": "passenger calls, clocks and printed platforms",
+      "locator": "駅名 / 時刻 / のりば table"
+    }
+  ],
+  "formation_evidence": {
+    "vehicle_series": "885",
+    "car_count": 6,
+    "configuration_source_id": "jr-kyushu-sonic-configuration-guide-20260930",
+    "equipment_source_id": "jr-kyushu-sonic-equipment-guide-20260930",
+    "diagram_source_id": "jr-kyushu-sonic-885-diagram-20260930",
+    "evidence_kind": "planned",
+    "actual_consist_verified": false
+  }
+}

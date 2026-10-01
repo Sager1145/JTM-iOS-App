@@ -1,0 +1,173 @@
+{
+  "candidate_id": "jr-hokkaido-niseko-20260922-stop-clocks",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Two exact September 22 service-date columns only; unprinted arrival/departure sides remain unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.niseko.sapporo-to-hakodate-dated-20260922.2026-09-22",
+      "service_date": "2026-09-22",
+      "train_number": "8012D",
+      "source_id": "jr-hokkaido-niseko-sapporo-20260922",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260922&s=681",
+      "source_locator": "8012D / 特急ニセコ号, 2026-09-22 selected column; all station and printed minute cells visually compared with the earlier reviewed column",
+      "stops": [
+        [
+          "札幌",
+          null,
+          "07:56"
+        ],
+        [
+          "手稲",
+          null,
+          "08:10"
+        ],
+        [
+          "小樽",
+          "08:40",
+          "08:43"
+        ],
+        [
+          "余市",
+          null,
+          "09:14"
+        ],
+        [
+          "倶知安",
+          null,
+          "10:00"
+        ],
+        [
+          "ニセコ",
+          null,
+          "10:23"
+        ],
+        [
+          "昆布",
+          null,
+          "10:33"
+        ],
+        [
+          "黒松内",
+          null,
+          "11:09"
+        ],
+        [
+          "長万部",
+          "11:29",
+          "11:43"
+        ],
+        [
+          "八雲",
+          null,
+          "12:07"
+        ],
+        [
+          "森",
+          null,
+          "12:31"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "13:07"
+        ],
+        [
+          "五稜郭",
+          null,
+          "13:19"
+        ],
+        [
+          "函館",
+          "13:23",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.niseko.hakodate-to-sapporo-dated-20260922.2026-09-22",
+      "service_date": "2026-09-22",
+      "train_number": "9011D",
+      "source_id": "jr-hokkaido-niseko-hakodate-20260922",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260922&s=680",
+      "source_locator": "9011D / 特急ニセコ号, 2026-09-22 selected column; all station and printed minute cells visually compared with the earlier reviewed column",
+      "stops": [
+        [
+          "函館",
+          null,
+          "13:55"
+        ],
+        [
+          "五稜郭",
+          null,
+          "14:00"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "14:14"
+        ],
+        [
+          "大沼公園",
+          null,
+          "14:48"
+        ],
+        [
+          "森",
+          null,
+          "15:06"
+        ],
+        [
+          "八雲",
+          null,
+          "15:28"
+        ],
+        [
+          "長万部",
+          "15:48",
+          "15:50"
+        ],
+        [
+          "黒松内",
+          null,
+          "16:09"
+        ],
+        [
+          "昆布",
+          null,
+          "16:46"
+        ],
+        [
+          "ニセコ",
+          null,
+          "17:11"
+        ],
+        [
+          "倶知安",
+          null,
+          "17:32"
+        ],
+        [
+          "余市",
+          null,
+          "18:20"
+        ],
+        [
+          "小樽",
+          "18:41",
+          "18:43"
+        ],
+        [
+          "手稲",
+          null,
+          "19:10"
+        ],
+        [
+          "札幌",
+          "19:28",
+          null
+        ]
+      ]
+    }
+  ]
+}

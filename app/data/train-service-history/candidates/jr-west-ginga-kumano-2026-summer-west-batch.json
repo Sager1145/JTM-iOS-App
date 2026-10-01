@@ -19,6 +19,40 @@
     "automated_extraction_allowed": false,
     "notes": "Official PDF visually reviewed. The PDF itself is not redistributed. Promotion is limited to both printed directional stop/time tables and colored origin-date cells; no route-feature, operator-boundary or train-number claim is made."
   },
+  "supplemental_sources": [
+    {
+      "source_id": "jr-west-odekake-west-express-ginga-8078m-20260930",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急 ＷＥＳＴ　ＥＸＰＲＥＳＳ　銀河 京都行 列車時刻表",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/train-timetable/193801?date=20260930",
+      "archive_locator": null,
+      "publication_date": null,
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-29",
+      "content_hash": null,
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Official JR Odekake train page visually reviewed. It identifies train 8078M, the WEST EXPRESS GINGA Kyoto-bound service, September 30 operation, and the same regular stop/time pattern as the candidate. The page states that its JR timetable data may not be reproduced, copied, or processed, so it is recorded only as verification provenance."
+    },
+    {
+      "source_id": "jr-west-odekake-west-express-ginga-8077m-20260925",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急 ＷＥＳＴ　ＥＸＰＲＥＳＳ　銀河 新宮行 列車時刻表",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/train-timetable/193791?date=20260925",
+      "archive_locator": null,
+      "publication_date": null,
+      "effective_date": "2026-09-25",
+      "accessed_at": "2026-09-29",
+      "content_hash": null,
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Official JR Odekake train page visually reviewed. It identifies train 8077M, the WEST EXPRESS GINGA Shingu-bound service, and the same stop/time pattern as the candidate, with operation through September 28. The page is recorded only as verification provenance under its explicit reuse prohibition."
+    }
+  ],
   "service": {
     "service_id": "west-express-ginga",
     "canonical_name": "WEST EXPRESS 銀河",
@@ -30,7 +64,9 @@
     "template_key": "kumano-day",
     "direction_label": "新宮→大阪・京都",
     "public_number": null,
-    "train_number": null,
+    "train_number": "8078M",
+    "train_number_source_id": "jr-west-odekake-west-express-ginga-8078m-20260930",
+    "train_number_locator": "JR Odekake train page fields 列車番号 8078M, 列車名 WEST EXPRESS 銀河, 運転日 9月30日運転",
     "operating_dates": [
       "2026-07-05",
       "2026-07-08",
@@ -102,7 +138,9 @@
     "template_key": "kumano-night",
     "direction_label": "京都・大阪→新宮",
     "public_number": null,
-    "train_number": null,
+    "train_number": "8077M",
+    "train_number_source_id": "jr-west-odekake-west-express-ginga-8077m-20260925",
+    "train_number_locator": "JR Odekake train page fields 列車番号 8077M, 列車名 WEST EXPRESS 銀河, 運転日 9月28日までの月・金曜運転",
     "operating_dates": [
       "2026-07-03",
       "2026-07-06",
@@ -143,9 +181,11 @@
   },
   "evidence_locators": [
     {"claim": "service identity, operating period, endpoints and limited-express classification", "locator": "PDF p.1 sections 1 and 3"},
-    {"claim": "24 daytime origin dates, including the 2026-09-30 date beyond manifest as_of_date", "locator": "PDF p.1 section 2, peach cells in July-August-September calendars"},
+    {"claim": "24 daytime origin dates, including 2026-09-30", "locator": "PDF p.1 section 2, peach cells in July-August-September calendars"},
     {"claim": "16 ordered stops and standard arrival/departure clocks", "locator": "PDF p.1 section 3, 昼行（京都行き） table"},
     {"claim": "holiday clocks at Kainan, Wakayama, Hineno and Shin-Osaka", "locator": "PDF p.1 section 3 parenthesized values; note says （ ）は休日ダイヤ"},
-    {"claim": "pickup/dropoff restrictions used by normalized stop rows", "locator": "PDF p.1 text immediately below each directional table"}
+    {"claim": "pickup/dropoff restrictions used by normalized stop rows", "locator": "PDF p.1 text immediately below each directional table"},
+    {"claim": "daytime internal train number 8078M and operation on 2026-09-30", "locator": "JR Odekake train timetable 193801, selected date 2026-09-30"},
+    {"claim": "night internal train number 8077M", "locator": "JR Odekake train timetable 193791, selected date 2026-09-25"}
   ]
 }

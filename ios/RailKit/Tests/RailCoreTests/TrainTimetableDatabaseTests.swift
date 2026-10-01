@@ -5,6 +5,49 @@ import Testing
 
 @Suite("Train timetable SQLite runtime")
 struct TrainTimetableDatabaseTests {
+    @Test func publishedDraftUsesOnlyOrderedPassengerCalls() throws {
+        let fixture = try FixtureDatabase()
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let query = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let template = try #require(query)
+        let first = try #require(template.stops.first)
+        let last = try #require(template.stops.last)
+        func call(_ source: TrainTimetableDatabase.StopTime, type: String)
+            -> TrainTimetableDatabase.StopTime {
+            .init(sequence: source.sequence, station: source.station,
+                  arrivalTime: source.arrivalTime, departureTime: source.departureTime,
+                  arrivalSeconds: source.arrivalSeconds, departureSeconds: source.departureSeconds,
+                  dayOffset: source.dayOffset, arrivalDayOffset: source.arrivalDayOffset,
+                  departureDayOffset: source.departureDayOffset, callType: type,
+                  pickupAllowed: source.pickupAllowed, dropoffAllowed: source.dropoffAllowed,
+                  platform: source.platform, timeAccuracy: source.timeAccuracy)
+        }
+        func trip(_ stops: [TrainTimetableDatabase.StopTime]) -> TrainTimetableDatabase.Trip {
+            .init(id: template.id, serviceDate: template.serviceDate,
+                  timetableVersionID: template.timetableVersionID,
+                  timetableEditionName: template.timetableEditionName, service: template.service,
+                  calendarID: template.calendarID, trainNumber: template.trainNumber,
+                  publicNumber: template.publicNumber, direction: template.direction,
+                  serviceClass: template.serviceClass, operationGroupID: template.operationGroupID,
+                  notes: template.notes, timetableCompleteness: template.timetableCompleteness,
+                  factCompleteness: template.factCompleteness, stops: stops,
+                  timetableSymbols: [], lineSegments: [], operatorSegments: template.operatorSegments)
+        }
+        let draft = Train(id: "passenger-projection", date: nil, number: "",
+                          origin: "", destination: "", stops: [], region: "jp")
+        let mixed = trip([call(last, type: "pass"), first,
+                          call(first, type: "passenger_stop"), last, call(first, type: "pass")])
+        let projected = try #require(mixed.publishedStopsDraft(to: draft, ridden: false))
+        #expect(projected.origin == first.station.name)
+        #expect(projected.destination == last.station.name)
+        #expect(projected.stops.map(\.name) == [first.station.name, first.station.name, last.station.name])
+        #expect(projected.stops.map(\.stopType) == ["origin", "passenger_stop", "destination"])
+        #expect(projected.stops.allSatisfy { $0.rideSegment == false })
+        #expect(trip([]).publishedStopsDraft(to: draft) == nil)
+        #expect(trip([call(last, type: "pass"), first]).publishedStopsDraft(to: draft) == nil)
+    }
+
     @Test func bundledArtifactColdQueryIsLazyAndIndexed() throws {
         let clock = ContinuousClock()
         let start = clock.now
@@ -35,6 +78,81 @@ struct TrainTimetableDatabaseTests {
         #expect(sources.contains { $0.id == "jr-central-summer-20130517" })
     }
 
+    @Test func printedNumericPlatformsSurviveEditorProjection() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let draft = Train(id: "platform-check", date: nil, number: "", origin: "",
+                          destination: "", stops: [], region: "jp")
+        let hokutoQuery = try database.trip(
+            id: "jr-hokkaido.hokuto.3.exact-2026-09-30", on: "2026-09-30")
+        let hokuto = try #require(hokutoQuery)
+        #expect(hokuto.stops.last?.platform == "(7)")
+        #expect(hokuto.publishedStopsDraft(to: draft)?.stops.last?.platformNumber == 7)
+        let kaijiQuery = try database.trip(
+            id: "jr-east.kaiji.2.exact-2026-09-30", on: "2026-09-30")
+        let kaiji = try #require(kaijiQuery)
+        #expect(kaiji.stops.first { $0.platform == "２" } != nil)
+        #expect(kaiji.publishedStopsDraft(to: draft)?.stops.contains { $0.platformNumber == 2 } == true)
+    }
+
+    @Test func publishedSymbolsRemainSeparateFromPassengerStops() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let hokutoQuery = try database.trip(
+            id: "jr-hokkaido.hokuto.1.exact-2026-09-30", on: "2026-09-30")
+        let hokuto = try #require(hokutoQuery)
+        #expect(hokuto.timetableSymbols.map(\.stationName) ==
+                ["大沼公園", "室蘭", "母恋", "御崎", "輪西", "鷲別", "幌別", "沼ノ端", "千歳"])
+        #expect(hokuto.timetableSymbols.map(\.symbol) ==
+                ["レ", "||", "||", "||", "||", "レ", "レ", "レ", "レ"])
+        #expect(!hokuto.passengerStops.contains { $0.station.name == "大沼公園" })
+        #expect(!hokuto.passengerStops.contains { $0.station.name == "室蘭" })
+
+        let hokuto2Query = try database.trip(
+            id: "jr-hokkaido.hokuto.2.exact-2026-09-30", on: "2026-09-30")
+        let hokuto2 = try #require(hokuto2Query)
+        #expect(hokuto2.timetableSymbols.map(\.stationName) ==
+                ["千歳", "沼ノ端", "白老", "登別", "幌別", "鷲別", "輪西", "御崎", "母恋", "室蘭",
+                 "伊達紋別", "洞爺", "大沼公園", "五稜郭"])
+        #expect(hokuto2.timetableSymbols.map(\.symbol) ==
+                ["レ", "レ", "レ", "レ", "レ", "レ", "||", "||", "||", "||", "レ", "レ", "レ", "レ"])
+
+        let huisTenBoschQuery = try database.trip(
+            id: "jr-kyushu.huis-ten-bosch.11.2026-09-30", on: "2026-09-30")
+        let huisTenBosch = try #require(huisTenBoschQuery)
+        #expect(huisTenBosch.timetableSymbols.first?.stationName == "佐世保")
+        #expect(huisTenBosch.timetableSymbols.first?.symbol == "||")
+        #expect(!huisTenBosch.stops.contains { $0.station.name == "佐世保" })
+    }
+
+    @Test func bundledPlannedFormationPreservesDateAndCarOrder() throws {
+        let database = try #require(TrainTimetableDatabase.bundled())
+        let ibusukiQuery = try database.trip(
+            id: "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01", on: "2026-09-30")
+        let ibusuki = try #require(ibusukiQuery)
+        let formationQuery = try database.formation(for: ibusuki)
+        let formation = try #require(formationQuery)
+        #expect(formation.evidenceKind == "planned")
+        #expect(formation.serviceDate == "2026-09-30")
+        #expect(formation.label == "C")
+        #expect(formation.carCount == 2)
+        #expect(formation.reservedSeatCapacity == 63)
+        #expect(formation.allReserved == true)
+        #expect(formation.cars.map(\.number) == ["2", "1"])
+        #expect(formation.cars.map(\.vehicleSeries) == ["キハ140", "キハ47"])
+        let precedingQuery = try database.trip(
+            id: "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01", on: "2026-09-29")
+        let preceding = try #require(precedingQuery)
+        #expect(try database.formation(for: preceding) == nil)
+        let hokutoQuery = try database.trip(
+            id: "jr-hokkaido.hokuto.3.exact-2026-09-30", on: "2026-09-30")
+        let hokuto = try #require(hokutoQuery)
+        let hokutoFormationQuery = try database.formation(for: hokuto)
+        let hokutoFormation = try #require(hokutoFormationQuery)
+        #expect(hokutoFormation.allReserved == true)
+        #expect(hokutoFormation.greenCarAvailable == true)
+        #expect(hokutoFormation.carCount == nil)
+        #expect(hokutoFormation.cars.isEmpty)
+    }
+
     @Test func bundledEastVariantsAndKyushuSummerDatesSelectExactOccurrences() throws {
         let database = try #require(TrainTimetableDatabase.bundled())
         let saturday = try database.trips(for: "azusa", on: "2026-09-26")
@@ -48,10 +166,31 @@ struct TrainTimetableDatabaseTests {
         #expect(selected.stops.last?.arrivalTime == "09:43")
         #expect(regular.stops.last?.arrivalTime == "09:38")
         #expect(!selected.canApplyToRouteEditor && !regular.canApplyToRouteEditor)
+        let from = try #require(regular.origin)
+        let to = try #require(regular.destination)
+        let fromCode = try #require(from.station.currentSourceCode)
+        let toCode = try #require(to.station.currentSourceCode)
+        let departure = try #require(from.departureTime)
+        let arrival = try #require(to.arrivalTime)
+        let input = Train(
+            id: "azusa-lookup", date: "2026-09-27", number: "", origin: from.station.name,
+            destination: to.station.name, stops: [
+                Stop(name: from.station.name, n02StationCode: fromCode,
+                     departure: departure, stopType: "origin"),
+                Stop(name: to.station.name, n02StationCode: toCode,
+                     arrival: arrival, stopType: "destination"),
+            ], region: "jp")
+        #expect(TimetableTripMatch.candidates(
+            for: input, serviceName: "あずさ", among: sunday).contains(regular))
         #expect(try database.trips(for: "tokiwa", on: "2026-09-18").isEmpty)
         #expect(try database.trips(for: "tokiwa", on: "2026-09-22").count == 1)
         #expect(try database.trips(for: "ibusuki-no-tamatebako", on: "2026-09-28").count == 6)
-        #expect(try database.trips(for: "ibusuki-no-tamatebako", on: "2026-09-29").isEmpty)
+        #expect(try database.trips(for: "ibusuki-no-tamatebako", on: "2026-09-29").count == 6)
+        #expect(try database.trips(named: "Niseko express", on: "2026-09-23").count == 2)
+        #expect(try database.trips(on: "2026-09-30").count >= 18)
+        #expect(try database.trips(for: "yufuin-no-mori", on: "2026-09-30").count == 6)
+        let ginga = try #require(database.trips(for: "west-express-ginga", on: "2026-09-30").first)
+        #expect(ginga.trainNumber == "8078M" && ginga.stops.count == 16)
     }
 
     @Test func sameStationDwellCanCrossMidnightWithoutChangingSourceClocks() throws {
@@ -68,6 +207,35 @@ struct TrainTimetableDatabaseTests {
         #expect(stop.departureSeconds == 88_200)
         #expect(stop.arrivalDayOffset == 0)
         #expect(stop.departureDayOffset == 1)
+    }
+
+    @Test func datedPlatformOverrideCanReplaceOrClearBasePlatform() throws {
+        let replaced = try FixtureDatabase(platformOverride: "9")
+        defer { replaced.remove() }
+        let replacedDatabase = try TrainTimetableDatabase(url: replaced.url)
+        let datedQuery = try replacedDatabase.trip(id: "shinano-1", on: "2026-09-29")
+        let ordinaryQuery = try replacedDatabase.trip(id: "shinano-1", on: "2026-09-21")
+        let dated = try #require(datedQuery)
+        let ordinary = try #require(ordinaryQuery)
+        #expect(dated.stops.last?.platform == "9")
+        #expect(ordinary.stops.last?.platform == "2")
+
+        let cleared = try FixtureDatabase(clearPlatformOverride: true)
+        defer { cleared.remove() }
+        let clearedDatabase = try TrainTimetableDatabase(url: cleared.url)
+        let blankQuery = try clearedDatabase.trip(id: "shinano-1", on: "2026-09-29")
+        let blank = try #require(blankQuery)
+        #expect(blank.stops.last?.platform == nil)
+    }
+
+    @Test func datedTrainNumberOverrideDoesNotChangeBaseTemplate() throws {
+        let fixture = try FixtureDatabase(trainNumberOverride: "8071D")
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let datedQuery = try database.trip(id: "shinano-1", on: "2026-09-29")
+        let ordinaryQuery = try database.trip(id: "shinano-1", on: "2026-09-21")
+        #expect(try #require(datedQuery).trainNumber == "8071D")
+        #expect(try #require(ordinaryQuery).trainNumber == "1001M")
     }
 
     @Test func bundledGingaNightUsesOriginalServiceDateAcrossWakayamaDwell() throws {
@@ -109,6 +277,24 @@ struct TrainTimetableDatabaseTests {
         #expect(trip.stops[1].dayOffset == 0)
         #expect(trip.canApplyToRouteEditor)
 
+        let exactInput = Train(
+            id: "lookup", date: "2026-09-29", number: "しなの", origin: "名古屋",
+            destination: "長野", stops: [
+                Stop(name: "名古屋", n02StationCode: "NAGOYA", departure: "23:50", stopType: "origin"),
+                Stop(name: "長野", n02StationCode: "NAGANO", arrival: "25:03", stopType: "destination"),
+            ], region: "jp")
+        #expect(TimetableTripMatch.candidates(for: exactInput, among: trips).map(\.id) == [trip.id])
+        var nameOnly = exactInput
+        nameOnly.number = ""
+        #expect(TimetableTripMatch.candidates(
+            for: nameOnly, serviceName: "しなの", among: trips).map(\.id) == [trip.id])
+        var wrongTime = exactInput
+        wrongTime.stops[1].arrival = "25:04"
+        #expect(TimetableTripMatch.candidates(for: wrongTime, among: trips).isEmpty)
+        var wrongService = exactInput
+        wrongService.number = "ひだ"
+        #expect(TimetableTripMatch.candidates(for: wrongService, among: trips).isEmpty)
+
         let pattern = try #require(trip.compatibilityPattern())
         #expect(pattern.name == "しなの 1号")
         #expect(pattern.stops == ["名古屋", "長野"])
@@ -147,6 +333,8 @@ struct TrainTimetableDatabaseTests {
         #expect(Set(try database.trips(for: "shinano", on: "2026-09-29").map(\.id))
                 == ["shinano-1", "research-trip"])
         #expect(Set(try database.trips(named: "スーパー", on: "2026-09-29").map(\.id))
+                == ["shinano-1", "research-trip"])
+        #expect(Set(try database.trips(named: "Shinano", on: "2026-09-29").map(\.id))
                 == ["shinano-1", "research-trip"])
         #expect(try database.service(named: "スーパー", on: "2026-09-29").map(\.id) == ["shinano"])
         #expect(try database.coverage(on: "2026-09-29").status == .partial)
@@ -194,6 +382,12 @@ struct TrainTimetableDatabaseTests {
         let trip = try #require(queried)
         #expect(!trip.canApplyToRouteEditor)
         #expect(trip.compatibilityPattern() == nil)
+        let empty = Train(id: "draft", number: "", origin: "", destination: "", stops: [], region: "jp")
+        let draft = try #require(trip.publishedStopsDraft(to: empty))
+        #expect(draft.routeSections == nil)
+        #expect(draft.routePolicy == nil)
+        #expect(draft.stops.count == trip.passengerStops.count)
+        #expect(draft.numberEn?.hasPrefix("Shinano") == true)
     }
 
     @Test func mixedJRAndPrivateOperatorTripAllowsPrivateRouteSegments() throws {
@@ -212,22 +406,43 @@ struct TrainTimetableDatabaseTests {
         #expect(applied.routePolicy?.preferredOperatorNames == ["JR東海", "東武鉄道"])
     }
 
-    @Test func multiSegmentPassengerPairRemainsReadOnlyUntilOrderCanBeEnforced() throws {
-        let fixture = try FixtureDatabase(multiSegmentPassengerPair: true)
+    @Test func routeOnlyLineBoundaryProjectsAnOrderedUntimedPassThrough() throws {
+        let fixture = try FixtureDatabase(routeOnlyLineBoundary: true)
         defer { fixture.remove() }
         let database = try TrainTimetableDatabase(url: fixture.url)
         let queried = try database.trip(id: "shinano-1", on: "2026-09-29")
         let trip = try #require(queried)
 
-        // The source chain is L1/O1 then L2/O2, but RouteSection only carries
-        // unordered allowed-name sets. It cannot enforce the junction or order.
+        #expect(trip.stops.count == 2)
+        #expect(trip.passengerStops.map(\.station.name) == ["水戸", "上野"])
+        #expect(!trip.stops.contains { $0.station.name == "日暮里" })
         #expect(trip.lineSegments.count == 2)
-        #expect(!trip.canApplyToRouteEditor)
+        #expect(trip.canApplyToRouteEditor)
+        // The passenger-only compatibility projection cannot encode the
+        // ordered physical-line boundary and therefore remains unavailable.
         #expect(trip.compatibilityPattern() == nil)
         let draft = Train(
             id: "draft", date: nil, number: "", origin: "", destination: "",
             stops: [], region: "jp")
-        #expect(trip.applying(to: draft) == nil)
+        let publishedDraft = try #require(trip.publishedStopsDraft(to: draft))
+        #expect(publishedDraft.stops.count == 2)
+        #expect(!publishedDraft.stops.contains { $0.name == "日暮里" })
+
+        let applied = try #require(trip.applying(to: draft))
+        #expect(applied.stops.count == 3)
+        #expect(applied.stops.map(\.name) == ["水戸", "日暮里", "上野"])
+        #expect(applied.stops[1].n02StationCode == "003417")
+        #expect(applied.stops[1].stopType == "pass_through")
+        #expect(applied.stops[1].arrival == nil)
+        #expect(applied.stops[1].departure == nil)
+        #expect(applied.routeSections?.count == 2)
+        #expect(applied.routeSections?[0].fromN02StationCode == "002319")
+        #expect(applied.routeSections?[0].toN02StationCode == "003417")
+        #expect(applied.routeSections?[0].lineNames == ["常磐線"])
+        #expect(applied.routeSections?[1].fromN02StationCode == "003417")
+        #expect(applied.routeSections?[1].toN02StationCode == "003505")
+        #expect(applied.routeSections?[1].lineNames == ["東北線"])
+        #expect(applied.routeSections?.allSatisfy { $0.operatorNames == ["JR東日本"] } == true)
     }
 
     @Test func historicalLineReferenceRemainsQueryableButCannotEnterCurrentEditor() throws {
@@ -345,8 +560,10 @@ private final class FixtureDatabase {
         nationalZeroInterval: Bool = false, invalidOperatorSegmentBounds: Bool = false,
         mixedOperatorSegments: Bool = false, normalizedDayOffsetTime: Bool = false,
         splitMidnightDwell: Bool = false,
-        multiSegmentPassengerPair: Bool = false, mismatchedLineOperatorCoverage: Bool = false,
-        historicalLineReference: Bool = false, missingLineReference: Bool = false
+        routeOnlyLineBoundary: Bool = false, mismatchedLineOperatorCoverage: Bool = false,
+        historicalLineReference: Bool = false, missingLineReference: Bool = false,
+        platformOverride: String? = nil, clearPlatformOverride: Bool = false,
+        trainNumberOverride: String? = nil
     ) throws {
         url = FileManager.default.temporaryDirectory
             .appendingPathComponent("train-timetable-\(UUID().uuidString).sqlite")
@@ -358,6 +575,25 @@ private final class FixtureDatabase {
 
         try execute(Self.schema, on: connection)
         try execute(Self.data, on: connection)
+        if let trainNumberOverride {
+            try execute("""
+                INSERT INTO trip_train_number_overrides VALUES(
+                  'shinano-1', '2026-09-29', '\(trainNumberOverride)', 'fact-source');
+                """, on: connection)
+        }
+        if let platformOverride {
+            try execute("""
+                UPDATE trip_stop_time_overrides
+                SET platform_override = '\(platformOverride)', platform_override_present = 1
+                WHERE trip_id = 'shinano-1' AND stop_sequence = 1;
+                """, on: connection)
+        } else if clearPlatformOverride {
+            try execute("""
+                UPDATE trip_stop_time_overrides
+                SET platform_override = NULL, platform_override_present = 1
+                WHERE trip_id = 'shinano-1' AND stop_sequence = 1;
+                """, on: connection)
+        }
         if splitMidnightDwell {
             try execute("""
                 UPDATE stop_times SET arrival_time='23:42', departure_time='00:30',
@@ -419,18 +655,24 @@ private final class FixtureDatabase {
                 INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
                 """, on: connection)
         }
-        if multiSegmentPassengerPair {
+        if routeOnlyLineBoundary {
             try execute("""
                 INSERT INTO station_identities VALUES(
-                  'shiojiri', '塩尻', 'current_n02', 'SHIOJIRI', NULL, NULL, NULL);
+                  'nippori', '日暮里', 'current_n02', '003417', NULL, NULL, NULL);
+                UPDATE station_identities SET name_snapshot = '水戸', current_source_code = '002319'
+                WHERE station_id = 'nagoya';
+                UPDATE station_identities SET name_snapshot = '上野', current_source_code = '003505'
+                WHERE station_id = 'nagano';
+                INSERT INTO operators VALUES('jr-east', 'JR東日本', '1987-04-01', NULL);
+                DELETE FROM trip_operator_segments WHERE trip_id = 'shinano-1';
+                INSERT INTO trip_operator_segments VALUES('shinano-1',0,1,'jr-east');
                 DELETE FROM trip_line_segments WHERE trip_id = 'shinano-1';
                 INSERT INTO trip_line_segments VALUES(
-                  'shinano-1',0,'nagoya','shiojiri','中央線','jr-central','high',
-                  'current_n02','N02-CENTRAL',NULL);
+                  'shinano-1',0,'nagoya','nippori','常磐線','jr-east','high',
+                  'current_n02','jp-東日本旅客鉄道-常磐線',NULL);
                 INSERT INTO trip_line_segments VALUES(
-                  'shinano-1',1,'shiojiri','nagano','篠ノ井線','tobu','high',
-                  'current_n02','N02-SHINONOI',NULL);
-                INSERT INTO trip_operator_segments VALUES('shinano-1',1,1,'tobu');
+                  'shinano-1',1,'nippori','nagano','東北線','jr-east','high',
+                  'current_n02','jp-東日本旅客鉄道-東北線-2',NULL);
                 """, on: connection)
         }
         if mismatchedLineOperatorCoverage {
@@ -480,9 +722,10 @@ private final class FixtureDatabase {
         CREATE TABLE metadata(key TEXT PRIMARY KEY, value TEXT);
         CREATE TABLE services(service_id TEXT PRIMARY KEY, canonical_name TEXT, service_class TEXT,
           historical_generation INTEGER, first_verified_date TEXT, last_verified_date TEXT, jr_scope TEXT);
-        CREATE TABLE service_name_periods(service_id TEXT, name TEXT, valid_from TEXT, valid_until TEXT);
+        CREATE TABLE service_name_periods(service_id TEXT, name TEXT, language TEXT,
+          valid_from TEXT, valid_until TEXT);
         CREATE TABLE timetable_versions(timetable_version_id TEXT PRIMARY KEY, effective_from TEXT,
-          effective_until TEXT, completeness TEXT);
+          effective_until TEXT, completeness TEXT, edition_name TEXT);
         CREATE TABLE timetable_version_sources(timetable_version_id TEXT, source_id TEXT);
         CREATE TABLE calendars(calendar_id TEXT PRIMARY KEY, monday INTEGER, tuesday INTEGER,
           wednesday INTEGER, thursday INTEGER, friday INTEGER, saturday INTEGER, sunday INTEGER,
@@ -502,7 +745,11 @@ private final class FixtureDatabase {
           platform TEXT, time_accuracy TEXT, arrival_day_offset INTEGER, departure_day_offset INTEGER);
         CREATE TABLE trip_stop_time_overrides(trip_id TEXT, service_date TEXT, stop_sequence INTEGER,
           arrival_override TEXT, departure_override TEXT, arrival_seconds_override INTEGER,
-          departure_seconds_override INTEGER, arrival_day_offset_override INTEGER, departure_day_offset_override INTEGER);
+          departure_seconds_override INTEGER, arrival_day_offset_override INTEGER,
+          departure_day_offset_override INTEGER, platform_override TEXT,
+          platform_override_present INTEGER NOT NULL DEFAULT 0);
+        CREATE TABLE trip_train_number_overrides(trip_id TEXT, service_date TEXT,
+          train_number TEXT, source_id TEXT);
         CREATE TABLE trip_operator_segments(trip_id TEXT, from_sequence INTEGER, to_sequence INTEGER,
           operator_id TEXT);
         CREATE TABLE trip_line_segments(trip_id TEXT, sequence INTEGER, from_station_id TEXT,
@@ -516,7 +763,7 @@ private final class FixtureDatabase {
         """
 
     static let data = """
-        INSERT INTO metadata VALUES('schema_version', '1.0.0');
+        INSERT INTO metadata VALUES('schema_version', '1.2.0');
         INSERT INTO source_documents VALUES(
           'version-source','Edition Publisher','Edition source','https://example.test/edition','test_only');
         INSERT INTO source_documents VALUES(
@@ -525,8 +772,9 @@ private final class FixtureDatabase {
         INSERT INTO operators VALUES('tobu', '東武鉄道', '1897-11-01', NULL);
         INSERT INTO services VALUES('shinano', 'しなの', 'limited_express', 1,
           '2026-03-14', NULL, 'jr');
-        INSERT INTO service_name_periods VALUES('shinano', 'スーパーしなの', '2026-01-01', NULL);
-        INSERT INTO timetable_versions VALUES('v1', '2026-01-01', '2027-01-01', 'verified');
+        INSERT INTO service_name_periods VALUES('shinano', 'スーパーしなの', 'ja', '2026-01-01', NULL);
+        INSERT INTO service_name_periods VALUES('shinano', 'Shinano', 'en', '2026-01-01', NULL);
+        INSERT INTO timetable_versions VALUES('v1', '2026-01-01', '2027-01-01', 'verified', '2026 edition');
         INSERT INTO timetable_version_sources VALUES('v1','version-source');
         INSERT INTO timetable_version_sources VALUES('v1','fact-source');
         INSERT INTO fact_sources VALUES('trip','shinano-1','fact-source');

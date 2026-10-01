@@ -683,7 +683,10 @@ public enum Stations {
     // MARK: - dedupe
 
     /// The signature that decides two features are the same station: code,
-    /// name, line, operator and the JSON spelling of the first coordinate.
+    /// name, line, operator, the JSON spelling of the first coordinate, and
+    /// the effective service interval. Historical overlays can contain the
+    /// same physical station in disjoint periods; those variants must survive
+    /// until the route's ride-date filter runs.
     ///
     /// That last part is the JavaScript number-printing rule. `JSON.stringify`
     /// renders a finite number with `ToString`, so 139 is `139` and never
@@ -698,12 +701,15 @@ public enum Stations {
         {
             head = first.jsonStringified
         }
+        let bounds = stationServiceBounds(feature)
         return [
             stationCode(feature) ?? "",
             stationName(feature) ?? "",
             stationLineName(feature),
             stationOperator(feature),
             head,
+            bounds.0 ?? "",
+            bounds.1 ?? "",
         ].joined(separator: "|")
     }
 
@@ -787,6 +793,58 @@ public enum Stations {
 
         private func features(forKey key: String) -> [Int]? { candidates[CodeUnits(key)] }
 
+        /// Whether one solved platform membership belongs to the station named
+        /// by a fixed directory code.
+        ///
+        /// N02 codes identify line/operator memberships, while a train stop is
+        /// a physical station. A dated solve can therefore end on another
+        /// membership at the same station: 尼崎's 福知山線 membership rather
+        /// than its catalogued JR東西線 membership, or the retired JR 北陸線
+        /// membership that preceded the current 金沢/敦賀 third-sector one.
+        ///
+        /// This stays deliberately narrower than a name or distance match. Two
+        /// memberships share identity only through an exact code, an explicit
+        /// N02 station group, or the exact same source geometry under the same
+        /// normalized name. The last rule is the temporal hand-off present in
+        /// the history overlay; it does not make a nearby same-name platform an
+        /// alias and it does not synthesize coordinates.
+        public func hasSameStationIdentity(referenceCode: String, actualIndex: Int) -> Bool {
+            guard features.indices.contains(actualIndex), !referenceCode.utf16.isEmpty else {
+                return false
+            }
+            let references = candidateIndices(
+                for: .stop(Stop(n02StationCode: referenceCode)))
+            guard !references.isEmpty else { return false }
+            let actual = features[actualIndex]
+
+            func identityCodes(_ feature: Feature) -> Set<CodeUnits> {
+                var result = Set<CodeUnits>()
+                for code in [stationCode(feature), stationGroupCode(feature)] {
+                    if let code, !code.utf16.isEmpty { result.insert(CodeUnits(code)) }
+                }
+                return result
+            }
+
+            let actualCodes = identityCodes(actual)
+            let actualName = normalizeStationName(stationName(actual))
+            for index in references {
+                let reference = features[index]
+                if !actualCodes.isDisjoint(with: identityCodes(reference)) { return true }
+                guard !actualName.utf16.isEmpty,
+                      sameCodeUnits(
+                        actualName, normalizeStationName(stationName(reference))),
+                      let actualGeometry = actual.geometry,
+                      let referenceGeometry = reference.geometry,
+                      actualGeometry.type == referenceGeometry.type,
+                      let actualCoordinates = actualGeometry.coordinates,
+                      let referenceCoordinates = referenceGeometry.coordinates,
+                      actualCoordinates == referenceCoordinates
+                else { continue }
+                return true
+            }
+            return false
+        }
+
         // MARK: Resolution
 
         /// The candidate features for a written name or stop, as positions in
@@ -799,6 +857,66 @@ public enum Stations {
         /// the wrong city.
         public func candidateIndices(for query: Query?) -> [Int] {
             candidateIndices(for: query, warned: nil)
+        }
+
+        /// Candidate memberships whose source name is exactly the supplied
+        /// written name after JavaScript-style trimming.
+        ///
+        /// `candidateIndices(for:)` deliberately understands normalized
+        /// aliases. Route endpoint history checks need the narrower question:
+        /// did this line/operator itself publish this exact old name? Filtering
+        /// the ordinary lookup result preserves its order and deduplication
+        /// while excluding normalized spellings that merely share an index key.
+        public func exactNameCandidateIndices(for name: String) -> [Int] {
+            let cleanName = jsTrim(name)
+            guard !cleanName.utf16.isEmpty else { return [] }
+            return candidateIndices(for: .name(cleanName)).filter {
+                guard let featureName = stationName(features[$0]) else { return false }
+                return sameCodeUnits(featureName, cleanName)
+            }
+        }
+
+        /// Whether a dated, old-name station membership is a reviewed alias
+        /// of the current directory name for the same fixed code.
+        ///
+        /// The historical feature must carry both its event identity and the
+        /// builder's exact-current-geometry certification. The current feature
+        /// must be in the exact code pool with identical geometry, line and
+        /// operator. A shared group or nearby platform is insufficient.
+        public func isCertifiedHistoricalNameAlias(
+            actualIndex: Int, referenceName: String, referenceCode: String
+        ) -> Bool {
+            guard features.indices.contains(actualIndex),
+                  !referenceName.utf16.isEmpty, !referenceCode.utf16.isEmpty
+            else { return false }
+            let actual = features[actualIndex]
+            guard stationCode(actual).map({ sameCodeUnits($0, referenceCode) }) == true,
+                  truthyString(actual.properties["station_code_basis"])
+                    == "exact_current_geometry_identity",
+                  truthyString(actual.properties["history_id"])?.utf16.isEmpty == false,
+                  let actualGeometry = actual.geometry
+            else { return false }
+            let actualLine = stationLineName(actual)
+            let actualOperator = stationOperator(actual)
+            let normalizedReference = normalizeStationName(referenceName)
+            return candidateIndices(
+                for: .stop(.init(n02StationCode: referenceCode))).contains { candidateIndex in
+                    guard candidateIndex != actualIndex else { return false }
+                    let candidate = features[candidateIndex]
+                    guard stationCode(candidate).map({
+                            sameCodeUnits($0, referenceCode)
+                          }) == true,
+                          truthyString(candidate.properties["station_code_basis"])
+                            != "exact_current_geometry_identity",
+                          sameCodeUnits(
+                            normalizeStationName(stationName(candidate)), normalizedReference),
+                          sameCodeUnits(stationLineName(candidate), actualLine),
+                          sameCodeUnits(stationOperator(candidate), actualOperator),
+                          candidate.geometry?.type == actualGeometry.type,
+                          candidate.geometry?.coordinates == actualGeometry.coordinates
+                    else { return false }
+                    return true
+                }
         }
 
         /// - Parameter warned: set to true when the code and the name disagree

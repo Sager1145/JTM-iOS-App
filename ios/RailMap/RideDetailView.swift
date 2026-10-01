@@ -500,11 +500,31 @@ struct RideDetailContent: View {
         VStack(alignment: .trailing, spacing: 2) {
             timeRow(stop.arrival, emphasised: true)
             timeRow(stop.departure, emphasised: false)
+            actualTimeRow(localization.editorText("ios.editor.actualArrival"),
+                          scheduled: stop.arrival, actual: stop.actualArrival)
+            actualTimeRow(localization.editorText("ios.editor.actualDeparture"),
+                          scheduled: stop.departure, actual: stop.actualDeparture)
             if let platform = stop.platformNumber, platform >= 0 {
                 platformBadge(platform)
             }
         }
         .accessibilityHidden(true)
+    }
+
+    @ViewBuilder
+    private func actualTimeRow(_ title: String, scheduled: String?, actual: String?) -> some View {
+        if let actual, !actual.isEmpty {
+            HStack(spacing: 4) {
+                Text("\(title) \(actual)")
+                if let status = StopTimingStatus.localizedLabel(
+                    scheduled: scheduled, actual: actual, localization: localization) {
+                    Text(status).foregroundStyle(
+                        status == localization.editorText("ios.editor.actualOnTime")
+                            ? Color.secondary : Color.orange)
+                }
+            }
+            .font(.caption2.monospacedDigit())
+        }
     }
 
     @ViewBuilder
@@ -848,6 +868,20 @@ struct RideDetailContent: View {
                     localization.countryText("popup.departure", fallback: "departure"), departure,
                     nextDayVoiceOver(departure),
                 ].compactMap { $0 }.joined(separator: " "))
+        }
+        if let actual = stop.actualArrival, !actual.isEmpty {
+            values.append([
+                localization.editorText("ios.editor.actualArrival"), actual,
+                StopTimingStatus.localizedLabel(
+                    scheduled: stop.arrival, actual: actual, localization: localization),
+            ].compactMap { $0 }.joined(separator: " "))
+        }
+        if let actual = stop.actualDeparture, !actual.isEmpty {
+            values.append([
+                localization.editorText("ios.editor.actualDeparture"), actual,
+                StopTimingStatus.localizedLabel(
+                    scheduled: stop.departure, actual: actual, localization: localization),
+            ].compactMap { $0 }.joined(separator: " "))
         }
         values.append(
             "\(localization.countryText("popup.rideSegment", fallback: "ridden")): "

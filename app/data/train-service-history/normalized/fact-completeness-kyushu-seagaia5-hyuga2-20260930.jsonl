@@ -1,0 +1,22 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Official detail prints train name and public number.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Official detail prints 5005M.", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Selected date 2026-09-30; 毎日運転.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Both endpoints printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Every printed passenger stop captured; 朽網 is marked ★ temporary stop.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "All printed arrival/departure clock sides retained.", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Names resolve to current JR Kyushu N02 stations.", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Printed seat categories only; consist and car details unverified.", "status": "partial"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Ordered operator boundaries not independently established.", "status": "unknown"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Dated ordered physical line identities not established.", "status": "unknown"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30", "entity_type": "trip", "notes": "Official URL pinned; reuse grant unconfirmed.", "status": "partial"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Official detail prints train name and public number.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Official detail prints 5072M.", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Selected date 2026-09-30; ９月１９・２２・２３日は運休.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Both endpoints printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Every printed passenger stop captured.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "All printed arrival/departure clock sides retained.", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Names resolve to current JR Kyushu N02 stations.", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Printed seat categories only; consist and car details unverified.", "status": "partial"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Ordered operator boundaries not independently established.", "status": "unknown"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Dated ordered physical line identities not established.", "status": "unknown"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-kyushu.hyuga.2.2026-09-30", "entity_type": "trip", "notes": "Official URL pinned; reuse grant unconfirmed.", "status": "partial"}

@@ -1,0 +1,139 @@
+{
+  "candidate_id": "jr-central-nanki2-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "nanki",
+  "source_id": "jr-west-odekake-nanki2-3002d-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/28031?date=20260930",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "Only the selected September 30 page is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.nanki.2.2026-09-30",
+    "public_number": "2",
+    "train_number": "3002D",
+    "origin": "新宮",
+    "destination": "名古屋",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "新宮",
+        "arrival_time": null,
+        "departure_time": "06:20",
+        "platform": null,
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "熊野市",
+        "arrival_time": "06:39",
+        "departure_time": "06:40",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "尾鷲",
+        "arrival_time": "07:07",
+        "departure_time": "07:07",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "紀伊長島",
+        "arrival_time": "07:28",
+        "departure_time": "07:29",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "三瀬谷",
+        "arrival_time": "07:55",
+        "departure_time": "07:56",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "多気",
+        "arrival_time": "08:18",
+        "departure_time": "08:19",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "松阪",
+        "arrival_time": "08:25",
+        "departure_time": "08:26",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "津",
+        "arrival_time": "08:40",
+        "departure_time": "08:41",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "鈴鹿",
+        "arrival_time": "08:54",
+        "departure_time": "08:54",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "四日市",
+        "arrival_time": "09:02",
+        "departure_time": "09:04",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 11,
+        "name_snapshot": "桑名",
+        "arrival_time": "09:15",
+        "departure_time": "09:16",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 12,
+        "name_snapshot": "名古屋",
+        "arrival_time": "09:42",
+        "departure_time": null,
+        "platform": "12",
+        "call_type": "destination"
+      }
+    ],
+    "direction": "up",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": [
+      "９月１８～２３日は普通車全車指定席で運転"
+    ]
+  },
+  "review_notes": [
+    "Official date-selected detail; September 30 drivingday-01 calendar cell and legend inspected in official HTML.",
+    "All printed passenger calls and platforms retained; レ pass rows omitted.",
+    "September 18–23 seat exception does not apply September 30; no formation inferred."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "cell_class": "drivingday-01",
+    "method": "Official HTML calendar cell and printed drivingday-01 legend inspected",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/28031?date=20260930"
+  }
+}

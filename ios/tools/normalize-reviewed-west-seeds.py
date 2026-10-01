@@ -87,6 +87,14 @@ def main():
         raise ValueError("Candidate must be visually reviewed before normalization")
 
     source = candidate["source"]
+    supplemental_sources = candidate.get("supplemental_sources", [])
+    sources = [source, *supplemental_sources]
+    source_by_id = {}
+    for source_row in sources:
+        source_id = source_row["source_id"]
+        if source_id in source_by_id:
+            raise ValueError(f"Duplicate candidate source id {source_id}")
+        source_by_id[source_id] = source_row
     service = candidate["service"]
     trip_sources = [candidate["trip"], candidate["night_trip"]]
     ensure_unique_service(service)
@@ -139,6 +147,11 @@ def main():
     })
     trip_ids = []
     for trip_source in trip_sources:
+        train_number_source_id = trip_source.get("train_number_source_id")
+        if trip_source.get("train_number") and train_number_source_id not in source_by_id:
+            raise ValueError(
+                f"Missing candidate train-number source {train_number_source_id} "
+                f"for {trip_source['template_key']}")
         days = days_by_key[trip_source["template_key"]]
         trip_id = f"jr-west.{service['service_id']}.{trip_source['template_key']}.{days[0].isoformat()}"
         trip_ids.append(trip_id)
@@ -146,6 +159,9 @@ def main():
         calendar_id = trip_id + ".calendar"
         valid_from = days[0].isoformat()
         valid_until = (days[-1] + timedelta(days=1)).isoformat()
+        version_source_ids = [source["source_id"]]
+        if train_number_source_id:
+            version_source_ids.append(train_number_source_id)
         data["timetable-versions"].append({
             "timetable_version_id": version_id,
             "operator_scope": "jr-west",
@@ -155,7 +171,7 @@ def main():
             "revision_type": "planned_exception",
             "publication_date": source["publication_date"],
             "completeness": "partial",
-            "source_ids": [source["source_id"]],
+            "source_ids": version_source_ids,
         })
         data["calendars"].append({
             "calendar_id": calendar_id,
@@ -201,15 +217,16 @@ def main():
             "timetable_version_id": version_id,
             "service_id": service["service_id"],
             "calendar_id": calendar_id,
-            "train_number": None,
+            "train_number": trip_source.get("train_number"),
             "public_number": None,
             "origin_station_id": trip_stop_rows[0]["station_id"],
             "destination_station_id": trip_stop_rows[-1]["station_id"],
             "direction": trip_source["direction_label"],
             "service_class": service["service_class"],
             "notes": (
-                "Official directional stop/time table. Internal/public train numbers, ordered route identities "
-                "and operator-segment boundaries are not printed."
+                "Official directional stop/time table, supplemented by the official JR Odekake internal "
+                "train number. No public number, ordered route identities or operator-segment boundaries "
+                "are established."
             ),
         })
         if trip_source is daytime_source:
@@ -225,7 +242,6 @@ def main():
 
     statuses = {
         "identity": ("verified", "high", "Official title and section 1 identify the named limited express."),
-        "train_number": ("unknown", "low", "The official PDF prints no public or internal train number."),
         "operator": ("unknown", "low", "The PDF does not print an ordered operator-boundary table."),
         "validity_calendar": ("verified", "high", "Only peach origin-date cells through manifest as_of_date are normalized."),
         "origin_destination": ("verified", "high", "Section 1 and each directional table state their endpoints."),
@@ -245,8 +261,16 @@ def main():
         "station_refs": "Shipped current station directory; exact JR West name/code resolution",
         "provenance": "Official PDF URL and SHA-256 reviewed 2026-09-28",
     }
-    for trip_id in trip_ids:
-        for dimension, (status, confidence, notes) in statuses.items():
+    for trip_id, trip_source in zip(trip_ids, trip_sources):
+        trip_statuses = dict(statuses)
+        if trip_source.get("train_number"):
+            trip_statuses["train_number"] = (
+                "verified", "high",
+                "The official JR Odekake train page prints the internal train number for this exact named directional pattern.")
+        else:
+            trip_statuses["train_number"] = (
+                "unknown", "low", "No reviewed official source prints an internal train number.")
+        for dimension, (status, confidence, notes) in trip_statuses.items():
             data["fact-completeness"].append({
                 "entity_type": "trip",
                 "entity_id": trip_id,
@@ -255,7 +279,17 @@ def main():
                 "confidence": confidence,
                 "notes": notes,
             })
-            if dimension in source_locators:
+            if dimension == "train_number" and trip_source.get("train_number"):
+                data["fact-sources"].append({
+                    "entity_type": "trip",
+                    "entity_id": trip_id,
+                    "field_name": dimension,
+                    "source_id": trip_source["train_number_source_id"],
+                    "page_or_locator": trip_source["train_number_locator"],
+                    "confidence": confidence,
+                    "verification_status": status,
+                })
+            elif dimension in source_locators:
                 data["fact-sources"].append({
                     "entity_type": "trip",
                     "entity_id": trip_id,
@@ -267,13 +301,16 @@ def main():
                 })
 
     research = {
-        "train_number": ("open", "Obtain an official consist/working timetable that prints the public and internal train numbers."),
         "operator": ("open", "Obtain source evidence for the ordered operator boundary, if any."),
         "route_lines": ("open", "Obtain dated direct line identities for every adjacent stop pair; do not infer them from the schematic map."),
         "provenance": ("license_blocked", "No redistribution or automated-extraction grant was found; the PDF remains verification-only."),
     }
-    for trip_id in trip_ids:
-        for dimension, (status, notes) in research.items():
+    for trip_id, trip_source in zip(trip_ids, trip_sources):
+        trip_research = dict(research)
+        if not trip_source.get("train_number"):
+            trip_research["train_number"] = (
+                "open", "Obtain an official source that prints the internal train number.")
+        for dimension, (status, notes) in trip_research.items():
             data["research-queue"].append({
                 "research_id": f"{trip_id}.{dimension}",
                 "entity_type": "trip",
@@ -285,7 +322,7 @@ def main():
 
     coverage_counts = {
         "inventory": len(trip_ids),
-        "train_number": 0,
+        "train_number": sum(bool(trip_source.get("train_number")) for trip_source in trip_sources),
         "calendar": len(normalized_days),
         "stops": len(data["stop-times"]),
         "times": len(data["stop-times"]),
@@ -295,25 +332,27 @@ def main():
     }
     coverage_notes = {
         "inventory": "2 directional WEST EXPRESS Ginga Kinan templates only; not a JR West company-wide or full-year inventory.",
-        "train_number": "0 numbered templates; the official PDF prints no public or internal train number.",
+        "train_number": "2 numbered templates; official JR Odekake pages print 8078M for the daytime pattern and 8077M for the night pattern.",
         "calendar": f"{len(normalized_days)} explicit directional origin-date occurrences through {manifest['as_of_date']}; excluded later source dates: {excluded_dates}.",
         "stops": f"{len(data['stop-times'])} ordered stop rows across 2 directional templates; no other JR West service is covered.",
         "times": f"{len(data['stop-times'])} stop rows with printed minute clocks, plus {len(data['trip-stop-time-overrides'])} date/stop override rows.",
         "route_lines": "0 route-line rows; the PDF schematic map is not promoted to physical line identity evidence.",
         "station_refs": f"{len(data['stop-times'])} stop references validated against unique current JR West sourceCodes.",
-        "provenance": "2 templates tied to 1 official PDF source for this local date slice; redistribution remains verification-only.",
+        "provenance": "2 templates tied to 1 official PDF and 2 official train-page sources for this local date slice; redistribution remains verification-only.",
     }
     for dimension, count in coverage_counts.items():
-        data["coverage-declarations"].append({
+        coverage_row = {
             "coverage_id": f"jr-west.2026.{dimension}.west-express-ginga-west-batch",
             "operator_scope": "jr-west",
             "year": 2026,
             "dimension": dimension,
             "status": "missing" if count == 0 else "partial",
             "record_count": count,
-            "source_id": source["source_id"],
             "notes": coverage_notes[dimension],
-        })
+        }
+        if dimension != "train_number":
+            coverage_row["source_id"] = source["source_id"]
+        data["coverage-declarations"].append(coverage_row)
 
     output_paths = {
         "services": BASE / "normalized/services-west-batch.jsonl",
@@ -330,7 +369,7 @@ def main():
         "calendar-exceptions": BASE / "normalized/calendar-exceptions/reviewed-west-batch/seeds-west-batch.jsonl",
         "trip-stop-time-overrides": BASE / "normalized/trip-stop-time-overrides/reviewed-west-batch/seeds-west-batch.jsonl",
     }
-    write_jsonl(SOURCE_REGISTRY_PATH, [source])
+    write_jsonl(SOURCE_REGISTRY_PATH, sources)
     data["station-identities"] = new_station_rows
     for entity, path in output_paths.items():
         write_jsonl(path, data[entity])

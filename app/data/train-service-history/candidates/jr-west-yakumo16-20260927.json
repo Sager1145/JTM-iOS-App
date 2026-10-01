@@ -1,0 +1,35 @@
+{
+  "candidate_id":"jr-west-yakumo16-20260927",
+  "candidate_status":"visually_reviewed",
+  "canonical":false,
+  "selected_service_date":"2026-09-27",
+  "valid_until":"2026-09-28",
+  "source_id":"jr-west-odekake-yakumo16-1016m-20260927",
+  "source_url":"https://timetable.jr-odekake.net/train-timetable/278911?date=20260927",
+  "calendar_note":"The September 27 cell is selected on this exact-date page. 毎日運転 is a source label and is not promoted beyond this date.",
+  "service_id":"yakumo",
+  "trip":{
+    "trip_id":"jr-west.yakumo.16.2026-09-27",
+    "public_number":"16","train_number":"1016M",
+    "origin":"出雲市","destination":"岡山",
+    "stop_times":[
+      {"stop_sequence":1,"name_snapshot":"出雲市","arrival_time":null,"departure_time":"11:44","platform":null,"call_type":"origin"},
+      {"stop_sequence":2,"name_snapshot":"宍道","arrival_time":"11:54","departure_time":"11:55","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":3,"name_snapshot":"玉造温泉","arrival_time":"12:03","departure_time":"12:04","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":4,"name_snapshot":"松江","arrival_time":"12:10","departure_time":"12:11","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":5,"name_snapshot":"安来","arrival_time":"12:26","departure_time":"12:27","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":6,"name_snapshot":"米子","arrival_time":"12:34","departure_time":"12:35","platform":"1","call_type":"passenger_stop"},
+      {"stop_sequence":7,"name_snapshot":"根雨","arrival_time":"12:59","departure_time":"13:03","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":8,"name_snapshot":"新見","arrival_time":"13:45","departure_time":"13:46","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":9,"name_snapshot":"備中高梁","arrival_time":"14:13","departure_time":"14:14","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":10,"name_snapshot":"倉敷","arrival_time":"14:35","departure_time":"14:36","platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":11,"name_snapshot":"岡山","arrival_time":"14:47","departure_time":null,"platform":"3","call_type":"destination"}
+    ]
+  },
+  "review_notes":[
+    "Only the eleven timed passenger calls are retained; レ pass rows are excluded.",
+    "The numeric train-page path was verified with date=20260927 and must not be reused with another date without reviewing that page.",
+    "The pre-existing shared Yakumo service metadata first_verified_date remains 2026-09-30 until the main rebuild owner reconciles it with this September 27 evidence.",
+    "No operator segments, dated physical line IDs, or actual operation are inferred."
+  ]
+}

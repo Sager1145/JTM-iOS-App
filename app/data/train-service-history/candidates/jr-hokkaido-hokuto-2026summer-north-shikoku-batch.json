@@ -14,6 +14,84 @@
     "automated_extraction_allowed": false,
     "notes": "Visually reviewed PDF pages 1 and 4. Raw PDF is not bundled. Records the published plan, not proof of actual operation."
   },
+  "furano_time_source": {
+    "source_id": "jr-hokkaido-furano-biei-20260325",
+    "publisher": "北海道旅客鉄道株式会社",
+    "title": "ＪＲで行く 富良野・美瑛 2026",
+    "source_type": "official_timetable",
+    "url_or_locator": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/260325_KO_Furano-Biei.pdf",
+    "publication_date": "2026-03-25",
+    "effective_date": "2026-07-01",
+    "accessed_at": "2026-09-29",
+    "license_status": "unknown",
+    "redistribution_status": "unknown",
+    "automated_extraction_allowed": false,
+    "notes": "Visually reviewed PDF physical page 5, section 2(2): all five published stop clocks in each Furano Lavender Express direction. Raw PDF is not bundled."
+  },
+  "sarobetsu_timetable_sources": [
+    {
+      "source_id": "jr-hokkaido-soya-down-20260930",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "宗谷本線(旭川―名寄―稚内) 下り 2026年9月30日(水)",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=2890",
+      "issue": "JR時刻表 令和8年9月号",
+      "publication_date": null,
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually reviewed the selected 2026-09-30 column matrix. JR Hokkaido's official network page links this timetable service and identifies Kotsu Shimbunsha as data provider. The page identifies 6063D Sarobetsu 3, its passenger calls, clocks and Soya Main Line route."
+    },
+    {
+      "source_id": "jr-hokkaido-soya-up-20260930",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "宗谷本線(稚内―名寄―旭川) 上り 2026年9月30日(水)",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=2891",
+      "issue": "JR時刻表 令和8年9月号",
+      "publication_date": null,
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually reviewed the selected 2026-09-30 column matrix. JR Hokkaido's official network page links this timetable service and identifies Kotsu Shimbunsha as data provider. The page identifies 6064D Sarobetsu 4, its passenger calls, clocks and Soya Main Line route."
+    }
+  ],
+  "kamui_timetable_sources": [
+    {
+      "source_id": "jr-hokkaido-kamui-down-20260927",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急カムイ等（札幌―旭川）下り 2026年9月27日",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260927&s=110",
+      "issue": "JR時刻表 令和8年9月号",
+      "publication_date": null,
+      "effective_date": "2026-09-27",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "The currently retrievable September 27 selected column shows 8009M and its passenger stops/clocks. No claim is made for August 7 or other calendar dates."
+    },
+    {
+      "source_id": "jr-hokkaido-kamui-up-20260927",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急カムイ等（旭川―札幌）上り 2026年9月27日",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260927&s=111",
+      "issue": "JR時刻表 令和8年9月号",
+      "publication_date": null,
+      "effective_date": "2026-09-27",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "The currently retrievable September 27 selected column shows 8026M and its passenger stops/clocks. No claim is made for August 7 or other calendar dates."
+    }
+  ],
   "operator_name_for_station_match": "北海道旅客鉄道",
   "service_groups": [
     {
@@ -25,8 +103,16 @@
       "table_heading": "札幌～函館間で臨時特急「北斗84・91号」を運転します。",
       "date_cell_text": "8/7-16, 9/19,20",
       "date_cell_interpretation": "One vertically merged operating-date cell applies to both train rows 84 and 91.",
-      "date_ranges": [["2026-08-07", "2026-08-16"]],
-      "single_dates": ["2026-09-19", "2026-09-20"],
+      "date_ranges": [
+        [
+          "2026-08-07",
+          "2026-08-16"
+        ]
+      ],
+      "single_dates": [
+        "2026-09-19",
+        "2026-09-20"
+      ],
       "trips": [
         {
           "trip_id_component": "84",
@@ -36,8 +122,34 @@
           "departure_time": "07:43",
           "destination": "函館",
           "arrival_time": "11:54",
-          "intermediate_stops": ["新札幌", "南千歳", "苫小牧", "白老", "登別", "東室蘭", "伊達紋別", "洞爺", "長万部", "八雲", "森", "大沼公園", "新函館北斗", "五稜郭"],
-          "source_locator": "PDF p.4 Hokuto table, 84 row; shared date cell and intermediate-stop line"
+          "intermediate_stops": [
+            "新札幌",
+            "南千歳",
+            "苫小牧",
+            "白老",
+            "登別",
+            "東室蘭",
+            "伊達紋別",
+            "洞爺",
+            "長万部",
+            "八雲",
+            "森",
+            "大沼公園",
+            "新函館北斗",
+            "五稜郭"
+          ],
+          "source_locator": "PDF p.4 Hokuto table, 84 row; shared date cell and intermediate-stop line",
+          "train_number": "8022D",
+          "number_source_id": "jr-hokkaido-hokuto-84-20260920",
+          "source_dates": [
+            "2026-09-20"
+          ],
+          "additional_date_sources": [
+            {
+              "service_date": "2026-09-19",
+              "source_id": "jr-hokkaido-hokuto-84-20260919"
+            }
+          ]
         },
         {
           "trip_id_component": "91",
@@ -47,8 +159,34 @@
           "departure_time": "13:00",
           "destination": "札幌",
           "arrival_time": "17:00",
-          "intermediate_stops": ["五稜郭", "新函館北斗", "大沼公園", "森", "八雲", "長万部", "洞爺", "伊達紋別", "東室蘭", "登別", "白老", "苫小牧", "南千歳", "新札幌"],
-          "source_locator": "PDF p.4 Hokuto table, 91 row; shared date cell and intermediate-stop line"
+          "intermediate_stops": [
+            "五稜郭",
+            "新函館北斗",
+            "大沼公園",
+            "森",
+            "八雲",
+            "長万部",
+            "洞爺",
+            "伊達紋別",
+            "東室蘭",
+            "登別",
+            "白老",
+            "苫小牧",
+            "南千歳",
+            "新札幌"
+          ],
+          "source_locator": "PDF p.4 Hokuto table, 91 row; shared date cell and intermediate-stop line",
+          "train_number": "8021D",
+          "number_source_id": "jr-hokkaido-hokuto-91-20260920",
+          "source_dates": [
+            "2026-09-20"
+          ],
+          "additional_date_sources": [
+            {
+              "service_date": "2026-09-19",
+              "source_id": "jr-hokkaido-hokuto-91-20260919"
+            }
+          ]
         }
       ]
     },
@@ -61,30 +199,179 @@
       "table_heading": "サロベツ",
       "date_cell_text": "7/1-31, 8/1-31, 9/1-30",
       "date_cell_interpretation": "One vertically merged operating-date cell applies to both rows 4 and 3; dates after manifest as_of_date are excluded.",
-      "date_ranges": [["2026-07-01", "2026-07-31"], ["2026-08-01", "2026-08-31"], ["2026-09-01", "2026-09-30"]],
+      "date_ranges": [
+        [
+          "2026-07-01",
+          "2026-07-31"
+        ],
+        [
+          "2026-08-01",
+          "2026-08-31"
+        ],
+        [
+          "2026-09-01",
+          "2026-09-30"
+        ]
+      ],
       "single_dates": [],
       "trips": [
         {
           "trip_id_component": "4",
           "public_number": "4",
+          "train_number": "6064D",
+          "operator_id": "jr-hokkaido",
+          "route_line": "宗谷本線",
+          "detail_source_id": "jr-hokkaido-soya-up-20260930",
           "direction": null,
           "origin": "稚内",
           "departure_time": "13:01",
           "destination": "旭川",
           "arrival_time": "16:45",
-          "intermediate_stops": null,
-          "source_locator": "PDF p.1 Sarobetsu table, 4 row and shared date cell"
+          "intermediate_stops": [
+            "南稚内",
+            "豊富",
+            "幌延",
+            "天塩中川",
+            "音威子府",
+            "美深",
+            "名寄",
+            "士別",
+            "和寒"
+          ],
+          "detailed_stops": [
+            {
+              "station": "稚内",
+              "departure_time": "13:01"
+            },
+            {
+              "station": "南稚内",
+              "departure_time": "13:05"
+            },
+            {
+              "station": "豊富",
+              "departure_time": "13:42"
+            },
+            {
+              "station": "幌延",
+              "arrival_time": "13:56",
+              "departure_time": "13:57"
+            },
+            {
+              "station": "天塩中川",
+              "departure_time": "14:30"
+            },
+            {
+              "station": "音威子府",
+              "arrival_time": "15:02",
+              "departure_time": "15:03"
+            },
+            {
+              "station": "美深",
+              "arrival_time": "15:28",
+              "departure_time": "15:29"
+            },
+            {
+              "station": "名寄",
+              "arrival_time": "15:48",
+              "departure_time": "15:50"
+            },
+            {
+              "station": "士別",
+              "arrival_time": "16:05",
+              "departure_time": "16:05"
+            },
+            {
+              "station": "和寒",
+              "departure_time": "16:18"
+            },
+            {
+              "station": "旭川",
+              "arrival_time": "16:45"
+            }
+          ],
+          "source_locator": "PDF p.1 Sarobetsu table, 4 row and shared date cell",
+          "source_dates": [
+            "2026-09-30"
+          ]
         },
         {
           "trip_id_component": "3",
           "public_number": "3",
+          "train_number": "6063D",
+          "operator_id": "jr-hokkaido",
+          "route_line": "宗谷本線",
+          "detail_source_id": "jr-hokkaido-soya-down-20260930",
           "direction": null,
           "origin": "旭川",
           "departure_time": "20:06",
           "destination": "稚内",
           "arrival_time": "23:47",
-          "intermediate_stops": null,
-          "source_locator": "PDF p.1 Sarobetsu table, 3 row and shared date cell"
+          "intermediate_stops": [
+            "和寒",
+            "士別",
+            "名寄",
+            "美深",
+            "音威子府",
+            "天塩中川",
+            "幌延",
+            "豊富",
+            "南稚内"
+          ],
+          "detailed_stops": [
+            {
+              "station": "旭川",
+              "departure_time": "20:06"
+            },
+            {
+              "station": "和寒",
+              "departure_time": "20:35"
+            },
+            {
+              "station": "士別",
+              "arrival_time": "20:47",
+              "departure_time": "20:47"
+            },
+            {
+              "station": "名寄",
+              "arrival_time": "21:01",
+              "departure_time": "21:03"
+            },
+            {
+              "station": "美深",
+              "arrival_time": "21:22",
+              "departure_time": "21:23"
+            },
+            {
+              "station": "音威子府",
+              "arrival_time": "21:48",
+              "departure_time": "21:48"
+            },
+            {
+              "station": "天塩中川",
+              "departure_time": "22:20"
+            },
+            {
+              "station": "幌延",
+              "arrival_time": "22:52",
+              "departure_time": "22:53"
+            },
+            {
+              "station": "豊富",
+              "departure_time": "23:07"
+            },
+            {
+              "station": "南稚内",
+              "departure_time": "23:43"
+            },
+            {
+              "station": "稚内",
+              "arrival_time": "23:47"
+            }
+          ],
+          "source_locator": "PDF p.1 Sarobetsu table, 3 row and shared date cell",
+          "source_dates": [
+            "2026-09-30"
+          ]
         }
       ]
     },
@@ -97,30 +384,140 @@
       "table_heading": "カムイ",
       "date_cell_text": "7/4,5,11,12,18-20,25,26, 8/1,2,7-16,22,23, 9/12,13,19-23,26,27",
       "date_cell_interpretation": "The upper merged operating-date cell applies only to rows 9 and 26.",
-      "date_ranges": [["2026-07-18", "2026-07-20"], ["2026-08-07", "2026-08-16"], ["2026-09-19", "2026-09-23"]],
-      "single_dates": ["2026-07-04", "2026-07-05", "2026-07-11", "2026-07-12", "2026-07-25", "2026-07-26", "2026-08-01", "2026-08-02", "2026-08-22", "2026-08-23", "2026-09-12", "2026-09-13", "2026-09-26", "2026-09-27"],
+      "date_ranges": [
+        [
+          "2026-07-18",
+          "2026-07-20"
+        ],
+        [
+          "2026-08-07",
+          "2026-08-16"
+        ],
+        [
+          "2026-09-19",
+          "2026-09-23"
+        ]
+      ],
+      "single_dates": [
+        "2026-07-04",
+        "2026-07-05",
+        "2026-07-11",
+        "2026-07-12",
+        "2026-07-25",
+        "2026-07-26",
+        "2026-08-01",
+        "2026-08-02",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-09-12",
+        "2026-09-13",
+        "2026-09-26",
+        "2026-09-27"
+      ],
       "trips": [
         {
           "trip_id_component": "9",
           "public_number": "9",
+          "train_number": "8009M",
+          "detail_source_id": "jr-hokkaido-kamui-down-20260927",
           "direction": null,
           "origin": "札幌",
           "departure_time": "09:30",
           "destination": "旭川",
           "arrival_time": "10:55",
-          "intermediate_stops": null,
-          "source_locator": "PDF p.1 Kamui table, 9 row and upper merged date cell"
+          "intermediate_stops": [
+            "岩見沢",
+            "美唄",
+            "砂川",
+            "滝川",
+            "深川"
+          ],
+          "detailed_stops": [
+            {
+              "station": "札幌",
+              "departure_time": "09:30"
+            },
+            {
+              "station": "岩見沢",
+              "departure_time": "09:55"
+            },
+            {
+              "station": "美唄",
+              "departure_time": "10:06"
+            },
+            {
+              "station": "砂川",
+              "departure_time": "10:17"
+            },
+            {
+              "station": "滝川",
+              "departure_time": "10:22"
+            },
+            {
+              "station": "深川",
+              "departure_time": "10:36"
+            },
+            {
+              "station": "旭川",
+              "arrival_time": "10:55"
+            }
+          ],
+          "source_locator": "PDF p.1 Kamui table, 9 row and upper merged date cell",
+          "source_dates": [
+            "2026-09-27"
+          ]
         },
         {
           "trip_id_component": "26",
           "public_number": "26",
+          "train_number": "8026M",
+          "detail_source_id": "jr-hokkaido-kamui-up-20260927",
           "direction": null,
           "origin": "旭川",
           "departure_time": "14:30",
           "destination": "札幌",
           "arrival_time": "15:55",
-          "intermediate_stops": null,
-          "source_locator": "PDF p.1 Kamui table, 26 row and upper merged date cell"
+          "intermediate_stops": [
+            "深川",
+            "滝川",
+            "砂川",
+            "美唄",
+            "岩見沢"
+          ],
+          "detailed_stops": [
+            {
+              "station": "旭川",
+              "departure_time": "14:30"
+            },
+            {
+              "station": "深川",
+              "departure_time": "14:49"
+            },
+            {
+              "station": "滝川",
+              "departure_time": "15:02"
+            },
+            {
+              "station": "砂川",
+              "departure_time": "15:08"
+            },
+            {
+              "station": "美唄",
+              "departure_time": "15:20"
+            },
+            {
+              "station": "岩見沢",
+              "departure_time": "15:30"
+            },
+            {
+              "station": "札幌",
+              "arrival_time": "15:55"
+            }
+          ],
+          "source_locator": "PDF p.1 Kamui table, 26 row and upper merged date cell",
+          "source_dates": [
+            "2026-09-27"
+          ]
         }
       ]
     },
@@ -133,7 +530,12 @@
       "table_heading": "カムイ",
       "date_cell_text": "8/7-9",
       "date_cell_interpretation": "The lower merged operating-date cell applies only to rows 15 and 36.",
-      "date_ranges": [["2026-08-07", "2026-08-09"]],
+      "date_ranges": [
+        [
+          "2026-08-07",
+          "2026-08-09"
+        ]
+      ],
       "single_dates": [],
       "trips": [
         {
@@ -169,7 +571,24 @@
       "table_heading": "札幌～倶知安～函館間で臨時特急「特急ニセコ号」を運転します。",
       "date_cell_text": "9/5-7,11-14,18-23,25-27",
       "date_cell_interpretation": "One vertically merged operating-date cell applies to both unnumbered directions.",
-      "date_ranges": [["2026-09-05", "2026-09-07"], ["2026-09-11", "2026-09-14"], ["2026-09-18", "2026-09-23"], ["2026-09-25", "2026-09-27"]],
+      "date_ranges": [
+        [
+          "2026-09-05",
+          "2026-09-07"
+        ],
+        [
+          "2026-09-11",
+          "2026-09-14"
+        ],
+        [
+          "2026-09-18",
+          "2026-09-23"
+        ],
+        [
+          "2026-09-25",
+          "2026-09-27"
+        ]
+      ],
       "single_dates": [],
       "trips": [
         {
@@ -180,8 +599,36 @@
           "departure_time": "07:56",
           "destination": "函館",
           "arrival_time": "13:23",
-          "intermediate_stops": ["手稲", "小樽", "余市", "倶知安", "ニセコ", "昆布", "黒松内", "長万部", "八雲", "森", "新函館北斗", "五稜郭"],
-          "source_locator": "PDF p.4 Niseko table, Sapporo-origin row; 函館行 intermediate-stop line"
+          "intermediate_stops": [
+            "手稲",
+            "小樽",
+            "余市",
+            "倶知安",
+            "ニセコ",
+            "昆布",
+            "黒松内",
+            "長万部",
+            "八雲",
+            "森",
+            "新函館北斗",
+            "五稜郭"
+          ],
+          "source_locator": "PDF p.4 Niseko table, Sapporo-origin row; 函館行 intermediate-stop line",
+          "train_number": "8012D",
+          "number_source_id": "jr-hokkaido-niseko-sapporo-20260923",
+          "source_dates": [
+            "2026-09-23"
+          ],
+          "additional_date_sources": [
+            {
+              "service_date": "2026-09-27",
+              "source_id": "jr-hokkaido-niseko-sapporo-20260927"
+            },
+            {
+              "service_date": "2026-09-22",
+              "source_id": "jr-hokkaido-niseko-sapporo-20260922"
+            }
+          ]
         },
         {
           "trip_id_component": "hakodate-to-sapporo",
@@ -191,8 +638,37 @@
           "departure_time": "13:55",
           "destination": "札幌",
           "arrival_time": "19:28",
-          "intermediate_stops": ["五稜郭", "新函館北斗", "大沼公園", "森", "八雲", "長万部", "黒松内", "昆布", "ニセコ", "倶知安", "余市", "小樽", "手稲"],
-          "source_locator": "PDF p.4 Niseko table, Hakodate-origin row; 札幌行 intermediate-stop line"
+          "intermediate_stops": [
+            "五稜郭",
+            "新函館北斗",
+            "大沼公園",
+            "森",
+            "八雲",
+            "長万部",
+            "黒松内",
+            "昆布",
+            "ニセコ",
+            "倶知安",
+            "余市",
+            "小樽",
+            "手稲"
+          ],
+          "source_locator": "PDF p.4 Niseko table, Hakodate-origin row; 札幌行 intermediate-stop line",
+          "train_number": "9011D",
+          "number_source_id": "jr-hokkaido-niseko-hakodate-20260926",
+          "source_dates": [
+            "2026-09-26"
+          ],
+          "additional_date_sources": [
+            {
+              "service_date": "2026-09-27",
+              "source_id": "jr-hokkaido-niseko-hakodate-20260927"
+            },
+            {
+              "service_date": "2026-09-22",
+              "source_id": "jr-hokkaido-niseko-hakodate-20260922"
+            }
+          ]
         }
       ]
     },
@@ -205,8 +681,32 @@
       "table_heading": "札幌～富良野間で臨時特急「フラノラベンダーエクスプレス」を運転します。",
       "date_cell_text": "7/1-31, 8/1-11,15,16,22,23,29,30, 9/5,6,12,13,19-23",
       "date_cell_interpretation": "One vertically merged operating-date cell applies to both unnumbered directions.",
-      "date_ranges": [["2026-07-01", "2026-07-31"], ["2026-08-01", "2026-08-11"], ["2026-09-19", "2026-09-23"]],
-      "single_dates": ["2026-08-15", "2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29", "2026-08-30", "2026-09-05", "2026-09-06", "2026-09-12", "2026-09-13"],
+      "date_ranges": [
+        [
+          "2026-07-01",
+          "2026-07-31"
+        ],
+        [
+          "2026-08-01",
+          "2026-08-11"
+        ],
+        [
+          "2026-09-19",
+          "2026-09-23"
+        ]
+      ],
+      "single_dates": [
+        "2026-08-15",
+        "2026-08-16",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-09-05",
+        "2026-09-06",
+        "2026-09-12",
+        "2026-09-13"
+      ],
       "trips": [
         {
           "trip_id_component": "sapporo-to-furano",
@@ -216,7 +716,25 @@
           "departure_time": "07:41",
           "destination": "富良野",
           "arrival_time": "09:44",
-          "intermediate_stops": ["岩見沢", "滝川", "芦別"],
+          "intermediate_stops": [
+            "岩見沢",
+            "滝川",
+            "芦別"
+          ],
+          "published_intermediate_clocks": [
+            {
+              "station": "岩見沢",
+              "departure_time": "08:18"
+            },
+            {
+              "station": "滝川",
+              "departure_time": "08:44"
+            },
+            {
+              "station": "芦別",
+              "departure_time": "09:10"
+            }
+          ],
           "source_locator": "PDF p.4 Furano Lavender Express, Sapporo-origin row and shared intermediate-stop line"
         },
         {
@@ -227,10 +745,178 @@
           "departure_time": "16:53",
           "destination": "札幌",
           "arrival_time": "18:52",
-          "intermediate_stops": ["芦別", "滝川", "岩見沢"],
+          "intermediate_stops": [
+            "芦別",
+            "滝川",
+            "岩見沢"
+          ],
+          "published_intermediate_clocks": [
+            {
+              "station": "芦別",
+              "arrival_time": "17:22"
+            },
+            {
+              "station": "滝川",
+              "arrival_time": "17:48"
+            },
+            {
+              "station": "岩見沢",
+              "arrival_time": "18:14"
+            }
+          ],
           "source_locator": "PDF p.4 Furano Lavender Express, Furano-origin row and shared intermediate-stop line"
         }
       ]
+    }
+  ],
+  "other_number_sources": [
+    {
+      "source_id": "jr-hokkaido-hokuto-84-20260920",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "北斗84 2026年9月20日 列車番号",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260920&s=151",
+      "publication_date": null,
+      "effective_date": "2026-09-20",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "The September 20 selected column identifies Hokuto 84 and its internal train number. It does not attest other service dates.",
+      "issue": "JR時刻表 令和8年9月号"
+    },
+    {
+      "source_id": "jr-hokkaido-hokuto-91-20260920",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "北斗91 2026年9月20日 列車番号",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260920&s=150",
+      "publication_date": null,
+      "effective_date": "2026-09-20",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "The September 20 selected column identifies Hokuto 91 and its internal train number. It does not attest other service dates.",
+      "issue": "JR時刻表 令和8年9月号"
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-sapporo-20260923",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 札幌発 2026年9月23日",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260923&s=681",
+      "publication_date": null,
+      "effective_date": "2026-09-23",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually reviewed dated column: internal train number 8012D."
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-hakodate-20260926",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 函館発 2026年9月26日",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260926&s=2810",
+      "publication_date": null,
+      "effective_date": "2026-09-26",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually reviewed dated column: internal train number 9011D."
+    },
+    {
+      "source_id": "jr-hokkaido-hokuto-84-20260919",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "北斗84 2026年9月19日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260919&s=151",
+      "publication_date": null,
+      "effective_date": "2026-09-19",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 8022D column establishes the train number and printed stop clocks for 2026-09-19 only.",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    {
+      "source_id": "jr-hokkaido-hokuto-91-20260919",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "北斗91 2026年9月19日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260919&s=150",
+      "publication_date": null,
+      "effective_date": "2026-09-19",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 8021D column establishes the train number and printed stop clocks for 2026-09-19 only.",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-sapporo-20260927",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 札幌発 2026年9月27日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260927&s=681",
+      "publication_date": null,
+      "effective_date": "2026-09-27",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 8012D column establishes the train number and printed stop clocks for 2026-09-27 only.",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-hakodate-20260927",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 函館発 2026年9月27日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260927&s=680",
+      "publication_date": null,
+      "effective_date": "2026-09-27",
+      "accessed_at": "2026-09-29",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 9011D column establishes the train number and printed stop clocks for 2026-09-27 only.",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-sapporo-20260922",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 札幌発 2026年9月22日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260922&s=681",
+      "publication_date": null,
+      "effective_date": "2026-09-22",
+      "accessed_at": "2026-09-30",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 8012D column establishes the train number and all printed passenger-stop clocks for September 22 only.",
+      "issue": "JR時刻表 令和8年10月号"
+    },
+    {
+      "source_id": "jr-hokkaido-niseko-hakodate-20260922",
+      "publisher": "北海道旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急ニセコ号 函館発 2026年9月22日逐站時刻",
+      "source_type": "official_timetable",
+      "url_or_locator": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260922&s=680",
+      "publication_date": null,
+      "effective_date": "2026-09-22",
+      "accessed_at": "2026-09-30",
+      "license_status": "terms_published_no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Selected 9011D column establishes the train number and all printed passenger-stop clocks for September 22 only.",
+      "issue": "JR時刻表 令和8年10月号"
     }
   ]
 }

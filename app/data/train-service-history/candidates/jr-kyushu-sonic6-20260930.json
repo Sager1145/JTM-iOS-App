@@ -1,0 +1,136 @@
+{
+  "candidate_id": "jr-kyushu-sonic6-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; 14 displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-sonic6-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013701.html?t=2874200e&d=20260930",
+  "service_date": "2026-09-30",
+  "new_source": {
+    "source_id": "jr-kyushu-sonic6-20260930",
+    "source_type": "official_train_timetable",
+    "title": "ソニック6号 列車詳細",
+    "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+    "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013701.html?t=2874200e&d=20260930",
+    "issue": "JR時刻表2026年10月号",
+    "effective_date": "2026-09-30",
+    "accessed_at": "2026-09-30",
+    "license_status": "third_party_timetable_data_terms_apply",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "notes": "Official exact-date train detail reached from 大分駅 2026-09-30 日豊本線 limited-express departure list. It prints ソニック6号 3006M and 14 passenger calls from 大分 to 博多; equipment shown in candidate snapshot."
+  },
+  "trip": {
+    "trip_id": "jr-kyushu.sonic.6.2026-09-30",
+    "service_id": "sonic",
+    "service_name": "ソニック",
+    "public_number": "6",
+    "train_number": "3006M",
+    "direction": "大分→博多",
+    "seat_description_snapshot": [
+      "「白いソニック」で運転",
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "stop_times": [
+      {
+        "name_snapshot": "大分",
+        "arrival_time": null,
+        "departure_time": "06:37",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "別府",
+        "arrival_time": "06:46",
+        "departure_time": "06:46",
+        "platform": null
+      },
+      {
+        "name_snapshot": "杵築",
+        "arrival_time": "07:00",
+        "departure_time": "07:01",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇佐",
+        "arrival_time": "07:15",
+        "departure_time": "07:16",
+        "platform": null
+      },
+      {
+        "name_snapshot": "柳ケ浦",
+        "arrival_time": "07:21",
+        "departure_time": "07:21",
+        "platform": null
+      },
+      {
+        "name_snapshot": "中津",
+        "arrival_time": "07:31",
+        "departure_time": "07:32",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇島",
+        "arrival_time": "07:37",
+        "departure_time": "07:37",
+        "platform": null
+      },
+      {
+        "name_snapshot": "行橋",
+        "arrival_time": "07:49",
+        "departure_time": "07:49",
+        "platform": null
+      },
+      {
+        "name_snapshot": "小倉",
+        "arrival_time": "08:06",
+        "departure_time": "08:09",
+        "platform": "4"
+      },
+      {
+        "name_snapshot": "黒崎",
+        "arrival_time": "08:18",
+        "departure_time": "08:19",
+        "platform": null
+      },
+      {
+        "name_snapshot": "折尾",
+        "arrival_time": "08:24",
+        "departure_time": "08:25",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "赤間",
+        "arrival_time": "08:35",
+        "departure_time": "08:36",
+        "platform": null
+      },
+      {
+        "name_snapshot": "福間",
+        "arrival_time": "08:43",
+        "departure_time": "08:44",
+        "platform": null
+      },
+      {
+        "name_snapshot": "博多",
+        "arrival_time": "09:02",
+        "departure_time": null,
+        "platform": "5"
+      }
+    ]
+  },
+  "evidence_locators": [
+    {
+      "claim": "exact 2026-09-30 occurrence",
+      "locator": "official train page heading 2026年09月30日の時刻 and date-qualified URL"
+    },
+    {
+      "claim": "limited express ソニック6号, 3006M, and equipment",
+      "locator": "列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号・列車設備 rows"
+    },
+    {
+      "claim": "14 passenger calls and clocks",
+      "locator": "駅名 / 時刻 / のりば table from 大分 through 博多"
+    }
+  ]
+}

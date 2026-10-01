@@ -16,6 +16,7 @@
 //
 // Output (all under app/data/sample-data/ — the published SAMPLE dataset):
 //   manifest.json  { format, schema_version, total, parts: ["part-000", ...],
+//                    part_train_ids: { "part-000": "train-id", ... },
 //                    dates: { "2026-07-03": ["part-000", ...], ... } }
 //   part-NNN.json  { format, train: <raw train from train-store.json>,
 //                    route: null | { cache_key, solver_context, features } |
@@ -30,11 +31,14 @@
 // Alternate store/output:
 //   PRECOMPUTE_STORE=data/special-samples/example.json
 //   PRECOMPUTE_OUT_DIR=data/example-parts node scripts/build/precompute-train-parts.mjs
+// Provenance-only repair after a successful solve from the current overlay:
+//   PRECOMPUTE_RESTAMP=1 node scripts/build/precompute-train-parts.mjs
 // (No dependencies; used by the GitHub Pages deploy workflow on every push.)
 
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { createHash } from "node:crypto";
 import { performance } from "node:perf_hooks";
 import { fileURLToPath } from "node:url";
 import {
@@ -102,6 +106,9 @@ export function readPrecomputeHistoryOverlay(text) {
 const DRIVER_SOURCE = `
 globalThis.PrecomputeAdapter.solveStore(__host)
 `;
+const CONTEXT_DRIVER_SOURCE = `
+globalThis.PrecomputeAdapter.solverContexts(__host)
+`;
 
 export function deriveManifestSolverContext(contexts) {
   let manifestContext = null;
@@ -140,9 +147,35 @@ export function deriveManifestSolverContext(contexts) {
       )
     )
       throw new Error(`${label} has invalid history_revisions`);
+    const rawHashes = context.history_hashes;
+    if (
+      rawHashes != null &&
+      (typeof rawHashes !== "object" || Array.isArray(rawHashes))
+    )
+      throw new Error(`${label} has invalid history_hashes`);
+    const historyHashEntries = Object.entries(rawHashes || {}).sort(
+      ([a], [b]) => a.localeCompare(b),
+    );
+    if (
+      historyHashEntries.some(
+        ([code, hash]) =>
+          !Object.prototype.hasOwnProperty.call(context.history_revisions, code) ||
+          typeof hash !== "string" ||
+          !/^[0-9a-f]{64}$/.test(hash),
+      ) ||
+      historyEntries.some(
+        ([code, revision]) =>
+          revision !== "none" &&
+          !historyHashEntries.some(([hashCode]) => hashCode === code),
+      )
+    )
+      throw new Error(`${label} has invalid history_hashes`);
     const candidate = {
       solver_version: context.solver_version,
       history_revisions: Object.fromEntries(historyEntries),
+      ...(historyHashEntries.length
+        ? { history_hashes: Object.fromEntries(historyHashEntries) }
+        : {}),
     };
     if (!manifestContext) manifestContext = candidate;
     else if (JSON.stringify(manifestContext) !== JSON.stringify(candidate))
@@ -164,14 +197,24 @@ export function currentPrecomputeSolverContext({
     throw new Error("Cannot read ROUTE_SOLVER_CACHE_VERSION from app-config.js");
   const historySuffix = country === "jp" ? "" : `-${country}`;
   const historyPath = path.join(dataDir, `rail-history${historySuffix}.json`);
-  const revision = fs.existsSync(historyPath)
-    ? readJson(historyPath)?.revision
+  const historyBytes = fs.existsSync(historyPath) ? fs.readFileSync(historyPath) : null;
+  const revision = historyBytes
+    ? JSON.parse(historyBytes.toString("utf8"))?.revision
     : "none";
   if (typeof revision !== "string" || !revision.trim())
     throw new Error(`${path.basename(historyPath)} has no revision`);
   return {
     solver_version: versionMatch[1],
     history_revisions: { [country]: revision },
+    ...(historyBytes
+      ? {
+          history_hashes: {
+            [country]: createHash("sha256")
+              .update(historyBytes)
+              .digest("hex"),
+          },
+        }
+      : {}),
   };
 }
 
@@ -187,6 +230,13 @@ export function assertCurrentPrecomputeSolverContext(
   return actual;
 }
 
+function requirePartTrainID(train, name) {
+  if (typeof train?.id !== "string" || !train.id.trim()) {
+    throw new Error(`${name} requires a nonempty train.id for the manifest index.`);
+  }
+  return train.id;
+}
+
 // Assemble manifest.json from already-emitted part files (used after sliced
 // runs; see PRECOMPUTE_RANGE below). Validates that every train in the store
 // has its part on disk, in order.
@@ -195,6 +245,7 @@ function finalizeManifestFromParts() {
     fs.readFileSync(STORE_PATH, "utf8"),
   );
   const partNames = [];
+  const partTrainIDs = Object.create(null);
   const partsByDate = new Map();
   let solvedCount = 0;
   let unsolvableCount = 0;
@@ -206,6 +257,7 @@ function finalizeManifestFromParts() {
       fs.readFileSync(path.join(OUT_DIR, `${name}.json`), "utf8"),
     );
     partNames.push(name);
+    partTrainIDs[name] = requirePartTrainID(part.train, name);
     const dateKey =
       part.train && typeof part.train.date === "string" ? part.train.date : "";
     if (!partsByDate.has(dateKey)) partsByDate.set(dateKey, []);
@@ -230,6 +282,7 @@ function finalizeManifestFromParts() {
     no_route: noRouteCount,
     solver_context: solverContext,
     parts: partNames,
+    part_train_ids: partTrainIDs,
     full: "sample-full",
     dates: Object.fromEntries(
       [...partsByDate.entries()].sort(([a], [b]) => a.localeCompare(b)),
@@ -261,6 +314,88 @@ function publishStagedOutput(stagingDir) {
   fs.rmSync(previousDir, { recursive: true, force: true });
 }
 
+async function restampPrecomputedOutput(context) {
+  if (!fs.existsSync(OUT_DIR)) {
+    throw new Error(`Cannot restamp missing output directory ${OUT_DIR}.`);
+  }
+  const current = currentPrecomputeSolverContext();
+  const manifest = readJson(path.join(OUT_DIR, "manifest.json"));
+  const summary = await vm.runInContext(CONTEXT_DRIVER_SOURCE, context, {
+    filename: "precompute-context-driver.js",
+  });
+  if (
+    !Array.isArray(manifest.parts) ||
+    manifest.parts.length !== summary.total ||
+    summary.results.length !== summary.total
+  ) {
+    throw new Error("Published parts do not match the train store being restamped.");
+  }
+  if (JSON.stringify(summary.solverContext) !== JSON.stringify(current)) {
+    throw new Error("Restamped contexts do not match the current overlay bytes.");
+  }
+
+  const stagingDir = `${OUT_DIR}.staging`;
+  fs.rmSync(stagingDir, { recursive: true, force: true });
+  fs.mkdirSync(stagingDir, { recursive: true });
+  const routeSolverContexts = [];
+  for (let index = 0; index < manifest.parts.length; index += 1) {
+    const name = manifest.parts[index];
+    const part = readJson(path.join(OUT_DIR, `${name}.json`));
+    const generated = summary.results[index];
+    if (part.train?.id !== generated.id) {
+      throw new Error(`${name} train id does not match the current store.`);
+    }
+    if (JSON.stringify(part.train) !== JSON.stringify(generated.raw)) {
+      throw new Error(
+        `${name} train or route sections changed; full regeneration is required.`,
+      );
+    }
+    if (part.route) {
+      const existing = part.route.solver_context;
+      const existingIdentity = existing
+        ? {
+            solver_version: existing.solver_version,
+            history_revisions: existing.history_revisions,
+            history_hashes: existing.history_hashes,
+          }
+        : null;
+      if (JSON.stringify(existingIdentity) !== JSON.stringify(current)) {
+        throw new Error(
+          `${name} was not solved from the current overlay; full regeneration is required.`,
+        );
+      }
+      if (!generated.solverContext) {
+        throw new Error(`${name} has route data but no reconstructed solve context.`);
+      }
+      // Only this field changes. The just-generated route geometry remains
+      // byte-for-value identical to the solve that already attested `current`.
+      part.route.solver_context = generated.solverContext;
+      routeSolverContexts.push(generated.solverContext);
+    }
+    fs.writeFileSync(
+      path.join(stagingDir, `${name}.json`), JSON.stringify(part));
+  }
+
+  const solverContext = deriveManifestSolverContext(routeSolverContexts);
+  assertCurrentPrecomputeSolverContext(solverContext, current);
+  const restampedManifest = { ...manifest, solver_context: solverContext };
+  fs.writeFileSync(
+    path.join(stagingDir, "manifest.json"),
+    JSON.stringify(restampedManifest, null, 2),
+  );
+  fs.copyFileSync(
+    path.join(OUT_DIR, "sample-full.json"),
+    path.join(stagingDir, "sample-full.json"),
+  );
+  // Re-read after all output is ready: a source task changing the overlay
+  // during this short pass must abort before the atomic publish.
+  assertCurrentPrecomputeSolverContext(currentPrecomputeSolverContext(), current);
+  publishStagedOutput(stagingDir);
+  console.log(
+    `Restamped ${summary.total} parts from the current history content; route geometry was not regenerated.`,
+  );
+}
+
 async function main() {
   // Finalize-only mode: build the manifest from parts emitted by sliced runs.
   if (process.env.PRECOMPUTE_FINALIZE) {
@@ -274,8 +409,15 @@ async function main() {
   const railSections = readJson(path.join(DATA_DIR, RAIL_SECTIONS_FILE));
   const stations = readJson(path.join(DATA_DIR, STATIONS_FILE));
   const historyPath = path.join(DATA_DIR, RAIL_HISTORY_FILE);
-  const historyOverlays = fs.existsSync(historyPath)
-    ? { [COUNTRY]: readPrecomputeHistoryOverlay(fs.readFileSync(historyPath, "utf8")) }
+  const historyBytes = fs.existsSync(historyPath) ? fs.readFileSync(historyPath) : null;
+  const historyOverlays = historyBytes
+    ? { [COUNTRY]: readPrecomputeHistoryOverlay(historyBytes.toString("utf8")) }
+    : {};
+  // Hash the exact bytes handed to the overlay decoder. Native computes the
+  // same SHA-256 from its bundled resource and rejects precomputed geometry
+  // that cannot attest those bytes, even when a stale file reused a revision.
+  const historyHashes = historyBytes
+    ? { [COUNTRY]: createHash("sha256").update(historyBytes).digest("hex") }
     : {};
   const matchedStops = readJson(path.join(DATA_DIR, "matched-stops.json"));
   // Curated per-train geometry — the offline fallback for trains the solver
@@ -320,6 +462,23 @@ async function main() {
   );
   evaluateAppScripts(context, appScripts);
 
+  const baseHost = {
+    country: COUNTRY,
+    railSections,
+    stations,
+    matchedStops,
+    matchedRoutes,
+    historyOverlays,
+    historyHashes,
+    trainStoreText,
+  };
+  if (process.env.PRECOMPUTE_RESTAMP) {
+    if (rangeEnv) throw new Error("PRECOMPUTE_RESTAMP cannot be combined with PRECOMPUTE_RANGE.");
+    context.__host = baseHost;
+    await restampPrecomputedOutput(context);
+    return;
+  }
+
   // Publishing is a SWAP, not an in-place rewrite. Emptying the live
   // directory and then writing parts one at a time leaves it observably
   // half-published for the minutes a full solve takes — a fresh rail package
@@ -335,6 +494,7 @@ async function main() {
   fs.mkdirSync(writeDir, { recursive: true });
 
   const partNames = [];
+  const partTrainIDs = Object.create(null);
   // date string ("" for undated trains) -> part names for that day, in store order.
   const partsByDate = new Map();
   let solvedCount = 0;
@@ -343,16 +503,11 @@ async function main() {
   const routeSolverContexts = [];
 
   context.__host = {
-    country: COUNTRY,
-    railSections,
-    stations,
-    matchedStops,
-    matchedRoutes,
-    historyOverlays,
-    trainStoreText,
+    ...baseHost,
     onTrainSolved({ index, id, raw, route, featureCount, ms }) {
       const name = `part-${String(sliceStart + index).padStart(3, "0")}`;
       partNames.push(name);
+      partTrainIDs[name] = requirePartTrainID(raw, name);
       const dateKey = typeof raw.date === "string" ? raw.date : "";
       if (!partsByDate.has(dateKey)) partsByDate.set(dateKey, []);
       partsByDate.get(dateKey).push(name);
@@ -403,6 +558,7 @@ async function main() {
       no_route: noRouteCount,
       solver_context: solverContext,
       parts: partNames,
+      part_train_ids: partTrainIDs,
       full: "sample-full",
       dates: Object.fromEntries(
         [...partsByDate.entries()].sort(([a], [b]) => a.localeCompare(b)),

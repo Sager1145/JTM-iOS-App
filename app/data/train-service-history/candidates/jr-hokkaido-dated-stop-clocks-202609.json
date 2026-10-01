@@ -1,0 +1,79 @@
+{
+  "candidate_id": "jr-hokkaido-dated-stop-clocks-202609",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Four exact service dates and four selected train columns only; a blank arrival or departure side remains unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.84-dated-20260920.2026-09-20",
+      "service_date": "2026-09-20",
+      "train_number": "8022D",
+      "source_id": "jr-hokkaido-hokuto-84-20260920",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260920&s=151",
+      "source_locator": "8022D / 北斗84, fourth train column; station rows in timetable order",
+      "stops": [
+        ["札幌", null, "07:43"], ["新札幌", null, "07:53"],
+        ["南千歳", null, "08:19"], ["苫小牧", null, "08:37"],
+        ["白老", null, "08:51"], ["登別", null, "09:02"],
+        ["東室蘭", "09:14", "09:15"], ["伊達紋別", null, "09:32"],
+        ["洞爺", null, "09:48"], ["長万部", null, "10:18"],
+        ["八雲", null, "10:40"], ["森", null, "11:04"],
+        ["大沼公園", null, "11:29"], ["新函館北斗", null, "11:40"],
+        ["五稜郭", null, "11:50"], ["函館", "11:54", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.91-dated-20260920.2026-09-20",
+      "service_date": "2026-09-20",
+      "train_number": "8021D",
+      "source_id": "jr-hokkaido-hokuto-91-20260920",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260920&s=150",
+      "source_locator": "8021D / 北斗91, eleventh train column; station rows in timetable order",
+      "stops": [
+        ["函館", null, "13:00"], ["五稜郭", null, "13:05"],
+        ["新函館北斗", null, "13:20"], ["大沼公園", null, "13:29"],
+        ["森", null, "13:47"], ["八雲", null, "14:09"],
+        ["長万部", null, "14:31"], ["洞爺", null, "14:58"],
+        ["伊達紋別", null, "15:10"], ["東室蘭", "15:26", "15:27"],
+        ["登別", null, "15:40"], ["白老", null, "15:54"],
+        ["苫小牧", null, "16:09"], ["南千歳", null, "16:27"],
+        ["新札幌", null, "16:52"], ["札幌", "17:00", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.niseko.sapporo-to-hakodate-dated-20260923.2026-09-23",
+      "service_date": "2026-09-23",
+      "train_number": "8012D",
+      "source_id": "jr-hokkaido-niseko-sapporo-20260923",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260923&s=681",
+      "source_locator": "8012D / 特急ニセコ号, sole train column; 大沼公園 is レ and excluded",
+      "stops": [
+        ["札幌", null, "07:56"], ["手稲", null, "08:10"],
+        ["小樽", "08:40", "08:43"], ["余市", null, "09:14"],
+        ["倶知安", null, "10:00"], ["ニセコ", null, "10:23"],
+        ["昆布", null, "10:33"], ["黒松内", null, "11:09"],
+        ["長万部", "11:29", "11:43"], ["八雲", null, "12:07"],
+        ["森", null, "12:31"], ["新函館北斗", null, "13:07"],
+        ["五稜郭", null, "13:19"], ["函館", "13:23", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.niseko.hakodate-to-sapporo-dated-20260926.2026-09-26",
+      "service_date": "2026-09-26",
+      "train_number": "9011D",
+      "source_id": "jr-hokkaido-niseko-hakodate-full-20260926",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260926&s=680",
+      "source_locator": "9011D / 特急ニセコ号, sole train column; full 函館–札幌 service",
+      "stops": [
+        ["函館", null, "13:55"], ["五稜郭", null, "14:00"],
+        ["新函館北斗", null, "14:14"], ["大沼公園", null, "14:48"],
+        ["森", null, "15:06"], ["八雲", null, "15:28"],
+        ["長万部", "15:48", "15:50"], ["黒松内", null, "16:09"],
+        ["昆布", null, "16:46"], ["ニセコ", null, "17:11"],
+        ["倶知安", null, "17:32"], ["余市", null, "18:20"],
+        ["小樽", "18:41", "18:43"], ["手稲", null, "19:10"],
+        ["札幌", "19:28", null]
+      ]
+    }
+  ]
+}

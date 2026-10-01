@@ -1,0 +1,26 @@
+{
+  "candidate_id":"jr-kyushu-midori11-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 Midori 11 occurrence; ten displayed passenger calls in its own train column; reciprocal coupling with Huis Ten Bosch 11 through Haiki arrival",
+  "source_id":"jr-kyushu-midori11-20260930","source_url":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085801.html?c=28283&ym=202609&d=30","service_date":"2026-09-30",
+  "new_source":{"source_id":"jr-kyushu-midori11-20260930","source_type":"official_train_timetable","title":"みどり・ハウステンボス 11号 列車詳細","publisher":"九州旅客鉄道株式会社 / 株式会社交通新聞社","url_or_locator":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085801.html?c=28283&ym=202609&d=30","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"third_party_timetable_data_terms_apply","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"The official date-qualified combined detail displays みどり11号 4011M and ハウステンボス11号 6011H in separate columns; 佐世保 is shown only in the Midori column. The note confirms coupling 博多－早岐, with distinct departures at 早岐."},
+  "trip":{"trip_id":"jr-kyushu.midori.11.2026-09-30","service_id":"midori","service_name":"みどり","public_number":"11","train_number":"4011M","direction":"博多→佐世保",
+    "stop_times":[
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"08:39","platform":"4"},
+      {"name_snapshot":"二日市","arrival_time":"08:51","departure_time":"08:52","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"09:02","departure_time":"09:02","platform":"5"},
+      {"name_snapshot":"新鳥栖","arrival_time":"09:06","departure_time":"09:06","platform":null},
+      {"name_snapshot":"佐賀","arrival_time":"09:19","departure_time":"09:20","platform":null},
+      {"name_snapshot":"江北","arrival_time":"09:29","departure_time":"09:30","platform":"4"},
+      {"name_snapshot":"武雄温泉","arrival_time":"09:39","departure_time":"09:40","platform":"2"},
+      {"name_snapshot":"有田","arrival_time":"09:54","departure_time":"09:54","platform":null},
+      {"name_snapshot":"早岐","arrival_time":"10:07","departure_time":"10:12","platform":null},
+      {"name_snapshot":"佐世保","arrival_time":"10:22","departure_time":null,"platform":null}
+    ]},
+  "coupling":{"related_trip_id":"jr-kyushu.huis-ten-bosch.11.2026-09-30","relation_type":"couples_with","from_sequence":1,"to_sequence":9,"endpoint_note":"coupled from 博多 through arrival at 早岐; departures at 早岐 are separately printed"},
+  "evidence_locators":[
+    {"claim":"Midori 11 identity and 4011M","locator":"left-hand みどり11号 / 4011M train column"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL, 毎日運転 row and September calendar"},
+    {"claim":"coupled through Haiki arrival","locator":"備考: 博多－早岐間４０１１Ｍ〔みどり１１号〕に併結; distinct 早岐 departure clocks"},
+    {"claim":"ten passenger calls and clocks, excluding Huis Ten Bosch","locator":"left-hand 時刻 / のりば column from 博多 through 佐世保; ハウステンボス row blank"}
+  ]
+}

@@ -362,10 +362,12 @@
               "solve_mode": "explicit_section_route_required_home_institution",
               "solve_attempt_index": 0,
               "require_preferred_institution": true,
-              "used_institution_type_codes": [],
+              "used_institution_type_codes": [
+                "4"
+              ],
               "route_template_key": "dbrrvp09n2",
-              "path_coordinate_count": 3,
-              "raw_path_coordinate_count": 2,
+              "path_coordinate_count": 4,
+              "raw_path_coordinate_count": 3,
               "snap_distance_m": {
                 "from": 0,
                 "to": 0
@@ -374,9 +376,9 @@
                 "from": 95.78,
                 "to": 0.31
               },
-              "physical_length_m": 586.46,
-              "raw_physical_length_m": 490.66,
-              "cost": 670.66
+              "physical_length_m": 595.86,
+              "raw_physical_length_m": 500.05,
+              "cost": 680.05
             },
             "geometry": {
               "type": "LineString",
@@ -388,6 +390,10 @@
                 [
                   113.54817,
                   22.15711
+                ],
+                [
+                  113.55192,
+                  22.15443
                 ],
                 [
                   113.55187,

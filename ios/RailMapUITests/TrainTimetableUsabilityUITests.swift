@@ -38,7 +38,7 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         let picker = app.buttons["rideEditorServicePattern"]
         XCTAssertTrue(picker.waitForExistence(timeout: 8))
         picker.tap()
-        app.buttons["置き換える"].tap()
+        app.buttons["rideEditorReplaceStops"].firstMatch.tap()
         let datedSearch = app.searchFields.firstMatch
         XCTAssertTrue(datedSearch.waitForExistence(timeout: 8))
         datedSearch.tap()
@@ -54,17 +54,24 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         }
         XCTAssertTrue(detail.isHittable, app.debugDescription)
         detail.tap()
+        let detailList = app.collectionViews["timetableDetailList"]
+        XCTAssertTrue(detailList.waitForExistence(timeout: 8), app.debugDescription)
+        let scrollDetailListUp = {
+            let start = detailList.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.72))
+            let end = detailList.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.52))
+            start.press(forDuration: 0.1, thenDragTo: end)
+        }
         XCTAssertTrue(app.staticTexts["運転日: 2026-09-27 · 日本時間"].waitForExistence(timeout: 8), app.debugDescription)
         let origin = app.descendants(matching: .any).matching(identifier: "timetableStop-1").firstMatch
         XCTAssertTrue(origin.waitForExistence(timeout: 8))
         XCTAssertTrue(origin.label.contains("07:00"), origin.label)
         let last = app.descendants(matching: .any).matching(identifier: "timetableStop-12").firstMatch
-        for _ in 0..<8 where !last.exists { app.collectionViews.firstMatch.swipeUp() }
+        for _ in 0..<12 where !last.exists { scrollDetailListUp() }
         XCTAssertTrue(last.waitForExistence(timeout: 8))
         XCTAssertTrue(last.label.contains("松本"))
         XCTAssertTrue(last.label.contains("09:38"))
         let source = app.links.matching(NSPredicate(format: "label CONTAINS %@", "あずさ")).firstMatch
-        for _ in 0..<8 where !source.exists { app.collectionViews.firstMatch.swipeUp() }
+        for _ in 0..<12 where !source.exists { scrollDetailListUp() }
         XCTAssertTrue(source.waitForExistence(timeout: 8), app.debugDescription)
     }
 }

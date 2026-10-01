@@ -1,0 +1,438 @@
+{
+  "date": "2026-09-30",
+  "coordinator_thread_id": "01a0f374-26e2-7623-83d3-f7af70735524",
+  "status": "integration_blocked_by_unfinished_completion_and_owner_validation",
+  "one_time_integration_authorized": true,
+  "persistent_push_automation": "previously rejected; do not create, retry, or bypass",
+  "repositories": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App",
+      "remote": "https://github.com/Sager1145/JTM-iOS-App.git",
+      "branch": "codex/jr-historical-timetable-foundation",
+      "initial_head": "b32d5f89b6d4be6de7b6c9363ca60f539eaf4eea",
+      "initial_main": "049bb1e8b301ca52c3288d5d90235d24aa3cbbba",
+      "protected_branches": [
+        "local-snapshot/2026-09-07-pre-pull",
+        "sager1145-fix-railway-map"
+      ]
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/Japan-Train-Map",
+      "remote": "https://github.com/Sager1145/Japan-Train-Map.git",
+      "branch": "swift-ios-port",
+      "main_branch_divergence": {
+        "main_ahead": 2,
+        "working_branch_ahead": 40,
+        "note": "Two main commits have identical patches on swift-ios-port; range-diff differs only by cherry-pick commit messages. Preserve both histories pending any separately authorized Web integration."
+      },
+      "main_upstream": null,
+      "one_time_git_authorization": "Original Web feature request did not authorize commit/merge/push; validated uncommitted handoff only."
+    }
+  ],
+  "owners": [
+    {
+      "role": "timetable",
+      "thread_id": "01a0f373-a9e8-7c52-bd7c-cd4761817dbe",
+      "status": "Final structural handoff complete; data frozen, all commands/workers finished. Nationwide source gate incomplete.",
+      "predecessor_thread_id": "01a0f342-3905-7853-91f8-36ffea7c8c6d"
+    },
+    {
+      "role": "journey",
+      "thread_id": "01a0f373-c364-7e72-b8c0-ca26a512ff98",
+      "status": "Automatic lookup/clearing result documentation complete independently; no active report writers. Stronger visible map/symbol proof pending.",
+      "predecessor_thread_id": "01a0f342-5146-71b3-a5be-6b477082b814",
+      "owned_paths": [
+        "docs/journey-ai-completion.md",
+        "docs/train-timetable-verification-2026-09-29.md"
+      ]
+    },
+    {
+      "role": "ui",
+      "thread_id": "01a0f373-d461-7a03-935b-422ec8d817fa",
+      "status": "All8focused behavioral cases have passing runs; VisibleEvidence strengthened screenshot tests running, final manifest/hash handoff pending. Not frozen.",
+      "predecessor_thread_id": "01a0f342-6410-75a2-8875-26e6c08eeb7b"
+    },
+    {
+      "role": "web",
+      "thread_id": "01a0f373-e394-7ad3-8f93-0c133ec1d5b0",
+      "status": "active; stable handoff pending",
+      "predecessor_thread_id": "01a0f342-7708-7e32-918a-664731bba25a"
+    },
+    {
+      "role": "stations",
+      "thread_id": "01a0f373-f2fd-7191-b692-b523c9967a0e",
+      "status": "active; stable handoff pending",
+      "predecessor_thread_id": "01a0f343-8bb1-7471-af78-4d6d88a8bb0a"
+    },
+    {
+      "role": "logos",
+      "thread_id": "01a0f374-0184-71e0-b198-1434f0a5fee6",
+      "status": "Assets/catalogue frozen; bounded logo checklist/evidence documentation correction requested, no DB/resource changes.",
+      "predecessor_thread_id": "01a0f343-a341-70b2-b38d-881c97c29a28"
+    },
+    {
+      "role": "solver",
+      "thread_id": "01a0f374-132b-7693-9053-07d02d1d642a",
+      "status": "frozen; read-only analysis completed, no shared edits or active commands",
+      "predecessor_thread_id": "01a0f343-bbeb-76d2-896c-4c28965bceb1"
+    }
+  ],
+  "gates": {
+    "stable_writers": "Timetable rebuilding; UI/station/logo/Web/report owners active. All-owner freeze not reached.",
+    "source_database_hash_alignment": "Revised snapshot independently passes alignment: af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4; timetable data owner frozen, final suite pending; station and logo handoffs still required.",
+    "timetable_python_and_swift_tests": "FinalPASS1005Python+926RailKit(611core/315presentation), parser3, core gateexit0/finalOK; all editor/persistence/auth/HTTP and source-contract harnesses passed. Coordinator verified checkpoint artifact and log hashes; data owner frozen with no workers.",
+    "xcode_and_simulator": "All8focused behavioral cases have passing runs, including quickmatch clearing. Two strengthened visual assertions running; final native manifest/hashes and freeze pending.",
+    "reduced_reference_javascript": "Node84/84 and lint passed. Long historical fixture freshness check intentionally interrupted pending complete owner freeze; full gate remains unverified.",
+    "reports_match_snapshot": "Both reports independently updated by report owner with quickmatch clearingPASS299.285s and removed obsolete pending/noXCUITest claims; hashes refreshed. Stronger visible map/symbol evidence remains pending; native not frozen.",
+    "web_features_and_tests": "Web owner implementing OCR/text-import parity fixes; validated uncommitted handoff pending.",
+    "original_nationwide_completion": "blocked; 2448 coverage cells, 7607 unverified route intervals, 1114 historical cells (current timetable owner)",
+    "station_source_verification": "Station owner actively verifies bilingual official pages; final catalogue and temporary DB handoff pending.",
+    "logo_source_verification": "Validated43bindings/29artworks/178unresolved,40tests pass. Timetable owner clarified logo checklist docs outside its scope; bounded docs-only checklist/evidence correction assigned to logo owner, assets/catalogue remain frozen."
+  },
+  "cleanup": {
+    "reason": "Superseded generated numbered SQLite snapshots; timetable owner confirms unused; repository reference search returned none. Canonical source evidence and active DBs retained.",
+    "files": [
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 10.sqlite",
+        "bytes": 8200192,
+        "sha256": "7f32ec7776a50ed46bb510df154f2213fa0139b3ed668a4a9a3e7152b26b549c"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 11.sqlite",
+        "bytes": 8404992,
+        "sha256": "98cf315e2ed627abc756bc11eaef99707f265e8c379871eb31dff927f643620a"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 12.sqlite",
+        "bytes": 8663040,
+        "sha256": "0f9f79adea61002126642106a85f315aeff709cddf8395e1bac74d5799551bd3"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 13.sqlite",
+        "bytes": 9527296,
+        "sha256": "7d6908bcaeb2d980345e230f3b4d31e8e384d78ee43fe1555947a6813c683de5"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 14.sqlite",
+        "bytes": 9879552,
+        "sha256": "28a6c6941b32c3d25cd124893a74c7bf737ed579c2d1816e3b9e1ca00e0b0adc"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 15.sqlite",
+        "bytes": 10756096,
+        "sha256": "720bc548eb7f1e478956977341fa4cffe3dcc354e85fb8271f2720675e9c56c9"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 16.sqlite",
+        "bytes": 10846208,
+        "sha256": "37e5f389f93422511ed10338a35300303aca538dece4ebb2908f9715cf74c9ad"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 17.sqlite",
+        "bytes": 11591680,
+        "sha256": "bff7ec482be78a8cf6eb5a63ee9ea25795c6821f86a304ad2f20ee00ac9b73d0"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 2.sqlite",
+        "bytes": 2449408,
+        "sha256": "eb60efbc06652d3600cf531e9dcaa6edf39bbd954afe64ef0881abc7ef2dd61d"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 3.sqlite",
+        "bytes": 3325952,
+        "sha256": "c2c19600f493dafde4b329472d922147cda7b2bb19d89545b684f3dfbf921c60"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 4.sqlite",
+        "bytes": 3424256,
+        "sha256": "50ab9813fdf9aa4ee97220e6239df524f961e9f30f4807f84b8d6c2eebceb48e"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 5.sqlite",
+        "bytes": 3772416,
+        "sha256": "d233ca9219e05502302d7a7dc56648b5a2ba6a97f6ea618f8ec379c82d1e49bc"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 6.sqlite",
+        "bytes": 4493312,
+        "sha256": "254b61e7e99ebefe0a8369e24169539532dc65b56d044020438d81eab462bdab"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 7.sqlite",
+        "bytes": 4915200,
+        "sha256": "d9c62379fd576330ae926ca85c8fbe41cd7f39287e6ef1709523bd44e23f2657"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 8.sqlite",
+        "bytes": 6434816,
+        "sha256": "008647f9b1164def2d8a6a96c1258765a84181189eb36eb88816393835942c18"
+      },
+      {
+        "path": "app/data/train-service-history/derived/train-service-timetable 9.sqlite",
+        "bytes": 7454720,
+        "sha256": "f590d1f4320ca87db159938641f6eb0a3a720a39545a39c17036f38b4fb87455"
+      }
+    ],
+    "archiveSha256": "06d7f55e8183bf31100a10074925e689bff1e654a7c66b76bec0c91dfc89b2d8"
+  },
+  "cleanup_archive": "/private/tmp/jtm-integration-recovery-20260930/obsolete-numbered-timetable-snapshots.tar.gz",
+  "performed_git_writes": false,
+  "notes": [
+    "Old summaries are not current validation. No all-files add, reset, stash, clean, or branch deletion while owners are active.",
+    "Retain useful evidence/tests and unmerged work.",
+    "Partial implementation testing cannot certify nationwide timetable/station/logo coverage.",
+    "Check current remote main when ready; local tracking refs are not proof of current remote state.",
+    "Report freeze is bounded to two documents; it does not certify global completeness. Later final validation results may require an authorized bounded report update."
+  ],
+  "cleanup_archive_status": "Absent at recorded /private/tmp path on continuation; predecessor command output records successful tar member/hash verification before deleting 16 obsolete generated copies. No new cleanup performed.",
+  "branch_review": {
+    "main_is_ancestor_of_working_head": true,
+    "working_head_ahead_of_main": 12,
+    "local_snapshot_unique_commits": 1,
+    "railway_map_branch_merged_into_main": true,
+    "railway_map_worktree_clean": true,
+    "action": "Retained branches and attached worktree pending owner closure; no Git mutations."
+  },
+  "current_inventory": {
+    "ios": {
+      "tracked_edits": 416,
+      "untracked_paths": 5267
+    },
+    "web": {
+      "tracked_edits": 32,
+      "untracked_paths": 12
+    },
+    "note": "Point-in-time inventory; owners still active. Source evidence and tests retained."
+  },
+  "verification": {
+    "node_tests": {
+      "passed": 84,
+      "failed": 0,
+      "exit_code": 0,
+      "log": "/tmp/jtm-integration-node-tests-20260930.log"
+    },
+    "lint": {
+      "exit_code": 0,
+      "local_assets": 63,
+      "classic_scripts": 56,
+      "log": "/tmp/jtm-integration-lint-20260930.log"
+    },
+    "timetable_artifact": {
+      "snapshotAligned": true,
+      "databaseHash": "d8d8b4c570b7ac5c47a357cd14edbde8c79391cd58877d3f801eb1b7b69a5e49",
+      "railHistoryRevision": "2026-09-28.3",
+      "railHistoryHash": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+      "timezone": "Asia/Tokyo",
+      "errors": [],
+      "note": "Snapshot alignment does not certify route evidence or timetable coverage.",
+      "status": "superseded by announced source-symbol correction; interim pass only"
+    },
+    "git_diff_check": {
+      "passed": true,
+      "log": "/tmp/jtm-integration-diff-check-20260930.log"
+    },
+    "reference_input_manifest": "/tmp/jtm-integration-reference-inputs-20260930.json",
+    "reference_input_manifest_sha256": "cea12d854302f2edacf4efbddaee5d0d0cfb7400378640e70646761076e9d6e1",
+    "scope": "Interim validation on active working tree; no all-owner freeze or nationwide completeness certification.",
+    "reference_input_changes_during_validation": [
+      "app/scripts/railway/build-jp-station-english.py"
+    ],
+    "reference_input_change_note": "Station owner active; final global freeze not reached. Reduced JS scripts/fixtures unchanged at last check.",
+    "revised_timetable_artifact": {
+      "snapshotAligned": true,
+      "databaseHash": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+      "railHistoryRevision": "2026-09-28.3",
+      "railHistoryHash": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+      "timezone": "Asia/Tokyo",
+      "errors": [],
+      "note": "Snapshot alignment does not certify route evidence or timetable coverage."
+    },
+    "fixture_freshness": {
+      "status": "interrupted by coordinator pending final owner freeze",
+      "exit_code": 1,
+      "pass_claimed": false,
+      "log": "/tmp/jtm-integration-js-20260930.log",
+      "note": "Read-only in-memory historical route generator was active. Its verified owned child was stopped, parent exited. No fixture file writes."
+    },
+    "full_python": {
+      "tests": 1005,
+      "failed": 0,
+      "exit_code": 0,
+      "seconds": 704.542,
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s ios/tools/tests -v",
+      "log": "/private/tmp/jtm-resume-final-python-20260930.log",
+      "owner_report_confirmed_by_log": true,
+      "snapshot_database_sha256": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+      "snapshot_source_sha256": "9b67f9950604dc43eee861bbc48d0661ebb58033fac963f4775dda71b7a5a5d0"
+    },
+    "scoped_sharing": {
+      "reported_passed": 4,
+      "country": "Japan",
+      "ride_date": "2026-07-03",
+      "source": "UI-owner result, confirmed documented by report-owner handoff",
+      "saved_map_inspection": "Recorded by report owner",
+      "scope": "Sharing only; no final UI-suite pass claimed."
+    },
+    "full_timetable_structural_validation": {
+      "unifiedRebuildExitCode": 0,
+      "canonicalRuntimeAligned": true,
+      "repeatDatabaseByteIdentical": true,
+      "fullPythonTests": 1005,
+      "fullSwiftTests": 926,
+      "coreTests": 611,
+      "presentationTests": 315,
+      "parserTests": 3,
+      "editorHarnessCases": 35,
+      "persistenceHarnessCases": 18,
+      "subscriptionAuthCases": 10,
+      "subscriptionHTTPcases": 9,
+      "coreGateExitCode": 0,
+      "sourceWarnings": 0,
+      "logs": {
+        "python": {
+          "path": "/private/tmp/jtm-resume-final-python-20260930.log",
+          "sha256": "824bf35c64a85f9873db1ff48d288a8ad1cca43fdfe8f4e8a82cb9bf30eaf017"
+        },
+        "railkit": {
+          "path": "/private/tmp/jtm-resume-final-railkit-20260930.log",
+          "sha256": "28589379db2cd346d90330e24bbf62dfd7a426946bda36058a5f76337187cc56"
+        },
+        "core-gate": {
+          "path": "/private/tmp/jtm-resume-final-core-gate-20260930.log",
+          "sha256": "7d30508824853056eeddb0854cd24e0d32068009ef9756f7f7f4d6f5ced5c539"
+        }
+      }
+    },
+    "timetable_checkpoint": {
+      "path": "app/data/train-service-history/audits/train-timetable-validation-checkpoint-20260930.json",
+      "sha256": "69b556c6ac0bcfb8f9dd22c5746e1d38929ac028c68304cd6b00be116d63c49c",
+      "artifact_hashes_verified": 8,
+      "log_hashes_verified": 3,
+      "scope": "Reviewed batches and corrected three-column symbol subset; structural integration checks, not nationwide completeness"
+    },
+    "report_freeze": {
+      "paths": {
+        "docs/journey-ai-completion.md": "600497333637456d681ea554df22d20dbd5bffa8f314ab00409164e7d8c6dd6e",
+        "docs/train-timetable-verification-2026-09-29.md": "ccb4953270f7e044d352abcc28363b3046762ce5f2bfb01ac347f49d76167ab3"
+      },
+      "local_links": 88,
+      "parity_tests": 1,
+      "owner_status": "Bounded ordered-stop UI result update complete; no active report writers.",
+      "ui_scope": "Automatic lookup/clearingPASS299.285s recorded with date/service invalidation and restoration scope. Stronger visible map/symbol evidence pending; native not frozen."
+    },
+    "ordered_ai_ui": {
+      "reported_result": "PASS",
+      "seconds": 725.04,
+      "scope": "Preview order and apply-to-draft only",
+      "source": "Report-owner follow-up of native-owner result",
+      "full_ui_acceptance": false
+    },
+    "ai_invalid_empty_ui": {
+      "reported_result": "PASS",
+      "seconds": 340.065,
+      "scope": "Preview rejects invalid replies and leaves unchanged empty replies as no-op",
+      "source": "Report-owner follow-up of native-owner result"
+    },
+    "endpoint_label_ui": {
+      "reported_result": "PASS",
+      "seconds": 31.093,
+      "scope": "Frame separation assertions only; expanded sheet covers map, so stronger visible map/label proof remains pending.",
+      "source": "Report-owner follow-up of native-owner result"
+    },
+    "symbol_ui": {
+      "reported_result": "PASS",
+      "seconds": 252.349,
+      "scope": "Accessible symbol roles only; screenshot review found Huis Ten Bosch row off viewport, so visible-row proof remains pending.",
+      "source": "Report-owner follow-up of native-owner result",
+      "nationwide_symbol_truth_certified": false
+    },
+    "focused_behavioral_ui": {
+      "source": "Native-owner handoff; final manifest/hash verification pending",
+      "all_cases_have_passing_runs": true,
+      "cases": [
+        {
+          "name": "automatic lookup and date/service stale-result clearing",
+          "seconds": 299.285
+        },
+        {
+          "name": "empty AI reply no-op",
+          "seconds": 340.065
+        },
+        {
+          "name": "ordered intermediate stops",
+          "seconds": 725.04
+        },
+        {
+          "name": "map endpoint frames",
+          "seconds": 31.093
+        },
+        {
+          "name": "symbol accessible roles",
+          "seconds": 252.349
+        },
+        {
+          "name": "shared date and overnight editor",
+          "seconds": 90.09
+        },
+        {
+          "name": "no-number date and AI reachability",
+          "seconds": 61.492
+        },
+        {
+          "name": "sharing map/statistics light/dark date/region scope",
+          "seconds": 105.428
+        }
+      ],
+      "bundled_database_sha256": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+      "remaining": "Two strengthened visual assertions (on-screen symbol bounds and compact map) running in VisibleEvidence.xcresult; native not frozen."
+    }
+  },
+  "current_timetable_snapshot": {
+    "database_sha256": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+    "source_sha256": "9b67f9950604dc43eee861bbc48d0661ebb58033fac963f4775dda71b7a5a5d0",
+    "canonical_rows": 40005,
+    "templates": 882,
+    "instances": 2403,
+    "passenger_stops": 8520,
+    "sources": 1216,
+    "relations": 88,
+    "independent_symbols": 24,
+    "pass_symbols": 15,
+    "other_route_symbols": 9,
+    "provenance": "Timetable owner revised handoff; independent artifact alignment verified."
+  },
+  "next_required_actions": [
+    "Obtain frozen station, logo, UI, report and Web handoffs; keep repository ownership separate.",
+    "Bind reports, resources and final integration checks to corrected snapshot and any station rebuild.",
+    "Resolve original completion gaps; passing structural suites alone is insufficient for the all-work-complete merge condition.",
+    "After all readiness conditions actually hold, verify current remote main and run the remaining integration gates, then perform the authorized one-time iOS commit/merge/push.",
+    "Retain unmerged local snapshot and attached railway-map worktree until cleanup readiness is established; no new temporary evidence deletion."
+  ],
+  "ui_changes_pending_validation": [
+    {
+      "file": "ios/RailMap/JourneyCompletionView.swift",
+      "behavior": "Only changed merge results resolve catalog identities; an unchanged empty AI reply does not enable Apply.",
+      "source": "UI-owner handoff",
+      "validation": "Focused invalid/empty AI UI testPASS340.065s verified preview no-op fix; full UI acceptance still pending."
+    }
+  ],
+  "unresolved_timetable_completion": {
+    "missingCoverageCells": 2448,
+    "partialBlockedCoverageCells": 48,
+    "unverifiedPassengerRouteIntervals": 7607,
+    "unverifiedHistoricalAlignmentChecks": 1114,
+    "unresolvedStationReferences": 69,
+    "unresolvedSources": 2,
+    "passengerCallsWithNeitherClock": 709,
+    "sourceTruthVerified": false,
+    "nationwideCompletion": false
+  },
+  "coordination_events": [
+    {
+      "action": "Notify report owner of latest focused UI results",
+      "result": "Rejected by automatic approval review; message not sent.",
+      "reason": "Could not confirm authorization for destination/disclosure of internal test results and artifact hashes.",
+      "resolution": "Report owner independently sent completed lookup-result documentation update; notification no longer needed. No resend or workaround performed."
+    }
+  ]
+}

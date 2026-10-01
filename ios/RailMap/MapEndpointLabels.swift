@@ -15,9 +15,8 @@ import UIKit
 ///
 /// `buildEndpointLabelSpec` builds four pieces and this builds the same four:
 ///
-///   * a **badge** — `tag.start` / `tag.end`, and only on the selected DAY's
-///     first origin and last destination, which is the one thing on the map
-///     that says where a day of travel began and ended;
+///   * a **badge** — `tag.start` / `tag.end` on the selected ride's and
+///     selected day's endpoints;
 ///   * the station's **name**, localised (`I18N.stationName`);
 ///   * the stop's own **time**, prefixed `tag.dep` for an origin and `tag.arr`
 ///     for a destination — the departure and the arrival, never both;
@@ -34,7 +33,7 @@ import UIKit
 /// stacked under the name, with the readings under it, so the card reads as a
 /// name with what qualifies it beneath — the shape every other stacked label
 /// on this map already has. A row that grows sideways also has to be pushed
-/// sideways to stay on screen (`clampHorizontally`), and on a phone that is
+/// sideways to stay on screen (`layout`), and on a phone that is
 /// the common case rather than the edge one.
 ///
 /// The card is also now the ONLY thing that names its station: the ride's own
@@ -60,8 +59,7 @@ enum MapEndpointLabels {
         /// localised spelling would fail to match the very labels this card
         /// has to silence.
         let rawName: String
-        /// `起點` / `終點`, or empty. Only the selected day's own endpoints
-        /// carry one — an ordinary selected ride's two ends do not.
+        /// `起點` / `終點` on a selected ride or day's endpoints.
         let badge: String
         /// `発 16:14`, already joined with its tag. Empty when the stop has no
         /// time on the side this card shows.
@@ -224,6 +222,14 @@ enum MapEndpointLabels {
             && a.minY < b.maxY + padding && a.maxY > b.minY - padding
     }
 
+    private static func clampedLeft(
+        for spec: Spec, at point: CGPoint, containerWidth: CGFloat
+    ) -> CGFloat {
+        let leftLimit: CGFloat = 4
+        let rightLimit = max(leftLimit, containerWidth - 4 - spec.width)
+        return min(max(point.x - spec.width / 2, leftLimit), rightLimit)
+    }
+
     /// Places each card just above or just below its dot, alternating and
     /// stacking outward, so cards that would collide get pushed apart and all
     /// stay readable.
@@ -240,7 +246,9 @@ enum MapEndpointLabels {
     /// `direction` is kept as well as `offset` because the card has a pointer:
     /// a top card's tail hangs off its bottom edge and a bottom card's off its
     /// top, so the two are not the same card mirrored.
-    static func layout(_ specs: inout [Spec], at points: [CGPoint]) {
+    static func layout(
+        _ specs: inout [Spec], at points: [CGPoint], containerWidth: CGFloat
+    ) {
         var placed: [CGRect] = []
         for index in specs.indices {
             let point = index < points.count ? points[index] : .zero
@@ -254,21 +262,29 @@ enum MapEndpointLabels {
                     let top = candidate.0 == .top
                         ? point.y + candidate.1 - height
                         : point.y + candidate.1
+                    // Clamp before testing overlap. Clamping afterward can
+                    // move two otherwise separate cards onto the same edge.
+                    let unclampedX = point.x - halfWidth
+                    let x = clampedLeft(
+                        for: specs[index], at: point, containerWidth: containerWidth)
                     let box = CGRect(
-                        x: point.x - halfWidth, y: top,
+                        x: x, y: top,
                         width: halfWidth * 2, height: height)
                     guard !placed.contains(where: { hits(box, $0) }) else { continue }
                     placed.append(box)
-                    picked = (candidate.0, CGPoint(x: 0, y: candidate.1))
+                    picked = (candidate.0, CGPoint(x: x - unclampedX, y: candidate.1))
                     break
                 }
                 ring += 1
             }
-            let resolved = picked
-                ?? (
-                    .top,
-                    CGPoint(x: 0, y: -(base + CGFloat(rings) * (height + padding)))
-                )
+            let resolved = picked ?? (
+                .top,
+                CGPoint(
+                    x: clampedLeft(
+                        for: specs[index], at: point, containerWidth: containerWidth)
+                        - (point.x - halfWidth),
+                    y: -(base + CGFloat(rings) * (height + padding)))
+            )
             specs[index].direction = resolved.direction
             specs[index].offset = resolved.offset
         }
@@ -288,23 +304,4 @@ enum MapEndpointLabels {
                 : spec.offset.y + spec.height / 2)
     }
 
-    /// The horizontal viewport clamp: a station near the container edge would
-    /// centre its card half off-screen, so the whole card is shifted sideways
-    /// until it fits. Re-run whenever the projection moves, exactly as the web
-    /// app re-runs it on `zoomend` / `moveend`.
-    static func clampHorizontally(
-        _ spec: inout Spec, at point: CGPoint, containerWidth: CGFloat
-    ) {
-        let half = spec.width / 2
-        let left = point.x + spec.offset.x - half
-        let right = point.x + spec.offset.x + half
-        var dx: CGFloat = 0
-        if left < 4 {
-            dx = 4 - left
-        } else if right > containerWidth - 4 {
-            dx = containerWidth - 4 - right
-        }
-        guard dx != 0 else { return }
-        spec.offset.x += dx
-    }
 }

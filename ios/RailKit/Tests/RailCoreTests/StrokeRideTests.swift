@@ -158,6 +158,46 @@ struct StrokeRideTests {
         #expect(index.resolve(segment: [points[0]]) == nil)
     }
 
+    @Test("spatial candidates preserve original order across distant chains and duplicate geometry")
+    func spatialCandidateOrder() {
+        var chains = (0..<128).map { i in
+            Self.chain(id: "remote-\(i)", points: [
+                .init(lon: -170 + Double(i), lat: -45),
+                .init(lon: -170 + Double(i), lat: -44.99),
+            ])
+        }
+        let first = Self.straightChain()
+        let duplicate = Self.chain(id: "duplicate", points: first.points, anchors: first.anchors)
+        chains.insert(first, at: 53)
+        chains.insert(duplicate, at: 101)
+        let index = StrokeRide.Index(chains: chains)
+        for chain in chains {
+            for segment in [chain.points, Array(chain.points.reversed())] {
+                #expect(index.resolve(segment: segment) == StrokeRide.resolve(segment: segment, chains: chains))
+            }
+        }
+        #expect(index.resolve(segment: first.points)?.chainID == first.id)
+        #expect(index.resolve(segment: [chains[0].points[0], chains.last!.points.last!]) == nil)
+    }
+
+    @Test("spatial pruning includes tolerance boundaries and long chain bounds")
+    func spatialBoundaries() {
+        let points = (0..<200).map { Coordinate(lon: -100 + Double($0) * 0.001, lat: 40) }
+        let long = Self.chain(id: "long", points: points)
+        let remote = (0..<32).map { i in
+            Self.chain(id: "remote-\(i)", points: [
+                .init(lon: Double(i), lat: -20), .init(lon: Double(i) + 0.001, lat: -20),
+            ])
+        }
+        let chains = remote + [long]
+        let index = StrokeRide.Index(chains: chains)
+        for offset in [0.0, 60.0 / 111_320, (60.0 + 0.00001) / 111_320, 0.01] {
+            let segment = points[50...150].map { Coordinate(lon: $0.lon, lat: $0.lat + offset) }
+            #expect(index.resolve(segment: segment) == StrokeRide.resolve(segment: segment, chains: chains))
+        }
+        #expect(StrokeRide.Index(chains: []).resolve(segment: points) == nil)
+    }
+
     @Test("prepared index is an immutable snapshot and ignores malformed chains")
     func preparedIndexSnapshot() {
         var chain = Self.straightChain()

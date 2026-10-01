@@ -1,0 +1,76 @@
+{
+  "candidate_id": "jr-east-sazanami2-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "sazanami",
+  "service_name": "さざなみ",
+  "jr_scope": "jr",
+  "public_number": "2",
+  "train_number": "1002M",
+  "trip_id": "jr-east.sazanami.2.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-sazanami2-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/045/049741.html",
+  "source_sha256": "ac6f0ae8f1d3700302b4476c77f5be310ad0ae16fdcb5f6577c15291b19341f3",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "君津",
+      null,
+      "05:52"
+    ],
+    [
+      "木更津",
+      "05:58",
+      "05:59"
+    ],
+    [
+      "姉ケ崎",
+      "06:10",
+      "06:10"
+    ],
+    [
+      "五井",
+      "06:15",
+      "06:15"
+    ],
+    [
+      "蘇我",
+      "06:23",
+      "06:24"
+    ],
+    [
+      "東京",
+      "06:57",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "君津": "３",
+    "木更津": "１",
+    "姉ケ崎": "３",
+    "蘇我": "２",
+    "東京": "京１"
+  },
+  "equipment": [
+    "座席未指定券",
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です",
+  "printed_operating_labels": "平日運転",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; no unprinted vehicle assignment or number changes inferred.",
+  "actual_dispatch": null
+}

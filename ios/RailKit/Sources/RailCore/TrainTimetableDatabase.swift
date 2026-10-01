@@ -61,6 +61,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
     public struct Service: Sendable, Hashable, Identifiable {
         public let id: String
         public let canonicalName: String
+        public let englishName: String?
         public let serviceClass: String
         public let historicalGeneration: Int
         public let firstVerifiedDate: String?
@@ -120,6 +121,42 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         }
     }
 
+    /// A printed symbol row, kept separate from the train's actual stop chain.
+    public struct TimetableSymbol: Sendable, Hashable, Identifiable {
+        public var id: String { "\(afterStopSequence):\(position)" }
+        public let afterStopSequence: Int
+        public let position: Int
+        public let stationName: String
+        public let symbol: String
+    }
+
+    public struct FormationCar: Sendable, Hashable, Identifiable {
+        public var id: Int { sequence }
+        public let sequence: Int
+        public let number: String
+        public let vehicleSeries: String?
+        public let seatClass: String?
+        public let reservationType: String?
+        public let sourceID: String
+        public let notes: String?
+    }
+
+    public struct Formation: Sendable, Hashable, Identifiable {
+        public let id: String
+        public let tripID: String
+        public let serviceDate: String
+        public let evidenceKind: String
+        public let label: String?
+        public let carCount: Int?
+        public let reservedSeatCapacity: Int?
+        public let vehicleSeries: String?
+        public let allReserved: Bool?
+        public let greenCarAvailable: Bool?
+        public let sourceID: String
+        public let notes: String?
+        public let cars: [FormationCar]
+    }
+
     public struct LineSegment: Sendable, Hashable, Identifiable {
         public enum ReferenceKind: String, Sendable, Hashable, Codable {
             case currentN02 = "current_n02"
@@ -136,6 +173,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let referenceKind: ReferenceKind?
         public let currentN02LineID: String?
         public let railHistoryID: String?
+        fileprivate let fromStation: StationIdentity
+        fileprivate let toStation: StationIdentity
 
         /// Historical overlay identities cannot yet be represented by the
         /// editor's RouteSection model. An explicit current-network identity
@@ -164,6 +203,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let id: String
         public let serviceDate: String
         public let timetableVersionID: String
+        public let timetableEditionName: String
         public let service: Service
         public let calendarID: String
         public let trainNumber: String
@@ -177,6 +217,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// canonical dimension (`stops`, `route_lines`, `station_refs`, …).
         public let factCompleteness: [String: Coverage]
         public let stops: [StopTime]
+        public let timetableSymbols: [TimetableSymbol]
         public let lineSegments: [LineSegment]
         public let operatorSegments: [OperatorSegment]
 
@@ -184,6 +225,38 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public var destination: StopTime? { stops.last(where: \.isPassengerCall) }
         public var passengerStops: [StopTime] { stops.filter(\.isPassengerCall) }
         public var displayName: String { service.canonicalName }
+
+        /// Copies published calls without inventing missing stops or route segments.
+        public func publishedStopsDraft(to train: Train, ridden: Bool = true) -> Train? {
+            guard timetableCompleteness != .conflict else { return nil }
+            let calls = passengerStops
+            guard calls.count >= 2, let origin = calls.first, let destination = calls.last
+            else { return nil }
+            var result = train
+            result.date = TimetableServiceDayContext(serviceDate: serviceDate).networkRideDate
+            let number = publicNumber ?? trainNumber
+            result.number = [service.canonicalName, number].filter { !$0.isEmpty }.joined(separator: " ")
+            result.numberEn = service.englishName.map { [$0, number].filter { !$0.isEmpty }.joined(separator: " ") }
+            result.trainType = serviceClass == "sleeper_limited_express" ? "寝台特急" : "特急"
+            result.company = operatorSegments.map(\.displayName).uniqued().joined(separator: "/")
+            result.origin = origin.station.name
+            result.destination = destination.station.name
+            result.direction = direction
+            result.routeSections = nil
+            result.routePolicy = nil
+            result.stops = calls.enumerated().map { index, stop in
+                Stop(name: stop.station.name,
+                     n02StationCode: stop.station.currentSourceCode,
+                     platformNumber: Self.editorPlatformNumber(stop.platform),
+                     arrival: Self.editorTime(seconds: stop.arrivalSeconds, source: stop.arrivalTime),
+                     departure: Self.editorTime(seconds: stop.departureSeconds, source: stop.departureTime),
+                     stopType: index == 0 ? "origin" : index == calls.count - 1
+                        ? "destination" : "passenger_stop",
+                     rideSegment: ridden)
+            }
+            if result.region == nil { result.region = "jp" }
+            return result
+        }
 
         /// Exact trips can enter the legacy editor only when every passenger
         /// stop maps to the current station directory. Historical-only station
@@ -206,7 +279,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 && hasValidChronology
                 && hasCompleteLineCoverage
                 && hasCompleteOperatorCoverage
-                && exactRouteSections != nil
+                && editorProjection(ridden: false) != nil
                 && required.allSatisfy { factCompleteness[$0] == .verified }
         }
 
@@ -255,75 +328,103 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             }
         }
 
-        /// Hard route constraints for every adjacent passenger-stop pair.
-        /// A globally complete origin-to-destination chain is insufficient:
-        /// each passenger boundary must occur in order in that chain, or the
-        /// verified facts cannot be attached to the editor's route sections.
-        private var exactRouteSections: [RouteSection]? {
+        private struct EditorProjection {
+            let stops: [Stop]
+            let routeSections: [RouteSection]
+        }
+
+        /// Projects the physical line chain into editor stops. A route-only
+        /// line boundary becomes an untimed pass-through stop here; it remains
+        /// absent from the canonical timetable calls and passenger-stop APIs.
+        /// A source-listed non-passenger call keeps its published clock facts.
+        private func editorProjection(ridden: Bool) -> EditorProjection? {
             let calls = passengerStops
             guard calls.count >= 2, !lineSegments.isEmpty else { return nil }
-            let chainStationIDs = [lineSegments[0].fromStationID]
-                + lineSegments.map(\.toStationID)
+            let chainStations = [lineSegments[0].fromStation] + lineSegments.map(\.toStation)
+            let chainStationIDs = chainStations.map(\.id)
             guard calls.allSatisfy({ call in
                 chainStationIDs.lazy.filter { $0 == call.station.id }.count == 1
+            }), chainStations.allSatisfy({ station in
+                station.stationKey != nil && station.isValid(on: serviceDate)
             }) else { return nil }
+
+            let callChainIndices = calls.compactMap { call in
+                chainStationIDs.firstIndex(of: call.station.id)
+            }
+            guard callChainIndices.count == calls.count,
+                  zip(callChainIndices, callChainIndices.dropFirst()).allSatisfy({
+                      $0.0 < $0.1
+                  })
+            else { return nil }
+
             let operatorNames = Dictionary(
                 operatorSegments.map { ($0.operatorID, $0.displayName) },
                 uniquingKeysWith: { first, _ in first })
-            var cursor = lineSegments.startIndex
             var sections: [RouteSection] = []
-            sections.reserveCapacity(calls.count - 1)
-
-            for index in 0..<(calls.count - 1) {
-                let from = calls[index]
-                let to = calls[index + 1]
-                guard lineSegments.indices.contains(cursor),
-                      lineSegments[cursor].fromStationID == from.station.id
+            sections.reserveCapacity(lineSegments.count)
+            for (index, segment) in lineSegments.enumerated() {
+                guard let leftCallIndex = callChainIndices.lastIndex(where: { $0 <= index }),
+                      let rightCallIndex = callChainIndices.firstIndex(where: { $0 >= index + 1 })
                 else { return nil }
-
-                var covered: [LineSegment] = []
-                var reachedBoundary = false
-                while lineSegments.indices.contains(cursor) {
-                    let segment = lineSegments[cursor]
-                    if let previous = covered.last,
-                       previous.toStationID != segment.fromStationID
-                    { return nil }
-                    covered.append(segment)
-                    cursor += 1
-                    if segment.toStationID == to.station.id {
-                        reachedBoundary = true
-                        break
-                    }
-                }
-                guard reachedBoundary,
-                      // RouteSection expresses allowed line/operator sets, not
-                      // an ordered chain of intermediate waypoints. More than
-                      // one source segment would lose verified traversal facts.
-                      covered.count == 1,
-                      covered.allSatisfy({ $0.confidence == "high" }),
-                      let fromCode = from.station.currentSourceCode,
-                      let toCode = to.station.currentSourceCode
-                else { return nil }
-
-                let segment = covered[0]
+                let leftCall = calls[leftCallIndex]
+                let rightCall = calls[rightCallIndex]
+                let from = chainStations[index]
+                let to = chainStations[index + 1]
                 guard !segment.lineName.isEmpty,
+                      segment.confidence == "high",
                       segment.canApplyToCurrentEditor,
                       let operatorID = segment.operatorID,
                       let operatorName = operatorNames[operatorID],
                       !operatorName.isEmpty,
+                      let fromCode = from.currentSourceCode,
+                      let toCode = to.currentSourceCode,
                       operatorSegments.contains(where: {
                           $0.operatorID == operatorID
-                              && $0.fromSequence <= from.sequence
-                              && $0.toSequence >= to.sequence
+                              && $0.fromSequence <= leftCall.sequence
+                              && $0.toSequence >= rightCall.sequence
                       })
                 else { return nil }
                 sections.append(RouteSection(
-                    from: from.station.name, to: to.station.name,
+                    from: from.name, to: to.name,
                     fromN02StationCode: fromCode, toN02StationCode: toCode,
                     lineNames: [segment.lineName], operatorNames: [operatorName]))
             }
-            guard cursor == lineSegments.endIndex else { return nil }
-            return sections
+
+            let callsByChainIndex = Dictionary(
+                uniqueKeysWithValues: zip(callChainIndices, calls.enumerated()).map {
+                    ($0.0, $0.1)
+                })
+            let projectedStops = chainStations.enumerated().map { index, station -> Stop in
+                if let (callIndex, call) = callsByChainIndex[index] {
+                    let type = callIndex == 0 ? "origin"
+                        : callIndex == calls.count - 1 ? "destination" : "passenger_stop"
+                    return Stop(
+                        name: call.station.name,
+                        n02StationCode: call.station.currentSourceCode,
+                        platformNumber: Self.editorPlatformNumber(call.platform),
+                        arrival: Self.editorTime(seconds: call.arrivalSeconds, source: call.arrivalTime),
+                        departure: Self.editorTime(seconds: call.departureSeconds, source: call.departureTime),
+                        stopType: type,
+                        rideSegment: ridden)
+                }
+                let sourceCalls = stops.filter { $0.station.id == station.id }
+                guard sourceCalls.count == 1, let sourceCall = sourceCalls.first else {
+                    return Stop(
+                        name: station.name, n02StationCode: station.currentSourceCode,
+                        stopType: "pass_through", rideSegment: ridden)
+                }
+                return Stop(
+                    name: sourceCall.station.name,
+                    n02StationCode: sourceCall.station.currentSourceCode,
+                    platformNumber: Self.editorPlatformNumber(sourceCall.platform),
+                    arrival: Self.editorTime(
+                        seconds: sourceCall.arrivalSeconds, source: sourceCall.arrivalTime),
+                    departure: Self.editorTime(
+                        seconds: sourceCall.departureSeconds, source: sourceCall.departureTime),
+                    stopType: "pass_through",
+                    rideSegment: ridden)
+            }
+            return EditorProjection(stops: projectedStops, routeSections: sections)
         }
 
         /// A one-day compatibility projection for the existing route editor.
@@ -331,6 +432,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// segments; it never invents optional stops or a fallback route.
         public func compatibilityPattern() -> TrainServicePatterns.Pattern? {
             guard canApplyToRouteEditor,
+                  editorProjection(ridden: false)?.stops.count == passengerStops.count,
                   let validUntil = Self.nextGregorianDay(after: serviceDate)
             else { return nil }
 
@@ -372,19 +474,22 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         /// ``canApplyToRouteEditor``; incomplete research records fail closed.
         public func applying(to train: Train, ridden: Bool = true) -> Train? {
             guard canApplyToRouteEditor, let origin, let destination,
-                  let routeSections = exactRouteSections
+                  let projection = editorProjection(ridden: ridden)
             else { return nil }
             var result = train
             result.date = TimetableServiceDayContext(serviceDate: serviceDate).networkRideDate
             result.number = [service.canonicalName, publicNumber ?? trainNumber]
                 .filter { !$0.isEmpty }.joined(separator: " ")
+            result.numberEn = service.englishName.map {
+                [$0, publicNumber ?? trainNumber].filter { !$0.isEmpty }.joined(separator: " ")
+            }
             result.trainType = serviceClass == "sleeper_limited_express" ? "寝台特急" : "特急"
             let operatorNames = operatorSegments.map(\.displayName).uniqued()
             result.company = operatorNames.joined(separator: "/")
             result.origin = origin.station.name
             result.destination = destination.station.name
             result.direction = direction
-            result.routeSections = routeSections
+            result.routeSections = projection.routeSections
             result.routePolicy = RoutePolicy(
                 mode: "single_primary_route",
                 jrOnly: !operatorSegments.isEmpty && operatorSegments.allSatisfy {
@@ -396,22 +501,24 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                 preferredLineNames: lineSegments.map(\.lineName),
                 preferredOperatorNames: operatorNames,
                 institutionFilterMode: "soft")
-            result.stops = passengerStops.enumerated().map { index, stop in
-                let type: String
-                if index == 0 { type = "origin" }
-                else if index == passengerStops.count - 1 { type = "destination" }
-                else { type = "passenger_stop" }
-                return Stop(
-                    name: stop.station.name,
-                    n02StationCode: stop.station.currentSourceCode,
-                    platformNumber: stop.platform.flatMap(Int.init),
-                    arrival: Self.editorTime(seconds: stop.arrivalSeconds, source: stop.arrivalTime),
-                    departure: Self.editorTime(seconds: stop.departureSeconds, source: stop.departureTime),
-                    stopType: type,
-                    rideSegment: ridden)
-            }
+            result.stops = projection.stops
             if result.region == nil { result.region = "jp" }
             return result
+        }
+
+        private static func editorPlatformNumber(_ source: String?) -> Int? {
+            guard let source else { return nil }
+            let printed = source.trimmingCharacters(in: .whitespacesAndNewlines)
+                .trimmingCharacters(in: CharacterSet(charactersIn: "()（）"))
+            let digits = printed.unicodeScalars.map { scalar -> Character? in
+                switch scalar.value {
+                case 48...57: return Character(String(scalar))
+                case 0xFF10...0xFF19: return Character(UnicodeScalar(scalar.value - 0xFF10 + 48)!)
+                default: return nil
+                }
+            }
+            guard !digits.isEmpty, digits.allSatisfy({ $0 != nil }) else { return nil }
+            return Int(String(digits.compactMap { $0 }))
         }
 
         private static func editorTime(seconds: Int?, source: String?) -> String? {
@@ -467,6 +574,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
     }
 
     private let connection: OpaquePointer
+    private let supportsDatedOverrides: Bool
     private let lock = NSLock()
 
     public init(url: URL) throws {
@@ -478,13 +586,14 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             if let database { sqlite3_close(database) }
             throw DatabaseError.cannotOpen(message)
         }
+        let schemaVersion: String
         do {
-            try Self.validateArtifactIdentity(in: database)
+            schemaVersion = try Self.validateArtifactIdentity(in: database)
         } catch {
             sqlite3_close(database)
             throw error
         }
-        let required = [
+        var required = [
             "source_documents", "operators", "services", "service_name_periods",
             "timetable_versions", "timetable_version_sources", "trips",
             "calendars", "calendar_exceptions", "station_identities", "stop_times",
@@ -492,6 +601,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             "fact_sources", "fact_completeness", "holiday_dates", "holiday_calendar_years",
             "coverage_declarations", "metadata", "verified_zero_service_intervals",
         ]
+        if schemaVersion == "1.2.0" {
+            required.append("trip_train_number_overrides")
+        }
         let present: Set<String>
         do {
             present = try Self.tableNames(in: database)
@@ -505,12 +617,13 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             throw DatabaseError.incompatibleSchema(missingTables: missing)
         }
         do {
-            try Self.validateEssentialColumns(in: database)
+            try Self.validateEssentialColumns(in: database, datedOverrides: schemaVersion == "1.2.0")
         } catch {
             sqlite3_close(database)
             throw error
         }
         connection = database
+        supportsDatedOverrides = schemaVersion == "1.2.0"
     }
 
     deinit { sqlite3_close(connection) }
@@ -578,7 +691,10 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             let sql = """
                 SELECT s.service_id, s.canonical_name, s.service_class,
                        s.historical_generation, s.first_verified_date,
-                       s.last_verified_date, s.jr_scope, MAX(snp.name)
+                       s.last_verified_date, s.jr_scope, MAX(snp.name),
+                       (SELECT en.name FROM service_name_periods en
+                        WHERE en.service_id = s.service_id AND en.language = 'en'
+                        ORDER BY en.valid_from DESC LIMIT 1)
                 FROM services s
                 LEFT JOIN service_name_periods snp ON snp.service_id = s.service_id \(datedJoin)
                 WHERE (s.canonical_name LIKE ?1 ESCAPE '\\' COLLATE NOCASE
@@ -610,6 +726,41 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                         validUntil: row.optionalString(9),
                         holidayPolicy: row.string(10))
                 }
+        }
+    }
+
+    /// Published consist facts for this exact service day, when available.
+    /// `planned` describes the scheduled set, not confirmed actual dispatch.
+    public func formation(for trip: Trip) throws -> Formation? {
+        try withLock {
+            let available = try !rows("""
+                SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'trip_formations'
+                """).isEmpty
+            guard available else { return nil }
+            guard let row = try rows("""
+                SELECT formation_id, trip_id, service_date, evidence_kind,
+                       formation_label, car_count, reserved_seat_capacity,
+                       vehicle_series, all_reserved, green_car_available, source_id, notes
+                FROM trip_formations WHERE trip_id = ?1 AND service_date = ?2
+                """, bindings: [trip.id, trip.serviceDate]).first else { return nil }
+            let formationID = row.string(0)
+            let cars = try rows("""
+                SELECT car_sequence, car_number, vehicle_series, seat_class,
+                       reservation_type, source_id, notes
+                FROM trip_formation_cars WHERE formation_id = ?1 ORDER BY car_sequence
+                """, bindings: [formationID]).map { car in
+                    FormationCar(sequence: car.int(0), number: car.string(1),
+                                 vehicleSeries: car.optionalString(2), seatClass: car.optionalString(3),
+                                 reservationType: car.optionalString(4), sourceID: car.string(5),
+                                 notes: car.optionalString(6))
+                }
+            return Formation(id: formationID, tripID: row.string(1), serviceDate: row.string(2),
+                             evidenceKind: row.string(3), label: row.optionalString(4),
+                             carCount: row.optionalInt(5), reservedSeatCapacity: row.optionalInt(6),
+                             vehicleSeries: row.optionalString(7),
+                             allReserved: row.optionalInt(8).map { $0 != 0 },
+                             greenCarAvailable: row.optionalInt(9).map { $0 != 0 },
+                             sourceID: row.string(10), notes: row.optionalString(11), cars: cars)
         }
     }
 
@@ -681,14 +832,25 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             let extra = predicates.isEmpty ? "" : " AND " + predicates.joined(separator: " AND ")
             try validateHolidayCalendarIfNeeded(
                 on: query.serviceDate, extraPredicate: extra, bindings: bindings)
+            let numberExpression = supportsDatedOverrides
+                ? "COALESCE(tno.train_number, t.train_number)" : "t.train_number"
+            let numberJoin = supportsDatedOverrides
+                ? "LEFT JOIN trip_train_number_overrides tno ON tno.trip_id = t.trip_id AND tno.service_date = ?1"
+                : ""
             let baseRows = try rows("""
                 SELECT t.trip_id, t.timetable_version_id, t.calendar_id,
-                       t.train_number, t.public_number, t.direction, t.service_class,
-                       t.operation_group_id, t.notes, tv.completeness,
+                       \(numberExpression), t.public_number, t.direction, t.service_class,
+                       t.operation_group_id, t.notes, tv.completeness, tv.edition_name,
                        s.service_id, s.canonical_name, s.service_class,
                        s.historical_generation, s.first_verified_date,
-                       s.last_verified_date, s.jr_scope
+                       s.last_verified_date, s.jr_scope,
+                       (SELECT en.name FROM service_name_periods en
+                        WHERE en.service_id = s.service_id AND en.language = 'en'
+                          AND en.valid_from <= ?1
+                          AND (en.valid_until IS NULL OR ?1 < en.valid_until)
+                        ORDER BY en.valid_from DESC LIMIT 1)
                 FROM trips t
+                \(numberJoin)
                 JOIN timetable_versions tv
                   ON tv.timetable_version_id = t.timetable_version_id
                 JOIN services s ON s.service_id = t.service_id
@@ -710,12 +872,13 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                           AND ce.service_date = ?1 AND ce.exception_type = 'remove'))
                   )
                   \(extra)
-                ORDER BY s.canonical_name, t.train_number, t.trip_id
+                ORDER BY s.canonical_name, \(numberExpression), t.trip_id
                 """, bindings: bindings)
 
             guard !baseRows.isEmpty else { return [] }
             let tripIDs = baseRows.map { $0.string(0) }
             let stopsByTrip = try loadStops(tripIDs: tripIDs, serviceDate: query.serviceDate)
+            let symbolsByTrip = try loadTimetableSymbols(tripIDs: tripIDs)
             let linesByTrip = try loadLineSegments(
                 tripIDs: tripIDs, serviceDate: query.serviceDate)
             let operatorsByTrip = try loadOperatorSegments(
@@ -725,20 +888,23 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             return baseRows.map { row in
                 let id = row.string(0)
                 let service = Service(
-                    id: row.string(10), canonicalName: row.string(11),
-                    serviceClass: row.string(12), historicalGeneration: row.int(13),
-                    firstVerifiedDate: row.optionalString(14), lastVerifiedDate: row.optionalString(15),
-                    jrScope: row.string(16), matchingName: nil)
+                    id: row.string(11), canonicalName: row.string(12),
+                    englishName: row.optionalString(18),
+                    serviceClass: row.string(13), historicalGeneration: row.int(14),
+                    firstVerifiedDate: row.optionalString(15), lastVerifiedDate: row.optionalString(16),
+                    jrScope: row.string(17), matchingName: nil)
                 return Trip(
                     id: id, serviceDate: query.serviceDate,
-                    timetableVersionID: row.string(1), service: service,
+                    timetableVersionID: row.string(1), timetableEditionName: row.string(10),
+                    service: service,
                     calendarID: row.string(2), trainNumber: row.string(3),
                     publicNumber: row.optionalString(4), direction: row.optionalString(5),
                     serviceClass: row.string(6), operationGroupID: row.optionalString(7),
                     notes: row.optionalString(8),
                     timetableCompleteness: Coverage(databaseValue: row.optionalString(9)),
                     factCompleteness: factsByTrip[id] ?? [:],
-                    stops: stopsByTrip[id] ?? [], lineSegments: linesByTrip[id] ?? [],
+                    stops: stopsByTrip[id] ?? [], timetableSymbols: symbolsByTrip[id] ?? [],
+                    lineSegments: linesByTrip[id] ?? [],
                     operatorSegments: operatorsByTrip[id] ?? [])
             }
         }
@@ -807,6 +973,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
     private func loadStops(tripIDs: [String], serviceDate: String) throws -> [String: [StopTime]] {
         var result: [String: [StopTime]] = [:]
+        let platformExpression = supportsDatedOverrides
+            ? "CASE WHEN o.platform_override_present = 1 THEN o.platform_override ELSE st.platform END"
+            : "st.platform"
         for batch in tripIDs.chunked(maximumCount: 400) {
             let placeholders = batch.indices.map { "?\($0 + 2)" }.joined(separator: ",")
             let records = try rows("""
@@ -818,7 +987,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                        COALESCE(o.arrival_seconds_override, st.arrival_seconds),
                        COALESCE(o.departure_seconds_override, st.departure_seconds),
                        st.day_offset, st.call_type, st.pickup_allowed,
-                       st.dropoff_allowed, st.platform, st.time_accuracy,
+                       st.dropoff_allowed,
+                       \(platformExpression),
+                       st.time_accuracy,
                        COALESCE(o.arrival_day_offset_override, st.arrival_day_offset, st.day_offset),
                        COALESCE(o.departure_day_offset_override, st.departure_day_offset, st.day_offset)
                 FROM stop_times st
@@ -850,6 +1021,27 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         return result
     }
 
+    private func loadTimetableSymbols(tripIDs: [String]) throws -> [String: [TimetableSymbol]] {
+        var result: [String: [TimetableSymbol]] = [:]
+        guard try !rows("""
+            SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'trip_timetable_symbols'
+            """).isEmpty else { return result }
+        for batch in tripIDs.chunked(maximumCount: 400) {
+            let placeholders = batch.indices.map { "?\($0 + 1)" }.joined(separator: ",")
+            for row in try rows("""
+                SELECT trip_id, after_stop_sequence, position, station_name, symbol
+                FROM trip_timetable_symbols
+                WHERE trip_id IN (\(placeholders))
+                ORDER BY trip_id, after_stop_sequence, position
+                """, bindings: batch) {
+                result[row.string(0), default: []].append(TimetableSymbol(
+                    afterStopSequence: row.int(1), position: row.int(2),
+                    stationName: row.string(3), symbol: row.string(4)))
+            }
+        }
+        return result
+    }
+
     private func loadLineSegments(
         tripIDs: [String], serviceDate: String
     ) throws -> [String: [LineSegment]] {
@@ -859,7 +1051,11 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             for row in try rows("""
                 SELECT tls.trip_id, tls.sequence, tls.from_station_id, tls.to_station_id,
                        tls.line_name, tls.operator_id, tls.confidence,
-                       tls.reference_kind, tls.current_n02_line_id, tls.rail_history_id
+                       tls.reference_kind, tls.current_n02_line_id, tls.rail_history_id,
+                       sf.name_snapshot, sf.reference_kind, sf.current_source_code,
+                       sf.rail_history_id, sf.valid_from, sf.valid_until,
+                       st.name_snapshot, st.reference_kind, st.current_source_code,
+                       st.rail_history_id, st.valid_from, st.valid_until
                 FROM trip_line_segments tls
                 JOIN operators o ON o.operator_id = tls.operator_id
                 JOIN station_identities sf ON sf.station_id = tls.from_station_id
@@ -873,12 +1069,27 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                   AND (st.valid_until IS NULL OR ?1 < st.valid_until)
                 ORDER BY tls.trip_id, tls.sequence
                 """, bindings: [serviceDate] + batch) {
+                guard let fromKind = StationIdentity.ReferenceKind(rawValue: row.string(11)),
+                      let toKind = StationIdentity.ReferenceKind(rawValue: row.string(17))
+                else {
+                    throw DatabaseError.invalidArtifact(
+                        "Line segment \(row.string(0)):\(row.int(1)) has an invalid station reference kind")
+                }
+                let fromStation = StationIdentity(
+                    id: row.string(2), name: row.string(10), referenceKind: fromKind,
+                    currentSourceCode: row.optionalString(12), railHistoryID: row.optionalString(13),
+                    validFrom: row.optionalString(14), validUntil: row.optionalString(15))
+                let toStation = StationIdentity(
+                    id: row.string(3), name: row.string(16), referenceKind: toKind,
+                    currentSourceCode: row.optionalString(18), railHistoryID: row.optionalString(19),
+                    validFrom: row.optionalString(20), validUntil: row.optionalString(21))
                 result[row.string(0), default: []].append(LineSegment(
                     sequence: row.int(1), fromStationID: row.string(2),
                     toStationID: row.string(3), lineName: row.string(4),
                     operatorID: row.optionalString(5), confidence: row.optionalString(6),
                     referenceKind: row.optionalString(7).flatMap(LineSegment.ReferenceKind.init),
-                    currentN02LineID: row.optionalString(8), railHistoryID: row.optionalString(9)))
+                    currentN02LineID: row.optionalString(8), railHistoryID: row.optionalString(9),
+                    fromStation: fromStation, toStation: toStation))
             }
         }
         return result
@@ -998,7 +1209,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         return names
     }
 
-    private static func validateArtifactIdentity(in connection: OpaquePointer) throws {
+    private static func validateArtifactIdentity(in connection: OpaquePointer) throws -> String {
         let applicationID = try integerPragma("application_id", in: connection)
         guard applicationID == 0x4A54_4D54 else {
             throw DatabaseError.invalidArtifact(
@@ -1018,8 +1229,9 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         defer { sqlite3_finalize(statement) }
         guard sqlite3_step(statement) == SQLITE_ROW,
               let value = sqlite3_column_text(statement, 0),
-              String(cString: value) == "1.0.0"
-        else { throw DatabaseError.invalidArtifact("metadata.schema_version must be 1.0.0") }
+              ["1.0.0", "1.1.0", "1.2.0"].contains(String(cString: value))
+        else { throw DatabaseError.invalidArtifact("metadata.schema_version must be 1.0.0, 1.1.0 or 1.2.0") }
+        return String(cString: value)
     }
 
     private static func integerPragma(
@@ -1036,8 +1248,10 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         return sqlite3_column_int(statement, 0)
     }
 
-    private static func validateEssentialColumns(in connection: OpaquePointer) throws {
-        let required: [String: Set<String>] = [
+    private static func validateEssentialColumns(
+        in connection: OpaquePointer, datedOverrides: Bool
+    ) throws {
+        var required: [String: Set<String>] = [
             "source_documents": ["source_id", "title", "publisher", "url_or_locator",
                                  "license_status"],
             "operators": ["operator_id", "display_name", "valid_from", "valid_until"],
@@ -1069,6 +1283,12 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             "fact_sources": ["entity_type", "entity_id", "source_id"],
             "fact_completeness": ["entity_type", "entity_id", "dimension", "status"],
         ]
+        if datedOverrides {
+            required["trip_stop_time_overrides", default: []].formUnion(
+                ["platform_override", "platform_override_present"])
+            required["trip_train_number_overrides"] =
+                ["trip_id", "service_date", "train_number", "source_id"]
+        }
         for (table, expected) in required {
             let columns = try columnNames(of: table, in: connection)
             let missing = expected.subtracting(columns).sorted()
@@ -1131,7 +1351,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
     private static func decodeService(_ row: Row) -> Service {
         Service(
-            id: row.string(0), canonicalName: row.string(1), serviceClass: row.string(2),
+            id: row.string(0), canonicalName: row.string(1),
+            englishName: row.optionalString(8), serviceClass: row.string(2),
             historicalGeneration: row.int(3), firstVerifiedDate: row.optionalString(4),
             lastVerifiedDate: row.optionalString(5), jrScope: row.string(6),
             matchingName: row.optionalString(7))

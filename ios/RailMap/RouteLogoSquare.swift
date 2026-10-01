@@ -458,6 +458,8 @@ struct RouteLogoSquare: View {
     init(train: Train, side: CGFloat = 52) {
         self.train = train
         self.color = JourneyBranding.color(of: train)
+        self.systemImage = TrainServiceBranding.isLimitedExpress(train)
+            ? "train.side.front.car" : "tram.fill"
         self.side = side
     }
 

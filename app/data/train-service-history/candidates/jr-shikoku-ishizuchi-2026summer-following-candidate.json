@@ -1,9 +1,9 @@
 {
   "candidate_id": "jr-shikoku-ishizuchi-silver-week-2026-following",
-  "candidate_status": "visually_reviewed_preparation_only",
+  "candidate_status": "reviewed_official_html",
   "canonical": false,
-  "database_as_of_date": "2026-09-28",
-  "notes": "Preparation for a later batch only. The official table publishes endpoint clocks for shortened Ishizuchi operations during Silver Week. It does not publish intermediate passenger calls or internal train numbers. Dates are planned operation evidence, not actual-operation events. Publisher identity is not promoted to operator-segment evidence.",
+  "database_as_of_date": "2026-09-30",
+  "notes": "The JR Shikoku announcement supplies the planned dates and shortened endpoints. Exact-date JR Odekake line grids for 2026-09-18 through 2026-09-23 distinguish the special 9003M-9028M variants from ordinary 1003M/1004M on 2026-09-18. The linked official train pages supply the complete passenger-call sequence, minute clocks, platforms, and internal train numbers. Passing rows are negative evidence and are not normalized. Publisher identity is not promoted to operator-segment evidence.",
   "source": {
     "source_id": "jr-shikoku-summer-20260515-ishizuchi-silver-week-following",
     "publisher": "四国旅客鉄道株式会社",
@@ -19,6 +19,13 @@
     "redistribution_status": "metadata_and_transcribed_facts_only",
     "automated_extraction_allowed": false,
     "notes": "Visually checked against the original page. The PDF header is 2026-05-15; the hosted file includes a 2026-07-15 revision note for another section. No PDF bytes should be committed."
+  },
+  "source_policy": {
+    "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+    "source_type": "official_train_timetable",
+    "license_status": "explicit_reproduction_and_processing_prohibition",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false
   },
   "service": {
     "service_id": "ishizuchi",
@@ -45,11 +52,46 @@
     "merged_cell_scope": "The 9/19-23 cell applies only to Ishizuchi 3 and 4. The 9/18-23 merged cells apply to all remaining displayed rows in their respective direction blocks.",
     "expected_trip_templates": 26,
     "expected_explicit_occurrences": 154,
-    "stops_completeness": "partial_endpoint_only",
-    "times_completeness": "partial_endpoint_only",
-    "train_number_completeness": "unknown",
+    "exact_date_line_grid_checks": 154,
+    "line_grid_url_templates": {
+      "down": "https://timetable.jr-odekake.net/line-timetable/2467?day={day}&month=9&year=2026",
+      "up": "https://timetable.jr-odekake.net/line-timetable/2468?day={day}&month=9&year=2026"
+    },
+    "ordinary_variant_exclusion": "On 2026-09-18 the line grids link Ishizuchi 3 and 4 to ordinary 1003M/1004M pages; the announcement does not schedule their shortened special variants that day. On 2026-09-19 through 2026-09-23 the grids link all public numbers 3-28 to the reviewed 9003M-9028M special pages.",
+    "passing_rows": "Official train pages display passing stations separately. They are counted for review but omitted from passenger stop_times.",
+    "stops_completeness": "complete_passenger_calls",
+    "times_completeness": "complete_passenger_call_clocks",
+    "train_number_completeness": "verified",
     "operator_completeness": "unknown",
     "route_lines_completeness": "unknown"
+  },
+  "reviewed_train_pages": {
+    "3": {"train_number": "9003M", "page_id": "246621", "operating_days_label": "９月１９～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 7, "passenger_calls": [["高松", null, "08:45", "8"], ["坂出", "09:00", "09:02", null], ["宇多津", "09:06", null, null]]},
+    "4": {"train_number": "9004D", "page_id": "177111", "operating_days_label": "９月１９～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "07:14", null], ["坂出", "07:20", "07:21", null], ["高松", "07:36", null, "8"]]},
+    "5": {"train_number": "9005D", "page_id": "227751", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "09:42", "7"], ["坂出", "09:55", "09:56", null], ["宇多津", "10:00", "10:01", null], ["丸亀", "10:04", "10:05", null], ["多度津", "10:10", null, null]]},
+    "6": {"train_number": "9006D", "page_id": "227821", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "08:26", null], ["坂出", "08:30", "08:31", null], ["高松", "08:45", null, "7"]]},
+    "7": {"train_number": "9007D", "page_id": "227761", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "10:47", "6"], ["坂出", "11:03", "11:04", null], ["宇多津", "11:08", "11:09", null], ["丸亀", "11:12", "11:12", null], ["多度津", "11:17", null, null]]},
+    "8": {"train_number": "9008D", "page_id": "227771", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "09:25", null], ["坂出", "09:31", "09:32", null], ["高松", "09:47", null, "6"]]},
+    "9": {"train_number": "9009M", "page_id": "177201", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "11:50", "7"], ["坂出", "12:03", "12:04", null], ["宇多津", "12:08", "12:09", null], ["丸亀", "12:12", "12:13", null], ["多度津", "12:18", null, null]]},
+    "10": {"train_number": "9010M", "page_id": "177241", "operating_days_label": "９月１８～２３日・１０月１０日・１１月２１日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "10:19", null], ["坂出", "10:24", "10:24", null], ["高松", "10:39", null, "7"]]},
+    "11": {"train_number": "9011D", "page_id": "392781", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "12:50", "7"], ["坂出", "13:03", "13:04", null], ["宇多津", "13:09", "13:09", null], ["丸亀", "13:12", "13:13", null], ["多度津", "13:18", null, null]]},
+    "12": {"train_number": "9012D", "page_id": "392791", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "11:33", null], ["坂出", "11:38", "11:39", null], ["高松", "11:54", null, "7"]]},
+    "13": {"train_number": "9013D", "page_id": "247041", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "13:50", "7"], ["坂出", "14:03", "14:04", null], ["宇多津", "14:09", "14:09", null], ["丸亀", "14:12", "14:13", null], ["多度津", "14:18", null, null]]},
+    "14": {"train_number": "9014D", "page_id": "247051", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "12:33", null], ["坂出", "12:38", "12:39", null], ["高松", "12:54", null, "7"]]},
+    "15": {"train_number": "9015M", "page_id": "177211", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "14:50", "7"], ["坂出", "15:04", "15:04", null], ["宇多津", "15:09", "15:09", null], ["丸亀", "15:12", "15:13", null], ["多度津", "15:18", null, null]]},
+    "16": {"train_number": "9016M", "page_id": "177251", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "13:34", null], ["坂出", "13:39", "13:39", null], ["高松", "13:55", null, "7"]]},
+    "17": {"train_number": "9017D", "page_id": "308031", "operating_days_label": "９月１８～２３日・１１月２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "15:50", "7"], ["坂出", "16:04", "16:04", null], ["宇多津", "16:09", "16:09", null], ["丸亀", "16:12", "16:13", null], ["多度津", "16:18", null, null]]},
+    "18": {"train_number": "9018D", "page_id": "308041", "operating_days_label": "９月１８～２３日・１１月２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "14:34", null], ["坂出", "14:39", "14:39", null], ["高松", "14:56", null, "7"]]},
+    "19": {"train_number": "9019D", "page_id": "227781", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "16:50", "7"], ["坂出", "17:04", "17:04", null], ["宇多津", "17:09", "17:09", null], ["丸亀", "17:12", "17:13", null], ["多度津", "17:18", null, null]]},
+    "20": {"train_number": "9020D", "page_id": "227801", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "15:34", null], ["坂出", "15:39", "15:39", null], ["高松", "15:56", null, "7"]]},
+    "21": {"train_number": "9021M", "page_id": "177221", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "17:53", "7"], ["坂出", "18:07", "18:08", null], ["宇多津", "18:12", "18:13", null], ["丸亀", "18:16", "18:17", null], ["多度津", "18:22", null, null]]},
+    "22": {"train_number": "9022M", "page_id": "177261", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "16:34", null], ["坂出", "16:38", "16:39", null], ["高松", "16:54", null, "7"]]},
+    "23": {"train_number": "9023D", "page_id": "227791", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "18:59", "8"], ["坂出", "19:12", "19:13", null], ["宇多津", "19:17", "19:17", null], ["丸亀", "19:20", "19:20", null], ["多度津", "19:26", null, null]]},
+    "24": {"train_number": "9024D", "page_id": "227811", "operating_days_label": "９月１８～２３日・１０月１２日・１１月２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "17:35", null], ["坂出", "17:40", "17:41", null], ["高松", "17:57", null, "8"]]},
+    "25": {"train_number": "9025D", "page_id": "246131", "operating_days_label": "９月１８～２３日・１１月２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "19:51", "7"], ["坂出", "20:07", "20:07", null], ["宇多津", "20:12", "20:12", null], ["丸亀", "20:15", "20:16", null], ["多度津", "20:22", null, null]]},
+    "26": {"train_number": "9026D", "page_id": "246141", "operating_days_label": "９月１８～２３日・１１月２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "18:36", null], ["坂出", "18:40", "18:41", null], ["高松", "18:56", null, "7"]]},
+    "27": {"train_number": "9027M", "page_id": "177231", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 8, "passenger_calls": [["高松", null, "20:59", "8"], ["坂出", "21:13", "21:13", null], ["宇多津", "21:18", "21:18", null], ["丸亀", "21:21", "21:22", null], ["多度津", "21:27", null, null]]},
+    "28": {"train_number": "9028M", "page_id": "177271", "operating_days_label": "９月１８～２３日運転", "omitted_pass_row_count": 7, "passenger_calls": [["宇多津", null, "19:38", null], ["坂出", "19:42", "19:43", null], ["高松", "19:58", null, "8"]]}
   },
   "trips": [
     {
@@ -468,9 +510,9 @@
     }
   ],
   "independent_review": {
-    "status": "visually_reviewed_preparation_only",
-    "reviewed_at": "2026-09-28",
-    "locator": "PDF physical page 17, printed page 16",
-    "notes": "Parent independently re-fetched the PDF, matched SHA-256, inspected the original merged-date cells, and checked all 26 endpoint/clock rows. Still excluded from canonical inputs until a subsequent reviewed normalization batch."
+    "status": "reviewed_official_html",
+    "reviewed_at": "2026-09-29",
+    "locator": "PDF physical page 17 plus JR Odekake exact-date line grids 2467/2468 and linked train pages",
+    "notes": "The announcement hash and merged-date cells were retained. All 12 direction/date grids for 2026-09-18 through 2026-09-23 were checked, yielding 154 special-variant occurrences. Each of the 26 linked special train pages was checked for train number, passenger calls, minute clocks, platforms, operating-day text, and passing-row count."
   }
 }

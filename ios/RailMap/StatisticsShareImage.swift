@@ -1,9 +1,79 @@
 import ImageIO
+import MapKit
 import UniformTypeIdentifiers
 import RailCore
 import RailPresentation
 import SwiftUI
 import UIKit
+
+/// A fresh map for the passport's selected date and region. The caller passes
+/// exactly the rides counted by that scope, so the image never inherits the
+/// reader's unrelated pan or zoom on the live workspace map.
+enum StatisticsMapSnapshot {
+    private struct SnapshotBox: @unchecked Sendable {
+        let value: MKMapSnapshotter.Snapshot?
+    }
+
+    @MainActor
+    static func render(
+        rides: [RiddenRouteStore.DrawnRide],
+        fallback: MKCoordinateRegion?,
+        colorScheme: ColorScheme
+    ) async -> UIImage? {
+        let segments = rides.flatMap(\.segments).filter { !$0.boundingRect.isNull }
+        let bounds = segments.reduce(MKMapRect.null) { $0.union($1.boundingRect) }
+        let options = MKMapSnapshotter.Options()
+        options.size = CGSize(width: 736, height: 736)
+        options.traitCollection = UITraitCollection(
+            userInterfaceStyle: colorScheme == .dark ? .dark : .light)
+        if !bounds.isNull {
+            let width = max(bounds.size.width, 1_000_000)
+            let height = max(bounds.size.height, 1_000_000)
+            options.mapRect = MKMapRect(
+                x: bounds.midX - width * 0.6,
+                y: bounds.midY - height * 0.6,
+                width: width * 1.2,
+                height: height * 1.2)
+        } else if let fallback {
+            options.region = fallback
+        } else {
+            return nil
+        }
+
+        let snapshotter = MKMapSnapshotter(options: options)
+        let result: SnapshotBox = await withCheckedContinuation { continuation in
+            snapshotter.start(with: .main) { snapshot, _ in
+                continuation.resume(returning: SnapshotBox(value: snapshot))
+            }
+        }
+        guard let snapshot = result.value, !Task.isCancelled else { return nil }
+
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.opaque = true
+        return UIGraphicsImageRenderer(size: options.size, format: format).image { context in
+            snapshot.image.draw(at: .zero)
+            let cg = context.cgContext
+            cg.setLineCap(.round)
+            cg.setLineJoin(.round)
+            for ride in rides {
+                guard let color = UIColor(railHex: ride.colorHex) else { continue }
+                cg.setStrokeColor(color.cgColor)
+                cg.setLineWidth(4)
+                for segment in ride.segments where segment.coordinates.count > 1 {
+                    let points = segment.coordinates.map {
+                        snapshot.point(for: CLLocationCoordinate2D(
+                            latitude: $0.lat, longitude: $0.lon))
+                    }
+                    cg.beginPath()
+                    cg.move(to: points[0])
+                    for point in points.dropFirst() { cg.addLine(to: point) }
+                    cg.strokePath()
+                }
+            }
+        }
+    }
+}
 
 /// §5.3.5's share, for the statistics rather than for the film.
 ///
@@ -42,6 +112,7 @@ enum StatisticsPoster {
     struct File: Identifiable, Equatable {
         var url: URL
         var image: UIImage
+        var includesMap: Bool
         var id: String { url.absoluteString }
     }
 
@@ -70,7 +141,8 @@ enum StatisticsPoster {
         title: String,
         localization: AppLocalization,
         journeyPresentation: @escaping (Train) -> JourneyPresentation,
-        colorScheme: ColorScheme
+        colorScheme: ColorScheme,
+        mapImage: UIImage? = nil
     ) async -> File? {
         let retirementDate = sessionStarted
         let page = StatisticsPosterPage(
@@ -79,6 +151,7 @@ enum StatisticsPoster {
             region: region,
             scope: scope,
             title: title,
+            mapImage: mapImage,
             journeyPresentation: journeyPresentation
         )
         .frame(width: pageWidth)
@@ -92,15 +165,15 @@ enum StatisticsPoster {
         renderer.isOpaque = true
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("rail-statistics-\(UUID().uuidString).png")
-        // Down the scales rather than at one of them. The budget below is a
-        // guess at what the bitmap will cost; `uiImage` is the answer, and a
-        // renderer that declines to allocate must not leave the reader with a
-        // button that did nothing. Every step is a smaller picture of the same
-        // page, so the fallback is a worse image and never a wrong one.
-        for scale in scales(for: renderer) {
-            renderer.scale = scale
+        // Draw into a Core Graphics bitmap instead of asking `uiImage` to
+        // rasterise the entire tall page. The latter stops around 8192 pixels
+        // high, which made a typical statistics image only ~680 pixels wide.
+        var pageSize = CGSize.zero
+        renderer.render { size, _ in pageSize = size }
+        for scale in scales(for: pageSize) {
             guard !Task.isCancelled else { return nil }
-            guard let image = renderer.uiImage, let bitmap = image.cgImage else { continue }
+            guard let bitmap = bitmap(from: renderer, scale: scale) else { continue }
+            let image = UIImage(cgImage: bitmap, scale: scale, orientation: .up)
             let worker = Task.detached(priority: .userInitiated) {
                 guard !Task.isCancelled else { return false }
                 // Retire files from earlier sessions. Another window may
@@ -136,43 +209,46 @@ enum StatisticsPoster {
                 try? FileManager.default.removeItem(at: url)
                 return nil
             }
-            return File(url: url, image: image)
+            return File(url: url, image: image, includesMap: mapImage != nil)
         }
         return nil
     }
 
-    /// The tallest bitmap the renderer will actually hand back, in pixels.
-    ///
-    /// Measured rather than assumed. A passport with a year of travel in it
-    /// lays out around 4,700 points tall; asked for 2× — a 9,462-pixel image —
-    /// `ImageRenderer.uiImage` returns `nil` and the reader gets a button that
-    /// did nothing. 8,000 sits just under the 8,192-pixel edge that rasteriser
-    /// stops at, with room for the page to grow by a journey between the
-    /// measurement and the draw.
-    private static let heightBudget: CGFloat = 8000
+    /// A 16-million-pixel RGBA image takes about 64 MB before PNG encoding.
+    /// Cap the height too, while letting an ordinary 4700-point page reach
+    /// almost 3× instead of the old 1.7× limit.
+    private static let pixelBudget: CGFloat = 16_000_000
+    private static let heightBudget: CGFloat = 20_000
 
-    /// The scales to try, best first.
-    ///
-    /// **Not an integer.** Stepping 3 → 2 → 1 would put a 4,700-point passport
-    /// on 1× — a 400-pixel-wide picture of a phone screen, which is the width
-    /// of the LAYOUT and half the width of anything anybody has looked at
-    /// since 2010. The rasterisation scale is a `CGFloat`, so the page is
-    /// drawn at exactly the scale its own height affords: about 1.7× here,
-    /// which is a 676 × 8,000 image, and the full 3× for a shorter passport
-    /// that can carry it.
-    ///
-    /// The height is measured first — the closure below lays the page out and
-    /// simply does not draw it. The two smaller steps after the first are
-    /// there because the budget is an estimate of what the rasteriser will
-    /// accept and `uiImage` is the answer; each is a softer picture of the
-    /// same page, never a different one.
-    @MainActor
-    private static func scales(for renderer: ImageRenderer<some View>) -> [CGFloat] {
-        var height: CGFloat = 0
-        renderer.render { size, _ in height = size.height }
-        guard height > 0 else { return [3, 2, 1] }
-        let best = min(3, heightBudget / height)
+    private static func scales(for size: CGSize) -> [CGFloat] {
+        guard size.width > 0, size.height > 0 else { return [] }
+        let best = min(
+            3,
+            sqrt(pixelBudget / (size.width * size.height)),
+            heightBudget / size.height)
         return [best, best * 0.75, best * 0.5]
+    }
+
+    @MainActor
+    private static func bitmap(
+        from renderer: ImageRenderer<some View>, scale: CGFloat
+    ) -> CGImage? {
+        var image: CGImage?
+        renderer.render(rasterizationScale: scale) { size, draw in
+            let width = Int(ceil(size.width * scale))
+            let height = Int(ceil(size.height * scale))
+            guard width > 0, height > 0,
+                  let context = CGContext(
+                    data: nil, width: width, height: height,
+                    bitsPerComponent: 8, bytesPerRow: 0,
+                    space: CGColorSpaceCreateDeviceRGB(),
+                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+            else { return }
+            context.scaleBy(x: scale, y: scale)
+            draw(context)
+            image = context.makeImage()
+        }
+        return image
     }
 }
 
@@ -185,11 +261,13 @@ enum StatisticsPoster {
 /// them — so a passport that says 78 % coverage has to say 78 % **of what**, or
 /// it is a figure with no denominator being posted to people who cannot ask.
 private struct StatisticsPosterPage: View {
+    @Environment(AppLocalization.self) private var localization
     var itineraries: ItineraryStore
     var statistics: MileageStatisticsStore
     var region: Region?
     var scope: String
     var title: String
+    var mapImage: UIImage?
     /// The picture draws the same journey rows the screen does, so it needs
     /// the same resolved surfaces — see ``StatisticsDashboardContent``. What
     /// it does NOT get is a way to open one: `passportPoster` makes those
@@ -207,7 +285,18 @@ private struct StatisticsPosterPage: View {
                 // silently move the live screen behind it.
                 region: .constant(region),
                 journeyPresentation: journeyPresentation,
-                openJourney: { _ in })
+                openJourney: { _ in },
+                ticketOnly: mapImage != nil)
+            if let mapImage {
+                Image(uiImage: mapImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 368, height: 368)
+                    .clipped()
+                    .clipShape(RoundedRectangle(
+                        cornerRadius: RailStyle.cardCornerRadius, style: .continuous))
+                    .accessibilityLabel(localization.statsText("ios.stats.shareMapImageLabel"))
+            }
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -382,9 +471,12 @@ struct StatisticsShareView: View {
                     .accessibilityLabel(
                         Text(
                             localization.statsText(
-                                "ios.stats.shareImageLabel")))
+                                file.includesMap
+                                    ? "ios.stats.shareMapImageLabel"
+                                    : "ios.stats.shareImageLabel")))
             }
-            .navigationTitle(localization.statsText("ios.stats.shareTitle"))
+            .navigationTitle(localization.statsText(
+                file.includesMap ? "ios.stats.shareMapTitle" : "ios.stats.shareTitle"))
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 ShareLink(item: file.url) {

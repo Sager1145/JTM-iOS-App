@@ -162,6 +162,19 @@ CREATE TABLE stop_times (
     PRIMARY KEY (trip_id, stop_sequence)
 );
 
+-- Printed timetable cells that are not trip stops.  A || row is outside the
+-- train's route; a レ row is a source-confirmed pass-through omitted from
+-- stop_times.  These rows are display-only and never enter route projections.
+CREATE TABLE trip_timetable_symbols (
+    trip_id TEXT NOT NULL REFERENCES trips(trip_id) ON DELETE CASCADE,
+    after_stop_sequence INTEGER NOT NULL CHECK (after_stop_sequence >= 0),
+    position INTEGER NOT NULL CHECK (position >= 0),
+    station_name TEXT NOT NULL CHECK (length(trim(station_name)) > 0),
+    symbol TEXT NOT NULL CHECK (symbol IN ('レ', '||')),
+    source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    PRIMARY KEY (trip_id, after_stop_sequence, position)
+);
+
 CREATE TABLE trip_stop_time_overrides (
     trip_id TEXT NOT NULL,
     service_date TEXT NOT NULL,
@@ -172,11 +185,23 @@ CREATE TABLE trip_stop_time_overrides (
     departure_seconds_override INTEGER CHECK (departure_seconds_override IS NULL OR departure_seconds_override >= 0),
     arrival_day_offset_override INTEGER CHECK (arrival_day_offset_override IS NULL OR arrival_day_offset_override >= 0),
     departure_day_offset_override INTEGER CHECK (departure_day_offset_override IS NULL OR departure_day_offset_override >= 0),
+    platform_override TEXT,
+    platform_override_present INTEGER NOT NULL DEFAULT 0 CHECK (platform_override_present IN (0, 1)),
     source_id TEXT NOT NULL REFERENCES source_documents(source_id),
     CHECK (arrival_day_offset_override IS NULL OR arrival_override IS NOT NULL),
     CHECK (departure_day_offset_override IS NULL OR departure_override IS NOT NULL),
+    CHECK (platform_override_present = 1 OR platform_override IS NULL),
+    CHECK (arrival_override IS NOT NULL OR departure_override IS NOT NULL OR platform_override_present = 1),
     PRIMARY KEY (trip_id, service_date, stop_sequence),
     FOREIGN KEY (trip_id, stop_sequence) REFERENCES stop_times(trip_id, stop_sequence) ON DELETE CASCADE
+);
+
+CREATE TABLE trip_train_number_overrides (
+    trip_id TEXT NOT NULL REFERENCES trips(trip_id) ON DELETE CASCADE,
+    service_date TEXT NOT NULL,
+    train_number TEXT NOT NULL CHECK (length(trim(train_number)) > 0),
+    source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    PRIMARY KEY (trip_id, service_date)
 );
 
 CREATE TABLE trip_number_segments (
@@ -186,6 +211,38 @@ CREATE TABLE trip_number_segments (
     train_number TEXT NOT NULL,
     PRIMARY KEY (trip_id, from_sequence),
     CHECK (from_sequence <= to_sequence)
+);
+
+-- A dated published/planned consist.  Unknown cars and vehicle series remain NULL;
+-- these rows must not be read as a claim about the actually dispatched set.
+CREATE TABLE trip_formations (
+    formation_id TEXT PRIMARY KEY NOT NULL,
+    trip_id TEXT NOT NULL REFERENCES trips(trip_id) ON DELETE CASCADE,
+    service_date TEXT NOT NULL,
+    evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('planned', 'actual')),
+    formation_label TEXT,
+    car_count INTEGER CHECK (car_count IS NULL OR car_count > 0),
+    reserved_seat_capacity INTEGER CHECK (reserved_seat_capacity IS NULL OR reserved_seat_capacity >= 0),
+    vehicle_series TEXT,
+    all_reserved INTEGER CHECK (all_reserved IS NULL OR all_reserved IN (0, 1)),
+    green_car_available INTEGER CHECK (green_car_available IS NULL OR green_car_available IN (0, 1)),
+    source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    notes TEXT,
+    UNIQUE (trip_id, service_date),
+    CHECK (formation_label IS NOT NULL OR car_count IS NOT NULL OR reserved_seat_capacity IS NOT NULL OR vehicle_series IS NOT NULL
+           OR all_reserved IS NOT NULL OR green_car_available IS NOT NULL)
+);
+
+CREATE TABLE trip_formation_cars (
+    formation_id TEXT NOT NULL REFERENCES trip_formations(formation_id) ON DELETE CASCADE,
+    car_sequence INTEGER NOT NULL CHECK (car_sequence > 0),
+    car_number TEXT NOT NULL,
+    vehicle_series TEXT,
+    seat_class TEXT,
+    reservation_type TEXT,
+    source_id TEXT NOT NULL REFERENCES source_documents(source_id),
+    notes TEXT,
+    PRIMARY KEY (formation_id, car_sequence)
 );
 
 CREATE TABLE trip_operator_segments (
@@ -243,7 +300,7 @@ CREATE TABLE fact_sources (
 CREATE TABLE fact_completeness (
     entity_type TEXT NOT NULL,
     entity_id TEXT NOT NULL,
-    dimension TEXT NOT NULL CHECK (dimension IN ('identity', 'train_number', 'operator', 'validity_calendar', 'origin_destination', 'stops', 'times', 'route_lines', 'station_refs', 'provenance')),
+    dimension TEXT NOT NULL CHECK (dimension IN ('identity', 'train_number', 'operator', 'validity_calendar', 'origin_destination', 'stops', 'times', 'route_lines', 'station_refs', 'formation', 'provenance')),
     status TEXT NOT NULL CHECK (status IN ('verified', 'partial', 'unknown', 'conflict', 'not_applicable')),
     confidence TEXT NOT NULL CHECK (confidence IN ('high', 'medium', 'low')),
     notes TEXT,
@@ -300,6 +357,7 @@ CREATE INDEX idx_trips_calendar ON trips(calendar_id);
 CREATE INDEX idx_stop_times_trip_sequence ON stop_times(trip_id, stop_sequence);
 CREATE INDEX idx_stop_times_station ON stop_times(station_id);
 CREATE INDEX idx_overrides_date ON trip_stop_time_overrides(service_date, trip_id);
+CREATE INDEX idx_train_number_overrides_date ON trip_train_number_overrides(service_date, trip_id);
 CREATE INDEX idx_operator_segments_trip ON trip_operator_segments(trip_id, from_sequence);
 CREATE INDEX idx_line_segments_trip ON trip_line_segments(trip_id, sequence);
 CREATE INDEX idx_line_segments_current_identity ON trip_line_segments(current_n02_line_id)

@@ -28,6 +28,20 @@ struct JourneyRouteIdentityTests {
         #expect(!consultedLine)
     }
 
+    @Test func namedExpressWithoutServiceLogoUsesOperatorThenTrainGlyph() {
+        var consultedLine = false
+        func lineLogo() -> String? { consultedLine = true; return "/rail/logos/line.png" }
+        var express = train(type: "特急", lines: ["東海道線"])
+        express.number = "サンライズ出雲1号"
+        #expect(JourneyRouteIdentity.logoPath(
+            for: express, lineLogo: lineLogo(),
+            operatorLogo: "/rail/operator-logos/jr-west.png")
+            == "/rail/operator-logos/jr-west.png")
+        #expect(JourneyRouteIdentity.logoPath(
+            for: express, lineLogo: lineLogo(), operatorLogo: nil) == nil)
+        #expect(!consultedLine)
+    }
+
     @Test func ordinaryServiceRetainsItsLineLogo() {
         #expect(JourneyRouteIdentity.logoPath(
             for: train(type: "普通", lines: ["山手線"]),
@@ -50,6 +64,22 @@ struct JourneyRouteIdentityTests {
             for: express, lineLogo: "/rail/logos/yamanote.png",
             operatorLogo: "/rail/operator-logos/jr-east.png")
             == "/rail/service-logos/narita-express.png")
+    }
+
+    @Test(arguments: [
+        ("WEST EXPRESS 銀河1号", "/rail/service-logos/west-express-ginga.png"),
+        ("はこね3号", "/rail/service-logos/romancecar.png"),
+        ("メトロホームウェイ41号", "/rail/service-logos/romancecar.png"),
+        ("はるか12号", "/rail/service-logos/haruka.jpg"),
+        ("オーシャンアロー3号", "/rail/service-logos/ocean-arrow.jpg"),
+        ("スノーモンキー1号", "/rail/service-logos/snow-monkey.jpg"),
+    ])
+    func newlyCatalogedServiceMarksResolve(number: String, expectedPath: String) {
+        var express = train(type: "特急", lines: ["小田原線"])
+        express.number = number
+        #expect(JourneyRouteIdentity.logoPath(
+            for: express, lineLogo: nil, operatorLogo: "/rail/operator-logos/operator.png")
+            == expectedPath)
     }
 
     @Test func ordinarySharedTrackDoesNotChangeIdentity() {

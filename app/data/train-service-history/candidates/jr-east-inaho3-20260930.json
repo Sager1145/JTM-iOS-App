@@ -1,0 +1,108 @@
+{
+  "trip_id": "jr-east.inaho.3.exact-2026-09-30",
+  "service_id": "inaho",
+  "service_name": "いなほ",
+  "jr_scope": "jr",
+  "service_date": "2026-09-30",
+  "public_number": "3",
+  "train_number": "3M",
+  "source_id": "jr-east-inaho3-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/064011.html",
+  "source_sha256": "2f20c2367485a6cd822ee20b12415ef9973afe1208db1abf5c5649bc43d6a680",
+  "source_locator": "2026年9月30日 td.ok; 印刷時刻/番線/設備/備考",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "printed_equipment": [
+    "普通車一部指定席"
+  ],
+  "printed_platforms": {
+    "新潟": "５",
+    "新発田": "１",
+    "坂町": "３",
+    "村上": "３",
+    "余目": "２",
+    "酒田": "１"
+  },
+  "printed_remarks": "９月１８日～１０月１６・１９～２２日・１１月４～６・９・２１～２４・２８・２９日はグリーン車指定席連結",
+  "stops": [
+    [
+      "新潟",
+      null,
+      "10:50"
+    ],
+    [
+      "豊栄",
+      "11:03",
+      "11:04"
+    ],
+    [
+      "新発田",
+      "11:13",
+      "11:13"
+    ],
+    [
+      "中条",
+      "11:22",
+      "11:23"
+    ],
+    [
+      "坂町",
+      "11:29",
+      "11:30"
+    ],
+    [
+      "村上",
+      "11:38",
+      "11:38"
+    ],
+    [
+      "府屋",
+      "12:08",
+      "12:08"
+    ],
+    [
+      "あつみ温泉",
+      "12:20",
+      "12:21"
+    ],
+    [
+      "鶴岡",
+      "12:43",
+      "12:44"
+    ],
+    [
+      "余目",
+      "12:54",
+      "12:55"
+    ],
+    [
+      "酒田",
+      "13:03",
+      null
+    ]
+  ],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": false,
+    "green_car_available": true,
+    "car_count": null,
+    "vehicle_series": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route and operator segments are unknown.",
+  "actual_dispatch": null,
+  "candidate_id": "jr-east-inaho3-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "printed_operating_labels": [],
+  "train_number_segments": [],
+  "dated_green_evidence": {
+    "valid_from": "2026-09-18",
+    "valid_through": "2026-10-16",
+    "printed_remark": "９月１８日～１０月１６・１９～２２日・１１月４～６・９・２１～２４・２８・２９日はグリーン車指定席連結",
+    "selected_date": "2026-09-30"
+  }
+}

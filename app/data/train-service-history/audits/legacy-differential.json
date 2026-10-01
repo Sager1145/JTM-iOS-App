@@ -4,9 +4,30 @@
     {
       "candidatePatternIds": [
         "tt-hida-02d847fe5a76",
+        "tt-hida-0d0f39843893",
+        "tt-hida-0dc9b533128e",
         "tt-hida-33bc59d879a8",
+        "tt-hida-36165b44a242",
+        "tt-hida-43ad7f0173c0",
+        "tt-hida-51a2357b1442",
+        "tt-hida-51e18fbea369",
+        "tt-hida-531f638c2960",
+        "tt-hida-533ba32a1135",
+        "tt-hida-5b8f640f600a",
+        "tt-hida-65a1a30f3969",
         "tt-hida-77d3b6df4aca",
-        "tt-hida-8bfd81f2b5d7"
+        "tt-hida-79d08f50146f",
+        "tt-hida-8bfd81f2b5d7",
+        "tt-hida-93460ab2db3e",
+        "tt-hida-9740845ac4a8",
+        "tt-hida-9b0ec20fb821",
+        "tt-hida-a54f1199d928",
+        "tt-hida-ab2698be9b6a",
+        "tt-hida-b465234cdb13",
+        "tt-hida-b9c207450858",
+        "tt-hida-c82aab3a0c50",
+        "tt-hida-ccf2cf51b082",
+        "tt-hida-e6b1d70e436f"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
@@ -17,9 +38,30 @@
     {
       "candidatePatternIds": [
         "tt-hida-02d847fe5a76",
+        "tt-hida-0d0f39843893",
+        "tt-hida-0dc9b533128e",
         "tt-hida-33bc59d879a8",
+        "tt-hida-36165b44a242",
+        "tt-hida-43ad7f0173c0",
+        "tt-hida-51a2357b1442",
+        "tt-hida-51e18fbea369",
+        "tt-hida-531f638c2960",
+        "tt-hida-533ba32a1135",
+        "tt-hida-5b8f640f600a",
+        "tt-hida-65a1a30f3969",
         "tt-hida-77d3b6df4aca",
-        "tt-hida-8bfd81f2b5d7"
+        "tt-hida-79d08f50146f",
+        "tt-hida-8bfd81f2b5d7",
+        "tt-hida-93460ab2db3e",
+        "tt-hida-9740845ac4a8",
+        "tt-hida-9b0ec20fb821",
+        "tt-hida-a54f1199d928",
+        "tt-hida-ab2698be9b6a",
+        "tt-hida-b465234cdb13",
+        "tt-hida-b9c207450858",
+        "tt-hida-c82aab3a0c50",
+        "tt-hida-ccf2cf51b082",
+        "tt-hida-e6b1d70e436f"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
@@ -30,9 +72,30 @@
     {
       "candidatePatternIds": [
         "tt-hida-02d847fe5a76",
+        "tt-hida-0d0f39843893",
+        "tt-hida-0dc9b533128e",
         "tt-hida-33bc59d879a8",
+        "tt-hida-36165b44a242",
+        "tt-hida-43ad7f0173c0",
+        "tt-hida-51a2357b1442",
+        "tt-hida-51e18fbea369",
+        "tt-hida-531f638c2960",
+        "tt-hida-533ba32a1135",
+        "tt-hida-5b8f640f600a",
+        "tt-hida-65a1a30f3969",
         "tt-hida-77d3b6df4aca",
-        "tt-hida-8bfd81f2b5d7"
+        "tt-hida-79d08f50146f",
+        "tt-hida-8bfd81f2b5d7",
+        "tt-hida-93460ab2db3e",
+        "tt-hida-9740845ac4a8",
+        "tt-hida-9b0ec20fb821",
+        "tt-hida-a54f1199d928",
+        "tt-hida-ab2698be9b6a",
+        "tt-hida-b465234cdb13",
+        "tt-hida-b9c207450858",
+        "tt-hida-c82aab3a0c50",
+        "tt-hida-ccf2cf51b082",
+        "tt-hida-e6b1d70e436f"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -42,11 +105,26 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-2e0c912b2af0",
-        "tt-shinano-68c29ceb73d4",
-        "tt-shinano-7f889217ccde",
-        "tt-shinano-947dcb2020cb",
-        "tt-shinano-9d85b58cf5b0"
+        "tt-shinano-0f2f390c6e26",
+        "tt-shinano-1e3b9bcba378",
+        "tt-shinano-258b9c8f55d7",
+        "tt-shinano-27685090af5e",
+        "tt-shinano-2a02b6149413",
+        "tt-shinano-60ca67639083",
+        "tt-shinano-76ee6970b37e",
+        "tt-shinano-8c7c73072449",
+        "tt-shinano-9678bfa8d4fe",
+        "tt-shinano-a3c4ae3eb81d",
+        "tt-shinano-b72429158553",
+        "tt-shinano-b978173f9fa5",
+        "tt-shinano-b9e7b5f9113d",
+        "tt-shinano-be25f60cd6e1",
+        "tt-shinano-d6bd3aa970af",
+        "tt-shinano-dcaab55d0565",
+        "tt-shinano-f1116c6f5286",
+        "tt-shinano-f14ea6f2e001",
+        "tt-shinano-fdf620d9302d",
+        "tt-shinano-ff56e9ca8487"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -57,9 +135,18 @@
     {
       "candidatePatternIds": [
         "tt-nanki-07dcd72ef451",
+        "tt-nanki-3cffc487b937",
         "tt-nanki-42a890226b9b",
+        "tt-nanki-7f97b2cda00f",
+        "tt-nanki-9a6599b07a56",
         "tt-nanki-aa87a44051e6",
-        "tt-nanki-ada7d84fc272"
+        "tt-nanki-ada7d84fc272",
+        "tt-nanki-ae9b9709e9b8",
+        "tt-nanki-c02b626128e5",
+        "tt-nanki-cdcc25379b09",
+        "tt-nanki-dd7775127a80",
+        "tt-nanki-f92d9dd26296",
+        "tt-nanki-fd15c3958a23"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
@@ -68,7 +155,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-fujikawa-54e0ee818ac7",
+        "tt-fujikawa-ce0c590b2f51"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "fujikawa-shizuoka-kofu",
@@ -76,7 +166,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nanpu-1902d1f4b778",
+        "tt-nanpu-511a3ff576df"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "nanpu-okayama-kochi",
@@ -84,7 +177,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shimanto-bef8f71fa2b0"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "shimanto-takamatsu-kochi",
@@ -100,7 +195,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-uzushio-41188205edce"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "uzushio-takamatsu-tokushima",
@@ -108,7 +205,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-uzushio-41188205edce"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 5,
       "legacyPatternId": "uzushio-okayama-tokushima",
@@ -125,8 +224,16 @@
     },
     {
       "candidatePatternIds": [
-        "tt-azusa-52b00b27dc4b",
-        "tt-azusa-60fad23a2d4d"
+        "tt-azusa-26654f0eb770",
+        "tt-azusa-3a2ab9e36acb",
+        "tt-azusa-401fe3a35852",
+        "tt-azusa-64b263e8eff8",
+        "tt-azusa-7aad3a957e5c",
+        "tt-azusa-89a1bf215181",
+        "tt-azusa-d49e929b0c5d",
+        "tt-azusa-d9aa1da01d5d",
+        "tt-azusa-f0a8bd9d3d74",
+        "tt-azusa-fe21a86b6942"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 11,
@@ -136,8 +243,16 @@
     },
     {
       "candidatePatternIds": [
-        "tt-azusa-52b00b27dc4b",
-        "tt-azusa-60fad23a2d4d"
+        "tt-azusa-26654f0eb770",
+        "tt-azusa-3a2ab9e36acb",
+        "tt-azusa-401fe3a35852",
+        "tt-azusa-64b263e8eff8",
+        "tt-azusa-7aad3a957e5c",
+        "tt-azusa-89a1bf215181",
+        "tt-azusa-d49e929b0c5d",
+        "tt-azusa-d9aa1da01d5d",
+        "tt-azusa-f0a8bd9d3d74",
+        "tt-azusa-fe21a86b6942"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
@@ -147,8 +262,16 @@
     },
     {
       "candidatePatternIds": [
-        "tt-azusa-52b00b27dc4b",
-        "tt-azusa-60fad23a2d4d"
+        "tt-azusa-26654f0eb770",
+        "tt-azusa-3a2ab9e36acb",
+        "tt-azusa-401fe3a35852",
+        "tt-azusa-64b263e8eff8",
+        "tt-azusa-7aad3a957e5c",
+        "tt-azusa-89a1bf215181",
+        "tt-azusa-d49e929b0c5d",
+        "tt-azusa-d9aa1da01d5d",
+        "tt-azusa-f0a8bd9d3d74",
+        "tt-azusa-fe21a86b6942"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
@@ -157,7 +280,16 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kaiji-01a0118c4f56",
+        "tt-kaiji-55f64bd12a4a",
+        "tt-kaiji-7f9853a813f6",
+        "tt-kaiji-841dd02b11e7",
+        "tt-kaiji-94d7edbafe94",
+        "tt-kaiji-c7a0299eadb6",
+        "tt-kaiji-de5126f8cb1f",
+        "tt-kaiji-f1cc4a30fc30"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "kaiji-shinjuku-kofu",
@@ -165,7 +297,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-fuji-excursion-099160c43d3d",
+        "tt-fuji-excursion-234b44632886",
+        "tt-fuji-excursion-911df29fd898"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "fuji-excursion-shinjuku-kawaguchiko",
@@ -190,7 +326,28 @@
     },
     {
       "candidatePatternIds": [
-        "tt-hitachi-bcb3e9bd7c9d"
+        "tt-hitachi-0c532c484432",
+        "tt-hitachi-0d9241caba30",
+        "tt-hitachi-0f94e385c317",
+        "tt-hitachi-1fbb79b6179b",
+        "tt-hitachi-26b566e001b2",
+        "tt-hitachi-28defb811aed",
+        "tt-hitachi-3457d4eb4696",
+        "tt-hitachi-406da4da7f2e",
+        "tt-hitachi-59afbb283f06",
+        "tt-hitachi-79486d1e933d",
+        "tt-hitachi-7b944f160dbc",
+        "tt-hitachi-838ffb35a90d",
+        "tt-hitachi-8c2f7d8c9650",
+        "tt-hitachi-a796660d1587",
+        "tt-hitachi-ad3337c57075",
+        "tt-hitachi-b1f0fb8accdf",
+        "tt-hitachi-d0dfd5ef9265",
+        "tt-hitachi-e17f794539e2",
+        "tt-hitachi-e182ce69efcd",
+        "tt-hitachi-efef117109ed",
+        "tt-hitachi-fcd1c49e8c94",
+        "tt-hitachi-fdedc5cfd120"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 9,
@@ -200,7 +357,28 @@
     },
     {
       "candidatePatternIds": [
-        "tt-hitachi-bcb3e9bd7c9d"
+        "tt-hitachi-0c532c484432",
+        "tt-hitachi-0d9241caba30",
+        "tt-hitachi-0f94e385c317",
+        "tt-hitachi-1fbb79b6179b",
+        "tt-hitachi-26b566e001b2",
+        "tt-hitachi-28defb811aed",
+        "tt-hitachi-3457d4eb4696",
+        "tt-hitachi-406da4da7f2e",
+        "tt-hitachi-59afbb283f06",
+        "tt-hitachi-79486d1e933d",
+        "tt-hitachi-7b944f160dbc",
+        "tt-hitachi-838ffb35a90d",
+        "tt-hitachi-8c2f7d8c9650",
+        "tt-hitachi-a796660d1587",
+        "tt-hitachi-ad3337c57075",
+        "tt-hitachi-b1f0fb8accdf",
+        "tt-hitachi-d0dfd5ef9265",
+        "tt-hitachi-e17f794539e2",
+        "tt-hitachi-e182ce69efcd",
+        "tt-hitachi-efef117109ed",
+        "tt-hitachi-fcd1c49e8c94",
+        "tt-hitachi-fdedc5cfd120"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 9,
@@ -210,7 +388,22 @@
     },
     {
       "candidatePatternIds": [
-        "tt-tokiwa-f314d67208ff"
+        "tt-tokiwa-05db658b6416",
+        "tt-tokiwa-09506ddde8a8",
+        "tt-tokiwa-1be396bcd833",
+        "tt-tokiwa-1ec8c729cff5",
+        "tt-tokiwa-4571394a7fba",
+        "tt-tokiwa-4e36142b257d",
+        "tt-tokiwa-5b9de7088404",
+        "tt-tokiwa-6e6fb1af54e9",
+        "tt-tokiwa-9523394313d3",
+        "tt-tokiwa-a47d274b5b62",
+        "tt-tokiwa-cb5ca8f90b87",
+        "tt-tokiwa-cb6fb782c848",
+        "tt-tokiwa-d3b9a40c1716",
+        "tt-tokiwa-d92660b4acbd",
+        "tt-tokiwa-debf9dd419c8",
+        "tt-tokiwa-e3600a0ca4b8"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -220,7 +413,22 @@
     },
     {
       "candidatePatternIds": [
-        "tt-tokiwa-f314d67208ff"
+        "tt-tokiwa-05db658b6416",
+        "tt-tokiwa-09506ddde8a8",
+        "tt-tokiwa-1be396bcd833",
+        "tt-tokiwa-1ec8c729cff5",
+        "tt-tokiwa-4571394a7fba",
+        "tt-tokiwa-4e36142b257d",
+        "tt-tokiwa-5b9de7088404",
+        "tt-tokiwa-6e6fb1af54e9",
+        "tt-tokiwa-9523394313d3",
+        "tt-tokiwa-a47d274b5b62",
+        "tt-tokiwa-cb5ca8f90b87",
+        "tt-tokiwa-cb6fb782c848",
+        "tt-tokiwa-d3b9a40c1716",
+        "tt-tokiwa-d92660b4acbd",
+        "tt-tokiwa-debf9dd419c8",
+        "tt-tokiwa-e3600a0ca4b8"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
@@ -229,7 +437,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-odoriko-d0aecbd10129",
+        "tt-odoriko-d992eeeab715"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "odoriko-tokyo-izukyushimoda",
@@ -237,7 +448,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-odoriko-d0aecbd10129",
+        "tt-odoriko-d992eeeab715"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "odoriko-tokyo-shuzenji",
@@ -245,7 +459,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-saphir-odoriko-df64981637a2"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "saphir-odoriko-tokyo-izukyushimoda",
@@ -253,7 +469,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shonan-1fce73ebb8e5",
+        "tt-shonan-484aa95ac66e",
+        "tt-shonan-6804be3fcffb",
+        "tt-shonan-7111199f9e86",
+        "tt-shonan-99fd7e24eb64",
+        "tt-shonan-9ded043be1fa",
+        "tt-shonan-d94891a26673",
+        "tt-shonan-e44218e8b59e",
+        "tt-shonan-edabbe2b1052",
+        "tt-shonan-f36bed153105",
+        "tt-shonan-fcb8c47d4fcb"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "shonan-tokyo-odawara",
@@ -261,7 +489,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shonan-1fce73ebb8e5",
+        "tt-shonan-484aa95ac66e",
+        "tt-shonan-6804be3fcffb",
+        "tt-shonan-7111199f9e86",
+        "tt-shonan-99fd7e24eb64",
+        "tt-shonan-9ded043be1fa",
+        "tt-shonan-d94891a26673",
+        "tt-shonan-e44218e8b59e",
+        "tt-shonan-edabbe2b1052",
+        "tt-shonan-f36bed153105",
+        "tt-shonan-fcb8c47d4fcb"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "shonan-shinjuku-odawara",
@@ -269,7 +509,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "narita-express-tokyo",
@@ -277,7 +533,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 5,
       "legacyPatternId": "narita-express-shinjuku",
@@ -285,7 +557,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "narita-express-ikebukuro",
@@ -293,7 +581,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "narita-express-omiya",
@@ -301,7 +605,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "narita-express-yokohama",
@@ -309,7 +629,23 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-narita-express-06ad78d49537",
+        "tt-narita-express-16539bc08f08",
+        "tt-narita-express-1b22e6c175d4",
+        "tt-narita-express-2129073e0113",
+        "tt-narita-express-2d5962fdfff8",
+        "tt-narita-express-376e35597c6a",
+        "tt-narita-express-74305838503f",
+        "tt-narita-express-9692706282a6",
+        "tt-narita-express-c16eeb7b3ab5",
+        "tt-narita-express-d96382f7fe08",
+        "tt-narita-express-d9e4561a8be6",
+        "tt-narita-express-e305cebb0c66",
+        "tt-narita-express-f2f0e45cfe5e",
+        "tt-narita-express-f4d1aa80f702",
+        "tt-narita-express-f99866c760b7"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "narita-express-ofuna",
@@ -325,7 +661,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-wakashio-e9150b00d306"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "wakashio-tokyo-awakamogawa",
@@ -341,7 +679,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sazanami-8dc84fc690af",
+        "tt-sazanami-f0299fe16e8d",
+        "tt-sazanami-f92c6dc8c44a"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "sazanami-tokyo-kimitsu",
@@ -357,7 +699,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shiosai-0f036b9ed52c"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "shiosai-tokyo-choshi",
@@ -365,7 +709,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-akagi-6cf98b11247d",
+        "tt-akagi-ada5b6c42f03",
+        "tt-akagi-b6c1a0fdd6bd"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
       "legacyPatternId": "akagi-ueno-takasaki",
@@ -373,7 +721,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kusatsu-shima-a94734db75dc",
+        "tt-kusatsu-shima-be40b11465f0"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "kusatsu-shima-ueno-naganoharakusatsuguchi",
@@ -389,7 +740,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kinugawa-a80b7eb1588d",
+        "tt-kinugawa-eece48e54a72"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "kinugawa-shinjuku-kinugawaonsen",
@@ -397,7 +751,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-spacia-nikko-34d58ab9d4cf",
+        "tt-spacia-nikko-d82d0df17744"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "spacia-nikko-shinjuku-tobunikko",
@@ -413,7 +770,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-inaho-669d25018e8d",
+        "tt-inaho-ce932839bdc9"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "inaho-niigata-akita",
@@ -421,7 +781,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-shirayuki-3348cc950021",
+        "tt-shirayuki-9e118b4ae3ac",
+        "tt-shirayuki-a506d9e7f1ce"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
       "legacyPatternId": "shirayuki-niigata-joetsumyoko",
@@ -429,7 +793,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-tsugaru-351c6aaeac21"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "tsugaru-akita-aomori",
@@ -437,7 +803,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-super-tsugaru-1602eda79f0b"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "super-tsugaru-akita-aomori",
@@ -446,8 +814,19 @@
     },
     {
       "candidatePatternIds": [
-        "tt-hokuto-60044bf01f23",
-        "tt-hokuto-b6894912ef74"
+        "tt-hokuto-1ead0947d8a0",
+        "tt-hokuto-3c6451190585",
+        "tt-hokuto-3cd26b936f00",
+        "tt-hokuto-5412c26459bf",
+        "tt-hokuto-62f2a4bf692c",
+        "tt-hokuto-6935e8662919",
+        "tt-hokuto-6aaf8ac333c3",
+        "tt-hokuto-6b59c260cfd4",
+        "tt-hokuto-80ff6f61b36a",
+        "tt-hokuto-8a220410be04",
+        "tt-hokuto-9302d595577a",
+        "tt-hokuto-9f6179038b18",
+        "tt-hokuto-d15162d58145"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
@@ -456,7 +835,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-suzuran-372cec6d0416",
+        "tt-suzuran-387e333cc7ec",
+        "tt-suzuran-c68322306bbe",
+        "tt-suzuran-dfe12c4f2d53"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "suzuran-muroran-sapporo",
@@ -464,7 +848,18 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-ozora-2d7698af3157",
+        "tt-ozora-383ece68dd57",
+        "tt-ozora-5407455d010c",
+        "tt-ozora-598d3e4aed8d",
+        "tt-ozora-71aa2d009806",
+        "tt-ozora-82d4e026d6ea",
+        "tt-ozora-97c8ad2163bf",
+        "tt-ozora-a80c09675a7e",
+        "tt-ozora-d2d1e9950fda",
+        "tt-ozora-f725d465efbe"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 8,
       "legacyPatternId": "ozora-sapporo-kushiro",
@@ -472,7 +867,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-tokachi-008118a7b28a",
+        "tt-tokachi-0bdb122ba548",
+        "tt-tokachi-61d6e4fec99d",
+        "tt-tokachi-b63f6e155a64"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "tokachi-sapporo-obihiro",
@@ -481,11 +881,17 @@
     },
     {
       "candidatePatternIds": [
-        "tt-kamui-2260eb11a822",
+        "tt-kamui-175ce6b61b6e",
+        "tt-kamui-19cb6a955aee",
+        "tt-kamui-1b5d873c775b",
         "tt-kamui-3ec593053d32",
+        "tt-kamui-48b0e4336f04",
         "tt-kamui-8af8e0fc0612",
+        "tt-kamui-929747ba82dd",
+        "tt-kamui-a47c9785ac66",
         "tt-kamui-b52182dac25d",
-        "tt-kamui-f98be3d7e547"
+        "tt-kamui-b9f317d41c95",
+        "tt-kamui-f99166cea816"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -495,6 +901,8 @@
     },
     {
       "candidatePatternIds": [
+        "tt-lilac-30ec5d406930",
+        "tt-lilac-a8b57c4bdedd",
         "tt-lilac-ad0a2d304b31"
       ],
       "classification": "new DB missing evidence",
@@ -504,7 +912,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-soya-275a64fe5672",
+        "tt-soya-a48185f580ba"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "soya-sapporo-wakkanai",
@@ -513,8 +924,12 @@
     },
     {
       "candidatePatternIds": [
-        "tt-sarobetsu-29c8684ac556",
-        "tt-sarobetsu-61c4d0c6ef53"
+        "tt-sarobetsu-0eb063ff5972",
+        "tt-sarobetsu-314612528c07",
+        "tt-sarobetsu-3a6e1234fb92",
+        "tt-sarobetsu-7c091ebeccce",
+        "tt-sarobetsu-a2a3f5eb7e06",
+        "tt-sarobetsu-bad4bce51595"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -523,7 +938,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-okhotsk-9585ccbe2912",
+        "tt-okhotsk-ca74a64dc1b3",
+        "tt-okhotsk-e4b08d5b4c1a"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
       "legacyPatternId": "okhotsk-sapporo-abashiri",
@@ -531,7 +950,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-taisetsu-139e1a33c286",
+        "tt-taisetsu-45ecf34ca440"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "taisetsu-asahikawa-abashiri",
@@ -540,8 +962,14 @@
     },
     {
       "candidatePatternIds": [
-        "tt-niseko-78b57d0fbad2",
-        "tt-niseko-d8db2f27c784"
+        "tt-niseko-18d0c5918c12",
+        "tt-niseko-453e013302fa",
+        "tt-niseko-9fac9af9b6b1",
+        "tt-niseko-a224f591acb7",
+        "tt-niseko-b619924bf0f4",
+        "tt-niseko-d86e4d900414",
+        "tt-niseko-e839d790a577",
+        "tt-niseko-f20a0f9c5c74"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -550,7 +978,40 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sonic-0210013e238c",
+        "tt-sonic-092267bdd6dd",
+        "tt-sonic-1564bde2255a",
+        "tt-sonic-179fb85e876a",
+        "tt-sonic-37ef56869324",
+        "tt-sonic-4161a3f5e91e",
+        "tt-sonic-4b53d5e11e15",
+        "tt-sonic-556932151cea",
+        "tt-sonic-59f98fec52c4",
+        "tt-sonic-642448561add",
+        "tt-sonic-6dc639670283",
+        "tt-sonic-7058af93c030",
+        "tt-sonic-75e525f226e1",
+        "tt-sonic-8028f5bb1df6",
+        "tt-sonic-8e23a9452c4b",
+        "tt-sonic-916489cd553d",
+        "tt-sonic-94b591098911",
+        "tt-sonic-99248cbad23c",
+        "tt-sonic-9a25c83f208e",
+        "tt-sonic-9d039fcfc117",
+        "tt-sonic-adba6e633c8f",
+        "tt-sonic-af4031685154",
+        "tt-sonic-b7345bf1b70b",
+        "tt-sonic-cb250e1d58e2",
+        "tt-sonic-db243297a7f8",
+        "tt-sonic-dc84e100afd2",
+        "tt-sonic-ddc9b52de0fb",
+        "tt-sonic-e48a475cf1bc",
+        "tt-sonic-e83a6eabae3b",
+        "tt-sonic-f0c68133e30b",
+        "tt-sonic-fe4f590b0e61",
+        "tt-sonic-fe8bbb2149fc"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 11,
       "legacyPatternId": "sonic-hakata-oita",
@@ -558,7 +1019,40 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sonic-0210013e238c",
+        "tt-sonic-092267bdd6dd",
+        "tt-sonic-1564bde2255a",
+        "tt-sonic-179fb85e876a",
+        "tt-sonic-37ef56869324",
+        "tt-sonic-4161a3f5e91e",
+        "tt-sonic-4b53d5e11e15",
+        "tt-sonic-556932151cea",
+        "tt-sonic-59f98fec52c4",
+        "tt-sonic-642448561add",
+        "tt-sonic-6dc639670283",
+        "tt-sonic-7058af93c030",
+        "tt-sonic-75e525f226e1",
+        "tt-sonic-8028f5bb1df6",
+        "tt-sonic-8e23a9452c4b",
+        "tt-sonic-916489cd553d",
+        "tt-sonic-94b591098911",
+        "tt-sonic-99248cbad23c",
+        "tt-sonic-9a25c83f208e",
+        "tt-sonic-9d039fcfc117",
+        "tt-sonic-adba6e633c8f",
+        "tt-sonic-af4031685154",
+        "tt-sonic-b7345bf1b70b",
+        "tt-sonic-cb250e1d58e2",
+        "tt-sonic-db243297a7f8",
+        "tt-sonic-dc84e100afd2",
+        "tt-sonic-ddc9b52de0fb",
+        "tt-sonic-e48a475cf1bc",
+        "tt-sonic-e83a6eabae3b",
+        "tt-sonic-f0c68133e30b",
+        "tt-sonic-fe4f590b0e61",
+        "tt-sonic-fe8bbb2149fc"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 12,
       "legacyPatternId": "sonic-hakata-saiki",
@@ -566,7 +1060,18 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nichirin-5e37a29ac765",
+        "tt-nichirin-5f39836cedc0",
+        "tt-nichirin-74636abd12e9",
+        "tt-nichirin-87b4b3c44060",
+        "tt-nichirin-b1567d4ce0a8",
+        "tt-nichirin-b1fd618ad84a",
+        "tt-nichirin-b3286c0953d0",
+        "tt-nichirin-d1293c6d9b85",
+        "tt-nichirin-df09b94b979e",
+        "tt-nichirin-f0aa665ddb12"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "nichirin-oita-miyazakikuko",
@@ -574,7 +1079,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nichirin-seagaia-bac01e6f875c",
+        "tt-nichirin-seagaia-ee0a619783d4"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 5,
       "legacyPatternId": "nichirin-seagaia-hakata-miyazakikuko",
@@ -582,7 +1090,15 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-hyuga-00f509c89978",
+        "tt-hyuga-344430434649",
+        "tt-hyuga-4a2f03823efa",
+        "tt-hyuga-58ea0a56e127",
+        "tt-hyuga-772452de1c89",
+        "tt-hyuga-9a8ffe0f0410",
+        "tt-hyuga-c0ad1a85e7e3"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "hyuga-nobeoka-miyazakikuko",
@@ -590,7 +1106,13 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kirishima-125702854f99",
+        "tt-kirishima-46f4300669a4",
+        "tt-kirishima-64e8c1d683ea",
+        "tt-kirishima-b7ace43c37c9",
+        "tt-kirishima-ff2957d48270"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "kirishima-miyazaki-kagoshimachuo",
@@ -598,7 +1120,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-relay-kamome-dbcff15d18f9"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "relay-kamome-hakata-takeoonsen",
@@ -606,7 +1130,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-midori-b75517032c9c",
+        "tt-midori-d96860271366"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "midori-hakata-sasebo",
@@ -614,7 +1141,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-huis-ten-bosch-6d3125ab72c2"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "huis-ten-bosch-hakata-huistenbosch",
@@ -622,7 +1151,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kasasagi-165adf21e597",
+        "tt-kasasagi-45699640ccb7",
+        "tt-kasasagi-87b9a8b8014e"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "kasasagi-mojiko-hizenkashima",
@@ -630,7 +1163,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kirameki-d02f2a8731a3"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
       "legacyPatternId": "kirameki-mojiko-hakata",
@@ -646,7 +1181,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kaio-3f230efba505"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "kaio-nogata-hakata",
@@ -654,7 +1191,14 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-yufu-0816fc834873",
+        "tt-yufu-0962e7c3f39f",
+        "tt-yufu-40964e200e5d",
+        "tt-yufu-c7d5a7ed2eb4",
+        "tt-yufu-f446ced727f1",
+        "tt-yufu-f8b25cce52ab"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "yufu-hakata-beppu",
@@ -663,10 +1207,14 @@
     },
     {
       "candidatePatternIds": [
-        "tt-yufuin-no-mori-8825099d2a78",
-        "tt-yufuin-no-mori-abd867a07779",
-        "tt-yufuin-no-mori-b947e4cfba48",
-        "tt-yufuin-no-mori-f4e31daadeb5"
+        "tt-yufuin-no-mori-01157a14a42e",
+        "tt-yufuin-no-mori-3fb63adf3f6b",
+        "tt-yufuin-no-mori-44ba913901e9",
+        "tt-yufuin-no-mori-77f7e11879f7",
+        "tt-yufuin-no-mori-ab02c42575e4",
+        "tt-yufuin-no-mori-c1a8d55b0237",
+        "tt-yufuin-no-mori-c1adae686f6d",
+        "tt-yufuin-no-mori-ed4472831de7"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -676,10 +1224,14 @@
     },
     {
       "candidatePatternIds": [
-        "tt-yufuin-no-mori-8825099d2a78",
-        "tt-yufuin-no-mori-abd867a07779",
-        "tt-yufuin-no-mori-b947e4cfba48",
-        "tt-yufuin-no-mori-f4e31daadeb5"
+        "tt-yufuin-no-mori-01157a14a42e",
+        "tt-yufuin-no-mori-3fb63adf3f6b",
+        "tt-yufuin-no-mori-44ba913901e9",
+        "tt-yufuin-no-mori-77f7e11879f7",
+        "tt-yufuin-no-mori-ab02c42575e4",
+        "tt-yufuin-no-mori-c1a8d55b0237",
+        "tt-yufuin-no-mori-c1adae686f6d",
+        "tt-yufuin-no-mori-ed4472831de7"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
@@ -801,13 +1353,15 @@
     },
     {
       "candidatePatternIds": [
-        "tt-ibusuki-no-tamatebako-661c422c49f0",
-        "tt-ibusuki-no-tamatebako-8ab18fcaff2a"
+        "tt-ibusuki-no-tamatebako-53c75ff917d0",
+        "tt-ibusuki-no-tamatebako-eaded7db9602"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "ibusuki-no-tamatebako-kagoshima-chuo-ibusuki",
-      "matchingSignatureIds": [],
+      "matchingSignatureIds": [
+        "tt-ibusuki-no-tamatebako-53c75ff917d0"
+      ],
       "verificationStatus": "unknown"
     },
     {
@@ -827,7 +1381,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-thunderbird-0352d3696d00",
+        "tt-thunderbird-097b41beba85",
+        "tt-thunderbird-1d07ee0350d0",
+        "tt-thunderbird-276434ffb238",
+        "tt-thunderbird-4f42540efd3f",
+        "tt-thunderbird-510098d7ee08",
+        "tt-thunderbird-9a0a821d4f4e",
+        "tt-thunderbird-b983880b8c9d",
+        "tt-thunderbird-daf0fb201873",
+        "tt-thunderbird-e177546cfa3c",
+        "tt-thunderbird-fc3313e9a17d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "thunderbird-osaka-tsuruga",
@@ -851,7 +1417,22 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kuroshio-04d3ac8f2781",
+        "tt-kuroshio-170da6442757",
+        "tt-kuroshio-21c04b9d0a9b",
+        "tt-kuroshio-2eeb7d64b1c8",
+        "tt-kuroshio-467b2d326649",
+        "tt-kuroshio-54fbf47261e8",
+        "tt-kuroshio-8bd41f948a37",
+        "tt-kuroshio-9d2a5e318454",
+        "tt-kuroshio-b21cb80af423",
+        "tt-kuroshio-caa5de1cee69",
+        "tt-kuroshio-cff1d6d9d564",
+        "tt-kuroshio-e49a7845dbe4",
+        "tt-kuroshio-f2efcd2fae93",
+        "tt-kuroshio-f30830695e97"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 7,
       "legacyPatternId": "kuroshio-shinosaka-shirahama",
@@ -859,7 +1440,22 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kuroshio-04d3ac8f2781",
+        "tt-kuroshio-170da6442757",
+        "tt-kuroshio-21c04b9d0a9b",
+        "tt-kuroshio-2eeb7d64b1c8",
+        "tt-kuroshio-467b2d326649",
+        "tt-kuroshio-54fbf47261e8",
+        "tt-kuroshio-8bd41f948a37",
+        "tt-kuroshio-9d2a5e318454",
+        "tt-kuroshio-b21cb80af423",
+        "tt-kuroshio-caa5de1cee69",
+        "tt-kuroshio-cff1d6d9d564",
+        "tt-kuroshio-e49a7845dbe4",
+        "tt-kuroshio-f2efcd2fae93",
+        "tt-kuroshio-f30830695e97"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 10,
       "legacyPatternId": "kuroshio-shinosaka-shingu",
@@ -875,7 +1471,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-kinosaki-33df1fd99d7c",
+        "tt-kinosaki-ad5d33d240ca"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "kinosaki-kyoto-kinosaki",
@@ -939,7 +1538,21 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-yakumo-09b12dc5b55d",
+        "tt-yakumo-18b1229acc3d",
+        "tt-yakumo-221d727a0a4c",
+        "tt-yakumo-3d1e4a89c437",
+        "tt-yakumo-4befc10d3da4",
+        "tt-yakumo-793c00d43e3b",
+        "tt-yakumo-923c4397554d",
+        "tt-yakumo-9f7cd4f3d5fe",
+        "tt-yakumo-a42abe17c233",
+        "tt-yakumo-b298269949ac",
+        "tt-yakumo-f40829b0d4a8",
+        "tt-yakumo-f8c74f89ade1",
+        "tt-yakumo-fb28b3b0f1ab"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "yakumo-okayama-izumoshi",
@@ -947,7 +1560,17 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-haruka-0af64e668ea8",
+        "tt-haruka-197b3ca8c23c",
+        "tt-haruka-3756647c9853",
+        "tt-haruka-4dc093a6e02b",
+        "tt-haruka-77366721a4e7",
+        "tt-haruka-7cd515a94bad",
+        "tt-haruka-954d0d3ab63d",
+        "tt-haruka-a8c0e43ac6cf",
+        "tt-haruka-d2489735ee4d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
       "legacyPatternId": "haruka-kyoto-kansai-airport",
@@ -955,7 +1578,17 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-haruka-0af64e668ea8",
+        "tt-haruka-197b3ca8c23c",
+        "tt-haruka-3756647c9853",
+        "tt-haruka-4dc093a6e02b",
+        "tt-haruka-77366721a4e7",
+        "tt-haruka-7cd515a94bad",
+        "tt-haruka-954d0d3ab63d",
+        "tt-haruka-a8c0e43ac6cf",
+        "tt-haruka-d2489735ee4d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
       "legacyPatternId": "haruka-yasu-kansai-airport",
@@ -1028,7 +1661,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-51fe616a4ad4",
         "tt-west-express-ginga-7f7a871e0fd8"
       ],
       "classification": "new DB missing evidence",
@@ -1039,7 +1672,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-51fe616a4ad4",
         "tt-west-express-ginga-7f7a871e0fd8"
       ],
       "classification": "new DB missing evidence",
@@ -1050,7 +1683,7 @@
     },
     {
       "candidatePatternIds": [
-        "tt-west-express-ginga-3286be1d4f0e",
+        "tt-west-express-ginga-51fe616a4ad4",
         "tt-west-express-ginga-7f7a871e0fd8"
       ],
       "classification": "new DB missing evidence",
@@ -1076,7 +1709,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sunrise-izumo-206df0379823",
+        "tt-sunrise-izumo-506a5438cea4"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "sunrise-izumo-tokyo-izumoshi",
@@ -1084,7 +1720,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sunrise-seto-57330ddbd0f6",
+        "tt-sunrise-seto-f209fffdc51f"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 6,
       "legacyPatternId": "sunrise-seto-tokyo-takamatsu",
@@ -1117,8 +1756,14 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shiokaze-2c9d880746ab",
-        "tt-shiokaze-cddb1b6d30ac"
+        "tt-shiokaze-2df610dc27c3",
+        "tt-shiokaze-5af9cf6c5806",
+        "tt-shiokaze-aef620d970ce",
+        "tt-shiokaze-c3187313ee0e",
+        "tt-shiokaze-c9e679a4cdf3",
+        "tt-shiokaze-f1a3470fb40b",
+        "tt-shiokaze-f9d84210e499",
+        "tt-shiokaze-fb14968f6ca8"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
@@ -1128,9 +1773,14 @@
     },
     {
       "candidatePatternIds": [
-        "tt-ishizuchi-608a7594b99b",
-        "tt-ishizuchi-74c242f7acce",
-        "tt-ishizuchi-84bd56653752"
+        "tt-ishizuchi-223ac5e2d7ae",
+        "tt-ishizuchi-286dbd232114",
+        "tt-ishizuchi-28e77bc0a323",
+        "tt-ishizuchi-5076a9712fb5",
+        "tt-ishizuchi-a588469fde40",
+        "tt-ishizuchi-c5d9637ab078",
+        "tt-ishizuchi-cb7d65b2355f",
+        "tt-ishizuchi-fc7eaf80ad9b"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 4,
@@ -1155,7 +1805,12 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-uwakai-6973750145c5",
+        "tt-uwakai-97a945039269",
+        "tt-uwakai-a6ef8aaaff1d",
+        "tt-uwakai-e8cc19899158"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 1,
       "legacyPatternId": "uwakai-matsuyama-uwajima",
@@ -1374,7 +2029,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-akagi-6cf98b11247d",
+        "tt-akagi-ada5b6c42f03",
+        "tt-akagi-b6c1a0fdd6bd"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "akagi-ueno-maebashi",
@@ -1430,7 +2089,9 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-tsugaru-351c6aaeac21"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
       "legacyPatternId": "tsugaru-hachinohe-hirosaki",
@@ -1446,7 +2107,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-inaho-669d25018e8d",
+        "tt-inaho-ce932839bdc9"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,
       "legacyPatternId": "inaho-niigata-sakata",
@@ -1454,7 +2118,11 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-sazanami-8dc84fc690af",
+        "tt-sazanami-f0299fe16e8d",
+        "tt-sazanami-f92c6dc8c44a"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 11,
       "legacyPatternId": "sazanami-tokyo-tateyama",
@@ -1478,7 +2146,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-thunderbird-0352d3696d00",
+        "tt-thunderbird-097b41beba85",
+        "tt-thunderbird-1d07ee0350d0",
+        "tt-thunderbird-276434ffb238",
+        "tt-thunderbird-4f42540efd3f",
+        "tt-thunderbird-510098d7ee08",
+        "tt-thunderbird-9a0a821d4f4e",
+        "tt-thunderbird-b983880b8c9d",
+        "tt-thunderbird-daf0fb201873",
+        "tt-thunderbird-e177546cfa3c",
+        "tt-thunderbird-fc3313e9a17d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 11,
       "legacyPatternId": "thunderbird-osaka-kanazawa",
@@ -1486,7 +2166,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-thunderbird-0352d3696d00",
+        "tt-thunderbird-097b41beba85",
+        "tt-thunderbird-1d07ee0350d0",
+        "tt-thunderbird-276434ffb238",
+        "tt-thunderbird-4f42540efd3f",
+        "tt-thunderbird-510098d7ee08",
+        "tt-thunderbird-9a0a821d4f4e",
+        "tt-thunderbird-b983880b8c9d",
+        "tt-thunderbird-daf0fb201873",
+        "tt-thunderbird-e177546cfa3c",
+        "tt-thunderbird-fc3313e9a17d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 13,
       "legacyPatternId": "thunderbird-osaka-toyama",
@@ -1494,7 +2186,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-thunderbird-0352d3696d00",
+        "tt-thunderbird-097b41beba85",
+        "tt-thunderbird-1d07ee0350d0",
+        "tt-thunderbird-276434ffb238",
+        "tt-thunderbird-4f42540efd3f",
+        "tt-thunderbird-510098d7ee08",
+        "tt-thunderbird-9a0a821d4f4e",
+        "tt-thunderbird-b983880b8c9d",
+        "tt-thunderbird-daf0fb201873",
+        "tt-thunderbird-e177546cfa3c",
+        "tt-thunderbird-fc3313e9a17d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 14,
       "legacyPatternId": "thunderbird-osaka-uozu",
@@ -1502,7 +2206,19 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-thunderbird-0352d3696d00",
+        "tt-thunderbird-097b41beba85",
+        "tt-thunderbird-1d07ee0350d0",
+        "tt-thunderbird-276434ffb238",
+        "tt-thunderbird-4f42540efd3f",
+        "tt-thunderbird-510098d7ee08",
+        "tt-thunderbird-9a0a821d4f4e",
+        "tt-thunderbird-b983880b8c9d",
+        "tt-thunderbird-daf0fb201873",
+        "tt-thunderbird-e177546cfa3c",
+        "tt-thunderbird-fc3313e9a17d"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 12,
       "legacyPatternId": "thunderbird-osaka-wakuraonsen",
@@ -1647,11 +2363,26 @@
     },
     {
       "candidatePatternIds": [
-        "tt-shinano-2e0c912b2af0",
-        "tt-shinano-68c29ceb73d4",
-        "tt-shinano-7f889217ccde",
-        "tt-shinano-947dcb2020cb",
-        "tt-shinano-9d85b58cf5b0"
+        "tt-shinano-0f2f390c6e26",
+        "tt-shinano-1e3b9bcba378",
+        "tt-shinano-258b9c8f55d7",
+        "tt-shinano-27685090af5e",
+        "tt-shinano-2a02b6149413",
+        "tt-shinano-60ca67639083",
+        "tt-shinano-76ee6970b37e",
+        "tt-shinano-8c7c73072449",
+        "tt-shinano-9678bfa8d4fe",
+        "tt-shinano-a3c4ae3eb81d",
+        "tt-shinano-b72429158553",
+        "tt-shinano-b978173f9fa5",
+        "tt-shinano-b9e7b5f9113d",
+        "tt-shinano-be25f60cd6e1",
+        "tt-shinano-d6bd3aa970af",
+        "tt-shinano-dcaab55d0565",
+        "tt-shinano-f1116c6f5286",
+        "tt-shinano-f14ea6f2e001",
+        "tt-shinano-fdf620d9302d",
+        "tt-shinano-ff56e9ca8487"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 2,
@@ -1660,7 +2391,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nanpu-1902d1f4b778",
+        "tt-nanpu-511a3ff576df"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "nanpu-okayama-nakamura",
@@ -1668,7 +2402,10 @@
       "verificationStatus": "unknown"
     },
     {
-      "candidatePatternIds": [],
+      "candidatePatternIds": [
+        "tt-nanpu-1902d1f4b778",
+        "tt-nanpu-511a3ff576df"
+      ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 3,
       "legacyPatternId": "nanpu-okayama-sukumo",
@@ -1789,8 +2526,8 @@
     },
     {
       "candidatePatternIds": [
-        "tt-ibusuki-no-tamatebako-661c422c49f0",
-        "tt-ibusuki-no-tamatebako-8ab18fcaff2a"
+        "tt-ibusuki-no-tamatebako-53c75ff917d0",
+        "tt-ibusuki-no-tamatebako-eaded7db9602"
       ],
       "classification": "new DB missing evidence",
       "legacyOptionalStopCount": 0,

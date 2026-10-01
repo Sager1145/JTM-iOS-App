@@ -1,0 +1,2214 @@
+{
+  "schema_version": "1",
+  "source": {
+    "source_id": "mlit-closures-20260401",
+    "title": "鉄軌道の廃止実績（平成5年度以降）",
+    "publisher": "国土交通省 鉄道局 都市鉄道政策課",
+    "landing_page_url": "https://www.mlit.go.jp/statistics/details/tetsudo_list.html",
+    "url": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+    "as_of": "2026-04-01",
+    "retrieved_at": "2026-09-27",
+    "sha256": "6d146d5ef32989a75ed5c660aa23c2e118d3575cd829e418bae900e3e7382679",
+    "extraction": "PDF table text cells grouped by rendered x/y coordinates with pypdf"
+  },
+  "inventory": {
+    "row_count": 78,
+    "date_bearing_source_row_count": 78,
+    "row_identity_sha256": "cddef0d6dba9df5308511b70e0488efc8b3610b3f59400d49b4bd1ff5747d575",
+    "page_row_counts": {
+      "1": 39,
+      "2": 39
+    },
+    "selector_status_counts": {
+      "resolved": 27,
+      "unresolved": 51
+    }
+  },
+  "rows": [
+    {
+      "source_row_id": "mlit-closures-20260401:001",
+      "source_page": 1,
+      "fiscal_year": 1993,
+      "official_line_name": "天王寺線",
+      "official_operator_name": "南海電気鉄道",
+      "from_station_name": "今池町",
+      "to_station_name": "天王寺",
+      "length_km": 1.2,
+      "effective_date": "1993-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "天王寺線",
+        "operator_name": "南海電気鉄道",
+        "date": "平5.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "天王寺線",
+        "operator": "南海電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:002",
+      "source_page": 1,
+      "fiscal_year": 1993,
+      "official_line_name": "本線・宮前線",
+      "official_operator_name": "函館市",
+      "from_station_name": "五稜郭公園前",
+      "to_station_name": "函館駅前",
+      "length_km": 3.6,
+      "effective_date": "1993-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "本線・宮前線",
+        "operator_name": "函館市",
+        "date": "平5.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "本線・宮前線",
+        "operator": "函館市",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:003",
+      "source_page": 1,
+      "fiscal_year": 1993,
+      "official_line_name": "新潟交通線",
+      "official_operator_name": "新潟交通",
+      "from_station_name": "月潟",
+      "to_station_name": "燕",
+      "length_km": 11.9,
+      "effective_date": "1993-08-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "新潟交通線",
+        "operator_name": "新潟交通",
+        "date": "平5.8.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "新潟交通線",
+        "operator": "新潟交通",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:004",
+      "source_page": 1,
+      "fiscal_year": 1993,
+      "official_line_name": "東京モノレール羽田線",
+      "official_operator_name": "東京モノレール",
+      "from_station_name": "羽田整備場",
+      "to_station_name": "羽田",
+      "length_km": 1.2,
+      "effective_date": "1993-09-26",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "東京モノレール羽田線",
+        "operator_name": "東京モノレール",
+        "date": "平5.9.26"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "東京モノレール羽田線",
+        "operator": "東京モノレール",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:005",
+      "source_page": 1,
+      "fiscal_year": 1994,
+      "official_line_name": "野上線",
+      "official_operator_name": "野上電気鉄道",
+      "from_station_name": "日方",
+      "to_station_name": "登山口",
+      "length_km": 11.4,
+      "effective_date": "1994-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "野上線",
+        "operator_name": "野上電気鉄道",
+        "date": "平6.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "野上線",
+        "operator": "野上電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:006",
+      "source_page": 1,
+      "fiscal_year": 1994,
+      "official_line_name": "函館線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "砂川",
+      "to_station_name": "上砂川",
+      "length_km": 7.3,
+      "effective_date": "1994-05-16",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "函館線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平6.5.16"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "函館線",
+        "operator": "ＪＲ北海道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:007",
+      "source_page": 1,
+      "fiscal_year": 1994,
+      "official_line_name": "志度線",
+      "official_operator_name": "高松琴平電気鉄道",
+      "from_station_name": "（現）瓦町",
+      "to_station_name": "（新）瓦町",
+      "length_km": 0.2,
+      "effective_date": "1994-07-31",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "志度線",
+        "operator_name": "高松琴平電気鉄道",
+        "date": "平6.7.31"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "志度線",
+        "operator": "高松琴平電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:008",
+      "source_page": 1,
+      "fiscal_year": 1994,
+      "official_line_name": "小坂線",
+      "official_operator_name": "小坂製錬",
+      "from_station_name": "大館",
+      "to_station_name": "小坂",
+      "length_km": 22.3,
+      "effective_date": "1994-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "小坂線",
+        "operator_name": "小坂製錬",
+        "date": "平6.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "小坂線",
+        "operator": "小坂製錬",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:009",
+      "source_page": 1,
+      "fiscal_year": 1995,
+      "official_line_name": "深名線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "深川",
+      "to_station_name": "名寄",
+      "length_km": 121.8,
+      "effective_date": "1995-09-04",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "深名線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平7.9.4"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "深名線",
+        "operator": "ＪＲ北海道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:010",
+      "source_page": 1,
+      "fiscal_year": 1996,
+      "official_line_name": "東海道線",
+      "official_operator_name": "ＪＲ東日本",
+      "from_station_name": "品川",
+      "to_station_name": "浜松町",
+      "length_km": 3.7,
+      "effective_date": "1996-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "東海道線",
+        "operator_name": "ＪＲ東日本",
+        "date": "平8.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "東海道線",
+        "operator": "ＪＲ東日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:011",
+      "source_page": 1,
+      "fiscal_year": 1996,
+      "official_line_name": "片町線",
+      "official_operator_name": "ＪＲ西日本",
+      "from_station_name": "京橋",
+      "to_station_name": "片町",
+      "length_km": 0.5,
+      "effective_date": "1997-03-08",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "片町線",
+        "operator_name": "ＪＲ西日本",
+        "date": "平9.3.8"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "片町線",
+        "operator": "ＪＲ西日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:012",
+      "source_page": 1,
+      "fiscal_year": 1997,
+      "official_line_name": "美称線",
+      "official_operator_name": "ＪＲ西日本",
+      "from_station_name": "南大嶺",
+      "to_station_name": "大嶺",
+      "length_km": 2.8,
+      "effective_date": "1997-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "美称線",
+        "operator_name": "ＪＲ西日本",
+        "date": "平9.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "美称線",
+        "operator": "ＪＲ西日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:013",
+      "source_page": 1,
+      "fiscal_year": 1997,
+      "official_line_name": "信越線",
+      "official_operator_name": "ＪＲ東日本",
+      "from_station_name": "横川",
+      "to_station_name": "軽井沢",
+      "length_km": 11.7,
+      "effective_date": "1997-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "信越線",
+        "operator_name": "ＪＲ東日本",
+        "date": "平9.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "信越線",
+        "operator": "ＪＲ東日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:014",
+      "source_page": 1,
+      "fiscal_year": 1997,
+      "official_line_name": "室蘭線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "東室蘭起点7.0ｷﾛ",
+      "to_station_name": "室蘭",
+      "length_km": 1.1,
+      "effective_date": "1997-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "室蘭線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平9.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "室蘭線",
+        "operator": "ＪＲ北海道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:015",
+      "source_page": 1,
+      "fiscal_year": 1997,
+      "official_line_name": "京津線",
+      "official_operator_name": "京阪電気鉄道",
+      "from_station_name": "京津三条",
+      "to_station_name": "御陵",
+      "length_km": 3.9,
+      "effective_date": "1997-10-12",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "京津線",
+        "operator_name": "京阪電気鉄道",
+        "date": "平9.10.12"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "京津線",
+        "operator": "京阪電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:016",
+      "source_page": 1,
+      "fiscal_year": 1998,
+      "official_line_name": "黒石線",
+      "official_operator_name": "弘南鉄道",
+      "from_station_name": "川部",
+      "to_station_name": "黒石",
+      "length_km": 6.2,
+      "effective_date": "1998-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "黒石線",
+        "operator_name": "弘南鉄道",
+        "date": "平10.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "黒石線",
+        "operator": "弘南鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:017",
+      "source_page": 1,
+      "fiscal_year": 1999,
+      "official_line_name": "美濃町線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "関",
+      "to_station_name": "美濃",
+      "length_km": 6.0,
+      "effective_date": "1999-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "美濃町線",
+        "operator_name": "名古屋鉄道",
+        "date": "平11.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "美濃町線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:018",
+      "source_page": 1,
+      "fiscal_year": 1999,
+      "official_line_name": "新潟交通線",
+      "official_operator_name": "新潟交通",
+      "from_station_name": "東関屋",
+      "to_station_name": "月潟",
+      "length_km": 21.6,
+      "effective_date": "1999-04-05",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "新潟交通線",
+        "operator_name": "新潟交通",
+        "date": "平11.4.5"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "新潟交通線",
+        "operator": "新潟交通",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:019",
+      "source_page": 1,
+      "fiscal_year": 1999,
+      "official_line_name": "蒲原鉄道線",
+      "official_operator_name": "蒲原鉄道",
+      "from_station_name": "五泉",
+      "to_station_name": "村松",
+      "length_km": 4.2,
+      "effective_date": "1999-10-04",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "蒲原鉄道線",
+        "operator_name": "蒲原鉄道",
+        "date": "平11.10.4"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "蒲原鉄道線",
+        "operator": "蒲原鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:020",
+      "source_page": 1,
+      "fiscal_year": 2000,
+      "official_line_name": "北九州線",
+      "official_operator_name": "西日本鉄道",
+      "from_station_name": "黒崎駅前",
+      "to_station_name": "折尾",
+      "length_km": 5.0,
+      "effective_date": "2000-11-26",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "北九州線",
+        "operator_name": "西日本鉄道",
+        "date": "平12.11.26"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "北九州線",
+        "operator": "西日本鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:021",
+      "source_page": 1,
+      "fiscal_year": 2000,
+      "official_line_name": "東海道本線西名古屋港線",
+      "official_operator_name": "ＪＲ東海",
+      "from_station_name": "名古屋貨物ﾀｰﾐﾅﾙ",
+      "to_station_name": "西名古屋港",
+      "length_km": 5.6,
+      "effective_date": "2001-03-31",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "東海道本線西名古屋港線",
+        "operator_name": "ＪＲ東海",
+        "date": "平13.3.31"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "東海道本線西名古屋港線",
+        "operator": "ＪＲ東海",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:022",
+      "source_page": 1,
+      "fiscal_year": 2000,
+      "official_line_name": "向ヶ丘遊園ﾓﾉﾚｰﾙ線",
+      "official_operator_name": "小田急電鉄",
+      "from_station_name": "向ヶ丘遊園",
+      "to_station_name": "向ヶ丘遊園正門",
+      "length_km": 1.1,
+      "effective_date": "2001-02-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "向ヶ丘遊園ﾓﾉﾚｰﾙ線",
+        "operator_name": "小田急電鉄",
+        "date": "平13.2.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "向ヶ丘遊園ﾓﾉﾚｰﾙ線",
+        "operator": "小田急電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:023",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "七尾線",
+      "official_operator_name": "のと鉄道",
+      "from_station_name": "穴水",
+      "to_station_name": "輪島",
+      "length_km": 20.4,
+      "effective_date": "2001-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "七尾線",
+        "operator_name": "のと鉄道",
+        "date": "平13.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "七尾線",
+        "operator": "のと鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:024",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "大畑線",
+      "official_operator_name": "下北交通",
+      "from_station_name": "下北",
+      "to_station_name": "大畑",
+      "length_km": 18.0,
+      "effective_date": "2001-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "大畑線",
+        "operator_name": "下北交通",
+        "date": "平13.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "大畑線",
+        "operator": "下北交通",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:025",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "揖斐線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "黒野",
+      "to_station_name": "本揖斐",
+      "length_km": 5.6,
+      "effective_date": "2001-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "揖斐線",
+        "operator_name": "名古屋鉄道",
+        "date": "平13.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "揖斐線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:026",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "谷汲線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "黒野",
+      "to_station_name": "谷汲",
+      "length_km": 11.2,
+      "effective_date": "2001-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "谷汲線",
+        "operator_name": "〃",
+        "date": "平13.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "谷汲線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:027",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "八百津線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "明智",
+      "to_station_name": "八百津",
+      "length_km": 7.3,
+      "effective_date": "2001-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "八百津線",
+        "operator_name": "〃",
+        "date": "平13.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "八百津線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:028",
+      "source_page": 1,
+      "fiscal_year": 2001,
+      "official_line_name": "竹鼻線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "江吉良",
+      "to_station_name": "大須",
+      "length_km": 6.7,
+      "effective_date": "2001-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "竹鼻線",
+        "operator_name": "〃",
+        "date": "平13.10.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "竹鼻線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:029",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "河東線",
+      "official_operator_name": "長野電鉄",
+      "from_station_name": "信州中野",
+      "to_station_name": "木島",
+      "length_km": 12.9,
+      "effective_date": "2002-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "河東線",
+        "operator_name": "長野電鉄",
+        "date": "平14.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "河東線",
+        "operator": "長野電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:030",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "南部縦貫鉄道線",
+      "official_operator_name": "南部縦貫鉄道",
+      "from_station_name": "野辺地",
+      "to_station_name": "七戸",
+      "length_km": 20.9,
+      "effective_date": "2002-08-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "南部縦貫鉄道線",
+        "operator_name": "南部縦貫鉄道",
+        "date": "平14.8.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "南部縦貫鉄道線",
+        "operator": "南部縦貫鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:031",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "永平寺線",
+      "official_operator_name": "京福電気鉄道",
+      "from_station_name": "東古市",
+      "to_station_name": "永平寺",
+      "length_km": 6.2,
+      "effective_date": "2002-10-21",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "永平寺線",
+        "operator_name": "京福電気鉄道",
+        "date": "平14.10.21"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "永平寺線",
+        "operator": "京福電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:032",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "和歌山港線",
+      "official_operator_name": "南海電気鉄道",
+      "from_station_name": "和歌山港",
+      "to_station_name": "水軒",
+      "length_km": 2.6,
+      "effective_date": "2002-05-26",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "和歌山港線",
+        "operator_name": "南海電気鉄道",
+        "date": "平14.5.26"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "和歌山港線",
+        "operator": "南海電気鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:033",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "有田鉄道線",
+      "official_operator_name": "有田鉄道",
+      "from_station_name": "藤並",
+      "to_station_name": "金屋口",
+      "length_km": 5.6,
+      "effective_date": "2003-01-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "有田鉄道線",
+        "operator_name": "有田鉄道",
+        "date": "平15.1.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "有田鉄道線",
+        "operator": "有田鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:034",
+      "source_page": 1,
+      "fiscal_year": 2002,
+      "official_line_name": "小牧線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "味鋺",
+      "to_station_name": "上飯田",
+      "length_km": 2.0,
+      "effective_date": "2003-03-27",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "小牧線",
+        "operator_name": "名古屋鉄道",
+        "date": "平15.3.27"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "小牧線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:035",
+      "source_page": 1,
+      "fiscal_year": 2003,
+      "official_line_name": "ドリームランド線",
+      "official_operator_name": "ドリーム開発",
+      "from_station_name": "大船",
+      "to_station_name": "ドリームランド",
+      "length_km": 5.3,
+      "effective_date": "2003-09-18",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "ドリームランド線",
+        "operator_name": "ドリーム開発",
+        "date": "平15.9.18"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "ドリームランド線",
+        "operator": "ドリーム開発",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:036",
+      "source_page": 1,
+      "fiscal_year": 2003,
+      "official_line_name": "可部線",
+      "official_operator_name": "ＪＲ西日本",
+      "from_station_name": "可部",
+      "to_station_name": "三段峡",
+      "length_km": 46.2,
+      "effective_date": "2003-12-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "可部線",
+        "operator_name": "ＪＲ西日本",
+        "date": "平15.12.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "可部線",
+        "operator": "ＪＲ西日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:037",
+      "source_page": 1,
+      "fiscal_year": 2003,
+      "official_line_name": "東横線",
+      "official_operator_name": "東京急行電鉄",
+      "from_station_name": "横浜",
+      "to_station_name": "桜木町",
+      "length_km": 2.0,
+      "effective_date": "2004-01-31",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "東横線",
+        "operator_name": "東京急行電鉄",
+        "date": "平16.1.31"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "東横線",
+        "operator": "東京急行電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:038",
+      "source_page": 1,
+      "fiscal_year": 2004,
+      "official_line_name": "三河線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "碧南",
+      "to_station_name": "吉良吉田",
+      "length_km": 16.4,
+      "effective_date": "2004-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "三河線",
+        "operator_name": "名古屋鉄道",
+        "date": "平16.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "三河線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:039",
+      "source_page": 1,
+      "fiscal_year": 2004,
+      "official_line_name": "〃",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "猿投",
+      "to_station_name": "西中金",
+      "length_km": 8.6,
+      "effective_date": "2004-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "〃",
+        "operator_name": "〃",
+        "date": "平16.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "〃",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:040",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "揖斐線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "忠節",
+      "to_station_name": "黒野",
+      "length_km": 12.7,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "揖斐線",
+        "operator_name": "名古屋鉄道",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "揖斐線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:041",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "美濃町線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "徹明町",
+      "to_station_name": "関",
+      "length_km": 18.8,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "美濃町線",
+        "operator_name": "〃",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "美濃町線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:042",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "田神線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "田神",
+      "to_station_name": "競輪場前",
+      "length_km": 1.4,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "田神線",
+        "operator_name": "〃",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "田神線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:043",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "岐阜市内線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "岐阜駅前",
+      "to_station_name": "忠節",
+      "length_km": 3.7,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "岐阜市内線",
+        "operator_name": "〃",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "岐阜市内線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:044",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "日立電鉄線",
+      "official_operator_name": "日立電鉄",
+      "from_station_name": "常北太田",
+      "to_station_name": "鮎川",
+      "length_km": 18.1,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "日立電鉄線",
+        "operator_name": "日立電鉄",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "日立電鉄線",
+        "operator": "日立電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:045",
+      "source_page": 2,
+      "fiscal_year": 2005,
+      "official_line_name": "能登線",
+      "official_operator_name": "のと鉄道",
+      "from_station_name": "穴水",
+      "to_station_name": "蛸島",
+      "length_km": 61.0,
+      "effective_date": "2005-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "能登線",
+        "operator_name": "のと鉄道",
+        "date": "平17.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "能登線",
+        "operator": "のと鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:046",
+      "source_page": 2,
+      "fiscal_year": 2006,
+      "official_line_name": "ふるさと銀河線",
+      "official_operator_name": "北海道ちほく高原鉄道",
+      "from_station_name": "北見",
+      "to_station_name": "池田",
+      "length_km": 140.0,
+      "effective_date": "2006-04-21",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "ふるさと銀河線",
+        "operator_name": "北海道ちほく高原鉄道",
+        "date": "平18.4.21"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "ふるさと銀河線",
+        "operator": "北海道ちほく高原鉄道",
+        "release": "N02-05",
+        "expected": {
+          "from_station": "北見",
+          "to_station": "池田",
+          "business_km": 140.0,
+          "historical_sections": 63,
+          "historical_station_features": 33,
+          "surveyed_overlay_km": 139.21
+        },
+        "review_event_id": "jp.chiho.ikeda-kitami",
+        "review_source_row_id": "mlit-closures-20260401:046",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:047",
+      "source_page": 2,
+      "fiscal_year": 2006,
+      "official_line_name": "桃花台線",
+      "official_operator_name": "桃花台新交通",
+      "from_station_name": "小牧",
+      "to_station_name": "桃花台東",
+      "length_km": 7.4,
+      "effective_date": "2006-10-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "桃花台線",
+        "operator_name": "桃花台新交通",
+        "date": "平18.10.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "桃花台線",
+        "operator": "桃花台新交通",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "小牧",
+          "to_station": "桃花台東",
+          "business_km": 7.4,
+          "historical_sections": 12,
+          "historical_station_features": 7,
+          "surveyed_overlay_km": 5.87
+        },
+        "review_event_id": "jp.tokadai.komaki-tokadaihigashi",
+        "review_source_row_id": "mlit-closures-20260401:047",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:048",
+      "source_page": 2,
+      "fiscal_year": 2006,
+      "official_line_name": "神岡線",
+      "official_operator_name": "神岡鉄道",
+      "from_station_name": "猪谷",
+      "to_station_name": "奥飛騨温泉口",
+      "length_km": 19.9,
+      "effective_date": "2006-12-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "神岡線",
+        "operator_name": "神岡鉄道",
+        "date": "平18.12.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "神岡線",
+        "operator": "神岡鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "猪谷",
+          "to_station": "奥飛騨温泉口",
+          "business_km": 19.9,
+          "historical_sections": 14,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 18.89
+        },
+        "review_event_id": "jp.kamioka.inotani-okuhidaonsenguchi",
+        "review_source_row_id": "mlit-closures-20260401:048",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:049",
+      "source_page": 2,
+      "fiscal_year": 2007,
+      "official_line_name": "くりはら田園鉄道線",
+      "official_operator_name": "くりはら田園鉄道",
+      "from_station_name": "石越",
+      "to_station_name": "細倉マインパーク前",
+      "length_km": 25.7,
+      "effective_date": "2007-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "くりはら田園鉄道線",
+        "operator_name": "くりはら田園鉄道",
+        "date": "平19.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "くりはら田園鉄道線",
+        "operator": "くりはら田園鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "石越",
+          "to_station": "細倉マインパーク前",
+          "business_km": 25.7,
+          "historical_sections": 31,
+          "historical_station_features": 16,
+          "surveyed_overlay_km": 25.65
+        },
+        "review_event_id": "jp.kurihara.ishikoshi-hosokura",
+        "review_source_row_id": "mlit-closures-20260401:049",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:050",
+      "source_page": 2,
+      "fiscal_year": 2007,
+      "official_line_name": "鹿島鉄道線",
+      "official_operator_name": "鹿島鉄道",
+      "from_station_name": "石岡",
+      "to_station_name": "鉾田",
+      "length_km": 27.2,
+      "effective_date": "2007-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "鹿島鉄道線",
+        "operator_name": "鹿島鉄道",
+        "date": "平19.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "鹿島鉄道線",
+        "operator": "鹿島鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "石岡",
+          "to_station": "鉾田",
+          "business_km": 27.2,
+          "historical_sections": 32,
+          "historical_station_features": 17,
+          "surveyed_overlay_km": 27.1
+        },
+        "review_event_id": "jp.kashima.ishioka-hokota",
+        "review_source_row_id": "mlit-closures-20260401:050",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:051",
+      "source_page": 2,
+      "fiscal_year": 2007,
+      "official_line_name": "宮地岳線",
+      "official_operator_name": "西日本鉄道",
+      "from_station_name": "西鉄新宮",
+      "to_station_name": "津屋崎",
+      "length_km": 9.9,
+      "effective_date": "2007-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "宮地岳線",
+        "operator_name": "西日本鉄道",
+        "date": "平19.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "宮地岳線",
+        "operator": "西日本鉄道",
+        "release": "N02-06",
+        "expected": {
+          "from_station": "西鉄新宮",
+          "to_station": "津屋崎",
+          "business_km": 9.9,
+          "historical_sections": 12,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 9.82
+        },
+        "review_event_id": "jp.nishitetsu.miyajidake.shingu-tsuyazaki",
+        "review_source_row_id": "mlit-closures-20260401:051",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:052",
+      "source_page": 2,
+      "fiscal_year": 2007,
+      "official_line_name": "高千穂線",
+      "official_operator_name": "高千穂鉄道",
+      "from_station_name": "槇峰",
+      "to_station_name": "延岡",
+      "length_km": 29.1,
+      "effective_date": "2007-09-06",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "高千穂線",
+        "operator_name": "高千穂鉄道",
+        "date": "平19.9.6"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "高千穂線",
+        "operator": "高千穂鉄道",
+        "release": "N02-07",
+        "bbox": [
+          131.4474,
+          32.5,
+          131.75,
+          32.75
+        ],
+        "expected": {
+          "from_station": "槇峰",
+          "to_station": "延岡",
+          "business_km": 29.1
+        },
+        "review_event_id": "jp.takachiho.nobeoka-makimine",
+        "review_source_row_id": "mlit-closures-20260401:052",
+        "evidence_references": [
+          "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:053",
+      "source_page": 2,
+      "fiscal_year": 2008,
+      "official_line_name": "島原鉄道線",
+      "official_operator_name": "島原鉄道",
+      "from_station_name": "島原外港",
+      "to_station_name": "加津佐",
+      "length_km": 35.3,
+      "effective_date": "2008-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "島原鉄道線",
+        "operator_name": "島原鉄道",
+        "date": "平20.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "島原鉄道線",
+        "operator": "島原鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "島原外港",
+          "to_station": "加津佐",
+          "business_km": 35.3,
+          "historical_sections": 40,
+          "historical_station_features": 23,
+          "surveyed_overlay_km": 35.19
+        },
+        "review_event_id": "jp.shimabara.shimabaragaiko-kazusa",
+        "review_source_row_id": "mlit-closures-20260401:053",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:054",
+      "source_page": 2,
+      "fiscal_year": 2008,
+      "official_line_name": "三木線",
+      "official_operator_name": "三木鉄道",
+      "from_station_name": "厄神",
+      "to_station_name": "三木",
+      "length_km": 6.6,
+      "effective_date": "2008-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "三木線",
+        "operator_name": "三木鉄道",
+        "date": "平20.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "三木線",
+        "operator": "三木鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "厄神",
+          "to_station": "三木",
+          "business_km": 6.6,
+          "historical_sections": 16,
+          "historical_station_features": 9,
+          "surveyed_overlay_km": 6.66
+        },
+        "review_event_id": "jp.miki.miki-yakujin",
+        "review_source_row_id": "mlit-closures-20260401:054",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:055",
+      "source_page": 2,
+      "fiscal_year": 2008,
+      "official_line_name": "高千穂線",
+      "official_operator_name": "高千穂鉄道",
+      "from_station_name": "槇峰",
+      "to_station_name": "高千穂",
+      "length_km": 20.9,
+      "effective_date": "2008-12-28",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "高千穂線",
+        "operator_name": "高千穂鉄道",
+        "date": "平20.12.28"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "高千穂線",
+        "operator": "高千穂鉄道",
+        "release": "N02-07",
+        "expected": {
+          "from_station": "槇峰",
+          "to_station": "高千穂",
+          "business_km": 20.9
+        },
+        "review_event_id": "jp.takachiho.makimine-takachiho",
+        "review_source_row_id": "mlit-closures-20260401:055",
+        "evidence_references": [
+          "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:056",
+      "source_page": 2,
+      "fiscal_year": 2008,
+      "official_line_name": "ﾓﾝｷｰﾊﾟｰｸ･ﾓﾉﾚｰﾙ線",
+      "official_operator_name": "名古屋鉄道",
+      "from_station_name": "犬山遊園",
+      "to_station_name": "動物園",
+      "length_km": 1.2,
+      "effective_date": "2008-12-28",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "ﾓﾝｷｰﾊﾟｰｸ･ﾓﾉﾚｰﾙ線",
+        "operator_name": "名古屋鉄道",
+        "date": "平20.12.28"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "ﾓﾝｷｰﾊﾟｰｸ･ﾓﾉﾚｰﾙ線",
+        "operator": "名古屋鉄道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:057",
+      "source_page": 2,
+      "fiscal_year": 2009,
+      "official_line_name": "石川線",
+      "official_operator_name": "北陸鉄道",
+      "from_station_name": "鶴来",
+      "to_station_name": "加賀一の宮",
+      "length_km": 2.1,
+      "effective_date": "2009-11-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "石川線",
+        "operator_name": "北陸鉄道",
+        "date": "平21.11.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "石川線",
+        "operator": "北陸鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "鶴来",
+          "to_station": "加賀一の宮",
+          "business_km": 2.1,
+          "historical_sections": 4,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 2.05
+        },
+        "review_event_id": "jp.hokutetsu.ishikawa.tsurugi-kaganoichinomiya",
+        "review_source_row_id": "mlit-closures-20260401:057",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:058",
+      "source_page": 2,
+      "fiscal_year": 2012,
+      "official_line_name": "屋代線",
+      "official_operator_name": "長野電鉄",
+      "from_station_name": "屋代",
+      "to_station_name": "須坂",
+      "length_km": 24.4,
+      "effective_date": "2012-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "屋代線",
+        "operator_name": "長野電鉄",
+        "date": "平24.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "屋代線",
+        "operator": "長野電鉄",
+        "release": "N02-11",
+        "expected": {
+          "from_station": "屋代",
+          "to_station": "須坂",
+          "business_km": 24.4,
+          "historical_sections": 23,
+          "historical_station_features": 13,
+          "surveyed_overlay_km": 24.11
+        },
+        "review_event_id": "jp.nagaden.yashiro",
+        "review_source_row_id": "mlit-closures-20260401:058",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:059",
+      "source_page": 2,
+      "fiscal_year": 2012,
+      "official_line_name": "十和田観光電鉄線",
+      "official_operator_name": "十和田観光電鉄",
+      "from_station_name": "十和田市",
+      "to_station_name": "三沢",
+      "length_km": 14.7,
+      "effective_date": "2012-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "十和田観光電鉄線",
+        "operator_name": "十和田観光電鉄",
+        "date": "平24.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "十和田観光電鉄線",
+        "operator": "十和田観光電鉄",
+        "release": "N02-11",
+        "expected": {
+          "from_station": "十和田市",
+          "to_station": "三沢",
+          "business_km": 14.7,
+          "historical_sections": 22,
+          "historical_station_features": 11,
+          "surveyed_overlay_km": 14.5
+        },
+        "review_event_id": "jp.towada.towadashi-misawa",
+        "review_source_row_id": "mlit-closures-20260401:059",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:060",
+      "source_page": 2,
+      "fiscal_year": 2014,
+      "official_line_name": "岩泉線",
+      "official_operator_name": "ＪＲ東日本",
+      "from_station_name": "茂市",
+      "to_station_name": "岩泉",
+      "length_km": 38.4,
+      "effective_date": "2014-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "岩泉線",
+        "operator_name": "ＪＲ東日本",
+        "date": "平26.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "岩泉線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-13",
+        "expected": {
+          "from_station": "茂市",
+          "to_station": "岩泉",
+          "business_km": 38.4
+        },
+        "review_event_id": "jp.jre.iwaizumi",
+        "review_source_row_id": "mlit-closures-20260401:060",
+        "evidence_references": [
+          "https://www.jreast.co.jp/railway/pdf/iwaizumi_course.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:061",
+      "source_page": 2,
+      "fiscal_year": 2014,
+      "official_line_name": "江差線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "木古内",
+      "to_station_name": "江差",
+      "length_km": 42.1,
+      "effective_date": "2014-05-12",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "江差線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平26.5.12"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "江差線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-13",
+        "expected": {
+          "from_station": "木古内",
+          "to_station": "江差",
+          "business_km": 42.1,
+          "historical_sections": 19,
+          "historical_station_features": 10,
+          "surveyed_overlay_km": 41.79
+        },
+        "review_event_id": "jp.jrh.esashi.kikonai-esashi",
+        "review_source_row_id": "mlit-closures-20260401:061",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:062",
+      "source_page": 2,
+      "fiscal_year": 2015,
+      "official_line_name": "上町線",
+      "official_operator_name": "阪堺電気軌道",
+      "from_station_name": "住吉",
+      "to_station_name": "住吉公園",
+      "length_km": 0.2,
+      "effective_date": "2016-01-31",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "上町線",
+        "operator_name": "阪堺電気軌道",
+        "date": "平28.1.31"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "isolated_historical_segment",
+        "line_name": "上町線",
+        "operator": "阪堺電気軌道",
+        "release": "N02-15",
+        "bbox": [
+          135.49055,
+          34.61285,
+          135.49082,
+          34.61355
+        ],
+        "historical_bbox": [
+          135.4905,
+          34.6128,
+          135.49225,
+          34.61465
+        ],
+        "stations": [
+          "住吉公園"
+        ],
+        "historical_stations": [
+          "住吉公園"
+        ],
+        "review_event_id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+        "review_source_row_id": "mlit-closures-20260401:062",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:063",
+      "source_page": 2,
+      "fiscal_year": 2016,
+      "official_line_name": "留萌線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "留萌",
+      "to_station_name": "増毛",
+      "length_km": 16.7,
+      "effective_date": "2016-12-05",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "留萌線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平28.12.5"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "留萌線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-15",
+        "expected": {
+          "from_station": "留萌",
+          "to_station": "増毛",
+          "business_km": 16.7,
+          "historical_sections": 16,
+          "historical_station_features": 8,
+          "surveyed_overlay_km": 16.5
+        },
+        "review_event_id": "jp.jrh.rumoi.rumoi-mashike",
+        "review_source_row_id": "mlit-closures-20260401:063",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:064",
+      "source_page": 2,
+      "fiscal_year": 2018,
+      "official_line_name": "三江線",
+      "official_operator_name": "ＪＲ西日本",
+      "from_station_name": "江津",
+      "to_station_name": "三次",
+      "length_km": 108.1,
+      "effective_date": "2018-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "三江線",
+        "operator_name": "ＪＲ西日本",
+        "date": "平30.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "三江線",
+        "operator": "西日本旅客鉄道",
+        "release": "N02-17",
+        "expected": {
+          "from_station": "江津",
+          "to_station": "三次",
+          "business_km": 108.1,
+          "historical_sections": 67,
+          "historical_station_features": 35,
+          "surveyed_overlay_km": 107.37
+        },
+        "review_event_id": "jp.jrw.sanko",
+        "review_source_row_id": "mlit-closures-20260401:064",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:065",
+      "source_page": 2,
+      "fiscal_year": 2018,
+      "official_line_name": "片町線",
+      "official_operator_name": "ＪＲ西日本",
+      "from_station_name": "鴫野",
+      "to_station_name": "神崎川信号場",
+      "length_km": 6.9,
+      "effective_date": "2019-03-16",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "片町線",
+        "operator_name": "〃",
+        "date": "平31.3.16"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "片町線",
+        "operator": "ＪＲ西日本",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:066",
+      "source_page": 2,
+      "fiscal_year": 2019,
+      "official_line_name": "石勝線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "新夕張",
+      "to_station_name": "夕張",
+      "length_km": 16.1,
+      "effective_date": "2019-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "石勝線",
+        "operator_name": "ＪＲ北海道",
+        "date": "平31.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "石勝線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-18",
+        "expected": {
+          "from_station": "新夕張",
+          "to_station": "夕張",
+          "business_km": 16.1,
+          "historical_sections": 10,
+          "historical_station_features": 5,
+          "surveyed_overlay_km": 15.57
+        },
+        "review_event_id": "jp.jrh.sekisho.yubari-branch",
+        "review_source_row_id": "mlit-closures-20260401:066",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:067",
+      "source_page": 2,
+      "fiscal_year": 2019,
+      "official_line_name": "大船渡線",
+      "official_operator_name": "ＪＲ東日本",
+      "from_station_name": "気仙沼",
+      "to_station_name": "盛",
+      "length_km": 43.7,
+      "effective_date": "2020-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "大船渡線",
+        "operator_name": "ＪＲ東日本",
+        "date": "令2.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "大船渡線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "気仙沼",
+          "to_station": "盛",
+          "business_km": 43.7
+        },
+        "review_event_id": "jp.jre.ofunato.kesennuma-sakari",
+        "review_source_row_id": "mlit-closures-20260401:067",
+        "evidence_references": [
+          "https://www.city.ofunato.iwate.jp/uploads/contents/archive_0000003207_00/17705.pdf",
+          "https://www.jreast.co.jp/press/2019/20200131_ho01.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:068",
+      "source_page": 2,
+      "fiscal_year": 2020,
+      "official_line_name": "気仙沼線",
+      "official_operator_name": "ＪＲ東日本",
+      "from_station_name": "柳津",
+      "to_station_name": "気仙沼",
+      "length_km": 55.3,
+      "effective_date": "2020-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "気仙沼線",
+        "operator_name": "〃",
+        "date": "令2.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "気仙沼線",
+        "operator": "東日本旅客鉄道",
+        "release": "N02-08",
+        "expected": {
+          "from_station": "柳津",
+          "to_station": "気仙沼",
+          "business_km": 55.3
+        },
+        "review_event_id": "jp.jre.kesennuma.yanaizu-kesennuma",
+        "review_source_row_id": "mlit-closures-20260401:068",
+        "evidence_references": [
+          "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+          "https://www.jreast.co.jp/press/2019/20191112_ho01.pdf",
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:069",
+      "source_page": 2,
+      "fiscal_year": 2020,
+      "official_line_name": "札沼線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "北海道医療大学",
+      "to_station_name": "新十津川",
+      "length_km": 47.6,
+      "effective_date": "2020-05-07",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "札沼線",
+        "operator_name": "ＪＲ北海道",
+        "date": "令2.5.7"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "札沼線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-20",
+        "station_release": "N02-19",
+        "expected": {
+          "from_station": "北海道医療大学",
+          "to_station": "新十津川",
+          "business_km": 47.6,
+          "historical_sections": 33,
+          "historical_station_features": 16,
+          "surveyed_overlay_km": 47.63
+        },
+        "review_event_id": "jp.jrh.sassho.iryodaigaku-shintotsukawa",
+        "review_source_row_id": "mlit-closures-20260401:069",
+        "evidence_references": [
+          "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20200416_KO_Sassyouline.pdf",
+          "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20181221_KO_Sassyoline.pdf",
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:070",
+      "source_page": 2,
+      "fiscal_year": 2021,
+      "official_line_name": "日高線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "鵡川",
+      "to_station_name": "様似",
+      "length_km": 116.0,
+      "effective_date": "2021-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "日高線",
+        "operator_name": "ＪＲ北海道",
+        "date": "令3.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "日高線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-20",
+        "expected": {
+          "from_station": "鵡川",
+          "to_station": "様似",
+          "business_km": 116.0
+        },
+        "review_event_id": "jp.jrh.hidaka.mukawa-samani",
+        "review_source_row_id": "mlit-closures-20260401:070",
+        "evidence_references": [
+          "https://www.jrhokkaido.co.jp/press/2015/150113-3.pdf",
+          "https://www.jrhokkaido.co.jp/press/2015/150227-1.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:071",
+      "source_page": 2,
+      "fiscal_year": 2021,
+      "official_line_name": "留萌線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "石狩沼田",
+      "to_station_name": "留萌",
+      "length_km": 35.7,
+      "effective_date": "2023-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "留萌線",
+        "operator_name": "ＪＲ北海道",
+        "date": "令5.4.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "留萌線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-22",
+        "expected": {
+          "from_station": "石狩沼田",
+          "to_station": "留萌",
+          "business_km": 35.7,
+          "historical_sections": 17,
+          "historical_station_features": 7,
+          "surveyed_overlay_km": 35.97
+        },
+        "review_event_id": "jp.jrh.rumoi.ishikarinumata-rumoi",
+        "review_source_row_id": "mlit-closures-20260401:071",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:072",
+      "source_page": 2,
+      "fiscal_year": 2023,
+      "official_line_name": "鋼索線",
+      "official_operator_name": "能勢電鉄",
+      "from_station_name": "黒川",
+      "to_station_name": "ケーブル山上",
+      "length_km": 0.6,
+      "effective_date": "2023-12-03",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "鋼索線",
+        "operator_name": "能勢電鉄",
+        "date": "令5.12.3"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "鋼索線",
+        "operator": "能勢電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:073",
+      "source_page": 2,
+      "fiscal_year": 2023,
+      "official_line_name": "上野懸垂線",
+      "official_operator_name": "東京都交通局",
+      "from_station_name": "上野動物園東園",
+      "to_station_name": "上野動物園西園",
+      "length_km": 0.3,
+      "effective_date": "2023-12-27",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "上野懸垂線",
+        "operator_name": "東京都交通局",
+        "date": "令5.12.27"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "上野懸垂線",
+        "operator": "東京都",
+        "release": "N02-22",
+        "expected": {
+          "from_station": "上野動物園東園",
+          "to_station": "上野動物園西園",
+          "business_km": 0.3,
+          "historical_sections": 3,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 0.32,
+          "runtime_sections": 6,
+          "runtime_station_features": 4,
+          "runtime_overlay_km": 0.64
+        },
+        "review_event_id": "jp.toei.ueno-monorail",
+        "review_source_row_id": "mlit-closures-20260401:073",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "https://www.kotsu.metro.tokyo.jp/about/service/pdf/05kensui_train.pdf",
+          "https://www.kotsu.metro.tokyo.jp/pickup_information/news/pdf/2018/otr_p_20190123_h_01.pdf",
+          "https://www.kotsu.metro.tokyo.jp/pickup_information/news/others/2023/otr_p_2023111311234_h.html"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:074",
+      "source_page": 2,
+      "fiscal_year": 2023,
+      "official_line_name": "根室線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "富良野",
+      "to_station_name": "新得",
+      "length_km": 81.7,
+      "effective_date": "2024-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "根室線",
+        "operator_name": "ＪＲ北海道",
+        "date": "令6.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "根室線",
+        "operator": "ＪＲ北海道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:075",
+      "source_page": 2,
+      "fiscal_year": 2024,
+      "official_line_name": "広島短距離交通瀬野線",
+      "official_operator_name": "スカイレールサービス",
+      "from_station_name": "みどり口",
+      "to_station_name": "みどり中央",
+      "length_km": 1.3,
+      "effective_date": "2024-05-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "広島短距離交通瀬野線",
+        "operator_name": "スカイレールサービス",
+        "date": "令6.5.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "広島短距離交通瀬野線",
+        "operator": "スカイレールサービス",
+        "release": "N02-23",
+        "expected": {
+          "from_station": "みどり口",
+          "to_station": "みどり中央",
+          "business_km": 1.3,
+          "historical_sections": 4,
+          "historical_station_features": 3,
+          "surveyed_overlay_km": 1.31
+        },
+        "review_event_id": "jp.skyrail.seno",
+        "review_source_row_id": "mlit-closures-20260401:075",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:076",
+      "source_page": 2,
+      "fiscal_year": 2024,
+      "official_line_name": "無軌条電車線",
+      "official_operator_name": "立山黒部貫光",
+      "from_station_name": "室堂",
+      "to_station_name": "大観峰",
+      "length_km": 3.7,
+      "effective_date": "2024-12-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "無軌条電車線",
+        "operator_name": "立山黒部貫光",
+        "date": "令6.12.1"
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "無軌条電車線",
+        "operator": "立山黒部貫光",
+        "release": "N02-23",
+        "expected": {
+          "from_station": "室堂",
+          "to_station": "大観峰",
+          "business_km": 3.7,
+          "historical_sections": 3,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 3.74
+        },
+        "review_event_id": "jp.tateyama.tunnel-trolleybus",
+        "review_source_row_id": "mlit-closures-20260401:076",
+        "evidence_references": [
+          "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        ]
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:077",
+      "source_page": 2,
+      "fiscal_year": 2025,
+      "official_line_name": "本線",
+      "official_operator_name": "広島電鉄",
+      "from_station_name": "広島駅",
+      "to_station_name": "的場町",
+      "length_km": 0.4,
+      "effective_date": "2025-08-03",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "本線",
+        "operator_name": "広島電鉄",
+        "date": "令7.8.3"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "本線",
+        "operator": "広島電鉄",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    },
+    {
+      "source_row_id": "mlit-closures-20260401:078",
+      "source_page": 2,
+      "fiscal_year": 2026,
+      "official_line_name": "留萌線",
+      "official_operator_name": "ＪＲ北海道",
+      "from_station_name": "深川",
+      "to_station_name": "石狩沼田",
+      "length_km": 14.4,
+      "effective_date": "2026-04-01",
+      "kind": "closure",
+      "source_cells": {
+        "line_name": "留萌線",
+        "operator_name": "ＪＲ北海道",
+        "date": "令8.4.1"
+      },
+      "selector": {
+        "status": "unresolved",
+        "line_name": "留萌線",
+        "operator": "ＪＲ北海道",
+        "reason": "Official row inventoried; canonical N02 identity and geometry scope require review."
+      }
+    }
+  ]
+}

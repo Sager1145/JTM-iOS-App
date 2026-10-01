@@ -51,7 +51,7 @@ class EastNextBatchSourcePinnedTests(unittest.TestCase):
                 "sha256:b86839567b5c38369bd19bc9e72f1e5f6b2bc323863cc488a7de414432e8cb64",
                 [
                     "2026-09-18", "2026-09-22", "2026-09-23", "2026-09-24",
-                    "2026-09-25", "2026-09-27", "2026-09-28",
+                    "2026-09-25", "2026-09-27", "2026-09-28", "2026-09-29", "2026-09-30",
                 ],
                 12,
             ),
@@ -91,7 +91,7 @@ class EastNextBatchSourcePinnedTests(unittest.TestCase):
             for row in self.exceptions
             if row["calendar_id"] in azusa_calendars
         )
-        self.assertEqual(dates, [f"2026-09-{day:02}" for day in range(18, 29)])
+        self.assertEqual(dates, [f"2026-09-{day:02}" for day in range(18, 31)])
         self.assertEqual(len(dates), len(set(dates)))
         for calendar in self.calendars:
             self.assertFalse(any(calendar[weekday] for weekday in [
@@ -132,7 +132,9 @@ class EastNextBatchSourcePinnedTests(unittest.TestCase):
             self.assertEqual(status[(trip["trip_id"], "stops")], "verified")
             self.assertEqual(status[(trip["trip_id"], "times")], "verified")
             self.assertEqual(status[(trip["trip_id"], "validity_calendar")], "verified")
-            self.assertEqual(status[(trip["trip_id"], "operator")], "unknown")
+        self.assertEqual(status[(selected_trip["trip_id"], "operator")], "partial")
+        self.assertEqual(status[(base_trip["trip_id"], "operator")], "partial")
+        self.assertEqual(status[(tokiwa_trip["trip_id"], "operator")], "partial")
 
 
 if __name__ == "__main__":

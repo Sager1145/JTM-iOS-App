@@ -1,0 +1,343 @@
+{
+  "inventory_id": "jr-west-kuroshio-20260930-closed-set",
+  "service_date": "2026-09-30",
+  "source_station_tables": {
+    "shin-osaka": "https://timetable.jr-odekake.net/station-timetable/2815076001?date=20260930",
+    "wakayama": "https://timetable.jr-odekake.net/station-timetable/3157068001?date=20260930"
+  },
+  "scope_note": "Exact-date station departure links and corresponding train-page identities/operation labels. Full printed calls staged only for trips 1–5. Source pages are not redistributed.",
+  "counts": {
+    "train_pages_running": 32,
+    "db_present_at_audit": 1,
+    "db_missing_at_audit": 31,
+    "fully_reviewed_train_pages": 32,
+    "normalized_trips_at_completion": 32,
+    "normalized_timed_calls_at_completion": 431
+  },
+  "db_snapshot": {
+    "path": "derived/train-service-timetable.sqlite",
+    "snapshot_kind": "read_only_at_inventory_generation"
+  },
+  "trains": [
+    {
+      "service_id": "kuroshio",
+      "public_number": 1,
+      "train_number": "51M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/38921?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": true,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 2,
+      "train_number": "2052M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/100391?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 3,
+      "train_number": "2053M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144311?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 4,
+      "train_number": "2054M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144451?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 5,
+      "train_number": "6055M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/198471?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 6,
+      "train_number": "2056M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144471?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 7,
+      "train_number": "2057M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/126971?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 8,
+      "train_number": "2058M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/126991?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 9,
+      "train_number": "2059M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144331?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 10,
+      "train_number": "2060M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144491?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 11,
+      "train_number": "61M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144341?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 12,
+      "train_number": "62M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144511?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 13,
+      "train_number": "2063M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144351?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 14,
+      "train_number": "2064M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144531?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 16,
+      "train_number": "66M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144541?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 17,
+      "train_number": "67M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/86211?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 19,
+      "train_number": "2069M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/18841?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 20,
+      "train_number": "2070M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/183811?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 21,
+      "train_number": "71M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/50631?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 22,
+      "train_number": "72M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/183821?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 23,
+      "train_number": "2073M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/100371?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 24,
+      "train_number": "2074M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/183851?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 25,
+      "train_number": "2075M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144361?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 26,
+      "train_number": "76M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/183831?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 27,
+      "train_number": "77M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144381?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 28,
+      "train_number": "2078M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/127011?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 29,
+      "train_number": "2079M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144401?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 30,
+      "train_number": "6080M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/198532?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 32,
+      "train_number": "2082M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/100421?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 33,
+      "train_number": "2083M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144421?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 35,
+      "train_number": "2085M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144441?date=20260930",
+      "station_table_source": "shin-osaka",
+      "direction": "southbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "kuroshio",
+      "public_number": 36,
+      "train_number": "86M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/144551?date=20260930",
+      "station_table_source": "wakayama",
+      "direction": "northbound",
+      "db_present_at_audit": false,
+      "detail_status": "reviewed_full_page"
+    }
+  ]
+}

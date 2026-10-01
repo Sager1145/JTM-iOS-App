@@ -1,0 +1,89 @@
+{
+  "candidate_id": "jr-hokkaido-s111-kamui42-lilac44-46-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "JR Hokkaido s=111 up timetable visibly selected 2026年9月30日(水); columns 25, 26 and 29 respectively print 2042M, 3044M and 3046M. Only printed passenger clocks, Sapporo arrival platforms and formation icons are transcribed. No car count, series or dated physical route is inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.kamui.42.exact-2026-09-30",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "service_class": "limited_express",
+      "public_number": "42",
+      "train_number": "2042M",
+      "origin": "旭川",
+      "destination": "札幌",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s111-kamui42-lilac44-46-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2026年9月30日(水) selected; column 25: 2042M / カムイ 42 / 毎日",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {"札幌": "(2)"},
+      "formation_icons": ["zensekisitei0.png"],
+      "pass_through_names": [],
+      "stops": [
+        ["旭川", null, "20:00"],
+        ["深川", null, "20:19"],
+        ["滝川", null, "20:32"],
+        ["砂川", null, "20:38"],
+        ["美唄", null, "20:50"],
+        ["岩見沢", null, "21:00"],
+        ["札幌", "21:25", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.44.exact-2026-09-30",
+      "service_id": "lilac",
+      "service_name": "ライラック",
+      "service_class": "limited_express",
+      "public_number": "44",
+      "train_number": "3044M",
+      "origin": "旭川",
+      "destination": "札幌",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s111-kamui42-lilac44-46-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2026年9月30日(水) selected; column 26: 3044M / ライラック 44 / 毎日",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {"札幌": "(3)"},
+      "formation_icons": ["greensiteidai0.png", "zensekisitei0.png"],
+      "pass_through_names": [],
+      "stops": [
+        ["旭川", null, "21:00"],
+        ["深川", null, "21:19"],
+        ["滝川", null, "21:32"],
+        ["砂川", null, "21:38"],
+        ["美唄", null, "21:50"],
+        ["岩見沢", null, "22:00"],
+        ["札幌", "22:25", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.46.exact-2026-09-30",
+      "service_id": "lilac",
+      "service_name": "ライラック",
+      "service_class": "limited_express",
+      "public_number": "46",
+      "train_number": "3046M",
+      "origin": "旭川",
+      "destination": "札幌",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s111-kamui42-lilac44-46-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2026年9月30日(水) selected; column 29: 3046M / ライラック 46 / 毎日",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {"札幌": "(3)"},
+      "formation_icons": ["greensiteidai0.png", "zensekisitei0.png"],
+      "pass_through_names": [],
+      "stops": [
+        ["旭川", null, "22:00"],
+        ["深川", null, "22:19"],
+        ["滝川", null, "22:33"],
+        ["砂川", null, "22:38"],
+        ["美唄", null, "22:50"],
+        ["岩見沢", null, "23:00"],
+        ["札幌", "23:25", null]
+      ]
+    }
+  ]
+}

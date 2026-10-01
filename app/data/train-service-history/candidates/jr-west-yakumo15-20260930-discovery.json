@@ -1,0 +1,62 @@
+{
+  "candidate_id": "jr-west-yakumo15-1015m-20260930-discovery",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "promotion_status": "exact_date_verification_only",
+  "observed_service_date": "2026-09-30",
+  "valid_from": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "operator_scope": "jr-west",
+  "service": {
+    "service_id": "yakumo",
+    "canonical_name": "やくも",
+    "service_class": "limited_express",
+    "historical_generation": 1,
+    "jr_scope": "jr"
+  },
+  "trip": {
+    "template_key": "15",
+    "train_number": "1015M",
+    "public_number": "15",
+    "direction": "岡山→出雲市",
+    "source_id": "jr-west-odekake-yakumo15-1015m-20260930",
+    "source_calendar_label": "毎日運転",
+    "calendar_verification": "observed_date_only",
+    "passenger_stops": [
+      {"station_name":"岡山","arrival_time":null,"departure_time":"14:13","call_type":"origin","pickup_allowed":1,"dropoff_allowed":0},
+      {"station_name":"倉敷","arrival_time":"14:24","departure_time":"14:24","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"備中高梁","arrival_time":"14:47","departure_time":"14:48","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"新見","arrival_time":"15:15","departure_time":"15:16","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"根雨","arrival_time":"16:03","departure_time":"16:04","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"米子","arrival_time":"16:27","departure_time":"16:28","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"安来","arrival_time":"16:35","departure_time":"16:35","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"松江","arrival_time":"16:51","departure_time":"16:54","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"玉造温泉","arrival_time":"17:02","departure_time":"17:02","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"宍道","arrival_time":"17:10","departure_time":"17:10","call_type":"passenger_stop","pickup_allowed":1,"dropoff_allowed":1},
+      {"station_name":"出雲市","arrival_time":"17:23","departure_time":null,"call_type":"destination","pickup_allowed":0,"dropoff_allowed":1}
+    ]
+  },
+  "source_ids": [
+    "jr-west-limited-express-directory-20260929",
+    "jr-west-family-yakumo-20260929",
+    "jr-west-odekake-yakumo15-1015m-20260930"
+  ],
+  "completeness": {
+    "identity": "verified",
+    "train_number": "verified",
+    "operator": "unknown",
+    "validity_calendar": "verified_for_observed_date",
+    "origin_destination": "verified",
+    "stops": "verified_for_observed_date",
+    "times": "verified_for_observed_date",
+    "route_lines": "unknown",
+    "station_refs": "verified",
+    "provenance": "partial"
+  },
+  "review_notes": [
+    "Only 2026-09-30 is normalized. The page's 毎日運転 label is retained as a source observation and is not promoted to an unsourced wider calendar.",
+    "Only rows with passenger clocks are staged. Pass rows marked レ are not copied into the candidate.",
+    "The train page does not establish ordered physical line identities or operator boundaries; those dimensions remain unknown.",
+    "The source footer prohibits unauthorized reproduction, copying, and processing. The URL is retained as verification provenance and no raw page is bundled."
+  ]
+}

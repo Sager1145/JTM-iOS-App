@@ -1,0 +1,206 @@
+{
+  "inventory_id": "jr-east-kusatsu-shima-nakanojo-observed-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "scope": "Only limited-express links from all four Nakanojo weekday/holiday direction tables; individual Sep30 cells decide inclusion. No exclusion claim for unseen entrances.",
+  "discovery_entrance": "https://timetables.jreast.co.jp/timetable/list1108.html",
+  "trains": [
+    {
+      "public_number": "1",
+      "train_number": "3001M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047041.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108010.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108011.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "source_sha256": "7a9e987db35d944e35049786ae95d6cadab2575e40ee789b6c7c398b3ce6e81b",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "2",
+      "train_number": "3002M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047061.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "source_sha256": "5e299047295bdc27565fe41dea4cb17f4deaf28e1885ebc3830b9493470d9d7a",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "3",
+      "train_number": "3003M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047051.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108010.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108011.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "source_sha256": "3666da8ec010bd0519913d60b4e476274c707f55e2f0aa8dd7c7b865b1a5087d",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "4",
+      "train_number": "3004M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047071.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "source_sha256": "dbfa96de47bc0f8bc5e885a79e2becaa54a1168026cdb60af70dfad44d4ea4b2",
+      "staged_before": true,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "31",
+      "train_number": "4031M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098741.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108011.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "土曜・休日運転"
+      ],
+      "source_sha256": "e57179a900b969fc82864715b795a5e182eaf8ecdc7fba6f9ce5c471321aca5c",
+      "staged_before": false,
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "34",
+      "train_number": "4034M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098751.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "土曜・休日運転"
+      ],
+      "source_sha256": "fea8a9ad62dbbb89ad36f23a2ee1d8b9997c95b26ab74de88a50648454b13f28",
+      "staged_before": false,
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "71",
+      "train_number": "9071M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/185/187571.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108010.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１１月１２・１３・１９・２０・２６・２７日運転"
+      ],
+      "source_sha256": "481d7a42eaa64e8bec3b805cb03ac881229ec1318e955c278ad6b0df69e84704",
+      "staged_before": false,
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "82",
+      "train_number": "9082M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087351.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月２０～２３日・１０月１２日・１１月１・８・１５・２２・２３・２９日運転"
+      ],
+      "source_sha256": "33138766541b18e07d9bb5b0eb62d89f01bf89611a370a263450be500983dfbd",
+      "staged_before": false,
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "83",
+      "train_number": "9083M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048661.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1108/1108011.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月１９～２２日・１０月１０・３１日・１１月７・１４・２１・２２・２８日運転"
+      ],
+      "source_sha256": "a9d17c7bcf409146d7f8cf021ec913db4d9b9badcf17a223199539f5fcbb7e9f",
+      "staged_before": false,
+      "staged_candidate_present": false
+    }
+  ],
+  "observed_proven_count": 4,
+  "staged_observed_count": 4,
+  "remaining_observed_public_numbers": [],
+  "observed_set_audit": {
+    "observed_pages": 9,
+    "proven_public_numbers": 4,
+    "staged_public_numbers": 4,
+    "nonrunning_public_numbers": [
+      "31",
+      "34",
+      "71",
+      "82",
+      "83"
+    ],
+    "trip_count": 4,
+    "stop_rows": 40,
+    "printed_platforms": 12,
+    "missing_public_numbers": [],
+    "scope": "Bounded closure of the four inspected Nakanojo station entrances only.",
+    "verification_test": "ios/tools/tests/test_east_kusatsu_shima1_2_3_observed_20260930_source_pinned.py"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "candidate_id": "jr-hokkaido-taisetsu3591d-3592d-planned-formations-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Formation-only overlay for the two existing 2026-09-30 特別快速大雪 trips. The selected timetable formation cells are blank, while the current official guide states that the service is all unreserved. Vehicle series, car count, Green-car availability and the actually dispatched sets remain unknown.",
+  "guide_source": {
+    "url": "https://www.jrhokkaido.co.jp/global/cn/train/guide/abashiri.html",
+    "locator": "特別快速大雪号 / 旭川 - 網走 / 全車自由席 / 掲載内容は2026年3月現在"
+  },
+  "trips": [
+    {
+      "existing_trip_id": "jr-hokkaido.taisetsu.3591d.exact-2026-09-30",
+      "formation_id": "jr-hokkaido.taisetsu.3591d.exact-2026-09-30.formation.2026-09-30",
+      "train_number": "3591D",
+      "service_name": "大雪",
+      "service_date": "2026-09-30",
+      "timetable_source_id": "jr-hokkaido-okhotsk1-taisetsu3591d-20260930",
+      "timetable_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日 selected; ninth train column 3591D / 大雪; 編成 cell blank",
+      "formation_icons": [],
+      "all_reserved": false,
+      "vehicle_series": null,
+      "car_count": null,
+      "green_car_available": null
+    },
+    {
+      "existing_trip_id": "jr-hokkaido.taisetsu.3592d.exact-2026-09-30",
+      "formation_id": "jr-hokkaido.taisetsu.3592d.exact-2026-09-30.formation.2026-09-30",
+      "train_number": "3592D",
+      "service_name": "大雪",
+      "service_date": "2026-09-30",
+      "timetable_source_id": "jr-hokkaido-okhotsk2-taisetsu3592d-20260930",
+      "timetable_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2026年9月30日 selected; twelfth train column 3592D / 大雪; 編成 cell blank",
+      "formation_icons": [],
+      "all_reserved": false,
+      "vehicle_series": null,
+      "car_count": null,
+      "green_car_available": null
+    }
+  ]
+}

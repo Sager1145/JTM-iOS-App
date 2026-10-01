@@ -1,0 +1,63 @@
+{
+  "schema_version": "1",
+  "source_schema_version": 2,
+  "title": "Reviewed North Shinano operator transfer",
+  "scope": "Full successor identity; exact N02-14 geometry comparison, not annual-date inference.",
+  "events": [],
+  "temporal_events": [
+    {
+      "id": "jp-id-north-shinano-transfer-2015",
+      "kind": "operator_transfer",
+      "date": "2015-03-14",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "信越線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "北しなの線",
+        "operator": "しなの鉄道"
+      },
+      "corridor_id": "jp.corridor.north-shinano",
+      "alignment_id": "jp.alignment.north-shinano.n02",
+      "service_identity_id": "jp.service.north-shinano",
+      "segment": {
+        "from_station": "長野",
+        "to_station": "妙高高原"
+      },
+      "expected": {
+        "business_km": 37.3
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "信越線",
+          "operator": "東日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "whole_identity",
+          "historical_bbox": [
+            138.18737,
+            36.64275,
+            138.29133,
+            36.87306
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The official 長野—妙高高原 interval is the whole current 北しなの線 identity. The historical bbox is derived from the measured successor extent and selects only its predecessor interval; no adjacent 信越線 section is included. All 16 selected historical sections and all eight station geometries are exactly equal to the measured current successor features, including both boundary stations."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    }
+  ]
+}

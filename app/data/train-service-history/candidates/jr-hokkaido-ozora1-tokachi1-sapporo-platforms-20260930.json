@@ -1,0 +1,28 @@
+{
+  "candidate_id": "jr-hokkaido-ozora1-tokachi1-sapporo-platforms-20260930",
+  "candidate_status": "visually_reviewed_official_exact_date",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=130",
+  "source_locator": "2026年9月30日(水) selected; 列車番号 row first two columns 4001D/31D; 番線 row first two cells (6)/(8); 札幌 departure row 648/758",
+  "platforms": [
+    {
+      "trip_id": "jr-hokkaido.ozora.1.2026-09-30",
+      "train_number": "4001D",
+      "stop_sequence": 1,
+      "station_name": "札幌",
+      "departure_time": "6:48",
+      "platform": "(6)",
+      "source_id": "jr-hokkaido-ozora1-20260930-timetable"
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.1.2026-09-29-30",
+      "train_number": "31D",
+      "stop_sequence": 1,
+      "station_name": "札幌",
+      "departure_time": "7:58",
+      "platform": "(8)",
+      "source_id": "jr-hokkaido-tokachi1-20260930-timetable"
+    }
+  ]
+}

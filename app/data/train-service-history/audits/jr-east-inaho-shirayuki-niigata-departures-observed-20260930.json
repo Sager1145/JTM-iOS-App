@@ -1,0 +1,310 @@
+{
+  "inventory_id": "jr-east-inaho-shirayuki-niigata-departures-observed-20260930",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope": "Only Niigata departures on Hakushin-down and Shinetsu-up weekday/holiday station entrances. Opposite-direction arrivals and other entrances are not covered. Individual date cells decide operation.",
+  "trains": [
+    {
+      "printed_name": "いなほ 1号",
+      "printed_train_numbers": [
+        "1M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064001.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "5325bdf1f46d46eaf1ef17266760c95d10cffe3bb0618fd4a055db52fef71932"
+    },
+    {
+      "printed_name": "いなほ 3号",
+      "printed_train_numbers": [
+        "3M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064011.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "９月１８日～１０月１６・１９～２２日・１１月４～６・９・２１～２４・２８・２９日はグリーン車指定席連結"
+      ],
+      "source_sha256": "2f20c2367485a6cd822ee20b12415ef9973afe1208db1abf5c5649bc43d6a680"
+    },
+    {
+      "printed_name": "いなほ 5号",
+      "printed_train_numbers": [
+        "5M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076041.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "d5b823534850b9c90f693c8c15a56a72b00a537fe2d859dfb06b070b4713f708"
+    },
+    {
+      "printed_name": "いなほ 7号",
+      "printed_train_numbers": [
+        "7M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064021.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "51ce7cca0cbeb61eb5540194e6648fcdd63f696a65077de6989a43ba46f24953"
+    },
+    {
+      "printed_name": "いなほ 9号",
+      "printed_train_numbers": [
+        "9M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064031.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "5c8674ca0fc1174ec75fecd5a7b68240f9134a6f86ba8ad8a7c0b0be7ea4f8d7"
+    },
+    {
+      "printed_name": "いなほ 11号",
+      "printed_train_numbers": [
+        "11M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064041.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "ff01cc957765499e7757618d92d16867978c6b2afc10b8eb759b01c7693455fb"
+    },
+    {
+      "printed_name": "いなほ 13号",
+      "printed_train_numbers": [
+        "13M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064051.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137020.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "641511f806d70308a6312ac39cd8ae89208d99e006609496523e5553bb380515"
+    },
+    {
+      "printed_name": "いなほ 83号",
+      "printed_train_numbers": [
+        "9083M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/125/128321.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月１９日運転"
+      ],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "23d7e638716207096b7ead11fbb1ad3b22c09f340b3579d4919fcaab7fa75b06"
+    },
+    {
+      "printed_name": "いなほ 55号",
+      "printed_train_numbers": [
+        "8055M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/110/112511.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137021.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月１９日・１０月１０日運転"
+      ],
+      "printed_remarks": [
+        ""
+      ],
+      "source_sha256": "a9299980ba0a6e6d0fd5bebb1fcc056dfb335bcdf1e14f977be007565bbc802b"
+    },
+    {
+      "printed_name": "しらゆき 2号",
+      "printed_train_numbers": [
+        "52M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063961.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137040.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137041.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません"
+      ],
+      "source_sha256": "d3baf5e52cccfeee4a47442cfdeaf3ece2f0d7f622566e52f4ba651d21c2272c"
+    },
+    {
+      "printed_name": "しらゆき 4号",
+      "printed_train_numbers": [
+        "54M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063971.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137040.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137041.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません"
+      ],
+      "source_sha256": "07434d71f063cb5d3f91ae16f47d79fdcd4564cbe4d956905ef73a1fd2095b24"
+    },
+    {
+      "printed_name": "しらゆき 6号",
+      "printed_train_numbers": [
+        "56M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063981.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137040.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137041.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません"
+      ],
+      "source_sha256": "29ddb6ea249392737c993dce49e6903c7931b8e84e04c3ee1843bf876eb4c632"
+    },
+    {
+      "printed_name": "しらゆき 8号",
+      "printed_train_numbers": [
+        "58M"
+      ],
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076071.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137040.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt1137/1137041.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません"
+      ],
+      "source_sha256": "28a5133fbeed1fe76e39b2abb125b0134bc6ec9b5cefa7ce44bf5088f5e10a26"
+    }
+  ],
+  "observed_set_audit": {
+    "operating_pages": 11,
+    "nonrunning_pages": 2,
+    "staged_within_departure_scope": 5,
+    "remaining_operating_names": [
+      "いなほ 5号",
+      "いなほ 7号",
+      "いなほ 11号",
+      "いなほ 13号",
+      "しらゆき 6号",
+      "しらゆき 8号"
+    ],
+    "scope": "Niigata departures only; opposite-direction arrivals not inventoried."
+  }
+}

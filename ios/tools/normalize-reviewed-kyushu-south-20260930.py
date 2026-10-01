@@ -1,0 +1,257 @@
+#!/usr/bin/env python3
+"""Normalize two manually reviewed exact-date JR Kyushu trips."""
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE = ROOT / "app/data/train-service-history"
+DATE = "2026-09-30"
+UNTIL = "2026-10-01"
+SUFFIX = "reviewed-kyushu-south-20260930"
+STATION_SOURCE = "jtm-current-station-directory"
+WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+
+SPECS = ({'candidate': 'jr-kyushu-nichirin2-20260930.json',
+  'trip_id': 'jr-kyushu.nichirin.2.2026-09-30',
+  'service_id': 'nichirin',
+  'service_name': 'にちりん',
+  'public_number': '2',
+  'train_number': '5002M',
+  'operator': 'jr-kyushu',
+  'source_id': 'jr-kyushu-nichirin2-20260930',
+  'source_url': 'https://www.jrkyushu-timetable.jp/jr-k_time/2610/0007/00075401.html?c=28903&ym=202609&d=30',
+  'expected': (('南宮崎', None, '05:41', None),
+               ('宮崎', '05:45', '05:47', None),
+               ('佐土原', '05:57', '06:00', None),
+               ('高鍋', '06:09', '06:10', None),
+               ('日向市', '06:40', '06:40', None),
+               ('門川', '06:46', '06:47', None),
+               ('南延岡', '06:55', '06:56', None),
+               ('延岡', '07:00', '07:06', None),
+               ('佐伯', '08:04', '08:05', None),
+               ('津久見', '08:23', '08:24', None),
+               ('臼杵', '08:33', '08:35', None),
+               ('鶴崎', '09:01', '09:02', None),
+               ('大分', '09:09', None, '4'))},
+ {'candidate': 'jr-kyushu-kirishima1-20260930.json',
+  'trip_id': 'jr-kyushu.kirishima.1.2026-09-30',
+  'service_id': 'kirishima',
+  'service_name': 'きりしま',
+  'public_number': '1',
+  'train_number': '6001M',
+  'operator': 'jr-kyushu',
+  'source_id': 'jr-kyushu-kirishima1-20260930',
+  'source_url': 'https://www.jrkyushu-timetable.jp/jr-k_time/2610/0006/00064501.html?c=28903&ym=202609&d=30',
+  'expected': (('宮崎', None, '05:46', None),
+               ('南宮崎', '05:49', '05:52', None),
+               ('清武', '05:58', '05:58', None),
+               ('都城', '06:39', '06:41', None),
+               ('西都城', '06:44', '06:45', None),
+               ('霧島神宮', '07:14', '07:15', None),
+               ('国分', '07:26', '07:27', None),
+               ('隼人', '07:31', '07:33', None),
+               ('加治木', '07:39', '07:40', None),
+               ('帖佐', '07:44', '07:44', None),
+               ('姶良', '07:47', '07:47', None),
+               ('重富', '07:50', '07:51', None),
+               ('鹿児島', '08:05', '08:06', None),
+               ('鹿児島中央', '08:10', None, '4'))})
+
+
+def rows(pattern, exclude=None):
+    for path in sorted(BASE.glob(pattern)):
+        if path == exclude or not path.is_file():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                yield json.loads(line)
+
+
+def write(path, records):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in records),
+        encoding="utf-8",
+    )
+
+
+def resolve_stations(names, package, prior, operator):
+    result = {}
+    allowed = ({"九州旅客鉄道"} if operator == "jr-kyushu"
+               else {"四国旅客鉄道"})
+    for name in names:
+        matches = {
+            station[0]
+            for line in package["lines"]
+            if line["operator"] in allowed
+            for station in line["stations"] if station[1] == name
+        }
+        if len(matches) != 1:
+            raise ValueError(f"Ambiguous or absent current station {name}: {sorted(matches)}")
+        code = next(iter(matches))
+        record = dict(station_id="jp.n02." + code, name_snapshot=name,
+                      reference_kind="current_n02", current_source_code=code)
+        previous = prior.get(record["station_id"])
+        if previous and any(previous.get(key) != value for key, value in record.items()):
+            raise ValueError(f"Station identity conflict for {name}")
+        result[name] = record
+    return result
+
+
+def main():
+    manifest = json.loads((BASE / "manifest.json").read_text(encoding="utf-8"))
+    if DATE > manifest["as_of_date"]:
+        raise ValueError("Candidate date exceeds database cutoff")
+    package = json.loads((ROOT / "app/public/rail/jp-2025.json").read_text(encoding="utf-8"))
+    station_target = BASE / f"normalized/station-identities-{SUFFIX}.jsonl"
+    service_target = BASE / f"normalized/services-{SUFFIX}.jsonl"
+    prior_stations = {row["station_id"]: row for row in rows("normalized/station-identities*.jsonl", station_target)}
+    prior_services = {row["service_id"]: row for row in rows("normalized/services*.jsonl", service_target)}
+    registry_target = BASE / f"sources/source-registry-{SUFFIX}.jsonl"
+    prior_sources = {row["source_id"] for row in rows("sources/source-registry*.jsonl", registry_target)}
+    output = {name: [] for name in (
+        "services", "service-name-periods", "timetable-versions", "station-identities", "calendars",
+        "calendar-exceptions", "trips", "stop-times", "fact-completeness",
+        "fact-sources", "research-queue", "source-registry",
+    )}
+    trip_ids = {row["trip_id"] for row in rows("normalized/trips/*/*.jsonl", BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl")}
+    for spec in SPECS:
+        candidate = json.loads((BASE / "candidates" / spec["candidate"]).read_text(encoding="utf-8"))
+        trip = candidate["trip"]
+        if candidate["candidate_status"] != "reviewed_official_html":
+            raise ValueError("Candidate review status changed")
+        if (trip["trip_id"], trip["service_id"], trip["service_name"],
+            trip["public_number"], trip["train_number"]) != tuple(
+                spec[key] for key in ("trip_id", "service_id", "service_name", "public_number", "train_number")
+            ):
+            raise ValueError("Reviewed train identity changed")
+        if trip.get("service_date", candidate.get("service_date")) != DATE or trip["trip_id"] in trip_ids:
+            raise ValueError("Date changed or trip id already exists")
+        actual = tuple((s["name_snapshot"], s["arrival_time"], s["departure_time"], s["platform"])
+                       for s in trip["stop_times"])
+        if actual != spec["expected"]:
+            raise ValueError(f"Reviewed passenger-call matrix changed for {spec['trip_id']}")
+        if "sources" in candidate:
+            sources = {row["source_id"]: row for row in candidate["sources"]}
+            if (sources[spec["source_id"]]["url_or_locator"] != spec["source_url"]
+                or sources[spec["line_source_id"]]["url_or_locator"] != spec["line_url"]):
+                raise ValueError("Reviewed Shikoku source URLs changed")
+            if any(row["automated_extraction_allowed"] is not False for row in sources.values()):
+                raise ValueError("Source permissions changed")
+            if prior_sources.intersection(sources):
+                raise ValueError("New source id collides with existing registry")
+            output["source-registry"].extend(sources.values())
+        elif candidate["source_id"] != spec["source_id"] or candidate["source_url"] != spec["source_url"]:
+            raise ValueError("Reviewed Kyushu source changed")
+        elif spec["source_id"] not in prior_sources:
+            raise ValueError("Kyushu source missing from existing discovery registry")
+        names = [s["name_snapshot"] for s in trip["stop_times"]]
+        stations = resolve_stations(names, package, prior_stations, spec["operator"])
+        for station in stations.values():
+            if station["station_id"] not in prior_stations:
+                output["station-identities"].append(station)
+                prior_stations[station["station_id"]] = station
+        existing_service = prior_services.get(spec["service_id"])
+        if existing_service and existing_service["canonical_name"] != spec["service_name"]:
+            raise ValueError("Service identity conflict")
+        if not existing_service:
+            service = dict(service_id=spec["service_id"], canonical_name=spec["service_name"],
+                           service_class="limited_express", historical_generation=1,
+                           first_verified_date=DATE, last_verified_date=DATE, jr_scope="jr")
+            output["services"].append(service)
+            prior_services[spec["service_id"]] = service
+            output["service-name-periods"].append(dict(
+                service_id=spec["service_id"], name=spec["service_name"], language="ja",
+                valid_from=DATE, valid_until=UNTIL, name_type="canonical",
+                source_id=spec["source_id"]))
+        trip_id = spec["trip_id"]
+        version_id, calendar_id = trip_id + ".version", trip_id + ".calendar"
+        source_ids = [spec["source_id"]]
+        if "line_source_id" in spec:
+            source_ids.append(spec["line_source_id"])
+        output["timetable-versions"].append(dict(
+            timetable_version_id=version_id, operator_scope=spec["operator"],
+            effective_from=DATE, effective_until=UNTIL,
+            edition_name="JR時刻表2026年10月号 exact 2026-09-30 train detail",
+            revision_type="source_snapshot", completeness="partial", source_ids=source_ids))
+        output["calendars"].append(dict(calendar_id=calendar_id, valid_from=DATE,
+                                        valid_until=UNTIL, holiday_policy="none",
+                                        **{day: 0 for day in WEEKDAYS}))
+        output["calendar-exceptions"].append(dict(
+            calendar_id=calendar_id, service_date=DATE, exception_type="add",
+            source_id=spec.get("line_source_id", spec["source_id"]),
+            reason="Exact-date official timetable; no recurrence inferred"))
+        trip_record = dict(
+            trip_id=trip_id, timetable_version_id=version_id, service_id=spec["service_id"],
+            calendar_id=calendar_id, train_number=spec["train_number"],
+            public_number=spec["public_number"],
+            origin_station_id=stations[names[0]]["station_id"],
+            destination_station_id=stations[names[-1]]["station_id"],
+            service_class="limited_express",
+            notes="One exact-date official detail: published passenger calls only. Operator boundaries and physical lines unresolved.")
+        if trip.get("direction"):
+            trip_record["direction"] = trip["direction"]
+        output["trips"].append(trip_record)
+        for sequence, stop in enumerate(trip["stop_times"], 1):
+            call = "origin" if sequence == 1 else "destination" if sequence == len(names) else "passenger_stop"
+            output["stop-times"].append(dict(
+                trip_id=trip_id, stop_sequence=sequence, station_id=stations[stop["name_snapshot"]]["station_id"],
+                arrival_time=stop["arrival_time"], departure_time=stop["departure_time"],
+                day_offset=0, call_type=call, pickup_allowed=0 if call == "destination" else 1,
+                dropoff_allowed=0 if call == "origin" else 1, platform=stop["platform"],
+                time_accuracy="minute", source_id=spec["source_id"]))
+        dimensions = {
+            "identity": ("verified", "high", "Official train detail prints limited express family and public number."),
+            "train_number": ("verified", "high", f"Official detail prints {spec['train_number']}."),
+            "operator": ("unknown", "low", "Publishing company is not an ordered operator-boundary proof."),
+            "validity_calendar": ("verified", "high", "Only the directly listed 2026-09-30 occurrence is emitted."),
+            "origin_destination": ("verified", "high", "First and last passenger rows are printed."),
+            "stops": ("verified", "high", f"{len(names)} published passenger calls, excluding レ rows."),
+            "times": ("verified", "high", "Printed arrival and departure sides are preserved; missing sides remain null."),
+            "route_lines": ("unknown", "low", "No dated ordered physical line IDs are established."),
+            "station_refs": ("verified", "high", "Names match unique current station source codes."),
+            "provenance": ("partial", "medium", "Official page is pinned for verification; reuse permission unresolved."),
+        }
+        for dimension, (status, confidence, notes) in dimensions.items():
+            output["fact-completeness"].append(dict(entity_type="trip", entity_id=trip_id,
+                                                     dimension=dimension, status=status,
+                                                     confidence=confidence, notes=notes))
+            if status == "verified":
+                source = STATION_SOURCE if dimension == "station_refs" else (
+                    spec.get("line_source_id", spec["source_id"]) if dimension == "validity_calendar"
+                    else spec["source_id"])
+                output["fact-sources"].append(dict(entity_type="trip", entity_id=trip_id,
+                                                   field_name=dimension, source_id=source,
+                                                   page_or_locator="exact-date train detail / dated line grid",
+                                                   confidence=confidence, verification_status=status))
+        for dimension, status, notes in (
+            ("operator", "open", "Find dated ordered operator segment boundaries."),
+            ("route_lines", "open", "Find dated ordered physical line identities and validity."),
+            ("provenance", "license_blocked", "No redistribution or automated extraction grant found."),
+        ):
+            output["research-queue"].append(dict(
+                research_id=f"{trip_id}.{dimension}", entity_type="trip", entity_id=trip_id,
+                missing_dimension=dimension, status=status, notes=notes))
+
+    paths = {
+        "source-registry": registry_target,
+        "services": service_target,
+        "service-name-periods": BASE / f"normalized/service-name-periods-{SUFFIX}.jsonl",
+        "timetable-versions": BASE / f"normalized/timetable-versions-{SUFFIX}.jsonl",
+        "station-identities": station_target,
+        "calendars": BASE / f"normalized/calendars/{SUFFIX}/seeds.jsonl",
+        "calendar-exceptions": BASE / f"normalized/calendar-exceptions/{SUFFIX}/seeds.jsonl",
+        "trips": BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl",
+        "stop-times": BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl",
+        "fact-completeness": BASE / f"normalized/fact-completeness-{SUFFIX}.jsonl",
+        "fact-sources": BASE / f"normalized/fact-sources-{SUFFIX}.jsonl",
+        "research-queue": BASE / f"normalized/research-queue-{SUFFIX}.jsonl",
+    }
+    for kind, path in paths.items():
+        write(path, sorted(output[kind], key=lambda row: json.dumps(row, ensure_ascii=False, sort_keys=True)))
+    print("Normalized 2 exact-day trips and 27 passenger calls; routes and operators remain unresolved")
+
+
+if __name__ == "__main__":
+    main()

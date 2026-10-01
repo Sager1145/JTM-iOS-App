@@ -99,7 +99,7 @@ def format_recognition(service_id, catalog_report):
 
 def logo_mark(logo_path, repo_root):
     if not logo_path:
-        return MARK_OK  # No dedicated logo is a valid, checked-in fallback.
+        return "—（公司标志回退）"
     full_path = os.path.join(repo_root, "app", "public") + logo_path
     exists = os.path.exists(full_path)
     filename = os.path.basename(logo_path)
@@ -141,7 +141,8 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
     lines.append(
         "- 列车名数据库：**辨识** = 每个别名都解析到本条目且被归为特急"
         "（来自 TrainServiceCatalogChecklistTests 报告）；"
-        "**Logo** = 非空 logoPath 的文件已打包（无专属 logo 的条目按规则退回公司 logo／默认图标）。")
+        "**Logo** = ✅ 专用图稿文件存在、❌ 专用图稿文件缺失、— 未收录专用图稿；"
+        "未收录时按规则退回公司 logo／默认图标。")
     lines.append(
         "- 停靠站模式：**资料完整度** = 停站/线路/生效日期三项的记录完整度"
         "（{ok} complete ⚠️ partial ❌ missing）；"
@@ -161,6 +162,13 @@ def build_markdown(args, branding, patterns, route_report, catalog_report, repo_
         logo = logo_mark(service.get("logoPath"), repo_root)
         lines.append("| {} | `{}` | {} | {} | {} |".format(
             i, service.get("id"), display_name, recognition, logo))
+    lines.append("")
+    logo_paths = [service.get("logoPath") for service in branding]
+    lines.append("专用图稿：{} 条服务已绑定，{} 条未收录；绑定路径中 {} 条文件缺失。".format(
+        sum(bool(path) for path in logo_paths),
+        sum(not path for path in logo_paths),
+        sum(bool(path) and logo_mark(path, repo_root).startswith(MARK_MISSING)
+            for path in logo_paths)))
     lines.append("")
 
     # Section 2

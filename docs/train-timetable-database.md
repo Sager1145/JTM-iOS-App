@@ -1,7 +1,7 @@
 # JR historical timetable database
 
 This implementation is an evidence-backed foundation, **not a completed six-JR
-historical inventory**. Scope is 1912-06-15 through 2026-09-28. Coverage must be
+historical inventory**. Scope is 1912-06-15 through 2026-09-30. Coverage must be
 read from `app/data/train-service-history/audits/train-timetable-coverage.json`;
 neither a successful build nor 298 legacy patterns establishes completeness.
 
@@ -37,11 +37,30 @@ on day zero and depart at source clock `0:30` on day one. Dated overrides
 inherit the corresponding side's offset unless they explicitly replace it. Actual disruption events do not overwrite the published
 schedule. No source-listed pass mark is invented where a source omits it.
 
+The timetable inventory start (`first_scope_date`) and its current `as_of_date`
+describe the evidence audit, not a route-query window. A trip before the H1
+railway inventory's 1993-04-01 planning start can still be queried and its
+route can be attested when exact historical line identities have dated service
+evidence covering that trip. Editor application additionally requires usable
+station references, as described below. A line's explicit service start sets
+its earliest attested day; an exclusive end closes it on that day. A missing
+lower bound means the model has no bound, not proof of service back to 1912.
+An open-ended modern interval has no artificial 2025/2026 upper bound, but
+future service still needs timetable evidence. Historical lines and timetable
+facts outside an attested interval remain stored for research; lacking
+temporal proof does not make a route verified.
+
 Station identities refer either to the shipped compact directory `sourceCode`
 or to an existing historical overlay `history_id`. Current topology is not
 proof of historical applicability. A source name by itself cannot establish a
 verified station reference. The root seed normalizer selects the main Tokyo
 group `003766`, distinct from the Keiyo group `003785`.
+
+For a current N02 line with a retirement/opening selector covering its entire
+geometry, the route audit now rejects planned operating days outside that
+selector's service interval. A date inside it remains unverified until ordered
+physical route evidence is supplied. Selectors covering only part of a line,
+or targeting stations alone, do not impose a line-wide timetable constraint.
 
 ## Runtime and compatibility
 
@@ -72,13 +91,13 @@ still pending.
 
 `normalize-reviewed-timetable-seeds.py` promotes reviewed official candidates
 for Kamui 93, Lilac 95, Shinano 1, Hitachi 26 and Yufuin no Mori 1–6.
-Together with the reviewed Shiokaze, 2013 JR Central, Hokkaido summer and
-WEST EXPRESS Ginga announcements, Azusa/Tokiwa date variants and
-Ibusuki no Tamatebako summer dates they represent
-95 templates and 1577 explicitly attested service-date occurrences;
-these small samples do not establish any company’s complete daily inventory. The special Hokkaido trips exercise explicit dates and overnight
-arrival; two JR East HTML tables exercise full passenger arrival/departure
-times. Unknown internal numbers, intermediate times and routes stay unknown.
+Together with the reviewed Shiokaze and Ishizuchi, 2013 and 2026 JR Central,
+Hokkaido, JR East, JR West, JR Shikoku and JR Kyushu dated sources, they represent
+131 templates and 1,664 explicitly attested service-date occurrences as of the
+2026-09-30 manifest cutoff. These samples do not establish any company’s complete daily inventory. The special Hokkaido and Sunrise Seto trips exercise explicit dates and overnight
+arrival; reviewed JR East HTML tables exercise full passenger arrival/departure
+times. Source-backed Shiokaze and Sarobetsu numbers and published intermediate
+clocks are recorded. Unpublished numbers, time cells and physical route identities stay unknown.
 JR East calendar cells marked `ok` attest the displayed schedule; other cells
 may contain different schedules and are excluded by the parser.
 
@@ -177,4 +196,4 @@ missing values, explain partial station lists, and expose deduplicated source
 titles, publishers and URLs. Overnight civil dates are derived without changing
 the original service date or clock string.
 
-Latest evidence, counts and validation: [East/Kyushu and historical report](train-timetable-next-report.md).
+Latest evidence, counts and validation: [September 29–30 verification and repair report](train-timetable-verification-2026-09-29.md).

@@ -1,0 +1,1004 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed 2019 Hankyu and Hanshin station rename memberships",
+  "scope": "Exact-day 2019-10-01 station identity transitions with redistributable surveyed predecessor geometry. One event is emitted per current N02 line/operator membership; the announced but absent Hankyu Kyoto-line HK01 membership is withheld.",
+  "sources": [
+    {
+      "source_id": "hankyu-station-renames-2019",
+      "title": "「梅田」「河原町」「石橋」の駅名を10月1日に変更",
+      "authority": "阪急電鉄株式会社",
+      "published_date": "2019-07-30",
+      "reference": "https://www.hankyu-hanshin.co.jp/upload/irInfo/887.pdf",
+      "role": "Primary exact-day evidence for the Hankyu renames and the operator's three named Osaka-Umeda line memberships."
+    },
+    {
+      "source_id": "hanshin-station-renames-2019",
+      "title": "10月1日から「梅田」と「鳴尾」の駅名を変更します",
+      "authority": "阪神電気鉄道株式会社",
+      "published_date": "2019-07-30",
+      "reference": "https://www.hanshin.co.jp/company/press/pdf/20190730-ekimei.pdf",
+      "role": "Primary exact-day evidence for the Hanshin Osaka-Umeda and Naruo renames."
+    },
+    {
+      "source_id": "hanshin-current-station-number-table",
+      "title": "営業キロ程表・大人普通旅客運賃表",
+      "authority": "阪神電気鉄道株式会社",
+      "reference": "https://www.hanshin.co.jp/company/pdf/handbook_all.pdf",
+      "role": "Primary operator cross-check for current station numbers HS01 and HS13."
+    },
+    {
+      "source_id": "mlit-n02-18",
+      "title": "国土数値情報 鉄道データ N02-18",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-18/N02-18_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "1d08f3a6aff2656980a9613a918a924d726ae446c9015d2bc174e8e6e089b072",
+      "role": "Last available old-name surveyed geometry for Hankyu Kawaramachi and Hankyu/Hanshin Umeda."
+    },
+    {
+      "source_id": "mlit-n02-19",
+      "title": "国土数値情報 鉄道データ N02-19",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-19/N02-19_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "a2ae41ebd42ca43613784e07ac3568d101c5b23fe4ba8194286aeae038247602",
+      "role": "Earliest post-rename observation for Osaka-Umeda and Kyoto-Kawaramachi; last old-name observation for Naruo."
+    },
+    {
+      "source_id": "mlit-n02-20",
+      "title": "国土数値情報 鉄道データ N02-20",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-20/N02-20_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "12fadde339dfbe3088e99dbd53da19447cd7c4bb8ba4af540e2a73c86a0458c7",
+      "role": "Earliest available post-rename observation for Naruo-Mukogawajoshidai-Mae."
+    },
+    {
+      "source_id": "mlit-n02-24-current-package",
+      "title": "国土数値情報 鉄道データ N02-24",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-24/N02-24_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "504eefd4411cd0fd3ad9a50f35da2f5da07949d5144ded7630df0972f8deaac7",
+      "role": "Current-package station codes and exact geometry identity cross-check."
+    }
+  ],
+  "snapshot_releases": {
+    "historical_old_name": {
+      "N02-18": [
+        "Hankyu Osaka-Umeda (Kobe and Takarazuka memberships)",
+        "Hanshin Osaka-Umeda",
+        "Hankyu Kyoto-Kawaramachi"
+      ],
+      "N02-19": [
+        "Hanshin Naruo-Mukogawajoshidai-Mae"
+      ]
+    },
+    "earliest_post_rename": {
+      "N02-19": [
+        "Hankyu Osaka-Umeda",
+        "Hanshin Osaka-Umeda",
+        "Hankyu Kyoto-Kawaramachi"
+      ],
+      "N02-20": [
+        "Hanshin Naruo-Mukogawajoshidai-Mae"
+      ]
+    },
+    "note": "N02-19 is not an old-name snapshot for Umeda or Kawaramachi; it already carries their 2019-10-01 successor names."
+  },
+  "selection_audit": [
+    {
+      "event_id": "jp.station-rename.hankyu.hk01.osaka-umeda.kobe",
+      "selector": {
+        "line": "神戸線",
+        "operator": "阪急電鉄",
+        "old_station": "梅田",
+        "current_station": "大阪梅田"
+      },
+      "historical_observation": {
+        "release": "N02-18",
+        "old_name_feature_count": 2,
+        "station_code_available": false
+      },
+      "earliest_post_rename_observation": {
+        "release": "N02-19",
+        "new_name_feature_count": 2
+      },
+      "current_package": {
+        "new_name_feature_count": 2,
+        "current_n02_station_code": "007049",
+        "current_n02_group_code": "007048"
+      },
+      "geometry_comparison": {
+        "old_to_current_exact_coordinate_matches": 2,
+        "unmatched_old_features": 0,
+        "unmatched_current_features": 0
+      },
+      "name_alias_negative_control": "梅田 has one current nationwide alias on Osaka Metro, but zero current Hankyu/神戸線 matches.",
+      "route_fixture": {
+        "origin_station": "十三",
+        "origin_n02_station_code": "006970",
+        "target_station_code": null,
+        "line_names": [
+          "神戸線"
+        ],
+        "operator_names": [
+          "阪急電鉄"
+        ],
+        "required_constraint": "Pin only the adjacent origin code. Leave the renamed target code absent so the ride-date/name lookup, not a stable code, determines availability."
+      },
+      "conclusion": "The exact line/operator/name selector isolates the reviewed membership. Historical code absence is bridged only by exact geometry identity.",
+      "route_service_probe": {
+        "method": "Cold-cache browser RouteService probe with the adjacent origin code pinned, renamed target code omitted, institution_filter_mode hard, and exact line/operator constraints.",
+        "results": [
+          {
+            "query_name_side": "old",
+            "ride_date_side": "before",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "神戸線",
+              "operator": "阪急電鉄",
+              "code": "007049"
+            },
+            "target_snap_distance_m": 0
+          },
+          {
+            "query_name_side": "old",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "1号線(御堂筋線)",
+              "operator": "大阪市高速電気軌道",
+              "code": "007065"
+            },
+            "target_snap_distance_m": 100.56
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "before",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "大阪梅田",
+              "line": "神戸線",
+              "operator": "阪急電鉄",
+              "code": "007049"
+            },
+            "target_snap_distance_m": 0
+          }
+        ],
+        "acceptance": "Before the boundary, old name must select this event’s exact line/operator membership and new name must be unsolvable. At the boundary, new name must select the exact successor membership. Old-name-after is not required to be unsolvable when another current operator retains that nationwide name."
+      }
+    },
+    {
+      "event_id": "jp.station-rename.hankyu.hk01.osaka-umeda.takarazuka",
+      "selector": {
+        "line": "宝塚線",
+        "operator": "阪急電鉄",
+        "old_station": "梅田",
+        "current_station": "大阪梅田"
+      },
+      "historical_observation": {
+        "release": "N02-18",
+        "old_name_feature_count": 1,
+        "station_code_available": false
+      },
+      "earliest_post_rename_observation": {
+        "release": "N02-19",
+        "new_name_feature_count": 1
+      },
+      "current_package": {
+        "new_name_feature_count": 1,
+        "current_n02_station_code": "007048",
+        "current_n02_group_code": "007048"
+      },
+      "geometry_comparison": {
+        "old_to_current_exact_coordinate_matches": 1,
+        "unmatched_old_features": 0,
+        "unmatched_current_features": 0
+      },
+      "name_alias_negative_control": "梅田 has one current nationwide alias on Osaka Metro, but zero current Hankyu/宝塚線 matches.",
+      "route_fixture": {
+        "origin_station": "十三",
+        "origin_n02_station_code": "006968",
+        "target_station_code": null,
+        "line_names": [
+          "宝塚線"
+        ],
+        "operator_names": [
+          "阪急電鉄"
+        ],
+        "required_constraint": "Pin only the adjacent origin code. Leave the renamed target code absent so the ride-date/name lookup, not a stable code, determines availability."
+      },
+      "conclusion": "The exact line/operator/name selector isolates the reviewed membership. Historical code absence is bridged only by exact geometry identity.",
+      "route_service_probe": {
+        "method": "Cold-cache browser RouteService probe with the adjacent origin code pinned, renamed target code omitted, institution_filter_mode hard, and exact line/operator constraints.",
+        "results": [
+          {
+            "query_name_side": "old",
+            "ride_date_side": "before",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "宝塚線",
+              "operator": "阪急電鉄",
+              "code": "007048"
+            },
+            "target_snap_distance_m": 0
+          },
+          {
+            "query_name_side": "old",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "1号線(御堂筋線)",
+              "operator": "大阪市高速電気軌道",
+              "code": "007065"
+            },
+            "target_snap_distance_m": 150.53
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "before",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "大阪梅田",
+              "line": "宝塚線",
+              "operator": "阪急電鉄",
+              "code": "007048"
+            },
+            "target_snap_distance_m": 0
+          }
+        ],
+        "acceptance": "Before the boundary, old name must select this event’s exact line/operator membership and new name must be unsolvable. At the boundary, new name must select the exact successor membership. Old-name-after is not required to be unsolvable when another current operator retains that nationwide name."
+      }
+    },
+    {
+      "event_id": "jp.station-rename.hanshin.hs01.osaka-umeda",
+      "selector": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "old_station": "梅田",
+        "current_station": "大阪梅田"
+      },
+      "historical_observation": {
+        "release": "N02-18",
+        "old_name_feature_count": 1,
+        "station_code_available": false
+      },
+      "earliest_post_rename_observation": {
+        "release": "N02-19",
+        "new_name_feature_count": 1
+      },
+      "current_package": {
+        "new_name_feature_count": 1,
+        "current_n02_station_code": "007071",
+        "current_n02_group_code": "007071"
+      },
+      "geometry_comparison": {
+        "old_to_current_exact_coordinate_matches": 1,
+        "unmatched_old_features": 0,
+        "unmatched_current_features": 0
+      },
+      "name_alias_negative_control": "梅田 has one current nationwide alias on Osaka Metro, but zero current Hanshin/本線 matches.",
+      "route_fixture": {
+        "origin_station": "福島",
+        "origin_n02_station_code": "007098",
+        "target_station_code": null,
+        "line_names": [
+          "本線"
+        ],
+        "operator_names": [
+          "阪神電気鉄道"
+        ],
+        "required_constraint": "Pin only the adjacent origin code. Leave the renamed target code absent so the ride-date/name lookup, not a stable code, determines availability."
+      },
+      "conclusion": "The exact line/operator/name selector isolates the reviewed membership. Historical code absence is bridged only by exact geometry identity.",
+      "route_service_probe": {
+        "method": "Cold-cache browser RouteService probe with the adjacent origin code pinned, renamed target code omitted, institution_filter_mode hard, and exact line/operator constraints.",
+        "results": [
+          {
+            "query_name_side": "old",
+            "ride_date_side": "before",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "本線",
+              "operator": "阪神電気鉄道",
+              "code": "007071"
+            },
+            "target_snap_distance_m": 0
+          },
+          {
+            "query_name_side": "old",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "梅田",
+              "line": "1号線(御堂筋線)",
+              "operator": "大阪市高速電気軌道",
+              "code": "007065"
+            },
+            "target_snap_distance_m": 19.24
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "before",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "大阪梅田",
+              "line": "本線",
+              "operator": "阪神電気鉄道",
+              "code": "007071"
+            },
+            "target_snap_distance_m": 0
+          }
+        ],
+        "acceptance": "Before the boundary, old name must select this event’s exact line/operator membership and new name must be unsolvable. At the boundary, new name must select the exact successor membership. Old-name-after is not required to be unsolvable when another current operator retains that nationwide name."
+      }
+    },
+    {
+      "event_id": "jp.station-rename.hankyu.hk86.kyoto-kawaramachi",
+      "selector": {
+        "line": "京都線",
+        "operator": "阪急電鉄",
+        "old_station": "河原町",
+        "current_station": "京都河原町"
+      },
+      "historical_observation": {
+        "release": "N02-18",
+        "old_name_feature_count": 1,
+        "station_code_available": false
+      },
+      "earliest_post_rename_observation": {
+        "release": "N02-19",
+        "new_name_feature_count": 1
+      },
+      "current_package": {
+        "new_name_feature_count": 1,
+        "current_n02_station_code": "005990",
+        "current_n02_group_code": "005990"
+      },
+      "geometry_comparison": {
+        "old_to_current_exact_coordinate_matches": 1,
+        "unmatched_old_features": 0,
+        "unmatched_current_features": 0
+      },
+      "name_alias_negative_control": "河原町 has current aliases on 熊本市幹線 and 仙台市南北線, but zero current Hankyu/京都線 matches.",
+      "route_fixture": {
+        "origin_station": "烏丸",
+        "origin_n02_station_code": "005992",
+        "target_station_code": null,
+        "line_names": [
+          "京都線"
+        ],
+        "operator_names": [
+          "阪急電鉄"
+        ],
+        "required_constraint": "Pin only the adjacent origin code. Leave the renamed target code absent so the ride-date/name lookup, not a stable code, determines availability."
+      },
+      "conclusion": "The exact line/operator/name selector isolates the reviewed membership. Historical code absence is bridged only by exact geometry identity.",
+      "route_service_probe": {
+        "method": "Cold-cache browser RouteService probe with the adjacent origin code pinned, renamed target code omitted, institution_filter_mode hard, and exact line/operator constraints.",
+        "results": [
+          {
+            "query_name_side": "old",
+            "ride_date_side": "before",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "河原町",
+              "line": "京都線",
+              "operator": "阪急電鉄",
+              "code": "005990"
+            },
+            "target_snap_distance_m": 0
+          },
+          {
+            "query_name_side": "old",
+            "ride_date_side": "after",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "before",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "京都河原町",
+              "line": "京都線",
+              "operator": "阪急電鉄",
+              "code": "005990"
+            },
+            "target_snap_distance_m": 0
+          }
+        ],
+        "acceptance": "Before the boundary, old name must select this event’s exact line/operator membership and new name must be unsolvable. At the boundary, new name must select the exact successor membership. Old-name-after is not required to be unsolvable when another current operator retains that nationwide name."
+      }
+    },
+    {
+      "event_id": "jp.station-rename.hanshin.hs13.naruo-mukogawajoshidai-mae",
+      "selector": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "old_station": "鳴尾",
+        "current_station": "鳴尾・武庫川女子大前"
+      },
+      "historical_observation": {
+        "release": "N02-19",
+        "old_name_feature_count": 1,
+        "station_code_available": false
+      },
+      "earliest_post_rename_observation": {
+        "release": "N02-20",
+        "new_name_feature_count": 1
+      },
+      "current_package": {
+        "new_name_feature_count": 1,
+        "current_n02_station_code": "006975",
+        "current_n02_group_code": "006975"
+      },
+      "geometry_comparison": {
+        "old_to_current_exact_coordinate_matches": 1,
+        "unmatched_old_features": 0,
+        "unmatched_current_features": 0
+      },
+      "name_alias_negative_control": "鳴尾 has no current-package station-name match.",
+      "route_fixture": {
+        "origin_station": "甲子園",
+        "origin_n02_station_code": "006954",
+        "target_station_code": null,
+        "line_names": [
+          "本線"
+        ],
+        "operator_names": [
+          "阪神電気鉄道"
+        ],
+        "required_constraint": "Pin only the adjacent origin code. Leave the renamed target code absent so the ride-date/name lookup, not a stable code, determines availability."
+      },
+      "conclusion": "The exact line/operator/name selector isolates the reviewed membership. Historical code absence is bridged only by exact geometry identity.",
+      "route_service_probe": {
+        "method": "Cold-cache browser RouteService probe with the adjacent origin code pinned, renamed target code omitted, institution_filter_mode hard, and exact line/operator constraints.",
+        "results": [
+          {
+            "query_name_side": "old",
+            "ride_date_side": "before",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "鳴尾",
+              "line": "本線",
+              "operator": "阪神電気鉄道",
+              "code": "006975"
+            },
+            "target_snap_distance_m": 0
+          },
+          {
+            "query_name_side": "old",
+            "ride_date_side": "after",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "before",
+            "outcome": "unsolvable",
+            "selected_endpoint": null,
+            "target_snap_distance_m": null
+          },
+          {
+            "query_name_side": "new",
+            "ride_date_side": "after",
+            "outcome": "solved",
+            "selected_endpoint": {
+              "name": "鳴尾・武庫川女子大前",
+              "line": "本線",
+              "operator": "阪神電気鉄道",
+              "code": "006975"
+            },
+            "target_snap_distance_m": 0
+          }
+        ],
+        "acceptance": "Before the boundary, old name must select this event’s exact line/operator membership and new name must be unsolvable. At the boundary, new name must select the exact successor membership. Old-name-after is not required to be unsolvable when another current operator retains that nationwide name."
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "jp.station-rename.hankyu.hk01.osaka-umeda.kobe",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hankyu.hk01",
+      "membership_id": "jp.membership.hankyu.kobe.hk01",
+      "official_station_number": "HK01",
+      "current_n02_station_code": "007049",
+      "current_n02_group_code": "007048",
+      "corridor_id": "jp.corridor.hankyu-kobe",
+      "alignment_id": "jp.alignment.hankyu-kobe.n02-18-continuity",
+      "service_identity_id": "jp.service.hankyu-kobe.station.hk01",
+      "before": {
+        "line": "神戸線",
+        "operator": "阪急電鉄",
+        "station": "梅田"
+      },
+      "after": {
+        "line": "神戸線",
+        "operator": "阪急電鉄",
+        "station": "大阪梅田"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-18",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "大阪梅田"
+          ]
+        },
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "神戸線",
+              "operator": "阪急電鉄",
+              "station_name": "梅田",
+              "source_release": "N02-18"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.49824,
+                  34.70467
+                ],
+                [
+                  135.4979,
+                  34.70641
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "神戸線",
+              "operator": "阪急電鉄",
+              "station_name": "梅田",
+              "source_release": "N02-18"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.49855,
+                  34.7047
+                ],
+                [
+                  135.49813,
+                  34.70646
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "geometry_continuity": "Every N02-18 old-name station feature has one exact-coordinate current-package successor; current N02 lookup codes are inherited only through that exact geometry identity.",
+        "historical_code_gap": "N02-18 does not publish N02_005c/N02_005g for these station features; no historical code is asserted."
+      },
+      "evidence": [
+        {
+          "authority": "阪急電鉄株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hankyu-hanshin.co.jp/upload/irInfo/887.pdf"
+        }
+      ],
+      "route_acceptance": {
+        "from_station": "十三"
+      }
+    },
+    {
+      "id": "jp.station-rename.hankyu.hk01.osaka-umeda.takarazuka",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hankyu.hk01",
+      "membership_id": "jp.membership.hankyu.takarazuka.hk01",
+      "official_station_number": "HK01",
+      "current_n02_station_code": "007048",
+      "current_n02_group_code": "007048",
+      "corridor_id": "jp.corridor.hankyu-takarazuka",
+      "alignment_id": "jp.alignment.hankyu-takarazuka.n02-18-continuity",
+      "service_identity_id": "jp.service.hankyu-takarazuka.station.hk01",
+      "before": {
+        "line": "宝塚線",
+        "operator": "阪急電鉄",
+        "station": "梅田"
+      },
+      "after": {
+        "line": "宝塚線",
+        "operator": "阪急電鉄",
+        "station": "大阪梅田"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-18",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "大阪梅田"
+          ]
+        },
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "宝塚線",
+              "operator": "阪急電鉄",
+              "station_name": "梅田",
+              "source_release": "N02-18"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.49881,
+                  34.70476
+                ],
+                [
+                  135.49836,
+                  34.70647
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "geometry_continuity": "Every N02-18 old-name station feature has one exact-coordinate current-package successor; current N02 lookup codes are inherited only through that exact geometry identity.",
+        "historical_code_gap": "N02-18 does not publish N02_005c/N02_005g for these station features; no historical code is asserted."
+      },
+      "evidence": [
+        {
+          "authority": "阪急電鉄株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hankyu-hanshin.co.jp/upload/irInfo/887.pdf"
+        }
+      ],
+      "route_acceptance": {
+        "from_station": "十三"
+      }
+    },
+    {
+      "id": "jp.station-rename.hanshin.hs01.osaka-umeda",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hanshin.hs01",
+      "membership_id": "jp.membership.hanshin-main.hs01",
+      "official_station_number": "HS01",
+      "current_n02_station_code": "007071",
+      "current_n02_group_code": "007071",
+      "corridor_id": "jp.corridor.hanshin-main",
+      "alignment_id": "jp.alignment.hanshin-main.n02-18-continuity",
+      "service_identity_id": "jp.service.hanshin-main.station.hs01",
+      "before": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "station": "梅田"
+      },
+      "after": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "station": "大阪梅田"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-18",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "大阪梅田"
+          ]
+        },
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "本線",
+              "operator": "阪神電気鉄道",
+              "station_name": "梅田",
+              "source_release": "N02-18"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.49802,
+                  34.70191
+                ],
+                [
+                  135.49719,
+                  34.70147
+                ],
+                [
+                  135.49655,
+                  34.70113
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "geometry_continuity": "Every N02-18 old-name station feature has one exact-coordinate current-package successor; current N02 lookup codes are inherited only through that exact geometry identity.",
+        "historical_code_gap": "N02-18 does not publish N02_005c/N02_005g for these station features; no historical code is asserted."
+      },
+      "evidence": [
+        {
+          "authority": "阪神電気鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hanshin.co.jp/company/press/pdf/20190730-ekimei.pdf"
+        }
+      ],
+      "route_acceptance": {
+        "from_station": "福島"
+      }
+    },
+    {
+      "id": "jp.station-rename.hankyu.hk86.kyoto-kawaramachi",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hankyu.hk86",
+      "membership_id": "jp.membership.hankyu-kyoto.hk86",
+      "official_station_number": "HK86",
+      "current_n02_station_code": "005990",
+      "current_n02_group_code": "005990",
+      "corridor_id": "jp.corridor.hankyu-kyoto",
+      "alignment_id": "jp.alignment.hankyu-kyoto.n02-18-continuity",
+      "service_identity_id": "jp.service.hankyu-kyoto.station.hk86",
+      "before": {
+        "line": "京都線",
+        "operator": "阪急電鉄",
+        "station": "河原町"
+      },
+      "after": {
+        "line": "京都線",
+        "operator": "阪急電鉄",
+        "station": "京都河原町"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-18",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "京都河原町"
+          ]
+        },
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "京都線",
+              "operator": "阪急電鉄",
+              "station_name": "河原町",
+              "source_release": "N02-18"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.76905,
+                  35.00378
+                ],
+                [
+                  135.76881,
+                  35.00378
+                ],
+                [
+                  135.76831,
+                  35.00378
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "geometry_continuity": "Every N02-18 old-name station feature has one exact-coordinate current-package successor; current N02 lookup codes are inherited only through that exact geometry identity.",
+        "historical_code_gap": "N02-18 does not publish N02_005c/N02_005g for these station features; no historical code is asserted."
+      },
+      "evidence": [
+        {
+          "authority": "阪急電鉄株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hankyu-hanshin.co.jp/upload/irInfo/887.pdf"
+        }
+      ],
+      "route_acceptance": {
+        "from_station": "烏丸"
+      }
+    },
+    {
+      "id": "jp.station-rename.hanshin.hs13.naruo-mukogawajoshidai-mae",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hanshin.hs13",
+      "membership_id": "jp.membership.hanshin-main.hs13",
+      "official_station_number": "HS13",
+      "current_n02_station_code": "006975",
+      "current_n02_group_code": "006975",
+      "corridor_id": "jp.corridor.hanshin-main",
+      "alignment_id": "jp.alignment.hanshin-main.n02-19-continuity",
+      "service_identity_id": "jp.service.hanshin-main.station.hs13",
+      "before": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "station": "鳴尾"
+      },
+      "after": {
+        "line": "本線",
+        "operator": "阪神電気鉄道",
+        "station": "鳴尾・武庫川女子大前"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "鳴尾・武庫川女子大前"
+          ]
+        },
+        "historical_stations": [
+          {
+            "type": "Feature",
+            "properties": {
+              "railway_class_code": "12",
+              "institution_type_code": "4",
+              "line_name": "本線",
+              "operator": "阪神電気鉄道",
+              "station_name": "鳴尾",
+              "source_release": "N02-19"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  135.37108,
+                  34.7195
+                ],
+                [
+                  135.37035,
+                  34.71968
+                ],
+                [
+                  135.36973,
+                  34.71987
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "geometry_continuity": "Every N02-19 old-name station feature has one exact-coordinate current-package successor; current N02 lookup codes are inherited only through that exact geometry identity.",
+        "historical_code_gap": "N02-19 does not publish N02_005c/N02_005g for these station features; no historical code is asserted."
+      },
+      "evidence": [
+        {
+          "authority": "阪神電気鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hanshin.co.jp/company/press/pdf/20190730-ekimei.pdf"
+        }
+      ],
+      "route_acceptance": {
+        "from_station": "甲子園"
+      }
+    }
+  ],
+  "withheld": [
+    {
+      "id": "jp.station-rename.hankyu.hk01.osaka-umeda.kyoto",
+      "kind": "station_rename",
+      "station_entity_id": "jp.station.hankyu.hk01",
+      "membership_id": "jp.membership.hankyu.kyoto.hk01",
+      "official_station_number": "HK01",
+      "before": {
+        "line": "京都線",
+        "operator": "阪急電鉄",
+        "station": "梅田"
+      },
+      "after": {
+        "line": "京都線",
+        "operator": "阪急電鉄",
+        "station": "大阪梅田"
+      },
+      "date": "2019-10-01",
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hankyu-kyoto",
+      "alignment_id": "jp.alignment.hankyu-kyoto.current-membership-unresolved",
+      "service_identity_id": "jp.service.hankyu-kyoto.station.hk01",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "大阪梅田"
+          ]
+        }
+      },
+      "review": {
+        "status": "withheld_missing_current_membership",
+        "reason": "The Hankyu primary announcement explicitly includes 京都本線 at HK01, but N02-18, N02-19 and the current package contain no 梅田/大阪梅田 station feature with line 京都線. The physical terminal is represented only by 神戸線 and 宝塚線 station features, so the current-package compiler cannot select a truthful 京都線 membership without inventing geometry."
+      },
+      "evidence": [
+        {
+          "authority": "阪急電鉄株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.hankyu-hanshin.co.jp/upload/irInfo/887.pdf"
+        }
+      ]
+    }
+  ],
+  "primary_source_ids": [
+    "hankyu-station-renames-2019",
+    "hanshin-station-renames-2019"
+  ]
+}

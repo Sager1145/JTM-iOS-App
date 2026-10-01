@@ -1,0 +1,106 @@
+{
+  "candidate_id": "jr-east-fuji-excursion36-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "fuji-excursion",
+  "service_name": "富士回遊",
+  "jr_scope": "through_jr",
+  "public_number": "36",
+  "train_number": "2136M",
+  "trip_id": "jr-east.fuji-excursion.36.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-fuji-excursion36-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/063461.html",
+  "source_sha256": "ef09559fa05f344cd98f9f6efe2a5b126bc8d2b24781b700a650ca8f01593e1f",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "河口湖",
+      null,
+      "14:58"
+    ],
+    [
+      "富士急ハイランド",
+      "15:01",
+      "15:01"
+    ],
+    [
+      "富士山",
+      "15:04",
+      "15:06"
+    ],
+    [
+      "下吉田",
+      "15:11",
+      "15:12"
+    ],
+    [
+      "都留文科大学前",
+      "15:26",
+      "15:27"
+    ],
+    [
+      "大月",
+      "15:48",
+      null
+    ],
+    [
+      "八王子",
+      null,
+      null
+    ],
+    [
+      "立川",
+      null,
+      null
+    ],
+    [
+      "新宿",
+      null,
+      null
+    ]
+  ],
+  "printed_platforms": {},
+  "equipment": [
+    "座席未指定券",
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "富士急行線内の特急料金は河口湖・富士山－大月間は６００円（こども４００円）です 〔富士回遊〕に富士急行線内のみご乗車の場合は、座席未指定券をご利用ください。座席の指定はできません。また、河口湖－富士山間の各駅相互間に限り、乗車券のみでご乗車になれます 普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です",
+  "printed_operating_labels": "",
+  "printed_coupling": "大月－新宿は3136Mに併結",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; retain printed train number only.",
+  "actual_dispatch": null,
+  "partial_timing_note": "Only Fuji Excursion column clocks/platforms transcribed. Coupled Kaiji clocks/platforms not copied; blank shared section remains null.",
+  "reservation_note": "Ordinary全車指定席 equipment label is retained; printed remark says Fujikyu-only travel uses seat-unassigned ticket and cannot designate a seat, and 富士山–河口湖 local journeys need only a fare ticket.",
+  "coupling_relations": [
+    {
+      "trip_id": "jr-east.fuji-excursion.36.exact-2026-09-30",
+      "related_trip_id": "jr-east.kaiji.36.exact-2026-09-30",
+      "relation_type": "couples_with",
+      "from_sequence": 6,
+      "to_sequence": 9,
+      "source_id": "jr-east-fuji-excursion36-20260930"
+    },
+    {
+      "trip_id": "jr-east.kaiji.36.exact-2026-09-30",
+      "related_trip_id": "jr-east.fuji-excursion.36.exact-2026-09-30",
+      "relation_type": "couples_with",
+      "from_sequence": 5,
+      "to_sequence": 8,
+      "source_id": "jr-east-fuji-excursion36-20260930"
+    }
+  ]
+}

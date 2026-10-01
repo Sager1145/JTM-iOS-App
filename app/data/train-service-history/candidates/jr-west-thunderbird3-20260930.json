@@ -1,0 +1,76 @@
+{
+  "candidate_id": "jr-west-thunderbird3-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "Only 2026-09-30 is promoted; the daily source label is not expanded.",
+  "trip": {
+    "trip_id": "jr-west.thunderbird.3.2026-09-30",
+    "service_id": "thunderbird",
+    "public_number": "3",
+    "train_number": "4003M",
+    "origin": "大阪",
+    "destination": "敦賀",
+    "train_source_id": "jr-west-odekake-thunderbird3-4003m-20260930",
+    "train_source_url": "https://timetable.jr-odekake.net/train-timetable/257661?date=20260930",
+    "route_source_ids": [
+      "jr-west-thunderbird3-kyoto-station-20260930",
+      "mlit-n02-2025-thunderbird3-20260930"
+    ],
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "大阪",
+        "current_source_code": "007068",
+        "arrival_time": null,
+        "departure_time": "07:00",
+        "platform": "11",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "新大阪",
+        "current_source_code": "006911",
+        "arrival_time": "07:03",
+        "departure_time": "07:04",
+        "platform": "4",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "高槻",
+        "current_source_code": "006432",
+        "arrival_time": "07:14",
+        "departure_time": "07:15",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "京都",
+        "current_source_code": "006079",
+        "arrival_time": "07:28",
+        "departure_time": "07:29",
+        "platform": "0",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "敦賀",
+        "current_source_code": "010186",
+        "arrival_time": "08:23",
+        "departure_time": null,
+        "platform": "32",
+        "call_type": "destination"
+      }
+    ]
+  },
+  "review_notes": [
+    "The 2026-09-30 Kyoto station 07:29 link opens exact train page 257661 for Thunderbird 3, 4003M.",
+    "Only five timed passenger calls are retained; レ pass rows are omitted.",
+    "Exact train page prints 山科 and 近江塩津 as レ pass-through line boundaries. Current N02 supplies 東海道線 大阪→山科, 湖西線 山科→近江塩津, and 北陸線 近江塩津→敦賀, with each named endpoint in order.",
+    "Route-only boundary stations 山科 and 近江塩津 are not passenger stop_times. All six current-N02 route segments remain partial because N02 has no 2026-09-30 daily physical-line validity interval."
+  ]
+}

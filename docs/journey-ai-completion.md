@@ -6,9 +6,20 @@ screenshots in journey order. Photos selection now displays selection order;
 an unreadable page or failed OCR tile fails the attempt instead of silently
 importing an incomplete journey.
 
-The screenshot preview and journey editor expose **AI completion** when the
-journey has named endpoints/stops and at least two identifying details among
-date, time, line, operator, and service information. Completion is explicit:
+The screenshot preview and journey editor expose **AI completion** for drafts
+with named endpoints/stops and missing supported fields. The request gate
+requires at least one station resolved in a loaded station catalog with a valid
+arrival or departure time on that same stop. An unconfirmed station name or a
+time belonging only to another, unresolved station is insufficient. Unique
+station names/aliases can resolve locally; ambiguous names need station-picker
+confirmation. The core prompt's default two-anchor research rule is separate
+from this catalog-based app request gate.
+
+For a new journey, enter the date, two station names and their departure/arrival
+times, and vehicle type when known; enter the service name for a limited express.
+The train number can remain empty while advancing to the date and completion
+steps. These details are research clues, not proof that every field is available.
+Completion is explicit:
 
 1. Choose **Sign in with ChatGPT subscription**. The app obtains a one-time
    device code directly from OpenAI. Open the authorization page, sign in to
@@ -29,10 +40,64 @@ field values are rejected. Suggestions must supply evidence URLs and an
 explanation; URL presence does not independently verify a timetable. The
 prompt asks ChatGPT to leave uncertain information unknown.
 
-Completion does not insert stops, change station identities, mark travel as
-ridden, or save automatically. Changing the import date discards completion
+Completion can insert intermediate **scheduled passenger stops** when supported
+by a dated timetable. Each `intermediate_stops` row names an original input gap
+with `after_index` and supplies a station name and at least one valid clock.
+The merge checks gap bounds and chronological order, including `24:xx` or `+N`
+cross-day times. Invalid additions reject the whole response atomically.
+When stops are inserted, review displays the complete proposed stop order.
+New stops inherit the preceding segment's ride flag; completion does not decide
+that a previously unrecorded journey was ridden.
+
+AI responses cannot assign station IDs. After merging, the app resolves unique
+names locally and labels unresolved stops for station selection. Existing
+station identities remain intact. Completion does not save automatically.
+Changing the import date discards completion
 suggestions because timetable evidence may no longer apply. Toggling included
 legs or ridden status preserves suggestions for the corresponding leg.
+
+## Local timetable lookup and source boundaries
+
+The Japanese new-journey date step offers local timetable matching using the
+date, both catalog station identities, origin departure and destination arrival,
+plus the supplied service name. It displays supporting source links. A result
+with a fully verified route can supply the route; other published results can
+supply an editable stop draft without asserting verified physical lines.
+When identifying inputs are ready, lookup starts automatically on appearance
+or input changes after a 300 ms pause. A new date, service name or endpoint/time
+cancels the pending lookup and clears old results. The search button remains
+available, and applying a match still requires selecting it. The native UI
+continuation implemented this on 2026-09-30. Its focused simulator test passed
+in 299.285 seconds, including automatic initial lookup and stale-result
+clearing after rapid date and service-name changes.
+
+Subscription completion requests live web search and asks for authoritative
+operator/timetable evidence. It does not first query the local timetable
+database, and it cannot guarantee that the model will find a usable source.
+The copy-prompt workflow likewise asks for research but relies on the selected
+ChatGPT session's available tools.
+
+Automatic local matching currently applies to the Japanese new-journey date
+step. Screenshot-import and existing-journey completion do not reuse that
+lookup automatically. The original minimal-input request is supported by the
+completion prompt and merge tests; filling every field still depends on the
+available evidence and the supported response schema. Network-researched
+results are proposed for the journey draft, not added to the shared timetable
+database by the app.
+
+Supported additions are service/public number, English service name, train type,
+vehicle type, operator, direction, line names, scheduled clocks, platforms and
+evidence-backed intermediate calls. The response schema does not fill the date,
+station IDs, actual-operation records or verified physical route identities.
+Absent evidence stays unknown. Line names alone do not verify a dated route.
+
+Earlier historical journeys can use direct evidence of the applicable railway
+identity and date; the H1 construction range is not a global cutoff. Data outside
+the verified span remains available with its limitations. Modern open-ended
+line validity is not truncated at the newest source snapshot; future timetables
+still need their own evidence. See the [timetable verification report](train-timetable-verification-2026-09-29.md)
+for the current evidence gaps. The user's background update preference is weekly;
+this documentation continuation creates no schedule.
 
 ## Standalone subscription connection
 
@@ -69,8 +134,10 @@ Protocol references:
 
 ## Verification
 
-`JourneyCompletionTests` tests eligibility, prompt contents, strict decoding,
-missing-field merges, preservation of existing data and malformed responses.
+`JourneyCompletionTests` tests eligibility, unique/ambiguous catalog resolution,
+minimal-input prompts, pasted-text drafts, strict decoding, intermediate-stop
+insertion/order, cross-day clocks, preservation of existing data and atomic
+rejection of invalid responses.
 `JourneyCompletionUITests` exercises the new-journey entry point and prevents
 applying invalid or empty replies.
 `TransferGuideTests` covers screenshot parser regressions using OCR text and
@@ -78,11 +145,76 @@ bounding-box fixtures. A device test with actual source screenshots is still
 needed to measure end-to-end OCR accuracy; parser fixtures cannot establish a
 recognition accuracy percentage.
 
-Focused core verification passed: 54 TransferGuide tests and 11
-JourneyCompletion tests. The iOS Simulator Debug app build also passed.
+Current focused verification (2026-09-30): **30 JourneyCompletion tests passed**
+with the following isolated command. This validates core request/merge behavior;
+the native UI continuation owns simulator verification of intermediate-stop
+review, cross-day editing and rapid date/service-name changes.
+
+```sh
+cd ios/RailKit
+CLANG_MODULE_CACHE_PATH=/tmp/jtm-journey-report-clang-20260930 \
+SWIFT_MODULECACHE_PATH=/tmp/jtm-journey-report-module-20260930 \
+swift test --disable-sandbox \
+  --scratch-path /tmp/jtm-journey-report-20260930 \
+  --cache-path /tmp/jtm-journey-report-cache-20260930 \
+  --filter JourneyCompletionTests
+```
+
+The final 2026-09-30 RailKit gate passed **926 tests**: 611 core tests in
+67 suites and 315 presentation tests in 29 suites. `./ios/verify.sh --core`
+also passed 35 production editor validation cases, 18 persistence checks,
+10 subscription-auth cases and 9 subscription-HTTP cases. The saved logs and
+artifact hashes were checked against the persistent validation checkpoint.
+This gate does not build or run the iOS app and does not validate the
+preview-layer no-op fix or live account access.
+
+The earlier focused core run passed 54 TransferGuide tests and 11
+JourneyCompletion tests before intermediate-stop support was added. The earlier
+iOS Simulator Debug app build also passed.
 The focused new-journey UI test passed on an isolated iOS 27 simulator,
 including insufficient-information gating, opening completion, rejecting an
 invalid reply, and keeping Apply disabled for an empty/no-op reply.
+
+The native continuation's first focused simulator run on 2026-09-30 passed
+2 of 5 checks: advancing without a train number and cross-day stop editing.
+The invalid-reply/no-op completion, source-symbol display and sharing checks
+failed in that run. The sharing retry then passed all four light/dark map and
+statistics previews with Japan and 2026-07-03 retained after dismissal; saved
+map previews were also visually inspected. The earlier UI pass above does not
+certify this run. That six-method retry finished **1/6 passed** (sharing);
+ordered review, endpoint collision, local lookup and source-symbol checks
+failed at screen reachability or accessibility selectors, while the no-op
+completion check exposed the app defect below. The UI owner corrected those
+test interactions and started an isolated five-method retry. Those five
+behaviors are tracked separately. The ordered intermediate-stop test passed
+in 725.040 seconds: the complete proposed sequence appeared in travel order,
+explicit Apply returned to the journey draft, and reopening an inserted stop
+preserved its editable name. This fixture verifies preview/apply behavior, not
+the truth of a researched timetable or a saved journey. The invalid/empty
+reply test then passed in 340.065 seconds, and endpoint-label frame separation
+passed in 31.093 seconds. Source-symbol accessible rows passed in 252.349
+seconds, checking Hokuto's pass role and Huis Ten Bosch's not-via role. The five-method
+bundle finished **4/5 passed**. Automatic lookup produced the expected match,
+but editing the clipped date field failed before the result-clearing checks.
+The test helper was corrected and the isolated case passed in 299.285 seconds:
+initial lookup ran without a search tap, rapid date changes cleared old matches,
+a valid date restored them, and an invalid service name cleared them until
+the supported name was restored.
+
+Follow-up screenshot inspection found that Huis Ten Bosch's not-via row was
+outside the captured viewport and the expanded search sheet covered the map.
+The accessible-row and frame checks remain valid; visible symbol and endpoint
+screenshots are being checked with stricter viewport and camera setup. These
+stronger visual checks remain pending; automatic result clearing is verified
+by the isolated test above.
+
+The invalid-reply retry rejected malformed JSON but found that an empty
+`{"trains":[]}` reply enabled Apply: resolving unique station names added IDs
+even when the merge made no additions. The native continuation now resolves
+identities only for journeys changed by the merge, preserving unchanged input
+for a no-op response. Its isolated simulator retry passed: malformed JSON
+was rejected and the empty reply kept Apply disabled. The core merge test
+pass alone did not catch the preview-layer defect.
 
 Subscription protocol tests run with:
 

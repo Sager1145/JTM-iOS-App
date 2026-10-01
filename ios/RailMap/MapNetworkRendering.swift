@@ -213,7 +213,10 @@ final class MapOverlayInstaller {
         reconciliation: MapOverlayReconciliation
     ) -> [MKMultiPolyline] {
         var overlays: [MKMultiPolyline] = []
-        for (key, polylines) in byColor {
+        // Preserve the same stack across rebuilds and process launches, including
+        // shared track geometry whose visible color depends on overlay order.
+        for key in byColor.keys.sorted() {
+            let polylines = byColor[key]!
             let styleKey = "network|\(key)"
             let multi = reconciliation.multiPolyline(polylines, key: styleKey)
             styles[styleKey] = .init(
@@ -223,7 +226,8 @@ final class MapOverlayInstaller {
             )
             overlays.append(multi)
         }
-        for (key, polylines) in historicalByColor {
+        for key in historicalByColor.keys.sorted() {
+            let polylines = historicalByColor[key]!
             let styleKey = "network-hist|\(key)"
             let multi = reconciliation.multiPolyline(polylines, key: styleKey)
             styles[styleKey] = .init(
@@ -234,7 +238,8 @@ final class MapOverlayInstaller {
             )
             overlays.append(multi)
         }
-        for (key, polylines) in withheldByColor {
+        for key in withheldByColor.keys.sorted() {
+            let polylines = withheldByColor[key]!
             let styleKey = "network-withheld|\(key)"
             let multi = reconciliation.multiPolyline(polylines, key: styleKey)
             styles[styleKey] = .init(
@@ -244,7 +249,8 @@ final class MapOverlayInstaller {
             )
             overlays.append(multi)
         }
-        for (key, polylines) in withheldByColor {
+        for key in withheldByColor.keys.sorted() {
+            let polylines = withheldByColor[key]!
             let styleKey = "network-withheld-casing|\(key)"
             let multi = reconciliation.multiPolyline(polylines, key: styleKey)
             styles[styleKey] = .init(

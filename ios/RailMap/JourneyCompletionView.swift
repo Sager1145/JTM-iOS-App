@@ -69,6 +69,7 @@ struct JourneyCompletionView: View {
                 if let failure { Section { Text(failure).foregroundStyle(.red) } }
                 if proposed != nil || draftTrains != initialTrains { reviewSection }
             }
+            .accessibilityIdentifier("aiCompletionForm")
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -392,9 +393,11 @@ struct JourneyCompletionView: View {
     }
 
     private func eligible(_ train: Train) -> Bool {
-        JourneyCompletion.isRequestEligible(
-            train, stationIsInDatabase: containsDatabaseStation)
-            && (callerEligibility?(train) ?? true)
+        let resolved = JourneyCompletion.resolvingUniqueStationNames(
+            in: train, catalogs: catalogs)
+        return JourneyCompletion.isRequestEligible(
+            resolved, stationIsInDatabase: containsDatabaseStation)
+            && (callerEligibility?(resolved) ?? true)
     }
 
     private func makePrompt() throws -> String {
@@ -417,7 +420,13 @@ struct JourneyCompletionView: View {
     private func preview() {
         previewResponse = response
         do {
-            proposed = try JourneyCompletion.merge(response: response, into: draftTrains)
+            proposed = try JourneyCompletion.merge(response: response, into: draftTrains).map { train in
+                // A reply with no additions is a no-op. Resolving names on an
+                // unchanged input would otherwise create station-ID changes
+                // and enable Apply even for {"trains":[]}.
+                guard train != draftTrains.first(where: { $0.id == train.id }) else { return train }
+                return JourneyCompletion.resolvingUniqueStationNames(in: train, catalogs: catalogs)
+            }
             failure = nil
         } catch { proposed = nil; failure = text("invalid") + "\n" + error.localizedDescription }
     }
@@ -445,12 +454,29 @@ struct JourneyCompletionView: View {
         add(text("destination"), old.destination, new.destination)
         add(text("lines"), old.routePolicy?.preferredLineNames?.joined(separator: " · "),
             new.routePolicy?.preferredLineNames?.joined(separator: " · "))
-        for (index, stop) in new.stops.enumerated() {
-            let before = old.stops.indices.contains(index) ? old.stops[index] : nil
-            add(text("station"), before?.name, stop.name, id: "stop-\(index)-name")
-            add(stop.name + " · " + text("arrival"), before?.arrival, stop.arrival, id: "stop-\(index)-arrival")
-            add(stop.name + " · " + text("departure"), before?.departure, stop.departure, id: "stop-\(index)-departure")
-            add(stop.name + " · " + text("platform"), before?.platformNumber.map(String.init), stop.platformNumber.map(String.init), id: "stop-\(index)-platform")
+        if old.stops.count != new.stops.count {
+            // Inserting a scheduled call shifts later indices. Show the full
+            // proposed sequence so an unchanged original stop is not reported
+            // as though the model had replaced it.
+            for (index, stop) in new.stops.enumerated() {
+                let clock = [stop.arrival, stop.departure]
+                    .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " / ")
+                var value = clock.isEmpty ? stop.name : "\(stop.name) · \(clock)"
+                if stop.n02StationCode?.isEmpty != false {
+                    value += " · \(text("chooseStation"))"
+                }
+                rows.append(Change(
+                    id: "stop-\(index)",
+                    text: "\(text("station")) \(index + 1): \(value)"))
+            }
+        } else {
+            for (index, stop) in new.stops.enumerated() {
+                let before = old.stops[index]
+                add(text("station"), before.name, stop.name, id: "stop-\(index)-name")
+                add(stop.name + " · " + text("arrival"), before.arrival, stop.arrival, id: "stop-\(index)-arrival")
+                add(stop.name + " · " + text("departure"), before.departure, stop.departure, id: "stop-\(index)-departure")
+                add(stop.name + " · " + text("platform"), before.platformNumber.map(String.init), stop.platformNumber.map(String.init), id: "stop-\(index)-platform")
+            }
         }
         return rows.isEmpty ? [Change(id: "unchanged", text: text("unchanged"))] : rows
     }

@@ -1,0 +1,185 @@
+{
+  "candidate_id": "jr-hokkaido-okhotsk2-taisetsu3592d-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Two adjacent selected 2026-09-30 columns, individually printed passenger calls only.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.okhotsk.2.exact-2026-09-30",
+      "service_id": "okhotsk",
+      "service_name": "オホーツク",
+      "service_class": "limited_express",
+      "public_number": "2",
+      "train_number": "72D",
+      "source_locator": "Selected 2026年9月30日(水), tenth train column: 72D / オホーツク 2",
+      "origin": "網走",
+      "destination": "札幌",
+      "stops": [
+        [
+          "網走",
+          null,
+          "06:55"
+        ],
+        [
+          "女満別",
+          null,
+          "07:10"
+        ],
+        [
+          "美幌",
+          null,
+          "07:21"
+        ],
+        [
+          "北見",
+          null,
+          "07:46"
+        ],
+        [
+          "留辺蘂",
+          null,
+          "08:05"
+        ],
+        [
+          "生田原",
+          null,
+          "08:25"
+        ],
+        [
+          "遠軽",
+          null,
+          "08:43"
+        ],
+        [
+          "丸瀬布",
+          null,
+          "09:00"
+        ],
+        [
+          "白滝",
+          null,
+          "09:19"
+        ],
+        [
+          "上川",
+          null,
+          "09:56"
+        ],
+        [
+          "旭川",
+          "10:35",
+          "10:37"
+        ],
+        [
+          "深川",
+          null,
+          "10:58"
+        ],
+        [
+          "滝川",
+          null,
+          "11:13"
+        ],
+        [
+          "岩見沢",
+          null,
+          "11:41"
+        ],
+        [
+          "札幌",
+          "12:10",
+          null
+        ]
+      ],
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-okhotsk2-taisetsu3592d-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "printed_platforms": {
+        "札幌": "(7)"
+      }
+    },
+    {
+      "trip_id": "jr-hokkaido.taisetsu.3592d.exact-2026-09-30",
+      "service_id": "taisetsu",
+      "service_name": "大雪",
+      "service_class": "special_rapid",
+      "public_number": null,
+      "train_number": "3592D",
+      "source_locator": "Selected 2026年9月30日(水), twelfth train column: 3592D / 大雪, public-number cell blank",
+      "origin": "網走",
+      "destination": "旭川",
+      "stops": [
+        [
+          "網走",
+          null,
+          "08:04"
+        ],
+        [
+          "女満別",
+          null,
+          "08:20"
+        ],
+        [
+          "美幌",
+          null,
+          "08:31"
+        ],
+        [
+          "北見",
+          null,
+          "08:56"
+        ],
+        [
+          "留辺蘂",
+          null,
+          "09:15"
+        ],
+        [
+          "生田原",
+          null,
+          "09:35"
+        ],
+        [
+          "遠軽",
+          null,
+          "09:55"
+        ],
+        [
+          "丸瀬布",
+          null,
+          "10:13"
+        ],
+        [
+          "白滝",
+          null,
+          "10:32"
+        ],
+        [
+          "上川",
+          null,
+          "11:11"
+        ],
+        [
+          "旭川",
+          "11:51",
+          null
+        ]
+      ],
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-okhotsk2-taisetsu3592d-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "printed_platforms": {}
+    }
+  ],
+  "pass_through_notes": {
+    "72D": [
+      "砂川",
+      "美唄"
+    ],
+    "3592D": []
+  },
+  "research_notes": {
+    "narita_express_5": "JR East 2610 page 031141 shows 2005M/2205M coupling Tokyo–Narita Airport, but 2205M onward individual time cells are blank; no complete paired canonical snapshot promoted.",
+    "kaiji_3": "No directly verifiable September 30 official かいじ3号 train-detail page found in the 2610 search; no train inferred."
+  }
+}

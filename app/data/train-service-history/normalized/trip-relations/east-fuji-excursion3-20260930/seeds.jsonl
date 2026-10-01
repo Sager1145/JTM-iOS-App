@@ -1,0 +1,2 @@
+{"from_sequence": 1, "related_trip_id": "jr-east.azusa.3.exact-2026-09-30", "relation_type": "couples_with", "source_id": "jr-east-fuji-excursion3-20260930", "to_sequence": 7, "trip_id": "jr-east.fuji-excursion.3.exact-2026-09-30"}
+{"from_sequence": 1, "related_trip_id": "jr-east.fuji-excursion.3.exact-2026-09-30", "relation_type": "couples_with", "source_id": "jr-east-fuji-excursion3-20260930", "to_sequence": 7, "trip_id": "jr-east.azusa.3.exact-2026-09-30"}

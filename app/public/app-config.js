@@ -237,7 +237,11 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // 22: dated history overlays now participate in Web and precompute solves;
 // cache identity includes normalized ride date plus every touched region's
 // overlay revision.
-const ROUTE_SOLVER_CACHE_VERSION = "22";
+// 23: station candidate deduplication retains disjoint historical service
+// periods until the ride-date filter selects the applicable variant.
+// 24: line/operator-pinned solves must traverse matching physical rail and
+// cannot settle a route made only from station-transfer connectors.
+const ROUTE_SOLVER_CACHE_VERSION = "24";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],

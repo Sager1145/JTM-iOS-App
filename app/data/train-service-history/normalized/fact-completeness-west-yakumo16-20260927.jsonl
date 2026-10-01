@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Official selected page prints やくも16号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Official selected page prints 1016M.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Ordered operator segments not established.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Only September 27 is promoted.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Both terminal calls printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Eleven timed passenger calls; レ rows excluded.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Only printed minute clocks and sides retained.", "status": "verified"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Dated physical line identities not established.", "status": "unknown"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Pinned current JR West N02 codes match.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-west.yakumo.16.2026-09-27", "entity_type": "trip", "notes": "Official page is verification-only.", "status": "partial"}

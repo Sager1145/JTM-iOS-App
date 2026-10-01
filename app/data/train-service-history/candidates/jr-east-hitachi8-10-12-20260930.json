@@ -1,0 +1,69 @@
+{
+  "candidate_id": "jr-east-hitachi8-10-12-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 service day and the three displayed JR East schedule variants. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.8.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "8",
+      "train_number": "8M",
+      "source_id": "jr-east-hitachi8-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048501.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち8号 8M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "１０", "品川": "９"},
+      "stops": [
+        ["いわき", null, "09:21"], ["湯本", "09:26", "09:27"],
+        ["泉", "09:31", "09:32"], ["磯原", "09:46", "09:47"],
+        ["日立", "10:02", "10:02"], ["常陸多賀", "10:06", "10:07"],
+        ["大甕", "10:10", "10:11"], ["勝田", "10:20", "10:21"],
+        ["水戸", "10:26", "10:27"], ["上野", "11:35", "11:37"],
+        ["東京", "11:42", "11:43"], ["品川", "11:51", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.10.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "10",
+      "train_number": "10M",
+      "source_id": "jr-east-hitachi10-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048511.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち10号 10M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "１０", "品川": "９"},
+      "stops": [
+        ["いわき", null, "10:17"], ["湯本", "10:22", "10:23"],
+        ["泉", "10:27", "10:28"], ["勿来", "10:36", "10:37"],
+        ["高萩", "10:50", "10:51"], ["日立", "11:02", "11:02"],
+        ["常陸多賀", "11:06", "11:07"], ["勝田", "11:20", "11:21"],
+        ["水戸", "11:26", "11:27"], ["上野", "12:35", "12:37"],
+        ["東京", "12:42", "12:43"], ["品川", "12:51", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.12.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "12",
+      "train_number": "12M",
+      "source_id": "jr-east-hitachi12-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098701.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち12号 12M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"仙台": "６", "水戸": "７", "上野": "９", "東京": "１０", "品川": "９"},
+      "stops": [
+        ["仙台", null, "08:48"], ["相馬", "09:32", "09:33"],
+        ["原ノ町", "09:49", "09:51"], ["浪江", "10:05", "10:06"],
+        ["双葉", "10:10", "10:10"], ["大野", "10:15", "10:15"],
+        ["富岡", "10:24", "10:24"], ["広野", "10:40", "10:44"],
+        ["いわき", "11:08", "11:13"], ["湯本", "11:19", "11:20"],
+        ["泉", "11:25", "11:25"], ["磯原", "11:42", "11:42"],
+        ["日立", "12:00", "12:00"], ["常陸多賀", "12:05", "12:05"],
+        ["勝田", "12:20", "12:21"], ["水戸", "12:26", "12:27"],
+        ["上野", "13:35", "13:37"], ["東京", "13:42", "13:43"],
+        ["品川", "13:51", null]
+      ]
+    }
+  ]
+}

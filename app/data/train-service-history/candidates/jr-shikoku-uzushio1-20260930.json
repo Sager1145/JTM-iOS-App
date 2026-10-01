@@ -1,0 +1,31 @@
+{
+  "candidate_id": "jr-shikoku-uzushio1-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; eleven timed passenger calls; passing rows marked レ excluded; operator segments and physical lines unresolved",
+  "sources": [
+    {"source_id":"jr-odekake-uzushio1-20260930-train","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"特急 うずしお1号 列車時刻表（2026-09-30）","source_type":"official_train_timetable","url_or_locator":"https://timetable.jr-odekake.net/train-timetable/75661?date=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Manually reviewed exact-date train page; source bytes are not bundled."},
+    {"source_id":"jr-odekake-uzushio1-20260930-line","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"高徳線区間時刻表 下り（2026-09-30）","source_type":"official_dated_line_timetable","url_or_locator":"https://timetable.jr-odekake.net/line-timetable/2479?day=30&month=9&year=2026","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Dated line grid lists うずしお1号 and train number 3001D."}
+  ],
+  "trip": {
+    "trip_id":"jr-shikoku.uzushio.1.2026-09-30","service_id":"uzushio","service_name":"うずしお","public_number":"1","train_number":"3001D","service_date":"2026-09-30",
+    "stop_times":[
+      {"name_snapshot":"高松","arrival_time":null,"departure_time":"06:10","platform":"3"},
+      {"name_snapshot":"栗林","arrival_time":"06:15","departure_time":"06:16","platform":null},
+      {"name_snapshot":"屋島","arrival_time":"06:20","departure_time":"06:21","platform":null},
+      {"name_snapshot":"志度","arrival_time":"06:26","departure_time":"06:29","platform":null},
+      {"name_snapshot":"オレンジタウン","arrival_time":"06:32","departure_time":"06:33","platform":null},
+      {"name_snapshot":"三本松","arrival_time":"06:46","departure_time":"06:47","platform":null},
+      {"name_snapshot":"引田","arrival_time":"06:52","departure_time":"06:53","platform":null},
+      {"name_snapshot":"板野","arrival_time":"07:05","departure_time":"07:06","platform":null},
+      {"name_snapshot":"池谷","arrival_time":"07:18","departure_time":"07:19","platform":null},
+      {"name_snapshot":"勝瑞","arrival_time":"07:22","departure_time":"07:23","platform":null},
+      {"name_snapshot":"徳島","arrival_time":"07:29","departure_time":null,"platform":"3"}
+    ]
+  },
+  "evidence_locators":[
+    {"claim":"identity and 3001D","locator":"dated line grid and train-detail header"},
+    {"claim":"exact operating day","locator":"line-grid date 2026-09-30 and detail calendar"},
+    {"claim":"eleven calls and clocks","locator":"時刻詳細 table; レ pass rows excluded"}
+  ]
+}

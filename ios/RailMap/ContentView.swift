@@ -3,6 +3,7 @@ import MapKit
 import RailCore
 import RailPresentation
 import SwiftUI
+import UIKit
 
 /// Seed for the resident journey editor. Edit keeps the id `replace` must target.
 struct JourneyEditorLaunch {
@@ -51,11 +52,6 @@ struct JourneyEditorLaunch {
 /// with tests over 288 state combinations. What is left here is the wiring:
 /// which store call each resolved action makes.
 struct RailWorkspaceView: View {
-    /// Read for one reason: the share image is rendered off screen, and an
-    /// `ImageRenderer` starts from the light appearance unless it is told
-    /// otherwise — so a reader in Dark Mode would get a white poster of their
-    /// own dark screen. See ``StatisticsPoster``.
-    @Environment(\.colorScheme) private var colorScheme
     /// Read for one reason: `PanelHeader` drops its subtitle in a short
     /// window at an accessibility text size, and the compact stop must not
     /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
@@ -144,9 +140,8 @@ struct RailWorkspaceView: View {
     /// and their persistence.
     @State private var manualDates = ManualDates()
     @AppStorage("map-follows-selected-date") private var mapFollowsSelectedDate = false
-    /// `focusZoomEnabled` — 自動縮放. Off to start with, as in the web app: a
-    /// map that moves itself every time a row is tapped is a map the reader
-    /// cannot keep a place in, so it is asked for rather than assumed.
+    /// `focusZoomEnabled` — 自動縮放 for date and region changes. A direct
+    /// journey pick always focuses the chosen route.
     @AppStorage("auto-focus-zoom") private var autoFocusZoom = false
     /// 設定 › 啟動地圖範圍 — what the map opens on, when the reader would
     /// rather say than have the app infer. See ``LaunchMapScope`` and
@@ -1245,7 +1240,22 @@ struct RailWorkspaceView: View {
     /// nothing in the console about presenting twice. What makes it safe is
     /// that the destinations are mutually exclusive — only the tab on screen
     /// can be trying to present.
-    @State private var isRenderingStatistics = false
+    private enum StatisticsShareRequest: Hashable {
+        case map(ColorScheme)
+        case statistics(ColorScheme)
+
+        var colorScheme: ColorScheme {
+            switch self {
+            case .map(let scheme), .statistics(let scheme): scheme
+            }
+        }
+        var includesMap: Bool {
+            if case .map = self { return true }
+            return false
+        }
+    }
+
+    @State private var statisticsShareRequest: StatisticsShareRequest?
     @State private var statisticsImage: StatisticsPoster.File?
 
     private var statisticsPanel: some View {
@@ -1633,18 +1643,61 @@ struct RailWorkspaceView: View {
     /// Disabled while there is nothing to draw: an image of a screen that is
     /// still calculating is a picture of a spinner.
     private var statisticsShareButton: some View {
-        SheetIconButton(
-            systemImage: "square.and.arrow.up",
-            accessibilityLabel: Text(localization.statsText("ios.stats.shareImage"))
-        ) {
-            isRenderingStatistics = true
+        Menu {
+            Menu {
+                Button {
+                    statisticsShareRequest = .map(.light)
+                } label: {
+                    Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
+                }
+                .accessibilityIdentifier("mapShareLightButton")
+                Button {
+                    statisticsShareRequest = .map(.dark)
+                } label: {
+                    Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
+                }
+                .accessibilityIdentifier("mapShareDarkButton")
+            } label: {
+                Label(localization.statsText("ios.stats.shareMapOption"), systemImage: "map")
+            }
+            .accessibilityIdentifier("mapShareOption")
+            Menu {
+                Button {
+                    statisticsShareRequest = .statistics(.light)
+                } label: {
+                    Label(localization.statsText("ios.stats.shareLight"), systemImage: "sun.max")
+                }
+                .accessibilityIdentifier("statisticsShareLightButton")
+                Button {
+                    statisticsShareRequest = .statistics(.dark)
+                } label: {
+                    Label(localization.statsText("ios.stats.shareDark"), systemImage: "moon")
+                }
+                .accessibilityIdentifier("statisticsShareDarkButton")
+            } label: {
+                Label(localization.statsText("ios.stats.shareStatisticsOption"), systemImage: "chart.bar")
+            }
+            .accessibilityIdentifier("statisticsShareOption")
+        } label: {
+            SheetIconLabel(systemImage: "square.and.arrow.up")
         }
-        .disabled(statistics.view == nil || isRenderingStatistics)
-        .overlay { if isRenderingStatistics { ProgressView().allowsHitTesting(false) } }
-        .task(id: isRenderingStatistics) {
-            guard isRenderingStatistics else { return }
-            defer { isRenderingStatistics = false }
-            guard let file = await renderStatisticsImage(), !Task.isCancelled else { return }
+        .accessibilityLabel(Text(localization.statsText("ios.stats.shareImage")))
+        .disabled(statistics.view == nil || statisticsShareRequest != nil)
+        .overlay { if statisticsShareRequest != nil { ProgressView().allowsHitTesting(false) } }
+        .task(id: statisticsShareRequest) {
+            guard let request = statisticsShareRequest else { return }
+            defer { statisticsShareRequest = nil }
+            let mapImage = request.includesMap
+                ? await StatisticsMapSnapshot.render(
+                    rides: mapRides,
+                    fallback: regionScope?.networkExtent ?? controller.mapView?.region,
+                    colorScheme: request.colorScheme)
+                : nil
+            if request.includesMap && mapImage == nil { return }
+            guard let file = await renderStatisticsImage(
+                colorScheme: request.colorScheme, mapImage: mapImage), !Task.isCancelled else {
+                return
+            }
             PresentationHost.afterTeardown { statisticsImage = file }
         }
         .accessibilityIdentifier("statisticsShareButton")
@@ -1652,7 +1705,9 @@ struct RailWorkspaceView: View {
 
     /// The statistics page, as a PNG on disk. `nil` if it could not be drawn
     /// or could not be written, in which case nothing is presented.
-    private func renderStatisticsImage() async -> StatisticsPoster.File? {
+    private func renderStatisticsImage(
+        colorScheme: ColorScheme, mapImage: UIImage?
+    ) async -> StatisticsPoster.File? {
         await StatisticsPoster.render(
             itineraries: itineraries,
             statistics: statistics,
@@ -1666,10 +1721,13 @@ struct RailWorkspaceView: View {
                     "region": .string(regionScopeName),
                     "date": .string(dateBucketLabel(statistics.selectedDate)),
                 ]),
-            title: localization.text("nav.stats", fallback: "Stats"),
+            title: mapImage == nil
+                ? localization.text("nav.stats", fallback: "Stats")
+                : localization.statsText("ios.stats.shareMapTitle"),
             localization: localization,
             journeyPresentation: { presentation(for: $0) },
-            colorScheme: colorScheme)
+            colorScheme: colorScheme,
+            mapImage: mapImage)
     }
 
     private var playbackButton: some View {
@@ -2733,7 +2791,7 @@ struct RailWorkspaceView: View {
                     "toggle.currentDate", fallback: "Map shows the selected date only"),
                 isOn: $mapFollowsSelectedDate)
             // Beside the date filter because they are the same kind of
-            // decision — what the MAP does when the list's scope or selection
+            // decision — what the MAP does when the list's scope
             // changes — and the web app keeps its own 自動縮放 button in the
             // date bar for the same reason.
             Toggle(autoFocusLabel, isOn: $autoFocusZoom)
@@ -2973,7 +3031,8 @@ struct RailWorkspaceView: View {
     /// ``MapDateScope/alpha(own:span:scope:isSelected:hasSelection:)`` puts
     /// the selection wrap after the date wrap for.
     ///
-    /// A user pick requests focus separately from the selected-record state.
+    /// A user pick requests focus separately from the selected-record state,
+    /// regardless of the automatic zoom setting for date and region changes.
     ///
     /// A pick made during a run ends the run first — see ``yieldRun()``. So by
     /// the time focus is requested the transport is idle, and the picked
@@ -2982,7 +3041,7 @@ struct RailWorkspaceView: View {
         guard yieldRun() else { return }
         itineraries.selectedTrainID = train.id
         controller.requestAutoFocus(
-            .journey(train.id), enabled: autoFocusZoom, playbackIsActive: playback.isActive)
+            .journey(train.id), enabled: true, playbackIsActive: playback.isActive)
     }
 
     /// A run gives way to the reader choosing a journey — or, while it is

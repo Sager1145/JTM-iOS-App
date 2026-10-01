@@ -1,0 +1,3 @@
+{"calendar_id": "jr-kyushu.midori.7.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-kyushu-midori7-20260930"}
+{"calendar_id": "jr-kyushu.relay-kamome.1.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-kyushu-relay-kamome1-20260930"}
+{"calendar_id": "jr-shikoku.shimanto.2.2026-09-30.calendar", "exception_type": "add", "reason": "Exact-date official timetable; no recurrence inferred", "service_date": "2026-09-30", "source_id": "jr-odekake-shimanto2-20260930-line"}

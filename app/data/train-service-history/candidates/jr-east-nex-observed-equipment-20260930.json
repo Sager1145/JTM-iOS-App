@@ -1,0 +1,2714 @@
+{
+  "candidate_id": "jr-east-nex-observed-equipment-20260930",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope": "82 reservation-only overlays; preexisting NEX5 two overlays retained separately. 54 observed public numbers, not unseen-entrance closure.",
+  "page_evidence": [
+    {
+      "public_number": "15",
+      "source_id": "jr-east-narita-express15-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029071.html",
+      "source_sha256": "318c27ce85c0919bafc71679360ba74380de362e348605eb7683b0170cc68a3e",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2015M",
+        "2215M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.15.2015m.exact-2026-09-30",
+        "jr-east.narita-express.15.2215m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "1",
+      "source_id": "jr-east-narita-express1-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031131.html",
+      "source_sha256": "8fb579ecdaaac6f28765a33eafcd2f69e248a6cb50854788339c30589891baff",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2001M",
+        "2201M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.1.2001m.exact-2026-09-30",
+        "jr-east.narita-express.1.2201m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "5",
+      "source_id": "jr-east-narita-express5-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031141.html",
+      "source_sha256": "404072c6da189d68dd3d1e9a68cee4bc2bf4a6a6fddc15750bc7e20cefc737a3",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2005M",
+        "2205M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.5.2005m.exact-2026-09-30",
+        "jr-east.narita-express.5.2205m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "7",
+      "source_id": "jr-east-narita-express7-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031151.html",
+      "source_sha256": "2c8f074a1ca5f47b4aa54ff4128b9e455e765431a9ed68cc8800caf0adc86717",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2007M",
+        "2207M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.7.2007m.exact-2026-09-30",
+        "jr-east.narita-express.7.2207m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "23",
+      "source_id": "jr-east-narita-express23-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031161.html",
+      "source_sha256": "294cda186c669f3654f0d3b9d39401c662992ee5599e21d367e5ebc325634993",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2023M",
+        "2223M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.23.2023m.exact-2026-09-30",
+        "jr-east.narita-express.23.2223m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "27",
+      "source_id": "jr-east-narita-express27-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031171.html",
+      "source_sha256": "d7cd0db4d0f4a7f6d6ebdb0521dd24b8216c19343bd355a760799dc08556bfcf",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2027M",
+        "2227M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.27.2027m.exact-2026-09-30",
+        "jr-east.narita-express.27.2227m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "31",
+      "source_id": "jr-east-narita-express31-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031181.html",
+      "source_sha256": "a29e76b42229a2a66650f12f86b2eb4abecf8eb6e03896dd2d70096e98c8b5a6",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2031M",
+        "2231M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.31.2031m.exact-2026-09-30",
+        "jr-east.narita-express.31.2231m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "35",
+      "source_id": "jr-east-narita-express35-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031191.html",
+      "source_sha256": "920fd0c79f9942a75e886447403660cb29e8ff20bfc285846f771ce3fcbcca53",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2035M",
+        "2235M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.35.2035m.exact-2026-09-30",
+        "jr-east.narita-express.35.2235m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "39",
+      "source_id": "jr-east-narita-express39-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031201.html",
+      "source_sha256": "bb384b28f9bbed909338c265bfe140220daebfa0a285e5351e994ef7105d08db",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2039M",
+        "2239M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.39.2039m.exact-2026-09-30",
+        "jr-east.narita-express.39.2239m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "43",
+      "source_id": "jr-east-narita-express43-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031211.html",
+      "source_sha256": "049bc6bbe7c6ae391d90fa6c70f9ccfe887413dc58af41876cb9bb67dc119fe8",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2043M",
+        "2243M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.43.2043m.exact-2026-09-30",
+        "jr-east.narita-express.43.2243m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "51",
+      "source_id": "jr-east-narita-express51-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031221.html",
+      "source_sha256": "f8bdcad9ba4a16886e946b7c4041a14149a36d7278ab78caf77929d22ab0e563",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2051M",
+        "2251M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.51.2051m.exact-2026-09-30",
+        "jr-east.narita-express.51.2251m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "53",
+      "source_id": "jr-east-narita-express53-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031231.html",
+      "source_sha256": "b3c2234a72146219e245176855e8a0d9cbf32bf5d597fd65ebad98692dd262a9",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2053M",
+        "2253M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.53.2053m.exact-2026-09-30",
+        "jr-east.narita-express.53.2253m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "33",
+      "source_id": "jr-east-narita-express33-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031511.html",
+      "source_sha256": "8a9e7e716329f9bdfea2bfac2dc06369ffd44cdef459557f9e39ceef624edf77",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2233M",
+        "2033M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.33.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "47",
+      "source_id": "jr-east-narita-express47-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031521.html",
+      "source_sha256": "c837d9810e960105ece99f07319ff5fcffd9bcc90cd43362b79adf30230c8954",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2047M",
+        "2247M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.47.2047m.exact-2026-09-30",
+        "jr-east.narita-express.47.2247m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "3",
+      "source_id": "jr-east-narita-express3-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037961.html",
+      "source_sha256": "875566e02bed80003c72766f1409c329c203ab011276116900b6750070a2e0e7",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2003M",
+        "2203M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.3.2003m.exact-2026-09-30",
+        "jr-east.narita-express.3.2203m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "17",
+      "source_id": "jr-east-narita-express17-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037971.html",
+      "source_sha256": "5a050dc27873d9feaf60021723bdf3f6605f0391674c6b7f103763c08aae402c",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2217M",
+        "2017M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.17.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "19",
+      "source_id": "jr-east-narita-express19-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037981.html",
+      "source_sha256": "23f71b821201aaf9cf11912da7a1af4fb927dfd188c2db48af5598db7821668f",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2019M",
+        "2219M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.19.2019m.exact-2026-09-30",
+        "jr-east.narita-express.19.2219m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "9",
+      "source_id": "jr-east-narita-express9-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054651.html",
+      "source_sha256": "83d2242df6f2f60df1aeedb20eb741680c2ce9fd93274905525f08317883d7df",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2209M",
+        "2009M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.9.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "49",
+      "source_id": "jr-east-narita-express49-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063321.html",
+      "source_sha256": "1bf57231f68845b671414f37a61478944c9d8d3b080c2cba39ca65a497cbffb1",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2249M",
+        "2049M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.49.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "21",
+      "source_id": "jr-east-narita-express21-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076511.html",
+      "source_sha256": "1ce1f0c17e929314f19d2f2abef03e4fec013ae6cc36f6848b29dc465f41f863",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2221M",
+        "2021M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.21.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "25",
+      "source_id": "jr-east-narita-express25-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076521.html",
+      "source_sha256": "ec4224e2aeee32d403a8ae4b7efb61fc0f6a7d17fdf96f78dea93dbdb7e43d64",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2225M",
+        "2025M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.25.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "29",
+      "source_id": "jr-east-narita-express29-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076541.html",
+      "source_sha256": "5781f3c418bced8f6e8073221266d14f407aa9349572a9b0209e9cd6388a1cb1",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2229M",
+        "2029M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.29.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "37",
+      "source_id": "jr-east-narita-express37-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076551.html",
+      "source_sha256": "32f04806e600b79faf0e56ff322bf02417444ff64d6e4d130232943f155d9b51",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2237M",
+        "2037M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.37.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "41",
+      "source_id": "jr-east-narita-express41-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076571.html",
+      "source_sha256": "964973d471652f25130af11fb1f1dc3ccb86629e439130cc0fa6736fde9256ec",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2241M",
+        "2041M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.41.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "45",
+      "source_id": "jr-east-narita-express45-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076581.html",
+      "source_sha256": "fa7dbf42ce3714cc2f7a1cdd518beca3add4e4fb821754a179ff87067f1dee9e",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2245M",
+        "2045M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.45.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "11",
+      "source_id": "jr-east-narita-express11-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098841.html",
+      "source_sha256": "70bdfcf385ab97581734795ee47fd4eec8c5d1c3a5d6fcb9133debcff7383f54",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2011M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.11.2011m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "13",
+      "source_id": "jr-east-narita-express13-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098851.html",
+      "source_sha256": "906561af0c5a45f894912e340a43dafe970c6fc030f00dbd104d8e9b977e420e",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2213M",
+        "2013M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.13.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "2",
+      "source_id": "jr-east-narita-express2-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029041.html",
+      "source_sha256": "f91fde7818b1013b15a863100576b5c5a7a14f70a45a1f39ffdf328718995337",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2002M",
+        "2202M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.2.2002m.exact-2026-09-30",
+        "jr-east.narita-express.2.2202m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "42",
+      "source_id": "jr-east-narita-express42-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029081.html",
+      "source_sha256": "73ec01a8df0b3a293024cb10b8c75ee136fb85f59ec0a05b75bee3c27976dd8b",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2042M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.42.2042m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "28",
+      "source_id": "jr-east-narita-express28-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031241.html",
+      "source_sha256": "003744be26a2aab56fe1854662ea3993446e3ac047bc4550bb9d86e26680f129",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2028M",
+        "2228M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.28.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "38",
+      "source_id": "jr-east-narita-express38-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031251.html",
+      "source_sha256": "6fee691e4551239a47fe0a10d90933bc9b33ea1e9ac6b63b9afbb329ee83608b",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2038M",
+        "2238M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.38.2038m.exact-2026-09-30",
+        "jr-east.narita-express.38.2238m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "40",
+      "source_id": "jr-east-narita-express40-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031261.html",
+      "source_sha256": "ca8d09bc79576f028259126a680224e278e443c89d8bcc7f1995121d68a620ae",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2040M",
+        "2240M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.40.2040m.exact-2026-09-30",
+        "jr-east.narita-express.40.2240m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "46",
+      "source_id": "jr-east-narita-express46-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031271.html",
+      "source_sha256": "8a34529ff9cce1fd9e628348d664372cdf67ce9611cc6cf85373e4d87cd2e83b",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2046M",
+        "2246M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.46.2046m.exact-2026-09-30",
+        "jr-east.narita-express.46.2246m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "52",
+      "source_id": "jr-east-narita-express52-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031281.html",
+      "source_sha256": "5e06c267f14d8a9e6dd01852750e985f7f3b319d8cef9cad948377ee5a91002c",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2052M",
+        "2252M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.52.2052m.exact-2026-09-30",
+        "jr-east.narita-express.52.2252m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "54",
+      "source_id": "jr-east-narita-express54-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031291.html",
+      "source_sha256": "992daf42415239ac1896895b2f980c3e3e4c9ef67edfb900db42dbd432b53e92",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2054M",
+        "2254M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.54.2054m.exact-2026-09-30",
+        "jr-east.narita-express.54.2254m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "10",
+      "source_id": "jr-east-narita-express10-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031481.html",
+      "source_sha256": "d29f57d22b01ba56e3e47f361d5649cfecd48f6f8782ef51624324fcfacb98b3",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2010M",
+        "2210M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.10.2010m.exact-2026-09-30",
+        "jr-east.narita-express.10.2210m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "30",
+      "source_id": "jr-east-narita-express30-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031491.html",
+      "source_sha256": "a88a6783dab8ba8b691b1a64949616b1138534040a99397a8cb3d721affb58e9",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2030M",
+        "2230M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.30.2030m.exact-2026-09-30",
+        "jr-east.narita-express.30.2230m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "34",
+      "source_id": "jr-east-narita-express34-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031501.html",
+      "source_sha256": "6f3f1f42ce32e16d05202f7e3a75357d32125132860d555cb95199b7edcc7ba0",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2034M",
+        "2234M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.34.2034m.exact-2026-09-30",
+        "jr-east.narita-express.34.2234m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "14",
+      "source_id": "jr-east-narita-express14-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047971.html",
+      "source_sha256": "0b75ecb1a66fef63bcf6cf722fbb451559a444667a73731cbc799b5d881370c1",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2014M",
+        "2214M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.14.2014m.exact-2026-09-30",
+        "jr-east.narita-express.14.2214m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "18",
+      "source_id": "jr-east-narita-express18-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047981.html",
+      "source_sha256": "3c5177fba34a74e0ded528fc87e290dd16dee2155e04db601474672213600706",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2018M",
+        "2218M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.18.2018m.exact-2026-09-30",
+        "jr-east.narita-express.18.2218m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "50",
+      "source_id": "jr-east-narita-express50-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047991.html",
+      "source_sha256": "46221e4076a4d590baf5f37a7d1f4fbb4a93341164ad39f142b9f01b237571b0",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2050M",
+        "2250M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.50.2050m.exact-2026-09-30",
+        "jr-east.narita-express.50.2250m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "12",
+      "source_id": "jr-east-narita-express12-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049941.html",
+      "source_sha256": "df9a4b5b4e8c27e6143455ef04e234659ddd5ca2c13d87e6369a970270202fd3",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2012M",
+        "2212M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.12.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "4",
+      "source_id": "jr-east-narita-express4-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063331.html",
+      "source_sha256": "821ce93e7824f5fe578cd9d6db86eec61fe2d9ce28cd2351249230518adf4f9e",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2004M",
+        "2204M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.4.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "8",
+      "source_id": "jr-east-narita-express8-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063341.html",
+      "source_sha256": "245c43aba0100b489c4f8801bd5ce3c070ec24beac4310aa256a6623ac6ef882",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2008M",
+        "2208M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.8.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "16",
+      "source_id": "jr-east-narita-express16-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063351.html",
+      "source_sha256": "e5c46a2f4e06042d910031e916b0077de7cb016c68698d66d8a7d44231a31a3d",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2016M",
+        "2216M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.16.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "20",
+      "source_id": "jr-east-narita-express20-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063361.html",
+      "source_sha256": "78c38a453e1e32a27ca6244e7a715564a8cfd180dbac277a8713acd032b3bb86",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2020M",
+        "2220M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.20.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "24",
+      "source_id": "jr-east-narita-express24-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063371.html",
+      "source_sha256": "690797fa6c97aed7385ef2a9aabee1e8d3d85cefdd38a8cae249b9e0b8a982ee",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2024M",
+        "2224M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.24.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "32",
+      "source_id": "jr-east-narita-express32-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063381.html",
+      "source_sha256": "6a2f5ea67248e293b259e72db186376d3ad5cb3af29b1cb2fa1fa74d41dc58f7",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2032M",
+        "2232M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.32.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "44",
+      "source_id": "jr-east-narita-express44-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063391.html",
+      "source_sha256": "d0c36d2fafa2636a676a9d424c553bfa92a720dae7d58b34e79d2e7999a7badf",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2044M",
+        "2244M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.44.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "48",
+      "source_id": "jr-east-narita-express48-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063401.html",
+      "source_sha256": "054f48c6be91bcc640311773a1bc93e504d60142f668c21f710913b77e5c9145",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2048M",
+        "2248M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.48.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "6",
+      "source_id": "jr-east-narita-express6-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063411.html",
+      "source_sha256": "a729735bdce9c8a19147b264f55a54d232f9bfc7a1ba4c4970bb64d416590f55",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2006M",
+        "2206M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.6.2006m.exact-2026-09-30",
+        "jr-east.narita-express.6.2206m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "22",
+      "source_id": "jr-east-narita-express22-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063421.html",
+      "source_sha256": "a1fabf2e559c0937eba6b4bf27602125f44a27b933abeab3e3c7e5f89975c2dd",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2022M",
+        "2222M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.22.2022m.exact-2026-09-30",
+        "jr-east.narita-express.22.2222m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "26",
+      "source_id": "jr-east-narita-express26-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063431.html",
+      "source_sha256": "f31db79629994f8756f8fc66708ccc6f6a8a0e0907e0d1b4b269e8ce86e637e8",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2026M",
+        "2226M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.26.2026m.exact-2026-09-30",
+        "jr-east.narita-express.26.2226m.exact-2026-09-30"
+      ]
+    },
+    {
+      "public_number": "36",
+      "source_id": "jr-east-narita-express36-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076611.html",
+      "source_sha256": "e5535d9a35468956ebcb493ef09e1fb775ee1840caf83b68eb6fb33fd0bf0c7e",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_train_numbers": [
+        "2036M",
+        "2236M"
+      ],
+      "equipment_columns": [
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ],
+        [
+          "座席未指定券",
+          "グリーン車指定席",
+          "普通車全車指定席"
+        ]
+      ],
+      "trip_ids": [
+        "jr-east.narita-express.36.exact-2026-09-30"
+      ]
+    }
+  ],
+  "formations": [
+    {
+      "formation_id": "jr-east.narita-express.15.2015m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.15.2015m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express15-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.15.2215m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.15.2215m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express15-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.1.2001m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.1.2001m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express1-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.1.2201m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.1.2201m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express1-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.7.2007m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.7.2007m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express7-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.7.2207m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.7.2207m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express7-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.23.2023m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.23.2023m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express23-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.23.2223m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.23.2223m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express23-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.27.2027m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.27.2027m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express27-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.27.2227m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.27.2227m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express27-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.31.2031m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.31.2031m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express31-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.31.2231m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.31.2231m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express31-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.35.2035m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.35.2035m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express35-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.35.2235m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.35.2235m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express35-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.39.2039m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.39.2039m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express39-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.39.2239m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.39.2239m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express39-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.43.2043m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.43.2043m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express43-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.43.2243m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.43.2243m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express43-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.51.2051m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.51.2051m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express51-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.51.2251m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.51.2251m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express51-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.53.2053m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.53.2053m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express53-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.53.2253m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.53.2253m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express53-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.33.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.33.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express33-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.47.2047m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.47.2047m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express47-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.47.2247m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.47.2247m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express47-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.3.2003m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.3.2003m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express3-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.3.2203m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.3.2203m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express3-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.17.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.17.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express17-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.19.2019m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.19.2019m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express19-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.19.2219m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.19.2219m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express19-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.9.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.9.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express9-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.49.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.49.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express49-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.21.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.21.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express21-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.25.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.25.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express25-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.29.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.29.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express29-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.37.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.37.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express37-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.41.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.41.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express41-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.45.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.45.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express45-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.11.2011m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.11.2011m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express11-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.13.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.13.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express13-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.2.2002m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.2.2002m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express2-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.2.2202m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.2.2202m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express2-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.42.2042m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.42.2042m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express42-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.28.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.28.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express28-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.38.2038m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.38.2038m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express38-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.38.2238m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.38.2238m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express38-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.40.2040m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.40.2040m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express40-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.40.2240m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.40.2240m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express40-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.46.2046m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.46.2046m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express46-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.46.2246m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.46.2246m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express46-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.52.2052m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.52.2052m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express52-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.52.2252m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.52.2252m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express52-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.54.2054m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.54.2054m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express54-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.54.2254m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.54.2254m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express54-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.10.2010m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.10.2010m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express10-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.10.2210m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.10.2210m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express10-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.30.2030m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.30.2030m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express30-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.30.2230m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.30.2230m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express30-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.34.2034m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.34.2034m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express34-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.34.2234m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.34.2234m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express34-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.14.2014m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.14.2014m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express14-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.14.2214m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.14.2214m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express14-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.18.2018m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.18.2018m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express18-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.18.2218m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.18.2218m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express18-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.50.2050m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.50.2050m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express50-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.50.2250m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.50.2250m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express50-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.12.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.12.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express12-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.4.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.4.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express4-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.8.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.8.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express8-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.16.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.16.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express16-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.20.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.20.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express20-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.24.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.24.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express24-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.32.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.32.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express32-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.44.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.44.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express44-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.48.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.48.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express48-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.6.2006m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.6.2006m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express6-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.6.2206m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.6.2206m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express6-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.22.2022m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.22.2022m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express22-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.22.2222m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.22.2222m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express22-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.26.2026m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.26.2026m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express26-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.26.2226m.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.26.2226m.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express26-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    },
+    {
+      "formation_id": "jr-east.narita-express.36.exact-2026-09-30.formation.2026-09-30",
+      "trip_id": "jr-east.narita-express.36.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "evidence_kind": "planned",
+      "all_reserved": true,
+      "green_car_available": true,
+      "car_count": null,
+      "vehicle_series": null,
+      "reserved_seat_capacity": null,
+      "source_id": "jr-east-narita-express36-20260930",
+      "notes": "Direct equipment labels on date-selected train page. Generic service diagrams do not identify this dated dispatch or train-specific consist."
+    }
+  ]
+}

@@ -10,7 +10,7 @@ final class MapCameraIntentTests: XCTestCase {
         let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka")
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) {
-            self.number("rides", $0) > 0 && abs(self.number("centerLon", $0) + 74.027) < 0.01
+            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLon", $0) + 74.027) < 0.01
         }
         let before = status.label
         XCUIDevice.shared.orientation = .landscapeLeft
@@ -29,11 +29,11 @@ final class MapCameraIntentTests: XCTestCase {
         assertCameraStays(status, equalTo: before, for: 2)
     }
 
-    func testUserSelectionStillFocusesWithAutoFocusEnabled() throws {
-        let app = launch(tab: "search", stage: "expanded")
+    func testUserSelectionFocusesWithAutoFocusDisabled() throws {
+        let app = launch(tab: "search", stage: "expanded", autoFocus: false)
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) {
-            self.number("rides", $0) > 0 && abs(self.number("centerLon", $0) + 74.027) < 0.01
+            self.number("targetRideReady", $0) == 1 && abs(self.number("centerLon", $0) + 74.027) < 0.01
         }
         let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
@@ -41,16 +41,39 @@ final class MapCameraIntentTests: XCTestCase {
         try waitFor(status) { self.number("centerLon", $0) > 125 }
     }
 
-    private func launch(tab: String, stage: String, selected: String? = nil) -> XCUIApplication {
+    func testSelectedJourneyEndpointLabelsStaySeparate() throws {
+        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka",
+                         autoFocus: false, camera: "34.55,135.4,0.55")
+        let status = app.staticTexts["railMapRenderStatus"]
+        try waitFor(status) { self.number("targetRideReady", $0) == 1 }
+        try waitFor(status) { self.number("centerLon", $0) > 125 }
+        let origin = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label BEGINSWITH %@ AND label CONTAINS %@", "Start ", "関西空港")).firstMatch
+        let destination = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label BEGINSWITH %@ AND label CONTAINS %@", "End ", "新大阪")).firstMatch
+        XCTAssertTrue(origin.waitForExistence(timeout: 15), app.debugDescription)
+        XCTAssertTrue(destination.waitForExistence(timeout: 15), app.debugDescription)
+        XCTAssertFalse(origin.frame.intersects(destination.frame),
+                       "Endpoint cards must occupy distinct screen space.")
+        let shot = XCTAttachment(screenshot: app.screenshot())
+        shot.name = "selected-haruka-role-labels"
+        shot.lifetime = .keepAlways
+        add(shot)
+    }
+
+    private func launch(tab: String, stage: String, selected: String? = nil,
+                        autoFocus: Bool = true,
+                        camera: String = "40.735,-74.027,0.016") -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-auto-focus-zoom", "YES"]
+                               "-auto-focus-zoom", autoFocus ? "YES" : "NO"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
         app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
         app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
+        app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260703_01_haruka"
         app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "routes,focus"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "40.735,-74.027,0.016"
+        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
         app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selected
         app.launch()
         return app
@@ -74,9 +97,16 @@ final class MapCameraIntentTests: XCTestCase {
     }
 
     private func assertSameCamera(_ actual: String, _ expected: String) {
-        XCTAssertEqual(number("centerLon", actual), number("centerLon", expected), accuracy: 0.001,
-                       "Before: \(expected)\nAfter: \(actual)")
-        XCTAssertEqual(number("centerLat", actual), number("centerLat", expected), accuracy: 0.001)
+        // Six-decimal diagnostics are compared in integer microdegrees, so a
+        // decimal boundary such as -74.026000 vs -74.027000 remains exactly
+        // the original 0.001-degree allowance rather than failing on binary
+        // subtraction roundoff.
+        for key in ["centerLon", "centerLat"] {
+            let observed = (number(key, actual) * 1_000_000).rounded()
+            let baseline = (number(key, expected) * 1_000_000).rounded()
+            XCTAssertLessThanOrEqual(abs(observed - baseline), 1_000,
+                                     "Before: \(expected)\nAfter: \(actual)")
+        }
         XCTAssertEqual(number("distance", actual), number("distance", expected),
                        accuracy: max(1, number("distance", expected) * 0.02))
     }

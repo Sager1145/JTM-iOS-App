@@ -273,14 +273,14 @@ final class RailMapUITests: XCTestCase {
         expectation(for: compact, evaluatedWith: toggle)
         waitForExpectations(timeout: 8)
         XCTAssertFalse(element("journeySearchField", in: app).exists)
-        assertHittable(element("mapNetworkToggle", in: app))
+        assertNetworkToggleResponds(in: app)
         attach(app, named: "ipad-menu-retracted")
 
         toggle.tap()
         XCTAssertTrue(
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "Reopening the resident menu must restore its Search destination.")
-        assertHittable(element("mapNetworkToggle", in: app))
+        assertNetworkToggleResponds(in: app)
         attach(app, named: "ipad-menu-reopened")
     }
 
@@ -309,9 +309,25 @@ final class RailMapUITests: XCTestCase {
         add(screenshot)
     }
 
-    private func assertHittable(_ element: XCUIElement) {
-        expectation(for: NSPredicate(format: "hittable == YES"), evaluatedWith: element)
-        waitForExpectations(timeout: 8)
+    private func assertNetworkToggleResponds(in app: XCUIApplication) {
+        let toggle = app.buttons["mapNetworkToggle"]
+        let status = app.staticTexts["railMapRenderStatus"]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 8))
+        XCTAssertTrue(status.waitForExistence(timeout: 8))
+        let original = toggle.isSelected
+        for selected in [!original, original] {
+            EditorUITestSupport.tap(toggle, in: app)
+            let changed = XCTNSPredicateExpectation(
+                predicate: NSPredicate { object, _ in
+                    (object as? XCUIElement)?.isSelected == selected
+                }, object: toggle)
+            XCTAssertEqual(XCTWaiter.wait(for: [changed], timeout: 8), .completed)
+            let prefix = selected ? "network:rendered;" : "network:off;"
+            let rendered = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label BEGINSWITH %@", prefix), object: status)
+            XCTAssertEqual(XCTWaiter.wait(for: [rendered], timeout: 8), .completed,
+                           "The map must render the layer selected from its visible control.")
+        }
     }
 
     private func launch(
@@ -325,6 +341,7 @@ final class RailMapUITests: XCTestCase {
     ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
+        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
         if let selectedJourney {
             app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selectedJourney

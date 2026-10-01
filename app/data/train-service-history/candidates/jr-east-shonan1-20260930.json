@@ -1,0 +1,82 @@
+{
+  "candidate_id": "jr-east-shonan1-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "shonan",
+  "service_name": "湘南",
+  "jr_scope": "jr",
+  "public_number": "1",
+  "train_number": "3071M",
+  "trip_id": "jr-east.shonan.1.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-shonan1-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/085/087621.html",
+  "source_sha256": "0d42f4d13a5f228b327dd4f916c54d48709c92d9226b841f8eb96a5728db1f2d",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "東京",
+      null,
+      "17:30"
+    ],
+    [
+      "品川",
+      "17:37",
+      "17:39"
+    ],
+    [
+      "大船",
+      "18:05",
+      "18:06"
+    ],
+    [
+      "藤沢",
+      "18:10",
+      "18:10"
+    ],
+    [
+      "辻堂",
+      "18:14",
+      "18:14"
+    ],
+    [
+      "茅ケ崎",
+      "18:18",
+      "18:18"
+    ],
+    [
+      "平塚",
+      "18:23",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "東京": "９",
+    "品川": "１２",
+    "大船": "３",
+    "茅ケ崎": "６",
+    "平塚": "３"
+  },
+  "equipment": [
+    "座席未指定券",
+    "グリーン車指定席",
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です",
+  "printed_operating_labels": "平日運転",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": true,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; no unprinted vehicle assignment or number changes inferred.",
+  "actual_dispatch": null
+}

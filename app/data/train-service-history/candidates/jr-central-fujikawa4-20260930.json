@@ -1,0 +1,144 @@
+{
+  "candidate_id": "jr-central-fujikawa4-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "fujikawa",
+  "source_id": "jr-west-odekake-fujikawa4-4004m-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/010/011071.html",
+  "source_calendar_label": "2026年9月30日 運転格ok",
+  "calendar_note": "Only the inspected September 30 calendar cell is promoted.",
+  "trip": {
+    "trip_id": "jr-central.fujikawa.4.2026-09-30",
+    "public_number": "4",
+    "train_number": "4004M",
+    "origin": "甲府",
+    "destination": "静岡",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "甲府",
+        "arrival_time": null,
+        "departure_time": "08:45",
+        "platform": null,
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "南甲府",
+        "arrival_time": "08:49",
+        "departure_time": "08:50",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "東花輪",
+        "arrival_time": "08:58",
+        "departure_time": "08:58",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "市川大門",
+        "arrival_time": "09:05",
+        "departure_time": "09:06",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "鰍沢口",
+        "arrival_time": "09:09",
+        "departure_time": "09:10",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "甲斐岩間",
+        "arrival_time": "09:16",
+        "departure_time": "09:17",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "下部温泉",
+        "arrival_time": "09:26",
+        "departure_time": "09:27",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "身延",
+        "arrival_time": "09:36",
+        "departure_time": "09:39",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "内船",
+        "arrival_time": "09:52",
+        "departure_time": "09:53",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "富士宮",
+        "arrival_time": "10:23",
+        "departure_time": "10:23",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 11,
+        "name_snapshot": "富士",
+        "arrival_time": "10:34",
+        "departure_time": "10:37",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 12,
+        "name_snapshot": "清水",
+        "arrival_time": "10:53",
+        "departure_time": "10:53",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 13,
+        "name_snapshot": "静岡",
+        "arrival_time": "11:02",
+        "departure_time": null,
+        "platform": "３",
+        "call_type": "destination"
+      }
+    ],
+    "direction": "up",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": []
+  },
+  "review_notes": [
+    "Official September 30 ok cell and all printed passenger calls inspected.",
+    "Unprinted vehicle formation and clock sides remain unknown."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok",
+    "status": "displayed_timetable_operates",
+    "method": "Official September calendar cell inspected",
+    "variant_url": "https://timetables.jreast.co.jp/2610/train/010/011071.html"
+  }
+}

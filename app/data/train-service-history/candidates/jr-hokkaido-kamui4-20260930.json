@@ -1,0 +1,28 @@
+{
+  "candidate_id": "jr-hokkaido-kamui4-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Selected 2004M / カムイ 4 column on 2026-09-30 only; unprinted intermediate arrival sides remain null.",
+  "service_metadata_extension": {
+    "service_id": "kamui",
+    "current_last_verified_date": "2026-09-27",
+    "reviewed_last_verified_date": "2026-09-30",
+    "integration_note": "The shared services-root row needs its last_verified_date extended after review. The Kamui 7 batch supplies the Japanese name period for this same date; this trip adds no duplicate period or service row."
+  },
+  "trip": {
+    "trip_id": "jr-hokkaido.kamui.4.exact-2026-09-30",
+    "service_date": "2026-09-30",
+    "service_id": "kamui",
+    "public_number": "4",
+    "train_number": "2004M",
+    "source_id": "jr-hokkaido-kamui4-20260930",
+    "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+    "source_locator": "Selected 2026年9月30日(水), 2004M / カムイ 4, second train column",
+    "stops": [
+      ["旭川", null, "06:46"], ["深川", null, "07:05"],
+      ["滝川", null, "07:19"], ["砂川", null, "07:25"],
+      ["美唄", null, "07:37"], ["岩見沢", null, "07:48"],
+      ["札幌", "08:26", null]
+    ]
+  }
+}

@@ -183,12 +183,9 @@ struct WorkspaceSheetContent: View {
                     controller: controller)
             }
         }
-        // Every sub-menu is Liquid Glass at every height. Left to itself the
-        // system turns a full-height sheet opaque, so the glass is set here
-        // explicitly; lists and forms inside drop their grouped backdrop.
+        // Secondary sheets use the same opaque content color as the resident
+        // menu. Lists and forms drop their separate grouped backdrop.
         .scrollContentBackground(.hidden)
-        .presentationBackground {
-            Color.clear.railGlass(in: Rectangle())
-        }
+        .presentationBackground(Color.railMenuBackground)
     }
 }

@@ -770,9 +770,10 @@ extension StoreOperations {
         return .object(TrainValidation.JSON.Object(pairs))
     }
 
-    /// All seven fields, `null` included — `canonicalStopShape` writes them
-    /// every time. The bundled archives may omit the newer platform field;
-    /// the first canonical write upgrades that absence to explicit null.
+    /// All seven base fields, `null` included — `canonicalStopShape` writes
+    /// them every time. Actual times are optional and appear only when
+    /// recorded. The bundled archives may omit the newer platform field; the
+    /// first canonical write upgrades that absence to explicit null.
     public static func json(_ stop: Stop) -> TrainValidation.JSON {
         var pairs: [(String, TrainValidation.JSON)] = [
             ("name", .string(stop.name)),
@@ -783,9 +784,15 @@ extension StoreOperations {
                 "platform_number",
                 stop.platformNumber.map { .number(Double($0)) } ?? .null))
         }
+        pairs.append(("arrival", stop.arrival.map(TrainValidation.JSON.string) ?? .null))
+        if let actualArrival = stop.actualArrival {
+            pairs.append(("actual_arrival", .string(actualArrival)))
+        }
+        pairs.append(("departure", stop.departure.map(TrainValidation.JSON.string) ?? .null))
+        if let actualDeparture = stop.actualDeparture {
+            pairs.append(("actual_departure", .string(actualDeparture)))
+        }
         pairs.append(contentsOf: [
-            ("arrival", stop.arrival.map(TrainValidation.JSON.string) ?? .null),
-            ("departure", stop.departure.map(TrainValidation.JSON.string) ?? .null),
             ("stop_type", .string(stop.stopType)),
             ("ride_segment", .bool(stop.rideSegment)),
         ])

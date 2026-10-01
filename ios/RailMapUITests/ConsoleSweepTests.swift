@@ -15,11 +15,14 @@ import UIKit
 /// is a lie. Everything else is left to the log.
 @MainActor
 final class ConsoleSweepTests: XCTestCase {
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         // The opposite of the sibling suite: one missed surface must not stop
         // the walk, or the first flake hides every screen after it.
         continueAfterFailure = true
-        XCUIDevice.shared.orientation = .portrait
+        await MainActor.run {
+            XCUIDevice.shared.orientation = .portrait
+        }
     }
 
     func testWalkEverySurface() throws {
@@ -66,26 +69,44 @@ final class ConsoleSweepTests: XCTestCase {
         // Disabled while the figures are still being computed — an image of a
         // screen that is calculating is a picture of a spinner. Give it the
         // time the sweep gives a sheet rather than failing on a cold launch.
-        let ready = XCTNSPredicateExpectation(
-            predicate: NSPredicate { _, _ in share.exists && share.isEnabled }, object: nil)
-        guard XCTWaiter.wait(for: [ready], timeout: 30) == .completed else {
-            XCTFail("the statistics share button never became enabled")
-            return
-        }
-        share.tap()
-        settle(1.5)
+        for appearance in ["light", "dark"] {
+            let ready = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in share.exists && share.isEnabled }, object: nil)
+            guard XCTWaiter.wait(for: [ready], timeout: 30) == .completed else {
+                XCTFail("the statistics share button never became enabled")
+                return
+            }
+            share.tap()
+            XCTAssertTrue(
+                element("mapShareOption", in: app).waitForExistence(timeout: 4),
+                "the ticket and map option is missing")
+            let statisticsOption = element("statisticsShareOption", in: app)
+            XCTAssertTrue(statisticsOption.exists, "the ticket and statistics option is missing")
+            statisticsOption.tap()
+            // UIKit's nested menu propagates the parent identifier to its
+            // actions. Match their visible labels, as IntegratedSharing does.
+            let lightShare = app.buttons["Share in light mode"]
+            let darkShare = app.buttons["Share in dark mode"]
+            XCTAssertTrue(lightShare.waitForExistence(timeout: 4), "the light share option is missing")
+            XCTAssertTrue(darkShare.exists, "the dark share option is missing")
+            (appearance == "light" ? lightShare : darkShare).tap()
 
-        XCTAssertTrue(
-            element("statisticsShareSheet", in: app).waitForExistence(timeout: 10),
-            "the statistics share sheet did not appear from its own anchor")
-
-        let close = element("statisticsShareCloseButton", in: app)
-        if close.waitForExistence(timeout: 4) {
+            let preview = element("statisticsShareSheet", in: app)
+            XCTAssertTrue(
+                preview.waitForExistence(timeout: 90),
+                "the \(appearance) statistics preview did not appear from its own anchor")
+            XCTAssertTrue(app.images.firstMatch.exists,
+                          "the \(appearance) statistics preview has no rendered image")
+            let close = element("statisticsShareCloseButton", in: app)
+            XCTAssertTrue(close.waitForExistence(timeout: 4),
+                          "the \(appearance) statistics preview has no close button")
             close.tap()
-        } else {
-            app.swipeDown()
+            XCTAssertTrue(close.waitForNonExistence(timeout: 8),
+                          "the \(appearance) statistics preview did not close")
+            XCTAssertTrue(preview.waitForNonExistence(timeout: 8),
+                          "the statistics share anchor remained presented")
+            settle()
         }
-        settle()
 
         // Put the destination back: this step is the only one in the sweep
         // that changes tabs mid-walk, and every step after it was written
@@ -337,7 +358,8 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func launch(tab: String, stage: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+                               "-interface-language", "en"]
         app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
         app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
         // A fresh installation deliberately starts empty. Sharing statistics

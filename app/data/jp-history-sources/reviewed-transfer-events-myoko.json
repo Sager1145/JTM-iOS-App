@@ -1,0 +1,208 @@
+{
+  "schema_version": "1",
+  "source_schema_version": 2,
+  "title": "Reviewed Myoko transfer with preceding Wakinoda relocation",
+  "scope": "Two measured predecessor geometries with exact service boundaries; shared junction geometry emitted once.",
+  "events": [],
+  "temporal_events": [
+    {
+      "id": "jp-id-echigo-myoko-transfer-2015",
+      "kind": "operator_transfer",
+      "date": "2015-03-14",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "信越線",
+        "operator": "東日本旅客鉄道"
+      },
+      "after": {
+        "line": "妙高はねうまライン",
+        "operator": "えちごトキめき鉄道"
+      },
+      "corridor_id": "jp.corridor.myoko-haneuma",
+      "alignment_id": "jp.alignment.myoko-haneuma.wakinoda-relocated",
+      "service_identity_id": "jp.service.myoko-haneuma",
+      "segment": {
+        "from_station": "妙高高原",
+        "to_station": "直江津"
+      },
+      "expected": {
+        "business_km": 37.7
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "selector": {
+          "scope": "whole_identity",
+          "line_name": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道"
+        },
+        "historical_periods": [
+          {
+            "service_period": [
+              null,
+              "2014-10-19"
+            ],
+            "source": "N02",
+            "release": "N02-13",
+            "licence_status": "redistributable",
+            "date_geometry_precision": "official_snapshot",
+            "historical_identity": {
+              "line": "信越線",
+              "operator": "東日本旅客鉄道"
+            },
+            "selector": {
+              "scope": "isolated_historical_segment",
+              "historical_bbox": [
+                138.20997,
+                36.87305,
+                138.25882,
+                37.16945
+              ]
+            },
+            "alignment_id": "jp.alignment.myoko-haneuma.wakinoda-old",
+            "evidence": [
+              {
+                "authority": "上越市 新幹線まちづくり推進上越広域連携会議",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf"
+              },
+              {
+                "authority": "上越市",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf"
+              }
+            ]
+          },
+          {
+            "service_period": [
+              "2014-10-19",
+              "2015-03-14"
+            ],
+            "source": "N02",
+            "release": "N02-14",
+            "licence_status": "redistributable",
+            "date_geometry_precision": "official_snapshot",
+            "historical_identity": {
+              "line": "信越線",
+              "operator": "東日本旅客鉄道"
+            },
+            "selector": {
+              "scope": "isolated_historical_segment",
+              "historical_bbox": [
+                138.20997,
+                36.87305,
+                138.25882,
+                37.16945
+              ]
+            },
+            "alignment_id": "jp.alignment.myoko-haneuma.wakinoda-relocated",
+            "evidence": [
+              {
+                "authority": "上越市 新幹線まちづくり推進上越広域連携会議",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf"
+              },
+              {
+                "authority": "上越市",
+                "date_precision": "exact_day",
+                "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The official 妙高高原—直江津 interval is the whole successor identity (21 current sections and ten stations). N02-13 preserves the old 脇野田 station and approach through 2014-10-18; N02-14 preserves its relocated position, still named 脇野田, from 2014-10-19 until the 2015-03-14 transfer and rename. Each historical selector includes 19 sections and eight stations. The shared 妙高高原 predecessor platform/station are supplied by North Shinano; the unchanged JR East 直江津 platform/station remain in the current package because JR continues north from that boundary. Both are explicitly reused without duplicate JR geometry. No snapshot year defines an event day."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        },
+        {
+          "authority": "上越市 新幹線まちづくり推進上越広域連携会議",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/117946.pdf"
+        },
+        {
+          "authority": "上越市",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.joetsu.niigata.jp/uploaded/attachment/261652.pdf"
+        }
+      ],
+      "shared_predecessor_stations": [
+        {
+          "station": "妙高高原",
+          "source_event_id": "jp-id-north-shinano-transfer-2015",
+          "n02_station_code": "001746",
+          "geometry_basis": "exact_n02_13_n02_14_station_and_platform_geometry",
+          "geometry_evidence": {
+            "releases": [
+              "N02-13",
+              "N02-14"
+            ],
+            "station_coordinates": [
+              [
+                138.21175,
+                36.87156
+              ],
+              [
+                138.21262,
+                36.87305
+              ]
+            ],
+            "basis": "The same JR 信越線 station/platform is selected by both transfer intervals; keep the predecessor features only under North Shinano."
+          }
+        },
+        {
+          "station": "直江津",
+          "source": "current-package",
+          "n02_station_code": "001600",
+          "geometry_basis": "exact_n02_13_n02_14_current_jr_station_and_platform_geometry",
+          "geometry_evidence": {
+            "releases": [
+              "N02-13",
+              "N02-14",
+              "current-package"
+            ],
+            "station_coordinates": [
+              [
+                138.2436,
+                37.17106
+              ],
+              [
+                138.24239,
+                37.17035
+              ],
+              [
+                138.24128,
+                37.1697
+              ],
+              [
+                138.24087,
+                37.16945
+              ]
+            ],
+            "basis": "JR East 信越線 continues north of 直江津 after the transfer. Its unchanged current platform and station already preserve the predecessor boundary membership; do not emit duplicate JR features."
+          }
+        }
+      ]
+    }
+  ],
+  "historical_coverage_limitations": [
+    {
+      "station": "春日山",
+      "status": "older_station_geometry_unresolved",
+      "candidate_relocation_date": "2002-12-01",
+      "evidence": {
+        "authority": "えちごトキめき鉄道（沿線写真・思い出展）",
+        "reference": "https://www.echigo-tokimeki.co.jp/userfiles/elfinder/1507~PDF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB/anatato_tetsudou_3_new.pdf"
+      },
+      "basis": "The operator-published photo memoir describes relocation in 2002. N02-13 is a later surveyed observation, not proof of the earlier station position. The unbounded first predecessor interval has an unknown earlier bound; the reviewed route acceptance covers the 2014 relocation and 2015 transfer, not complete pre-2002 station geometry."
+    }
+  ]
+}

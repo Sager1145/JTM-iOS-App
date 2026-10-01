@@ -1,0 +1,87 @@
+{
+  "candidate_id": "jr-east-kinugawa3-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "kinugawa",
+  "service_name": "きぬがわ",
+  "jr_scope": "through_jr",
+  "public_number": "3",
+  "train_number": "1083M",
+  "trip_id": "jr-east.kinugawa.3.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-kinugawa3-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/045/046941.html",
+  "source_sha256": "b0f3647eb88cf50e5550ced3c1c95697df38a2066d455584a035c9c32109bab8",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "新宿",
+      null,
+      "10:31"
+    ],
+    [
+      "池袋",
+      "10:36",
+      "10:37"
+    ],
+    [
+      "浦和",
+      "10:54",
+      "10:54"
+    ],
+    [
+      "大宮",
+      "11:01",
+      "11:02"
+    ],
+    [
+      "栃木",
+      "11:44",
+      "11:45"
+    ],
+    [
+      "新鹿沼",
+      "12:00",
+      "12:01"
+    ],
+    [
+      "下今市",
+      "12:17",
+      "12:18"
+    ],
+    [
+      "東武ワールドスクウェア",
+      "12:33",
+      "12:33"
+    ],
+    [
+      "鬼怒川温泉",
+      "12:36",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "新宿": "６",
+    "池袋": "３",
+    "大宮": "１１"
+  },
+  "equipment": [
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "２５３系",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": "253系",
+    "car_count": null,
+    "green_car_available": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown. Published whole-page train number retained; no unprinted Tobu number changes inferred.",
+  "actual_dispatch": null
+}

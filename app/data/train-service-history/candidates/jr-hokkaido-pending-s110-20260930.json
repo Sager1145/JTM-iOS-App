@@ -1,0 +1,116 @@
+{
+  "candidate_id": "jr-hokkaido-pending-s110-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Two independent browser reads of the official 2026-09-30 selected s=110 page agree on the train-number columns, 毎日 marker, seven passenger clocks and Sapporo printed platforms; now included in the reviewed exact-date line-column normalizer.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.kamui.21.exact-2026-09-30",
+      "service_id": "kamui",
+      "public_number": "21",
+      "train_number": "2021M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2021M / カムイ21, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(9)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "14:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "14:25"
+        ],
+        [
+          "美唄",
+          null,
+          "14:36"
+        ],
+        [
+          "砂川",
+          null,
+          "14:47"
+        ],
+        [
+          "滝川",
+          null,
+          "14:52"
+        ],
+        [
+          "深川",
+          null,
+          "15:06"
+        ],
+        [
+          "旭川",
+          "15:25",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.23.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "23",
+      "train_number": "3023M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3023M / ライラック23, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(10)"
+      },
+      "stops": [
+        [
+          "札幌",
+          null,
+          "14:30"
+        ],
+        [
+          "岩見沢",
+          null,
+          "14:55"
+        ],
+        [
+          "美唄",
+          null,
+          "15:06"
+        ],
+        [
+          "砂川",
+          null,
+          "15:17"
+        ],
+        [
+          "滝川",
+          null,
+          "15:22"
+        ],
+        [
+          "深川",
+          null,
+          "15:36"
+        ],
+        [
+          "旭川",
+          "15:55",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    }
+  ]
+}
