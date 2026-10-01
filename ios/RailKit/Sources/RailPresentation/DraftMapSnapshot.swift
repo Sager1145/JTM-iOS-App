@@ -1,4 +1,5 @@
 import Foundation
+import RailCore
 
 public struct DraftStopPin: Hashable, Sendable, Identifiable {
     public var occurrenceID: UUID
@@ -33,10 +34,14 @@ public struct DraftStopPin: Hashable, Sendable, Identifiable {
 public struct DraftMapSnapshot: Hashable, Sendable {
     public var revision: Int
     public var pins: [DraftStopPin]
+    /// The draft's service day, independent of the journey-list date filter.
+    /// Nil previews the current network, including when a date is removed.
+    public var networkRideDate: String?
 
-    public init(revision: Int, pins: [DraftStopPin]) {
+    public init(revision: Int, pins: [DraftStopPin], networkRideDate: String? = nil) {
         self.revision = revision
         self.pins = pins
+        self.networkRideDate = Dates.normalizeDateString(networkRideDate)
     }
 }
 
@@ -45,8 +50,10 @@ public enum DraftMapPins {
     /// Missing coordinate stays on the pin with nil lat/lon (caller must not draw those).
     /// timeText empty means the bubble should say the time is unfilled; this function does not invent "00:00".
     /// Order of pins is the stop order given.
-    public static func snapshot(revision: Int, pins: [DraftStopPin]) -> DraftMapSnapshot {
-        DraftMapSnapshot(revision: revision, pins: pins)
+    public static func snapshot(
+        revision: Int, pins: [DraftStopPin], networkRideDate: String? = nil
+    ) -> DraftMapSnapshot {
+        DraftMapSnapshot(revision: revision, pins: pins, networkRideDate: networkRideDate)
     }
 
     /// Returns what changed, keyed by occurrenceID.

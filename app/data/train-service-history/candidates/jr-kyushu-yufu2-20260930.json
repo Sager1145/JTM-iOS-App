@@ -1,0 +1,29 @@
+{
+  "candidate_id":"jr-kyushu-yufu2-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; fifteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-yufu2-20260930","source_url":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167401.html?t=2881400&d=20260930","service_date":"2026-09-30",
+  "new_source":{"source_id":"jr-kyushu-yufu2-20260930","source_type":"official_train_timetable","title":"ゆふ2号 列車詳細","publisher":"九州旅客鉄道株式会社 / 株式会社交通新聞社","url_or_locator":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167401.html?t=2881400&d=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"third_party_timetable_data_terms_apply","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Official exact-date train detail reached from 由布院駅 2026-09-30 departure list. It prints the full ゆふ2号 82D passenger-call table from 大分 to 博多. This documents only the selected date."},
+  "trip":{"trip_id":"jr-kyushu.yufu.2.2026-09-30","service_id":"yufu","service_name":"ゆふ","public_number":"2","train_number":"82D","direction":"大分→博多",
+    "stop_times":[
+      {"name_snapshot":"大分","arrival_time":null,"departure_time":"08:20","platform":"7"},
+      {"name_snapshot":"向之原","arrival_time":"08:34","departure_time":"08:35","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"08:54","departure_time":"08:55","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"09:06","departure_time":"09:08","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"09:24","departure_time":"09:25","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"09:34","departure_time":"09:35","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"09:47","departure_time":"09:48","platform":null},
+      {"name_snapshot":"日田","arrival_time":"09:59","departure_time":"10:00","platform":null},
+      {"name_snapshot":"うきは","arrival_time":"10:16","departure_time":"10:19","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"10:23","departure_time":"10:23","platform":null},
+      {"name_snapshot":"田主丸","arrival_time":"10:29","departure_time":"10:29","platform":null},
+      {"name_snapshot":"久留米","arrival_time":"10:47","departure_time":"10:48","platform":"4"},
+      {"name_snapshot":"鳥栖","arrival_time":"10:54","departure_time":"10:56","platform":"1"},
+      {"name_snapshot":"二日市","arrival_time":"11:07","departure_time":"11:08","platform":null},
+      {"name_snapshot":"博多","arrival_time":"11:20","departure_time":null,"platform":"2"}
+    ]},
+  "evidence_locators":[
+    {"claim":"exact 2026-09-30 occurrence","locator":"official train page heading 2026年09月30日の時刻 and date-qualified URL"},
+    {"claim":"limited express ゆふ2号 and 82D","locator":"列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号 rows"},
+    {"claim":"fifteen passenger calls and clocks","locator":"駅名 / 時刻 / のりば table from 大分 through 博多"}
+  ]
+}

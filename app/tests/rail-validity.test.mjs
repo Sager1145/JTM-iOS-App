@@ -273,6 +273,76 @@ test("dijkstraFromCandidateSources skips edges invalid on the ride date", () => 
   assert.deepEqual(solve(null), ["A", "C", "B"]);
 });
 
+test("pinned Dijkstra cannot settle a connector-only shortcut", () => {
+  const { run } = load();
+  const dijkstra = run("dijkstraFromCandidateSources");
+  const allowedCodes = run("getAllowedInstitutionTypeCodes({})");
+  const connector = (to, length) => ({
+    to,
+    length,
+    is_station_connector: true,
+  });
+  const rail = (to, length) => ({
+    to,
+    length,
+    institution_type_code: "1",
+    railway_class_code: "11",
+    line_name: "Opening Line",
+    operator: "Opening Operator",
+    valid_from: "2009-12-23",
+    valid_to: null,
+  });
+  const graph = {
+    adjacency: new Map([
+      ["A", [connector("B", 1), rail("C", 100)]],
+      ["B", []],
+      ["C", [connector("B", 100)]],
+    ]),
+    nodes: new Map(),
+  };
+  const pinnedHints = {
+    preferredLines: new Set(),
+    preferredOperators: new Set(),
+    requiredLines: new Set(["Opening Line"]),
+    requiredOperators: new Set(),
+  };
+  const solve = (date, hints = pinnedHints, target = "B") =>
+    dijkstra(
+      graph,
+      [{ key: "A", distance: 0 }],
+      new Set([target]),
+      { date },
+      allowedCodes,
+      hints,
+    );
+
+  assert.equal(solve("2009-12-22").length, 0);
+  const opened = solve("2009-12-23");
+  assert.equal(opened.length, 1);
+  assert.deepEqual([...opened[0].pathKeys], ["A", "C", "B"]);
+  assert.equal(opened[0].edges.some((edge) => !edge.is_station_connector), true);
+
+  const operatorPinned = {
+    ...pinnedHints,
+    requiredLines: new Set(),
+    requiredOperators: new Set(["Opening Operator"]),
+  };
+  assert.equal(solve("2009-12-22", operatorPinned).length, 0);
+  assert.deepEqual(
+    [...solve("2009-12-23", operatorPinned)[0].pathKeys],
+    ["A", "C", "B"],
+  );
+
+  const unconstrained = {
+    preferredLines: new Set(),
+    preferredOperators: new Set(),
+    requiredLines: new Set(),
+    requiredOperators: new Set(),
+  };
+  assert.deepEqual([...solve("2009-12-23", unconstrained)[0].pathKeys], ["A", "B"]);
+  assert.deepEqual([...solve("2009-12-23", unconstrained, "A")[0].pathKeys], ["A"]);
+});
+
 test("isRailValid treats empty-string bounds as missing", () => {
   const isRailValid = load().run("isRailValid");
   assert.equal(isRailValid("", "", null), true);
@@ -398,21 +468,15 @@ test("published overlay intervals and relocations are half-open", () => {
     const retirementId = event.id.replace(".old-", ".new-");
     const old = [...overlay.sections, ...overlay.stations].filter((feature) => {
       const properties = feature.properties || {};
-      return properties.history_id === event.id && properties.valid_to === event.valid_to;
+      return properties.history_id === event.id;
     });
     assert.ok(old.length > 0, `${event.id} old bounds`);
     for (const feature of old) {
       const properties = feature.properties;
-      assert.equal(
-        isRailValid(properties.valid_from ?? null, properties.valid_to, priorIsoDay(event.valid_to)),
-        true,
-        event.id,
-      );
-      assert.equal(
-        isRailValid(properties.valid_from ?? null, properties.valid_to, event.valid_to),
-        false,
-        event.id,
-      );
+      check(properties.valid_from, properties.valid_to, event.id);
+      const expectedEnds = event.service_periods
+        ? event.service_periods.map((period) => period[1]) : [event.valid_to];
+      assert.ok(expectedEnds.includes(properties.valid_to), `${event.id} service end`);
     }
     const retirement = overlay.retirements.find((entry) => entry.history_id === retirementId);
     assert.ok(retirement, event.id);
@@ -455,7 +519,7 @@ test("buildTrainRouteSolveContext keys on ride date and history revision", () =>
   assert.ok(undated.cacheKey.endsWith("|date:none|history:jp:none"), undated.cacheKey);
   assert.deepEqual({ ...dated.historyRevisions }, { jp: "none" });
   const serialized = get(train("2019-12-31"));
-  assert.equal(serialized.solver_version, "22");
+  assert.equal(serialized.solver_version, "24");
   assert.equal(serialized.ride_date, "2019-12-31");
   assert.equal(
     serialized.route_cache_digest,
@@ -664,4 +728,34 @@ test("endpoint station candidates are filtered by ride date", () => {
   assert.deepEqual(names("2016-12-04"), ["増毛", "留萌"]);
   assert.deepEqual(names("2016-12-05"), ["留萌"]);
   assert.deepEqual(names(null), ["留萌"]);
+});
+
+test("station dedupe preserves disjoint historical service periods", () => {
+  const { run } = load();
+  const dedupe = run("dedupeStationFeatures");
+  const filter = run("filterStationCandidatesByRideDate");
+  const station = (serviceValidity) => ({
+    type: "Feature",
+    properties: {
+      station_name: "静内",
+      line_name: "日高線",
+      operator: "北海道旅客鉄道",
+      service_validity: serviceValidity,
+    },
+    geometry: {
+      type: "LineString",
+      coordinates: [[142.36108, 42.33623], [142.3599, 42.33679]],
+    },
+  });
+  const variants = dedupe([
+    station([null, "2015-01-08"]),
+    station(["2015-01-27", "2015-03-01"]),
+  ]);
+  assert.equal(variants.length, 2);
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(
+      filter(variants, "2015-02-01").map((feature) => feature.properties.service_validity),
+    )),
+    [["2015-01-27", "2015-03-01"]],
+  );
 });

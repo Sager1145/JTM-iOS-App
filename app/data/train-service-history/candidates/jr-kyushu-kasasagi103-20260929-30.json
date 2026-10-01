@@ -1,0 +1,63 @@
+{
+  "candidate_id": "jr-kyushu-kasasagi103-20260929-30",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "promotion_scope": "two exact 2026-09-29 and 2026-09-30 occurrences with all seven published passenger calls and minute clocks; no recurrence, operator segment, or route-line inference",
+  "sources": [
+    {
+      "source_id": "jr-kyushu-kasasagi103-20260929-exact",
+      "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "かささぎ 103号 列車詳細 (2026年9月29日)",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00194501.html?c=08291&d=29&ym=202609",
+      "issue": "JR時刻表2026年10月号",
+      "effective_date": "2026-09-29",
+      "accessed_at": "2026-09-29",
+      "license_status": "third_party_timetable_data_terms_apply",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Date-qualified official JR Kyushu detail visually reviewed. It prints 特急, かささぎ103号, 1003M, 毎日運転, and all seven passenger calls. No HTML snapshot is redistributed."
+    },
+    {
+      "source_id": "jr-kyushu-kasasagi103-20260930-exact",
+      "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "かささぎ 103号 列車詳細 (2026年9月30日)",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00194501.html?c=08291&d=30&ym=202609",
+      "issue": "JR時刻表2026年10月号",
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-29",
+      "license_status": "third_party_timetable_data_terms_apply",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Date-qualified official JR Kyushu detail visually reviewed. The identity, schedule and seven passenger calls match the September 29 page. No HTML snapshot is redistributed."
+    }
+  ],
+  "service_dates": ["2026-09-29", "2026-09-30"],
+  "service": {
+    "service_id": "kasasagi",
+    "canonical_name": "かささぎ",
+    "service_class": "limited_express",
+    "historical_generation": 1,
+    "jr_scope": "jr"
+  },
+  "trip": {
+    "public_number": "103",
+    "train_number": "1003M",
+    "direction": "博多→肥前鹿島",
+    "stop_times": [
+      {"stop_sequence": 1, "name_snapshot": "博多", "arrival_time": null, "departure_time": "13:16", "platform": "4", "call_type": "origin"},
+      {"stop_sequence": 2, "name_snapshot": "二日市", "arrival_time": "13:27", "departure_time": "13:27", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 3, "name_snapshot": "鳥栖", "arrival_time": "13:37", "departure_time": "13:38", "platform": "5", "call_type": "passenger_stop"},
+      {"stop_sequence": 4, "name_snapshot": "新鳥栖", "arrival_time": "13:41", "departure_time": "13:42", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 5, "name_snapshot": "佐賀", "arrival_time": "13:54", "departure_time": "13:55", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 6, "name_snapshot": "江北", "arrival_time": "14:04", "departure_time": "14:04", "platform": "4", "call_type": "passenger_stop"},
+      {"stop_sequence": 7, "name_snapshot": "肥前鹿島", "arrival_time": "14:17", "departure_time": null, "platform": null, "call_type": "destination"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim": "train class, public number and train number", "locator": "列車種 / 列車名 / 列車番号 rows on both dated pages"},
+    {"claim": "two exact service dates", "locator": "d=29 and d=30 with ym=202609 in each source URL, and 運転日 毎日運転"},
+    {"claim": "seven passenger stops and all minute clocks", "locator": "駅名 / 時刻 / のりば table from 博多 to 肥前鹿島 on both pages"}
+  ]
+}

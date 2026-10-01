@@ -1,0 +1,354 @@
+{
+  "inventory_id": "jr-east-shonan-fujisawa-observed-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "scope": "Only 湘-labelled links found in both official Fujisawa weekday station tables. Each exact page calendar checked independently; no exclusion claim for unseen entrances or trains not calling at Fujisawa.",
+  "discovery_entrance": "https://timetables.jreast.co.jp/timetable/list1361.html",
+  "trains": [
+    {
+      "public_number": "1",
+      "train_number": "3071M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087621.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "0d42f4d13a5f228b327dd4f916c54d48709c92d9226b841f8eb96a5728db1f2d",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "2",
+      "train_number": "3072M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068191.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "e6a7dc16e5afca031614b8fdaa6bad295219cfe671a8eea0257ecd7404fa9bea",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "3",
+      "train_number": "3073M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068131.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "0be49597579e7958b338ca6c516069c15f0f7640e464c1c0db5ec565f7e94789",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "4",
+      "train_number": "3074M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068101.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "cede7a6d53df9b3a3140be71763707f8db69bee9eca7735e90ae296414fcf726",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "5",
+      "train_number": "3075M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098921.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "71c956a1709cde6714dc7d1565c9790543bab0252b1a29fbc097e360bba92b97",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "6",
+      "train_number": "3076M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076081.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "7e5d41cddef699b11fdf7aa66fb78364eacc35eed3a0e240b228b6bacd101a05",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "7",
+      "train_number": "3077M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068081.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "4442812cdaca4d135815592f7ba495d951f84b001c817dd49ce5f3a05ded7a04",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "8",
+      "train_number": "3078M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068201.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "bc3025ef772ec7b894d9999497f448b3fe3300894188572dae51741602d96db2",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "9",
+      "train_number": "3079M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068141.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "8b2071dc71171ed2e94e588b65f8be5261b1e0bc6cf697d9305b24cb51f5fc6d",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "10",
+      "train_number": "3080M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068111.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "3103db7b99ed409ba2058f0267c3078ef7b40ecc29ea701b5bd6487536876c6e",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "11",
+      "train_number": "3081M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068091.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "d5d954bbb4d70c97a4626b3ce571a6e4cb7406db86810f3c6ae75de7e9ec0320",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "12",
+      "train_number": "3082M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068121.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "12d12ca4c03c9220b9b68e657c8e77801167c8c04fb7bc757ae379ecd2c91f6e",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "13",
+      "train_number": "3083M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068151.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "c21e0fba905e2a136970ee627935f6a36d553a37b47fd25555e05685a1201da4",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "14",
+      "train_number": "3084M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098931.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "12246737d87017cb4f30b1b98f7b1ee6e5935f2dea6a483c6c44d4195a02a769",
+      "staged_before": true,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "15",
+      "train_number": "3085M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068161.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "3f3d6fd332fbb1af05dfff3ee0d4578adc1f74d119785c789acb81f189bb9d71",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "17",
+      "train_number": "3087M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/125/129761.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "2fb967fbf220eee252983ae5cc9a03b19c0c4edb813a9570a1e922945f034ebd",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "19",
+      "train_number": "3089M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/125/129771.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "5831bdc2096609c4ac0e30368f8829491fad49a0533f05acb8ae0521922d26c8",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "21",
+      "train_number": "3091M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068171.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "8416fab279a9c99925b9e2ad05e5e8a16483f4210439d3ee47d3e3eb468c8a7b",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "22",
+      "train_number": "3092M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068211.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "9d4c51b1a46c173fbd5f68b3ad928f634d3cede681f785c5f4b5c3562d7eb9a3",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "23",
+      "train_number": "3093M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068181.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "44d7ec2a18f03885074250daa708895f965dcd241eaa6f14a8b56052ea23dcdc",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "24",
+      "train_number": "3094M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068221.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "23c4a04d3f6b989cb2e1de29234208774733886c4c11f9734ae13507ea869602",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "26",
+      "train_number": "3096M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/065/068231.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt1361/1361020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "d63c357f2c363128ac35919f79ef856c8f7b43b8e74ed53594617e7477408538",
+      "staged_before": false,
+      "staged_candidate_present": true
+    }
+  ],
+  "observed_proven_count": 22,
+  "staged_observed_count": 22,
+  "remaining_observed_public_numbers": [],
+  "observed_set_audit": {
+    "proven_public_numbers": 22,
+    "staged_public_numbers": 22,
+    "trip_count": 22,
+    "stop_rows": 174,
+    "printed_platforms": 126,
+    "missing_public_numbers": [],
+    "candidate_normalized_mismatches": [],
+    "formation_scope": "22 planned reservation equipment rows; vehicle series/car counts and actual dispatch unknown.",
+    "verification_test": "ios/tools/tests/test_east_shonan_observed_inventory_20260930.py",
+    "scope": "Closes only the observed Fujisawa two-table individual-page set; no claim excluding unseen entrances."
+  }
+}

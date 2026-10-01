@@ -1,0 +1,3 @@
+{"calendar_id": "jr-shikoku.ishizuchi.1.1001m.exact-2026-09-30.calendar", "exception_type": "add", "reason": "2026年9月 day 30 td.ok; 毎日運転", "service_date": "2026-09-30", "source_id": "jr-odekake-shiokaze1-20260930-train"}
+{"calendar_id": "jr-shikoku.ishizuchi.29.1029m.exact-2026-09-30.calendar", "exception_type": "add", "reason": "2026年9月 day 30 td.ok; 毎日運転", "service_date": "2026-09-30", "source_id": "jr-odekake-ishizuchi29-20260930-train"}
+{"calendar_id": "jr-shikoku.ishizuchi.30.1030m.exact-2026-09-30.calendar", "exception_type": "add", "reason": "2026年9月 day 30 td.ok; 毎日運転", "service_date": "2026-09-30", "source_id": "jr-odekake-ishizuchi30-20260930-train"}

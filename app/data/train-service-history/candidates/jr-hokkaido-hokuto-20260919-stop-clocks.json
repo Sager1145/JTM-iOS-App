@@ -1,0 +1,188 @@
+{
+  "candidate_id": "jr-hokkaido-hokuto-20260919-stop-clocks",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Two exact September 19 Hokuto columns only; unprinted arrival/departure sides remain unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.84-dated-20260919.2026-09-19",
+      "service_date": "2026-09-19",
+      "train_number": "8022D",
+      "source_id": "jr-hokkaido-hokuto-84-20260919",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260919&s=151",
+      "source_locator": "8022D / 北斗84, 2026-09-19 selected column; all station and printed minute cells visually compared with September 20 reviewed column",
+      "stops": [
+        [
+          "札幌",
+          null,
+          "07:43"
+        ],
+        [
+          "新札幌",
+          null,
+          "07:53"
+        ],
+        [
+          "南千歳",
+          null,
+          "08:19"
+        ],
+        [
+          "苫小牧",
+          null,
+          "08:37"
+        ],
+        [
+          "白老",
+          null,
+          "08:51"
+        ],
+        [
+          "登別",
+          null,
+          "09:02"
+        ],
+        [
+          "東室蘭",
+          "09:14",
+          "09:15"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "09:32"
+        ],
+        [
+          "洞爺",
+          null,
+          "09:48"
+        ],
+        [
+          "長万部",
+          null,
+          "10:18"
+        ],
+        [
+          "八雲",
+          null,
+          "10:40"
+        ],
+        [
+          "森",
+          null,
+          "11:04"
+        ],
+        [
+          "大沼公園",
+          null,
+          "11:29"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "11:40"
+        ],
+        [
+          "五稜郭",
+          null,
+          "11:50"
+        ],
+        [
+          "函館",
+          "11:54",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.91-dated-20260919.2026-09-19",
+      "service_date": "2026-09-19",
+      "train_number": "8021D",
+      "source_id": "jr-hokkaido-hokuto-91-20260919",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260919&s=150",
+      "source_locator": "8021D / 北斗91, 2026-09-19 selected column; all station and printed minute cells visually compared with September 20 reviewed column",
+      "stops": [
+        [
+          "函館",
+          null,
+          "13:00"
+        ],
+        [
+          "五稜郭",
+          null,
+          "13:05"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "13:20"
+        ],
+        [
+          "大沼公園",
+          null,
+          "13:29"
+        ],
+        [
+          "森",
+          null,
+          "13:47"
+        ],
+        [
+          "八雲",
+          null,
+          "14:09"
+        ],
+        [
+          "長万部",
+          null,
+          "14:31"
+        ],
+        [
+          "洞爺",
+          null,
+          "14:58"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "15:10"
+        ],
+        [
+          "東室蘭",
+          "15:26",
+          "15:27"
+        ],
+        [
+          "登別",
+          null,
+          "15:40"
+        ],
+        [
+          "白老",
+          null,
+          "15:54"
+        ],
+        [
+          "苫小牧",
+          null,
+          "16:09"
+        ],
+        [
+          "南千歳",
+          null,
+          "16:27"
+        ],
+        [
+          "新札幌",
+          null,
+          "16:52"
+        ],
+        [
+          "札幌",
+          "17:00",
+          null
+        ]
+      ]
+    }
+  ]
+}

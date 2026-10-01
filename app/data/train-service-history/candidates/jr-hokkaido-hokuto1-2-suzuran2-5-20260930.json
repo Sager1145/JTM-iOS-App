@@ -1,0 +1,496 @@
+{
+  "candidate_id": "jr-hokkaido-hokuto1-2-suzuran2-5-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Four individually selected exact-date official columns; printed passenger calls only; unprinted clock sides remain null.",
+  "service_metadata_extension": {
+    "service_id": "hokuto",
+    "current_last_verified_date": "2026-09-20",
+    "reviewed_last_verified_date": "2026-09-30",
+    "integration_note": "Shared Hokuto service last_verified_date requires parent review and extension to 2026-09-30. A separate exact-date Japanese display-name period is supplied."
+  },
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.1.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "1",
+      "train_number": "1D",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "Selected 2026年9月30日(水), 1D / 北斗 1, train column 3",
+      "origin": "函館",
+      "destination": "札幌",
+      "stops": [
+        [
+          "函館",
+          null,
+          "06:02"
+        ],
+        [
+          "五稜郭",
+          null,
+          "06:07"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "06:21"
+        ],
+        [
+          "森",
+          null,
+          "06:48"
+        ],
+        [
+          "八雲",
+          null,
+          "07:09"
+        ],
+        [
+          "長万部",
+          null,
+          "07:31"
+        ],
+        [
+          "洞爺",
+          null,
+          "07:57"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "08:08"
+        ],
+        [
+          "東室蘭",
+          "08:23",
+          "08:25"
+        ],
+        [
+          "登別",
+          null,
+          "08:37"
+        ],
+        [
+          "白老",
+          null,
+          "08:49"
+        ],
+        [
+          "苫小牧",
+          null,
+          "09:03"
+        ],
+        [
+          "南千歳",
+          null,
+          "09:19"
+        ],
+        [
+          "新札幌",
+          null,
+          "09:39"
+        ],
+        [
+          "札幌",
+          "09:47",
+          null
+        ]
+      ],
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "printed_symbols": [
+        {
+          "after_stop_sequence": 3,
+          "position": 0,
+          "station_name": "大沼公園",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 8,
+          "position": 0,
+          "station_name": "室蘭",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 8,
+          "position": 1,
+          "station_name": "母恋",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 8,
+          "position": 2,
+          "station_name": "御崎",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 8,
+          "position": 3,
+          "station_name": "輪西",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 9,
+          "position": 0,
+          "station_name": "鷲別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 9,
+          "position": 1,
+          "station_name": "幌別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 12,
+          "position": 0,
+          "station_name": "沼ノ端",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 13,
+          "position": 0,
+          "station_name": "千歳",
+          "symbol": "レ"
+        }
+      ],
+      "symbol_review": {
+        "accessed_at": "2026-09-30",
+        "selected_date": "2026年9月30日(水)",
+        "issue": "JR時刻表 令和8年10月号",
+        "locator": "Selected 2026年9月30日(水), 1D / 北斗 1, train column 3",
+        "scope": "All printed レ and || rows in the selected Hokuto column; table display order only, not a physical route claim."
+      }
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.2.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "service_id": "hokuto",
+      "public_number": "2",
+      "train_number": "2D",
+      "source_id": "jr-hokkaido-hokuto-suzuran-up-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "Selected 2026年9月30日(水), 2D / 北斗 2, train column 1",
+      "origin": "札幌",
+      "destination": "函館",
+      "stops": [
+        [
+          "札幌",
+          null,
+          "06:00"
+        ],
+        [
+          "新札幌",
+          null,
+          "06:08"
+        ],
+        [
+          "南千歳",
+          null,
+          "06:28"
+        ],
+        [
+          "苫小牧",
+          null,
+          "06:44"
+        ],
+        [
+          "東室蘭",
+          "07:17",
+          "07:18"
+        ],
+        [
+          "長万部",
+          null,
+          "08:07"
+        ],
+        [
+          "八雲",
+          null,
+          "08:27"
+        ],
+        [
+          "森",
+          null,
+          "08:49"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "09:16"
+        ],
+        [
+          "函館",
+          "09:29",
+          null
+        ]
+      ],
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "printed_symbols": [
+        {
+          "after_stop_sequence": 2,
+          "position": 0,
+          "station_name": "千歳",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 3,
+          "position": 0,
+          "station_name": "沼ノ端",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 4,
+          "position": 0,
+          "station_name": "白老",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 4,
+          "position": 1,
+          "station_name": "登別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 4,
+          "position": 2,
+          "station_name": "幌別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 4,
+          "position": 3,
+          "station_name": "鷲別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 0,
+          "station_name": "輪西",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 1,
+          "station_name": "御崎",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 2,
+          "station_name": "母恋",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 3,
+          "station_name": "室蘭",
+          "symbol": "||"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 4,
+          "station_name": "伊達紋別",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 5,
+          "position": 5,
+          "station_name": "洞爺",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 8,
+          "position": 0,
+          "station_name": "大沼公園",
+          "symbol": "レ"
+        },
+        {
+          "after_stop_sequence": 9,
+          "position": 0,
+          "station_name": "五稜郭",
+          "symbol": "レ"
+        }
+      ],
+      "symbol_review": {
+        "accessed_at": "2026-09-30",
+        "selected_date": "2026年9月30日(水)",
+        "issue": "JR時刻表 令和8年10月号",
+        "locator": "Selected 2026年9月30日(水), 2D / 北斗 2, train column 1",
+        "scope": "All printed レ and || rows in the selected Hokuto column; table display order only, not a physical route claim."
+      }
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.2.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "2",
+      "train_number": "1002M",
+      "source_id": "jr-hokkaido-hokuto-suzuran-up-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "Selected 2026年9月30日(水), 1002M / すずらん 2, train column 3",
+      "origin": "札幌",
+      "destination": "東室蘭",
+      "stops": [
+        [
+          "札幌",
+          null,
+          "07:30"
+        ],
+        [
+          "新札幌",
+          null,
+          "07:38"
+        ],
+        [
+          "千歳",
+          null,
+          "07:57"
+        ],
+        [
+          "南千歳",
+          null,
+          "08:01"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "08:12"
+        ],
+        [
+          "苫小牧",
+          null,
+          "08:19"
+        ],
+        [
+          "白老",
+          null,
+          "08:32"
+        ],
+        [
+          "登別",
+          null,
+          "08:45"
+        ],
+        [
+          "幌別",
+          null,
+          "08:50"
+        ],
+        [
+          "鷲別",
+          null,
+          "08:56"
+        ],
+        [
+          "東室蘭",
+          "08:58",
+          null
+        ]
+      ],
+      "printed_platforms": {
+        "札幌": "(6)"
+      }
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.5.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "service_id": "suzuran",
+      "public_number": "5",
+      "train_number": "1005M",
+      "source_id": "jr-hokkaido-hokuto-suzuran-down-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "Selected 2026年9月30日(水), 1005M / すずらん 5, train column 4",
+      "origin": "東室蘭",
+      "destination": "札幌",
+      "stops": [
+        [
+          "東室蘭",
+          null,
+          "09:31"
+        ],
+        [
+          "鷲別",
+          null,
+          "09:34"
+        ],
+        [
+          "幌別",
+          null,
+          "09:40"
+        ],
+        [
+          "登別",
+          null,
+          "09:46"
+        ],
+        [
+          "白老",
+          null,
+          "09:58"
+        ],
+        [
+          "苫小牧",
+          null,
+          "10:11"
+        ],
+        [
+          "沼ノ端",
+          null,
+          "10:18"
+        ],
+        [
+          "南千歳",
+          null,
+          "10:29"
+        ],
+        [
+          "千歳",
+          null,
+          "10:32"
+        ],
+        [
+          "新札幌",
+          null,
+          "10:52"
+        ],
+        [
+          "札幌",
+          "11:00",
+          null
+        ]
+      ],
+      "printed_platforms": {
+        "札幌": "(4)"
+      }
+    }
+  ],
+  "pass_through_notes": {
+    "1D": [
+      "大沼公園",
+      "鷲別",
+      "幌別",
+      "沼ノ端",
+      "千歳"
+    ],
+    "2D": [
+      "千歳",
+      "沼ノ端",
+      "白老",
+      "登別",
+      "幌別",
+      "鷲別",
+      "伊達紋別",
+      "洞爺",
+      "大沼公園",
+      "五稜郭"
+    ],
+    "1002M": [],
+    "1005M": []
+  }
+}

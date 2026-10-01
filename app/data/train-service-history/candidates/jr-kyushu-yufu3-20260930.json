@@ -1,0 +1,30 @@
+{
+  "candidate_id":"jr-kyushu-yufu3-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; sixteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-yufu3-20260930","source_url":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167201.html?t=2828302e&d=20260930","service_date":"2026-09-30",
+  "new_source":{"source_id":"jr-kyushu-yufu3-20260930","source_type":"official_train_timetable","title":"ゆふ3号 列車詳細","publisher":"九州旅客鉄道株式会社 / 株式会社交通新聞社","url_or_locator":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167201.html?t=2828302e&d=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"third_party_timetable_data_terms_apply","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Official exact-date train detail reached from 博多駅 2026-09-30 limited-express departure list. It prints the full ゆふ3号 83D passenger-call table from 博多 to 別府. This documents only the selected date."},
+  "trip":{"trip_id":"jr-kyushu.yufu.3.2026-09-30","service_id":"yufu","service_name":"ゆふ","public_number":"3","train_number":"83D","direction":"博多→別府",
+    "stop_times":[
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"12:14","platform":"5"},
+      {"name_snapshot":"二日市","arrival_time":"12:25","departure_time":"12:26","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"12:38","departure_time":"12:39","platform":"4"},
+      {"name_snapshot":"久留米","arrival_time":"12:47","departure_time":"12:48","platform":"1"},
+      {"name_snapshot":"田主丸","arrival_time":"13:06","departure_time":"13:07","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"13:12","departure_time":"13:13","platform":null},
+      {"name_snapshot":"うきは","arrival_time":"13:16","departure_time":"13:20","platform":null},
+      {"name_snapshot":"日田","arrival_time":"13:36","departure_time":"13:39","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"13:50","departure_time":"13:51","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"14:04","departure_time":"14:05","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"14:17","departure_time":"14:17","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"14:39","departure_time":"14:45","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"14:56","departure_time":"14:57","platform":null},
+      {"name_snapshot":"向之原","arrival_time":"15:14","departure_time":"15:14","platform":null},
+      {"name_snapshot":"大分","arrival_time":"15:29","departure_time":"15:36","platform":"8"},
+      {"name_snapshot":"別府","arrival_time":"15:46","departure_time":null,"platform":null}
+    ]},
+  "evidence_locators":[
+    {"claim":"exact 2026-09-30 occurrence","locator":"official train page heading 2026年09月30日の時刻 and date-qualified URL"},
+    {"claim":"limited express ゆふ3号 and 83D","locator":"列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号 rows"},
+    {"claim":"sixteen passenger calls and clocks","locator":"駅名 / 時刻 / のりば table from 博多 through 別府"}
+  ]
+}

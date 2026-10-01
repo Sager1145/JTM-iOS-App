@@ -1,0 +1,1069 @@
+{
+  "source": "https://www.jreast.co.jp/multi/stations/",
+  "publisher": "East Japan Railway Company",
+  "retrievedAt": "2026-09-30",
+  "description": "English station-map links paired with Japanese station records by official numeric station ID. Japanese route indexes retain their source URL. Nagaoka index mislink resolved against its detail page; Muikamachi paired through its Japanese detail page. Suspected source spelling errors remain flagged.",
+  "names": [
+    "Abiko",
+    "Akabane",
+    "Akihabara",
+    "Akita",
+    "Aomori",
+    "Asagaya",
+    "Atami",
+    "Bakurocho",
+    "Ebina",
+    "Ebisu",
+    "Echigo-Yuzawa",
+    "Fukushima",
+    "Furukawa",
+    "Gotanda",
+    "Hachinohe",
+    "Hachioji",
+    "Hamamatsucho",
+    "Harajuku",
+    "Hatchobori",
+    "Higashi-Nakano",
+    "Hirosaki",
+    "Ichigaya",
+    "Ichinoseki",
+    "Iidabashi",
+    "Iiyama",
+    "Ikebukuro",
+    "Itabashi",
+    "Iwaki",
+    "Joetsumyoko",
+    "Jujo",
+    "Kamakura",
+    "Kamata",
+    "Kameari",
+    "Kanamachi",
+    "Kanda",
+    "Karuizawa",
+    "Kashiwa",
+    "Kawagoe",
+    "Kawasaki",
+    "Kichijoji",
+    "Kitakami",
+    "Kita-Kogane",
+    "Kita-Senju",
+    "Koenji",
+    "Kofu",
+    "Komagome",
+    "Koriyama",
+    "Kumagaya",
+    "Maihama",
+    "Matsudo",
+    "Matsumoto",
+    "Meguro",
+    "Mejiro",
+    "Minami-Kashiwa",
+    "Minami-Nagareyama",
+    "Minami-Senju",
+    "Minami-Urawa",
+    "Mitaka",
+    "Mito",
+    "Morioka",
+    "Muikamachi",
+    "Musashi-Kosugi",
+    "Musashi-Urawa",
+    "Nagano",
+    "Nagaoka",
+    "Nakano",
+    "Nakayama",
+    "Narita Airport Terminal 1(Narita Airport)",
+    "Narita Airport Terminal 2·3(Airport Terminal 2)",
+    "Nasushiobara",
+    "Niigata",
+    "Nikko",
+    "Nippori",
+    "Nishi-Funabashi",
+    "Nishi-Kokubunji",
+    "Nishi-Nippori",
+    "Nishi-Ogikubo",
+    "Noborito",
+    "Ochanomizu",
+    "Odawara",
+    "Ofuna",
+    "Ogikubo",
+    "Oimachi",
+    "Oji",
+    "Okachimachi",
+    "Omagari",
+    "Omiya",
+    "Omori",
+    "Osaki",
+    "Otsuka",
+    "Otsuki",
+    "Oyama",
+    "Sakudaira",
+    "Sendai",
+    "Shibuya",
+    "Shichinohe-Towada",
+    "Shimbashi",
+    "Shim-Matsudo",
+    "Shin-Aomori",
+    "Shinagawa",
+    "Shinjo",
+    "Shinjuku",
+    "Shin-Kiba",
+    "Shin-Nihombashi",
+    "Shin-Okubo",
+    "Shin-Shirakawa",
+    "Shin-Yokohama",
+    "Shiojiri",
+    "Sugamo",
+    "Suidobashi",
+    "Tabata",
+    "Tachikawa",
+    "Takadanobaba",
+    "Takanawa Gateway",
+    "Takao",
+    "Takasaki",
+    "Tamachi",
+    "Tokyo",
+    "Toride",
+    "Tsubamesanjo",
+    "Tsuchiura",
+    "Ueda",
+    "Ueno",
+    "Urawa",
+    "Utsunomiya",
+    "Yamagata",
+    "Yokohama",
+    "Yonezawa",
+    "Yotsuya",
+    "Yoyogi",
+    "Yurakucho"
+  ],
+  "identitySource": "https://www.jreast.co.jp/estation/facility_search.aspx?SearchCategoryCd=3",
+  "licenseNote": "No bulk reuse license identified; short station-name facts only, with attribution.",
+  "byEnglishName": {
+    "Abiko": {
+      "stationId": "72",
+      "ja": "我孫子",
+      "en": "Abiko",
+      "source": "https://www.jreast.co.jp/e/stations/e72.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Akabane": {
+      "stationId": "34",
+      "ja": "赤羽",
+      "en": "Akabane",
+      "source": "https://www.jreast.co.jp/e/stations/e34.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=29=1=%e5%9f%bc%e4%ba%ac%e7%b7%9a%e3%83%bb%e5%b7%9d%e8%b6%8a%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Akihabara": {
+      "stationId": "41",
+      "ja": "秋葉原",
+      "en": "Akihabara",
+      "source": "https://www.jreast.co.jp/e/stations/e41.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Akita": {
+      "stationId": "39",
+      "ja": "秋田",
+      "en": "Akita",
+      "source": "https://www.jreast.co.jp/e/stations/e39.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Aomori": {
+      "stationId": "25",
+      "ja": "青森",
+      "en": "Aomori",
+      "source": "https://www.jreast.co.jp/e/stations/e25.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Asagaya": {
+      "stationId": "45",
+      "ja": "阿佐ケ谷",
+      "en": "Asagaya",
+      "source": "https://www.jreast.co.jp/e/stations/e45.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3",
+      "packageJa": "阿佐ヶ谷",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "Atami": {
+      "stationId": "64",
+      "ja": "熱海",
+      "en": "Atami",
+      "source": "https://www.jreast.co.jp/e/stations/e64.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=49=1=%e6%9d%b1%e6%b5%b7%e9%81%93%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Bakurocho": {
+      "stationId": "1220",
+      "ja": "馬喰町",
+      "en": "Bakurocho",
+      "source": "https://www.jreast.co.jp/e/stations/e1220.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=40=1=%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%bf%ab%e9%80%9f&SearchCategoryCd=3"
+    },
+    "Ebina": {
+      "stationId": "291",
+      "ja": "海老名",
+      "en": "Ebina",
+      "source": "https://www.jreast.co.jp/e/stations/e291.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=30=1=%e7%9b%b8%e6%a8%a1%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ebisu": {
+      "stationId": "290",
+      "ja": "恵比寿",
+      "en": "Ebisu",
+      "source": "https://www.jreast.co.jp/e/stations/e290.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Echigo-Yuzawa": {
+      "stationId": "285",
+      "ja": "越後湯沢",
+      "en": "Echigo-Yuzawa",
+      "source": "https://www.jreast.co.jp/e/stations/e285.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=74=1=%e4%b8%8a%e8%b6%8a%e6%96%b0%e5%b9%b9%e7%b7%9a(1)&SearchCategoryCd=3"
+    },
+    "Fukushima": {
+      "stationId": "1352",
+      "ja": "福島",
+      "en": "Fukushima",
+      "source": "https://www.jreast.co.jp/e/stations/e1352.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Furukawa": {
+      "stationId": "1388",
+      "ja": "古川",
+      "en": "Furukawa",
+      "source": "https://www.jreast.co.jp/e/stations/e1388.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Gotanda": {
+      "stationId": "695",
+      "ja": "五反田",
+      "en": "Gotanda",
+      "source": "https://www.jreast.co.jp/e/stations/e695.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Hachinohe": {
+      "stationId": "1230",
+      "ja": "八戸",
+      "en": "Hachinohe",
+      "source": "https://www.jreast.co.jp/e/stations/e1230.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Hachioji": {
+      "stationId": "1227",
+      "ja": "八王子",
+      "en": "Hachioji",
+      "source": "https://www.jreast.co.jp/e/stations/e1227.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Hamamatsucho": {
+      "stationId": "1248",
+      "ja": "浜松町",
+      "en": "Hamamatsucho",
+      "source": "https://www.jreast.co.jp/e/stations/e1248.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Harajuku": {
+      "stationId": "1256",
+      "ja": "原宿",
+      "en": "Harajuku",
+      "source": "https://www.jreast.co.jp/e/stations/e1256.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Hatchobori": {
+      "stationId": "1236",
+      "ja": "八丁堀",
+      "en": "Hatchobori",
+      "source": "https://www.jreast.co.jp/e/stations/e1236.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=25=1=%e4%ba%ac%e8%91%89%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Higashi-Nakano": {
+      "stationId": "1295",
+      "ja": "東中野",
+      "en": "Higashi-Nakano",
+      "source": "https://www.jreast.co.jp/e/stations/e1295.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Hirosaki": {
+      "stationId": "1344",
+      "ja": "弘前",
+      "en": "Hirosaki",
+      "source": "https://www.jreast.co.jp/e/stations/e1344.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ichigaya": {
+      "stationId": "135",
+      "ja": "市ケ谷",
+      "en": "Ichigaya",
+      "source": "https://www.jreast.co.jp/e/stations/e135.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3",
+      "packageJa": "市ヶ谷",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "Ichinoseki": {
+      "stationId": "140",
+      "ja": "一ノ関",
+      "en": "Ichinoseki",
+      "source": "https://www.jreast.co.jp/e/stations/e140.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Iidabashi": {
+      "stationId": "99",
+      "ja": "飯田橋",
+      "en": "Iidabashi",
+      "source": "https://www.jreast.co.jp/e/stations/e99.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Iiyama": {
+      "stationId": "102",
+      "ja": "飯山",
+      "en": "Iiyama",
+      "source": "https://www.jreast.co.jp/e/stations/e102.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ikebukuro": {
+      "stationId": "108",
+      "ja": "池袋",
+      "en": "Ikebukuro",
+      "source": "https://www.jreast.co.jp/e/stations/e108.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Itabashi": {
+      "stationId": "132",
+      "ja": "板橋",
+      "en": "Itabashi",
+      "source": "https://www.jreast.co.jp/e/stations/e132.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=29=1=%e5%9f%bc%e4%ba%ac%e7%b7%9a%e3%83%bb%e5%b7%9d%e8%b6%8a%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Iwaki": {
+      "stationId": "166",
+      "ja": "いわき",
+      "en": "Iwaki",
+      "source": "https://www.jreast.co.jp/e/stations/e166.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=34=1=%e5%b8%b8%e7%a3%90%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Joetsumyoko": {
+      "stationId": "1732",
+      "ja": "上越妙高",
+      "en": "Joetsumyoko",
+      "source": "https://www.jreast.co.jp/e/stations/e1732.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Jujo": {
+      "stationId": "834",
+      "ja": "十条",
+      "en": "Jujo",
+      "source": "https://www.jreast.co.jp/e/stations/e834.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=29=1=%e5%9f%bc%e4%ba%ac%e7%b7%9a%e3%83%bb%e5%b7%9d%e8%b6%8a%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kamakura": {
+      "stationId": "476",
+      "ja": "鎌倉",
+      "en": "Kamakura",
+      "source": "https://www.jreast.co.jp/e/stations/e476.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=67=1=%e6%a8%aa%e9%a0%88%e8%b3%80%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kamata": {
+      "stationId": "478",
+      "ja": "蒲田",
+      "en": "Kamata",
+      "source": "https://www.jreast.co.jp/e/stations/e478.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kameari": {
+      "stationId": "507",
+      "ja": "亀有",
+      "en": "Kameari",
+      "source": "https://www.jreast.co.jp/e/stations/e507.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kanamachi": {
+      "stationId": "462",
+      "ja": "金町",
+      "en": "Kanamachi",
+      "source": "https://www.jreast.co.jp/e/stations/e462.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kanda": {
+      "stationId": "538",
+      "ja": "神田",
+      "en": "Kanda",
+      "source": "https://www.jreast.co.jp/e/stations/e538.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Karuizawa": {
+      "stationId": "518",
+      "ja": "軽井沢",
+      "en": "Karuizawa",
+      "source": "https://www.jreast.co.jp/e/stations/e518.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kashiwa": {
+      "stationId": "434",
+      "ja": "柏",
+      "en": "Kashiwa",
+      "source": "https://www.jreast.co.jp/e/stations/e434.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kawagoe": {
+      "stationId": "525",
+      "ja": "川越",
+      "en": "Kawagoe",
+      "source": "https://www.jreast.co.jp/e/stations/e525.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=29=1=%e5%9f%bc%e4%ba%ac%e7%b7%9a%e3%83%bb%e5%b7%9d%e8%b6%8a%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kawasaki": {
+      "stationId": "526",
+      "ja": "川崎",
+      "en": "Kawasaki",
+      "source": "https://www.jreast.co.jp/e/stations/e526.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kichijoji": {
+      "stationId": "596",
+      "ja": "吉祥寺",
+      "en": "Kichijoji",
+      "source": "https://www.jreast.co.jp/e/stations/e596.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kitakami": {
+      "stationId": "564",
+      "ja": "北上",
+      "en": "Kitakami",
+      "source": "https://www.jreast.co.jp/e/stations/e564.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kita-Kogane": {
+      "stationId": "566",
+      "ja": "北小金",
+      "en": "Kita-Kogane",
+      "source": "https://www.jreast.co.jp/e/stations/e566.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kita-Senju": {
+      "stationId": "571",
+      "ja": "北千住",
+      "en": "Kita-Senju",
+      "source": "https://www.jreast.co.jp/e/stations/e571.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=34=1=%e5%b8%b8%e7%a3%90%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Koenji": {
+      "stationId": "663",
+      "ja": "高円寺",
+      "en": "Koenji",
+      "source": "https://www.jreast.co.jp/e/stations/e663.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Kofu": {
+      "stationId": "671",
+      "ja": "甲府",
+      "en": "Kofu",
+      "source": "https://www.jreast.co.jp/e/stations/e671.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Komagome": {
+      "stationId": "712",
+      "ja": "駒込",
+      "en": "Komagome",
+      "source": "https://www.jreast.co.jp/e/stations/e712.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Koriyama": {
+      "stationId": "675",
+      "ja": "郡山",
+      "en": "Koriyama",
+      "source": "https://www.jreast.co.jp/e/stations/e675.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Kumagaya": {
+      "stationId": "625",
+      "ja": "熊谷",
+      "en": "Kumagaya",
+      "source": "https://www.jreast.co.jp/e/stations/e625.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Maihama": {
+      "stationId": "1414",
+      "ja": "舞浜",
+      "en": "Maihama",
+      "source": "https://www.jreast.co.jp/e/stations/e1414.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=25=1=%e4%ba%ac%e8%91%89%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Matsudo": {
+      "stationId": "1441",
+      "ja": "松戸",
+      "en": "Matsudo",
+      "source": "https://www.jreast.co.jp/e/stations/e1441.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Matsumoto": {
+      "stationId": "1444",
+      "ja": "松本",
+      "en": "Matsumoto",
+      "source": "https://www.jreast.co.jp/e/stations/e1444.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Meguro": {
+      "stationId": "1552",
+      "ja": "目黒",
+      "en": "Meguro",
+      "source": "https://www.jreast.co.jp/e/stations/e1552.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Mejiro": {
+      "stationId": "1553",
+      "ja": "目白",
+      "en": "Mejiro",
+      "source": "https://www.jreast.co.jp/e/stations/e1553.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Minami-Kashiwa": {
+      "stationId": "1479",
+      "ja": "南柏",
+      "en": "Minami-Kashiwa",
+      "source": "https://www.jreast.co.jp/e/stations/e1479.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Minami-Nagareyama": {
+      "stationId": "1495",
+      "ja": "南流山",
+      "en": "Minami-Nagareyama",
+      "source": "https://www.jreast.co.jp/e/stations/e1495.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=63=1=%e6%ad%a6%e8%94%b5%e9%87%8e%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Minami-Senju": {
+      "stationId": "1487",
+      "ja": "南千住",
+      "en": "Minami-Senju",
+      "source": "https://www.jreast.co.jp/e/stations/e1487.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=34=1=%e5%b8%b8%e7%a3%90%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Minami-Urawa": {
+      "stationId": "1476",
+      "ja": "南浦和",
+      "en": "Minami-Urawa",
+      "source": "https://www.jreast.co.jp/e/stations/e1476.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Mitaka": {
+      "stationId": "1463",
+      "ja": "三鷹",
+      "en": "Mitaka",
+      "source": "https://www.jreast.co.jp/e/stations/e1463.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Mito": {
+      "stationId": "1471",
+      "ja": "水戸",
+      "en": "Mito",
+      "source": "https://www.jreast.co.jp/e/stations/e1471.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=34=1=%e5%b8%b8%e7%a3%90%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Morioka": {
+      "stationId": "1565",
+      "ja": "盛岡",
+      "en": "Morioka",
+      "source": "https://www.jreast.co.jp/e/stations/e1565.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Muikamachi": {
+      "stationId": "1520",
+      "ja": "六日町",
+      "en": "Muikamachi",
+      "source": "https://www.jreast.co.jp/e/stations/e1520.html",
+      "identitySource": "https://www.jreast.co.jp/estation/station/info.aspx?StationCd=1520"
+    },
+    "Musashi-Kosugi": {
+      "stationId": "1527",
+      "ja": "武蔵小杉",
+      "en": "Musashi-Kosugi",
+      "source": "https://www.jreast.co.jp/e/stations/e1527.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=67=1=%e6%a8%aa%e9%a0%88%e8%b3%80%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Musashi-Urawa": {
+      "stationId": "1525",
+      "ja": "武蔵浦和",
+      "en": "Musashi-Urawa",
+      "source": "https://www.jreast.co.jp/e/stations/e1525.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=29=1=%e5%9f%bc%e4%ba%ac%e7%b7%9a%e3%83%bb%e5%b7%9d%e8%b6%8a%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nagano": {
+      "stationId": "1105",
+      "ja": "長野",
+      "en": "Nagano",
+      "source": "https://www.jreast.co.jp/e/stations/e1105.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nagaoka": {
+      "stationId": "1085",
+      "ja": "長岡",
+      "en": "Nagaoka",
+      "source": "https://www.jreast.co.jp/e/stations/e1085.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=74=1=%e4%b8%8a%e8%b6%8a%e6%96%b0%e5%b9%b9%e7%b7%9a(1)&SearchCategoryCd=3",
+      "indexStationId": "1105",
+      "note": "English index links Nagaoka to Nagano ID 1105. Corrected using Japanese Joetsu index ID 1085 and the English Nagaoka detail heading at e1085.html."
+    },
+    "Nakano": {
+      "stationId": "1104",
+      "ja": "中野",
+      "en": "Nakano",
+      "source": "https://www.jreast.co.jp/e/stations/e1104.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Nakayama": {
+      "stationId": "1113",
+      "ja": "中山",
+      "en": "Nakayama",
+      "source": "https://www.jreast.co.jp/e/stations/e1113.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=68=1=%e6%a8%aa%e6%b5%9c%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Narita Airport Terminal 1(Narita Airport)": {
+      "stationId": "1130",
+      "ja": "成田空港",
+      "en": "Narita Airport Terminal 1(Narita Airport)",
+      "source": "https://www.jreast.co.jp/e/stations/e1130.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=40=1=%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%bf%ab%e9%80%9f&SearchCategoryCd=3"
+    },
+    "Narita Airport Terminal 2·3(Airport Terminal 2)": {
+      "stationId": "611",
+      "ja": "空港第２ビル",
+      "en": "Narita Airport Terminal 2·3(Airport Terminal 2)",
+      "source": "https://www.jreast.co.jp/e/stations/e611.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=40=1=%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%bf%ab%e9%80%9f&SearchCategoryCd=3",
+      "packageJa": "空港第2ビル",
+      "mappingNote": "Reviewed Japanese spelling variant or bracketed landmark alias; matched only under this operator. Original official label is retained in ja."
+    },
+    "Nasushiobara": {
+      "stationId": "1118",
+      "ja": "那須塩原",
+      "en": "Nasushiobara",
+      "source": "https://www.jreast.co.jp/e/stations/e1118.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Niigata": {
+      "stationId": "1137",
+      "ja": "新潟",
+      "en": "Niigata",
+      "source": "https://www.jreast.co.jp/e/stations/e1137.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=74=1=%e4%b8%8a%e8%b6%8a%e6%96%b0%e5%b9%b9%e7%b7%9a(1)&SearchCategoryCd=3"
+    },
+    "Nikko": {
+      "stationId": "1180",
+      "ja": "日光",
+      "en": "Nikko",
+      "source": "https://www.jreast.co.jp/e/stations/e1180.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=54=1=%e6%97%a5%e5%85%89%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nippori": {
+      "stationId": "1184",
+      "ja": "日暮里",
+      "en": "Nippori",
+      "source": "https://www.jreast.co.jp/e/stations/e1184.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nishi-Funabashi": {
+      "stationId": "1171",
+      "ja": "西船橋",
+      "en": "Nishi-Funabashi",
+      "source": "https://www.jreast.co.jp/e/stations/e1171.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Nishi-Kokubunji": {
+      "stationId": "1156",
+      "ja": "西国分寺",
+      "en": "Nishi-Kokubunji",
+      "source": "https://www.jreast.co.jp/e/stations/e1156.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=63=1=%e6%ad%a6%e8%94%b5%e9%87%8e%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nishi-Nippori": {
+      "stationId": "1167",
+      "ja": "西日暮里",
+      "en": "Nishi-Nippori",
+      "source": "https://www.jreast.co.jp/e/stations/e1167.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Nishi-Ogikubo": {
+      "stationId": "1152",
+      "ja": "西荻窪",
+      "en": "Nishi-Ogikubo",
+      "source": "https://www.jreast.co.jp/e/stations/e1152.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Noborito": {
+      "stationId": "1212",
+      "ja": "登戸",
+      "en": "Noborito",
+      "source": "https://www.jreast.co.jp/e/stations/e1212.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=53=1=%e5%8d%97%e6%ad%a6%e7%b7%9a(1)&SearchCategoryCd=3"
+    },
+    "Ochanomizu": {
+      "stationId": "384",
+      "ja": "御茶ノ水",
+      "en": "Ochanomizu",
+      "source": "https://www.jreast.co.jp/e/stations/e384.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Odawara": {
+      "stationId": "382",
+      "ja": "小田原",
+      "en": "Odawara",
+      "source": "https://www.jreast.co.jp/e/stations/e382.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=49=1=%e6%9d%b1%e6%b5%b7%e9%81%93%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ofuna": {
+      "stationId": "342",
+      "ja": "大船",
+      "en": "Ofuna",
+      "source": "https://www.jreast.co.jp/e/stations/e342.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=67=1=%e6%a8%aa%e9%a0%88%e8%b3%80%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ogikubo": {
+      "stationId": "362",
+      "ja": "荻窪",
+      "en": "Ogikubo",
+      "source": "https://www.jreast.co.jp/e/stations/e362.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Oimachi": {
+      "stationId": "307",
+      "ja": "大井町",
+      "en": "Oimachi",
+      "source": "https://www.jreast.co.jp/e/stations/e307.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Oji": {
+      "stationId": "301",
+      "ja": "王子",
+      "en": "Oji",
+      "source": "https://www.jreast.co.jp/e/stations/e301.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Okachimachi": {
+      "stationId": "355",
+      "ja": "御徒町",
+      "en": "Okachimachi",
+      "source": "https://www.jreast.co.jp/e/stations/e355.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Omagari": {
+      "stationId": "346",
+      "ja": "大曲",
+      "en": "Omagari",
+      "source": "https://www.jreast.co.jp/e/stations/e346.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Omiya": {
+      "stationId": "350",
+      "ja": "大宮",
+      "en": "Omiya",
+      "source": "https://www.jreast.co.jp/e/stations/e350.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Omori": {
+      "stationId": "351",
+      "ja": "大森",
+      "en": "Omori",
+      "source": "https://www.jreast.co.jp/e/stations/e351.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Osaki": {
+      "stationId": "319",
+      "ja": "大崎",
+      "en": "Osaki",
+      "source": "https://www.jreast.co.jp/e/stations/e319.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Otsuka": {
+      "stationId": "330",
+      "ja": "大塚",
+      "en": "Otsuka",
+      "source": "https://www.jreast.co.jp/e/stations/e330.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Otsuki": {
+      "stationId": "331",
+      "ja": "大月",
+      "en": "Otsuki",
+      "source": "https://www.jreast.co.jp/e/stations/e331.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Oyama": {
+      "stationId": "401",
+      "ja": "小山",
+      "en": "Oyama",
+      "source": "https://www.jreast.co.jp/e/stations/e401.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Sakudaira": {
+      "stationId": "736",
+      "ja": "佐久平",
+      "en": "Sakudaira",
+      "source": "https://www.jreast.co.jp/e/stations/e736.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Sendai": {
+      "stationId": "913",
+      "ja": "仙台",
+      "en": "Sendai",
+      "source": "https://www.jreast.co.jp/e/stations/e913.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shibuya": {
+      "stationId": "808",
+      "ja": "渋谷",
+      "en": "Shibuya",
+      "source": "https://www.jreast.co.jp/e/stations/e808.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shichinohe-Towada": {
+      "stationId": "1725",
+      "ja": "七戸十和田",
+      "en": "Shichinohe-Towada",
+      "source": "https://www.jreast.co.jp/e/stations/e1725.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shimbashi": {
+      "stationId": "877",
+      "ja": "新橋",
+      "en": "Shimbashi",
+      "source": "https://www.jreast.co.jp/e/stations/e877.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shim-Matsudo": {
+      "stationId": "884",
+      "ja": "新松戸",
+      "en": "Shim-Matsudo",
+      "source": "https://www.jreast.co.jp/e/stations/e884.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3",
+      "reviewNote": "Official English index and detail heading both say Shim-Matsudo. Suspected source typo; keep provisional pending independent official spelling evidence."
+    },
+    "Shin-Aomori": {
+      "stationId": "854",
+      "ja": "新青森",
+      "en": "Shin-Aomori",
+      "source": "https://www.jreast.co.jp/e/stations/e854.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shinagawa": {
+      "stationId": "788",
+      "ja": "品川",
+      "en": "Shinagawa",
+      "source": "https://www.jreast.co.jp/e/stations/e788.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shinjo": {
+      "stationId": "867",
+      "ja": "新庄",
+      "en": "Shinjo",
+      "source": "https://www.jreast.co.jp/e/stations/e867.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shinjuku": {
+      "stationId": "866",
+      "ja": "新宿",
+      "en": "Shinjuku",
+      "source": "https://www.jreast.co.jp/e/stations/e866.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shin-Kiba": {
+      "stationId": "859",
+      "ja": "新木場",
+      "en": "Shin-Kiba",
+      "source": "https://www.jreast.co.jp/e/stations/e859.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=25=1=%e4%ba%ac%e8%91%89%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shin-Nihombashi": {
+      "stationId": "875",
+      "ja": "新日本橋",
+      "en": "Shin-Nihombashi",
+      "source": "https://www.jreast.co.jp/e/stations/e875.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=40=1=%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%bf%ab%e9%80%9f&SearchCategoryCd=3"
+    },
+    "Shin-Okubo": {
+      "stationId": "857",
+      "ja": "新大久保",
+      "en": "Shin-Okubo",
+      "source": "https://www.jreast.co.jp/e/stations/e857.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shin-Shirakawa": {
+      "stationId": "869",
+      "ja": "新白河",
+      "en": "Shin-Shirakawa",
+      "source": "https://www.jreast.co.jp/e/stations/e869.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shin-Yokohama": {
+      "stationId": "888",
+      "ja": "新横浜",
+      "en": "Shin-Yokohama",
+      "source": "https://www.jreast.co.jp/e/stations/e888.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=68=1=%e6%a8%aa%e6%b5%9c%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Shiojiri": {
+      "stationId": "774",
+      "ja": "塩尻",
+      "en": "Shiojiri",
+      "source": "https://www.jreast.co.jp/e/stations/e774.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Sugamo": {
+      "stationId": "896",
+      "ja": "巣鴨",
+      "en": "Sugamo",
+      "source": "https://www.jreast.co.jp/e/stations/e896.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Suidobashi": {
+      "stationId": "891",
+      "ja": "水道橋",
+      "en": "Suidobashi",
+      "source": "https://www.jreast.co.jp/e/stations/e891.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Tabata": {
+      "stationId": "972",
+      "ja": "田端",
+      "en": "Tabata",
+      "source": "https://www.jreast.co.jp/e/stations/e972.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Tachikawa": {
+      "stationId": "958",
+      "ja": "立川",
+      "en": "Tachikawa",
+      "source": "https://www.jreast.co.jp/e/stations/e958.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Takadanobaba": {
+      "stationId": "938",
+      "ja": "高田馬場",
+      "en": "Takadanobaba",
+      "source": "https://www.jreast.co.jp/e/stations/e938.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Takanawa Gateway": {
+      "stationId": "1750",
+      "ja": "高輪ゲートウェイ",
+      "en": "Takanawa Gateway",
+      "source": "https://www.jreast.co.jp/e/stations/e1750.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Takao": {
+      "stationId": "931",
+      "ja": "高尾",
+      "en": "Takao",
+      "source": "https://www.jreast.co.jp/e/stations/e931.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=46=1=%e4%b8%ad%e5%a4%ae%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Takasaki": {
+      "stationId": "934",
+      "ja": "高崎",
+      "en": "Takasaki",
+      "source": "https://www.jreast.co.jp/e/stations/e934.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Tamachi": {
+      "stationId": "976",
+      "ja": "田町",
+      "en": "Tamachi",
+      "source": "https://www.jreast.co.jp/e/stations/e976.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Tokyo": {
+      "stationId": "1039",
+      "ja": "東京",
+      "en": "Tokyo",
+      "source": "https://www.jreast.co.jp/e/stations/e1039.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Toride": {
+      "stationId": "1077",
+      "ja": "取手",
+      "en": "Toride",
+      "source": "https://www.jreast.co.jp/e/stations/e1077.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=83=1=%e5%b8%b8%e7%a3%90%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Tsubamesanjo": {
+      "stationId": "1018",
+      "ja": "燕三条",
+      "en": "Tsubamesanjo",
+      "source": "https://www.jreast.co.jp/e/stations/e1018.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=74=1=%e4%b8%8a%e8%b6%8a%e6%96%b0%e5%b9%b9%e7%b7%9a(1)&SearchCategoryCd=3"
+    },
+    "Tsuchiura": {
+      "stationId": "1011",
+      "ja": "土浦",
+      "en": "Tsuchiura",
+      "source": "https://www.jreast.co.jp/e/stations/e1011.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=34=1=%e5%b8%b8%e7%a3%90%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ueda": {
+      "stationId": "203",
+      "ja": "上田",
+      "en": "Ueda",
+      "source": "https://www.jreast.co.jp/e/stations/e203.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=76=1=%e5%8c%97%e9%99%b8%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Ueno": {
+      "stationId": "204",
+      "ja": "上野",
+      "en": "Ueno",
+      "source": "https://www.jreast.co.jp/e/stations/e204.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Urawa": {
+      "stationId": "259",
+      "ja": "浦和",
+      "en": "Urawa",
+      "source": "https://www.jreast.co.jp/e/stations/e259.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=24=1=%e4%ba%ac%e6%b5%9c%e6%9d%b1%e5%8c%97%e7%b7%9a%e3%83%bb%e6%a0%b9%e5%b2%b8%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Utsunomiya": {
+      "stationId": "248",
+      "ja": "宇都宮",
+      "en": "Utsunomiya",
+      "source": "https://www.jreast.co.jp/e/stations/e248.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=75=1=%e6%9d%b1%e5%8c%97%e6%96%b0%e5%b9%b9%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Yamagata": {
+      "stationId": "1600",
+      "ja": "山形",
+      "en": "Yamagata",
+      "source": "https://www.jreast.co.jp/e/stations/e1600.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Yokohama": {
+      "stationId": "1638",
+      "ja": "横浜",
+      "en": "Yokohama",
+      "source": "https://www.jreast.co.jp/e/stations/e1638.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=67=1=%e6%a8%aa%e9%a0%88%e8%b3%80%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Yonezawa": {
+      "stationId": "1648",
+      "ja": "米沢",
+      "en": "Yonezawa",
+      "source": "https://www.jreast.co.jp/e/stations/e1648.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=12=1=%e5%a5%a5%e7%be%bd%e6%9c%ac%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Yotsuya": {
+      "stationId": "1647",
+      "ja": "四ツ谷",
+      "en": "Yotsuya",
+      "source": "https://www.jreast.co.jp/e/stations/e1647.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=81=1=%e4%b8%ad%e5%a4%ae%e7%b7%9a%e7%b7%8f%e6%ad%a6%e7%b7%9a%e5%90%84%e9%a7%85%e5%81%9c%e8%bb%8a&SearchCategoryCd=3"
+    },
+    "Yoyogi": {
+      "stationId": "1654",
+      "ja": "代々木",
+      "en": "Yoyogi",
+      "source": "https://www.jreast.co.jp/e/stations/e1654.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    },
+    "Yurakucho": {
+      "stationId": "1617",
+      "ja": "有楽町",
+      "en": "Yurakucho",
+      "source": "https://www.jreast.co.jp/e/stations/e1617.html",
+      "identitySource": "https://www.jreast.co.jp/estation/facility_result.aspx?mode=2&rosen=66=1=%e5%b1%b1%e6%89%8b%e7%b7%9a&SearchCategoryCd=3"
+    }
+  }
+}

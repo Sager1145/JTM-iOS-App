@@ -1,0 +1,3713 @@
+{
+  "research_id": "shinano1-26-physical-route-operator-20260930",
+  "canonical": false,
+  "normalizer_permitted": false,
+  "service_date": "2026-09-30",
+  "verdict": "Do not promote complete physical route or operating sections; date-applicable evidence missing",
+  "counts": {
+    "trips": 26,
+    "passenger_intervals": 241,
+    "new_temporally_attested_segments": 0
+  },
+  "scope_note": "Shinano 1 uses existing 2026-09-18 template with explicit September 30 calendar add. 2–26 are exact September 30 templates. Excludes 2013 seasonal templates. Existing Shinano 3 current-N02 partial segments remain untouched.",
+  "official_sources": [
+    {
+      "id": "jreast-securities-2026",
+      "url": "https://www.jreast.co.jp/investor/securitiesreport/2026/pdf/securitiesreport.pdf",
+      "locator": "PDF page 48 (zero-based 47), 線路及び電路施設; cover page reporting period",
+      "establishes": "Formal JR East facility classification: 篠ノ井線 (塩尻)–(篠ノ井) 66.7km; 信越線 篠ノ井–長野 9.3km. Parenthesized stations excluded from station count, not interval endpoints.",
+      "publication_date": "2026-06-17",
+      "report_period_end": "2026-03-31",
+      "does_not_establish": "September 30 continuity, train-specific operating entity/physical track assignment or N02 mapping validity"
+    },
+    {
+      "id": "jrcentral-shinano-corridor",
+      "url": "https://recommend.jr-central.co.jp/oshi-tabi/ekimemo4th/",
+      "locator": "中央本線 特急しなので 木曽路の風景を堪能 section",
+      "establishes": "Official service-family description names Nagoya–Nagano via Chuo Main and Shinonoi lines",
+      "does_not_establish": "Page says campaign ended; no September 30 per-train transition validity; omission of Shinetsu in service-family wording cannot remove physical Shinonoi–Nagano Shinetsu section"
+    },
+    {
+      "id": "jrcentral-20260522",
+      "url": "https://jr-central.co.jp/news/release/_pdf/000045597.pdf",
+      "publication_date": "2026-05-22",
+      "establishes": "383 series used as Shinano on Chuo Main; separate July 4 Suwa Shinano enters Chuo East at Shiojiri",
+      "does_not_establish": "July event routing is not evidence for regular September 30 Shinano 1–26"
+    },
+    {
+      "id": "jreast-20260522",
+      "url": "https://www.jreast.co.jp/press/2026/nagano/20260522_na01.pdf",
+      "locator": "Section 8 fare/points promotion",
+      "establishes": "Shinano/Shinshu service-family classification as Shinonoi Line limited express; Shiojiri/Matsumoto–Shinonoi/Nagano fare corridor",
+      "effective_from": "2026-09-01",
+      "effective_until_inclusive": "2026-09-17",
+      "does_not_establish": "Promotion excludes September 30 and uses service corridor labels, not physical line boundary proof"
+    },
+    {
+      "id": "jreast-station-numbering",
+      "url": "https://www.jreast.co.jp/press/2024/nagano/20241213_na02.pdf",
+      "publication_date": "2024-12-13",
+      "establishes": "Station numbering distinguishes Shinonoi line SN01 Shiojiri and Shinetsu SE09 Shinonoi through SE13 Nagano",
+      "does_not_establish": "Not September 30 train-specific physical route/operator attestation"
+    },
+    {
+      "id": "jreast-shinano-running-status",
+      "url": "https://traininfo.jreast.co.jp/train_info/express.aspx?group=shinano",
+      "observed_timestamp": "2026-09-30 03:54",
+      "establishes": "No cancellation information at observed time; outside 04:00–02:00 information window",
+      "does_not_establish": "No route, actual operation, boundary or per-train proof"
+    },
+    {
+      "id": "mlit-n02-2025",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "snapshot_date": "2025-12-31",
+      "local_package": "app/public/rail/jp-2025.json",
+      "does_not_establish": "2026-09-30 per-line physical validity"
+    }
+  ],
+  "physical_snapshot_lines": [
+    {
+      "line_id": "jp-東海旅客鉄道-中央線",
+      "line_name": "中央線",
+      "operator_name": "東海旅客鉄道",
+      "station_ids": [
+        "jp.n02.002616",
+        "jp.n02.002647",
+        "jp.n02.002702",
+        "jp.n02.002741",
+        "jp.n02.002789",
+        "jp.n02.002805",
+        "jp.n02.002865",
+        "jp.n02.002941",
+        "jp.n02.002971",
+        "jp.n02.003015",
+        "jp.n02.003139",
+        "jp.n02.003364",
+        "jp.n02.003633",
+        "jp.n02.003739",
+        "jp.n02.003811",
+        "jp.n02.004002",
+        "jp.n02.004241",
+        "jp.n02.004267",
+        "jp.n02.004302",
+        "jp.n02.004444",
+        "jp.n02.004521",
+        "jp.n02.004590",
+        "jp.n02.004662",
+        "jp.n02.004717",
+        "jp.n02.004785",
+        "jp.n02.004915",
+        "jp.n02.004946",
+        "jp.n02.005009",
+        "jp.n02.005104",
+        "jp.n02.005164",
+        "jp.n02.005194",
+        "jp.n02.005212",
+        "jp.n02.005253",
+        "jp.n02.005280",
+        "jp.n02.005332",
+        "jp.n02.005387",
+        "jp.n02.005450",
+        "jp.n02.005509",
+        "jp.n02.005551",
+        "jp.n02.005451"
+      ]
+    },
+    {
+      "line_id": "jp-東日本旅客鉄道-篠ノ井線",
+      "line_name": "篠ノ井線",
+      "operator_name": "東日本旅客鉄道",
+      "station_ids": [
+        "jp.n02.002616",
+        "jp.n02.002578",
+        "jp.n02.002562",
+        "jp.n02.002551",
+        "jp.n02.002535",
+        "jp.n02.002506",
+        "jp.n02.002423",
+        "jp.n02.002345",
+        "jp.n02.002269",
+        "jp.n02.002228",
+        "jp.n02.002215",
+        "jp.n02.002212",
+        "jp.n02.002178",
+        "jp.n02.002127",
+        "jp.n02.002096"
+      ]
+    },
+    {
+      "line_id": "jp-東日本旅客鉄道-信越線-3",
+      "line_name": "信越線",
+      "operator_name": "東日本旅客鉄道",
+      "station_ids": [
+        "jp.n02.002031",
+        "jp.n02.002049",
+        "jp.n02.002060",
+        "jp.n02.002074",
+        "jp.n02.002096"
+      ]
+    }
+  ],
+  "boundary_conclusions": {
+    "shiojiri": {
+      "station_id": "jp.n02.002616",
+      "candidate_transition": "JR Central Chuo to JR East Shinonoi; physical identity/operator date validity unproven"
+    },
+    "shinonoi": {
+      "station_id": "jp.n02.002096",
+      "candidate_transition": "JR East Shinonoi to JR East Shinetsu-3; no candidate operator change"
+    },
+    "route_only_nodes_needed": false,
+    "basis": "All 26 staged passenger lists include both boundaries; no inferred passenger stops added"
+  },
+  "unresolved_for_all_26": [
+    "Date-applicable official facility/line identity evidence covering September 30, not March 31 financial snapshot",
+    "Explicit mapping of each dated train between staged passenger stops and those physical line objects; endpoint membership is candidate evidence only",
+    "Date-applicable operating-entity sections and Shiojiri transition; infrastructure operator and service brand are distinct evidence roles",
+    "Official temporal continuity/change records linking 2025-12-31 N02 identities to the target day"
+  ],
+  "trips": [
+    {
+      "trip_id": "jr-central.shinano.1.2026-09-18",
+      "public_number": "1",
+      "train_number": "1001M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 12,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000041.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 8
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 11
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.003139",
+          "to_name": "上松",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003139",
+          "from_name": "上松",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 11,
+          "to_stop_sequence": 12,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.2.2026-09-30",
+      "public_number": "2",
+      "train_number": "1002M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 14,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000071.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 5
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.003139",
+          "to_name": "上松",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.003139",
+          "from_name": "上松",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 11,
+          "to_stop_sequence": 12,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 12,
+          "to_stop_sequence": 13,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005551",
+          "to_name": "金山",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 13,
+          "to_stop_sequence": 14,
+          "from_station_id": "jp.n02.005551",
+          "from_name": "金山",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.3.2026-09-30",
+      "public_number": "3",
+      "train_number": "1003M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000081.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.4.2026-09-30",
+      "public_number": "4",
+      "train_number": "1004M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000111.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 5
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002215",
+          "to_name": "聖高原",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002215",
+          "from_name": "聖高原",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.5.2026-09-30",
+      "public_number": "5",
+      "train_number": "1005M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020021.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 6
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 8
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.6.2026-09-30",
+      "public_number": "6",
+      "train_number": "1006M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000151.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 5
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.7.2026-09-30",
+      "public_number": "7",
+      "train_number": "1007M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000171.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.8.2026-09-30",
+      "public_number": "8",
+      "train_number": "1008M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000201.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.9.2026-09-30",
+      "public_number": "9",
+      "train_number": "1009M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/040/044911.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 6
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 8
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.10.2026-09-30",
+      "public_number": "10",
+      "train_number": "1010M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000241.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.003139",
+          "to_name": "上松",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003139",
+          "from_name": "上松",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.11.2026-09-30",
+      "public_number": "11",
+      "train_number": "1011M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000271.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 6
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 8
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.12.2026-09-30",
+      "public_number": "12",
+      "train_number": "1012M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000301.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.13.2026-09-30",
+      "public_number": "13",
+      "train_number": "1013M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020031.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.14.2026-09-30",
+      "public_number": "14",
+      "train_number": "1014M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000321.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.15.2026-09-30",
+      "public_number": "15",
+      "train_number": "1015M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020041.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 6
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.16.2026-09-30",
+      "public_number": "16",
+      "train_number": "1016M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/040/044921.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.17.2026-09-30",
+      "public_number": "17",
+      "train_number": "1017M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000381.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.18.2026-09-30",
+      "public_number": "18",
+      "train_number": "1018M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020081.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.19.2026-09-30",
+      "public_number": "19",
+      "train_number": "1019M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000411.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 6
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 9
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.20.2026-09-30",
+      "public_number": "20",
+      "train_number": "1020M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020091.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.21.2026-09-30",
+      "public_number": "21",
+      "train_number": "1021M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 11,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000421.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 10
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005551",
+          "to_name": "金山",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005551",
+          "from_name": "金山",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002215",
+          "to_name": "聖高原",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002215",
+          "from_name": "聖高原",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.22.2026-09-30",
+      "public_number": "22",
+      "train_number": "1022M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 9,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000431.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 4
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.23.2026-09-30",
+      "public_number": "23",
+      "train_number": "1023M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 11,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000441.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 7
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 10
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005551",
+          "to_name": "金山",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005551",
+          "from_name": "金山",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.24.2026-09-30",
+      "public_number": "24",
+      "train_number": "1024M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 12,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/020/020101.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 5
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.003139",
+          "to_name": "上松",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.003139",
+          "from_name": "上松",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 11,
+          "to_stop_sequence": 12,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.25.2026-09-30",
+      "public_number": "25",
+      "train_number": "1025M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 13,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000451.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 10
+        },
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 12
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.005451",
+          "from_name": "名古屋",
+          "to_station_id": "jp.n02.005551",
+          "to_name": "金山",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.005551",
+          "from_name": "金山",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.004662",
+          "to_name": "恵那",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.004662",
+          "from_name": "恵那",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.004241",
+          "to_name": "南木曽",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004241",
+          "from_name": "南木曽",
+          "to_station_id": "jp.n02.003139",
+          "to_name": "上松",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.003139",
+          "from_name": "上松",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 10,
+          "to_stop_sequence": 11,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 11,
+          "to_stop_sequence": 12,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 12,
+          "to_stop_sequence": 13,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002031",
+          "to_name": "長野",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    },
+    {
+      "trip_id": "jr-central.shinano.26.2026-09-30",
+      "public_number": "26",
+      "train_number": "1026M",
+      "service_date": "2026-09-30",
+      "staged_passenger_call_count": 10,
+      "date_and_passenger_source": "https://timetables.jreast.co.jp/2610/train/000/000461.html",
+      "date_review_scope": "Existing independently reviewed canonical/inventory date evidence; not re-inspected in browser in this route research",
+      "boundaries": [
+        {
+          "station_id": "jp.n02.002096",
+          "name": "篠ノ井",
+          "passenger_stop_sequence": 2
+        },
+        {
+          "station_id": "jp.n02.002616",
+          "name": "塩尻",
+          "passenger_stop_sequence": 5
+        }
+      ],
+      "candidate_passenger_intervals": [
+        {
+          "from_stop_sequence": 1,
+          "to_stop_sequence": 2,
+          "from_station_id": "jp.n02.002031",
+          "from_name": "長野",
+          "to_station_id": "jp.n02.002096",
+          "to_name": "篠ノ井",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-信越線-3",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 2,
+          "to_stop_sequence": 3,
+          "from_station_id": "jp.n02.002096",
+          "from_name": "篠ノ井",
+          "to_station_id": "jp.n02.002345",
+          "to_name": "明科",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 3,
+          "to_stop_sequence": 4,
+          "from_station_id": "jp.n02.002345",
+          "from_name": "明科",
+          "to_station_id": "jp.n02.002506",
+          "to_name": "松本",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 4,
+          "to_stop_sequence": 5,
+          "from_station_id": "jp.n02.002506",
+          "from_name": "松本",
+          "to_station_id": "jp.n02.002616",
+          "to_name": "塩尻",
+          "snapshot_candidate_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+          "snapshot_operator_name": "東日本旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 5,
+          "to_stop_sequence": 6,
+          "from_station_id": "jp.n02.002616",
+          "from_name": "塩尻",
+          "to_station_id": "jp.n02.003015",
+          "to_name": "木曽福島",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 6,
+          "to_stop_sequence": 7,
+          "from_station_id": "jp.n02.003015",
+          "from_name": "木曽福島",
+          "to_station_id": "jp.n02.004521",
+          "to_name": "中津川",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 7,
+          "to_stop_sequence": 8,
+          "from_station_id": "jp.n02.004521",
+          "from_name": "中津川",
+          "to_station_id": "jp.n02.005009",
+          "to_name": "多治見",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 8,
+          "to_stop_sequence": 9,
+          "from_station_id": "jp.n02.005009",
+          "from_name": "多治見",
+          "to_station_id": "jp.n02.005450",
+          "to_name": "千種",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        },
+        {
+          "from_stop_sequence": 9,
+          "to_stop_sequence": 10,
+          "from_station_id": "jp.n02.005450",
+          "from_name": "千種",
+          "to_station_id": "jp.n02.005451",
+          "to_name": "名古屋",
+          "snapshot_candidate_line_id": "jp-東海旅客鉄道-中央線",
+          "snapshot_operator_name": "東海旅客鉄道",
+          "status": "candidate_endpoint_membership_only",
+          "date_validity_proven": false
+        }
+      ],
+      "route_verdict": "unresolved_physical_date_validity",
+      "operator_verdict": "unresolved_dated_train_operating_sections"
+    }
+  ]
+}

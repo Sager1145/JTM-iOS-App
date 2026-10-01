@@ -55,12 +55,12 @@ struct DockedCard<Content: View>: View {
         return content
             .environment(\.railPanelHeaderDrag, headerDrag)
             .frame(width: width, height: live)
-            // Liquid Glass, as Apple Maps' own floating panel: the system
-            // surface through `railGlass`, which also owns the Reduce
-            // Transparency and Increase Contrast fallbacks. Glass casts its
-            // own shadow, so there is no separate shadow shape behind it.
+            // The side-by-side layout uses the same opaque content color as
+            // the resident sheet. The system tab bar keeps its own glass.
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-            .railGlass(in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .background(
+                Color.railMenuBackground,
+                in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .onAppear {
                 if headerDrag == nil { headerDrag = makeHeaderDrag() }
                 syncMorph(to: live)

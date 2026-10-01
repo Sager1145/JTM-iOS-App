@@ -19,6 +19,8 @@ import Testing
         #expect(TrainServicePatternAcceptance.referenceIntegrity(
             expectedCode: "001632", actualCode: "nearby-platform") == "failed")
         #expect(TrainServicePatternAcceptance.referenceIntegrity(
+            expectedCode: "002093", actualCode: "002092", sameStationIdentity: true) == "passed")
+        #expect(TrainServicePatternAcceptance.referenceIntegrity(
             expectedCode: "001632", actualCode: nil) == "failed")
         #expect(TrainServicePatternAcceptance.referenceIntegrity(
             expectedCode: "", actualCode: "") == "failed")

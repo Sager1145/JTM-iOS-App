@@ -1,0 +1,265 @@
+{
+  "date": "2026-09-30",
+  "chat_id": "01a0f373-d461-7a03-935b-422ec8d817fa",
+  "status": "complete_native_files_frozen",
+  "simulator": {
+    "id": "95F4B116-8F9C-4440-BD77-5C271285F690",
+    "name": "JTM-Timetable-Isolated",
+    "device": "iPhone 17 Pro",
+    "os": "iOS 27"
+  },
+  "product_fix": "AI completion preview resolves station names only on changed trains, so an empty reply cannot create station-ID-only changes or enable Apply.",
+  "files_modified_in_this_continuation": {
+    "ios/RailMap/JourneyCompletionView.swift": "1828ae6c068deae2e734b042f9fd8a7d8e08ee76875f2fbccf6993f4617fbea5",
+    "ios/RailMapUITests/IntegratedSharingUITests.swift": "ebc32a3eccd6d5a26a89bb349272a95f7f7fb23aba7d2f3a2ffb9d7076d0fd32",
+    "ios/RailMapUITests/TimetableSymbolUITests.swift": "1a56b66a4582dcb6df4047592fd32a5cd10c7948829e8ec751b33f10e40b5d6b",
+    "ios/RailMapUITests/WorkspaceEditingTests.swift": "da6139544d8971acb6de0ec490fe8ff0b3477eec6128bfd9acf8d6151fea24d9",
+    "ios/RailMapUITests/TimetableQuickMatchUITests.swift": "b671c8c97f7e06f257ad03c8d94e6cbd3e661e5d4c368838fa7d52b3d5b194be",
+    "ios/RailMapUITests/JourneyCompletionUITests.swift": "5696907c3541e195729d963cd0e03ffc8f4943cdd8c2352f6ed9263334fe0f37",
+    "ios/RailMapUITests/MapCameraIntentTests.swift": "fb00be110919580f71f6b00a083ecf9dc71347883453980ed9f5535942bdb7b4"
+  },
+  "latest_focused_outcomes": [
+    {
+      "test": "IntegratedSharingUITests/testBothPosterKindsPreviewInLightAndDarkWithSelectedScope",
+      "outcome": "passed",
+      "seconds": 105.428,
+      "run": "Retry"
+    },
+    {
+      "test": "JourneyCompletionUITests/testInvalidReplyCannotApplyAndEmptyReplyIsANoOp",
+      "outcome": "passed",
+      "seconds": 340.065,
+      "run": "Final"
+    },
+    {
+      "test": "JourneyCompletionUITests/testNewJourneyCanReachDateAndCompletionWithoutTrainNumber",
+      "outcome": "passed",
+      "seconds": 61.492,
+      "run": "Focused"
+    },
+    {
+      "test": "StopDateTimeUITests/testJourneyDateIsSharedAndNextDayStopTimeShowsItsCivilDate",
+      "outcome": "passed",
+      "seconds": 90.09,
+      "run": "Focused"
+    },
+    {
+      "test": "TimetableSymbolUITests/testPassAndNotViaSymbolsRemainVisibleInSourceTimetable",
+      "outcome": "passed",
+      "seconds": 327.551,
+      "run": "VisibleEvidence"
+    },
+    {
+      "test": "JourneyCompletionUITests/testIntermediateStopsAreReviewedInOrderBeforeApplyingToDraft",
+      "outcome": "passed",
+      "seconds": 725.04,
+      "run": "Final"
+    },
+    {
+      "test": "MapCameraIntentTests/testSelectedJourneyEndpointLabelsStaySeparate",
+      "outcome": "passed",
+      "seconds": 16.741,
+      "run": "VisibleEvidence"
+    },
+    {
+      "test": "TimetableQuickMatchUITests/testAutomaticLookupClearsResultsAfterDateAndServiceChanges",
+      "outcome": "passed",
+      "seconds": 299.285,
+      "run": "QuickMatch"
+    }
+  ],
+  "runs": [
+    {
+      "name": "Focused",
+      "log": "/private/tmp/jtm-native-ui-20260930.log",
+      "log_sha256": "61c4aa76d1b39bab14d7c27c193a15f2ecdd0eff836165a24ca440fbc8840c95",
+      "result_bundle": "/private/tmp/jtm-native-ui-20260930/Focused.xcresult",
+      "exit_code": 65,
+      "cases": [
+        {
+          "test": "IntegratedSharingUITests/testBothPosterKindsPreviewInLightAndDarkWithSelectedScope",
+          "outcome": "failed",
+          "seconds": 50.555
+        },
+        {
+          "test": "JourneyCompletionUITests/testInvalidReplyCannotApplyAndEmptyReplyIsANoOp",
+          "outcome": "failed",
+          "seconds": 21.503
+        },
+        {
+          "test": "JourneyCompletionUITests/testNewJourneyCanReachDateAndCompletionWithoutTrainNumber",
+          "outcome": "passed",
+          "seconds": 61.492
+        },
+        {
+          "test": "StopDateTimeUITests/testJourneyDateIsSharedAndNextDayStopTimeShowsItsCivilDate",
+          "outcome": "passed",
+          "seconds": 90.09
+        },
+        {
+          "test": "TimetableSymbolUITests/testPassAndNotViaSymbolsRemainVisibleInSourceTimetable",
+          "outcome": "failed",
+          "seconds": 26.681
+        }
+      ]
+    },
+    {
+      "name": "Retry",
+      "log": "/private/tmp/jtm-native-ui-retry-20260930.log",
+      "log_sha256": "ce46afc2ab752d47d03568ffc49b5c27acb8f589fd7151b3348ec476e341a645",
+      "result_bundle": "/private/tmp/jtm-native-ui-20260930/Retry.xcresult",
+      "exit_code": 65,
+      "cases": [
+        {
+          "test": "IntegratedSharingUITests/testBothPosterKindsPreviewInLightAndDarkWithSelectedScope",
+          "outcome": "passed",
+          "seconds": 105.428
+        },
+        {
+          "test": "JourneyCompletionUITests/testIntermediateStopsAreReviewedInOrderBeforeApplyingToDraft",
+          "outcome": "failed",
+          "seconds": 275.171
+        },
+        {
+          "test": "JourneyCompletionUITests/testInvalidReplyCannotApplyAndEmptyReplyIsANoOp",
+          "outcome": "failed",
+          "seconds": 264.269
+        },
+        {
+          "test": "MapCameraIntentTests/testSelectedJourneyEndpointLabelsStaySeparate",
+          "outcome": "failed",
+          "seconds": 37.784
+        },
+        {
+          "test": "TimetableQuickMatchUITests/testAutomaticLookupClearsResultsAfterDateAndServiceChanges",
+          "outcome": "failed",
+          "seconds": 123.004
+        },
+        {
+          "test": "TimetableSymbolUITests/testPassAndNotViaSymbolsRemainVisibleInSourceTimetable",
+          "outcome": "failed",
+          "seconds": 166.291
+        }
+      ]
+    },
+    {
+      "name": "Final",
+      "log": "/private/tmp/jtm-native-ui-final-20260930.log",
+      "log_sha256": "89ade46691d954a8585e25ac6fae3dd188a2900eeb334dc62c528d7176c26a47",
+      "result_bundle": "/private/tmp/jtm-native-ui-20260930/Final.xcresult",
+      "exit_code": 65,
+      "cases": [
+        {
+          "test": "JourneyCompletionUITests/testIntermediateStopsAreReviewedInOrderBeforeApplyingToDraft",
+          "outcome": "passed",
+          "seconds": 725.04
+        },
+        {
+          "test": "JourneyCompletionUITests/testInvalidReplyCannotApplyAndEmptyReplyIsANoOp",
+          "outcome": "passed",
+          "seconds": 340.065
+        },
+        {
+          "test": "MapCameraIntentTests/testSelectedJourneyEndpointLabelsStaySeparate",
+          "outcome": "passed",
+          "seconds": 31.093
+        },
+        {
+          "test": "TimetableQuickMatchUITests/testAutomaticLookupClearsResultsAfterDateAndServiceChanges",
+          "outcome": "failed",
+          "seconds": 205.313
+        },
+        {
+          "test": "TimetableSymbolUITests/testPassAndNotViaSymbolsRemainVisibleInSourceTimetable",
+          "outcome": "passed",
+          "seconds": 252.349
+        }
+      ]
+    },
+    {
+      "name": "QuickMatch",
+      "log": "/private/tmp/jtm-native-ui-quickmatch-20260930.log",
+      "log_sha256": "2e2b9c224f8a29cc2fe4e8695be872f7066ffaf9d6db9a7653b03c571c836185",
+      "result_bundle": "/private/tmp/jtm-native-ui-20260930/QuickMatch.xcresult",
+      "exit_code": 0,
+      "cases": [
+        {
+          "test": "TimetableQuickMatchUITests/testAutomaticLookupClearsResultsAfterDateAndServiceChanges",
+          "outcome": "passed",
+          "seconds": 299.285
+        }
+      ]
+    },
+    {
+      "name": "VisibleEvidence",
+      "log": "/private/tmp/jtm-native-ui-visible-20260930.log",
+      "log_sha256": "38e993d455c17a88eb86aafc9239a0eedfa1b751a15407576682c6fa0a393c63",
+      "result_bundle": "/private/tmp/jtm-native-ui-20260930/VisibleEvidence.xcresult",
+      "exit_code": 0,
+      "cases": [
+        {
+          "test": "MapCameraIntentTests/testSelectedJourneyEndpointLabelsStaySeparate",
+          "outcome": "passed",
+          "seconds": 16.741
+        },
+        {
+          "test": "TimetableSymbolUITests/testPassAndNotViaSymbolsRemainVisibleInSourceTimetable",
+          "outcome": "passed",
+          "seconds": 327.551
+        }
+      ]
+    }
+  ],
+  "evidence_files": {
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/final-results.txt": "c92a3ea46126e3c095cb351251d256b450a501da64065f2a26d619ac3fe50c3c",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/focused-results.txt": "2eaaf00bb558b52a7c35280d6a6ac62d7a7c86f0215ec120093149a5fc2e17e3",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/intermediate-stop-review-order.png": "fe450f69d061593454fbc1aa48ea253eb4aa86c897325c6d3a9e17d0cc40d451",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/map-dark.png": "b4fd1fe21eccb0ba6861f126fdfe009a60d4f74964125dbb14ee3f904099eb77",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/map-light.png": "6f2c9510242aa920fc076ddeeec7ef85bc107a201ee3b4d4559c499ee6be5f85",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/quickmatch-results.txt": "66e33c4538b8e0f6e40f61b63fefea325fd51e1d6df08e515e573917f979de9b",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/retry-results.txt": "bc65a859d1d51ead4b7c55d2da768733eb10885add398dadee9bb7a9662773e5",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/selected-haruka-role-labels.png": "7cccf7cd874d8430b0ad3d2844a26e3ae599b2595537b0caff9e2915a159d7d9",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/selected-haruka.png": "ca7a080d96b5300fe33432b3a3e50b7f78a20d1bfde3fd62da1c80627ed85190",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/source-symbol-hokuto.png": "30bc2c074d129523436f832b79faeef3712e27747e0d2d53f4e9904580592acb",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/source-symbol-huis-ten-bosch.png": "462fa12802bacf3c7437a7c1027ec11d809b372f5cb1f4e27bb3628443a68513",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/statistics-dark.png": "e534ce00d2e0faba7776b969a03bf830729fb361961c161356a250ce003ec200",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/statistics-light.png": "0523a792a2e36e07156236802b858d965d4ade37f94ae9237da08c33d9cd44b6",
+    "/Users/sager/.codex/visualizations/2026/09/30/01a0f373-d461-7a03-935b-422ec8d817fa/ui-validation/visibleevidence-results.txt": "55a4c2b045095a4864a5cde6a0396c7741b407063a53cb4bebee852b9b0e8574"
+  },
+  "built_app_timetable": {
+    "path": "/private/tmp/jtm-native-ui-20260930/DerivedData/Build/Products/Debug-iphonesimulator/RailMap.app/RailKit_RailCore.bundle/train-service-timetable.sqlite",
+    "sha256": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+    "canonical_source_fingerprint": "9b67f9950604dc43eee861bbc48d0661ebb58033fac963f4775dda71b7a5a5d0"
+  },
+  "timetable_owner_completed_gates": {
+    "python_tests_passed": 1005,
+    "swift_tests_passed": 926,
+    "swift_core": 611,
+    "swift_presentation": 315,
+    "verify_core_exit_code": 0,
+    "handoff": "docs/train-timetable-data-handoff-2026-09-30.md"
+  },
+  "validation_scope": [
+    "Eight distinct focused UI cases passed across runs; this is not a full UI-suite run.",
+    "Sharing previews and actual PNG exports checked for map/statistics in light/dark with Japan and 2026-07-03 scope; ticket explicitly shows all-time Totalled summary.",
+    "Shared journey date and 25:10 next-day stop time checked.",
+    "Automatic timetable matching checked without manual search; date and service changes invalidate and restore results.",
+    "Invalid AI reply and empty no-op reply checked; proposed intermediate-stop order, explicit application to draft and reopening inserted stop checked. Fixture is not source-truth or persistent-save proof.",
+    "On-screen Hokuto pass and Huis Ten Bosch not-via glyphs checked independently of passenger stop import.",
+    "Endpoint labels visible and non-overlapping in compact map sheet; test disables route lines through existing harness flags. Full selected-route overview inspected separately in selected-haruka.png."
+  ],
+  "resolved_harness_failures": [
+    "Localized nested sharing menu selection",
+    "Lazy form mounting and long journey scrolling",
+    "Blank route preventing wizard date advance",
+    "Source symbol spoken-role selector",
+    "Clipped date field lacking keyboard focus",
+    "Off-screen symbol capture and expanded search sheet covering map"
+  ],
+  "remaining_limitations": [
+    "National timetable and historical geometry/source completeness remain as documented by data owner.",
+    "Subscription AI completion retains documented web-search flow without local database preflight."
+  ],
+  "active_native_commands": [],
+  "git_actions": []
+}

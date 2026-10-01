@@ -6,7 +6,29 @@
     /tmp/jtm-bench/release/RailBench tap search # named suites only
 
 Suites: `search`, `stations`, `predicates`, `tap`, `rebuild`, `statistics`,
-`routes`, `editor`.
+`routes`, `strokes`, `editor`.
+
+`strokes` checks the prepared ride matcher against exhaustive matching on real
+Japanese package intervals, then measures index construction and queries.
+`routes` also compares scanning all part identities with the optional manifest
+identity index; both paths must produce exactly the same ordered part references.
+For existing datasets, add identities with
+`node app/scripts/build/index-dataset-manifests.mjs` and validate with `--check`.
+The precompute builder emits identities automatically for new datasets.
+
+## Ride-rendering optimization measurements (2026-09-30)
+
+An isolated `swiftc -O` comparison of the previous and current `StrokeRide`
+sources used 9,576 real JP intervals and 303 forward, reverse and offset
+queries. Both prepared implementations matched the exhaustive resolver exactly.
+Median query time fell from 14.245 ms to 1.768 ms; index preparation fell from
+66.304 ms to 42.073 ms. These are host arithmetic timings, not MapKit frame times.
+
+The release `routes` suite checked all ordered identity references for the 201
+JP parts before timing them. Scanning identities took 76.712 ms versus 0.654 ms
+for reading and decoding the manifest index, with warm filesystem caches.
+Background workload affects these numbers; compare repeated runs on the same
+machine and measure device loading separately.
 
 ## Why this is a separate package
 

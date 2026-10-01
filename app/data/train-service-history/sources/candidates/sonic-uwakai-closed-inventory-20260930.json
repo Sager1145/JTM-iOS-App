@@ -1,0 +1,884 @@
+{
+  "service_date": "2026-09-30",
+  "reviewed_at": "2026-09-30",
+  "scope": "official date-selected closed inventory",
+  "note": "URLs and train numbers manually checked against date-selected station/line tables and individual train pages. Inventory status is from local materialize before this batch; no timetable clocks copied here.",
+  "source_tables": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2828301e/",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2874200e/",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2878101/",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/sp/sp-tt_dep.cgi/2878100e/",
+    "https://timetable.jr-odekake.net/line-timetable/2469?day=30&month=9&year=2026",
+    "https://timetable.jr-odekake.net/line-timetable/2470?day=30&month=9&year=2026"
+  ],
+  "services": {
+    "sonic": [
+      {
+        "public_number": "1",
+        "train_number": "3001M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013201.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "2",
+        "train_number": "3002M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013301.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "3",
+        "train_number": "3003M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013401.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "4",
+        "train_number": "3004M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013501.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "5",
+        "train_number": "3005M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013601.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "6",
+        "train_number": "3006M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013701.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "7",
+        "train_number": "3007M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013801.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "8",
+        "train_number": "3008M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00013901.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "9",
+        "train_number": "3009M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238201.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "10",
+        "train_number": "3010M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0006/00068901.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "11",
+        "train_number": "3011M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014001.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "12",
+        "train_number": "3012M",
+        "origin": "佐伯",
+        "destination": "博多",
+        "category": "saiki_hakata",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117801.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "13",
+        "train_number": "3013M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238301.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "14",
+        "train_number": "3014M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117401.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "15",
+        "train_number": "3015M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014101.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "16",
+        "train_number": "3016M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117501.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "17",
+        "train_number": "3017M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238401.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "18",
+        "train_number": "3018M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014201.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "19",
+        "train_number": "3019M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014301.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "20",
+        "train_number": "3020M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014401.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "21",
+        "train_number": "3021M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238501.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "22",
+        "train_number": "3022M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014501.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "23",
+        "train_number": "3023M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014601.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "24",
+        "train_number": "3024M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014701.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "25",
+        "train_number": "3025M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238601.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "26",
+        "train_number": "3026M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238701.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "27",
+        "train_number": "3027M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014801.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "28",
+        "train_number": "3028M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00014901.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "29",
+        "train_number": "3029M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0019/00193001.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "30",
+        "train_number": "3030M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238801.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "31",
+        "train_number": "3031M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015001.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "32",
+        "train_number": "3032M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015101.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "33",
+        "train_number": "3033M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015201.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "34",
+        "train_number": "3034M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00238901.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "35",
+        "train_number": "3035M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015301.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "36",
+        "train_number": "3036M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015401.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "37",
+        "train_number": "3037M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015501.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "38",
+        "train_number": "3038M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00239001.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "39",
+        "train_number": "3039M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015601.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "40",
+        "train_number": "3040M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015701.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "41",
+        "train_number": "3041M",
+        "origin": "博多",
+        "destination": "佐伯",
+        "category": "extended_to_saiki",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015801.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "42",
+        "train_number": "3042M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00239101.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "43",
+        "train_number": "3043M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00015901.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "44",
+        "train_number": "3044M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016001.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "45",
+        "train_number": "3045M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016101.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "46",
+        "train_number": "3046M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0019/00193101.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "47",
+        "train_number": "3047M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016201.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "48",
+        "train_number": "3048M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016301.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "49",
+        "train_number": "3049M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016401.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "50",
+        "train_number": "3050M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016501.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "51",
+        "train_number": "3051M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117101.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "52",
+        "train_number": "3052M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016601.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "53",
+        "train_number": "3053M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016701.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "54",
+        "train_number": "3054M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016801.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "55",
+        "train_number": "3055M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00016901.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "56",
+        "train_number": "3056M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00017001.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "57",
+        "train_number": "3057M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00017101.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "58",
+        "train_number": "3058M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0001/00017201.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "59",
+        "train_number": "3059M",
+        "origin": "博多",
+        "destination": "大分",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0006/00068701.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "60",
+        "train_number": "3060M",
+        "origin": "大分",
+        "destination": "博多",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0006/00068801.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "101",
+        "train_number": "3091M",
+        "origin": "中津",
+        "destination": "大分",
+        "category": "nakatsu_oita",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117201.html?t=2878101&d=20260930"
+      },
+      {
+        "public_number": "102",
+        "train_number": "3092M",
+        "origin": "大分",
+        "destination": "中津",
+        "category": "oita_nakatsu",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117701.html?t=2874200e&d=20260930"
+      },
+      {
+        "public_number": "201",
+        "train_number": "3081M",
+        "origin": "博多",
+        "destination": "中津",
+        "category": "hakata_nakatsu",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117301.html?t=2828301e&d=20260930"
+      },
+      {
+        "public_number": "202",
+        "train_number": "3082M",
+        "origin": "中津",
+        "destination": "博多",
+        "category": "nakatsu_hakata",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117601.html?t=2878100e&d=20260930"
+      }
+    ],
+    "uwakai": [
+      {
+        "public_number": "1",
+        "train_number": "1051D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1221?date=20260930"
+      },
+      {
+        "public_number": "2",
+        "train_number": "1052D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1231?date=20260930"
+      },
+      {
+        "public_number": "3",
+        "train_number": "1053D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1241?date=20260930"
+      },
+      {
+        "public_number": "4",
+        "train_number": "1054D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1251?date=20260930"
+      },
+      {
+        "public_number": "5",
+        "train_number": "1055D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1261?date=20260930"
+      },
+      {
+        "public_number": "6",
+        "train_number": "1056D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1271?date=20260930"
+      },
+      {
+        "public_number": "7",
+        "train_number": "1057D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1281?date=20260930"
+      },
+      {
+        "public_number": "8",
+        "train_number": "1058D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1291?date=20260930"
+      },
+      {
+        "public_number": "9",
+        "train_number": "1059D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1301?date=20260930"
+      },
+      {
+        "public_number": "10",
+        "train_number": "1060D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1341?date=20260930"
+      },
+      {
+        "public_number": "11",
+        "train_number": "1061D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1361?date=20260930"
+      },
+      {
+        "public_number": "12",
+        "train_number": "1062D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1371?date=20260930"
+      },
+      {
+        "public_number": "13",
+        "train_number": "1063D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "normalized",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1391?date=20260930"
+      },
+      {
+        "public_number": "14",
+        "train_number": "1064D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1401?date=20260930"
+      },
+      {
+        "public_number": "15",
+        "train_number": "1065D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1411?date=20260930"
+      },
+      {
+        "public_number": "16",
+        "train_number": "1066D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1421?date=20260930"
+      },
+      {
+        "public_number": "17",
+        "train_number": "1067D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1431?date=20260930"
+      },
+      {
+        "public_number": "18",
+        "train_number": "1068D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1441?date=20260930"
+      },
+      {
+        "public_number": "19",
+        "train_number": "1069D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1451?date=20260930"
+      },
+      {
+        "public_number": "20",
+        "train_number": "1070D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1521?date=20260930"
+      },
+      {
+        "public_number": "21",
+        "train_number": "1071D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1541?date=20260930"
+      },
+      {
+        "public_number": "22",
+        "train_number": "1072D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1551?date=20260930"
+      },
+      {
+        "public_number": "23",
+        "train_number": "1073D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1571?date=20260930"
+      },
+      {
+        "public_number": "24",
+        "train_number": "1074D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1581?date=20260930"
+      },
+      {
+        "public_number": "25",
+        "train_number": "1075D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1591?date=20260930"
+      },
+      {
+        "public_number": "26",
+        "train_number": "1076D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1601?date=20260930"
+      },
+      {
+        "public_number": "27",
+        "train_number": "1077D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/65591?date=20260930"
+      },
+      {
+        "public_number": "28",
+        "train_number": "1078D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/1611?date=20260930"
+      },
+      {
+        "public_number": "29",
+        "train_number": "1079D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/90151?date=20260930"
+      },
+      {
+        "public_number": "30",
+        "train_number": "1080D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/104411?date=20260930"
+      },
+      {
+        "public_number": "31",
+        "train_number": "1081D",
+        "origin": "松山",
+        "destination": "宇和島",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/88911?date=20260930"
+      },
+      {
+        "public_number": "32",
+        "train_number": "1082D",
+        "origin": "宇和島",
+        "destination": "松山",
+        "category": "regular",
+        "inventory_status": "missing_as_of_audit",
+        "detail_url": "https://timetable.jr-odekake.net/train-timetable/125271?date=20260930"
+      }
+    ]
+  }
+}

@@ -49,7 +49,7 @@ struct TrainServiceCatalogChecklistTests {
         #expect(Set(services.map(\.id)).count == services.count, "service ids must be unique")
     }
 
-    @Test("every catalog service resolves, classifies, and has its logo",
+    @Test("every catalog service resolves, classifies, and validates any configured logo",
           arguments: TrainServiceBranding.services.map(\.id))
     func serviceChecklist(serviceID: String) throws {
         let service = try #require(

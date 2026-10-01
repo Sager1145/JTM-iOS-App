@@ -3152,6 +3152,234 @@ class DisplayNetworkHistoryTests(unittest.TestCase):
             self.assertEqual(report["displayFragmentHits"], 1)
             self.assertIsNone(report["unmatchedReason"])
 
+    def test_history_targets_keep_section_and_station_timelines_separate(self):
+        """Rich events emit separate section and station bounds. Repeated
+        bounds for one target form its interval without leaking into the
+        other target, and station-only matches do not require line geometry.
+        """
+        line_key = "jp|targeted"
+        fragments = [{
+            "lineKey": line_key,
+            "parts": [[[139.0, 35.0], [139.1, 35.1]]],
+            "partLengths": [1.0],
+        }]
+        stations = [{
+            "id": "targeted:a", "lineKey": line_key,
+            "lon": 139.0, "lat": 35.0,
+        }]
+        metadata = {line_key: {
+            "name": "Targeted Line", "operator": "Test Rail",
+        }}
+        selector = {
+            "line_name": "Targeted Line", "operator": "Test Rail",
+            "bbox": [138.9, 34.9, 139.2, 35.2],
+        }
+        overlay = {"retirements": [
+            {
+                "history_id": "section.start",
+                "match": {**selector, "targets": ["sections"]},
+                "valid_from": "2000-01-01",
+            },
+            {
+                "history_id": "section.end",
+                "match": {**selector, "targets": ["sections"]},
+                "valid_to": "2010-01-01",
+            },
+            {
+                "history_id": "station.start",
+                "match": {**selector, "targets": ["stations"]},
+                "valid_from": "2001-01-01",
+            },
+            {
+                "history_id": "station.end",
+                "match": {**selector, "targets": ["stations"]},
+                "valid_to": "2009-01-01",
+            },
+        ]}
+
+        stamps, station_stamps, reports = display_network._stamp_overlay_parts(
+            "jp", overlay, fragments, stations, metadata)
+
+        self.assertEqual(stamps, [[{
+            "kind": "relocatedNew", "validFrom": "2000-01-01",
+            "validTo": "2010-01-01", "historyId": "section.start",
+        }]])
+        self.assertEqual(station_stamps, {"targeted:a": {
+            "kind": "relocatedNew", "validFrom": "2001-01-01",
+            "validTo": "2009-01-01", "historyId": "station.start",
+        }})
+        by_id = {report["historyId"]: report for report in reports}
+        self.assertEqual(by_id["section.start"]["stationHits"], 0)
+        self.assertEqual(by_id["section.start"]["displayFragmentHits"], 1)
+        self.assertEqual(by_id["station.start"]["solvedIntervalHits"], 0)
+        self.assertEqual(by_id["station.start"]["displayFragmentHits"], 0)
+        self.assertEqual(by_id["station.start"]["stationHits"], 1)
+        self.assertIsNone(by_id["station.start"]["expectedAffectedLength"])
+        self.assertIsNone(by_id["station.start"]["actualAffectedLength"])
+        self.assertTrue(all(
+            report["reviewStatus"] == "matched" for report in reports))
+
+    def test_missing_closed_line_uses_surveyed_solver_geometry_fallback(self):
+        overlay = {
+            "schema_version": "1", "revision": "test",
+            "sections": [], "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.closed-fallback",
+                "match": {
+                    "line_name": "Missing Line", "operator": "Test Rail",
+                    "bbox": [138.9, 34.9, 139.2, 35.2],
+                },
+                "valid_to": "2026-04-01",
+            }],
+        }
+        source_section = {
+            "type": "Feature",
+            "properties": {"N02_003": "Missing Line", "N02_004": "Test Rail"},
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [[139.0, 35.0], [139.1, 35.1]],
+            },
+        }
+        source_station = {
+            "type": "Feature",
+            "properties": {
+                "line_name": "Missing Line", "operator": "Test Rail",
+                "station_name": "Fallback Station", "n02_station_code": "demo-1",
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [[139.0, 35.0], [139.001, 35.001]],
+            },
+        }
+        with tempfile.TemporaryDirectory() as root:
+            history = Path(root)
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            (history / "rail-sections.json").write_text(json.dumps({
+                "type": "FeatureCollection", "features": [source_section],
+            }))
+            (history / "stations.json").write_text(json.dumps({
+                "type": "FeatureCollection", "features": [source_station],
+            }))
+
+            result = display_network.build_region_history(
+                "jp", history, [], [], {})
+
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result["lines"]), 1)
+        line = result["lines"][0]
+        self.assertEqual(line["historyId"], "jp.demo.closed-fallback")
+        self.assertEqual(line["kind"], "retiredInPlace")
+        self.assertEqual(line["parts"], [{
+            "coordinates": [[139.0, 35.0], [139.1, 35.1]],
+            "kind": "retiredInPlace", "validTo": "2026-04-01",
+        }])
+        self.assertEqual(len(result["stations"]), 1)
+        self.assertEqual(result["stations"][0]["name"], "Fallback Station")
+        self.assertEqual(
+            result["stations"][0]["lineHistoryId"], "jp.demo.closed-fallback")
+        self.assertEqual(result["stations"][0]["kind"], "retiredInPlace")
+        report = result["matchReport"][0]
+        self.assertEqual(report["reviewStatus"], "solver_geometry_fallback")
+        self.assertEqual(report["matchSource"], "solver_geometry_fallback")
+        self.assertEqual(report["solvedIntervalHits"], 0)
+        self.assertEqual(report["displayFragmentHits"], 0)
+        self.assertEqual(report["stationHits"], 0)
+        self.assertEqual(report["solverFallbackSectionHits"], 1)
+        self.assertEqual(report["solverFallbackStationHits"], 1)
+        self.assertIsNone(report["unmatchedReason"])
+
+    def test_station_only_solver_fallback_does_not_add_line_geometry(self):
+        overlay = {
+            "schema_version": "1", "revision": "test",
+            "sections": [], "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.station-only-fallback",
+                "match": {
+                    "line_name": "Missing Line", "operator": "Test Rail",
+                    "bbox": [138.9, 34.9, 139.2, 35.2],
+                    "targets": ["stations"],
+                },
+                "valid_to": "2026-04-01",
+            }],
+        }
+        section = {
+            "type": "Feature",
+            "properties": {"N02_003": "Missing Line", "N02_004": "Test Rail"},
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [[139.0, 35.0], [139.1, 35.1]],
+            },
+        }
+        station = {
+            "type": "Feature",
+            "properties": {
+                "line_name": "Missing Line", "operator": "Test Rail",
+                "station_name": "Station Only", "n02_station_code": "demo-2",
+            },
+            "geometry": {"type": "Point", "coordinates": [139.0, 35.0]},
+        }
+        with tempfile.TemporaryDirectory() as root:
+            history = Path(root)
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            (history / "rail-sections.json").write_text(json.dumps({
+                "type": "FeatureCollection", "features": [section],
+            }))
+            (history / "stations.json").write_text(json.dumps({
+                "type": "FeatureCollection", "features": [station],
+            }))
+
+            result = display_network.build_region_history(
+                "jp", history, [], [], {})
+
+        self.assertEqual(result["lines"], [])
+        self.assertEqual(len(result["stations"]), 1)
+        self.assertEqual(result["stations"][0]["name"], "Station Only")
+        report = result["matchReport"][0]
+        self.assertEqual(report["reviewStatus"], "solver_geometry_fallback")
+        self.assertEqual(report["solverFallbackSectionHits"], 0)
+        self.assertEqual(report["solverFallbackStationHits"], 1)
+
+    def test_missing_opening_does_not_use_solver_geometry_fallback(self):
+        overlay = {
+            "schema_version": "1", "revision": "test",
+            "sections": [], "stations": [],
+            "retirements": [{
+                "history_id": "jp.demo.opening-missing",
+                "match": {
+                    "line_name": "Missing Line", "operator": "Test Rail",
+                    "bbox": [138.9, 34.9, 139.2, 35.2],
+                    "targets": ["sections"],
+                },
+                "valid_from": "2020-01-01",
+            }],
+        }
+        source = {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature",
+                "properties": {
+                    "N02_003": "Missing Line", "N02_004": "Test Rail",
+                },
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [[139.0, 35.0], [139.1, 35.1]],
+                },
+            }],
+        }
+        with tempfile.TemporaryDirectory() as root:
+            history = Path(root)
+            (history / "rail-history.json").write_text(json.dumps(overlay))
+            (history / "rail-sections.json").write_text(json.dumps(source))
+
+            result = display_network.build_region_history(
+                "jp", history, [], [], {})
+
+        self.assertEqual(result["lines"], [])
+        report = result["matchReport"][0]
+        self.assertEqual(report["reviewStatus"], "incomplete")
+        self.assertEqual(report["unmatchedReason"], "display geometry absent")
+        self.assertNotIn("matchSource", report)
+
     def test_missing_display_line_is_incomplete_not_not_applicable(self):
         """留萌 is in the retirement list and absent from this region's
         fragments. The build still returns. That gap is incomplete."""
@@ -3200,6 +3428,8 @@ class DisplayNetworkHistoryTests(unittest.TestCase):
             self.assertEqual(report["solvedIntervalHits"], 0)
             self.assertEqual(report["displayFragmentHits"], 0)
             self.assertEqual(report["stationHits"], 0)
+            self.assertEqual(report["solverFallbackSectionHits"], 0)
+            self.assertEqual(report["solverFallbackStationHits"], 0)
             self.assertIsNone(report["expectedAffectedLength"])
             self.assertIsNone(report["actualAffectedLength"])
             logged = stderr.getvalue()

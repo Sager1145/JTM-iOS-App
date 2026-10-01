@@ -236,7 +236,11 @@ function dedupeStationFeatures(features) {
   const seen = new Set();
   const candidates = [];
   (features || []).forEach((feature) => {
-    const signature = `${stationCode(feature) || ""}|${stationName(feature) || ""}|${stationLineName(feature) || ""}|${stationOperator(feature) || ""}|${JSON.stringify(feature.geometry?.coordinates?.[0] || [])}`;
+    // Historical overlays can carry the same physical station in disjoint
+    // service periods. Keep those variants until the route's ride-date filter
+    // runs; otherwise the first (usually expired) period hides every later one.
+    const bounds = railServiceBounds(feature?.properties);
+    const signature = `${stationCode(feature) || ""}|${stationName(feature) || ""}|${stationLineName(feature) || ""}|${stationOperator(feature) || ""}|${JSON.stringify(feature.geometry?.coordinates?.[0] || [])}|${bounds.valid_from || ""}|${bounds.valid_to || ""}`;
     if (seen.has(signature)) return;
     seen.add(signature);
     candidates.push(feature);

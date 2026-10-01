@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Official train detail prints limited express family and public number.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "First and last passenger rows are printed.", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Names match unique current station source codes.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "8 published passenger calls, excluding レ rows.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Printed arrival and departure sides are preserved; missing sides remain null.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Official detail prints 1053D.", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Only the directly listed 2026-09-30 occurrence is emitted.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Publishing company is not an ordered operator-boundary proof.", "status": "unknown"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "No dated ordered physical line IDs are established.", "status": "unknown"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-shikoku.uwakai.3.2026-09-30", "entity_type": "trip", "notes": "Official page is pinned for verification; reuse permission unresolved.", "status": "partial"}

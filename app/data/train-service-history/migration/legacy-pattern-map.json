@@ -1,0 +1,2090 @@
+[
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hida-nagoya-takayama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hida"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hida-nagoya-toyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hida"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hida-osaka-takayama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hida"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shinano-nagoya-nagano",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shinano"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nanki-nagoya-kiikatsuura",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nanki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fujikawa-shizuoka-kofu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fujikawa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nanpu-okayama-kochi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nanpu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shimanto-takamatsu-kochi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shimanto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tsurugisan-tokushima-awaikeda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tsurugisan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "uzushio-takamatsu-tokushima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "uzushio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "uzushio-okayama-tokushima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "uzushio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "muroto-tokushima-mugi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "muroto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "azusa-shinjuku-matsumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "azusa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "azusa-chiba-matsumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "azusa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "azusa-minamiotari",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "azusa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kaiji-shinjuku-kofu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kaiji"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fuji-excursion-shinjuku-kawaguchiko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fuji-excursion"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hachioji-tokyo-hachioji",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hachioji"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ome-tokyo-ome",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ome"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hitachi-shinagawa-iwaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hitachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hitachi-shinagawa-sendai",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hitachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tokiwa-shinagawa-katsuta",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tokiwa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tokiwa-shinagawa-takahagi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tokiwa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "odoriko-tokyo-izukyushimoda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "odoriko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "odoriko-tokyo-shuzenji",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "odoriko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "saphir-odoriko-tokyo-izukyushimoda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "saphir-odoriko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shonan-tokyo-odawara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shonan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shonan-shinjuku-odawara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shonan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-tokyo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-shinjuku",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-ikebukuro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-omiya",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-yokohama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "narita-express-ofuna",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "narita-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kamakura-yoshikawaminami-kamakura",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kamakura"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "wakashio-tokyo-awakamogawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "wakashio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shinjuku-wakashio-shinjuku-awakamogawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shinjuku-wakashio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sazanami-tokyo-kimitsu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sazanami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shinjuku-sazanami-shinjuku-tateyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shinjuku-sazanami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shiosai-tokyo-choshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shiosai"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "akagi-ueno-takasaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "akagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kusatsu-shima-ueno-naganoharakusatsuguchi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kusatsu-shima"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nikko-shinjuku-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nikko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kinugawa-shinjuku-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kinugawa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "spacia-nikko-shinjuku-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "spacia-nikko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "spacia-kinugawa-shinjuku-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "spacia-kinugawa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "inaho-niigata-akita",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "inaho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirayuki-niigata-joetsumyoko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirayuki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tsugaru-akita-aomori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tsugaru"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-tsugaru-akita-aomori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-tsugaru"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hokuto-hakodate-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hokuto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "suzuran-muroran-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "suzuran"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ozora-sapporo-kushiro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ozora"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tokachi-sapporo-obihiro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tokachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kamui-sapporo-asahikawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kamui"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "lilac-sapporo-asahikawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "lilac"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "soya-sapporo-wakkanai",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "soya"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sarobetsu-asahikawa-wakkanai",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sarobetsu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "okhotsk-sapporo-abashiri",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "okhotsk"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "taisetsu-asahikawa-abashiri",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "taisetsu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "niseko-sapporo-hakodate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "niseko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sonic-hakata-oita",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sonic"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sonic-hakata-saiki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sonic"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nichirin-oita-miyazakikuko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nichirin"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nichirin-seagaia-hakata-miyazakikuko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nichirin-seagaia"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hyuga-nobeoka-miyazakikuko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hyuga"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kirishima-miyazaki-kagoshimachuo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kirishima"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "relay-kamome-hakata-takeoonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "relay-kamome"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "midori-hakata-sasebo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "midori"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "huis-ten-bosch-hakata-huistenbosch",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "huis-ten-bosch"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kasasagi-mojiko-hizenkashima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kasasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kirameki-mojiko-hakata",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kirameki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ariake-omuta-hakata",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ariake"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kaio-nogata-hakata",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kaio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yufu-hakata-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yufu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yufuin-no-mori-hakata-yufuin",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yufuin-no-mori"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yufuin-no-mori-hakata-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yufuin-no-mori"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kyushu-odan-tokkyu-beppu-kumamoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kyushu-odan-tokkyu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "aso-kumamoto-miyaji",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "aso"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "asoboy-kumamoto-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "asoboy"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kawasemi-yamasemi-kumamoto-miyaji",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kawasemi-yamasemi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "umisachi-yamasachi-miyazaki-nango",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "umisachi-yamasachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "36-plus-3-red-hakata-kagoshima-chuo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "36-plus-3"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "36-plus-3-black-kagoshima-chuo-miyazaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "36-plus-3"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "36-plus-3-green-miyazaki-airport-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "36-plus-3"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "36-plus-3-blue-oita-hakata",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "36-plus-3"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "36-plus-3-gold-hakata-sasebo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "36-plus-3"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "a-ressha-de-iko-kumamoto-misumi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "a-ressha-de-iko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "futatsuboshi-4047-takeo-onsen-nagasaki-am",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "futatsuboshi-4047"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "futatsuboshi-4047-nagasaki-takeo-onsen-pm",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "futatsuboshi-4047"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "aru-ressha-hakata-yufuin",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "aru-ressha"
+  },
+  {
+    "derivedPatternIds": [
+      "tt-ibusuki-no-tamatebako-53c75ff917d0"
+    ],
+    "legacyPatternId": "ibusuki-no-tamatebako-kagoshima-chuo-ibusuki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ibusuki-no-tamatebako"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kanpachi-ichiroku-hakata-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kanpachi-ichiroku"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "isaburo-shinpei-kumamoto-yoshimatsu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "isaburo-shinpei"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "thunderbird-osaka-tsuruga",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "thunderbird"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirasagi-nagoya-tsuruga",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirasagi-maibara-tsuruga",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kuroshio-shinosaka-shirahama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kuroshio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kuroshio-shinosaka-shingu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kuroshio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kounotori-shinosaka-kinosaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kounotori"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kinosaki-kyoto-kinosaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kinosaki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hashidate-kyoto-amanohashidate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hashidate"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hashidate-kyoto-toyooka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hashidate"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "maizuru-kyoto-higashimaizuru",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "maizuru"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hamakaze-osaka-hamasaka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hamakaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hamakaze-osaka-tottori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hamakaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hakuto-kyoto-kurayoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hakuto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-inaba-okayama-tottori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-inaba"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yakumo-okayama-izumoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yakumo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "haruka-kyoto-kansai-airport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "haruka"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "haruka-yasu-kansai-airport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "haruka"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-oki-tottori-shinyamaguchi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-oki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-matsukaze-tottori-masuda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-matsukaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rakuraku-harima-kyoto-aboshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rakuraku-harima"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rakuraku-biwako-osaka-maibara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rakuraku-biwako"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rakuraku-yamato-shinosaka-nara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rakuraku-yamato"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rakuraku-yamato-shinosaka-nara-2025",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rakuraku-yamato"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "dinostar-fukui-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "dinostar"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "noto-kagaribi-kanazawa-wakuraonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "noto-kagaribi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "west-express-ginga-sanin",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "west-express-ginga"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "west-express-ginga-sanyo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "west-express-ginga"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "west-express-ginga-kinan",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "west-express-ginga"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hanaakari-current",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hanaakari"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "mahoroba-osaka-nara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "mahoroba"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sunrise-izumo-tokyo-izumoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sunrise-izumo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sunrise-seto-tokyo-takamatsu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sunrise-seto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "mizukaze-sanin-course",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "twilight-express-mizukaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "mizukaze-sanyo-course",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "twilight-express-mizukaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "inaji-toyohashi-iida",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "inaji"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shiokaze-okayama-matsuyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shiokaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ishizuchi-takamatsu-matsuyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ishizuchi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ashizuri-kochi-nakamura",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ashizuri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ashizuri-kochi-sukumo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ashizuri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "uwakai-matsuyama-uwajima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "uwakai"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "morning-exp-iyosaijo-takamatsu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "morning-exp"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "morning-exp-niihama-matsuyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "morning-exp"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hokuto-hakodate-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hokuto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-ozora-sapporo-kushiro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-ozora"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-tokachi-sapporo-obihiro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-tokachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-kamui-sapporo-asahikawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-kamui"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-soya-sapporo-wakkanai",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-soya"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "asahiyama-zoo-sapporo-asahikawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "asahiyama-zoo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "furano-lavender-express-sapporo-furano",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "furano-lavender-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hakucho-hachinohe-hakodate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hakucho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hakucho-shinaomori-hakodate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hakucho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakucho-hachinohe-hakodate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakucho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakucho-shinaomori-hakodate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakucho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hokutosei-ueno-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hokutosei"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "cassiopeia-ueno-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "cassiopeia"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hitachi-ueno-iwaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hitachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hitachi-ueno-sendai",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hitachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fresh-hitachi-ueno-katsuta",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fresh-hitachi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-azusa-shinjuku-matsumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-azusa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-view-odoriko-tokyo-izukyushimoda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-view-odoriko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-view-odoriko-ikebukuro-izukyushimoda",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-view-odoriko"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ayame-tokyo-kashimajingu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ayame"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "minakami-ueno-minakami",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "minakami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kusatsu-ueno-naganoharakusatsuguchi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kusatsu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kusatsu-ueno-manzakazawaguchi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kusatsu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "swallow-akagi-ueno-takasaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "swallow-akagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "akagi-ueno-maebashi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "akagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "akebono-ueno-aomori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "akebono"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hokuriku-ueno-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hokuriku"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hokuetsu-niigata-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hokuetsu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakutaka-echigoyuzawa-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakutaka-zairaisen"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakutaka-echigoyuzawa-fukui",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakutaka-zairaisen"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakutaka-echigoyuzawa-wakuraonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakutaka-zairaisen"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tsugaru-hachinohe-hirosaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tsugaru"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kamoshika-akita-aomori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kamoshika"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "inaho-niigata-sakata",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "inaho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sazanami-tokyo-tateyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sazanami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hama-kaiji-yokohama-matsumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hama-kaiji"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "raicho-osaka-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "raicho"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "thunderbird-osaka-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "thunderbird"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "thunderbird-osaka-toyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "thunderbird"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "thunderbird-osaka-uozu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "thunderbird"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "thunderbird-osaka-wakuraonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "thunderbird"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirasagi-nagoya-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirasagi-nagoya-toyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shirasagi-maibara-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shirasagi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "twilight-express-osaka-sapporo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "twilight-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nihonkai-osaka-aomori",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nihonkai"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kitakinki-shinosaka-kinosakionsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kitakinki"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "monju-shinosaka-amanohashidate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "monju"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tanba-kyoto-fukuchiyama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tanba"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tango-explorer-shinosaka-toyooka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tango-explorer"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-kuroshio-kyoto-shingu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-kuroshio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-kuroshio-kyoto-shirahama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-kuroshio"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ocean-arrow-kyoto-shingu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ocean-arrow"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ocean-arrow-kyoto-shirahama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ocean-arrow"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "biwako-express-osaka-maibara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "biwako-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ohayo-express-fukui-kanazawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ohayo-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "oyasumi-express-kanazawa-fukui",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "oyasumi-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hanayome-noren-kanazawa-wakuraonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hanayome-noren"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shinano-osaka-nagano",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shinano"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nanpu-okayama-nakamura",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nanpu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "nanpu-okayama-sukumo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "nanpu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "muroto-tokushima-kaifu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "muroto"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "home-express-anan-tokushima-anan",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "home-express-anan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kamome-hakata-nagasaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kamome"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "relay-tsubame-hakata-shinyatsushiro",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "relay-tsubame"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ariake-hakata-kumamoto-pre2011",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ariake"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ariake-hakata-nagasu-2011",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ariake"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yufu-dx-hakata-beppu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yufu-dx"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kumagawa-kumamoto-hitoyoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kumagawa"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sendai-express-sendai-kagoshimachuo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sendai-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hayato-no-kaze-yoshimatsu-kagoshimachuo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hayato-no-kaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "dream-nichirin-hakata-miyazakikuko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "dream-nichirin"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kyushu-odan-tokkyu-beppu-hitoyoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kyushu-odan-tokkyu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "asoboy-kumamoto-miyaji",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "asoboy"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kawasemi-yamasemi-kumamoto-hitoyoshi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kawasemi-yamasemi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ibusuki-no-tamatebako-kagoshimachuo-ibusuki-2011",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ibusuki-no-tamatebako"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "seaboldt-sasebo-nagasaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "seaboldt"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hakone-shinjuku-hakoneyumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hakone"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "super-hakone-shinjuku-hakoneyumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "super-hakone"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sagami-shinjuku-odawara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sagami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "enoshima-shinjuku-katasenoshima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "enoshima"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "metro-hakone-kitasenju-hakoneyumoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "metro-hakone"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "metro-enoshima-kitasenju-katasenoshima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "metro-enoshima"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "metro-sagami-kitasenju-honatsugi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "metro-sagami"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "morningway-odawara-shinjuku",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "morningway"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "homeway-shinjuku-odawara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "homeway"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "homeway-shinjuku-katasenoshima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "homeway"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "metro-morningway-honatsugi-kitasenju",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "metro-morningway"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "metro-homeway-kitasenju-honatsugi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "metro-homeway"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fujisan-shinjuku-gotemba",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fujisan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "asagiri-shinjuku-numazu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "asagiri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "asagiri-shinjuku-gotemba",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "asagiri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "skyliner-keiseiueno-naritaairport-access",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "skyliner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "skyliner-keiseiueno-naritaairport-main",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "skyliner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "morning-liner-naritaairport-keiseiueno",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "morning-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "evening-liner-keiseiueno-naritaairport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "evening-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "city-liner-keiseiueno-naritaairport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "city-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "chichibu-ikebukuro-seibuchichibu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "chichibu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "musashi-ikebukuro-hanno",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "musashi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "koedo-seibushinjuku-honkawagoe",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "koedo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kegon-asakusa-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kegon"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kinu-asakusa-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kinu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ryomo-asakusa-akagi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ryomo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ryomo-asakusa-ota",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ryomo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ryomo-asakusa-isesaki",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ryomo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ryomo-asakusa-kuzu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ryomo"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "spacia-x-asakusa-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "spacia-x"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "spacia-x-asakusa-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "spacia-x"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "revaty-kegon-asakusa-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "revaty"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "revaty-kinu-asakusa-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "revaty"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "revaty-aizu-asakusa-aizutajima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "revaty"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "revaty-ryomo-asakusa-akagi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "revaty"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shimotsuke-asakusa-tobuutsunomiya",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shimotsuke"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kirifuri-asakusa-tobunikko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kirifuri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kirifuri-asakusa-minamikurihashi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kirifuri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yunosato-asakusa-kinugawaonsen",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yunosato"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "urban-park-liner-asakusa-omiya",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "urban-park-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "urban-park-liner-omiya-kashiwa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "urban-park-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "skytree-liner-asakusa-kasukabe",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "skytree-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fujisan-tokkyu-otsuki-kawaguchiko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fujisan-tokkyu"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fujisan-view-express-otsuki-kawaguchiko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fujisan-view-express"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "yukemuri-nagano-yudanaka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "yukemuri"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "snow-monkey-nagano-yudanaka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "snow-monkey"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "hinotori-namba-nagoya",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "hinotori"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shimakaze-namba-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shimakaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shimakaze-kyoto-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shimakaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shimakaze-nagoya-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shimakaze"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "urban-liner-namba-nagoya",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "urban-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ise-shima-liner-namba-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ise-shima-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ise-shima-liner-nagoya-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ise-shima-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ise-shima-liner-kyoto-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ise-shima-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "sakura-liner-abenobashi-yoshino",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "sakura-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "ao-no-symphony-abenobashi-yoshino",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "ao-no-symphony"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-meihan-ko",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-meihan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-meihan-otsu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-meihan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-hanise-namba-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-hanise"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-meii-nagoya-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-meii"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-kyoise-kyoto-kashikojima",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-kyoise"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-keina-kyoto-nara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-keina"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-kyokashi-kyoto-kashiharajingumae",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-kyokashi"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-hanna-namba-nara",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-hanna"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kintetsu-yoshino-abenobashi-yoshino",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kintetsu-yoshino"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rapit-alpha-namba-kansai-airport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rapit"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rapit-beta-namba-kansai-airport",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rapit-beta"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "southern-namba-wakayamashi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "southern"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "koya-namba-gokurakubashi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "koya"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "rinkan-namba-hashimoto",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "rinkan"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "semboku-liner-namba-izumichuo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "semboku-liner"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "mu-sky-meitetsu-gifu-centrair",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "mu-sky"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "mu-sky-shin-unuma-centrair",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "mu-sky"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kyo-train-garaku-umeda-kawaramachi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kyo-train"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "kyo-train-original-umeda-kawaramachi",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "kyo-train-original"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tango-relay-amanohashidate-toyooka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tango-relay"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tango-discovery-kyoto-amanohashidate",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tango-discovery"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "tango-discovery-kyoto-toyooka",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "tango-discovery"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shikoku-mannaka-sennen-monogatari"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "shikoku-tosa-jidai-no-yoake-kochi-kubokawa",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "shikoku-tosa-jidai-no-yoake"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "iyonada-monogatari-matsuyama-iyo-ozu",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "iyonada-monogatari"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "iyonada-monogatari-matsuyama-yawatahama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "iyonada-monogatari"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "midnight-exp-takamatsu-iyo-saijo",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "midnight-exp"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "midnight-exp-matsuyama-niihama",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "midnight-exp"
+  },
+  {
+    "derivedPatternIds": [],
+    "legacyPatternId": "fuji-tokyo-oita",
+    "migrationStatus": "pending_evidence",
+    "reason": "Legacy record retained; exact trip/date/route coverage is not yet certified.",
+    "serviceId": "fuji"
+  }
+]

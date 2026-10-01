@@ -143,6 +143,98 @@ struct JourneyCompletionTests {
         #expect(result.stops.map(\.rideSegment) == original.stops.map(\.rideSegment))
     }
 
+    @Test("a sourced timetable expands two endpoints with ordered scheduled calls")
+    func sourcedIntermediateStops() throws {
+        var original = Self.train()
+        original.stops[1].arrival = "10:00"
+        let result = try #require(JourneyCompletion.merge(
+            response: Self.response(body: """
+            "company": "Example Rail",
+            "intermediate_stops": [
+              {"after_index": 0, "name": "Beta", "arrival": "09:20", "departure": "09:22", "platform_number": 2},
+              {"after_index": 0, "name": "Gamma", "arrival": "09:40", "departure": "09:42"}
+            ]
+            """), into: [original]).first)
+
+        #expect(result.company == "Example Rail")
+        #expect(result.stops.map(\.name) == ["Alpha", "Beta", "Gamma", "Omega"])
+        #expect(result.stops[1].arrival == "09:20")
+        #expect(result.stops[1].departure == "09:22")
+        #expect(result.stops[1].platformNumber == 2)
+        #expect(result.stops[1].n02StationCode == nil)
+        #expect(result.stops[2].n02StationCode == nil)
+        #expect(result.stops[1].stopType == "passenger_stop")
+        #expect(result.stops[1].rideSegment == original.stops[0].rideSegment)
+        #expect(result.stops[0] == original.stops[0])
+        #expect(result.stops[3] == original.stops[1])
+    }
+
+    @Test("intermediate calls respect original gap indices even when groups arrive out of order")
+    func intermediateGapIndices() throws {
+        var original = Self.train()
+        original.stops.insert(Stop(name: "Middle", arrival: "09:30", departure: "09:35"), at: 1)
+        original.stops[2].arrival = "10:00"
+        let result = try #require(JourneyCompletion.merge(
+            response: Self.response(body: """
+            "intermediate_stops": [
+              {"after_index": 1, "name": "Later", "arrival": "09:45"},
+              {"after_index": 0, "name": "Earlier", "departure": "09:15"}
+            ]
+            """), into: [original]).first)
+        #expect(result.stops.map(\.name) == ["Alpha", "Earlier", "Middle", "Later", "Omega"])
+        #expect(result.stops[2] == original.stops[1])
+    }
+
+    @Test("intermediate calls require valid gaps, times, chronology, and evidence")
+    func invalidIntermediateStops() throws {
+        var original = Self.train()
+        original.stops[1].arrival = "10:00"
+        let badBodies = [
+            #""intermediate_stops": [{"after_index": 1, "name": "Beta", "arrival": "09:20"}]"#,
+            #""intermediate_stops": [{"after_index": -1, "name": "Beta", "arrival": "09:20"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": " ", "arrival": "09:20"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta", "arrival": "09:99"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta", "arrival": "08:59"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta", "departure": "10:01"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta", "arrival": "09:20", "departure": "09:19"}]"#,
+            #""intermediate_stops": [{"after_index": 0, "name": "Beta", "arrival": "09:20", "n02_station_code": "B001"}]"#,
+        ]
+        for body in badBodies {
+            #expect(throws: JourneyCompletion.Error.self) {
+                try JourneyCompletion.merge(response: Self.response(body: body), into: [original])
+            }
+        }
+        let unsourced = #"{"trains":[{"id":"limited-7","sources":[],"intermediate_stops":[{"after_index":0,"name":"Beta","arrival":"09:20"}]}]}"#
+        #expect(throws: JourneyCompletion.Error.missingEvidence(trainID: "limited-7")) {
+            try JourneyCompletion.merge(response: unsourced, into: [original])
+        }
+        var singleStop = original
+        singleStop.stops.removeLast()
+        #expect(throws: JourneyCompletion.Error.self) {
+            try JourneyCompletion.merge(
+                response: Self.response(body: #""intermediate_stops": [{"after_index": 0, "name": "Beta", "arrival": "09:20"}]"#),
+                into: [singleStop])
+        }
+    }
+
+    @Test("an invalid intermediate call rejects the entire multi-journey response")
+    func intermediateMergeIsAtomic() throws {
+        let first = Self.train()
+        let second = Self.train(id: "other")
+        let response = """
+        {"trains": [
+          {"id":"limited-7","sources":[{"url":"https://rail.example/timetable","explanation":"Timetable"}],"company":"Example Rail"},
+          {"id":"other","sources":[{"url":"https://rail.example/timetable","explanation":"Timetable"}],"intermediate_stops":[{"after_index":0,"name":"Beta","arrival":"08:00"}]}
+        ]}
+        """
+        #expect(throws: JourneyCompletion.Error.self) {
+            try JourneyCompletion.merge(response: response, into: [first, second])
+        }
+        #expect(first.company == nil)
+        #expect(second.stops.count == 2)
+    }
+
     @Test("line names create a canonical route policy when one is absent")
     func lineNamesCreateCanonicalPolicy() throws {
         let original = Self.train(routePolicy: nil)
@@ -597,6 +689,61 @@ struct JourneyCompletionTests {
 
         #expect(draft.stops.first?.candidates.count == 2)
         #expect(draft.stops.first?.automaticSelection == nil)
+    }
+
+    @Test("AI sheet resolves unique typed station names but preserves ambiguity")
+    func uniqueTypedStationsResolveFromCatalog() {
+        let catalog = EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "test", name: "Test", stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "TOK", name: "東京", longitude: 139, latitude: 35),
+                    EditorCatalogStationSource(
+                        sourceCode: "CENTRAL-A", name: "中央", longitude: 138, latitude: 35),
+                    EditorCatalogStationSource(
+                        sourceCode: "CENTRAL-B", name: "中央", longitude: 137, latitude: 35),
+                ])
+        ])
+        var train = Self.train(date: "2026-09-29", number: "特急 1")
+        train.origin = "東京"
+        train.destination = "中央"
+        train.stops[0].name = "東京"
+        train.stops[0].n02StationCode = nil
+        train.stops[1].name = "中央"
+        train.stops[1].n02StationCode = nil
+
+        let resolved = JourneyCompletion.resolvingUniqueStationNames(
+            in: train, catalogs: ["jp": catalog])
+        #expect(resolved.stops[0].n02StationCode == "TOK")
+        #expect(resolved.stops[1].n02StationCode == nil)
+        #expect(train.stops[0].n02StationCode == nil)
+        #expect(JourneyCompletion.isRequestEligible(resolved, catalog: catalog))
+    }
+
+    @Test("date, two named timed stations, and vehicle type can start completion")
+    func minimalNamedJourneyCanRequestCompletion() throws {
+        let catalog = Self.catalog()
+        var train = Self.train(date: "2026-09-29", number: "")
+        train.origin = "東京"
+        train.destination = "新大阪"
+        train.vehicleType = "N700S"
+        train.stops[0].name = "東京"
+        train.stops[0].n02StationCode = nil
+        train.stops[1].name = "新大阪"
+        train.stops[1].n02StationCode = nil
+        train.stops[1].arrival = "11:27"
+
+        let resolved = JourneyCompletion.resolvingUniqueStationNames(
+            in: train, catalogs: ["jp": catalog])
+        #expect(resolved.stops.map(\.n02StationCode) == ["TOK", "OSA"])
+        #expect(JourneyCompletion.isRequestEligible(resolved, catalog: catalog))
+        let prompt = try JourneyCompletion.prompt(
+            trains: [train], context: "Limited express service name: example",
+            eligible: { JourneyCompletion.isRequestEligible(
+                JourneyCompletion.resolvingUniqueStationNames(in: $0, catalogs: ["jp": catalog]),
+                catalog: catalog) })
+        #expect(prompt.contains("N700S"))
+        #expect(prompt.contains("Limited express service name: example"))
     }
 
     private static func catalog() -> EditorCatalog {

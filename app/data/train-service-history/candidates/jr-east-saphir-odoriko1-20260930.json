@@ -1,0 +1,98 @@
+{
+  "candidate_id": "jr-east-saphir-odoriko1-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "saphir-odoriko",
+  "service_name": "サフィール踊り子",
+  "jr_scope": "through_jr",
+  "public_number": "1",
+  "train_number": "3001M",
+  "trip_id": "jr-east.saphir-odoriko.1.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-saphir-odoriko1-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/063451.html",
+  "source_sha256": "adce46ad182b366ab02add8ee4771da2299c7d86b70034647d9beb6419dff9eb",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "東京",
+      null,
+      "11:00"
+    ],
+    [
+      "品川",
+      "11:07",
+      "11:08"
+    ],
+    [
+      "横浜",
+      "11:23",
+      "11:24"
+    ],
+    [
+      "熱海",
+      "12:17",
+      "12:19"
+    ],
+    [
+      "伊東",
+      "12:36",
+      "12:37"
+    ],
+    [
+      "伊豆高原",
+      "12:55",
+      "12:56"
+    ],
+    [
+      "伊豆熱川",
+      "13:05",
+      "13:05"
+    ],
+    [
+      "伊豆稲取",
+      "13:12",
+      "13:13"
+    ],
+    [
+      "河津",
+      "13:18",
+      "13:18"
+    ],
+    [
+      "伊豆急下田",
+      "13:29",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "東京": "９",
+    "品川": "１２",
+    "横浜": "６",
+    "熱海": "２",
+    "伊東": "１"
+  },
+  "equipment": [
+    "全車グリーン車指定席",
+    "プレミアムグリーン",
+    "グリーン車指定席",
+    "グリーン車指定席（６人用グリーン個室連結）",
+    "グリーン車指定席（４人用グリーン個室連結）"
+  ],
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": true,
+    "reserved_seat_capacity": null
+  },
+  "formation_note": "All cars Green reserved; Premium Green, Green, six-person and four-person Green compartments printed. Compartment occupancy is not car/total seat count; car numbers, series and actual dispatch unprinted.",
+  "route_note": "Exact dated ordered physical route/operator segments unknown; no unprinted number changes inferred.",
+  "actual_dispatch": null
+}

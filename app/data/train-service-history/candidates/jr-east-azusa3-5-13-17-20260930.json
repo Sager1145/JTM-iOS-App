@@ -1,0 +1,42 @@
+{
+  "candidate_id": "jr-east-azusa3-5-13-17-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Official JR East weekday down timetable lists these public numbers; each selected train page marks 2026-09-30 td.ok. Only printed Azusa-column stops are staged. Physical routes and operator segments remain unknown.",
+  "weekday_down_source": "https://timetables.jreast.co.jp/2610/timetable-v/223d1.html",
+  "trips": [
+    {
+      "trip_id": "jr-east.azusa.3.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "3", "train_number": "5003M",
+      "source_id": "jr-east-azusa3-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/050/054761.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ3号 5003M column; 設備, 併結運転 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_coupling": "千葉－大月は2103Mを併結",
+      "printed_platforms": {"千葉": "８", "新宿": "１０", "立川": "６", "八王子": "４", "大月": "３", "塩山": "１", "山梨市": "３", "甲府": "１", "小淵沢": "１", "松本": "２"},
+      "stops": [["千葉", null, "06:38"], ["船橋", "06:52", "06:53"], ["錦糸町", "07:06", "07:07"], ["新宿", "07:26", "07:30"], ["立川", "07:52", "07:53"], ["八王子", "08:02", "08:03"], ["大月", "08:30", "08:33"], ["塩山", "08:53", "08:54"], ["山梨市", "08:58", "08:58"], ["石和温泉", "09:02", "09:03"], ["甲府", "09:08", "09:09"], ["韮崎", "09:18", "09:18"], ["小淵沢", "09:36", "09:36"], ["富士見", "09:42", "09:43"], ["茅野", "09:51", "09:52"], ["上諏訪", "09:57", "09:57"], ["下諏訪", "10:01", "10:01"], ["岡谷", "10:05", "10:06"], ["塩尻", "10:13", "10:14"], ["松本", "10:23", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.5.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "5", "train_number": "5M",
+      "source_id": "jr-east-azusa5-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/110/111361.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ5号 5M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "９", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "４"},
+      "stops": [["新宿", null, "08:00"], ["立川", "08:24", "08:25"], ["八王子", "08:33", "08:34"], ["甲府", "09:28", "09:29"], ["小淵沢", "09:53", "09:53"], ["茅野", "10:06", "10:07"], ["上諏訪", "10:12", "10:12"], ["岡谷", "10:19", "10:20"], ["塩尻", "10:27", "10:28"], ["松本", "10:37", "10:41"], ["豊科", "10:54", "10:54"], ["穂高", "10:59", "10:59"], ["信濃大町", "11:14", "11:15"], ["白馬", "11:40", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.13.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "13", "train_number": "13M",
+      "source_id": "jr-east-azusa13-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/050/054701.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ13号 13M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "９", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "３"},
+      "stops": [["新宿", null, "10:00"], ["立川", "10:25", "10:25"], ["八王子", "10:33", "10:34"], ["甲府", "11:28", "11:29"], ["小淵沢", "11:53", "11:53"], ["茅野", "12:06", "12:07"], ["上諏訪", "12:12", "12:12"], ["岡谷", "12:19", "12:20"], ["塩尻", "12:27", "12:27"], ["松本", "12:37", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.17.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "17", "train_number": "17M",
+      "source_id": "jr-east-azusa17-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/050/054721.html",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 あずさ17号 17M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "９", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "４"},
+      "stops": [["新宿", null, "11:00"], ["立川", "11:22", "11:22"], ["八王子", "11:30", "11:31"], ["甲府", "12:25", "12:26"], ["韮崎", "12:35", "12:35"], ["小淵沢", "12:52", "12:52"], ["茅野", "13:05", "13:06"], ["上諏訪", "13:11", "13:11"], ["岡谷", "13:18", "13:19"], ["塩尻", "13:26", "13:27"], ["松本", "13:36", null]]
+    }
+  ]
+}

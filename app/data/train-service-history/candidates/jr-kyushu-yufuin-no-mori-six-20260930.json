@@ -1,0 +1,421 @@
+{
+  "candidate_id": "jr-kyushu-yufuin-no-mori-20260930-six",
+  "candidate_status": "reviewed_official_html_and_diagrams",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Six exact-date passenger trains only. The March 14 service-page schedule and September 19 template are not copied into these arrival/departure rows.",
+  "train_pages": [
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-1-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166501.html?t=2828302e&d=20260930",
+      "public_number": "1",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-2-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166801.html?t=2881400&d=20260930",
+      "public_number": "2",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-3-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166601.html?t=2828302e&d=20260930",
+      "public_number": "3",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-4-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166901.html?t=2881400&d=20260930",
+      "public_number": "4",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-5-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166701.html?t=2828302e&d=20260930",
+      "public_number": "5",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-no-mori-6-20260930",
+      "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167001.html?t=2881400&d=20260930",
+      "public_number": "6",
+      "locator": "2026-09-30 selected page; train header, 2026年9月 calendar day 30 current-clocks cell, passenger timetable rows and のりば"
+    }
+  ],
+  "formation_sources": [
+    {
+      "source_id": "jr-kyushu-yufuin-20260930-calendar",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/img/index/cal_202609.png",
+      "locator": "2026年9月30日 yellow cell = all six trains operate, per service-page legend"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-formation-i",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/img/index/img_yufumori1.png",
+      "locator": "I世 four-car diagram: 博多方 4,3,2,1 由布院・別府方; all reserved; car 2 buffet"
+    },
+    {
+      "source_id": "jr-kyushu-yufuin-formation-iii",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/yufuinnomori/img/index/img_yufumori3.png",
+      "locator": "III世 five-car diagram: 博多方 5,4,3,2,1 由布院方; all reserved; car 3 buffet"
+    }
+  ],
+  "service_page_url": "https://www.jrkyushu.co.jp/trains/yufuinnomori/",
+  "operating_plan_url": "https://www.jrkyushu.co.jp/trains/yufuinnomori/__icsFiles/afieldfile/2026/08/18/20260818_yuhuin_no_mori_train_plan_0919_1.pdf",
+  "formation_note": "September 30 service calendar plus 9/19–9/30 resumption notice assign ordinary I世 to trains 3/4 and ordinary III世 to 1/2/5/6. Planned, not an actual dispatch record; service page says operating days may change.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.1.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "1",
+      "train_number": "8001D",
+      "service_date": "2026-09-30",
+      "direction": "down",
+      "source_id": "jr-kyushu-yufuin-no-mori-1-20260930",
+      "formation_label": "III世",
+      "stop_times": [
+        [
+          "博多",
+          null,
+          "09:17",
+          "6"
+        ],
+        [
+          "鳥栖",
+          "09:42",
+          "09:43",
+          "6"
+        ],
+        [
+          "久留米",
+          "09:50",
+          "09:51",
+          "3"
+        ],
+        [
+          "日田",
+          "10:36",
+          "10:37",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "10:49",
+          "10:49",
+          null
+        ],
+        [
+          "豊後森",
+          "11:04",
+          "11:04",
+          null
+        ],
+        [
+          "由布院",
+          "11:31",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.2.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "2",
+      "train_number": "8002D",
+      "service_date": "2026-09-30",
+      "direction": "up",
+      "source_id": "jr-kyushu-yufuin-no-mori-2-20260930",
+      "formation_label": "III世",
+      "stop_times": [
+        [
+          "由布院",
+          null,
+          "12:01",
+          null
+        ],
+        [
+          "豊後森",
+          "12:32",
+          "12:32",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "12:46",
+          "12:47",
+          null
+        ],
+        [
+          "日田",
+          "12:59",
+          "13:01",
+          null
+        ],
+        [
+          "久留米",
+          "13:45",
+          "13:46",
+          "1"
+        ],
+        [
+          "鳥栖",
+          "13:54",
+          "13:55",
+          "1"
+        ],
+        [
+          "博多",
+          "14:19",
+          null,
+          "6"
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.3.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "3",
+      "train_number": "8003D",
+      "service_date": "2026-09-30",
+      "direction": "down",
+      "source_id": "jr-kyushu-yufuin-no-mori-3-20260930",
+      "formation_label": "I世",
+      "stop_times": [
+        [
+          "博多",
+          null,
+          "10:11",
+          "6"
+        ],
+        [
+          "鳥栖",
+          "10:36",
+          "10:37",
+          "5"
+        ],
+        [
+          "久留米",
+          "10:45",
+          "10:47",
+          "1"
+        ],
+        [
+          "日田",
+          "11:31",
+          "11:33",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "11:45",
+          "11:45",
+          null
+        ],
+        [
+          "豊後森",
+          "12:00",
+          "12:00",
+          null
+        ],
+        [
+          "由布院",
+          "12:27",
+          "12:32",
+          null
+        ],
+        [
+          "大分",
+          "13:18",
+          "13:20",
+          "7"
+        ],
+        [
+          "別府",
+          "13:31",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.4.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "4",
+      "train_number": "8004D",
+      "service_date": "2026-09-30",
+      "direction": "up",
+      "source_id": "jr-kyushu-yufuin-no-mori-4-20260930",
+      "formation_label": "I世",
+      "stop_times": [
+        [
+          "別府",
+          null,
+          "14:36",
+          null
+        ],
+        [
+          "大分",
+          "14:48",
+          "14:58",
+          "8"
+        ],
+        [
+          "由布院",
+          "15:46",
+          "15:56",
+          null
+        ],
+        [
+          "豊後森",
+          "16:23",
+          "16:24",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "16:37",
+          "16:40",
+          null
+        ],
+        [
+          "日田",
+          "16:52",
+          "16:53",
+          null
+        ],
+        [
+          "久留米",
+          "17:35",
+          "17:36",
+          "4"
+        ],
+        [
+          "鳥栖",
+          "17:43",
+          "17:44",
+          "1"
+        ],
+        [
+          "博多",
+          "18:10",
+          null,
+          "5"
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.5.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "5",
+      "train_number": "8005D",
+      "service_date": "2026-09-30",
+      "direction": "down",
+      "source_id": "jr-kyushu-yufuin-no-mori-5-20260930",
+      "formation_label": "III世",
+      "stop_times": [
+        [
+          "博多",
+          null,
+          "14:38",
+          "6"
+        ],
+        [
+          "鳥栖",
+          "15:03",
+          "15:04",
+          "6"
+        ],
+        [
+          "久留米",
+          "15:11",
+          "15:12",
+          "3"
+        ],
+        [
+          "日田",
+          "15:53",
+          "15:56",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "16:08",
+          "16:09",
+          null
+        ],
+        [
+          "豊後森",
+          "16:23",
+          "16:24",
+          null
+        ],
+        [
+          "由布院",
+          "16:50",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufuin-no-mori.6.2026-09-30",
+      "service_id": "yufuin-no-mori",
+      "service_name": "ゆふいんの森",
+      "public_number": "6",
+      "train_number": "8006D",
+      "service_date": "2026-09-30",
+      "direction": "up",
+      "source_id": "jr-kyushu-yufuin-no-mori-6-20260930",
+      "formation_label": "III世",
+      "stop_times": [
+        [
+          "由布院",
+          null,
+          "17:17",
+          null
+        ],
+        [
+          "豊後森",
+          "17:44",
+          "17:44",
+          null
+        ],
+        [
+          "天ケ瀬",
+          "17:58",
+          "17:59",
+          null
+        ],
+        [
+          "日田",
+          "18:11",
+          "18:12",
+          null
+        ],
+        [
+          "久留米",
+          "18:53",
+          "18:54",
+          "4"
+        ],
+        [
+          "鳥栖",
+          "19:01",
+          "19:02",
+          "1"
+        ],
+        [
+          "博多",
+          "19:27",
+          null,
+          "3"
+        ]
+      ]
+    }
+  ]
+}

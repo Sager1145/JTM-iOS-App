@@ -1,0 +1,2 @@
+{"calendar_id": "jr-hokkaido.tokachi.2026-09-29-30.calendar", "exception_type": "add", "reason": "Selected 2026-09-29 column prints 31D as 毎日; only reviewed dates promoted.", "service_date": "2026-09-29", "source_id": "jr-hokkaido-tokachi1-20260929-timetable"}
+{"calendar_id": "jr-hokkaido.tokachi.2026-09-29-30.calendar", "exception_type": "add", "reason": "Selected 2026-09-30 column prints 31D as 毎日; only reviewed dates promoted.", "service_date": "2026-09-30", "source_id": "jr-hokkaido-tokachi1-20260930-timetable"}

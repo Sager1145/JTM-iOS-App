@@ -1,0 +1,32 @@
+{
+  "candidate_id": "jr-shikoku-shimanto2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; twelve timed passenger calls; passing rows marked レ excluded; operator segments and physical lines unresolved",
+  "sources": [
+    {"source_id":"jr-odekake-shimanto2-20260930-train","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"特急 しまんと2号 列車時刻表（2026-09-30）","source_type":"official_train_timetable","url_or_locator":"https://timetable.jr-odekake.net/train-timetable/90141?date=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Manually reviewed exact-date train page; source bytes are not bundled."},
+    {"source_id":"jr-odekake-shimanto2-20260930-line","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"土讃線区間時刻表 上り（2026-09-30）","source_type":"official_dated_line_timetable","url_or_locator":"https://timetable.jr-odekake.net/line-timetable/2473?day=30&month=9&year=2026","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Dated line grid lists しまんと2号 and train number 2002D."}
+  ],
+  "trip": {
+    "trip_id":"jr-shikoku.shimanto.2.2026-09-30","service_id":"shimanto","service_name":"しまんと","public_number":"2","train_number":"2002D","service_date":"2026-09-30",
+    "stop_times":[
+      {"name_snapshot":"高知","arrival_time":null,"departure_time":"04:51","platform":"1"},
+      {"name_snapshot":"後免","arrival_time":"04:58","departure_time":"04:58","platform":null},
+      {"name_snapshot":"土佐山田","arrival_time":"05:02","departure_time":"05:03","platform":null},
+      {"name_snapshot":"大杉","arrival_time":"05:22","departure_time":"05:22","platform":null},
+      {"name_snapshot":"大歩危","arrival_time":"05:40","departure_time":"05:40","platform":null},
+      {"name_snapshot":"阿波池田","arrival_time":"05:59","departure_time":"06:00","platform":null},
+      {"name_snapshot":"琴平","arrival_time":"06:23","departure_time":"06:23","platform":null},
+      {"name_snapshot":"善通寺","arrival_time":"06:27","departure_time":"06:28","platform":null},
+      {"name_snapshot":"多度津","arrival_time":"06:37","departure_time":"06:38","platform":null},
+      {"name_snapshot":"丸亀","arrival_time":"06:41","departure_time":"06:42","platform":null},
+      {"name_snapshot":"坂出","arrival_time":"06:47","departure_time":"06:48","platform":null},
+      {"name_snapshot":"高松","arrival_time":"07:02","departure_time":null,"platform":"6"}
+    ]
+  },
+  "evidence_locators":[
+    {"claim":"identity and 2002D", "locator":"dated line grid and train-detail header"},
+    {"claim":"exact operating day", "locator":"line-grid date 2026-09-30 and detail calendar"},
+    {"claim":"twelve calls and clocks", "locator":"時刻詳細 table; レ pass rows excluded"}
+  ]
+}

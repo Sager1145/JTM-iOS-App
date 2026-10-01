@@ -1,0 +1,163 @@
+{
+  "candidate_id": "jr-hokkaido-tokachi2-4-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official s=131 up-direction grid for 2026-09-30; only the とかち2 and とかち4 columns are transcribed. 毎日, Green reserved-seat and all-reserved icons are printed for both. Blank arrival sides are not inferred from departure rows.",
+  "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=131",
+  "source_id": "jr-hokkaido-ozora-tokachi-up-20260930",
+  "source_date_selector": "2026年9月30日(水)",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.tokachi.2.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "2",
+      "train_number": "32D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-up-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=131",
+      "source_locator": "32D / とかち2, selected 2026-09-30 毎日 column, first train column; 編成 row prints greensiteidai0.png and zensekisitei0.png",
+      "origin": "帯広",
+      "destination": "札幌",
+      "operating_day_label": "毎日",
+      "green_car_reserved_icon": true,
+      "all_reserved_icon": true,
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "stops": [
+        [
+          "帯広",
+          null,
+          "06:45"
+        ],
+        [
+          "芽室",
+          null,
+          "06:55"
+        ],
+        [
+          "十勝清水",
+          null,
+          "07:10"
+        ],
+        [
+          "新得",
+          "07:17",
+          "07:17"
+        ],
+        [
+          "トマム",
+          null,
+          "07:41"
+        ],
+        [
+          "占冠",
+          null,
+          "07:55"
+        ],
+        [
+          "新夕張",
+          null,
+          "08:23"
+        ],
+        [
+          "追分",
+          null,
+          "08:49"
+        ],
+        [
+          "南千歳",
+          null,
+          "09:02"
+        ],
+        [
+          "新札幌",
+          null,
+          "09:25"
+        ],
+        [
+          "札幌",
+          "09:34",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.tokachi.4.exact-2026-09-30",
+      "service_id": "tokachi",
+      "public_number": "4",
+      "train_number": "34D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-up-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=131",
+      "source_locator": "34D / とかち4, selected 2026-09-30 毎日 column, third train column; 編成 row prints greensiteidai0.png and zensekisitei0.png",
+      "origin": "帯広",
+      "destination": "札幌",
+      "operating_day_label": "毎日",
+      "green_car_reserved_icon": true,
+      "all_reserved_icon": true,
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "stops": [
+        [
+          "帯広",
+          null,
+          "08:42"
+        ],
+        [
+          "芽室",
+          null,
+          "08:51"
+        ],
+        [
+          "十勝清水",
+          null,
+          "09:13"
+        ],
+        [
+          "新得",
+          "09:20",
+          "09:21"
+        ],
+        [
+          "トマム",
+          null,
+          "09:52"
+        ],
+        [
+          "占冠",
+          null,
+          "10:07"
+        ],
+        [
+          "新夕張",
+          null,
+          "10:37"
+        ],
+        [
+          "追分",
+          null,
+          "10:57"
+        ],
+        [
+          "南千歳",
+          null,
+          "11:10"
+        ],
+        [
+          "新札幌",
+          null,
+          "11:31"
+        ],
+        [
+          "札幌",
+          "11:40",
+          null
+        ]
+      ],
+      "pass_through_names": []
+    }
+  ]
+}

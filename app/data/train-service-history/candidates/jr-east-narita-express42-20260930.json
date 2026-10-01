@@ -1,0 +1,100 @@
+{
+  "candidate_id": "jr-east-narita-express42-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-narita-express42-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/025/029081.html",
+  "source_locator": "2026年9月30日 td.ok; full printed numbered columns",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "coupling_note": "",
+  "printed_operating_labels": [
+    "１１月７日は運休"
+  ],
+  "printed_remarks": [
+    "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です"
+  ],
+  "trips": [
+    {
+      "trip_id": "jr-east.narita-express.42.2042m.exact-2026-09-30",
+      "train_number": "2042M",
+      "origin": "成田空港",
+      "destination": "大船",
+      "stops": [
+        [
+          "成田空港",
+          null,
+          "17:45",
+          null,
+          "origin"
+        ],
+        [
+          "空港第２ビル",
+          "17:46",
+          "17:48",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "千葉",
+          "18:19",
+          "18:20",
+          "７",
+          "passenger_stop"
+        ],
+        [
+          "東京",
+          "18:48",
+          "18:50",
+          "１",
+          "passenger_stop"
+        ],
+        [
+          "品川",
+          "18:56",
+          "18:57",
+          "１５",
+          "passenger_stop"
+        ],
+        [
+          "武蔵小杉",
+          "19:06",
+          "19:07",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "横浜",
+          "19:19",
+          "19:20",
+          "９",
+          "passenger_stop"
+        ],
+        [
+          "戸塚",
+          "19:31",
+          "19:32",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "大船",
+          "19:38",
+          null,
+          "７",
+          "destination"
+        ]
+      ],
+      "equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "formation": null
+    }
+  ]
+}

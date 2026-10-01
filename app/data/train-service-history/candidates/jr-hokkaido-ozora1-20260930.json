@@ -1,0 +1,29 @@
+{
+  "candidate_id": "jr-hokkaido-ozora1-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "source_id": "jr-hokkaido-ozora1-20260930-timetable",
+  "train_guide_source_id": "jr-hokkaido-ozora-2025-guide",
+  "english_source_id": "jr-hokkaido-ozora-2026-english-guide",
+  "service_id": "ozora",
+  "canonical_name": "おおぞら",
+  "english_name": "Ozora",
+  "public_number": "1",
+  "train_number": "4001D",
+  "direction": "札幌→釧路",
+  "passenger_calls": [
+    {"station": "札幌", "departure_time": "6:48"},
+    {"station": "新札幌", "departure_time": "6:56"},
+    {"station": "南千歳", "departure_time": "7:20"},
+    {"station": "追分", "departure_time": "7:32"},
+    {"station": "新夕張", "departure_time": "7:52"},
+    {"station": "トマム", "departure_time": "8:26"},
+    {"station": "新得", "arrival_time": "8:48", "departure_time": "8:49"},
+    {"station": "帯広", "arrival_time": "9:18", "departure_time": "9:19"},
+    {"station": "池田", "departure_time": "9:36"},
+    {"station": "釧路", "arrival_time": "10:56"}
+  ],
+  "passing_rows_excluded": ["占冠", "十勝清水", "芽室", "浦幌", "白糠"],
+  "scope_note": "Only the selected 2026-09-30 column is promoted. The operator's table labels the train 毎日, but this candidate does not assert other dates. Only printed arrival/departure sides are entered."
+}

@@ -1,0 +1,4 @@
+{"calendar_id": "jr-hokkaido.hokuto.21.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-down"}
+{"calendar_id": "jr-hokkaido.hokuto.4.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up"}
+{"calendar_id": "jr-hokkaido.hokuto.6.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up"}
+{"calendar_id": "jr-hokkaido.hokuto.8.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up"}

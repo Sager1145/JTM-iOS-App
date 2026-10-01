@@ -1,0 +1,102 @@
+{
+  "trip_id": "jr-east.shirayuki.4.exact-2026-09-30",
+  "service_id": "shirayuki",
+  "service_name": "しらゆき",
+  "jr_scope": "through_jr",
+  "service_date": "2026-09-30",
+  "public_number": "4",
+  "train_number": "54M",
+  "source_id": "jr-east-shirayuki4-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/060/063971.html",
+  "source_sha256": "07434d71f063cb5d3f91ae16f47d79fdcd4564cbe4d956905ef73a1fd2095b24",
+  "source_locator": "2026年9月30日 td.ok; 印刷時刻/番線/設備/備考",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "printed_equipment": [
+    "普通車一部指定席"
+  ],
+  "printed_platforms": {
+    "新潟": "５",
+    "新津": "２",
+    "東三条": "３",
+    "長岡": "４",
+    "柏崎": "３",
+    "直江津": "３"
+  },
+  "printed_remarks": "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません",
+  "stops": [
+    [
+      "新潟",
+      null,
+      "10:23"
+    ],
+    [
+      "新津",
+      "10:36",
+      "10:37"
+    ],
+    [
+      "加茂",
+      "10:49",
+      "10:50"
+    ],
+    [
+      "東三条",
+      "10:56",
+      "10:57"
+    ],
+    [
+      "見附",
+      "11:05",
+      "11:06"
+    ],
+    [
+      "長岡",
+      "11:16",
+      "11:17"
+    ],
+    [
+      "柏崎",
+      "11:42",
+      "11:42"
+    ],
+    [
+      "柿崎",
+      "11:57",
+      "11:57"
+    ],
+    [
+      "直江津",
+      "12:09",
+      "12:11"
+    ],
+    [
+      "高田",
+      "12:18",
+      "12:18"
+    ],
+    [
+      "上越妙高",
+      "12:24",
+      null
+    ]
+  ],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": false,
+    "green_car_available": null,
+    "car_count": null,
+    "vehicle_series": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route and operator segments are unknown. The printed ticketing remark is retained without converting it into an operator-segment claim.",
+  "actual_dispatch": null,
+  "candidate_id": "jr-east-shirayuki4-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "printed_operating_labels": [],
+  "train_number_segments": []
+}

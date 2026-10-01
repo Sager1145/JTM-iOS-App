@@ -1,0 +1,188 @@
+{
+  "candidate_id": "jr-kyushu-nichirin-seagaia5-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Exact-day JR Kyushu train detail; every printed passenger clock side and platform retained. Vehicle series, car count and individual car assignment unverified.",
+  "trips": [
+    {
+      "service_id": "nichirin-seagaia",
+      "service_name": "にちりんシーガイア",
+      "public_number": "5",
+      "train_number": "5005M",
+      "origin": "博多",
+      "destination": "宮崎空港",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "グリーン車指定席（４人用グリーン個室連結）",
+        "普通車一部指定席"
+      ],
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0016/00165801.html?c=28283&ym=202609&d=30",
+      "stops": [
+        [
+          "博多",
+          null,
+          "07:31",
+          "2"
+        ],
+        [
+          "吉塚",
+          "07:34",
+          "07:34",
+          null
+        ],
+        [
+          "香椎",
+          "07:41",
+          "07:42",
+          null
+        ],
+        [
+          "福間",
+          "07:52",
+          "07:52",
+          null
+        ],
+        [
+          "赤間",
+          "08:01",
+          "08:01",
+          null
+        ],
+        [
+          "折尾",
+          "08:15",
+          "08:15",
+          "5"
+        ],
+        [
+          "黒崎",
+          "08:20",
+          "08:20",
+          null
+        ],
+        [
+          "小倉",
+          "08:33",
+          "08:35",
+          "7"
+        ],
+        [
+          "朽網",
+          "08:45",
+          "08:45",
+          null
+        ],
+        [
+          "行橋",
+          "08:52",
+          "08:52",
+          null
+        ],
+        [
+          "中津",
+          "09:10",
+          "09:11",
+          null
+        ],
+        [
+          "杵築",
+          "09:38",
+          "09:39",
+          null
+        ],
+        [
+          "別府",
+          "09:53",
+          "09:54",
+          null
+        ],
+        [
+          "大分",
+          "10:04",
+          "10:06",
+          "2"
+        ],
+        [
+          "鶴崎",
+          "10:14",
+          "10:14",
+          null
+        ],
+        [
+          "臼杵",
+          "10:39",
+          "10:44",
+          null
+        ],
+        [
+          "津久見",
+          "10:53",
+          "10:54",
+          null
+        ],
+        [
+          "佐伯",
+          "11:12",
+          "11:18",
+          null
+        ],
+        [
+          "延岡",
+          "12:19",
+          "12:20",
+          null
+        ],
+        [
+          "南延岡",
+          "12:24",
+          "12:25",
+          null
+        ],
+        [
+          "日向市",
+          "12:39",
+          "12:39",
+          null
+        ],
+        [
+          "高鍋",
+          "13:08",
+          "13:08",
+          null
+        ],
+        [
+          "佐土原",
+          "13:18",
+          "13:20",
+          null
+        ],
+        [
+          "宮崎",
+          "13:36",
+          "13:40",
+          null
+        ],
+        [
+          "南宮崎",
+          "13:43",
+          "13:45",
+          null
+        ],
+        [
+          "宮崎空港",
+          "13:51",
+          null,
+          null
+        ]
+      ],
+      "temporary_stop": "朽網",
+      "trip_id": "jr-kyushu.nichirin-seagaia.5.2026-09-30",
+      "service_class": "limited_express",
+      "source_id": "jr-kyushu-nichirin-seagaia5-20260930",
+      "source_locator": "2026-09-30 selected; train identity/number/equipment/operating-day and 駅名/時刻/のりば table"
+    }
+  ]
+}

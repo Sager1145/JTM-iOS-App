@@ -1,0 +1,39 @@
+{
+  "candidate_id": "jr-hokkaido-ozora2-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official s=131 up-direction page visibly selected 2026年9月30日(水); 4002D column prints 毎日, 15 passenger calls, two dwell arrival/departure pairs, Sapporo platform (4), and Green/all-reserved icons. Other columns remain unpromoted.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.ozora.2.exact-2026-09-30",
+      "service_id": "ozora",
+      "public_number": "2",
+      "train_number": "4002D",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-ozora-tokachi-up-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=131",
+      "source_locator": "4002D / おおぞら2, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "釧路",
+      "destination": "札幌",
+      "printed_platforms": {"札幌": "(4)"},
+      "stops": [
+        ["釧路", null, "06:18"],
+        ["白糠", null, "06:36"],
+        ["浦幌", null, "07:16"],
+        ["池田", null, "07:36"],
+        ["帯広", "07:52", "07:54"],
+        ["芽室", null, "08:03"],
+        ["十勝清水", null, "08:18"],
+        ["新得", "08:25", "08:26"],
+        ["トマム", null, "08:58"],
+        ["占冠", null, "09:12"],
+        ["新夕張", null, "09:34"],
+        ["追分", null, "09:55"],
+        ["南千歳", null, "10:08"],
+        ["新札幌", null, "10:33"],
+        ["札幌", "10:41", null]
+      ],
+      "pass_through_names": []
+    }
+  ]
+}

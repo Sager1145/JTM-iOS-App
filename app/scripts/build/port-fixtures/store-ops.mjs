@@ -71,6 +71,7 @@ const SCOPE_FILES = [
   "app-config.js", // SCHEMA_VERSION, ALL_DATES, DEFAULT_* , activeCountry …
   "app-coords.js", // clone — the deep copy addTrain/duplicateTrain make
   "app-datasets.js", // stationNameForCode and the map behind it
+  "app-rail-history.js", // railServiceBounds, used by temporal station dedupe
   "app-stations.js", // stopName, stopStationCode, resolveStationForTrain
   "app-store-ops.js", // §17–§20 — the module under test
   "app-validation.js", // §33 — appendImportedTrain calls validateTrain

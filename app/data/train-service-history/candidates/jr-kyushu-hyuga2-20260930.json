@@ -1,0 +1,77 @@
+{
+  "candidate_id": "jr-kyushu-hyuga2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Exact-day JR Kyushu train detail; every printed passenger clock side and platform retained. Vehicle series, car count and individual car assignment unverified.",
+  "trips": [
+    {
+      "service_id": "hyuga",
+      "service_name": "ひゅうが",
+      "public_number": "2",
+      "train_number": "5072M",
+      "origin": "宮崎空港",
+      "destination": "延岡",
+      "operating_day_marker": "９月１９・２２・２３日は運休",
+      "formation_seat_text": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00088301.html?c=28903&ym=202609&d=30",
+      "stops": [
+        [
+          "宮崎空港",
+          null,
+          "11:15",
+          null
+        ],
+        [
+          "南宮崎",
+          "11:24",
+          "11:26",
+          null
+        ],
+        [
+          "宮崎",
+          "11:29",
+          "11:30",
+          null
+        ],
+        [
+          "佐土原",
+          "11:44",
+          "11:45",
+          null
+        ],
+        [
+          "高鍋",
+          "11:54",
+          "11:55",
+          null
+        ],
+        [
+          "日向市",
+          "12:20",
+          "12:20",
+          null
+        ],
+        [
+          "南延岡",
+          "12:36",
+          "12:39",
+          null
+        ],
+        [
+          "延岡",
+          "12:42",
+          null,
+          null
+        ]
+      ],
+      "trip_id": "jr-kyushu.hyuga.2.2026-09-30",
+      "service_class": "limited_express",
+      "source_id": "jr-kyushu-hyuga2-20260930",
+      "source_locator": "2026-09-30 selected; train identity/number/equipment/operating-day and 駅名/時刻/のりば table"
+    }
+  ]
+}

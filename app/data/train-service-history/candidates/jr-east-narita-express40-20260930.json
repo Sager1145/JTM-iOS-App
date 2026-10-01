@@ -1,0 +1,151 @@
+{
+  "candidate_id": "jr-east-narita-express40-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-narita-express40-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/030/031261.html",
+  "source_locator": "2026年9月30日 td.ok; full printed numbered columns",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "coupling_note": "成田空港－東京は2240Mを併結 / 成田空港－東京は2040Mに併結",
+  "printed_operating_labels": [
+    "１１月７日は運休",
+    "１１月７日は運休"
+  ],
+  "printed_remarks": [
+    "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です",
+    "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です"
+  ],
+  "trips": [
+    {
+      "trip_id": "jr-east.narita-express.40.2040m.exact-2026-09-30",
+      "train_number": "2040M",
+      "origin": "成田空港",
+      "destination": "大船",
+      "stops": [
+        [
+          "成田空港",
+          null,
+          "17:16",
+          null,
+          "origin"
+        ],
+        [
+          "空港第２ビル",
+          "17:17",
+          "17:19",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "東京",
+          "18:18",
+          "18:20",
+          "１",
+          "passenger_stop"
+        ],
+        [
+          "品川",
+          "18:27",
+          "18:28",
+          "１５",
+          "passenger_stop"
+        ],
+        [
+          "武蔵小杉",
+          "18:39",
+          "18:40",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "横浜",
+          "18:51",
+          "18:52",
+          "９",
+          "passenger_stop"
+        ],
+        [
+          "戸塚",
+          "19:02",
+          "19:03",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "大船",
+          "19:09",
+          null,
+          "７",
+          "destination"
+        ]
+      ],
+      "equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "formation": null
+    },
+    {
+      "trip_id": "jr-east.narita-express.40.2240m.exact-2026-09-30",
+      "train_number": "2240M",
+      "origin": "成田空港",
+      "destination": "新宿",
+      "stops": [
+        [
+          "成田空港",
+          null,
+          null,
+          null,
+          "origin"
+        ],
+        [
+          "空港第２ビル",
+          null,
+          null,
+          null,
+          "passenger_stop"
+        ],
+        [
+          "東京",
+          null,
+          "18:23",
+          "１",
+          "passenger_stop"
+        ],
+        [
+          "品川",
+          null,
+          null,
+          null,
+          "pass"
+        ],
+        [
+          "渋谷",
+          "18:41",
+          "18:42",
+          null,
+          "passenger_stop"
+        ],
+        [
+          "新宿",
+          "18:46",
+          null,
+          "５",
+          "destination"
+        ]
+      ],
+      "equipment": [
+        "座席未指定券",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "formation": null
+    }
+  ]
+}

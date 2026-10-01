@@ -1,0 +1,62 @@
+{
+  "schema_version": "1",
+  "retrieved_at": "2026-09-27",
+  "sources": [
+    {
+      "source_id": "mlit-railway-statistics",
+      "publisher": "国土交通省 鉄道局",
+      "url": "https://www.mlit.go.jp/statistics/details/tetsudo_list.html",
+      "role": "Official index for opening and closure tables.",
+      "licence_url": "https://www.mlit.go.jp/link.html",
+      "licence": "PDL-1.0",
+      "licence_note": "MLIT website content terms apply; derived rows retain source URLs and state that they were extracted."
+    },
+    {
+      "source_id": "mlit-n02-legacy-1996",
+      "publisher": "国土交通省 国土計画局",
+      "url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N02.html",
+      "metadata_url": "https://nlftp.mlit.go.jp/ksj/old/meta/N02/N02-07L/KS-META-N02-07L-2K.htm",
+      "publication_date": "1996-12-31",
+      "labelled_year": "平成7年",
+      "downloads": [
+        {
+          "crs": "Tokyo Datum / geographic",
+          "version": "1.0",
+          "filename": "N02-07L-48-01.0.zip",
+          "url": "https://nlftp.mlit.go.jp/ksj/old/data/N02/N02-07L/N02-07L-48-01.0.zip",
+          "sha256": "17c00ca41e36b54af0437fbb15191895ebf7ffca6245d82bfc496ba5ebaabbfc"
+        },
+        {
+          "crs": "JGD2000 / geographic",
+          "version": "1.0a",
+          "filename": "N02-07L-48-01.1a.zip",
+          "url": "https://nlftp.mlit.go.jp/ksj/old/data/N02/N02-07L/N02-07L-48-01.1a.zip",
+          "sha256": "106509ab37025656fda7d8f9357fe8a20d2fcdb653fe5bf9f4c6ebd066aa07fa"
+        }
+      ],
+      "licence_url": "https://nlftp.mlit.go.jp/ksj/other/agreement_02.html",
+      "licence_faq_url": "https://nlftp.mlit.go.jp/ksj/other/faq.html",
+      "licence": "old-nlni-terms",
+      "commercial_use_status": "not_asserted",
+      "licence_note": "Legacy unified-format text: old National Land Numerical Information terms apply. The download page does not label this package CC BY 4.0; do not infer the current N02 licence.",
+      "bundle_status": "not_bundled"
+    },
+    {
+      "source_id": "mlit-n02-current-licence",
+      "publisher": "国土交通省",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_url": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence": "CC-BY-4.0 (2020 and later); commercial-use-allowed (earlier current-series releases)",
+      "licence_note": "MLIT states CC BY 4.0 for 2020 and later N02 releases and commercial use allowed for earlier releases on this current-series page."
+    },
+    {
+      "source_id": "mlit-n05-railway-timeseries",
+      "publisher": "国土交通省",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html",
+      "licence_url": "https://nlftp.mlit.go.jp/ksj/other/agreement_02.html",
+      "licence": "noncommercial",
+      "licence_note": "MLIT explicitly restricts N05 to noncommercial use because JTB's 停車場変遷大辞典 is an underlying source.",
+      "bundle_status": "prohibited_by_project_policy"
+    }
+  ]
+}

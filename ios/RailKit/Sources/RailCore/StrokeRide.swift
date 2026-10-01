@@ -100,10 +100,18 @@ public enum StrokeRide {
             let minLat: Double, maxLat: Double, minLon: Double, maxLon: Double
 
             init(_ points: ArraySlice<Coordinate>) {
-                minLat = points.map(\.lat).min() ?? 0
-                maxLat = points.map(\.lat).max() ?? 0
-                minLon = points.map(\.lon).min() ?? 0
-                maxLon = points.map(\.lon).max() ?? 0
+                var loLat = Double.infinity, hiLat = -Double.infinity
+                var loLon = Double.infinity, hiLon = -Double.infinity
+                for point in points {
+                    loLat = min(loLat, point.lat); hiLat = max(hiLat, point.lat)
+                    loLon = min(loLon, point.lon); hiLon = max(hiLon, point.lon)
+                }
+                minLat = loLat; maxLat = hiLat; minLon = loLon; maxLon = hiLon
+            }
+
+            init(union a: Bounds, _ b: Bounds) {
+                minLat = min(a.minLat, b.minLat); maxLat = max(a.maxLat, b.maxLat)
+                minLon = min(a.minLon, b.minLon); maxLon = max(a.maxLon, b.maxLon)
             }
 
             func contains(_ point: Coordinate, pad: Double) -> Bool {
@@ -152,18 +160,71 @@ public enum StrokeRide {
         }
 
         private let entries: [Entry]
+        // A hierarchy stores each chain once, including long chains spanning
+        // many grid cells. Query traversal only finds candidates; original
+        // entry order still decides the first matching railway.
+        private struct Node: Sendable {
+            let bounds: Bounds
+            let left: Int?
+            let right: Int?
+            let entries: [Int]
+        }
+        private let nodes: [Node]
+        private let root: Int?
 
         public init(chains: [ChainRef]) {
-            entries = chains.filter {
+            let entries = chains.filter {
                 $0.points.count >= 2 && $0.points.count == $0.measures.count
             }.map(Entry.init)
+            self.entries = entries
+            var nodes: [Node] = []
+            nodes.reserveCapacity(max(1, entries.count / 2))
+            func build(_ indices: [Int]) -> Int? {
+                guard let first = indices.first else { return nil }
+                let bounds = indices.dropFirst().reduce(entries[first].bounds) {
+                    Bounds(union: $0, entries[$1].bounds)
+                }
+                if indices.count <= 8 {
+                    nodes.append(Node(bounds: bounds, left: nil, right: nil, entries: indices))
+                } else {
+                    let longitude = bounds.maxLon - bounds.minLon > bounds.maxLat - bounds.minLat
+                    let sorted = indices.sorted { a, b in
+                        let ba = entries[a].bounds, bb = entries[b].bounds
+                        let ca = longitude ? ba.minLon + ba.maxLon : ba.minLat + ba.maxLat
+                        let cb = longitude ? bb.minLon + bb.maxLon : bb.minLat + bb.maxLat
+                        return ca == cb ? a < b : ca < cb
+                    }
+                    let middle = sorted.count / 2
+                    let left = build(Array(sorted[..<middle]))
+                    let right = build(Array(sorted[middle...]))
+                    nodes.append(Node(bounds: bounds, left: left, right: right, entries: []))
+                }
+                return nodes.count - 1
+            }
+            root = build(Array(entries.indices))
+            self.nodes = nodes
+        }
+
+        private func candidates(first: Coordinate, last: Coordinate) -> [Int] {
+            var candidates: [Int] = []
+            func visit(_ index: Int) {
+                let node = nodes[index]
+                guard node.bounds.contains(first, pad: boundsPadDegrees),
+                      node.bounds.contains(last, pad: boundsPadDegrees) else { return }
+                candidates.append(contentsOf: node.entries)
+                if let left = node.left { visit(left) }
+                if let right = node.right { visit(right) }
+            }
+            if let root { visit(root) }
+            return candidates.sorted()
         }
 
         public func resolve(segment: [Coordinate]) -> StrokeRef? {
             guard segment.count >= 2 else { return nil }
             let first = segment[0], last = segment[segment.count - 1]
             let length = StrokeRide.polylineLength(segment)
-            for entry in entries {
+            for index in candidates(first: first, last: last) {
+                let entry = entries[index]
                 guard entry.bounds.contains(first, pad: boundsPadDegrees),
                     entry.bounds.contains(last, pad: boundsPadDegrees),
                     let p1 = entry.project(first, tolerance: endpointToleranceMeters),

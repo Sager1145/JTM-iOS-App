@@ -21,7 +21,7 @@ import RailCore
 /// `UIViewRepresentable` to memoise one without changing the view's
 /// initialiser. What the renderer actually needs from a value is the answer to
 /// "has anything about the reader's language changed since the last build?",
-/// and that is four strings and three flags.
+/// and that is six strings and the reading preferences.
 ///
 /// ## The witness
 ///
@@ -48,10 +48,13 @@ struct MapNaming: Equatable, Sendable {
     /// its time.
     var departureTag = ""
     var arrivalTag = ""
-    /// `tag.start` / `tag.end` — the 起點 / 終點 badge the selected DAY's first
-    /// origin and last destination carry.
+    /// `tag.start` / `tag.end` — the 起點 / 終點 badge on selected ride
+    /// and scoped-day endpoints.
     var startTag = ""
     var endTag = ""
+    /// Short role captions shown only beside stations on the selected ride.
+    var stopTag = ""
+    var passTag = ""
 
     init() {}
 
@@ -64,6 +67,8 @@ struct MapNaming: Equatable, Sendable {
         arrivalTag = localization.text("tag.arr", fallback: "Arr")
         startTag = localization.text("tag.start", fallback: "Start")
         endTag = localization.text("tag.end", fallback: "End")
+        stopTag = localization.text("ios.map.stopTag", fallback: "Stop")
+        passTag = localization.text("ios.map.passTag", fallback: "Pass")
         let prefs = localization.activeReadingPrefs
         signature = [
             localization.language.rawValue,
@@ -72,7 +77,7 @@ struct MapNaming: Equatable, Sendable {
             prefs.zh ? "z" : "-",
             // The table-arrival witness. See the type's note.
             String(readingsGeneration),
-            departureTag, arrivalTag, startTag, endTag,
+            departureTag, arrivalTag, startTag, endTag, stopTag, passTag,
         ].joined(separator: "\u{0000}")
     }
 }

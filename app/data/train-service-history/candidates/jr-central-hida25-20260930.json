@@ -1,0 +1,142 @@
+{
+  "candidate_id": "jr-central-hida25-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "hida",
+  "source_id": "jr-west-odekake-hida25-2025d-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/76781?date=20260930",
+  "source_calendar_label": "土曜・休日運休 / 毎日運転",
+  "calendar_note": "The selected September 30 page alone is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.hida.25.2026-09-30",
+    "public_number": "25",
+    "train_number": "2025D",
+    "origin": "大阪",
+    "destination": "高山",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "大阪",
+        "arrival_time": null,
+        "departure_time": "07:58",
+        "platform": "11",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "新大阪",
+        "arrival_time": "08:03",
+        "departure_time": "08:04",
+        "platform": "4",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "京都",
+        "arrival_time": "08:29",
+        "departure_time": "08:31",
+        "platform": "0",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "草津",
+        "arrival_time": "08:50",
+        "departure_time": "08:51",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "米原",
+        "arrival_time": "09:20",
+        "departure_time": "09:22",
+        "platform": "8",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "大垣",
+        "arrival_time": "09:46",
+        "departure_time": "09:46",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "岐阜",
+        "arrival_time": "09:56",
+        "departure_time": "10:12",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "美濃太田",
+        "arrival_time": "10:31",
+        "departure_time": "10:32",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "下呂",
+        "arrival_time": "11:29",
+        "departure_time": "11:30",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "高山",
+        "arrival_time": "12:14",
+        "departure_time": null,
+        "platform": null,
+        "call_type": "destination"
+      }
+    ],
+    "direction": "down",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": [
+      "９月１８～２３日は普通車全車指定席で運転",
+      "大阪－大垣間の各停車駅から乗車し、〔ひだ５号〕に乗り継いで飛騨古川まで行く場合は、通しの料金でご乗車になれます"
+    ],
+    "train_number_segments": [
+      {
+        "from_sequence": 1,
+        "to_sequence": 7,
+        "train_number": "2025D"
+      },
+      {
+        "from_sequence": 7,
+        "to_sequence": 10,
+        "train_number": "25D"
+      }
+    ],
+    "coupling_note": "岐阜－高山間２５Ｄ〔ひだ５号〕に併結",
+    "segment_calendar_labels": [
+      "土曜・休日運休",
+      "毎日運転"
+    ]
+  },
+  "review_notes": [
+    "Official date-selected detail; September 30 drivingday-01 calendar cell and legend inspected in official HTML.",
+    "All printed passenger calls and platforms retained; レ pass rows omitted.",
+    "September 18–23 seat exception does not apply September 30; no formation inferred.",
+    "Two printed columns of the same public service joined at explicit Gifu through arrow; shared boundary stop retained once."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "cell_class": "drivingday-01",
+    "method": "Official HTML calendar cell and printed drivingday-01 legend inspected",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/76781?date=20260930"
+  }
+}

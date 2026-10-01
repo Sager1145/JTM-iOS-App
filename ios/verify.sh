@@ -10,6 +10,7 @@
 #   ./verify.sh --swift    Swift + app build
 #   ./verify.sh --core     RailCore + its parity tests only (the porting loop)
 #   ./verify.sh --js       JavaScript only
+#   ./verify.sh --app      App build + app contracts only
 #
 # SCRATCH lets parallel workers avoid fighting over one build directory:
 #
@@ -44,8 +45,9 @@ case "${1:-}" in
     # contend well.
     --core) run_js=0; run_app=0 ;;
     --js) run_swift=0; run_app=0 ;;
+    --app) run_js=0; run_swift=0 ;;
     "") ;;
-    *) echo "usage: verify.sh [--swift|--core|--js]" >&2; exit 2 ;;
+    *) echo "usage: verify.sh [--swift|--core|--js|--app]" >&2; exit 2 ;;
 esac
 
 fail() { echo "FAIL: $1" >&2; exit 1; }
@@ -75,6 +77,10 @@ fi
 if [ "$run_swift" = 1 ]; then
     echo "== Swift ======================================================="
     cd "$here/RailKit"
+
+    python3 "$here/tools/verify-train-timetable-artifact.py" \
+        || fail "timetable and historical network snapshots differ — rebuild the timetable database"
+    echo "  timetable dates, historical network and bundled resource share one snapshot"
 
     python3 "$here/tools/build-train-service-station-refs.py" --check \
         || fail "train-service station references are missing or ambiguous"
@@ -153,7 +159,18 @@ if [ "$run_swift" = 1 ]; then
         Sources/RailCore/ Sources/RailPresentation/ 2>/dev/null | grep .; then
         fail "a pure target imported a platform framework (see the files above)"
     fi
-    echo "  RailCore imports nothing but Foundation"
+    unexpected_core_imports=$(grep -rhE '^import ' Sources/RailCore/ 2>/dev/null \
+        | sort -u | grep -vE '^import (Foundation|SQLite3)$' || true)
+    if [ -n "$unexpected_core_imports" ]; then
+        echo "$unexpected_core_imports"
+        fail "RailCore imported something other than Foundation/SQLite3"
+    fi
+    sqlite_imports=$(grep -rl '^import SQLite3$' Sources/RailCore/ 2>/dev/null || true)
+    if [ "$sqlite_imports" != "Sources/RailCore/TrainTimetableDatabase.swift" ]; then
+        echo "$sqlite_imports"
+        fail "SQLite3 must remain isolated to TrainTimetableDatabase.swift"
+    fi
+    echo "  RailCore imports Foundation; SQLite3 is isolated to the read-only timetable database"
 
     # And RailPresentation nothing but Foundation and RailCore: it may consume
     # the ported business logic, never the app's storage or map objects.
@@ -362,7 +379,7 @@ if [ "$run_swift" = 1 ]; then
     echo "  every station link is built by StationPlaceLink, and the card resolves its place"
 fi
 
-if [ "$run_app" = 1 ] && [ "$run_swift" = 1 ]; then
+if [ "$run_app" = 1 ]; then
     echo "== app ========================================================="
     cd "$here"
     xcodebuild -project RailMap.xcodeproj -scheme RailMap -sdk iphonesimulator \
@@ -705,9 +722,23 @@ PY
     # one-polygon renderer update, not a network invalidation.
     grep -q 'if playbackLayer\.lastSnapshot != nil {' RailMap/RailMapView.swift \
         || fail "playback camera changes are no longer isolated from network rebuilds"
-    grep -q 'if basemapChanged { updateBasemapVeil(on: mapView) }' \
-        RailMap/RailMapView.swift \
+    # Selection and ride visibility also repaint the retained veil. Accept
+    # those triggers and multiline formatting, while keeping opacity out of
+    # the complete-map update plan and the branch limited to veil paint.
+    python3 - RailMap/RailMapView.swift <<'PY' \
         || fail "basemap opacity once again invalidates the complete map"
+import pathlib, re, sys
+
+source = pathlib.Path(sys.argv[1]).read_text()
+veil = re.search(
+    r'if\s+basemapChanged(?:\s*\|\|\s*(?:selectionChanged|ridesChanged))*\s*'
+    r'\{\s*updateBasemapVeil\(on:\s*mapView\)\s*\}', source)
+changes = re.search(
+    r'let\s+changes\s*=\s*MapDrawChanges\s*\((.*?)\)\s*switch\s+changes\.plan',
+    source, re.S)
+if veil is None or changes is None or 'basemapChanged' in changes.group(1):
+    sys.exit(1)
+PY
     echo "  playback camera and basemap opacity use narrow MapKit invalidation"
 
     # A region's package is opened and JSON-scanned ONCE, wherever it is read.

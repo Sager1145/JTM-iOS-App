@@ -60,6 +60,7 @@ const SCOPE_FILES = [
   "railmap-style.js", // window.RailMapStyle — read at app-config.js's top level
   "app-config.js", // SCHEMA_VERSION, STOP_TYPES, TRAIN_ID_PATTERN, activeCountry …
   "app-datasets.js", // stationNameForCode and the map behind it
+  "app-rail-history.js", // railServiceBounds, used by temporal station dedupe
   "app-stations.js", // stopName, isValidSourceStationCode, resolveStationForTrain
   "app-store-ops.js", // §18/§19 — the canonical shapes and the import normalisers
   "app-validation.js", // §33 — the module under test
@@ -479,6 +480,22 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
   addTrain("arrival is a number", project(base, (t) => (t.stops[1].arrival = 830)));
   addTrain("departure is false", project(base, (t) => (t.stops[1].departure = false)));
   addTrain("arrival is absent", project(base, (t) => delete t.stops[1].arrival));
+  addTrain(
+    "actual arrival is a string",
+    project(base, (t) => (t.stops[1].actual_arrival = "08:14")),
+  );
+  addTrain(
+    "actual departure is null",
+    project(base, (t) => (t.stops[1].actual_departure = null)),
+  );
+  addTrain(
+    "actual arrival is a number",
+    project(base, (t) => (t.stops[1].actual_arrival = 814)),
+  );
+  addTrain(
+    "actual departure is false",
+    project(base, (t) => (t.stops[1].actual_departure = false)),
+  );
 
   // -- unknown keys are NOT validateTrain's business
   addTrain(
@@ -887,6 +904,16 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
     withLean({ stops: [{ name: "東京", departure: "   " }, { name: "品川", arrival: "" }] }),
     undefined,
     "normalizeNullableTime collapses a whitespace-only time to null (§19).",
+  );
+  addImport(
+    "actual times survive and blank actual times disappear",
+    "jp",
+    withLean({
+      stops: [
+        { name: "東京", departure: "08:00", actual_departure: " 08:07 " },
+        { name: "品川", arrival: "08:10", actual_arrival: "   " },
+      ],
+    }),
   );
   addImport(
     "a time that is a number",

@@ -1,0 +1,92 @@
+{
+  "candidate_id": "jr-east-kaiji43-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only September30 td.ok and the Kaiji column; other train numbers on shared pages belong to separate coupled services.",
+  "trip_id": "jr-east.kaiji.43.exact-2026-09-30",
+  "service_id": "kaiji",
+  "service_name": "かいじ",
+  "service_class": "limited_express",
+  "public_number": "43",
+  "train_number": "5143M",
+  "origin": "東京",
+  "destination": "甲府",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-kaiji43-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/075/076131.html",
+  "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 特急かいじ 10号 5143M",
+  "printed_platforms": {
+    "東京": "１",
+    "新宿": "１０",
+    "立川": "６",
+    "八王子": "４",
+    "大月": "３",
+    "塩山": "１",
+    "山梨市": "３",
+    "甲府": "１"
+  },
+  "stops": [
+    [
+      "東京",
+      null,
+      "17:15"
+    ],
+    [
+      "新宿",
+      "17:28",
+      "17:30"
+    ],
+    [
+      "立川",
+      "17:56",
+      "17:57"
+    ],
+    [
+      "八王子",
+      "18:05",
+      "18:06"
+    ],
+    [
+      "大月",
+      "18:32",
+      "18:33"
+    ],
+    [
+      "塩山",
+      "18:51",
+      "18:52"
+    ],
+    [
+      "山梨市",
+      "18:56",
+      "18:56"
+    ],
+    [
+      "石和温泉",
+      "19:00",
+      "19:01"
+    ],
+    [
+      "甲府",
+      "19:06",
+      null
+    ]
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "equipment": [
+    "座席未指定券",
+    "グリーン車指定席",
+    "普通車全車指定席"
+  ],
+  "formation": null,
+  "printed_operating_label": "平日運転",
+  "printed_remarks": [
+    "普通車全席で指定が可能な他、座席未指定券では、車内の空席がご利用可能です"
+  ],
+  "direction": "down",
+  "printed_coupling": null
+}

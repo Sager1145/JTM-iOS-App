@@ -1,0 +1,86 @@
+{
+  "candidate_id": "jr-east-spacia-nikko4-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "spacia-nikko",
+  "service_name": "スペーシア日光",
+  "jr_scope": "through_jr",
+  "public_number": "4",
+  "train_number": "1094M",
+  "trip_id": "jr-east.spacia-nikko.4.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-spacia-nikko4-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/085/087591.html",
+  "source_sha256": "cc88bc56b4e02736542f9fffd38093863d414139d5e9b583fc30328c33c8ab67",
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "cell_class": "ok"
+  },
+  "stops": [
+    [
+      "東武日光",
+      null,
+      "16:38"
+    ],
+    [
+      "下今市",
+      "16:45",
+      "16:46"
+    ],
+    [
+      "新鹿沼",
+      "17:01",
+      "17:02"
+    ],
+    [
+      "栃木",
+      "17:17",
+      "17:19"
+    ],
+    [
+      "大宮",
+      "18:03",
+      "18:04"
+    ],
+    [
+      "浦和",
+      "18:10",
+      "18:11"
+    ],
+    [
+      "池袋",
+      "18:29",
+      "18:30"
+    ],
+    [
+      "新宿",
+      "18:35",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "大宮": "４",
+    "池袋": "２",
+    "新宿": "６"
+  },
+  "equipment": [
+    "グリーン車指定席（４人用グリーン個室連結）",
+    "普通車全車指定席"
+  ],
+  "printed_remarks": "４人用グリーン個室料金は６３００円です １００系",
+  "printed_operating_labels": [],
+  "printed_coupling": null,
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": "100系",
+    "car_count": null,
+    "green_car_available": true,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; retain printed train number only.",
+  "actual_dispatch": null,
+  "green_compartment_note": "Printed equipment specifies a four-person Green compartment; quantity of compartments/car number not printed. This is compartment occupancy, not total seating capacity."
+}

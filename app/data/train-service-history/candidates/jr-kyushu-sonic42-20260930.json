@@ -1,0 +1,97 @@
+{
+  "candidate_id": "jr-kyushu-sonic42-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; displayed passenger calls only; physical lines and operator boundaries unresolved",
+  "source_id": "jr-kyushu-sonic42-20260930-train",
+  "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00239101.html?t=2874200e&d=20260930",
+  "service_date": "2026-09-30",
+  "new_source": {
+    "source_id": "jr-kyushu-sonic42-20260930-train",
+    "source_type": "official_train_timetable",
+    "title": "ソニック42号 列車詳細（2026-09-30）",
+    "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+    "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0023/00239101.html?t=2874200e&d=20260930",
+    "issue": "JR時刻表2026年10月号",
+    "effective_date": "2026-09-30",
+    "accessed_at": "2026-09-30",
+    "license_status": "third_party_timetable_data_terms_apply",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "notes": "Date-selected official train detail; station, clock, train number and equipment rows reviewed. Source bytes not bundled."
+  },
+  "trip": {
+    "trip_id": "jr-kyushu.sonic.42.2026-09-30",
+    "service_id": "sonic",
+    "service_name": "ソニック",
+    "public_number": "42",
+    "train_number": "3042M",
+    "service_date": "2026-09-30",
+    "direction": "大分→博多",
+    "operating_note": "毎日運転",
+    "seat_description_snapshot": [
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "stop_times": [
+      {
+        "name_snapshot": "大分",
+        "arrival_time": null,
+        "departure_time": "15:44",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "別府",
+        "arrival_time": "15:51",
+        "departure_time": "15:52",
+        "platform": null
+      },
+      {
+        "name_snapshot": "中津",
+        "arrival_time": "16:30",
+        "departure_time": "16:31",
+        "platform": null
+      },
+      {
+        "name_snapshot": "行橋",
+        "arrival_time": "16:47",
+        "departure_time": "16:48",
+        "platform": null
+      },
+      {
+        "name_snapshot": "小倉",
+        "arrival_time": "17:03",
+        "departure_time": "17:05",
+        "platform": "4"
+      },
+      {
+        "name_snapshot": "黒崎",
+        "arrival_time": "17:13",
+        "departure_time": "17:14",
+        "platform": null
+      },
+      {
+        "name_snapshot": "折尾",
+        "arrival_time": "17:18",
+        "departure_time": "17:19",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "博多",
+        "arrival_time": "17:49",
+        "departure_time": null,
+        "platform": "5"
+      }
+    ]
+  },
+  "evidence_locators": [
+    {
+      "claim": "exact-day identity, internal number, operating and equipment",
+      "locator": "date heading and train-detail header / expanded other-train-info rows"
+    },
+    {
+      "claim": "passenger calls, clocks and printed platforms",
+      "locator": "駅名 / 時刻 / のりば table"
+    }
+  ]
+}

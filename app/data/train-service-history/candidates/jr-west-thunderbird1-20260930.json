@@ -1,0 +1,17 @@
+{
+  "candidate_id":"jr-west-thunderbird1-20260930",
+  "candidate_status":"visually_reviewed",
+  "canonical":false,
+  "observed_service_date":"2026-09-30",
+  "valid_until":"2026-10-01",
+  "notes":"Official exact-date page was opened with date=20260930. Its calendar displays September 30 in the selected variant. 毎日運転 is retained as a label, not extended into an unreviewed calendar. Pass rows marked レ are omitted.",
+  "service":{"service_id":"thunderbird","canonical_name":"サンダーバード","service_class":"limited_express","historical_generation":1,"jr_scope":"jr"},
+  "trip":{"trip_id":"jr-west.thunderbird.1.2026-09-30","public_number":"1","train_number":"4001M","source_calendar_label":"毎日運転","source_id":"jr-west-odekake-thunderbird1-20260930","stop_times":[
+    {"stop_sequence":1,"name_snapshot":"大阪","arrival_time":null,"departure_time":"06:30","platform":"11","call_type":"origin"},
+    {"stop_sequence":2,"name_snapshot":"新大阪","arrival_time":"06:33","departure_time":"06:34","platform":"4","call_type":"passenger_stop"},
+    {"stop_sequence":3,"name_snapshot":"高槻","arrival_time":"06:44","departure_time":"06:45","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":4,"name_snapshot":"京都","arrival_time":"06:58","departure_time":"06:59","platform":"0","call_type":"passenger_stop"},
+    {"stop_sequence":5,"name_snapshot":"敦賀","arrival_time":"07:54","departure_time":null,"platform":"31","call_type":"destination"}
+  ]},
+  "completeness":{"identity":"verified","train_number":"verified","operator":"unknown","validity_calendar":"verified_for_observed_date","origin_destination":"verified","stops":"verified_for_observed_date","times":"verified_for_observed_date","route_lines":"unknown","station_refs":"verified_current_n02","provenance":"partial"}
+}

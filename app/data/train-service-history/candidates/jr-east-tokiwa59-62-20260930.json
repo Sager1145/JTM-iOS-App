@@ -1,0 +1,82 @@
+{
+  "candidate_id": "jr-east-tokiwa59-62-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30, each selected JR East page has td.ok for that day. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.tokiwa.59.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "59",
+      "train_number": "59M",
+      "source_id": "jr-east-tokiwa59-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048331.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ59号 59M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "11:15"], ["東京", "11:22", "11:23"],
+        ["上野", "11:28", "11:30"], ["柏", "11:49", "11:50"],
+        ["土浦", "12:11", "12:12"], ["石岡", "12:22", "12:22"],
+        ["友部", "12:33", "12:34"], ["水戸", "12:44", "12:45"],
+        ["勝田", "12:50", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.60.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "60",
+      "train_number": "60M",
+      "source_id": "jr-east-tokiwa60-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076441.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ60号 60M; 平日運転, 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "１０", "品川": "９"},
+      "stops": [
+        ["高萩", null, "08:10"], ["日立", "08:21", "08:21"],
+        ["常陸多賀", "08:26", "08:26"], ["大甕", "08:30", "08:31"],
+        ["勝田", "08:40", "08:41"], ["水戸", "08:47", "08:48"],
+        ["友部", "08:58", "08:59"], ["石岡", "09:09", "09:10"],
+        ["土浦", "09:19", "09:20"], ["柏", "09:44", "09:45"],
+        ["上野", "10:06", "10:08"], ["東京", "10:13", "10:14"],
+        ["品川", "10:23", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.61.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "61",
+      "train_number": "61M",
+      "source_id": "jr-east-tokiwa61-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048351.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ61号 61M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "12:15"], ["東京", "12:22", "12:23"],
+        ["上野", "12:28", "12:30"], ["柏", "12:49", "12:50"],
+        ["土浦", "13:11", "13:12"], ["石岡", "13:22", "13:22"],
+        ["友部", "13:33", "13:34"], ["水戸", "13:44", "13:45"],
+        ["勝田", "13:50", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.62.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "62",
+      "train_number": "62M",
+      "source_id": "jr-east-tokiwa62-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076461.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ときわ62号 62M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "９", "品川": "９"},
+      "stops": [
+        ["勝田", null, "09:47"], ["水戸", "09:52", "09:53"],
+        ["友部", "10:03", "10:03"], ["石岡", "10:14", "10:15"],
+        ["土浦", "10:24", "10:25"], ["柏", "10:46", "10:47"],
+        ["上野", "11:06", "11:08"], ["東京", "11:13", "11:14"],
+        ["品川", "11:22", null]
+      ]
+    }
+  ]
+}

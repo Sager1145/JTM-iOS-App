@@ -1,0 +1,34 @@
+{
+  "candidate_id": "jr-kyushu-kirameki2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; all ten published passenger stops and displayed minute clocks; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-kirameki2-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00086001.html?c=28283&ym=202609&d=30",
+  "service_date": "2026-09-30",
+  "trip": {
+    "trip_id": "jr-kyushu.kirameki.2.2026-09-30",
+    "service_id": "kirameki",
+    "service_name": "きらめき",
+    "public_number": "2",
+    "train_number": "52M",
+    "direction": "博多→小倉",
+    "stop_times": [
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"07:11","platform":"2"},
+      {"name_snapshot":"吉塚","arrival_time":"07:13","departure_time":"07:14","platform":null},
+      {"name_snapshot":"香椎","arrival_time":"07:19","departure_time":"07:19","platform":null},
+      {"name_snapshot":"福間","arrival_time":"07:29","departure_time":"07:30","platform":null},
+      {"name_snapshot":"東郷","arrival_time":"07:35","departure_time":"07:36","platform":null},
+      {"name_snapshot":"赤間","arrival_time":"07:39","departure_time":"07:40","platform":null},
+      {"name_snapshot":"折尾","arrival_time":"07:53","departure_time":"07:55","platform":"5"},
+      {"name_snapshot":"黒崎","arrival_time":"08:00","departure_time":"08:01","platform":null},
+      {"name_snapshot":"戸畑","arrival_time":"08:06","departure_time":"08:07","platform":null},
+      {"name_snapshot":"小倉","arrival_time":"08:12","departure_time":null,"platform":"7"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"limited express, public and internal numbers", "locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 service day", "locator":"date-qualified URL and September operating-day calendar"},
+    {"claim":"ten passenger calls and all displayed clocks", "locator":"駅名 / 時刻 / のりば table"}
+  ]
+}

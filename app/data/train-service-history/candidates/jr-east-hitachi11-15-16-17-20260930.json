@@ -1,0 +1,82 @@
+{
+  "candidate_id": "jr-east-hitachi11-15-16-17-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30, each selected JR East page has td.ok for that day. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.11.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "11",
+      "train_number": "11M",
+      "source_id": "jr-east-hitachi11-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048341.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち11号 11M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "７", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "11:45"], ["東京", "11:52", "11:53"],
+        ["上野", "11:58", "12:00"], ["水戸", "13:06", "13:07"],
+        ["勝田", "13:11", "13:12"], ["日立", "13:27", "13:27"],
+        ["磯原", "13:42", "13:43"], ["泉", "13:57", "13:58"],
+        ["湯本", "14:02", "14:03"], ["いわき", "14:09", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.15.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "15",
+      "train_number": "15M",
+      "source_id": "jr-east-hitachi15-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048361.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち15号 15M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "13:45"], ["東京", "13:52", "13:53"],
+        ["上野", "13:58", "14:00"], ["水戸", "15:08", "15:09"],
+        ["勝田", "15:13", "15:14"], ["日立", "15:29", "15:29"],
+        ["磯原", "15:44", "15:45"], ["泉", "15:59", "16:00"],
+        ["湯本", "16:04", "16:05"], ["いわき", "16:11", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.16.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "16",
+      "train_number": "16M",
+      "source_id": "jr-east-hitachi16-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048561.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち16号 16M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"水戸": "７", "上野": "９", "東京": "９", "品川": "９"},
+      "stops": [
+        ["いわき", null, "13:23"], ["湯本", "13:28", "13:29"],
+        ["泉", "13:33", "13:34"], ["磯原", "13:48", "13:49"],
+        ["日立", "14:04", "14:05"], ["勝田", "14:20", "14:21"],
+        ["水戸", "14:26", "14:27"], ["上野", "15:35", "15:37"],
+        ["東京", "15:42", "15:43"], ["品川", "15:51", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.17.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "17",
+      "train_number": "17M",
+      "source_id": "jr-east-hitachi17-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048381.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち17号 17M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "７", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "14:45"], ["東京", "14:52", "14:53"],
+        ["上野", "14:58", "15:00"], ["水戸", "16:06", "16:07"],
+        ["勝田", "16:11", "16:12"], ["大甕", "16:21", "16:22"],
+        ["常陸多賀", "16:25", "16:26"], ["日立", "16:29", "16:30"],
+        ["高萩", "16:40", "16:40"], ["勿来", "16:53", "16:54"],
+        ["泉", "17:02", "17:02"], ["湯本", "17:07", "17:07"],
+        ["いわき", "17:14", null]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+{
+  "candidate_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official JR Hokkaido s=150 down and s=151 up columns for selected 2026-09-30. Every printed passenger-stop clock is captured; レ/||/＝ rows, unprinted clock sides, car count, vehicle series and dated physical line segments are not inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.21.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "21",
+      "train_number": "21D",
+      "origin": "函館",
+      "destination": "札幌",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-down",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=150",
+      "source_locator": "2026年9月30日(水) selected; 21D / 北斗 21 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(3)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        [
+          "函館",
+          null,
+          "18:43"
+        ],
+        [
+          "五稜郭",
+          null,
+          "18:48"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "19:01"
+        ],
+        [
+          "森",
+          null,
+          "19:33"
+        ],
+        [
+          "八雲",
+          null,
+          "19:54"
+        ],
+        [
+          "長万部",
+          null,
+          "20:14"
+        ],
+        [
+          "洞爺",
+          null,
+          "20:40"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "20:51"
+        ],
+        [
+          "東室蘭",
+          "21:07",
+          "21:08"
+        ],
+        [
+          "登別",
+          null,
+          "21:21"
+        ],
+        [
+          "苫小牧",
+          null,
+          "21:48"
+        ],
+        [
+          "南千歳",
+          null,
+          "22:06"
+        ],
+        [
+          "新札幌",
+          null,
+          "22:32"
+        ],
+        [
+          "札幌",
+          "22:41",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.4.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "4",
+      "train_number": "4D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 4D / 北斗 4 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(4)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "06:53"
+        ],
+        [
+          "新札幌",
+          null,
+          "07:02"
+        ],
+        [
+          "南千歳",
+          null,
+          "07:23"
+        ],
+        [
+          "苫小牧",
+          null,
+          "07:40"
+        ],
+        [
+          "登別",
+          null,
+          "08:03"
+        ],
+        [
+          "東室蘭",
+          "08:15",
+          "08:16"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "08:33"
+        ],
+        [
+          "洞爺",
+          null,
+          "08:43"
+        ],
+        [
+          "長万部",
+          null,
+          "09:10"
+        ],
+        [
+          "八雲",
+          null,
+          "09:30"
+        ],
+        [
+          "森",
+          null,
+          "09:53"
+        ],
+        [
+          "大沼公園",
+          null,
+          "10:12"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "10:24"
+        ],
+        [
+          "五稜郭",
+          null,
+          "10:34"
+        ],
+        [
+          "函館",
+          "10:38",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.6.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "6",
+      "train_number": "6D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 6D / 北斗 6 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "08:43"
+        ],
+        [
+          "新札幌",
+          null,
+          "08:51"
+        ],
+        [
+          "南千歳",
+          null,
+          "09:12"
+        ],
+        [
+          "苫小牧",
+          null,
+          "09:28"
+        ],
+        [
+          "白老",
+          null,
+          "09:42"
+        ],
+        [
+          "登別",
+          null,
+          "09:54"
+        ],
+        [
+          "東室蘭",
+          "10:07",
+          "10:08"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "10:27"
+        ],
+        [
+          "洞爺",
+          null,
+          "10:39"
+        ],
+        [
+          "長万部",
+          null,
+          "11:06"
+        ],
+        [
+          "八雲",
+          null,
+          "11:26"
+        ],
+        [
+          "森",
+          null,
+          "11:49"
+        ],
+        [
+          "大沼公園",
+          null,
+          "12:07"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "12:18"
+        ],
+        [
+          "五稜郭",
+          null,
+          "12:28"
+        ],
+        [
+          "函館",
+          "12:33",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.8.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "8",
+      "train_number": "8D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s150-s151-hokuto21-4-6-8-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 8D / 北斗 8 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "09:45"
+        ],
+        [
+          "新札幌",
+          null,
+          "09:54"
+        ],
+        [
+          "南千歳",
+          null,
+          "10:16"
+        ],
+        [
+          "苫小牧",
+          null,
+          "10:34"
+        ],
+        [
+          "白老",
+          null,
+          "10:48"
+        ],
+        [
+          "登別",
+          null,
+          "11:00"
+        ],
+        [
+          "東室蘭",
+          "11:11",
+          "11:12"
+        ],
+        [
+          "伊達紋別",
+          null,
+          "11:28"
+        ],
+        [
+          "洞爺",
+          null,
+          "11:39"
+        ],
+        [
+          "長万部",
+          null,
+          "12:05"
+        ],
+        [
+          "八雲",
+          null,
+          "12:25"
+        ],
+        [
+          "森",
+          null,
+          "12:47"
+        ],
+        [
+          "大沼公園",
+          null,
+          "13:09"
+        ],
+        [
+          "新函館北斗",
+          null,
+          "13:19"
+        ],
+        [
+          "五稜郭",
+          null,
+          "13:31"
+        ],
+        [
+          "函館",
+          "13:35",
+          null
+        ]
+      ]
+    }
+  ]
+}

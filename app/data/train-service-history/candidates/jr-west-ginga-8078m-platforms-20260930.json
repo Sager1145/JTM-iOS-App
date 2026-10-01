@@ -1,0 +1,18 @@
+{
+  "candidate_id": "jr-west-ginga-8078m-platforms-20260930",
+  "candidate_status": "reviewed_official_train_page",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trip_id": "jr-west.west-express-ginga.kumano-day.2026-07-05",
+  "train_number": "8078M",
+  "source_id": "jr-west-odekake-west-express-ginga-8078m-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/193801?date=20260930",
+  "platforms": [
+    {"stop_sequence": 11, "station_name": "和歌山", "platform": "1"},
+    {"stop_sequence": 13, "station_name": "天王寺", "platform": "18"},
+    {"stop_sequence": 14, "station_name": "大阪", "platform": "24"},
+    {"stop_sequence": 15, "station_name": "新大阪", "platform": "1"},
+    {"stop_sequence": 16, "station_name": "京都", "platform": "31"}
+  ],
+  "scope_note": "Only printed September 30 platforms are staged. Blank platform cells on this page provide no replacement value for the reusable multi-date trip."
+}

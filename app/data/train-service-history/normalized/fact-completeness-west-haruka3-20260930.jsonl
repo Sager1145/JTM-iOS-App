@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "1003M and はるか3号", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "1003M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "September 30 weekday selection", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "草津 and 関西空港", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "eleven timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "eleven current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories; car count/series unknown.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "Osaka underground alignment and daily physical route not verified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.3.2026-09-30", "entity_type": "trip", "notes": "Individual train-operation company segments unverified.", "status": "unknown"}

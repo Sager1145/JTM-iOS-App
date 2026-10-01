@@ -1,0 +1,129 @@
+{
+  "inventory_id": "jr-east-sazanami-soga-observed-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "scope": "Only さざ-labelled links from inspected Soga weekday Uchibo-down/Keiyo-up/Uchibo-Sotobo-up station tables. Individual exact-date calendars checked; no exclusion claim for unseen entrances or branded variants.",
+  "discovery_entrance": "https://timetables.jreast.co.jp/timetable/list0920.html",
+  "trains": [
+    {
+      "public_number": "1",
+      "train_number": "1001M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049701.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "1a9ed299547f5689d4c8a2a218a56313661abc5c8d9b3a10c1ce84ff456fa3ed",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "2",
+      "train_number": "1002M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049741.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "ac6f0ae8f1d3700302b4476c77f5be310ad0ae16fdcb5f6577c15291b19341f3",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "3",
+      "train_number": "1003M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049711.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "fd2ec48e5009590f82181e7cfa3b5ae62a9f8e0a71ba58f412abc94f00b144d1",
+      "staged_before": true,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "4",
+      "train_number": "1004M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076061.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "a5c898302eea3577ae98021077257b6a91d35bc3216bbc2a5225ef526c5c59d1",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "5",
+      "train_number": "1005M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049721.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "59bbbcb6fdc2b6e8f199a5497a58407abe52a1992aa45c79b920162307c3c07f",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "6",
+      "train_number": "1006M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049761.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920020.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "f48ae58751b7b4721b346ab19169a2292a43c873c4722735286e6d036c398f41",
+      "staged_before": false,
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "7",
+      "train_number": "1007M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049731.html",
+      "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0920/0920010.html",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "source_sha256": "2eb21ee89e9d77cd6b974e65c1f3938c1c1f115d280ae8d6d628c90f101c5497",
+      "staged_before": false,
+      "staged_candidate_present": true
+    }
+  ],
+  "observed_proven_count": 7,
+  "staged_observed_count": 7,
+  "remaining_observed_public_numbers": [],
+  "observed_set_audit": {
+    "proven_public_numbers": 7,
+    "staged_public_numbers": 7,
+    "trip_count": 7,
+    "stop_rows": 41,
+    "printed_platforms": 34,
+    "missing_public_numbers": [],
+    "candidate_normalized_mismatches": [],
+    "formation_scope": "7 planned ordinary reserved-seat rows; vehicle/car counts and actual dispatch unknown.",
+    "verification_test": "ios/tools/tests/test_east_sazanami_observed_inventory_20260930.py",
+    "scope": "Closes only observed Soga individual-page set; no claim excluding unseen entrances or branded variants."
+  }
+}

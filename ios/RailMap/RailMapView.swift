@@ -63,8 +63,8 @@ private struct MapLabelCollisionGrid {
     }
 
     private static let cellSize: CGFloat = 96
-    private static let horizontalPadding: CGFloat = 4
-    private static let verticalPadding: CGFloat = 3
+    private static let horizontalPadding: CGFloat = 8
+    private static let verticalPadding: CGFloat = 6
     private var boxesByCell: [Cell: [CGRect]] = [:]
 
     mutating func insertIfClear(_ box: CGRect) -> Bool {
@@ -90,6 +90,19 @@ private struct MapLabelCollisionGrid {
             }
         }
         return true
+    }
+
+    /// Endpoint cards stay visible even when two of them overlap. Reserve both
+    /// boxes so later station names cannot be admitted on top of either card.
+    mutating func reserve(_ box: CGRect) {
+        guard box.width > 0, box.height > 0 else { return }
+        let padded = box.insetBy(
+            dx: -Self.horizontalPadding, dy: -Self.verticalPadding)
+        for column in cellRange(from: padded.minX, through: padded.maxX) {
+            for row in cellRange(from: padded.minY, through: padded.maxY) {
+                boxesByCell[Cell(column: column, row: row), default: []].append(padded)
+            }
+        }
     }
 
     private func cellRange(from lower: CGFloat, through upper: CGFloat) -> ClosedRange<Int> {
@@ -735,6 +748,28 @@ struct RailMapView: View {
                 naming: MapNaming,
                 on mapView: MKMapView
             ) {
+                // Input preparation also rebuilds station and line indexes.
+                // Keep the installed frame stable while fingers move, and
+                // coalesce arriving data into the newest update for release.
+                if isManipulating {
+                    pendingViewUpdate = { [weak self, weak mapView] in
+                        guard let self, let mapView, self.mapView === mapView else { return }
+                        self.update(
+                            lines: lines, stations: stations, rides: rides,
+                            networkExtent: networkExtent,
+                            selectedTrainID: selectedTrainID, selectedDate: selectedDate,
+                            networkRideDate: networkRideDate,
+                            showsNetwork: showsNetwork, layers: layers,
+                            categoryIndexes: categoryIndexes,
+                            autoFocusRequest: autoFocusRequest,
+                            basemapOpacity: basemapOpacity,
+                            display: display, naming: naming, on: mapView)
+                    }
+                    rebuildDeferredByGesture = true
+                    return
+                }
+                // A newer normal update supersedes any queued gesture update.
+                pendingViewUpdate = nil
                 // A sheet drag and a menu presentation can call
                 // `updateUIView` every frame while these arrays still share
                 // their exact backing buffers with the coordinator. Take that
@@ -985,7 +1020,9 @@ struct RailMapView: View {
                 case .rebuild:
                     rebuildOwed(on: mapView)
                 }
-                if basemapChanged { updateBasemapVeil(on: mapView) }
+                if basemapChanged || selectionChanged || ridesChanged {
+                    updateBasemapVeil(on: mapView)
+                }
             }
 
             /// The old full-rebuild branch, unchanged, extracted so the
@@ -1164,6 +1201,7 @@ struct RailMapView: View {
             /// Keep mounted layers while the camera moves. A cancellable settle
             /// task coalesces gesture, inertia, resize and data-arrival rebuilds.
             private var cameraRebuildTask: Task<Void, Never>?
+            private var pendingViewUpdate: (@MainActor () -> Void)?
             private var lastCameraChange: ContinuousClock.Instant?
 
             /// Cancel work and release bridges installed by this coordinator when
@@ -1174,6 +1212,7 @@ struct RailMapView: View {
             func tearDown(_ dismantledMapView: MKMapView) {
                 cameraRebuildTask?.cancel()
                 cameraRebuildTask = nil
+                pendingViewUpdate = nil
                 viewportResizeTask?.cancel()
                 viewportResizeTask = nil
                 matchingTask?.cancel()
@@ -1221,6 +1260,9 @@ struct RailMapView: View {
                         self.rebuildDeferredByGesture = true
                         return
                     }
+                    let pendingUpdate = self.pendingViewUpdate
+                    self.pendingViewUpdate = nil
+                    pendingUpdate?()
                     if self.playbackLayer.lastSnapshot != nil {
                         self.rebuildDeferredByPlayback = true
                         return
@@ -1347,12 +1389,25 @@ struct RailMapView: View {
                 rebuild(on: mapView)
             }
 
-            /// Keep the veil mounted. Changing the renderer's compositing alpha
-            /// avoids baking each slider value into separately redrawn map tiles.
+            /// A selected ride uses a quiet map surface so its own stations and
+            /// captions are the only geographic text left in the foreground.
+            /// Outside selection the reader's basemap opacity setting applies.
+            private var focusesSelectedRide: Bool {
+                rides.contains { $0.id == selectedTrainID && $0.visible }
+            }
+
+            /// Keep the veil mounted. Changing its paint and compositing alpha
+            /// avoids rebuilding the basemap when selection changes.
             private func updateBasemapVeil(on mapView: MKMapView) {
                 if let basemapVeil, mapView.overlays.contains(where: { $0 === basemapVeil }) {
-                    mapView.renderer(for: basemapVeil)?.alpha =
-                        CGFloat(1 - min(max(basemapOpacity, 0), 1))
+                    if let renderer = mapView.renderer(for: basemapVeil) as? BasemapVeilRenderer {
+                        renderer.surfaceColor = focusesSelectedRide
+                            ? MapLabelStyle.halo(
+                                dark: mapView.traitCollection.userInterfaceStyle == .dark).cgColor
+                            : CGColor(gray: 0, alpha: 1)
+                        renderer.alpha = focusesSelectedRide
+                            ? 1 : CGFloat(1 - min(max(basemapOpacity, 0), 1))
+                    }
                     return
                 }
                 let veil = BasemapVeilOverlay()
@@ -1497,6 +1552,11 @@ struct RailMapView: View {
                     cachedTapIndex = nil
 #if DEBUG
                     renderStatus?.text = "network:off;lines:0;overlays:0;backbones:0;networkStations:0"
+                        + ";rides:0"
+                        + String(format: ";centerLat:%.6f;centerLon:%.6f;distance:%.1f", mapView.centerCoordinate.latitude,
+                                 mapView.centerCoordinate.longitude, mapView.camera.centerCoordinateDistance)
+                        + String(format: ";viewportWidth:%.1f;viewportHeight:%.1f", mapView.bounds.width, mapView.bounds.height)
+                        + targetRideReadiness()
 #endif
                     return
                 }
@@ -2002,7 +2062,7 @@ struct RailMapView: View {
                     + ";networkStations:\(networkAnnotations.count)"
                     + String(format: ";distance:%.1f", mapView.camera.centerCoordinateDistance)
                     + String(format: ";heading:%.1f", mapView.camera.heading)
-                    + String(format: ";centerLat:%.4f;centerLon:%.4f", mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude)
+                    + String(format: ";centerLat:%.6f;centerLon:%.6f", mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude)
                     + String(format: ";viewportWidth:%.1f;viewportHeight:%.1f", mapView.bounds.width, mapView.bounds.height)
                     + String(format: ";firstNetworkMs:%.1f", firstNetworkRenderMilliseconds ?? -1)
                     + ";rebuilds:\(rebuildCount);gestureBuilds:\(rebuildsDuringGesture)"
@@ -2010,9 +2070,24 @@ struct RailMapView: View {
                     + ";panCallbacks:\(panCallbacks);panMaxGapMs:\(maxPanCallbackGapMilliseconds)"
                     + ";gestureFrames:\(gestureFrameProbe.frames);gestureMaxFrameGapMs:\(Int(gestureFrameProbe.maximumGapMilliseconds))"
                     + ";buildMs:\(elapsed.milliseconds);covered:\(networkBuildState.builtRect.contains(mapView.visibleMapRect) ? 1 : 0)"
+                renderStatus?.text = (renderStatus?.text ?? "") + targetRideReadiness()
 #endif
                 DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
+
+#if DEBUG
+            private func targetRideReadiness() -> String {
+                // A ride count includes entries whose geometry is still being
+                // decoded. Picking/focus tests wait for their target and the
+                // category index used to filter its segments.
+                guard let targetID = ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_READY_RIDE"]
+                else { return "" }
+                let target = rides.first { $0.id == targetID }
+                let ready = target?.segments.contains { $0.coordinates.count > 1 } == true
+                let classified = target.map { categoryIndexes[$0.country] != nil } == true
+                return ";targetRideReady:\(ready ? 1 : 0);targetCategoryReady:\(classified ? 1 : 0)"
+            }
+#endif
 
             private func buildMarkers(_ context: MarkerBuildContext, on mapView: MKMapView) {
                 let zoom = context.zoom
@@ -2089,18 +2164,17 @@ struct RailMapView: View {
                 let endpointPoints = placedEndpointSpecs.map {
                     mapView.convert($0.coordinate.clLocation, toPointTo: mapView)
                 }
-                MapEndpointLabels.layout(&placedEndpointSpecs, at: endpointPoints)
+                MapEndpointLabels.layout(
+                    &placedEndpointSpecs, at: endpointPoints,
+                    containerWidth: mapView.bounds.width)
                 for index in placedEndpointSpecs.indices {
                     let point = endpointPoints[index]
-                    MapEndpointLabels.clampHorizontally(
-                        &placedEndpointSpecs[index], at: point,
-                        containerWidth: mapView.bounds.width)
                     let offset = MapEndpointLabels.centreOffset(
                         for: placedEndpointSpecs[index])
                     let size = CGSize(
                         width: placedEndpointSpecs[index].width,
                         height: placedEndpointSpecs[index].height)
-                    _ = labelCollisions.insertIfClear(CGRect(
+                    labelCollisions.reserve(CGRect(
                         x: point.x + offset.x - size.width / 2,
                         y: point.y + offset.y - size.height / 2,
                         width: size.width, height: size.height))
@@ -2165,9 +2239,9 @@ struct RailMapView: View {
                 // marker.
                 let ridesByID = Dictionary(
                     rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-                // The full-network map retains role-specific zoom floors.
-                // The journey-only map admits all names to collision placement;
-                // below-floor dots return only when their name fits.
+                // Unselected rides retain role-specific zoom floors. The
+                // selected ride keeps its station dots and offers every name
+                // to collision placement, even with the network visible.
                 var markerAnnotations: [MKAnnotation] = []
                 var pendingRideLabels: [(
                     claimName: String, position: Coordinate,
@@ -2186,11 +2260,12 @@ struct RailMapView: View {
                         lastEmitted = nil
                         continue
                     }
-                    let drawsDot = MapRideMarkers.drawsDot(item, atZoom: zoom)
-                    // In the journey-only map, space rather than the network's
-                    // zoom ladder decides which names are useful. A hidden dot
-                    // must not prevent its name from entering that election.
-                    guard !showsNetwork || drawsDot
+                    let selected = feature.tid == selectedTrainID
+                    let drawsDot = selected || MapRideMarkers.drawsDot(item, atZoom: zoom)
+                    // A selected journey uses screen space rather than the
+                    // network zoom ladder to decide which names can fit.
+                    // Other rides keep the journey-only map's existing rule.
+                    guard selected || !showsNetwork || drawsDot
                             || feature.role == "stop-center" else {
                         lastEmitted = nil
                         continue
@@ -2244,7 +2319,6 @@ struct RailMapView: View {
                         displayCoordinate = record.position.clLocation
                     }
                     guard buildRect.contains(MKMapPoint(displayCoordinate)) else { continue }
-                    let selected = feature.tid == selectedTrainID
                     let routeColor = UIColor(railHex: item.routeColorHex) ?? .systemBlue
                     let prominent = feature.role == "terminal" || feature.role == "xday"
                     let annotation = RideStationAnnotation(
@@ -2277,11 +2351,11 @@ struct RailMapView: View {
                         selected: selected)
                     if drawsDot { markerAnnotations.append(annotation) }
                     lastEmitted = annotation
-                    // …and its name, if it won one and the view is wide enough for
-                    // its tier. Each floor is a hard gate rather than a fade,
-                    // because a zero-opacity label would still hold its space in
-                    // the collision pass and silently suppress a name that IS
-                    // shown — the finding recorded on `RideLabelTier`.
+                    // …and its name, if it won one. Unselected rides retain
+                    // their tier floor; a selected ride offers every name to
+                    // collision placement. Each remaining floor is a hard gate
+                    // rather than a fade, because a zero-opacity label would
+                    // still suppress a name that IS shown.
                     //
                     // Which election answers depends on whether the reader has
                     // chosen a journey: with none chosen the deck-wide one
@@ -2294,16 +2368,22 @@ struct RailMapView: View {
                             ? record.name : "")
                         : feature.name
                     guard !labelName.isEmpty, let tier = annotation.labelTier,
-                          !showsNetwork || zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom))
+                          selected || !showsNetwork
+                            || zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom))
                     else { continue }
                     // The election runs on the package's own names — see
                     // `markerRecords` — and only the winner is translated, so
                     // which record carries a name never depends on the
                     // reader's language.
+                    let stationName = localized(
+                        labelName, code: item.stationCode, region: item.region).display
+                    let roleTag = selected ? (feature.role == "pass" ? naming.passTag
+                        : feature.role == "stop" ? naming.stopTag : "") : ""
+                    let displayedName = roleTag.isEmpty
+                        ? stationName : "\(stationName) · \(roleTag)"
                     let label = RideLabelAnnotation(
                         coordinate: annotation.coordinate,
-                        text: localized(
-                            labelName, code: item.stationCode, region: item.region).display,
+                        text: displayedName,
                         rawName: record.name, stationCode: item.stationCode,
                         region: item.region,
                         tier: tier,
@@ -2344,13 +2424,22 @@ struct RailMapView: View {
                         + MapLabelStyle.haloWidth * 2
                     let height = max(ceil(measured.height), 16)
                     let point = mapView.convert(item.coordinate, toPointTo: mapView)
-                    let box = CGRect(
-                        x: point.x + item.dotRadiusToken * scale
-                            + textSize * MapLabelStyle.radialOffsetEm,
-                        y: point.y - height / 2,
+                    let gap = item.dotRadiusToken * scale
+                        + textSize * MapLabelStyle.radialOffsetEm
+                    let trailing = CGRect(
+                        x: point.x + gap, y: point.y - height / 2,
                         width: width, height: height)
-                    guard labelCollisions.insertIfClear(box),
-                          claimName(candidate.claimName, at: candidate.position)
+                    let leading = CGRect(
+                        x: point.x - gap - width, y: point.y - height / 2,
+                        width: width, height: height)
+                    if labelCollisions.insertIfClear(trailing) {
+                        item.side = .trailing
+                    } else if labelCollisions.insertIfClear(leading) {
+                        item.side = .leading
+                    } else {
+                        continue
+                    }
+                    guard claimName(candidate.claimName, at: candidate.position)
                     else { continue }
                     // Only revive a below-threshold dot when its label fits;
                     // a national view must not instantiate every station view.
@@ -3076,8 +3165,8 @@ struct RailMapView: View {
                 // destination are ALWAYS labelled, so picking a date
                 // immediately shows where that day begins and ends.
                 if scope.isActive, let pair = scopedEndpointRides() {
-                    add(endpointSpec(for: pair.first, kind: .origin, dayEndpoint: true))
-                    add(endpointSpec(for: pair.last, kind: .destination, dayEndpoint: true))
+                    add(endpointSpec(for: pair.first, kind: .origin))
+                    add(endpointSpec(for: pair.last, kind: .destination))
                 }
                 // (2) …and the selected ride keeps its own two ends.
                 guard let ride = rides.first(where: { $0.id == selectedTrainID }), ride.visible
@@ -3093,8 +3182,7 @@ struct RailMapView: View {
             /// `buildEndpointLabelSpec`, with the four pieces resolved.
             private func endpointSpec(
                 for ride: RiddenRouteStore.DrawnRide,
-                kind: MapEndpointLabels.Kind,
-                dayEndpoint: Bool = false
+                kind: MapEndpointLabels.Kind
             ) -> MapEndpointLabels.Spec? {
                 guard let endpoint = MapEndpointLabels.endpointStop(of: ride, kind: kind)
                 else { return nil }
@@ -3107,8 +3195,7 @@ struct RailMapView: View {
                 let clock = kind == .origin ? endpoint.stop.departure : endpoint.stop.arrival
                 let tag = kind == .origin ? naming.departureTag : naming.arrivalTag
                 let time = (clock?.isEmpty == false) ? "\(tag) \(clock!)" : ""
-                let badge = dayEndpoint
-                    ? (kind == .origin ? naming.startTag : naming.endTag) : ""
+                let badge = kind == .origin ? naming.startTag : naming.endTag
                 return MapEndpointLabels.spec(
                     trainID: ride.id, kind: kind, at: endpoint.position,
                     name: named.display, rawName: endpoint.stop.name,
@@ -3129,12 +3216,10 @@ struct RailMapView: View {
                 let points = specs.map {
                     mapView.convert($0.coordinate.clLocation, toPointTo: mapView)
                 }
-                MapEndpointLabels.layout(&specs, at: points)
+                MapEndpointLabels.layout(
+                    &specs, at: points, containerWidth: mapView.bounds.width)
                 for index in specs.indices {
-                    MapEndpointLabels.clampHorizontally(
-                        &specs[index], at: points[index],
-                        containerWidth: mapView.bounds.width)
-                    // Placement is all `layout` and `clampHorizontally` touch;
+                    // Placement is all `layout` touches;
                     // the text, the readings and the measured box are the ones
                     // the spec was built with. `configure` re-measures three
                     // labels and every reading with `sizeThatFits`, and this
@@ -3878,7 +3963,12 @@ struct RailMapView: View {
             func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
                 if let veil = overlay as? BasemapVeilOverlay {
                     let renderer = BasemapVeilRenderer(overlay: veil)
-                    renderer.alpha = CGFloat(1 - min(max(basemapOpacity, 0), 1))
+                    renderer.surfaceColor = focusesSelectedRide
+                        ? MapLabelStyle.halo(
+                            dark: mapView.traitCollection.userInterfaceStyle == .dark).cgColor
+                        : CGColor(gray: 0, alpha: 1)
+                    renderer.alpha = focusesSelectedRide
+                        ? 1 : CGFloat(1 - min(max(basemapOpacity, 0), 1))
                     return renderer
                 }
                 // The weight ramp, applied at the one place a token becomes points.
@@ -4015,8 +4105,12 @@ final class BasemapVeilOverlay: NSObject, MKOverlay {
 }
 
 final class BasemapVeilRenderer: MKOverlayRenderer {
+    var surfaceColor: CGColor = CGColor(gray: 0, alpha: 1) {
+        didSet { setNeedsDisplay() }
+    }
+
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-        context.setFillColor(CGColor(gray: 0, alpha: 1))
+        context.setFillColor(surfaceColor)
         context.fill(rect(for: mapRect))
     }
 }

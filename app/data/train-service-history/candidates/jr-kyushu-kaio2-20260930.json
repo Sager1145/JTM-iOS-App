@@ -1,0 +1,30 @@
+{
+  "candidate_id": "jr-kyushu-kaio2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; six passenger calls and printed clock sides only; no operator or physical-line promotion",
+  "source_id": "jr-kyushu-kaio2-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00192701.html?c=28283&ym=202609&d=30",
+  "service_date": "2026-09-30",
+  "trip": {
+    "trip_id": "jr-kyushu.kaio.2.2026-09-30",
+    "service_id": "kaio",
+    "service_name": "かいおう",
+    "public_number": "2",
+    "train_number": "1092H",
+    "direction": "博多→直方",
+    "stop_times": [
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"21:37","platform":"7"},
+      {"name_snapshot":"吉塚","arrival_time":"21:40","departure_time":"21:41","platform":null},
+      {"name_snapshot":"桂川","arrival_time":"22:05","departure_time":"22:07","platform":null},
+      {"name_snapshot":"飯塚","arrival_time":"22:13","departure_time":"22:13","platform":null},
+      {"name_snapshot":"新飯塚","arrival_time":"22:16","departure_time":"22:17","platform":null},
+      {"name_snapshot":"直方","arrival_time":"22:29","departure_time":null,"platform":null}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"limited express and numbers", "locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"exact day", "locator":"date-qualified URL and 2026年9月運転日 calendar"},
+    {"claim":"six calls and clock sides", "locator":"駅名 / 時刻 / のりば table"}
+  ]
+}

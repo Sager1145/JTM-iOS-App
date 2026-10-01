@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Dated page prints ひだ36号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Dated page prints 36D → 2036D with through transition at Gifu.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Ordered operator segments not established.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Only September 30 is promoted.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Both termini printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "10 timed calls; レ rows excluded.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks and side blanks retained.", "status": "verified"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Dated physical line identities not established.", "status": "unknown"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Exact current N02 name-code matches.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-central.hida.36.2026-09-30", "entity_type": "trip", "notes": "Official page is verification-only.", "status": "partial"}

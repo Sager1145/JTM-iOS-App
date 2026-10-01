@@ -1,0 +1,40 @@
+{
+  "candidate_id": "jr-east-azusa8-12-21-29-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30, each selected JR East train page marks that date td.ok. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.azusa.8.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "8", "train_number": "5008M",
+      "source_id": "jr-east-azusa8-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/075/076231.html",
+      "source_locator": "2026年9月30日 td.ok current variant; 時刻詳細 あずさ8号 5008M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"松本": "２", "甲府": "２", "八王子": "２", "立川": "３", "新宿": "７", "東京": "２"},
+      "stops": [["松本", null, "07:10"], ["塩尻", "07:18", "07:18"], ["岡谷", "07:25", "07:26"], ["上諏訪", "07:32", "07:33"], ["茅野", "07:38", "07:39"], ["甲府", "08:16", "08:17"], ["八王子", "09:10", "09:11"], ["立川", "09:19", "09:20"], ["新宿", "09:45", "09:46"], ["東京", "10:00", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.12.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "12", "train_number": "5012M",
+      "source_id": "jr-east-azusa12-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/075/076251.html",
+      "source_locator": "2026年9月30日 td.ok current variant; 時刻詳細 あずさ12号 5012M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"松本": "２", "小淵沢": "２", "甲府": "２", "八王子": "２", "立川": "３", "新宿": "７", "東京": "１"},
+      "stops": [["松本", null, "08:10"], ["塩尻", "08:19", "08:19"], ["岡谷", "08:26", "08:27"], ["下諏訪", "08:30", "08:31"], ["上諏訪", "08:34", "08:35"], ["茅野", "08:42", "08:43"], ["富士見", "08:52", "08:53"], ["小淵沢", "08:59", "08:59"], ["韮崎", "09:15", "09:16"], ["甲府", "09:25", "09:27"], ["八王子", "10:20", "10:21"], ["立川", "10:30", "10:31"], ["新宿", "10:58", "11:00"], ["東京", "11:12", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.21.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "21", "train_number": "21M",
+      "source_id": "jr-east-azusa21-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/050/054681.html",
+      "source_locator": "2026年9月30日 td.ok current variant; 時刻詳細 あずさ21号 21M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "１０", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "３"},
+      "stops": [["新宿", null, "12:00"], ["立川", "12:21", "12:22"], ["八王子", "12:30", "12:31"], ["甲府", "13:27", "13:28"], ["小淵沢", "13:51", "13:51"], ["茅野", "14:05", "14:05"], ["上諏訪", "14:10", "14:11"], ["岡谷", "14:18", "14:18"], ["塩尻", "14:25", "14:26"], ["松本", "14:35", null]]
+    },
+    {
+      "trip_id": "jr-east.azusa.29.exact-2026-09-30", "service_date": "2026-09-30", "public_number": "29", "train_number": "29M",
+      "source_id": "jr-east-azusa29-20260930", "source_url": "https://timetables.jreast.co.jp/2610/train/025/025711.html",
+      "source_locator": "2026年9月30日 td.ok current variant; 時刻詳細 あずさ29号 29M; 設備 and 番線",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"新宿": "１０", "立川": "６", "八王子": "４", "甲府": "１", "小淵沢": "１", "松本": "３"},
+      "stops": [["新宿", null, "14:00"], ["立川", "14:23", "14:24"], ["八王子", "14:32", "14:32"], ["甲府", "15:27", "15:28"], ["小淵沢", "15:51", "15:52"], ["茅野", "16:06", "16:07"], ["上諏訪", "16:13", "16:14"], ["岡谷", "16:21", "16:21"], ["塩尻", "16:29", "16:29"], ["松本", "16:39", null]]
+    }
+  ]
+}

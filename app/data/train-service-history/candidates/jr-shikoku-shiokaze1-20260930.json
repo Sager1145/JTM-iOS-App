@@ -1,0 +1,34 @@
+{
+  "candidate_id": "jr-shikoku-shiokaze1-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; fifteen displayed passenger calls; passing rows excluded; physical route and operator segments unresolved",
+  "sources": [
+    {"source_id":"jr-odekake-shiokaze1-20260930-train","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"特急 しおかぜ1号 列車時刻表（2026-09-30）","source_type":"official_train_timetable","url_or_locator":"https://timetable.jr-odekake.net/train-timetable/18541?date=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-30","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Manually reviewed date-qualified train page. Its second column shows coupled いしづち1号; only the しおかぜ1号 passenger column is normalized here. Source bytes are not bundled."},
+    {"source_id":"jr-odekake-shiokaze1-20260930-station","publisher":"西日本旅客鉄道株式会社 / 株式会社交通新聞社","title":"岡山駅時刻表（2026-09-30）","source_type":"official_dated_station_timetable","url_or_locator":"https://timetable.jr-odekake.net/station-timetable/3449041001?date=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-30","license_status":"explicit_reproduction_and_processing_prohibition","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Dated station page links the 07:22 しおかぜ1号 to the train detail."}
+  ],
+  "trip": {"trip_id":"jr-shikoku.shiokaze.1.2026-09-30","service_id":"shiokaze","service_name":"しおかぜ","public_number":"1","train_number":"1M","service_date":"2026-09-30","direction":"岡山→松山",
+    "equipment_note":"普通車一部指定席。宇多津－松山は1001M（いしづち1号）を併結。併結相手の別列車は本候補では未正規化。",
+    "stop_times": [
+      {"name_snapshot":"岡山","arrival_time":null,"departure_time":"07:22","platform":"6"},
+      {"name_snapshot":"児島","arrival_time":"07:41","departure_time":"07:42","platform":null},
+      {"name_snapshot":"宇多津","arrival_time":"07:58","departure_time":"08:01","platform":null},
+      {"name_snapshot":"丸亀","arrival_time":"08:04","departure_time":"08:04","platform":null},
+      {"name_snapshot":"多度津","arrival_time":"08:08","departure_time":"08:09","platform":null},
+      {"name_snapshot":"詫間","arrival_time":"08:16","departure_time":"08:17","platform":null},
+      {"name_snapshot":"観音寺","arrival_time":"08:26","departure_time":"08:27","platform":null},
+      {"name_snapshot":"川之江","arrival_time":"08:37","departure_time":"08:37","platform":null},
+      {"name_snapshot":"伊予三島","arrival_time":"08:41","departure_time":"08:44","platform":null},
+      {"name_snapshot":"新居浜","arrival_time":"09:00","departure_time":"09:01","platform":null},
+      {"name_snapshot":"伊予西条","arrival_time":"09:08","departure_time":"09:09","platform":null},
+      {"name_snapshot":"壬生川","arrival_time":"09:17","departure_time":"09:18","platform":null},
+      {"name_snapshot":"今治","arrival_time":"09:30","departure_time":"09:31","platform":null},
+      {"name_snapshot":"伊予北条","arrival_time":"09:53","departure_time":"09:54","platform":null},
+      {"name_snapshot":"松山","arrival_time":"10:06","departure_time":null,"platform":"1"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"date and departure","locator":"岡山駅 date-qualified station timetable 07:22 row"},
+    {"claim":"1M identity, 15 calls, equipment and coupling","locator":"train detail header and しおかぜ1号 first column; レ pass-through rows excluded"}
+  ]
+}

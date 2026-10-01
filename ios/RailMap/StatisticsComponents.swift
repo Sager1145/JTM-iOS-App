@@ -285,6 +285,7 @@ struct StatisticsColumnChart: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(column.name))
         .accessibilityValue(Text(column.spoken))
+        .accessibilityIdentifier("statisticsRhythmColumn-\(column.id)")
     }
 
     private var peak: Int { columns.map(\.count).max() ?? 0 }

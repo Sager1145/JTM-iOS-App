@@ -444,8 +444,14 @@ function applyLoadedRailHistoryToSections(
   // Station additions were installed earlier for indexing. Retirement
   // selectors describe current-package features, so do not let one historical
   // addition accidentally satisfy an otherwise-unmatched selector.
+  const addedStationIDs = new Set();
+  for (const code of railScopeCountriesForCountry(country)) {
+    (railHistoryOverlays.get(code)?.stations || []).forEach((feature) => {
+      if (feature?.properties?.history_id) addedStationIDs.add(feature.properties.history_id);
+    });
+  }
   const currentStations = (railHistoryFeatureList(stations) || []).filter(
-    (feature) => !feature?.properties?.history_id,
+    (feature) => !addedStationIDs.has(feature?.properties?.history_id),
   );
   for (const code of railScopeCountriesForCountry(country)) {
     const overlay = railHistoryOverlays.get(code);

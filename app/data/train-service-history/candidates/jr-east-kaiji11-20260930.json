@@ -1,0 +1,74 @@
+{
+  "candidate_id": "jr-east-kaiji11-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 td.ok cell and displayed 3111M Kaiji portion of the coupled train table.",
+  "trip_id": "jr-east.kaiji.11.exact-2026-09-30",
+  "service_id": "kaiji",
+  "service_name": "かいじ",
+  "service_class": "limited_express",
+  "public_number": "11",
+  "train_number": "3111M",
+  "origin": "新宿",
+  "destination": "甲府",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-kaiji11-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/050/054801.html",
+  "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 特急かいじ 11号 3111M, coupled with 富士回遊 11号 to 大月",
+  "printed_platforms": {
+    "新宿": "１０",
+    "立川": "６",
+    "八王子": "４",
+    "大月": "３",
+    "塩山": "１",
+    "山梨市": "３",
+    "甲府": "１"
+  },
+  "stops": [
+    [
+      "新宿",
+      null,
+      "09:30"
+    ],
+    [
+      "立川",
+      "09:58",
+      "09:59"
+    ],
+    [
+      "八王子",
+      "10:08",
+      "10:09"
+    ],
+    [
+      "大月",
+      "10:36",
+      "10:39"
+    ],
+    [
+      "勝沼ぶどう郷",
+      "10:55",
+      "10:56"
+    ],
+    [
+      "塩山",
+      "10:59",
+      "11:00"
+    ],
+    [
+      "山梨市",
+      "11:04",
+      "11:04"
+    ],
+    [
+      "石和温泉",
+      "11:08",
+      "11:09"
+    ],
+    [
+      "甲府",
+      "11:15",
+      null
+    ]
+  ]
+}

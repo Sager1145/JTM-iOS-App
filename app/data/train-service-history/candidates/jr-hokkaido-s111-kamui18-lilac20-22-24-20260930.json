@@ -1,0 +1,100 @@
+{
+  "candidate_id": "jr-hokkaido-s111-kamui18-lilac20-22-24-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official s=111 up-direction page visibly selected 2026年9月30日(水). These four columns each print 毎日 and seven passenger calls. Kamui 18 prints the all-reserved icon only; Lilac 20, 22, and 24 each print Green and all-reserved icons. Blank arrival sides are left unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.kamui.18.exact-2026-09-30",
+      "service_id": "kamui",
+      "public_number": "18",
+      "train_number": "2018M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "2018M / カムイ18, selected 2026-09-30 毎日 column; 編成 row prints zensekisitei0.png only; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {"札幌": "(2)"},
+      "stops": [
+        ["旭川", null, "11:00"],
+        ["深川", null, "11:19"],
+        ["滝川", null, "11:33"],
+        ["砂川", null, "11:38"],
+        ["美唄", null, "11:50"],
+        ["岩見沢", null, "12:00"],
+        ["札幌", "12:25", null]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.20.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "20",
+      "train_number": "3020M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3020M / ライラック20, selected 2026-09-30 毎日 column; 編成 row prints greensiteidai0.png and zensekisitei0.png; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {"札幌": "(3)"},
+      "stops": [
+        ["旭川", null, "12:00"],
+        ["深川", null, "12:19"],
+        ["滝川", null, "12:32"],
+        ["砂川", null, "12:38"],
+        ["美唄", null, "12:50"],
+        ["岩見沢", null, "13:00"],
+        ["札幌", "13:25", null]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.22.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "22",
+      "train_number": "3022M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3022M / ライラック22, selected 2026-09-30 毎日 column; 編成 row prints greensiteidai0.png and zensekisitei0.png; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {"札幌": "(3)"},
+      "stops": [
+        ["旭川", null, "13:00"],
+        ["深川", null, "13:19"],
+        ["滝川", null, "13:32"],
+        ["砂川", null, "13:38"],
+        ["美唄", null, "13:50"],
+        ["岩見沢", null, "14:00"],
+        ["札幌", "14:25", null]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.24.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "24",
+      "train_number": "3024M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-up-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+      "source_locator": "3024M / ライラック24, selected 2026-09-30 毎日 column; 編成 row prints greensiteidai0.png and zensekisitei0.png; printed passenger-stop rows",
+      "origin": "旭川",
+      "destination": "札幌",
+      "printed_platforms": {"札幌": "(3)"},
+      "stops": [
+        ["旭川", null, "14:00"],
+        ["深川", null, "14:19"],
+        ["滝川", null, "14:32"],
+        ["砂川", null, "14:38"],
+        ["美唄", null, "14:50"],
+        ["岩見沢", null, "15:00"],
+        ["札幌", "15:25", null]
+      ],
+      "pass_through_names": []
+    }
+  ]
+}

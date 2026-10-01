@@ -1,0 +1,83 @@
+{
+  "candidate_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "JR Hokkaido s=151 up timetable selected 2026年9月30日(水); columns 5, 10, 13, 16 and 17 print these Suzuran trains. Only printed passenger clocks, Sapporo departure platforms and all-reserved icons are transcribed. Car count, series and physical route remain unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.suzuran.4.exact-2026-09-30",
+      "service_id": "suzuran", "service_name": "すずらん", "service_class": "limited_express", "public_number": "4", "train_number": "1004M",
+      "origin": "札幌", "destination": "室蘭", "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; column 5: 1004M / すずらん 4 / 毎日",
+      "operating_day_marker": "毎日", "printed_platforms": {"札幌": "(9)"}, "formation_icons": ["zensekisitei0.png"], "pass_through_names": [],
+      "stops": [
+        ["札幌", null, "09:21"], ["新札幌", null, "09:30"], ["千歳", null, "09:53"], ["南千歳", null, "09:57"],
+        ["沼ノ端", null, "10:08"], ["苫小牧", null, "10:14"], ["白老", null, "10:28"], ["登別", null, "10:40"],
+        ["幌別", null, "10:46"], ["鷲別", null, "10:51"], ["東室蘭", "10:54", "10:55"], ["輪西", null, "10:58"],
+        ["御崎", null, "11:01"], ["母恋", null, "11:04"], ["室蘭", "11:06", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.6.exact-2026-09-30",
+      "service_id": "suzuran", "service_name": "すずらん", "service_class": "limited_express", "public_number": "6", "train_number": "1006M",
+      "origin": "札幌", "destination": "室蘭", "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; column 10: 1006M / すずらん 6 / 毎日",
+      "operating_day_marker": "毎日", "printed_platforms": {"札幌": "(7)"}, "formation_icons": ["zensekisitei0.png"], "pass_through_names": [],
+      "stops": [
+        ["札幌", null, "13:46"], ["新札幌", null, "13:54"], ["千歳", null, "14:14"], ["南千歳", null, "14:18"],
+        ["沼ノ端", null, "14:30"], ["苫小牧", null, "14:37"], ["白老", null, "14:51"], ["登別", null, "15:03"],
+        ["幌別", null, "15:09"], ["鷲別", null, "15:15"], ["東室蘭", "15:18", "15:19"], ["輪西", null, "15:22"],
+        ["御崎", null, "15:25"], ["母恋", null, "15:28"], ["室蘭", "15:30", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.8.exact-2026-09-30",
+      "service_id": "suzuran", "service_name": "すずらん", "service_class": "limited_express", "public_number": "8", "train_number": "1008M",
+      "origin": "札幌", "destination": "室蘭", "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; column 13: 1008M / すずらん 8 / 毎日",
+      "operating_day_marker": "毎日", "printed_platforms": {"札幌": "(7)"}, "formation_icons": ["zensekisitei0.png"], "pass_through_names": [],
+      "stops": [
+        ["札幌", null, "16:07"], ["新札幌", null, "16:15"], ["千歳", null, "16:36"], ["南千歳", null, "16:39"],
+        ["沼ノ端", null, "16:50"], ["苫小牧", null, "16:57"], ["白老", null, "17:10"], ["登別", null, "17:22"],
+        ["幌別", null, "17:28"], ["鷲別", null, "17:34"], ["東室蘭", "17:36", "17:37"], ["輪西", null, "17:41"],
+        ["御崎", null, "17:44"], ["母恋", null, "17:46"], ["室蘭", "17:49", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.10.exact-2026-09-30",
+      "service_id": "suzuran", "service_name": "すずらん", "service_class": "limited_express", "public_number": "10", "train_number": "1010M",
+      "origin": "札幌", "destination": "室蘭", "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; column 16: 1010M / すずらん 10 / 毎日",
+      "operating_day_marker": "毎日", "printed_platforms": {"札幌": "(7)"}, "formation_icons": ["zensekisitei0.png"], "pass_through_names": [],
+      "stops": [
+        ["札幌", null, "19:14"], ["新札幌", null, "19:23"], ["千歳", null, "19:45"], ["南千歳", null, "19:48"],
+        ["沼ノ端", null, "20:00"], ["苫小牧", null, "20:07"], ["白老", null, "20:23"], ["登別", null, "20:36"],
+        ["幌別", null, "20:42"], ["鷲別", null, "20:48"], ["東室蘭", "20:51", "20:52"], ["輪西", null, "20:55"],
+        ["御崎", null, "20:58"], ["母恋", null, "21:01"], ["室蘭", "21:03", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.suzuran.12.exact-2026-09-30",
+      "service_id": "suzuran", "service_name": "すずらん", "service_class": "limited_express", "public_number": "12", "train_number": "1012M",
+      "origin": "札幌", "destination": "室蘭", "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-suzuran4-6-8-10-12-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; column 17: 1012M / すずらん 12 / 毎日",
+      "operating_day_marker": "毎日", "printed_platforms": {"札幌": "(9)"}, "formation_icons": ["zensekisitei0.png"], "pass_through_names": [],
+      "stops": [
+        ["札幌", null, "21:12"], ["新札幌", null, "21:20"], ["千歳", null, "21:39"], ["南千歳", null, "21:43"],
+        ["沼ノ端", null, "21:54"], ["苫小牧", null, "22:01"], ["白老", null, "22:14"], ["登別", null, "22:26"],
+        ["幌別", null, "22:31"], ["鷲別", null, "22:37"], ["東室蘭", "22:39", "22:41"], ["輪西", null, "22:44"],
+        ["御崎", null, "22:47"], ["母恋", null, "22:50"], ["室蘭", "22:52", null]
+      ]
+    }
+  ]
+}

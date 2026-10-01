@@ -1,0 +1,58 @@
+{
+  "candidate_id": "jr-shikoku-nanpu2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "database_as_of_date": "2026-09-30",
+  "notes": "The exact-date JR Odekake line grid contains Nanpu 2 / 32D on September 30. Its linked train-detail page supplies the 13 timed passenger calls below. Passing rows marked レ are excluded. The 'daily' label is not used to infer earlier or later service dates. The publisher does not by itself attest ordered operator boundaries or physical line identities.",
+  "sources": [
+    {
+      "source_id": "jr-odekake-nanpu2-20260930-train",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急 南風2号 列車時刻表（2026-09-30）",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/train-timetable/30871?date=20260930",
+      "issue": "JR時刻表 2026年10月号",
+      "accessed_at": "2026-09-29",
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually reviewed exact-date train page; source HTML/PDF bytes are not bundled."
+    },
+    {
+      "source_id": "jr-odekake-nanpu2-20260930-line",
+      "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "土讃線区間時刻表 上り（2026-09-30）",
+      "source_type": "official_dated_line_timetable",
+      "url_or_locator": "https://timetable.jr-odekake.net/line-timetable/2473?day=30&month=9&year=2026",
+      "issue": "JR時刻表 2026年10月号",
+      "accessed_at": "2026-09-29",
+      "license_status": "explicit_reproduction_and_processing_prohibition",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "The dated line grid shows Nanpu 2 with internal train number 32D."
+    }
+  ],
+  "trip": {
+    "trip_id": "jr-shikoku.nanpu.2.2026-09-30",
+    "service_id": "nanpu",
+    "service_name": "南風",
+    "public_number": "2",
+    "train_number": "32D",
+    "service_date": "2026-09-30",
+    "stop_times": [
+      {"name_snapshot": "高知", "arrival_time": null, "departure_time": "06:00", "platform": "1"},
+      {"name_snapshot": "後免", "arrival_time": "06:07", "departure_time": "06:07", "platform": null},
+      {"name_snapshot": "土佐山田", "arrival_time": "06:11", "departure_time": "06:12", "platform": null},
+      {"name_snapshot": "大杉", "arrival_time": "06:31", "departure_time": "06:31", "platform": null},
+      {"name_snapshot": "大歩危", "arrival_time": "06:48", "departure_time": "06:48", "platform": null},
+      {"name_snapshot": "阿波池田", "arrival_time": "07:06", "departure_time": "07:08", "platform": null},
+      {"name_snapshot": "琴平", "arrival_time": "07:31", "departure_time": "07:32", "platform": null},
+      {"name_snapshot": "善通寺", "arrival_time": "07:36", "departure_time": "07:37", "platform": null},
+      {"name_snapshot": "多度津", "arrival_time": "07:41", "departure_time": "07:49", "platform": null},
+      {"name_snapshot": "丸亀", "arrival_time": "07:53", "departure_time": "07:54", "platform": null},
+      {"name_snapshot": "宇多津", "arrival_time": "07:57", "departure_time": "07:58", "platform": null},
+      {"name_snapshot": "児島", "arrival_time": "08:12", "departure_time": "08:14", "platform": null},
+      {"name_snapshot": "岡山", "arrival_time": "08:38", "departure_time": null, "platform": "6"}
+    ]
+  }
+}

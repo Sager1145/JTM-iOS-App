@@ -22,8 +22,8 @@ struct WorkspacePanelPage<Header: View, Content: View>: View {
 }
 
 /// Clears the opaque system background UIKit gives each tab's hosting view,
-/// so the menu's Liquid Glass — the sheet's own, or the docked card's — shows
-/// through. Walks up only as far as the tab bar controller's own view.
+/// so the shared menu surface shows through without a second color layer.
+/// Walks up only as far as the tab bar controller's own view.
 private struct TabHostTransparency: UIViewRepresentable {
     func makeUIView(context: Context) -> Probe { Probe() }
     func updateUIView(_ uiView: Probe, context: Context) {}
@@ -51,9 +51,8 @@ private struct TabHostTransparency: UIViewRepresentable {
             liftTabBar()
         }
 
-        /// The tab bar is glass on a glass menu, so on its own it has no edge
-        /// to read. A soft shadow in the shape of its capsule lifts it off the
-        /// card and leaves the glass itself untouched. The path is explicit
+        /// A soft shadow in the shape of the system tab bar's glass capsule
+        /// separates it from the opaque menu surface. The path is explicit
         /// because the glass renders nothing a layer shadow could trace.
         private func liftTabBar() {
             guard let bar = tabBar,

@@ -1,0 +1,316 @@
+{
+  "inventory_id": "jr-west-yakumo-20260930-closed-set",
+  "service_date": "2026-09-30",
+  "source_station_tables": {
+    "okayama": "https://timetable.jr-odekake.net/station-timetable/3449046001?date=20260930",
+    "izumoshi": "https://timetable.jr-odekake.net/station-timetable/3285024001?date=20260930"
+  },
+  "scope_note": "Exact-date station departure links and corresponding train-page identities. Full printed calls are staged only for trains 1–4. Existing normalized Yakumo 15 was present before this batch. Source pages are not redistributed.",
+  "counts": {
+    "train_pages_running": 30,
+    "normalized_at_inventory": 1,
+    "fully_reviewed_train_pages": 12
+  },
+  "trains": [
+    {
+      "service_id": "yakumo",
+      "public_number": 1,
+      "train_number": "1001M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76231?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 2,
+      "train_number": "1002M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76332?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 3,
+      "train_number": "1003M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76241?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 4,
+      "train_number": "1004M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76281?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 5,
+      "train_number": "1005M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76251?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 6,
+      "train_number": "1006M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76291?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 7,
+      "train_number": "1007M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76261?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 8,
+      "train_number": "1008M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76301?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 9,
+      "train_number": "1009M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76271?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 10,
+      "train_number": "1010M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/76321?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 11,
+      "train_number": "1011M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/541?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 12,
+      "train_number": "1012M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278901?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "reviewed_full_page"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 13,
+      "train_number": "1013M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278871?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 14,
+      "train_number": "1014M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/631?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 15,
+      "train_number": "1015M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/681?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": true,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 16,
+      "train_number": "1016M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278911?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 17,
+      "train_number": "1017M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278881?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 18,
+      "train_number": "1018M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/771?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 19,
+      "train_number": "1019M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/811?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 20,
+      "train_number": "1020M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/891?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 21,
+      "train_number": "1021M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/921?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 22,
+      "train_number": "1022M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/941?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 23,
+      "train_number": "1023M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/961?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 24,
+      "train_number": "1024M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/971?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 25,
+      "train_number": "1025M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1001?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 26,
+      "train_number": "1026M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1021?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 27,
+      "train_number": "1027M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1041?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 28,
+      "train_number": "1028M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278921?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 29,
+      "train_number": "1029M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/278891?date=20260930",
+      "station_table_source": "okayama",
+      "direction": "southbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    },
+    {
+      "service_id": "yakumo",
+      "public_number": 30,
+      "train_number": "1030M",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1101?date=20260930",
+      "station_table_source": "izumoshi",
+      "direction": "northbound",
+      "normalized_at_inventory": false,
+      "detail_status": "identity_and_date_reviewed"
+    }
+  ]
+}

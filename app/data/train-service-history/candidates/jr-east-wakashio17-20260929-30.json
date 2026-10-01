@@ -1,0 +1,85 @@
+{
+  "candidate_status": "reviewed_official_html",
+  "issue": "JR時刻表2026年10月号",
+  "notes": "The official train-detail page directly marks 2026-09-29 and 2026-09-30 as td.ok and prints the complete passenger-stop table for this schedule variant. Only those two requested dates are promoted. No recurring weekday calendar, pass records, operator segments, or route lines are inferred. Raw HTML is not bundled; the source registry contains factual metadata, the locator, and a review hash only.",
+  "operator_name_for_station_match": "東日本旅客鉄道",
+  "schema_version": 1,
+  "trips": [
+    {
+      "operating_dates": [
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "public_name": "わかしお 17号",
+      "public_number": "17",
+      "service_id": "wakashio",
+      "service_name": "わかしお",
+      "source": {
+        "accessed_at": "2026-09-29T23:56:48Z",
+        "automated_extraction_allowed": false,
+        "content_hash": "sha256:15ff3b2fde28534cf240474658742b9cad30d29313510ffe17eff91d1640414a",
+        "issue": "JR時刻表2026年10月号",
+        "license_status": "unknown",
+        "notes": "Official train-detail page visually and structurally reviewed. September 29 and 30 are td.ok calendar cells. The stop/time facts were manually transcribed. Raw HTML is not bundled and redistribution authorization is unresolved.",
+        "publisher": "東日本旅客鉄道 / 交通新聞社",
+        "redistribution_status": "unknown",
+        "source_id": "jr-east-wakashio17-20260929-30",
+        "source_type": "official_train_timetable",
+        "title": "わかしお 17号 停車駅一覧",
+        "url_or_locator": "https://timetables.jreast.co.jp/2610/train/095/098781.html"
+      },
+      "stop_times": [
+        {
+          "arrival_time": null,
+          "call_type": "origin",
+          "departure_time": "20:00",
+          "name_snapshot": "東京",
+          "platform": "京１",
+          "stop_sequence": 1
+        },
+        {
+          "arrival_time": "20:36",
+          "call_type": "passenger_stop",
+          "departure_time": "20:37",
+          "name_snapshot": "蘇我",
+          "platform": "５",
+          "stop_sequence": 2
+        },
+        {
+          "arrival_time": "20:46",
+          "call_type": "passenger_stop",
+          "departure_time": "20:47",
+          "name_snapshot": "土気",
+          "platform": null,
+          "stop_sequence": 3
+        },
+        {
+          "arrival_time": "20:51",
+          "call_type": "passenger_stop",
+          "departure_time": "20:51",
+          "name_snapshot": "大網",
+          "platform": "２",
+          "stop_sequence": 4
+        },
+        {
+          "arrival_time": "20:59",
+          "call_type": "passenger_stop",
+          "departure_time": "21:00",
+          "name_snapshot": "茂原",
+          "platform": "３",
+          "stop_sequence": 5
+        },
+        {
+          "arrival_time": "21:08",
+          "call_type": "destination",
+          "departure_time": null,
+          "name_snapshot": "上総一ノ宮",
+          "platform": "２",
+          "stop_sequence": 6
+        }
+      ],
+      "train_number": "1067M",
+      "variant_id": "weekday-requested-dates"
+    }
+  ]
+}

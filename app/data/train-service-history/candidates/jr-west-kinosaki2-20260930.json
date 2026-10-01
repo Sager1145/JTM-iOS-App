@@ -1,0 +1,95 @@
+{
+  "candidate_id": "jr-west-kinosaki2-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "Only the selected 2026-09-30 page is promoted; the daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-west.kinosaki.2.2026-09-30",
+    "service_id": "kinosaki",
+    "public_number": "2",
+    "train_number": "5002M",
+    "origin": "福知山",
+    "destination": "京都",
+    "train_source_id": "jr-west-odekake-kinosaki2-5002m-20260930",
+    "train_source_url": "https://timetable.jr-odekake.net/train-timetable/90831?date=20260930",
+    "route_current_n02_line_id": "jp-西日本旅客鉄道-山陰線",
+    "route_source_ids": [
+      "jr-west-kinosaki2-sanin-scope-20260930",
+      "mlit-n02-2025-kinosaki2-20260930"
+    ],
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "福知山",
+        "current_source_code": "005124",
+        "arrival_time": null,
+        "departure_time": "06:02",
+        "platform": "1",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "綾部",
+        "current_source_code": "005106",
+        "arrival_time": "06:11",
+        "departure_time": "06:12",
+        "platform": "2",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "日吉",
+        "current_source_code": "005489",
+        "arrival_time": "06:41",
+        "departure_time": "06:41",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "園部",
+        "current_source_code": "005695",
+        "arrival_time": "06:48",
+        "departure_time": "06:49",
+        "platform": "2",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "亀岡",
+        "current_source_code": "005925",
+        "arrival_time": "07:00",
+        "departure_time": "07:00",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "二条",
+        "current_source_code": "005949",
+        "arrival_time": "07:12",
+        "departure_time": "07:13",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "京都",
+        "current_source_code": "006079",
+        "arrival_time": "07:18",
+        "departure_time": null,
+        "platform": "30",
+        "call_type": "destination"
+      }
+    ]
+  },
+  "review_notes": [
+    "The 2026-09-30 Fukuchiyama station Sanin-line page 06:02 link opens exact train page 90831 for Kinosaki 2, 5002M.",
+    "Only seven timed passenger calls are retained; all レ pass rows are omitted.",
+    "JR West route scope is 山陰本線. Current N02 names this line 山陰線 and contains all seven calls in order.",
+    "Current N02 line identity has no 2026-09-30 daily validity interval. No actual-operation or full-inventory claim."
+  ]
+}

@@ -945,7 +945,7 @@ struct QuietActionGroup: View {
             // exactly this reason: a control's meaning and its 44-point target
             // do not get clearer by doubling the mark inside it.
             .font(.system(size: 15, weight: .semibold))
-            .foregroundStyle(Color.accentColor)
+            .foregroundStyle(.tint)
             .frame(
                 width: SheetIconButton<Image>.visualSide,
                 height: SheetIconButton<Image>.visualSide)
@@ -965,6 +965,7 @@ struct QuietActionGroup: View {
             )
             .labelStyle(.iconOnly)
             .font(.footnote.weight(.semibold))
+            .foregroundStyle(.tint)
             .frame(minWidth: 44)
             .padding(.vertical, 10)
         }

@@ -1,0 +1,104 @@
+{
+  "inventory_id": "jr-central-fujikawa-inaji-bounded-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "completeness": "partial",
+  "scope_note": "Seven Kofu-origin Fujikawa identities proven individually; opposite direction not yet inventoried. Iida line weekday tables identify four Inaji names but exact-date detail evidence is still missing. No unconditional closed inventory claim.",
+  "guide_url": "https://railway.jr-central.co.jp/train/express/detail_02_03/index.html",
+  "discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0671/0671030.html",
+  "comparison_database": "app/data/train-service-history/derived/train-service-timetable.sqlite",
+  "comparison_result": "No trips or service identity for fujikawa or inaji before staging",
+  "trains": [
+    {
+      "service_id": "fujikawa",
+      "public_number": "2",
+      "train_number": "4002M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011061.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "4",
+      "train_number": "4004M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011071.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "6",
+      "train_number": "4006M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011081.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "8",
+      "train_number": "4008M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011091.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "10",
+      "train_number": "4010M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011111.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "12",
+      "train_number": "4012M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011121.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "14",
+      "train_number": "4014M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/010/011131.html",
+      "direction": "up",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 calendar day30 td.ok",
+      "db_present_before_staging": false
+    }
+  ],
+  "unresolved_service": {
+    "service_id": "inaji",
+    "observed_public_numbers": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "observed_train_numbers": [
+      "21M",
+      "22M",
+      "23M",
+      "24M"
+    ],
+    "source_urls": [
+      "https://timetables.jreast.co.jp/2610/timetable-v/112d1.html",
+      "https://timetables.jreast.co.jp/2610/timetable-v/112u1.html"
+    ],
+    "scheduled_on_date": null,
+    "missing_evidence": "Exact September 30 train detail/calendar; weekday line tables only cover Hon-Nagashino–Okaya section and do not supply full trip stop arrivals/platforms."
+  }
+}

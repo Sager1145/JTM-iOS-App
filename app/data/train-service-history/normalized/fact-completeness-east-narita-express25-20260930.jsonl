@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "Official Narita Express 25 train-detail page.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "Official page prints 2225M.", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "September 30 td.ok cell selects this page.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "新宿 to 成田空港 endpoints printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "All 6 passenger stops printed.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "All printed arrival/departure clocks captured.", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "Current JR East N02 station-group matches.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "No dated ordered operator segments.", "status": "unknown"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "No dated ordered physical line identities.", "status": "unknown"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-east.narita-express.25.exact-2026-09-30", "entity_type": "trip", "notes": "Official page pinned; reuse grant unconfirmed.", "status": "partial"}

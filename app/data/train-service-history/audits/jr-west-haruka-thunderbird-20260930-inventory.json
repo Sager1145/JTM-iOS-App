@@ -1,0 +1,1125 @@
+{
+  "inventory_id": "jr-west-haruka-thunderbird-20260930-closed-set",
+  "service_date": "2026-09-30",
+  "source_station_tables": {
+    "haruka_odd": "https://timetable.jr-odekake.net/station-timetable/2784076001?date=20260930",
+    "haruka_even": "https://timetable.jr-odekake.net/station-timetable/3162069001?date=20260930",
+    "thunderbird_odd": "https://timetable.jr-odekake.net/station-timetable/2796076002?date=20260930",
+    "thunderbird_even": "https://timetable.jr-odekake.net/station-timetable/2635014001?date=20260930"
+  },
+  "scope_note": "Origin-station date-selected link inventory only. page_link_only means the individual train page, train number, complete stop clocks, platforms, equipment, and operation label are not verified. Link IDs are not stable across date variants.",
+  "db_snapshot": {
+    "path": "derived/train-service-timetable.sqlite",
+    "haruka_present": 60,
+    "thunderbird_present": 50,
+    "snapshot_kind": "read_only_at_inventory_generation"
+  },
+  "counts": {
+    "haruka_total": 60,
+    "thunderbird_total": 50,
+    "train_pages_reviewed": 110,
+    "page_link_only": 0
+  },
+  "trains": [
+    {
+      "service_id": "haruka",
+      "public_number": 1,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/91?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1001M",
+      "reviewed_trip_id": "jr-west.haruka.1.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 2,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/151?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1002M",
+      "reviewed_trip_id": "jr-west.haruka.2.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 3,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/181?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1003M",
+      "reviewed_trip_id": "jr-west.haruka.3.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 4,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/231?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1004M",
+      "reviewed_trip_id": "jr-west.haruka.4.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 5,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/271?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1005M",
+      "reviewed_trip_id": "jr-west.haruka.5.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 6,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/321?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1006M",
+      "reviewed_trip_id": "jr-west.haruka.6.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 7,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/203221?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1007M",
+      "reviewed_trip_id": "jr-west.haruka.7.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 8,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/401?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1008M",
+      "reviewed_trip_id": "jr-west.haruka.8.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 9,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/192661?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1009M",
+      "reviewed_trip_id": "jr-west.haruka.9.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 10,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/203241?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1010M",
+      "reviewed_trip_id": "jr-west.haruka.10.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 11,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/192681?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1011M",
+      "reviewed_trip_id": "jr-west.haruka.11.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 12,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/581?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1012M",
+      "reviewed_trip_id": "jr-west.haruka.12.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 13,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/192701?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1013M",
+      "reviewed_trip_id": "jr-west.haruka.13.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 14,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257171?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1014M",
+      "reviewed_trip_id": "jr-west.haruka.14.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 15,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/661?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1015M",
+      "reviewed_trip_id": "jr-west.haruka.15.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 16,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257181?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1016M",
+      "reviewed_trip_id": "jr-west.haruka.16.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 17,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256921?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1017M",
+      "reviewed_trip_id": "jr-west.haruka.17.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 18,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257191?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1018M",
+      "reviewed_trip_id": "jr-west.haruka.18.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 19,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256941?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1019M",
+      "reviewed_trip_id": "jr-west.haruka.19.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 20,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257201?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1020M",
+      "reviewed_trip_id": "jr-west.haruka.20.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 21,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256951?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1021M",
+      "reviewed_trip_id": "jr-west.haruka.21.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 22,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257211?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1022M",
+      "reviewed_trip_id": "jr-west.haruka.22.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 23,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256961?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1023M",
+      "reviewed_trip_id": "jr-west.haruka.23.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 24,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257221?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1024M",
+      "reviewed_trip_id": "jr-west.haruka.24.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 25,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256971?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1025M",
+      "reviewed_trip_id": "jr-west.haruka.25.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 26,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257231?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1026M",
+      "reviewed_trip_id": "jr-west.haruka.26.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 27,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256981?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1027M",
+      "reviewed_trip_id": "jr-west.haruka.27.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 28,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257241?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1028M",
+      "reviewed_trip_id": "jr-west.haruka.28.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 29,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/256991?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1029M",
+      "reviewed_trip_id": "jr-west.haruka.29.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 30,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257251?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1030M",
+      "reviewed_trip_id": "jr-west.haruka.30.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 31,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257001?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1031M",
+      "reviewed_trip_id": "jr-west.haruka.31.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 32,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257261?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1032M",
+      "reviewed_trip_id": "jr-west.haruka.32.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 33,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257011?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1033M",
+      "reviewed_trip_id": "jr-west.haruka.33.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 34,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257271?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1034M",
+      "reviewed_trip_id": "jr-west.haruka.34.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 35,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257021?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1035M",
+      "reviewed_trip_id": "jr-west.haruka.35.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 36,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257281?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1036M",
+      "reviewed_trip_id": "jr-west.haruka.36.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 37,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257031?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1037M",
+      "reviewed_trip_id": "jr-west.haruka.37.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 38,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257291?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1038M",
+      "reviewed_trip_id": "jr-west.haruka.38.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 39,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257041?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1039M",
+      "reviewed_trip_id": "jr-west.haruka.39.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 40,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257301?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1040M",
+      "reviewed_trip_id": "jr-west.haruka.40.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 41,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257051?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1041M",
+      "reviewed_trip_id": "jr-west.haruka.41.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 42,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129451?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1042M",
+      "reviewed_trip_id": "jr-west.haruka.42.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 43,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257071?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1043M",
+      "reviewed_trip_id": "jr-west.haruka.43.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 44,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257321?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1044M",
+      "reviewed_trip_id": "jr-west.haruka.44.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 45,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257091?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1045M",
+      "reviewed_trip_id": "jr-west.haruka.45.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 46,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1151?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1046M",
+      "reviewed_trip_id": "jr-west.haruka.46.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 47,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/1171?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1047M",
+      "reviewed_trip_id": "jr-west.haruka.47.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 48,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257341?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1048M",
+      "reviewed_trip_id": "jr-west.haruka.48.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 49,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257111?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1049M",
+      "reviewed_trip_id": "jr-west.haruka.49.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 50,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/192721?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1050M",
+      "reviewed_trip_id": "jr-west.haruka.50.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 51,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129391?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1051M",
+      "reviewed_trip_id": "jr-west.haruka.51.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 52,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257361?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1052M",
+      "reviewed_trip_id": "jr-west.haruka.52.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 53,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257131?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1053M",
+      "reviewed_trip_id": "jr-west.haruka.53.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 54,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/192741?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1054M",
+      "reviewed_trip_id": "jr-west.haruka.54.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 55,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129411?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1055M",
+      "reviewed_trip_id": "jr-west.haruka.55.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 56,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257381?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1056M",
+      "reviewed_trip_id": "jr-west.haruka.56.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 57,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257151?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1057M",
+      "reviewed_trip_id": "jr-west.haruka.57.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 58,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129471?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1058M",
+      "reviewed_trip_id": "jr-west.haruka.58.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 59,
+      "station_table_source": "haruka_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129431?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1059M",
+      "reviewed_trip_id": "jr-west.haruka.59.2026-09-30"
+    },
+    {
+      "service_id": "haruka",
+      "public_number": 60,
+      "station_table_source": "haruka_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/129481?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "1060M",
+      "reviewed_trip_id": "jr-west.haruka.60.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 1,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257651?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4001M",
+      "reviewed_trip_id": "jr-west.thunderbird.1.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 2,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257941?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4002M",
+      "reviewed_trip_id": "jr-west.thunderbird.2.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 3,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257661?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4003M",
+      "reviewed_trip_id": "jr-west.thunderbird.3.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 4,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257961?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4004M",
+      "reviewed_trip_id": "jr-west.thunderbird.4.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 5,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257671?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4005M",
+      "reviewed_trip_id": "jr-west.thunderbird.5.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 6,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257981?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4006M",
+      "reviewed_trip_id": "jr-west.thunderbird.6.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 7,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257691?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4007M",
+      "reviewed_trip_id": "jr-west.thunderbird.7.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 8,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257991?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4008M",
+      "reviewed_trip_id": "jr-west.thunderbird.8.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 9,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257701?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4009M",
+      "reviewed_trip_id": "jr-west.thunderbird.9.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 10,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258001?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4010M",
+      "reviewed_trip_id": "jr-west.thunderbird.10.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 11,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257721?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4011M",
+      "reviewed_trip_id": "jr-west.thunderbird.11.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 12,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258021?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4012M",
+      "reviewed_trip_id": "jr-west.thunderbird.12.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 13,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257741?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4013M",
+      "reviewed_trip_id": "jr-west.thunderbird.13.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 14,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258031?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4014M",
+      "reviewed_trip_id": "jr-west.thunderbird.14.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 15,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257751?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4015M",
+      "reviewed_trip_id": "jr-west.thunderbird.15.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 16,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258051?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4016M",
+      "reviewed_trip_id": "jr-west.thunderbird.16.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 17,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257761?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4017M",
+      "reviewed_trip_id": "jr-west.thunderbird.17.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 18,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258061?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4018M",
+      "reviewed_trip_id": "jr-west.thunderbird.18.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 19,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257771?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4019M",
+      "reviewed_trip_id": "jr-west.thunderbird.19.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 20,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258071?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4020M",
+      "reviewed_trip_id": "jr-west.thunderbird.20.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 21,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257781?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4021M",
+      "reviewed_trip_id": "jr-west.thunderbird.21.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 22,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258081?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4022M",
+      "reviewed_trip_id": "jr-west.thunderbird.22.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 23,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257791?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4023M",
+      "reviewed_trip_id": "jr-west.thunderbird.23.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 24,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258091?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4024M",
+      "reviewed_trip_id": "jr-west.thunderbird.24.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 25,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257801?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4025M",
+      "reviewed_trip_id": "jr-west.thunderbird.25.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 26,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258101?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4026M",
+      "reviewed_trip_id": "jr-west.thunderbird.26.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 27,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257811?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4027M",
+      "reviewed_trip_id": "jr-west.thunderbird.27.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 28,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258111?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4028M",
+      "reviewed_trip_id": "jr-west.thunderbird.28.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 29,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257821?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4029M",
+      "reviewed_trip_id": "jr-west.thunderbird.29.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 30,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258121?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4030M",
+      "reviewed_trip_id": "jr-west.thunderbird.30.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 31,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257831?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4031M",
+      "reviewed_trip_id": "jr-west.thunderbird.31.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 32,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258131?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4032M",
+      "reviewed_trip_id": "jr-west.thunderbird.32.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 33,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257841?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4033M",
+      "reviewed_trip_id": "jr-west.thunderbird.33.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 34,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258151?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4034M",
+      "reviewed_trip_id": "jr-west.thunderbird.34.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 35,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257851?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4035M",
+      "reviewed_trip_id": "jr-west.thunderbird.35.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 36,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258171?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4036M",
+      "reviewed_trip_id": "jr-west.thunderbird.36.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 37,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257861?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4037M",
+      "reviewed_trip_id": "jr-west.thunderbird.37.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 38,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258191?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4038M",
+      "reviewed_trip_id": "jr-west.thunderbird.38.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 39,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257871?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4039M",
+      "reviewed_trip_id": "jr-west.thunderbird.39.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 40,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258201?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4040M",
+      "reviewed_trip_id": "jr-west.thunderbird.40.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 41,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257881?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4041M",
+      "reviewed_trip_id": "jr-west.thunderbird.41.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 42,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258221?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4042M",
+      "reviewed_trip_id": "jr-west.thunderbird.42.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 43,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257891?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4043M",
+      "reviewed_trip_id": "jr-west.thunderbird.43.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 44,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258231?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4044M",
+      "reviewed_trip_id": "jr-west.thunderbird.44.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 45,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257901?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4045M",
+      "reviewed_trip_id": "jr-west.thunderbird.45.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 46,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258241?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4046M",
+      "reviewed_trip_id": "jr-west.thunderbird.46.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 47,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257911?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4047M",
+      "reviewed_trip_id": "jr-west.thunderbird.47.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 48,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258251?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4048M",
+      "reviewed_trip_id": "jr-west.thunderbird.48.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 49,
+      "station_table_source": "thunderbird_odd",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/257921?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4049M",
+      "reviewed_trip_id": "jr-west.thunderbird.49.2026-09-30"
+    },
+    {
+      "service_id": "thunderbird",
+      "public_number": 50,
+      "station_table_source": "thunderbird_even",
+      "train_page_url": "https://timetable.jr-odekake.net/train-timetable/258261?date=20260930",
+      "db_present_at_audit": true,
+      "verification_status": "train_page_reviewed",
+      "reviewed_train_number": "4050M",
+      "reviewed_trip_id": "jr-west.thunderbird.50.2026-09-30"
+    }
+  ]
+}

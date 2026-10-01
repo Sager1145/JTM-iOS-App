@@ -1,0 +1,34 @@
+{
+  "candidate_id": "jr-west-thunderbird8-haruka4-20260930",
+  "candidate_status": "visually_reviewed_official_train_pages",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trips": [
+    {
+      "trip_id": "jr-west.thunderbird.8.2026-09-30", "service_id": "thunderbird", "public_number": "8", "train_number": "4008M",
+      "source_id": "jr-west-odekake-thunderbird8-4008m-20260930", "source_url": "https://timetable.jr-odekake.net/train-timetable/257991?date=20260930",
+      "operation_label": "毎日運転", "printed_equipment": ["女性専用席があります", "グリーン車指定席", "普通車全車指定席"],
+      "stops": [
+        {"name":"敦賀","code":"010186","arrival":null,"departure":"08:37","platform":"33","call_type":"origin"},
+        {"name":"京都","code":"006079","arrival":"09:34","departure":"09:36","platform":"7","call_type":"passenger_stop"},
+        {"name":"新大阪","code":"006911","arrival":"09:58","departure":"09:59","platform":"9","call_type":"passenger_stop"},
+        {"name":"大阪","code":"007068","arrival":"10:03","departure":null,"platform":"3","call_type":"destination"}
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.4.2026-09-30", "service_id": "haruka", "public_number": "4", "train_number": "1004M",
+      "source_id": "jr-west-odekake-haruka4-1004m-20260930", "source_url": "https://timetable.jr-odekake.net/train-timetable/231?date=20260930",
+      "operation_label": "土曜・休日運休", "printed_equipment": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        {"name":"関西空港","code":"007958","arrival":null,"departure":"07:27","platform":null,"call_type":"origin"},
+        {"name":"日根野","code":"008072","arrival":"07:35","departure":"07:36","platform":null,"call_type":"passenger_stop"},
+        {"name":"和泉府中","code":"007871","arrival":"07:46","departure":"07:46","platform":null,"call_type":"passenger_stop"},
+        {"name":"天王寺","code":"007439","arrival":"08:08","departure":"08:09","platform":"18","call_type":"passenger_stop"},
+        {"name":"大阪","code":"007068","arrival":"08:25","departure":"08:27","platform":"24","call_type":"passenger_stop"},
+        {"name":"新大阪","code":"006911","arrival":"08:32","departure":"08:36","platform":"1","call_type":"passenger_stop"},
+        {"name":"京都","code":"006079","arrival":"08:59","departure":null,"platform":"30","call_type":"destination"}
+      ]
+    }
+  ],
+  "scope_note": "Only September 30 is promoted. Pass rows are excluded from passenger stops. Equipment describes the published plan, not actual dispatch; daily physical route, operating-company segments, car count and vehicle series remain unresolved."
+}

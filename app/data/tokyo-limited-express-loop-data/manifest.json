@@ -43,5 +43,23 @@
       "part-014",
       "part-015"
     ]
+  },
+  "part_train_ids": {
+    "part-000": "tokyo_limited_express_loop_20260529_01",
+    "part-001": "tokyo_limited_express_loop_20260529_02",
+    "part-002": "tokyo_limited_express_loop_20260529_03",
+    "part-003": "tokyo_limited_express_loop_20260529_04",
+    "part-004": "tokyo_limited_express_loop_20260529_05",
+    "part-005": "tokyo_limited_express_loop_20260529_06",
+    "part-006": "tokyo_limited_express_loop_20260529_07",
+    "part-007": "tokyo_limited_express_loop_20260529_08",
+    "part-008": "tokyo_limited_express_loop_20260529_09",
+    "part-009": "tokyo_limited_express_loop_20260529_10",
+    "part-010": "tokyo_limited_express_loop_20260529_11",
+    "part-011": "tokyo_limited_express_loop_20260529_12",
+    "part-012": "tokyo_limited_express_loop_20260529_13",
+    "part-013": "tokyo_limited_express_loop_20260529_14",
+    "part-014": "tokyo_limited_express_loop_20260529_15",
+    "part-015": "tokyo_limited_express_loop_20260529_16"
   }
 }

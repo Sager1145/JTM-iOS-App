@@ -1,0 +1,73 @@
+{
+  "candidate_id": "jr-kyushu-aso-boy1-20260930",
+  "canonical": false,
+  "candidate_status": "reviewed_official_html",
+  "service_id": "aso-boy",
+  "service_name": "あそぼーい！",
+  "jr_scope": "jr",
+  "public_number": "1",
+  "train_number": "8091D",
+  "trip_id": "jr-kyushu.aso-boy.1.exact-2026-09-30",
+  "service_date": "2026-09-30",
+  "source_id": "jr-kyushu-aso-boy1-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0026/00262201.html?c=28626&ym=202609&d=30",
+  "source_sha256": "b999213b408ec810b12fbe70b7eb0962e95cb35efe4f470f96bc9516a92c4aa7",
+  "calendar_observation": {
+    "month": "2026年 9月",
+    "day": 30,
+    "cell_bgcolor": "#d0f0ff",
+    "bold": true,
+    "legend": "運転日"
+  },
+  "stops": [
+    [
+      "熊本",
+      null,
+      "09:57"
+    ],
+    [
+      "新水前寺",
+      "10:03",
+      "10:04"
+    ],
+    [
+      "肥後大津",
+      "10:25",
+      "10:32"
+    ],
+    [
+      "立野",
+      "10:51",
+      "10:56"
+    ],
+    [
+      "阿蘇",
+      "11:22",
+      "11:27"
+    ],
+    [
+      "宮地",
+      "11:32",
+      null
+    ]
+  ],
+  "printed_platforms": {
+    "熊本": "３"
+  },
+  "equipment": [
+    "普通車全車指定席"
+  ],
+  "printed_remarks": null,
+  "printed_operating_labels": "１１月１４・２４～２７日は運休",
+  "train_number_segments": [],
+  "formation": {
+    "evidence_kind": "planned",
+    "all_reserved": true,
+    "vehicle_series": null,
+    "car_count": null,
+    "green_car_available": null,
+    "reserved_seat_capacity": null
+  },
+  "route_note": "Exact dated ordered physical route/operator segments unknown; no unprinted vehicle assignment or number changes inferred.",
+  "actual_dispatch": null
+}

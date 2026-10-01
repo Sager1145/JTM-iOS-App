@@ -1,0 +1,29 @@
+{
+  "candidate_id":"jr-kyushu-yufu5-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; fifteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-yufu5-20260930","source_url":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167301.html?t=2828302e&d=20260930","service_date":"2026-09-30",
+  "new_source":{"source_id":"jr-kyushu-yufu5-20260930","source_type":"official_train_timetable","title":"ゆふ5号 列車詳細","publisher":"九州旅客鉄道株式会社 / 株式会社交通新聞社","url_or_locator":"https://www.jrkyushu-timetable.jp/sp/2610/0016/00167301.html?t=2828302e&d=20260930","issue":"JR時刻表2026年10月号","effective_date":"2026-09-30","accessed_at":"2026-09-29","license_status":"third_party_timetable_data_terms_apply","redistribution_status":"verification_only","automated_extraction_allowed":false,"notes":"Official exact-date train detail reached from 博多駅 2026-09-30 limited-express departure list. It prints the full ゆふ5号 85D passenger-call table from 博多 to 大分. This documents only the selected date."},
+  "trip":{"trip_id":"jr-kyushu.yufu.5.2026-09-30","service_id":"yufu","service_name":"ゆふ","public_number":"5","train_number":"85D","direction":"博多→大分",
+    "stop_times":[
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"18:30","platform":"4"},
+      {"name_snapshot":"二日市","arrival_time":"18:42","departure_time":"18:43","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"18:56","departure_time":"18:58","platform":"4"},
+      {"name_snapshot":"久留米","arrival_time":"19:06","departure_time":"19:08","platform":"1"},
+      {"name_snapshot":"田主丸","arrival_time":"19:24","departure_time":"19:25","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"19:30","departure_time":"19:31","platform":null},
+      {"name_snapshot":"うきは","arrival_time":"19:35","departure_time":"19:35","platform":null},
+      {"name_snapshot":"日田","arrival_time":"19:51","departure_time":"19:52","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"20:04","departure_time":"20:07","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"20:20","departure_time":"20:21","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"20:32","departure_time":"20:32","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"20:49","departure_time":"20:54","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"21:06","departure_time":"21:09","platform":null},
+      {"name_snapshot":"向之原","arrival_time":"21:26","departure_time":"21:26","platform":null},
+      {"name_snapshot":"大分","arrival_time":"21:43","departure_time":null,"platform":"6"}
+    ]},
+  "evidence_locators":[
+    {"claim":"exact 2026-09-30 occurrence","locator":"official train page heading 2026年09月30日の時刻 and date-qualified URL"},
+    {"claim":"limited express ゆふ5号 and 85D","locator":"列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号 rows"},
+    {"claim":"fifteen passenger calls and clocks","locator":"駅名 / 時刻 / のりば table from 博多 through 大分"}
+  ]
+}

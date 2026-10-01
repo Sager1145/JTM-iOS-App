@@ -52,10 +52,16 @@ enum TrainServicePatternAcceptance {
         })
     }
 
-    /// Station identity is the fixed code. A different code for the same name
-    /// is a reference failure, including a nearby platform.
-    static func referenceIntegrity(expectedCode: String, actualCode: String?) -> String {
-        guard !expectedCode.isEmpty, actualCode == expectedCode else { return "failed" }
+    /// The saved identity remains the fixed directory code. A solved N02
+    /// membership may carry a different line/operator code only after the
+    /// station index proves it is the same physical station; a name or nearby
+    /// platform alone never satisfies this contract.
+    static func referenceIntegrity(
+        expectedCode: String, actualCode: String?, sameStationIdentity: Bool = false
+    ) -> String {
+        guard !expectedCode.isEmpty, actualCode != nil,
+              actualCode == expectedCode || sameStationIdentity
+        else { return "failed" }
         return "passed"
     }
 

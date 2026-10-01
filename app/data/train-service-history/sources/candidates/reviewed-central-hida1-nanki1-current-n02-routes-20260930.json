@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-30",
+  "review_contract": "Only the two named exact-date trips are in scope. Ordered calls come from their pinned train pages; official railway material establishes named line boundaries; the shipped N02-25 package supplies current line ids and station membership. Kawarada is an explicit route-only boundary and is not a passenger call. These current identities do not establish physical-line validity on 2026-09-30, actual operation, or a solver-verified route.",
+  "new_sources": [
+    {
+      "source_id": "mlit-n02-2025-central-hida-nanki-route-20260930",
+      "publisher": "国土交通省 国土数値情報",
+      "title": "鉄道データ N02 令和7年版",
+      "source_type": "official_national_rail_dataset_catalog",
+      "url_or_locator": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "issue": "N02-25; shipped jp-2025 package version 2025.5.0",
+      "publication_date": null,
+      "effective_date": "2025-12-31",
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "government_open_data_terms_apply",
+      "redistribution_status": "factual_metadata_only",
+      "automated_extraction_allowed": true,
+      "archive_locator": null,
+      "notes": "N02_003 names railway lines and N02_004 names their operating companies. Project jp-* ids and station-group membership come from the shipped snapshot; this source supplies no daily validity interval for 2026-09-30."
+    },
+    {
+      "source_id": "jr-central-line-scope-hida-nanki-route-20260930",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "各駅の時刻表・時刻表の提供範囲",
+      "source_type": "official_operator_line_inventory",
+      "url_or_locator": "https://railway.jr-central.co.jp/time-schedule/search/",
+      "issue": "Live line-scope list reviewed 2026-09-30",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Lists 東海道本線 熱海–米原, 高山本線 岐阜–猪谷, 関西本線 名古屋–亀山 and 紀勢本線 亀山–新宮. It does not publish project line ids or the exact train route."
+    },
+    {
+      "source_id": "ise-railway-route-hida-nanki-20260930",
+      "publisher": "伊勢鉄道株式会社",
+      "title": "路線図・時刻表／会社概要",
+      "source_type": "official_operator_route_and_history",
+      "url_or_locator": "https://isetetu.co.jp/station/",
+      "issue": "Live route map reviewed 2026-09-30",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": "https://isetetu.co.jp/company/",
+      "notes": "The route map names 河原田 as the JR Kansai connection and 津 as the JR Kisei connection, with 鈴鹿 on 伊勢線; the company page dates Ise Railway service from 1987-03-27. The homepage states JR 南紀 runs through 河原田–津. None of these establishes N02 daily validity."
+    },
+    {
+      "source_id": "jr-central-ise-kisei-boundary-hida-nanki-20260930",
+      "publisher": "東海旅客鉄道株式会社",
+      "title": "旅客連絡運輸規則別表・旅客連絡運輸取扱細則別表",
+      "source_type": "official_passenger_rule_line_boundary",
+      "url_or_locator": "https://railway.jr-central.co.jp/ticket-rule/carriage/_pdf/07-02.pdf",
+      "issue": "伊勢鉄道株式会社線 entry, printed page 53/111",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Lists 伊勢鉄道 connections at 関西本線 河原田 and 紀勢本線 津, JR Central 紀勢線 下庄–新宮, and JR West 紀勢線 新宮–紀伊勝浦. It does not publish a project line id or an exact train path."
+    }
+  ],
+  "route_only_station": {
+    "station_id": "jp.n02.006285",
+    "name_snapshot": "河原田",
+    "current_source_code": "006285",
+    "evidence_source_ids": [
+      "mlit-n02-2025-central-hida-nanki-route-20260930",
+      "ise-railway-route-hida-nanki-20260930",
+      "jr-central-ise-kisei-boundary-hida-nanki-20260930"
+    ]
+  },
+  "line_identities": [
+    {"current_n02_line_id": "jp-東海旅客鉄道-東海道線", "line_name": "東海道線", "operator_id": "jr-central", "operator_name": "東海旅客鉄道"},
+    {"current_n02_line_id": "jp-東海旅客鉄道-高山線", "line_name": "高山線", "operator_id": "jr-central", "operator_name": "東海旅客鉄道"},
+    {"current_n02_line_id": "jp-東海旅客鉄道-関西線", "line_name": "関西線", "operator_id": "jr-central", "operator_name": "東海旅客鉄道"},
+    {"current_n02_line_id": "jp-伊勢鉄道-伊勢線", "line_name": "伊勢線", "operator_id": "ise-railway", "operator_name": "伊勢鉄道"},
+    {"current_n02_line_id": "jp-東海旅客鉄道-紀勢線", "line_name": "紀勢線", "operator_id": "jr-central", "operator_name": "東海旅客鉄道"},
+    {"current_n02_line_id": "jp-西日本旅客鉄道-紀勢線", "line_name": "紀勢線", "operator_id": "jr-west", "operator_name": "西日本旅客鉄道"}
+  ],
+  "trips": [
+    {
+      "trip_id": "jr-central.hida.1.2026-09-30",
+      "train_source_id": "jr-west-odekake-hida1-21d-20260930",
+      "expected_passenger_path": ["jp.n02.005451", "jp.n02.005111", "jp.n02.004788", "jp.n02.004836", "jp.n02.004693", "jp.n02.004293", "jp.n02.003902", "jp.n02.003075", "jp.n02.002962", "jp.n02.002831", "jp.n02.002699", "jp.n02.002587"],
+      "groups": [
+        {"current_n02_line_id": "jp-東海旅客鉄道-東海道線", "line_source_id": "jr-central-line-scope-hida-nanki-route-20260930", "station_path": ["jp.n02.005451", "jp.n02.005111", "jp.n02.004788"]},
+        {"current_n02_line_id": "jp-東海旅客鉄道-高山線", "line_source_id": "jr-central-line-scope-hida-nanki-route-20260930", "station_path": ["jp.n02.004788", "jp.n02.004836", "jp.n02.004693", "jp.n02.004293", "jp.n02.003902", "jp.n02.003075", "jp.n02.002962", "jp.n02.002831", "jp.n02.002699", "jp.n02.002587"]}
+      ]
+    },
+    {
+      "trip_id": "jr-central.nanki.1.2026-09-30",
+      "train_source_id": "jr-west-odekake-nanki1-3001d-20260930",
+      "expected_passenger_path": ["jp.n02.005451", "jp.n02.005776", "jp.n02.006159", "jp.n02.006367", "jp.n02.006905", "jp.n02.007664", "jp.n02.007806", "jp.n02.008051", "jp.n02.008394", "jp.n02.008495", "jp.n02.008674", "jp.n02.008874", "jp.n02.008974"],
+      "groups": [
+        {"current_n02_line_id": "jp-東海旅客鉄道-関西線", "line_source_id": "jr-central-line-scope-hida-nanki-route-20260930", "station_path": ["jp.n02.005451", "jp.n02.005776", "jp.n02.006159", "jp.n02.006285"]},
+        {"current_n02_line_id": "jp-伊勢鉄道-伊勢線", "line_source_id": "ise-railway-route-hida-nanki-20260930", "station_path": ["jp.n02.006285", "jp.n02.006367", "jp.n02.006905"]},
+        {"current_n02_line_id": "jp-東海旅客鉄道-紀勢線", "line_source_id": "jr-central-ise-kisei-boundary-hida-nanki-20260930", "station_path": ["jp.n02.006905", "jp.n02.007664", "jp.n02.007806", "jp.n02.008051", "jp.n02.008394", "jp.n02.008495", "jp.n02.008674", "jp.n02.008874"]},
+        {"current_n02_line_id": "jp-西日本旅客鉄道-紀勢線", "line_source_id": "jr-central-ise-kisei-boundary-hida-nanki-20260930", "station_path": ["jp.n02.008874", "jp.n02.008974"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "candidate_id": "jr-west-sunrise-seto-20260929",
+  "candidate_status": "reviewed_official_html",
+  "canonical": true,
+  "schema_version": 1,
+  "promotion_scope": "scheduled_service_departing_2026-09-29_only",
+  "actual_operation_status": "unverified_plan",
+  "selected_service_date": "2026-09-29",
+  "source": {
+    "accessed_at": "2026-09-29",
+    "automated_extraction_allowed": false,
+    "content_hash": "sha256:8c47b02e1a5fda8e8f5a6080037869a1c95896b2a32d328b7d9bdbf3ab8afa1c",
+    "effective_date": "2026-09-29",
+    "issue": "JR時刻表2026年10月号",
+    "license_status": "no_reuse_grant_identified",
+    "notes": "Official JR Odekake dated train-detail page manually reviewed. The page explicitly prohibits unauthorized reproduction, copying, or processing of the timetable data, so only minimal transcribed facts are stored and the raw HTML is not bundled.",
+    "publisher": "西日本旅客鉄道株式会社 / 株式会社交通新聞社",
+    "redistribution_status": "verification_only",
+    "source_id": "jr-west-sunrise-seto-20260929",
+    "source_type": "official_train_timetable",
+    "title": "寝台特急 サンライズ瀬戸 高松行（5031M）列車詳細",
+    "url_or_locator": "https://timetable.jr-odekake.net/train-timetable/38492?date=20260929"
+  },
+  "calendar_attestation": {
+    "date_basis": "The September 2026 calendar marks 29 as drivingday-01, whose legend says the train runs with the timetable displayed on this page.",
+    "source_label": "2026年9月29日 drivingday-01"
+  },
+  "service": {
+    "canonical_name": "サンライズ瀬戸",
+    "historical_generation": 1,
+    "jr_scope": "through_jr",
+    "service_class": "limited_express",
+    "service_id": "sunrise-seto"
+  },
+  "trip": {
+    "destination": "高松",
+    "direction_label": "東京→高松",
+    "origin": "東京",
+    "public_number": null,
+    "train_number": "5031M",
+    "stop_times": [
+      {"arrival_time": null, "call_type": "origin", "day_offset": 0, "departure_time": "21:26", "name_snapshot": "東京", "platform": "9", "stop_sequence": 1},
+      {"arrival_time": "21:51", "call_type": "passenger_stop", "day_offset": 0, "departure_time": "21:52", "name_snapshot": "横浜", "platform": "6", "stop_sequence": 2},
+      {"arrival_time": "22:55", "call_type": "passenger_stop", "day_offset": 0, "departure_time": "22:57", "name_snapshot": "熱海", "platform": "2", "stop_sequence": 3},
+      {"arrival_time": "23:15", "call_type": "passenger_stop", "day_offset": 0, "departure_time": "23:16", "name_snapshot": "沼津", "platform": null, "stop_sequence": 4},
+      {"arrival_time": "23:31", "call_type": "passenger_stop", "day_offset": 0, "departure_time": "23:32", "name_snapshot": "富士", "platform": null, "stop_sequence": 5},
+      {"arrival_time": "23:57", "call_type": "passenger_stop", "day_offset": 0, "departure_time": "23:59", "name_snapshot": "静岡", "platform": "4", "stop_sequence": 6},
+      {"arrival_time": "00:53", "call_type": "passenger_stop", "day_offset": 1, "departure_time": "00:54", "name_snapshot": "浜松", "platform": "4", "stop_sequence": 7},
+      {"arrival_time": "05:25", "call_type": "passenger_stop", "day_offset": 1, "departure_time": "05:26", "name_snapshot": "姫路", "platform": "8", "stop_sequence": 8},
+      {"arrival_time": "06:27", "call_type": "passenger_stop", "day_offset": 1, "departure_time": "06:31", "name_snapshot": "岡山", "platform": "8", "stop_sequence": 9},
+      {"arrival_time": "06:52", "call_type": "passenger_stop", "day_offset": 1, "departure_time": "06:53", "name_snapshot": "児島", "platform": null, "stop_sequence": 10},
+      {"arrival_time": "07:09", "call_type": "passenger_stop", "day_offset": 1, "departure_time": "07:10", "name_snapshot": "坂出", "platform": null, "stop_sequence": 11},
+      {"arrival_time": "07:27", "call_type": "destination", "day_offset": 1, "departure_time": null, "name_snapshot": "高松", "platform": "6", "stop_sequence": 12}
+    ]
+  },
+  "review_notes": [
+    "The official page prints train number 5031M for Sunrise Seto and marks 2026-09-29 as a drivingday-01 date.",
+    "The service-date occurrence starts at Tokyo on 2026-09-29; Hamamatsu through Takamatsu occur on the following civil date and therefore retain day_offset 1.",
+    "Only cells with printed arrival or departure times in the Sunrise Seto column are promoted as passenger calls. Pass-through rows are not normalized.",
+    "The source states that Sunrise Seto is coupled to Sunrise Izumo between Tokyo and Okayama, but the counterpart trip is outside this single-trip batch and no trip relation is emitted.",
+    "Operator segments, physical route-line identities, and proof of actual operation are not inferred."
+  ]
+}

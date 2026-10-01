@@ -13,5 +13,8 @@
     "2026-08-10": [
       "part-000"
     ]
+  },
+  "part_train_ids": {
+    "part-000": "HK-SAMPLE-EAL-LOW"
   }
 }

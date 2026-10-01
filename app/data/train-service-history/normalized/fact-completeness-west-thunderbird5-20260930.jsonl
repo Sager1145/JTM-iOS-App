@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "4005M and サンダーバード5号", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "4005M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "September 30 weekday selection", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "大阪 and 敦賀", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "five timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "five current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only; actual consist unknown.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "Daily physical-line validity and reroute status unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.5.2026-09-30", "entity_type": "trip", "notes": "Individual train-operation company segments unverified.", "status": "unknown"}

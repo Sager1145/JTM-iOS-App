@@ -1,0 +1,58 @@
+{
+  "candidate_id": "jr-kyushu-kirishima2-4-6-8-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Four selected-date JR Kyushu northbound Kirishima details. Only printed passenger arrival/departure sides, platforms, train numbers, operating-day labels and seat categories are retained; no car count, series or physical route inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.kirishima.2.2026-09-30", "service_id": "kirishima", "service_name": "きりしま", "service_class": "limited_express", "public_number": "2", "train_number": "6002M",
+      "origin": "鹿児島中央", "destination": "宮崎", "source_id": "jr-kyushu-kirishima2-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0004/00047201.html?t=2900702&d=20260930",
+      "source_locator": "2026年09月30日の時刻; きりしま 2号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転", "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["鹿児島中央", null, "05:49", "3"], ["鹿児島", "05:53", "05:54", null], ["加治木", "06:14", "06:15", null],
+        ["隼人", "06:21", "06:23", null], ["国分", "06:27", "06:28", null], ["霧島神宮", "06:40", "06:41", null],
+        ["西都城", "07:06", "07:07", null], ["都城", "07:10", "07:11", null], ["三股", "07:16", "07:17", null],
+        ["山之口", "07:23", "07:24", null], ["田野", "07:46", "07:48", null], ["清武", "07:57", "07:58", null],
+        ["南宮崎", "08:03", "08:06", null], ["宮崎", "08:09", null, null]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kirishima.4.2026-09-30", "service_id": "kirishima", "service_name": "きりしま", "service_class": "limited_express", "public_number": "4", "train_number": "6004M",
+      "origin": "鹿児島中央", "destination": "宮崎", "source_id": "jr-kyushu-kirishima4-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0004/00047301.html?t=2900702&d=20260930",
+      "source_locator": "2026年09月30日の時刻; きりしま 4号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転", "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["鹿児島中央", null, "07:40", "3"], ["鹿児島", "07:44", "07:45", null], ["帖佐", "08:07", "08:08", null],
+        ["加治木", "08:12", "08:13", null], ["隼人", "08:19", "08:19", null], ["国分", "08:23", "08:24", null],
+        ["霧島神宮", "08:36", "08:36", null], ["西都城", "09:01", "09:02", null], ["都城", "09:06", "09:07", null],
+        ["南宮崎", "09:53", "09:56", null], ["宮崎", "10:00", null, null]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kirishima.6.2026-09-30", "service_id": "kirishima", "service_name": "きりしま", "service_class": "limited_express", "public_number": "6", "train_number": "6006M",
+      "origin": "鹿児島中央", "destination": "宮崎", "source_id": "jr-kyushu-kirishima6-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0006/00065101.html?t=2900702&d=20260930",
+      "source_locator": "2026年09月30日の時刻; きりしま 6号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転", "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["鹿児島中央", null, "08:49", "4"], ["鹿児島", "08:53", "08:54", null], ["加治木", "09:14", "09:15", null],
+        ["隼人", "09:21", "09:22", null], ["国分", "09:25", "09:26", null], ["霧島神宮", "09:38", "09:39", null],
+        ["西都城", "10:04", "10:04", null], ["都城", "10:08", "10:08", null], ["南宮崎", "10:54", "10:55", null],
+        ["宮崎", "10:58", null, null]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kirishima.8.2026-09-30", "service_id": "kirishima", "service_name": "きりしま", "service_class": "limited_express", "public_number": "8", "train_number": "6008M",
+      "origin": "鹿児島中央", "destination": "宮崎", "source_id": "jr-kyushu-kirishima8-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0004/00047501.html?t=2900702&d=20260930",
+      "source_locator": "2026年09月30日の時刻; きりしま 8号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "１１月４・１０・１１・１７・１８・２４・２５日は運休", "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["鹿児島中央", null, "10:00", "5"], ["鹿児島", "10:04", "10:04", null], ["加治木", "10:24", "10:25", null],
+        ["隼人", "10:31", "10:32", null], ["国分", "10:35", "10:36", null], ["霧島神宮", "10:49", "10:50", null],
+        ["西都城", "11:19", "11:20", null], ["都城", "11:23", "11:24", null], ["南宮崎", "12:07", "12:08", null],
+        ["宮崎", "12:12", null, null]
+      ]
+    }
+  ]
+}

@@ -344,6 +344,15 @@ html[data-ui-mode="mobile"] .form-grid {
   grid-template-columns: 1fr;
 }
 
+/* A tablet still uses the touch-first bottom sheet, but its inset content is
+   wide enough for paired fields. Keeping the phone's single column here made
+   the editor unnecessarily tall on iPad portrait and landscape. */
+@media (min-width: 600px) {
+  html[data-ui-mode="mobile"] .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* Desktop UI uses the same opaque iOS component grammar at a substantially
    tighter information density. This also overrides narrow-width sheet rules
    when a phone or tablet explicitly selects Desktop. */
@@ -368,6 +377,14 @@ html[data-ui-mode="desktop"] #app {
   --sidebar-open-size: min(400px, calc(100vw - 52px));
   --sidebar-size: var(--sidebar-open-size);
   --panel-clip: 0px;
+}
+
+/* Preserve useful map width in tablet split views and narrow desktop windows.
+   The previous 400px drawer consumed two thirds of a 600px viewport. */
+@media (min-width: 600px) and (max-width: 839px) {
+  html[data-ui-mode="desktop"] #app {
+    --sidebar-open-size: clamp(320px, 48vw, 400px);
+  }
 }
 
 html[data-ui-mode="desktop"][data-sidebar="collapsed"] #app,
@@ -413,6 +430,44 @@ html[data-ui-mode="desktop"] #sidebar > header {
   margin: 0 0 4px;
   padding: 4px 2px;
   border-top: 0;
+}
+
+/* The drawer stays at 400px even on a wide monitor, so viewport breakpoints
+   cannot describe this row. Give all three selectors one compact drawer row
+   and retain their labels for assistive technology. */
+html[data-ui-mode="desktop"] .header-actions {
+  display: grid;
+  grid-template-columns: minmax(72px, 0.8fr) minmax(112px, 1.3fr)
+    minmax(80px, 0.9fr);
+  width: 100%;
+  gap: 6px;
+}
+
+html[data-ui-mode="desktop"] .country-switch,
+html[data-ui-mode="desktop"] .lang-switch,
+html[data-ui-mode="desktop"] .theme-switch {
+  min-width: 0;
+}
+
+html[data-ui-mode="desktop"] .country-switch label,
+html[data-ui-mode="desktop"] .lang-switch label,
+html[data-ui-mode="desktop"] .theme-switch label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+html[data-ui-mode="desktop"] .country-switch select,
+html[data-ui-mode="desktop"] .lang-switch select,
+html[data-ui-mode="desktop"] .theme-switch select,
+html[data-ui-mode="desktop"] #lang-select,
+html[data-ui-mode="desktop"] #theme-select {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  padding: 5px 24px 5px 8px;
 }
 
 html[data-ui-mode="desktop"] h1 {

@@ -2,9 +2,12 @@ import XCTest
 
 @MainActor
 final class JourneySaveUITests: XCTestCase {
-    override func setUp() {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
-        XCUIDevice.shared.orientation = .portrait
+        await MainActor.run {
+            XCUIDevice.shared.orientation = .portrait
+        }
     }
 
     func testSavedJourneyIsStillPresentAfterRelaunch() {
@@ -135,9 +138,7 @@ final class JourneySaveUITests: XCTestCase {
     private func fillRequiredStops(in app: XCUIApplication) {
         for (index, name) in ["Tokyo", "Shinagawa"].enumerated() {
             let stop = app.descendants(matching: .any)["rideEditorStop-\(index)"].firstMatch
-            for _ in 0..<6 where !stop.isHittable { app.swipeUp() }
-            XCTAssertTrue(stop.isHittable)
-            stop.tap()
+            EditorUITestSupport.tap(stop, in: app)
             let field = app.otherElements["rideEditorStopName"].textFields.firstMatch
             XCTAssertTrue(field.waitForExistence(timeout: 5))
             field.tap()

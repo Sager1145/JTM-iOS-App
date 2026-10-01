@@ -1,0 +1,4521 @@
+{
+  "result": "ERROR",
+  "scope": {
+    "canonical_events": 106,
+    "canonical_retirements": 1,
+    "generated_sections": 956,
+    "generated_stations": 494,
+    "generated_retirements": 124
+  },
+  "claims": {
+    "canonical_ledger_compilation": "PASS",
+    "official_inventory_compilation": "INCOMPLETE",
+    "web_loader_boundaries": "NOT_EVALUATED (see jp-history-boundary-report.json)",
+    "route_solver_regression": "NOT_EVALUATED (see historical-routes.json and Swift parity tests)",
+    "final_display": "NOT_EVALUATED (see packaged jp.display-history.json matchReport)"
+  },
+  "events": [
+    {
+      "id": "jp.chiho.ikeda-kitami",
+      "kind": "closure",
+      "identity": [
+        "ふるさと銀河線",
+        "北海道ちほく高原鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2006-04-21"
+        ]
+      ],
+      "generated": {
+        "sections": 63,
+        "stations": 33,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.tokadai.komaki-tokadaihigashi",
+      "kind": "closure",
+      "identity": [
+        "桃花台線",
+        "桃花台新交通"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2006-10-01"
+        ]
+      ],
+      "generated": {
+        "sections": 12,
+        "stations": 7,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.kamioka.inotani-okuhidaonsenguchi",
+      "kind": "closure",
+      "identity": [
+        "神岡線",
+        "神岡鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2006-12-01"
+        ]
+      ],
+      "generated": {
+        "sections": 14,
+        "stations": 8,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.kurihara.ishikoshi-hosokura",
+      "kind": "closure",
+      "identity": [
+        "くりはら田園鉄道線",
+        "くりはら田園鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2007-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 31,
+        "stations": 16,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.kashima.ishioka-hokota",
+      "kind": "closure",
+      "identity": [
+        "鹿島鉄道線",
+        "鹿島鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2007-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 32,
+        "stations": 17,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.nishitetsu.miyajidake.shingu-tsuyazaki",
+      "kind": "closure",
+      "identity": [
+        "宮地岳線",
+        "西日本鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2007-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 12,
+        "stations": 8,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.takachiho.nobeoka-makimine",
+      "kind": "closure",
+      "identity": [
+        "高千穂線",
+        "高千穂鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2005-09-06"
+        ]
+      ],
+      "generated": {
+        "sections": 21,
+        "stations": 11,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.takachiho.makimine-takachiho",
+      "kind": "closure",
+      "identity": [
+        "高千穂線",
+        "高千穂鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2005-09-06"
+        ]
+      ],
+      "generated": {
+        "sections": 15,
+        "stations": 8,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.shimabara.shimabaragaiko-kazusa",
+      "kind": "closure",
+      "identity": [
+        "島原鉄道線",
+        "島原鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2008-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 40,
+        "stations": 23,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.miki.miki-yakujin",
+      "kind": "closure",
+      "identity": [
+        "三木線",
+        "三木鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2008-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 16,
+        "stations": 9,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.toyama-ko.jr",
+      "kind": "closure",
+      "identity": [
+        "富山港線",
+        "西日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2006-03-01"
+        ]
+      ],
+      "generated": {
+        "sections": 1,
+        "stations": 2,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.meitetsu.monkeypark",
+      "kind": "closure",
+      "identity": [
+        "モンキーパークモノレール線",
+        "名古屋鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2008-12-28"
+        ]
+      ],
+      "generated": {
+        "sections": 4,
+        "stations": 3,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.hokutetsu.ishikawa.tsurugi-kaganoichinomiya",
+      "kind": "closure",
+      "identity": [
+        "石川線",
+        "北陸鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2009-11-01"
+        ]
+      ],
+      "generated": {
+        "sections": 4,
+        "stations": 2,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.towada.towadashi-misawa",
+      "kind": "closure",
+      "identity": [
+        "十和田観光電鉄線",
+        "十和田観光電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2012-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 22,
+        "stations": 11,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.nagaden.yashiro",
+      "kind": "closure",
+      "identity": [
+        "屋代線",
+        "長野電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2012-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 23,
+        "stations": 13,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jre.iwaizumi",
+      "kind": "closure",
+      "identity": [
+        "岩泉線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2010-08-01"
+        ]
+      ],
+      "generated": {
+        "sections": 17,
+        "stations": 9,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.esashi.kikonai-esashi",
+      "kind": "closure",
+      "identity": [
+        "江差線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2014-05-12"
+        ]
+      ],
+      "generated": {
+        "sections": 19,
+        "stations": 10,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jre.agatsuma.old-iwashima-naganoharakusatsuguchi",
+      "kind": "relocation",
+      "identity": [
+        "吾妻線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2014-10-01"
+        ]
+      ],
+      "generated": {
+        "sections": 3,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.jre.senseki.old-rikuzenotsuka-rikuzenono",
+      "kind": "relocation",
+      "identity": [
+        "仙石線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2011-03-12"
+        ]
+      ],
+      "generated": {
+        "sections": 5,
+        "stations": 2,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.jre.joban.old-komagamine-hamayoshida",
+      "kind": "relocation",
+      "identity": [
+        "常磐線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2011-03-12"
+        ]
+      ],
+      "generated": {
+        "sections": 7,
+        "stations": 3,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.jrh.rumoi.rumoi-mashike",
+      "kind": "closure",
+      "identity": [
+        "留萌線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2016-12-05"
+        ]
+      ],
+      "generated": {
+        "sections": 16,
+        "stations": 8,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrw.sanko",
+      "kind": "closure",
+      "identity": [
+        "三江線",
+        "西日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2018-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 67,
+        "stations": 35,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.kanden.tunnel-trolleybus",
+      "kind": "closure",
+      "identity": [
+        "関電トンネルトロリーバス",
+        "関西電力"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2018-12-01"
+        ]
+      ],
+      "generated": {
+        "sections": 3,
+        "stations": 2,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.sekisho.yubari-branch",
+      "kind": "closure",
+      "identity": [
+        "石勝線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 10,
+        "stations": 5,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jre.kesennuma.yanaizu-kesennuma",
+      "kind": "closure",
+      "identity": [
+        "気仙沼線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2011-03-12"
+        ]
+      ],
+      "generated": {
+        "sections": 33,
+        "stations": 17,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jre.ofunato.kesennuma-sakari",
+      "kind": "closure",
+      "identity": [
+        "大船渡線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2011-03-12"
+        ]
+      ],
+      "generated": {
+        "sections": 21,
+        "stations": 11,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.sassho.iryodaigaku-shintotsukawa",
+      "kind": "closure",
+      "identity": [
+        "札沼線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-04-18"
+        ]
+      ],
+      "generated": {
+        "sections": 33,
+        "stations": 16,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.hidaka.mukawa-samani",
+      "kind": "closure",
+      "identity": [
+        "日高線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2015-01-08"
+        ],
+        [
+          "2015-01-27",
+          "2015-03-01"
+        ]
+      ],
+      "service_partition": {
+        "lower": {
+          "source_periods": [
+            [
+              null,
+              "2015-01-08"
+            ]
+          ],
+          "generated_records": 19
+        },
+        "upper": {
+          "source_periods": [
+            [
+              null,
+              "2015-01-08"
+            ],
+            [
+              "2015-01-27",
+              "2015-03-01"
+            ]
+          ],
+          "generated_records": 58
+        }
+      },
+      "generated": {
+        "sections": 77,
+        "stations": 39,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.rumoi.ishikarinumata-rumoi",
+      "kind": "closure",
+      "identity": [
+        "留萌線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2023-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 17,
+        "stations": 7,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.nose.cable",
+      "kind": "closure",
+      "identity": [
+        "鋼索線",
+        "能勢電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2023-12-04"
+        ]
+      ],
+      "generated": {
+        "sections": 3,
+        "stations": 2,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.toei.ueno-monorail",
+      "kind": "closure",
+      "identity": [
+        "上野懸垂線",
+        "東京都"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "1999-12-19"
+        ],
+        [
+          "2001-05-31",
+          "2019-11-01"
+        ]
+      ],
+      "generated": {
+        "sections": 6,
+        "stations": 4,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.jrh.nemuro.furano-shintoku",
+      "kind": "closure",
+      "identity": [
+        "根室線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2024-04-01"
+        ]
+      ],
+      "generated": {
+        "sections": 15,
+        "stations": 7,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.skyrail.seno",
+      "kind": "closure",
+      "identity": [
+        "広島短距離交通瀬野線",
+        "スカイレールサービス"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2024-05-01"
+        ]
+      ],
+      "generated": {
+        "sections": 4,
+        "stations": 3,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.tateyama.tunnel-trolleybus",
+      "kind": "closure",
+      "identity": [
+        "無軌条電車線",
+        "立山黒部貫光"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2024-12-01"
+        ]
+      ],
+      "generated": {
+        "sections": 3,
+        "stations": 2,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.opening.toyo",
+      "kind": "opening",
+      "identity": [
+        "東葉高速線",
+        "東葉高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1996-04-27",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.minatomirai",
+      "kind": "opening",
+      "identity": [
+        "みなとみらい21線",
+        "横浜高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2004-02-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.aonami",
+      "kind": "opening",
+      "identity": [
+        "西名古屋港線",
+        "名古屋臨海高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2004-10-06",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.tsukuba",
+      "kind": "opening",
+      "identity": [
+        "常磐新線",
+        "首都圏新都市鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2005-08-24",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.nippori-toneri",
+      "kind": "opening",
+      "identity": [
+        "日暮里・舎人ライナー",
+        "東京都"
+      ],
+      "source_service_periods": [
+        [
+          "2008-03-30",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+      "kind": "closure",
+      "identity": [
+        "上町線",
+        "阪堺電気軌道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2016-01-31"
+        ]
+      ],
+      "generated": {
+        "sections": 2,
+        "stations": 1,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp-id-donan-isaribi-transfer-2016",
+      "kind": "operator_transfer",
+      "identity": [
+        "道南いさりび鉄道線",
+        "道南いさりび鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2016-03-26"
+        ],
+        [
+          "2016-03-26",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 28,
+        "stations": 12,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-takanawa-gateway-opening-2020",
+      "kind": "station_opening",
+      "identity": [
+        "東海道線",
+        "東日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp-id-osaka-monorail-main-operator-rename-2020",
+      "kind": "operator_rename",
+      "identity": [
+        "大阪モノレール線",
+        "大阪モノレール"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-06-01"
+        ],
+        [
+          "2020-06-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 28,
+        "stations": 14,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-osaka-monorail-saito-operator-rename-2020",
+      "kind": "operator_rename",
+      "identity": [
+        "国際文化公園都市モノレール線(彩都線)",
+        "大阪モノレール"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-06-01"
+        ],
+        [
+          "2020-06-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 10,
+        "stations": 5,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-kitahinode-closure-2021",
+      "kind": "station_closure",
+      "identity": [
+        "石北線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2021-03-13"
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 0
+      }
+    },
+    {
+      "id": "jp.opening.nankai-airport",
+      "kind": "opening",
+      "identity": [
+        "空港線",
+        "南海電気鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1994-06-15",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.jr-kansai-airport",
+      "kind": "opening",
+      "identity": [
+        "関西空港線",
+        "西日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1994-06-15",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.chizu",
+      "kind": "opening",
+      "identity": [
+        "智頭線",
+        "智頭急行"
+      ],
+      "source_service_periods": [
+        [
+          "1994-12-03",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.miyazaki-airport",
+      "kind": "opening",
+      "identity": [
+        "宮崎空港線",
+        "九州旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1996-07-18",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.jr-tozai",
+      "kind": "opening",
+      "identity": [
+        "JR東西線",
+        "西日本旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1997-03-08",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.hokuhoku",
+      "kind": "opening",
+      "identity": [
+        "ほくほく線",
+        "北越急行"
+      ],
+      "source_service_periods": [
+        [
+          "1997-03-22",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.sukumo",
+      "kind": "opening",
+      "identity": [
+        "宿毛線",
+        "土佐くろしお鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1997-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.guideway-shidami",
+      "kind": "opening",
+      "identity": [
+        "ガイドウェイバス志段味線",
+        "名古屋ガイドウェイバス"
+      ],
+      "source_service_periods": [
+        [
+          "2001-03-23",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.saitama-rapid",
+      "kind": "opening",
+      "identity": [
+        "埼玉高速鉄道線",
+        "埼玉高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2001-03-28",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.kobe-kaigan",
+      "kind": "opening",
+      "identity": [
+        "海岸線",
+        "神戸市"
+      ],
+      "source_service_periods": [
+        [
+          "2001-07-07",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.disney-resort",
+      "kind": "opening",
+      "identity": [
+        "ディズニーリゾートライン",
+        "舞浜リゾートライン"
+      ],
+      "source_service_periods": [
+        [
+          "2001-07-27",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.shibayama",
+      "kind": "opening",
+      "identity": [
+        "芝山鉄道線",
+        "芝山鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2002-10-27",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.kamiiida",
+      "kind": "opening",
+      "identity": [
+        "上飯田線",
+        "名古屋市"
+      ],
+      "source_service_periods": [
+        [
+          "2003-03-27",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.meitetsu-airport",
+      "kind": "opening",
+      "identity": [
+        "空港線",
+        "名古屋鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2005-01-29",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.sendai-airport",
+      "kind": "opening",
+      "identity": [
+        "仙台空港線",
+        "仙台空港鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2007-03-18",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.yokohama-green",
+      "kind": "opening",
+      "identity": [
+        "4号線",
+        "横浜市"
+      ],
+      "source_service_periods": [
+        [
+          "2008-03-30",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.nakanoshima",
+      "kind": "opening",
+      "identity": [
+        "中之島線",
+        "京阪電気鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2008-10-19",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.mojiko-retro",
+      "kind": "opening",
+      "identity": [
+        "門司港レトロ観光線",
+        "平成筑豊鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2009-04-26",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.sendai-tozai",
+      "kind": "opening",
+      "identity": [
+        "東西線",
+        "仙台市"
+      ],
+      "source_service_periods": [
+        [
+          "2015-12-06",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.west-kyushu-shinkansen",
+      "kind": "opening",
+      "identity": [
+        "西九州新幹線",
+        "九州旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2022-09-23",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.tokyu-shin-yokohama",
+      "kind": "opening",
+      "identity": [
+        "東急新横浜線",
+        "東急電鉄"
+      ],
+      "source_service_periods": [
+        [
+          "2023-03-18",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.utsunomiya-lrt",
+      "kind": "opening",
+      "identity": [
+        "宇都宮芳賀ライトレール線",
+        "宇都宮ライトレール"
+      ],
+      "source_service_periods": [
+        [
+          "2023-08-26",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.toyama-city-loop",
+      "kind": "opening",
+      "identity": [
+        "富山都心線",
+        "富山地方鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2009-12-23",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.toyama-station-connection",
+      "kind": "opening",
+      "identity": [
+        "富山駅南北接続線",
+        "富山地方鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.hokkaido-shinkansen",
+      "kind": "opening",
+      "identity": [
+        "北海道新幹線",
+        "北海道旅客鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2016-03-26",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk16.haneda-t3",
+      "kind": "station_rename",
+      "identity": [
+        "空港線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk17.haneda-t1-t2",
+      "kind": "station_rename",
+      "identity": [
+        "空港線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk25.daishibashi",
+      "kind": "station_rename",
+      "identity": [
+        "大師線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk30.kagetsu-sojiji",
+      "kind": "station_rename",
+      "identity": [
+        "本線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk35.keikyu-higashi-kanagawa",
+      "kind": "station_rename",
+      "identity": [
+        "本線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.keikyu.kk53.zushi-hayama",
+      "kind": "station_rename",
+      "identity": [
+        "逗子線",
+        "京浜急行電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2020-03-14"
+        ],
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp-id-north-shinano-transfer-2015",
+      "kind": "operator_transfer",
+      "identity": [
+        "北しなの線",
+        "しなの鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2015-03-14"
+        ],
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 16,
+        "stations": 8,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-echigo-hisui-transfer-2015",
+      "kind": "operator_transfer",
+      "identity": [
+        "日本海ひすいライン",
+        "えちごトキめき鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2015-03-14"
+        ],
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 31,
+        "stations": 12,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-ainokaze-transfer-2015",
+      "kind": "operator_transfer",
+      "identity": [
+        "あいの風とやま鉄道線",
+        "あいの風とやま鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2015-03-14"
+        ],
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 56,
+        "stations": 22,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.station-opening.2021.echigo-oshiage-hisui-kaigan",
+      "kind": "station_opening",
+      "identity": [
+        "日本海ひすいライン",
+        "えちごトキめき鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2021-03-13",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2018.takaoka-yabunami",
+      "kind": "station_opening",
+      "identity": [
+        "あいの風とやま鉄道線",
+        "あいの風とやま鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2018-03-17",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2022.shin-toyamaguchi",
+      "kind": "station_opening",
+      "identity": [
+        "あいの風とやま鉄道線",
+        "あいの風とやま鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2022-03-12",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp-id-ir-kurikara-kanazawa-transfer-2015",
+      "kind": "operator_transfer",
+      "identity": [
+        "IRいしかわ鉄道線",
+        "IRいしかわ鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2015-03-14"
+        ],
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 9,
+        "stations": 4,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-hapi-line-transfer-2024",
+      "kind": "operator_transfer",
+      "identity": [
+        "ハピラインふくい線",
+        "ハピラインふくい"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2024-03-16"
+        ],
+        [
+          "2024-03-16",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 42,
+        "stations": 19,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-ir-kanazawa-daishoji-transfer-2024",
+      "kind": "operator_transfer",
+      "identity": [
+        "IRいしかわ鉄道線",
+        "IRいしかわ鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2024-03-16"
+        ],
+        [
+          "2024-03-16",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 27,
+        "stations": 14,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp-id-echigo-myoko-transfer-2015",
+      "kind": "operator_transfer",
+      "identity": [
+        "妙高はねうまライン",
+        "えちごトキめき鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2014-10-19"
+        ],
+        [
+          "2014-10-19",
+          "2015-03-14"
+        ],
+        [
+          "2015-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 38,
+        "stations": 16,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.station-opening.1999.techno-sakaki",
+      "kind": "station_opening",
+      "identity": [
+        "しなの鉄道線",
+        "しなの鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "1999-04-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2001.yashiro-kokomae",
+      "kind": "station_opening",
+      "identity": [
+        "しなの鉄道線",
+        "しなの鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2001-03-22",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2002.shinano-kokubunji",
+      "kind": "station_opening",
+      "identity": [
+        "しなの鉄道線",
+        "しなの鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2002-03-29",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2009.chikuma",
+      "kind": "station_opening",
+      "identity": [
+        "しなの鉄道線",
+        "しなの鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2009-03-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-opening.2006.aoyama",
+      "kind": "station_opening",
+      "identity": [
+        "いわて銀河鉄道線",
+        "アイジーアールいわて銀河鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2006-03-18",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.opening.nagoya-tsurumai-kamiotai",
+      "kind": "opening",
+      "identity": [
+        "3号線鶴舞線",
+        "名古屋市"
+      ],
+      "source_service_periods": [
+        [
+          "1993-08-12",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.rinkai-tennozu",
+      "kind": "opening",
+      "identity": [
+        "臨海副都心線",
+        "東京臨海高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2001-03-31",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.rinkai-osaki",
+      "kind": "opening",
+      "identity": [
+        "臨海副都心線",
+        "東京臨海高速鉄道"
+      ],
+      "source_service_periods": [
+        [
+          "2002-12-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.kyoto-tozai-rokujizo",
+      "kind": "opening",
+      "identity": [
+        "東西線",
+        "京都市"
+      ],
+      "source_service_periods": [
+        [
+          "2004-11-26",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.station-rename.hankyu.hk01.osaka-umeda.kobe",
+      "kind": "station_rename",
+      "identity": [
+        "神戸線",
+        "阪急電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-10-01"
+        ],
+        [
+          "2019-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 2,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.hankyu.hk01.osaka-umeda.takarazuka",
+      "kind": "station_rename",
+      "identity": [
+        "宝塚線",
+        "阪急電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-10-01"
+        ],
+        [
+          "2019-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.hanshin.hs01.osaka-umeda",
+      "kind": "station_rename",
+      "identity": [
+        "本線",
+        "阪神電気鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-10-01"
+        ],
+        [
+          "2019-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.hankyu.hk86.kyoto-kawaramachi",
+      "kind": "station_rename",
+      "identity": [
+        "京都線",
+        "阪急電鉄"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-10-01"
+        ],
+        [
+          "2019-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.station-rename.hanshin.hs13.naruo-mukogawajoshidai-mae",
+      "kind": "station_rename",
+      "identity": [
+        "本線",
+        "阪神電気鉄道"
+      ],
+      "source_service_periods": [
+        [
+          null,
+          "2019-10-01"
+        ],
+        [
+          "2019-10-01",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 1,
+        "retirements": 1
+      }
+    },
+    {
+      "id": "jp.opening.osaka-monorail-minami-ibaraki-kadomashi",
+      "kind": "opening",
+      "identity": [
+        "大阪モノレール線",
+        "大阪モノレール"
+      ],
+      "source_service_periods": [
+        [
+          "1997-08-22",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.kyoto-karasuma-kokusai-kaikan",
+      "kind": "opening",
+      "identity": [
+        "烏丸線",
+        "京都市"
+      ],
+      "source_service_periods": [
+        [
+          "1997-06-03",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.kyoto-tozai-uzumasa-tenjingawa",
+      "kind": "opening",
+      "identity": [
+        "東西線",
+        "京都市"
+      ],
+      "source_service_periods": [
+        [
+          "2008-01-16",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.sapporo-tozai-miyanosawa",
+      "kind": "opening",
+      "identity": [
+        "東西線",
+        "札幌市"
+      ],
+      "source_service_periods": [
+        [
+          "1999-02-25",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.sapporo-toho-fukuzumi",
+      "kind": "opening",
+      "identity": [
+        "東豊線",
+        "札幌市"
+      ],
+      "source_service_periods": [
+        [
+          "1994-10-14",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    },
+    {
+      "id": "jp.opening.nagoya-sakuradori-nonami-tokushige",
+      "kind": "opening",
+      "identity": [
+        "6号線桜通線",
+        "名古屋市"
+      ],
+      "source_service_periods": [
+        [
+          "2011-03-27",
+          null
+        ]
+      ],
+      "generated": {
+        "sections": 0,
+        "stations": 0,
+        "retirements": 2
+      }
+    }
+  ],
+  "official_inventory": {
+    "provided": true,
+    "records": 217,
+    "explicitly_linked": 80,
+    "matched": 80,
+    "unresolved": 138,
+    "matched_nothing": 137,
+    "identity_candidates_without_reviewed_link": 8
+  },
+  "unresolved": [
+    {
+      "source": "canonical.not_in_n02",
+      "detail": "2005-04-01 以前に廃止され N02-05 に含まれない路線（名鉄岐阜600V線区・日立電鉄線・のと鉄道能登線 穴水—蛸島 など）は現行系列 N02 から復元できない。N02-1996 は正規化済みだが旧統一形式の再配布条件および運営者属性の補完が未解決のため公開 overlay に未収録。"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:001",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:002",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:003",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:004",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:005",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:006",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:007",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:008",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:009",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:010",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:011",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:012",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:013",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:014",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:015",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:016",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:017",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:018",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:019",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:020",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:021",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:022",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:023",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:024",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:025",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:026",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:027",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:028",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:029",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:030",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:031",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:032",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:033",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:034",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:035",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:036",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:037",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:038",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:039",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:040",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:041",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:042",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:043",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:044",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:045",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:056",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:065",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:072",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:074",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:077",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-closures-20260401:078",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:001",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:003",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:004",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:007",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:008",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:011",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:012",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:013",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:014",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:015",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:016",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:017",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:018",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:019",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:020",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:023",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:026",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:029",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:030",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:031",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:033",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:034",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:035",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:036",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:037",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:038",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:039",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:040",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:041",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:042",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:043",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:045",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:046",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:047",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:048",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:049",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:050",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:051",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:052",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:053",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:054",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:055",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:061",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:064",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:065",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:066",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:068",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:069",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:071",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:072",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:075",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:077",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:078",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:080",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:081",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:082",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:083",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:084",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:086",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:088",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:091",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:093",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:096",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:097",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:098",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:100",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:101",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:103",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:105",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:107",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:108",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:109",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:110",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:111",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:113",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:115",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:117",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:118",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:119",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:120",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "mlit-openings-20260401:121",
+      "detail": "unresolved"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-shinano-transfer-1997",
+      "detail": "reviewed_source_only"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-nishitetsu-line-rename-2001",
+      "detail": "reviewed_source_only"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-nishitetsu-fukuoka-station-rename-2001",
+      "detail": "reviewed_source_only"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-igr-transfer-2002",
+      "detail": "reviewed_source_only"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-aoimori-metoki-hachinohe-transfer-2002",
+      "detail": "reviewed_source_only"
+    },
+    {
+      "source": "official_inventory",
+      "id": "jp-id-aoimori-hachinohe-aomori-transfer-2010",
+      "detail": "reviewed_source_only"
+    }
+  ],
+  "findings": [
+    {
+      "code": "DECLARED_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "2005-04-01 以前に廃止され N02-05 に含まれない路線（名鉄岐阜600V線区・日立電鉄線・のと鉄道能登線 穴水—蛸島 など）は現行系列 N02 から復元できない。N02-1996 は正規化済みだが旧統一形式の再配布条件および運営者属性の補完が未解決のため公開 overlay に未収録。"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:001"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 0 matches no canonical event",
+      "record_id": "mlit-closures-20260401:001"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:002"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 1 matches no canonical event",
+      "record_id": "mlit-closures-20260401:002"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:003"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 2 matches no canonical event",
+      "record_id": "mlit-closures-20260401:003"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:004"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 3 matches no canonical event",
+      "record_id": "mlit-closures-20260401:004"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:005"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 4 matches no canonical event",
+      "record_id": "mlit-closures-20260401:005"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:006"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 5 matches no canonical event",
+      "record_id": "mlit-closures-20260401:006"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:007"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 6 matches no canonical event",
+      "record_id": "mlit-closures-20260401:007"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:008"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 7 matches no canonical event",
+      "record_id": "mlit-closures-20260401:008"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:009"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 8 matches no canonical event",
+      "record_id": "mlit-closures-20260401:009"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:010"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 9 matches no canonical event",
+      "record_id": "mlit-closures-20260401:010"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:011"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 10 matches no canonical event",
+      "record_id": "mlit-closures-20260401:011"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:012"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 11 matches no canonical event",
+      "record_id": "mlit-closures-20260401:012"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:013"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 12 matches no canonical event",
+      "record_id": "mlit-closures-20260401:013"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:014"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 13 matches no canonical event",
+      "record_id": "mlit-closures-20260401:014"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:015"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 14 matches no canonical event",
+      "record_id": "mlit-closures-20260401:015"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:016"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 15 matches no canonical event",
+      "record_id": "mlit-closures-20260401:016"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:017"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 16 matches no canonical event",
+      "record_id": "mlit-closures-20260401:017"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:018"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 17 matches no canonical event",
+      "record_id": "mlit-closures-20260401:018"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:019"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 18 matches no canonical event",
+      "record_id": "mlit-closures-20260401:019"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:020"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 19 matches no canonical event",
+      "record_id": "mlit-closures-20260401:020"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:021"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 20 matches no canonical event",
+      "record_id": "mlit-closures-20260401:021"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:022"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 21 matches no canonical event",
+      "record_id": "mlit-closures-20260401:022"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:023"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 22 matches no canonical event",
+      "record_id": "mlit-closures-20260401:023"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:024"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 23 matches no canonical event",
+      "record_id": "mlit-closures-20260401:024"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:025"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 24 matches no canonical event",
+      "record_id": "mlit-closures-20260401:025"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:026"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 25 matches no canonical event",
+      "record_id": "mlit-closures-20260401:026"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:027"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 26 matches no canonical event",
+      "record_id": "mlit-closures-20260401:027"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:028"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 27 matches no canonical event",
+      "record_id": "mlit-closures-20260401:028"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:029"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 28 matches no canonical event",
+      "record_id": "mlit-closures-20260401:029"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:030"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 29 matches no canonical event",
+      "record_id": "mlit-closures-20260401:030"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:031"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 30 matches no canonical event",
+      "record_id": "mlit-closures-20260401:031"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:032"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 31 matches no canonical event",
+      "record_id": "mlit-closures-20260401:032"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:033"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 32 matches no canonical event",
+      "record_id": "mlit-closures-20260401:033"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:034"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 33 matches no canonical event",
+      "record_id": "mlit-closures-20260401:034"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:035"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 34 matches no canonical event",
+      "record_id": "mlit-closures-20260401:035"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:036"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 35 matches no canonical event",
+      "record_id": "mlit-closures-20260401:036"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:037"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 36 matches no canonical event",
+      "record_id": "mlit-closures-20260401:037"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:038"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 37 matches no canonical event",
+      "record_id": "mlit-closures-20260401:038"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:039"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 38 matches no canonical event",
+      "record_id": "mlit-closures-20260401:039"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:040"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 39 matches no canonical event",
+      "record_id": "mlit-closures-20260401:040"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:041"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 40 matches no canonical event",
+      "record_id": "mlit-closures-20260401:041"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:042"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 41 matches no canonical event",
+      "record_id": "mlit-closures-20260401:042"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:043"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 42 matches no canonical event",
+      "record_id": "mlit-closures-20260401:043"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:044"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 43 matches no canonical event",
+      "record_id": "mlit-closures-20260401:044"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:045"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 44 matches no canonical event",
+      "record_id": "mlit-closures-20260401:045"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:056"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 55 matches no canonical event",
+      "record_id": "mlit-closures-20260401:056"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:065"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 64 matches no canonical event",
+      "record_id": "mlit-closures-20260401:065"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:072"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 71 matches no canonical event",
+      "record_id": "mlit-closures-20260401:072"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:074"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:077"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 76 matches no canonical event",
+      "record_id": "mlit-closures-20260401:077"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-closures-20260401:078"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 77 matches no canonical event",
+      "record_id": "mlit-closures-20260401:078"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:001"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 78 matches no canonical event",
+      "record_id": "mlit-openings-20260401:001"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:003"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 80 matches no canonical event",
+      "record_id": "mlit-openings-20260401:003"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:004"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 81 matches no canonical event",
+      "record_id": "mlit-openings-20260401:004"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:007"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 84 matches no canonical event",
+      "record_id": "mlit-openings-20260401:007"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:008"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 85 matches no canonical event",
+      "record_id": "mlit-openings-20260401:008"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:011"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 88 matches no canonical event",
+      "record_id": "mlit-openings-20260401:011"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:012"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 89 matches no canonical event",
+      "record_id": "mlit-openings-20260401:012"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:013"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 90 matches no canonical event",
+      "record_id": "mlit-openings-20260401:013"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:014"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 91 matches no canonical event",
+      "record_id": "mlit-openings-20260401:014"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:015"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 92 matches no canonical event",
+      "record_id": "mlit-openings-20260401:015"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:016"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 93 matches no canonical event",
+      "record_id": "mlit-openings-20260401:016"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:017"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 94 matches no canonical event",
+      "record_id": "mlit-openings-20260401:017"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:018"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 95 matches no canonical event",
+      "record_id": "mlit-openings-20260401:018"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:019"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 96 matches no canonical event",
+      "record_id": "mlit-openings-20260401:019"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:020"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 97 matches no canonical event",
+      "record_id": "mlit-openings-20260401:020"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:023"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 100 matches no canonical event",
+      "record_id": "mlit-openings-20260401:023"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:026"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 103 matches no canonical event",
+      "record_id": "mlit-openings-20260401:026"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:029"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 106 matches no canonical event",
+      "record_id": "mlit-openings-20260401:029"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:030"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 107 matches no canonical event",
+      "record_id": "mlit-openings-20260401:030"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:031"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 108 matches no canonical event",
+      "record_id": "mlit-openings-20260401:031"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:033"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 110 matches no canonical event",
+      "record_id": "mlit-openings-20260401:033"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:034"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 111 matches no canonical event",
+      "record_id": "mlit-openings-20260401:034"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:035"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 112 matches no canonical event",
+      "record_id": "mlit-openings-20260401:035"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:036"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 113 matches no canonical event",
+      "record_id": "mlit-openings-20260401:036"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:037"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 114 matches no canonical event",
+      "record_id": "mlit-openings-20260401:037"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:038"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 115 matches no canonical event",
+      "record_id": "mlit-openings-20260401:038"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:039"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 116 matches no canonical event",
+      "record_id": "mlit-openings-20260401:039"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:040"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 117 matches no canonical event",
+      "record_id": "mlit-openings-20260401:040"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:041"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 118 matches no canonical event",
+      "record_id": "mlit-openings-20260401:041"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:042"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 119 matches no canonical event",
+      "record_id": "mlit-openings-20260401:042"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:043"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 120 matches no canonical event",
+      "record_id": "mlit-openings-20260401:043"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:045"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 122 matches no canonical event",
+      "record_id": "mlit-openings-20260401:045"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:046"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 123 matches no canonical event",
+      "record_id": "mlit-openings-20260401:046"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:047"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 124 matches no canonical event",
+      "record_id": "mlit-openings-20260401:047"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:048"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 125 matches no canonical event",
+      "record_id": "mlit-openings-20260401:048"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:049"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 126 matches no canonical event",
+      "record_id": "mlit-openings-20260401:049"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:050"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 127 matches no canonical event",
+      "record_id": "mlit-openings-20260401:050"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:051"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 128 matches no canonical event",
+      "record_id": "mlit-openings-20260401:051"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:052"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 129 matches no canonical event",
+      "record_id": "mlit-openings-20260401:052"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:053"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 130 matches no canonical event",
+      "record_id": "mlit-openings-20260401:053"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:054"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 131 matches no canonical event",
+      "record_id": "mlit-openings-20260401:054"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:055"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 132 matches no canonical event",
+      "record_id": "mlit-openings-20260401:055"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:061"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 138 matches no canonical event",
+      "record_id": "mlit-openings-20260401:061"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:064"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 141 matches no canonical event",
+      "record_id": "mlit-openings-20260401:064"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:065"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 142 matches no canonical event",
+      "record_id": "mlit-openings-20260401:065"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:066"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 143 matches no canonical event",
+      "record_id": "mlit-openings-20260401:066"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:068"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 145 matches no canonical event",
+      "record_id": "mlit-openings-20260401:068"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:069"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 146 matches no canonical event",
+      "record_id": "mlit-openings-20260401:069"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:071"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 148 matches no canonical event",
+      "record_id": "mlit-openings-20260401:071"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:072"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 149 matches no canonical event",
+      "record_id": "mlit-openings-20260401:072"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:075"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 152 matches no canonical event",
+      "record_id": "mlit-openings-20260401:075"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:077"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 154 matches no canonical event",
+      "record_id": "mlit-openings-20260401:077"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:078"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 155 matches no canonical event",
+      "record_id": "mlit-openings-20260401:078"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:080"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 157 matches no canonical event",
+      "record_id": "mlit-openings-20260401:080"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:081"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 158 matches no canonical event",
+      "record_id": "mlit-openings-20260401:081"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:082"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 159 matches no canonical event",
+      "record_id": "mlit-openings-20260401:082"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:083"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 160 matches no canonical event",
+      "record_id": "mlit-openings-20260401:083"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:084"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 161 matches no canonical event",
+      "record_id": "mlit-openings-20260401:084"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:086"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 163 matches no canonical event",
+      "record_id": "mlit-openings-20260401:086"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:088"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 165 matches no canonical event",
+      "record_id": "mlit-openings-20260401:088"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:091"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 168 matches no canonical event",
+      "record_id": "mlit-openings-20260401:091"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:093"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 170 matches no canonical event",
+      "record_id": "mlit-openings-20260401:093"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:096"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 173 matches no canonical event",
+      "record_id": "mlit-openings-20260401:096"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:097"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 174 matches no canonical event",
+      "record_id": "mlit-openings-20260401:097"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:098"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 175 matches no canonical event",
+      "record_id": "mlit-openings-20260401:098"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:100"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 177 matches no canonical event",
+      "record_id": "mlit-openings-20260401:100"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:101"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 178 matches no canonical event",
+      "record_id": "mlit-openings-20260401:101"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:103"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 180 matches no canonical event",
+      "record_id": "mlit-openings-20260401:103"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:105"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 182 matches no canonical event",
+      "record_id": "mlit-openings-20260401:105"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:107"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 184 matches no canonical event",
+      "record_id": "mlit-openings-20260401:107"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:108"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 185 matches no canonical event",
+      "record_id": "mlit-openings-20260401:108"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:109"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 186 matches no canonical event",
+      "record_id": "mlit-openings-20260401:109"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:110"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 187 matches no canonical event",
+      "record_id": "mlit-openings-20260401:110"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:111"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 188 matches no canonical event",
+      "record_id": "mlit-openings-20260401:111"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:113"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 190 matches no canonical event",
+      "record_id": "mlit-openings-20260401:113"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:115"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 192 matches no canonical event",
+      "record_id": "mlit-openings-20260401:115"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:117"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 194 matches no canonical event",
+      "record_id": "mlit-openings-20260401:117"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:118"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 195 matches no canonical event",
+      "record_id": "mlit-openings-20260401:118"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:119"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 196 matches no canonical event",
+      "record_id": "mlit-openings-20260401:119"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:120"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 197 matches no canonical event",
+      "record_id": "mlit-openings-20260401:120"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is unresolved",
+      "record_id": "mlit-openings-20260401:121"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 198 matches no canonical event",
+      "record_id": "mlit-openings-20260401:121"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-shinano-transfer-1997"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 199 matches no canonical event",
+      "record_id": "jp-id-shinano-transfer-1997"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-nishitetsu-line-rename-2001"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 200 matches no canonical event",
+      "record_id": "jp-id-nishitetsu-line-rename-2001"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-nishitetsu-fukuoka-station-rename-2001"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 201 matches no canonical event",
+      "record_id": "jp-id-nishitetsu-fukuoka-station-rename-2001"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-igr-transfer-2002"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 202 matches no canonical event",
+      "record_id": "jp-id-igr-transfer-2002"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-aoimori-metoki-hachinohe-transfer-2002"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 203 matches no canonical event",
+      "record_id": "jp-id-aoimori-metoki-hachinohe-transfer-2002"
+    },
+    {
+      "code": "OFFICIAL_UNRESOLVED",
+      "status": "INCOMPLETE",
+      "message": "official inventory status is reviewed_source_only",
+      "record_id": "jp-id-aoimori-hachinohe-aomori-transfer-2010"
+    },
+    {
+      "code": "OFFICIAL_MATCHED_NOTHING",
+      "status": "ERROR",
+      "message": "official inventory record 204 matches no canonical event",
+      "record_id": "jp-id-aoimori-hachinohe-aomori-transfer-2010"
+    }
+  ],
+  "counts": {
+    "errors": 137,
+    "unresolved": 139,
+    "matched_nothing": 137,
+    "unknown": 0
+  }
+}

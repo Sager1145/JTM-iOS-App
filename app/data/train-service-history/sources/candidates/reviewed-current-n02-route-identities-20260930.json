@@ -1,0 +1,538 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-30",
+  "review_contract": "Each patch is pinned to an exact trip, input sequence, ordered endpoint path, official train evidence, official physical-line evidence, and one current jp-2025 line identity. Current N02 identity does not establish a daily service-validity interval. The uncalled Nippori boundary is a route-only station identity used solely by trip_line_segments and is not a canonical timetable stop.",
+  "new_sources": [
+    {
+      "source_id": "mlit-n02-2025-20251231",
+      "publisher": "国土交通省 国土数値情報",
+      "title": "鉄道データ N02 令和7年版",
+      "source_type": "official_national_rail_dataset_catalog",
+      "url_or_locator": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "issue": "N02-25, 2025-12-31 reference date; updated 2026-04",
+      "publication_date": null,
+      "effective_date": "2025-12-31",
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "government_open_data_terms_apply",
+      "redistribution_status": "factual_metadata_only",
+      "automated_extraction_allowed": true,
+      "archive_locator": null,
+      "notes": "Official catalog defines N02_003 as railway line name and N02_004 as operator. The canonical jp-* line ids are deterministic identifiers in the shipped jp-2025 package, not identifiers published by MLIT. This snapshot has no per-line daily validity interval."
+    },
+    {
+      "source_id": "jr-east-passenger-lines-rules-20260930",
+      "publisher": "東日本旅客鉄道株式会社",
+      "title": "旅客営業規則 第156条（途中下車）",
+      "source_type": "official_passenger_rule_line_scope",
+      "url_or_locator": "https://www.jreast.co.jp/ryokaku/02_hen/04_syo/02_setsu/02.html",
+      "issue": "Live passenger rules reviewed 2026-09-30",
+      "publication_date": null,
+      "effective_date": null,
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Article 156 identifies 東海道本線 東京–熱海, 中央本線 東京–塩尻, 東北本線 東京–黒磯, and 常磐線 日暮里–浪江 for its stopover rule, and lists 篠ノ井線 without endpoint bounds. It supports only that named line scope; it does not establish operator ownership, the 篠ノ井–塩尻 endpoints, a train-specific route, or daily-valid current-N02 history."
+    },
+    {
+      "source_id": "jr-hokkaido-line-inventory-20260401",
+      "publisher": "北海道旅客鉄道株式会社",
+      "title": "会社概要 営業路線",
+      "source_type": "official_operator_line_inventory",
+      "url_or_locator": "https://www.jrhokkaido.co.jp/corporate/company/com_02.html",
+      "issue": "2026-04-01 current operating-area inventory",
+      "publication_date": "2026-04-01",
+      "effective_date": "2026-04-01",
+      "accessed_at": "2026-09-30",
+      "content_hash": null,
+      "license_status": "all_rights_reserved_no_data_license_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "archive_locator": null,
+      "notes": "Official company inventory lists 宗谷本線 旭川–稚内, 259.4 km. The shipped current N02 metadata uses the normalized name 宗谷線."
+    }
+  ],
+  "partial_route_state": [
+    {
+      "trip_id": "jr-east.azusa.1.base.2026-09-18",
+      "completeness_notes": "All eleven passenger-pair intervals have direct current N02 identities: ten on 中央線 and one on 篠ノ井線. Route completeness remains partial because the current snapshot has no per-line daily validity interval.",
+      "research_notes": "Current N02 identity and endpoint membership are direct. Obtain a service-validity interval that covers the trip occurrence before route publication."
+    },
+    {
+      "trip_id": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19",
+      "completeness_notes": "All eleven passenger-pair intervals have direct current N02 identities: ten on 中央線 and one on 篠ノ井線. Route completeness remains partial because the current snapshot has no per-line daily validity interval.",
+      "research_notes": "Current N02 identity and endpoint membership are direct. Obtain a service-validity interval that covers the trip occurrence before route publication."
+    },
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "completeness_notes": "All fourteen ordered physical segments have direct current N02 identities, including the Mito–Nippori Joban and Nippori–Ueno Tohoku segments. Route completeness remains partial because current identities lack per-line daily validity intervals.",
+      "research_notes": "The route-only Nippori boundary and current N02 endpoint memberships are direct. Obtain service-validity intervals for the current identities before route publication."
+    },
+    {
+      "trip_id": "jr-east.tokiwa.55.main.2026-09-19",
+      "completeness_notes": "All nine ordered physical segments have direct current N02 identities, including the Ueno–Nippori Tohoku and Nippori–Kashiwa Joban segments. Route completeness remains partial because current identities lack per-line daily validity intervals.",
+      "research_notes": "The route-only Nippori boundary and current N02 endpoint memberships are direct. Obtain service-validity intervals for the current identities before route publication."
+    },
+    {
+      "trip_id": "jr-hokkaido.sarobetsu.3-dated-20260930.2026-09-30",
+      "completeness_notes": "All ten passenger-pair intervals have the direct current 宗谷線 N02 identity. Route completeness remains partial because the current snapshot has no per-line daily validity interval.",
+      "research_notes": "Current N02 identity and endpoint membership are direct. Obtain a service-validity interval that covers 2026-09-30 before route publication."
+    },
+    {
+      "trip_id": "jr-hokkaido.sarobetsu.4-dated-20260930.2026-09-30",
+      "completeness_notes": "All ten passenger-pair intervals have the direct current 宗谷線 N02 identity. Route completeness remains partial because the current snapshot has no per-line daily validity interval.",
+      "research_notes": "Current N02 identity and endpoint membership are direct. Obtain a service-validity interval that covers 2026-09-30 before route publication."
+    }
+  ],
+  "route_only_station_identities": [
+    {
+      "station_id": "jp.n02.003417",
+      "name_snapshot": "日暮里",
+      "reference_kind": "current_n02",
+      "current_source_code": "003417",
+      "rail_history_id": null,
+      "evidence_source_ids": [
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "JR East Article 156 sets the Joban boundary at Nippori; jp-2025 group code 003417 is a member of both the Joban and Tohoku current identities. This route-only identity is not a source-listed Hitachi 26 or Tokiwa 55 stop."
+    }
+  ],
+  "line_identities": [
+    {
+      "current_n02_line_id": "jp-東日本旅客鉄道-中央線",
+      "line_name": "中央線",
+      "operator_id": "jr-east",
+      "operator_name": "東日本旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-east-passenger-lines-rules-20260930"
+      ]
+    },
+    {
+      "current_n02_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+      "line_name": "篠ノ井線",
+      "operator_id": "jr-east",
+      "operator_name": "東日本旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-east-passenger-lines-rules-20260930"
+      ]
+    },
+    {
+      "current_n02_line_id": "jp-東日本旅客鉄道-常磐線",
+      "line_name": "常磐線",
+      "operator_id": "jr-east",
+      "operator_name": "東日本旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-east-passenger-lines-rules-20260930"
+      ]
+    },
+    {
+      "current_n02_line_id": "jp-東日本旅客鉄道-東北線-2",
+      "line_name": "東北線",
+      "operator_id": "jr-east",
+      "operator_name": "東日本旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-east-passenger-lines-rules-20260930"
+      ]
+    },
+    {
+      "current_n02_line_id": "jp-東日本旅客鉄道-東海道線",
+      "line_name": "東海道線",
+      "operator_id": "jr-east",
+      "operator_name": "東日本旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-east-passenger-lines-rules-20260930"
+      ]
+    },
+    {
+      "current_n02_line_id": "jp-北海道旅客鉄道-宗谷線",
+      "line_name": "宗谷線",
+      "operator_id": "jr-hokkaido",
+      "operator_name": "北海道旅客鉄道",
+      "identity_source_ids": [
+        "mlit-n02-2025-20251231",
+        "jr-hokkaido-line-inventory-20260401"
+      ]
+    }
+  ],
+  "segment_groups": [
+    {
+      "trip_id": "jr-east.azusa.1.base.2026-09-18",
+      "input_sequence_start": 1,
+      "output_sequence_start": 1,
+      "current_n02_line_id": "jp-東日本旅客鉄道-中央線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-azusa1-base-202609-east-next",
+        "jr-east-azusa-route-current",
+        "jr-east-chuo-shinonoi-boundary-20260507",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Azusa 1 train table plus JR East Chuo/Shinonoi boundary notice and passenger-rule line scope; jp-2025 endpoint membership checked for every pair.",
+      "station_path": [
+        "jp.n02.003700",
+        "jp.n02.003634",
+        "jp.n02.003947",
+        "jp.n02.004166",
+        "jp.n02.003867",
+        "jp.n02.003533",
+        "jp.n02.002981",
+        "jp.n02.002764",
+        "jp.n02.002706",
+        "jp.n02.002696",
+        "jp.n02.002616"
+      ]
+    },
+    {
+      "trip_id": "jr-east.azusa.1.base.2026-09-18",
+      "input_sequence_start": 11,
+      "output_sequence_start": 11,
+      "current_n02_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-azusa1-base-202609-east-next",
+        "jr-east-azusa-route-current",
+        "jr-east-chuo-shinonoi-boundary-20260507",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Azusa 1 train table and official Shiojiri boundary evidence; jp-2025 confirms Shiojiri and Matsumoto on the current Shinonoi identity.",
+      "station_path": [
+        "jp.n02.002616",
+        "jp.n02.002506"
+      ]
+    },
+    {
+      "trip_id": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19",
+      "input_sequence_start": 1,
+      "output_sequence_start": 1,
+      "current_n02_line_id": "jp-東日本旅客鉄道-中央線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-azusa1-202609-east-next",
+        "jr-east-azusa-route-current",
+        "jr-east-chuo-shinonoi-boundary-20260507",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact selected-day Azusa 1 train table plus JR East Chuo/Shinonoi boundary notice and passenger-rule line scope; jp-2025 endpoint membership checked for every pair.",
+      "station_path": [
+        "jp.n02.003700",
+        "jp.n02.003634",
+        "jp.n02.003947",
+        "jp.n02.004166",
+        "jp.n02.003867",
+        "jp.n02.003533",
+        "jp.n02.002981",
+        "jp.n02.002764",
+        "jp.n02.002706",
+        "jp.n02.002696",
+        "jp.n02.002616"
+      ]
+    },
+    {
+      "trip_id": "jr-east.azusa.1.selected-saturday-holiday.2026-09-19",
+      "input_sequence_start": 11,
+      "output_sequence_start": 11,
+      "current_n02_line_id": "jp-東日本旅客鉄道-篠ノ井線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-azusa1-202609-east-next",
+        "jr-east-azusa-route-current",
+        "jr-east-chuo-shinonoi-boundary-20260507",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact selected-day Azusa 1 train table and official Shiojiri boundary evidence; jp-2025 confirms Shiojiri and Matsumoto on the current Shinonoi identity.",
+      "station_path": [
+        "jp.n02.002616",
+        "jp.n02.002506"
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "input_sequence_start": 1,
+      "output_sequence_start": 1,
+      "current_n02_line_id": "jp-東日本旅客鉄道-常磐線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-hitachi26-202609",
+        "jr-east-hitachi-route-current",
+        "jr-east-kanto-route-map-202604",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Hitachi 26 calls through Mito, official service and network material, Article 156 Joban line-scope boundary, and jp-2025 endpoint membership.",
+      "station_path": [
+        "jp.n02.001657",
+        "jp.n02.001684",
+        "jp.n02.001710",
+        "jp.n02.001738",
+        "jp.n02.001903",
+        "jp.n02.002079",
+        "jp.n02.002129",
+        "jp.n02.002171",
+        "jp.n02.002207",
+        "jp.n02.002280",
+        "jp.n02.002319"
+      ]
+    },
+    {
+      "trip_id": "jr-east.tokiwa.55.main.2026-09-19",
+      "input_sequence_start": 2,
+      "prior_output_sequence_start": 4,
+      "output_sequence_start": 5,
+      "current_n02_line_id": "jp-東日本旅客鉄道-常磐線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-tokiwa55-202609-east-next",
+        "jr-east-hitachi-route-current",
+        "jr-east-kanto-route-map-202604",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Tokiwa 55 calls from Kashiwa through Katsuta, official service and network material, Article 156 Joban line-scope boundary, and jp-2025 endpoint membership.",
+      "station_path": [
+        "jp.n02.002984",
+        "jp.n02.002660",
+        "jp.n02.002552",
+        "jp.n02.002350",
+        "jp.n02.002319",
+        "jp.n02.002280"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.sarobetsu.3-dated-20260930.2026-09-30",
+      "input_sequence_start": 1,
+      "output_sequence_start": 1,
+      "current_n02_line_id": "jp-北海道旅客鉄道-宗谷線",
+      "segment_source_id": "jr-hokkaido-line-inventory-20260401",
+      "evidence_source_ids": [
+        "jr-hokkaido-soya-down-20260930",
+        "jr-hokkaido-sarobetsu-family-guide-2026",
+        "jr-hokkaido-line-inventory-20260401",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact dated Sarobetsu 3 Soya Main Line timetable, current service guide, company line inventory, and jp-2025 endpoint membership.",
+      "station_path": [
+        "jp.n02.000095",
+        "jp.n02.000033",
+        "jp.n02.000030",
+        "jp.n02.000025",
+        "jp.n02.000021",
+        "jp.n02.000016",
+        "jp.n02.000013",
+        "jp.n02.000008",
+        "jp.n02.000006",
+        "jp.n02.000002",
+        "jp.n02.000001"
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.sarobetsu.4-dated-20260930.2026-09-30",
+      "input_sequence_start": 1,
+      "output_sequence_start": 1,
+      "current_n02_line_id": "jp-北海道旅客鉄道-宗谷線",
+      "segment_source_id": "jr-hokkaido-line-inventory-20260401",
+      "evidence_source_ids": [
+        "jr-hokkaido-soya-up-20260930",
+        "jr-hokkaido-sarobetsu-family-guide-2026",
+        "jr-hokkaido-line-inventory-20260401",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact dated Sarobetsu 4 Soya Main Line timetable, current service guide, company line inventory, and jp-2025 endpoint membership.",
+      "station_path": [
+        "jp.n02.000001",
+        "jp.n02.000002",
+        "jp.n02.000006",
+        "jp.n02.000008",
+        "jp.n02.000013",
+        "jp.n02.000016",
+        "jp.n02.000021",
+        "jp.n02.000025",
+        "jp.n02.000030",
+        "jp.n02.000033",
+        "jp.n02.000095"
+      ]
+    }
+  ],
+  "new_segments": [
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "sequence": 13,
+      "from_station_id": "jp.n02.003505",
+      "to_station_id": "jp.n02.003766",
+      "current_n02_line_id": "jp-東日本旅客鉄道-東北線-2",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "confidence": "high",
+      "evidence_source_ids": [
+        "jr-east-hitachi26-202609",
+        "jr-east-ueno-tokyo-line-20150314",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Hitachi 26 Ueno and Tokyo calls, official through-service notice, Article 156 Tohoku line scope, and jp-2025 endpoint membership."
+    },
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "sequence": 14,
+      "from_station_id": "jp.n02.003766",
+      "to_station_id": "jp.n02.004095",
+      "current_n02_line_id": "jp-東日本旅客鉄道-東海道線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "confidence": "high",
+      "evidence_source_ids": [
+        "jr-east-hitachi26-202609",
+        "jr-east-ueno-tokyo-line-20150314",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Hitachi 26 Tokyo and Shinagawa calls, official through-service notice, Article 156 Tokaido line scope, and jp-2025 endpoint membership."
+    },
+    {
+      "trip_id": "jr-east.tokiwa.55.main.2026-09-19",
+      "sequence": 1,
+      "from_station_id": "jp.n02.004095",
+      "to_station_id": "jp.n02.003766",
+      "current_n02_line_id": "jp-東日本旅客鉄道-東海道線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "confidence": "high",
+      "evidence_source_ids": [
+        "jr-east-tokiwa55-202609-east-next",
+        "jr-east-ueno-tokyo-line-20150314",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Tokiwa 55 Shinagawa and Tokyo calls, official through-service notice, Article 156 Tokaido line scope, and jp-2025 endpoint membership."
+    },
+    {
+      "trip_id": "jr-east.tokiwa.55.main.2026-09-19",
+      "sequence": 2,
+      "from_station_id": "jp.n02.003766",
+      "to_station_id": "jp.n02.003505",
+      "current_n02_line_id": "jp-東日本旅客鉄道-東北線-2",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "confidence": "high",
+      "evidence_source_ids": [
+        "jr-east-tokiwa55-202609-east-next",
+        "jr-east-ueno-tokyo-line-20150314",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Tokiwa 55 Tokyo and Ueno calls, official through-service notice, Article 156 Tohoku line scope, and jp-2025 endpoint membership."
+    }
+  ],
+  "route_only_boundary_splits": [
+    {
+      "trip_id": "jr-east.hitachi.26.2026-09-18",
+      "input_sequence": 11,
+      "first_sequence": 11,
+      "second_sequence": 12,
+      "from_station_id": "jp.n02.002319",
+      "boundary_station_id": "jp.n02.003417",
+      "to_station_id": "jp.n02.003505",
+      "incoming_current_n02_line_id": "jp-東日本旅客鉄道-常磐線",
+      "outgoing_current_n02_line_id": "jp-東日本旅客鉄道-東北線-2",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-hitachi26-202609",
+        "jr-east-hitachi-route-current",
+        "jr-east-kanto-route-map-202604",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Hitachi 26 page lists Mito then Ueno with no Nippori passenger call. JR East Article 156 places the Joban boundary at Nippori; official service/network material and jp-2025 establish the ordered Mito–Nippori Joban then Nippori–Ueno Tohoku chain."
+    },
+    {
+      "trip_id": "jr-east.tokiwa.55.main.2026-09-19",
+      "input_sequence": 1,
+      "first_sequence": 3,
+      "second_sequence": 4,
+      "from_station_id": "jp.n02.003505",
+      "boundary_station_id": "jp.n02.003417",
+      "to_station_id": "jp.n02.002984",
+      "incoming_current_n02_line_id": "jp-東日本旅客鉄道-東北線-2",
+      "outgoing_current_n02_line_id": "jp-東日本旅客鉄道-常磐線",
+      "segment_source_id": "jr-east-passenger-lines-rules-20260930",
+      "evidence_source_ids": [
+        "jr-east-tokiwa55-202609-east-next",
+        "jr-east-hitachi-route-current",
+        "jr-east-kanto-route-map-202604",
+        "jr-east-passenger-lines-rules-20260930",
+        "mlit-n02-2025-20251231"
+      ],
+      "evidence_locator": "Exact Tokiwa 55 page lists Ueno then Kashiwa with no Nippori passenger call. JR East Article 156 places the Joban boundary at Nippori; official service/network material and jp-2025 establish the ordered Ueno–Nippori Tohoku then Nippori–Kashiwa Joban chain."
+    }
+  ],
+  "evidence_source_roles": {
+    "jr-east-azusa1-base-202609-east-next": {
+      "role": "dated_train_table",
+      "locator": "The exact Azusa 1 table proves the displayed base schedule and ordered passenger calls, but does not publish a physical line id."
+    },
+    "jr-east-azusa1-202609-east-next": {
+      "role": "dated_train_table",
+      "locator": "The exact Azusa 1 selected-day table proves that schedule variant and its ordered passenger calls, but does not publish a physical line id."
+    },
+    "jr-east-azusa-route-current": {
+      "role": "train_family_corridor",
+      "locator": "The current train-family guide names the Chuo Main Line corridor from Shinjuku through Kofu to Matsumoto; it does not identify the Shiojiri–Matsumoto physical section."
+    },
+    "jr-east-chuo-shinonoi-boundary-20260507": {
+      "role": "physical_line_boundary",
+      "locator": "Page 1 assigns Chuo Main Line to Takao–Shiojiri and Shinonoi Line to Shiojiri–Shinonoi; it does not identify a jp-* feature id or an Azusa operating day."
+    },
+    "jr-east-passenger-lines-rules-20260930": {
+      "role": "passenger_rule_line_scope",
+      "locator": "Article 156 names the Tokaido, Chuo, Tohoku and Joban bounds used here and lists Shinonoi Line without endpoints; it does not establish ownership, a train path, a jp-* id, or daily validity."
+    },
+    "mlit-n02-2025-20251231": {
+      "role": "current_n02_snapshot_metadata",
+      "locator": "The N02-25 catalog defines the line-name and operator attributes. Canonical jp-* ids and endpoint membership are project-derived from the reviewed shipped snapshot; neither proves a train route or daily line validity."
+    },
+    "jr-east-hitachi26-202609": {
+      "role": "dated_train_table",
+      "locator": "The exact Hitachi 26 table proves the displayed 2026 operating dates and ordered passenger calls from Iwaki through Ueno and Tokyo to Shinagawa, but not the physical line id between calls."
+    },
+    "jr-east-tokiwa55-202609-east-next": {
+      "role": "dated_train_table",
+      "locator": "The exact Tokiwa 55 table proves the displayed 2026 operating dates and ordered passenger calls from Shinagawa through Ueno to Katsuta, but not the physical line id between calls."
+    },
+    "jr-east-hitachi-route-current": {
+      "role": "train_family_corridor",
+      "locator": "The current guide says Hitachi and Tokiwa run on the Joban Line and identifies the Shinagawa/Tokyo/Ueno–Mito/Iwaki/Sendai corridor; it is not train-number-specific edge evidence."
+    },
+    "jr-east-kanto-route-map-202604": {
+      "role": "current_network_corridor",
+      "locator": "The official network map supports the reviewed Joban station corridor; its drawn line is not treated as a canonical N02 feature id or dated train schedule."
+    },
+    "jr-east-ueno-tokyo-line-20150314": {
+      "role": "through_service_corridor",
+      "locator": "The official notice establishes Joban through service via Ueno and Tokyo to Shinagawa. Ueno-Tokyo Line is a service corridor here, not the physical N02 line name."
+    },
+    "jr-hokkaido-soya-down-20260930": {
+      "role": "dated_line_timetable",
+      "locator": "The selected 2026-09-30 Soya Main Line table proves Sarobetsu 3, its direction and ordered passenger calls; it does not publish the normalized jp-* id."
+    },
+    "jr-hokkaido-soya-up-20260930": {
+      "role": "dated_line_timetable",
+      "locator": "The selected 2026-09-30 Soya Main Line table proves Sarobetsu 4, its direction and ordered passenger calls; it does not publish the normalized jp-* id."
+    },
+    "jr-hokkaido-sarobetsu-family-guide-2026": {
+      "role": "train_family_corridor",
+      "locator": "The current guide identifies Sarobetsu and its Asahikawa–Wakkanai corridor; it does not prove every dated train or a canonical N02 id."
+    },
+    "jr-hokkaido-line-inventory-20260401": {
+      "role": "operator_line_inventory",
+      "locator": "The 2026-04-01 company inventory identifies Soya Main Line as Asahikawa–Wakkanai under JR Hokkaido; the shipped snapshot uses the normalized name 宗谷線 and a project-derived jp-* id."
+    }
+  }
+}

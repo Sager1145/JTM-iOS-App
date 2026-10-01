@@ -1,0 +1,2 @@
+{"from_sequence": 3, "related_trip_id": "jr-shikoku.ishizuchi.1.1001m.exact-2026-09-30", "relation_type": "couples_with", "source_id": "jr-odekake-shiokaze1-20260930-train", "to_sequence": 15, "trip_id": "jr-shikoku.shiokaze.1.2026-09-30"}
+{"from_sequence": 3, "related_trip_id": "jr-shikoku.shiokaze.1.2026-09-30", "relation_type": "couples_with", "source_id": "jr-odekake-shiokaze1-20260930-train", "to_sequence": 15, "trip_id": "jr-shikoku.ishizuchi.1.1001m.exact-2026-09-30"}

@@ -1,0 +1,3 @@
+{"calendar_id": "jr-hokkaido.sarobetsu.1.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-sarobetsu1-okhotsk3-lilac33-20260930"}
+{"calendar_id": "jr-hokkaido.okhotsk.3.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-sarobetsu1-okhotsk3-lilac33-20260930"}
+{"calendar_id": "jr-hokkaido.lilac.33.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-sarobetsu1-okhotsk3-lilac33-20260930"}

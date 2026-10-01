@@ -1,0 +1,111 @@
+{
+  "candidate_id": "jr-kyushu-huis-ten-bosch11-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 Huis Ten Bosch 11 occurrence; ten displayed passenger calls in its own train column; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-huis-ten-bosch11-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085801.html?c=28283&ym=202609&d=30",
+  "service_date": "2026-09-30",
+  "trip": {
+    "trip_id": "jr-kyushu.huis-ten-bosch.11.2026-09-30",
+    "service_id": "huis-ten-bosch",
+    "service_name": "ハウステンボス",
+    "public_number": "11",
+    "train_number": "6011H",
+    "direction": "博多→ハウステンボス",
+    "stop_times": [
+      {
+        "name_snapshot": "博多",
+        "arrival_time": null,
+        "departure_time": "08:39",
+        "platform": "4"
+      },
+      {
+        "name_snapshot": "二日市",
+        "arrival_time": "08:51",
+        "departure_time": "08:52",
+        "platform": null
+      },
+      {
+        "name_snapshot": "鳥栖",
+        "arrival_time": "09:02",
+        "departure_time": "09:02",
+        "platform": "5"
+      },
+      {
+        "name_snapshot": "新鳥栖",
+        "arrival_time": "09:06",
+        "departure_time": "09:06",
+        "platform": null
+      },
+      {
+        "name_snapshot": "佐賀",
+        "arrival_time": "09:19",
+        "departure_time": "09:20",
+        "platform": null
+      },
+      {
+        "name_snapshot": "江北",
+        "arrival_time": "09:29",
+        "departure_time": "09:30",
+        "platform": "4"
+      },
+      {
+        "name_snapshot": "武雄温泉",
+        "arrival_time": "09:39",
+        "departure_time": "09:40",
+        "platform": "2"
+      },
+      {
+        "name_snapshot": "有田",
+        "arrival_time": "09:54",
+        "departure_time": "09:54",
+        "platform": null
+      },
+      {
+        "name_snapshot": "早岐",
+        "arrival_time": "10:07",
+        "departure_time": "10:16",
+        "platform": null
+      },
+      {
+        "name_snapshot": "ハウステンボス",
+        "arrival_time": "10:22",
+        "departure_time": null,
+        "platform": null
+      }
+    ]
+  },
+  "evidence_locators": [
+    {
+      "claim": "Huis Ten Bosch 11 identity and 6011H",
+      "locator": "right-hand ハウステンボス11号 / 6011H train column"
+    },
+    {
+      "claim": "2026-09-30 occurrence",
+      "locator": "date-qualified URL, 毎日運転 row and September calendar"
+    },
+    {
+      "claim": "coupled working before Haiki",
+      "locator": "備考: 博多－早岐間４０１１Ｍ〔みどり１１号〕に併結"
+    },
+    {
+      "claim": "ten passenger calls and clocks, excluding Sasebo",
+      "locator": "right-hand 時刻 / のりば column from 博多 through ハウステンボス; 佐世保 row has ||"
+    }
+  ],
+  "printed_symbols": [
+    {
+      "after_stop_sequence": 9,
+      "position": 0,
+      "station_name": "佐世保",
+      "symbol": "||"
+    }
+  ],
+  "symbol_review": {
+    "accessed_at": "2026-09-30",
+    "selected_date": "2026年9月30日(水)",
+    "locator": "Right-hand 6011H / ハウステンボス11 column, 佐世保 row between 早岐 and ハウステンボス",
+    "scope": "All non-passenger symbol rows in the selected column; no clock inferred."
+  }
+}

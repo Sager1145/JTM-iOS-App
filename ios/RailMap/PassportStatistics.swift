@@ -91,8 +91,8 @@ struct PassportStatistics: Sendable {
     let totalMinutes: Double
 
     let byYear: [Column]
-    let byMonth: [Column]
-    let byWeekday: [Column]
+    private let monthsByYear: [Int: [Column]]
+    private let weekdaysByYear: [Int: [Column]]
     /// Journeys with no usable date. They are in every total on this screen
     /// and in none of the three distributions, which is a thing the chart has
     /// to say out loud rather than quietly leave out.
@@ -118,6 +118,14 @@ struct PassportStatistics: Sendable {
 
     var isEmpty: Bool { journeys == 0 }
 
+    func months(in year: Int) -> [Column] {
+        monthsByYear[year] ?? Self.filled([:], over: 1...12)
+    }
+
+    func weekdays(in year: Int) -> [Column] {
+        weekdaysByYear[year] ?? Self.filled([:], over: 1...7)
+    }
+
     // MARK: - building it
 
     /// Group one region's already-matched journeys.
@@ -131,8 +139,8 @@ struct PassportStatistics: Sendable {
         journeys.reserveCapacity(min(trains.count, entries.count))
 
         var years: [Int: (count: Int, km: Double)] = [:]
-        var months: [Int: (count: Int, km: Double)] = [:]
-        var weekdays: [Int: (count: Int, km: Double)] = [:]
+        var monthsByYear: [Int: [Int: (count: Int, km: Double)]] = [:]
+        var weekdaysByYear: [Int: [Int: (count: Int, km: Double)]] = [:]
         var undated = 0
 
         var stations = Accumulator()
@@ -178,11 +186,11 @@ struct PassportStatistics: Sendable {
             if let day = calendarParts(bucket) {
                 years[day.year, default: (0, 0)].count += 1
                 years[day.year, default: (0, 0)].km += km
-                months[day.month, default: (0, 0)].count += 1
-                months[day.month, default: (0, 0)].km += km
+                monthsByYear[day.year, default: [:]][day.month, default: (0, 0)].count += 1
+                monthsByYear[day.year, default: [:]][day.month, default: (0, 0)].km += km
                 if let weekday = weekday(of: day) {
-                    weekdays[weekday, default: (0, 0)].count += 1
-                    weekdays[weekday, default: (0, 0)].km += km
+                    weekdaysByYear[day.year, default: [:]][weekday, default: (0, 0)].count += 1
+                    weekdaysByYear[day.year, default: [:]][weekday, default: (0, 0)].km += km
                 }
             } else {
                 undated += 1
@@ -238,8 +246,8 @@ struct PassportStatistics: Sendable {
             timedJourneys: timed,
             totalMinutes: totalMinutes,
             byYear: columns(years).sorted { $0.id < $1.id },
-            byMonth: filled(months, over: 1...12),
-            byWeekday: filled(weekdays, over: 1...7),
+            monthsByYear: monthsByYear.mapValues { filled($0, over: 1...12) },
+            weekdaysByYear: weekdaysByYear.mapValues { filled($0, over: 1...7) },
             undated: undated,
             longestByDistance: journeys.max { $0.km < $1.km },
             shortestByDistance: journeys.filter { $0.km > 0 }.min { $0.km < $1.km },

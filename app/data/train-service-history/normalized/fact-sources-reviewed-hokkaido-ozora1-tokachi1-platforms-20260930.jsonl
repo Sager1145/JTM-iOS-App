@@ -1,0 +1,2 @@
+{"confidence": "high", "entity_id": "jr-hokkaido.ozora.1.2026-09-30:1", "entity_type": "stop_time", "field_name": "platform", "page_or_locator": "2026-09-30 s=130 4001D 番線 row / 札幌 6:48発: (6)", "source_id": "jr-hokkaido-ozora1-20260930-timetable", "verification_status": "verified"}
+{"confidence": "high", "entity_id": "jr-hokkaido.tokachi.1.2026-09-29-30:1", "entity_type": "stop_time", "field_name": "platform", "page_or_locator": "2026-09-30 s=130 31D 番線 row / 札幌 7:58発: (8)", "source_id": "jr-hokkaido-tokachi1-20260930-timetable", "verification_status": "verified"}

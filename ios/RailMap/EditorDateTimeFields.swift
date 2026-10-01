@@ -108,6 +108,9 @@ struct EditorTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
     @Binding var time: String?
+    /// A journey has one service date. This picker presents the civil date at
+    /// this stop, then stores it as the existing service-day clock offset.
+    var serviceDate: String? = nil
     var accessibilityID: String? = nil
     @State private var pendingPickerTime: Date?
     @State private var pendingPickerDayOffset: Int?
@@ -122,19 +125,28 @@ struct EditorTimeField: View {
                 timeTextField
             }
             .frame(minHeight: 44)
-            Picker(localization.editorText("ios.editor.serviceDay"), selection: pickerDay) {
-                Text(localization.editorText("ios.editor.today")).tag(ServiceDay.today)
-                Text(localization.editorText("ios.editor.nextServiceDay")).tag(ServiceDay.next)
-                Text(localization.editorText("ios.editor.later")).tag(ServiceDay.later)
-            }
-            if pickerDay.wrappedValue == .later {
-                Stepper(
-                    localization.editorText("ios.editor.serviceDaysLater", [
-                        "count": .number(Double(pickerDayOffset.wrappedValue))
-                    ]),
-                    value: pickerDayOffset,
-                    in: 2...Self.maximumPickerDayOffset
-                )
+            if let dateBounds {
+                DatePicker(
+                    localization.editorText("ios.editor.date"),
+                    selection: pickerDateSelection,
+                    in: dateBounds,
+                    displayedComponents: .date)
+                    .accessibilityIdentifier("\(accessibilityID ?? "rideEditorTime")Date")
+            } else {
+                Picker(localization.editorText("ios.editor.serviceDay"), selection: pickerDay) {
+                    Text(localization.editorText("ios.editor.today")).tag(ServiceDay.today)
+                    Text(localization.editorText("ios.editor.nextServiceDay")).tag(ServiceDay.next)
+                    Text(localization.editorText("ios.editor.later")).tag(ServiceDay.later)
+                }
+                if pickerDay.wrappedValue == .later {
+                    Stepper(
+                        localization.editorText("ios.editor.serviceDaysLater", [
+                            "count": .number(Double(pickerDayOffset.wrappedValue))
+                        ]),
+                        value: pickerDayOffset,
+                        in: 2...Self.maximumPickerDayOffset
+                    )
+                }
             }
             DatePicker(title, selection: pickerSelection, displayedComponents: .hourAndMinute)
             Button(localization.editorText("ios.editor.useSelectedTime")) {
@@ -154,11 +166,22 @@ struct EditorTimeField: View {
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            if let serviceDate,
+               case .valid(_, let clock) = EditorTime.parseTime(time),
+               clock.dayOffset > 0,
+               let civilDate = Dates.addDays(serviceDate, clock.dayOffset) {
+                Text("\(civilDate) " + String(
+                    format: "%02d:%02d", clock.hour, clock.minute))
+                    .font(.footnote.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("\(accessibilityID ?? "rideEditorTime")Civil")
+            }
         }
         .onChange(of: time) { _, _ in
             pendingPickerTime = nil
             pendingPickerDayOffset = nil
         }
+        .onChange(of: serviceDate) { _, _ in pendingPickerDayOffset = nil }
     }
 
     private var timeTextField: some View {
@@ -234,6 +257,36 @@ struct EditorTimeField: View {
                 return 0
             },
             set: { pendingPickerDayOffset = $0 }
+        )
+    }
+
+    private var dateBounds: ClosedRange<Date>? {
+        guard let serviceDate,
+              case .valid(_, _, _, let base) = EditorTime.parseDate(serviceDate),
+              let first = RecordDate.date(from: base),
+              let lastText = Dates.addDays(base, Self.maximumPickerDayOffset),
+              let last = RecordDate.date(from: lastText)
+        else { return nil }
+        return first...last
+    }
+
+    private var pickerDateSelection: Binding<Date> {
+        Binding(
+            get: {
+                guard let serviceDate,
+                      let date = Dates.addDays(serviceDate, pickerDayOffset.wrappedValue),
+                      let selection = RecordDate.date(from: date)
+                else { return Date() }
+                return selection
+            },
+            set: { selected in
+                guard let serviceDate,
+                      let start = RecordDate.date(from: serviceDate)
+                else { return }
+                let offset = Self.pickerCalendar.dateComponents(
+                    [.day], from: start, to: selected).day ?? 0
+                pendingPickerDayOffset = min(Self.maximumPickerDayOffset, max(0, offset))
+            }
         )
     }
 

@@ -1,0 +1,111 @@
+{
+  "candidate_id": "jr-kyushu-ibusuki-no-tamatebako-2026-summer-kyushu-next-batch",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "promotion_scope": "six numbered endpoint-only templates and every explicitly published origin date through manifest as_of_date",
+  "sources": [
+    {
+      "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "特急指宿のたまて箱",
+      "source_type": "official_train_service_timetable",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/",
+      "issue": "2026年3月14日改正",
+      "effective_date": "2026-03-14",
+      "accessed_at": "2026-09-28",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Official service page visually reviewed. Its timetable section explicitly labels the two displayed rows as 停車駅 and prints public numbers 1-6 with endpoint minute clocks. No HTML snapshot is redistributed."
+    },
+    {
+      "source_id": "jr-kyushu-summer-ds-plan-current-20260515",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "2026年夏季（7月～9月）臨時列車運転計画とD&S列車の運転日について",
+      "source_type": "official_special_train_plan_pdf",
+      "url_or_locator": "https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2026/07/13/20260515_Special_Train_Operation_Plan_and_DS_Train_Operating_Dates.pdf",
+      "archive_locator": "https://www.jrkyushu.co.jp/news/release/index.html",
+      "publication_date": "2026-05-15",
+      "effective_date": "2026-07-01",
+      "accessed_at": "2026-09-28",
+      "content_hash": "3309ec0977ecb9f75a483a626d3cfc71a66ea5bf3db8e5bd809ef9113576b166",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Current official news-index download visually reviewed. PDF p.10 merges 7/1-31, 8/1-31 and 9/1-30 across all three rows in each direction; the printed 276-per-direction total independently equals 92 dates times 3 trains. No PDF copy is redistributed."
+    },
+    {
+      "source_id": "jr-kyushu-ds-line-list-20260314",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "JR九州 D&S列車一覧",
+      "source_type": "official_train_service_guide",
+      "url_or_locator": "https://www.jrkyushu.co.jp/trains/",
+      "issue": "2026年3月14日時点の情報",
+      "effective_date": "2026-03-14",
+      "accessed_at": "2026-09-29",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Official D&S train list labels 指宿のたまて箱 in 鹿児島県 with おもな線区：指宿枕崎線. This supports a named line, not a physical line feature ID or a complete operator-boundary audit."
+    },
+    {
+      "source_id": "jr-kyushu-ibusuki-line-operator-20250315",
+      "publisher": "九州旅客鉄道株式会社",
+      "title": "路線別鉄道営業キロ数",
+      "source_type": "official_operator_line_inventory",
+      "url_or_locator": "https://www.jrkyushu.co.jp/company/info/data/line_km.html",
+      "issue": "2025年3月15日現在",
+      "effective_date": "2025-03-15",
+      "accessed_at": "2026-09-30",
+      "license_status": "no_reuse_grant_identified",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "JR Kyushu's company line inventory lists 指宿枕崎線 from 鹿児島中央 to 枕崎; combined with the 2026 D&S timetable's 鹿児島中央–指宿 endpoints and line label, this supports the sole JR Kyushu operator segment for the published train route. No historical N02 validity is implied."
+    }
+  ],
+  "service": {
+    "service_id": "ibusuki-no-tamatebako",
+    "canonical_name": "指宿のたまて箱",
+    "service_class": "limited_express",
+    "historical_generation": 1,
+    "jr_scope": "jr"
+  },
+  "operating_date_range": {
+    "from": "2026-07-01",
+    "until_inclusive": "2026-09-30",
+    "source_id": "jr-kyushu-summer-ds-plan-current-20260515",
+    "locator": "PDF p.10 merged operating-date cells for both three-row directional tables"
+  },
+  "route_evidence": {
+    "source_id": "jr-kyushu-ds-line-list-20260314",
+    "line_name": "指宿枕崎線",
+    "current_n02_line_id": "jp-九州旅客鉄道-指宿枕崎線",
+    "operator_id": "jr-kyushu",
+    "confidence": "medium",
+    "locator": "D&S train list, 指宿のたまて箱 card, おもな線区：指宿枕崎線; information as of 2026-03-14"
+  },
+  "operator_evidence": {
+    "source_id": "jr-kyushu-ibusuki-line-operator-20250315",
+    "operator_id": "jr-kyushu",
+    "line_name": "指宿枕崎線",
+    "line_from": "鹿児島中央",
+    "line_to": "枕崎",
+    "locator": "JR Kyushu company line inventory, row 21; combined with the 2026 train table's 鹿児島中央–指宿 endpoints"
+  },
+  "trips": [
+    {"public_number": "1", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "9:56", "destination": "指宿", "arrival_time": "10:47"},
+    {"public_number": "3", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "11:56", "destination": "指宿", "arrival_time": "12:48"},
+    {"public_number": "5", "direction_label": "鹿児島中央→指宿", "origin": "鹿児島中央", "departure_time": "13:56", "destination": "指宿", "arrival_time": "14:49"},
+    {"public_number": "2", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "10:56", "destination": "鹿児島中央", "arrival_time": "11:48"},
+    {"public_number": "4", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "12:57", "destination": "鹿児島中央", "arrival_time": "13:48"},
+    {"public_number": "6", "direction_label": "指宿→鹿児島中央", "origin": "指宿", "departure_time": "15:07", "destination": "鹿児島中央", "arrival_time": "16:00"}
+  ],
+  "evidence_locators": [
+    {"claim": "service identity, limited-express class, six public numbers and the complete displayed stop list", "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314", "locator": "official HTML timetable heading and two 停車駅 tables"},
+    {"claim": "all twelve endpoint minute clocks", "source_id": "jr-kyushu-ibusuki-no-tamatebako-timetable-20260314", "locator": "official HTML timetable, 2026-03-14 revision"},
+    {"claim": "all six trains operate on every source date from July 1 through September 30", "source_id": "jr-kyushu-summer-ds-plan-current-20260515", "locator": "PDF p.10, merged operating-date cells and 276 trains per direction"},
+    {"claim": "the named train uses 指宿枕崎線 as its main line, without a direct physical feature identity", "source_id": "jr-kyushu-ds-line-list-20260314", "locator": "official D&S train list, 指宿のたまて箱 card; as of 2026-03-14"},
+    {"claim": "the published route is within JR Kyushu's 指宿枕崎線 operator boundary", "source_id": "jr-kyushu-ibusuki-line-operator-20250315", "locator": "JR Kyushu company line inventory, row 21; cross-check official 2026 train table endpoints"},
+    {"claim": "the manifest boundary includes the complete published source date range", "source_id": "jr-kyushu-summer-ds-plan-current-20260515", "locator": "manifest as_of_date 2026-09-30 includes the PDF range through September 30"}
+  ]
+}

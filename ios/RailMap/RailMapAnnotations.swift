@@ -288,6 +288,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
 /// station claims its space before an intermediate stop, which claims
 /// it before one merely rolled through" the style's layer order expresses.
 final class RideLabelAnnotation: NSObject, MKAnnotation {
+    enum Side { case leading, trailing }
     dynamic var coordinate: CLLocationCoordinate2D
     let text: String
     /// The same two keys the dot carries. A caption is a separate
@@ -303,6 +304,7 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
     /// on it. A token, like every other size here.
     let dotRadiusToken: CGFloat
     let selected: Bool
+    var side: Side = .trailing
     var title: String? { text }
     init(
         coordinate: CLLocationCoordinate2D, text: String,
@@ -444,6 +446,7 @@ enum MapAnnotationReconciler {
         case let (a as RideLabelAnnotation, b as RideLabelAnnotation):
             return a.text == b.text && a.rawName == b.rawName && a.stationCode == b.stationCode
                 && a.tier == b.tier && a.dotRadiusToken == b.dotRadiusToken && a.selected == b.selected
+                && a.side == b.side
         case let (a as RideStationAnnotation, b as RideStationAnnotation):
             return a.name == b.name && a.rawName == b.rawName && a.stationCode == b.stationCode
                 && a.role == b.role && a.radius == b.radius && a.lineWidth == b.lineWidth
@@ -828,9 +831,10 @@ final class RideLabelAnnotationView: MKAnnotationView {
         let width = size.width + inset * 2
         text.frame = CGRect(x: 0, y: 0, width: width, height: height)
         frame.size = CGSize(width: width, height: height)
+        let distance = item.dotRadiusToken * scale
+            + points * MapLabelStyle.radialOffsetEm + width / 2
         centerOffset = CGPoint(
-            x: item.dotRadiusToken * scale
-                + points * MapLabelStyle.radialOffsetEm + width / 2,
+            x: item.side == .trailing ? distance : -distance,
             y: 0)
     }
 }

@@ -1,0 +1,43 @@
+{
+  "candidate_id": "jr-west-kinosaki1-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "Only the selected 2026-09-30 page is promoted; the daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-west.kinosaki.1.2026-09-30",
+    "service_id": "kinosaki",
+    "public_number": "1",
+    "train_number": "5001M",
+    "origin": "京都",
+    "destination": "城崎温泉",
+    "train_source_id": "jr-west-odekake-kinosaki1-5001m-20260930",
+    "train_source_url": "https://timetable.jr-odekake.net/train-timetable/114351?date=20260930",
+    "route_current_n02_line_id": "jp-西日本旅客鉄道-山陰線",
+    "route_source_ids": [
+      "jr-west-kinosaki-sanin-scope-20260930",
+      "mlit-n02-2025-kinosaki1-20260930"
+    ],
+    "stop_times": [
+      {"stop_sequence": 1, "name_snapshot": "京都", "current_source_code": "006079", "arrival_time": null, "departure_time": "07:32", "platform": "30", "call_type": "origin"},
+      {"stop_sequence": 2, "name_snapshot": "二条", "current_source_code": "005949", "arrival_time": "07:37", "departure_time": "07:38", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 3, "name_snapshot": "亀岡", "current_source_code": "005925", "arrival_time": "07:50", "departure_time": "07:51", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 4, "name_snapshot": "園部", "current_source_code": "005695", "arrival_time": "08:01", "departure_time": "08:02", "platform": "3", "call_type": "passenger_stop"},
+      {"stop_sequence": 5, "name_snapshot": "綾部", "current_source_code": "005106", "arrival_time": "08:38", "departure_time": "08:39", "platform": "3", "call_type": "passenger_stop"},
+      {"stop_sequence": 6, "name_snapshot": "福知山", "current_source_code": "005124", "arrival_time": "08:47", "departure_time": "08:49", "platform": "3", "call_type": "passenger_stop"},
+      {"stop_sequence": 7, "name_snapshot": "和田山", "current_source_code": "004991", "arrival_time": "09:16", "departure_time": "09:16", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 8, "name_snapshot": "八鹿", "current_source_code": "004776", "arrival_time": "09:26", "departure_time": "09:27", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 9, "name_snapshot": "江原", "current_source_code": "004619", "arrival_time": "09:33", "departure_time": "09:33", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 10, "name_snapshot": "豊岡", "current_source_code": "004383", "arrival_time": "09:41", "departure_time": "09:43", "platform": null, "call_type": "passenger_stop"},
+      {"stop_sequence": 11, "name_snapshot": "城崎温泉", "current_source_code": "004122", "arrival_time": "09:52", "departure_time": null, "platform": null, "call_type": "destination"}
+    ]
+  },
+  "review_notes": [
+    "The 2026-09-30 Kyoto station Sagano-line page's 07:32 link opens exact train page 114351 for Kinosaki 1, 5001M.",
+    "Only eleven timed passenger calls are retained; all レ pass rows are omitted.",
+    "JR West's September 2026 fare guide explicitly calls Kyoto–Kinosaki-Onsen 山陰本線経由. Current N02 names the continuous feature 山陰線 and has all eleven station groups in order.",
+    "Current N02 line identity has no 2026-09-30 daily validity interval. No actual-operation or full-inventory claim."
+  ]
+}

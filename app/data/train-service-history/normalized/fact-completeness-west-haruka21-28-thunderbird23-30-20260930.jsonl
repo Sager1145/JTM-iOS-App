@@ -1,0 +1,160 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "1021M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.21.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "1022M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.22.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "1023M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.23.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "1024M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.24.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "1025M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.25.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "1026M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.26.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "1027M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.27.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "1028M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "5 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.haruka.28.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "4023M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.23.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "4024M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.24.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "4025M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.25.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "4026M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.26.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "4027M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.27.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "4028M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.28.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "4029M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.29.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Named exact-date train", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "4030M", "status": "verified"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Selected September 30 variant", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Printed termini", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "4 timed passenger calls", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks", "status": "verified"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Current N02 station identities", "status": "verified"}
+{"confidence": "high", "dimension": "formation", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Planned seat categories only.", "status": "partial"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Daily physical route unverified.", "status": "unknown"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.thunderbird.30.2026-09-30", "entity_type": "trip", "notes": "Train-operation segments unverified.", "status": "unknown"}

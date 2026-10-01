@@ -1,0 +1,56 @@
+{
+  "candidate_id": "jr-hokkaido-lilac25-27-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official s=110 down-direction page visibly selected 2026年9月30日(水). The 3025M and 3027M columns each print 毎日, seven passenger calls, Sapporo platform (9), Green reserved-seat and all-reserved ordinary-car icons. Only printed clocks are transcribed.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.lilac.25.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "25",
+      "train_number": "3025M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3025M / ライラック25, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {"札幌": "(9)"},
+      "stops": [
+        ["札幌", null, "15:00"],
+        ["岩見沢", null, "15:25"],
+        ["美唄", null, "15:36"],
+        ["砂川", null, "15:47"],
+        ["滝川", null, "15:52"],
+        ["深川", null, "16:06"],
+        ["旭川", "16:25", null]
+      ],
+      "pass_through_names": []
+    },
+    {
+      "trip_id": "jr-hokkaido.lilac.27.exact-2026-09-30",
+      "service_id": "lilac",
+      "public_number": "27",
+      "train_number": "3027M",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-lilac-kamui-down-extra-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "3027M / ライラック27, selected 2026-09-30 毎日 column; printed passenger-stop rows",
+      "origin": "札幌",
+      "destination": "旭川",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {"札幌": "(9)"},
+      "stops": [
+        ["札幌", null, "16:00"],
+        ["岩見沢", null, "16:25"],
+        ["美唄", null, "16:36"],
+        ["砂川", null, "16:47"],
+        ["滝川", null, "16:52"],
+        ["深川", null, "17:06"],
+        ["旭川", "17:25", null]
+      ],
+      "pass_through_names": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "candidate_id": "ancestral-limited-express-boundaries-v1",
+  "candidate_status": "unreviewed",
+  "canonical": false,
+  "first_limited_express": {
+    "operator_scope": "jr-ancestral-national-railways",
+    "origin": "新橋",
+    "destination": "下関",
+    "verified_precision": "day",
+    "verified_date": "1912-06-15",
+    "exact_date_status": "verified_by_official_museum_notice_identifying_displayed_timetable",
+    "source_ids": [
+      "ndl-railway-history-kaleidoscope-2022",
+      "railway-museum-travel-exhibit-20220706",
+      "railway-museum-era-change-exhibit-20190227"
+    ],
+    "notes": "The 2019 Railway Museum notice states that the first special express operated on 1912-06-15 and identifies its displayed Shinbashi-Shimonoseki timetable as revised on that date. The sources do not establish complete calls, times, train number or calendar."
+  },
+  "conservative_verified_zero_service_interval": {
+    "interval_id": "national-limited-express-zero-conservative-1944-1949",
+    "operator_scope": "jr-ancestral-national-railways",
+    "valid_from": "1944-05-01",
+    "valid_until": "1949-09-01",
+    "reason": "The last named limited express ended during April 1944 and limited express service returned during September 1949. This half-open interval is wholly inside the absence period at the month precision supported by the sources.",
+    "source_ids": [
+      "showakan-expert-meeting-2024-24",
+      "showakan-postwar-limited-express-20240312",
+      "ndl-railway-history-kaleidoscope-2022"
+    ],
+    "boundary_precision": "conservative_month_bounds",
+    "promotion_status": "eligible_after_fact_source_model_supports_multiple_sources"
+  },
+  "exact_boundary_hypotheses": [
+    {
+      "event": "last_pre_restoration_limited_express_ended",
+      "date_hypothesis": "1944-04-01",
+      "verification_status": "unknown",
+      "required_evidence": "Original or officially reproduced April 1944 timetable showing the last operating date"
+    },
+    {
+      "event": "heiwa_restoration_began",
+      "date_hypothesis": "1949-09-15",
+      "verification_status": "unknown",
+      "required_evidence": "Original or officially reproduced September 1949 timetable showing the first operating date"
+    }
+  ],
+  "archive_acquisition_targets": [
+    "Original 1912-06-15 national timetable issue for complete calls, times, train number and calendar",
+    "March-April 1944 national timetable issues bracketing abolition",
+    "September 1949 national timetable issue containing Heiwa restoration"
+  ],
+  "archive_inventory_source_id": "ndl-timetable-research-guide-20260316"
+}

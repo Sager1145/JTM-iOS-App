@@ -1,0 +1,154 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed service and legal-closure corrections, 2026-09-28",
+  "scope": "Exact-day corrections keep passenger service, infrastructure/legal closure, and official-row reconciliation independent. Half-open intervals end on the first wholly unavailable date.",
+  "corrections": [
+    {
+      "id": "jp-service-correction-sassho-covid-2020",
+      "canonical_event_id": "jp.jrh.sassho.iryodaigaku-shintotsukawa",
+      "official_event_id": "mlit-closures-20260401:069",
+      "kind": "closure",
+      "date_precision": "exact_day",
+      "review": {
+        "status": "verified",
+        "basis": "JR Hokkaido states that the final passenger train departed Shin-Totsukawa at 10:00 on 2020-04-17 and all later trains were cancelled. Its railway-business closure filing and MLIT row 069 retain 2020-05-07 as the legal closure date."
+      },
+      "existing": {
+        "valid_to": "2020-05-07",
+        "service_periods": null,
+        "infrastructure_periods": null,
+        "effect": "The undifferentiated valid_to currently presents legal closure as service availability."
+      },
+      "proposed": {
+        "valid_to": "2020-05-07",
+        "service_periods": [
+          [
+            null,
+            "2020-04-18"
+          ]
+        ],
+        "infrastructure_periods": [
+          [
+            null,
+            "2020-05-07"
+          ]
+        ],
+        "last_passenger_service_date": "2020-04-17",
+        "first_unavailable_date": "2020-04-18",
+        "legal_closure_date": "2020-05-07",
+        "date_policy": "One train ran on 2020-04-17; the date-only solver therefore ends service on 2020-04-18. Legal closure remains an infrastructure boundary on 2020-05-07."
+      },
+      "selector": {
+        "status": "resolved",
+        "scope": "legacy_release_geometry",
+        "line_name": "札沼線",
+        "operator": "北海道旅客鉄道",
+        "release": "N02-20",
+        "station_release": "N02-19",
+        "expected": {
+          "from_station": "北海道医療大学",
+          "to_station": "新十津川",
+          "business_km": 47.6,
+          "historical_sections": 33,
+          "historical_station_features": 16,
+          "surveyed_overlay_km": 47.63
+        }
+      },
+      "official_row_resolution": "resolved_legal_date_with_separate_service_period",
+      "evidence": [
+        {
+          "authority": "北海道旅客鉄道株式会社",
+          "reference": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20200416_KO_Sassyouline.pdf",
+          "date_precision": "exact_day",
+          "locator": "p.1: 最終運行は2020-04-17 新十津川10:00発、以降の列車は運休"
+        },
+        {
+          "authority": "北海道旅客鉄道株式会社",
+          "reference": "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20181221_KO_Sassyoline.pdf",
+          "date_precision": "exact_day",
+          "locator": "p.1: 北海道医療大学—新十津川 廃止予定日2020-05-07"
+        },
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 069: 北海道医療大学—新十津川 2020-05-07"
+        }
+      ]
+    },
+    {
+      "id": "jp-service-review-nose-cable-2023",
+      "canonical_event_id": "jp.nose.cable",
+      "official_event_id": "mlit-closures-20260401:072",
+      "kind": "closure",
+      "date_precision": "exact_day",
+      "review": {
+        "status": "verified",
+        "basis": "Nose Electric Railway states that 2023-12-03 was the final business day and that the filed legal closure date was 2023-12-04. The canonical half-open boundary is correct; MLIT row 072 conflicts by listing 2023-12-03."
+      },
+      "existing": {
+        "valid_to": "2023-12-04",
+        "service_periods": null,
+        "infrastructure_periods": null
+      },
+      "proposed": {
+        "valid_to": "2023-12-04",
+        "service_periods": null,
+        "infrastructure_periods": null,
+        "last_passenger_service_date": "2023-12-03",
+        "first_unavailable_date": "2023-12-04",
+        "legal_closure_date": "2023-12-04",
+        "date_policy": "Retain the existing half-open 2023-12-04 boundary. Do not copy the conflicting MLIT row date into either the service or infrastructure end."
+      },
+      "selector": {
+        "status": "reviewed_geometry",
+        "scope": "legacy_release_geometry",
+        "line_name": "鋼索線",
+        "operator": "能勢電鉄",
+        "release": "N02-22",
+        "expected": {
+          "from_station": "黒川",
+          "to_station": "ケーブル山上",
+          "business_km": 0.6,
+          "historical_sections": 3,
+          "historical_station_features": 2,
+          "surveyed_overlay_km": 0.65
+        }
+      },
+      "official_row_resolution": "unresolved_date_conflict",
+      "evidence": [
+        {
+          "authority": "能勢電鉄株式会社",
+          "reference": "https://noseden.hankyu.co.jp/upload_file/noseden/information/newsrelease20230922.pdf",
+          "date_precision": "exact_day",
+          "locator": "p.1: 廃止日2023-12-04、最終営業日2023-12-03"
+        },
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+          "date_precision": "exact_day",
+          "locator": "鉄軌道の廃止実績 row 072 lists 2023-12-03; conflicts with operator filing"
+        }
+      ]
+    }
+  ],
+  "unresolved_geometry_notes": [
+    {
+      "source_row_id": "mlit-closures-20260401:074",
+      "canonical_event_id": "jp.jrh.nemuro.furano-shintoku",
+      "status": "unresolved_geometry_coverage_gap",
+      "official_interval": {
+        "from_station": "富良野",
+        "to_station": "新得",
+        "business_km": 81.7
+      },
+      "compiled_n02_23_overlay": {
+        "historical_sections": 15,
+        "historical_station_features": 7,
+        "surveyed_overlay_km": 54.49
+      },
+      "coverage_length_gap_km": 27.21,
+      "reason": "The compiled N02-23 geometry is 27.21 km shorter than the official business interval. This records the discrepancy without guessing a missing subinterval or promoting row 074."
+    }
+  ]
+}

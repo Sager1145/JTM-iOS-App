@@ -188,17 +188,19 @@ function validateTrain(train, index, ids) {
         `${prefix} stop ${stopIndex + 1}: platform_number must be a non-negative integer or null.`,
       );
     }
-    ["arrival", "departure"].forEach((field) => {
-      if (
-        stop[field] !== null &&
-        stop[field] !== undefined &&
-        typeof stop[field] !== "string"
-      ) {
-        throw new Error(
-          `${prefix} stop ${stopIndex + 1}: ${field} must be a string or null.`,
-        );
-      }
-    });
+    ["arrival", "actual_arrival", "departure", "actual_departure"].forEach(
+      (field) => {
+        if (
+          stop[field] !== null &&
+          stop[field] !== undefined &&
+          typeof stop[field] !== "string"
+        ) {
+          throw new Error(
+            `${prefix} stop ${stopIndex + 1}: ${field} must be a string or null.`,
+          );
+        }
+      },
+    );
   });
   if (train.route_sections) {
     if (!Array.isArray(train.route_sections))

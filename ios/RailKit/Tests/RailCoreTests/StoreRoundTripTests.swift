@@ -125,6 +125,28 @@ struct StoreRoundTripTests {
         #expect(decoded.vehicleType == "N700S")
     }
 
+    @Test("actual stop times persist without changing legacy stop shape")
+    func actualTimesPersistAndRemainOptional() throws {
+        var train = Self.sample(region: "jp")
+        train.stops[0].actualDeparture = "06:07"
+        train.stops[1].actualArrival = "08:21"
+
+        let exported = TrainValidation.normalizeExportTrain(
+            train, country: "jp", stations: TrainValidation.StationTable.empty)
+        let text = StoreOperations.stringify(StoreOperations.json(exported))
+        #expect(text.contains("\"actual_departure\":\"06:07\""))
+        #expect(text.contains("\"actual_arrival\":\"08:21\""))
+
+        let reimported = try TrainValidation.normalizeImportedTrain(
+            try TrainValidation.JSON.parse(text))
+        #expect(reimported.stops[0].actualDeparture == "06:07")
+        #expect(reimported.stops[1].actualArrival == "08:21")
+
+        let legacyText = StoreOperations.stringify(StoreOperations.json(Self.sample(region: "jp")))
+        #expect(!legacyText.contains("actual_arrival"))
+        #expect(!legacyText.contains("actual_departure"))
+    }
+
     @Test("vehicle type survives canonical export and import")
     func vehicleTypeSurvivesExportImportRoundTrip() throws {
         var train = Self.sample(region: "jp")

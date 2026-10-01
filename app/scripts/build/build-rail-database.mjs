@@ -25,6 +25,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { APP_DIR, buildDatabase } from "./rail-database/load.mjs";
@@ -56,6 +57,8 @@ function main() {
   const log = options.quiet ? () => {} : (message) => process.stdout.write(`${message}\n`);
   const startedAt = Date.now();
 
+  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-jp-station-english.py"), "--check"],
+    { stdio: options.quiet ? "pipe" : "inherit" });
   log(`Building ${path.relative(APP_DIR, options.outFile)}${options.geometry ? "" : " (no geometry)"}`);
   const counts = buildDatabase({ ...options, log });
 

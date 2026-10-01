@@ -1,0 +1,11 @@
+{
+  "scope": "All 54 observed public numbers; candidate-to-normalized parity, not an independent re-observation of every clock.",
+  "counts": {
+    "public_numbers": 54,
+    "trips": 84,
+    "stop_rows": 665,
+    "printed_platforms": 308,
+    "number_segments": 44
+  },
+  "mismatches": []
+}

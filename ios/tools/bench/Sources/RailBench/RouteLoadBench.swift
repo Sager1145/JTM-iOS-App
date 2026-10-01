@@ -1,6 +1,43 @@
 import Foundation
 import RailCore
 
+/// First dataset lookup, with and without the optional manifest identity map.
+func benchmarkDatasetLookup(root: URL) {
+    struct PartIdentity: Decodable {
+        struct TrainIdentity: Decodable { let id: String }
+        let train: TrainIdentity
+    }
+    let directory = root.appending(path: "app/data/sample-data")
+    let manifestURL = directory.appending(path: "manifest.json")
+    guard let data = try? Data(contentsOf: manifestURL),
+          let manifest = try? JSONDecoder().decode(DatasetManifestIndex.self, from: data),
+          let indexed = manifest.indexedParts else { return }
+    func scan() throws -> [String: [DatasetManifestIndex.PartRef]] {
+        var result: [String: [DatasetManifestIndex.PartRef]] = [:]
+        for (position, name) in manifest.parts.enumerated() {
+            let part = try JSONDecoder().decode(PartIdentity.self,
+                from: Data(contentsOf: directory.appending(path: "\(name).json")))
+            result[part.train.id, default: []].append(.init(name: name, position: position))
+        }
+        return result
+    }
+    do {
+        let scanned = try scan()
+        precondition(scanned == indexed, "manifest identities differ from part scan")
+        print("\ndataset lookup — \(manifest.parts.count) jp parts, parity passed")
+        measure("legacy identity scan (warm filesystem)", repeats: 7) {
+            do { return try scan().count } catch { fatalError("\(error)") }
+        }
+        measure("read + decode manifest identity index", repeats: 7) {
+            do {
+                let fresh = try JSONDecoder().decode(DatasetManifestIndex.self,
+                    from: Data(contentsOf: manifestURL))
+                return fresh.indexedParts!.count
+            } catch { fatalError("\(error)") }
+        }
+    } catch { fatalError("dataset lookup benchmark: \(error)") }
+}
+
 /// The route store's warm path.
 ///
 /// `loadCached` asks two questions per journey — what is this route's cache

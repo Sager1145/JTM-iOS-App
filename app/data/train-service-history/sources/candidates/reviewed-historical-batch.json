@@ -1,0 +1,158 @@
+{
+  "batch_id": "reviewed-historical-batch-20260928",
+  "canonical_promotion_allowed": false,
+  "notes": "Directly reviewed historical-source leads. These records remain candidates because an explicit operating calendar and/or historical station identity is missing. Do not infer daily service from an unqualified timetable row.",
+  "research_queue": [
+    {
+      "entity_id": "tokyo-shimonoseki-special-express-19260401",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "validity_calendar",
+      "notes": "Inspect issue legends, supplements, or the Railway Ministry source issue for an explicit regular/conditional operating-day rule. The visible timetable row alone must not be promoted as daily. Source: ndl-kyushu-line-timetable-80-1926, IIIF canvas R0000008.",
+      "research_id": "historical-batch.19260401.calendar",
+      "status": "open"
+    },
+    {
+      "entity_id": "tokyo-shimonoseki-special-express-19260401",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "station_refs",
+      "notes": "Resolve the 1926 Tokyo and Shimonoseki station identities only against existing dated rail-history IDs; do not map by name or current N02 code alone.",
+      "research_id": "historical-batch.19260401.station-refs",
+      "status": "open"
+    },
+    {
+      "entity_id": "tsubame-travel-plan-19591018",
+      "entity_type": "historical_timetable_candidate",
+      "missing_dimension": "complete_timetable",
+      "notes": "Acquire the 1959-10-18 JNR timetable page that contains the named Tsubame trains; verify train numbers, true endpoints, arrivals, calls, and operating calendar. The JACAR itinerary supplies only Tokyo 09:00 and Numazu 14:42 departures.",
+      "research_id": "historical-batch.19591018.complete-timetable",
+      "status": "open"
+    },
+    {
+      "entity_id": "ancestral-special-express-shinbashi-shimonoseki-1912",
+      "entity_type": "service",
+      "missing_dimension": "timetable_issue_access",
+      "notes": "Concrete acquisition target: NDL DK111-G29 volume [4], PID 14603552, NDL-premises-only. Request remote copies of the title/revision page, special-express rows, legends, and operating-day notes. A public-library locator also exists as NDL Search R100000001-I19111000010061762. Catalog metadata does not establish timetable facts.",
+      "research_id": "historical-batch.19120615.ndl-volume-access",
+      "status": "source_unavailable"
+    }
+  ],
+  "source_documents": [
+    {
+      "accessed_at": "2026-09-28",
+      "archive_locator": "NDL PID 914814; IIIF manifest; canvas R0000008 (scan label 8, printed pp. 2-3)",
+      "automated_extraction_allowed": true,
+      "content_hash": null,
+      "effective_date": "1926-04-01",
+      "issue": "第80号",
+      "license_status": "public_domain_mark",
+      "notes": "The NDL IIIF manifest reports Access Restrictions=PDM. All 37 canvases were fetched and the relevant page was inspected directly. The scan margin says 大正十五年四月一日補訂. No raw scan is committed.",
+      "publication_date": null,
+      "publisher": "駸々堂 (NDL manifest metadata)",
+      "redistribution_status": "metadata_and_transcribed_facts_only",
+      "source_id": "ndl-kyushu-line-timetable-80-1926",
+      "source_type": "official_archive_digitization",
+      "title": "九州線汽車時間表. 第80号",
+      "url_or_locator": "https://dl.ndl.go.jp/pid/914814"
+    },
+    {
+      "accessed_at": "2026-09-28",
+      "archive_locator": "JACAR B25090979800.BAdash_0035.RAdash-0869.00000131; right-hand manuscript page",
+      "automated_extraction_allowed": false,
+      "content_hash": null,
+      "effective_date": "1959-10-18",
+      "issue": null,
+      "license_status": "jacar_site_terms_apply",
+      "notes": "The dated government document explicitly says Sunday 1959-10-18, Tokyo 09:00 aboard special express Tsubame for Numazu, and Numazu 14:42 aboard Tsubame for the return. It does not give the train's complete endpoints, arrival times, train numbers, or complete calls.",
+      "publication_date": "1959-09-16",
+      "publisher": "外務省 / アジア歴史資料センター",
+      "redistribution_status": "citation_and_metadata_only",
+      "source_id": "jacar-desai-tsubame-plan-19591018",
+      "source_type": "official_archive_document",
+      "title": "インド大蔵大臣一行の特別急行「つばめ」乗車予定に関する文書",
+      "url_or_locator": "https://www.jacar.archives.go.jp/acv/contents/pub/pdf/B25/B25090979800.BAdash_0035.RAdash-0869.00000131.pdf"
+    },
+    {
+      "accessed_at": "2026-09-28",
+      "archive_locator": "NDL call number DK111-G29, volume [4], PID 14603552; NDL Search bibliographic ID 000002975289",
+      "automated_extraction_allowed": false,
+      "content_hash": null,
+      "effective_date": null,
+      "issue": "[4] 列車時刻表 明治45年6月",
+      "license_status": "ndl_access_terms_apply",
+      "notes": "The digitized 2000 reprint is NDL-premises-only. NDL Search identifies it as the June 1912 timetable volume. Request remote copying of the title/revision page, the Tokyo/Shinbashi-Shimonoseki special-express rows, legends, and operating-day notes; do not infer times from the catalog record.",
+      "publication_date": null,
+      "publisher": "新人物往来社",
+      "redistribution_status": "bibliographic_metadata_only",
+      "source_id": "ndl-meiji-taisho-timetable-reprint-vol4",
+      "source_type": "official_archive_catalog_record",
+      "title": "復刻版明治大正鐵道省列車時刻表 [4]",
+      "url_or_locator": "https://ndlsearch.ndl.go.jp/books/R100000039-I14603552"
+    }
+  ],
+  "timetable_candidates": [
+    {
+      "calendar_status": "unknown",
+      "candidate_id": "tokyo-shimonoseki-special-express-19260401",
+      "directly_read_fields": [
+        "effective_date",
+        "train_number",
+        "displayed_service_class",
+        "origin_name_snapshot",
+        "destination_name_snapshot",
+        "origin_departure_time",
+        "destination_arrival_time"
+      ],
+      "effective_date": "1926-04-01",
+      "historical_station_identity_status": "unresolved",
+      "page_or_locator": "IIIF canvas R0000008, 東京下関間主要列車（下り）, rows 3 and 1",
+      "source_id": "ndl-kyushu-line-timetable-80-1926",
+      "trips": [
+        {
+          "arrival_day_offset": 1,
+          "destination_arrival_time": "08:30",
+          "destination_name_snapshot": "下関",
+          "displayed_service_class": "三等特急",
+          "operation_days": null,
+          "origin_departure_time": "08:45",
+          "origin_name_snapshot": "東京",
+          "train_number": "3"
+        },
+        {
+          "arrival_day_offset": 1,
+          "destination_arrival_time": "08:05",
+          "destination_name_snapshot": "下関",
+          "displayed_service_class": "一・二等特急",
+          "operation_days": null,
+          "origin_departure_time": "08:15",
+          "origin_name_snapshot": "東京",
+          "train_number": "1"
+        }
+      ],
+      "verification_status": "partial_direct_scan_review",
+      "why_not_canonical": "The source page does not explicitly state a daily or date-specific operating calendar, and no existing historical station identity was proven for the 1926 endpoints."
+    },
+    {
+      "calendar_status": "explicit_single_date",
+      "candidate_id": "tsubame-travel-plan-19591018",
+      "date": "1959-10-18",
+      "facts": [
+        {
+          "departure_station_name_snapshot": "東京",
+          "departure_time": "09:00",
+          "passenger_intended_alighting_station": "沼津",
+          "service_name": "つばめ"
+        },
+        {
+          "departure_station_name_snapshot": "沼津",
+          "departure_time": "14:42",
+          "passenger_intended_alighting_station": "東京",
+          "service_name": "つばめ"
+        }
+      ],
+      "page_or_locator": "JACAR PDF, right-hand manuscript page",
+      "source_id": "jacar-desai-tsubame-plan-19591018",
+      "verification_status": "partial_direct_document_review",
+      "why_not_canonical": "The document records a passenger itinerary, not the train's complete timetable: train numbers, actual train endpoints, arrivals, calls, and historical station identities are absent."
+    }
+  ]
+}

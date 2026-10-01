@@ -1,0 +1,2 @@
+{"from_sequence": 1, "related_trip_id": "jr-east.odoriko.1.4021m-shuzenji.2026-09-29", "relation_type": "couples_with", "source_id": "jr-east-odoriko1-20260929-30", "to_sequence": 8, "trip_id": "jr-east.odoriko.1.3021m-izukyu-shimoda.2026-09-29"}
+{"from_sequence": 1, "related_trip_id": "jr-east.odoriko.1.3021m-izukyu-shimoda.2026-09-29", "relation_type": "couples_with", "source_id": "jr-east-odoriko1-20260929-30", "to_sequence": 8, "trip_id": "jr-east.odoriko.1.4021m-shuzenji.2026-09-29"}

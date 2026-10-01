@@ -1,0 +1,66 @@
+{
+  "asOfDate": "2026-09-30",
+  "scope": "Reviewed batches and corrected three-column symbol subset; structural integration checks, not nationwide completeness",
+  "canonicalRecords": 40005,
+  "templates": 882,
+  "representedDatedInstances": 2403,
+  "passengerStopRecords": 8520,
+  "independentSymbols": 24,
+  "sourceDocuments": 1216,
+  "tripRelations": 88,
+  "canonicalSourceHash": "9b67f9950604dc43eee861bbc48d0661ebb58033fac963f4775dda71b7a5a5d0",
+  "hashes": {
+    "derived/train-service-timetable.sqlite": "af8568aa8b5ecadee80ec335891d9d0a7f7b0edb918b421bd7436088d07996f4",
+    "derived/train-service-patterns.json": "f3b301ce2d0adacaf9102731a03e3b0eba32c6f33831a5c8e3bc0d9c0a75bd08",
+    "audits/train-timetable-coverage.json": "01153335bd927aa461a8133fa8f02a85d93c78472690f5e05d732323c2a137b3",
+    "audits/train-timetable-routes.json": "570b6eb580767b66e67610431bb5d84ea680fc70c874db5a10e2c68a0758de75",
+    "audits/train-timetable-history-alignment.json": "4183f899b4e813ae2503ec55067ab311285c4f9d85244a8b2505211a2b25cc24",
+    "audits/train-timetable-stop-chronology.json": "18c0e69db7ff2526b36a9d6cc4b1ec3c7227335878b4295c25d1597ef85eef7a",
+    "audits/source-inventory.json": "d766cecab545be74e1928b44a41754ca3a6774b0cec4883a5e8ad359cad7f0dd",
+    "audits/train-service-patterns-projection.json": "7b13f1155744bf17ae59816de83a35bf66541f269c87113e30e666ff1438a023"
+  },
+  "validation": {
+    "unifiedRebuildExitCode": 0,
+    "canonicalRuntimeAligned": true,
+    "repeatDatabaseByteIdentical": true,
+    "fullPythonTests": 1005,
+    "fullSwiftTests": 926,
+    "coreTests": 611,
+    "presentationTests": 315,
+    "parserTests": 3,
+    "editorHarnessCases": 35,
+    "persistenceHarnessCases": 18,
+    "subscriptionAuthCases": 10,
+    "subscriptionHTTPcases": 9,
+    "coreGateExitCode": 0,
+    "sourceWarnings": 0,
+    "logs": {
+      "python": {
+        "path": "/private/tmp/jtm-resume-final-python-20260930.log",
+        "sha256": "824bf35c64a85f9873db1ff48d288a8ad1cca43fdfe8f4e8a82cb9bf30eaf017"
+      },
+      "railkit": {
+        "path": "/private/tmp/jtm-resume-final-railkit-20260930.log",
+        "sha256": "28589379db2cd346d90330e24bbf62dfd7a426946bda36058a5f76337187cc56"
+      },
+      "core-gate": {
+        "path": "/private/tmp/jtm-resume-final-core-gate-20260930.log",
+        "sha256": "7d30508824853056eeddb0854cd24e0d32068009ef9756f7f7f4d6f5ced5c539"
+      }
+    }
+  },
+  "unresolved": {
+    "missingCoverageCells": 2448,
+    "partialBlockedCoverageCells": 48,
+    "unverifiedPassengerRouteIntervals": 7607,
+    "unverifiedHistoricalAlignmentChecks": 1114,
+    "unresolvedStationReferences": 69,
+    "unresolvedSources": 2,
+    "passengerCallsWithNeitherClock": 709,
+    "sourceTruthVerified": false,
+    "nationwideCompletion": false
+  },
+  "dataFrozen": true,
+  "noActiveDataWriter": true,
+  "committedMergedPushed": false
+}

@@ -265,15 +265,141 @@ function filterStationCandidatesNear(
   });
 }
 
+function explicitEndpointOperatorNames(train, endpointName, sectionLineNames) {
+  const name = String(endpointName || "").trim();
+  const lines = new Set(sectionLineNames || []);
+  const operators = new Set();
+  if (!name || !lines.size) return operators;
+
+  (train?.route_sections || []).forEach((section) => {
+    const from = String(section?.from || "").trim();
+    const to = String(section?.to || "").trim();
+    if (from !== name && to !== name) return;
+    const candidateLines = new Set(
+      (section?.line_names || []).map((value) => String(value || "").trim()),
+    );
+    if (![...lines].some((line) => candidateLines.has(line))) return;
+    (section?.operator_names || []).forEach((value) => {
+      const operator = String(value || "").trim();
+      if (operator) operators.add(operator);
+    });
+  });
+  return operators;
+}
+
+// A dated name-only endpoint may still have another current namesake after its
+// own membership is retired.  When the route section explicitly identifies
+// the old membership's line and operator, preserve that identity boundary:
+// the other operator is not a fallback for a station name that this railway
+// itself used. Explicit station codes keep their existing stable-identity
+// resolution, and current shared stations remain expandable because their
+// matching membership is valid on the ride date.
+function suppressRetiredExplicitNameFallback(
+  candidates,
+  name,
+  code,
+  train,
+  sectionLineNames,
+) {
+  const rideDate = train?.date;
+  if (
+    code ||
+    typeof rideDate !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(rideDate)
+  )
+    return candidates;
+  const cleanName = String(name || "").trim();
+  const lines = new Set(sectionLineNames || []);
+  const operators = explicitEndpointOperatorNames(
+    train,
+    cleanName,
+    sectionLineNames,
+  );
+  if (!cleanName || !lines.size || !operators.size) return candidates;
+
+  const explicitMemberships = candidates.filter(
+    (feature) =>
+      stationName(feature) === cleanName &&
+      lines.has(stationLineName(feature)) &&
+      operators.has(stationOperator(feature)),
+  );
+  if (!explicitMemberships.length) return candidates;
+  const hasValidExplicitMembership = explicitMemberships.some((feature) => {
+    const bounds = railServiceBounds(feature?.properties);
+    return isRailValid(bounds.valid_from, bounds.valid_to, rideDate);
+  });
+  return hasValidExplicitMembership ? candidates : [];
+}
+
+// An explicit N02 station code is the stable line-membership identity across
+// a reviewed station rename. resolveStationCandidates deliberately prefers
+// the written name when that name exists in the code pool, which is correct
+// for undated lookups but can leave only the current-name feature for a ride
+// before the rename. In that one dated case, recover only date-valid aliases
+// from the same code. A wrong code whose pool never contained the written name
+// keeps the existing code/name mismatch fallback unchanged.
+function includeDatedExplicitCodeIdentityAliases(
+  candidates,
+  name,
+  code,
+  rideDate,
+) {
+  if (
+    !name ||
+    !code ||
+    typeof rideDate !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(rideDate)
+  )
+    return candidates;
+
+  const codePool = dedupeStationFeatures(
+    stationCandidatesIndex.get(String(code).trim()) || [],
+  );
+  const normalizedName = normalizeStationName(String(name).trim());
+  if (
+    !normalizedName ||
+    !codePool.some(
+      (feature) =>
+        normalizeStationName(stationName(feature)) === normalizedName,
+    )
+  )
+    return candidates;
+
+  const available = (feature) => {
+    const bounds = railServiceBounds(feature?.properties);
+    return isRailValid(bounds.valid_from, bounds.valid_to, rideDate);
+  };
+  if ((candidates || []).some(available)) return candidates;
+
+  const aliases = codePool.filter(available);
+  return aliases.length
+    ? dedupeStationFeatures([...(candidates || []), ...aliases])
+    : candidates;
+}
+
 function resolveRouteEndpointStationCandidates(
   endpoint,
   train,
   allowedCodes,
   sectionLineNames,
 ) {
-  const candidates = resolveStationCandidates(endpoint);
+  let candidates = resolveStationCandidates(endpoint);
   const name = typeof endpoint === "string" ? endpoint : stopName(endpoint);
   const code = typeof endpoint === "string" ? null : stopStationCode(endpoint);
+  candidates = includeDatedExplicitCodeIdentityAliases(
+    candidates,
+    name,
+    code,
+    train?.date,
+  );
+  const datedCandidates = suppressRetiredExplicitNameFallback(
+    candidates,
+    name,
+    code,
+    train,
+    sectionLineNames,
+  );
+  if (datedCandidates !== candidates) return datedCandidates;
   if (!name || !code || !candidates.length) return candidates;
 
   const preferredCandidates = filterStationsByPreferredInstitution(
@@ -1379,19 +1505,38 @@ function dijkstraFromCandidateSources(
     requiredOperators: new Set(),
   },
 ) {
+  const requiresPhysicalRail =
+    (segmentHints.requiredLines?.size || 0) > 0 ||
+    (segmentHints.requiredOperators?.size || 0) > 0;
+  // A connector can reach the same graph node more cheaply than the required
+  // railway.  Keep those two arrivals distinct so a pinned solve is settled
+  // only after it has traversed matching physical rail.
+  const searchStateKey = (nodeKey, usedRequiredRail) =>
+    requiresPhysicalRail
+      ? `${usedRequiredRail ? "rail" : "connector"}\u0000${nodeKey}`
+      : nodeKey;
   const distance = new Map();
   const previous = new Map();
   const previousEdge = new Map();
+  const nodeOf = new Map();
   const sourceOf = new Map();
   const seedCost = new Map();
   const heap = new MinHeap();
   sourceCandidates.forEach((candidate) => {
     const init = candidate.distance * STATION_SNAP_COST_FACTOR;
-    if (init < (distance.get(candidate.key) ?? Infinity)) {
-      distance.set(candidate.key, init);
-      sourceOf.set(candidate.key, candidate.key);
-      seedCost.set(candidate.key, init);
-      heap.push({ key: candidate.key, priority: init });
+    const usedRequiredRail = !requiresPhysicalRail;
+    const stateKey = searchStateKey(candidate.key, usedRequiredRail);
+    if (init < (distance.get(stateKey) ?? Infinity)) {
+      distance.set(stateKey, init);
+      nodeOf.set(stateKey, candidate.key);
+      sourceOf.set(stateKey, stateKey);
+      seedCost.set(stateKey, init);
+      heap.push({
+        key: candidate.key,
+        stateKey,
+        usedRequiredRail,
+        priority: init,
+      });
     }
   });
   const visited = new Set();
@@ -1400,11 +1545,15 @@ function dijkstraFromCandidateSources(
 
   while (heap.size() && remaining.size) {
     const current = heap.pop();
-    if (visited.has(current.key)) continue;
-    visited.add(current.key);
-    if (remaining.has(current.key)) {
+    if (visited.has(current.stateKey)) continue;
+    visited.add(current.stateKey);
+    if (current.usedRequiredRail && remaining.has(current.key)) {
       remaining.delete(current.key);
-      settled.push({ targetKey: current.key, settledCost: current.priority });
+      settled.push({
+        targetKey: current.key,
+        targetStateKey: current.stateKey,
+        settledCost: current.priority,
+      });
     }
     const edges = graph.adjacency.get(current.key) || [];
     edges.forEach((edge) => {
@@ -1426,30 +1575,50 @@ function dijkstraFromCandidateSources(
         );
       }
       const nextCost = current.priority + weight;
-      if (nextCost < (distance.get(edge.to) ?? Infinity)) {
-        distance.set(edge.to, nextCost);
-        previous.set(edge.to, current.key);
-        previousEdge.set(edge.to, edge);
-        sourceOf.set(edge.to, sourceOf.get(current.key));
-        heap.push({ key: edge.to, priority: nextCost });
+      const usedRequiredRail =
+        current.usedRequiredRail || !edge.is_station_connector;
+      const nextStateKey = searchStateKey(edge.to, usedRequiredRail);
+      if (nextCost < (distance.get(nextStateKey) ?? Infinity)) {
+        distance.set(nextStateKey, nextCost);
+        nodeOf.set(nextStateKey, edge.to);
+        previous.set(nextStateKey, current.stateKey);
+        previousEdge.set(nextStateKey, edge);
+        sourceOf.set(nextStateKey, sourceOf.get(current.stateKey));
+        heap.push({
+          key: edge.to,
+          stateKey: nextStateKey,
+          usedRequiredRail,
+          priority: nextCost,
+        });
       }
     });
   }
 
   return settled.map((entry) => {
-    const sourceKey = sourceOf.get(entry.targetKey);
+    const sourceStateKey = sourceOf.get(entry.targetStateKey);
+    const sourceKey = nodeOf.get(sourceStateKey);
     return {
       targetKey: entry.targetKey,
       sourceKey,
       // Pure path cost (matches the old per-pair solved.cost): subtract the
       // winning source's seeded snap cost back out.
-      cost: entry.settledCost - (seedCost.get(sourceKey) || 0),
-      pathKeys: reconstructPath(previous, sourceKey, entry.targetKey),
+      cost: entry.settledCost - (seedCost.get(sourceStateKey) || 0),
+      pathKeys: reconstructPath(
+        previous,
+        sourceStateKey,
+        entry.targetStateKey,
+        nodeOf,
+      ),
       // The edge actually relaxed onto each node, so parallel-edge consumers
       // (used_institution_type_codes, routeLineMismatchPenalty) score the
       // path Dijkstra chose rather than the first adjacency entry between
       // the same pair of nodes.
-      edges: reconstructPathEdges(previous, previousEdge, sourceKey, entry.targetKey),
+      edges: reconstructPathEdges(
+        previous,
+        previousEdge,
+        sourceStateKey,
+        entry.targetStateKey,
+      ),
     };
   });
 }
@@ -1578,13 +1747,13 @@ function projectPointToSegmentMeters(point, a, b) {
   };
 }
 
-function reconstructPath(previous, sourceKey, targetKey) {
-  const path = [targetKey];
-  let current = targetKey;
-  while (current !== sourceKey) {
+function reconstructPath(previous, sourceStateKey, targetStateKey, nodeOf = null) {
+  const path = [nodeOf?.get(targetStateKey) ?? targetStateKey];
+  let current = targetStateKey;
+  while (current !== sourceStateKey) {
     current = previous.get(current);
     if (!current) return [];
-    path.push(current);
+    path.push(nodeOf?.get(current) ?? current);
   }
   path.reverse();
   return path;
@@ -1593,10 +1762,15 @@ function reconstructPath(previous, sourceKey, targetKey) {
 // Same walk as reconstructPath, but yields the edge relaxed onto each node
 // instead of the node key. edges[i] is the edge from pathKeys[i] to
 // pathKeys[i + 1].
-function reconstructPathEdges(previous, previousEdge, sourceKey, targetKey) {
+function reconstructPathEdges(
+  previous,
+  previousEdge,
+  sourceStateKey,
+  targetStateKey,
+) {
   const edges = [];
-  let current = targetKey;
-  while (current !== sourceKey) {
+  let current = targetStateKey;
+  while (current !== sourceStateKey) {
     const edge = previousEdge.get(current);
     const prior = previous.get(current);
     if (!edge || !prior) return [];

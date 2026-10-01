@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page prints きのさき1号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page prints 5001M.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Train-operation company segments are not independently dated.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Only 2026-09-30 is materialized.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Both termini printed on the selected train page.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Eleven timed calls retained; レ pass rows omitted.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Printed minute clocks and side blanks retained.", "status": "verified"}
+{"confidence": "high", "dimension": "route_lines", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Ten passenger legs match current N02 山陰線; 2026-09-30 physical-line validity is unverified.", "status": "partial"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "All calls match ordered current N02 station groups.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-west.kinosaki.1.2026-09-30", "entity_type": "trip", "notes": "Timetable page is verification-only.", "status": "partial"}

@@ -1,0 +1,849 @@
+{
+  "candidate_id": "jr-west-haruka21-28-thunderbird23-30-20260930",
+  "candidate_status": "visually_reviewed_official_train_pages",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trips": [
+    {
+      "trip_id": "jr-west.haruka.21.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "21",
+      "train_number": "1021M",
+      "source_id": "jr-west-odekake-haruka21-1021m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/256951?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": null,
+          "departure": "11:00",
+          "platform": "30",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "11:27",
+          "departure": "11:28",
+          "platform": "3",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "11:32",
+          "departure": "11:33",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "11:45",
+          "departure": "11:47",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": "12:20",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.22.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "22",
+      "train_number": "1022M",
+      "source_id": "jr-west-odekake-haruka22-1022m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257211?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": null,
+          "departure": "12:14",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "12:48",
+          "departure": "12:50",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "13:01",
+          "departure": "13:02",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "13:06",
+          "departure": "13:07",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "13:34",
+          "departure": null,
+          "platform": "30",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.23.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "23",
+      "train_number": "1023M",
+      "source_id": "jr-west-odekake-haruka23-1023m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/256961?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": null,
+          "departure": "11:30",
+          "platform": "30",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "11:57",
+          "departure": "11:58",
+          "platform": "3",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "12:02",
+          "departure": "12:03",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "12:15",
+          "departure": "12:17",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": "12:50",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.24.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "24",
+      "train_number": "1024M",
+      "source_id": "jr-west-odekake-haruka24-1024m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257221?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": null,
+          "departure": "12:44",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "13:18",
+          "departure": "13:20",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "13:31",
+          "departure": "13:32",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "13:36",
+          "departure": "13:37",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "14:04",
+          "departure": null,
+          "platform": "30",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.25.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "25",
+      "train_number": "1025M",
+      "source_id": "jr-west-odekake-haruka25-1025m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/256971?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": null,
+          "departure": "12:00",
+          "platform": "30",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "12:27",
+          "departure": "12:28",
+          "platform": "3",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "12:32",
+          "departure": "12:33",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "12:45",
+          "departure": "12:47",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": "13:20",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.26.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "26",
+      "train_number": "1026M",
+      "source_id": "jr-west-odekake-haruka26-1026m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257231?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": null,
+          "departure": "13:14",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "13:48",
+          "departure": "13:50",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "14:01",
+          "departure": "14:02",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "14:06",
+          "departure": "14:07",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "14:34",
+          "departure": null,
+          "platform": "30",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.27.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "27",
+      "train_number": "1027M",
+      "source_id": "jr-west-odekake-haruka27-1027m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/256981?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": null,
+          "departure": "12:30",
+          "platform": "30",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "12:57",
+          "departure": "12:58",
+          "platform": "3",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "13:02",
+          "departure": "13:03",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "13:15",
+          "departure": "13:17",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": "13:50",
+          "departure": null,
+          "platform": null,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.haruka.28.2026-09-30",
+      "service_id": "haruka",
+      "public_number": "28",
+      "train_number": "1028M",
+      "source_id": "jr-west-odekake-haruka28-1028m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257241?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "関西空港",
+          "code": "007958",
+          "arrival": null,
+          "departure": "13:44",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "14:18",
+          "departure": "14:20",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "14:31",
+          "departure": "14:32",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "14:36",
+          "departure": "14:37",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "15:04",
+          "departure": null,
+          "platform": "30",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.23.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "23",
+      "train_number": "4023M",
+      "source_id": "jr-west-odekake-thunderbird23-4023m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257791?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": null,
+          "departure": "12:42",
+          "platform": "11",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "12:45",
+          "departure": "12:46",
+          "platform": "4",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "13:09",
+          "departure": "13:10",
+          "platform": "0",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": "14:03",
+          "departure": null,
+          "platform": "32",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.24.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "24",
+      "train_number": "4024M",
+      "source_id": "jr-west-odekake-thunderbird24-4024m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/258091?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": null,
+          "departure": "14:14",
+          "platform": "33",
+          "call_type": "origin"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "15:09",
+          "departure": "15:10",
+          "platform": "7",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "15:32",
+          "departure": "15:32",
+          "platform": "9",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "15:36",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.25.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "25",
+      "train_number": "4025M",
+      "source_id": "jr-west-odekake-thunderbird25-4025m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257801?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": null,
+          "departure": "13:12",
+          "platform": "11",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "13:15",
+          "departure": "13:16",
+          "platform": "4",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "13:39",
+          "departure": "13:40",
+          "platform": "0",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": "14:33",
+          "departure": null,
+          "platform": "31",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.26.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "26",
+      "train_number": "4026M",
+      "source_id": "jr-west-odekake-thunderbird26-4026m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/258101?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": null,
+          "departure": "15:14",
+          "platform": "33",
+          "call_type": "origin"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "16:09",
+          "departure": "16:10",
+          "platform": "7",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "16:32",
+          "departure": "16:32",
+          "platform": "9",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "16:36",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.27.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "27",
+      "train_number": "4027M",
+      "source_id": "jr-west-odekake-thunderbird27-4027m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257811?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": null,
+          "departure": "14:12",
+          "platform": "11",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "14:15",
+          "departure": "14:16",
+          "platform": "4",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "14:39",
+          "departure": "14:40",
+          "platform": "0",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": "15:33",
+          "departure": null,
+          "platform": "31",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.28.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "28",
+      "train_number": "4028M",
+      "source_id": "jr-west-odekake-thunderbird28-4028m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/258111?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": null,
+          "departure": "15:44",
+          "platform": "33",
+          "call_type": "origin"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "16:39",
+          "departure": "16:40",
+          "platform": "7",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "17:02",
+          "departure": "17:02",
+          "platform": "9",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "17:06",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.29.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "29",
+      "train_number": "4029M",
+      "source_id": "jr-west-odekake-thunderbird29-4029m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/257821?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": null,
+          "departure": "15:09",
+          "platform": "11",
+          "call_type": "origin"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "15:13",
+          "departure": "15:13",
+          "platform": "4",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "15:36",
+          "departure": "15:37",
+          "platform": "0",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": "16:31",
+          "departure": null,
+          "platform": "31",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.thunderbird.30.2026-09-30",
+      "service_id": "thunderbird",
+      "public_number": "30",
+      "train_number": "4030M",
+      "source_id": "jr-west-odekake-thunderbird30-4030m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/258121?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; full route line IDs and operator segments remain unresolved.",
+      "stops": [
+        {
+          "name": "敦賀",
+          "code": "010186",
+          "arrival": null,
+          "departure": "16:13",
+          "platform": "33",
+          "call_type": "origin"
+        },
+        {
+          "name": "京都",
+          "code": "006079",
+          "arrival": "17:09",
+          "departure": "17:10",
+          "platform": "7",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "17:32",
+          "departure": "17:32",
+          "platform": "9",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "17:36",
+          "departure": null,
+          "platform": "3",
+          "call_type": "destination"
+        }
+      ]
+    }
+  ],
+  "scope_note": "Only September 30 is promoted. Pass rows are excluded from passenger stops. Equipment describes published seat plan, not actual dispatch. Haruka and Thunderbird standard nine-car plans are applied by separate official-source overlays; vehicle series, actual dispatch, full route line IDs and operator segments remain unresolved."
+}

@@ -1,0 +1,30 @@
+{
+  "candidate_id":"jr-west-kuroshio1-20260930",
+  "candidate_status":"reviewed_official_html",
+  "canonical":false,
+  "selected_service_date":"2026-09-30",
+  "valid_until":"2026-10-01",
+  "source_id":"jr-west-odekake-kuroshio1-51m-20260930",
+  "source_url":"https://timetable.jr-odekake.net/train-timetable/38921?date=20260930",
+  "source_calendar_label":"土曜・休日運休",
+  "calendar_note":"September 30 is a Wednesday and the exact-date page displays the Kuroshio 1 weekday schedule. Only September 30 is promoted.",
+  "service":{"service_id":"kuroshio","canonical_name":"くろしお","service_class":"limited_express","historical_generation":1,"jr_scope":"jr"},
+  "trip":{"trip_id":"jr-west.kuroshio.1.2026-09-30","public_number":"1","train_number":"51M","origin":"新大阪","destination":"新宮","stop_times":[
+    {"stop_sequence":1,"name_snapshot":"新大阪","arrival_time":null,"departure_time":"07:34","platform":"2","call_type":"origin"},
+    {"stop_sequence":2,"name_snapshot":"大阪","arrival_time":"07:38","departure_time":"07:39","platform":"21","call_type":"passenger_stop"},
+    {"stop_sequence":3,"name_snapshot":"天王寺","arrival_time":"07:56","departure_time":"07:59","platform":"15","call_type":"passenger_stop"},
+    {"stop_sequence":4,"name_snapshot":"日根野","arrival_time":"08:25","departure_time":"08:25","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":5,"name_snapshot":"和歌山","arrival_time":"08:45","departure_time":"08:48","platform":"4","call_type":"passenger_stop"},
+    {"stop_sequence":6,"name_snapshot":"海南","arrival_time":"08:57","departure_time":"08:57","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":7,"name_snapshot":"御坊","arrival_time":"09:29","departure_time":"09:30","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":8,"name_snapshot":"紀伊田辺","arrival_time":"09:58","departure_time":"10:00","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":9,"name_snapshot":"白浜","arrival_time":"10:10","departure_time":"10:12","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":10,"name_snapshot":"周参見","arrival_time":"10:33","departure_time":"10:33","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":11,"name_snapshot":"串本","arrival_time":"11:06","departure_time":"11:07","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":12,"name_snapshot":"古座","arrival_time":"11:15","departure_time":"11:15","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":13,"name_snapshot":"太地","arrival_time":"11:33","departure_time":"11:33","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":14,"name_snapshot":"紀伊勝浦","arrival_time":"11:40","departure_time":"11:40","platform":null,"call_type":"passenger_stop"},
+    {"stop_sequence":15,"name_snapshot":"新宮","arrival_time":"11:59","departure_time":null,"platform":null,"call_type":"destination"}
+  ]},
+  "review_notes":["All timed passenger calls in the official 51M column are retained; レ pass rows are omitted.","The origin arrival and destination departure are unprinted and remain null.","No train-specific ordered physical line IDs or actual operation is inferred."]
+}

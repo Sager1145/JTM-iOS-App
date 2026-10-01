@@ -1,0 +1,46 @@
+{
+  "candidate_id": "jr-east-hitachi7-9-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only 2026-09-30 and each applicable JR East schedule variant. Hitachi 7's initial 047852 calendar links the target date to 047851. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.7.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "7",
+      "train_number": "7M",
+      "source_id": "jr-east-hitachi7-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047851.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell, reached via 047852 td.other link; 時刻詳細 ひたち7号 7M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "７", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "09:45"], ["東京", "09:52", "09:53"],
+        ["上野", "09:58", "10:00"], ["水戸", "11:05", "11:06"],
+        ["勝田", "11:10", "11:11"], ["日立", "11:26", "11:26"],
+        ["磯原", "11:41", "11:42"], ["泉", "11:56", "11:57"],
+        ["湯本", "12:01", "12:02"], ["いわき", "12:07", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.9.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "9",
+      "train_number": "9M",
+      "source_id": "jr-east-hitachi9-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048321.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち9号 9M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "10:45"], ["東京", "10:52", "10:53"],
+        ["上野", "10:58", "11:00"], ["水戸", "12:06", "12:07"],
+        ["勝田", "12:11", "12:12"], ["東海", "12:18", "12:18"],
+        ["大甕", "12:23", "12:23"], ["常陸多賀", "12:27", "12:27"],
+        ["日立", "12:31", "12:32"], ["高萩", "12:42", "12:42"],
+        ["勿来", "12:55", "12:56"], ["泉", "13:04", "13:04"],
+        ["湯本", "13:09", "13:09"], ["いわき", "13:15", null]
+      ]
+    }
+  ]
+}

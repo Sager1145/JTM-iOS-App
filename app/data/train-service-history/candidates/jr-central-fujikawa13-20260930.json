@@ -1,0 +1,144 @@
+{
+  "candidate_id": "jr-central-fujikawa13-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "fujikawa",
+  "source_id": "jr-west-odekake-fujikawa13-4013m-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/33561?date=20260930",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "Only the selected September 30 page is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.fujikawa.13.2026-09-30",
+    "public_number": "13",
+    "train_number": "4013M",
+    "origin": "静岡",
+    "destination": "甲府",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "静岡",
+        "arrival_time": null,
+        "departure_time": "19:45",
+        "platform": "2",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "清水",
+        "arrival_time": "19:54",
+        "departure_time": "19:55",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "富士",
+        "arrival_time": "20:12",
+        "departure_time": "20:15",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "富士宮",
+        "arrival_time": "20:26",
+        "departure_time": "20:27",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "内船",
+        "arrival_time": "20:58",
+        "departure_time": "20:58",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "身延",
+        "arrival_time": "21:12",
+        "departure_time": "21:13",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "下部温泉",
+        "arrival_time": "21:22",
+        "departure_time": "21:23",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "甲斐岩間",
+        "arrival_time": "21:33",
+        "departure_time": "21:33",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "鰍沢口",
+        "arrival_time": "21:40",
+        "departure_time": "21:40",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "市川大門",
+        "arrival_time": "21:44",
+        "departure_time": "21:44",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 11,
+        "name_snapshot": "東花輪",
+        "arrival_time": "21:51",
+        "departure_time": "21:52",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 12,
+        "name_snapshot": "南甲府",
+        "arrival_time": "22:00",
+        "departure_time": "22:01",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 13,
+        "name_snapshot": "甲府",
+        "arrival_time": "22:06",
+        "departure_time": null,
+        "platform": null,
+        "call_type": "destination"
+      }
+    ],
+    "direction": "down",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": []
+  },
+  "review_notes": [
+    "Official September30 drivingday-01 operating cell and all13 timed passenger calls inspected.",
+    "Unprinted formation and clock sides remain unknown."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "cell_class": "drivingday-01",
+    "method": "Official HTML calendar cell and printed drivingday-01 legend inspected",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/33561?date=20260930"
+  }
+}

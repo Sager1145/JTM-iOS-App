@@ -1,0 +1,91 @@
+{
+  "candidate_id": "jr-kyushu-hyuga12-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Date-selected JR Kyushu train detail. All printed passenger clock sides and platforms retained; consist, car count and per-car assignments remain unverified.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.hyuga.12.2026-09-30",
+      "service_id": "hyuga",
+      "service_name": "ひゅうが",
+      "service_class": "limited_express",
+      "public_number": "12",
+      "train_number": "5082M",
+      "origin": "宮崎空港",
+      "destination": "延岡",
+      "source_id": "jr-kyushu-hyuga12-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00166401.html?t=2890300&d=20260930",
+      "source_locator": "2026年09月30日の時刻; 列車名/列車番号/列車設備/運転日 and 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "グリーン車指定席（４人用グリーン個室連結）",
+        "普通車自由席"
+      ],
+      "stops": [
+        [
+          "宮崎空港",
+          null,
+          "20:15",
+          null
+        ],
+        [
+          "南宮崎",
+          "20:19",
+          "20:21",
+          null
+        ],
+        [
+          "宮崎",
+          "20:25",
+          "20:30",
+          null
+        ],
+        [
+          "佐土原",
+          "20:40",
+          "20:41",
+          null
+        ],
+        [
+          "高鍋",
+          "20:52",
+          "21:01",
+          null
+        ],
+        [
+          "都農",
+          "21:11",
+          "21:11",
+          null
+        ],
+        [
+          "日向市",
+          "21:32",
+          "21:33",
+          null
+        ],
+        [
+          "門川",
+          "21:38",
+          "21:39",
+          null
+        ],
+        [
+          "南延岡",
+          "21:46",
+          "21:47",
+          null
+        ],
+        [
+          "延岡",
+          "21:51",
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

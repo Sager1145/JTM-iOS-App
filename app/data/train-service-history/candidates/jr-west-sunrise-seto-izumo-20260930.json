@@ -1,0 +1,361 @@
+{
+  "candidate_id": "jr-west-sunrise-seto-izumo-20260930",
+  "candidate_status": "visually_reviewed_official_train_page",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "promotion_scope": "scheduled_service_departing_2026-09-30_only",
+  "source_id": "jr-west-odekake-sunrise-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/38492?date=20260930",
+  "calendar_evidence": "2026年9月30日 is listed under このページに表示されている時刻で運転する日; three columns say 毎日運転.",
+  "date_interpretation": "Tokyo 21:26 departure is September 30; Hamamatsu onward is October 1 (day_offset 1).",
+  "coupling_evidence": "The 5031M Izumo column prints 東京－岡山間〔サンライズ瀬戸〕に併結; trains separate after Okayama.",
+  "page_note": "The Seto extension to Kotohira is a conditional remark; the selected ordinary 5031M column ends at Takamatsu.",
+  "actual_operation_status": "unverified_plan",
+  "trips": [
+    {
+      "trip_id": "jr-west.sunrise-seto.5031m.2026-09-30",
+      "service_id": "sunrise-seto",
+      "train_number": "5031M",
+      "origin": "東京",
+      "destination": "高松",
+      "printed_equipment": [
+        "シングルデラックス（Ａ寝台１人個室）",
+        "ソロ（Ｂ寝台１人個室）",
+        "シングルツイン（Ｂ寝台１人個室）",
+        "シングル（Ｂ寝台１人個室）",
+        "サンライズツイン（Ｂ寝台２人個室）",
+        "普通車全車指定席（ノビノビ座席）"
+      ],
+      "operation_label": "毎日運転",
+      "number_segments": [
+        {
+          "from_sequence": 1,
+          "to_sequence": 12,
+          "train_number": "5031M"
+        }
+      ],
+      "stops": [
+        {
+          "stop_sequence": 1,
+          "name": "東京",
+          "code": "003766",
+          "arrival": null,
+          "departure": "21:26",
+          "platform": "9",
+          "day_offset": 0,
+          "call_type": "origin"
+        },
+        {
+          "stop_sequence": 2,
+          "name": "横浜",
+          "code": "004633",
+          "arrival": "21:51",
+          "departure": "21:52",
+          "platform": "6",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 3,
+          "name": "熱海",
+          "code": "005685",
+          "arrival": "22:55",
+          "departure": "22:57",
+          "platform": "2",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 4,
+          "name": "沼津",
+          "code": "005689",
+          "arrival": "23:15",
+          "departure": "23:16",
+          "platform": null,
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 5,
+          "name": "富士",
+          "code": "005522",
+          "arrival": "23:31",
+          "departure": "23:32",
+          "platform": null,
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 6,
+          "name": "静岡",
+          "code": "006128",
+          "arrival": "23:57",
+          "departure": "23:59",
+          "platform": "4",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 7,
+          "name": "浜松",
+          "code": "007059",
+          "arrival": "00:53",
+          "departure": "00:54",
+          "platform": "4",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 8,
+          "name": "姫路",
+          "code": "006509",
+          "arrival": "05:25",
+          "departure": "05:26",
+          "platform": "8",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 9,
+          "name": "岡山",
+          "code": "007310",
+          "arrival": "06:27",
+          "departure": "06:31",
+          "platform": "8",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 10,
+          "name": "児島",
+          "code": "007919",
+          "arrival": "06:52",
+          "departure": "06:53",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 11,
+          "name": "坂出",
+          "code": "008240",
+          "arrival": "07:09",
+          "departure": "07:10",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 12,
+          "name": "高松",
+          "code": "008163",
+          "arrival": "07:27",
+          "departure": null,
+          "platform": "6",
+          "day_offset": 1,
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.sunrise-izumo.5031m-4031m.2026-09-30",
+      "service_id": "sunrise-izumo",
+      "train_number": "5031M",
+      "origin": "東京",
+      "destination": "出雲市",
+      "printed_equipment": [
+        "シングルデラックス（Ａ寝台１人個室）",
+        "ソロ（Ｂ寝台１人個室）",
+        "シングルツイン（Ｂ寝台１人個室）",
+        "シングル（Ｂ寝台１人個室）",
+        "サンライズツイン（Ｂ寝台２人個室）",
+        "普通車全車指定席（ノビノビ座席）"
+      ],
+      "operation_label": "毎日運転",
+      "number_segments": [
+        {
+          "from_sequence": 1,
+          "to_sequence": 9,
+          "train_number": "5031M"
+        },
+        {
+          "from_sequence": 9,
+          "to_sequence": 17,
+          "train_number": "4031M"
+        }
+      ],
+      "stops": [
+        {
+          "stop_sequence": 1,
+          "name": "東京",
+          "code": "003766",
+          "arrival": null,
+          "departure": "21:26",
+          "platform": "9",
+          "day_offset": 0,
+          "call_type": "origin"
+        },
+        {
+          "stop_sequence": 2,
+          "name": "横浜",
+          "code": "004633",
+          "arrival": "21:51",
+          "departure": "21:52",
+          "platform": "6",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 3,
+          "name": "熱海",
+          "code": "005685",
+          "arrival": "22:55",
+          "departure": "22:57",
+          "platform": "2",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 4,
+          "name": "沼津",
+          "code": "005689",
+          "arrival": "23:15",
+          "departure": "23:16",
+          "platform": null,
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 5,
+          "name": "富士",
+          "code": "005522",
+          "arrival": "23:31",
+          "departure": "23:32",
+          "platform": null,
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 6,
+          "name": "静岡",
+          "code": "006128",
+          "arrival": "23:57",
+          "departure": "23:59",
+          "platform": "4",
+          "day_offset": 0,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 7,
+          "name": "浜松",
+          "code": "007059",
+          "arrival": "00:53",
+          "departure": "00:54",
+          "platform": "4",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 8,
+          "name": "姫路",
+          "code": "006509",
+          "arrival": "05:25",
+          "departure": "05:26",
+          "platform": "8",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 9,
+          "name": "岡山",
+          "code": "007310",
+          "arrival": "06:27",
+          "departure": "06:34",
+          "platform": "8",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 10,
+          "name": "倉敷",
+          "code": "007598",
+          "arrival": "06:46",
+          "departure": "06:47",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 11,
+          "name": "備中高梁",
+          "code": "006686",
+          "arrival": "07:14",
+          "departure": "07:14",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 12,
+          "name": "新見",
+          "code": "006070",
+          "arrival": "07:43",
+          "departure": "07:44",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 13,
+          "name": "米子",
+          "code": "004758",
+          "arrival": "09:05",
+          "departure": "09:08",
+          "platform": "2",
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 14,
+          "name": "安来",
+          "code": "004748",
+          "arrival": "09:16",
+          "departure": "09:17",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 15,
+          "name": "松江",
+          "code": "004638",
+          "arrival": "09:33",
+          "departure": "09:34",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 16,
+          "name": "宍道",
+          "code": "004793",
+          "arrival": "09:47",
+          "departure": "09:48",
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "passenger_stop"
+        },
+        {
+          "stop_sequence": 17,
+          "name": "出雲市",
+          "code": "004943",
+          "arrival": "10:00",
+          "departure": null,
+          "platform": null,
+          "day_offset": 1,
+          "call_type": "destination"
+        }
+      ]
+    }
+  ]
+}

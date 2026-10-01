@@ -1,0 +1,27 @@
+{
+  "candidate_id":"jr-kyushu-kirishima1-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 weekday occurrence; fourteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-kirishima1-20260930","source_url":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0006/00064501.html?c=28903&ym=202609&d=30","service_date":"2026-09-30",
+  "trip":{"trip_id":"jr-kyushu.kirishima.1.2026-09-30","service_id":"kirishima","service_name":"きりしま","public_number":"1","train_number":"6001M","direction":"宮崎→鹿児島中央",
+    "stop_times":[
+      {"name_snapshot":"宮崎","arrival_time":null,"departure_time":"05:46","platform":null},
+      {"name_snapshot":"南宮崎","arrival_time":"05:49","departure_time":"05:52","platform":null},
+      {"name_snapshot":"清武","arrival_time":"05:58","departure_time":"05:58","platform":null},
+      {"name_snapshot":"都城","arrival_time":"06:39","departure_time":"06:41","platform":null},
+      {"name_snapshot":"西都城","arrival_time":"06:44","departure_time":"06:45","platform":null},
+      {"name_snapshot":"霧島神宮","arrival_time":"07:14","departure_time":"07:15","platform":null},
+      {"name_snapshot":"国分","arrival_time":"07:26","departure_time":"07:27","platform":null},
+      {"name_snapshot":"隼人","arrival_time":"07:31","departure_time":"07:33","platform":null},
+      {"name_snapshot":"加治木","arrival_time":"07:39","departure_time":"07:40","platform":null},
+      {"name_snapshot":"帖佐","arrival_time":"07:44","departure_time":"07:44","platform":null},
+      {"name_snapshot":"姶良","arrival_time":"07:47","departure_time":"07:47","platform":null},
+      {"name_snapshot":"重富","arrival_time":"07:50","departure_time":"07:51","platform":null},
+      {"name_snapshot":"鹿児島","arrival_time":"08:05","departure_time":"08:06","platform":null},
+      {"name_snapshot":"鹿児島中央","arrival_time":"08:10","departure_time":null,"platform":"4"}
+    ]},
+  "evidence_locators":[
+    {"claim":"limited express identity and 6001M","locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL, 平日運転 row and September calendar; Wednesday"},
+    {"claim":"fourteen full-route calls and clocks","locator":"駅名 / 時刻 / のりば table from 宮崎 through 鹿児島中央"}
+  ]
+}

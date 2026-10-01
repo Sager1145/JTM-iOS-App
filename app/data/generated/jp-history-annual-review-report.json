@@ -1,0 +1,1339 @@
+{
+  "comparisons": [
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2006",
+        "before_snapshot_id": "jp-n02-2005",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 522,
+        "candidate_match_status": {
+          "possible_match": 78,
+          "unmatched": 444
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 3
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-05/N02-05-g_RailroadSection",
+            "stations": "N02-05/N02-05-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "N02-05/KS-META-N02-05-g.xml",
+          "crs_evidence_sha256": "7bffa9a88d98fe2a78287852b180f9a47833fbb602939dd0cef71d54dd32f98a",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-05",
+          "retrieved": null,
+          "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+          "source_path": "N02-05_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-06-g_RailroadSection",
+            "stations": "N02-06-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-06-g.xml",
+          "crs_evidence_sha256": "7255833d80242afd6592eff94366fd834b03ef16b4b39474e4a4f8b5d15f1d7e",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-06",
+          "retrieved": null,
+          "sha256": "ee90bde387e712c57060d4726e1505fc43728f6a37015b40cd63487c3f88b113",
+          "source_path": "N02-06_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-06/N02-06_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 74,
+          "section_geometry_removed": 100,
+          "section_identity_changed": 185,
+          "station_added": 27,
+          "station_identity_changed": 90,
+          "station_moved": 6,
+          "station_name_changed": 2,
+          "station_removed": 38
+        },
+        "candidate_count": 522
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2007",
+        "before_snapshot_id": "jp-n02-2006",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 325,
+        "candidate_match_status": {
+          "possible_match": 115,
+          "unmatched": 210
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 6
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-06-g_RailroadSection",
+            "stations": "N02-06-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-06-g.xml",
+          "crs_evidence_sha256": "7255833d80242afd6592eff94366fd834b03ef16b4b39474e4a4f8b5d15f1d7e",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-06",
+          "retrieved": null,
+          "sha256": "ee90bde387e712c57060d4726e1505fc43728f6a37015b40cd63487c3f88b113",
+          "source_path": "N02-06_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-06/N02-06_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-07-g_RailroadSection",
+            "stations": "N02-07-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-07-g.xml",
+          "crs_evidence_sha256": "8a91a92e32854e7dce84f8dcbeff603f9779b8fce4046c1a5ff2ba0a51ba75ad",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-07",
+          "retrieved": null,
+          "sha256": "bc981fb8bf9fc39c5d13c919e4f30ff4642f5cb1c65222569a336c0e81d84bbf",
+          "source_path": "N02-07_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-07/N02-07_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 59,
+          "section_geometry_removed": 116,
+          "section_identity_changed": 38,
+          "station_added": 24,
+          "station_identity_changed": 20,
+          "station_name_changed": 14,
+          "station_removed": 54
+        },
+        "candidate_count": 325
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2008",
+        "before_snapshot_id": "jp-n02-2007",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 54466,
+        "candidate_match_status": {
+          "ambiguous": 59,
+          "possible_match": 605,
+          "unmatched": 53802
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 34
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-07-g_RailroadSection",
+            "stations": "N02-07-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-07-g.xml",
+          "crs_evidence_sha256": "8a91a92e32854e7dce84f8dcbeff603f9779b8fce4046c1a5ff2ba0a51ba75ad",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-07",
+          "retrieved": null,
+          "sha256": "bc981fb8bf9fc39c5d13c919e4f30ff4642f5cb1c65222569a336c0e81d84bbf",
+          "source_path": "N02-07_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-07/N02-07_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-08-g_RailroadSection",
+            "stations": "N02-08-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-08-g.xml",
+          "crs_evidence_sha256": "53dc2f7dfda33cda781701dc4c63b1bc528272f21e1be882f26267457639717d",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-08",
+          "retrieved": null,
+          "sha256": "c5e579faf17e268b9b9e2880b38d09297a95b0f7cfc9967df96ed4b61ed74840",
+          "source_path": "N02-08_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 22000,
+          "section_geometry_removed": 22041,
+          "station_added": 110,
+          "station_moved": 10185,
+          "station_removed": 130
+        },
+        "candidate_count": 54466
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2011",
+        "before_snapshot_id": "jp-n02-2008",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 929,
+        "candidate_match_status": {
+          "ambiguous": 3,
+          "possible_match": 35,
+          "unmatched": 891
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 8
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-08-g_RailroadSection",
+            "stations": "N02-08-g_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-08-g.xml",
+          "crs_evidence_sha256": "53dc2f7dfda33cda781701dc4c63b1bc528272f21e1be882f26267457639717d",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-08",
+          "retrieved": null,
+          "sha256": "c5e579faf17e268b9b9e2880b38d09297a95b0f7cfc9967df96ed4b61ed74840",
+          "source_path": "N02-08_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-11_RailroadSection",
+            "stations": "N02-11_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KSJ-META-N02-11.xml",
+          "crs_evidence_sha256": "73bbd94c254a780588fabbb17990b3a7bc7fa93bdee1942b3c517fe7c13c9c71",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-11",
+          "retrieved": null,
+          "sha256": "5e23d84d203e2e17dda236eb05351ffcb2cbab699dde3b9e6104a8984d9a3fbc",
+          "source_path": "N02-11_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-11/N02-11_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 353,
+          "section_geometry_removed": 233,
+          "section_identity_changed": 72,
+          "station_added": 112,
+          "station_identity_changed": 51,
+          "station_moved": 30,
+          "station_name_changed": 31,
+          "station_removed": 47
+        },
+        "candidate_count": 929
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2012",
+        "before_snapshot_id": "jp-n02-2011",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 152,
+        "candidate_match_status": {
+          "possible_match": 47,
+          "unmatched": 105
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 2
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-11_RailroadSection",
+            "stations": "N02-11_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KSJ-META-N02-11.xml",
+          "crs_evidence_sha256": "73bbd94c254a780588fabbb17990b3a7bc7fa93bdee1942b3c517fe7c13c9c71",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-11",
+          "retrieved": null,
+          "sha256": "5e23d84d203e2e17dda236eb05351ffcb2cbab699dde3b9e6104a8984d9a3fbc",
+          "source_path": "N02-11_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-11/N02-11_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-12_RailroadSection",
+            "stations": "N02-12_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-12.xml",
+          "crs_evidence_sha256": "315c720460a0808a271826b6709eb3ae7d7c50278b614be80a8b61c3204602ca",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-12",
+          "retrieved": null,
+          "sha256": "f8e45727388da541b413d4eb76afe3aa7016b7edb78b9e0be13ecf468e8c64e5",
+          "source_path": "N02-12_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-12/N02-12_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 19,
+          "section_geometry_removed": 56,
+          "section_identity_changed": 27,
+          "station_added": 5,
+          "station_identity_changed": 14,
+          "station_moved": 3,
+          "station_name_changed": 4,
+          "station_removed": 24
+        },
+        "candidate_count": 152
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2013",
+        "before_snapshot_id": "jp-n02-2012",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 195,
+        "candidate_match_status": {
+          "unmatched": 195
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 0
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-12_RailroadSection",
+            "stations": "N02-12_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "KS-META-N02-12.xml",
+          "crs_evidence_sha256": "315c720460a0808a271826b6709eb3ae7d7c50278b614be80a8b61c3204602ca",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-12",
+          "retrieved": null,
+          "sha256": "f8e45727388da541b413d4eb76afe3aa7016b7edb78b9e0be13ecf468e8c64e5",
+          "source_path": "N02-12_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-12/N02-12_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-13/N02-13_RailroadSection",
+            "stations": "N02-13/N02-13_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "N02-13/N02-13.xml",
+          "crs_evidence_sha256": "95e75ef9a67ad9de7b212fbcc7b0eadd45e8dadc9ea671e342176bc80d796e83",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-13",
+          "retrieved": null,
+          "sha256": "11ab477d089bc424b97e9a267c966511af765eaabe5166492347bba4a947ecc2",
+          "source_path": "N02-13.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-13/N02-13.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 27,
+          "section_geometry_removed": 20,
+          "section_identity_changed": 80,
+          "station_added": 6,
+          "station_identity_changed": 42,
+          "station_moved": 4,
+          "station_name_changed": 14,
+          "station_removed": 2
+        },
+        "candidate_count": 195
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2014",
+        "before_snapshot_id": "jp-n02-2013",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 475,
+        "candidate_match_status": {
+          "possible_match": 43,
+          "unmatched": 432
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 3
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-13/N02-13_RailroadSection",
+            "stations": "N02-13/N02-13_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "N02-13/N02-13.xml",
+          "crs_evidence_sha256": "95e75ef9a67ad9de7b212fbcc7b0eadd45e8dadc9ea671e342176bc80d796e83",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-13",
+          "retrieved": null,
+          "sha256": "11ab477d089bc424b97e9a267c966511af765eaabe5166492347bba4a947ecc2",
+          "source_path": "N02-13.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-13/N02-13.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-14_GML/N02-14_RailroadSection",
+            "stations": "N02-14_GML/N02-14_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "N02-14_GML/KS-META-N02-14.xml",
+          "crs_evidence_sha256": "cbe2f47cb31d8fab573ebae48a005cc658b486ae34642aa4e0c4d743afac9738",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-14",
+          "retrieved": null,
+          "sha256": "a8a6dd8b00bb175ca89cd0ac542312b3726cbd81ced06a1d85ae0a6098e56204",
+          "source_path": "N02-14_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 33,
+          "section_geometry_removed": 77,
+          "section_identity_changed": 218,
+          "station_added": 5,
+          "station_identity_changed": 109,
+          "station_moved": 5,
+          "station_name_changed": 4,
+          "station_removed": 24
+        },
+        "candidate_count": 475
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2015",
+        "before_snapshot_id": "jp-n02-2014",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 549,
+        "candidate_match_status": {
+          "possible_match": 211,
+          "unmatched": 338
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 8
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-14_GML/N02-14_RailroadSection",
+            "stations": "N02-14_GML/N02-14_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:4612",
+          "crs_evidence_member": "N02-14_GML/KS-META-N02-14.xml",
+          "crs_evidence_sha256": "cbe2f47cb31d8fab573ebae48a005cc658b486ae34642aa4e0c4d743afac9738",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-14",
+          "retrieved": null,
+          "sha256": "a8a6dd8b00bb175ca89cd0ac542312b3726cbd81ced06a1d85ae0a6098e56204",
+          "source_path": "N02-14_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-15_RailroadSection",
+            "stations": "N02-15_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-15_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-15",
+          "retrieved": null,
+          "sha256": "8cb4a3289c11ad1da1b95793ebf90e6b07babfde1b8bc04ac9c4060849abc6a1",
+          "source_path": "N02-15_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-15/N02-15_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 108,
+          "section_geometry_removed": 27,
+          "section_identity_changed": 231,
+          "station_added": 48,
+          "station_identity_changed": 104,
+          "station_moved": 5,
+          "station_name_changed": 25,
+          "station_removed": 1
+        },
+        "candidate_count": 549
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2016",
+        "before_snapshot_id": "jp-n02-2015",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 1033,
+        "candidate_match_status": {
+          "ambiguous": 1,
+          "possible_match": 90,
+          "unmatched": 942
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 12
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-15_RailroadSection",
+            "stations": "N02-15_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-15_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-15",
+          "retrieved": null,
+          "sha256": "8cb4a3289c11ad1da1b95793ebf90e6b07babfde1b8bc04ac9c4060849abc6a1",
+          "source_path": "N02-15_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-15/N02-15_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-16_RailroadSection",
+            "stations": "N02-16_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-16_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-16",
+          "retrieved": null,
+          "sha256": "7005e111c30fb7d603f6dc0702e23d62af7aa66b6ab9743f18877aa3104572e4",
+          "source_path": "N02-16_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-16/N02-16_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 149,
+          "section_geometry_removed": 242,
+          "section_identity_changed": 328,
+          "station_added": 15,
+          "station_identity_changed": 169,
+          "station_moved": 43,
+          "station_name_changed": 19,
+          "station_removed": 68
+        },
+        "candidate_count": 1033
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2017",
+        "before_snapshot_id": "jp-n02-2016",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 34,
+        "candidate_match_status": {
+          "unmatched": 34
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 0
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-16_RailroadSection",
+            "stations": "N02-16_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-16_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-16",
+          "retrieved": null,
+          "sha256": "7005e111c30fb7d603f6dc0702e23d62af7aa66b6ab9743f18877aa3104572e4",
+          "source_path": "N02-16_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-16/N02-16_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-17_GML/N02-17_RailroadSection",
+            "stations": "N02-17_GML/N02-17_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-17_GML/N02-17_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-17",
+          "retrieved": null,
+          "sha256": "b41a5377362321bf634c904d965f8d581d07cb4bf6986615ce7a500c3ec60117",
+          "source_path": "N02-17_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-17/N02-17_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 19,
+          "section_geometry_removed": 6,
+          "station_added": 7,
+          "station_name_changed": 2
+        },
+        "candidate_count": 34
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2018",
+        "before_snapshot_id": "jp-n02-2017",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 573,
+        "candidate_match_status": {
+          "possible_match": 75,
+          "unmatched": 498
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 3
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-17_GML/N02-17_RailroadSection",
+            "stations": "N02-17_GML/N02-17_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-17_GML/N02-17_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-17",
+          "retrieved": null,
+          "sha256": "b41a5377362321bf634c904d965f8d581d07cb4bf6986615ce7a500c3ec60117",
+          "source_path": "N02-17_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-17/N02-17_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-18_RailroadSection",
+            "stations": "N02-18_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-18_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-18",
+          "retrieved": null,
+          "sha256": "1d08f3a6aff2656980a9613a918a924d726ae446c9015d2bc174e8e6e089b072",
+          "source_path": "N02-18_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-18/N02-18_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 18,
+          "section_geometry_removed": 81,
+          "section_identity_changed": 273,
+          "station_added": 6,
+          "station_identity_changed": 133,
+          "station_name_changed": 25,
+          "station_removed": 37
+        },
+        "candidate_count": 573
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2019",
+        "before_snapshot_id": "jp-n02-2018",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 765,
+        "candidate_match_status": {
+          "possible_match": 15,
+          "unmatched": 750
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 5
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-18_RailroadSection",
+            "stations": "N02-18_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-18_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-18",
+          "retrieved": null,
+          "sha256": "1d08f3a6aff2656980a9613a918a924d726ae446c9015d2bc174e8e6e089b072",
+          "source_path": "N02-18_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-18/N02-18_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-19_RailroadSection",
+            "stations": "N02-19_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-19_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-19",
+          "retrieved": null,
+          "sha256": "a2ae41ebd42ca43613784e07ac3568d101c5b23fe4ba8194286aeae038247602",
+          "source_path": "N02-19_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-19/N02-19_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 117,
+          "section_geometry_removed": 85,
+          "section_identity_changed": 289,
+          "station_added": 34,
+          "station_identity_changed": 158,
+          "station_moved": 11,
+          "station_name_changed": 51,
+          "station_removed": 20
+        },
+        "candidate_count": 765
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2020",
+        "before_snapshot_id": "jp-n02-2019",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 440,
+        "candidate_match_status": {
+          "possible_match": 52,
+          "unmatched": 388
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 10
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-19_RailroadSection",
+            "stations": "N02-19_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-19_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "MLIT current-series terms; commercial use allowed",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-19",
+          "retrieved": null,
+          "sha256": "a2ae41ebd42ca43613784e07ac3568d101c5b23fe4ba8194286aeae038247602",
+          "source_path": "N02-19_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-19/N02-19_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-20_GML/N02-20_RailroadSection",
+            "stations": "N02-20_GML/N02-20_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-20_GML/N02-20_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-20",
+          "retrieved": null,
+          "sha256": "12fadde339dfbe3088e99dbd53da19447cd7c4bb8ba4af540e2a73c86a0458c7",
+          "source_path": "N02-20_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-20/N02-20_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 50,
+          "section_geometry_removed": 98,
+          "section_identity_changed": 118,
+          "station_added": 14,
+          "station_identity_changed": 65,
+          "station_moved": 7,
+          "station_name_changed": 31,
+          "station_removed": 57
+        },
+        "candidate_count": 440
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2021",
+        "before_snapshot_id": "jp-n02-2020",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 344,
+        "candidate_match_status": {
+          "possible_match": 83,
+          "unmatched": 261
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 4
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "N02-20_GML/N02-20_RailroadSection",
+            "stations": "N02-20_GML/N02-20_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-20_GML/N02-20_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-20",
+          "retrieved": null,
+          "sha256": "12fadde339dfbe3088e99dbd53da19447cd7c4bb8ba4af540e2a73c86a0458c7",
+          "source_path": "N02-20_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-20/N02-20_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-21_RailroadSection",
+            "stations": "Shift-JIS/N02-21_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-21_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-21",
+          "retrieved": null,
+          "sha256": "826ddf099f85503d9479ac12029379896b506fd25ec97098b04640bd402e1498",
+          "source_path": "N02-21_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-21/N02-21_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 45,
+          "section_geometry_removed": 93,
+          "section_identity_changed": 72,
+          "station_added": 18,
+          "station_identity_changed": 35,
+          "station_moved": 1,
+          "station_name_changed": 17,
+          "station_removed": 63
+        },
+        "candidate_count": 344
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2022",
+        "before_snapshot_id": "jp-n02-2021",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 10520,
+        "candidate_match_status": {
+          "ambiguous": 3,
+          "possible_match": 14,
+          "unmatched": 10503
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 5
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-21_RailroadSection",
+            "stations": "Shift-JIS/N02-21_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-21_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-21",
+          "retrieved": null,
+          "sha256": "826ddf099f85503d9479ac12029379896b506fd25ec97098b04640bd402e1498",
+          "source_path": "N02-21_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-21/N02-21_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-22_RailroadSection",
+            "stations": "Shift-JIS/N02-22_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-22_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-22",
+          "retrieved": null,
+          "sha256": "69f15f9740ee3b4a8fd0189af55e92ee065f8f13ec6b41de269b49212cef9621",
+          "source_path": "N02-22_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-22/N02-22_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 80,
+          "section_geometry_removed": 84,
+          "section_identity_changed": 99,
+          "station_added": 9,
+          "station_identity_changed": 10211,
+          "station_moved": 18,
+          "station_name_changed": 8,
+          "station_removed": 11
+        },
+        "candidate_count": 10520
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2023",
+        "before_snapshot_id": "jp-n02-2022",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 467,
+        "candidate_match_status": {
+          "possible_match": 65,
+          "unmatched": 402
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 5
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-22_RailroadSection",
+            "stations": "Shift-JIS/N02-22_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-22_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-22",
+          "retrieved": null,
+          "sha256": "69f15f9740ee3b4a8fd0189af55e92ee065f8f13ec6b41de269b49212cef9621",
+          "source_path": "N02-22_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-22/N02-22_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-23_RailroadSection",
+            "stations": "Shift-JIS/N02-23_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-23_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-23",
+          "retrieved": null,
+          "sha256": "e91ecdee90966877c6119ab94dc92ee6562eb9d89194f8a0a91f71b179c82a40",
+          "source_path": "N02-23_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-23/N02-23_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 85,
+          "section_geometry_removed": 52,
+          "section_identity_changed": 176,
+          "station_added": 33,
+          "station_identity_changed": 88,
+          "station_moved": 5,
+          "station_name_changed": 15,
+          "station_removed": 13
+        },
+        "candidate_count": 467
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2024",
+        "before_snapshot_id": "jp-n02-2023",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 345,
+        "candidate_match_status": {
+          "possible_match": 121,
+          "unmatched": 224
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 5
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-23_RailroadSection",
+            "stations": "Shift-JIS/N02-23_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-23_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-23",
+          "retrieved": null,
+          "sha256": "e91ecdee90966877c6119ab94dc92ee6562eb9d89194f8a0a91f71b179c82a40",
+          "source_path": "N02-23_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-23/N02-23_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-24_RailroadSection",
+            "stations": "Shift-JIS/N02-24_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-24_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-24",
+          "retrieved": null,
+          "sha256": "504eefd4411cd0fd3ad9a50f35da2f5da07949d5144ded7630df0972f8deaac7",
+          "source_path": "N02-24_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-24/N02-24_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 56,
+          "section_geometry_removed": 73,
+          "section_identity_changed": 117,
+          "station_added": 13,
+          "station_identity_changed": 57,
+          "station_moved": 9,
+          "station_name_changed": 2,
+          "station_removed": 18
+        },
+        "candidate_count": 345
+      }
+    },
+    {
+      "interval": {
+        "after_snapshot_id": "jp-n02-2025",
+        "before_snapshot_id": "jp-n02-2024",
+        "event_date": null,
+        "precision": "snapshot_interval"
+      },
+      "matching_summary": {
+        "candidate_count": 209,
+        "candidate_match_status": {
+          "unmatched": 209
+        },
+        "event_count": 106,
+        "events_with_candidate_links": 0
+      },
+      "sources": [
+        {
+          "archive_members": {
+            "sections": "Shift-JIS/N02-24_RailroadSection",
+            "stations": "Shift-JIS/N02-24_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "Shift-JIS/N02-24_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-24",
+          "retrieved": null,
+          "sha256": "504eefd4411cd0fd3ad9a50f35da2f5da07949d5144ded7630df0972f8deaac7",
+          "source_path": "N02-24_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-24/N02-24_GML.zip"
+        },
+        {
+          "archive_members": {
+            "sections": "N02-25_GML/Shift-JIS/N02-25_RailroadSection",
+            "stations": "N02-25_GML/Shift-JIS/N02-25_Station"
+          },
+          "coordinate_operation": "none; native geographic coordinates preserved",
+          "coordinate_order": "longitude_latitude",
+          "crs": "EPSG:6668",
+          "crs_evidence_member": "N02-25_GML/Shift-JIS/N02-25_RailroadSection.prj",
+          "crs_evidence_sha256": "1761bb7f37f73fd0eb043175a78403ba37ff1066299987c116fd43bbd0057eae",
+          "dataset": "National Land Numerical Information Railway Data (N02)",
+          "format": "n02-zip-shapefile",
+          "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+          "license": "CC-BY-4.0",
+          "publisher": "Japan Ministry of Land, Infrastructure, Transport and Tourism",
+          "release_label": "N02-25",
+          "retrieved": null,
+          "sha256": "aaf76af133b2e771e538fabc4646d2e443dc1d5a67b221382a28d744e706cc9f",
+          "source_path": "N02-25_GML.zip",
+          "source_url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip"
+        }
+      ],
+      "summary": {
+        "by_kind": {
+          "section_geometry_added": 29,
+          "section_geometry_removed": 28,
+          "section_identity_changed": 84,
+          "station_added": 6,
+          "station_identity_changed": 48,
+          "station_moved": 5,
+          "station_name_changed": 2,
+          "station_removed": 7
+        },
+        "candidate_count": 209
+      }
+    }
+  ],
+  "policy": {
+    "auto_verify_candidates": false,
+    "infer_day_dates_from_snapshots": false,
+    "routing_and_display_verified": false
+  },
+  "schema_version": "1",
+  "summary": {
+    "candidate_count": 72343,
+    "comparison_count": 18,
+    "snapshot_count": 19
+  }
+}

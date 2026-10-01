@@ -1,0 +1,23 @@
+# Nanpu route and operator evidence gap — 2026-09-30
+
+## Scope and decision
+
+The [Shikoku/Kyushu batch report](train-timetable-shikoku-kyushu-2026-09-30-batch.md) records JR West's date-selected train pages for 南風6号 and 南風8号 on 2026-09-30. Those pages support their scheduled passenger calls; `レ` rows denote passage, not passenger stops. The candidate infrastructure alignment below helps prioritize review. It does **not** establish a complete physical train path, a day-valid operator sequence, or day-valid N02 identities. Keep `route_lines` and ordered `operator` completeness **unknown**.
+
+## Primary-source distinctions
+
+| Evidence | Supported reading | Limit |
+| --- | --- | --- |
+| [JR West 南風6号 date-selected train page](https://timetable.jr-odekake.net/train-timetable/162031?date=20260930), [南風8号 date-selected train page](https://timetable.jr-odekake.net/train-timetable/59411?date=20260930), and [2026-09-30 土讃線 upbound timetable](https://timetable.jr-odekake.net/line-timetable/2473?day=30&month=9&year=2026) | Scheduled train and station sequence for the selected service day. The train tables include pass-through `レ` rows at route junctions. | Timetable station rows are not a track-level trace or a facilities/operator inventory; a date query parameter alone must not substitute for checking the page's displayed date and train identity. |
+| [JR West FY2026 securities report, pp. 47–48](https://www.westjr.co.jp/company/ir/library/securities-report/pdf/report39_01.pdf) | In `線路及び電路施設 / 第一種鉄道事業`, JR West lists **宇野線 (岡山)–宇野** and **本四備讃線 (茶屋町)–児島**. Page 46 also lists leased facilities for 本四備讃線 茶屋町–児島 (12.9 km). | This is JR West's formal facilities/accounting disclosure for the fiscal year ended 2026-03-31, filed 2026-06-16. It does not itself identify a particular 南風 train's movements on 2026-09-30 or establish September day validity. |
+| [JR Shikoku 2026-05-13 annual results, p. 11](https://www.jr-shikoku.co.jp/03_news/press/assets/2026/05/13/20260513%2001.pdf) | The **2025 fiscal-year `区間別平均通過人員（輸送密度）` table** names 本四備讃線 宇多津–児島 (18.1 km), 予讃線 高松–多度津, and 土讃線 多度津–琴平–高知 accounting sections. | This is a ridership/traffic-density table, **not** a legal facilities inventory or a train-specific route certificate. Its endpoints are accounting-section boundaries. |
+| [JR Shikoku track-proximity guidance](https://www.jr-shikoku.co.jp/04_company/proximity-consultation/) and [Honshi-Bisan information](https://www.jr-shikoku.co.jp/04_company/information/seto.htm) | JR Shikoku describes its 本四備讃線 section as 児島–宇多津 in maintenance and service information. | These operational descriptions corroborate the company-side section name; they do not specify 南風6/8's exact-day physical tracks or prove an N02 feature's September validity. |
+| [JR West's explanation of 瀬戸大橋線](https://www.westjr.co.jp/press/article/2013/03/page_3445.html) | `瀬戸大橋線` is a passenger corridor nickname; the underlying formal line names on 岡山–高松 are 宇野線, 本四備讃線, and 予讃線. | Published in 2013 for a commemorative train, so it clarifies terminology rather than the 2026 南風 path. |
+
+## Candidate N02 alignment and unresolved boundary
+
+In the local N02-derived `app/public/rail/jp-2025.json` package, 岡山 belongs to `jp-西日本旅客鉄道-宇野線`; 茶屋町 (station code `007662`) belongs to both that line and `jp-西日本旅客鉄道-本四備讃線`. 児島 (`007919`) belongs to both the JR West and JR Shikoku `本四備讃線` line objects. 宇多津 (`008252`) belongs to `jp-四国旅客鉄道-本四備讃線` and `jp-四国旅客鉄道-予讃線`; 多度津 (`008300`) belongs to the Shikoku `予讃線` and `土讃線` objects; 高知 belongs to the Shikoku `土讃線` object. These are **local package IDs and station associations**, not raw MLIT feature identifiers or proof that a train traversed each object.
+
+Together, the dated train-page station order and the formal/accounting section evidence suggest this candidate sequence for 高知 → 岡山: 土讃線 to 多度津, 予讃線 toward 宇多津, JR Shikoku 本四備讃線 to 児島, JR West 本四備讃線 to 茶屋町, then 宇野線 to 岡山. The 児島 shared anchor is a candidate company boundary. The sources have different dates and purposes, so do not turn that inferred sequence into exact-day `route_lines`, operator segments, or a reduction in the unresolved-leg count. The MLIT [2025 N02 edition](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html) is referenced to 2025-12-31 and provides no per-feature validity through 2026-09-30.
+
+To close the gap, obtain a source applicable on 2026-09-30 that identifies each train's physical line sequence, including non-stopping junctions, and validates the JR West/JR Shikoku operating boundary against the target day's inventory. Reconcile that evidence to the local N02-derived identities before normalizing route or operator segments.

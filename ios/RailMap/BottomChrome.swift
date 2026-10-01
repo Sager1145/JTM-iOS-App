@@ -1067,12 +1067,9 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
             .sheet(isPresented: $isPresented, onDismiss: restoreIfNeeded) {
                 sheetContent()
                 .presentationDetents(metrics.detents, selection: $detent)
-                // Keep one surface across detents. The default sheet backdrop
-                // switches to opaque at full height, flashing as the panel
-                // crosses between its floating and full-screen appearances.
-                .presentationBackground {
-                    Color.clear.railGlass(in: Rectangle())
-                }
+                // Keep the content surface opaque and identical at every stop.
+                // SwiftUI still draws the tab bar's own glass above it.
+                .presentationBackground(Color.railMenuBackground)
                 // §9.5.6: no Pull Bar.
                 //
                 // `.scrolls` rather than `.resizes`, which is what decides who

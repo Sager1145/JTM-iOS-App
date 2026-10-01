@@ -1,0 +1,28 @@
+{
+  "candidate_id":"jr-kyushu-kasasagi101-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; fifteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-kasasagi101-20260930","source_url":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00194101.html?c=28283&ym=202609&d=30","service_date":"2026-09-30",
+  "trip":{"trip_id":"jr-kyushu.kasasagi.101.2026-09-30","service_id":"kasasagi","service_name":"かささぎ","public_number":"101","train_number":"1001M","direction":"門司港→肥前鹿島",
+    "stop_times":[
+      {"name_snapshot":"門司港","arrival_time":null,"departure_time":"06:40","platform":null},
+      {"name_snapshot":"門司","arrival_time":"06:46","departure_time":"06:47","platform":null},
+      {"name_snapshot":"小倉","arrival_time":"06:53","departure_time":"06:56","platform":"5"},
+      {"name_snapshot":"戸畑","arrival_time":"07:01","departure_time":"07:02","platform":null},
+      {"name_snapshot":"黒崎","arrival_time":"07:09","departure_time":"07:09","platform":null},
+      {"name_snapshot":"折尾","arrival_time":"07:14","departure_time":"07:15","platform":"3"},
+      {"name_snapshot":"赤間","arrival_time":"07:29","departure_time":"07:29","platform":null},
+      {"name_snapshot":"福間","arrival_time":"07:37","departure_time":"07:37","platform":null},
+      {"name_snapshot":"博多","arrival_time":"07:53","departure_time":"07:55","platform":"4"},
+      {"name_snapshot":"二日市","arrival_time":"08:08","departure_time":"08:08","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"08:18","departure_time":"08:19","platform":"5"},
+      {"name_snapshot":"新鳥栖","arrival_time":"08:22","departure_time":"08:23","platform":null},
+      {"name_snapshot":"佐賀","arrival_time":"08:35","departure_time":"08:36","platform":null},
+      {"name_snapshot":"江北","arrival_time":"08:46","departure_time":"08:47","platform":"4"},
+      {"name_snapshot":"肥前鹿島","arrival_time":"08:58","departure_time":null,"platform":null}
+    ]},
+  "evidence_locators":[
+    {"claim":"limited express identity and 1001M","locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL, 毎日運転 row and September calendar"},
+    {"claim":"fifteen full-route calls and clocks","locator":"駅名 / 時刻 / のりば table from 門司港 through 肥前鹿島"}
+  ]
+}

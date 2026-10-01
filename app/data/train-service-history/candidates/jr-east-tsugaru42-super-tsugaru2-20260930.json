@@ -1,0 +1,159 @@
+{
+  "candidate_id": "jr-east-tsugaru42-super-tsugaru2-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the two selected JR East 2026-09-30 td.ok train pages. Service identities follow each page title. Physical route, operator segments, car count and actual dispatch are unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-east.tsugaru.42.exact-2026-09-30",
+      "service_id": "tsugaru",
+      "service_name": "つがる",
+      "public_number": "42",
+      "train_number": "2042M",
+      "source_id": "jr-east-tsugaru42-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/005/008181.html",
+      "printed_platforms": {
+        "青森": "５",
+        "新青森": "２",
+        "秋田": "４"
+      },
+      "stops": [
+        [
+          "青森",
+          null,
+          "09:04"
+        ],
+        [
+          "新青森",
+          "09:09",
+          "09:11"
+        ],
+        [
+          "浪岡",
+          "09:26",
+          "09:26"
+        ],
+        [
+          "弘前",
+          "09:38",
+          "09:40"
+        ],
+        [
+          "大鰐温泉",
+          "09:50",
+          "09:50"
+        ],
+        [
+          "碇ケ関",
+          "09:58",
+          "09:58"
+        ],
+        [
+          "大館",
+          "10:16",
+          "10:17"
+        ],
+        [
+          "鷹ノ巣",
+          "10:32",
+          "10:32"
+        ],
+        [
+          "二ツ井",
+          "10:42",
+          "10:43"
+        ],
+        [
+          "東能代",
+          "10:56",
+          "10:56"
+        ],
+        [
+          "森岳",
+          "11:06",
+          "11:06"
+        ],
+        [
+          "八郎潟",
+          "11:20",
+          "11:21"
+        ],
+        [
+          "秋田",
+          "11:45",
+          null
+        ]
+      ],
+      "service_date": "2026-09-30",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 つがる42号 2042M; 設備 and 番線 columns",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "printed_remark": "青森－新青森間の各駅相互間に限り、乗車券のみで特急の普通車自由席にご乗車になれます"
+    },
+    {
+      "trip_id": "jr-east.super-tsugaru.2.exact-2026-09-30",
+      "service_id": "super-tsugaru",
+      "service_name": "スーパーつがる",
+      "public_number": "2",
+      "train_number": "2022M",
+      "source_id": "jr-east-super-tsugaru2-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098671.html",
+      "printed_platforms": {
+        "青森": "３",
+        "新青森": "２",
+        "秋田": "４"
+      },
+      "stops": [
+        [
+          "青森",
+          null,
+          "12:40"
+        ],
+        [
+          "新青森",
+          "12:45",
+          "12:47"
+        ],
+        [
+          "弘前",
+          "13:13",
+          "13:15"
+        ],
+        [
+          "大鰐温泉",
+          "13:24",
+          "13:25"
+        ],
+        [
+          "大館",
+          "13:49",
+          "13:50"
+        ],
+        [
+          "鷹ノ巣",
+          "14:05",
+          "14:05"
+        ],
+        [
+          "東能代",
+          "14:27",
+          "14:28"
+        ],
+        [
+          "秋田",
+          "15:12",
+          null
+        ]
+      ],
+      "service_date": "2026-09-30",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 スーパーつがる2号 2022M; 設備 and 番線 columns",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "printed_remark": "青森－新青森間の各駅相互間に限り、乗車券のみで特急の普通車自由席にご乗車になれます"
+    }
+  ]
+}

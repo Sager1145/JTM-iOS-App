@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -12,6 +13,7 @@ import {
 } from "../scripts/build/precompute-train-parts.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+const EXAMPLE_HISTORY_HASH = "a".repeat(64);
 
 function context(overrides = {}) {
   return {
@@ -19,6 +21,7 @@ function context(overrides = {}) {
     route_cache_digest: "abc123",
     ride_date: "2026-07-03",
     history_revisions: { jp: "2026-09-23.2" },
+    history_hashes: { jp: EXAMPLE_HISTORY_HASH },
     ...overrides,
   };
 }
@@ -32,6 +35,7 @@ test("manifest solver provenance is derived from consistent route parts", () => 
     {
       solver_version: "22",
       history_revisions: { jp: "2026-09-23.2" },
+      history_hashes: { jp: EXAMPLE_HISTORY_HASH },
     },
   );
 });
@@ -50,6 +54,14 @@ test("manifest solver provenance rejects corrupt part contexts", () => {
     () => deriveManifestSolverContext([context({ history_revisions: { jp: "" } })]),
     /history_revisions/,
   );
+  assert.throws(
+    () => deriveManifestSolverContext([context({ history_hashes: {} })]),
+    /history_hashes/,
+  );
+  assert.throws(
+    () => deriveManifestSolverContext([context({ history_hashes: { jp: "not-sha256" } })]),
+    /history_hashes/,
+  );
 });
 
 test("manifest solver provenance rejects version and history mismatches", () => {
@@ -61,17 +73,33 @@ test("manifest solver provenance rejects version and history mismatches", () => 
     () =>
       deriveManifestSolverContext([
         context(),
-        context({ history_revisions: { jp: "2026-09-24.1" } }),
+        context({
+          history_revisions: { jp: "2026-09-24.1" },
+          history_hashes: { jp: "b".repeat(64) },
+        }),
       ]),
+    /disagrees/,
+  );
+  assert.throws(
+    () => deriveManifestSolverContext([
+      context(),
+      context({ history_hashes: { jp: "b".repeat(64) } }),
+    ]),
     /disagrees/,
   );
 });
 
 test("manifest provenance must match the current shipped solver and history overlay", () => {
   const current = currentPrecomputeSolverContext();
+  const shippedOverlayPath = path.join(HERE, "..", "data", "rail-history.json");
+  const shippedOverlayBytes = fs.readFileSync(shippedOverlayPath);
+  const shippedOverlay = JSON.parse(shippedOverlayBytes.toString("utf8"));
   assert.deepEqual(current, {
-    solver_version: "22",
-    history_revisions: { jp: "2026-09-23.2" },
+    solver_version: "24",
+    history_revisions: { jp: shippedOverlay.revision },
+    history_hashes: {
+      jp: createHash("sha256").update(shippedOverlayBytes).digest("hex"),
+    },
   });
   assert.equal(assertCurrentPrecomputeSolverContext(current), current);
   assert.throws(
@@ -150,6 +178,11 @@ test("published sample manifest must carry the current overlay revision", () => 
   assert.equal(
     revision,
     current.history_revisions.jp,
+    "rerun `npm run precompute` from app/",
+  );
+  assert.deepEqual(
+    manifest.solver_context?.history_hashes,
+    current.history_hashes,
     "rerun `npm run precompute` from app/",
   );
 });

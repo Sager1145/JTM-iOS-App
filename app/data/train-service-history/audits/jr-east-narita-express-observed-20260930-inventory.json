@@ -1,0 +1,1472 @@
+{
+  "inventory_id": "jr-east-narita-express-observed-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "completeness": "bounded_observed_set",
+  "scope_note": "59 individual links from Airport Terminal2 weekday pages inspected;54 dated running numbered pages and5 non-running Tokyo-termination variants. Does not exclude unobserved entrances. Printed train-number columns can represent coupled branches or sequential through segments, distinguished by coupling notes/through arrows.",
+  "proven_numbered_page_count": 54,
+  "nonrunning_variant_count": 5,
+  "db_existing_before_staging": [
+    {
+      "public_number": "5",
+      "train_number": "2005M"
+    },
+    {
+      "public_number": "5",
+      "train_number": "2205M"
+    }
+  ],
+  "trains": [
+    {
+      "public_number": "15",
+      "printed_train_numbers": [
+        "2015M",
+        "2215M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 15号（大船－成田空港）／特急成田エクスプレス 15号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029071.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2215Mを併結",
+        "東京－成田空港は2015Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "318c27ce85c0919bafc71679360ba74380de362e348605eb7683b0170cc68a3e",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "1",
+      "printed_train_numbers": [
+        "2001M",
+        "2201M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 1号（大船－成田空港）／特急成田エクスプレス 1号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031131.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2201Mを併結",
+        "東京－成田空港は2001Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "8fb579ecdaaac6f28765a33eafcd2f69e248a6cb50854788339c30589891baff",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "5",
+      "printed_train_numbers": [
+        "2005M",
+        "2205M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 5号（大船－成田空港）／特急成田エクスプレス 5号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031141.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2205Mを併結",
+        "東京－成田空港は2005Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "404072c6da189d68dd3d1e9a68cee4bc2bf4a6a6fddc15750bc7e20cefc737a3",
+      "db_public_number_present_before_staging": true,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "7",
+      "printed_train_numbers": [
+        "2007M",
+        "2207M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 7号（大船－成田空港）／特急成田エクスプレス 7号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031151.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2207Mを併結",
+        "東京－成田空港は2007Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "2c8f074a1ca5f47b4aa54ff4128b9e455e765431a9ed68cc8800caf0adc86717",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "23",
+      "printed_train_numbers": [
+        "2023M",
+        "2223M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 23号（大船－成田空港）／特急成田エクスプレス 23号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031161.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2223Mを併結",
+        "東京－成田空港は2023Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "294cda186c669f3654f0d3b9d39401c662992ee5599e21d367e5ebc325634993",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "27",
+      "printed_train_numbers": [
+        "2027M",
+        "2227M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 27号（大船－成田空港）／特急成田エクスプレス 27号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031171.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2227Mを併結",
+        "東京－成田空港は2027Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "d7cd0db4d0f4a7f6d6ebdb0521dd24b8216c19343bd355a760799dc08556bfcf",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "31",
+      "printed_train_numbers": [
+        "2031M",
+        "2231M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 31号（大船－成田空港）／特急成田エクスプレス 31号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031181.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2231Mを併結",
+        "東京－成田空港は2031Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "a29e76b42229a2a66650f12f86b2eb4abecf8eb6e03896dd2d70096e98c8b5a6",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "35",
+      "printed_train_numbers": [
+        "2035M",
+        "2235M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 35号（大船－成田空港）／特急成田エクスプレス 35号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031191.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2235Mを併結",
+        "東京－成田空港は2035Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "920fd0c79f9942a75e886447403660cb29e8ff20bfc285846f771ce3fcbcca53",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "39",
+      "printed_train_numbers": [
+        "2039M",
+        "2239M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 39号（大船－成田空港）／特急成田エクスプレス 39号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031201.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2239Mを併結",
+        "東京－成田空港は2039Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "bb384b28f9bbed909338c265bfe140220daebfa0a285e5351e994ef7105d08db",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "43",
+      "printed_train_numbers": [
+        "2043M",
+        "2243M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 43号（大船－成田空港）／特急成田エクスプレス 43号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031211.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2243Mを併結",
+        "東京－成田空港は2043Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "049bc6bbe7c6ae391d90fa6c70f9ccfe887413dc58af41876cb9bb67dc119fe8",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "51",
+      "printed_train_numbers": [
+        "2051M",
+        "2251M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 51号（大船－成田空港）／特急成田エクスプレス 51号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031221.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2251Mを併結",
+        "東京－成田空港は2051Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "f8bdcad9ba4a16886e946b7c4041a14149a36d7278ab78caf77929d22ab0e563",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "53",
+      "printed_train_numbers": [
+        "2053M",
+        "2253M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 53号（大船－成田空港）／特急成田エクスプレス 53号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031231.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2253Mを併結",
+        "東京－成田空港は2053Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "b3c2234a72146219e245176855e8a0d9cbf32bf5d597fd65ebad98692dd262a9",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "33",
+      "printed_train_numbers": [
+        "2233M",
+        "2033M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 33号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031511.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "8a9e7e716329f9bdfea2bfac2dc06369ffd44cdef459557f9e39ceef624edf77",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "47",
+      "printed_train_numbers": [
+        "2047M",
+        "2247M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 47号（大船－成田空港）／特急成田エクスプレス 47号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031521.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2247Mを併結",
+        "東京－成田空港は2047Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "c837d9810e960105ece99f07319ff5fcffd9bcc90cd43362b79adf30230c8954",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "3",
+      "printed_train_numbers": [
+        "2003M",
+        "2203M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 3号（大船－成田空港）／特急成田エクスプレス 3号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037961.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2203Mを併結",
+        "東京－成田空港は2003Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "875566e02bed80003c72766f1409c329c203ab011276116900b6750070a2e0e7",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "17",
+      "printed_train_numbers": [
+        "2217M",
+        "2017M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 17号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037971.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "5a050dc27873d9feaf60021723bdf3f6605f0391674c6b7f103763c08aae402c",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "19",
+      "printed_train_numbers": [
+        "2019M",
+        "2219M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 19号（大船－成田空港）／特急成田エクスプレス 19号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/035/037981.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "東京－成田空港は2219Mを併結",
+        "東京－成田空港は2019Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "23f71b821201aaf9cf11912da7a1af4fb927dfd188c2db48af5598db7821668f",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "9",
+      "printed_train_numbers": [
+        "2209M",
+        "2009M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 9号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/054651.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "83d2242df6f2f60df1aeedb20eb741680c2ce9fd93274905525f08317883d7df",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "49",
+      "printed_train_numbers": [
+        "2249M",
+        "2049M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 49号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063321.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "1bf57231f68845b671414f37a61478944c9d8d3b080c2cba39ca65a497cbffb1",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "21",
+      "printed_train_numbers": [
+        "2221M",
+        "2021M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 21号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076511.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "1ce1f0c17e929314f19d2f2abef03e4fec013ae6cc36f6848b29dc465f41f863",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "25",
+      "printed_train_numbers": [
+        "2225M",
+        "2025M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 25号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076521.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "ec4224e2aeee32d403a8ae4b7efb61fc0f6a7d17fdf96f78dea93dbdb7e43d64",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "29",
+      "printed_train_numbers": [
+        "2229M",
+        "2029M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 29号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076541.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "5781f3c418bced8f6e8073221266d14f407aa9349572a9b0209e9cd6388a1cb1",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "37",
+      "printed_train_numbers": [
+        "2237M",
+        "2037M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 37号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076551.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "32f04806e600b79faf0e56ff322bf02417444ff64d6e4d130232943f155d9b51",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "41",
+      "printed_train_numbers": [
+        "2241M",
+        "2041M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 41号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076571.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "964973d471652f25130af11fb1f1dc3ccb86629e439130cc0fa6736fde9256ec",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "45",
+      "printed_train_numbers": [
+        "2245M",
+        "2045M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 45号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076581.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "fa7dbf42ce3714cc2f7a1cdd518beca3add4e4fb821754a179ff87067f1dee9e",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "11",
+      "printed_train_numbers": [
+        "2011M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 11号（大船－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098841.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "70bdfcf385ab97581734795ee47fd4eec8c5d1c3a5d6fcb9133debcff7383f54",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "13",
+      "printed_train_numbers": [
+        "2213M",
+        "2013M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 13号（新宿－東京－成田空港））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/098851.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611030.html",
+      "direction": "airport_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "906561af0c5a45f894912e340a43dafe970c6fc030f00dbd104d8e9b977e420e",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "2",
+      "printed_train_numbers": [
+        "2002M",
+        "2202M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 2号（成田空港－大船）／特急成田エクスプレス 2号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029041.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2202Mを併結",
+        "成田空港－東京は2002Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "f91fde7818b1013b15a863100576b5c5a7a14f70a45a1f39ffdf328718995337",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "42",
+      "printed_train_numbers": [
+        "2042M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 42号（成田空港－大船））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/025/029081.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "73ec01a8df0b3a293024cb10b8c75ee136fb85f59ec0a05b75bee3c27976dd8b",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "28",
+      "printed_train_numbers": [
+        "2028M",
+        "2228M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 28号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031241.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "003744be26a2aab56fe1854662ea3993446e3ac047bc4550bb9d86e26680f129",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "38",
+      "printed_train_numbers": [
+        "2038M",
+        "2238M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 38号（成田空港－大船）／特急成田エクスプレス 38号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031251.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2238Mを併結",
+        "成田空港－東京は2038Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "6fee691e4551239a47fe0a10d90933bc9b33ea1e9ac6b63b9afbb329ee83608b",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "40",
+      "printed_train_numbers": [
+        "2040M",
+        "2240M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 40号（成田空港－大船）／特急成田エクスプレス 40号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031261.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2240Mを併結",
+        "成田空港－東京は2040Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "ca8d09bc79576f028259126a680224e278e443c89d8bcc7f1995121d68a620ae",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "46",
+      "printed_train_numbers": [
+        "2046M",
+        "2246M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 46号（成田空港－大船）／特急成田エクスプレス 46号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031271.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2246Mを併結",
+        "成田空港－東京は2046Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "8a34529ff9cce1fd9e628348d664372cdf67ce9611cc6cf85373e4d87cd2e83b",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "52",
+      "printed_train_numbers": [
+        "2052M",
+        "2252M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 52号（成田空港－大船）／特急成田エクスプレス 52号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031281.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2252Mを併結",
+        "成田空港－東京は2052Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "5e06c267f14d8a9e6dd01852750e985f7f3b319d8cef9cad948377ee5a91002c",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "54",
+      "printed_train_numbers": [
+        "2054M",
+        "2254M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 54号（成田空港－大船）／特急成田エクスプレス 54号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031291.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2254Mを併結",
+        "成田空港－東京は2054Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "992daf42415239ac1896895b2f980c3e3e4c9ef67edfb900db42dbd432b53e92",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "10",
+      "printed_train_numbers": [
+        "2010M",
+        "2210M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 10号（成田空港－大船）／特急成田エクスプレス 10号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031481.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2210Mを併結",
+        "成田空港－東京は2010Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "d29f57d22b01ba56e3e47f361d5649cfecd48f6f8782ef51624324fcfacb98b3",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "30",
+      "printed_train_numbers": [
+        "2030M",
+        "2230M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 30号（成田空港－大船）／特急成田エクスプレス 30号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031491.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2230Mを併結",
+        "成田空港－東京は2030Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "a88a6783dab8ba8b691b1a64949616b1138534040a99397a8cb3d721affb58e9",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "34",
+      "printed_train_numbers": [
+        "2034M",
+        "2234M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 34号（成田空港－大船）／特急成田エクスプレス 34号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/030/031501.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2234Mを併結",
+        "成田空港－東京は2034Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "6f3f1f42ce32e16d05202f7e3a75357d32125132860d555cb95199b7edcc7ba0",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "14",
+      "printed_train_numbers": [
+        "2014M",
+        "2214M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 14号（成田空港－大船）／特急成田エクスプレス 14号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047971.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2214Mを併結",
+        "成田空港－東京は2014Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "0b75ecb1a66fef63bcf6cf722fbb451559a444667a73731cbc799b5d881370c1",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "18",
+      "printed_train_numbers": [
+        "2018M",
+        "2218M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 18号（成田空港－大船）／特急成田エクスプレス 18号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047981.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2218Mを併結",
+        "成田空港－東京は2018Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "3c5177fba34a74e0ded528fc87e290dd16dee2155e04db601474672213600706",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "50",
+      "printed_train_numbers": [
+        "2050M",
+        "2250M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 50号（成田空港－大船）／特急成田エクスプレス 50号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047991.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2250Mを併結",
+        "成田空港－東京は2050Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "46221e4076a4d590baf5f37a7d1f4fbb4a93341164ad39f142b9f01b237571b0",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "12",
+      "printed_train_numbers": [
+        "2012M",
+        "2212M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 12号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/049941.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "df9a4b5b4e8c27e6143455ef04e234659ddd5ca2c13d87e6369a970270202fd3",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "4",
+      "printed_train_numbers": [
+        "2004M",
+        "2204M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 4号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063331.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "821ce93e7824f5fe578cd9d6db86eec61fe2d9ce28cd2351249230518adf4f9e",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "8",
+      "printed_train_numbers": [
+        "2008M",
+        "2208M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 8号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063341.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "245c43aba0100b489c4f8801bd5ce3c070ec24beac4310aa256a6623ac6ef882",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "16",
+      "printed_train_numbers": [
+        "2016M",
+        "2216M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 16号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063351.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "e5c46a2f4e06042d910031e916b0077de7cb016c68698d66d8a7d44231a31a3d",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "20",
+      "printed_train_numbers": [
+        "2020M",
+        "2220M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 20号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063361.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "78c38a453e1e32a27ca6244e7a715564a8cfd180dbac277a8713acd032b3bb86",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "24",
+      "printed_train_numbers": [
+        "2024M",
+        "2224M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 24号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063371.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "690797fa6c97aed7385ef2a9aabee1e8d3d85cefdd38a8cae249b9e0b8a982ee",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "32",
+      "printed_train_numbers": [
+        "2032M",
+        "2232M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 32号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063381.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "6a2f5ea67248e293b259e72db186376d3ad5cb3af29b1cb2fa1fa74d41dc58f7",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "44",
+      "printed_train_numbers": [
+        "2044M",
+        "2244M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 44号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063391.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "d0c36d2fafa2636a676a9d424c553bfa92a720dae7d58b34e79d2e7999a7badf",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "48",
+      "printed_train_numbers": [
+        "2048M",
+        "2248M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 48号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063401.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "054f48c6be91bcc640311773a1bc93e504d60142f668c21f710913b77e5c9145",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "6",
+      "printed_train_numbers": [
+        "2006M",
+        "2206M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 6号（成田空港－大船）／特急成田エクスプレス 6号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063411.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2206Mを併結",
+        "成田空港－東京は2006Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "a729735bdce9c8a19147b264f55a54d232f9bfc7a1ba4c4970bb64d416590f55",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "22",
+      "printed_train_numbers": [
+        "2022M",
+        "2222M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 22号（成田空港－大船）／特急成田エクスプレス 22号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063421.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2222Mを併結",
+        "成田空港－東京は2022Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "a1fabf2e559c0937eba6b4bf27602125f44a27b933abeab3e3c7e5f89975c2dd",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "26",
+      "printed_train_numbers": [
+        "2026M",
+        "2226M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 26号（成田空港－大船）／特急成田エクスプレス 26号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063431.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [
+        "成田空港－東京は2226Mを併結",
+        "成田空港－東京は2026Mに併結"
+      ],
+      "has_printed_through_arrow": false,
+      "source_sha256": "f31db79629994f8756f8fc66708ccc6f6a8a0e0907e0d1b4b269e8ce86e637e8",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "coupled_branches",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "36",
+      "printed_train_numbers": [
+        "2036M",
+        "2236M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 36号（成田空港－東京－新宿））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076611.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_coupling": [],
+      "has_printed_through_arrow": true,
+      "source_sha256": "e5535d9a35468956ebcb493ef09e1fb775ee1840caf83b68eb6fb33fd0bf0c7e",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "sequential_through_numbers",
+      "staged_candidate_present": true
+    },
+    {
+      "public_number": "46",
+      "printed_train_numbers": [
+        "9946M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 46号（成田空港－東京））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/180/184891.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "8832237be53a7daa0d070b27b1a6d12b66f13a07a6a890322258764c384429e6",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "48",
+      "printed_train_numbers": [
+        "9948M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 48号（成田空港－東京））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/180/184911.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "88591fed42664ddb4fc27fb2c6856e457abfffe237d2f35a3ed7d3d55296e2f8",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "50",
+      "printed_train_numbers": [
+        "9950M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 50号（成田空港－東京））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/180/184931.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "0674a7be72a9bdab3b6eff0c8c9865c9d4ddd1590635adae9d3b0dffd54c65cd",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "52",
+      "printed_train_numbers": [
+        "9952M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 52号（成田空港－東京））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/180/184951.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "dd3cc54bffd7deda919fc06ef89807dd474a36d42f508e91e3fbfcf33a8077de",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": false
+    },
+    {
+      "public_number": "54",
+      "printed_train_numbers": [
+        "9954M"
+      ],
+      "title": "時刻表 停車駅一覧（特急成田エクスプレス 54号（成田空港－東京））：JR東日本",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/180/184971.html",
+      "station_discovery_url": "https://timetables.jreast.co.jp/2610/timetable/tt0611/0611040.html",
+      "direction": "city_bound",
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_coupling": [],
+      "has_printed_through_arrow": false,
+      "source_sha256": "bc5b0d48dd47006a9ccd64261f890f28e91449240fffcb20214dae645d6b4bde",
+      "db_public_number_present_before_staging": false,
+      "column_relationship": "single_number",
+      "staged_candidate_present": false
+    }
+  ],
+  "db_existing_numbered_services_before_staging": 1,
+  "missing_numbered_services_before_staging": 53,
+  "staged_proven_public_number_count": 54,
+  "observed_set_audit": {
+    "proven_public_numbers": 54,
+    "staged_public_numbers": 54,
+    "trip_count": 84,
+    "missing_public_numbers": [],
+    "excluded_nonrunning_variants": 5,
+    "scope": "Closes only the observed individual-page set; unseen entrances remain outside scope."
+  }
+}

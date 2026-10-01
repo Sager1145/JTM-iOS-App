@@ -7,11 +7,11 @@ import PackageDescription
 // measured in REFACTOR_FOR_SWIFT_FORK_PROMPT.md §二, made into targets so the
 // compiler enforces it:
 //
-//   RailCore  the pure-logic tier. Imports Foundation and NOTHING ELSE — no
-//             MapKit, no SwiftUI, no persistence. This is the 14,369 lines of
-//             JavaScript that carry the actual behaviour, and the whole point
-//             of keeping it import-free is that it can be verified against the
-//             JavaScript by running both over the same fixtures.
+//   RailCore  the platform-free logic tier. It imports Foundation plus the
+//             system SQLite library for lazy, read-only timetable queries —
+//             no MapKit, SwiftUI, or app-owned persistence. The route solver
+//             remains portable and can be verified against the JavaScript by
+//             running both over the same fixtures.
 //
 //   RailPresentation
 //             the display-state tier: JRM_FLIGHTY_UI_REFACTOR_SPEC.md §11.1's
@@ -37,7 +37,8 @@ let package = Package(
     targets: [
         .target(
             name: "RailCore",
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            linkerSettings: [.linkedLibrary("sqlite3")]
         ),
         .target(name: "RailPresentation", dependencies: ["RailCore"]),
         .testTarget(name: "RailCoreTests", dependencies: ["RailCore"]),

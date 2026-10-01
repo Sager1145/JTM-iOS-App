@@ -1,0 +1,89 @@
+{
+  "candidate_id": "jr-kyushu-hyuga10-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Date-selected JR Kyushu train detail. All printed passenger clock sides and platforms retained; consist, car count and per-car assignments remain unverified.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.hyuga.10.2026-09-30",
+      "service_id": "hyuga",
+      "service_name": "ひゅうが",
+      "service_class": "limited_express",
+      "public_number": "10",
+      "train_number": "5080M",
+      "origin": "宮崎空港",
+      "destination": "延岡",
+      "source_id": "jr-kyushu-hyuga10-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117901.html?t=2890300&d=20260930",
+      "source_locator": "2026年09月30日の時刻; 列車名/列車番号/列車設備/運転日 and 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "stops": [
+        [
+          "宮崎空港",
+          null,
+          "19:15",
+          null
+        ],
+        [
+          "南宮崎",
+          "19:20",
+          "19:22",
+          null
+        ],
+        [
+          "宮崎",
+          "19:25",
+          "19:30",
+          null
+        ],
+        [
+          "佐土原",
+          "19:40",
+          "19:41",
+          null
+        ],
+        [
+          "高鍋",
+          "19:50",
+          "19:51",
+          null
+        ],
+        [
+          "都農",
+          "20:01",
+          "20:01",
+          null
+        ],
+        [
+          "日向市",
+          "20:20",
+          "20:20",
+          null
+        ],
+        [
+          "門川",
+          "20:27",
+          "20:32",
+          null
+        ],
+        [
+          "南延岡",
+          "20:40",
+          "20:41",
+          null
+        ],
+        [
+          "延岡",
+          "20:45",
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

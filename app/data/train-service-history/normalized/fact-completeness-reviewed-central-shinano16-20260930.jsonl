@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "Official selected variant prints しなの16号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "Official selected variant prints 1016M.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "Publisher identity is not ordered operator-segment evidence.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "September 30 selects official schedule variant 044921.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "First and last timed passenger calls are printed.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "The selected variant prints 10 passenger calls.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "All printed arrival/departure minute clocks are retained.", "status": "verified"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "No ordered physical-line evidence is promoted.", "status": "unknown"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "Names and pinned codes match current JR Central/East groups.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-central.shinano.16.2026-09-30", "entity_type": "trip", "notes": "Official page is verification-only; redistribution grant unresolved.", "status": "partial"}

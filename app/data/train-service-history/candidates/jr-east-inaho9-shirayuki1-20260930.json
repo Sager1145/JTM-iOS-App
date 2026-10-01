@@ -1,0 +1,117 @@
+{
+  "candidate_id": "jr-east-inaho9-shirayuki1-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 service day and the two selected JR East timetable variants. Every printed passenger call, minute clock, platform, train number, equipment label and remark is retained. No physical route, operator segment, car count, vehicle series or actual dispatch is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.inaho.9.exact-2026-09-30",
+      "service_id": "inaho",
+      "service_name": "いなほ",
+      "jr_scope": "jr",
+      "service_date": "2026-09-30",
+      "public_number": "9",
+      "train_number": "9M",
+      "source_id": "jr-east-inaho9-family-gap-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/064031.html",
+      "source_sha256": "5c8674ca0fc1174ec75fecd5a7b68240f9134a6f86ba8ad8a7c0b0be7ea4f8d7",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 いなほ9号 9M; 設備, 時刻 and 番線 columns",
+      "calendar_observation": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ],
+      "printed_platforms": {
+        "新潟": "５",
+        "新発田": "１",
+        "坂町": "３",
+        "村上": "３",
+        "余目": "２",
+        "酒田": "１"
+      },
+      "printed_remarks": null,
+      "stops": [
+        ["新潟", null, "17:58"],
+        ["豊栄", "18:11", "18:11"],
+        ["新発田", "18:21", "18:22"],
+        ["中条", "18:31", "18:31"],
+        ["坂町", "18:37", "18:38"],
+        ["村上", "18:46", "18:47"],
+        ["府屋", "19:18", "19:19"],
+        ["あつみ温泉", "19:30", "19:31"],
+        ["鶴岡", "19:51", "19:51"],
+        ["余目", "20:01", "20:02"],
+        ["酒田", "20:10", null]
+      ],
+      "formation": {
+        "evidence_kind": "planned",
+        "all_reserved": false,
+        "green_car_available": true,
+        "car_count": null,
+        "vehicle_series": null,
+        "reserved_seat_capacity": null
+      },
+      "route_note": "Exact dated ordered physical route and operator segments are unknown.",
+      "actual_dispatch": null
+    },
+    {
+      "trip_id": "jr-east.shirayuki.1.exact-2026-09-30",
+      "service_id": "shirayuki",
+      "service_name": "しらゆき",
+      "jr_scope": "through_jr",
+      "service_date": "2026-09-30",
+      "public_number": "1",
+      "train_number": "51M",
+      "source_id": "jr-east-shirayuki1-family-gap-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/060/063941.html",
+      "source_sha256": "cad7e30d426d151b9dbeca9221e6454b1dc825458af7c3ab9ee5b05a1052b9ca",
+      "source_locator": "2026年9月30日 td.ok; 時刻詳細 しらゆき1号 51M; 設備, 時刻, 番線 and 備考 columns",
+      "calendar_observation": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "printed_equipment": [
+        "普通車一部指定席"
+      ],
+      "printed_platforms": {
+        "直江津": "６",
+        "柏崎": "２",
+        "長岡": "２",
+        "東三条": "１",
+        "新津": "４",
+        "新潟": "３"
+      },
+      "printed_remarks": "えちごトキめき鉄道線内相互間のみの指定席特急券は発売いたしません",
+      "stops": [
+        ["新井", null, "10:23"],
+        ["上越妙高", "10:30", "10:31"],
+        ["高田", "10:35", "10:36"],
+        ["春日山", "10:40", "10:40"],
+        ["直江津", "10:46", "10:48"],
+        ["柿崎", "10:59", "11:00"],
+        ["柏崎", "11:14", "11:15"],
+        ["長岡", "11:39", "11:40"],
+        ["見附", "11:49", "11:49"],
+        ["東三条", "11:57", "11:58"],
+        ["加茂", "12:04", "12:05"],
+        ["新津", "12:18", "12:18"],
+        ["新潟", "12:30", null]
+      ],
+      "formation": {
+        "evidence_kind": "planned",
+        "all_reserved": false,
+        "green_car_available": null,
+        "car_count": null,
+        "vehicle_series": null,
+        "reserved_seat_capacity": null
+      },
+      "route_note": "Exact dated ordered physical route and operator segments are unknown. The printed ticketing remark is retained without converting it into an operator-segment claim.",
+      "actual_dispatch": null
+    }
+  ]
+}

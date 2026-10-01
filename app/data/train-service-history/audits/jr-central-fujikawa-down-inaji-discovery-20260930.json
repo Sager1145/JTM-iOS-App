@@ -1,0 +1,179 @@
+{
+  "inventory_id": "jr-central-fujikawa-down-inaji-discovery-20260930",
+  "service_date": "2026-09-30",
+  "canonical": false,
+  "completeness": "discovery_only",
+  "scope_note": "11 identities found in official weekday headers. Only Fujikawa13 subsequently proved September30 from official individual detail; other10 remain discovery only.",
+  "trains": [
+    {
+      "service_id": "fujikawa",
+      "public_number": "1",
+      "train_number": "4001M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "3",
+      "train_number": "4003M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "5",
+      "train_number": "4005M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "7",
+      "train_number": "4007M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "9",
+      "train_number": "4009M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "11",
+      "train_number": "4011M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "fujikawa",
+      "public_number": "13",
+      "train_number": "4013M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "source_sha256": "4d550d966ed733d25334fbd4ad327a7d8f36288b585c638d309b3ddf0edfc83d",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": true,
+      "date_evidence": "2026年9月 day30 drivingday-01",
+      "detail_url": "https://timetable.jr-odekake.net/train-timetable/33561?date=20260930",
+      "missing_evidence": null
+    },
+    {
+      "service_id": "inaji",
+      "public_number": "1",
+      "train_number": "21M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/112d1.html",
+      "source_sha256": "ba014ff188e0f6e75802cb16cd611e7098b1d57385af6d4e212e67f1ab2b73f7",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "inaji",
+      "public_number": "3",
+      "train_number": "23M",
+      "direction": "down",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/112d1.html",
+      "source_sha256": "ba014ff188e0f6e75802cb16cd611e7098b1d57385af6d4e212e67f1ab2b73f7",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "inaji",
+      "public_number": "2",
+      "train_number": "22M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/112u1.html",
+      "source_sha256": "211a03effd0b3da3d9dc8970948f0a6b6ef6ad79131ffeaf26200b6a185737ca",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    },
+    {
+      "service_id": "inaji",
+      "public_number": "4",
+      "train_number": "24M",
+      "direction": "up",
+      "source_url": "https://timetables.jreast.co.jp/2610/timetable-v/112u1.html",
+      "source_sha256": "211a03effd0b3da3d9dc8970948f0a6b6ef6ad79131ffeaf26200b6a185737ca",
+      "source_type": "official_weekday_line_table",
+      "scheduled_on_date": null,
+      "date_evidence": null,
+      "detail_url": null,
+      "missing_evidence": "Individual train detail page and explicit September 30 operating calendar cell; line table alone is discovery evidence."
+    }
+  ],
+  "individual_detail_discovery_checks": [
+    {
+      "url": "https://timetables.jreast.co.jp/2610/timetable-v/109d1.html",
+      "result": "No individual train detail hrefs in published HTML; train-name and train-number cells are plain table cells."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/timetable-v/112d1.html",
+      "result": "No individual train detail hrefs in published HTML; train-name and train-number cells are plain table cells."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/timetable-v/112u1.html",
+      "result": "No individual train detail hrefs in published HTML; train-name and train-number cells are plain table cells."
+    },
+    {
+      "url": "https://eki.jr-odekake.net/search_free?keyword=%E9%9D%99%E5%B2%A1",
+      "result": "Official station search returned no matching Shizuoka station."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/cgi-bin/st_search.cgi?mode=0&ekimei=%E9%9D%99%E5%B2%A1",
+      "result": "Official station search returned no matching station."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/cgi-bin/st_search.cgi?mode=0&ekimei=%E8%B1%8A%E6%A9%8B",
+      "result": "Official station search returned no matching station."
+    }
+  ],
+  "remaining_gap": "Fujikawa1/3/5/7/9/11 and Inaji1/2/3/4 lack official individual detail URLs and September30 calendar evidence. No train URL generated from neighboring IDs or number patterns."
+}

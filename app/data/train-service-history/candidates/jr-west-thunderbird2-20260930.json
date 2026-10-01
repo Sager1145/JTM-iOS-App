@@ -1,0 +1,85 @@
+{
+  "candidate_id": "jr-west-thunderbird2-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "source_calendar_label": "土曜・休日運休",
+  "calendar_note": "Only 2026-09-30 is promoted; the weekday-only source label is not expanded.",
+  "trip": {
+    "trip_id": "jr-west.thunderbird.2.2026-09-30",
+    "service_id": "thunderbird",
+    "public_number": "2",
+    "train_number": "4002M",
+    "origin": "敦賀",
+    "destination": "大阪",
+    "train_source_id": "jr-west-odekake-thunderbird2-4002m-20260930",
+    "train_source_url": "https://timetable.jr-odekake.net/train-timetable/257941?date=20260930",
+    "route_source_ids": [
+      "jr-west-thunderbird2-kosei-scope-20260930",
+      "mlit-n02-2025-thunderbird2-20260930"
+    ],
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "敦賀",
+        "current_source_code": "010186",
+        "arrival_time": null,
+        "departure_time": "07:05",
+        "platform": "33",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "近江今津",
+        "current_source_code": "004835",
+        "arrival_time": "07:28",
+        "departure_time": "07:29",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "堅田",
+        "current_source_code": "005626",
+        "arrival_time": "07:47",
+        "departure_time": "07:47",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "京都",
+        "current_source_code": "006079",
+        "arrival_time": "08:02",
+        "departure_time": "08:04",
+        "platform": "7",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "新大阪",
+        "current_source_code": "006911",
+        "arrival_time": "08:29",
+        "departure_time": "08:30",
+        "platform": "10",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "大阪",
+        "current_source_code": "007068",
+        "arrival_time": "08:34",
+        "departure_time": null,
+        "platform": "3",
+        "call_type": "destination"
+      }
+    ]
+  },
+  "review_notes": [
+    "The 2026-09-30 Shin-Osaka station 08:30 and Tsuruga station 07:05 links both open exact train page 257941 for Thunderbird 2, 4002M.",
+    "Only six timed passenger calls are retained; レ pass rows are omitted.",
+    "Exact train page prints 近江塩津 and 山科 as レ pass-through line boundaries. The Tsuruga station page labels the departure direction 湖西線. Current N02 supplies 北陸線 敦賀→近江塩津, 湖西線 近江塩津→山科, and 東海道線 山科→大阪, with each named endpoint in order.",
+    "Route-only boundary stations 近江塩津 and 山科 are not passenger stop_times. All seven current-N02 route segments remain partial because N02 has no 2026-09-30 daily physical-line validity interval."
+  ]
+}

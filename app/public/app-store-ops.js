@@ -109,13 +109,19 @@ function exportTrainStore() {
 // Canonical shape builders shared by both the export and import paths so the
 // serialized stop/style/route_policy schema has a single definition.
 function canonicalStopShape(stop) {
+  const actualArrival = normalizeNullableTime(stop.actual_arrival);
+  const actualDeparture = normalizeNullableTime(stop.actual_departure);
   return {
     name: stop.name || "",
     n02_station_code: canonicalStationCode(stop.n02_station_code || null),
     // `??` is intentional: platform 0 exists and must not collapse to null.
     platform_number: stop.platform_number ?? null,
     arrival: normalizeNullableTime(stop.arrival),
+    ...(actualArrival === null ? {} : { actual_arrival: actualArrival }),
     departure: normalizeNullableTime(stop.departure),
+    ...(actualDeparture === null
+      ? {}
+      : { actual_departure: actualDeparture }),
     stop_type: stop.stop_type || "passenger_stop",
     ride_segment: Boolean(stop.ride_segment),
   };
@@ -383,7 +389,9 @@ function normalizeImportedStop(stop) {
       "n02_station_code",
       "platform_number",
       "arrival",
+      "actual_arrival",
       "departure",
+      "actual_departure",
       "stop_type",
       "ride_segment",
     ],

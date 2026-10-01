@@ -239,4 +239,58 @@ struct RouteSolverParityTests {
         // (cheap) edge, not the unrelaxed (expensive) one.
         #expect(RouteSolver.routeLineMismatchPenalty(edges: result.edges, hints: hints) > 0)
     }
+
+    @Test func institutionFiltersKeepEmptyDuplicateAndConnectorRules() throws {
+        struct Case {
+            var code: String
+            var connectorCodes: [String]?
+            var allowedCodes: [String]
+            var mode: String
+            var requirePreferred: Bool = false
+            var expectedCost: Double?
+        }
+        let cases: [Case] = [
+            .init(code: "5", allowedCodes: ["", "5", "5"], mode: "soft", expectedCost: 10),
+            .init(code: "5", allowedCodes: ["", "1", "1"], mode: "soft", expectedCost: 6810),
+            .init(code: "5", allowedCodes: ["", "1", "1"], mode: "hard", expectedCost: nil),
+            .init(code: "5", allowedCodes: ["", "1"], mode: "soft",
+                  requirePreferred: true, expectedCost: nil),
+            .init(code: "5", allowedCodes: ["", ""], mode: "hard", expectedCost: 10),
+            .init(code: "", allowedCodes: ["1"], mode: "hard", expectedCost: 10),
+            .init(code: "", connectorCodes: ["1", "", "5"], allowedCodes: ["1", "1", ""],
+                  mode: "hard", expectedCost: nil),
+            .init(code: "", connectorCodes: ["1", "", "1"], allowedCodes: ["1", "1", ""],
+                  mode: "hard", expectedCost: 10),
+            .init(code: "", connectorCodes: [], allowedCodes: ["1"],
+                  mode: "hard", expectedCost: 10),
+            .init(code: "", connectorCodes: ["5"], allowedCodes: [],
+                  mode: "hard", expectedCost: 10),
+            .init(code: "5", connectorCodes: ["5"], allowedCodes: ["1"],
+                  mode: "soft", expectedCost: 10),
+        ]
+        for sample in cases {
+            let graph = RouteGraph.Graph(cellSize: 1)
+            let edge = RouteGraph.Edge(
+                to: "B", length: 10, institutionTypeCode: sample.code,
+                railwayClassCode: "", lineName: "", operator: "",
+                connector: sample.connectorCodes.map {
+                    RouteGraph.StationConnector(institutionTypeCodes: $0)
+                })
+            graph.adjacency["A"] = [edge]
+            let results = RouteSolver.dijkstra(
+                graph: graph, sourceCandidates: [.init(key: "A", distance: 0)],
+                targetKeys: ["B"], train: .init(institutionFilterMode: sample.mode),
+                allowedCodes: sample.allowedCodes,
+                hints: .init(requirePreferredInstitution: sample.requirePreferred))
+            if let expectedCost = sample.expectedCost {
+                let result = try #require(results.first)
+                #expect(results.count == 1)
+                #expect(result.cost == expectedCost)
+                #expect(result.pathKeys == ["A", "B"])
+                #expect(result.edges == [edge])
+            } else {
+                #expect(results.isEmpty)
+            }
+        }
+    }
 }

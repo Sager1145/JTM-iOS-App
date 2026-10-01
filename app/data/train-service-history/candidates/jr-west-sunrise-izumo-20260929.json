@@ -1,0 +1,50 @@
+{
+  "candidate_id": "jr-west-sunrise-izumo-20260929",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "selected_service_date": "2026-09-29",
+  "valid_until": "2026-09-30",
+  "promotion_scope": "scheduled_service_departing_2026-09-29_only",
+  "source_id": "jr-west-sunrise-seto-20260929",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/38492?date=20260929",
+  "source_sha256": "sha256:8c47b02e1a5fda8e8f5a6080037869a1c95896b2a32d328b7d9bdbf3ab8afa1c",
+  "calendar_note": "The selected September 29 page displays the Sunrise Izumo 5031M and 4031M columns. Source says 毎日運転; only September 29 is promoted.",
+  "coupling_note": "The Sunrise Izumo 5031M column explicitly prints 東京－岡山間〔サンライズ瀬戸〕に併結.",
+  "service": {"service_id":"sunrise-izumo","canonical_name":"サンライズ出雲","service_class":"limited_express","historical_generation":1,"jr_scope":"through_jr"},
+  "trip": {
+    "trip_id":"jr-west.sunrise-izumo.5031m-4031m.2026-09-29",
+    "origin":"東京","destination":"出雲市","public_number":null,
+    "train_number":"5031M",
+    "number_segments":[
+      {"from_sequence":1,"to_sequence":9,"train_number":"5031M"},
+      {"from_sequence":9,"to_sequence":17,"train_number":"4031M"}
+    ],
+    "coupled_trip_id":"jr-west.sunrise-seto.5031m.2026-09-29",
+    "coupled_from_sequence":1,"coupled_to_sequence":9,
+    "stop_times":[
+      {"stop_sequence":1,"name_snapshot":"東京","arrival_time":null,"departure_time":"21:26","day_offset":0,"platform":"9","call_type":"origin"},
+      {"stop_sequence":2,"name_snapshot":"横浜","arrival_time":"21:51","departure_time":"21:52","day_offset":0,"platform":"6","call_type":"passenger_stop"},
+      {"stop_sequence":3,"name_snapshot":"熱海","arrival_time":"22:55","departure_time":"22:57","day_offset":0,"platform":"2","call_type":"passenger_stop"},
+      {"stop_sequence":4,"name_snapshot":"沼津","arrival_time":"23:15","departure_time":"23:16","day_offset":0,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":5,"name_snapshot":"富士","arrival_time":"23:31","departure_time":"23:32","day_offset":0,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":6,"name_snapshot":"静岡","arrival_time":"23:57","departure_time":"23:59","day_offset":0,"platform":"4","call_type":"passenger_stop"},
+      {"stop_sequence":7,"name_snapshot":"浜松","arrival_time":"00:53","departure_time":"00:54","day_offset":1,"platform":"4","call_type":"passenger_stop"},
+      {"stop_sequence":8,"name_snapshot":"姫路","arrival_time":"05:25","departure_time":"05:26","day_offset":1,"platform":"8","call_type":"passenger_stop"},
+      {"stop_sequence":9,"name_snapshot":"岡山","arrival_time":"06:27","departure_time":"06:34","day_offset":1,"platform":"8","call_type":"passenger_stop"},
+      {"stop_sequence":10,"name_snapshot":"倉敷","arrival_time":"06:46","departure_time":"06:47","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":11,"name_snapshot":"備中高梁","arrival_time":"07:14","departure_time":"07:14","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":12,"name_snapshot":"新見","arrival_time":"07:43","departure_time":"07:44","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":13,"name_snapshot":"米子","arrival_time":"09:05","departure_time":"09:08","day_offset":1,"platform":"2","call_type":"passenger_stop"},
+      {"stop_sequence":14,"name_snapshot":"安来","arrival_time":"09:16","departure_time":"09:17","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":15,"name_snapshot":"松江","arrival_time":"09:33","departure_time":"09:34","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":16,"name_snapshot":"宍道","arrival_time":"09:47","departure_time":"09:48","day_offset":1,"platform":null,"call_type":"passenger_stop"},
+      {"stop_sequence":17,"name_snapshot":"出雲市","arrival_time":"10:00","departure_time":null,"day_offset":1,"platform":null,"call_type":"destination"}
+    ]
+  },
+  "review_notes":[
+    "The official September 29 page prints both Sunrise Izumo number columns and the coupling statement, so the shared Tokyo–Okayama times are transcribed from Izumo's own column, not copied from the Seto record.",
+    "Okayama's 06:27 arrival belongs to the 5031M column; 06:34 departure belongs to the 4031M continuation.",
+    "All timed passenger calls after midnight have day_offset 1; pass rows marked レ are excluded.",
+    "The page does not establish dated ordered physical line IDs, operator segments, or actual operation."
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "candidate_id": "jr-kyushu-shikoku-reservation-audit-20260930",
+  "candidate_status": "visually_reviewed_official_exact_date",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope": "Published planned seat/equipment labels only, captured from the 2026-09-30 train-detail pages; no claim of actual dispatch, physical car series, car count or per-car assignments.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.huis-ten-bosch.11.2026-09-30",
+      "train_number": "6011H",
+      "candidate_file": "jr-kyushu-huis-ten-bosch11-20260930.json",
+      "source_id": "jr-kyushu-huis-ten-bosch11-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085801.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kaio.2.2026-09-30",
+      "train_number": "1092H",
+      "candidate_file": "jr-kyushu-kaio2-20260930.json",
+      "source_id": "jr-kyushu-kaio2-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00192701.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "普通車自由席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kasasagi.101.2026-09-30",
+      "train_number": "1001M",
+      "candidate_file": "jr-kyushu-kasasagi101-20260930.json",
+      "source_id": "jr-kyushu-kasasagi101-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00194101.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "グリーン車指定席（４人用グリーン個室連結）",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kasasagi.103.2026-09-30",
+      "train_number": "1003M",
+      "candidate_file": "jr-kyushu-kasasagi103-20260929-30.json",
+      "source_id": "jr-kyushu-kasasagi103-20260930-exact",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0019/00194501.html?c=08291&d=30&ym=202609",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kirameki.2.2026-09-30",
+      "train_number": "52M",
+      "candidate_file": "jr-kyushu-kirameki2-20260930.json",
+      "source_id": "jr-kyushu-kirameki2-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00086001.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "グリーン車指定席（４人用グリーン個室連結）",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kirishima.1.2026-09-30",
+      "train_number": "6001M",
+      "candidate_file": "jr-kyushu-kirishima1-20260930.json",
+      "source_id": "jr-kyushu-kirishima1-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0006/00064501.html?c=28903&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車自由席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.kyushu-cross-express.5.2026-09-30",
+      "train_number": "1075D",
+      "candidate_file": "jr-kyushu-kyushu-odan5-20260930.json",
+      "source_id": "jr-kyushu-kyushu-odan5-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0030/00308301.html?c=28742&d=30&ym=202609",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.midori.11.2026-09-30",
+      "train_number": "4011M",
+      "candidate_file": "jr-kyushu-midori11-20260930.json",
+      "source_id": "jr-kyushu-midori11-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085801.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.midori.7.2026-09-30",
+      "train_number": "4007M",
+      "candidate_file": "jr-kyushu-midori7-20260930.json",
+      "source_id": "jr-kyushu-midori7-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0008/00085901.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.nichirin.2.2026-09-30",
+      "train_number": "5002M",
+      "candidate_file": "jr-kyushu-nichirin2-20260930.json",
+      "source_id": "jr-kyushu-nichirin2-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0007/00075401.html?c=28903&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.relay-kamome.1.2026-09-30",
+      "train_number": "2001H",
+      "candidate_file": "jr-kyushu-relay-kamome1-20260930.json",
+      "source_id": "jr-kyushu-relay-kamome1-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0018/00189101.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "ＤＸグリーンがあります",
+        "グリーン車指定席",
+        "グリーン車指定席（４人用グリーン個室連結）",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.sonic.1.2026-09-30",
+      "train_number": "3001M",
+      "candidate_file": "jr-kyushu-sonic1-20260930.json",
+      "source_id": "jr-kyushu-sonic1-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0001/00013201.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufu.1.2026-09-30",
+      "train_number": "81D",
+      "candidate_file": "jr-kyushu-yufu1-20260930.json",
+      "source_id": "jr-kyushu-yufu1-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/jr-k_time/2610/0016/00167101.html?c=28283&ym=202609&d=30",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufu.2.2026-09-30",
+      "train_number": "82D",
+      "candidate_file": "jr-kyushu-yufu2-20260930.json",
+      "source_id": "jr-kyushu-yufu2-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167401.html?t=2881400&d=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufu.3.2026-09-30",
+      "train_number": "83D",
+      "candidate_file": "jr-kyushu-yufu3-20260930.json",
+      "source_id": "jr-kyushu-yufu3-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167201.html?t=2828302e&d=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufu.4.2026-09-30",
+      "train_number": "84D",
+      "candidate_file": "jr-kyushu-yufu4-20260930.json",
+      "source_id": "jr-kyushu-yufu4-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167501.html?t=2881400&d=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.yufu.5.2026-09-30",
+      "train_number": "85D",
+      "candidate_file": "jr-kyushu-yufu5-20260930.json",
+      "source_id": "jr-kyushu-yufu5-20260930",
+      "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167301.html?t=2828302e&d=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.nanpu.2.2026-09-30",
+      "train_number": "32D",
+      "candidate_file": "jr-shikoku-nanpu2-20260930.json",
+      "source_id": "jr-odekake-nanpu2-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/30871?date=20260930",
+      "printed_equipment": [
+        "アンパンマン列車で運転",
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.nanpu.4.2026-09-30",
+      "train_number": "34D",
+      "candidate_file": "jr-shikoku-nanpu4-20260930.json",
+      "source_id": "jr-odekake-nanpu4-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/59421?date=20260930",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.nanpu.6.2026-09-30",
+      "train_number": "36D",
+      "candidate_file": "jr-shikoku-nanpu6-20260930.json",
+      "source_id": "jr-odekake-nanpu6-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/162031?date=20260930",
+      "printed_equipment": [
+        "アンパンマン列車で運転",
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.nanpu.8.2026-09-30",
+      "train_number": "38D",
+      "candidate_file": "jr-shikoku-nanpu8-20260930.json",
+      "source_id": "jr-odekake-nanpu8-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/59411?date=20260930",
+      "printed_equipment": [
+        "グリーン車指定席",
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.shimanto.2.2026-09-30",
+      "train_number": "2002D",
+      "candidate_file": "jr-shikoku-shimanto2-20260930.json",
+      "source_id": "jr-odekake-shimanto2-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/90141?date=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.uwakai.1.2026-09-30",
+      "train_number": "1051D",
+      "candidate_file": "jr-shikoku-uwakai1-20260930.json",
+      "source_id": "jr-odekake-uwakai1-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/1221?date=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    },
+    {
+      "trip_id": "jr-shikoku.uzushio.1.2026-09-30",
+      "train_number": "3001D",
+      "candidate_file": "jr-shikoku-uzushio1-20260930.json",
+      "source_id": "jr-odekake-uzushio1-20260930-train",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/75661?date=20260930",
+      "printed_equipment": [
+        "普通車一部指定席"
+      ]
+    }
+  ]
+}

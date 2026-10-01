@@ -1,0 +1,146 @@
+{
+  "candidate_id": "jr-central-shinano24-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "database_as_of_date": "2026-09-30",
+  "notes": "Only September 30 is promoted. Individually reviewed official calendar day 30 is class ok. All printed passenger arrival/departure sides and platforms are transcribed; unprinted sides stay null.",
+  "official_english_name": {
+    "name": "Shinano",
+    "source_id": "jr-central-conventional-limited-express-2026-en",
+    "url_or_locator": "https://global.jr-central.co.jp/en/nozomi/pdf/zairai_English.pdf"
+  },
+  "trip": {
+    "trip_id": "jr-central.shinano.24.2026-09-30",
+    "service_id": "shinano",
+    "service_name": "しなの",
+    "public_number": "24",
+    "train_number": "1024M",
+    "service_date": "2026-09-30",
+    "source": {
+      "source_id": "jr-east-shinano24-20260930",
+      "publisher": "東日本旅客鉄道株式会社 / 株式会社交通新聞社",
+      "title": "特急しなの 24号 停車駅一覧（2026-09-30運転格確認）",
+      "source_type": "official_train_timetable",
+      "url_or_locator": "https://timetables.jreast.co.jp/2610/train/020/020101.html",
+      "issue": "JR時刻表2026年10月号",
+      "effective_date": "2026-09-30",
+      "accessed_at": "2026-09-30",
+      "license_status": "unknown",
+      "redistribution_status": "verification_only",
+      "automated_extraction_allowed": false,
+      "notes": "Visually and structurally reviewed after selecting September 30 in the official calendar. Only manually transcribed facts are stored; source HTML is not bundled."
+    },
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "長野",
+        "arrival_time": null,
+        "departure_time": "18:11",
+        "platform": "６",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "篠ノ井",
+        "arrival_time": "18:19",
+        "departure_time": "18:20",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "明科",
+        "arrival_time": "18:53",
+        "departure_time": "18:54",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "松本",
+        "arrival_time": "19:06",
+        "departure_time": "19:07",
+        "platform": "１",
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "塩尻",
+        "arrival_time": "19:16",
+        "departure_time": "19:19",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "木曽福島",
+        "arrival_time": "19:48",
+        "departure_time": "19:48",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 7,
+        "name_snapshot": "上松",
+        "arrival_time": "19:54",
+        "departure_time": "19:54",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 8,
+        "name_snapshot": "中津川",
+        "arrival_time": "20:25",
+        "departure_time": "20:26",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 9,
+        "name_snapshot": "恵那",
+        "arrival_time": "20:34",
+        "departure_time": "20:34",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 10,
+        "name_snapshot": "多治見",
+        "arrival_time": "20:54",
+        "departure_time": "20:54",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 11,
+        "name_snapshot": "千種",
+        "arrival_time": "21:13",
+        "departure_time": "21:14",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 12,
+        "name_snapshot": "名古屋",
+        "arrival_time": "21:21",
+        "departure_time": null,
+        "platform": "１０",
+        "call_type": "destination"
+      }
+    ],
+    "direction": "up",
+    "equipment": [
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "calendar_observation": {
+      "month": "2026年9月",
+      "day": 30,
+      "cell_class": "ok",
+      "variant_url": "https://timetables.jreast.co.jp/2610/train/020/020101.html"
+    },
+    "equipment_note": "９月１８～２３日はグリーン車指定席普通車全車指定席で運転; this exception does not apply September 30.",
+    "formation": null,
+    "formation_note": "Official detail prints seat classes only; car count, car order, stock model and individual car configuration are unprinted and unknown."
+  }
+}

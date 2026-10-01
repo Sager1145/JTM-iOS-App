@@ -1,0 +1,100 @@
+# Train-service source inventory
+
+This directory records source discovery and review candidates. `source-registry.jsonl`
+uses the `source_documents` field names from `schema.sql`. Candidate files are not
+canonical database inputs and must not be promoted without source, calendar,
+station-reference and license review.
+
+The initial inventory was reviewed on 2026-09-27; later batches record their own
+access dates in `accessed_at`. A live page may change after that date.
+None of the portal landing pages listed here proves an all-year,
+operator-wide limited-express inventory.
+
+## Current official source coverage
+
+The East-next batch preserves two disjoint Azusa 1 schedule calendars and the
+explicit Tokiwa 55 dates from official train pages. The Kyushu-next batch pairs
+the Ibusuki no Tamatebako stop table with the visually reviewed summer plan.
+Historical-next candidates retain directly read 1926/1934 facts without daily
+calendar promotion. Their independent normalizers are part of the reviewed
+rebuild entry point; source inventory now refreshes with every rebuild.
+
+| Operator | Registry source | Observed coverage | Effective-date evidence | Reuse/extraction blocker |
+| --- | --- | --- | --- | --- |
+| JR Hokkaido | `jr-hokkaido-vtime-hokuto-20260927` | A public line table exposes train numbers, names, operation labels and station rows for the selected line/date. | Selected view is dated 2026-09-27; the support page says data is normally loaded monthly through the following two months. | Kotsu Shimbunsha supplies the timetable data; no bulk-reuse grant was found. |
+| JR East | `jr-east-timetables-2026` | Official station/train timetable portal with month-specific train pages. | Must be established per train page and month. | No data license or automated-extraction permission was found. |
+| JR Central | `jr-central-access-search-2026` | Official search covers JR Central conventional lines and links train names to train timetables. | The page says next-month data is loaded monthly. | Query results are not an inventory export; no data reuse grant was found. The station page was partially unavailable during review. |
+| JR West | `jr-west-thunderbird1-20260525` | Exact train-level candidate for Thunderbird 1 (4001M), Osaka-Tsuruga, on 2026-05-25, with all passenger-call arrival/departure times. | Page is based on the June 2026 JR Timetable issue and was queried for 2026-05-25. Only that date is verified by the candidate. | The page explicitly prohibits unauthorized reproduction, copying and processing; candidate promotion is blocked. |
+| JR Shikoku | `jr-shikoku-timetable-portal-2026` | Official station timetable, formation and special-train notice entry point. | Must be established per station/train notice. | Station views do not establish complete trips/calendars and no data reuse grant was found. |
+| JR Kyushu | `jr-kyushu-yufuin-no-mori-20260314` | Official service page exposes six public train numbers, ordered passenger stops and one displayed time per stop. | Timetable says revised 2026-03-14; page says information updated 2026-08-21. A separate July-September plan exists. | Intermediate arrivals are absent; dates use an image-coded calendar; later operation notices can supersede it; no data reuse grant was found. |
+
+The JR Kyushu current-operation page is a separate evidence layer. It must be
+modeled as planned/actual operation and must not silently modify the published
+base timetable. The July-September plan must not be extended past its printed
+period. Any September 2026 claim still needs the specific revision notice that
+applies to the requested service date.
+
+## Historical source coverage
+
+The NDL Research Navi guide is an archive inventory, not proof of facts inside an
+issue. It identifies original/reprint runs that can be acquired for deterministic
+extraction and page-level review, including:
+
+- Meiji-Taisho selected reprints covering issues from 1894-11 through 1927-01.
+- Wartime selected reprints covering issues from 1925-04 through 1945-07.
+- Immediate postwar selected reprints covering issues from 1945-09 through 1947-12.
+- Original predecessor/JTB timetable holdings beginning in 1948, subject to issue gaps.
+- Railway Museum and JTB travel-library holdings for specialist follow-up.
+
+An official 2019 Railway Museum notice states that the first special express
+operated on 1912-06-15 and identifies the displayed Shinbashi-Shimonoseki
+timetable as revised on that date. This verifies the date and endpoints. It does
+not expose the full timetable, so complete calls, times, train number and calendar
+still require the original issue or an authorized reproduction.
+
+Official Showakan/MHLW material supports that the last named limited express ended
+in April 1944 and limited express service returned in September 1949. At that
+precision, the defensible half-open zero-service interval is
+`[1944-05-01, 1949-09-01)`. Exact boundary dates sometimes given in secondary
+sources remain hypotheses until primary timetable evidence is acquired.
+
+## Candidate review rules
+
+1. Treat every file under `sources/candidates` as unreviewed and non-canonical.
+2. Preserve nulls for arrival/departure values the source does not print.
+3. Verify every `jp.n02.<sourceCode>` against `app/data/stations.json`.
+4. Apply calendars only to the dates explicitly supported by the cited issue or notice.
+5. Keep published timetable, later revision, disruption and actual-operation facts in separate layers.
+6. Record source terms before extraction; `automated_extraction_allowed: false` means no automated ingestion authorization was established.
+
+## Reviewed partial route evidence
+
+`reviewed-route-evidence-20260928.json` separates published route labels from
+physical network identities. For Hitachi 26, the exact train table establishes
+the passenger-stop order and official JR East route material establishes the
+Joban Line corridor through Ueno. The eleven passenger-pair intervals from
+Iwaki through Ueno are therefore normalized at medium confidence. Ueno–Tokyo
+and Tokyo–Shinagawa remain candidate-only: the official material calls the
+through service Ueno-Tokyo Line, but that service name does not identify the
+underlying N02 line features.
+
+Official JR Central material states that Shinano connects Nagoya and Nagano via
+the Chuo Main and Shinonoi lines. It does not state the train-specific transition
+boundary or physical feature identifiers, so no Shinano line segment is
+normalized. The JR East and JR Central website terms prohibit unlicensed reuse;
+the registry stores factual metadata and locators only, with automated extraction
+disabled.
+
+## Parallel reviewed batches
+
+The 2013 JR Central summer announcement adds only its twelve printed temporary
+endpoint templates and explicit dates. The seven Shinano 81 departure exceptions
+are separate dated overrides. Current directory lookup is marked partial for
+2013 correspondence; it does not certify a historical railway identity.
+
+Each independent batch uses separate source/candidate/normalized files. The
+manifest selects these via existing globs. `rebuild-reviewed-train-timetable.py`
+runs their normalizers in dependency order and builds the read-only artifact.
+Original source documents are not shipped; content hashes identify reviewed
+public documents. Scheduled announcements are planned-service evidence, not
+proof that a train actually ran without disruption.

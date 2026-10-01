@@ -1,0 +1,82 @@
+{
+  "candidate_status": "reviewed_official_html",
+  "issue": "JR時刻表2026年10月号",
+  "notes": "The official two-column train-detail table directly distinguishes 3021M to 伊豆急下田 and 4021M to 修善寺, states that they run coupled between 東京 and 熱海, and marks 2026-09-29 and 2026-09-30 as td.ok. The 4021M column is blank from 東京 through 湯河原 and prints only its 熱海 departure after the split, so every unprinted 4021M shared-segment time and platform remains null. No recurring calendar, pass records, operator segments, or route lines are inferred.",
+  "schema_version": 1,
+  "source": {
+    "accessed_at": "2026-09-30T00:07:55Z",
+    "automated_extraction_allowed": false,
+    "content_hash": "sha256:35f39d356ca9f8e1cb1493a86b95235387c2f05128fa83c59658895493027c66",
+    "issue": "JR時刻表2026年10月号",
+    "license_status": "unknown",
+    "notes": "Official train-detail page visually and structurally reviewed. September 29 and 30 are td.ok cells. Facts were manually transcribed; raw HTML is not bundled and redistribution authorization is unresolved.",
+    "publisher": "東日本旅客鉄道 / 交通新聞社",
+    "redistribution_status": "unknown",
+    "source_id": "jr-east-odoriko1-20260929-30",
+    "source_type": "official_train_timetable",
+    "title": "踊り子 1号（3021M／4021M）停車駅一覧",
+    "url_or_locator": "https://timetables.jreast.co.jp/2610/train/095/098901.html"
+  },
+  "trips": [
+    {
+      "branch_id": "izukyu-shimoda",
+      "operating_dates": [
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "public_name": "踊り子 1号",
+      "public_number": "1",
+      "service_id": "odoriko",
+      "service_name": "踊り子",
+      "stop_times": [
+        {"arrival_time": null, "call_type": "origin", "departure_time": "09:00", "name_snapshot": "東京", "platform": "９", "stop_sequence": 1},
+        {"arrival_time": "09:07", "call_type": "passenger_stop", "departure_time": "09:08", "name_snapshot": "品川", "platform": "１２", "stop_sequence": 2},
+        {"arrival_time": "09:16", "call_type": "passenger_stop", "departure_time": "09:16", "name_snapshot": "川崎", "platform": "１", "stop_sequence": 3},
+        {"arrival_time": "09:24", "call_type": "passenger_stop", "departure_time": "09:24", "name_snapshot": "横浜", "platform": "６", "stop_sequence": 4},
+        {"arrival_time": "09:37", "call_type": "passenger_stop", "departure_time": "09:37", "name_snapshot": "大船", "platform": "３", "stop_sequence": 5},
+        {"arrival_time": "10:01", "call_type": "passenger_stop", "departure_time": "10:01", "name_snapshot": "小田原", "platform": "３", "stop_sequence": 6},
+        {"arrival_time": "10:13", "call_type": "passenger_stop", "departure_time": "10:14", "name_snapshot": "湯河原", "platform": null, "stop_sequence": 7},
+        {"arrival_time": "10:20", "call_type": "passenger_stop", "departure_time": "10:23", "name_snapshot": "熱海", "platform": "２", "stop_sequence": 8},
+        {"arrival_time": "10:43", "call_type": "passenger_stop", "departure_time": "10:45", "name_snapshot": "伊東", "platform": "１", "stop_sequence": 9},
+        {"arrival_time": "11:02", "call_type": "passenger_stop", "departure_time": "11:02", "name_snapshot": "伊豆高原", "platform": null, "stop_sequence": 10},
+        {"arrival_time": "11:11", "call_type": "passenger_stop", "departure_time": "11:13", "name_snapshot": "伊豆熱川", "platform": null, "stop_sequence": 11},
+        {"arrival_time": "11:19", "call_type": "passenger_stop", "departure_time": "11:22", "name_snapshot": "伊豆稲取", "platform": null, "stop_sequence": 12},
+        {"arrival_time": "11:27", "call_type": "passenger_stop", "departure_time": "11:28", "name_snapshot": "河津", "platform": null, "stop_sequence": 13},
+        {"arrival_time": "11:39", "call_type": "destination", "departure_time": null, "name_snapshot": "伊豆急下田", "platform": null, "stop_sequence": 14}
+      ],
+      "times_completeness": "verified",
+      "train_number": "3021M",
+      "variant_id": "izukyu-shimoda-requested-dates"
+    },
+    {
+      "branch_id": "shuzenji",
+      "operating_dates": [
+        "2026-09-29",
+        "2026-09-30"
+      ],
+      "public_name": "踊り子 1号",
+      "public_number": "1",
+      "service_id": "odoriko",
+      "service_name": "踊り子",
+      "stop_times": [
+        {"arrival_time": null, "call_type": "origin", "departure_time": null, "name_snapshot": "東京", "platform": null, "stop_sequence": 1, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "品川", "platform": null, "stop_sequence": 2, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "川崎", "platform": null, "stop_sequence": 3, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "横浜", "platform": null, "stop_sequence": 4, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "大船", "platform": null, "stop_sequence": 5, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "小田原", "platform": null, "stop_sequence": 6, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": null, "name_snapshot": "湯河原", "platform": null, "stop_sequence": 7, "time_evidence": "not_printed_in_4021M_column"},
+        {"arrival_time": null, "call_type": "passenger_stop", "departure_time": "10:25", "name_snapshot": "熱海", "platform": "２", "stop_sequence": 8, "time_evidence": "departure_only_printed_after_split"},
+        {"arrival_time": "10:38", "call_type": "passenger_stop", "departure_time": "10:40", "name_snapshot": "三島", "platform": "１", "stop_sequence": 9},
+        {"arrival_time": "10:43", "call_type": "passenger_stop", "departure_time": "10:44", "name_snapshot": "三島田町", "platform": null, "stop_sequence": 10},
+        {"arrival_time": "10:48", "call_type": "passenger_stop", "departure_time": "10:48", "name_snapshot": "大場", "platform": null, "stop_sequence": 11},
+        {"arrival_time": "10:55", "call_type": "passenger_stop", "departure_time": "10:56", "name_snapshot": "伊豆長岡", "platform": null, "stop_sequence": 12},
+        {"arrival_time": "11:02", "call_type": "passenger_stop", "departure_time": "11:03", "name_snapshot": "大仁", "platform": null, "stop_sequence": 13},
+        {"arrival_time": "11:08", "call_type": "destination", "departure_time": null, "name_snapshot": "修善寺", "platform": null, "stop_sequence": 14}
+      ],
+      "times_completeness": "partial",
+      "train_number": "4021M",
+      "variant_id": "shuzenji-requested-dates"
+    }
+  ]
+}

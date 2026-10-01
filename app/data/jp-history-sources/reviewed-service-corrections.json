@@ -1,0 +1,248 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed service-period corrections for legacy Japanese railway overlays",
+  "scope": "Merge-field patches for canonical legacy events. This file is evidence and review input, not a runtime overlay.",
+  "temporal_policy": {
+    "interval_model": "half-open [from, to)",
+    "date_only_rule": "When service stopped during a calendar day, to is the first whole calendar day without rail service. The exact interruption timestamp remains explicit and must not be restated as an event on the following day.",
+    "snapshot_rule": "N02 release years select surveyed geometry only and never supply an event date."
+  },
+  "patches": [
+    {
+      "target_event_id": "jp.takachiho.nobeoka-makimine",
+      "operation": "merge_fields",
+      "set": {
+        "source": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf; https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+        "service_periods": [
+          [
+            null,
+            "2005-09-06"
+          ]
+        ],
+        "service_interruption": {
+          "at_local": "2005-09-05T05:31:00+09:00",
+          "scope": "全線",
+          "cause": "台風第14号"
+        },
+        "date_policy": "MLIT records the full-line suspension at 05:31 on 2005-09-05. Runtime day precision therefore ends service on 2005-09-06, the first whole unserved date; 2005-09-06 is not the disaster date.",
+        "date_precision": "exact_day",
+        "review": {
+          "status": "verified"
+        },
+        "corridor_id": "jp.corridor.takachiho",
+        "alignment_id": "jp.takachiho.n02-07-alignment",
+        "service_identity_id": "jp.takachiho.service",
+        "geometry": {
+          "source": "N02",
+          "release": "N02-07",
+          "licence_status": "redistributable",
+          "geometry_precision": "official_snapshot"
+        },
+        "evidence": [
+          {
+            "authority": "国土交通省",
+            "reference": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+            "date_precision": "exact_day",
+            "locator": "第13報 p.30 rail disruption table: 高千穂鉄道 高千穂線 全線 5日 5:31"
+          },
+          {
+            "authority": "国土交通省 鉄道局",
+            "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+            "date_precision": "exact_day",
+            "locator": "鉄軌道の廃止実績 row 052: 槇峰—延岡 2007-09-06"
+          }
+        ]
+      },
+      "preserve": {
+        "valid_to": "2007-09-06",
+        "official_event_id": "mlit-closures-20260401:052"
+      }
+    },
+    {
+      "target_event_id": "jp.takachiho.makimine-takachiho",
+      "operation": "merge_fields",
+      "set": {
+        "source": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf; https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+        "service_periods": [
+          [
+            null,
+            "2005-09-06"
+          ]
+        ],
+        "service_interruption": {
+          "at_local": "2005-09-05T05:31:00+09:00",
+          "scope": "全線",
+          "cause": "台風第14号"
+        },
+        "date_policy": "MLIT records the full-line suspension at 05:31 on 2005-09-05. Runtime day precision therefore ends service on 2005-09-06, the first whole unserved date; 2005-09-06 is not the disaster date.",
+        "date_precision": "exact_day",
+        "review": {
+          "status": "verified"
+        },
+        "corridor_id": "jp.corridor.takachiho",
+        "alignment_id": "jp.takachiho.n02-07-alignment",
+        "service_identity_id": "jp.takachiho.service",
+        "geometry": {
+          "source": "N02",
+          "release": "N02-07",
+          "licence_status": "redistributable",
+          "geometry_precision": "official_snapshot"
+        },
+        "evidence": [
+          {
+            "authority": "国土交通省",
+            "reference": "https://www.mlit.go.jp/river/saigaisokuho_blog/past_saigaisokuho/index/050905_taihu14/050905_taihu14_13.pdf",
+            "date_precision": "exact_day",
+            "locator": "第13報 p.30 rail disruption table: 高千穂鉄道 高千穂線 全線 5日 5:31"
+          },
+          {
+            "authority": "国土交通省 鉄道局",
+            "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+            "date_precision": "exact_day",
+            "locator": "鉄軌道の廃止実績 row 055: 槇峰—高千穂 2008-12-28"
+          }
+        ]
+      },
+      "preserve": {
+        "valid_to": "2008-12-28",
+        "official_event_id": "mlit-closures-20260401:055"
+      }
+    },
+    {
+      "target_event_id": "jp.jre.kesennuma.yanaizu-kesennuma",
+      "operation": "merge_fields",
+      "set": {
+        "year": "08",
+        "source": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf; https://www.jreast.co.jp/press/2019/20191112_ho01.pdf; https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+        "service_periods": [
+          [
+            null,
+            "2011-03-12"
+          ]
+        ],
+        "date_policy": "Rail service existed before the 2011-03-11 earthquake; 2011-03-12 is the first whole unserved date. BRT service is a road service and is excluded.",
+        "date_precision": "exact_day",
+        "review": {
+          "status": "verified"
+        },
+        "corridor_id": "jp.corridor.jre.kesennuma.yanaizu-kesennuma",
+        "alignment_id": "jp.jre.kesennuma.yanaizu-kesennuma.n02-08-alignment",
+        "service_identity_id": "jp.jre.kesennuma.yanaizu-kesennuma.rail-service",
+        "geometry": {
+          "source": "N02",
+          "release": "N02-08",
+          "licence_status": "redistributable",
+          "geometry_precision": "official_pre_disaster_snapshot"
+        },
+        "evidence": [
+          {
+            "authority": "東日本旅客鉄道株式会社 仙台支社",
+            "reference": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+            "date_precision": "exact_day",
+            "locator": "pp.5,7: 2011-03-11 tsunami damage; BRT began 2012-08-20"
+          },
+          {
+            "authority": "東日本旅客鉄道株式会社",
+            "reference": "https://www.jreast.co.jp/press/2019/20191112_ho01.pdf",
+            "date_precision": "exact_day",
+            "locator": "Railway-business closure filing; BRT is operated under the Road Transportation Act"
+          },
+          {
+            "authority": "国土交通省 鉄道局",
+            "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf",
+            "date_precision": "exact_day",
+            "locator": "鉄軌道の廃止実績 row 068: 柳津—気仙沼 2020-04-01"
+          }
+        ]
+      },
+      "preserve": {
+        "valid_to": "2020-04-01",
+        "official_event_id": "mlit-closures-20260401:068"
+      }
+    },
+    {
+      "target_event_id": "jp.jre.senseki.old-rikuzenotsuka-rikuzenono",
+      "operation": "merge_fields",
+      "set": {
+        "source": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+        "service_periods": [
+          [
+            null,
+            "2011-03-12"
+          ]
+        ],
+        "date_policy": "Rail service existed before the 2011-03-11 earthquake; 2011-03-12 is the first whole unserved date. The current inland alignment retains valid_from 2015-05-30.",
+        "date_precision": "exact_day",
+        "review": {
+          "status": "verified"
+        },
+        "corridor_id": "jp.corridor.jre.senseki.rikuzenotsuka-rikuzenono",
+        "alignment_id": "jp.jre.senseki.rikuzenotsuka-rikuzenono.old-n02-14",
+        "service_identity_id": "jp.jre.senseki.service",
+        "geometry": {
+          "source": "N02",
+          "release": "N02-14",
+          "licence_status": "redistributable",
+          "geometry_precision": "official_pre_relocation_snapshot"
+        },
+        "evidence": [
+          {
+            "authority": "東日本旅客鉄道株式会社 仙台支社",
+            "reference": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+            "date_precision": "exact_day",
+            "locator": "pp.1,7: 2011-03-11 disaster damage; 2015-05-30 inland relocation of 陸前大塚—陸前小野"
+          }
+        ]
+      },
+      "preserve": {
+        "valid_to": "2015-05-30",
+        "kind": "relocation"
+      }
+    },
+    {
+      "target_event_id": "jp.jre.joban.old-komagamine-hamayoshida",
+      "operation": "merge_fields",
+      "set": {
+        "source": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf; https://www.jreast.co.jp/sendai/upload-images/2016/07/jobansen.pdf",
+        "service_periods": [
+          [
+            null,
+            "2011-03-12"
+          ]
+        ],
+        "date_policy": "Rail service existed before the 2011-03-11 earthquake; 2011-03-12 is the first whole unserved date. The current inland alignment retains valid_from 2016-12-10.",
+        "date_precision": "exact_day",
+        "review": {
+          "status": "verified"
+        },
+        "corridor_id": "jp.corridor.jre.joban.komagamine-hamayoshida",
+        "alignment_id": "jp.jre.joban.komagamine-hamayoshida.old-n02-15",
+        "service_identity_id": "jp.jre.joban.service",
+        "geometry": {
+          "source": "N02",
+          "release": "N02-15",
+          "licence_status": "redistributable",
+          "geometry_precision": "official_pre_relocation_snapshot"
+        },
+        "evidence": [
+          {
+            "authority": "東日本旅客鉄道株式会社 仙台支社",
+            "reference": "https://www.jreast.co.jp/press/2020/sendai/20210325_s01.pdf",
+            "date_precision": "exact_day",
+            "locator": "pp.3,7: 2011-03-11 disaster damage; 2016-12-10 inland relocation of 駒ヶ嶺—浜吉田"
+          },
+          {
+            "authority": "東日本旅客鉄道株式会社 仙台支社・水戸支社",
+            "reference": "https://www.jreast.co.jp/sendai/upload-images/2016/07/jobansen.pdf",
+            "date_precision": "exact_day",
+            "locator": "2016-12-10 operation resumption; 駒ヶ嶺—浜吉田 inland relocation"
+          }
+        ]
+      },
+      "preserve": {
+        "valid_to": "2016-12-10",
+        "kind": "relocation"
+      }
+    }
+  ]
+}

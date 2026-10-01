@@ -313,6 +313,7 @@ struct SheetCloseButton: View {
 /// The tint role is §6.2's — "可点击、选中、当前路线" — and a filter the reader
 /// has switched on is the selected case of it. Off, nothing changes: an
 /// unfiltered scope is the ordinary state and must not read as a badge.
+/// The active SF Symbol badge keeps that state visible without relying on hue.
 struct SheetIconLabel: View {
     var systemImage: String
     /// Whether the control this labels is currently narrowing something.
@@ -332,6 +333,17 @@ struct SheetIconLabel: View {
                 Circle().stroke(
                     isActive ? Color.accentColor.opacity(0.28) : Color.primary.opacity(0.06),
                     lineWidth: 0.5)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if isActive {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 14, weight: .semibold))
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color(.systemBackground), Color.accentColor)
+                        .offset(x: 3, y: 3)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
             }
             .frame(minWidth: 44, minHeight: 44)
             .contentShape(.rect)

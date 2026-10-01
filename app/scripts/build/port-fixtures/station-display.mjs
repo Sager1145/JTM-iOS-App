@@ -108,6 +108,7 @@ const DECK_SCOPE_FILES = [
   "app-coords.js", // getFeatureDisplayCoordinate
   "app-route-simplify.js", // distanceMeters, for the station resolver seam
   "app-datasets.js", // the dataset installs + the station indexes
+  "app-rail-history.js", // railServiceBounds, used by temporal station dedupe
   "app-stations.js", // station resolution
   "app-editor.js", // effectivelyRiddenStopIndexes / effectiveStopRide
   "app-dates.js", // getTrainDate / getTrainDaySpan — the xday diamonds

@@ -1,0 +1,26 @@
+{
+  "candidate_id": "jr-kyushu-ibusuki-20260930-formation",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trip_id": "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01",
+  "trip_ids": [
+    "jr-kyushu.ibusuki-no-tamatebako.1.2026-07-01",
+    "jr-kyushu.ibusuki-no-tamatebako.2.2026-07-01",
+    "jr-kyushu.ibusuki-no-tamatebako.3.2026-07-01",
+    "jr-kyushu.ibusuki-no-tamatebako.4.2026-07-01",
+    "jr-kyushu.ibusuki-no-tamatebako.5.2026-07-01",
+    "jr-kyushu.ibusuki-no-tamatebako.6.2026-07-01"
+  ],
+  "formation_label": "C",
+  "car_count": 2,
+  "reserved_seat_capacity": 63,
+  "all_reserved": true,
+  "cars_origin_to_destination": [
+    {"car_sequence": 1, "car_number": "2", "vehicle_series": "キハ140", "seat_class": "ordinary", "reservation_type": "reserved", "notes": "予備車; 鹿児島中央方"},
+    {"car_sequence": 2, "car_number": "1", "vehicle_series": "キハ47", "seat_class": "ordinary", "reservation_type": "reserved", "notes": "通常車; 指宿方"}
+  ],
+  "calendar_source_url": "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/__icsFiles/afieldfile/2026/09/28/calendar202609_202611.pdf",
+  "train_page_url": "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/",
+  "scope_note": "Official September 28 service-wide calendar assigns C to September 30, without limiting it to a train number; page 2 defines the planned two-car C diagram. Applying the daily pattern to each of the six numbered trips is a service-to-trip inference. Reverse-direction car order is reversed. Changes for inspections are possible. This is not an actual dispatch record."
+}

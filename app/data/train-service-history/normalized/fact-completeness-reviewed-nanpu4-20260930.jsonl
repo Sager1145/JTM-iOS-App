@@ -1,0 +1,10 @@
+{"confidence": "high", "dimension": "identity", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page prints 南風4号.", "status": "verified"}
+{"confidence": "high", "dimension": "train_number", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Exact-date train page and line grid print 34D.", "status": "verified"}
+{"confidence": "low", "dimension": "operator", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Publisher alone does not prove ordered operator segments.", "status": "unknown"}
+{"confidence": "high", "dimension": "validity_calendar", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Dated line grid directly lists the train on 2026-09-30.", "status": "verified"}
+{"confidence": "high", "dimension": "origin_destination", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Train page prints the first and last timed passenger calls.", "status": "verified"}
+{"confidence": "high", "dimension": "stops", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "13 passenger calls are transcribed; レ pass rows excluded.", "status": "verified"}
+{"confidence": "high", "dimension": "times", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Published minute clocks and their arrival/departure sides are retained.", "status": "verified"}
+{"confidence": "low", "dimension": "route_lines", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "No ordered dated physical-line identity evidence promoted.", "status": "unknown"}
+{"confidence": "high", "dimension": "station_refs", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Names uniquely match current JR station groups.", "status": "verified"}
+{"confidence": "medium", "dimension": "provenance", "entity_id": "jr-shikoku.nanpu.4.2026-09-30", "entity_type": "trip", "notes": "Official pages are verification-only; redistribution grant unresolved.", "status": "partial"}

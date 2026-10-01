@@ -206,10 +206,12 @@ public struct Train: Codable, Equatable, Sendable {
 
 /// One station on the itinerary — jsonspec §7.1.
 ///
-/// A canonical stop encodes all seven fields, `null` included. The bundled
-/// 1.3 archives predate `platform_number`, so direct decode→encode preserves
-/// that one legacy absence; every import, edit, or canonical export creates a
-/// stop with the field present and writes an unknown value as explicit null.
+/// A canonical stop encodes its seven base fields, `null` included. The
+/// optional actual-time fields are written only when recorded, so old stores
+/// retain their original shape. The bundled 1.3 archives predate
+/// `platform_number`, so direct decode→encode preserves that one legacy
+/// absence; every import, edit, or canonical export creates a stop with the
+/// field present and writes an unknown value as explicit null.
 ///
 /// `name`, `stopType` and `rideSegment` are non-optional for the same reason
 /// — the canonical writer never leaves them out or null. A lean hand-written
@@ -239,7 +241,12 @@ public struct Stop: Codable, Equatable, Sendable {
     /// `25:10` is 01:10 tomorrow). Nothing validates the format — see
     /// ``TrainValidation/validateTrain(_:index:ids:)``.
     public var arrival: String?
+    /// Manually recorded observed arrival. Kept separate from the scheduled
+    /// value so clients can show the signed early/late difference.
+    public var actualArrival: String?
     public var departure: String?
+    /// Manually recorded observed departure. See ``actualArrival``.
+    public var actualDeparture: String?
     /// One of ``TrainValidation/stopTypes`` (§7.2).
     public var stopType: String
     public var rideSegment: Bool
@@ -249,7 +256,9 @@ public struct Stop: Codable, Equatable, Sendable {
         n02StationCode: String? = nil,
         platformNumber: Int? = nil,
         arrival: String? = nil,
+        actualArrival: String? = nil,
         departure: String? = nil,
+        actualDeparture: String? = nil,
         stopType: String = "passenger_stop",
         rideSegment: Bool = false
     ) {
@@ -258,13 +267,17 @@ public struct Stop: Codable, Equatable, Sendable {
         self.platformNumber = platformNumber
         self.hasPlatformNumberField = true
         self.arrival = arrival
+        self.actualArrival = actualArrival
         self.departure = departure
+        self.actualDeparture = actualDeparture
         self.stopType = stopType
         self.rideSegment = rideSegment
     }
 
     private enum CodingKeys: String, CodingKey {
         case name, platformNumber = "platform_number", arrival, departure
+        case actualArrival = "actual_arrival"
+        case actualDeparture = "actual_departure"
         case n02StationCode = "n02_station_code"
         case stopType = "stop_type"
         case rideSegment = "ride_segment"
@@ -279,7 +292,9 @@ public struct Stop: Codable, Equatable, Sendable {
         hasPlatformNumberField = container.contains(.platformNumber)
         platformNumber = try container.decodeIfPresent(Int.self, forKey: .platformNumber)
         arrival = try container.decodeIfPresent(String.self, forKey: .arrival)
+        actualArrival = try container.decodeIfPresent(String.self, forKey: .actualArrival)
         departure = try container.decodeIfPresent(String.self, forKey: .departure)
+        actualDeparture = try container.decodeIfPresent(String.self, forKey: .actualDeparture)
         stopType = try container.decode(String.self, forKey: .stopType)
         rideSegment = try container.decode(Bool.self, forKey: .rideSegment)
     }
@@ -292,7 +307,9 @@ public struct Stop: Codable, Equatable, Sendable {
             try container.encode(platformNumber, forKey: .platformNumber)  // null, not absent
         }
         try container.encode(arrival, forKey: .arrival)
+        try container.encodeIfPresent(actualArrival, forKey: .actualArrival)
         try container.encode(departure, forKey: .departure)
+        try container.encodeIfPresent(actualDeparture, forKey: .actualDeparture)
         try container.encode(stopType, forKey: .stopType)
         try container.encode(rideSegment, forKey: .rideSegment)
     }
@@ -302,7 +319,9 @@ public struct Stop: Codable, Equatable, Sendable {
             && lhs.n02StationCode == rhs.n02StationCode
             && lhs.platformNumber == rhs.platformNumber
             && lhs.arrival == rhs.arrival
+            && lhs.actualArrival == rhs.actualArrival
             && lhs.departure == rhs.departure
+            && lhs.actualDeparture == rhs.actualDeparture
             && lhs.stopType == rhs.stopType
             && lhs.rideSegment == rhs.rideSegment
     }
@@ -858,7 +877,7 @@ public enum TrainValidation {
                 throw fail(
                     "\(at): platform_number must be a non-negative integer or null.")
             }
-            for field in ["arrival", "departure"] {
+            for field in ["arrival", "actual_arrival", "departure", "actual_departure"] {
                 if let value = stop[field], value != .null, !value.isString {
                     throw fail("\(at): \(field) must be a string or null.")
                 }
@@ -1028,7 +1047,8 @@ public enum TrainValidation {
         try assertOnlyKeys(
             stop,
             [
-                "name", "n02_station_code", "platform_number", "arrival", "departure",
+                "name", "n02_station_code", "platform_number", "arrival", "actual_arrival",
+                "departure", "actual_departure",
                 "stop_type", "ride_segment",
             ],
             "Stop")
@@ -1192,7 +1212,8 @@ public enum TrainValidation {
 
     // MARK: - §18: the canonical shapes
 
-    /// `canonicalStopShape` — the seven fields, every time.
+    /// `canonicalStopShape` — the seven base fields every time, plus actual
+    /// times when they have been recorded.
     public static func canonicalStopShape(_ stop: JSON) -> Stop {
         Stop(
             name: (stop["name"] ?? .null).isTruthy ? jsToString(stop["name"] ?? .null) : "",
@@ -1200,7 +1221,9 @@ public enum TrainValidation {
                 .map(StationCodeAliases.canonical),
             platformNumber: platformNumber(stop["platform_number"]),
             arrival: normalizeNullableTime(stop["arrival"]),
+            actualArrival: normalizeNullableTime(stop["actual_arrival"]),
             departure: normalizeNullableTime(stop["departure"]),
+            actualDeparture: normalizeNullableTime(stop["actual_departure"]),
             stopType: (stop["stop_type"] ?? .null).stringOrNilIfFalsy ?? "passenger_stop",
             rideSegment: (stop["ride_segment"] ?? .null).isTruthy)
     }
@@ -1219,7 +1242,9 @@ public enum TrainValidation {
             },
             platformNumber: stop.platformNumber.flatMap { $0 >= 0 ? $0 : nil },
             arrival: normalizeNullableTime(stop.arrival.map(JSON.string)),
+            actualArrival: normalizeNullableTime(stop.actualArrival.map(JSON.string)),
             departure: normalizeNullableTime(stop.departure.map(JSON.string)),
+            actualDeparture: normalizeNullableTime(stop.actualDeparture.map(JSON.string)),
             stopType: stop.stopType.isEmpty ? "passenger_stop" : stop.stopType,
             rideSegment: stop.rideSegment)
     }
@@ -1370,6 +1395,34 @@ public enum TrainValidation {
             // dropping it here would lose the answer on every save and make
             // every load re-derive it.
             region: train.region)
+    }
+
+    /// Restore the endpoint names that the browser import path resolves from
+    /// station codes before it builds a route-solve cache key. Bundled stores
+    /// deliberately omit these redundant names. Only an exact canonical-code
+    /// match in the train's stop list is used; explicit and unknown names are
+    /// left untouched.
+    public static func restoringRouteSectionEndpointNames(_ train: Train) -> Train {
+        var restored = train
+        var namesByCode: [String: String] = [:]
+        for stop in train.stops {
+            guard !stop.name.isEmpty,
+                  let code = stop.n02StationCode, !code.isEmpty else { continue }
+            namesByCode[StationCodeAliases.canonical(code)] = stop.name
+        }
+        restored.routeSections = train.routeSections?.map { section in
+            var section = section
+            if section.from?.isEmpty != false,
+               let code = section.fromN02StationCode, !code.isEmpty {
+                section.from = namesByCode[StationCodeAliases.canonical(code)]
+            }
+            if section.to?.isEmpty != false,
+               let code = section.toN02StationCode, !code.isEmpty {
+                section.to = namesByCode[StationCodeAliases.canonical(code)]
+            }
+            return section
+        }
+        return restored
     }
 
     /// `getRideRouteSectionsForTrain` — one section per adjacent stop pair.

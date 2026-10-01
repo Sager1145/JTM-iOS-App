@@ -1,0 +1,53 @@
+{
+  "candidate_id": "jr-kyushu-yufu6-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; fourteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-yufu6-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167601.html?t=2880501e&d=20260930",
+  "service_date": "2026-09-30",
+  "new_source": {
+    "source_id": "jr-kyushu-yufu6-20260930",
+    "source_type": "official_train_timetable",
+    "title": "ゆふ6号 列車詳細",
+    "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+    "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00167601.html?t=2880501e&d=20260930",
+    "issue": "JR時刻表2026年10月号",
+    "effective_date": "2026-09-30",
+    "accessed_at": "2026-09-30",
+    "license_status": "third_party_timetable_data_terms_apply",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "notes": "Official exact-date train detail reached from 別府駅 2026-09-30 日豊本線 limited-express departure list. It prints ゆふ6号 86D and the full passenger-call table from 別府 to 博多, plus 普通車一部指定席. This documents only the selected date."
+  },
+  "trip": {
+    "trip_id": "jr-kyushu.yufu.6.2026-09-30",
+    "service_id": "yufu",
+    "service_name": "ゆふ",
+    "public_number": "6",
+    "train_number": "86D",
+    "direction": "別府→博多",
+    "seat_description_snapshot": "普通車一部指定席",
+    "stop_times": [
+      {"name_snapshot":"別府","arrival_time":null,"departure_time":"18:09","platform":null},
+      {"name_snapshot":"大分","arrival_time":"18:20","departure_time":"18:36","platform":"7"},
+      {"name_snapshot":"向之原","arrival_time":"18:50","departure_time":"18:51","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"19:12","departure_time":"19:12","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"19:24","departure_time":"19:27","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"19:43","departure_time":"19:44","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"19:54","departure_time":"19:55","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"20:07","departure_time":"20:07","platform":null},
+      {"name_snapshot":"日田","arrival_time":"20:19","departure_time":"20:20","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"20:39","departure_time":"20:42","platform":null},
+      {"name_snapshot":"久留米","arrival_time":"21:03","departure_time":"21:04","platform":"4"},
+      {"name_snapshot":"鳥栖","arrival_time":"21:10","departure_time":"21:11","platform":"1"},
+      {"name_snapshot":"二日市","arrival_time":"21:22","departure_time":"21:23","platform":null},
+      {"name_snapshot":"博多","arrival_time":"21:34","departure_time":null,"platform":"2"}
+    ]
+  },
+  "evidence_locators": [
+    {"claim":"exact 2026-09-30 occurrence","locator":"official train page heading 2026年09月30日の時刻 and date-qualified URL"},
+    {"claim":"limited express ゆふ6号, 86D, and seat description","locator":"列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号・列車設備 rows"},
+    {"claim":"fourteen passenger calls and clocks","locator":"駅名 / 時刻 / のりば table from 別府 through 博多"}
+  ]
+}

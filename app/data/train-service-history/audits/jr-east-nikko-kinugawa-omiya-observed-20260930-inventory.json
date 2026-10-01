@@ -1,0 +1,298 @@
+{
+  "inventory_id": "jr-east-nikko-kinugawa-omiya-observed-20260930",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope": "Only 日光/きぬがわ/スペーシア日光 labels in four inspected Omiya weekday/holiday direction tables. Individual date cells decide inclusion; no exclusion claim for unseen entrances.",
+  "trains": [
+    {
+      "printed_name": "日光 21号",
+      "train_number": "8121M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087741.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350070.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350071.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１０月１６～１９・２２～２６・２９日～１１月９・１２～２３・２７～２９日運転",
+        "１０月１６～１９・２２～２６・２９日～１１月９・１２～２３・２７～２９日運転"
+      ],
+      "printed_remarks": [
+        "",
+        ""
+      ],
+      "source_sha256": "67681a91f4f2f1cf9a5054bc5e579bb163ef0f2e0b6c165d875ce4141be7ea5b",
+      "printed_train_numbers": [
+        "8121M",
+        "5021M"
+      ]
+    },
+    {
+      "printed_name": "スペーシア日光 1号",
+      "train_number": "1091M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/046931.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350070.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350071.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "４人用グリーン個室料金は６３００円です １００系"
+      ],
+      "source_sha256": "f657e4190c049a9d63a1095a290e787eedc6a749e1ad357ace04b4e2c04cc5fb",
+      "printed_train_numbers": [
+        "1091M"
+      ]
+    },
+    {
+      "printed_name": "きぬがわ 3号",
+      "train_number": "1083M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/046941.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350070.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350071.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "２５３系"
+      ],
+      "source_sha256": "b0f3647eb88cf50e5550ced3c1c95697df38a2066d455584a035c9c32109bab8",
+      "printed_train_numbers": [
+        "1083M"
+      ]
+    },
+    {
+      "printed_name": "スペーシア日光 21号",
+      "train_number": "9121M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/185/187581.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350071.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月１９～２３日運転",
+        "９月１９～２３日運転"
+      ],
+      "printed_remarks": [
+        "４人用グリーン個室料金は６３００円です",
+        "４人用グリーン個室料金は６３００円です"
+      ],
+      "source_sha256": "f50d4c13f1669198a53c5634a08853d01c96374c693bbd566a5594b5c94eec5b",
+      "printed_train_numbers": [
+        "9121M",
+        "5021M"
+      ]
+    },
+    {
+      "printed_name": "きぬがわ 13号",
+      "train_number": "8113M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087751.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350071.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１１月２１・２２日運転",
+        "１１月２１・２２日運転"
+      ],
+      "printed_remarks": [
+        "",
+        ""
+      ],
+      "source_sha256": "8099a4fa873614e7a7449d1d003ce6ea547a6c33cfdc4aec186fe445a58e5023",
+      "printed_train_numbers": [
+        "8113M",
+        "5113M"
+      ]
+    },
+    {
+      "printed_name": "きぬがわ 2号",
+      "train_number": "1082M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/046951.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350130.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350131.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "２５３系"
+      ],
+      "source_sha256": "c105a121c17197a3b6bad0ea7375a173347bf618b19ed5d16a664b4c8c8ae475",
+      "printed_train_numbers": [
+        "1082M"
+      ]
+    },
+    {
+      "printed_name": "スペーシア日光 4号",
+      "train_number": "1094M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/085/087591.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350130.html",
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350131.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "ok"
+      },
+      "scheduled_on_date": true,
+      "printed_operating_labels": [],
+      "printed_remarks": [
+        "４人用グリーン個室料金は６３００円です １００系"
+      ],
+      "source_sha256": "cc88bc56b4e02736542f9fffd38093863d414139d5e9b583fc30328c33c8ab67",
+      "printed_train_numbers": [
+        "1094M"
+      ]
+    },
+    {
+      "printed_name": "日光 26号",
+      "train_number": "5026M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/185/187931.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350130.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１０月１６・１９・２２・２３・２６・２９・３０日・１１月２・４～６・９・１２・１３・１６～２０・２７日運転",
+        "１０月１６・１９・２２・２３・２６・２９・３０日・１１月２・４～６・９・１２・１３・１６～２０・２７日運転"
+      ],
+      "printed_remarks": [
+        "",
+        ""
+      ],
+      "source_sha256": "9ca20c283191ded7404198344399c4407c932371b9fcc94d2d51688bba0f4038",
+      "printed_train_numbers": [
+        "5026M",
+        "9126M"
+      ]
+    },
+    {
+      "printed_name": "日光 22号",
+      "train_number": "5022M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/095/096741.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350131.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１１月２１・２２日運転",
+        "１１月２１・２２日運転"
+      ],
+      "printed_remarks": [
+        "",
+        ""
+      ],
+      "source_sha256": "eb666f002ea89ba3169ea6283367371db9b66da20675a12d2dc0a679b55a060e",
+      "printed_train_numbers": [
+        "5022M",
+        "8122M"
+      ]
+    },
+    {
+      "printed_name": "日光 26号",
+      "train_number": "5026M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/175/177861.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350131.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "１０月１７日～１１月２９日の土曜・休日運転",
+        "１０月１７日～１１月２９日の土曜・休日運転"
+      ],
+      "printed_remarks": [
+        "",
+        ""
+      ],
+      "source_sha256": "aa1456b27edc9e07313e32cc25317ce4ba5f08a4c54a9775d0256b889f3212ce",
+      "printed_train_numbers": [
+        "5026M",
+        "8126M"
+      ]
+    },
+    {
+      "printed_name": "スペーシア日光 26号",
+      "train_number": "5026M",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/185/187941.html",
+      "discovery_urls": [
+        "https://timetables.jreast.co.jp/2610/timetable/tt0350/0350131.html"
+      ],
+      "date_evidence": {
+        "month": "2026年9月",
+        "day": 30,
+        "cell_class": "none"
+      },
+      "scheduled_on_date": false,
+      "printed_operating_labels": [
+        "９月１９～２３日運転",
+        "９月１９～２３日運転"
+      ],
+      "printed_remarks": [
+        "４人用グリーン個室料金は６３００円です",
+        "４人用グリーン個室料金は６３００円です"
+      ],
+      "source_sha256": "a5b4439e921bf5c59814572b84b005a66519118eaa29cf522ad3342964604acc",
+      "printed_train_numbers": [
+        "5026M",
+        "9126M"
+      ]
+    }
+  ],
+  "observed_set_audit": {
+    "observed_pages": 11,
+    "operating_pages": 4,
+    "nonrunning_pages": 7,
+    "staged_operating_trips": 4,
+    "missing_operating_trips": [],
+    "scope": "Only inspected Omiya through-service labels; unseen entrances remain outside scope."
+  }
+}

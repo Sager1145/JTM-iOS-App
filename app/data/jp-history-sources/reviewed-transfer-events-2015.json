@@ -1,0 +1,437 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed 2015 Hokuriku conventional-line transfers and later station openings",
+  "scope": "Promotion-ready rich events for 日本海ひすいライン and あいの風とやま鉄道線. 妙高はねうまライン and 北しなの線 are intentionally out of scope.",
+  "sources": [
+    {
+      "source_id": "mlit-parallel-conventional-railways",
+      "title": "並行在来線鉄道一覧",
+      "authority": "国土交通省 鉄道局",
+      "reference": "https://www.mlit.go.jp/common/001514800.pdf",
+      "role": "Primary exact-day evidence for the 2015-03-14 transfers, termini and business kilometres."
+    },
+    {
+      "source_id": "mlit-n02-14",
+      "title": "国土数値情報 鉄道データ N02-14",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "a8a6dd8b00bb175ca89cd0ac542312b3726cbd81ced06a1d85ae0a6098e56204",
+      "role": "Redistributable pre-transfer 北陸線 section and station geometry."
+    },
+    {
+      "source_id": "echigo-oshiaage-opening",
+      "title": "2021年3月13日（土）、えちご押上ひすい海岸駅が開業いたします。",
+      "authority": "えちごトキめき鉄道株式会社",
+      "published_date": "2021-02-17",
+      "reference": "https://www.echigo-tokimeki.co.jp/information/detail?id=1279",
+      "role": "Primary exact-day and line-interval evidence for the station opening."
+    },
+    {
+      "source_id": "ainokaze-takaoka-yabunami-opening",
+      "title": "高岡やぶなみ駅からの旅客運賃をお知らせします",
+      "authority": "あいの風とやま鉄道株式会社",
+      "published_date": "2018-01-23",
+      "reference": "https://ainokaze.co.jp/6258",
+      "role": "Primary exact-day evidence for the station opening."
+    },
+    {
+      "source_id": "ainokaze-shin-toyamaguchi-opening",
+      "title": "新富山口駅の開業について",
+      "authority": "あいの風とやま鉄道株式会社",
+      "published_date": "2022-03-11",
+      "reference": "https://ainokaze.co.jp/13377",
+      "role": "Primary exact-day and adjacent-station evidence for the station opening."
+    }
+  ],
+  "snapshot_releases": [
+    {
+      "release_id": "N02-14",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-14/N02-14_GML.zip",
+      "sha256": "a8a6dd8b00bb175ca89cd0ac542312b3726cbd81ced06a1d85ae0a6098e56204",
+      "licence_status": "redistributable"
+    },
+    {
+      "release_id": "current-package",
+      "reference": "app/data/rail-sections.json and app/data/stations.json",
+      "role": "Current successor geometry and unique current station identities."
+    }
+  ],
+  "selection_audit": [
+    {
+      "event_id": "jp.transfer.2015.echigo-hisui",
+      "bbox": [
+        137.64893,
+        36.98035,
+        138.2436,
+        37.17106
+      ],
+      "current_successor": {
+        "sections": 33,
+        "station_features": 13,
+        "endpoint_stations": [
+          "直江津",
+          "市振"
+        ]
+      },
+      "historical_predecessor": {
+        "sections": 31,
+        "station_features": 12,
+        "endpoint_stations": [
+          "直江津",
+          "市振"
+        ]
+      },
+      "later_stations_excluded_from_2015_snapshot": [
+        "えちご押上ひすい海岸"
+      ],
+      "adjacent_identity_negative_controls": [
+        {
+          "line": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道"
+        },
+        {
+          "line": "大糸線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "line": "あいの風とやま鉄道線",
+          "operator": "あいの風とやま鉄道"
+        }
+      ],
+      "conclusion": "The line/operator selector plus bbox selects the complete successor identity and only the corresponding N02-14 北陸線 predecessor geometry."
+    },
+    {
+      "event_id": "jp.transfer.2015.ainokaze-toyama",
+      "bbox": [
+        136.79068,
+        36.67138,
+        137.65204,
+        36.98054
+      ],
+      "current_successor": {
+        "sections": 56,
+        "station_features": 23,
+        "endpoint_stations": [
+          "市振",
+          "倶利伽羅"
+        ]
+      },
+      "historical_predecessor": {
+        "sections": 56,
+        "station_features": 22,
+        "distinct_station_names": 21,
+        "endpoint_stations": [
+          "市振",
+          "倶利伽羅"
+        ],
+        "note": "N02-14 represents 高岡 with two station features."
+      },
+      "later_stations_excluded_from_2015_snapshot": [
+        "高岡やぶなみ",
+        "新富山口"
+      ],
+      "adjacent_identity_negative_controls": [
+        {
+          "line": "日本海ひすいライン",
+          "operator": "えちごトキめき鉄道"
+        },
+        {
+          "line": "IRいしかわ鉄道線",
+          "operator": "IRいしかわ鉄道"
+        },
+        {
+          "line": "城端線",
+          "operator": "西日本旅客鉄道"
+        },
+        {
+          "line": "氷見線",
+          "operator": "西日本旅客鉄道"
+        }
+      ],
+      "conclusion": "The line/operator selector excludes neighboring and crossing identities; both termini and every N02-14 predecessor station feature are covered."
+    }
+  ],
+  "events": [],
+  "temporal_events": [
+    {
+      "id": "jp-id-echigo-hisui-transfer-2015",
+      "kind": "operator_transfer",
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "日本海ひすいライン",
+        "operator": "えちごトキめき鉄道"
+      },
+      "date": "2015-03-14",
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hokuriku.naoetsu-ichiburi",
+      "alignment_id": "jp.alignment.hokuriku.naoetsu-ichiburi.n02-14-continuity",
+      "service_identity_id": "jp.service.echigo-hisui",
+      "segment": {
+        "from_station": "直江津",
+        "to_station": "市振"
+      },
+      "expected": {
+        "business_km": 59.3,
+        "current_sections": 33,
+        "current_station_features": 13,
+        "historical_sections": 31,
+        "historical_station_features": 12
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "bbox": [
+            137.64893,
+            36.98035,
+            138.2436,
+            37.17106
+          ],
+          "historical_bbox": [
+            137.64893,
+            36.98035,
+            138.2436,
+            37.17106
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The official interval is isolated by exact successor bounds; N02-14 supplies both termini and excludes the later 2021 station."
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways",
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-ainokaze-transfer-2015",
+      "kind": "operator_transfer",
+      "before": {
+        "line": "北陸線",
+        "operator": "西日本旅客鉄道"
+      },
+      "after": {
+        "line": "あいの風とやま鉄道線",
+        "operator": "あいの風とやま鉄道"
+      },
+      "date": "2015-03-14",
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hokuriku.ichiburi-kurikara",
+      "alignment_id": "jp.alignment.hokuriku.ichiburi-kurikara.n02-14-continuity",
+      "service_identity_id": "jp.service.ainokaze-toyama",
+      "segment": {
+        "from_station": "市振",
+        "to_station": "倶利伽羅"
+      },
+      "expected": {
+        "business_km": 100.1,
+        "current_sections": 56,
+        "current_station_features": 23,
+        "historical_sections": 56,
+        "historical_station_features": 22
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-14",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "北陸線",
+          "operator": "西日本旅客鉄道"
+        },
+        "selector": {
+          "bbox": [
+            136.79068,
+            36.67138,
+            137.65204,
+            36.98054
+          ],
+          "historical_bbox": [
+            136.79068,
+            36.67138,
+            137.65204,
+            36.98054
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The exact successor bbox covers both termini and all N02-14 predecessor features while excluding the 2018 and 2022 stations."
+      },
+      "evidence": [
+        {
+          "source_id": "mlit-parallel-conventional-railways",
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2021.echigo-oshiage-hisui-kaigan",
+      "kind": "station_opening",
+      "after": {
+        "line": "日本海ひすいライン",
+        "operator": "えちごトキめき鉄道",
+        "station": "えちご押上ひすい海岸"
+      },
+      "service_periods": [
+        [
+          "2021-03-13",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hokuriku.naoetsu-ichiburi",
+      "alignment_id": "jp.alignment.echigo-hisui.current",
+      "service_identity_id": "jp.service.echigo-hisui.station.echigo-oshiage-hisui-kaigan",
+      "interval": {
+        "from_station": "糸魚川",
+        "to_station": "梶屋敷"
+      },
+      "current_n02_station_code": "001663",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "えちご押上ひすい海岸"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact date and adjacent stations; the current station identity is unique."
+      },
+      "evidence": [
+        {
+          "source_id": "echigo-oshiaage-opening",
+          "authority": "えちごトキめき鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.echigo-tokimeki.co.jp/information/detail?id=1279"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2018.takaoka-yabunami",
+      "kind": "station_opening",
+      "after": {
+        "line": "あいの風とやま鉄道線",
+        "operator": "あいの風とやま鉄道",
+        "station": "高岡やぶなみ"
+      },
+      "service_periods": [
+        [
+          "2018-03-17",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hokuriku.ichiburi-kurikara",
+      "alignment_id": "jp.alignment.ainokaze-toyama.current",
+      "service_identity_id": "jp.service.ainokaze-toyama.station.takaoka-yabunami",
+      "interval": {
+        "from_station": "西高岡",
+        "to_station": "高岡"
+      },
+      "current_n02_station_code": "001876",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "高岡やぶなみ"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact date; the current station identity is unique."
+      },
+      "evidence": [
+        {
+          "source_id": "ainokaze-takaoka-yabunami-opening",
+          "authority": "あいの風とやま鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://ainokaze.co.jp/6258"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2022.shin-toyamaguchi",
+      "kind": "station_opening",
+      "after": {
+        "line": "あいの風とやま鉄道線",
+        "operator": "あいの風とやま鉄道",
+        "station": "新富山口"
+      },
+      "service_periods": [
+        [
+          "2022-03-12",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.hokuriku.ichiburi-kurikara",
+      "alignment_id": "jp.alignment.ainokaze-toyama.current",
+      "service_identity_id": "jp.service.ainokaze-toyama.station.shin-toyamaguchi",
+      "interval": {
+        "from_station": "富山",
+        "to_station": "東富山"
+      },
+      "current_n02_station_code": "001898",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {
+          "stations": [
+            "新富山口"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact date and adjacent stations; the current station identity is unique."
+      },
+      "evidence": [
+        {
+          "source_id": "ainokaze-shin-toyamaguchi-opening",
+          "authority": "あいの風とやま鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://ainokaze.co.jp/13377"
+        }
+      ]
+    }
+  ],
+  "withheld": [
+    {
+      "identity": "妙高はねうまライン",
+      "reason": "Out of scope: the pre-transfer 脇野田/上越妙高 relocation requires a separate historical-alignment review."
+    },
+    {
+      "identity": "北しなの線",
+      "reason": "Out of scope: owned by the parent integration task."
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed Shinano Railway and IGR later station openings",
+  "scope": "Promotion-ready current-package station openings whose earliest post-opening N02 geometry matches the unique current station feature. 巣子 is retained as reviewed but withheld because the opening-era snapshot contains a second station feature absent from the current package.",
+  "sources": [
+    {
+      "source_id": "shinano-railway-company-history",
+      "title": "会社概要／沿革",
+      "authority": "しなの鉄道株式会社",
+      "reference": "https://www.shinanorailway.co.jp/corporate/docs/company2022.pdf",
+      "role": "Primary exact-day evidence for the openings of テクノさかき, 屋代高校前, 信濃国分寺 and 千曲."
+    },
+    {
+      "source_id": "igr-aoyama-station-profile",
+      "title": "青山駅",
+      "authority": "ＩＧＲいわて銀河鉄道株式会社",
+      "reference": "https://igr.jp/station/aoyama/",
+      "role": "Primary exact-day evidence that 青山 opened on 2006-03-18."
+    },
+    {
+      "source_id": "igr-sugo-station-profile",
+      "title": "巣子駅",
+      "authority": "ＩＧＲいわて銀河鉄道株式会社",
+      "reference": "https://igr.jp/station/sugo/",
+      "role": "Primary exact-day evidence that 巣子 opened on 2006-03-18 and has vertically separated platforms."
+    },
+    {
+      "source_id": "mlit-n02-05",
+      "title": "国土数値情報 鉄道データ N02-05",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "role": "Oldest available post-opening N02 station geometry for テクノさかき, 屋代高校前 and 信濃国分寺."
+    },
+    {
+      "source_id": "mlit-n02-06",
+      "title": "国土数値情報 鉄道データ N02-06",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-06/N02-06_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "ee90bde387e712c57060d4726e1505fc43728f6a37015b40cd63487c3f88b113",
+      "role": "Oldest available post-opening N02 station geometry for 青山 and 巣子."
+    },
+    {
+      "source_id": "mlit-n02-08",
+      "title": "国土数値情報 鉄道データ N02-08",
+      "authority": "国土交通省",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "sha256": "c5e579faf17e268b9b9e2880b38d09297a95b0f7cfc9967df96ed4b61ed74840",
+      "role": "Oldest available post-opening N02 station geometry for 千曲."
+    }
+  ],
+  "snapshot_releases": [
+    {
+      "release_id": "N02-05",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "licence_status": "redistributable"
+    },
+    {
+      "release_id": "N02-06",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-06/N02-06_GML.zip",
+      "sha256": "ee90bde387e712c57060d4726e1505fc43728f6a37015b40cd63487c3f88b113",
+      "licence_status": "redistributable"
+    },
+    {
+      "release_id": "N02-08",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip",
+      "sha256": "c5e579faf17e268b9b9e2880b38d09297a95b0f7cfc9967df96ed4b61ed74840",
+      "licence_status": "redistributable"
+    },
+    {
+      "release_id": "current-package",
+      "reference": "app/data/stations.json",
+      "role": "Unique current N02 station identities and geometry selected by the compiler."
+    }
+  ],
+  "selection_audit": [
+    {
+      "event_id": "jp.station-opening.1999.techno-sakaki",
+      "earliest_post_opening_release": "N02-05",
+      "snapshot_station_features": 1,
+      "current_station_features": 1,
+      "current_n02_station_code": "002223",
+      "max_snapshot_to_current_distance_m": 0.421,
+      "max_current_to_snapshot_distance_m": 0.316,
+      "normalized_five_decimal_geometry_equal": true,
+      "conclusion": "The unique N02-05 station feature equals the unique current feature after the history builder's five-decimal normalization."
+    },
+    {
+      "event_id": "jp.station-opening.2001.yashiro-kokomae",
+      "earliest_post_opening_release": "N02-05",
+      "snapshot_station_features": 1,
+      "current_station_features": 1,
+      "current_n02_station_code": "002132",
+      "max_snapshot_to_current_distance_m": 0.29,
+      "max_current_to_snapshot_distance_m": 0.235,
+      "normalized_five_decimal_geometry_equal": true,
+      "conclusion": "The unique N02-05 station feature equals the unique current feature after the history builder's five-decimal normalization."
+    },
+    {
+      "event_id": "jp.station-opening.2002.shinano-kokubunji",
+      "earliest_post_opening_release": "N02-05",
+      "snapshot_station_features": 1,
+      "current_station_features": 1,
+      "current_n02_station_code": "002303",
+      "max_snapshot_to_current_distance_m": 0.348,
+      "max_current_to_snapshot_distance_m": 0.348,
+      "normalized_five_decimal_geometry_equal": true,
+      "conclusion": "The unique N02-05 station feature equals the unique current feature after the history builder's five-decimal normalization."
+    },
+    {
+      "event_id": "jp.station-opening.2009.chikuma",
+      "earliest_post_opening_release": "N02-08",
+      "snapshot_station_features": 1,
+      "current_station_features": 1,
+      "current_n02_station_code": "002173",
+      "max_snapshot_to_current_distance_m": 0.0,
+      "max_current_to_snapshot_distance_m": 0.0,
+      "normalized_five_decimal_geometry_equal": true,
+      "conclusion": "The unique N02-08 station feature is exactly equal to the unique current feature."
+    },
+    {
+      "event_id": "jp.station-opening.2006.aoyama",
+      "earliest_post_opening_release": "N02-06",
+      "snapshot_station_features": 1,
+      "current_station_features": 1,
+      "current_n02_station_code": "000782",
+      "max_snapshot_to_current_distance_m": 0.32,
+      "max_current_to_snapshot_distance_m": 0.339,
+      "normalized_five_decimal_geometry_equal": true,
+      "conclusion": "The unique N02-06 station feature equals the unique current feature after the history builder's five-decimal normalization."
+    },
+    {
+      "event_id": "jp.station-opening.2006.sugo",
+      "earliest_post_opening_release": "N02-06",
+      "snapshot_station_features": 2,
+      "current_station_features": 1,
+      "current_n02_station_code": "000771",
+      "max_snapshot_to_current_distance_m": 26.596,
+      "max_current_to_snapshot_distance_m": 0.237,
+      "normalized_five_decimal_geometry_equal": false,
+      "conclusion": "One N02-06 station feature matches the current feature, but the second opening-era feature on the paired alignment is absent from the current package. Current geometry cannot represent the complete opening-era surveyed station."
+    }
+  ],
+  "events": [
+    {
+      "id": "jp.station-opening.1999.techno-sakaki",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.shinano.techno-sakaki",
+      "membership_id": "jp.membership.shinano-railway.techno-sakaki",
+      "after": {
+        "line": "しなの鉄道線",
+        "operator": "しなの鉄道",
+        "station": "テクノさかき"
+      },
+      "service_periods": [["1999-04-01", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.shinano.karuizawa-shinonoi",
+      "alignment_id": "jp.alignment.shinano-railway.n02-current-continuity",
+      "service_identity_id": "jp.service.shinano-railway.station.techno-sakaki",
+      "interval": {
+        "from_station": "西上田",
+        "to_station": "坂城"
+      },
+      "current_n02_station_code": "002223",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["テクノさかき"]}
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact opening date and the station is unique in the current identity.",
+        "geometry_continuity": "The N02-05 feature equals the current feature after five-decimal normalization."
+      },
+      "evidence": [
+        {
+          "source_id": "shinano-railway-company-history",
+          "authority": "しなの鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.shinanorailway.co.jp/corporate/docs/company2022.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2001.yashiro-kokomae",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.shinano.yashiro-kokomae",
+      "membership_id": "jp.membership.shinano-railway.yashiro-kokomae",
+      "after": {
+        "line": "しなの鉄道線",
+        "operator": "しなの鉄道",
+        "station": "屋代高校前"
+      },
+      "service_periods": [["2001-03-22", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.shinano.karuizawa-shinonoi",
+      "alignment_id": "jp.alignment.shinano-railway.n02-current-continuity",
+      "service_identity_id": "jp.service.shinano-railway.station.yashiro-kokomae",
+      "interval": {
+        "from_station": "屋代",
+        "to_station": "篠ノ井"
+      },
+      "current_n02_station_code": "002132",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["屋代高校前"]}
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact opening date and the station is unique in the current identity.",
+        "geometry_continuity": "The N02-05 feature equals the current feature after five-decimal normalization."
+      },
+      "evidence": [
+        {
+          "source_id": "shinano-railway-company-history",
+          "authority": "しなの鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.shinanorailway.co.jp/corporate/docs/company2022.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2002.shinano-kokubunji",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.shinano.shinano-kokubunji",
+      "membership_id": "jp.membership.shinano-railway.shinano-kokubunji",
+      "after": {
+        "line": "しなの鉄道線",
+        "operator": "しなの鉄道",
+        "station": "信濃国分寺"
+      },
+      "service_periods": [["2002-03-29", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.shinano.karuizawa-shinonoi",
+      "alignment_id": "jp.alignment.shinano-railway.n02-current-continuity",
+      "service_identity_id": "jp.service.shinano-railway.station.shinano-kokubunji",
+      "interval": {
+        "from_station": "大屋",
+        "to_station": "上田"
+      },
+      "current_n02_station_code": "002303",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["信濃国分寺"]}
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact opening date and the station is unique in the current identity.",
+        "geometry_continuity": "The N02-05 feature equals the current feature after five-decimal normalization."
+      },
+      "evidence": [
+        {
+          "source_id": "shinano-railway-company-history",
+          "authority": "しなの鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.shinanorailway.co.jp/corporate/docs/company2022.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2009.chikuma",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.shinano.chikuma",
+      "membership_id": "jp.membership.shinano-railway.chikuma",
+      "after": {
+        "line": "しなの鉄道線",
+        "operator": "しなの鉄道",
+        "station": "千曲"
+      },
+      "service_periods": [["2009-03-14", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.shinano.karuizawa-shinonoi",
+      "alignment_id": "jp.alignment.shinano-railway.n02-current-continuity",
+      "service_identity_id": "jp.service.shinano-railway.station.chikuma",
+      "interval": {
+        "from_station": "戸倉",
+        "to_station": "屋代"
+      },
+      "current_n02_station_code": "002173",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["千曲"]}
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact opening date and the station is unique in the current identity.",
+        "geometry_continuity": "The N02-08 feature is exactly equal to the current feature."
+      },
+      "evidence": [
+        {
+          "source_id": "shinano-railway-company-history",
+          "authority": "しなの鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.shinanorailway.co.jp/corporate/docs/company2022.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.station-opening.2006.aoyama",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.igr.aoyama",
+      "membership_id": "jp.membership.igr.aoyama",
+      "after": {
+        "line": "いわて銀河鉄道線",
+        "operator": "アイジーアールいわて銀河鉄道",
+        "station": "青山"
+      },
+      "service_periods": [["2006-03-18", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.igr.morioka-metoki",
+      "alignment_id": "jp.alignment.igr.n02-current-continuity",
+      "service_identity_id": "jp.service.igr.station.aoyama",
+      "interval": {
+        "from_station": "盛岡",
+        "to_station": "厨川"
+      },
+      "current_n02_station_code": "000782",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["青山"]}
+      },
+      "review": {
+        "status": "verified",
+        "reason": "The operator supplies the exact opening date and the station is unique in the current identity.",
+        "geometry_continuity": "The N02-06 feature equals the current feature after five-decimal normalization."
+      },
+      "evidence": [
+        {
+          "source_id": "igr-aoyama-station-profile",
+          "authority": "ＩＧＲいわて銀河鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://igr.jp/station/aoyama/"
+        }
+      ]
+    }
+  ],
+  "withheld": [
+    {
+      "id": "jp.station-opening.2006.sugo",
+      "kind": "station_opening",
+      "station_entity_id": "jp.station.igr.sugo",
+      "membership_id": "jp.membership.igr.sugo",
+      "after": {
+        "line": "いわて銀河鉄道線",
+        "operator": "アイジーアールいわて銀河鉄道",
+        "station": "巣子"
+      },
+      "service_periods": [["2006-03-18", null]],
+      "date_precision": "exact_day",
+      "corridor_id": "jp.corridor.igr.morioka-metoki",
+      "alignment_id": "jp.alignment.igr.n02-06-paired-platforms",
+      "service_identity_id": "jp.service.igr.station.sugo",
+      "interval": {
+        "from_station": "厨川",
+        "to_station": "滝沢"
+      },
+      "current_n02_station_code": "000771",
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "selector": {"stations": ["巣子"]}
+      },
+      "review": {
+        "status": "withheld_geometry_mismatch",
+        "reason": "N02-06 has two 巣子 station features on paired alignments. The current package retains only the three-vertex feature; its missing two-vertex opening-era counterpart is 26.596 m away. Backdating the current feature would omit surveyed opening-era station geometry."
+      },
+      "evidence": [
+        {
+          "source_id": "igr-sugo-station-profile",
+          "authority": "ＩＧＲいわて銀河鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://igr.jp/station/sugo/"
+        }
+      ]
+    }
+  ]
+}

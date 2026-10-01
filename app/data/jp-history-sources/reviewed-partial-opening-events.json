@@ -1,0 +1,1763 @@
+{
+  "schema_version": "1",
+  "title": "Promotion-ready partial-current-identity MLIT opening events",
+  "source": {
+    "title": "鉄軌道開業一覧（平成5年度以降）",
+    "authority": "国土交通省 鉄道局 都市鉄道政策課",
+    "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf",
+    "inventory": "mlit-openings.json",
+    "inventory_row_identity_sha256": "52681e7b91b2c6e2c42cff960d737fe69878d93be61d780a7a96aaaf5ffcfce5"
+  },
+  "geometry_sources": [
+    {
+      "release": "current-package",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable"
+    },
+    {
+      "release": "N02-05",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "role": "earliest redistributable cross-release alignment audit"
+    },
+    {
+      "release": "N02-05",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "role": "earliest redistributable cross-release alignment audit for the 1997 Karasuma extension"
+    },
+    {
+      "release": "N02-07",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-07/N02-07_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "bc981fb8bf9fc39c5d13c919e4f30ff4642f5cb1c65222569a336c0e81d84bbf",
+      "role": "last inventoried release without the 2008 Tozai west extension"
+    },
+    {
+      "release": "N02-08",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-08/N02-08_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "c5e579faf17e268b9b9e2880b38d09297a95b0f7cfc9967df96ed4b61ed74840",
+      "role": "earliest inventoried release containing the 2008 Tozai west extension"
+    },
+    {
+      "release": "N02-11",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-11/N02-11_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "5e23d84d203e2e17dda236eb05351ffcb2cbab699dde3b9e6104a8984d9a3fbc",
+      "role": "earliest inventoried release with the corrected current Tozai station name and feature partition"
+    },
+    {
+      "release": "current-package",
+      "underlying_release": "N02-25",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "coordinate_reference": "canonical WGS84 longitude_latitude",
+      "role": "current surveyed feature geometry used by the runtime selector"
+    },
+    {
+      "release": "N02-05",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "crs": "EPSG:4612",
+      "coordinate_order": "longitude_latitude",
+      "coordinate_operation": "none; native geographic coordinates preserved",
+      "snapshot_observation": {
+        "value": "2005",
+        "precision": "year",
+        "role": "dataset_snapshot_vintage",
+        "event_date_inference": "forbidden"
+      },
+      "role": "earliest redistributable post-opening cross-release alignment audit"
+    },
+    {
+      "release": "N02-05",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-05/N02-05_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "7bd63f75dac91106720a4ebfe1630162e25b8166fdab0988bfe679c216ff27f7",
+      "role": "earliest redistributable cross-release alignment audit for the 1994 opening"
+    },
+    {
+      "release": "N02-11",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-11/N02-11_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "5e23d84d203e2e17dda236eb05351ffcb2cbab699dde3b9e6104a8984d9a3fbc",
+      "role": "first post-opening surveyed snapshot for the 2011 extension"
+    },
+    {
+      "release": "N02-12",
+      "source": "N02",
+      "authority": "国土交通省 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-12/N02-12_GML.zip",
+      "catalogue_reference": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement.html",
+      "licence_status": "redistributable",
+      "sha256": "f8e45727388da541b413d4eb76afe3aa7016b7edb78b9e0be13ecf468e8c64e5",
+      "role": "second post-opening alignment corroboration for the 2011 extension"
+    },
+    {
+      "release": "N02-96-audit-only",
+      "source": "N02-07L",
+      "authority": "国土地理院／国土庁 国土数値情報",
+      "reference": "https://nlftp.mlit.go.jp/ksj/old/data/N02/N02-07L/N02-07L-48-01.1a.zip",
+      "licence_reference": "https://nlftp.mlit.go.jp/ksj/other/agreement_02.html",
+      "licence_status": "legacy_terms_unasserted_audit_only",
+      "sha256": "106509ab37025656fda7d8f9357fe8a20d2fcdb653fe5bf9f4c6ebd066aa07fa",
+      "role": "read-only 1996 topology and station-name corroboration; never copied into shipped geometry"
+    }
+  ],
+  "review_rule": "A partial opening is ready only when one bbox selects complete current N02 section features for the opened interval, an explicit station allow-list excludes every pre-existing boundary membership, selected section geometry meets the shared boundary platform at an exact coordinate, and a declared redistributable post-opening N02 release independently corroborates the alignment and station topology. Post-opening snapshots are corroboration, not event-day geometry or opening-date evidence.",
+  "events": [
+    {
+      "id": "jp.opening.nagoya-tsurumai-kamiotai",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:002",
+      "official_line_name": "鶴舞線",
+      "line": "3号線鶴舞線",
+      "operator": "名古屋市",
+      "corridor_id": "jp.corridor.nagoya-tsurumai",
+      "alignment_id": "jp.alignment.nagoya-tsurumai.kamiotai-shonai-ryokuchi-koen.n02-current",
+      "service_identity_id": "jp.service.nagoya-tsurumai",
+      "segment": {
+        "from_station": "上小田井",
+        "to_station": "庄内緑地公園"
+      },
+      "expected": {
+        "business_km": 1.4
+      },
+      "service_periods": [
+        [
+          "1993-08-12",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": null,
+        "reason": "The official segment.from_station 上小田井 is the newly opened terminus, so no route ending there can be a solved-before control. Use the adjacent 庄内緑地公園→上小田井 opening probe instead."
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.87684999,
+            35.21549999,
+            136.88629001,
+            35.22360001
+          ],
+          "stations": [
+            "上小田井"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "MLIT's 鶴舞線 maps to current N02 3号線鶴舞線.",
+        "basis": "The selector contains the complete 上小田井 platform and interstation section, but excludes the pre-existing 庄内緑地公園 platform. N02-05 and the current package have identical five-decimal section edges and station geometry for the selection."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "名古屋市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.rinkai-tennozu",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:058",
+      "official_line_name": "りんかい線",
+      "line": "臨海副都心線",
+      "operator": "東京臨海高速鉄道",
+      "corridor_id": "jp.corridor.rinkai",
+      "alignment_id": "jp.alignment.rinkai.tokyo-teleport-tennozu.n02-current",
+      "service_identity_id": "jp.service.rinkai",
+      "segment": {
+        "from_station": "東京テレポート",
+        "to_station": "天王洲アイル"
+      },
+      "expected": {
+        "business_km": 2.9
+      },
+      "service_periods": [
+        [
+          "2001-03-31",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "国際展示場",
+        "existing_from_n02_station_code": "004065",
+        "control_to_station": "東京テレポート",
+        "control_to_n02_station_code": "004108",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            139.75081999,
+            35.61972999,
+            139.77768001,
+            35.62689001
+          ],
+          "stations": [
+            "天王洲アイル"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "MLIT's public line name りんかい線 maps to current N02 臨海副都心線; N02-05 itself uses りんかい線.",
+        "basis": "The selector contains the complete 東京テレポート—天王洲アイル interstation section and the new 天王洲アイル platform, while the existing 東京テレポート platform remains undated. N02-05 preserves the same feature topology and exact five-decimal station/boundary geometry; section redigitization is sub-metre."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "東京臨海高速鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.twr.co.jp/Default.aspx?TabId=337"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.rinkai-osaki",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:063",
+      "official_line_name": "りんかい線",
+      "line": "臨海副都心線",
+      "operator": "東京臨海高速鉄道",
+      "corridor_id": "jp.corridor.rinkai",
+      "alignment_id": "jp.alignment.rinkai.tennozu-osaki.n02-current",
+      "service_identity_id": "jp.service.rinkai",
+      "segment": {
+        "from_station": "天王洲アイル",
+        "to_station": "大崎"
+      },
+      "expected": {
+        "business_km": 4.4
+      },
+      "service_periods": [
+        [
+          "2002-12-01",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "東京テレポート",
+        "existing_from_n02_station_code": "004108",
+        "control_to_station": "天王洲アイル",
+        "control_to_n02_station_code": "004129",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            139.72742999,
+            35.60668999,
+            139.75082001,
+            35.62041001
+          ],
+          "stations": [
+            "品川シーサイド",
+            "大井町",
+            "大崎"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "MLIT's public line name りんかい線 maps to current N02 臨海副都心線; N02-05 itself uses りんかい線.",
+        "basis": "The selector contains the complete 天王洲アイル—大崎 extension and its three new station memberships, while the already-open 天王洲アイル platform remains undated. N02-05 preserves the same feature topology and boundary geometry; all measured section and station vertex changes are sub-metre."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "東京臨海高速鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.twr.co.jp/Default.aspx?TabId=337"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.kyoto-tozai-rokujizo",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:074",
+      "line": "東西線",
+      "operator": "京都市",
+      "corridor_id": "jp.corridor.kyoto-tozai",
+      "alignment_id": "jp.alignment.kyoto-tozai.rokujizo-daigo.n02-current",
+      "service_identity_id": "jp.service.kyoto-tozai",
+      "segment": {
+        "from_station": "六地蔵",
+        "to_station": "醍醐"
+      },
+      "expected": {
+        "business_km": 2.4
+      },
+      "service_periods": [
+        [
+          "2004-11-26",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": null,
+        "reason": "The official segment.from_station 六地蔵 is newly opened, so no route ending there can be a solved-before control. Use the adjacent 醍醐→石田 opening probe instead."
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            135.79580999,
+            34.93277999,
+            135.81047001,
+            34.95000001
+          ],
+          "stations": [
+            "六地蔵",
+            "石田"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "Kyoto's exact-day opening notice identifies 六地蔵 and 石田 as the two new stations. The selector contains both platforms and the complete extension, but excludes the pre-existing 醍醐 platform. N02-05 and the current package have identical five-decimal section edges and selected station geometry."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/sogo/page/0000013649.html"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.osaka-monorail-minami-ibaraki-kadomashi",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:028",
+      "official_line_name": "大阪モノレール線",
+      "line": "大阪モノレール線",
+      "operator": "大阪高速鉄道",
+      "after": {
+        "line": "大阪モノレール線",
+        "operator": "大阪モノレール"
+      },
+      "predecessor_event_ids": [
+        "jp-id-osaka-monorail-main-operator-rename-2020"
+      ],
+      "corridor_id": "jp.corridor.osaka-monorail-main",
+      "alignment_id": "jp.alignment.osaka-monorail-main.minami-ibaraki-kadomashi.n02-current",
+      "service_identity_id": "jp.service.osaka-monorail-main",
+      "segment": {
+        "from_station": "南茨木",
+        "to_station": "門真市"
+      },
+      "expected": {
+        "business_km": 7.9
+      },
+      "service_periods": [
+        [
+          "1997-08-22",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "宇野辺",
+        "existing_from_n02_station_code": "006596",
+        "control_to_station": "南茨木",
+        "control_to_n02_station_code": "006612",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            135.56116999,
+            34.73685999,
+            135.58262001,
+            34.80283001
+          ],
+          "stations": [
+            "沢良宜",
+            "摂津",
+            "南摂津",
+            "大日",
+            "門真市"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "The official opening operator 大阪高速鉄道 maps through the reviewed 2020 company rename to current N02 operator 大阪モノレール; the line name and all six station names in this interval are unchanged.",
+        "basis": "The selector contains all ten current section features from the south end of the existing 南茨木 platform through the new 門真市 platform, and the five new station memberships, while excluding the pre-existing 南茨木 platform. N02-05 preserves the same ten-feature and five-station topology with sub-metre redigitization. Every selected current feature has exactly equal geometry in the explicit 大阪高速鉄道 predecessor variant."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "大阪モノレール株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.osaka-monorail.co.jp/company/corporate-info/plan/pdf/ryokaku_shunyu2023.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.kyoto-karasuma-kokusai-kaikan",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:027",
+      "official_line_name": "烏丸線",
+      "line": "烏丸線",
+      "operator": "京都市",
+      "corridor_id": "jp.corridor.kyoto-karasuma",
+      "alignment_id": "jp.alignment.kyoto-karasuma.kitayama-kokusai-kaikan.n02-current",
+      "service_identity_id": "jp.service.kyoto-karasuma",
+      "segment": {
+        "from_station": "北山",
+        "to_station": "国際会館"
+      },
+      "expected": {
+        "business_km": 2.6
+      },
+      "service_periods": [
+        [
+          "1997-06-03",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "北大路",
+        "existing_from_n02_station_code": "005845",
+        "control_to_station": "北山",
+        "control_to_n02_station_code": "005829",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            135.76668999,
+            35.05135999,
+            135.78525001,
+            35.06373001
+          ],
+          "stations": [
+            "松ヶ崎",
+            "国際会館"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The selector contains the complete four-feature 北山—国際会館 extension and the two new station memberships, while the pre-existing 北山 platform remains undated. N02-05 preserves the same feature and station topology; all current-to-N02-05 vertex changes are sub-metre."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/kotsu/page/0000219240.html"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.kyoto-tozai-uzumasa-tenjingawa",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:087",
+      "official_line_name": "東西線",
+      "line": "東西線",
+      "operator": "京都市",
+      "corridor_id": "jp.corridor.kyoto-tozai",
+      "alignment_id": "jp.alignment.kyoto-tozai.nijo-uzumasa-tenjingawa.n02-current",
+      "service_identity_id": "jp.service.kyoto-tozai",
+      "segment": {
+        "from_station": "二条",
+        "to_station": "太秦天神川"
+      },
+      "expected": {
+        "business_km": 2.4
+      },
+      "service_periods": [
+        [
+          "2008-01-16",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "二条城前",
+        "existing_from_n02_station_code": "005950",
+        "control_to_station": "二条",
+        "control_to_n02_station_code": "005949",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            135.71547999,
+            35.01093999,
+            135.74129001,
+            35.01181001
+          ],
+          "stations": [
+            "西大路御池",
+            "太秦天神川"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The selector contains all four current section features and both new station memberships from the west end of the pre-existing 二条 platform through 太秦天神川, while excluding the 二条 platform itself. N02-07 contains none of the extension. N02-08 contains the same continuous surveyed track alignment and two-station topology, although its 西大路池 label and station-feature split were corrected by N02-11; N02-11 and the current selection are geometrically exact. Snapshot years corroborate surveyed lineage and do not supply the exact opening date."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "京都市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.kyoto.lg.jp/kotsu/page/0000024682.html"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.sapporo-tozai-miyanosawa",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:044",
+      "official_line_name": "東西線",
+      "line": "東西線",
+      "operator": "札幌市",
+      "corridor_id": "jp.corridor.sapporo-tozai",
+      "alignment_id": "jp.alignment.sapporo-tozai.kotoni-miyanosawa.n02-current",
+      "service_identity_id": "jp.service.sapporo-tozai",
+      "segment": {
+        "from_station": "琴似",
+        "to_station": "宮の沢"
+      },
+      "expected": {
+        "business_km": 2.8
+      },
+      "service_periods": [
+        [
+          "1999-02-25",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "二十四軒",
+        "existing_from_n02_station_code": "000225",
+        "control_to_station": "琴似",
+        "control_to_n02_station_code": "000220",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            141.27678999,
+            43.07583999,
+            141.30380001,
+            43.09016001
+          ],
+          "stations": [
+            "発寒南",
+            "宮の沢"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "The official and current N02 identities agree exactly: 札幌市 / 東西線. No identity predecessor is required.",
+        "basis": "The selector contains the four complete current section features from the west end of the existing 琴似 platform through the new 発寒南 and 宮の沢 platforms. The explicit station allow-list excludes 琴似, and the selected section geometry meets that undated boundary at exactly [141.3038, 43.07584]. N02-05 preserves the same four-section, two-station topology with sub-metre coordinate differences."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "札幌市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.sapporo.jp/st/subway/gaiyo/gaiyo.html"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.sapporo-toho-fukuzumi",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:009",
+      "official_line_name": "東豊線",
+      "line": "東豊線",
+      "operator": "札幌市",
+      "corridor_id": "jp.corridor.sapporo-toho",
+      "alignment_id": "jp.alignment.sapporo-toho.hosui-susukino-fukuzumi.n02-current",
+      "service_identity_id": "jp.service.sapporo-toho",
+      "segment": {
+        "from_station": "豊水すすきの",
+        "to_station": "福住"
+      },
+      "expected": {
+        "business_km": 5.5
+      },
+      "service_periods": [
+        [
+          "1994-10-14",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "大通",
+        "existing_from_n02_station_code": "000232",
+        "control_to_station": "豊水すすきの",
+        "control_to_n02_station_code": "000257",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "cross_release_stable_alignment",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            141.35715999,
+            43.02145999,
+            141.40327001,
+            43.05342001
+          ],
+          "stations": [
+            "学園前",
+            "豊平公園",
+            "美園",
+            "月寒中央",
+            "福住"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "The official and current N02 identities agree exactly: 札幌市 / 東豊線. No identity predecessor is required.",
+        "basis": "The selector contains all ten complete current section features from the south end of the existing 豊水すすきの platform through the five new station memberships to 福住. The explicit station allow-list excludes 豊水すすきの, and the selected section geometry meets that undated boundary at exactly [141.35716, 43.05342]. N02-05 preserves the same ten-section, five-station topology with sub-metre coordinate differences."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "札幌市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.city.sapporo.jp/st/subway/gaiyo/gaiyo.html"
+        }
+      ]
+    },
+    {
+      "id": "jp.opening.nagoya-sakuradori-nonami-tokushige",
+      "kind": "opening",
+      "official_event_id": "mlit-openings-20260401:099",
+      "official_line_name": "桜通線",
+      "line": "6号線桜通線",
+      "operator": "名古屋市",
+      "corridor_id": "jp.corridor.nagoya-sakuradori",
+      "alignment_id": "jp.alignment.nagoya-sakuradori.nonami-tokushige.n02-current",
+      "service_identity_id": "jp.service.nagoya-sakuradori",
+      "segment": {
+        "from_station": "野並",
+        "to_station": "徳重"
+      },
+      "expected": {
+        "business_km": 4.2
+      },
+      "service_periods": [
+        [
+          "2011-03-27",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "route_acceptance": {
+        "existing_from_station": "鶴里",
+        "existing_from_n02_station_code": "005681",
+        "control_to_station": "野並",
+        "control_to_n02_station_code": "005692",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "current-package",
+        "licence_status": "redistributable",
+        "geometry_precision": "official_snapshot",
+        "date_geometry_precision": "opening_era_snapshot_exact",
+        "selector": {
+          "scope": "isolated_current_segment",
+          "bbox": [
+            136.95535999,
+            35.09445799,
+            136.99810501,
+            35.10294601
+          ],
+          "stations": [
+            "鳴子北",
+            "相生山",
+            "神沢",
+            "徳重"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "normalization": "MLIT's 桜通線 maps to current N02 6号線桜通線; all four new station names are unchanged.",
+        "basis": "The exact bbox contains all eight current section features from the east end of the existing 野並 platform through the new 徳重 platform and exactly the four new station memberships. It excludes the pre-existing 野並 platform while the selected section geometry shares its exact east endpoint. The first post-opening N02-11 snapshot and N02-12 both preserve the same eight features, four stations, and shared boundary geometry exactly at five-decimal source precision. The existing 鶴里—野並 control belongs to the officially documented 1994 interval, which remains a separate withheld opening until its historical station-name lineage is reviewed."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "名古屋市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+        },
+        {
+          "authority": "名古屋市",
+          "date_precision": "exact_day",
+          "reference": "https://www.ido.city.nagoya.jp/blog/2011/03/2011327.html"
+        }
+      ]
+    }
+  ],
+  "measured_selection_audit": [
+    {
+      "event_id": "jp.opening.nagoya-tsurumai-kamiotai",
+      "current_selection": {
+        "section_count": 3,
+        "section_edge_count": 12,
+        "station_count": 1,
+        "station_names": [
+          "上小田井"
+        ],
+        "station_codes": [
+          "005297"
+        ],
+        "surveyed_length_km": 1.271,
+        "section_geometry_sha256": "55206afed6b69d4ace6f544ef76b4aab36044e2c8e9f1a80a04ceb1b0ad5c41b",
+        "station_geometry_sha256": "7c5fa9b81e51bb979d2d950944970de35e305a10e97808179bab39c2fbf95af0"
+      },
+      "shared_boundary": {
+        "station": "庄内緑地公園",
+        "n02_station_code": "005310",
+        "selected": false,
+        "geometry": [
+          [
+            136.88629,
+            35.2155
+          ],
+          [
+            136.88694,
+            35.21455
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "3号線鶴舞線",
+        "operator": "名古屋市",
+        "section_count": 3,
+        "station_count": 1,
+        "five_decimal_edge_multiset_equal": true,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.716,
+        "maximum_station_vertex_delta_m": 0.426
+      },
+      "suggested_route_fixture": {
+        "from_station": "庄内緑地公園",
+        "from_n02_station_code": "005310",
+        "to_station": "上小田井",
+        "to_n02_station_code": "005297"
+      }
+    },
+    {
+      "event_id": "jp.opening.rinkai-tennozu",
+      "current_selection": {
+        "section_count": 2,
+        "section_edge_count": 33,
+        "station_count": 1,
+        "station_names": [
+          "天王洲アイル"
+        ],
+        "station_codes": [
+          "004129"
+        ],
+        "surveyed_length_km": 2.829,
+        "section_geometry_sha256": "fe61402afb8f264d8d388fdd9a85c3294564d0e94c5ee4d789fc01c611dae60f",
+        "station_geometry_sha256": "d5774b6e1a521a6367f27ce615664b106dc7709a8945fab2f2db2976431362ec"
+      },
+      "shared_boundary": {
+        "station": "東京テレポート",
+        "n02_station_code": "004108",
+        "selected": false,
+        "geometry": [
+          [
+            139.77844,
+            35.62728
+          ],
+          [
+            139.77768,
+            35.62689
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "りんかい線",
+        "operator": "東京臨海高速鉄道",
+        "section_count": 2,
+        "station_count": 1,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 8,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.633,
+        "maximum_station_vertex_delta_m": 0.35
+      },
+      "suggested_route_fixture": {
+        "from_station": "東京テレポート",
+        "from_n02_station_code": "004108",
+        "to_station": "天王洲アイル",
+        "to_n02_station_code": "004129"
+      }
+    },
+    {
+      "event_id": "jp.opening.rinkai-osaki",
+      "current_selection": {
+        "section_count": 6,
+        "section_edge_count": 35,
+        "station_count": 3,
+        "station_names": [
+          "品川シーサイド",
+          "大井町",
+          "大崎"
+        ],
+        "station_codes": [
+          "004182",
+          "004197",
+          "004136"
+        ],
+        "surveyed_length_km": 4.531,
+        "section_geometry_sha256": "cda8b23620428705e2f20f04a576d47d46531bd3ae4ab0705743077f9b2318f2",
+        "station_geometry_sha256": "60f06e7ee6d5a3ce63b6eb5015f872dbb5a3ca6e6eadf4e40db12609d0e2ee4e"
+      },
+      "shared_boundary": {
+        "station": "天王洲アイル",
+        "n02_station_code": "004129",
+        "selected": false,
+        "geometry": [
+          [
+            139.75095,
+            35.62171
+          ],
+          [
+            139.75082,
+            35.61973
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "りんかい線",
+        "operator": "東京臨海高速鉄道",
+        "section_count": 6,
+        "station_count": 3,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 11,
+        "five_decimal_selected_station_geometry_equal": false,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.714,
+        "maximum_station_vertex_delta_m": 0.582
+      },
+      "suggested_route_fixture": {
+        "from_station": "天王洲アイル",
+        "from_n02_station_code": "004129",
+        "to_station": "品川シーサイド",
+        "to_n02_station_code": "004182"
+      }
+    },
+    {
+      "event_id": "jp.opening.kyoto-tozai-rokujizo",
+      "current_selection": {
+        "section_count": 4,
+        "section_edge_count": 11,
+        "station_count": 2,
+        "station_names": [
+          "六地蔵",
+          "石田"
+        ],
+        "station_codes": [
+          "006224",
+          "006212"
+        ],
+        "surveyed_length_km": 2.382,
+        "section_geometry_sha256": "b67674ece2d87c94b187dde0c5d071f8ebe583b9666a43f65689e1dcebd2cb7c",
+        "station_geometry_sha256": "ac64738919ebc556fe6de22b20c72c69368875f021db9d57a6629526c0e4baf7"
+      },
+      "shared_boundary": {
+        "station": "醍醐",
+        "n02_station_code": "006192",
+        "selected": false,
+        "geometry": [
+          [
+            135.81047,
+            34.95
+          ],
+          [
+            135.8105,
+            34.9501
+          ],
+          [
+            135.8107,
+            34.95087
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "東西線",
+        "operator": "京都市",
+        "section_count": 4,
+        "station_count": 2,
+        "five_decimal_edge_multiset_equal": true,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.573,
+        "maximum_station_vertex_delta_m": 0.507
+      },
+      "suggested_route_fixture": {
+        "from_station": "醍醐",
+        "from_n02_station_code": "006192",
+        "to_station": "石田",
+        "to_n02_station_code": "006212"
+      }
+    },
+    {
+      "event_id": "jp.opening.osaka-monorail-minami-ibaraki-kadomashi",
+      "current_selection": {
+        "section_count": 10,
+        "section_edge_count": 82,
+        "station_count": 5,
+        "station_names": [
+          "沢良宜",
+          "摂津",
+          "南摂津",
+          "大日",
+          "門真市"
+        ],
+        "station_codes": [
+          "006662",
+          "006713",
+          "006769",
+          "006838",
+          "006893"
+        ],
+        "surveyed_length_km": 7.906,
+        "section_geometry_sha256": "ebb59f0503a420de79e5eb364620ad2c9d0307f7588373ac9905d68a6291b0a9",
+        "station_geometry_sha256": "0568f7eee458c8a2f42f52e5f84715bb00a6712a922359e765fdb25d1cd56e00"
+      },
+      "station_identity_audit": {
+        "opening_day_boundary_station_names": [
+          "南茨木"
+        ],
+        "current_boundary_station_names": [
+          "南茨木"
+        ],
+        "opening_day_new_station_names": [
+          "沢良宜",
+          "摂津",
+          "南摂津",
+          "大日",
+          "門真市"
+        ],
+        "current_new_station_names": [
+          "沢良宜",
+          "摂津",
+          "南摂津",
+          "大日",
+          "門真市"
+        ],
+        "renamed_since_opening": []
+      },
+      "shared_boundary": {
+        "station": "南茨木",
+        "n02_station_code": "006612",
+        "selected": false,
+        "geometry": [
+          [
+            135.56508,
+            34.80283
+          ],
+          [
+            135.56444,
+            34.80356
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "大阪モノレール線",
+        "operator": "大阪高速鉄道",
+        "section_count": 10,
+        "station_count": 5,
+        "same_feature_and_station_topology": true,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 14,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.617,
+        "maximum_station_vertex_delta_m": 0.582
+      },
+      "predecessor_geometry_comparison": {
+        "event_id": "jp-id-osaka-monorail-main-operator-rename-2020",
+        "historical_identity": {
+          "line": "大阪モノレール線",
+          "operator": "大阪高速鉄道"
+        },
+        "section_count": 10,
+        "station_count": 5,
+        "section_geometry_multiset_equal": true,
+        "station_geometry_multiset_equal": true,
+        "unmatched_current_section_count": 0,
+        "unmatched_current_station_count": 0
+      },
+      "route_acceptance_control": {
+        "from_station": "宇野辺",
+        "from_n02_station_code": "006596",
+        "to_station": "南茨木",
+        "to_n02_station_code": "006612",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "suggested_route_fixture": {
+        "from_station": "南茨木",
+        "from_n02_station_code": "006612",
+        "to_station": "沢良宜",
+        "to_n02_station_code": "006662"
+      }
+    },
+    {
+      "event_id": "jp.opening.kyoto-karasuma-kokusai-kaikan",
+      "current_selection": {
+        "section_count": 4,
+        "section_edge_count": 49,
+        "station_count": 2,
+        "station_names": [
+          "松ヶ崎",
+          "国際会館"
+        ],
+        "station_codes": [
+          "005827",
+          "005791"
+        ],
+        "surveyed_length_km": 2.639,
+        "section_geometry_sha256": "81dac200307d8745585ac39048da8952ad7f455dc548128031a3abe96ce7fcb8",
+        "station_geometry_sha256": "a20c2f04a38fb0b78ba3bf0bb23096a0f0ad1fbd3ad6b202adb2d7074a44db72"
+      },
+      "shared_boundary": {
+        "station": "北山",
+        "n02_station_code": "005829",
+        "selected": false,
+        "geometry": [
+          [
+            135.76453,
+            35.05116
+          ],
+          [
+            135.76464,
+            35.05117
+          ],
+          [
+            135.76656,
+            35.05135
+          ],
+          [
+            135.76669,
+            35.05136
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "烏丸線",
+        "operator": "京都市",
+        "section_count": 4,
+        "station_count": 2,
+        "same_feature_and_station_topology": true,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 8,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.665,
+        "maximum_station_vertex_delta_m": 0.494,
+        "maximum_shared_boundary_vertex_delta_m": 0.431
+      },
+      "suggested_route_fixture": {
+        "from_station": "北山",
+        "from_n02_station_code": "005829",
+        "to_station": "松ヶ崎",
+        "to_n02_station_code": "005827"
+      }
+    },
+    {
+      "event_id": "jp.opening.kyoto-tozai-uzumasa-tenjingawa",
+      "current_selection": {
+        "section_count": 4,
+        "section_edge_count": 7,
+        "station_count": 2,
+        "station_names": [
+          "西大路御池",
+          "太秦天神川"
+        ],
+        "station_codes": [
+          "005957",
+          "005959"
+        ],
+        "surveyed_length_km": 2.375,
+        "section_geometry_sha256": "8465d738cd562357cd1cbd3d0a9d9b68f948288d26a0d3b68bc60caffa597f93",
+        "station_geometry_sha256": "065c584cae02b294b6f2cadd670168be085326cc8ac9a83002f490e7dc27eb39"
+      },
+      "shared_boundary": {
+        "station": "二条",
+        "n02_station_code": "005949",
+        "selected": false,
+        "geometry": [
+          [
+            135.74225,
+            35.01223
+          ],
+          [
+            135.74129,
+            35.01181
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_07_preopening_control": {
+        "line": "東西線",
+        "operator": "京都市",
+        "extension_section_count": 0,
+        "extension_station_count": 0,
+        "conclusion": "The N02-07 snapshot contains 二条 as the western terminus and no feature west of its platform. This is a year-vintage geometry observation, not evidence for an exact opening day."
+      },
+      "n02_08_comparison": {
+        "line": "東西線",
+        "operator": "京都市",
+        "section_count": 4,
+        "station_count": 2,
+        "source_station_names": [
+          "西大路池",
+          "太秦天神川"
+        ],
+        "same_continuous_track_and_station_topology": true,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 3,
+        "maximum_bidirectional_alignment_delta_m": 0.111,
+        "maximum_feature_partition_vertex_delta_m": 173.586,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "conclusion": "N02-08 surveys the same continuous extension alignment, but abbreviates 西大路御池 as 西大路池 and assigns a shorter platform feature. The 173.586 m feature-vertex delta measures the changed split point along the same straight surveyed alignment; it is not a lateral track displacement."
+      },
+      "n02_11_comparison": {
+        "line": "東西線",
+        "operator": "京都市",
+        "section_count": 4,
+        "station_count": 2,
+        "five_decimal_edge_multiset_equal": true,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.0,
+        "maximum_station_vertex_delta_m": 0.0
+      },
+      "suggested_route_fixture": {
+        "from_station": "二条",
+        "from_n02_station_code": "005949",
+        "to_station": "西大路御池",
+        "to_n02_station_code": "005957"
+      }
+    },
+    {
+      "event_id": "jp.opening.sapporo-tozai-miyanosawa",
+      "current_selection": {
+        "section_count": 4,
+        "section_edge_count": 32,
+        "station_count": 2,
+        "station_names": [
+          "宮の沢",
+          "発寒南"
+        ],
+        "station_codes": [
+          "000208",
+          "000216"
+        ],
+        "surveyed_length_km": 2.743,
+        "section_geometry_sha256": "0f219a24d8358400ca74046ef21104e30db08864876fc58f0ae47b9263d260a2",
+        "station_geometry_sha256": "7211797159326a8d2ca7f3e45b7d259c2c8a54184406358088a92ea977efcd02"
+      },
+      "shared_boundary": {
+        "station": "琴似",
+        "n02_station_code": "000220",
+        "selected": false,
+        "geometry": [
+          [
+            141.3038,
+            43.07584
+          ],
+          [
+            141.30509,
+            43.07505
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "東西線",
+        "operator": "札幌市",
+        "section_count": 4,
+        "station_count": 2,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 2,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.549,
+        "maximum_station_vertex_delta_m": 0.464,
+        "snapshot_observation_year": 2005,
+        "event_date_inference": "forbidden"
+      },
+      "route_acceptance_control": {
+        "from_station": "二十四軒",
+        "from_n02_station_code": "000225",
+        "to_station": "琴似",
+        "to_n02_station_code": "000220",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "suggested_route_fixture": {
+        "from_station": "琴似",
+        "from_n02_station_code": "000220",
+        "to_station": "発寒南",
+        "to_n02_station_code": "000216"
+      }
+    },
+    {
+      "event_id": "jp.opening.sapporo-toho-fukuzumi",
+      "current_selection": {
+        "section_count": 10,
+        "section_edge_count": 63,
+        "station_count": 5,
+        "station_names": [
+          "学園前",
+          "美園",
+          "福住",
+          "豊平公園",
+          "月寒中央"
+        ],
+        "station_codes": [
+          "000264",
+          "000282",
+          "000299",
+          "000271",
+          "000296"
+        ],
+        "surveyed_length_km": 5.534,
+        "section_geometry_sha256": "58d762b612a6d6a649aa9be62c7801ada480b194893ca9b46c09ec932577ec50",
+        "station_geometry_sha256": "54daeade8da273ac338a6a5a1fde0cc3169245cf31e93033a2043213ad3a5f3c"
+      },
+      "shared_boundary": {
+        "station": "豊水すすきの",
+        "n02_station_code": "000257",
+        "selected": false,
+        "geometry": [
+          [
+            141.35716,
+            43.05342
+          ],
+          [
+            141.35682,
+            43.05477
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_05_comparison": {
+        "line": "東豊線",
+        "operator": "札幌市",
+        "section_count": 10,
+        "station_count": 5,
+        "five_decimal_edge_multiset_equal": false,
+        "five_decimal_edge_mismatch_count_each_side": 13,
+        "five_decimal_selected_station_geometry_equal": false,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.641,
+        "maximum_station_vertex_delta_m": 0.601,
+        "snapshot_observation_year": 2005,
+        "event_date_inference": "forbidden",
+        "rounding_note": "The selected 月寒中央 feature differs at two exact half-way longitude roundings (141.396975 and 141.396425); all selected station vertices remain within 0.601 m."
+      },
+      "route_acceptance_control": {
+        "from_station": "大通",
+        "from_n02_station_code": "000232",
+        "to_station": "豊水すすきの",
+        "to_n02_station_code": "000257",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "suggested_route_fixture": {
+        "from_station": "豊水すすきの",
+        "from_n02_station_code": "000257",
+        "to_station": "学園前",
+        "to_n02_station_code": "000264"
+      }
+    },
+    {
+      "event_id": "jp.opening.nagoya-sakuradori-nonami-tokushige",
+      "current_selection": {
+        "section_count": 8,
+        "section_edge_count": 101,
+        "station_count": 4,
+        "station_names": [
+          "鳴子北",
+          "相生山",
+          "神沢",
+          "徳重"
+        ],
+        "station_codes": [
+          "005691",
+          "005693",
+          "005703",
+          "005713"
+        ],
+        "surveyed_length_km": 4.263,
+        "section_geometry_sha256": "229a79e50c7c774fc3e171f6a5fe8e3db8cc5f1468948a7300a3c38b3c5af7a3",
+        "station_geometry_sha256": "d98481c13301eeca15fd1864e5c3cea2a57fa9a1e1bc84c030400b4566f733ac",
+        "all_selected_section_features_fully_inside_bbox": true
+      },
+      "station_identity_audit": {
+        "opening_day_boundary_station_names": [
+          "野並"
+        ],
+        "current_boundary_station_names": [
+          "野並"
+        ],
+        "opening_day_new_station_names": [
+          "鳴子北",
+          "相生山",
+          "神沢",
+          "徳重"
+        ],
+        "current_new_station_names": [
+          "鳴子北",
+          "相生山",
+          "神沢",
+          "徳重"
+        ],
+        "renamed_since_opening": []
+      },
+      "shared_boundary": {
+        "station": "野並",
+        "n02_station_code": "005692",
+        "selected": false,
+        "geometry": [
+          [
+            136.95536,
+            35.10236
+          ],
+          [
+            136.95443,
+            35.10285
+          ]
+        ],
+        "selected_section_meets_boundary": true
+      },
+      "n02_11_comparison": {
+        "line": "6号線桜通線",
+        "operator": "名古屋市",
+        "section_count": 8,
+        "station_count": 4,
+        "same_feature_and_station_topology": true,
+        "five_decimal_edge_multiset_equal": true,
+        "five_decimal_edge_mismatch_count_each_side": 0,
+        "five_decimal_selected_station_geometry_equal": true,
+        "five_decimal_shared_boundary_geometry_equal": true,
+        "maximum_section_vertex_delta_m": 0.0,
+        "maximum_station_vertex_delta_m": 0.0
+      },
+      "n02_12_comparison": {
+        "section_count": 8,
+        "station_count": 4,
+        "five_decimal_edge_multiset_equal_to_current": true,
+        "five_decimal_selected_station_geometry_equal_to_current": true,
+        "maximum_section_vertex_delta_m": 0.0,
+        "maximum_station_vertex_delta_m": 0.0
+      },
+      "route_acceptance_control": {
+        "from_station": "鶴里",
+        "from_n02_station_code": "005681",
+        "to_station": "野並",
+        "to_n02_station_code": "005692",
+        "expected_before": "solved",
+        "expected_at": "solved"
+      },
+      "suggested_route_fixture": {
+        "from_station": "野並",
+        "from_n02_station_code": "005692",
+        "to_station": "鳴子北",
+        "to_n02_station_code": "005691"
+      }
+    }
+  ],
+  "withheld": [
+    {
+      "official_event_ids": [
+        "mlit-openings-20260401:008",
+        "mlit-openings-20260401:026"
+      ],
+      "identity": {
+        "line": "大阪モノレール線",
+        "opening_operator": "大阪高速鉄道",
+        "current_operator": "大阪モノレール"
+      },
+      "predecessor_event_ids": [
+        "jp-id-osaka-monorail-main-operator-rename-2020"
+      ],
+      "gap": "Rows 008 and 026 use the opening-day boundary name 柴原, but the reviewed source set has no 柴原→柴原阪大前 station-rename event, so a historical route constrained to the official name cannot resolve. Row 026 also lacks the exact-geometry predecessor mapping required by the opening dependency: three of four selected current sections and the 蛍池 platform were redigitized at higher precision after the compiled 2020 predecessor clone.",
+      "measured_gap": {
+        "official_event_id": "mlit-openings-20260401:026",
+        "selected_current_section_count": 4,
+        "exact_predecessor_section_match_count": 1,
+        "selected_current_station_count": 2,
+        "exact_predecessor_station_match_count": 1,
+        "unmatched_station": "蛍池",
+        "opening_day_boundary_station": "柴原",
+        "current_boundary_station": "柴原阪大前"
+      }
+    },
+    {
+      "official_event_ids": [
+        "mlit-openings-20260401:040"
+      ],
+      "identity": {
+        "line": "国際文化公園都市モノレール線(彩都線)",
+        "opening_operator": "大阪高速鉄道",
+        "current_operator": "大阪モノレール"
+      },
+      "predecessor_event_ids": [
+        "jp-id-osaka-monorail-saito-operator-rename-2020"
+      ],
+      "gap": "A complete current bbox for 万博記念公園—阪大病院前 necessarily contains the pre-existing 万博記念公園 platform because the opened branch curves west of that shared platform. The partial selector therefore cannot isolate all opened sections while leaving the boundary platform undated; retain the row until section allow-list semantics are reviewed.",
+      "measured_gap": {
+        "shared_boundary_station": "万博記念公園",
+        "new_stations": [
+          "公園東口",
+          "阪大病院前"
+        ],
+        "bbox_isolatable": false
+      }
+    },
+    {
+      "official_event_ids": [
+        "mlit-openings-20260401:034"
+      ],
+      "identity": {
+        "line": "東西線",
+        "operator": "京都市"
+      },
+      "gap": "The 1997 醍醐—二条 selector is spatially isolatable, but N02-05 represents 烏丸御池 with two platform features while the current package has one combined feature and 33 five-decimal section edges differ. Retain it until the junction geometry lineage is reviewed explicitly."
+    },
+    {
+      "official_event_ids": [
+        "mlit-openings-20260401:004"
+      ],
+      "identity": {
+        "line": "6号線桜通線",
+        "operator": "名古屋市"
+      },
+      "gap": "The 1994 opening includes 瑞穂運動場, renamed 瑞穂運動場西 on 2004-10-06. No reviewed redistributable pre-rename precise station geometry or certified name lineage is available. Current names must not be backdated across that identity boundary. The 1996 coarse legacy observation is audit-only and does not establish exact current-geometry identity.",
+      "date_evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+        },
+        {
+          "authority": "名古屋市交通局",
+          "date_precision": "exact_day",
+          "reference": "https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm"
+        }
+      ],
+      "measured_selection_audit": {
+        "event_id": "jp.opening.nagoya-sakuradori-imaike-nonami",
+        "current_selection": {
+          "section_count": 18,
+          "section_edge_count": 84,
+          "station_count": 9,
+          "station_names": [
+            "吹上",
+            "御器所",
+            "桜山",
+            "瑞穂区役所",
+            "瑞穂運動場西",
+            "新瑞橋",
+            "桜本町",
+            "鶴里",
+            "野並"
+          ],
+          "station_codes": [
+            "005503",
+            "005526",
+            "005563",
+            "005583",
+            "005608",
+            "005632",
+            "005667",
+            "005681",
+            "005692"
+          ],
+          "surveyed_length_km": 8.605,
+          "section_geometry_sha256": "505305d81e215a2fd1485d6c8dc43a1b0e78a8f23e607221c164c471a31bb857",
+          "station_geometry_sha256": "ba1785e0a39e15aadc30aa91ade1f96f6dd12ad24bd1793a0ebe42550ca740ed",
+          "all_selected_section_features_fully_inside_bbox": true
+        },
+        "station_identity_audit": {
+          "opening_day_boundary_station_names": [
+            "今池"
+          ],
+          "current_boundary_station_names": [
+            "今池"
+          ],
+          "opening_day_new_station_names": [
+            "吹上",
+            "御器所",
+            "桜山",
+            "瑞穂区役所",
+            "瑞穂運動場",
+            "新瑞橋",
+            "桜本町",
+            "鶴里",
+            "野並"
+          ],
+          "current_new_station_names": [
+            "吹上",
+            "御器所",
+            "桜山",
+            "瑞穂区役所",
+            "瑞穂運動場西",
+            "新瑞橋",
+            "桜本町",
+            "鶴里",
+            "野並"
+          ],
+          "renamed_since_opening": [
+            {
+              "from": "瑞穂運動場",
+              "to": "瑞穂運動場西",
+              "effective_date": "2004-10-06",
+              "authority": "名古屋市交通局",
+              "reference": "https://www.kotsu.city.nagoya.jp/jp/sp/ABOUT/TRP0004025/15-%E5%9C%B0%E4%B8%8B%E9%89%84.pdf"
+            }
+          ]
+        },
+        "shared_boundary": {
+          "station": "今池",
+          "n02_station_code": "005465",
+          "selected": false,
+          "geometry": [
+            [
+              136.93692,
+              35.1685
+            ],
+            [
+              136.93709,
+              35.16945
+            ]
+          ],
+          "selected_section_meets_boundary": true
+        },
+        "n02_05_comparison": {
+          "line": "6号線桜通線",
+          "operator": "名古屋市",
+          "section_count": 18,
+          "station_count": 9,
+          "same_feature_and_station_topology": true,
+          "five_decimal_edge_multiset_equal": false,
+          "five_decimal_edge_mismatch_count_each_side": 17,
+          "five_decimal_selected_station_geometry_equal": true,
+          "five_decimal_shared_boundary_geometry_equal": true,
+          "maximum_section_vertex_delta_m": 0.716,
+          "maximum_station_vertex_delta_m": 0.634
+        },
+        "n02_96_audit_only_observation": {
+          "release_observation_date": "1996-12-31",
+          "line": "名古屋市交通局６号線（桜通線）",
+          "operator_field_available": false,
+          "opening_interval_station_count": 9,
+          "opening_interval_station_names": [
+            "吹上",
+            "御器所",
+            "桜山",
+            "瑞穂区役所",
+            "瑞穂運動場",
+            "新瑞橋",
+            "桜本町",
+            "鶴里",
+            "野並"
+          ],
+          "selected_current_vertex_to_legacy_line_max_m": 26.042,
+          "selected_current_vertex_to_legacy_line_mean_m": 7.525,
+          "used_as_shipped_geometry": false
+        },
+        "route_acceptance_control": {
+          "from_station": "車道",
+          "from_n02_station_code": "005438",
+          "to_station": "今池",
+          "to_n02_station_code": "005465",
+          "expected_before": "solved",
+          "expected_at": "solved"
+        },
+        "suggested_route_fixture": {
+          "from_station": "今池",
+          "from_n02_station_code": "005465",
+          "to_station": "吹上",
+          "to_n02_station_code": "005503"
+        }
+      }
+    }
+  ]
+}

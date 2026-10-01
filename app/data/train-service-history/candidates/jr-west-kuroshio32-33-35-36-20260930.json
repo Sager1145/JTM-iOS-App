@@ -1,0 +1,415 @@
+{
+  "candidate_id": "jr-west-kuroshio32-33-35-36-20260930",
+  "candidate_status": "visually_reviewed_official_train_pages",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Only September 30 is promoted. Pass rows are excluded. Trains 35 and 36 print Ocean Arrow vehicle and panorama Green; actual dispatch, vehicle series, car count and capacity remain unverified.",
+  "trips": [
+    {
+      "trip_id": "jr-west.kuroshio.32.2026-09-30",
+      "service_id": "kuroshio",
+      "public_number": "32",
+      "train_number": "2082M",
+      "source_id": "jr-west-odekake-kuroshio32-2082m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/100421?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "白浜",
+          "code": "008915",
+          "arrival": null,
+          "departure": "17:20",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "紀伊田辺",
+          "code": "008867",
+          "arrival": "17:30",
+          "departure": "17:32",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "南部",
+          "code": "008845",
+          "arrival": "17:38",
+          "departure": "17:38",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "御坊",
+          "code": "008657",
+          "arrival": "18:02",
+          "departure": "18:03",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "湯浅",
+          "code": "008554",
+          "arrival": "18:16",
+          "departure": "18:16",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "藤並",
+          "code": "008517",
+          "arrival": "18:20",
+          "departure": "18:20",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "箕島",
+          "code": "008481",
+          "arrival": "18:27",
+          "departure": "18:27",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "海南",
+          "code": "008442",
+          "arrival": "18:39",
+          "departure": "18:39",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和歌山",
+          "code": "008365",
+          "arrival": "18:48",
+          "departure": "18:50",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "日根野",
+          "code": "008072",
+          "arrival": "19:08",
+          "departure": "19:09",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "19:33",
+          "departure": "19:35",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "19:46",
+          "departure": "19:47",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "19:51",
+          "departure": null,
+          "platform": "2",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.kuroshio.33.2026-09-30",
+      "service_id": "kuroshio",
+      "public_number": "33",
+      "train_number": "2083M",
+      "source_id": "jr-west-odekake-kuroshio33-2083m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/144421?date=20260930",
+      "operation_label": "土曜・休日運休",
+      "printed_equipment": [
+        "女性専用席があります",
+        "グリーン車指定席",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": null,
+          "departure": "21:44",
+          "platform": "2",
+          "call_type": "origin"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "21:49",
+          "departure": "21:50",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "22:04",
+          "departure": "22:06",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和泉府中",
+          "code": "007871",
+          "arrival": "22:24",
+          "departure": "22:24",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "日根野",
+          "code": "008072",
+          "arrival": "22:34",
+          "departure": "22:35",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和泉砂川",
+          "code": "008142",
+          "arrival": "22:39",
+          "departure": "22:40",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和歌山",
+          "code": "008365",
+          "arrival": "22:55",
+          "departure": null,
+          "platform": "5",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.kuroshio.35.2026-09-30",
+      "service_id": "kuroshio",
+      "public_number": "35",
+      "train_number": "2085M",
+      "source_id": "jr-west-odekake-kuroshio35-2085m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/144441?date=20260930",
+      "operation_label": "毎日運転",
+      "printed_equipment": [
+        "オーシャンアロー車両で運転",
+        "女性専用席があります",
+        "グリーン車指定席（パノラマ型グリーン車）",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": null,
+          "departure": "22:47",
+          "platform": "2",
+          "call_type": "origin"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "22:51",
+          "departure": "22:52",
+          "platform": "21",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "23:09",
+          "departure": "23:10",
+          "platform": "15",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和泉府中",
+          "code": "007871",
+          "arrival": "23:27",
+          "departure": "23:27",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "日根野",
+          "code": "008072",
+          "arrival": "23:37",
+          "departure": "23:38",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和泉砂川",
+          "code": "008142",
+          "arrival": "23:42",
+          "departure": "23:43",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和歌山",
+          "code": "008365",
+          "arrival": "23:58",
+          "departure": null,
+          "platform": "1",
+          "call_type": "destination"
+        }
+      ]
+    },
+    {
+      "trip_id": "jr-west.kuroshio.36.2026-09-30",
+      "service_id": "kuroshio",
+      "public_number": "36",
+      "train_number": "86M",
+      "source_id": "jr-west-odekake-kuroshio36-86m-20260930",
+      "source_url": "https://timetable.jr-odekake.net/train-timetable/144551?date=20260930",
+      "operation_label": "土曜・休日運休",
+      "printed_equipment": [
+        "オーシャンアロー車両で運転",
+        "女性専用席があります",
+        "グリーン車指定席（パノラマ型グリーン車）",
+        "普通車全車指定席"
+      ],
+      "route_evidence": "Printed passenger calls only; physical route line IDs and operator segments unresolved.",
+      "stops": [
+        {
+          "name": "新宮",
+          "code": "008874",
+          "arrival": null,
+          "departure": "17:46",
+          "platform": null,
+          "call_type": "origin"
+        },
+        {
+          "name": "紀伊勝浦",
+          "code": "008974",
+          "arrival": "18:03",
+          "departure": "18:04",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "太地",
+          "code": "009025",
+          "arrival": "18:10",
+          "departure": "18:11",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "古座",
+          "code": "009224",
+          "arrival": "18:28",
+          "departure": "18:29",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "串本",
+          "code": "009265",
+          "arrival": "18:37",
+          "departure": "18:38",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "周参見",
+          "code": "009191",
+          "arrival": "19:09",
+          "departure": "19:10",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "白浜",
+          "code": "008915",
+          "arrival": "19:30",
+          "departure": "19:37",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "紀伊田辺",
+          "code": "008867",
+          "arrival": "19:48",
+          "departure": "19:50",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "御坊",
+          "code": "008657",
+          "arrival": "20:19",
+          "departure": "20:19",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "海南",
+          "code": "008442",
+          "arrival": "20:51",
+          "departure": "20:52",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "和歌山",
+          "code": "008365",
+          "arrival": "21:01",
+          "departure": "21:02",
+          "platform": "1",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "日根野",
+          "code": "008072",
+          "arrival": "21:22",
+          "departure": "21:23",
+          "platform": null,
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "天王寺",
+          "code": "007439",
+          "arrival": "21:47",
+          "departure": "21:49",
+          "platform": "18",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "大阪",
+          "code": "007068",
+          "arrival": "22:02",
+          "departure": "22:03",
+          "platform": "24",
+          "call_type": "passenger_stop"
+        },
+        {
+          "name": "新大阪",
+          "code": "006911",
+          "arrival": "22:08",
+          "departure": null,
+          "platform": "2",
+          "call_type": "destination"
+        }
+      ]
+    }
+  ]
+}

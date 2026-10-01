@@ -100,6 +100,8 @@ struct StatisticsDashboardContent: View {
     /// destination of its own, so tapping a journey here opens the record
     /// rather than silently changing what the map behind the panel draws.
     var openJourney: (Train) -> Void
+    /// The map share image prints the same record ticket without the charts below it.
+    var ticketOnly = false
 
     /// §13.2: work under about 400 ms must not flash progress UI at the
     /// reader. Held here rather than inside the summary because the summary is
@@ -246,44 +248,46 @@ struct StatisticsDashboardContent: View {
                         // whole screen waiting for the slower half.
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
                         passportDataPage(loaded, stats.overall)
-                        // 本日乗車 — the day in scope, issued as a ticket of
-                        // its own directly under the record it is one entry
-                        // in. It used to be a stamped block INSIDE that card,
-                        // below a perforation, on the reading that a stub does
-                        // not carry its own tear line. The face the design
-                        // gives these cards has no room for a second document
-                        // inside the first: it is one 券面 from 券種名 to
-                        // 最下行, and a day printed into the middle of it would
-                        // have to be a second 券種名 on the same piece of
-                        // stock. So it is a second piece of stock — same
-                        // stock, same typesetting, its own 券種.
-                        if let daily = stats.daily {
-                            dailyTicket(daily)
+                        if !ticketOnly {
+                            // 本日乗車 — the day in scope, issued as a ticket of
+                            // its own directly under the record it is one entry
+                            // in. It used to be a stamped block INSIDE that card,
+                            // below a perforation, on the reading that a stub does
+                            // not carry its own tear line. The face the design
+                            // gives these cards has no room for a second document
+                            // inside the first: it is one 券面 from 券種名 to
+                            // 最下行, and a day printed into the middle of it would
+                            // have to be a second 券種名 on the same piece of
+                            // stock. So it is a second piece of stock — same
+                            // stock, same typesetting, its own 券種.
+                            if let daily = stats.daily {
+                                dailyTicket(daily)
+                            }
+                            // §5.7's order, with the reference's own sections
+                            // folded into it: what the shape of the travelling was,
+                            // then the two records the distance and the clock hold,
+                            // then coverage and 車種, then who and where.
+                            if let passport {
+                                rhythmCard(passport)
+                                distanceCard(passport)
+                                timeCard(passport)
+                            }
+                            coverageCard(stats)
+                            serviceCard(stats.overall)
+                            if let passport {
+                                stationsCard(passport)
+                                operatorsCard(passport)
+                                routesCard(passport)
+                            }
+                            topSegmentsCard(stats.overall)
+                            // Only when there is more than one. Scoped to Japan,
+                            // this card would be the scope control's own answer
+                            // read back — a country list of length one (§5.1).
+                            if let passport, passport.regions.count > 1 {
+                                regionsCard(passport)
+                            }
+                            lineDetailCard(stats)
                         }
-                        // §5.7's order, with the reference's own sections
-                        // folded into it: what the shape of the travelling was,
-                        // then the two records the distance and the clock hold,
-                        // then coverage and 車種, then who and where.
-                        if let passport {
-                            rhythmCard(passport)
-                            distanceCard(passport)
-                            timeCard(passport)
-                        }
-                        coverageCard(stats)
-                        serviceCard(stats.overall)
-                        if let passport {
-                            stationsCard(passport)
-                            operatorsCard(passport)
-                            routesCard(passport)
-                        }
-                        topSegmentsCard(stats.overall)
-                        // Only when there is more than one. Scoped to Japan,
-                        // this card would be the scope control's own answer
-                        // read back — a country list of length one (§5.1).
-                        if let passport, passport.regions.count > 1 {
-                            regionsCard(passport)
-                        }
-                        lineDetailCard(stats)
                     }
                 }
             } else {
@@ -1061,6 +1065,9 @@ struct StatisticsDashboardContent: View {
                 .pickerStyle(.segmented)
                 .accessibilityLabel(Text(localization.statsText("ios.stats.scaleLabel")))
             }
+            if rhythm != .year {
+                rhythmYearControl(passport)
+            }
             if let best, best.count > 0 {
                 PassportHighlight(
                     eyebrow: localization.statsText("ios.stats.mostJourneys"),
@@ -1108,7 +1115,7 @@ struct StatisticsDashboardContent: View {
                     spoken: journeyCount(column.count))
             }
         case .month:
-            return passport.byMonth.map { column in
+            return passport.months(in: rhythmYear).map { column in
                 StatisticsColumnChart.Column(
                     id: column.id,
                     label: column.id.formatted(),
@@ -1117,7 +1124,7 @@ struct StatisticsDashboardContent: View {
                     spoken: journeyCount(column.count))
             }
         case .weekday:
-            return passport.byWeekday.map { column in
+            return passport.weekdays(in: rhythmYear).map { column in
                 StatisticsColumnChart.Column(
                     id: column.id,
                     label: weekdayLabel(column.id, short: true),
@@ -1125,6 +1132,47 @@ struct StatisticsDashboardContent: View {
                     count: column.count,
                     spoken: journeyCount(column.count))
             }
+        }
+    }
+
+    private var rhythmYear: Int {
+        statistics.selectedRhythmYear ?? Self.currentGregorianYear
+    }
+
+    private static var currentGregorianYear: Int {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        return calendar.component(.year, from: Date())
+    }
+
+    @ViewBuilder
+    private func rhythmYearControl(_ passport: PassportStatistics) -> some View {
+        let year = rhythmYear
+        if isPoster {
+            Text(String(year))
+                .font(.subheadline.weight(.semibold))
+        } else {
+            Menu {
+                let years = Set(passport.byYear.map(\.id) + [Self.currentGregorianYear, year])
+                ForEach(years.sorted(by: >), id: \.self) { candidate in
+                    Button {
+                        statistics.selectRhythmYear(candidate == Self.currentGregorianYear
+                            ? nil : candidate
+                        )
+                    } label: {
+                        Label(
+                            String(candidate),
+                            systemImage: candidate == year ? "checkmark" : "calendar")
+                    }
+                    .accessibilityIdentifier("statisticsRhythmYear-\(candidate)")
+                }
+            } label: {
+                Label(String(year), systemImage: "calendar")
+                    .font(.subheadline.weight(.semibold))
+            }
+            .accessibilityLabel(
+                Text(localization.statsText("ios.stats.scale.year") + " " + String(year)))
+            .accessibilityIdentifier("statisticsRhythmYearMenu")
         }
     }
 
@@ -1602,15 +1650,22 @@ struct StatisticsDashboardContent: View {
 
     // MARK: - shared bits
 
-    /// A label/value pair that turns into two stacked lines rather than
-    /// squeezing either side at an accessibility text size (§10.1).
+    /// Keep both sides readable when the card is narrow or text is enlarged.
     @ViewBuilder
     private func adaptiveRow(label: some View, value: some View) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            label
-            Spacer(minLength: 8)
-            value
-                .multilineTextAlignment(.trailing)
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline) {
+                label.fixedSize(horizontal: true, vertical: false)
+                Spacer(minLength: 8)
+                value
+                    .fixedSize(horizontal: true, vertical: false)
+                    .multilineTextAlignment(.trailing)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                label
+                value
+                    .multilineTextAlignment(.leading)
+            }
         }
     }
 

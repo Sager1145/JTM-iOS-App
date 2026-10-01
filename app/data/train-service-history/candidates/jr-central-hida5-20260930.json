@@ -1,0 +1,118 @@
+{
+  "candidate_id": "jr-central-hida5-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "selected_service_date": "2026-09-30",
+  "valid_until": "2026-10-01",
+  "service_id": "hida",
+  "source_id": "jr-west-odekake-hida5-25d-20260930",
+  "source_url": "https://timetable.jr-odekake.net/train-timetable/76781?date=20260930",
+  "source_calendar_label": "毎日運転",
+  "calendar_note": "The selected September 30 page alone is promoted; the general daily label is not expanded.",
+  "trip": {
+    "trip_id": "jr-central.hida.5.2026-09-30",
+    "public_number": "5",
+    "train_number": "25D",
+    "origin": "名古屋",
+    "destination": "飛騨古川",
+    "stop_times": [
+      {
+        "stop_sequence": 1,
+        "name_snapshot": "名古屋",
+        "arrival_time": null,
+        "departure_time": "09:39",
+        "platform": "11",
+        "call_type": "origin"
+      },
+      {
+        "stop_sequence": 2,
+        "name_snapshot": "岐阜",
+        "arrival_time": "10:00",
+        "departure_time": "10:12",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 3,
+        "name_snapshot": "美濃太田",
+        "arrival_time": "10:31",
+        "departure_time": "10:32",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 4,
+        "name_snapshot": "下呂",
+        "arrival_time": "11:29",
+        "departure_time": "11:30",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 5,
+        "name_snapshot": "高山",
+        "arrival_time": "12:14",
+        "departure_time": "12:20",
+        "platform": null,
+        "call_type": "passenger_stop"
+      },
+      {
+        "stop_sequence": 6,
+        "name_snapshot": "飛騨古川",
+        "arrival_time": "12:35",
+        "departure_time": null,
+        "platform": null,
+        "call_type": "destination"
+      }
+    ],
+    "direction": "down",
+    "equipment": [
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "formation": null,
+    "formation_note": "Car count, stock model, order and individual car configuration are unprinted and unknown.",
+    "printed_remarks": [
+      "９月１８～２３日はグリーン車指定席普通車全車指定席で運転"
+    ]
+  },
+  "review_notes": [
+    "Official date-selected detail; September 30 blue calendar cell confirmed visually.",
+    "All printed passenger calls and platforms retained; レ pass rows omitted.",
+    "September 18–23 seat exception does not apply September 30; no formation inferred."
+  ],
+  "calendar_observation": {
+    "month": "2026年9月",
+    "day": 30,
+    "status": "displayed_timetable_operates",
+    "visual_cell_color": "blue",
+    "method": "Native browser screenshot; blue legend explicitly means displayed times operate",
+    "variant_url": "https://timetable.jr-odekake.net/train-timetable/76781?date=20260930"
+  },
+  "related_service_observation": {
+    "public_number": "25",
+    "source_url": "https://timetable.jr-odekake.net/train-timetable/76781?date=20260930",
+    "train_number_segments": [
+      {
+        "train_number": "2025D",
+        "origin": "大阪",
+        "destination": "岐阜",
+        "calendar_label": "土曜・休日運休"
+      },
+      {
+        "train_number": "25D",
+        "origin": "岐阜",
+        "destination": "高山",
+        "calendar_label": "毎日運転"
+      }
+    ],
+    "coupling_note": "岐阜－高山間２５Ｄ〔ひだ５号〕に併結",
+    "gifu_arrival": "09:56",
+    "gifu_departure": "10:12",
+    "takayama_arrival": "12:14",
+    "equipment": [
+      "普通車一部指定席"
+    ],
+    "note": "Separate public service; 2025D is not a Hida 5 segment. Shared page columns show through arrows at Gifu."
+  }
+}

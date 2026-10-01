@@ -2098,6 +2098,7 @@ def _stamp_overlay_parts(
     stations: list[dict],
     metadata: dict[str, dict],
     exclusions: dict[str, str] | None = None,
+    log_reports: bool = True,
 ) -> tuple[list[list[dict]], dict[str, dict], list[dict]]:
     """Stamp display parts from the pre-weld interval when one is stored.
 
@@ -2122,6 +2123,14 @@ def _stamp_overlay_parts(
         bbox = match.get("bbox") or []
         line_name = match.get("line_name")
         operator = match.get("operator")
+        raw_targets = match.get("targets")
+        targets = (
+            set(raw_targets)
+            if isinstance(raw_targets, list) and raw_targets
+            else {"sections", "stations"}
+        )
+        targets_sections = "sections" in targets
+        targets_stations = "stations" in targets
         solved_hits = 0
         raw_hits = 0
         stamped_parts = 0
@@ -2145,115 +2154,130 @@ def _stamp_overlay_parts(
                 "reviewStatus": "not_applicable",
             }
             reports.append(report)
-            print(
-                "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
-                file=sys.stderr,
-            )
+            if log_reports:
+                print(
+                    "MATCH "
+                    + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
+                    file=sys.stderr,
+                )
             continue
-        for fragment_index, fragment in enumerate(fragments):
-            entry = metadata.get(fragment["lineKey"]) or {}
-            if not _line_name_matches(entry, line_name, operator):
-                continue
-            line_present = True
-            pres = fragment.get("preWeldParts")
-            lengths = fragment.get("partLengths")
-            clip_safe = _fragment_measures_clip_safe(fragment)
-            new_parts: list = []
-            new_pres: list = []
-            new_lengths: list = []
-            new_stamps: list = []
-            split_any = False
-            for part_index, part in enumerate(fragment["parts"]):
-                raw_hit = _part_inside_bbox(part, bbox)
-                if raw_hit:
-                    raw_hits += 1
-                pre_weld = pres[part_index] if pres and part_index < len(pres) else None
-                length_km = lengths[part_index] if lengths and part_index < len(lengths) else None
-                stamp = stamps[fragment_index][part_index]
-                decision, flags = _ownership_flags(part, pre_weld, bbox)
-                subparts = _straddle_subparts(part, flags) if decision == "flags" and flags else None
-                if decision == "flags" and subparts is None:
-                    # Vertices cross the box but no edge has both ends inside.
-                    decision = "all_out"
-                if decision == "flags" and not clip_safe:
-                    failed_inside += 1
-                    solved_hits += 1
-                    new_parts.append(part)
-                    new_pres.append(pre_weld)
-                    new_lengths.append(length_km)
-                    new_stamps.append(stamp)
+        if targets_sections:
+            for fragment_index, fragment in enumerate(fragments):
+                entry = metadata.get(fragment["lineKey"]) or {}
+                if not _line_name_matches(entry, line_name, operator):
                     continue
-                if decision != "flags" or not subparts:
-                    if decision == "all_in":
+                line_present = True
+                pres = fragment.get("preWeldParts")
+                lengths = fragment.get("partLengths")
+                clip_safe = _fragment_measures_clip_safe(fragment)
+                new_parts: list = []
+                new_pres: list = []
+                new_lengths: list = []
+                new_stamps: list = []
+                split_any = False
+                for part_index, part in enumerate(fragment["parts"]):
+                    raw_hit = _part_inside_bbox(part, bbox)
+                    if raw_hit:
+                        raw_hits += 1
+                    pre_weld = pres[part_index] if pres and part_index < len(pres) else None
+                    length_km = lengths[part_index] if lengths and part_index < len(lengths) else None
+                    stamp = stamps[fragment_index][part_index]
+                    decision, flags = _ownership_flags(part, pre_weld, bbox)
+                    subparts = _straddle_subparts(part, flags) if decision == "flags" and flags else None
+                    if decision == "flags" and subparts is None:
+                        # Vertices cross the box but no edge has both ends inside.
+                        decision = "all_out"
+                    if decision == "flags" and not clip_safe:
+                        failed_inside += 1
                         solved_hits += 1
-                        matched_lengths.append(length_km)
-                        _apply_retirement_dates(stamp, retirement)
-                        stamped_parts += 1
-                        stamped_lengths.append(length_km)
-                    new_parts.append(part)
-                    new_pres.append(pre_weld)
-                    new_lengths.append(length_km)
-                    new_stamps.append(stamp)
-                    continue
-                split_any = True
-                for coords, inside, origin in subparts:
-                    piece_stamp = dict(stamp)
-                    # The parent segment's stored kilometres are not a length
-                    # for one run. Leave it unset rather than invent one.
-                    piece_length = None
-                    if pre_weld is not None and len(pre_weld) == len(part):
-                        piece_pre = [
-                            list(point) for point in pre_weld[origin:origin + len(coords)]
-                        ]
-                    elif pre_weld is not None:
-                        piece_pre = [list(point) for point in coords]
-                    else:
-                        piece_pre = None
-                    if inside:
-                        solved_hits += 1
-                        matched_lengths.append(piece_length)
-                        _apply_retirement_dates(piece_stamp, retirement)
-                        stamped_parts += 1
-                        stamped_lengths.append(piece_length)
-                    new_parts.append(coords)
-                    new_pres.append(piece_pre)
-                    new_lengths.append(piece_length)
-                    new_stamps.append(piece_stamp)
-            if split_any:
-                fragment["parts"] = new_parts
-                if pres is not None:
-                    fragment["preWeldParts"] = new_pres
-                if lengths is not None:
-                    fragment["partLengths"] = new_lengths
-                stamps[fragment_index] = new_stamps
+                        new_parts.append(part)
+                        new_pres.append(pre_weld)
+                        new_lengths.append(length_km)
+                        new_stamps.append(stamp)
+                        continue
+                    if decision != "flags" or not subparts:
+                        if decision == "all_in":
+                            solved_hits += 1
+                            matched_lengths.append(length_km)
+                            _apply_retirement_dates(stamp, retirement)
+                            stamped_parts += 1
+                            stamped_lengths.append(length_km)
+                        new_parts.append(part)
+                        new_pres.append(pre_weld)
+                        new_lengths.append(length_km)
+                        new_stamps.append(stamp)
+                        continue
+                    split_any = True
+                    for coords, inside, origin in subparts:
+                        piece_stamp = dict(stamp)
+                        # The parent segment's stored kilometres are not a length
+                        # for one run. Leave it unset rather than invent one.
+                        piece_length = None
+                        if pre_weld is not None and len(pre_weld) == len(part):
+                            piece_pre = [
+                                list(point) for point in pre_weld[origin:origin + len(coords)]
+                            ]
+                        elif pre_weld is not None:
+                            piece_pre = [list(point) for point in coords]
+                        else:
+                            piece_pre = None
+                        if inside:
+                            solved_hits += 1
+                            matched_lengths.append(piece_length)
+                            _apply_retirement_dates(piece_stamp, retirement)
+                            stamped_parts += 1
+                            stamped_lengths.append(piece_length)
+                        new_parts.append(coords)
+                        new_pres.append(piece_pre)
+                        new_lengths.append(piece_length)
+                        new_stamps.append(piece_stamp)
+                if split_any:
+                    fragment["parts"] = new_parts
+                    if pres is not None:
+                        fragment["preWeldParts"] = new_pres
+                    if lengths is not None:
+                        fragment["partLengths"] = new_lengths
+                    stamps[fragment_index] = new_stamps
         station_hits = 0
-        for station in stations:
-            entry = metadata.get(station["lineKey"]) or {}
-            if not _line_name_matches(entry, line_name, operator):
-                continue
-            point = [[station["lon"], station["lat"]]]
-            if not _part_inside_bbox(point, bbox):
-                continue
-            station_hits += 1
-            station_stamp = station_stamps_by_id.setdefault(station["id"], _blank_stamp())
-            _apply_retirement_dates(station_stamp, retirement)
-        if failed_inside:
+        station_line_present = False
+        if targets_stations:
+            for station in stations:
+                entry = metadata.get(station["lineKey"]) or {}
+                if not _line_name_matches(entry, line_name, operator):
+                    continue
+                station_line_present = True
+                point = [[station["lon"], station["lat"]]]
+                if not _part_inside_bbox(point, bbox):
+                    continue
+                station_hits += 1
+                station_stamp = station_stamps_by_id.setdefault(
+                    station["id"], _blank_stamp())
+                _apply_retirement_dates(station_stamp, retirement)
+        if targets_sections and failed_inside:
             status = "incomplete"
             reason = "straddle split unsupported"
-        elif not line_present:
+        elif targets_sections and not line_present:
             status = "incomplete"
             reason = "display geometry absent"
-        elif stamped_parts == 0:
+        elif targets_sections and stamped_parts == 0:
             status = "incomplete"
             reason = "original interval outside bbox"
-        elif stamped_parts != solved_hits:
+        elif targets_sections and stamped_parts != solved_hits:
             status = "incomplete"
             reason = "matched source interval was not stamped"
+        elif targets_stations and not targets_sections and station_hits == 0:
+            status = "incomplete"
+            reason = (
+                "display station outside bbox"
+                if station_line_present else "display stations absent"
+            )
         else:
             status = "matched"
             reason = None
         rule_length = _rule_length_km(retirement)
-        if rule_length is not None:
+        if not targets_sections:
+            expected_length = None
+        elif rule_length is not None:
             expected_length = rule_length
         else:
             expected_length = _sum_stored_lengths(matched_lengths)
@@ -2267,16 +2291,190 @@ def _stamp_overlay_parts(
             "displayFragmentHitsStage": "before chain split",
             "stationHits": station_hits,
             "expectedAffectedLength": expected_length,
-            "actualAffectedLength": _sum_stored_lengths(stamped_lengths),
+            "actualAffectedLength": (
+                _sum_stored_lengths(stamped_lengths) if targets_sections else None
+            ),
             "unmatchedReason": reason,
             "reviewStatus": status,
         }
         reports.append(report)
-        print(
-            "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
-            file=sys.stderr,
-        )
+        if log_reports:
+            print(
+                "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
+                file=sys.stderr,
+            )
     return stamps, station_stamps_by_id, reports
+
+
+def _history_source_path(history_dir: Path, region: str, stem: str) -> Path:
+    suffix = "" if region == "jp" else f"-{region}"
+    return history_dir / f"{stem}{suffix}.json"
+
+
+def _retirement_targets(match: dict) -> set[str]:
+    raw = match.get("targets")
+    if isinstance(raw, list) and raw:
+        return set(raw)
+    return {"sections", "stations"}
+
+
+def _retirement_identity(retirement: dict) -> tuple:
+    match = retirement.get("match") or {}
+    return (
+        match.get("line_name"),
+        match.get("operator"),
+        tuple(match.get("bbox") or []),
+        tuple(sorted(_retirement_targets(match))),
+    )
+
+
+def _solver_geometry_fallbacks(
+    region: str,
+    history_dir: Path,
+    overlay: dict,
+    metadata: dict[str, dict],
+    reports: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """Recover a closed current identity omitted by the display base.
+
+    This is deliberately one-way: a `valid_to` rule may preserve surveyed
+    solver geometry in the history side file, while an opening whose
+    `valid_from` identity is absent stays incomplete. The main display blob is
+    never changed. Every selected source feature must fit wholly in the rule's
+    bbox; partial source features are not clipped or guessed.
+    """
+    report_by_id = {report.get("historyId"): report for report in reports}
+    candidates = []
+    retirements = overlay.get("retirements") or []
+    for retirement in retirements:
+        history_id = retirement.get("history_id")
+        report = report_by_id.get(history_id)
+        valid_to = retirement.get("valid_to")
+        if not isinstance(valid_to, str) or not valid_to or not report:
+            continue
+        if report.get("reviewStatus") != "incomplete":
+            continue
+        match = retirement.get("match") or {}
+        line_name = match.get("line_name")
+        operator = match.get("operator")
+        identity_present = any(
+            (entry.get("region") or str(key).split("|", 1)[0]) == region
+            and _line_name_matches(entry, line_name, operator)
+            for key, entry in metadata.items()
+        )
+        if identity_present:
+            continue
+        candidates.append(retirement)
+    if not candidates:
+        return [], []
+
+    sections_path = _history_source_path(history_dir, region, "rail-sections")
+    stations_path = _history_source_path(history_dir, region, "stations")
+    section_features = []
+    station_features = []
+    if sections_path.exists():
+        section_features = (json.loads(sections_path.read_bytes()).get("features") or [])
+    if stations_path.exists():
+        station_features = (json.loads(stations_path.read_bytes()).get("features") or [])
+
+    fallback_sections: list[dict] = []
+    fallback_stations: list[dict] = []
+    emitted_identities: set[tuple] = set()
+    for retirement in candidates:
+        history_id = retirement["history_id"]
+        report = report_by_id[history_id]
+        match = retirement.get("match") or {}
+        line_name = match.get("line_name")
+        operator = match.get("operator")
+        bbox = match.get("bbox") or []
+        targets = _retirement_targets(match)
+
+        matched_sections = []
+        if "sections" in targets:
+            for feature in section_features:
+                props = feature.get("properties") or {}
+                if _prop(props, "line_name", "N02_003") != line_name:
+                    continue
+                if _prop(props, "operator", "N02_004") != (operator or ""):
+                    continue
+                parts = _linestring_parts(feature.get("geometry") or {})
+                if parts and all(_part_inside_bbox(part, bbox) for part in parts):
+                    matched_sections.append(feature)
+
+        matched_stations = []
+        if "stations" in targets:
+            for feature in station_features:
+                props = feature.get("properties") or {}
+                if _prop(props, "line_name", "N02_003") != line_name:
+                    continue
+                if _prop(props, "operator", "N02_004") != (operator or ""):
+                    continue
+                points = _flatten_coordinates(
+                    (feature.get("geometry") or {}).get("coordinates"))
+                if points and _part_inside_bbox(points, bbox):
+                    matched_stations.append(feature)
+
+        report["solverFallbackSectionHits"] = len(matched_sections)
+        report["solverFallbackStationHits"] = len(matched_stations)
+        complete = (
+            ("sections" not in targets or bool(matched_sections))
+            and ("stations" not in targets or bool(matched_stations))
+        )
+        if not complete:
+            continue
+
+        report["reviewStatus"] = "solver_geometry_fallback"
+        report["matchSource"] = "solver_geometry_fallback"
+        report["unmatchedReason"] = None
+        identity = _retirement_identity(retirement)
+        if identity in emitted_identities:
+            continue
+        emitted_identities.add(identity)
+
+        related = [
+            other for other in retirements
+            if _retirement_identity(other) == identity
+        ]
+        valid_from_values = [
+            row["valid_from"] for row in related if row.get("valid_from")]
+        valid_to_values = [
+            row["valid_to"] for row in related if row.get("valid_to")]
+        valid_from = max(valid_from_values) if valid_from_values else None
+        valid_to = min(valid_to_values) if valid_to_values else None
+        shared = {
+            "line_name": line_name,
+            "operator": operator,
+            "display_kind": "retiredInPlace",
+        }
+        if valid_from:
+            shared["valid_from"] = valid_from
+        if valid_to:
+            shared["valid_to"] = valid_to
+
+        for feature in matched_sections:
+            props = dict(feature.get("properties") or {})
+            props.update(shared)
+            props["history_id"] = history_id
+            fallback_sections.append({
+                "type": "Feature", "properties": props,
+                "geometry": feature.get("geometry"),
+            })
+        for feature in matched_stations:
+            props = dict(feature.get("properties") or {})
+            points = _flatten_coordinates(
+                (feature.get("geometry") or {}).get("coordinates"))
+            digest_input = json.dumps(
+                [props.get("n02_station_code"), props.get("station_name"), points],
+                ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+            station_suffix = hashlib.sha256(digest_input.encode()).hexdigest()[:12]
+            props.update(shared)
+            props["history_id"] = f"{history_id}.solver.station.{station_suffix}"
+            props["line_history_id"] = history_id
+            fallback_stations.append({
+                "type": "Feature", "properties": props,
+                "geometry": feature.get("geometry"),
+            })
+    return fallback_sections, fallback_stations
 
 
 def build_region_history(
@@ -2309,7 +2507,15 @@ def build_region_history(
     }
 
     stamps, station_stamps_by_id, match_report = _stamp_overlay_parts(
-        region, overlay, fragments, stations, metadata, exclusions)
+        region, overlay, fragments, stations, metadata, exclusions,
+        log_reports=False)
+    fallback_sections, fallback_stations = _solver_geometry_fallbacks(
+        region, history_dir, overlay, metadata, match_report)
+    for report in match_report:
+        print(
+            "MATCH " + json.dumps(report, ensure_ascii=False, separators=(",", ":")),
+            file=sys.stderr,
+        )
     _split_mixed_continuous_chains(fragments, stations, stamps)
 
     for fragment, part_stamps in zip(fragments, stamps):
@@ -2338,7 +2544,7 @@ def build_region_history(
         station_stamps.append({"id": station["id"], **_dated_fields(stamp)})
 
     grouped: dict[str, dict] = {}
-    for feature in overlay.get("sections") or []:
+    for feature in [*(overlay.get("sections") or []), *fallback_sections]:
         props = feature.get("properties") or {}
         history_id = props.get("history_id")
         if not isinstance(history_id, str) or not history_id.strip():
@@ -2347,7 +2553,8 @@ def build_region_history(
         parts = _linestring_parts(feature.get("geometry") or {})
         if not parts:
             continue
-        kind = _overlay_section_kind(history_id, retirement_ids)
+        kind = props.get("display_kind") or _overlay_section_kind(
+            history_id, retirement_ids)
         name = _prop(props, "line_name", "N02_003")
         operator = _prop(props, "operator", "N02_004")
         group = grouped.get(history_id)
@@ -2376,7 +2583,7 @@ def build_region_history(
             group["parts"].append(row)
 
     overlay_stations = []
-    for feature in overlay.get("stations") or []:
+    for feature in [*(overlay.get("stations") or []), *fallback_stations]:
         props = feature.get("properties") or {}
         history_id = props.get("history_id")
         if not isinstance(history_id, str) or not history_id.strip():
@@ -2390,7 +2597,7 @@ def build_region_history(
         name = _prop(props, "station_name", "N02_005", "name")
         line_name = _prop(props, "line_name", "N02_003")
         operator = _prop(props, "operator", "N02_004")
-        line_history_id = _overlay_station_line(
+        line_history_id = props.get("line_history_id") or _overlay_station_line(
             grouped, line_name, operator, lon, lat)
         color, _, _, min_zoom, _ = _history_line_style(
             region, line_name, operator, metadata)
@@ -2401,7 +2608,7 @@ def build_region_history(
             "operator": operator,
             "lon": lon,
             "lat": lat,
-            "kind": "historical",
+            "kind": props.get("display_kind") or "historical",
             "color": color,
             "minZoomMapLibre": min_zoom,
             "lineHistoryId": line_history_id or history_id,

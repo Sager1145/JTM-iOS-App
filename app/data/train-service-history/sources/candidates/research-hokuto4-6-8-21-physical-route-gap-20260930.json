@@ -1,0 +1,454 @@
+{
+  "schema_version": 1,
+  "purpose": "Research-only evidence and snapshot candidate; must not be materialized as verified route or operator segments",
+  "reviewed_on": "2026-09-30",
+  "trip_ids": [
+    "jr-hokkaido.hokuto.4.exact-2026-09-30",
+    "jr-hokkaido.hokuto.6.exact-2026-09-30",
+    "jr-hokkaido.hokuto.8.exact-2026-09-30",
+    "jr-hokkaido.hokuto.21.exact-2026-09-30"
+  ],
+  "route_verdict": "insufficient_for_complete_dated_physical_route",
+  "canonical_data_modified": false,
+  "sources": [
+    {
+      "url": "https://www.jrhokkaido.co.jp/corporate/company/com_02.html",
+      "scope": "Official named operating areas, explicitly as of 2026-04-01",
+      "direct_continuing_validity_to_20260930_found": false
+    },
+    {
+      "url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=9851",
+      "inspection": "Safari accessibility UI; date dropdown visibly 2026年9月30日(水), expanded menu also marks that date selected; footer JR時刻表 令和8年10月号",
+      "train_columns_present": [
+        "4D / 北斗4",
+        "6D / 北斗6",
+        "8D / 北斗8"
+      ],
+      "column_positions_one_based": [
+        19,
+        40,
+        53
+      ],
+      "manual_date_selection_completed": false,
+      "limitation": "Stopped by coordinator to avoid concurrent Safari operations, after opening selected date menu. Accessibility table exposed first 24 rows only; no full-column certification."
+    },
+    {
+      "url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "inspection": "Web cache omitted visible selected date and returned September issue; existing live Safari page independently showed September 30 and October issue before opening new research tab",
+      "limitation": "Web cache not accepted as date evidence"
+    }
+  ],
+  "observed_s9851_three_train_common_path_prefix": [
+    {
+      "station": "苗穂",
+      "status": "pass"
+    },
+    {
+      "station": "白石",
+      "status": "pass"
+    },
+    {
+      "station": "平和",
+      "status": "pass"
+    },
+    {
+      "station": "新札幌",
+      "status": "call"
+    },
+    {
+      "station": "上野幌",
+      "status": "pass"
+    },
+    {
+      "station": "北広島",
+      "status": "pass"
+    },
+    {
+      "station": "島松",
+      "status": "pass"
+    },
+    {
+      "station": "恵み野",
+      "status": "pass"
+    },
+    {
+      "station": "恵庭",
+      "status": "pass"
+    },
+    {
+      "station": "サッポロビール庭園",
+      "status": "pass"
+    },
+    {
+      "station": "長都",
+      "status": "pass"
+    },
+    {
+      "station": "千歳",
+      "status": "pass"
+    },
+    {
+      "station": "南千歳",
+      "status": "call"
+    },
+    {
+      "station": "新千歳空港",
+      "status": "other_line_symbol_not_a_pass_or_call"
+    },
+    {
+      "station": "植苗",
+      "status": "pass"
+    }
+  ],
+  "observed_path_prefix_origin": "札幌",
+  "snapshot_package": "app/public/rail/jp-2025.json",
+  "snapshot_warning": "2025 snapshot identities and current packaged station arrays do not establish 2026-09-30 facility validity",
+  "southbound_candidate_sections": [
+    {
+      "current_n02_line_id": "jp-北海道旅客鉄道-函館線",
+      "operator_name_in_package": "北海道旅客鉄道",
+      "from": "札幌",
+      "to": "白石",
+      "station_path": [
+        {
+          "station_id": "jp.n02.000227",
+          "name": "札幌"
+        },
+        {
+          "station_id": "jp.n02.000226",
+          "name": "苗穂"
+        },
+        {
+          "station_id": "jp.n02.000255",
+          "name": "白石"
+        }
+      ],
+      "temporal_status": "unattested",
+      "trip_assignment_status": "candidate_not_verified"
+    },
+    {
+      "current_n02_line_id": "jp-北海道旅客鉄道-千歳線",
+      "operator_name_in_package": "北海道旅客鉄道",
+      "from": "白石",
+      "to": "沼ノ端",
+      "station_path": [
+        {
+          "station_id": "jp.n02.000255",
+          "name": "白石"
+        },
+        {
+          "station_id": "jp.n02.000266",
+          "name": "平和"
+        },
+        {
+          "station_id": "jp.n02.000278",
+          "name": "新札幌"
+        },
+        {
+          "station_id": "jp.n02.000302",
+          "name": "上野幌"
+        },
+        {
+          "station_id": "jp.n02.000317",
+          "name": "北広島"
+        },
+        {
+          "station_id": "jp.n02.000328",
+          "name": "島松"
+        },
+        {
+          "station_id": "jp.n02.000337",
+          "name": "恵み野"
+        },
+        {
+          "station_id": "jp.n02.000340",
+          "name": "恵庭"
+        },
+        {
+          "station_id": "jp.n02.000343",
+          "name": "サッポロビール庭園"
+        },
+        {
+          "station_id": "jp.n02.000345",
+          "name": "長都"
+        },
+        {
+          "station_id": "jp.n02.000347",
+          "name": "千歳"
+        },
+        {
+          "station_id": "jp.n02.000353",
+          "name": "南千歳"
+        },
+        {
+          "station_id": "jp.n02.000362",
+          "name": "植苗"
+        },
+        {
+          "station_id": "jp.n02.000364",
+          "name": "沼ノ端"
+        }
+      ],
+      "temporal_status": "unattested",
+      "trip_assignment_status": "candidate_not_verified"
+    },
+    {
+      "current_n02_line_id": "jp-北海道旅客鉄道-室蘭線",
+      "operator_name_in_package": "北海道旅客鉄道",
+      "from": "沼ノ端",
+      "to": "長万部",
+      "station_path": [
+        {
+          "station_id": "jp.n02.000364",
+          "name": "沼ノ端"
+        },
+        {
+          "station_id": "jp.n02.000367",
+          "name": "苫小牧"
+        },
+        {
+          "station_id": "jp.n02.000370",
+          "name": "青葉"
+        },
+        {
+          "station_id": "jp.n02.000371",
+          "name": "糸井"
+        },
+        {
+          "station_id": "jp.n02.000373",
+          "name": "錦岡"
+        },
+        {
+          "station_id": "jp.n02.000380",
+          "name": "社台"
+        },
+        {
+          "station_id": "jp.n02.000383",
+          "name": "白老"
+        },
+        {
+          "station_id": "jp.n02.000385",
+          "name": "萩野"
+        },
+        {
+          "station_id": "jp.n02.000389",
+          "name": "北吉原"
+        },
+        {
+          "station_id": "jp.n02.000390",
+          "name": "竹浦"
+        },
+        {
+          "station_id": "jp.n02.000394",
+          "name": "虎杖浜"
+        },
+        {
+          "station_id": "jp.n02.000395",
+          "name": "登別"
+        },
+        {
+          "station_id": "jp.n02.000397",
+          "name": "富浦"
+        },
+        {
+          "station_id": "jp.n02.000400",
+          "name": "幌別"
+        },
+        {
+          "station_id": "jp.n02.000404",
+          "name": "鷲別"
+        },
+        {
+          "station_id": "jp.n02.000406",
+          "name": "東室蘭"
+        },
+        {
+          "station_id": "jp.n02.000405",
+          "name": "本輪西"
+        },
+        {
+          "station_id": "jp.n02.000402",
+          "name": "崎守"
+        },
+        {
+          "station_id": "jp.n02.000401",
+          "name": "黄金"
+        },
+        {
+          "station_id": "jp.n02.000399",
+          "name": "稀府"
+        },
+        {
+          "station_id": "jp.n02.000396",
+          "name": "北舟岡"
+        },
+        {
+          "station_id": "jp.n02.000393",
+          "name": "伊達紋別"
+        },
+        {
+          "station_id": "jp.n02.000391",
+          "name": "長和"
+        },
+        {
+          "station_id": "jp.n02.000386",
+          "name": "有珠"
+        },
+        {
+          "station_id": "jp.n02.000384",
+          "name": "洞爺"
+        },
+        {
+          "station_id": "jp.n02.000379",
+          "name": "豊浦"
+        },
+        {
+          "station_id": "jp.n02.000376",
+          "name": "大岸"
+        },
+        {
+          "station_id": "jp.n02.000378",
+          "name": "礼文"
+        },
+        {
+          "station_id": "jp.n02.000375",
+          "name": "小幌"
+        },
+        {
+          "station_id": "jp.n02.000377",
+          "name": "静狩"
+        },
+        {
+          "station_id": "jp.n02.000387",
+          "name": "長万部"
+        }
+      ],
+      "temporal_status": "unattested",
+      "trip_assignment_status": "candidate_not_verified"
+    },
+    {
+      "current_n02_line_id": "jp-北海道旅客鉄道-函館線",
+      "operator_name_in_package": "北海道旅客鉄道",
+      "from": "長万部",
+      "to": "函館",
+      "station_path": [
+        {
+          "station_id": "jp.n02.000387",
+          "name": "長万部"
+        },
+        {
+          "station_id": "jp.n02.000398",
+          "name": "国縫"
+        },
+        {
+          "station_id": "jp.n02.000403",
+          "name": "黒岩"
+        },
+        {
+          "station_id": "jp.n02.000411",
+          "name": "山崎"
+        },
+        {
+          "station_id": "jp.n02.000412",
+          "name": "八雲"
+        },
+        {
+          "station_id": "jp.n02.000413",
+          "name": "山越"
+        },
+        {
+          "station_id": "jp.n02.000414",
+          "name": "野田生"
+        },
+        {
+          "station_id": "jp.n02.000415",
+          "name": "落部"
+        },
+        {
+          "station_id": "jp.n02.000416",
+          "name": "石倉"
+        },
+        {
+          "station_id": "jp.n02.000420",
+          "name": "森"
+        },
+        {
+          "station_id": "jp.n02.000424",
+          "name": "駒ヶ岳"
+        },
+        {
+          "station_id": "jp.n02.000425",
+          "name": "赤井川"
+        },
+        {
+          "station_id": "jp.n02.000426",
+          "name": "大沼公園"
+        },
+        {
+          "station_id": "jp.n02.000427",
+          "name": "大沼"
+        },
+        {
+          "station_id": "jp.n02.000429",
+          "name": "新函館北斗"
+        },
+        {
+          "station_id": "jp.n02.000431",
+          "name": "七飯"
+        },
+        {
+          "station_id": "jp.n02.000432",
+          "name": "大中山"
+        },
+        {
+          "station_id": "jp.n02.000433",
+          "name": "桔梗"
+        },
+        {
+          "station_id": "jp.n02.000439",
+          "name": "五稜郭"
+        },
+        {
+          "station_id": "jp.n02.000455",
+          "name": "函館"
+        }
+      ],
+      "temporal_status": "unattested",
+      "trip_assignment_status": "candidate_not_verified"
+    }
+  ],
+  "northbound_21_candidate": "Reverse southbound candidate; requires independent train/date review",
+  "route_only_boundaries": [
+    {
+      "name": "白石",
+      "station_id": "jp.n02.000255"
+    },
+    {
+      "name": "沼ノ端",
+      "station_id": "jp.n02.000364"
+    }
+  ],
+  "passenger_call_boundary": {
+    "name": "長万部",
+    "station_id": "jp.n02.000387"
+  },
+  "excluded_candidate_branches": [
+    "jp-北海道旅客鉄道-函館線-2 (森—渡島砂原—大沼)",
+    "jp-北海道旅客鉄道-函館線-p1 (七飯—大沼 bypassing 新函館北斗)",
+    "jp-北海道旅客鉄道-千歳線-2 (南千歳—新千歳空港)",
+    "jp-北海道旅客鉄道-室蘭線-2 (東室蘭—室蘭)"
+  ],
+  "excluded_branch_status": "Not assigned to candidate; full dated table review is still required to establish exclusion per train",
+  "remaining_evidence": [
+    "Complete selected-date UI review of 4D/6D/8D in s9851 and s2811, including lower offscreen station rows and leg-through symbols",
+    "Complete independent selected-date UI review of 21D in s9850 and s2810",
+    "Official date-applicable mapping between passenger line labels and physical line identity/operator sections",
+    "Direct official evidence covering April 1 operating inventory through September 30; no such continuing-validity or change history evidence found"
+  ],
+  "next_urls": [
+    "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=9851",
+    "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=2811",
+    "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=9850",
+    "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=2810"
+  ]
+}

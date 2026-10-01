@@ -1,0 +1,125 @@
+{
+  "candidate_id": "jr-hokkaido-s151-hokuto18-20-22-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "Official JR Hokkaido s=151 up columns for selected 2026-09-30. Every printed passenger-stop clock is captured; レ/||/＝ rows and unprinted clock sides are not inferred. The train guide supports キハ261系1000代 as the planned standard series, not the actual dated vehicle assignment; car count and per-car diagram remain unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.hokuto.18.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "18",
+      "train_number": "18D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-hokuto18-20-22-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 18D / 北斗 18 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(7)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        ["札幌", null, "15:45"],
+        ["新札幌", null, "15:53"],
+        ["南千歳", null, "16:17"],
+        ["苫小牧", null, "16:33"],
+        ["白老", null, "16:47"],
+        ["登別", null, "16:58"],
+        ["東室蘭", "17:10", "17:11"],
+        ["伊達紋別", null, "17:27"],
+        ["洞爺", null, "17:38"],
+        ["長万部", null, "18:04"],
+        ["八雲", null, "18:23"],
+        ["森", null, "18:46"],
+        ["新函館北斗", null, "19:14"],
+        ["五稜郭", null, "19:25"],
+        ["函館", "19:29", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.20.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "20",
+      "train_number": "20D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-hokuto18-20-22-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 20D / 北斗 20 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        ["札幌", null, "16:51"],
+        ["新札幌", null, "17:02"],
+        ["南千歳", null, "17:26"],
+        ["苫小牧", null, "17:43"],
+        ["白老", null, "17:56"],
+        ["登別", null, "18:08"],
+        ["東室蘭", "18:20", "18:21"],
+        ["伊達紋別", null, "18:37"],
+        ["洞爺", null, "18:48"],
+        ["長万部", null, "19:15"],
+        ["八雲", null, "19:35"],
+        ["森", null, "19:57"],
+        ["新函館北斗", null, "20:24"],
+        ["五稜郭", null, "20:34"],
+        ["函館", "20:39", null]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.hokuto.22.exact-2026-09-30",
+      "service_id": "hokuto",
+      "service_name": "北斗",
+      "service_class": "limited_express",
+      "public_number": "22",
+      "train_number": "22D",
+      "origin": "札幌",
+      "destination": "函館",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s151-hokuto18-20-22-20260930-up",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=151",
+      "source_locator": "2026年9月30日(水) selected; 22D / 北斗 22 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "formation_icons": [
+        "greensiteidai0.png",
+        "zensekisitei0.png"
+      ],
+      "stops": [
+        ["札幌", null, "18:46"],
+        ["新札幌", null, "18:54"],
+        ["南千歳", null, "19:18"],
+        ["苫小牧", null, "19:34"],
+        ["白老", null, "19:48"],
+        ["登別", null, "19:59"],
+        ["東室蘭", "20:11", "20:12"],
+        ["伊達紋別", null, "20:29"],
+        ["洞爺", null, "20:39"],
+        ["長万部", null, "21:05"],
+        ["八雲", null, "21:25"],
+        ["森", null, "21:48"],
+        ["新函館北斗", null, "22:15"],
+        ["五稜郭", null, "22:27"],
+        ["函館", "22:31", null]
+      ]
+    }
+  ]
+}

@@ -7,6 +7,32 @@ import XCTest
 final class RailValidityTests: XCTestCase {
     private typealias Validity = RouteGraph.RailValidity
 
+    private struct CodedHistoryEnvironment {
+        let graphStore: RouteGraph.RouteGraphStore
+        let stations: Stations.Index
+    }
+
+    nonisolated(unsafe) private static let codedHistoryEnvironment: CodedHistoryEnvironment = {
+        let root = try! PortFixtures.repositoryRoot()
+        var sections = try! RouteGraph.SectionFeatureCollection.load(
+            contentsOf: root.appending(path: "app/data/rail-sections.json")
+        ).features
+        var stationFeatures = try! Stations.FeatureCollection.load(
+            contentsOf: root.appending(path: "app/data/stations.json")
+        ).features
+        let overlay = try! RailHistoryOverlay.load(
+            from: root.appending(path: "app/data/rail-history.json"))
+        _ = RailHistory.apply(overlay, sections: &sections, stations: &stationFeatures)
+        let collection = Stations.FeatureCollection(features: stationFeatures)
+        let graphStore = RouteGraph.RouteGraphStore(sections: sections)
+        graphStore.augment = { graph, _ in
+            RouteSolver.addStationTransferConnectorEdges(
+                graph: graph, stations: collection.features)
+        }
+        return CodedHistoryEnvironment(
+            graphStore: graphStore, stations: Stations.Index(collection))
+    }()
+
     // MARK: - (a) isValid truth table
 
     func testUndatedRideUsesOnlyEdgesWithoutValidTo() {
@@ -137,6 +163,63 @@ final class RailValidityTests: XCTestCase {
         XCTAssertEqual(path(on: nil), ["A", "B", "C"])
     }
 
+    func testPinnedDijkstraCannotSettleConnectorOnlyShortcut() throws {
+        let graph = RouteGraph.Graph(cellSize: 1)
+        graph.nodes = [
+            "A": Coordinate(lon: 0, lat: 0),
+            "B": Coordinate(lon: 1, lat: 0),
+            "C": Coordinate(lon: 0.5, lat: 0),
+        ]
+        func connector(_ to: String, _ length: Double) -> RouteGraph.Edge {
+            RouteGraph.Edge(
+                to: to, length: length, institutionTypeCode: "", railwayClassCode: "",
+                lineName: "", operator: "", connector: .init())
+        }
+        func rail(_ to: String, _ length: Double) -> RouteGraph.Edge {
+            RouteGraph.Edge(
+                to: to, length: length, institutionTypeCode: "1", railwayClassCode: "11",
+                lineName: "Opening Line", operator: "Opening Operator", connector: nil,
+                validFrom: "2009-12-23", validTo: nil)
+        }
+        graph.adjacency = [
+            "A": [connector("B", 1), rail("C", 100)],
+            "B": [],
+            "C": [connector("B", 100)],
+        ]
+        let pinnedHints = RouteSolver.SegmentHints(
+            requiredLines: ["Opening Line"])
+        func solve(_ date: String?, hints: RouteSolver.SegmentHints? = nil,
+                   target: String = "B") -> [RouteSolver.SolvedTarget]
+        {
+            RouteSolver.dijkstra(
+                graph: graph,
+                sourceCandidates: [.init(key: "A", distance: 0)],
+                targetKeys: [target], train: .init(rideDate: date),
+                allowedCodes: ["1"], hints: hints ?? pinnedHints)
+        }
+
+        XCTAssertTrue(solve("2009-12-22").isEmpty)
+        let opened = try XCTUnwrap(solve("2009-12-23").first)
+        XCTAssertEqual(opened.pathKeys, ["A", "C", "B"])
+        XCTAssertTrue(opened.edges.contains { $0.connector == nil })
+
+        let operatorPinned = RouteSolver.SegmentHints(
+            requiredOperators: ["Opening Operator"])
+        XCTAssertTrue(solve("2009-12-22", hints: operatorPinned).isEmpty)
+        XCTAssertEqual(
+            try XCTUnwrap(solve("2009-12-23", hints: operatorPinned).first).pathKeys,
+            ["A", "C", "B"])
+
+        let unconstrained = RouteSolver.SegmentHints()
+        XCTAssertEqual(
+            try XCTUnwrap(solve("2009-12-23", hints: unconstrained).first).pathKeys,
+            ["A", "B"])
+        XCTAssertEqual(
+            try XCTUnwrap(solve(
+                "2009-12-23", hints: unconstrained, target: "A").first).pathKeys,
+            ["A"])
+    }
+
     // MARK: - (c) cache key
 
     private func cacheKey(rideDate: String?, historyRevision: String?) -> String? {
@@ -154,8 +237,8 @@ final class RailValidityTests: XCTestCase {
         let c = try XCTUnwrap(cacheKey(rideDate: "2019-12-31", historyRevision: "r2"))
         XCTAssertNotEqual(a, b)
         XCTAssertNotEqual(a, c)
-        XCTAssertTrue(a.contains("solver:22"), a)
-        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "22")
+        XCTAssertTrue(a.contains("solver:24"), a)
+        XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "24")
         XCTAssertEqual(RouteGraph.routeDrawnCacheVersion, "23")
         XCTAssertTrue(a.contains("|date:2019-12-31|history:r1"), a)
         let undated = try XCTUnwrap(cacheKey(rideDate: nil, historyRevision: nil))
@@ -182,5 +265,68 @@ final class RailValidityTests: XCTestCase {
         XCTAssertEqual(kept("2016-12-04"), [0, 1])
         XCTAssertEqual(kept("2016-12-05"), [1])
         XCTAssertEqual(kept(nil), [1])
+    }
+
+    func testStationDedupePreservesDisjointHistoricalServicePeriods() {
+        func station(_ service: [String?]) -> Stations.Feature {
+            Stations.Feature(
+                properties: [
+                    "station_name": .string("静内"),
+                    "line_name": .string("日高線"),
+                    "operator": .string("北海道旅客鉄道"),
+                    "service_validity": .array(service.map { value in
+                        value.map(Stations.Value.string) ?? .null
+                    }),
+                ],
+                geometry: Stations.Geometry(
+                    type: "LineString",
+                    coordinates: .array([
+                        .array([.number(142.36108), .number(42.33623)]),
+                        .array([.number(142.3599), .number(42.33679)]),
+                    ])))
+        }
+        let index = Stations.Index(Stations.FeatureCollection(features: [
+            station([nil, "2015-01-08"]),
+            station(["2015-01-27", "2015-03-01"]),
+        ]))
+        let candidates = index.candidateIndices(for: .name("静内"))
+        XCTAssertEqual(candidates, [0, 1])
+        XCTAssertEqual(
+            RouteSolver.filterStationCandidatesByRideDate(
+                candidates, in: index, rideDate: "2015-02-01"),
+            [1])
+    }
+
+    func testCodedDonanEndpointsResolvePreTransferStationVariants() throws {
+        let environment = Self.codedHistoryEnvironment
+        for (name, code) in [("五稜郭", "000440"), ("木古内", "000478")] {
+            let candidates = environment.stations.candidateIndices(
+                for: .stop(.init(name: name, n02StationCode: code)))
+            let dated = RouteSolver.filterStationCandidatesByRideDate(
+                candidates, in: environment.stations, rideDate: "2016-03-25")
+            XCTAssertTrue(dated.contains { index in
+                let feature = environment.stations.features[index]
+                return Stations.stationCode(feature) == code
+                    && Stations.stationLineName(feature) == "江差線"
+                    && Stations.stationOperator(feature) == "北海道旅客鉄道"
+            }, "\(name) must keep its surveyed code on the pre-transfer variant")
+        }
+        let section = RouteSection(
+            from: "五稜郭", to: "木古内",
+            fromN02StationCode: "000440", toN02StationCode: "000478",
+            lineNames: ["江差線"])
+        let train = RouteSolver.TrainContext(
+            id: "coded-donan-history", number: "", trainType: "", company: "JR北海道",
+            origin: "五稜郭", destination: "木古内", preferredLineNames: ["江差線"],
+            preferredOperatorNames: ["北海道旅客鉄道"],
+            allowedInstitutionTypeCodes: ["2"], institutionFilterMode: "soft",
+            rideDate: "2016-03-25")
+        let solved = try XCTUnwrap(RouteSolver.solveSectionOnDemand(
+            section, segmentIndex: 0, train: train, country: "jp",
+            graphStore: environment.graphStore, stations: environment.stations,
+            continuityAnchor: nil))
+        XCTAssertEqual(solved.hints.requiredLines, Set(["江差線"]))
+        XCTAssertGreaterThan(solved.physicalLength / 1000, 25)
+        XCTAssertLessThan(solved.physicalLength / 1000, 50)
     }
 }

@@ -1,0 +1,52 @@
+{
+  "candidate_id": "jr-east-hitachi3-5-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 service day and each selected JR East schedule variant. Both target-day calendar cells are td.ok. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.3.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "3",
+      "train_number": "3M",
+      "source_id": "jr-east-hitachi3-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/075/076491.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち3号 3M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４", "仙台": "１"},
+      "stops": [
+        ["品川", null, "07:43"], ["東京", "07:51", "07:52"],
+        ["上野", "07:58", "08:00"], ["柏", "08:28", "08:28"],
+        ["土浦", "08:49", "08:50"], ["水戸", "09:18", "09:19"],
+        ["勝田", "09:24", "09:25"], ["常陸多賀", "09:36", "09:37"],
+        ["日立", "09:41", "09:41"], ["磯原", "09:56", "09:57"],
+        ["泉", "10:11", "10:12"], ["湯本", "10:16", "10:17"],
+        ["いわき", "10:23", "10:25"], ["広野", "10:42", "10:43"],
+        ["富岡", "10:58", "10:58"], ["大野", "11:06", "11:07"],
+        ["双葉", "11:11", "11:12"], ["浪江", "11:16", "11:16"],
+        ["原ノ町", "11:31", "11:32"], ["相馬", "11:47", "11:48"],
+        ["仙台", "12:27", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.5.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "5",
+      "train_number": "5M",
+      "source_id": "jr-east-hitachi5-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/050/050251.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち5号 5M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "08:43"], ["東京", "08:51", "08:53"],
+        ["上野", "08:59", "09:00"], ["水戸", "10:16", "10:17"],
+        ["勝田", "10:21", "10:22"], ["大甕", "10:31", "10:32"],
+        ["常陸多賀", "10:35", "10:36"], ["日立", "10:40", "10:40"],
+        ["高萩", "10:50", "10:51"], ["勿来", "11:04", "11:04"],
+        ["泉", "11:12", "11:13"], ["湯本", "11:17", "11:18"],
+        ["いわき", "11:24", null]
+      ]
+    }
+  ]
+}

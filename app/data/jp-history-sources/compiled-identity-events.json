@@ -1,0 +1,315 @@
+{
+  "schema_version": "1",
+  "title": "Reviewed identity events ready for the temporal-source compiler",
+  "scope": "Standalone rich-event input. Merge temporal_events into the canonical source only after review.",
+  "events": [],
+  "temporal_events": [
+    {
+      "id": "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016",
+      "kind": "closure",
+      "official_event_id": "mlit-closures-20260401:062",
+      "line": "上町線",
+      "operator": "阪堺電気軌道",
+      "before": {
+        "line": "上町線",
+        "operator": "阪堺電気軌道"
+      },
+      "corridor_id": "jp.corridor.hankai-uemachi",
+      "alignment_id": "jp.alignment.hankai-uemachi-sumiyoshikoen.n02-15",
+      "service_identity_id": "jp.service.hankai-uemachi-sumiyoshikoen",
+      "segment": {
+        "from_station": "住吉",
+        "to_station": "住吉公園"
+      },
+      "expected": {
+        "business_km": 0.2
+      },
+      "service_periods": [
+        [
+          null,
+          "2016-01-31"
+        ]
+      ],
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-15",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "上町線",
+          "operator": "阪堺電気軌道"
+        },
+        "selector": {
+          "scope": "isolated_historical_segment",
+          "bbox": [
+            135.49055,
+            34.61285,
+            135.49082,
+            34.61355
+          ],
+          "historical_bbox": [
+            135.4905,
+            34.6128,
+            135.49225,
+            34.61465
+          ],
+          "stations": [
+            "住吉公園"
+          ],
+          "historical_stations": [
+            "住吉公園"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The historical bbox selects exactly the two N02-15 features from the 住吉 station edge through 住吉公園 and its exact station feature. The tighter current bbox matches no current 上町線 feature or station."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局 都市鉄道政策課",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/statistics/details/content/001737586.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-donan-isaribi-transfer-2016",
+      "kind": "operator_transfer",
+      "date": "2016-03-26",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "江差線",
+        "operator": "北海道旅客鉄道"
+      },
+      "after": {
+        "line": "道南いさりび鉄道線",
+        "operator": "道南いさりび鉄道"
+      },
+      "corridor_id": "jp.corridor.donan-isaribi",
+      "alignment_id": "jp.alignment.donan-isaribi.n02",
+      "service_identity_id": "jp.service.donan-isaribi",
+      "segment": {
+        "from_station": "木古内",
+        "to_station": "五稜郭"
+      },
+      "expected": {
+        "business_km": 37.8
+      },
+      "geometry": {
+        "source": "N02",
+        "release": "N02-15",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "江差線",
+          "operator": "北海道旅客鉄道"
+        },
+        "selector": {
+          "scope": "whole_identity"
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The official interval is the full current successor identity; N02-15 contains only the matching 木古内—五稜郭 江差線 identity."
+      },
+      "evidence": [
+        {
+          "authority": "国土交通省 鉄道局",
+          "date_precision": "exact_day",
+          "reference": "https://www.mlit.go.jp/common/001514800.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-takanawa-gateway-opening-2020",
+      "kind": "station_opening",
+      "after": {
+        "line": "東海道線",
+        "operator": "東日本旅客鉄道",
+        "station": "高輪ゲートウェイ"
+      },
+      "corridor_id": "jp.corridor.tokaido-east",
+      "alignment_id": "jp.alignment.takanawa-gateway.n02",
+      "service_identity_id": "jp.service.takanawa-gateway",
+      "service_periods": [
+        [
+          "2020-03-14",
+          null
+        ]
+      ],
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-20",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "東海道線",
+          "operator": "東日本旅客鉄道"
+        },
+        "selector": {
+          "scope": "current_station",
+          "stations": [
+            "高輪ゲートウェイ"
+          ],
+          "historical_stations": [
+            "高輪ゲートウェイ"
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The JR East date is exact and the station name selects one current membership and one N02-20 membership."
+      },
+      "evidence": [
+        {
+          "authority": "東日本旅客鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.jreast.co.jp/estation/station/info.aspx?StationCd=1750"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-osaka-monorail-main-operator-rename-2020",
+      "kind": "operator_rename",
+      "date": "2020-06-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "大阪モノレール線",
+        "operator": "大阪高速鉄道"
+      },
+      "after": {
+        "line": "大阪モノレール線",
+        "operator": "大阪モノレール"
+      },
+      "corridor_id": "jp.corridor.osaka-monorail-main",
+      "alignment_id": "jp.alignment.osaka-monorail-main.n02",
+      "service_identity_id": "jp.service.osaka-monorail-main",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "大阪モノレール線",
+          "operator": "大阪高速鉄道"
+        },
+        "selector": {
+          "scope": "whole_identity"
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The company rename covers the complete line identity; N02-19 and the current package each carry one complete identity."
+      },
+      "evidence": [
+        {
+          "authority": "大阪府",
+          "date_precision": "exact_day",
+          "reference": "https://www.pref.osaka.lg.jp/documents/12856/r03_gyouseikeieinotorikumip43-p76.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-osaka-monorail-saito-operator-rename-2020",
+      "kind": "operator_rename",
+      "date": "2020-06-01",
+      "date_precision": "exact_day",
+      "before": {
+        "line": "国際文化公園都市モノレール線(彩都線)",
+        "operator": "大阪高速鉄道"
+      },
+      "after": {
+        "line": "国際文化公園都市モノレール線(彩都線)",
+        "operator": "大阪モノレール"
+      },
+      "corridor_id": "jp.corridor.osaka-monorail-saito",
+      "alignment_id": "jp.alignment.osaka-monorail-saito.n02",
+      "service_identity_id": "jp.service.osaka-monorail-saito",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-19",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "国際文化公園都市モノレール線（彩都線）",
+          "operator": "大阪高速鉄道"
+        },
+        "selector": {
+          "scope": "whole_identity"
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "The company rename covers the complete line identity. historical_identity preserves N02-19 full-width parentheses while the service identity uses the current normalized spelling."
+      },
+      "evidence": [
+        {
+          "authority": "大阪府",
+          "date_precision": "exact_day",
+          "reference": "https://www.pref.osaka.lg.jp/documents/12856/r03_gyouseikeieinotorikumip43-p76.pdf"
+        }
+      ]
+    },
+    {
+      "id": "jp-id-kitahinode-closure-2021",
+      "kind": "station_closure",
+      "line": "石北線",
+      "operator": "北海道旅客鉄道",
+      "before": {
+        "line": "石北線",
+        "operator": "北海道旅客鉄道",
+        "station": "北日ノ出"
+      },
+      "corridor_id": "jp.corridor.sekihoku",
+      "alignment_id": "jp.alignment.kitahinode.n02-20",
+      "service_identity_id": "jp.service.kitahinode",
+      "service_periods": [
+        [
+          null,
+          "2021-03-13"
+        ]
+      ],
+      "date_precision": "exact_day",
+      "geometry": {
+        "source": "N02",
+        "release": "N02-20",
+        "licence_status": "redistributable",
+        "date_geometry_precision": "official_snapshot",
+        "historical_identity": {
+          "line": "石北線",
+          "operator": "北海道旅客鉄道"
+        },
+        "selector": {
+          "scope": "historical_station",
+          "stations": [
+            "北日ノ出"
+          ],
+          "historical_stations": [
+            "北日ノ出"
+          ],
+          "historical_bbox": [
+            142.4657,
+            43.7816,
+            142.4666,
+            43.7822
+          ]
+        }
+      },
+      "review": {
+        "status": "verified",
+        "basis": "北日ノ出 is absent from the current station collection and the name plus tight bbox selects exactly one N02-20 station feature."
+      },
+      "evidence": [
+        {
+          "authority": "北海道旅客鉄道株式会社",
+          "date_precision": "exact_day",
+          "reference": "https://www.jrhokkaido.co.jp/corporate/region/pdf/past/05_2020.pdf"
+        }
+      ]
+    }
+  ],
+  "source_schema_version": 2
+}

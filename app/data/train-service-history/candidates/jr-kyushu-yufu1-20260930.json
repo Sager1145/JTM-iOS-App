@@ -1,0 +1,28 @@
+{
+  "candidate_id":"jr-kyushu-yufu1-20260930","candidate_status":"reviewed_official_html","canonical":false,
+  "promotion_scope":"one exact 2026-09-30 occurrence; fifteen displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id":"jr-kyushu-yufu1-20260930","source_url":"https://www.jrkyushu-timetable.jp/jr-k_time/2610/0016/00167101.html?c=28283&ym=202609&d=30","service_date":"2026-09-30",
+  "trip":{"trip_id":"jr-kyushu.yufu.1.2026-09-30","service_id":"yufu","service_name":"ゆふ","public_number":"1","train_number":"81D","direction":"博多→別府",
+    "stop_times":[
+      {"name_snapshot":"博多","arrival_time":null,"departure_time":"07:43","platform":"5"},
+      {"name_snapshot":"二日市","arrival_time":"07:59","departure_time":"07:59","platform":null},
+      {"name_snapshot":"鳥栖","arrival_time":"08:13","departure_time":"08:15","platform":"4"},
+      {"name_snapshot":"久留米","arrival_time":"08:23","departure_time":"08:25","platform":"1"},
+      {"name_snapshot":"久留米大学前","arrival_time":"08:33","departure_time":"08:33","platform":null},
+      {"name_snapshot":"筑後吉井","arrival_time":"08:48","departure_time":"08:49","platform":null},
+      {"name_snapshot":"日田","arrival_time":"09:08","departure_time":"09:09","platform":null},
+      {"name_snapshot":"天ケ瀬","arrival_time":"09:20","departure_time":"09:21","platform":null},
+      {"name_snapshot":"豊後森","arrival_time":"09:34","departure_time":"09:35","platform":null},
+      {"name_snapshot":"豊後中村","arrival_time":"09:45","departure_time":"09:46","platform":null},
+      {"name_snapshot":"由布院","arrival_time":"10:02","departure_time":"10:05","platform":null},
+      {"name_snapshot":"湯平","arrival_time":"10:16","departure_time":"10:16","platform":null},
+      {"name_snapshot":"向之原","arrival_time":"10:34","departure_time":"10:34","platform":null},
+      {"name_snapshot":"大分","arrival_time":"10:51","departure_time":"10:53","platform":"8"},
+      {"name_snapshot":"別府","arrival_time":"11:04","departure_time":null,"platform":null}
+    ]},
+  "evidence_locators":[
+    {"claim":"limited express identity and 81D","locator":"列車種 / 列車名 / 列車番号 rows"},
+    {"claim":"2026-09-30 occurrence","locator":"date-qualified URL, 毎日運転 row and September calendar"},
+    {"claim":"fifteen full-route calls and clocks","locator":"駅名 / 時刻 / のりば table from 博多 through 別府"}
+  ]
+}

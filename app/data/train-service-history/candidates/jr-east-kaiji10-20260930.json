@@ -1,0 +1,75 @@
+{
+  "candidate_id": "jr-east-kaiji10-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the current-variant 2026-09-30 calendar cell and displayed 5110M train table.",
+  "trip_id": "jr-east.kaiji.10.exact-2026-09-30",
+  "service_id": "kaiji",
+  "service_name": "かいじ",
+  "service_class": "limited_express",
+  "public_number": "10",
+  "train_number": "5110M",
+  "origin": "甲府",
+  "destination": "東京",
+  "service_date": "2026-09-30",
+  "source_id": "jr-east-kaiji10-20260930",
+  "source_url": "https://timetables.jreast.co.jp/2610/train/075/076171.html",
+  "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 特急かいじ 10号 5110M",
+  "printed_platforms": {
+    "甲府": "２",
+    "山梨市": "１",
+    "塩山": "３",
+    "大月": "５",
+    "八王子": "２",
+    "立川": "３",
+    "新宿": "７",
+    "東京": "２"
+  },
+  "stops": [
+    [
+      "甲府",
+      null,
+      "08:45"
+    ],
+    [
+      "石和温泉",
+      "08:51",
+      "08:51"
+    ],
+    [
+      "山梨市",
+      "08:56",
+      "08:56"
+    ],
+    [
+      "塩山",
+      "09:01",
+      "09:01"
+    ],
+    [
+      "大月",
+      "09:20",
+      "09:21"
+    ],
+    [
+      "八王子",
+      "09:48",
+      "09:49"
+    ],
+    [
+      "立川",
+      "09:58",
+      "09:59"
+    ],
+    [
+      "新宿",
+      "10:28",
+      "10:30"
+    ],
+    [
+      "東京",
+      "10:42",
+      null
+    ]
+  ]
+}

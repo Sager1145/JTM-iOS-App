@@ -1,0 +1,244 @@
+{
+  "candidate_id": "jr-hokkaido-s110-kamui31-35-43-45-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope_note": "JR Hokkaido s=110 down timetable visibly selected 2026年9月30日(水). Only printed values in 2031M, 2035M, 2043M, 2045M columns are transcribed; unprinted clock sides, car counts, vehicle series and dated physical line segments remain unknown.",
+  "trips": [
+    {
+      "trip_id": "jr-hokkaido.kamui.31.exact-2026-09-30",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "service_class": "limited_express",
+      "public_number": "31",
+      "train_number": "2031M",
+      "origin": "札幌",
+      "destination": "旭川",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s110-kamui31-35-43-45-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; 2031M / カムイ 31 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(8)"
+      },
+      "formation_icons": [
+        "zensekisitei0.png"
+      ],
+      "pass_through_names": [],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "17:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "17:25"
+        ],
+        [
+          "美唄",
+          null,
+          "17:36"
+        ],
+        [
+          "砂川",
+          null,
+          "17:47"
+        ],
+        [
+          "滝川",
+          null,
+          "17:52"
+        ],
+        [
+          "深川",
+          null,
+          "18:06"
+        ],
+        [
+          "旭川",
+          "18:25",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.35.exact-2026-09-30",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "service_class": "limited_express",
+      "public_number": "35",
+      "train_number": "2035M",
+      "origin": "札幌",
+      "destination": "旭川",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s110-kamui31-35-43-45-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; 2035M / カムイ 35 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(9)"
+      },
+      "formation_icons": [
+        "zensekisitei0.png"
+      ],
+      "pass_through_names": [],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "18:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "18:25"
+        ],
+        [
+          "美唄",
+          null,
+          "18:36"
+        ],
+        [
+          "砂川",
+          null,
+          "18:47"
+        ],
+        [
+          "滝川",
+          null,
+          "18:52"
+        ],
+        [
+          "深川",
+          null,
+          "19:06"
+        ],
+        [
+          "旭川",
+          "19:25",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.43.exact-2026-09-30",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "service_class": "limited_express",
+      "public_number": "43",
+      "train_number": "2043M",
+      "origin": "札幌",
+      "destination": "旭川",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s110-kamui31-35-43-45-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; 2043M / カムイ 43 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(9)"
+      },
+      "formation_icons": [
+        "zensekisitei0.png"
+      ],
+      "pass_through_names": [],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "21:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "21:25"
+        ],
+        [
+          "美唄",
+          null,
+          "21:36"
+        ],
+        [
+          "砂川",
+          null,
+          "21:47"
+        ],
+        [
+          "滝川",
+          null,
+          "21:52"
+        ],
+        [
+          "深川",
+          null,
+          "22:06"
+        ],
+        [
+          "旭川",
+          "22:25",
+          null
+        ]
+      ]
+    },
+    {
+      "trip_id": "jr-hokkaido.kamui.45.exact-2026-09-30",
+      "service_id": "kamui",
+      "service_name": "カムイ",
+      "service_class": "limited_express",
+      "public_number": "45",
+      "train_number": "2045M",
+      "origin": "札幌",
+      "destination": "旭川",
+      "service_date": "2026-09-30",
+      "source_id": "jr-hokkaido-s110-kamui31-35-43-45-20260930",
+      "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=110",
+      "source_locator": "2026年9月30日(水) selected; 2045M / カムイ 45 / 毎日 column",
+      "operating_day_marker": "毎日",
+      "printed_platforms": {
+        "札幌": "(9)"
+      },
+      "formation_icons": [
+        "zensekisitei0.png"
+      ],
+      "pass_through_names": [],
+      "stops": [
+        [
+          "札幌",
+          null,
+          "22:00"
+        ],
+        [
+          "岩見沢",
+          null,
+          "22:25"
+        ],
+        [
+          "美唄",
+          null,
+          "22:36"
+        ],
+        [
+          "砂川",
+          null,
+          "22:47"
+        ],
+        [
+          "滝川",
+          null,
+          "22:52"
+        ],
+        [
+          "深川",
+          null,
+          "23:06"
+        ],
+        [
+          "旭川",
+          "23:25",
+          null
+        ]
+      ]
+    }
+  ]
+}

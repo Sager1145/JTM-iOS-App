@@ -1,0 +1,32 @@
+{
+  "candidate_id": "jr-hokkaido-tokachi1-20260929-30",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "service_dates": ["2026-09-29", "2026-09-30"],
+  "source_ids": {
+    "2026-09-29": "jr-hokkaido-tokachi1-20260929-timetable",
+    "2026-09-30": "jr-hokkaido-tokachi1-20260930-timetable"
+  },
+  "guide_source_id": "jr-hokkaido-tokachi-guide-2026",
+  "english_source_id": "jr-hokkaido-tokachi-english-guide-2026",
+  "service_id": "tokachi",
+  "canonical_name": "とかち",
+  "english_name": "Tokachi",
+  "public_number": "1",
+  "train_number": "31D",
+  "direction": "札幌→帯広",
+  "passenger_calls": [
+    {"station": "札幌", "departure_time": "7:58"},
+    {"station": "新札幌", "departure_time": "8:07"},
+    {"station": "南千歳", "departure_time": "8:27"},
+    {"station": "追分", "departure_time": "8:40"},
+    {"station": "新夕張", "departure_time": "8:59"},
+    {"station": "占冠", "departure_time": "9:27"},
+    {"station": "トマム", "departure_time": "9:42"},
+    {"station": "新得", "arrival_time": "10:05", "departure_time": "10:05"},
+    {"station": "十勝清水", "departure_time": "10:13"},
+    {"station": "芽室", "departure_time": "10:34"},
+    {"station": "帯広", "arrival_time": "10:43"}
+  ],
+  "scope_note": "The selected 31D column was visually checked on both dated JR Hokkaido pages. Only the two selected service dates are promoted. No pass row or unprinted arrival side is inferred; no overnight call occurs."
+}

@@ -20,6 +20,123 @@ import RailCore
 enum EditorStrings {
 
     static let table: [String: [Localization.Language: String]] = [
+        "ios.editor.selectExpressStops": [
+            .zhHans: "从特急班次导入停站", .zhHant: "從特急班次匯入停站",
+            .ja: "特急から駅を入力", .en: "Use limited express stops",
+        ],
+        "ios.editor.expressStopsNote": [
+            .zhHans: "可打开各站修改已公布时刻；列车详情中也可使用 AI 核对。",
+            .zhHant: "可開啟各站修改已公布時刻；列車詳情中也可使用 AI 核對。",
+            .ja: "掲載時刻は各駅を開いて変更できます。列車の詳細からAI照合も利用できます。",
+            .en: "Open each stop to edit published times. AI checking is also available in train details.",
+        ],
+        "ios.editor.replaceExistingStopsTitle": [
+            .zhHans: "替换现有停站？", .zhHant: "替換現有停站？",
+            .ja: "既存の駅を置き換えますか？", .en: "Replace existing stops?",
+        ],
+        "ios.editor.replaceExistingStops": [
+            .zhHans: "替换停站", .zhHant: "替換停站",
+            .ja: "置き換える", .en: "Replace stops",
+        ],
+        "ios.editor.actualTimes": [
+            .zhHans: "实际时间", .zhHant: "實際時間", .ja: "実際の時刻", .en: "Actual times",
+        ],
+        "ios.editor.actualArrival": [
+            .zhHans: "实际到达", .zhHant: "實際抵達", .ja: "実際の到着", .en: "Actual arrival",
+        ],
+        "ios.editor.actualDeparture": [
+            .zhHans: "实际出发", .zhHant: "實際出發", .ja: "実際の発車", .en: "Actual departure",
+        ],
+        "ios.editor.actualTimesNote": [
+            .zhHans: "仅在已知实际时间时填写。未填写时保留计划时间。",
+            .zhHant: "僅在已知實際時間時填寫。未填寫時保留計劃時間。",
+            .ja: "実績が分かる場合のみ入力してください。未入力なら予定時刻を保持します。",
+            .en: "Enter actual times only when known. Scheduled times remain when these are blank.",
+        ],
+        "ios.editor.actualOnTime": [
+            .zhHans: "准点", .zhHant: "準點", .ja: "定刻", .en: "On time",
+        ],
+        "ios.editor.actualDelayed": [
+            .zhHans: "晚点 {minutes} 分钟", .zhHant: "晚點 {minutes} 分鐘",
+            .ja: "{minutes}分遅れ", .en: "{minutes} min late",
+        ],
+        "ios.editor.actualEarly": [
+            .zhHans: "提前 {minutes} 分钟", .zhHant: "提前 {minutes} 分鐘",
+            .ja: "{minutes}分早い", .en: "{minutes} min early",
+        ],
+        "ios.editor.limitedExpressName": [
+            .zhHans: "特急名称", .zhHant: "特急名稱",
+            .ja: "特急列車名", .en: "Limited express name",
+        ],
+        "ios.editor.timetableDateChanged": [
+            .zhHans: "已导入班次的日期为 {date}。更改日期后请重新查询或核对时刻；已编辑的停站会保留。",
+            .zhHant: "已匯入班次的日期為 {date}。更改日期後請重新查詢或核對時刻；已編輯的停站會保留。",
+            .ja: "取り込んだ列車の運転日は {date} です。日付を変えた場合は時刻を再検索・確認してください。編集した駅は保持します。",
+            .en: "The imported train runs on {date}. Search again or check its times after changing the date. Your edited stops are kept.",
+        ],
+        "ios.editor.timetableBrowse": [
+            .zhHans: "按日期、列车或车站查找班次", .zhHant: "按日期、列車或車站查找班次",
+            .ja: "日付・列車・駅から探す", .en: "Browse trains by date, name or station",
+        ],
+        "ios.editor.timetableBrowseDate": [
+            .zhHans: "班次日期", .zhHant: "班次日期", .ja: "運転日", .en: "Service date",
+        ],
+        "ios.editor.timetableAnyDate": [
+            .zhHans: "清除日期，浏览线路模式", .zhHant: "清除日期，瀏覽路線模式",
+            .ja: "日付を解除してパターンを見る", .en: "Clear date and browse route patterns",
+        ],
+        "ios.editor.timetableSearchPrompt": [
+            .zhHans: "名称、车次、车站或时刻", .zhHant: "名稱、車次、車站或時刻",
+            .ja: "列車名・番号・駅・時刻", .en: "Name, number, station or time",
+        ],
+        "ios.editor.timetableSearchHelp": [
+            .zhHans: "空格组合关键词，例如 azusa 松本；用 東京 → 松本 按停站方向查找。支持英文列车名、平假名、片假名和全角数字。选择班次后仍需确认保存。",
+            .zhHant: "空格組合關鍵詞，例如 azusa 松本；用 東京 → 松本 按停站方向查找。支援英文列車名、平假名、片假名和全形數字。選擇班次後仍需確認儲存。",
+            .ja: "空白で条件を組み合わせます（azusa 松本）。東京 → 松本 で停車順を検索。英語の列車名・かな・全角数字も使えます。選択後に保存を確認します。",
+            .en: "Combine terms with spaces (azusa 松本), or use 東京 → 松本 for stop order. English train names, kana and full-width numbers work too. Review before saving.",
+        ],
+        "ios.editor.timetableMatchTitle": [
+            .zhHans: "从本地时刻表补全", .zhHant: "從本地時刻表補全",
+            .ja: "保存済み時刻表から補完", .en: "Complete from timetable",
+        ],
+        "ios.editor.timetableSources": [
+            .zhHans: "查看资料来源", .zhHant: "查看資料來源",
+            .ja: "出典を見る", .en: "View sources",
+        ],
+        "ios.editor.timetableVerifiedRoute": [
+            .zhHans: "完整线路已核验", .zhHant: "完整路線已核驗",
+            .ja: "全経路確認済み", .en: "Verified full route",
+        ],
+        "ios.editor.timetablePublishedDraft": [
+            .zhHans: "已公布停站草稿", .zhHant: "已公布停站草稿",
+            .ja: "公表済み停車駅の下書き", .en: "Published stops draft",
+        ],
+        "ios.editor.timetableSearch": [
+            .zhHans: "查找已公布班次", .zhHant: "查找已公布班次",
+            .ja: "公表済み列車を検索", .en: "Find published trains",
+        ],
+        "ios.editor.timetableSearching": [
+            .zhHans: "正在查找班次…", .zhHant: "正在查找班次…",
+            .ja: "列車を検索中…", .en: "Finding trains…",
+        ],
+        "ios.editor.timetableNoMatch": [
+            .zhHans: "本地时刻表中没有端点与时刻完全吻合的班次。可继续使用 AI 补全或手动填写。",
+            .zhHant: "本地時刻表中沒有端點與時刻完全吻合的班次。可繼續使用 AI 補全或手動填寫。",
+            .ja: "両端の駅と時刻が一致する列車はありません。AI 補完または手入力を利用できます。",
+            .en: "No train matches both endpoint stations and times. Continue with AI completion or enter details manually.",
+        ],
+        "ios.editor.timetableMatchNote": [
+            .zhHans: "已公布但缺少完整线路的班次只生成可编辑草稿；请核对来源并补齐缺项。",
+            .zhHant: "已公布但缺少完整路線的班次只生成可編輯草稿；請核對來源並補齊缺項。",
+            .ja: "全経路が未確認の列車は編集用の下書きになります。出典を確認し、不足分を補ってください。",
+            .en: "Trains without a verified full route create an editable draft. Check the source and complete missing details.",
+        ],
+        "ios.editor.timetableMatchRequirements": [
+            .zhHans: "先填写日期，并在两端选择数据库车站和输入出发、到达时刻。",
+            .zhHant: "先填寫日期，並在兩端選擇資料庫車站和輸入出發、抵達時刻。",
+            .ja: "日付、両端のデータベース駅、出発・到着時刻を入力してください。",
+            .en: "Enter a date, choose both database stations, and add departure and arrival times.",
+        ],
         "ios.editor.vehicleSearchNote": [
             .zhHans: "输入以查找建议，也可以填写自定义内容。车辆类型建议来自已保存的行程。",
             .zhHant: "輸入以查找建議，也可以填寫自訂內容。車輛類型建議來自已儲存的行程。",
@@ -69,10 +186,10 @@ enum EditorStrings {
             .en: "Choose departure, arrival and intermediate stops. Search for a line if needed.",
         ],
         "ios.editor.step.serviceNote": [
-            .zhHans: "填写列车名称或车次，车型和车辆类型可选。",
-            .zhHant: "填寫列車名稱或車次，車種和車輛類型可選。",
-            .ja: "列車名や番号を入力します。種別と車両形式は任意です。",
-            .en: "Enter a train name or number. Service and vehicle types are optional.",
+            .zhHans: "特急请填写名称；车次可在下一步从时刻表或 AI 补全。普通列车可留空。",
+            .zhHant: "特急請填寫名稱；車次可在下一步從時刻表或 AI 補全。普通列車可留空。",
+            .ja: "特急は列車名を入力してください。番号は次の画面で補完できます。普通列車は空欄でも進めます。",
+            .en: "Enter the limited express name when applicable. The next step can fill the train number. Local trains can leave it blank.",
         ],
         "ios.editor.step.dateNote": [
             .zhHans: "输入日期或从日历选择，也可以暂不填写日期。",
@@ -285,6 +402,12 @@ enum EditorStrings {
         ],
         "ios.editor.includeDate": [
             .zhHant: "加入日期", .zhHans: "添加日期", .ja: "日付を追加", .en: "Include a date",
+        ],
+        "ios.editor.sharedJourneyDateNote": [
+            .zhHant: "全程共用這個出發日期；每站可另選到達或出發日期與時間。",
+            .zhHans: "全程共用这个出发日期；每站可另选到达或出发日期与时间。",
+            .ja: "この出発日は旅程全体で共通です。各駅の到着・発車日時は別に選べます。",
+            .en: "The journey shares this departure date. Choose each stop's arrival or departure date and time below.",
         ],
         "ios.editor.newGuide": [
             .zhHant: "填寫列車與車站。其他細節可以稍後補上。",

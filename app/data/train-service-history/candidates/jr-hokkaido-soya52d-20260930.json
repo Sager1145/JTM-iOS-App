@@ -1,0 +1,26 @@
+{
+  "candidate_id": "jr-hokkaido-soya52d-20260930",
+  "candidate_status": "visually_reviewed",
+  "canonical": false,
+  "scope": "Selected 52D / 宗谷 column on 2026-09-30 only; no public number is printed. 剣淵, 比布, 砂川 and 美唄 are レ, and unprinted arrival sides remain null.",
+  "trip": {
+    "trip_id": "jr-hokkaido.soya.52d.exact-2026-09-30",
+    "service_date": "2026-09-30",
+    "service_id": "soya",
+    "public_number": null,
+    "train_number": "52D",
+    "source_id": "jr-hokkaido-soya52d-20260930",
+    "source_url": "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20260930&s=111",
+    "source_locator": "Selected 2026年9月30日(水), 52D / 宗谷, 27th train column; public number blank; 剣淵, 比布, 砂川, 美唄 are レ",
+    "stops": [
+      ["稚内", null, "17:44"], ["南稚内", null, "17:48"],
+      ["豊富", null, "18:25"], ["幌延", null, "18:39"],
+      ["天塩中川", null, "19:13"], ["音威子府", null, "19:45"],
+      ["美深", null, "20:11"], ["名寄", null, "20:32"],
+      ["士別", null, "20:47"], ["和寒", null, "21:00"],
+      ["旭川", "21:26", "21:30"], ["深川", null, "21:50"],
+      ["滝川", null, "22:04"], ["岩見沢", null, "22:30"],
+      ["札幌", "22:56", null]
+    ]
+  }
+}

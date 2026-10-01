@@ -1,0 +1,4 @@
+{"calendar_id": "jr-hokkaido.kamui.29.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-kamui29-lilac37-39-41-20260930"}
+{"calendar_id": "jr-hokkaido.lilac.37.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-kamui29-lilac37-39-41-20260930"}
+{"calendar_id": "jr-hokkaido.lilac.39.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-kamui29-lilac37-39-41-20260930"}
+{"calendar_id": "jr-hokkaido.lilac.41.exact-2026-09-30.calendar", "exception_type": "add", "reason": "Exact selected date on operator timetable", "service_date": "2026-09-30", "source_id": "jr-hokkaido-s110-kamui29-lilac37-39-41-20260930"}

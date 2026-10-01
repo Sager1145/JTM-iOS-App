@@ -1,0 +1,51 @@
+{
+  "candidate_id": "jr-kyushu-nichirin4-6-8-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "scope_note": "Three selected-date JR Kyushu train-detail pages. Only printed passenger arrival/departure sides, platforms, train numbers, operating-day labels and seat categories are retained; no car count, series or physical route inferred.",
+  "trips": [
+    {
+      "trip_id": "jr-kyushu.nichirin.4.2026-09-30", "service_id": "nichirin", "service_name": "にちりん", "service_class": "limited_express", "public_number": "4", "train_number": "5004M",
+      "origin": "宮崎空港", "destination": "大分", "source_id": "jr-kyushu-nichirin4-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0016/00165901.html?d=20260930&t=2877600",
+      "source_locator": "2026年09月30日の時刻; にちりん 4号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "平日運転",
+      "formation_seat_text": ["ＤＸグリーンがあります", "グリーン車指定席", "グリーン車指定席（４人用グリーン個室連結）", "普通車自由席"],
+      "stops": [
+        ["宮崎空港", null, "06:38", null], ["南宮崎", "06:42", "06:47", null], ["宮崎", "06:50", "06:53", null],
+        ["宮崎神宮", "06:55", "06:59", null], ["佐土原", "07:07", "07:07", null], ["高鍋", "07:16", "07:17", null],
+        ["日向市", "07:43", "07:44", null], ["門川", "07:50", "07:51", null], ["南延岡", "07:58", "07:59", null],
+        ["延岡", "08:03", "08:06", null], ["佐伯", "09:06", "09:07", null], ["津久見", "09:25", "09:26", null],
+        ["臼杵", "09:35", "09:37", null], ["鶴崎", "09:58", "09:59", null], ["大分", "10:06", null, "4"]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.nichirin.6.2026-09-30", "service_id": "nichirin", "service_name": "にちりん", "service_class": "limited_express", "public_number": "6", "train_number": "5006M",
+      "origin": "宮崎空港", "destination": "大分", "source_id": "jr-kyushu-nichirin6-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0031/00310201.html?d=20260930&t=2890400",
+      "source_locator": "2026年09月30日の時刻; にちりん 6号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["宮崎空港", null, "07:45", null], ["南宮崎", "07:51", "08:02", null], ["宮崎", "08:06", "08:10", null],
+        ["佐土原", "08:20", "08:21", null], ["高鍋", "08:30", "08:30", null], ["日向市", "08:55", "08:56", null],
+        ["南延岡", "09:08", "09:09", null], ["延岡", "09:13", "09:15", null], ["佐伯", "10:11", "10:12", null],
+        ["津久見", "10:29", "10:30", null], ["臼杵", "10:39", "10:40", null], ["鶴崎", "11:02", "11:02", null],
+        ["大分", "11:10", null, "4"]
+      ]
+    },
+    {
+      "trip_id": "jr-kyushu.nichirin.8.2026-09-30", "service_id": "nichirin", "service_name": "にちりん", "service_class": "limited_express", "public_number": "8", "train_number": "5008M",
+      "origin": "宮崎空港", "destination": "大分", "source_id": "jr-kyushu-nichirin8-20260930", "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0008/00087401.html?d=20260930&t=2890400",
+      "source_locator": "2026年09月30日の時刻; にちりん 8号; 他の列車情報の表示; 駅名/時刻/のりば table",
+      "operating_day_marker": "毎日運転",
+      "formation_seat_text": ["グリーン車指定席", "普通車一部指定席"],
+      "stops": [
+        ["宮崎空港", null, "10:15", null], ["南宮崎", "10:21", "10:25", null], ["宮崎", "10:28", "10:30", null],
+        ["佐土原", "10:39", "10:40", null], ["高鍋", "10:49", "10:50", null], ["日向市", "11:18", "11:19", null],
+        ["南延岡", "11:31", "11:32", null], ["延岡", "11:36", "11:44", null], ["佐伯", "12:40", "12:41", null],
+        ["津久見", "12:59", "13:00", null], ["臼杵", "13:09", "13:10", null], ["鶴崎", "13:32", "13:33", null],
+        ["大分", "13:41", null, "4"]
+      ]
+    }
+  ]
+}

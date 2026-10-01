@@ -32,6 +32,55 @@ def station(line, operator, name, coordinates):
 
 class RailHistoryEventTests(unittest.TestCase):
 
+    def test_materializes_each_surveyed_predecessor_release_independently(self):
+        base = {'N02_001': '11', 'N02_002': '2', 'N02_003': 'Old L', 'N02_004': 'JR'}
+        seen = []
+
+        def release(year):
+            seen.append(year)
+            offset = 0.000006 if year == '14' else 0
+            rows = [(dict(base), [[138.1, 36.1], [138.2 + offset, 36.2]])]
+            stations = [(dict(base, N02_005='S', N02_005c='000123', N02_005g='000999'),
+                         [[138.1 + offset, 36.1], [138.1001, 36.1]])]
+            return rows, stations
+
+        proof = [{'authority': 'city', 'reference': 'https://example.test/date',
+                  'date_precision': 'exact_day'}]
+        event = {'id': 'transfer', 'kind': 'operator_transfer',
+                 'before': {'line': 'Old L', 'operator': 'JR'},
+                 'after': {'line': 'L', 'operator': 'O'},
+                 'geometry': {'source': 'N02', 'release': 'N02-14',
+                              'historical_periods': [
+                                  {'source': 'N02', 'release': 'N02-13',
+                                   'historical_identity': {'line': 'Old L', 'operator': 'JR'},
+                                   'selector': {'historical_bbox': [138, 36, 139, 37]},
+                                   'evidence': proof},
+                                  {'source': 'N02', 'release': 'N02-14',
+                                   'historical_identity': {'line': 'Old L', 'operator': 'JR'},
+                                   'selector': {'historical_bbox': [138, 36, 139, 37]},
+                                   'evidence': proof}]}}
+        materialized = mod.source_event_geometry(event, release)
+        self.assertEqual(seen, ['13', '14'])
+        periods = materialized['geometry']['historical_periods']
+        self.assertEqual([len(p['historical_sections']) for p in periods], [1, 1])
+        self.assertEqual([len(p['historical_stations']) for p in periods], [1, 1])
+        self.assertEqual(periods[1]['historical_sections'][0]['geometry']['coordinates'][1][0], 138.20001)
+        self.assertEqual(periods[0]['historical_stations'][0]['properties']['n02_station_code'], '000123')
+        self.assertEqual(periods[0]['historical_stations'][0]['properties']['n02_group_code'], '000999')
+        self.assertNotIn('historical_sections', event['geometry']['historical_periods'][0])
+
+    def test_old_station_name_selector_does_not_rename_other_snapshot_stations(self):
+        props = {'N02_001': '11', 'N02_002': '2', 'N02_003': 'L', 'N02_004': 'O'}
+        rows = [(dict(props, N02_005=name), [[139, 35], [139.0001, 35]])
+                for name in ('Old', 'Unrelated')]
+        event = {'id': 'rename', 'kind': 'station_rename',
+                 'before': {'line': 'L', 'operator': 'O', 'station': 'Old'},
+                 'geometry': {'source': 'N02', 'release': 'N02-08'}}
+        materialized = mod.source_event_geometry(event, lambda year: ([], rows))
+        self.assertEqual([f['properties']['station_name']
+                          for f in materialized['geometry']['historical_stations']], ['Old'])
+        self.assertNotIn('historical_stations', event['geometry'])
+
     def test_missing_kind_is_closure_and_relocation_stays(self):
         self.assertEqual(mod.event_kind({'id': 'a', 'valid_to': '2016-12-05'}), 'closure')
         self.assertEqual(mod.event_kind({'id': 'b', 'kind': 'relocation'}), 'relocation')

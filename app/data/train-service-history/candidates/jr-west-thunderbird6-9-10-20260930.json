@@ -1,0 +1,46 @@
+{
+  "candidate_id": "jr-west-thunderbird6-9-10-20260930",
+  "candidate_status": "visually_reviewed_official_train_pages",
+  "canonical": false,
+  "service_date": "2026-09-30",
+  "trips": [
+    {
+      "trip_id":"jr-west.thunderbird.6.2026-09-30", "service_id":"thunderbird", "public_number":"6", "train_number":"4006M",
+      "source_id":"jr-west-odekake-thunderbird6-4006m-20260930", "source_url":"https://timetable.jr-odekake.net/train-timetable/257981?date=20260930",
+      "operation_label":"毎日運転", "printed_equipment":["女性専用席があります","グリーン車指定席","普通車全車指定席"],
+      "route_evidence":"Date-selected Tsuruga station timetable labels this departure 湖西線; train page lists pass sequence via 大津京 and 近江塩津. Full route line IDs and operator segments remain unresolved.",
+      "stops":[
+        {"name":"敦賀","code":"010186","arrival":null,"departure":"08:07","platform":"33","call_type":"origin"},
+        {"name":"京都","code":"006079","arrival":"09:02","departure":"09:03","platform":"7","call_type":"passenger_stop"},
+        {"name":"新大阪","code":"006911","arrival":"09:28","departure":"09:29","platform":"9","call_type":"passenger_stop"},
+        {"name":"大阪","code":"007068","arrival":"09:33","departure":null,"platform":"3","call_type":"destination"}
+      ]
+    },
+    {
+      "trip_id":"jr-west.thunderbird.9.2026-09-30", "service_id":"thunderbird", "public_number":"9", "train_number":"4009M",
+      "source_id":"jr-west-odekake-thunderbird9-4009m-20260930", "source_url":"https://timetable.jr-odekake.net/train-timetable/257701?date=20260930",
+      "operation_label":"土曜・休日運休", "printed_equipment":["女性専用席があります","グリーン車指定席","普通車全車指定席"],
+      "route_evidence":"Date-selected train page lists pass sequence via 大津京 and 近江塩津 between 京都 and 敦賀. Full route line IDs and operator segments remain unresolved.",
+      "stops":[
+        {"name":"大阪","code":"007068","arrival":null,"departure":"08:42","platform":"11","call_type":"origin"},
+        {"name":"新大阪","code":"006911","arrival":"08:46","departure":"08:47","platform":"4","call_type":"passenger_stop"},
+        {"name":"京都","code":"006079","arrival":"09:09","departure":"09:11","platform":"0","call_type":"passenger_stop"},
+        {"name":"敦賀","code":"010186","arrival":"10:03","departure":null,"platform":"31","call_type":"destination"}
+      ]
+    },
+    {
+      "trip_id":"jr-west.thunderbird.10.2026-09-30", "service_id":"thunderbird", "public_number":"10", "train_number":"4010M",
+      "source_id":"jr-west-odekake-thunderbird10-4010m-20260930", "source_url":"https://timetable.jr-odekake.net/train-timetable/258001?date=20260930",
+      "operation_label":"土曜・休日運休", "printed_equipment":["女性専用席があります","グリーン車指定席","普通車全車指定席"],
+      "route_evidence":"Date-selected Tsuruga station timetable labels this departure 湖西線; train page lists pass sequence via 大津京 and 近江塩津. Full route line IDs and operator segments remain unresolved.",
+      "stops":[
+        {"name":"敦賀","code":"010186","arrival":null,"departure":"09:07","platform":"33","call_type":"origin"},
+        {"name":"京都","code":"006079","arrival":"10:06","departure":"10:07","platform":"7","call_type":"passenger_stop"},
+        {"name":"新大阪","code":"006911","arrival":"10:29","departure":"10:29","platform":"9","call_type":"passenger_stop"},
+        {"name":"大阪","code":"007068","arrival":"10:33","departure":null,"platform":"3","call_type":"destination"}
+      ]
+    }
+  ],
+  "route_source_url":"https://timetable.jr-odekake.net/station-timetable/2635014001?date=20260930",
+  "scope_note":"Only September 30 is promoted. Pass rows are excluded from passenger stops. Equipment describes published seat plan, not actual dispatch. Car count, vehicle series, full line-level route and operating-company segments remain unresolved."
+}

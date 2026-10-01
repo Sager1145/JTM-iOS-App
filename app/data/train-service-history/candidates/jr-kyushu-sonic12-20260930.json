@@ -1,0 +1,178 @@
+{
+  "candidate_id": "jr-kyushu-sonic12-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "promotion_scope": "one exact 2026-09-30 occurrence; twenty-one displayed passenger calls; operator segments and physical lines unresolved",
+  "source_id": "jr-kyushu-sonic12-20260930",
+  "source_url": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117801.html?t=2874200e&d=20260930",
+  "service_date": "2026-09-30",
+  "new_source": {
+    "source_id": "jr-kyushu-sonic12-20260930",
+    "source_type": "official_train_timetable",
+    "title": "ソニック12号 列車詳細",
+    "publisher": "九州旅客鉄道株式会社 / 株式会社交通新聞社",
+    "url_or_locator": "https://www.jrkyushu-timetable.jp/sp/2610/0011/00117801.html?t=2874200e&d=20260930",
+    "issue": "JR時刻表2026年10月号",
+    "effective_date": "2026-09-30",
+    "accessed_at": "2026-09-30",
+    "license_status": "third_party_timetable_data_terms_apply",
+    "redistribution_status": "verification_only",
+    "automated_extraction_allowed": false,
+    "notes": "Official exact-date train detail reached from 大分駅 2026-09-30 日豊本線 limited-express departure list. It prints ソニック12号 3012M and twenty-one passenger calls from 佐伯 to 博多; equipment shown in candidate snapshot."
+  },
+  "trip": {
+    "trip_id": "jr-kyushu.sonic.12.2026-09-30",
+    "service_id": "sonic",
+    "service_name": "ソニック",
+    "public_number": "12",
+    "train_number": "3012M",
+    "direction": "佐伯→博多",
+    "seat_description_snapshot": [
+      "「白いソニック」で運転",
+      "グリーン車指定席",
+      "普通車一部指定席"
+    ],
+    "stop_times": [
+      {
+        "name_snapshot": "佐伯",
+        "arrival_time": null,
+        "departure_time": "06:58",
+        "platform": null
+      },
+      {
+        "name_snapshot": "津久見",
+        "arrival_time": "07:22",
+        "departure_time": "07:23",
+        "platform": null
+      },
+      {
+        "name_snapshot": "臼杵",
+        "arrival_time": "07:31",
+        "departure_time": "07:32",
+        "platform": null
+      },
+      {
+        "name_snapshot": "幸崎",
+        "arrival_time": "07:51",
+        "departure_time": "07:51",
+        "platform": null
+      },
+      {
+        "name_snapshot": "大在",
+        "arrival_time": "07:58",
+        "departure_time": "07:58",
+        "platform": null
+      },
+      {
+        "name_snapshot": "鶴崎",
+        "arrival_time": "08:02",
+        "departure_time": "08:02",
+        "platform": null
+      },
+      {
+        "name_snapshot": "大分",
+        "arrival_time": "08:09",
+        "departure_time": "08:11",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "別府",
+        "arrival_time": "08:18",
+        "departure_time": "08:19",
+        "platform": null
+      },
+      {
+        "name_snapshot": "杵築",
+        "arrival_time": "08:32",
+        "departure_time": "08:33",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇佐",
+        "arrival_time": "08:47",
+        "departure_time": "08:47",
+        "platform": null
+      },
+      {
+        "name_snapshot": "柳ケ浦",
+        "arrival_time": "08:52",
+        "departure_time": "08:53",
+        "platform": null
+      },
+      {
+        "name_snapshot": "中津",
+        "arrival_time": "09:02",
+        "departure_time": "09:03",
+        "platform": null
+      },
+      {
+        "name_snapshot": "宇島",
+        "arrival_time": "09:08",
+        "departure_time": "09:09",
+        "platform": null
+      },
+      {
+        "name_snapshot": "行橋",
+        "arrival_time": "09:21",
+        "departure_time": "09:22",
+        "platform": null
+      },
+      {
+        "name_snapshot": "小倉",
+        "arrival_time": "09:37",
+        "departure_time": "09:39",
+        "platform": "4"
+      },
+      {
+        "name_snapshot": "戸畑",
+        "arrival_time": "09:44",
+        "departure_time": "09:44",
+        "platform": null
+      },
+      {
+        "name_snapshot": "黒崎",
+        "arrival_time": "09:49",
+        "departure_time": "09:50",
+        "platform": null
+      },
+      {
+        "name_snapshot": "折尾",
+        "arrival_time": "09:54",
+        "departure_time": "09:54",
+        "platform": "3"
+      },
+      {
+        "name_snapshot": "赤間",
+        "arrival_time": "10:04",
+        "departure_time": "10:05",
+        "platform": null
+      },
+      {
+        "name_snapshot": "香椎",
+        "arrival_time": "10:18",
+        "departure_time": "10:19",
+        "platform": null
+      },
+      {
+        "name_snapshot": "博多",
+        "arrival_time": "10:27",
+        "departure_time": null,
+        "platform": "5"
+      }
+    ]
+  },
+  "evidence_locators": [
+    {
+      "claim": "exact 2026-09-30 occurrence",
+      "locator": "official train page heading 2026年09月30日の時刻 and date-qualified URL"
+    },
+    {
+      "claim": "limited express ソニック12号, 3012M, and equipment",
+      "locator": "列車種別 / 列車名 / expanded 他の列車情報の表示 → 列車番号・列車設備 rows"
+    },
+    {
+      "claim": "twenty-one passenger calls and clocks",
+      "locator": "駅名 / 時刻 / のりば table from 佐伯 through 博多"
+    }
+  ]
+}

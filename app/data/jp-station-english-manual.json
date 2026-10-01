@@ -1,0 +1,369 @@
+{
+  "note": "Provisional transliterations for package stations without an OSM English/Romanized label. Every entry requires human review and may be wrong.",
+  "byCode": {
+    "002223": {
+      "ja": "テクノさかき",
+      "en": "Techno-Sakaki"
+    },
+    "009101": {
+      "ja": "田辺島通",
+      "en": "Tanabejimadōri"
+    },
+    "M000002": {
+      "ja": "しきぶ",
+      "en": "Shikibu"
+    },
+    "009433": {
+      "ja": "乙原",
+      "en": "Otohara"
+    },
+    "009432": {
+      "ja": "雲泉寺",
+      "en": "Unsenji"
+    },
+    "001802": {
+      "ja": "六渡寺",
+      "en": "Rokudōji"
+    },
+    "001807": {
+      "ja": "庄川口",
+      "en": "Shōgawaguchi"
+    },
+    "001811": {
+      "ja": "第一イン新湊クロスベイ前",
+      "en": "Daiichi Inn Shinminato Cross Bay-mae"
+    },
+    "001814": {
+      "ja": "新町口",
+      "en": "Shinmachiguchi"
+    },
+    "001819": {
+      "ja": "中新湊",
+      "en": "Naka-Shinminato"
+    },
+    "001815": {
+      "ja": "東新湊",
+      "en": "Higashi-Shinminato"
+    },
+    "001817": {
+      "ja": "海王丸",
+      "en": "Kaiōmaru"
+    },
+    "001820": {
+      "ja": "越ノ潟",
+      "en": "Koshinokata"
+    },
+    "001805": {
+      "ja": "中伏木",
+      "en": "Naka-Fushiki"
+    },
+    "001810": {
+      "ja": "吉久",
+      "en": "Yoshihisa"
+    },
+    "001818": {
+      "ja": "新吉久",
+      "en": "Shin-Yoshihisa"
+    },
+    "001823": {
+      "ja": "能町口",
+      "en": "Nōmachiguchi"
+    },
+    "001824": {
+      "ja": "米島口",
+      "en": "Yoneshimaguchi"
+    },
+    "001826": {
+      "ja": "新能町",
+      "en": "Shin-Nōmachi"
+    },
+    "001833": {
+      "ja": "荻布",
+      "en": "Ogino"
+    },
+    "001834": {
+      "ja": "旭ヶ丘",
+      "en": "Asahigaoka"
+    },
+    "001837": {
+      "ja": "江尻",
+      "en": "Ejiri"
+    },
+    "001842": {
+      "ja": "市民病院前",
+      "en": "Shiminbyōin-mae"
+    },
+    "001845": {
+      "ja": "志貴野中学校前",
+      "en": "Shikino Chūgakkō-mae"
+    },
+    "001851": {
+      "ja": "広小路",
+      "en": "Hirokōji"
+    },
+    "001854": {
+      "ja": "急患医療センター前",
+      "en": "Kyūkan Iryō Center-mae"
+    },
+    "001861": {
+      "ja": "坂下町",
+      "en": "Sakashitamachi"
+    },
+    "001864": {
+      "ja": "片原町",
+      "en": "Kataharamachi"
+    },
+    "001866": {
+      "ja": "末広町",
+      "en": "Suehiromachi"
+    },
+    "009361": {
+      "ja": "今山",
+      "en": "Imayama"
+    },
+    "009336": {
+      "ja": "大鶴",
+      "en": "Ōtsuru"
+    },
+    "009326": {
+      "ja": "宝珠山",
+      "en": "Hōshuyama"
+    },
+    "009314": {
+      "ja": "大行司",
+      "en": "Daigyōji"
+    },
+    "009287": {
+      "ja": "筑前岩屋",
+      "en": "Chikuzen-Iwaya"
+    },
+    "009249": {
+      "ja": "彦山",
+      "en": "Hikosan"
+    },
+    "009209": {
+      "ja": "豊前桝田",
+      "en": "Buzen-Masuda"
+    },
+    "009154": {
+      "ja": "歓遊舎ひこさん",
+      "en": "Kanyūsha Hikosan"
+    },
+    "006352": {
+      "ja": "ケーブル八幡宮口",
+      "en": "Cable Hachimangū-guchi"
+    },
+    "006358": {
+      "ja": "ケーブル八幡宮山上",
+      "en": "Cable Hachimangū-sanjō"
+    },
+    "000026": {
+      "ja": "名寄高校",
+      "en": "Nayoro Kōkō"
+    },
+    "005360": {
+      "ja": "守山",
+      "en": "Moriyama"
+    },
+    "005343": {
+      "ja": "金屋",
+      "en": "Kanaya"
+    },
+    "005325": {
+      "ja": "川宮",
+      "en": "Kawamiya"
+    },
+    "005314": {
+      "ja": "川村",
+      "en": "Kawamura"
+    },
+    "005309": {
+      "ja": "白沢渓谷",
+      "en": "Shirasawa Keikoku"
+    },
+    "005306": {
+      "ja": "小幡緑地",
+      "en": "Obata Ryokuchi"
+    },
+    "006386": {
+      "ja": "西尾口",
+      "en": "Nishioguchi"
+    },
+    "008153": {
+      "ja": "八栗登山口",
+      "en": "Yakuri Tozanguchi"
+    },
+    "008147": {
+      "ja": "八栗山上",
+      "en": "Yakuri Sanjō"
+    },
+    "004732": {
+      "ja": "阿夫利神社",
+      "en": "Afuri-Jinja"
+    },
+    "004743": {
+      "ja": "大山寺",
+      "en": "Ōyamadera"
+    },
+    "001958": {
+      "ja": "諏訪川原",
+      "en": "Suwagawara"
+    },
+    "001953": {
+      "ja": "丸の内",
+      "en": "Marunouchi"
+    },
+    "001916": {
+      "ja": "オークスカナルパークホテル富山前",
+      "en": "Oarks Canal Park Hotel Toyama-mae"
+    },
+    "001921": {
+      "ja": "龍谷富山高校前（永楽町）",
+      "en": "Ryūkoku Toyama Kōkō-mae (Eirakuchō)"
+    },
+    "001964": {
+      "ja": "西町",
+      "en": "Nishichō"
+    },
+    "001966": {
+      "ja": "グランドプラザ前",
+      "en": "Grand Plaza-mae"
+    },
+    "001963": {
+      "ja": "大手モール",
+      "en": "Ōte Mall"
+    },
+    "001948": {
+      "ja": "県庁前",
+      "en": "Kenchō-mae"
+    },
+    "001936": {
+      "ja": "新富町",
+      "en": "Shintomichō"
+    },
+    "001939": {
+      "ja": "地鉄ビル前",
+      "en": "Chitetsu Building-mae"
+    },
+    "001942": {
+      "ja": "電気ビル前",
+      "en": "Denki Building-mae"
+    },
+    "001950": {
+      "ja": "桜橋",
+      "en": "Sakurabashi"
+    },
+    "001960": {
+      "ja": "荒町",
+      "en": "Aramachi"
+    },
+    "001962": {
+      "ja": "中町（西町北）",
+      "en": "Nakamachi (Nishichō-kita)"
+    },
+    "001971": {
+      "ja": "上本町",
+      "en": "Kamihonmachi"
+    },
+    "001973": {
+      "ja": "広貫堂前",
+      "en": "Kōkandō-mae"
+    },
+    "001975": {
+      "ja": "西中野",
+      "en": "Nishinakano"
+    },
+    "001978": {
+      "ja": "小泉町",
+      "en": "Koizumichō"
+    },
+    "001984": {
+      "ja": "堀川小泉",
+      "en": "Horikawa-Koizumi"
+    },
+    "001985": {
+      "ja": "大町",
+      "en": "Ōmachi"
+    },
+    "001991": {
+      "ja": "南富山駅前",
+      "en": "Minami-Toyama-Ekimae"
+    },
+    "008239": {
+      "ja": "宮島ボートレース場",
+      "en": "Miyajima Boat Race Jō"
+    },
+    "008158": {
+      "ja": "廿日市市役所前（平良）",
+      "en": "Hatsukaichi-shiyakusho-mae (Hera)"
+    },
+    "010190": {
+      "ja": "松川町",
+      "en": "Matsukawachō"
+    },
+    "005696": {
+      "ja": "宮本武蔵",
+      "en": "Miyamoto Musashi"
+    },
+    "005738": {
+      "ja": "石井",
+      "en": "Ishii"
+    },
+    "005848": {
+      "ja": "平福",
+      "en": "Hirafuku"
+    },
+    "000906": {
+      "ja": "ゆだ錦秋湖",
+      "en": "Yuda-Kinshūko"
+    },
+    "000837": {
+      "ja": "鶯野",
+      "en": "Uguisuno"
+    },
+    "001267": {
+      "ja": "手ノ子",
+      "en": "Tenoko"
+    },
+    "008716": {
+      "ja": "山麓",
+      "en": "Sanroku"
+    },
+    "008746": {
+      "ja": "山上",
+      "en": "Sanjō"
+    },
+    "002730": {
+      "ja": "清明",
+      "en": "Seimei"
+    },
+    "002883": {
+      "ja": "スポーツ公園",
+      "en": "Sports Kōen"
+    },
+    "002594": {
+      "ja": "ソシオ流通センター",
+      "en": "Socio Ryūtsū Center"
+    },
+    "M000001": {
+      "ja": "手柄山平和公園",
+      "en": "Tegarayama Heiwa Kōen"
+    },
+    "006673": {
+      "ja": "浜北",
+      "en": "Hamakita"
+    },
+    "009818": {
+      "ja": "八千代町",
+      "en": "Yachiyomachi"
+    },
+    "007447": {
+      "ja": "天王寺駅前",
+      "en": "Tennōji-Ekimae"
+    },
+    "009190": {
+      "ja": "甲浦",
+      "en": "Kannoura"
+    }
+  }
+}

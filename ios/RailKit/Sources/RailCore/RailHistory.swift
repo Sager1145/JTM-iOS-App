@@ -5,14 +5,23 @@ import Foundation
 /// the same history identity.
 public struct RailHistoryRevisionSet: Sendable, Equatable {
     public let revisions: [String: String]
+    public let contentHashes: [String: String]
 
-    public init(_ revisions: [String: String?]) {
+    public init(
+        _ revisions: [String: String?],
+        contentHashes: [String: String] = [:]
+    ) {
         self.revisions = revisions.mapValues { $0 ?? "none" }
+        self.contentHashes = contentHashes
     }
 
     public var canonical: String {
-        revisions.keys.sorted().map { "\($0):\(revisions[$0]!)" }
+        let revisionIdentity = revisions.keys.sorted().map { "\($0):\(revisions[$0]!)" }
             .joined(separator: "|")
+        guard !contentHashes.isEmpty else { return revisionIdentity }
+        let hashIdentity = contentHashes.keys.sorted().map { "\($0):\(contentHashes[$0]!)" }
+            .joined(separator: "|")
+        return "\(revisionIdentity)|hashes:\(hashIdentity)"
     }
 }
 
@@ -23,12 +32,14 @@ public struct RailPrecomputedSolverContext: Decodable, Sendable, Equatable {
     public let routeCacheDigest: String
     public let rideDate: String?
     public let historyRevisions: [String: String]
+    public let historyHashes: [String: String]?
 
     private enum CodingKeys: String, CodingKey {
         case solverVersion = "solver_version"
         case routeCacheDigest = "route_cache_digest"
         case rideDate = "ride_date"
         case historyRevisions = "history_revisions"
+        case historyHashes = "history_hashes"
     }
 }
 
@@ -38,14 +49,24 @@ public enum RailPrecomputedRouteGate {
         expectedDigest: String,
         solverVersion: String,
         rideDate: String?,
-        revisions: RailHistoryRevisionSet
+        revisions: RailHistoryRevisionSet,
+        expectedHashes: [String: String]? = nil
     ) -> Bool {
         if let context {
-            return context.solverVersion == solverVersion
+            guard context.solverVersion == solverVersion
                 && context.routeCacheDigest == expectedDigest
                 && context.rideDate == rideDate
                 && context.historyRevisions == revisions.revisions
+            else { return false }
+            if let expectedHashes {
+                return context.historyHashes == expectedHashes
+            }
+            return true
         }
+        // A caller supplying the current content hashes requires an attested
+        // precomputed context.  Falling back to the legacy undated rule here
+        // would accept bytes from a different snapshot with the same revision.
+        if expectedHashes != nil { return false }
         // Legacy parts have no network attestation. Dated rides in a region
         // with history must be solved on demand instead.
         return rideDate == nil || !revisions.revisions.values.contains(where: { $0 != "none" })

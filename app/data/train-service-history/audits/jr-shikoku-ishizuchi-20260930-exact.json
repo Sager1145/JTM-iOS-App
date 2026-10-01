@@ -1,0 +1,108 @@
+{
+  "audit_id": "jr-shikoku-ishizuchi-20260930-exact",
+  "canonical": false,
+  "audit_kind": "exact_date_historical_only_family_staging",
+  "operator_scope": "jr-shikoku",
+  "service_id": "ishizuchi",
+  "canonical_name": "いしづち",
+  "service_date": "2026-09-30",
+  "prior_database_status": {
+    "status": "historical_only_no_active_2026_09_30",
+    "all_templates": 26,
+    "active_templates": 0,
+    "basis": "jr-limited-express-family-gaps-20260930 audit snapshot before this isolated staging"
+  },
+  "staging_status": {
+    "confirmed_trips": 3,
+    "printed_passenger_calls": 43,
+    "normalized_trip_relations": 2,
+    "scope": "isolated candidate and normalized source bundle; shared SQLite and reports were not rebuilt"
+  },
+  "sources": [
+    {
+      "source_id": "jr-odekake-shiokaze1-20260930-train",
+      "official_url": "https://timetable.jr-odekake.net/train-timetable/18541?date=20260930",
+      "evidence_date": "2026-09-30",
+      "date_evidence": "2026年9月 day 30 td.ok; 毎日運転",
+      "printed_trains": ["しおかぜ1号 1M", "いしづち1号 1001M"],
+      "printed_coupling": "宇多津－松山は1Mに併結",
+      "content_hash": null,
+      "hash_note": "Source bytes were not downloaded or bundled because the page states an explicit reproduction and processing prohibition."
+    },
+    {
+      "source_id": "jr-odekake-ishizuchi29-20260930-train",
+      "official_url": "https://timetable.jr-odekake.net/train-timetable/99561?date=20260930",
+      "evidence_date": "2026-09-30",
+      "date_evidence": "2026年9月 day 30 td.ok; 毎日運転",
+      "printed_trains": ["しおかぜ29号 29M", "いしづち29号 1029M"],
+      "printed_coupling": "多度津－伊予西条は29Mに併結",
+      "content_hash": null,
+      "hash_note": "Source bytes were not downloaded or bundled because the page states an explicit reproduction and processing prohibition."
+    },
+    {
+      "source_id": "jr-odekake-ishizuchi30-20260930-train",
+      "official_url": "https://timetable.jr-odekake.net/train-timetable/28651?date=20260930",
+      "evidence_date": "2026-09-30",
+      "date_evidence": "2026年9月 day 30 td.ok; 毎日運転",
+      "printed_trains": ["しおかぜ30号 30M", "いしづち30号 1030M"],
+      "printed_coupling": "松山－宇多津は30Mに併結",
+      "content_hash": null,
+      "hash_note": "Source bytes were not downloaded or bundled because the page states an explicit reproduction and processing prohibition."
+    }
+  ],
+  "trips": [
+    {
+      "trip_id": "jr-shikoku.ishizuchi.1.1001m.exact-2026-09-30",
+      "public_number": "1",
+      "train_number": "1001M",
+      "origin": "高松",
+      "destination": "松山",
+      "passenger_calls": 15,
+      "printed_platforms": {"高松": "7", "松山": "1"},
+      "coupled_section": "宇多津－松山",
+      "partner_train_number": "1M",
+      "partner_trip_status": "materialized; reciprocal couples_with relation staged",
+      "planned_seat_facts": {"all_reserved": false, "green_car_available": true},
+      "unknowns": ["physical route line IDs", "ordered operator segments", "car count", "vehicle series", "reserved capacity", "actual dispatch"]
+    },
+    {
+      "trip_id": "jr-shikoku.ishizuchi.29.1029m.exact-2026-09-30",
+      "public_number": "29",
+      "train_number": "1029M",
+      "origin": "高松",
+      "destination": "伊予西条",
+      "passenger_calls": 12,
+      "printed_platforms": {"高松": "7"},
+      "coupled_section": "多度津－伊予西条",
+      "partner_train_number": "29M",
+      "partner_trip_status": "not materialized; printed coupling retained as a fact and research item",
+      "planned_seat_facts": {"all_reserved": false, "green_car_available": null},
+      "unknowns": ["physical route line IDs", "ordered operator segments", "car count", "vehicle series", "reserved capacity", "actual dispatch"]
+    },
+    {
+      "trip_id": "jr-shikoku.ishizuchi.30.1030m.exact-2026-09-30",
+      "public_number": "30",
+      "train_number": "1030M",
+      "origin": "松山",
+      "destination": "高松",
+      "passenger_calls": 16,
+      "printed_platforms": {"松山": "1", "高松": "7"},
+      "coupled_section": "松山－宇多津",
+      "partner_train_number": "30M",
+      "partner_trip_status": "not materialized; printed coupling retained as a fact and research item",
+      "planned_seat_facts": {"all_reserved": false, "green_car_available": null},
+      "unknowns": ["physical route line IDs", "ordered operator segments", "car count", "vehicle series", "reserved capacity", "actual dispatch"]
+    }
+  ],
+  "files": {
+    "candidate": "app/data/train-service-history/candidates/jr-shikoku-ishizuchi1-29-30-20260930.json",
+    "normalizer": "ios/tools/normalize-reviewed-shikoku-ishizuchi1-29-30-20260930.py",
+    "test": "ios/tools/tests/test_shikoku_ishizuchi1_29_30_20260930_source_pinned.py",
+    "normalized_suffix": "reviewed-shikoku-ishizuchi1-29-30-20260930"
+  },
+  "limitations": [
+    "This is a bounded three-train sample and does not establish complete Ishizuchi service-family coverage on September 30.",
+    "Through-section clocks are printed in the paired Shiokaze column and are associated only where the same page explicitly prints coupling.",
+    "No actual consist or dispatch claim is made."
+  ]
+}

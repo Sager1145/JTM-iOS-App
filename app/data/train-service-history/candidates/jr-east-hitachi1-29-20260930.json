@@ -1,0 +1,47 @@
+{
+  "candidate_id": "jr-east-hitachi1-29-20260930",
+  "candidate_status": "reviewed_official_html",
+  "canonical": false,
+  "scope": "Only the 2026-09-30 service day and each selected JR East schedule variant. Hitachi 1's initial 047843 page marks the day other and links to applicable 047841. No physical route or operator segment is asserted.",
+  "trips": [
+    {
+      "trip_id": "jr-east.hitachi.1.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "1",
+      "train_number": "1M",
+      "source_id": "jr-east-hitachi1-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/047841.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; arrived through 047843 td.other day link; 時刻詳細 ひたち1号 1M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "７", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "06:45"], ["東京", "06:52", "06:53"],
+        ["上野", "06:58", "07:00"], ["土浦", "07:41", "07:42"],
+        ["水戸", "08:10", "08:11"], ["勝田", "08:16", "08:17"],
+        ["日立", "08:34", "08:34"], ["高萩", "08:44", "08:45"],
+        ["勿来", "08:58", "08:58"], ["泉", "09:06", "09:07"],
+        ["湯本", "09:11", "09:12"], ["いわき", "09:18", null]
+      ]
+    },
+    {
+      "trip_id": "jr-east.hitachi.29.exact-2026-09-30",
+      "service_date": "2026-09-30",
+      "public_number": "29",
+      "train_number": "29M",
+      "source_id": "jr-east-hitachi29-20260930",
+      "source_url": "https://timetables.jreast.co.jp/2610/train/045/048441.html",
+      "source_locator": "2026年9月30日 td.ok current-variant calendar cell; 時刻詳細 ひたち29号 29M; 設備 and 番線 columns",
+      "printed_equipment": ["座席未指定券", "グリーン車指定席", "普通車全車指定席"],
+      "printed_platforms": {"品川": "９", "東京": "８", "上野": "８", "水戸": "４"},
+      "stops": [
+        ["品川", null, "20:45"], ["東京", "20:52", "20:54"],
+        ["上野", "20:59", "21:00"], ["土浦", "21:41", "21:42"],
+        ["水戸", "22:10", "22:11"], ["勝田", "22:16", "22:17"],
+        ["大甕", "22:27", "22:27"], ["常陸多賀", "22:31", "22:31"],
+        ["日立", "22:35", "22:35"], ["磯原", "22:50", "22:51"],
+        ["勿来", "22:58", "22:59"], ["泉", "23:07", "23:07"],
+        ["湯本", "23:12", "23:12"], ["いわき", "23:19", null]
+      ]
+    }
+  ]
+}

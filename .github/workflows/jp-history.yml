@@ -1,0 +1,166 @@
+name: Japan rail history coverage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - app/data/rail-history.json
+      - app/data/rail-sections.json
+      - app/data/stations.json
+      - app/data/jp-history-sources/**
+      - app/data/generated/jp-history-*.json
+      - app/public/app-rail-history.js
+      - app/public/app-route-solver.js
+      - app/public/app-stations.js
+      - app/tests/rail-validity.test.mjs
+      - app/tests/jp-reviewed-transfers.test.mjs
+      - app/tests/jp-station-opening-loader.test.mjs
+      - app/tests/jp-station-rename-routing.test.mjs
+      - app/public/app-route-graph.js
+      - app/scripts/railway/jp-rail-history-events.json
+      - app/scripts/railway/history/**
+      - app/scripts/railway/build-jp-rail-history.py
+      - app/scripts/railway/build-display-network.py
+      - app/scripts/railway/tests/test_display_network.py
+      - app/scripts/railway/tests/test_jp*.py
+      - app/scripts/railway/tests/test_mlit_history_import.py
+      - app/scripts/railway/tests/test_opening_predecessor_constraints.py
+      - app/scripts/railway/tests/test_reviewed*.py
+      - tests/test_jp_history_coverage.py
+      - .github/workflows/jp-history.yml
+  pull_request:
+    paths:
+      - app/data/rail-history.json
+      - app/data/rail-sections.json
+      - app/data/stations.json
+      - app/data/jp-history-sources/**
+      - app/data/generated/jp-history-*.json
+      - app/public/app-rail-history.js
+      - app/public/app-route-solver.js
+      - app/public/app-stations.js
+      - app/tests/rail-validity.test.mjs
+      - app/tests/jp-reviewed-transfers.test.mjs
+      - app/tests/jp-station-opening-loader.test.mjs
+      - app/tests/jp-station-rename-routing.test.mjs
+      - app/public/app-route-graph.js
+      - app/scripts/railway/jp-rail-history-events.json
+      - app/scripts/railway/history/**
+      - app/scripts/railway/build-jp-rail-history.py
+      - app/scripts/railway/build-display-network.py
+      - app/scripts/railway/tests/test_display_network.py
+      - app/scripts/railway/tests/test_jp*.py
+      - app/scripts/railway/tests/test_mlit_history_import.py
+      - app/scripts/railway/tests/test_opening_predecessor_constraints.py
+      - app/scripts/railway/tests/test_reviewed*.py
+      - tests/test_jp_history_coverage.py
+      - .github/workflows/jp-history.yml
+  workflow_dispatch:
+    inputs:
+      strict_full_milestone:
+        description: Require zero canonical and official-inventory gaps; route/display acceptance is separate
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: jp-history-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structural-baseline:
+    name: Structural baseline (1 declared legacy gap accepted)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.4.0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Source pipeline dependencies
+        run: python3 -m pip install pyshp==3.1.6
+
+      - name: Source compiler and snapshot pipeline tests
+        run: |
+          python3 -m unittest discover -s app/scripts/railway/tests -p "test_jp*.py" -v
+          python3 -m unittest discover -s app/scripts/railway/tests -p "test_mlit_history_import.py" -v
+          python3 -m unittest discover -s app/scripts/railway/tests -p "test_opening_predecessor_constraints.py" -v
+          python3 -m unittest discover -s app/scripts/railway/tests -p "test_reviewed*.py" -v
+          python3 app/scripts/railway/history/import-mlit-history.py --check
+
+      - name: Coverage audit tests
+        run: python3 -m unittest tests/test_jp_history_coverage.py -v
+
+      - name: Display targets and station service periods
+        run: |
+          python3 -m unittest discover -s app/scripts/railway/tests -p "test_display_network.py"
+          node --test \
+            app/tests/rail-validity.test.mjs \
+            app/tests/jp-reviewed-transfers.test.mjs \
+            app/tests/jp-station-opening-loader.test.mjs \
+            app/tests/jp-station-rename-routing.test.mjs
+
+      # This accepts only the early-geometry gap already declared in not_in_n02. A new
+      # unknown kind, unmatched canonical event, orphan generated artefact, or
+      # second unresolved gap fails. It intentionally makes no solver/display
+      # claim; those require separate end-to-end regressions.
+      - name: Canonical ledger still compiles within the accepted baseline
+        run: >-
+          python3 app/scripts/railway/history/audit-jp-history-coverage.py
+          --baseline-max-unresolved 1
+          --json-report "${RUNNER_TEMP}/jp-history-coverage.json"
+
+      - name: Production Web loader honors every effective boundary
+        run: >-
+          node app/scripts/railway/history/verify-jp-history-boundaries.mjs
+          --fixtures app/data/generated/jp-history-boundary-fixtures.json
+          --json-report app/data/generated/jp-history-boundary-report.json
+
+      # Diagnostic mode records the official inventory and identity review rows without making
+      # its accepted unresolved selectors fail this baseline job.
+      - name: Refresh honest official-inventory coverage report
+        run: >-
+          python3 app/scripts/railway/history/audit-jp-history-coverage.py
+          --official-inventory app/data/jp-history-sources
+          --json-report app/data/generated/jp-history-coverage-report.json
+
+      - name: Generated coverage evidence is current
+        run: |
+          git ls-files --error-unmatch \
+            app/data/generated/jp-history-coverage-report.json \
+            app/data/generated/jp-history-boundary-fixtures.json \
+            app/data/generated/jp-history-boundary-report.json
+          git diff --exit-code -- \
+            app/data/generated/jp-history-coverage-report.json \
+            app/data/generated/jp-history-boundary-fixtures.json \
+            app/data/generated/jp-history-boundary-report.json
+
+  strict-full-milestone:
+    name: Strict inventory coverage (manual opt-in)
+    if: github.event_name == 'workflow_dispatch' && inputs.strict_full_milestone
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # This is expected to stay red until the declared pre-N02/near-current
+      # gaps and every unresolved official selector are reviewed and covered.
+      # It is opt-in so accepted historical debt does not break every PR.
+      - name: Require complete canonical and official coverage
+        run: >-
+          python3 app/scripts/railway/history/audit-jp-history-coverage.py
+          --official-inventory app/data/jp-history-sources
+          --require-official-inventory
+          --strict
